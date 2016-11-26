@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="wf_app_color_base">#78b8d1</color>
+    <color name="wf_app_color_base_50">#8078b8d1</color>
+
+    <!--Button color-->
+    <color name="wf_app_button_color_off">#804099bc</color>
+    <color name="wf_app_button_color_on">#4099bc</color>
+    <color name="wf_login_background_color">#f0f8ff</color>
+
+    <color name="wf_login_button_color_off">#8078b8d1</color>
+    <color name="wf_login_button_color_on">#78b8d1</color>
+
+    <color name="wf_app_color_base_active">#477DC3</color>
+    <color name="msg_message_action_active">#880007</color>
+
+</resources>

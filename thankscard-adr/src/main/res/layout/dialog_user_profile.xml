@@ -1,0 +1,51 @@
+<LinearLayout style="@style/cs_common_match"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:custom="http://schemas.android.com/apk/res-auto"
+              android:layout_marginTop="@dimen/margin_50dp"
+              android:layout_marginBottom="@dimen/margin_50dp"
+    >
+
+    <LinearLayout
+        style="@style/cs_common_match"
+        android:layout_marginBottom="@dimen/margin_10dp"
+        android:layout_marginLeft="@dimen/margin_16dp"
+        android:layout_marginRight="@dimen/margin_16dp"
+        android:layout_marginTop="@dimen/margin_10dp"
+        android:background="@color/tc_profile_bg_color"
+        android:orientation="vertical">
+
+        <LinearLayout
+            style="@style/cs_common_match_wrap"
+            android:gravity="center_vertical|right"
+            android:orientation="horizontal"
+            android:padding="@dimen/margin_10dp">
+
+            <ImageView
+                android:id="@+id/img_id_close"
+                style="@style/cs_common_wrap"
+                android:src="@drawable/wf_close_white_thin"/>
+        </LinearLayout>
+
+        <trente.asia.welfare.adr.view.SelectableRoundedImageView
+            android:id="@+id/img_id_photo"
+            android:layout_width="@dimen/margin_150dp"
+            android:layout_height="@dimen/margin_150dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/margin_16dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/wf_profile"
+            custom:sriv_oval="true"/>
+
+        <TextView
+            android:id="@+id/txt_id_user_name"
+            style="@style/wl_common_text"
+            android:layout_marginBottom="@dimen/margin_100dp"
+            android:layout_marginLeft="@dimen/margin_16dp"
+            android:layout_marginRight="@dimen/margin_16dp"
+            android:layout_marginTop="@dimen/margin_16dp"
+            android:gravity="center"
+            android:textColor="@color/chiase_white"
+            android:textSize="14pt"/>
+    </LinearLayout>
+
+</LinearLayout>

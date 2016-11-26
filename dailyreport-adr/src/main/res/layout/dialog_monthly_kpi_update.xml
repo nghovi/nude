@@ -1,0 +1,210 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="300dp"
+              android:layout_height="match_parent"
+              android:gravity="center_vertical"
+              android:orientation="vertical"
+              android:padding="0dp"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:layout_marginTop="100dp"
+        android:background="@color/wf_dr_color_base"
+        android:gravity="center_vertical|center_horizontal"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="@string/dlg_monthly_goal_title"
+            android:textColor="@color/chiase_white"/>
+
+        <ImageView
+            android:id="@+id/dlg_add_actual_plan_close"
+            android:layout_width="@dimen/margin_24dp"
+            android:layout_height="@dimen/margin_24dp"
+            android:layout_marginRight="@dimen/margin_10dp"
+            android:src="@drawable/wf_close_white"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="100dp"
+        android:background="@color/cs_work_background"
+        android:orientation="vertical"
+        android:padding="@dimen/wf_margin_16">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/wf_margin_16"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/wf_margin_10"
+                android:text="@string/dr_item_name"
+                />
+
+            <TextView
+                android:id="@+id/dlg_monthly_kpi_update_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:gravity="right"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/wf_margin_16"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/wf_margin_10"
+                android:layout_weight="1"
+                android:text="@string/dlr_unit"/>
+
+            <TextView
+                android:id="@+id/dlg_monthly_kpi_update_unit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New Text"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/wf_margin_16"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/wf_margin_10"
+                android:layout_weight="1"
+                android:text="@string/dlr_monthly_goal"/>
+
+            <TextView
+                android:id="@+id/dlg_monthly_kpi_update_monthly_goal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/wf_margin_16"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="@string/dlr_input_rule"
+                android:layout_marginBottom="@dimen/margin_6dp"/>
+
+            <TextView
+                android:id="@+id/dlg_monthly_kpi_update_input_rule"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textIsSelectable="true"
+                style="@style/dr_text_ellipsized"
+                android:singleLine="true"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/wf_margin_16"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/wf_margin_10"
+                android:text="@string/dlr_plan"/>
+
+            <trente.asia.android.view.ChiaseEditText
+                android:id="@+id/dlg_add_actual_plan_edt_plan"
+                style="@style/dr_edit_text_small_no_corner"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="@dimen/margin_6dp"
+                android:layout_weight="1"
+                android:hint="0"
+                android:inputType="numberDecimal"
+                android:textColorHint="@color/wf_common_color_hint"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/wf_margin_16"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/wf_margin_10"
+                android:text="@string/dlr_actual"/>
+
+            <trente.asia.android.view.ChiaseEditText
+                android:id="@+id/dlg_add_actual_plan_edt_actual"
+                style="@style/dr_edit_text_small_no_corner"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="@dimen/margin_6dp"
+                android:layout_weight="1"
+                android:hint="0"
+                android:inputType="numberDecimal"
+                android:textColorHint="@color/wf_common_color_hint"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical|center_horizontal"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/dlg_add_actual_plan_btn_clear"
+                style="@style/wl_common_button_small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/dlr_clear"
+                android:textSize="12sp"
+                android:layout_marginRight="@dimen/wf_margin_10"/>
+
+            <Button
+                android:id="@+id/dlg_add_actual_plan_btn_done"
+                style="@style/wl_common_button_small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/dlr_done"
+                android:textSize="12sp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>
+
+
+

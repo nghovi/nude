@@ -1,0 +1,21 @@
+<LinearLayout style="@style/wf_common_match"
+              xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <include layout="@layout/view_common_header"/>
+
+    <LinearLayout
+        android:id="@+id/lnr_id_content"
+        style="@style/cs_common_match"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <TextView
+            style="@style/cs_common_match_wrap"
+            android:text="Work offer"/>
+
+    </LinearLayout>
+
+    <include layout="@layout/view_common_footer"/>
+
+</LinearLayout>

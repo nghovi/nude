@@ -1,0 +1,138 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+
+    <View style="@style/cs_common_divider"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/wf_app_color_base"
+        android:baselineAligned="false"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/margin_5dp"
+        android:paddingTop="@dimen/margin_5dp">
+
+        <RelativeLayout
+            android:id="@+id/lnr_view_common_footer_myreport"
+            style="@style/cs_common_wrap"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <ImageView
+                style="@style/cs_common_wrap"
+                android:alpha="0.5"
+                android:src="@drawable/dr_footer_report"
+                android:layout_centerInParent="true"/>
+
+            <TextView
+                style="@style/dr_text_footer_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingTop="@dimen/margin_40dp"
+                android:text="@string/footer_item1"
+                android:textColor="@color/core_gray"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/lnr_view_common_footer_others"
+            style="@style/cs_common_wrap"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                style="@style/cs_common_wrap"
+                android:alpha="0.5"
+                android:src="@drawable/dr_footer_report_all"
+                android:layout_centerInParent="true"/>
+
+            <TextView
+                style="@style/dr_text_footer_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingTop="@dimen/margin_40dp"
+                android:text="@string/footer_item2"
+                android:textColor="@color/core_gray"
+                android:layout_centerInParent="true"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/lnr_view_common_footer_KPI"
+            style="@style/cs_common_wrap"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ImageView
+                style="@style/cs_common_wrap"
+                android:alpha="0.5"
+                android:src="@drawable/dr_footer_kpi"
+                android:layout_centerInParent="true"/>
+
+            <TextView
+                style="@style/dr_text_footer_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingTop="@dimen/margin_40dp"
+                android:text="KPI"
+                android:textColor="@color/core_gray"
+                />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/lnr_view_common_footer_activity"
+            style="@style/cs_common_wrap"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                style="@style/cs_common_wrap"
+                android:alpha="0.5"
+                android:src="@drawable/dr_footer_activity"
+                android:layout_centerInParent="true"/>
+
+            <TextView
+                style="@style/dr_text_footer_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingTop="@dimen/margin_40dp"
+                android:text="@string/footer_item3"
+                android:textColor="@color/core_gray"
+                android:layout_centerInParent="true"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/lnr_view_common_footer_setting"
+            style="@style/cs_common_wrap"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                style="@style/cs_common_wrap"
+                android:alpha="0.5"
+                android:src="@drawable/dr_footer_setting"
+                android:layout_centerInParent="true"/>
+
+            <TextView
+                style="@style/dr_text_footer_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingTop="@dimen/margin_40dp"
+                android:text="@string/footer_item4"
+                android:textColor="@color/core_gray"/>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</merge>

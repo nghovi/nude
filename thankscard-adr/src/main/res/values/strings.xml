@@ -1,0 +1,131 @@
+<resources>
+    <string name="app_name">ThanksCard</string>
+
+    <string name="main_activity_back_btn_guide">Click back again to exit</string>
+    <string name="common_server_api_error">Server Api Error</string>
+
+    <string name="fragment_signin_login_button">Login</string>
+    <string name="fragment_signin_user_id">User Id</string>
+    <string name="fragment_signin_password">Password</string>
+    <string name="fragment_signin_title">Login</string>
+    <string name="fragment_signin_login_error_title">Error</string>
+
+    <string name="fragment_mypage_note_list">Notice</string>
+    <string name="fragment_mypage_alert_title">Notice</string>
+    <string name="fragment_mypage_alert_post">Post</string>
+    <string name="fragment_mypage_rank_post">Post Rank: %1$s</string>
+    <string name="fragment_mypage_rank_receive">Receive Rank: %1$s</string>
+    <string name="fragment_mypage_btn_post">Post</string>
+    <string name="fragment_mypage_btn_rank">Rank</string>
+    <string name="fragment_mypage_user_info">User Info</string>
+    <string name="fragment_mypage_title">Mypage</string>
+    <string name="fragment_mypage_dialog_title">Check message</string>
+    <string name="fragment_mypage_notice_new">NEW</string>
+    <string name="fragment_mypage_dialog_message">Do you want to sign out?</string>
+
+    <string name="page_ranking_post">Post Ranking</string>
+    <string name="page_ranking_receive">Receive Ranking</string>
+    <string name="fragment_ranking_title">Ranking</string>
+    <string name="fragment_ranking_date">%1$s-%2$s</string>
+
+    <string name="fragment_setting_pass_cur">Current Password</string>
+    <string name="fragment_setting_pass_new">New Password</string>
+    <string name="fragment_setting_pass_confirm">Password Confirm</string>
+    <string name="fragment_setting_login_button">Setting</string>
+    <string name="fragment_setting_push_notification">Push Notifications</string>
+    <string name="fragment_setting_password">Change Password</string>
+    <string name="fragment_setting_title">Setting</string>
+    <string name="fragment_setting_change_success_title">Password Change</string>
+    <string name="fragment_setting_change_success_message">Success</string>
+
+    <string name="fragment_month_post_button">Post</string>
+
+    <string name="fragment_post_tc_list_title">Post List</string>
+    <string name="fragment_receive_tc_list_title">Receive List</string>
+    <string name="fragment_tc_list_back">Prev</string>
+    <string name="fragment_tc_list_next">Next</string>
+    <string name="fragment_tc_list_date">Date</string>
+    <string name="fragment_tc_list_dept">Dept</string>
+    <string name="fragment_tc_list_user">User</string>
+
+    <string name="fragment_tc_detail_date">%1$s</string>
+    <string name="fragment_tc_detail_to">Dear: %1$s</string>
+    <string name="fragment_tc_detail_from">From: %1$s</string>
+    <string name="fragment_tc_detail_title_pos">Post Detail</string>
+    <string name="fragment_tc_detail_title_receive">Receive Detail</string>
+    <string name="fragment_tc_detail_send_post">Send this user message</string>
+    <string name="fragment_tc_detail_like">Like</string>
+    <string name="fragment_tc_detail_dislike">Dislike</string>
+
+    <string name="fragment_post_template_title">Post - Template</string>
+    <string name="fragment_post_template_sample_message">Thank you</string>
+
+    <string name="fragment_post_edit_title">Post - Edit</string>
+    <string name="fragment_post_edit_button">Submit</string>
+    <string name="fragment_post_edit_hint"></string>
+    <string name="fragment_post_edit_alert_dlg_title">Error Message</string>
+    <string name="txt_fragment_post_edit_template">Template ></string>
+    <string name="fragment_post_edit_dept">Dept</string>
+    <string name="fragment_post_edit_user">User</string>
+    <string name="fragment_post_edit_category">Category</string>
+    <string name="txt_fragment_post_edit_message">Message</string>
+    <string name="fragment_post_edit_alert_dlg_message1">User must be selected</string>
+    <string name="fragment_post_edit_alert_dlg_message2">Message has to be not empty and less than %1$s letters</string>
+    <string name="fragment_post_edit_alert_dlg_message3">Template must be chosen</string>
+
+    <string name="fragment_post_edit_alert_dlg_confirm_title">Check Message</string>
+    <string name="fragment_post_edit_alert_dlg_confirm_message">Are you sure you want to send to %1$s</string>
+
+
+    <string name="fragment_post_confirm_title">Post - Confirm</string>
+    <string name="fragment_post_confirm_btn_cancel">Cancel</string>
+    <string name="fragment_post_confirm_btn_submit">Submit</string>
+    <string name="fragment_posted_confirm_success_title">Success</string>
+    <string name="fragment_posted_confirm_success_message">Message has been successfully sent</string>
+
+    <string name="spinner_default_department">All Dept</string>
+    <string name="spinner_default_user">All User</string>
+    <string name="spinner_default_prompt"></string>
+    <string name="spinner_dept_selection_prompt">All Dept</string>
+    <string name="spinner_user_selection_prompt">All User</string>
+    <string name="dialog_category_selection_category">Category</string>
+    <string name="dialog_template_selection_template">Template</string>
+
+
+    <string name="dialog_avatar_handlers_camera">Camera</string>
+    <string name="dialog_avatar_handlers_gallery">Gallery</string>
+    <string name="dialog_avatar_handlers_delete">Delete Photo</string>
+
+    <string name="tc_crop_message">Crop Image</string>
+    <string name="tc_crop_tip">写真の位置とサイズを調整</string>
+    <string name="fragment_upload_photo_title">Crop Your Image</string>
+
+    <string name="dialog_rank_stage_title">Total %1$sP</string>
+    <string name="dialog_rank_stage_cancel">Cancel</string>
+    <string name="dialog_rank_stage_require">Required: %1$sP</string>
+    <string name="dialog_rank_stage_status_ok">Achieved</string>
+    <string name="dialog_rank_stage_status_not_ok">Not achieved</string>
+
+
+    <!-- footer -->
+    <string name="footer_item1">MyPage</string>
+    <string name="footer_item2">Posted</string>
+    <string name="footer_item3">Receive</string>
+    <string name="footer_item4">Ranking</string>
+    <string name="fragment_tc_detail_liked">Liked</string>
+
+    <string name="tc_common_point">%1$spt</string>
+    <string name="msg_msg_invalid_empty">Message has to be not empty and less than 75 letters</string>
+
+    <!--Notifications-->
+    <string name="FM_TC_001">You received new notice</string>
+    <string name="FM_TC_002">Today is %1$s\'s birthday!</string>
+    <string name="FM_TC_003">You received thanks card from %1$s</string>
+
+    <string name="tc_dialog_profile_title">User detail</string>
+    <string name="tc_contact_us_problem_item">Bug</string>
+    <string name="tc_contact_us_improve_item">Improve</string>
+    <string name="tc_contact_us_content_title">Content</string>
+    <string name="tc_contact_us_service_title">Service name</string>
+    <string name="tc_contact_us_select_item">Select</string>
+</resources>

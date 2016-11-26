@@ -1,0 +1,63 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:paddingBottom="10dp"
+    android:paddingTop="10dp">
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical|center_horizontal"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/img_item_dialog_rank_stage"
+            android:layout_width="60dp"
+            android:layout_height="60dp"/>
+
+        <TextView
+            android:id="@+id/txt_item_dialog_rank_stage_name"
+            android:layout_width="@dimen/margin_80dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:singleLine="true"
+            android:textColor="@color/chiase_white"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_20dp"
+        android:layout_marginRight="20dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txt_item_dialog_rank_stage_require"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/chiase_white"/>
+
+        <LinearLayout
+            android:id="@+id/lnr_item_dialog_rank_stage_status"
+            style="@style/cs_common_match_wrap"
+            android:layout_marginTop="@dimen/margin_6dp"
+            android:gravity="center"
+            android:paddingBottom="@dimen/margin_10dp"
+            android:paddingTop="@dimen/margin_10dp">
+
+            <TextView
+                android:id="@+id/txt_item_dialog_rank_stage_status"
+                style="@style/wl_common_text"
+                android:layout_width="wrap_content"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

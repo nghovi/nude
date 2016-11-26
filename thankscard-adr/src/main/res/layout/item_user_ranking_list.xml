@@ -1,0 +1,68 @@
+<LinearLayout
+    style="@style/cs_common_match_wrap"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/state_common_selectable_row2"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:id="@+id/lnr_container"
+        style="@style/cs_common_match_wrap"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/margin_4dp"
+        android:paddingLeft="@dimen/margin_16dp"
+        android:paddingRight="@dimen/margin_16dp"
+        android:paddingTop="@dimen/margin_4dp">
+
+        <LinearLayout
+            style="@style/cs_common_wrap"
+            android:layout_width="@dimen/margin_40dp"
+            android:layout_marginRight="@dimen/margin_10dp"
+            android:gravity="center_vertical|center_horizontal"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/img_id_medal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/tc_ranking_medal1"/>
+
+            <TextView
+                android:id="@+id/txt_id_ranking"
+                style="@style/tc_text_black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:text="--"
+                android:visibility="gone"/>
+        </LinearLayout>
+
+        <trente.asia.thankscard.services.rank.view.RoundedImageView
+            android:id="@+id/img_id_avatar"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginRight="20dp"
+            android:src="@drawable/tc_icon_mypage_gray"/>
+
+        <TextView
+            android:id="@+id/txt_id_user_name"
+            style="@style/tc_text_black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:singleLine="true"/>
+
+        <TextView
+            android:id="@+id/txt_id_point"
+            style="@style/tc_text_black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:gravity="right"
+            android:singleLine="true"/>
+
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,110 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/wf_app_color_base"
+        android:baselineAligned="false"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/margin_5dp"
+        android:paddingBottom="@dimen/margin_5dp">
+
+        <LinearLayout
+            android:id="@+id/lnr_view_common_footer_mypage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:src="@drawable/tc_icon_mypage_gray"/>
+
+            <TextView
+                style="@style/tc_text_footer_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/footer_item1"
+                android:visibility="visible"
+                android:textColor="@color/tc_edittext_hint_color"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lnr_view_common_footer_posted"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:src="@drawable/tc_icon_post_gray"/>
+
+            <TextView
+                style="@style/tc_text_footer_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/footer_item2"
+                android:textColor="@color/tc_edittext_hint_color"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/lnr_view_common_footer_receive"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:src="@drawable/tc_icon_receive_gray"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/footer_item3"
+                android:textColor="@color/tc_edittext_hint_color"
+                android:textSize="12sp"
+                android:visibility="visible"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lnr_view_common_footer_ranking"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:src="@drawable/tc_icon_ranking_gray"/>
+
+            <TextView
+                style="@style/tc_text_footer_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/footer_item4"
+                android:textColor="@color/tc_edittext_hint_color"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</merge>

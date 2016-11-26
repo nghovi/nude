@@ -1,0 +1,65 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <trente.asia.shiftworking.services.shiftworking.view.CommonMonthView
+        android:id="@+id/view_id_month"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_30dp"
+        android:layout_marginTop="@dimen/margin_10dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/txt_id_month"
+            style="@style/wl_common_text"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textStyle="bold"/>
+
+        <RelativeLayout
+            style="@style/cs_common_wrap"
+            android:gravity="center_vertical">
+
+            <trente.asia.android.view.ChiaseCheckableImageView
+                android:id="@+id/btn_id_back"
+                style="@style/sw_button_previous"/>
+
+            <TextView
+                style="@style/wl_common_text"
+                android:layout_width="wrap_content"
+                android:layout_centerInParent="true"
+                android:textColor="@color/chiase_white"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            style="@style/cs_common_wrap"
+            android:layout_marginLeft="@dimen/margin_6dp"
+            android:gravity="center_vertical">
+
+            <Button
+                android:id="@+id/img_id_this_month"
+                style="@style/wl_common_button_small"
+                android:layout_width="@dimen/margin_100dp"
+                android:text="@string/sw_shift_work_this_month"
+                android:textColor="@color/chiase_white"
+                android:textSize="12sp"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            style="@style/cs_common_wrap"
+            android:layout_marginLeft="@dimen/margin_6dp"
+            android:gravity="center_vertical">
+
+            <trente.asia.android.view.ChiaseCheckableImageView
+                android:id="@+id/btn_id_next"
+                style="@style/sw_button_next"/>
+
+            <TextView
+                style="@style/wl_common_text"
+                android:layout_width="wrap_content"
+                android:layout_centerInParent="true"
+                android:textColor="@color/chiase_white"/>
+        </RelativeLayout>
+    </trente.asia.shiftworking.services.shiftworking.view.CommonMonthView>
+</merge>

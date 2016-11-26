@@ -1,0 +1,69 @@
+<trente.asia.messenger.services.message.view.MessageView
+    android:id="@+id/view_id_message"
+    style="@style/wf_common_match"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        style="@style/cs_common_match"
+        android:orientation="vertical">
+
+        <trente.asia.messenger.services.message.view.MsgRecyclerView
+            android:id="@+id/rev_id_message"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:scrollbars="vertical"
+            android:splitMotionEvents="false"/>
+
+        <View style="@style/cs_common_divider"/>
+
+        <LinearLayout
+            style="@style/cs_common_match_wrap"
+            android:background="@color/chiase_white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/lnr_id_like"
+                style="@style/cs_common_wrap"
+                android:background="@drawable/state_common_selectable_row"
+                android:padding="@dimen/margin_8dp">
+
+                <ImageButton
+                    android:id="@+id/img_id_like"
+                    style="@style/cs_common_wrap"
+                    android:background="@android:color/transparent"
+                    android:clickable="false"
+                    android:src="@drawable/wf_good"/>
+            </LinearLayout>
+
+            <trente.asia.welfare.adr.view.MsgMultiAutoCompleteTextView
+                android:id="@+id/edt_id_message"
+                style="@style/wl_common_text"
+                android:layout_weight="1"
+                android:background="@color/chiase_white"
+                android:completionThreshold="1"
+                android:gravity="left"
+                android:hint="@string/msg_message_edittext_hint"
+                android:inputType="textMultiLine"
+                android:maxLines="5"
+                android:scrollHorizontally="false"
+                android:textColorHint="@color/wf_common_color_hint"/>
+
+            <LinearLayout
+                android:id="@+id/lnr_id_send"
+                style="@style/cs_common_wrap"
+                android:background="@drawable/state_common_selectable_row"
+                android:padding="@dimen/margin_8dp">
+
+                <ImageButton
+                    android:id="@+id/btn_id_send"
+                    style="@style/cs_common_wrap"
+                    android:background="@android:color/transparent"
+                    android:clickable="false"
+                    android:src="@drawable/wf_attachment"/>
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+</trente.asia.messenger.services.message.view.MessageView>

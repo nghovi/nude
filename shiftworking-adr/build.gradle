@@ -1,0 +1,56 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 24
+    buildToolsVersion "24.0.2"
+
+    defaultConfig {
+        applicationId "trente.asia.shiftworking"
+        minSdkVersion 15
+        targetSdkVersion 24
+        versionCode 2
+        versionName "2.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+    }
+
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
+
+    productFlavors {
+        develop {
+            buildConfigField "Boolean", "DEVELOP", "true"
+            buildConfigField "String", "HOST", "\"http://192.168.1.99:9000\""
+        }
+        production {
+            buildConfigField "Boolean", "DEVELOP", "false"
+            buildConfigField "String", "HOST", "\"https://tr-fukuri.jp\""
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    packagingOptions {
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
+}
+
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile project(path: ':welfare-android-core')
+    compile 'com.android.support:support-v4:24.2.1'
+    compile 'com.google.android.gms:play-services:9.2.1'
+//    compile 'com.google.maps.android:android-maps-utils:0.3.4'
+    compile "com.daimajia.swipelayout:library:1.2.0@aar"
+}
+apply plugin: 'com.google.gms.google-services'

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    style="@style/cs_common_match"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        style="@style/cs_common_match"
+        android:background="@color/chiase_white"
+        android:orientation="vertical">
+
+        <include layout="@layout/view_common_header"/>
+
+        <RelativeLayout
+            style="@style/cs_common_match"
+            android:layout_margin="@dimen/margin_10dp"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/img_id_preview"
+                style="@style/cs_common_match"/>
+
+            <ImageView
+                style="@style/cs_common_wrap"
+                android:layout_centerInParent="true"
+                android:src="@drawable/wf_movie_play"
+                android:visibility="gone"/>
+        </RelativeLayout>
+
+        <View style="@style/cs_common_divider"/>
+
+        <LinearLayout
+            style="@style/cs_common_match_wrap"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/lnr_id_cancel"
+                style="@style/cs_common_wrap"
+                android:layout_weight="1"
+                android:background="@drawable/state_common_selectable_row"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/margin_10dp"
+                android:paddingTop="@dimen/margin_10dp">
+
+                <TextView
+                    style="@style/wl_common_text"
+                    android:layout_width="wrap_content"
+                    android:text="@string/chiase_common_cancel"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lnr_id_ok"
+                style="@style/cs_common_wrap"
+                android:layout_weight="1"
+                android:background="@drawable/state_common_selectable_row"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/margin_10dp"
+                android:paddingTop="@dimen/margin_10dp">
+
+                <TextView
+                    style="@style/wl_common_text"
+                    android:layout_width="wrap_content"
+                    android:text="@string/chiase_common_ok"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <!--Button color-->
+    <color name="wf_app_button_color_off">#8072bd4b</color>
+    <color name="wf_app_button_color_on">#72bd4b</color>
+    <color name="wf_login_background_color">#ecf4d9</color>
+
+    <color name="wf_login_button_color_off">#808ebd4b</color>
+    <color name="wf_login_button_color_on">#8ebd4b</color>
+    <color name="file_count">#9E0411</color>
+
+</resources>

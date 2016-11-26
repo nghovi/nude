@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout style="@style/cs_common_match"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:custom="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical">
+
+    <LinearLayout
+        style="@style/cs_common_match_wrap"
+        android:orientation="vertical">
+
+        <LinearLayout
+            style="@style/cs_common_match_wrap"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/margin_16dp">
+
+            <RelativeLayout
+                style="@style/cs_common_wrap"
+                android:layout_gravity="center_horizontal">
+
+                <trente.asia.welfare.adr.view.SelectableRoundedImageView
+                    android:id="@+id/img_fragment_setting_avatar"
+                    android:layout_width="@dimen/margin_60dp"
+                    android:layout_height="@dimen/margin_60dp"
+                    android:layout_gravity="center_horizontal"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/wf_profile"
+                    custom:sriv_oval="true"/>
+
+                <ImageView
+                    style="@style/cs_common_wrap"
+                    android:layout_alignBottom="@+id/img_fragment_setting_avatar"
+                    android:layout_alignRight="@+id/img_fragment_setting_avatar"
+                    android:layout_marginBottom="@dimen/margin_5dp"
+                    android:src="@drawable/wf_camera"/>
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/txt_id_username"
+                style="@style/wl_common_text"
+                android:layout_marginLeft="@dimen/margin_20dp"/>
+        </LinearLayout>
+
+        <View style="@style/cs_common_divider"/>
+
+        <LinearLayout
+            style="@style/cs_common_match_wrap"
+            android:orientation="vertical"
+            android:padding="@dimen/margin_16dp">
+
+            <LinearLayout
+                android:id="@+id/rlt_push_notification"
+                style="@style/cs_common_match_wrap"
+                android:layout_marginBottom="@dimen/margin_10dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    style="@style/cs_common_wrap"
+                    android:layout_marginRight="20dp"
+                    android:src="@drawable/wf_icon_push"/>
+
+                <TextView
+                    style="@style/cs_common_wrap"
+                    android:layout_weight="1"
+                    android:text="@string/wf_push_notification"/>
+
+                <android.support.v7.widget.SwitchCompat
+                    android:id="@+id/swt_push_notification"
+                    style="@style/cs_common_wrap"
+                    android:textColor="@color/wf_app_color_base"
+                    android:theme="@style/wf_common_switch"/>
+            </LinearLayout>
+
+            <View style="@style/cs_common_divider"/>
+
+            <LinearLayout
+                android:id="@+id/rlt_change_password"
+                style="@style/cs_common_match_wrap"
+                android:layout_marginTop="@dimen/margin_10dp">
+
+                <ImageView
+                    style="@style/cs_common_wrap"
+                    android:layout_marginRight="20dp"
+                    android:src="@drawable/wf_icon_pass"/>
+
+                <TextView
+                    style="@style/cs_common_wrap"
+                    android:layout_weight="1"
+                    android:text="@string/wf_password_change_title"/>
+
+                <android.support.v7.widget.SwitchCompat
+                    android:id="@+id/swt_change_password"
+                    style="@style/cs_common_wrap"
+                    android:theme="@style/wf_common_switch"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lnr_change_password"
+                style="@style/cs_common_match_wrap"
+                android:orientation="vertical"
+                android:visibility="gone"
+                android:layout_marginTop="@dimen/margin_16dp">
+
+                <trente.asia.android.view.ChiaseEditText
+                    android:id="@+id/txt_old_password"
+                    style="@style/wl_common_edit_text"
+                    android:hint="@string/wf_old_password"
+                    android:inputType="textPassword"/>
+
+                <trente.asia.android.view.ChiaseEditText
+                    android:id="@+id/txt_new_password"
+                    style="@style/wl_common_edit_text"
+                    android:layout_marginBottom="@dimen/margin_10dp"
+                    android:layout_marginTop="@dimen/margin_10dp"
+                    android:hint="@string/wf_new_password"
+                    android:inputType="textPassword"/>
+
+                <trente.asia.android.view.ChiaseEditText
+                    android:id="@+id/txt_comfirm_password"
+                    style="@style/wl_common_edit_text"
+                    android:hint="@string/wf_confirm_password"
+                    android:inputType="textPassword"/>
+
+                <Button
+                    android:id="@+id/btn_id_update"
+                    style="@style/wl_common_button_60"
+                    android:layout_marginTop="@dimen/margin_16dp"
+                    android:text="@string/wlf_update_info"/>
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

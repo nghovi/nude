@@ -1,0 +1,22 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/wf_common_match">
+
+    <include layout="@layout/view_common_header" />
+
+
+        <GridView
+            android:id="@+id/gridview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:columnWidth="100dp"
+            android:minHeight="100dp"
+            android:numColumns="auto_fit"
+            android:verticalSpacing="8dp"
+            android:horizontalSpacing="8dp"
+            android:stretchMode="columnWidth"
+            android:gravity="center"
+            android:paddingTop="@dimen/margin_20dp"
+            />
+
+
+</LinearLayout>

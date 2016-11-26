@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="100dp"
+    android:layout_height="100dp">
+
+    <ImageView
+        android:id="@+id/hue_imageview"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="4dp"
+        android:background="#000000"/>
+
+    <TextView
+        android:id="@+id/hue_textview"
+        android:layout_width="80dp"
+        android:layout_height="16dp"
+        android:text="000000"
+        android:textSize="14dp"
+        android:gravity="center_horizontal"
+        android:layout_below="@id/hue_imageview"
+        android:layout_centerHorizontal="true"/>
+
+</RelativeLayout>

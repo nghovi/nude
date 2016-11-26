@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:gravity="center_vertical|center_horizontal"
+              android:orientation="vertical"
+              android:padding="16dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/dialog_template_selection_template"
+        android:layout_gravity="left"
+        android:layout_marginBottom="16dp"
+        style="@style/tc_text_white_bold"/>
+
+    <View style="@style/core_line_divider_thick"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp">
+
+        <TableLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/lnr_fragment_post_template_table_container"
+            android:layout_weight="1"
+            android:stretchColumns="*"></TableLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/dialog_rank_stage_cancel"
+            android:id="@+id/btn_dialog_template_selection_cancel"/>
+
+    </LinearLayout>
+
+</LinearLayout>

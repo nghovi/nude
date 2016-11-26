@@ -1,0 +1,52 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/dr_background_selectable"
+              android:gravity="center_vertical"
+              android:orientation="horizontal">
+
+
+    <TextView
+        android:id="@+id/item_kpi_name"
+        style="@style/dr_text_single_line_ellipsized_kpi_num"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/dr_background_gray_border_padding"
+        android:gravity="left"/>
+
+    <TextView
+        android:id="@+id/item_kpi_goal"
+        style="@style/dr_text_single_line_ellipsized_kpi_num"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/dr_background_gray_border_padding"
+        />
+
+    <TextView
+        android:id="@+id/item_kpi_sum"
+        style="@style/dr_text_single_line_ellipsized_kpi_num"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/dr_background_gray_border_padding"
+        />
+
+    <TextView
+        android:id="@+id/item_kpi_month_txt_plan"
+        style="@style/dr_text_single_line_ellipsized_kpi_num"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/dr_background_gray_border_padding"/>
+
+    <TextView
+        android:id="@+id/item_kpi_month_txt_actual"
+        style="@style/dr_text_single_line_ellipsized_kpi_num"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/dr_background_gray_border_padding"/>
+
+</LinearLayout>

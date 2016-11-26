@@ -1,0 +1,186 @@
+<LinearLayout style="@style/wf_common_match"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:padding="0dp">
+
+    <include layout="@layout/view_common_header_strip"/>
+
+    <ScrollView
+        style="@style/cs_common_match"
+        android:layout_weight="1">
+
+        <LinearLayout
+            style="@style/cs_common_match"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:padding="0dp">
+
+            <include layout="@layout/common_setting_account_info"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:gravity="center_vertical"-->
+    <!--android:orientation="horizontal"-->
+    <!--android:paddingBottom="@dimen/wf_margin_16"-->
+    <!--android:paddingLeft="@dimen/wf_margin_16"-->
+    <!--android:paddingRight="@dimen/wf_margin_16"-->
+    <!--android:paddingTop="@dimen/wf_margin_16">-->
+
+    <!--<RelativeLayout-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content">-->
+
+    <!--<trente.asia.thankscard.services.rank.view.RoundedImageView-->
+    <!--android:id="@+id/img_fragment_setting_avatar"-->
+    <!--android:layout_width="60dp"-->
+    <!--android:layout_height="60dp"-->
+    <!--android:layout_marginRight="20dp"-->
+    <!--android:src="@drawable/tc_icon_mypage_gray"/>-->
+
+    <!--<ImageView-->
+    <!--android:layout_width="24dp"-->
+    <!--android:layout_height="24dp"-->
+    <!--android:layout_alignBottom="@+id/img_fragment_setting_avatar"-->
+    <!--android:layout_alignParentBottom="false"-->
+    <!--android:layout_alignRight="@+id/img_fragment_setting_avatar"-->
+    <!--android:src="@drawable/ic_camera"/>-->
+    <!--</RelativeLayout>-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/txt_fragment_setting_username"-->
+    <!--style="@style/tc_text_black_bold"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"/>-->
+    <!--</LinearLayout>-->
+
+    <!--<View style="@style/core_line_divider"/>-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="0dp"-->
+
+    <!--android:layout_weight="1"-->
+    <!--android:orientation="vertical"-->
+    <!--android:paddingLeft="@dimen/wf_margin_16"-->
+    <!--android:paddingRight="@dimen/wf_margin_16">-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginBottom="10dp"-->
+    <!--android:layout_marginTop="10dp"-->
+    <!--android:gravity="center_vertical"-->
+    <!--android:orientation="horizontal">-->
+
+    <!--<ImageView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginRight="20dp"-->
+    <!--android:src="@drawable/tc_icon_push"/>-->
+
+    <!--<TextView-->
+    <!--style="@style/tc_text_black_12"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_weight="1"-->
+    <!--android:text="@string/fragment_setting_push_notification"/>-->
+
+    <!--<android.support.v7.widget.SwitchCompat-->
+    <!--android:id="@+id/swt_fragment_setting_push_notification"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:theme="@style/wf_common_switch"/>-->
+    <!--</LinearLayout>-->
+
+    <!--<View-->
+    <!--style="@style/core_line_divider"-->
+    <!--android:layout_marginBottom="10dp"/>-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginBottom="20dp"-->
+    <!--android:gravity="center_vertical"-->
+    <!--android:orientation="horizontal">-->
+
+    <!--<ImageView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginRight="20dp"-->
+    <!--android:src="@drawable/tc_icon_pass"/>-->
+
+    <!--<TextView-->
+    <!--style="@style/tc_text_black_12"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_weight="1"-->
+    <!--android:text="@string/fragment_setting_password"/>-->
+
+    <!--<android.support.v7.widget.SwitchCompat-->
+    <!--android:id="@+id/swt_fragment_setting_pass"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:theme="@style/wf_common_switch"/>-->
+    <!--</LinearLayout>-->
+
+    <!--<LinearLayout-->
+    <!--android:id="@+id/lnr_fragment_setting_pass"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginBottom="20dp"-->
+    <!--android:gravity="center_vertical|center_horizontal"-->
+    <!--android:orientation="vertical"-->
+    <!--android:visibility="gone">-->
+
+    <!--<EditText-->
+    <!--android:id="@+id/edt_fragment_setting_pass_cur"-->
+    <!--style="@style/tc_edit_text2"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="center_vertical"-->
+    <!--android:layout_marginBottom="10dp"-->
+    <!--android:hint="@string/fragment_setting_pass_cur"-->
+    <!--android:inputType="textPassword"-->
+    <!--custome:mName="account"/>-->
+
+    <!--<EditText-->
+    <!--android:id="@+id/edt_fragment_setting_pass_new"-->
+    <!--style="@style/tc_edit_text2"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="center_vertical"-->
+    <!--android:layout_marginBottom="10dp"-->
+    <!--android:hint="@string/fragment_setting_pass_new"-->
+    <!--android:inputType="textPassword"-->
+    <!--custome:mName="account"/>-->
+
+    <!--<EditText-->
+    <!--android:id="@+id/edt_fragment_setting_pass_confirm"-->
+    <!--style="@style/tc_edit_text2"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="center_vertical"-->
+    <!--android:hint="@string/fragment_setting_pass_confirm"-->
+    <!--android:inputType="textPassword"-->
+    <!--custome:mName="account"/>-->
+
+    <!--<Button-->
+    <!--android:id="@+id/btn_fragment_setting"-->
+    <!--style="@style/tc_button_big"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginTop="20dp"-->
+    <!--android:text="@string/fragment_setting_login_button"/>-->
+
+    <!--</LinearLayout>-->
+
+    <!--</LinearLayout>-->
+
+    <include layout="@layout/view_common_footer"/>
+
+
+</LinearLayout>

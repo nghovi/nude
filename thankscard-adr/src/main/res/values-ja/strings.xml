@@ -1,0 +1,130 @@
+<resources>
+    <string name="app_name">ThanksCard</string>
+
+    <string name="main_activity_back_btn_guide">Click back again to exit</string>
+    <string name="common_server_api_error">Server Api Error</string>
+
+    <string name="fragment_signin_login_button">ログイン</string>
+    <string name="fragment_signin_user_id">ユーザーID</string>
+    <string name="fragment_signin_password">パスワード</string>
+    <string name="fragment_signin_title">ログイン</string>
+    <string name="fragment_signin_login_error_title">エラー</string>
+
+    <string name="fragment_mypage_note_list">お知らせ</string>
+    <string name="fragment_mypage_alert_title">お知らせ</string>
+    <string name="fragment_mypage_alert_post">投稿する</string>
+    <string name="fragment_mypage_rank_post">投稿順位: %1$s</string>
+    <string name="fragment_mypage_rank_receive">受取順位: %1$s</string>
+    <string name="fragment_mypage_btn_post">投稿</string>
+    <string name="fragment_mypage_btn_rank">ランク</string>
+    <string name="fragment_mypage_user_info">ユーザー情報</string>
+    <string name="fragment_mypage_title">マイページ</string>
+    <string name="fragment_mypage_dialog_title">確認メッセージ</string>
+    <string name="fragment_mypage_notice_new">NEW</string>
+    <string name="fragment_mypage_dialog_message">ログアウトしますか？</string>
+
+    <string name="page_ranking_post">投稿順位</string>
+    <string name="page_ranking_receive">受取順位</string>
+    <string name="fragment_ranking_title">ランキング</string>
+    <string name="fragment_ranking_date">%1$s-%2$s</string>
+
+    <string name="fragment_setting_pass_cur">現在のパスワード</string>
+    <string name="fragment_setting_pass_new">新しいパスワード</string>
+    <string name="fragment_setting_pass_confirm">新しいパスワード（再確認）</string>
+    <string name="fragment_setting_login_button">設定する</string>
+    <string name="fragment_setting_push_notification">プッシュ通知</string>
+    <string name="fragment_setting_password">パスワードを変更する</string>
+    <string name="fragment_setting_title">設定</string>
+    <string name="fragment_setting_change_success_title">パスワードを変更しました</string>
+    <string name="fragment_setting_change_success_message">成功</string>
+
+    <string name="fragment_month_post_button">投稿する</string>
+
+    <string name="fragment_post_tc_list_title">投稿履歴</string>
+    <string name="fragment_receive_tc_list_title">受取履歴</string>
+    <string name="fragment_tc_list_back">前へ</string>
+    <string name="fragment_tc_list_next">次へ</string>
+    <string name="fragment_tc_list_date">年月</string>
+    <string name="fragment_tc_list_dept">部署</string>
+    <string name="fragment_tc_list_user">ユーザ</string>
+
+    <string name="fragment_tc_detail_date">%1$s</string>
+    <string name="fragment_tc_detail_to">Dear: %1$s</string>
+    <string name="fragment_tc_detail_from">From: %1$s</string>
+    <string name="fragment_tc_detail_title_pos">投稿詳細</string>
+    <string name="fragment_tc_detail_title_receive">受取詳細</string>
+    <string name="fragment_tc_detail_send_post">このユーザにメッセージを送る</string>
+    <string name="fragment_tc_detail_like">Like</string>
+    <string name="fragment_tc_detail_dislike">Dislike</string>
+
+    <string name="fragment_post_template_title">Post - Template</string>
+    <string name="fragment_post_template_sample_message">Thank you</string>
+
+    <string name="fragment_post_edit_title">投稿編集</string>
+    <string name="fragment_post_edit_button">送信する</string>
+    <string name="fragment_post_edit_hint"></string>
+    <string name="fragment_post_edit_alert_dlg_title">エラー</string>
+    <string name="txt_fragment_post_edit_template">テンプレート ></string>
+    <string name="fragment_post_edit_dept">部署</string>
+    <string name="fragment_post_edit_user">ユーザ</string>
+    <string name="fragment_post_edit_category">カテゴリ</string>
+    <string name="txt_fragment_post_edit_message">メッセージ</string>
+    <string name="fragment_post_edit_alert_dlg_message1">ユーザを選択してください</string>
+    <string name="fragment_post_edit_alert_dlg_message2">メッセージは 1 文字以上 %1$s 文字以下です</string>
+    <string name="fragment_post_edit_alert_dlg_message3">テンプレートを選択してください</string>
+
+    <string name="fragment_post_edit_alert_dlg_confirm_title">確認メッセージ</string>
+    <string name="fragment_post_edit_alert_dlg_confirm_message">%1$s さんへメッセージを送りますか？</string>
+
+
+    <string name="fragment_post_confirm_title">Post - Confirm</string>
+    <string name="fragment_post_confirm_btn_cancel">キャンセル</string>
+    <string name="fragment_post_confirm_btn_submit">Submit</string>
+    <string name="fragment_posted_confirm_success_title">成功</string>
+    <string name="fragment_posted_confirm_success_message">メッセージが送信されました</string>
+
+    <string name="spinner_default_department">全て</string>
+    <string name="spinner_default_user">全て</string>
+    <string name="spinner_default_prompt"></string>
+    <string name="spinner_dept_selection_prompt">全て</string>
+    <string name="spinner_user_selection_prompt">全て</string>
+    <string name="dialog_category_selection_category">カテゴリ</string>
+    <string name="dialog_template_selection_template">テンプレート</string>
+
+
+    <string name="dialog_avatar_handlers_camera">カメラ</string>
+    <string name="dialog_avatar_handlers_gallery">ギャラリー</string>
+    <string name="dialog_avatar_handlers_delete">写真を削除する</string>
+
+    <string name="tc_crop_message">トリミング</string>
+    <string name="tc_crop_tip">写真の位置とサイズを調整</string>
+    <string name="fragment_upload_photo_title">トリミング</string>
+
+    <string name="dialog_rank_stage_title">合計数: %1$sP</string>
+    <string name="dialog_rank_stage_cancel">キャンセル</string>
+    <string name="dialog_rank_stage_require">必要数: %1$sP</string>
+    <string name="dialog_rank_stage_status_ok">達成</string>
+    <string name="dialog_rank_stage_status_not_ok">未達成</string>
+
+    <!-- footer -->
+    <string name="footer_item1">MyPage</string>
+    <string name="footer_item2">Posted</string>
+    <string name="footer_item3">Receive</string>
+    <string name="footer_item4">Ranking</string>
+    <string name="fragment_tc_detail_liked">Liked</string>
+
+    <string name="tc_common_point">%1$spt</string>
+    <string name="msg_msg_invalid_empty">メッセージは１文字以上75文字以下です</string>
+
+    <!--Notifications-->
+    <string name="FM_TC_001">新しいお知らせを受け取りました</string>
+    <string name="FM_TC_002">今日は%1$sさんの誕生日です</string>
+    <string name="FM_TC_003">%1$sさんから新しいサンクスカードを受け取りました</string>
+
+    <string name="tc_dialog_profile_title">ユーザーの詳細</string>
+    <string name="tc_contact_us_problem_item">問題を報告</string>
+    <string name="tc_contact_us_improve_item">改善を提案</string>
+    <string name="tc_contact_us_content_title">内容</string>
+    <string name="tc_contact_us_service_title">サービス名</string>
+    <string name="tc_contact_us_select_item">選択する</string>
+</resources>

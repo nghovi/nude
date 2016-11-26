@@ -1,0 +1,64 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:custom="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/state_common_selectable_row"
+              android:orientation="horizontal"
+              android:paddingBottom="@dimen/margin_10dp"
+              android:paddingLeft="@dimen/margin_16dp"
+              android:paddingRight="@dimen/margin_16dp"
+              android:paddingTop="@dimen/margin_10dp">
+
+    <trente.asia.welfare.adr.view.SelectableRoundedImageView
+        android:id="@+id/item_user_img_avatar"
+        android:layout_width="@dimen/margin_40dp"
+        android:layout_height="@dimen/margin_40dp"
+        android:layout_marginRight="@dimen/margin_10dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/wf_profile"
+        custom:sriv_oval="true"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/item_user_txt_name"
+                    style="@style/dr_text_username"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+
+                <TextView
+                    android:id="@+id/item_user_txt_date"
+                    style="@style/wl_common_text"
+                    android:layout_width="wrap_content"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/item_user_txt_content"
+                style="@style/wl_common_text"
+                android:layout_marginTop="@dimen/margin_6dp"
+                android:gravity="center_horizontal"
+                android:textSize="@dimen/margin_16dp"/>
+
+            <TextView
+                android:id="@+id/item_user_txt_desc"
+                style="@style/wl_common_text"
+                android:layout_marginTop="@dimen/margin_6dp"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+</LinearLayout>

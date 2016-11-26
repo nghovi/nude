@@ -1,0 +1,114 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven { url 'https://plugins.gradle.org/m2/' } // License
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.2.2'
+        classpath "gradle.plugin.nl.javadude.gradle.plugins:license-gradle-plugin:0.12.1"
+    }
+}
+
+apply plugin: 'com.android.application'
+apply plugin: "com.github.hierynomus.license" // License
+
+android {
+    compileSdkVersion 24
+    buildToolsVersion "24.0.0"
+
+    sourceSets {
+        main {
+            assets.srcDirs = ['build/reports']
+        }
+    }
+
+    defaultConfig {
+        applicationId "trente.asia.messenger"
+        minSdkVersion 14
+        targetSdkVersion 24
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled true
+    }
+
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
+
+    productFlavors {
+        develop {
+            buildConfigField "Boolean", "DEVELOP", "true"
+            buildConfigField "String", "HOST", "\"http://192.168.1.4:9000\""
+        }
+        production {
+            buildConfigField "Boolean", "DEVELOP", "false"
+            buildConfigField "String", "HOST", "\"https://tr-fukuri.jp\""
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    packagingOptions {
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
+
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile project(':welfare-android-core')
+    compile 'com.android.support:support-v4:24.0.0'
+    compile 'com.commit451:PhotoView:1.2.4'
+    compile 'com.google.android.gms:play-services:9.2.1'
+}
+apply plugin: 'com.google.gms.google-services'
+
+downloadLicenses {
+    ext.apacheTwo = license('Apache License, Version 2.0', 'http://opensource.org/licenses/Apache-2.0')
+    ext.bsd = license('BSD License', 'http://www.opensource.org/licenses/bsd-license.php')
+    ext.mit = license('The MIT License', 'https://opensource.org/licenses/MIT')
+    ext.cc25 = license('CC BY 2.5', 'https://creativecommons.org/licenses/by/2.5/')
+    ext.cc30 = license('CC BY 3.0', 'https://creativecommons.org/licenses/by/3.0/')
+
+    includeProjectDependencies = false
+    licenses = [
+            // from chiase-core
+            //'com.mcxiaoke.volley:library:1.0.19' : apacheTwo,
+            // from welfare-core
+            'com.nineoldandroids:library:2.4.0'                  : apacheTwo,
+            'com.android.support:recyclerview-v7:24.0.0'         : mit,
+            'com.commit451:PhotoView:1.2.4'                      : apacheTwo,
+            // from myself
+            'com.android.support:support-v4:24.0.0'              : apacheTwo,
+            'com.google.firebase:firebase-messaging:9.2.1'       : cc30,
+
+            // from unknown
+            'com.google.android.gms:play-services-basement:9.2.1': cc30,
+            'com.google.android.gms:play-services-tasks:9.2.1'   : cc30,
+            'com.android.support:support-annotations:24.0.0'     : cc25,
+            'com.android.support:animated-vector-drawable:24.0.0': cc25,
+            'com.android.support:support-vector-drawable:24.0.0' : cc25,
+            'com.android.support:appcompat-v7:24.0.0'            : cc25,
+            'com.google.firebase:firebase-iid:9.2.1'             : cc30,
+            'com.google.firebase:firebase-common:9.2.1'          : cc30,
+            'com.google.firebase:firebase-analytics:9.2.1'       : cc30,
+            'com.google.firebase:firebase-analytics-impl:9.2.1'  : cc30,
+            'com.google.firebase:firebase-core:9.2.1'            : cc30
+    ]
+
+    aliases = [
+            (apacheTwo): ['The Apache Software License, Version 2.0', 'Apache 2', 'Apache License Version 2.0', 'Apache License, Version 2.0', 'Apache License 2.0', license('Apache License', 'http://www.apache.org/licenses/LICENSE-2.0')],
+            (bsd)      : ['BSD', license('New BSD License', 'http://www.opensource.org/licenses/bsd-license.php')]
+    ]
+
+    dependencyConfiguration = 'compile'
+}

@@ -1,0 +1,94 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:gravity="center_vertical|center_horizontal"
+              android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:elevation="1dp">
+
+
+        <ImageView
+            android:id="@+id/img_item_thanks_card_frame"
+            android:adjustViewBounds="true"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+
+        <LinearLayout
+            android:id="@+id/lnr_thanks_card_frame_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:baselineAligned="false"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/margin_30dp"
+            android:paddingLeft="@dimen/margin_70dp"
+            android:paddingRight="@dimen/margin_70dp"
+            android:paddingTop="@dimen/margin_30dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txt_tc_detail_date"
+                    style="@style/tc_text_black_12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="@string/fragment_tc_detail_date"/>
+
+                <TextView
+                    android:id="@+id/txt_tc_detail_to"
+                    style="@style/tc_text_black_12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginBottom="@dimen/margin_10dp"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="@string/fragment_tc_detail_to"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txt_tc_detail_message"
+                style="@style/tc_text_black_bold"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/margin_10dp"
+                android:layout_marginRight="@dimen/margin_10dp"
+                android:layout_weight="1"
+                android:maxLines="4"
+                android:nestedScrollingEnabled="false"
+                android:scrollbars="vertical"/>
+
+            <TextView
+                android:id="@+id/txt_tc_detail_from"
+                style="@style/tc_text_black_12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginTop="@dimen/margin_15dp"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="@string/fragment_tc_detail_from"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+</LinearLayout>
+
+

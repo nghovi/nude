@@ -1,0 +1,74 @@
+<resources>
+    <string name="app_name">Shift Working</string>
+
+    <string name="fragment_setting_title">設定</string>
+    <string name="fragment_about_version">Version %1$s</string>
+    <string name="wf_about_app">アプリについて</string>
+    <string name="wf_account_info_title">アカウント情報</string>
+
+    <string name="sw_offer_title">勤務お知らせエントリー</string>
+    <string name="sw_notice_list_title">お知らせ一覧</string>
+    <string name="sw_worker_title">勤務ユーザー</string>
+    <string name="sw_notice_detail_title">お知らせ詳細</string>
+
+    <string name="sw_footer_work_time">勤務時間</string>
+    <string name="sw_footer_work_shift">勤務シフト</string>
+    <string name="sw_footer_who_work">勤務ユーザー</string>
+    <string name="sw_footer_notices">お知らせ</string>
+    <string name="sw_footer_setting">設定</string>
+
+    <!--Check in service-->
+
+
+    <string name="sw_work_item_project">プロジェクト</string>
+    <string name="sw_work_item_project_loc">場所</string>
+    <string name="sw_work_item_checkin_list">チェックイン履歴</string>
+
+    <string name="sw_work_item_notice_type">お知らせ区分</string>
+    <string name="sw_work_item_target_dept">送信先部門</string>
+    <string name="sw_work_item_reason">理由</string>
+    <string name="sw_work_item_notice_loc">場所</string>
+    <string name="sw_work_item_notice_pic">画像</string>
+    <string name="sw_work_item_notice_user">ユーザー</string>
+    <string name="sw_work_item_notice_date">お知らせ日時</string>
+    <string name="sw_work_item_check_user">チェックしたユーザー</string>
+
+    <string name="sw_work_time_modify_request_title">修正依頼する</string>
+    <string name="sw_work_time_modify_request">%1$sチェックインを修正依頼する</string>
+    <string name="sw_work_time_modify_request_success">成功のリクエスト</string>
+
+    <string name="sw_shift_work_this_month">今月</string>
+    <string name="sw_shift_work_history">勤務履歴</string>
+    <string name="sw_shift_work_item_status">ステータス</string>
+    <string name="sw_shift_work_item_night_time">深夜勤務時間</string>
+    <string name="sw_shift_work_item_over_time">残業時間</string>
+    <string name="sw_shift_work_item_total">勤務時間</string>
+
+
+    <string name="sw_work_action_check_in">チェックイン</string>
+    <string name="sw_work_action_choose_loc">場所情報を選択</string>
+
+    <string name="sw_msg_no_project">プロジェクトが設定されていません</string>
+    <string name="sw_notice_title">%1$s -> %2$s</string>
+
+    <!--Notifications-->
+    <string name="FM_SW_001">新しい勤怠お知らせを受け取りました</string>
+    <string name="FM_SW_002">まだチェックインしていません</string>
+    <string name="FM_SW_003">まだチェックアウトしていません</string>
+    <string name="FM_SW_0041">%1$s:残業時間を超えました</string>
+    <string name="FM_SW_0042">%1$sユーザーが残業時間を超えました</string>
+    <string name="FM_SW_005">勤怠予定が更新されました</string>
+
+    <!--Work transit service-->
+    <string name="sw_work_transit_entry_title">勤務交通エントリー</string>
+    <string name="sw_work_transit_leave_item">出発</string>
+    <string name="sw_work_transit_arrive_item">到着</string>
+    <string name="sw_work_transit_way_type_item">ウェイタイプ</string>
+    <string name="sw_work_transit_one_way_item">片道</string>
+    <string name="sw_work_transit_two_way_item">往復</string>
+    <string name="sw_work_transit_cost_type_item">支払側</string>
+    <string name="sw_work_transit_trans_type_item">交通機関</string>
+    <string name="sw_work_transit_fee_item">交通費</string>
+    <string name="sw_work_transit_note_item">ノート</string>
+    <string name="sw_work_transit_attachment_item">添付</string>
+</resources>

@@ -1,0 +1,35 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:gravity="center_vertical|center_horizontal"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginRight="2dp"
+        android:background="@color/tc_item_indicator_background"
+        android:orientation="vertical"
+        android:id="@+id/lnr_tab"
+        android:padding="4dp">
+
+        <TextView
+            android:id="@+id/txt_tc_tab_linear_layout_name"
+            style="@style/tc_text_white_bold"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical|center_horizontal"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:textSize="20sp"/>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view_base_line"
+        android:layout_width="match_parent"
+        android:layout_height="15dp"
+        android:background="@color/tc_item_indicator_background"/>
+
+
+</LinearLayout>

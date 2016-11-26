@@ -1,0 +1,58 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:custom="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/wf_login_background_color"
+              android:gravity="center_vertical"
+              android:orientation="vertical"
+              android:paddingLeft="@dimen/margin_32dp"
+              android:paddingRight="@dimen/margin_32dp">
+
+    <trente.asia.android.view.ChiaseImageViewRatioWidth
+        style="@style/cs_common_match_wrap"
+        android:src="@drawable/tc_logo"/>
+
+    <LinearLayout
+        android:id="@+id/lnr_id_signin"
+        style="@style/cs_common_match_wrap"
+        android:orientation="vertical">
+
+        <trente.asia.android.view.ChiaseEditText
+            android:id="@+id/edt_username"
+            style="@style/tc_edit_text2"
+            android:layout_marginTop="@dimen/margin_100dp"
+            android:hint="@string/fragment_signin_user_id"
+            android:inputType="textEmailAddress"
+            custom:mName="account"/>
+
+        <trente.asia.android.view.ChiaseEditText
+            android:id="@+id/edt_password"
+            style="@style/tc_edit_text2"
+            android:hint="@string/fragment_signin_password"
+            android:inputType="textPassword"
+            custom:mName="password"/>
+    </LinearLayout>
+
+    <CheckBox
+        android:id="@+id/chk_id_remember"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/wf_sign_in_remember"
+        android:layout_marginTop="@dimen/margin_16dp"/>
+
+    <Button
+        android:id="@+id/btn_signIn"
+        style="@style/wl_common_button_small"
+        android:layout_width="match_parent"
+        android:layout_marginTop="16dp"
+        android:text="@string/fragment_signin_login_button"/>
+
+    <TextView
+        android:id="@+id/txt_forget_password"
+        style="@style/cs_common_match_wrap"
+        android:layout_marginTop="@dimen/margin_16dp"
+        android:gravity="center"
+        android:text="@string/wf_forget_password"/>
+
+</LinearLayout>

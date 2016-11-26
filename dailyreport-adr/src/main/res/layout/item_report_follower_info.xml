@@ -1,0 +1,99 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        style="@style/cs_common_match_wrap"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <LinearLayout
+            style="@style/cs_common_wrap"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/share_lnr_check"
+                style="@style/cs_common_wrap"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/wf_seen_small"/>
+
+                <TextView
+                    android:id="@+id/share_lnr_check_txt_checked_num"
+                    style="@style/dr_text_follower_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_2dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/share_lnr_like"
+                style="@style/cs_common_wrap"
+                android:layout_marginLeft="@dimen/margin_4dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/wf_good_small"/>
+
+                <TextView
+                    android:id="@+id/share_lnr_like_txt_num"
+                    style="@style/dr_text_follower_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_2dp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/cs_common_wrap"
+            android:layout_marginTop="@dimen/margin_6dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/item_report_follower_info_lnr_comment"
+                style="@style/cs_common_wrap"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/wf_comment_small"/>
+
+                <TextView
+
+                    android:id="@+id/share_lnr_comment_txt_num"
+                    style="@style/dr_text_follower_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_2dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/item_report_follower_info_lnr_file"
+                style="@style/cs_common_wrap"
+                android:layout_marginLeft="@dimen/margin_4dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/dr_report"/>
+
+                <TextView
+                    android:id="@+id/share_lnr_file_txt_num"
+                    style="@style/dr_text_follower_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_2dp"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</merge>

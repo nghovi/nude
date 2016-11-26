@@ -1,0 +1,62 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/chiase_white"
+              android:orientation="vertical">
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="5dp"
+        android:paddingTop="6dp"
+        android:paddingRight="2dp"
+        android:paddingBottom="6dp"
+        android:gravity="center_vertical">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/fragment_mypage_notice_new"
+                android:id="@+id/txt_item_notice_status"
+                android:singleLine="true"
+                android:layout_marginRight="20dp"
+                android:textColor="@color/core_red"
+                android:textStyle="bold"
+                android:visibility="invisible"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2016/01/05"
+                android:id="@+id/txt_item_notice_date"
+                android:singleLine="true"
+                android:layout_marginRight="10dp"
+                style="@style/tc_text_black"
+                android:gravity="left"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Today is Ima-san&apos;s birthday, so please send him a thankscard"
+                android:id="@+id/txt_item_notice_message"
+                android:singleLine="true"
+                android:ellipsize="end"
+                style="@style/tc_text_black"
+                android:gravity="left"
+                android:layout_marginRight="10dp"/>
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:src="@drawable/tc_detail_disclosure"/>
+    </LinearLayout>
+</LinearLayout>

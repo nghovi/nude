@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout style="@style/wf_common_match"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:custom="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical">
+
+    <include layout="@layout/view_common_header"/>
+
+    <ScrollView
+        android:id="@+id/scr_id_detail"
+        style="@style/cs_common_match_wrap"
+        android:layout_weight="1">
+
+        <LinearLayout
+            style="@style/cs_common_match_wrap"
+            android:orientation="vertical"
+            android:padding="@dimen/margin_16dp">
+
+            <LinearLayout
+                style="@style/cs_common_match_wrap"
+                android:orientation="horizontal">
+
+                <trente.asia.welfare.adr.view.SelectableRoundedImageView
+                    android:id="@+id/img_id_avatar"
+                    android:layout_width="@dimen/margin_50dp"
+                    android:layout_height="@dimen/margin_50dp"
+                    android:layout_marginRight="@dimen/margin_6dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/wf_profile"
+                    custom:sriv_oval="true"/>
+
+                <LinearLayout
+                    style="@style/cs_common_match"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        style="@style/cs_common_match_wrap"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/txt_detail_userName"
+                            style="@style/wl_common_text"
+                            android:layout_width="wrap_content"
+                            android:textColor="@color/wf_ms_color_base"/>
+
+                        <TextView
+                            android:id="@+id/txt_detail_date"
+                            style="@style/wl_common_text"
+                            android:layout_width="wrap_content"
+                            android:layout_marginLeft="@dimen/margin_6dp"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/lnr_id_target_user"
+                        style="@style/cs_common_match_wrap"
+                        android:layout_marginTop="@dimen/margin_6dp"
+                        android:orientation="horizontal"
+                        android:visibility="gone"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/rlt_id_media"
+                style="@style/cs_common_match_wrap"
+                android:layout_marginBottom="@dimen/margin_10dp"
+                android:layout_marginTop="@dimen/margin_10dp">
+
+                <trente.asia.android.view.ChiaseImageViewRatioWidth
+                    android:id="@+id/img_message_thumbnail"
+                    style="@style/cs_common_match_wrap"/>
+
+                <ImageView
+                    android:id="@+id/img_id_play"
+                    style="@style/cs_common_wrap"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/wf_movie_play"
+                    android:visibility="gone"/>
+
+                <VideoView
+                    android:id="@+id/video_id_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="400dp"
+                    android:layout_centerInParent="true"
+                    android:minWidth="@dimen/margin_200dp"
+                    android:visibility="gone"/>
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/txt_id_address"
+                style="@style/wl_common_text"
+                android:layout_marginBottom="@dimen/margin_16dp"
+                android:visibility="gone"/>
+
+            <LinearLayout
+                android:id="@+id/lnr_id_file"
+                style="@style/cs_common_match_wrap"
+                android:layout_marginBottom="@dimen/margin_10dp"
+                android:layout_marginTop="@dimen/margin_10dp"
+                android:background="@drawable/shape_attach_background"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/margin_10dp"
+                android:visibility="gone">
+
+                <ImageView
+                    style="@style/cs_common_wrap"
+                    android:src="@drawable/wf_file"/>
+
+                <TextView
+                    android:id="@+id/txt_id_file_name"
+                    style="@style/wl_common_text"
+                    android:layout_marginLeft="@dimen/margin_10dp"
+                    android:textColor="@color/chiase_white"/>
+            </LinearLayout>
+
+            <include layout="@layout/common_messages_action"/>
+
+            <LinearLayout
+                android:id="@+id/lnr_id_comment"
+                style="@style/cs_common_match_wrap"
+                android:orientation="vertical"/>
+        </LinearLayout>
+
+    </ScrollView>
+
+    <View style="@style/cs_common_divider"/>
+
+    <LinearLayout
+        style="@style/cs_common_match_wrap"
+        android:background="@color/chiase_white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/lnr_id_like"
+            style="@style/cs_common_wrap"
+            android:background="@drawable/state_common_selectable_row"
+            android:padding="@dimen/margin_8dp">
+
+            <ImageButton
+                android:id="@+id/btn_like_cmt"
+                style="@style/cs_common_wrap"
+                android:background="@android:color/transparent"
+                android:clickable="false"
+                android:src="@drawable/wf_good"/>
+        </LinearLayout>
+
+        <trente.asia.android.view.ChiaseEditText
+            android:id="@+id/edt_comment"
+            style="@style/wl_common_text"
+            android:layout_weight="1"
+            android:background="@color/chiase_white"
+            android:gravity="left|center_vertical"
+            android:hint="@string/msg_message_detail_edittext_hint"
+            android:inputType="textMultiLine"
+            android:maxLines="5"
+            android:scrollHorizontally="false"
+            android:textColorHint="@color/wf_common_color_hint"/>
+
+        <LinearLayout
+            android:id="@+id/lnr_id_send"
+            style="@style/cs_common_wrap"
+            android:background="@drawable/state_common_selectable_row"
+            android:padding="@dimen/margin_8dp">
+
+            <trente.asia.android.view.ChiaseImageView
+                android:id="@+id/btn_send_cmt"
+                style="@style/cs_common_wrap"
+                android:background="@android:color/transparent"
+                android:clickable="false"
+                android:src="@drawable/wf_send"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>
+
+

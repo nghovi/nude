@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    style="@style/cs_common_match_wrap"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/shape_attach_background"
+    android:orientation="vertical"
+    android:visibility="invisible">
+
+    <trente.asia.welfare.adr.view.RevealFrameLayout
+        style="@style/cs_common_match_wrap">
+
+        <LinearLayout
+            android:id="@+id/menuMain"
+            style="@style/cs_common_match_wrap"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/cs_common_match_wrap"
+                android:gravity="center"
+                android:padding="@dimen/margin_10dp"
+                android:text="@string/wf_select_attach_file"
+                android:textColor="@color/chiase_white"/>
+
+            <View
+                style="@style/cs_common_divider"
+                android:background="@color/chiase_white"/>
+
+            <LinearLayout
+                style="@style/cs_common_match_wrap"
+                android:background="@color/chiase_white"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <LinearLayout
+                    android:id="@+id/lnr_id_camera"
+                    style="@style/cs_common_match"
+                    android:layout_weight="1"
+                    android:background="@drawable/state_menu_attach_selectable_row"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/margin_20dp"
+                    android:paddingTop="@dimen/margin_20dp">
+
+                    <ImageView
+                        style="@style/cs_common_wrap"
+                        android:src="@drawable/wf_camera"/>
+
+                    <TextView
+                        style="@style/cs_common_wrap"
+                        android:layout_marginTop="@dimen/margin_5dp"
+                        android:text="@string/wf_camera"
+                        android:textColor="@color/chiase_white"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/lnr_id_gallery"
+                    style="@style/cs_common_match"
+                    android:layout_weight="1"
+                    android:background="@drawable/state_menu_attach_selectable_row"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/margin_20dp"
+                    android:paddingTop="@dimen/margin_20dp">
+
+                    <ImageView
+                        style="@style/cs_common_wrap"
+                        android:src="@drawable/wf_gallery"/>
+
+                    <TextView
+                        style="@style/cs_common_wrap"
+                        android:layout_marginTop="@dimen/margin_5dp"
+                        android:text="@string/wf_gallery"
+                        android:textColor="@color/chiase_white"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/lnr_id_location"
+                    style="@style/cs_common_match"
+                    android:layout_weight="1"
+                    android:background="@drawable/state_menu_attach_selectable_row"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/margin_20dp"
+                    android:paddingTop="@dimen/margin_20dp">
+
+                    <ImageView
+                        style="@style/cs_common_wrap"
+                        android:src="@drawable/wf_location"/>
+
+                    <TextView
+                        style="@style/cs_common_wrap"
+                        android:layout_marginTop="@dimen/margin_5dp"
+                        android:text="@string/wf_location"
+                        android:textColor="@color/chiase_white"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                style="@style/cs_common_divider"
+                android:background="@color/chiase_white"/>
+
+            <LinearLayout
+                style="@style/cs_common_match_wrap"
+                android:background="@color/chiase_white"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <LinearLayout
+                    android:id="@+id/lnr_id_file"
+                    style="@style/cs_common_match"
+                    android:layout_weight="1"
+                    android:background="@drawable/state_menu_attach_selectable_row"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/margin_20dp"
+                    android:paddingTop="@dimen/margin_20dp">
+
+                    <ImageView
+                        style="@style/cs_common_wrap"
+                        android:src="@drawable/wf_file"/>
+
+                    <TextView
+                        style="@style/cs_common_wrap"
+                        android:layout_marginTop="@dimen/margin_5dp"
+                        android:text="@string/wf_file"
+                        android:textColor="@color/chiase_white"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/lnr_id_video"
+                    style="@style/cs_common_match_wrap"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/margin_20dp"
+                    android:paddingTop="@dimen/margin_20dp"
+                    android:background="@drawable/state_menu_attach_selectable_row">
+
+                    <ImageView
+                        style="@style/cs_common_wrap"
+                        android:src="@drawable/wf_video"/>
+
+                    <TextView
+                        style="@style/cs_common_wrap"
+                        android:layout_marginTop="@dimen/margin_5dp"
+                        android:text="@string/wf_video"
+                        android:textColor="@color/chiase_white"/>
+                </LinearLayout>
+
+                <!--<LinearLayout-->
+                <!--style="@style/cs_common_match"-->
+                <!--android:layout_weight="1"-->
+                <!--android:background="@drawable/state_menu_selectable_row"-->
+                <!--android:gravity="center"-->
+                <!--android:orientation="vertical"-->
+                <!--android:paddingBottom="@dimen/margin_20dp"-->
+                <!--android:paddingTop="@dimen/margin_20dp">-->
+
+                <!--<ImageView-->
+                <!--style="@style/cs_common_wrap"-->
+                <!--android:src="@drawable/ic_menu_contact"/>-->
+
+                <!--<TextView-->
+                <!--style="@style/cs_common_wrap"-->
+                <!--android:layout_marginTop="@dimen/margin_5dp"-->
+                <!--android:text="Contact"-->
+                <!--android:textColor="@color/chiase_white"/>-->
+                <!--</LinearLayout>-->
+            </LinearLayout>
+
+            <!--<View-->
+            <!--style="@style/cs_common_divider"-->
+            <!--android:background="@color/chiase_white"/>-->
+
+            <!--<LinearLayout-->
+            <!--style="@style/cs_common_match_wrap"-->
+            <!--android:orientation="horizontal"-->
+            <!--android:weightSum="2">-->
+
+            <!--<LinearLayout-->
+            <!--style="@style/cs_common_match_wrap"-->
+            <!--android:layout_weight="1"-->
+            <!--android:gravity="center"-->
+            <!--android:orientation="vertical"-->
+            <!--android:paddingBottom="@dimen/margin_20dp"-->
+            <!--android:paddingTop="@dimen/margin_20dp">-->
+
+            <!--<ImageView-->
+            <!--style="@style/cs_common_wrap"-->
+            <!--android:src="@drawable/ic_menu_audio"/>-->
+
+            <!--<TextView-->
+            <!--style="@style/cs_common_wrap"-->
+            <!--android:layout_marginTop="@dimen/margin_5dp"-->
+            <!--android:text="Audio"-->
+            <!--android:textColor="@color/chiase_white"/>-->
+            <!--</LinearLayout>-->
+
+
+            <!--</LinearLayout>-->
+
+            <View
+                style="@style/cs_common_divider"
+                android:background="@color/chiase_white"/>
+
+            <TextView
+                style="@style/cs_common_match_wrap"
+                android:gravity="center"
+                android:padding="@dimen/margin_10dp"
+                android:text="@string/wf_cancel"
+                android:textColor="@color/chiase_white"/>
+
+        </LinearLayout>
+
+    </trente.asia.welfare.adr.view.RevealFrameLayout>
+
+</LinearLayout>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="chiase_date_time_view_set_button">設定</string>
+    <string name="chiase_date_time_view_cancel_button">キャンセル</string>
+
+    <string name="chiase_photo_actions">Photo actions</string>
+    <string name="chiase_movie_actions">Movie actions</string>
+    <string name="chiase_title_photo_choose">写真を選ぶ</string>
+    <string name="chiase_title_photo_take">写真を撮る</string>
+    <string name="chiase_title_movie_choose">動画を選択</string>
+    <string name="chiase_title_movie_take">動画を撮る</string>
+
+    <string name="chiase_common_ok">OK</string>
+    <string name="chiase_common_cancel">キャンセル</string>
+    <string name="chiase_common_edit">編集</string>
+    <string name="chiase_common_delete">削除</string>
+    <string name="chiase_common_copy">ノート</string>
+    <string name="chiase_common_update">更新</string>
+    <string name="chiase_common_save">保存</string>
+    <string name="chiase_common_modify">修正</string>
+
+    <string name="chiase_common_send">送信</string>
+    <string name="chiase_common_prev">前へ</string>
+    <string name="chiase_common_next">次へ</string>
+    <string name="chiase_common_check">チェック</string>
+
+    <string name="chiase_common_none">なし</string>
+
+    <string name="chiase_common_today">今日</string>
+
+    <string name="chiase_common_action_downloading">ダウンロードしています</string>
+    <string name="chiase_action_downloaded">ファイルがダウンロードされました</string>
+    <string name="chiase_action_open_file_confirm">ファイルを開けますか。</string>
+
+    <string name="chiase_common_disabled_function">現在、この機能を使用できません。</string>
+    <string name="chiase_common_not_working_gps">Can\'t get location, please check network again.</string>
+</resources>

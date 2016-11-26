@@ -1,0 +1,104 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="cs_common_match">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="cs_common_wrap">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="cs_common_match_wrap">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="cs_common_fill">
+        <item name="android:layout_margin">0dp</item>
+        <item name="android:padding">0dp</item>
+    </style>
+
+    <style name="cs_common_match_fill">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_margin">0dp</item>
+        <item name="android:padding">0dp</item>
+    </style>
+
+    <style name="cs_progress_dialog" parent="@android:style/Theme.Dialog">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="cs_common_divider">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">1px</item>
+        <item name="android:background">@color/cs_common_divider</item>
+    </style>
+
+    <style name="cs_row_style" parent="cs_common_match_wrap">
+        <item name="android:paddingBottom">18dp</item>
+        <item name="android:paddingTop">18dp</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:background">@color/chiase_white</item>
+    </style>
+
+    <style name="cs_custom_checkbox">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:button">@drawable/state_list_item_checkbox</item>
+    </style>
+
+    <!--DatePicker-->
+
+    <style name="CalendarCard"/>
+
+    <style name="CalendarCard.Root">
+        <item name="android:padding">10dp</item>
+    </style>
+
+    <style name="CalendarCard.Day">
+        <item name="android:paddingBottom">5dp</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="CalendarCard.Days">
+        <item name="android:padding">0dp</item>
+    </style>
+
+    <style name="CalendarCard.Title">
+        <item name="android:padding">5dp</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="CalendarCard.Grid">
+        <!--<item name="android:background">@drawable/card_grid_bg</item>-->
+        <item name="android:paddingRight">1dp</item>
+        <item name="android:paddingBottom">1dp</item>
+    </style>
+
+    <style name="CalendarCard.Cell">
+        <!--<item name="android:background">@drawable/card_item_bg</item>-->
+        <item name="android:layout_marginLeft">1dp</item>
+        <item name="android:layout_marginTop">1dp</item>
+    </style>
+
+    <style name="Theme.Dialog" parent="AppTheme">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+</resources>

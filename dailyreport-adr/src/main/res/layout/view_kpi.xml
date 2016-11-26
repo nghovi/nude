@@ -1,0 +1,188 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/margin_5dp"
+    android:id="@+id/view_kpi_root">
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/wf_margin_16"
+        android:id="@+id/view_kpi_lnr_monthly_goal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/view_kpi_monthly_goal"
+            android:layout_marginBottom="@dimen/wf_margin_10"
+            style="@style/dr_text_title_bold"/>
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:background="@drawable/dr_background_selectable"
+                      android:gravity="center_vertical"
+                      android:orientation="horizontal">
+
+
+            <TextView
+                android:id="@+id/item_kpi_name"
+                style="@style/dr_text_single_line_ellipsized"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/dlr_item"
+                android:layout_weight="1"
+                android:background="@drawable/dr_background_gray_border_padding"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/item_kpi_goal"
+                style="@style/dr_text_single_line_ellipsized"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/dlr_goal"
+                android:background="@drawable/dr_background_gray_border_padding"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/item_kpi_sum"
+                style="@style/dr_text_single_line_ellipsized"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/dlr_sum"
+                android:layout_weight="1"
+                android:background="@drawable/dr_background_gray_border_padding"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/item_kpi_plan"
+                style="@style/dr_text_single_line_ellipsized"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/dlr_plan"
+                android:layout_weight="1"
+                android:background="@drawable/dr_background_gray_border_padding"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/item_kpi_actual"
+                style="@style/dr_text_single_line_ellipsized"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/dlr_actual"
+                android:layout_weight="1"
+                android:background="@drawable/dr_background_gray_border_padding"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/view_kpi_lnr_monthly">
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/view_kpi_lnr_action_plan">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/wf_margin_10">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/view_kpi_actual_plan"
+                android:layout_marginRight="@dimen/wf_margin_10"
+                style="@style/dr_text_title_bold"
+                android:layout_weight="1"/>
+
+            <Button
+                android:id="@+id/view_kpi_btn_copy"
+                style="@style/wl_common_button_small"
+                android:layout_marginRight="@dimen/wf_margin_10"
+                android:text="@string/dlr_copy"
+                android:layout_height="24dp"
+                android:layout_width="90dp"/>
+
+            <Button
+                android:id="@+id/view_kpi_btn_add"
+                style="@style/wl_common_button_small"
+                android:text="@string/dlr_add_kpi"
+                android:layout_height="24dp"
+                android:layout_width="90dp"/>
+        </LinearLayout>
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:background="@drawable/dr_background_selectable"
+                      android:gravity="center_vertical"
+                      android:orientation="horizontal"
+                      android:id="@+id/view_kpi_lnr_actual_plan_header">
+
+            <TextView
+                style="@style/dr_text_single_line_ellipsized"
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/dr_item"
+                android:layout_weight="1"
+                android:background="@drawable/dr_background_gray_border_padding"
+                android:gravity="center"/>
+
+            <TextView
+                style="@style/dr_text_single_line_ellipsized"
+                android:id="@+id/textView4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/dlr_avg"
+                android:layout_weight="1"
+                android:background="@drawable/dr_background_gray_border_padding"
+                android:gravity="center"
+                android:visibility="gone"/>
+
+            <TextView
+                style="@style/dr_text_single_line_ellipsized"
+                android:id="@+id/textView5"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/dlr_plan"
+                android:layout_weight="1"
+                android:background="@drawable/dr_background_gray_border_padding"
+                android:gravity="center"/>
+
+            <TextView
+                style="@style/dr_text_single_line_ellipsized"
+                android:id="@+id/textView6"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/dlr_actual"
+                android:layout_weight="1"
+                android:background="@drawable/dr_background_gray_border_padding"
+                android:gravity="center"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/view_kpi_lnr_actual_plan">
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
+
+

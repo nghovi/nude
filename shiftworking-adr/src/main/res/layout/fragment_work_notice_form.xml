@@ -1,0 +1,188 @@
+<LinearLayout style="@style/wf_common_match"
+              xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <include layout="@layout/view_common_header"/>
+
+    <ScrollView
+        style="@style/cs_common_match"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:id="@+id/lnr_id_content"
+            style="@style/wf_common_linear"
+            android:visibility="invisible">
+
+            <TextView
+                style="@style/wl_common_text"
+                android:text="@string/sw_notice_detail_title"
+                android:textStyle="bold"/>
+
+            <LinearLayout
+                style="@style/cs_common_match_wrap"
+                android:layout_marginTop="@dimen/margin_10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/wl_common_text"
+                    android:layout_width="@dimen/margin_100dp"
+                    android:text="@string/sw_work_item_target_dept"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/txt_id_target_dept"
+                    style="@style/wl_common_text"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/cs_common_match_wrap"
+                android:layout_marginTop="@dimen/margin_10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/wl_common_text"
+                    android:layout_width="@dimen/margin_100dp"
+                    android:text="@string/sw_work_item_notice_user"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/txt_id_notice_user"
+                    style="@style/wl_common_text"/>
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/cs_common_match_wrap"
+                android:layout_marginTop="@dimen/margin_10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/wl_common_text"
+                    android:layout_width="@dimen/margin_100dp"
+                    android:text="@string/sw_work_item_project"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/txt_id_project_name"
+                    style="@style/wl_common_text"/>
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/cs_common_match_wrap"
+                android:layout_marginTop="@dimen/margin_10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/wl_common_text"
+                    android:layout_width="@dimen/margin_100dp"
+                    android:text="@string/sw_work_item_notice_date"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/txt_id_notice_date"
+                    style="@style/wl_common_text"/>
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/cs_common_match_wrap"
+                android:layout_marginTop="@dimen/margin_10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/wl_common_text"
+                    android:layout_width="@dimen/margin_100dp"
+                    android:text="@string/sw_work_item_notice_type"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/txt_id_notice_type"
+                    style="@style/wl_common_text"/>
+            </LinearLayout>
+
+            <TextView
+                style="@style/wl_common_text"
+                android:layout_marginTop="@dimen/margin_10dp"
+                android:text="@string/sw_work_item_reason"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/txt_id_reason"
+                style="@style/wl_common_text"
+                android:layout_marginTop="@dimen/margin_10dp"/>
+
+            <LinearLayout
+                android:id="@+id/lnr_id_location"
+                style="@style/cs_common_match_wrap"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/wl_common_text"
+                    android:layout_marginTop="@dimen/margin_10dp"
+                    android:text="@string/sw_work_item_notice_loc"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/txt_id_location"
+                    style="@style/wl_common_text"
+                    android:layout_marginTop="@dimen/margin_10dp"/>
+
+                <trente.asia.android.view.ChiaseImageViewRatioWidth
+                    android:id="@+id/img_id_map"
+                    style="@style/cs_common_match_wrap"
+                    android:layout_marginTop="@dimen/margin_10dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lnr_id_photo"
+                style="@style/cs_common_match_wrap"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/wl_common_text"
+                    android:layout_marginTop="@dimen/margin_10dp"
+                    android:text="@string/sw_work_item_notice_pic"
+                    android:textStyle="bold"/>
+
+                <trente.asia.android.view.ChiaseImageViewRatioWidth
+                    android:id="@+id/img_id_photo"
+                    style="@style/cs_common_match_wrap"
+                    android:layout_marginTop="@dimen/margin_10dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lnr_id_check"
+                style="@style/cs_common_match_wrap"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    style="@style/wl_common_text"
+                    android:layout_marginTop="@dimen/margin_10dp"
+                    android:text="@string/sw_work_item_check_user"
+                    android:textStyle="bold"/>
+
+                <LinearLayout
+                    android:id="@+id/lnr_id_check_user"
+                    style="@style/cs_common_match_wrap"
+                    android:layout_marginTop="@dimen/margin_10dp"
+                    android:orientation="vertical">
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_id_check"
+                style="@style/wl_common_button_10"
+                android:layout_marginTop="@dimen/margin_16dp"
+                android:text="@string/chiase_common_check"
+                android:visibility="gone"/>
+        </LinearLayout>
+    </ScrollView>
+
+    <include layout="@layout/view_common_footer"/>
+
+</LinearLayout>

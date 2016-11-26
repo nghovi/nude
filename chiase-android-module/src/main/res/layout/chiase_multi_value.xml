@@ -1,0 +1,26 @@
+<asia.chiase.android.view.layout.ItemMultiValueLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                      android:layout_width="match_parent"
+                                                      android:layout_height="match_parent"
+                                                      android:orientation="vertical"
+                                                      android:padding="10dp">
+
+    <TextView
+        android:id="@+id/id_title"
+        android:text="value"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="5dp"
+        android:textSize="8pt"
+        android:layout_centerVertical="true"/>
+
+    <TextView
+        android:id="@+id/id_value"
+        android:text="value"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        android:textSize="12pt"
+        android:layout_centerVertical="true"/>
+
+
+</asia.chiase.android.view.layout.ItemMultiValueLayout>

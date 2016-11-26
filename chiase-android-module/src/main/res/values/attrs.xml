@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="Chiase_Layout">
+        <!--common attribute-->
+        <attr name="viewControl" format="string"></attr>
+
+        <!-- map name that Spinner use -->
+        <attr name="nameMap" format="string"></attr>
+        <attr name="isCustom" format="boolean"></attr>
+        <attr name="customValue" format="string"></attr>
+
+        <!--set value to text view-->
+        <attr name="value" format="string"></attr>
+        <attr name="isPressed" format="boolean"></attr>
+
+        <!--set value to image view-->
+        <attr name="pathFileName" format="string"></attr>
+
+        <attr name="mName" format="string"></attr>
+
+        <!--set value to chiase seekbar-->
+        <attr name="min" format="integer"></attr>
+        <attr name="interval" format="float"/>
+
+        <!-- default value for View -->
+        <attr name="defaultValue" format="string"/>
+
+        <!--Value for ChiaseRadioButton-->
+        <attr name="mValue" format="string"></attr>
+
+        <attr name="mPrefix" format="string"></attr>
+        <attr name="mIsGray" format="boolean"></attr>
+
+        <!--chiase numeric edit text formatter attributes-->
+        <attr name="unitName" format="string"/>
+        <attr name="formatString" format="string"/>
+    </declare-styleable>
+
+    <declare-styleable name="SwipeRevealLayout">
+        <attr name="dragEdge">
+            <flag name="left" value="1"/>
+            <flag name="right" value="2"/>
+            <flag name="top" value="4"/>
+            <flag name="bottom" value="8"/>
+        </attr>
+
+        <attr name="mode">
+            <enum name="normal" value="0"/>
+            <enum name="same_level" value="1"/>
+        </attr>
+
+        <attr name="flingVelocity" format="integer"/>
+        <attr name="minDistRequestDisallowParent" format="dimension"/>
+    </declare-styleable>
+</resources>

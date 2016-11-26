@@ -1,0 +1,43 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/cs_work_background"
+              android:gravity="center_vertical"
+              android:orientation="vertical"
+              android:padding="0dp">
+
+    <include layout="@layout/view_common_header"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/wf_margin_16"
+        android:background="@color/wf_login_background_color">
+
+        <include
+            android:id="@+id/fragment_other_report_spn_dept"
+            layout="@layout/view_wf_spinner"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/wf_margin_10"
+            android:orientation="vertical">
+        </LinearLayout>
+
+        <include
+            android:id="@+id/fragment_other_report_spn_user"
+            layout="@layout/view_wf_spinner"/>
+    </LinearLayout>
+
+
+    <ListView
+        android:id="@+id/fragment_activity_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"/>
+
+    <include layout="@layout/view_common_footer"/>
+
+</LinearLayout>

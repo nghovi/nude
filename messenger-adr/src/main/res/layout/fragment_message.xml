@@ -1,0 +1,46 @@
+<trente.asia.welfare.adr.view.WfSlideMenuLayout android:id="@+id/drawer_layout"
+                                                style="@style/cs_common_match"
+                                                xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Slide Menu  -->
+    <LinearLayout
+        android:id="@+id/slice_menu_board"
+        style="@style/cs_common_match"
+        android:orientation="vertical"/>
+
+    <!-- Body  -->
+    <RelativeLayout
+        style="@style/cs_common_match"
+        android:background="@color/chiase_white">
+
+        <LinearLayout
+            style="@style/cs_common_match"
+            android:orientation="vertical">
+
+            <include layout="@layout/view_message_header"/>
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/view_pager_id_board"
+                style="@style/cs_common_match"
+                android:layout_weight="1"/>
+        </LinearLayout>
+
+        <!-- include menu layout -->
+        <View
+            android:id="@+id/viewForMenuBehind"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:background="@color/wf_common_black_transparent"
+            android:visibility="gone"/>
+
+        <!--action menu: camera, photo, recorder-->
+        <include
+            layout="@layout/layout_menu_attach"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/margin_8dp"/>
+    </RelativeLayout>
+
+</trente.asia.welfare.adr.view.WfSlideMenuLayout>

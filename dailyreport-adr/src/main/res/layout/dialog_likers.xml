@@ -1,0 +1,51 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="300dp"
+              android:layout_height="match_parent"
+              android:gravity="center_vertical"
+              android:orientation="vertical"
+              android:padding="0dp"
+    >
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:background="@color/wf_dr_color_base"
+        android:gravity="center_vertical|center_horizontal"
+        android:layout_marginTop="100dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/dialog_likers_title"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center_vertical|center_horizontal"
+            android:textColor="@color/chiase_white"/>
+
+        <ImageView
+            android:layout_width="@dimen/margin_24dp"
+            android:layout_height="@dimen/margin_24dp"
+            android:id="@+id/dialog_liker_close"
+            android:src="@drawable/wf_close_white"
+            android:layout_marginRight="@dimen/margin_10dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:padding="@dimen/margin_16dp"
+        android:layout_marginBottom="100dp"
+        android:background="@color/cs_work_background">
+
+        <ListView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:listSelector="@android:color/transparent"
+            android:cacheColorHint="@android:color/transparent"
+            android:id="@+id/fragment_followers_list"/>
+    </LinearLayout>
+
+
+</LinearLayout>
