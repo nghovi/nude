@@ -1,25 +1,9 @@
 package trente.asia.android.activity;
 
-import java.io.File;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.util.Iterator;
-import java.util.Map;
-
-import org.json.JSONObject;
-
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.RetryPolicy;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -29,16 +13,18 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+
+import org.json.JSONObject;
+
+import java.io.File;
+import java.util.Map;
+
 import asia.chiase.core.define.CCConst;
 import trente.asia.android.R;
-import trente.asia.android.exception.CAException;
 import trente.asia.android.util.AndroidUtil;
-import trente.asia.android.util.CARequestUtil;
 import trente.asia.android.view.ChiaseAlertDialog;
 import trente.asia.android.view.ChiaseLoadingDialog;
 import trente.asia.android.view.util.CAObjectSerializeUtil;
-import trente.asia.android.volley.UploadFileRequest;
-import trente.asia.android.volley.VolleySingleton;
 
 /**
  * ChiaseFragment
@@ -311,13 +297,7 @@ public class ChiaseFragment extends Fragment implements HttpCallback {
 
     /**
      * Error request.
-     *
-     * @param error the error
      */
-    protected void errorRequest(VolleyError error) {
-        Toast.makeText(activity, error.getMessage(), Toast.LENGTH_LONG).show();
-    }
-
     protected void errorRequest2() {
         Toast.makeText(activity, "http error", Toast.LENGTH_LONG).show();
     }

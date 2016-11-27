@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.util.TypedValue;
 
-import com.android.volley.Request;
 
 import org.json.JSONObject;
 
@@ -37,9 +36,9 @@ public class CARequestUtil {
      * @return the string
      */
     public static String getUrl(String url, int method, JSONObject jsonObject) {
-        if (Request.Method.GET == method) {
-            url = url + "?" + getQueryString(jsonObject);
-        }
+
+        url = url + "?" + getQueryString(jsonObject);
+
         // try{
         // url = URLEncoder.encode(url, "UTF-8");
         // }catch (UnsupportedEncodingException ex){

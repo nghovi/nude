@@ -1,12 +1,10 @@
 package trente.asia.android.activity;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 
@@ -15,7 +13,6 @@ import okhttp3.Request;
 import okhttp3.Response;
 import trente.asia.android.util.AndroidUtil;
 import trente.asia.android.util.CARequestUtil;
-import trente.asia.android.volley.VolleySingleton;
 
 /**
  * ChiaseActivity

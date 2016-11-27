@@ -9,7 +9,6 @@ import java.util.TimerTask;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.android.volley.VolleyError;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -885,10 +884,16 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 		messageView.imgSend.setEnabled(true);
 	}
 
-	protected void errorRequest(VolleyError error){
-		super.errorRequest(error);
+//	protected void errorRequest(VolleyError error){
+//		super.errorRequest(error);
+//		messageView.imgSend.setEnabled(true);
+//	}
+
+	protected void errorRequest2(){
+		super.errorRequest2();
 		messageView.imgSend.setEnabled(true);
 	}
+
 
 	@Override
 	public void onDestroy(){
