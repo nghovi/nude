@@ -16,5 +16,10 @@ proguard/
 .idea/libraries/
 .gradle
 app/build/
+
+
 .DS_Store
 
+build/intermediates/
+shiftworking-adr/src/androidTest/
+shiftworking-adr/src/test/

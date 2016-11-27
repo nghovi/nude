@@ -38,7 +38,7 @@ android {
     productFlavors {
         develop {
             buildConfigField "Boolean", "DEVELOP", "true"
-            buildConfigField "String", "HOST", "\"http://192.168.1.99:9000\""
+            buildConfigField "String", "HOST", "\"http://192.168.1.4:9000\""
         }
         production {
             buildConfigField "String", "HOST", "\"https://tr-fukuri.jp\""
@@ -82,11 +82,15 @@ downloadLicenses {
     includeProjectDependencies = false
     licenses = [
             // from chiase-core
-            //'com.mcxiaoke.volley:library:1.0.19' : apacheTwo,
+            'com.squareup.okhttp3:okhttp:3.4.2'                 : apacheTwo,
+            'com.google.code.gson:gson:2.8.0'                   : apacheTwo,
             // from welfare-core
+            // com.android.support:multidex:1.0.0
+            'com.squareup.picasso:picasso:2.5.2'                 : apacheTwo,
             'com.nineoldandroids:library:2.4.0'                  : apacheTwo,
             'com.android.support:recyclerview-v7:24.0.0'         : mit,
             'com.commit451:PhotoView:1.2.4'                      : apacheTwo,
+
             // from myself
             'com.android.support:support-v4:24.0.0'              : apacheTwo,
             'com.google.firebase:firebase-messaging:9.2.1'       : cc30,
