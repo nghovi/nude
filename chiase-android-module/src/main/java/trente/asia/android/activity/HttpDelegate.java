@@ -60,7 +60,7 @@ public class HttpDelegate {
                 super.onPostExecute(s);
                 try {
                     JSONObject resJson = new JSONObject(s);
-                    callback.callback(HttpCallback.SUCCESS, url, resJson, isAlert);
+                    callback.callbackLoad(HttpCallback.SUCCESS, url, resJson, isAlert);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

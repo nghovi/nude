@@ -7,7 +7,6 @@ import java.util.Map;
 /**
  * Created by takyas on 11/27/16.
  */
-
 public interface HttpCallback {
 
     /**
@@ -21,8 +20,8 @@ public interface HttpCallback {
     public static final int ERROR = -1;
 
     /**
-     * コールバックメソッド
+     * Call back for laod
      */
-    public void callback(final int responseCode,  String url, final JSONObject resultMap, final boolean isAlert);
+    public void callbackLoad(final int responseCode,  String url, final JSONObject resultMap, final boolean isAlert);
 
 }

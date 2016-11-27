@@ -194,7 +194,7 @@ public class ChiaseFragment extends Fragment implements HttpCallback {
     }
 
     @Override
-    public void callback(int responseCode, String url, JSONObject resultMap, final boolean isAlert) {
+    public void callbackLoad(int responseCode, String url, JSONObject resultMap, final boolean isAlert) {
 
         if (isDestroy == null) return;
         if (swipeRfresh != null) swipeRfresh.setRefreshing(false);
