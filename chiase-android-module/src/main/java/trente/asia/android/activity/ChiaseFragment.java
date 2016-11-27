@@ -194,12 +194,12 @@ public class ChiaseFragment extends Fragment implements HttpCallback {
     }
 
     @Override
-    public void callbackLoad(int responseCode, String url, JSONObject resultMap, final boolean isAlert) {
+    public void callbackLoad(int responseCode, String url, JSONObject response, final boolean isAlert) {
 
         if (isDestroy == null) return;
         if (swipeRfresh != null) swipeRfresh.setRefreshing(false);
 
-        onSuccessLoad(resultMap, isAlert, url);
+        onSuccessLoad(response, isAlert, url);
 
     }
 
@@ -223,31 +223,20 @@ public class ChiaseFragment extends Fragment implements HttpCallback {
         }
 
         initParams(jsonObject);
-        String fullUrl = CARequestUtil.getUrl(host + url, Request.Method.POST, null);
 
-        JsonObjectRequest jsonRequest = new BasicJsonObjectMapRequest(Request.Method.POST, fullUrl, jsonObject, new Response.Listener<JSONObject>() {
+        HttpDelegate http = new HttpDelegate(host);
+        http.post(ChiaseFragment.this, url, jsonObject, isAlert);
 
-            @Override
-            public void onResponse(JSONObject response) {
-                if (isDestroy == null) return;
-                onSuccessUpdate(response, isAlert, url);
-            }
-        },
-
-                new Response.ErrorListener() {
-
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        if (isDestroy == null) return;
-                        loadingDialog.continueShowing = false;
-                        dismissLoad();
-                        errorRequest(error);
-                    }
-                });
-        RetryPolicy policy = new DefaultRetryPolicy(300000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
-        jsonRequest.setRetryPolicy(policy);
-        VolleySingleton.getInstance(activity).addToRequestQueue(jsonRequest);
     }
+
+    @Override
+    public void callbackUpdate(int responseCode, String url, JSONObject response, final boolean isAlert) {
+
+        if (isDestroy == null) return;
+        onSuccessUpdate(response, isAlert, url);
+
+    }
+
 
     /**
      * Request upload.
@@ -258,6 +247,7 @@ public class ChiaseFragment extends Fragment implements HttpCallback {
      * @param isAlert    the is alert
      */
     protected void requestUpload(final String url, JSONObject jsonObject, Map<String, File> files, final boolean isAlert) {
+
         if (AndroidUtil.invalidInternet(activity)) {
             errorNetwork();
             return;
@@ -267,32 +257,20 @@ public class ChiaseFragment extends Fragment implements HttpCallback {
         }
 
         initParams(jsonObject);
-        String fullUrl = CARequestUtil.getUrl(host + url, Request.Method.POST, null);
 
-        UploadFileRequest request = new UploadFileRequest(fullUrl, files, jsonObject, new Response.Listener<JSONObject>() {
+        HttpDelegate http = new HttpDelegate(host);
+        http.upload(ChiaseFragment.this, url, jsonObject, files, isAlert);
 
-            @Override
-            public void onResponse(JSONObject response) {
-                if (isDestroy == null) return;
-                onSuccessUpLoad(response, isAlert, url);
-            }
-        },
-
-                new Response.ErrorListener() {
-
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        if (isDestroy == null) return;
-
-                        loadingDialog.continueShowing = false;
-                        dismissLoad();
-                        errorRequest(error);
-                    }
-                });
-        RetryPolicy policy = new DefaultRetryPolicy(300000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
-        request.setRetryPolicy(policy);
-        VolleySingleton.getInstance(activity).addToRequestQueue(request);
     }
+
+    @Override
+    public void callbackUpload(int responseCode, String url, JSONObject response, final boolean isAlert) {
+
+        if (isDestroy == null) return;
+        onSuccessUpLoad(response, isAlert, url);
+
+    }
+
 
     /**
      * Success load.
@@ -330,41 +308,6 @@ public class ChiaseFragment extends Fragment implements HttpCallback {
         });
     }
 
-    /**
-     * Get url.
-     *
-     * @param url the url
-     * @param method the method
-     * @param jsonObject the json object
-     * @return the string
-     */
-//	protected String getUrl(String url, int method, JSONObject jsonObject){
-//		url = host + url;
-//		if(Request.Method.GET == method){
-//			url = url + "?" + getQueryString(jsonObject);
-//		}
-//		// try{
-//		// url = URLEncoder.encode(url, "UTF-8");
-//		// }catch (UnsupportedEncodingException ex){
-//		// ex.printStackTrace();
-//		// }
-//
-//		return(url);
-//	}
-//
-//	private String getQueryString(JSONObject jsonObject){
-//		StringBuilder builder = new StringBuilder();
-//		try{
-//			Iterator<String> iterator = jsonObject.keys();
-//			while(iterator.hasNext()){
-//				String key = iterator.next();
-//				builder.append(key + "=" + URLEncoder.encode(jsonObject.optString(key), "UTF-8") + "&");
-//			}
-//		}catch(UnsupportedEncodingException ex){
-//			new CAException(ex);
-//		}
-//		return builder.toString();
-//	}
 
     /**
      * Error request.

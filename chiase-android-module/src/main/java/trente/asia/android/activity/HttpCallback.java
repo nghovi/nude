@@ -24,4 +24,8 @@ public interface HttpCallback {
      */
     public void callbackLoad(final int responseCode,  String url, final JSONObject resultMap, final boolean isAlert);
 
+    public void callbackUpdate(final int responseCode,  String url, final JSONObject resultMap, final boolean isAlert);
+
+    public void callbackUpload(final int responseCode,  String url, final JSONObject resultMap, final boolean isAlert);
+
 }
