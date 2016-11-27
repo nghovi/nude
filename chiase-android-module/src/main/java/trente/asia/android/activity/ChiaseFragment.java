@@ -43,313 +43,301 @@ import trente.asia.android.volley.VolleySingleton;
 /**
  * ChiaseFragment
  */
-public class ChiaseFragment extends Fragment{
+public class ChiaseFragment extends Fragment implements HttpCallback {
 
-	/**
-	 * The Activity.
-	 */
-	protected Activity				activity;
+    /**
+     * The Activity.
+     */
+    protected Activity activity;
 
-	/**
-	 * The Key.
-	 */
-	// protected Integer key;
+    /**
+     * The Key.
+     */
+    // protected Integer key;
 
-	/**
-	 * The Token key.
-	 */
-	// protected String tokenKey;
+    /**
+     * The Token key.
+     */
+    // protected String tokenKey;
 
-	/**
-	 * The Loading dialog.
-	 */
-	protected ChiaseLoadingDialog	loadingDialog;
+    /**
+     * The Loading dialog.
+     */
+    protected ChiaseLoadingDialog loadingDialog;
 
-	/**
-	 * The Alert dialog builder.
-	 */
-	// protected AlertDialog.Builder alertDialogBuilder;
-	protected ChiaseAlertDialog		alertDialog;
+    /**
+     * The Alert dialog builder.
+     */
+    // protected AlertDialog.Builder alertDialogBuilder;
+    protected ChiaseAlertDialog alertDialog;
 
-	/**
-	 * The Host.
-	 */
-	protected String				host;
+    /**
+     * The Host.
+     */
+    protected String host;
 
-	/**
-	 * The Swipe rfresh.
-	 */
-	protected SwipeRefreshLayout	swipeRfresh;
+    /**
+     * The Swipe rfresh.
+     */
+    protected SwipeRefreshLayout swipeRfresh;
 
-	/**
-	 * The Pref.
-	 */
-	// protected CAPreferences pref;
+    /**
+     * The Pref.
+     */
+    // protected CAPreferences pref;
 
-	protected Boolean				isDestroy;
+    protected Boolean isDestroy;
 
-	protected View					mRootView;
-	private boolean					mIsNewFragment	= true;
-	protected ViewGroup				mFooterView;
-	protected ViewGroup				mHeaderView;
+    protected View mRootView;
+    private boolean mIsNewFragment = true;
+    protected ViewGroup mFooterView;
+    protected ViewGroup mHeaderView;
 
-	/**
-	 * Instantiates a new Chiase fragment.
-	 */
-	public ChiaseFragment(){
-		super();
-	}
+    /**
+     * Instantiates a new Chiase fragment.
+     */
+    public ChiaseFragment() {
+        super();
+    }
 
-	@Override
-	public void onCreate(Bundle savedInstanceState){
-		super.onCreate(savedInstanceState);
-		activity = getActivity();
-		loadingDialog = new ChiaseLoadingDialog(activity);
-	}
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        activity = getActivity();
+        loadingDialog = new ChiaseLoadingDialog(activity);
+    }
 
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState){
-		super.onActivityCreated(savedInstanceState);
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
-		// alertDialogBuilder = new AlertDialog.Builder(activity);
-		// alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-		//
-		// public void onClick(DialogInterface dialog, int id){
-		// }
-		// });
-		try{
+        // alertDialogBuilder = new AlertDialog.Builder(activity);
+        // alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        //
+        // public void onClick(DialogInterface dialog, int id){
+        // }
+        // });
+        try {
 
-			alertDialog = new ChiaseAlertDialog(activity);
-			isDestroy = false;
+            alertDialog = new ChiaseAlertDialog(activity);
+            isDestroy = false;
 
-			if(mIsNewFragment){
-				mIsNewFragment = false;
-				initView();
-				initData();
-			}else{
-				if(((ChiaseActivity)activity).isInitData){
-					((ChiaseActivity)activity).isInitData = false;
-					initData();
-				}
-			}
+            if (mIsNewFragment) {
+                mIsNewFragment = false;
+                initView();
+                initData();
+            } else {
+                if (((ChiaseActivity) activity).isInitData) {
+                    ((ChiaseActivity) activity).isInitData = false;
+                    initData();
+                }
+            }
 
-			if(mFooterView != null){
-				LinearLayout lnrFooter = (LinearLayout)activity.findViewById(R.id.lnr_id_footer);
-				LinearLayout lnrContentFooter = (LinearLayout)activity.findViewById(R.id.qk_common_footer);
-				if(lnrFooter != null && lnrContentFooter == null){
-					((ViewGroup)mFooterView.getParent()).removeView(mFooterView);
-					lnrFooter.addView(mFooterView);
-				}
-			}
-			if(mHeaderView != null){
-				LinearLayout lnrContentHeader = (LinearLayout)activity.findViewById(R.id.lnr_id_header_title);
-				if(CCConst.ZERO.equals(lnrContentHeader.getChildCount())){
-					((ViewGroup)mHeaderView.getParent()).removeView(mHeaderView);
-					lnrContentHeader.addView(mHeaderView);
-				}
-			}
-		}catch(OutOfMemoryError error){
-			if(alertDialog != null){
-				alertDialog.setMessage("Memory is not enough. Please check again.");
-				alertDialog.show();
-			}else{
-				error.printStackTrace();
-			}
-		}
-	}
+            if (mFooterView != null) {
+                LinearLayout lnrFooter = (LinearLayout) activity.findViewById(R.id.lnr_id_footer);
+                LinearLayout lnrContentFooter = (LinearLayout) activity.findViewById(R.id.qk_common_footer);
+                if (lnrFooter != null && lnrContentFooter == null) {
+                    ((ViewGroup) mFooterView.getParent()).removeView(mFooterView);
+                    lnrFooter.addView(mFooterView);
+                }
+            }
+            if (mHeaderView != null) {
+                LinearLayout lnrContentHeader = (LinearLayout) activity.findViewById(R.id.lnr_id_header_title);
+                if (CCConst.ZERO.equals(lnrContentHeader.getChildCount())) {
+                    ((ViewGroup) mHeaderView.getParent()).removeView(mHeaderView);
+                    lnrContentHeader.addView(mHeaderView);
+                }
+            }
+        } catch (OutOfMemoryError error) {
+            if (alertDialog != null) {
+                alertDialog.setMessage("Memory is not enough. Please check again.");
+                alertDialog.show();
+            } else {
+                error.printStackTrace();
+            }
+        }
+    }
 
-	protected void initView(){
-	}
+    protected void initView() {
+    }
 
-	protected void initData(){
-	}
+    protected void initData() {
+    }
 
-	protected void initParams(JSONObject jsonObject){
-		CAObjectSerializeUtil.disabledButton((ViewGroup)mRootView, true);
-	}
+    protected void initParams(JSONObject jsonObject) {
+        CAObjectSerializeUtil.disabledButton((ViewGroup) mRootView, true);
+    }
 
-	/**
-	 * Request load.
-	 *
-	 * @param url the url
-	 * @param jsonObject the json object
-	 * @param isAlert the is alert
-	 */
-	protected void requestLoad(final String url, JSONObject jsonObject, final boolean isAlert){
+    /**
+     * Request load.
+     *
+     * @param url        the url
+     * @param jsonObject the json object
+     * @param isAlert    the is alert
+     */
+    protected void requestLoad(final String url, JSONObject jsonObject, final boolean isAlert) {
 
-		if(AndroidUtil.invalidInternet(activity)){
-			errorNetwork();
-			return;
-		}
+        if (AndroidUtil.invalidInternet(activity)) {
+            errorNetwork();
+            return;
+        }
 
-		if(isAlert){
-			loadingDialog.show();
-		}
+        if (isAlert) {
+            loadingDialog.show();
+        }
 
-		initParams(jsonObject);
-		String fullUrl = CARequestUtil.getUrl(host + url, Request.Method.GET, jsonObject);
+        initParams(jsonObject);
 
-		ChiaseJsonObjectRequest jsonRequest = new ChiaseJsonObjectRequest(Request.Method.GET, fullUrl, new Response.Listener<JSONObject>() {
+        HttpDelegate http = new HttpDelegate(host);
+        http.get(ChiaseFragment.this, url, jsonObject, isAlert);
 
-			@Override
-			public void onResponse(JSONObject response){
-				if(isDestroy == null) return;
-				if(swipeRfresh != null) swipeRfresh.setRefreshing(false);
+    }
 
-				onSuccessLoad(response, isAlert, url);
-			}
-		},
+    @Override
+    public void callback(int responseCode, String url, JSONObject resultMap, final boolean isAlert) {
 
-						new Response.ErrorListener() {
+        if (isDestroy == null) return;
+        if (swipeRfresh != null) swipeRfresh.setRefreshing(false);
 
-							@Override
-							public void onErrorResponse(VolleyError error){
-								if(isDestroy == null) return;
+        onSuccessLoad(resultMap, isAlert, url);
 
-								loadingDialog.continueShowing = false;
-								dismissLoad();
-								errorRequest(error);
-							}
-						});
-		RetryPolicy policy = new DefaultRetryPolicy(60000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
-		jsonRequest.setRetryPolicy(policy);
-		VolleySingleton.getInstance(activity).addToRequestQueue(jsonRequest);
-	}
+    }
 
-	/**
-	 * Request update.
-	 *
-	 * @param url the url
-	 * @param jsonObject the json object
-	 * @param isAlert the is alert
-	 */
-	protected void requestUpdate(final String url, JSONObject jsonObject, final boolean isAlert){
 
-		if(AndroidUtil.invalidInternet(activity)){
-			errorNetwork();
-			return;
-		}
+    /**
+     * Request update.
+     *
+     * @param url        the url
+     * @param jsonObject the json object
+     * @param isAlert    the is alert
+     */
+    protected void requestUpdate(final String url, JSONObject jsonObject, final boolean isAlert) {
 
-		if(isAlert){
-			loadingDialog.show();
-		}
+        if (AndroidUtil.invalidInternet(activity)) {
+            errorNetwork();
+            return;
+        }
 
-		initParams(jsonObject);
-		String fullUrl = CARequestUtil.getUrl(host + url, Request.Method.POST, null);
+        if (isAlert) {
+            loadingDialog.show();
+        }
 
-		JsonObjectRequest jsonRequest = new BasicJsonObjectMapRequest(Request.Method.POST, fullUrl, jsonObject, new Response.Listener<JSONObject>() {
+        initParams(jsonObject);
+        String fullUrl = CARequestUtil.getUrl(host + url, Request.Method.POST, null);
 
-			@Override
-			public void onResponse(JSONObject response){
-				if(isDestroy == null) return;
-				onSuccessUpdate(response, isAlert, url);
-			}
-		},
+        JsonObjectRequest jsonRequest = new BasicJsonObjectMapRequest(Request.Method.POST, fullUrl, jsonObject, new Response.Listener<JSONObject>() {
 
-						new Response.ErrorListener() {
+            @Override
+            public void onResponse(JSONObject response) {
+                if (isDestroy == null) return;
+                onSuccessUpdate(response, isAlert, url);
+            }
+        },
 
-							@Override
-							public void onErrorResponse(VolleyError error){
-								if(isDestroy == null) return;
-								loadingDialog.continueShowing = false;
-								dismissLoad();
-								errorRequest(error);
-							}
-						});
-		RetryPolicy policy = new DefaultRetryPolicy(300000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
-		jsonRequest.setRetryPolicy(policy);
-		VolleySingleton.getInstance(activity).addToRequestQueue(jsonRequest);
-	}
+                new Response.ErrorListener() {
 
-	/**
-	 * Request upload.
-	 *
-	 * @param url the url
-	 * @param jsonObject the json object
-	 * @param files the files
-	 * @param isAlert the is alert
-	 */
-	protected void requestUpload(final String url, JSONObject jsonObject, Map<String, File> files, final boolean isAlert){
-		if(AndroidUtil.invalidInternet(activity)){
-			errorNetwork();
-			return;
-		}
-		if(isAlert){
-			loadingDialog.show();
-		}
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        if (isDestroy == null) return;
+                        loadingDialog.continueShowing = false;
+                        dismissLoad();
+                        errorRequest(error);
+                    }
+                });
+        RetryPolicy policy = new DefaultRetryPolicy(300000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        jsonRequest.setRetryPolicy(policy);
+        VolleySingleton.getInstance(activity).addToRequestQueue(jsonRequest);
+    }
 
-		initParams(jsonObject);
-		String fullUrl = CARequestUtil.getUrl(host + url, Request.Method.POST, null);
+    /**
+     * Request upload.
+     *
+     * @param url        the url
+     * @param jsonObject the json object
+     * @param files      the files
+     * @param isAlert    the is alert
+     */
+    protected void requestUpload(final String url, JSONObject jsonObject, Map<String, File> files, final boolean isAlert) {
+        if (AndroidUtil.invalidInternet(activity)) {
+            errorNetwork();
+            return;
+        }
+        if (isAlert) {
+            loadingDialog.show();
+        }
 
-		UploadFileRequest request = new UploadFileRequest(fullUrl, files, jsonObject, new Response.Listener<JSONObject>() {
+        initParams(jsonObject);
+        String fullUrl = CARequestUtil.getUrl(host + url, Request.Method.POST, null);
 
-			@Override
-			public void onResponse(JSONObject response){
-				if(isDestroy == null) return;
-				onSuccessUpLoad(response, isAlert, url);
-			}
-		},
+        UploadFileRequest request = new UploadFileRequest(fullUrl, files, jsonObject, new Response.Listener<JSONObject>() {
 
-						new Response.ErrorListener() {
+            @Override
+            public void onResponse(JSONObject response) {
+                if (isDestroy == null) return;
+                onSuccessUpLoad(response, isAlert, url);
+            }
+        },
 
-							@Override
-							public void onErrorResponse(VolleyError error){
-								if(isDestroy == null) return;
+                new Response.ErrorListener() {
 
-								loadingDialog.continueShowing = false;
-								dismissLoad();
-								errorRequest(error);
-							}
-						});
-		RetryPolicy policy = new DefaultRetryPolicy(300000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
-		request.setRetryPolicy(policy);
-		VolleySingleton.getInstance(activity).addToRequestQueue(request);
-	}
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        if (isDestroy == null) return;
 
-	/**
-	 * Success load.
-	 *
-	 * @param response the response
-	 */
-	protected void onSuccessLoad(JSONObject response, boolean isAlert, String url){
-	}
+                        loadingDialog.continueShowing = false;
+                        dismissLoad();
+                        errorRequest(error);
+                    }
+                });
+        RetryPolicy policy = new DefaultRetryPolicy(300000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        request.setRetryPolicy(policy);
+        VolleySingleton.getInstance(activity).addToRequestQueue(request);
+    }
 
-	/**
-	 * Success upload.
-	 *
-	 * @param response the response
-	 */
-	protected void onSuccessUpLoad(JSONObject response, boolean isAlert, String url){
-	}
+    /**
+     * Success load.
+     *
+     * @param response the response
+     */
+    protected void onSuccessLoad(JSONObject response, boolean isAlert, String url) {
+    }
 
-	/**
-	 * Success update.
-	 *
-	 * @param response the response
-	 */
-	protected void onSuccessUpdate(JSONObject response, boolean isAlert, String url){
-	}
+    /**
+     * Success upload.
+     *
+     * @param response the response
+     */
+    protected void onSuccessUpLoad(JSONObject response, boolean isAlert, String url) {
+    }
 
-	/**
-	 * errorNetwork
-	 */
-	protected void errorNetwork(){
-		activity.runOnUiThread(new Runnable() {
+    /**
+     * Success update.
+     *
+     * @param response the response
+     */
+    protected void onSuccessUpdate(JSONObject response, boolean isAlert, String url) {
+    }
 
-			public void run(){
-				Toast.makeText(activity, "No internet access.", Toast.LENGTH_LONG).show();
-			}
-		});
-	}
+    /**
+     * errorNetwork
+     */
+    protected void errorNetwork() {
+        activity.runOnUiThread(new Runnable() {
 
-	/**
-	 * Get url.
-	 *
-	 * @param url the url
-	 * @param method the method
-	 * @param jsonObject the json object
-	 * @return the string
-	 */
+            public void run() {
+                Toast.makeText(activity, "No internet access.", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    /**
+     * Get url.
+     *
+     * @param url the url
+     * @param method the method
+     * @param jsonObject the json object
+     * @return the string
+     */
 //	protected String getUrl(String url, int method, JSONObject jsonObject){
 //		url = host + url;
 //		if(Request.Method.GET == method){
@@ -378,73 +366,78 @@ public class ChiaseFragment extends Fragment{
 //		return builder.toString();
 //	}
 
-	/**
-	 * Error request.
-	 *
-	 * @param error the error
-	 */
-	protected void errorRequest(VolleyError error){
-		Toast.makeText(activity, error.getMessage(), Toast.LENGTH_LONG).show();
-	}
+    /**
+     * Error request.
+     *
+     * @param error the error
+     */
+    protected void errorRequest(VolleyError error) {
+        Toast.makeText(activity, error.getMessage(), Toast.LENGTH_LONG).show();
+    }
 
-	/**
-	 * errorMessage.
-	 */
-	protected void errorMessage(){
-	}
+    protected void errorRequest2() {
+        Toast.makeText(activity, "http error", Toast.LENGTH_LONG).show();
+    }
 
-	@Override
-	public void onPause(){
-		super.onPause();
+    /**
+     * errorMessage.
+     */
+    protected void errorMessage() {
+    }
 
-		// hide soft keyboard
-		if(activity.getCurrentFocus() != null){
-			InputMethodManager inputManager = (InputMethodManager)activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-			inputManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-		}
-	}
+    @Override
+    public void onPause() {
+        super.onPause();
 
-	/*
-	 * dismiss loading dialog and swipeRefresh
-	 */
-	protected void dismissLoad(){
-		if(loadingDialog.isShowing() && !loadingDialog.continueShowing) loadingDialog.dismiss();
-		if(swipeRfresh != null){
-			swipeRfresh.setRefreshing(false);
-		}
-	}
+        // hide soft keyboard
+        if (activity.getCurrentFocus() != null) {
+            InputMethodManager inputManager = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
+    }
 
-	/**
-	 * Goto fragment.
-	 *
-	 * @param fragment the fragment
-	 */
-	public void gotoFragment(Fragment fragment){
+    /*
+     * dismiss loading dialog and swipeRefresh
+     */
+    protected void dismissLoad() {
+        if (loadingDialog.isShowing() && !loadingDialog.continueShowing) loadingDialog.dismiss();
+        if (swipeRfresh != null) {
+            swipeRfresh.setRefreshing(false);
+        }
+    }
 
-		FragmentManager fragmentManager = getFragmentManager();
-		FragmentTransaction transaction = fragmentManager.beginTransaction();
-		transaction.replace(R.id.ipt_id_body, fragment);
-		transaction.addToBackStack(null);
-		transaction.commit();
-	}
+    /**
+     * Goto fragment.
+     *
+     * @param fragment the fragment
+     */
+    public void gotoFragment(Fragment fragment) {
 
-	protected void emptyBackStack(){
-		// remove fragments in back stack
-		FragmentManager fragmentManager = getFragmentManager();
-		fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-	}
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.ipt_id_body, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
 
-	@Override
-	public void onDestroy(){
-		super.onDestroy();
-		activity = null;
-		if(loadingDialog != null){
-			loadingDialog.dismiss();
-			loadingDialog = null;
-		}
-		alertDialog = null;
-		swipeRfresh = null;
-		isDestroy = null;
-		mRootView = null;
-	}
+    protected void emptyBackStack() {
+        // remove fragments in back stack
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        activity = null;
+        if (loadingDialog != null) {
+            loadingDialog.dismiss();
+            loadingDialog = null;
+        }
+        alertDialog = null;
+        swipeRfresh = null;
+        isDestroy = null;
+        mRootView = null;
+    }
+
 }
