@@ -3,6 +3,7 @@
 
     <include layout="@layout/view_common_header"/>
 
+
     <LinearLayout
         android:id="@+id/lnr_id_content"
         style="@style/cs_common_match"
@@ -10,9 +11,28 @@
         android:orientation="vertical"
         android:visibility="visible">
 
-        <TextView
-            style="@style/cs_common_match_wrap"
-            android:text="Work offer"/>
+        <include layout="@layout/view_common_shift_working_month"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/sw_work_offer_history"/>
+
+            <ListView
+                android:id="@+id/lst_work_offer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </ListView>
+
+
+        </LinearLayout>
+
 
     </LinearLayout>
 
