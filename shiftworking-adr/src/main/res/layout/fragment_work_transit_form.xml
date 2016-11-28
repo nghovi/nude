@@ -39,7 +39,8 @@
                         android:id="@+id/edt_id_leave"
                         style="@style/wl_common_edit_text2"
                         android:layout_marginLeft="@dimen/margin_10dp"
-                        android:hint="Please entry"/>
+                        android:hint="Please entry"
+                        custom:mName="transLeave"/>
                 </LinearLayout>
 
                 <View style="@style/cs_common_divider"/>
@@ -56,7 +57,8 @@
                         android:id="@+id/edt_id_arrive"
                         style="@style/wl_common_edit_text2"
                         android:layout_marginLeft="@dimen/margin_10dp"
-                        android:hint="Please entry"/>
+                        android:hint="Please entry"
+                        custom:mName="transArrive"/>
                 </LinearLayout>
 
                 <View style="@style/cs_common_divider"/>
@@ -69,13 +71,14 @@
                     <TextView
                         style="@style/wl_common_text"
                         android:layout_width="wrap_content"
-                        android:text="@string/sw_work_transit_arrive_item"/>
+                        android:text="@string/sw_work_transit_trans_type_item"/>
 
                     <trente.asia.android.view.ChiaseTextView
                         android:id="@+id/txt_id_transit_type"
                         style="@style/wl_common_edit_text2"
                         android:layout_marginLeft="@dimen/margin_10dp"
-                        android:hint="Please entry"/>
+                        android:hint="Please entry"
+                        custom:mName="transType"/>
                 </LinearLayout>
 
                 <View style="@style/cs_common_divider"/>
@@ -94,7 +97,8 @@
                         android:id="@+id/txt_id_way_type"
                         style="@style/wl_common_edit_text2"
                         android:layout_marginLeft="@dimen/margin_10dp"
-                        android:hint="Please entry"/>
+                        android:hint="Please entry"
+                        custom:mName="wayType"/>
                 </LinearLayout>
 
                 <View style="@style/cs_common_divider"/>
@@ -114,7 +118,7 @@
                         android:hint="0"
                         android:inputType="number"
                         custom:formatString=""
-                        custom:mName=""
+                        custom:mName="fee"
                         custom:unitName=""/>
                 </LinearLayout>
 
@@ -134,7 +138,8 @@
                         android:id="@+id/txt_id_cost_type"
                         style="@style/wl_common_edit_text2"
                         android:layout_marginLeft="@dimen/margin_10dp"
-                        android:hint="Please entry"/>
+                        android:hint="Please entry"
+                        custom:mName="costType"/>
                 </LinearLayout>
 
                 <View style="@style/cs_common_divider"/>
@@ -153,7 +158,8 @@
                         style="@style/wl_common_edit_text_multi_line2"
                         android:layout_marginTop="@dimen/margin_10dp"
                         android:hint="Please entry"
-                        android:inputType="textMultiLine"/>
+                        android:inputType="textMultiLine"
+                        custom:mName="note"/>
                 </LinearLayout>
 
                 <View style="@style/cs_common_divider"/>

@@ -1,9 +1,11 @@
 package trente.asia.shiftworking.services.transit;
 
 import java.io.File;
-import java.util.LinkedHashMap;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
@@ -16,15 +18,20 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import asia.chiase.core.util.CCFormatUtil;
+import asia.chiase.core.util.CCJsonUtil;
+import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.util.AndroidUtil;
 import trente.asia.android.view.ChiaseListDialog;
 import trente.asia.android.view.ChiaseTextView;
 import trente.asia.android.view.util.CAObjectSerializeUtil;
 import trente.asia.shiftworking.R;
 import trente.asia.shiftworking.common.fragments.AbstractPhotoFragment;
+import trente.asia.shiftworking.services.transit.model.TransitModelHolder;
 import trente.asia.shiftworking.services.worktime.model.ProjectModel;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.define.WfUrlConst;
+import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 
 public class WorkTransitFormFragment extends AbstractPhotoFragment{
 
@@ -82,17 +89,13 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 		imgPhoto.setOnClickListener(this);
 		imgRightIcon.setOnClickListener(this);
 
-		initDialog();
+		// initDialog();
 	}
 
-	private void initDialog(){
-		Map<String, String> exampleMap = new LinkedHashMap<>();
-		exampleMap.put("0", "Example-01");
-		exampleMap.put("1", "Example-02");
-		exampleMap.put("2", "Example-03");
-		dlgTransitType = new ChiaseListDialog(activity, "Transit type", exampleMap, txtTransitType, null);
-		dlgWayType = new ChiaseListDialog(activity, "Way type", exampleMap, txtWayType, null);
-		dlgCostType = new ChiaseListDialog(activity, "Cost type", exampleMap, txtCostType, null);
+	private void initDialog(TransitModelHolder holder){
+		dlgTransitType = new ChiaseListDialog(activity, "Transit type", WelfareFormatUtil.convertList2Map(holder.transTypes), txtTransitType, null);
+		dlgWayType = new ChiaseListDialog(activity, "Way type", WelfareFormatUtil.convertList2Map(holder.wayTypes), txtWayType, null);
+		dlgCostType = new ChiaseListDialog(activity, "Cost type", WelfareFormatUtil.convertList2Map(holder.costTypes), txtCostType, null);
 	}
 
 	@Override
@@ -112,21 +115,36 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 	@Override
 	protected void successLoad(JSONObject response, String url){
 		if(WfUrlConst.WF_TRANS_0002.equals(url)){
-
+			TransitModelHolder holder = CCJsonUtil.convertToModel(CCStringUtil.toString(response), TransitModelHolder.class);
+			initDialog(holder);
 		}else{
 			super.successLoad(response, url);
 		}
 	}
 
-    private void updateTransit(){
-        LinearLayout lnrContent = (LinearLayout)getView().findViewById(R.id.lnr_id_content);
-        JSONObject jsonObject = CAObjectSerializeUtil.serializeObject(lnrContent, null);
-        // try{
-        // }catch(JSONException e){
-        // e.printStackTrace();
-        // }
-        requestUpdate(WfUrlConst.WF_TRANS_0003, jsonObject, true);
-    }
+	private void updateTransit(){
+		Map<String, File> photoMap = new HashMap<>();
+		if(!CCStringUtil.isEmpty(mOriginalPath)){
+			photoMap.put("photo", new File(mOriginalPath));
+		}
+		LinearLayout lnrContent = (LinearLayout)getView().findViewById(R.id.lnr_id_content);
+		JSONObject jsonObject = CAObjectSerializeUtil.serializeObject(lnrContent, null);
+		try{
+			jsonObject.put("userId", myself.key);
+            jsonObject.put("transDate", CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, new Date()));
+		}catch(JSONException e){
+			e.printStackTrace();
+		}
+		requestUpload(WfUrlConst.WF_TRANS_0003, jsonObject, photoMap, true);
+	}
+
+	@Override
+	protected void successUpload(JSONObject response, String url){
+		if(WfUrlConst.WF_TRANS_0003.equals(url)){
+		}else{
+			super.successLoad(response, url);
+		}
+	}
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent returnedIntent){
