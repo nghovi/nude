@@ -26,7 +26,8 @@
     <color name="chiase_message_bg_input">#F7F7F7</color>
     <color name="chiase_warning">#C9283B</color>
 
-    <color name="red_button">#C6414F</color>
+    <color name="chiase_red_button">#C6414F</color>
+    <color name="chiase_red_button_50">#80C6414F</color>
     <color name="orange_button">#F28E41</color>
     <color name="qk_common_password_divider">#5D6578</color>
 

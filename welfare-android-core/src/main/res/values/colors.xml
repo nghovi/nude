@@ -16,8 +16,8 @@
     <color name="wf_app_button_color_off">#007130</color>
     <color name="wf_app_button_color_on">#00A95F</color>
 
-    <color name="wf_login_button_color_off">#000000</color>
-    <color name="wf_login_button_color_on">#000000</color>
+    <color name="wf_login_button_color_off">@android:color/transparent</color>
+    <color name="wf_login_button_color_on">@android:color/transparent</color>
 
     <color name="wf_common_header_base">#554426</color>
 

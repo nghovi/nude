@@ -56,9 +56,9 @@ public class WorktimeCheckInFragment extends AbstractLocationFragment{
 	private LinearLayout		lnrProjectInfo;
 	private LinearLayout		lnrNoProject;
 
-	private SwDialog			mDlgCheckIn;
-	private TextView			txtNotify;
-	private TextView			txtDelete;
+//	private SwDialog			mDlgCheckIn;
+//	private TextView			txtNotify;
+//	private TextView			txtDelete;
 	private WorkingTimeModel	activeWorkingTime;
 
     private ItemWorkTimeClickListener itemWorkTimeClickListener = new ItemWorkTimeClickListener() {
@@ -109,23 +109,7 @@ public class WorktimeCheckInFragment extends AbstractLocationFragment{
 		imgRightIcon.setOnClickListener(this);
 		imgRightSubIcon.setOnClickListener(this);
 
-		mDlgCheckIn = new SwDialog(activity);
-		mDlgCheckIn.setDialogCheckUserList();
-		txtNotify = (TextView)mDlgCheckIn.findViewById(R.id.txt_id_notify);
-		txtDelete = (TextView)mDlgCheckIn.findViewById(R.id.txt_id_delete);
-		txtNotify.setOnClickListener(this);
-		txtDelete.setOnClickListener(this);
-
 		setCheckInTime();
-
-		lsvWorkTime.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-
-			public boolean onItemLongClick(AdapterView<?> adapter, View view, int position, long id){
-				activeWorkingTime = (WorkingTimeModel)adapter.getItemAtPosition(position);
-				mDlgCheckIn.show();
-				return true;
-			}
-		});
 	}
 
 	@Override
@@ -278,14 +262,6 @@ public class WorktimeCheckInFragment extends AbstractLocationFragment{
 			break;
 		case R.id.btn_id_check_in:
 			getLocation();
-			break;
-		case R.id.txt_id_notify:
-			mDlgCheckIn.dismiss();
-			modifyWorkTime();
-			break;
-		case R.id.txt_id_delete:
-			mDlgCheckIn.dismiss();
-			deleteWorkTime();
 			break;
 		default:
 			break;
