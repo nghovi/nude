@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout style="@style/cs_common_match_wrap"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              android:background="@drawable/state_common_selectable_row"
+              android:orientation="vertical"
+              android:paddingBottom="@dimen/margin_10dp"
+              android:paddingLeft="@dimen/margin_16dp"
+              android:paddingRight="@dimen/margin_16dp"
+              android:paddingTop="@dimen/margin_10dp">
+
+    <TextView
+        android:id="@+id/txt_id_leave"
+        style="@style/wl_common_text_single_line"
+        android:text="Leave:"/>
+
+    <TextView
+        android:id="@+id/txt_id_arrive"
+        style="@style/wl_common_text_single_line"
+        android:layout_marginTop="@dimen/margin_6dp"
+        android:text="Arrive:"/>
+
+
+    <LinearLayout
+        style="@style/cs_common_match_wrap"
+        android:layout_marginTop="@dimen/margin_6dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/txt_id_way_type"
+            style="@style/wl_common_text_single_line"
+            android:layout_width="@dimen/margin_0dp"
+            android:layout_marginRight="@dimen/margin_5dp"
+            android:layout_weight="1"
+            android:text="Way type:"/>
+
+        <TextView
+            android:id="@+id/txt_id_cost_type"
+            style="@style/wl_common_text_single_line"
+            android:layout_width="@dimen/margin_0dp"
+            android:layout_marginLeft="@dimen/margin_5dp"
+            android:layout_weight="1"
+            android:text="Cost type:"/>
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/cs_common_match_wrap"
+        android:layout_marginTop="@dimen/margin_6dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/txt_id_transit_type"
+            style="@style/wl_common_text_single_line"
+            android:layout_width="@dimen/margin_0dp"
+            android:layout_marginRight="@dimen/margin_5dp"
+            android:layout_weight="1"
+            android:text="Transit type:"/>
+
+        <TextView
+            android:id="@+id/txt_id_fee"
+            style="@style/wl_common_text_single_line"
+            android:layout_width="@dimen/margin_0dp"
+            android:layout_marginLeft="@dimen/margin_5dp"
+            android:layout_weight="1"
+            android:text="Fee:"/>
+    </LinearLayout>
+
+</LinearLayout>

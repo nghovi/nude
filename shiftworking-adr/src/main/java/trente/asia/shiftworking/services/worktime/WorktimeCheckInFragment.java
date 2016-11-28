@@ -14,7 +14,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -28,9 +27,8 @@ import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.shiftworking.R;
 import trente.asia.shiftworking.common.defines.SwConst;
-import trente.asia.shiftworking.common.dialog.SwDialog;
 import trente.asia.shiftworking.common.fragments.AbstractLocationFragment;
-import trente.asia.shiftworking.services.transit.WorkTransitFragment;
+import trente.asia.shiftworking.services.transit.WorkTransitListFragment;
 import trente.asia.shiftworking.services.worktime.listener.ItemWorkTimeClickListener;
 import trente.asia.shiftworking.services.worktime.model.ProjectModel;
 import trente.asia.shiftworking.services.worktime.model.WorkingTimeModel;
@@ -252,7 +250,7 @@ public class WorktimeCheckInFragment extends AbstractLocationFragment{
 			gotoFragment(fragment);
 			break;
 		case R.id.img_id_header_right_sub_icon:
-			WorkTransitFragment transitFragment = new WorkTransitFragment();
+			WorkTransitListFragment transitFragment = new WorkTransitListFragment();
 			transitFragment.setActiveProject(activeProject);
 			gotoFragment(transitFragment);
 			break;

@@ -60,6 +60,11 @@
         <item name="android:textSize">@dimen/margin_12dp</item>
     </style>
 
+    <style name="wl_common_text_single_line" parent="@style/wl_common_text">
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
     <style name="wl_common_edit_text" parent="@style/wl_common_text">
         <item name="android:background">@drawable/shape_gray_border</item>
         <item name="android:padding">10dp</item>
