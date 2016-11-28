@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 import trente.asia.android.util.AndroidUtil;
 import trente.asia.android.view.ChiaseListDialog;
 import trente.asia.android.view.ChiaseTextView;
+import trente.asia.android.view.util.CAObjectSerializeUtil;
 import trente.asia.shiftworking.R;
 import trente.asia.shiftworking.common.fragments.AbstractPhotoFragment;
 import trente.asia.shiftworking.services.worktime.model.ProjectModel;
@@ -69,6 +70,7 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 		txtCostType = (ChiaseTextView)getView().findViewById(R.id.txt_id_cost_type);
 
 		imgPhoto = (ImageView)getView().findViewById(R.id.img_id_photo);
+		ImageView imgRightIcon = (ImageView)getView().findViewById(R.id.img_id_header_right_icon);
 
 		lnrTransitType = (LinearLayout)getView().findViewById(R.id.lnr_id_transit_type);
 		lnrWayType = (LinearLayout)getView().findViewById(R.id.lnr_id_way_type);
@@ -78,6 +80,7 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 		lnrWayType.setOnClickListener(this);
 		lnrCostType.setOnClickListener(this);
 		imgPhoto.setOnClickListener(this);
+		imgRightIcon.setOnClickListener(this);
 
 		initDialog();
 	}
@@ -94,46 +97,61 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 
 	@Override
 	protected void initData(){
-		loadWorkerList();
+		loadTransitForm();
 	}
 
-	private void loadWorkerList(){
-
+	private void loadTransitForm(){
+		JSONObject jsonObject = new JSONObject();
+		// try{
+		// }catch(JSONException e){
+		// e.printStackTrace();
+		// }
+		requestLoad(WfUrlConst.WF_TRANS_0002, jsonObject, true);
 	}
 
 	@Override
 	protected void successLoad(JSONObject response, String url){
-		if(WfUrlConst.WF_API_WOKER_LIST.equals(url)){
+		if(WfUrlConst.WF_TRANS_0002.equals(url)){
 
 		}else{
 			super.successLoad(response, url);
 		}
 	}
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent returnedIntent){
-        super.onActivityResult(requestCode, resultCode, returnedIntent);
-        if(resultCode != Activity.RESULT_OK) return;
-        switch(requestCode){
-            case WelfareConst.RequestCode.PHOTO_CHOOSE:
-                if(returnedIntent != null){
-                    String detailMessage = returnedIntent.getExtras().getString("detail");
-                    if(WelfareConst.WF_FILE_SIZE_NG.equals(detailMessage)){
-                        alertDialog.setMessage(getString(R.string.wf_invalid_photo_over));
-                        alertDialog.show();
-                    }else{
-                        mOriginalPath = returnedIntent.getExtras().getString(WelfareConst.IMAGE_PATH_KEY);
-                        Uri uri = AndroidUtil.getUriFromFileInternal(activity, new File(mOriginalPath));
-                        imgPhoto.setImageURI(uri);
-                    }
-                }
-
-                break;
-
-            default:
-                break;
-        }
+    private void updateTransit(){
+        LinearLayout lnrContent = (LinearLayout)getView().findViewById(R.id.lnr_id_content);
+        JSONObject jsonObject = CAObjectSerializeUtil.serializeObject(lnrContent, null);
+        // try{
+        // }catch(JSONException e){
+        // e.printStackTrace();
+        // }
+        requestUpdate(WfUrlConst.WF_TRANS_0003, jsonObject, true);
     }
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent returnedIntent){
+		super.onActivityResult(requestCode, resultCode, returnedIntent);
+		if(resultCode != Activity.RESULT_OK) return;
+		switch(requestCode){
+		case WelfareConst.RequestCode.PHOTO_CHOOSE:
+			if(returnedIntent != null){
+				String detailMessage = returnedIntent.getExtras().getString("detail");
+				if(WelfareConst.WF_FILE_SIZE_NG.equals(detailMessage)){
+					alertDialog.setMessage(getString(R.string.wf_invalid_photo_over));
+					alertDialog.show();
+				}else{
+					mOriginalPath = returnedIntent.getExtras().getString(WelfareConst.IMAGE_PATH_KEY);
+					Uri uri = AndroidUtil.getUriFromFileInternal(activity, new File(mOriginalPath));
+					imgPhoto.setImageURI(uri);
+				}
+			}
+
+			break;
+
+		default:
+			break;
+		}
+	}
 
 	@Override
 	public void onClick(View v){
@@ -150,6 +168,9 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 		case R.id.img_id_photo:
 			menuManager.openMenu(imgPhoto);
 			mViewForMenuBehind.setVisibility(View.VISIBLE);
+			break;
+		case R.id.img_id_header_right_icon:
+			updateTransit();
 			break;
 		default:
 			break;
