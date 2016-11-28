@@ -55,10 +55,6 @@ public class WorktimeCheckInFragment extends AbstractLocationFragment{
 	private Timer				mTimer;
 	private LinearLayout		lnrProjectInfo;
 	private LinearLayout		lnrNoProject;
-
-//	private SwDialog			mDlgCheckIn;
-//	private TextView			txtNotify;
-//	private TextView			txtDelete;
 	private WorkingTimeModel	activeWorkingTime;
 
     private ItemWorkTimeClickListener itemWorkTimeClickListener = new ItemWorkTimeClickListener() {
