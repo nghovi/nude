@@ -8,6 +8,8 @@ import java.util.Map;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.google.gson.Gson;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
@@ -17,8 +19,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-
-import com.google.gson.Gson;
 
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
@@ -92,13 +92,12 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 		imgPhoto.setOnClickListener(this);
 		imgRightIcon.setOnClickListener(this);
 
-		// initDialog();
 	}
 
 	private void initDialog(TransitModelHolder holder){
-		dlgTransitType = new ChiaseListDialog(activity, "Transit type", WelfareFormatUtil.convertList2Map(holder.transTypes), txtTransitType, null);
-		dlgWayType = new ChiaseListDialog(activity, "Way type", WelfareFormatUtil.convertList2Map(holder.wayTypes), txtWayType, null);
-		dlgCostType = new ChiaseListDialog(activity, "Cost type", WelfareFormatUtil.convertList2Map(holder.costTypes), txtCostType, null);
+		dlgTransitType = new ChiaseListDialog(activity, getString(R.string.sw_work_transit_trans_type_item), WelfareFormatUtil.convertList2Map(holder.transTypes), txtTransitType, null);
+		dlgWayType = new ChiaseListDialog(activity, getString(R.string.sw_work_transit_way_type_item), WelfareFormatUtil.convertList2Map(holder.wayTypes), txtWayType, null);
+		dlgCostType = new ChiaseListDialog(activity, getString(R.string.sw_work_transit_cost_type_item), WelfareFormatUtil.convertList2Map(holder.costTypes), txtCostType, null);
 	}
 
 	@Override
@@ -109,7 +108,7 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 	private void loadTransitForm(){
 		JSONObject jsonObject = new JSONObject();
 		try{
-            jsonObject.put("key", activeTransitId);
+			jsonObject.put("key", activeTransitId);
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
@@ -121,26 +120,26 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 		if(WfUrlConst.WF_TRANS_0002.equals(url)){
 			TransitModelHolder holder = CCJsonUtil.convertToModel(CCStringUtil.toString(response), TransitModelHolder.class);
 			initDialog(holder);
-            if(!CCStringUtil.isEmpty(activeTransitId)){
-                loadTransit(holder.transit);
-            }
+			if(!CCStringUtil.isEmpty(activeTransitId)){
+				loadTransit(holder.transit);
+			}
 		}else{
 			super.successLoad(response, url);
 		}
 	}
 
-    private void loadTransit(TransitModel transitModel){
-        LinearLayout lnrContent = (LinearLayout)getView().findViewById(R.id.lnr_id_content);
-        try{
-            Gson gson = new Gson();
-            CAObjectSerializeUtil.deserializeObject(lnrContent, new JSONObject(gson.toJson(transitModel)));
-            txtTransitType.setText(transitModel.transTypeName);
-            txtWayType.setText(transitModel.wayTypeName);
-            txtCostType.setText(transitModel.costTypeName);
-        }catch(JSONException e){
-            e.printStackTrace();
-        }
-    }
+	private void loadTransit(TransitModel transitModel){
+		LinearLayout lnrContent = (LinearLayout)getView().findViewById(R.id.lnr_id_content);
+		try{
+			Gson gson = new Gson();
+			CAObjectSerializeUtil.deserializeObject(lnrContent, new JSONObject(gson.toJson(transitModel)));
+			txtTransitType.setText(transitModel.transTypeName);
+			txtWayType.setText(transitModel.wayTypeName);
+			txtCostType.setText(transitModel.costTypeName);
+		}catch(JSONException e){
+			e.printStackTrace();
+		}
+	}
 
 	private void updateTransit(){
 		Map<String, File> photoMap = new HashMap<>();
