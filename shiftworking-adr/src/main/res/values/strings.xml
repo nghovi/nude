@@ -46,6 +46,8 @@
     <string name="sw_work_item_notice_date">Notice date</string>
     <string name="sw_work_item_check_user">Check user list</string>
 
+    <string name="sw_work_notice_item_offer_dept">Offer dept</string>
+
     <string name="sw_work_time_modify_request_title">Modify request</string>
     <string name="sw_work_time_modify_request">Modify request for %1$s check in</string>
     <string name="sw_work_time_modify_request_success">Success request</string>

@@ -9,8 +9,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import android.app.Activity;
 import android.content.Context;
@@ -26,6 +28,7 @@ import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.widget.Toast;
 
+import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
@@ -262,6 +265,19 @@ public class WelfareUtil{
 
 		return null;
 	}
+
+    /**
+     * convert dept model list -> map
+     *
+     */
+    public static Map<String, String> convertDept2Map(List<DeptModel> lstDept, Context context){
+        Map<String, String> map = new LinkedHashMap<>();
+        map.put(CCConst.NONE, context.getString(R.string.chiase_common_all));
+        for(DeptModel deptModel : lstDept){
+            map.put(deptModel.key, deptModel.deptName);
+        }
+        return map;
+    }
 
 	// // TODO: 9/6/2016 how to turn 1000.25 into 1,000.25 ?
 	// Requirement: if kpi is SALE or COUNT, use format Account

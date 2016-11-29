@@ -5,9 +5,30 @@
     android:orientation="vertical"
     android:visibility="invisible">
 
+    <View style="@style/cs_common_divider"/>
+
+    <LinearLayout
+        android:id="@+id/lnr_id_offer_dept"
+        style="@style/wf_common_item_linear2"
+        android:background="@drawable/state_common_selectable_row">
+
+        <TextView
+            style="@style/wl_common_text"
+            android:layout_width="wrap_content"
+            android:text="@string/sw_work_notice_item_offer_dept"/>
+
+        <trente.asia.android.view.ChiaseTextView
+            android:id="@+id/txt_id_offer_dept"
+            style="@style/wl_common_edit_text2"
+            android:layout_marginLeft="@dimen/margin_10dp"/>
+    </LinearLayout>
+
+    <View style="@style/cs_common_divider"/>
+
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swp_id_notice"
         style="@style/cs_common_match"
+        android:layout_marginTop="@dimen/margin_16dp"
         android:layout_weight="1">
 
         <ListView
