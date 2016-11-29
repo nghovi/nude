@@ -11,6 +11,8 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.TimeZone;
 
 import asia.chiase.core.util.CCStringUtil;
@@ -30,6 +32,7 @@ import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
 public class WelfareActivity extends ChiaseActivity{
 
 	public boolean isClearRegistrationId = false;
+    public Map<String, Object> dataMap = new HashMap<String, Object>();
 
 	////////////// Device Back Button/////////////////////////////////////////////////////////////
 	public interface OnDeviceBackButtonClickListener{

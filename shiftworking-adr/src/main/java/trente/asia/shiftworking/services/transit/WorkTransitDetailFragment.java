@@ -10,12 +10,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.shiftworking.R;
+import trente.asia.shiftworking.common.defines.SwConst;
 import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
 import trente.asia.shiftworking.services.transit.model.TransitModelHolder;
+import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WfUrlConst;
 
 public class WorkTransitDetailFragment extends AbstractSwFragment{
@@ -68,7 +71,6 @@ public class WorkTransitDetailFragment extends AbstractSwFragment{
 
 		imgPhoto.setOnClickListener(this);
 		imgRightIcon.setOnClickListener(this);
-
 	}
 
 	@Override
@@ -105,6 +107,20 @@ public class WorkTransitDetailFragment extends AbstractSwFragment{
 			super.successLoad(response, url);
 		}
 	}
+
+    @Override
+    public void onResume(){
+        super.onResume();
+
+        if(!((WelfareActivity)activity).dataMap.isEmpty()){
+            String isDelete = CCStringUtil.toString(((WelfareActivity)activity).dataMap.get(SwConst.ACTION_TRANSIT_DELETE));
+            if(CCConst.YES.equals(isDelete)){
+                ((WelfareActivity)activity).dataMap.clear();
+                ((WelfareActivity)activity).isInitData = true;
+                getFragmentManager().popBackStack();
+            }
+        }
+    }
 
 	@Override
 	public void onClick(View v){

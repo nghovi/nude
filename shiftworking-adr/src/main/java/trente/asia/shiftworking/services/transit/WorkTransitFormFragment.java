@@ -17,9 +17,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
@@ -28,6 +30,7 @@ import trente.asia.android.view.ChiaseListDialog;
 import trente.asia.android.view.ChiaseTextView;
 import trente.asia.android.view.util.CAObjectSerializeUtil;
 import trente.asia.shiftworking.R;
+import trente.asia.shiftworking.common.defines.SwConst;
 import trente.asia.shiftworking.common.fragments.AbstractPhotoFragment;
 import trente.asia.shiftworking.services.transit.model.TransitModel;
 import trente.asia.shiftworking.services.transit.model.TransitModelHolder;
@@ -44,6 +47,7 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 	private ChiaseTextView		txtCostType;
 
 	private ImageView			imgPhoto;
+	private Button				btnDelete;
 
 	private LinearLayout		lnrTransitType;
 	private LinearLayout		lnrWayType;
@@ -80,6 +84,7 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 		txtCostType = (ChiaseTextView)getView().findViewById(R.id.txt_id_cost_type);
 
 		imgPhoto = (ImageView)getView().findViewById(R.id.img_id_photo);
+		btnDelete = (Button)getView().findViewById(R.id.btn_id_delete);
 		ImageView imgRightIcon = (ImageView)getView().findViewById(R.id.img_id_header_right_icon);
 
 		lnrTransitType = (LinearLayout)getView().findViewById(R.id.lnr_id_transit_type);
@@ -91,7 +96,7 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 		lnrCostType.setOnClickListener(this);
 		imgPhoto.setOnClickListener(this);
 		imgRightIcon.setOnClickListener(this);
-
+		btnDelete.setOnClickListener(this);
 	}
 
 	private void initDialog(TransitModelHolder holder){
@@ -167,6 +172,26 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 		}
 	}
 
+	private void deleteTransit(){
+		JSONObject jsonObject = new JSONObject();
+		try{
+			jsonObject.put("key", activeTransitId);
+		}catch(JSONException e){
+			e.printStackTrace();
+		}
+		requestUpdate(WfUrlConst.WF_TRANS_0004, jsonObject, true);
+	}
+
+	@Override
+	protected void successUpdate(JSONObject response, String url){
+		if(WfUrlConst.WF_TRANS_0004.equals(url)){
+			getFragmentManager().popBackStack();
+            ((WelfareActivity)activity).dataMap.put(SwConst.ACTION_TRANSIT_DELETE, CCConst.YES);
+		}else{
+			super.successLoad(response, url);
+		}
+	}
+
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent returnedIntent){
 		super.onActivityResult(requestCode, resultCode, returnedIntent);
@@ -210,6 +235,9 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 			break;
 		case R.id.img_id_header_right_icon:
 			updateTransit();
+			break;
+		case R.id.btn_id_delete:
+			deleteTransit();
 			break;
 		default:
 			break;
