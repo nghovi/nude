@@ -97,6 +97,10 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 		imgPhoto.setOnClickListener(this);
 		imgRightIcon.setOnClickListener(this);
 		btnDelete.setOnClickListener(this);
+
+        if(!CCStringUtil.isEmpty(activeTransitId)){
+            btnDelete.setVisibility(View.VISIBLE);
+        }
 	}
 
 	private void initDialog(TransitModelHolder holder){

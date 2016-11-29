@@ -15,7 +15,8 @@
                 style="@style/cs_common_match"
                 android:orientation="vertical"
                 android:paddingBottom="@dimen/margin_16dp"
-                android:paddingTop="@dimen/margin_16dp">
+                android:paddingTop="@dimen/margin_16dp"
+                android:visibility="invisible">
 
                 <TextView
                     style="@style/wl_common_text"
@@ -200,7 +201,8 @@
                     android:layout_marginLeft="@dimen/margin_26dp"
                     android:layout_marginRight="@dimen/margin_26dp"
                     android:layout_marginTop="@dimen/margin_10dp"
-                    android:text="@string/chiase_common_delete"/>
+                    android:text="@string/chiase_common_delete"
+                    android:visibility="gone"/>
 
             </LinearLayout>
 

@@ -12,7 +12,8 @@
             style="@style/cs_common_match"
             android:orientation="vertical"
             android:paddingBottom="@dimen/margin_16dp"
-            android:paddingTop="@dimen/margin_16dp">
+            android:paddingTop="@dimen/margin_16dp"
+            android:visibility="invisible">
 
             <TextView
                 style="@style/wl_common_text"

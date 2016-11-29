@@ -9,7 +9,8 @@
         android:layout_weight="1"
         android:orientation="vertical"
         android:paddingBottom="@dimen/margin_16dp"
-        android:paddingTop="@dimen/margin_16dp">
+        android:paddingTop="@dimen/margin_16dp"
+        android:visibility="invisible">
 
         <TextView
             style="@style/wl_common_text"
