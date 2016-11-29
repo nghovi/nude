@@ -18,6 +18,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.google.gson.Gson;
+
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
@@ -27,8 +29,8 @@ import trente.asia.android.view.ChiaseTextView;
 import trente.asia.android.view.util.CAObjectSerializeUtil;
 import trente.asia.shiftworking.R;
 import trente.asia.shiftworking.common.fragments.AbstractPhotoFragment;
+import trente.asia.shiftworking.services.transit.model.TransitModel;
 import trente.asia.shiftworking.services.transit.model.TransitModelHolder;
-import trente.asia.shiftworking.services.worktime.model.ProjectModel;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.define.WfUrlConst;
@@ -36,7 +38,7 @@ import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 
 public class WorkTransitFormFragment extends AbstractPhotoFragment{
 
-	private ProjectModel		activeProject;
+	private String				activeTransitId;
 	private ChiaseTextView		txtTransitType;
 	private ChiaseTextView		txtWayType;
 	private ChiaseTextView		txtCostType;
@@ -51,8 +53,8 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 	private ChiaseListDialog	dlgWayType;
 	private ChiaseListDialog	dlgCostType;
 
-	public void setActiveProject(ProjectModel activeProject){
-		this.activeProject = activeProject;
+	public void setActiveTransitId(String activeTransitId){
+		this.activeTransitId = activeTransitId;
 	}
 
 	@Override
@@ -106,10 +108,11 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 
 	private void loadTransitForm(){
 		JSONObject jsonObject = new JSONObject();
-		// try{
-		// }catch(JSONException e){
-		// e.printStackTrace();
-		// }
+		try{
+            jsonObject.put("key", activeTransitId);
+		}catch(JSONException e){
+			e.printStackTrace();
+		}
 		requestLoad(WfUrlConst.WF_TRANS_0002, jsonObject, true);
 	}
 
@@ -118,10 +121,26 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 		if(WfUrlConst.WF_TRANS_0002.equals(url)){
 			TransitModelHolder holder = CCJsonUtil.convertToModel(CCStringUtil.toString(response), TransitModelHolder.class);
 			initDialog(holder);
+            if(!CCStringUtil.isEmpty(activeTransitId)){
+                loadTransit(holder.transit);
+            }
 		}else{
 			super.successLoad(response, url);
 		}
 	}
+
+    private void loadTransit(TransitModel transitModel){
+        LinearLayout lnrContent = (LinearLayout)getView().findViewById(R.id.lnr_id_content);
+        try{
+            Gson gson = new Gson();
+            CAObjectSerializeUtil.deserializeObject(lnrContent, new JSONObject(gson.toJson(transitModel)));
+            txtTransitType.setText(transitModel.transTypeName);
+            txtWayType.setText(transitModel.wayTypeName);
+            txtCostType.setText(transitModel.costTypeName);
+        }catch(JSONException e){
+            e.printStackTrace();
+        }
+    }
 
 	private void updateTransit(){
 		Map<String, File> photoMap = new HashMap<>();
@@ -132,7 +151,7 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 		JSONObject jsonObject = CAObjectSerializeUtil.serializeObject(lnrContent, null);
 		try{
 			jsonObject.put("userId", myself.key);
-            jsonObject.put("transDate", CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, new Date()));
+			jsonObject.put("transDate", CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, new Date()));
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
@@ -142,8 +161,8 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 	@Override
 	protected void successUpload(JSONObject response, String url){
 		if(WfUrlConst.WF_TRANS_0003.equals(url)){
-            ((WelfareActivity)activity).isInitData = true;
-            getFragmentManager().popBackStack();
+			((WelfareActivity)activity).isInitData = true;
+			getFragmentManager().popBackStack();
 		}else{
 			super.successLoad(response, url);
 		}

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 
@@ -56,6 +57,17 @@ public class WorkTransitListFragment extends AbstractSwFragment{
 		lsvTransit = (ListView)getView().findViewById(R.id.lsv_id_transit);
 		ImageView imgRightIcon = (ImageView)getView().findViewById(R.id.img_id_header_right_icon);
 		imgRightIcon.setOnClickListener(this);
+
+        lsvTransit.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id){
+                TransitModel transitModel = (TransitModel)parent.getItemAtPosition(position);
+                WorkTransitDetailFragment fragment = new WorkTransitDetailFragment();
+                fragment.setActiveTransitId(transitModel.key);
+                gotoFragment(fragment);
+            }
+        });
 	}
 
 	@Override

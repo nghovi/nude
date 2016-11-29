@@ -126,7 +126,7 @@ public class CAObjectSerializeUtil{
 			}else if(view instanceof ChiaseTextView){
 				name = ((ChiaseTextView)view).getmName();
 				if(jsonObject.has(name)){
-					((ChiaseTextView)view).setText(jsonObject.optString(name));
+					((ChiaseTextView)view).setValue(jsonObject.optString(name));
 				}
 			}else if(view instanceof ViewGroup){
 				deserializeObject((ViewGroup)view, jsonObject);

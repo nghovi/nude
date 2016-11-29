@@ -16,7 +16,9 @@ public class TransitModel{
 	public String	wayTypeName;
 	public String	costType;
 	public String	costTypeName;
-	public String	transitType;
+	public String	transType;
 	public String	transTypeName;
+
 	public String	fee;
+	public String	note;
 }

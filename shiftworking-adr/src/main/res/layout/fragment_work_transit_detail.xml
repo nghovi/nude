@@ -1,0 +1,174 @@
+<LinearLayout style="@style/wf_common_match"
+              xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <include layout="@layout/view_common_header"/>
+
+    <ScrollView
+        style="@style/wf_common_match"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:id="@+id/lnr_id_content"
+            style="@style/cs_common_match"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/margin_16dp"
+            android:paddingTop="@dimen/margin_16dp">
+
+            <TextView
+                style="@style/wl_common_text"
+                android:layout_marginBottom="@dimen/margin_10dp"
+                android:paddingLeft="@dimen/margin_16dp"
+                android:paddingRight="@dimen/margin_16dp"
+                android:text="@string/sw_work_transit_entry_title"
+                android:textStyle="bold"/>
+
+            <View style="@style/cs_common_divider"/>
+
+            <LinearLayout
+                style="@style/wf_common_item_linear2">
+
+                <TextView
+                    style="@style/wl_common_text"
+                    android:layout_width="wrap_content"
+                    android:text="@string/sw_work_transit_leave_item"/>
+
+                <TextView
+                    android:id="@+id/txt_id_leave"
+                    style="@style/wl_common_edit_text2"
+                    android:layout_marginLeft="@dimen/margin_10dp"/>
+            </LinearLayout>
+
+            <View style="@style/cs_common_divider"/>
+
+            <LinearLayout
+                style="@style/wf_common_item_linear2">
+
+                <TextView
+                    style="@style/wl_common_text"
+                    android:layout_width="wrap_content"
+                    android:text="Arrive"/>
+
+                <TextView
+                    android:id="@+id/txt_id_arrive"
+                    style="@style/wl_common_edit_text2"
+                    android:layout_marginLeft="@dimen/margin_10dp"/>
+            </LinearLayout>
+
+            <View style="@style/cs_common_divider"/>
+
+            <LinearLayout
+                style="@style/wf_common_item_linear2">
+
+                <TextView
+                    style="@style/wl_common_text"
+                    android:layout_width="wrap_content"
+                    android:text="@string/sw_work_transit_trans_type_item"/>
+
+                <TextView
+                    android:id="@+id/txt_id_transit_type"
+                    style="@style/wl_common_edit_text2"
+                    android:layout_marginLeft="@dimen/margin_10dp"/>
+            </LinearLayout>
+
+            <View style="@style/cs_common_divider"/>
+
+            <LinearLayout
+                style="@style/wf_common_item_linear2">
+
+                <TextView
+                    style="@style/wl_common_text"
+                    android:layout_width="wrap_content"
+                    android:text="@string/sw_work_transit_way_type_item"/>
+
+                <TextView
+                    android:id="@+id/txt_id_way_type"
+                    style="@style/wl_common_edit_text2"
+                    android:layout_marginLeft="@dimen/margin_10dp"/>
+            </LinearLayout>
+
+            <View style="@style/cs_common_divider"/>
+
+            <LinearLayout
+                style="@style/wf_common_item_linear2">
+
+                <TextView
+                    style="@style/wl_common_text"
+                    android:layout_width="wrap_content"
+                    android:text="@string/sw_work_transit_fee_item"/>
+
+                <TextView
+                    android:id="@+id/txt_id_fee"
+                    style="@style/wl_common_edit_text2"
+                    android:layout_marginLeft="@dimen/margin_10dp"/>
+            </LinearLayout>
+
+            <View style="@style/cs_common_divider"/>
+
+            <LinearLayout
+                style="@style/wf_common_item_linear2">
+
+                <TextView
+                    style="@style/wl_common_text"
+                    android:layout_width="wrap_content"
+                    android:text="@string/sw_work_transit_cost_type_item"/>
+
+                <trente.asia.android.view.ChiaseTextView
+                    android:id="@+id/txt_id_cost_type"
+                    style="@style/wl_common_edit_text2"
+                    android:layout_marginLeft="@dimen/margin_10dp"/>
+            </LinearLayout>
+
+            <View style="@style/cs_common_divider"/>
+
+            <LinearLayout
+                style="@style/wf_common_item_linear2"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/wl_common_text"
+                    android:layout_width="wrap_content"
+                    android:text="@string/sw_work_transit_note_item"/>
+
+                <TextView
+                    android:id="@+id/txt_id_note"
+                    style="@style/wl_common_text"
+                    android:layout_marginTop="@dimen/margin_10dp"/>
+            </LinearLayout>
+
+            <View style="@style/cs_common_divider"/>
+
+            <LinearLayout
+                style="@style/wf_common_item_linear2"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/wl_common_text"
+                    android:layout_width="wrap_content"
+                    android:text="@string/sw_work_transit_attachment_item"/>
+
+                <RelativeLayout
+                    style="@style/cs_common_match_wrap"
+                    android:layout_marginTop="@dimen/margin_10dp">
+
+                    <ImageView
+                        android:id="@+id/img_id_photo"
+                        android:layout_width="@dimen/margin_100dp"
+                        android:layout_height="@dimen/margin_100dp"
+                        android:layout_centerInParent="true"/>
+
+                    <ImageView
+                        style="@style/cs_common_wrap"
+                        android:layout_alignBottom="@+id/img_id_photo"
+                        android:layout_alignRight="@+id/img_id_photo"
+                        android:layout_marginBottom="@dimen/margin_5dp"
+                        android:src="@drawable/wf_camera"/>
+                </RelativeLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <include layout="@layout/view_common_footer"/>
+
+</LinearLayout>

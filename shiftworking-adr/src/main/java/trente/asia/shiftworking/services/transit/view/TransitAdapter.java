@@ -68,8 +68,8 @@ public class TransitAdapter extends ArrayAdapter<TransitModel>{
 		return convertView;
 	}
 
-	public void clearAll(){
-		this.lstTransit.clear();
-		this.notifyDataSetChanged();
-	}
+//	public void clearAll(){
+//		this.lstTransit.clear();
+//		this.notifyDataSetChanged();
+//	}
 }
