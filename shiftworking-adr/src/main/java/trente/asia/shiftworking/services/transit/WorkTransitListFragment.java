@@ -14,7 +14,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCFormatUtil;
+import asia.chiase.core.util.CCJsonUtil;
 import trente.asia.shiftworking.R;
 import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
 import trente.asia.shiftworking.services.transit.model.TransitModel;
@@ -75,20 +77,15 @@ public class WorkTransitListFragment extends AbstractSwFragment{
 	@Override
 	protected void successLoad(JSONObject response, String url){
 		if(WfUrlConst.WF_TRANS_0001.equals(url)){
-            showTransit();
+            List<TransitModel> lstTransit = CCJsonUtil.convertToModelList(response.optString("transits"), TransitModel.class);
+            if(!CCCollectionUtil.isEmpty(lstTransit)){
+                TransitAdapter adapter = new TransitAdapter(activity, lstTransit);
+                lsvTransit.setAdapter(adapter);
+            }
 		}else{
 			super.successLoad(response, url);
 		}
 	}
-
-    private void showTransit(){
-        List<TransitModel> lstTransit = new ArrayList<>();
-        lstTransit.add(new TransitModel());
-        lstTransit.add(new TransitModel());
-
-        TransitAdapter adapter = new TransitAdapter(activity, lstTransit);
-        lsvTransit.setAdapter(adapter);
-    }
 
 	@Override
 	public void onClick(View v){

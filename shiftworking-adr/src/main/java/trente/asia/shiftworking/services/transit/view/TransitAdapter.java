@@ -10,8 +10,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import asia.chiase.core.util.CCFormatUtil;
 import trente.asia.shiftworking.R;
 import trente.asia.shiftworking.services.transit.model.TransitModel;
+import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 
 /**
  * TransitAdapter.
@@ -55,6 +57,13 @@ public class TransitAdapter extends ArrayAdapter<TransitModel>{
 		LayoutInflater mInflater = (LayoutInflater)mContext.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 		convertView = mInflater.inflate(R.layout.item_transit_list, null);
 		BoardViewHolder holder = new BoardViewHolder(convertView);
+
+        holder.txtLeave.setText(WelfareFormatUtil.connect2String(mContext.getString(R.string.sw_work_transit_leave_item), model.transLeave, ":"));
+        holder.txtArrive.setText(WelfareFormatUtil.connect2String(mContext.getString(R.string.sw_work_transit_arrive_item), model.transArrive, ":"));
+        holder.txtWayType.setText(WelfareFormatUtil.connect2String(mContext.getString(R.string.sw_work_transit_way_type_item), model.wayTypeName, ":"));
+        holder.txtCostType.setText(WelfareFormatUtil.connect2String(mContext.getString(R.string.sw_work_transit_cost_type_item), model.costTypeName, ":"));
+        holder.txtTransitType.setText(WelfareFormatUtil.connect2String(mContext.getString(R.string.sw_work_transit_trans_type_item), model.transTypeName, ":"));
+        holder.txtFee.setText(WelfareFormatUtil.connect2String(mContext.getString(R.string.sw_work_transit_fee_item), CCFormatUtil.formatAmount(model.fee), ":"));
 
 		return convertView;
 	}

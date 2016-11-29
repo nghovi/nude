@@ -29,6 +29,7 @@ import trente.asia.shiftworking.R;
 import trente.asia.shiftworking.common.fragments.AbstractPhotoFragment;
 import trente.asia.shiftworking.services.transit.model.TransitModelHolder;
 import trente.asia.shiftworking.services.worktime.model.ProjectModel;
+import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
@@ -141,6 +142,8 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 	@Override
 	protected void successUpload(JSONObject response, String url){
 		if(WfUrlConst.WF_TRANS_0003.equals(url)){
+            ((WelfareActivity)activity).isInitData = true;
+            getFragmentManager().popBackStack();
 		}else{
 			super.successLoad(response, url);
 		}
