@@ -46,8 +46,10 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 	private ChiaseTextView		txtWayType;
 	private ChiaseTextView		txtCostType;
 
-	private ImageView			imgPhoto;
+	private LinearLayout		lnrAttachment;
+	private ImageView			imgAdd;
 	private Button				btnDelete;
+	private int					numberAttachment	= 0;
 
 	private LinearLayout		lnrTransitType;
 	private LinearLayout		lnrWayType;
@@ -56,6 +58,8 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 	private ChiaseListDialog	dlgTransitType;
 	private ChiaseListDialog	dlgWayType;
 	private ChiaseListDialog	dlgCostType;
+
+	private final int			MAX_ATTACHMENT		= 3;
 
 	public void setActiveTransitId(String activeTransitId){
 		this.activeTransitId = activeTransitId;
@@ -83,7 +87,9 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 		txtWayType = (ChiaseTextView)getView().findViewById(R.id.txt_id_way_type);
 		txtCostType = (ChiaseTextView)getView().findViewById(R.id.txt_id_cost_type);
 
-		imgPhoto = (ImageView)getView().findViewById(R.id.img_id_photo);
+		lnrAttachment = (LinearLayout)getView().findViewById(R.id.lnr_id_attachment);
+		imgAdd = (ImageView)getView().findViewById(R.id.img_id_add);
+		// imgPhoto1 = (ImageView)getView().findViewById(R.id.img_id_photo1);
 		btnDelete = (Button)getView().findViewById(R.id.btn_id_delete);
 		ImageView imgRightIcon = (ImageView)getView().findViewById(R.id.img_id_header_right_icon);
 
@@ -94,13 +100,14 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 		lnrTransitType.setOnClickListener(this);
 		lnrWayType.setOnClickListener(this);
 		lnrCostType.setOnClickListener(this);
-		imgPhoto.setOnClickListener(this);
+		// imgPhoto1.setOnClickListener(this);
 		imgRightIcon.setOnClickListener(this);
 		btnDelete.setOnClickListener(this);
+		imgAdd.setOnClickListener(this);
 
-        if(!CCStringUtil.isEmpty(activeTransitId)){
-            btnDelete.setVisibility(View.VISIBLE);
-        }
+		if(!CCStringUtil.isEmpty(activeTransitId)){
+			btnDelete.setVisibility(View.VISIBLE);
+		}
 	}
 
 	private void initDialog(TransitModelHolder holder){
@@ -190,7 +197,7 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 	protected void successUpdate(JSONObject response, String url){
 		if(WfUrlConst.WF_TRANS_0004.equals(url)){
 			getFragmentManager().popBackStack();
-            ((WelfareActivity)activity).dataMap.put(SwConst.ACTION_TRANSIT_DELETE, CCConst.YES);
+			((WelfareActivity)activity).dataMap.put(SwConst.ACTION_TRANSIT_DELETE, CCConst.YES);
 		}else{
 			super.successLoad(response, url);
 		}
@@ -210,7 +217,7 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 				}else{
 					mOriginalPath = returnedIntent.getExtras().getString(WelfareConst.IMAGE_PATH_KEY);
 					Uri uri = AndroidUtil.getUriFromFileInternal(activity, new File(mOriginalPath));
-					imgPhoto.setImageURI(uri);
+					// imgPhoto1.setImageURI(uri);
 				}
 			}
 
@@ -234,7 +241,7 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 			dlgCostType.show();
 			break;
 		case R.id.img_id_photo:
-			menuManager.openMenu(imgPhoto);
+			// menuManager.openMenu(imgPhoto1);
 			mViewForMenuBehind.setVisibility(View.VISIBLE);
 			break;
 		case R.id.img_id_header_right_icon:
@@ -243,10 +250,40 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 		case R.id.btn_id_delete:
 			deleteTransit();
 			break;
+		case R.id.img_id_add:
+			addAttachment();
+			break;
 		default:
 			break;
 		}
 	}
+
+	private void addAttachment(){
+        numberAttachment++;
+        judgeAdd();
+		LayoutInflater mInflater = (LayoutInflater)activity.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+		final View view = mInflater.inflate(R.layout.item_attachment_list, null);
+		ImageView imgDelete = (ImageView)view.findViewById(R.id.img_id_photo_delete);
+		imgDelete.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v){
+				lnrAttachment.removeView(view);
+                numberAttachment--;
+                judgeAdd();
+			}
+		});
+
+		lnrAttachment.addView(view);
+	}
+
+    private void judgeAdd(){
+        if(numberAttachment >= MAX_ATTACHMENT){
+            imgAdd.setEnabled(false);
+        }else{
+            imgAdd.setEnabled(true);
+        }
+    }
 
 	@Override
 	public void onDestroy(){
