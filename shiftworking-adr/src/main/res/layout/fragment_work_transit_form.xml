@@ -42,7 +42,7 @@
                         android:id="@+id/edt_id_leave"
                         style="@style/wl_common_edit_text2"
                         android:layout_marginLeft="@dimen/margin_10dp"
-                        android:hint="Please entry"
+                        android:hint="@string/chiase_common_please_entry"
                         custom:mName="transLeave"/>
                 </LinearLayout>
 
@@ -54,13 +54,13 @@
                     <TextView
                         style="@style/wl_common_text"
                         android:layout_width="wrap_content"
-                        android:text="Arrive"/>
+                        android:text="@string/sw_work_transit_arrive_item"/>
 
                     <trente.asia.android.view.ChiaseEditText
                         android:id="@+id/edt_id_arrive"
                         style="@style/wl_common_edit_text2"
                         android:layout_marginLeft="@dimen/margin_10dp"
-                        android:hint="Please entry"
+                        android:hint="@string/chiase_common_please_entry"
                         custom:mName="transArrive"/>
                 </LinearLayout>
 
@@ -80,7 +80,7 @@
                         android:id="@+id/txt_id_transit_type"
                         style="@style/wl_common_edit_text2"
                         android:layout_marginLeft="@dimen/margin_10dp"
-                        android:hint="Please entry"
+                        android:hint="@string/chiase_common_please_select"
                         custom:mName="transType"/>
                 </LinearLayout>
 
@@ -100,7 +100,7 @@
                         android:id="@+id/txt_id_way_type"
                         style="@style/wl_common_edit_text2"
                         android:layout_marginLeft="@dimen/margin_10dp"
-                        android:hint="Please entry"
+                        android:hint="@string/chiase_common_please_select"
                         custom:mName="wayType"/>
                 </LinearLayout>
 
@@ -141,7 +141,7 @@
                         android:id="@+id/txt_id_cost_type"
                         style="@style/wl_common_edit_text2"
                         android:layout_marginLeft="@dimen/margin_10dp"
-                        android:hint="Please entry"
+                        android:hint="@string/chiase_common_please_select"
                         custom:mName="costType"/>
                 </LinearLayout>
 
@@ -160,7 +160,7 @@
                         android:id="@+id/edt_id_note"
                         style="@style/wl_common_edit_text_multi_line2"
                         android:layout_marginTop="@dimen/margin_10dp"
-                        android:hint="Please entry"
+                        android:hint="@string/chiase_common_please_entry"
                         android:inputType="textMultiLine"
                         custom:mName="note"/>
                 </LinearLayout>
