@@ -1,0 +1,27 @@
+<LinearLayout style="@style/wf_common_match"
+              xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <include layout="@layout/view_common_header"/>
+
+    <LinearLayout
+        style="@style/cs_common_match"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/margin_16dp"
+        android:paddingTop="@dimen/margin_16dp">
+
+        <trente.asia.android.view.ChiaseEditText
+            android:id="@+id/edt_id_place"
+            style="@style/wl_common_edit_text"
+            android:background="@color/chiase_white"
+            android:hint="Please entry"/>
+
+        <ListView
+            android:id="@+id/lsv_id_place"
+            style="@style/cs_common_match"
+            android:layout_marginTop="@dimen/margin_16dp"
+            android:divider="@color/cs_common_divider"
+            android:dividerHeight="1px"/>
+    </LinearLayout>
+
+</LinearLayout>

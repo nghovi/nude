@@ -37,6 +37,10 @@
             android:name=".common.activities.CameraPhotoPreviewOfferActivity"
             android:screenOrientation="portrait"/>
 
+        <activity
+            android:name=".services.transit.activity.PlaceHistoryActivity"
+            android:screenOrientation="portrait"/>
+
         <service
             android:name=".common.fcm.MyFirebaseMessagingService">
             <intent-filter>

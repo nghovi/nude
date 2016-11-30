@@ -1,6 +1,7 @@
 package trente.asia.shiftworking.services.transit;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,10 +19,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import asia.chiase.core.define.CCConst;
+import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
@@ -32,6 +35,7 @@ import trente.asia.android.view.util.CAObjectSerializeUtil;
 import trente.asia.shiftworking.R;
 import trente.asia.shiftworking.common.defines.SwConst;
 import trente.asia.shiftworking.common.fragments.AbstractPhotoFragment;
+import trente.asia.shiftworking.services.transit.activity.PlaceHistoryActivity;
 import trente.asia.shiftworking.services.transit.model.TransitModel;
 import trente.asia.shiftworking.services.transit.model.TransitModelHolder;
 import trente.asia.welfare.adr.activity.WelfareActivity;
@@ -50,6 +54,9 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 	private LinearLayout		lnrAttachment;
 	private ImageView			imgAdd;
 	private Button				btnDelete;
+
+	private EditText			edtLeave;
+	private EditText			edtArrive;
 	private int					numberAttachment	= 0;
 
 	private LinearLayout		lnrTransitType;
@@ -60,7 +67,10 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 	private ChiaseListDialog	dlgWayType;
 	private ChiaseListDialog	dlgCostType;
 
+	private TransitModelHolder	mHolder;
 	private final int			MAX_ATTACHMENT		= 3;
+	private final int			ENTRY_LEAVE			= 201;
+	private final int			ENTRY_ARRIVE		= 202;
 
 	public void setActiveTransitId(String activeTransitId){
 		this.activeTransitId = activeTransitId;
@@ -90,7 +100,6 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 
 		lnrAttachment = (LinearLayout)getView().findViewById(R.id.lnr_id_attachment);
 		imgAdd = (ImageView)getView().findViewById(R.id.img_id_add);
-		// imgPhoto1 = (ImageView)getView().findViewById(R.id.img_id_photo1);
 		btnDelete = (Button)getView().findViewById(R.id.btn_id_delete);
 		ImageView imgRightIcon = (ImageView)getView().findViewById(R.id.img_id_header_right_icon);
 
@@ -101,7 +110,6 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 		lnrTransitType.setOnClickListener(this);
 		lnrWayType.setOnClickListener(this);
 		lnrCostType.setOnClickListener(this);
-		// imgPhoto1.setOnClickListener(this);
 		imgRightIcon.setOnClickListener(this);
 		btnDelete.setOnClickListener(this);
 		imgAdd.setOnClickListener(this);
@@ -109,12 +117,54 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 		if(!CCStringUtil.isEmpty(activeTransitId)){
 			btnDelete.setVisibility(View.VISIBLE);
 		}
+		initPlaceEditText();
 	}
 
 	private void initDialog(TransitModelHolder holder){
 		dlgTransitType = new ChiaseListDialog(activity, getString(R.string.sw_work_transit_trans_type_item), WelfareFormatUtil.convertList2Map(holder.transTypes), txtTransitType, null);
 		dlgWayType = new ChiaseListDialog(activity, getString(R.string.sw_work_transit_way_type_item), WelfareFormatUtil.convertList2Map(holder.wayTypes), txtWayType, null);
 		dlgCostType = new ChiaseListDialog(activity, getString(R.string.sw_work_transit_cost_type_item), WelfareFormatUtil.convertList2Map(holder.costTypes), txtCostType, null);
+	}
+
+	private void initPlaceEditText(){
+		edtLeave = (EditText)getView().findViewById(R.id.edt_id_leave);
+		edtArrive = (EditText)getView().findViewById(R.id.edt_id_arrive);
+
+		edtLeave.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+
+			@Override
+			public void onFocusChange(View v, boolean hasFocus){
+				if(hasFocus){
+					if(!CCCollectionUtil.isEmpty(mHolder.historyNames)){
+						Intent intent = new Intent(activity, PlaceHistoryActivity.class);
+						Bundle bundle = new Bundle();
+
+						bundle.putSerializable(SwConst.KEY_HISTORY_LIST, (Serializable)mHolder.historyNames);
+                        bundle.putString(SwConst.KEY_HISTORY_NAME, CCStringUtil.toString(edtLeave.getText()));
+						intent.putExtras(bundle);
+						startActivityForResult(intent, ENTRY_LEAVE);
+					}
+				}
+			}
+		});
+
+		edtArrive.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+
+			@Override
+			public void onFocusChange(View v, boolean hasFocus){
+				if(hasFocus){
+					if(!CCCollectionUtil.isEmpty(mHolder.historyNames)){
+						Intent intent = new Intent(activity, PlaceHistoryActivity.class);
+						Bundle bundle = new Bundle();
+
+						bundle.putSerializable(SwConst.KEY_HISTORY_LIST, (Serializable)mHolder.historyNames);
+                        bundle.putString(SwConst.KEY_HISTORY_NAME, CCStringUtil.toString(edtArrive.getText()));
+						intent.putExtras(bundle);
+						startActivityForResult(intent, ENTRY_ARRIVE);
+					}
+				}
+			}
+		});
 	}
 
 	@Override
@@ -135,10 +185,10 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 	@Override
 	protected void successLoad(JSONObject response, String url){
 		if(WfUrlConst.WF_TRANS_0002.equals(url)){
-			TransitModelHolder holder = CCJsonUtil.convertToModel(CCStringUtil.toString(response), TransitModelHolder.class);
-			initDialog(holder);
+			mHolder = CCJsonUtil.convertToModel(CCStringUtil.toString(response), TransitModelHolder.class);
+			initDialog(mHolder);
 			if(!CCStringUtil.isEmpty(activeTransitId)){
-				loadTransit(holder.transit);
+				loadTransit(mHolder.transit);
 			}
 		}else{
 			super.successLoad(response, url);
@@ -224,6 +274,18 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 
 			break;
 
+		case ENTRY_LEAVE:
+			Bundle bundle = returnedIntent.getExtras();
+			String leave = (String)bundle.getSerializable(SwConst.KEY_HISTORY_NAME);
+			edtLeave.setText(leave);
+            edtLeave.clearFocus();
+			break;
+		case ENTRY_ARRIVE:
+			Bundle bundle1 = returnedIntent.getExtras();
+			String arrive = (String)bundle1.getSerializable(SwConst.KEY_HISTORY_NAME);
+			edtArrive.setText(arrive);
+            edtArrive.clearFocus();
+			break;
 		default:
 			break;
 		}

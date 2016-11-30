@@ -17,4 +17,5 @@ public class TransitModelHolder{
 	public List<ApiObjectModel>	transTypes;
 
 	public TransitModel			transit;
+	public List<String>			historyNames;
 }

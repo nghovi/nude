@@ -13,6 +13,8 @@
             <LinearLayout
                 android:id="@+id/lnr_id_content"
                 style="@style/cs_common_match"
+                android:descendantFocusability="beforeDescendants"
+                android:focusableInTouchMode="true"
                 android:orientation="vertical"
                 android:paddingBottom="@dimen/margin_16dp"
                 android:paddingTop="@dimen/margin_16dp"

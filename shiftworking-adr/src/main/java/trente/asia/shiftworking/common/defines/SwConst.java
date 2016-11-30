@@ -22,6 +22,9 @@ public class SwConst{
 	public static final int				MAX_CHECK_USER				= 4;
 	public static final String			ACTION_TRANSIT_DELETE		= "ACTION_TRANSIT_DELETE";
 
+	public static final String			KEY_HISTORY_LIST			= "KEY_HISTORY_LIST";
+    public static final String			KEY_HISTORY_NAME			= "KEY_HISTORY_NAME";
+
 	public static Map<String, String>	offerTypes					= new LinkedHashMap<>();
 	public static final String			OFFER_TYPE_ABSENT			= "1";
 	public static final String			OFFER_TYPE_HOLIDAY			= "2";
