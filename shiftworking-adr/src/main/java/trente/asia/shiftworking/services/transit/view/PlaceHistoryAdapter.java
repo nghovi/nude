@@ -36,7 +36,7 @@ public class PlaceHistoryAdapter extends ArrayAdapter<String> {
     }
 
     public PlaceHistoryAdapter(Context context, List<String> lstPlace) {
-        super(context, R.layout.item_place_list, lstPlace);
+        super(context, R.layout.item_place_list, new ArrayList<String>());
         this.mContext = context;
         this.mLstPlace = lstPlace;
     }
@@ -44,6 +44,11 @@ public class PlaceHistoryAdapter extends ArrayAdapter<String> {
     @Override
     public int getCount() {
         return this.mLstPlaceDisplay.size();
+    }
+
+    @Override
+    public String getItem(int position) {
+        return mLstPlaceDisplay.get(position);
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
