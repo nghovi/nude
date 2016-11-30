@@ -46,6 +46,7 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 	private ChiaseTextView		txtWayType;
 	private ChiaseTextView		txtCostType;
 
+	private ImageView			activePhoto;
 	private LinearLayout		lnrAttachment;
 	private ImageView			imgAdd;
 	private Button				btnDelete;
@@ -217,7 +218,7 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 				}else{
 					mOriginalPath = returnedIntent.getExtras().getString(WelfareConst.IMAGE_PATH_KEY);
 					Uri uri = AndroidUtil.getUriFromFileInternal(activity, new File(mOriginalPath));
-					// imgPhoto1.setImageURI(uri);
+					activePhoto.setImageURI(uri);
 				}
 			}
 
@@ -259,9 +260,10 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 	}
 
 	private void addAttachment(){
-        numberAttachment++;
-        judgeAdd();
+		numberAttachment++;
+		judgeAdd();
 		LayoutInflater mInflater = (LayoutInflater)activity.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+
 		final View view = mInflater.inflate(R.layout.item_attachment_list, null);
 		ImageView imgDelete = (ImageView)view.findViewById(R.id.img_id_photo_delete);
 		imgDelete.setOnClickListener(new View.OnClickListener() {
@@ -269,21 +271,32 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 			@Override
 			public void onClick(View v){
 				lnrAttachment.removeView(view);
-                numberAttachment--;
-                judgeAdd();
+				numberAttachment--;
+				judgeAdd();
+			}
+		});
+
+		final ImageView imgPhoto = (ImageView)view.findViewById(R.id.img_id_photo);
+		imgPhoto.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v){
+				activePhoto = imgPhoto;
+				menuManager.openMenu(imgPhoto);
+				mViewForMenuBehind.setVisibility(View.VISIBLE);
 			}
 		});
 
 		lnrAttachment.addView(view);
 	}
 
-    private void judgeAdd(){
-        if(numberAttachment >= MAX_ATTACHMENT){
-            imgAdd.setEnabled(false);
-        }else{
-            imgAdd.setEnabled(true);
-        }
-    }
+	private void judgeAdd(){
+		if(numberAttachment >= MAX_ATTACHMENT){
+			imgAdd.setEnabled(false);
+		}else{
+			imgAdd.setEnabled(true);
+		}
+	}
 
 	@Override
 	public void onDestroy(){
