@@ -189,7 +189,6 @@
                     <LinearLayout
                         android:id="@+id/lnr_id_attachment"
                         style="@style/cs_common_match_wrap"
-                        android:layout_marginTop="@dimen/margin_10dp"
                         android:orientation="vertical"/>
 
                 </LinearLayout>
