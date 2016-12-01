@@ -216,6 +216,7 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 		LinearLayout lnrContent = (LinearLayout)getView().findViewById(R.id.lnr_id_content);
 		JSONObject jsonObject = CAObjectSerializeUtil.serializeObject(lnrContent, null);
 		try{
+            jsonObject.put("key", activeTransitId);
 			jsonObject.put("userId", myself.key);
 			jsonObject.put("transDate", CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, new Date()));
 		}catch(JSONException e){
