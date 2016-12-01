@@ -9,28 +9,69 @@
         style="@style/cs_common_match"
         android:layout_weight="1"
         android:orientation="vertical"
-        android:visibility="visible">
+        android:visibility="visible"
+        android:paddingLeft="@dimen/wf_margin_16"
+        android:paddingRight="@dimen/wf_margin_16">
 
         <include layout="@layout/view_common_shift_working_month"/>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="229dp"
+            android:layout_weight="0.63"
             android:orientation="vertical">
 
             <TextView
+                style="@style/sf_text_value_black_bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/sw_work_offer_history"/>
+                android:text="@string/sw_work_offer_history"
+                />
 
             <ListView
                 android:id="@+id/lst_work_offer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
             </ListView>
 
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/sf_text_value_black_bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/sw_work_offer_history"
+                android:id="@+id/textView"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/fragment_work_offer_filter_desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/fragment_offer_filter_other_history_filter"/>
+
+                <ImageView
+                    android:id="@+id/img_fragment_work_offer_filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_action_collection"/>
+            </LinearLayout>
+
+            <ListView
+                android:id="@+id/fragment_work_offer_other_history"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></ListView>
         </LinearLayout>
 
 

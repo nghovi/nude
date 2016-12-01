@@ -93,10 +93,16 @@ public class WfUrlConst{
 	public static final String	WF_TRANS_0001										= "/api/sw/transit/list";
 	public static final String	WF_TRANS_0002										= "/api/sw/transit/detail";
 	public static final String	WF_TRANS_0003										= "/api/sw/transit/update";
-    public static final String	WF_TRANS_0004										= "/api/sw/transit/delete";
+	public static final String	WF_TRANS_0004										= "/api/sw/transit/delete";
 
 	public static final String	WF_API_WOKER_LIST									= "/api/sw/work/users";
 	public static final String	WF_API_WORK_HISTORY									= "/api/sw/work/history";
+
+	public static final String	WF_SW_OFFER_LIST									= "/api/sw/offer/list";
+	public static final String	WF_SW_OFFER_DETAIL									= "/api/sw/offer/detail";
+	public static final String	WF_SW_OFFER_UPDATE									= "/api/sw/offer/update";
+	public static final String	WF_SW_OFFER_APPROVE									= "/api/sw/offer/approve";
+	public static final String	WF_SW_OFFER_DELETE									= "/api/sw/offer/delete";
 
 	/**
 	 * team360 API

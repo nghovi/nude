@@ -8,12 +8,12 @@
 
 
     <ImageView
-        android:id="@+id/img_item_offer_avatar"
+        android:id="@+id/img_item_approve_history_avatar"
         android:layout_width="@dimen/margin_32dp"
         android:layout_height="@dimen/margin_32dp"/>
 
     <LinearLayout
-        android:id="@+id/lnr_item_offer_main"
+        android:id="@+id/lnr_item_approve_history_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -29,19 +29,27 @@
             android:paddingRight="@dimen/margin_10dp">
 
             <TextView
-                android:id="@+id/txt_item_offer_username"
+                android:id="@+id/txt_item_approve_history_username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Username"
                 android:textColor="@color/core_gray"/>
 
             <TextView
-                android:id="@+id/txt_item_offer_date"
+                android:id="@+id/txt_item_approve_history_date"
                 style="@style/sf_text_value_blue_bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textAlignment="viewEnd"/>
+
+            <TextView
+                android:id="@+id/txt_item_approve_history_status"
+                style="@style/sf_text_value_blue_bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAlignment="viewEnd"
+                android:layout_weight="1"/>
         </LinearLayout>
 
         <LinearLayout
@@ -52,19 +60,13 @@
             android:paddingRight="@dimen/margin_10dp">
 
             <TextView
-                android:id="@+id/txt_item_offer_type"
+                android:id="@+id/txt_item_approve_history_comment"
                 style="@style/sf_text_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/margin_4dp"
                 android:text="Type:"/>
 
-            <TextView
-                android:id="@+id/txt_item_offer_status"
-                style="@style/sf_text_value_blue_bold"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAlignment="viewEnd"/>
         </LinearLayout>
 
     </LinearLayout>

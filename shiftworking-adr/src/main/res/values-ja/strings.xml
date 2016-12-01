@@ -90,6 +90,21 @@
     <string name="sw_work_transit_fee_item">交通費</string>
     <string name="sw_work_transit_note_item">ノート</string>
     <string name="sw_work_transit_attachment_item">添付</string>
-
     <string name="sw_work_transit_list_title">Transit list</string>
+    <string name="fragment_offer_filter_offer_type">Offer type</string>
+    <string name="fragment_offer_filter_other_history_filter">Filter: %1$s</string>
+    <string name="fragment_offer_filter_offer_status">Offer status</string>
+    <string name="fragment_offer_filter_offer_dept">Offer dept</string>
+    <string name="fragment_offer_filter_title">Filter</string>
+    <string name="fragment_offer_filter_clear">Clear</string>
+    <string name="fragment_offer_filter_update">Update</string>
+    <string name="fragment_offer_detail_header">Work offer detail</string>
+    <string name="fragment_offer_detail_start_date">Offer date start date</string>
+    <string name="fragment_offer_detail_start_time">Offer date start time</string>
+    <string name="fragment_offer_detail_end_date">Offer date end time</string>
+    <string name="fragment_offer_detail_end_time">Offer date end time</string>
+    <string name="fragment_offer_detail_note">Note</string>
+    <string name="fragment_offer_detail_approve_history">Work offer approve history</string>
+    <string name="fragment_offer_detail_approve_comment">Approve comment</string>
+    <string name="fragment_offer_edit_header">Work offer entry</string>
 </resources>

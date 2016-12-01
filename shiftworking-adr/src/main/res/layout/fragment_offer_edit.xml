@@ -7,12 +7,13 @@
               android:orientation="vertical"
               android:padding="0dp">
 
-    <include layout="@layout/view_common_header" />
+    <include layout="@layout/view_common_header"/>
 
     <ScrollView
+        android:id="@+id/scrollView3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/scrollView3">
+        android:layout_weight="1">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -23,193 +24,166 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/shape_gray_border"
-                android:gravity="center_vertical|center_horizontal"
-                android:orientation="vertical"
-                android:padding="@dimen/margin_16dp">
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/sf_text_value_black_bold"
+                    android:layout_width="@dimen/margin_100dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fragment_offer_edit_header"
+                    android:textAlignment="viewStart"/>
 
                 <LinearLayout
-                    android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/margin_8dp"
-                    android:gravity="center_vertical">
-
-                    <TextView
-                        android:layout_width="@dimen/margin_100dp"
-                        android:layout_height="wrap_content"
-                        android:text="@string/fragment_offer_edit_user_name"
-                        style="@style/cs_work_text_title" />
-                    <Spinner
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/spn_fragment_offer_edit_username"
-                        android:layout_gravity="right"
-                        android:gravity="right"></Spinner>
-                </LinearLayout>
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/margin_8dp"
-                    android:gravity="center_vertical">
-
-                    <TextView
-                        android:layout_width="@dimen/margin_100dp"
-                        android:layout_height="wrap_content"
-                        android:text="@string/fragment_offer_edit_offer_type"
-                        style="@style/cs_work_text_title" />
-                    <Spinner
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/spn_fragment_offer_edit_offer_type"
-                        android:layout_gravity="right"
-                        android:gravity="right"></Spinner>
-                </LinearLayout>
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/margin_8dp"
-                    android:gravity="center_vertical">
-
-                    <TextView
-                        android:layout_width="@dimen/margin_100dp"
-                        android:layout_height="wrap_content"
-                        android:text="@string/fragment_offer_edit_sub_type"
-                        style="@style/cs_work_text_title" />
-                    <Spinner
-                        android:layout_width="match_parent"
-                        android:id="@+id/spn_fragment_offer_edit_sub_type"
-                        android:layout_height="wrap_content"
-                        android:gravity="right"></Spinner>
-                </LinearLayout>
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/margin_8dp"
+                    android:layout_marginBottom="@dimen/margin_16dp"
                     android:gravity="center_vertical"
-                    android:id="@+id/lnr_start_date">
+                    android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        style="@style/sf_text_title"
+                        android:layout_width="@dimen/margin_150dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/fragment_offer_edit_start_date"
-                        android:layout_weight="1"
-                        style="@style/cs_work_text_title" />
+                        android:text="@string/fragment_offer_edit_offer_type"/>
+
+                    <include
+                        android:id="@+id/spn_fragment_offer_edit_offer_type"
+                        layout="@layout/view_wf_spinner"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/lnr_start_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_16dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/sf_text_title"
+                        android:layout_width="@dimen/margin_150dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/fragment_offer_detail_start_date"/>
 
                     <TextView
                         android:id="@+id/txt_fragment_offer_edit_start_date"
-                        style="@style/cs_work_text_value"
-                        android:layout_width="wrap_content"
+                        style="@style/sf_text_value_black"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="@dimen/margin_6dp"
+                        android:background="@drawable/wf_background_gray_border_white_padding"
                         android:textColor="@color/chiase_blue"/>
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/imageView2"
-                        android:src="@drawable/ic_action_collection" />
-
                 </LinearLayout>
+
                 <LinearLayout
-                    android:orientation="horizontal"
+                    android:id="@+id/lnr_start_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/margin_8dp"
+                    android:layout_marginBottom="@dimen/margin_16dp"
                     android:gravity="center_vertical"
-                    android:id="@+id/lnr_end_date">
+                    android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        style="@style/sf_text_title"
+                        android:layout_width="@dimen/margin_150dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/fragment_offer_edit_end_date"
-                        android:layout_weight="1"
-                        style="@style/cs_work_text_title" />
+                        android:text="@string/fragment_offer_detail_start_time"/>
+
+                    <TextView
+                        android:id="@+id/txt_fragment_offer_edit_start_time"
+                        style="@style/sf_text_value_black"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/wf_background_gray_border_white_padding"
+                        android:layout_marginRight="@dimen/margin_6dp"
+                        android:textColor="@color/chiase_blue"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/lnr_end_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_16dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/sf_text_title"
+                        android:layout_width="@dimen/margin_150dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/fragment_offer_detail_end_date"/>
 
                     <TextView
                         android:id="@+id/txt_fragment_offer_edit_end_date"
-                        style="@style/cs_work_text_value"
-                        android:layout_width="wrap_content"
+                        style="@style/sf_text_value_black"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/wf_background_gray_border_white_padding"
                         android:layout_marginRight="@dimen/margin_6dp"
                         android:textColor="@color/chiase_blue"/>
 
-                    <ImageView
-                        android:layout_width="wrap_content"
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/lnr_end_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_16dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/sf_text_title"
+                        android:layout_width="@dimen/margin_150dp"
                         android:layout_height="wrap_content"
-                        android:id="@+id/imageView3"
-                        android:src="@drawable/ic_action_collection" />
+                        android:text="@string/fragment_offer_detail_end_time"/>
+
+                    <TextView
+                        android:id="@+id/txt_fragment_offer_edit_end_time"
+                        style="@style/sf_text_value_black"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/wf_background_gray_border_white_padding"
+                        android:layout_marginRight="@dimen/margin_6dp"
+                        android:textColor="@color/chiase_blue"/>
 
                 </LinearLayout>
 
-            </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_16dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/fragment_offer_edit_reason"
-                android:id="@+id/textView6"
-                android:layout_marginTop="@dimen/margin_20dp"
-                style="@style/cs_work_text_title" />
+                    <TextView
+                        android:id="@+id/textView6"
+                        style="@style/sf_text_title"
+                        android:layout_width="@dimen/margin_150dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/fragment_offer_detail_note"/>
 
-            <EditText
-                style="@style/cs_work_edit_text"
-                android:layout_width="match_parent"
-                android:layout_gravity="center_vertical"
-                android:singleLine="false"
-                android:maxLines="2"
-                android:minLines="2"
-                android:hint=""
-                custome:mName="password"
-                android:layout_height="@dimen/margin_60dp"
-                android:id="@+id/edt_fragment_offer_edit_reason" />
+                    <EditText
+                        android:id="@+id/edt_fragment_offer_edit_note"
+                        style="@style/sf_edit_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/margin_60dp"
+                        android:layout_gravity="center_vertical"
+                        android:hint=""
+                        android:maxLines="2"
+                        android:minLines="2"
+                        android:singleLine="false"
+                        custome:mName="password"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/fragment_offer_edit_memo"
-                android:layout_marginTop="@dimen/margin_20dp"
-                style="@style/cs_work_text_title" />
+                </LinearLayout>
 
-            <EditText
-                style="@style/cs_work_edit_text"
-                android:layout_width="match_parent"
-                android:layout_gravity="center_vertical"
-                android:singleLine="false"
-                android:maxLines="2"
-                android:minLines="2"
-                android:hint=""
-                custome:mName="password"
-                android:layout_height="@dimen/margin_60dp"
-                android:id="@+id/edt_fragment_offer_edit_memo" />
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical|center_horizontal">
-
-                <Button
-                    android:layout_width="@dimen/margin_150dp"
-                    android:layout_height="@dimen/margin_60dp"
-                    android:text="Delete"
-                    android:id="@+id/btn_fragment_offer_edit_delete"
-                    style="@style/wl_common_button_60"/>
-
-                <Button
-                    android:layout_width="@dimen/margin_150dp"
-                    android:layout_height="@dimen/margin_60dp"
-                    android:text="Update"
-                    android:id="@+id/btn_fragment_offer_edit_update"
-                    style="@style/wl_common_button_60"/>
             </LinearLayout>
 
 
         </LinearLayout>
     </ScrollView>
 
+    <include layout="@layout/view_common_footer"/>
 
 </LinearLayout>

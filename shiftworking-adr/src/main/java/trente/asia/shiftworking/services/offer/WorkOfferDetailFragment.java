@@ -1,5 +1,6 @@
 package trente.asia.shiftworking.services.offer;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,24 +13,32 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import asia.chiase.core.util.CCJsonUtil;
+import asia.chiase.core.util.CCStringUtil;
+import trente.asia.android.activity.ChiaseActivity;
+import trente.asia.android.view.ChiaseListViewNoScroll;
 import trente.asia.shiftworking.R;
 import trente.asia.shiftworking.common.activities.MainActivity;
 import trente.asia.shiftworking.common.defines.SwConst;
 import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
 import trente.asia.shiftworking.services.offer.model.WorkOffer;
+import trente.asia.shiftworking.services.offer.view.ApproveHistoryAdapter;
 import trente.asia.welfare.adr.define.WfUrlConst;
+import trente.asia.welfare.adr.dialog.WfDialog;
+import trente.asia.welfare.adr.models.DeptModel;
 import trente.asia.welfare.adr.models.UserModel;
 
 public class WorkOfferDetailFragment extends AbstractSwFragment{
 
-	private WorkOffer offer;
+	private WorkOffer			offer;
 	private String				selectedWorkOfferStatusCode;
 	Map<String, String>			targetUserModels	= new HashMap<String, String>();
 	Map<String, List<Double>>	groupInfo;
 	private int					approveGroupType;
+	private ImageView			btnEdit;
 
 	public void setFromPush(boolean fromPush){
 		isFromPush = fromPush;
@@ -48,6 +57,8 @@ public class WorkOfferDetailFragment extends AbstractSwFragment{
 	@Override
 	protected void initView(){
 		super.initView();
+		buildHeaderWithBackBtn(myself.userName);
+		buildWorkOfferDetail();
 	}
 
 	@Override
@@ -70,65 +81,55 @@ public class WorkOfferDetailFragment extends AbstractSwFragment{
 			e.printStackTrace();
 		}
 
-		requestLoad(WfUrlConst.API_THANKSCARD_GET_CATEGORY, jsonObject, true);
+		requestLoad(WfUrlConst.WF_SW_OFFER_DETAIL, jsonObject, true);
 	}
 
 	private void buildWorkOfferDetail(){
-		buildHeaderWithBackBtn(getString(R.string.fragment_offer_detail_title));
-		((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_username)).setText(offer.targetUserName);
+		buildOfferInfo();
+		buildWorkOfferApproveHistory();
+		buildActionButtons();
+	}
+
+	private void buildOfferInfo(){
 		String offerType = SwConst.offerTypes.get(offer.offerType);
-		String subType = SwConst.subTypes.get(offer.offerType).get(offer.subType);
-		((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_offer_type)).setText(offerType + "/" + subType);
-		((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_status)).setText(SwConst.offerStatus.get(offer.status));
 
-		// String startDate = offer.startDateString;
-		// ((TextView) getView().findViewById(R.id.txt_fragment_offer_detail_start_date))
-		// .setText(CSWUtil.isEmpty(offer.startTime) ? startDate : startDate + " ~ "
-		// + offer.startTime);
-		//
-		// String endDate = offer.endDateString;
-		// ((TextView) getView().findViewById(R.id.txt_fragment_offer_detail_end_date))
-		// .setText(CSWUtil.isEmpty(offer.endTime) ? endDate : endDate + " ~ " + offer.endTime);
+		((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_offer_type)).setText(offerType);
 
-		TextView txtReason = (TextView)getView().findViewById(R.id.txt_fragment_offer_detail_reason);
-		txtReason.setText(offer.content);
+		((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_start_date)).setText(offer.startDateString);
 
-		TextView txtMemo = (TextView)getView().findViewById(R.id.txt_fragment_offer_detail_memo);
-		txtMemo.setText(offer.note);
+		((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_end_date)).setText(offer.endDateString);
 
-		buildApproveResult();
+		if(CCStringUtil.isEmpty(offer.startTime)){
+			getView().findViewById(R.id.lnr_start_time).setVisibility(View.INVISIBLE);
+		}else{
+			((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_start_time)).setText(offer.startTime);
+		}
 
-		buildApproveAction();
+		if(CCStringUtil.isEmpty(offer.endTime)){
+			getView().findViewById(R.id.lnr_end_time).setVisibility(View.INVISIBLE);
+		}else{
+			((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_end_time)).setText(offer.endTime);
+		}
+
+		TextView txtNote = (TextView)getView().findViewById(R.id.txt_fragment_offer_detail_note);
+		txtNote.setText(offer.note);
 	}
 
-	private void buildApproveResult(){
-		TextView txtApprove1 = (TextView)getView().findViewById(R.id.txt_fragment_offer_detail_approve1);
-		TextView txtApprove1Comment = (TextView)getView().findViewById(R.id.txt_fragment_offer_detail_approve1_comment);
-		TextView txtApprove2 = (TextView)getView().findViewById(R.id.txt_fragment_offer_detail_approve2);
-		TextView txtApprove2Comment = (TextView)getView().findViewById(R.id.txt_fragment_offer_detail_approve2_comment);
+	private void buildActionButtons(){
+		Button btnReject = (Button)getView().findViewById(R.id.btn_fragment_offer_detail_reject);
+		btnReject.setOnClickListener(this);
 
-		buildApproveResultPart(txtApprove1, txtApprove1Comment, offer.approve1);
-		buildApproveResultPart(txtApprove2, txtApprove2Comment, offer.approve2);
+		Button btnApprove = (Button)getView().findViewById(R.id.btn_fragment_offer_detail_approve);
+		btnApprove.setOnClickListener(this);
+
+		Button btnDelete = (Button)getView().findViewById(R.id.btn_fragment_offer_detail_delete);
+		btnDelete.setOnClickListener(this);
 	}
 
-	private void buildApproveResultPart(TextView txtResult, TextView txtComment, WorkOffer.Approve approve){
-		// if (CSWUtil.isNotEmpty(approve.result)) {
-		// txtResult.setVisibility(View.VISIBLE);
-		// txtResult.setText(approve.result.equals(SwConst.APPROVE_STATUS_NA) ? SwConst.approveTypes
-		// .get(SwConst.APPROVE_STATUS_NA) : getString(
-		// R.string.fragment_offer_detail_approve, SwConst.approveTypes.get(approve.result),
-		// approve.historyName));
-		// String approveComment = getApproveComment(approve);
-		// if (CSWUtil.isNotEmpty(approveComment)) {
-		// txtComment.setVisibility(View.VISIBLE);
-		// txtComment.setText("\"" + approveComment + "\"");
-		// } else {
-		// txtComment.setVisibility(View.GONE);
-		// }
-		// } else {
-		// txtResult.setVisibility(View.GONE);
-		// txtComment.setVisibility(View.GONE);
-		// }
+	private void buildWorkOfferApproveHistory(){
+		ChiaseListViewNoScroll lstApproveHistory = (ChiaseListViewNoScroll)getView().findViewById(R.id.lst_fragment_offer_detail_approve_history);
+		ApproveHistoryAdapter adapter = new ApproveHistoryAdapter(activity, offer.historyList);
+		lstApproveHistory.setAdapter(adapter);
 	}
 
 	private String getApproveComment(WorkOffer.Approve approve){
@@ -144,93 +145,53 @@ public class WorkOfferDetailFragment extends AbstractSwFragment{
 		return result;
 	}
 
-	private void onClickApproveButton(){
-		// Calendar c = Calendar.getInstance();
-		// String execType = "approve";
-		// String flow =
-		// approveGroupType == ApproveStatus.APPROVE1 ? offer.approve1.flow
-		// : offer.approve2.flow;
-		// JSONObject jsonObject =
-		// getJsonBuilder()
-		// .add("startTime", offer.startTime)
-		// .add("endTime", offer.endTime)
-		// .add("key", offer.key)
-		// .add("keyHash", offer.keyHash)
-		// .add("execType", execType)
-		// .add("flow", flow)
-		// .add("offerUserModelId", offer.offerUserModelId)
-		// .add("offerType", offer.offerType)
-		// .add("subType", offer.subType)
-		// .add("status", selectedWorkOfferStatusCode)
-		// .add("approveNote",
-		// ((EditText) getView().findViewById(
-		// R.id.edt_fragment_offer_detail_comment)).getText()
-		// .toString()).add("offerDate", offer.offerDateString)
-		// .add("startDate", offer.startDateString)
-		// .add("endDate", offer.endDateString).add("content", offer.content)
-		// .add("note", offer.note).getJsonObj();
-		// requestUpdate(SwConst.API_WORK_OFFER_UPDATE, jsonObject, true);
-	}
-
 	protected void buildHeaderWithBackBtn(String title){
-		// if (isFromPush) {
-		// super.buildHeaderWithTitle(title);
-		// } else {
-		// super.buildHeaderWithBackBtn(title);
-		// }
-		// UserModel userMe = prefAccUtil.getUserModelPref();
-		// int userType = getUserModelType(groupInfo, offer, userMe);
-		// if ((offer.status == Offer.OFFER_STATUS_OFFERING && (isUserModelWorkOffer(userMe, offer)
-		// || (userType == UserModel.GROUP && isUserModelWorkOffer(userMe, offer)) || userType == UserModel.ADMIN))
-		// || (offer.status == Offer.OFFER_STATUS_APPROVING
-		// && offer.approve1.result.equals(SwConst.APPROVE_STATUS_YET)
-		// && (offer.approve2.result.equals(SwConst.APPROVE_STATUS_YET) || offer.approve2.result
-		// .equals(SwConst.APPROVE_STATUS_NA)) && (isUserModelWorkOffer(userMe, offer)
-		// || (userType == UserModel.GROUP && isUserModelWorkOffer(userMe, offer)) || userType == UserModel.ADMIN))
-		//
-		// || (offer.status == Offer.OFFER_STATUS_APPROVING
-		// && offer.approve2.result.equals(SwConst.APPROVE_STATUS_YET)
-		// && (offer.approve1.result.equals(SwConst.APPROVE_STATUS_YET) || offer.approve1.result
-		// .equals(SwConst.APPROVE_STATUS_NA)) && (isUserModelWorkOffer(userMe, offer)
-		// || (userType == UserModel.GROUP && isUserModelWorkOffer(userMe, offer)) || userType == UserModel.ADMIN))) {
-		// ImageView btnEdit =
-		// (ImageView) getView().findViewById(R.id.img_view_common_header_right_btn);
-		// btnEdit.setImageResource(R.drawable.bb_action_edit);
-		// btnEdit.setVisibility(View.VISIBLE);
-		// btnEdit.setOnClickListener(new View.OnClickListener() {
-		//
-		// @Override
-		// public void onClick(View v) {
-		// gotoWorkOfferEdit();
-		// }
-		// });
-		// }
+		super.initHeader(R.drawable.wf_back_white, title, R.drawable.ic_action_remove);
+		btnEdit = (ImageView)getView().findViewById(R.id.img_id_header_right_icon);
+		if(WorkOffer.OFFER_PERMISSION_EDITABLE.equals(offer.permission)){
+			btnEdit.setVisibility(View.VISIBLE);
+			btnEdit.setOnClickListener(this);
+		}else{
+			btnEdit.setVisibility(View.INVISIBLE);
+		}
 	}
 
-	public static int getUserModelType(Map<String, List<Double>> groupInfo, WorkOffer offer, UserModel userMe){
-		// if (userMe.isBoss) {
-		// return UserModel.ADMIN;
-		// } else if (canApprove(groupInfo, offer, userMe)) {
-		// return UserModel.GROUP;
-		// }
-		// return UserModel.NORMAL;
-		return 0;
+	private void onClickBtnDelete(){
+		final WfDialog dlgConfirmDelete = new WfDialog(activity);
+		dlgConfirmDelete.setDialogTitleButton(getString(R.string.fragment_offer_edit_confirm_delete_msg), getString(android.R.string.ok), getString(android.R.string.cancel), new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v){
+				sendDeleteOfferRequest();
+				dlgConfirmDelete.dismiss();
+			}
+		}).show();
+
 	}
 
-	public static boolean isUserModelWorkOffer(UserModel userMe, WorkOffer offer){
-		// return userMe.userId.equals(offer.offerUserModelId);
-		return false;
+	private void sendDeleteOfferRequest(){
+		JSONObject jsonObject = new JSONObject();
+		try{
+			jsonObject.put("key", offer.key);
+		}catch(JSONException e){
+			e.printStackTrace();
+		}
+		requestUpdate(WfUrlConst.WF_SW_OFFER_DELETE, jsonObject, true);
 	}
 
 	@Override
 	protected void successUpdate(JSONObject response, String url){
-		// ((MainActivity) activity).onClickWorkOfferListFooter(Integer.parseInt(CSWUtil.getDateString(
-		// offer.endDateString, SwConst.DISPLAY_DATE_FORMAT, SwConst.DISPLAY_MONTH_FORMAT)) - 1);
+		if(WfUrlConst.WF_SW_OFFER_DELETE.equals(url)){
+			((ChiaseActivity)activity).isInitData = true;
+			onClickBackBtn();
+		}else{
+			((ChiaseActivity)activity).isInitData = true;
+			onClickBackBtn();
+		}
 	}
 
 	@Override
 	protected void successLoad(JSONObject response, String url){
-		// // TODO: 5/27/2016 api should return targetUserName ?
 		String targetUserName = offer.targetUserName;
 		offer = CCJsonUtil.convertToModel(response.optString("offer"), WorkOffer.class);
 		groupInfo = CCJsonUtil.convertToModel(response.optString("groupJoinMap"), Map.class);
@@ -244,145 +205,51 @@ public class WorkOfferDetailFragment extends AbstractSwFragment{
 		}
 	}
 
-	private void gotoWorkOfferEdit(){
-		// WorkOfferEditFragment workWorkOfferEditFragment = new WorkOfferEditFragment();
-		// workWorkOfferEditFragment.setWorkOffer(offer);
-		// workWorkOfferEditFragment.setGroupInfo(groupInfo);
-		// workWorkOfferEditFragment.setTargetUserModels(targetUserModels);
-		// ((MainActivity) activity).addFragment(workWorkOfferEditFragment);
-	}
-
-	private void buildApproveAction(){
-		// UserModel userMe = prefAccUtil.getUserModelPref();
-		// int userType = getUserModelType(groupInfo, offer, userMe);
-		// approveGroupType = getApproveGroupType(userMe, userType);
-		// ApproveStatus approveStatus =
-		// new ApproveStatus(offer.approve1.result, offer.approve2.result, userType,
-		// approveGroupType);
-		// final List<String> approveStatusValues = SwConst.approveStatusListMap.get(approveStatus);
-		// if (CSWUtil.isNotEmpty(offer.approveNote))
-		// ((TextView) getView().findViewById(R.id.edt_fragment_offer_detail_comment))
-		// .setText(offer.approveNote);
-		// if (approveStatusValues != null) {
-		// buildApproveButton();
-		//
-		// ArrayAdapter<String> dataAdapter =
-		// new ArrayAdapter<String>(activity, android.R.layout.simple_spinner_item,
-		// approveStatusValues);
-		// dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		// Spinner spinner =
-		// (Spinner) getView().findViewById(R.id.spn_fragment_offer_detail_approve_type);
-		// spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-		// @Override
-		// public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-		// selectedWorkOfferStatusCode =
-		// (String) CSWUtil.getKeyFromValue(SwConst.approveTypes,
-		// approveStatusValues.get(position));
-		// }
-		//
-		// @Override
-		// public void onNothingSelected(AdapterView<?> parent) {
-		//
-		// }
-		// });
-		// spinner.setAdapter(dataAdapter);
-		// int defaultPosition = 0;
-		// String previousApproveValue =
-		// approveGroupType == ApproveStatus.APPROVE1 ? SwConst.approveTypes
-		// .get(offer.approve1.result)
-		// : (approveGroupType == ApproveStatus.APPROVE2 ? SwConst.approveTypes
-		// .get(offer.approve2.result) : null);
-		// for (int i = 0; i < approveStatusValues.size(); i++) {
-		// if (approveStatusValues.get(i).equals(previousApproveValue)) {
-		// defaultPosition = i;
-		// }
-		// }
-		// spinner.setSelection(defaultPosition);
-		// } else {
-		// getView().findViewById(R.id.lnr_fragment_offer_detail_approve).setVisibility(View.GONE);
-		// if (CSWUtil.isEmpty(offer.approveNote))
-		// getView().findViewById(R.id.edt_fragment_offer_detail_comment).setVisibility(
-		// View.GONE);
-		// }
-	}
-
-	private int getApproveGroupType(UserModel userMe, int userType){
-		// if (offer.approve2.groupId != null) {
-		// List<Double> memberIds = groupInfo.get(offer.approve2.groupId);
-		// for (Double memberId : memberIds) {
-		// if (memberId.intValue() == Integer.parseInt(userMe.userId)) {
-		// return ApproveStatus.APPROVE2;
-		// }
-		// }
-		// }
-		//
-		// if (offer.approve1.groupId != null) {
-		// List<Double> memberIds = groupInfo.get(offer.approve1.groupId);
-		// for (Double memberId : memberIds) {
-		// if (memberId.intValue() == Integer.parseInt(userMe.userId)) {
-		// return ApproveStatus.APPROVE1;
-		// }
-		// }
-		// }
-
-		// if (userType == UserModel.ADMIN) {
-		// if ((offer.approve1.result.equals(SwConst.APPROVE_STATUS_YET)
-		// || offer.approve1.result.equals(SwConst.APPROVE_STATUS_ACCEPT)
-		// || offer.approve1.result.equals(SwConst.APPROVE_STATUS_STOP) || offer.approve1.result
-		// .equals(SwConst.APPROVE_STATUS_NA))
-		// && (offer.approve2.result.equals(SwConst.APPROVE_STATUS_YET)
-		// || offer.approve2.result.equals(SwConst.APPROVE_STATUS_ACCEPT) || offer.approve2.result
-		// .equals(SwConst.APPROVE_STATUS_STOP))) {
-		// return ApproveStatus.APPROVE2;
-		// } else {
-		// return ApproveStatus.APPROVE1;
-		// }
-		// }
-
-		return ApproveStatus.APPROVE0;
-	}
-
-	public static boolean canApprove(Map<String, List<Double>> groupInfo, WorkOffer offer, UserModel userMe){
-		// if (userMe.userId.equals(offer.offerUserModelId)) {
-		// return false;
-		// }
-		//
-		// List<Double> memberIds = null;
-		// if (CSWUtil.isNotEmpty(offer.approve1.groupId)) {
-		// memberIds = groupInfo.get(offer.approve1.groupId);
-		// }
-		// if (memberIds != null && CSWUtil.isNotEmpty(offer.approve2.groupId)) {
-		// List<Double> approve2GroupIds = groupInfo.get(offer.approve2.groupId);
-		// if (approve2GroupIds != null) {
-		// memberIds.addAll(approve2GroupIds);
-		// }
-		// } else if (CSWUtil.isNotEmpty(offer.approve2.groupId)) {
-		// memberIds = groupInfo.get(offer.approve2.groupId);
-		// }
-		// if (memberIds != null) {
-		// for (Double memberId : memberIds) {
-		// if (memberId.intValue() == Integer.parseInt(userMe.userId)) {
-		// return true;
-		// }
-		// }
-		// }
-		return false;
-	}
-
-	private void buildApproveButton(){
-		Button btnAprrove = (Button)getView().findViewById(R.id.btn_fragment_offer_detail_approve);
-		btnAprrove.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v){
-				onClickApproveButton();
-			}
-		});
+	private void gotoWorkOfferEditFragment(){
+		WorkOfferEditFragment fragment = new WorkOfferEditFragment();
+		List<DeptModel> deptModels = new ArrayList<>();
+		// fragment.setFiltersAndDepts(filters, deptModels);
+		gotoFragment(fragment);
 	}
 
 	@Override
 	public void onClick(View v){
+		switch(v.getId()){
+		case R.id.img_id_header_right_icon:
+			gotoWorkOfferEditFragment();
+			break;
+		case R.id.btn_fragment_offer_detail_delete:
+			onClickBtnDelete();
+			break;
+		case R.id.btn_fragment_offer_detail_approve:
+			onClickBtnApprove();
+			break;
+		case R.id.btn_fragment_offer_detail_reject:
+			onClickBtnReject();
+			break;
+		default:
+			break;
+		}
+	}
 
+	private void onClickBtnReject(){
+		JSONObject jsonObject = new JSONObject();
+		try{
+			jsonObject.put("key", offer.key);
+		}catch(JSONException e){
+			e.printStackTrace();
+		}
+		requestUpdate(WfUrlConst.WF_SW_OFFER_UPDATE, jsonObject, true);
+	}
+
+	private void onClickBtnApprove(){
+		JSONObject jsonObject = new JSONObject();
+		try{
+			jsonObject.put("key", offer.key);
+		}catch(JSONException e){
+			e.printStackTrace();
+		}
+		requestUpdate(WfUrlConst.WF_SW_OFFER_APPROVE, jsonObject, true);
 	}
 
 	public static class ApproveStatus{

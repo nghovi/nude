@@ -70,20 +70,20 @@
         <item name="android:ellipsize">end</item>
     </style>
 
-    <style name="cs_work_text_title">
+    <style name="sf_text_title">
         <item name="android:textSize">12sp</item>
         <item name="android:singleLine">true</item>
         <item name="android:ellipsize">end</item>
     </style>
 
-    <style name="cs_work_text_value">
+    <style name="sf_text_value_black">
         <item name="android:textSize">13sp</item>
         <item name="android:textColor">#000000</item>
         <item name="android:singleLine">true</item>
         <item name="android:ellipsize">end</item>
     </style>
 
-    <style name="cs_work_text_value_black_bold">
+    <style name="sf_text_value_black_bold">
         <item name="android:textSize">13sp</item>
         <item name="android:textColor">#000000</item>
         <item name="android:textStyle">bold</item>
@@ -91,7 +91,15 @@
         <item name="android:ellipsize">end</item>
     </style>
 
-    <style name="cs_work_edit_text">
+    <style name="sf_text_value_blue_bold">
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/sw_data_text_color</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="sf_edit_text">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">12dp</item>

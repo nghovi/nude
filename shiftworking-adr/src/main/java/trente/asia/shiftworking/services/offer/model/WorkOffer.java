@@ -14,6 +14,10 @@ public class WorkOffer {
     public static final Integer OFFER_STATUS_DISABLED = 7;
     public static final Integer OFFER_STATUS_ALL = 0;
 
+    public static final String OFFER_PERMISSION_EDITABLE = "ME";
+    public static final String OFFER_PERMISSION_APPROVEABLE = "AP";
+    public static final String OFFER_PERMISSION_SHOW= "VW";
+
     public WorkOffer() {
     }
 

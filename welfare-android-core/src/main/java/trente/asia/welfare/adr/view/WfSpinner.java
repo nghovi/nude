@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import asia.chiase.core.util.CCStringUtil;
 import trente.asia.welfare.adr.R;
 
 /**
@@ -59,8 +60,11 @@ public class WfSpinner extends LinearLayout implements AdapterView.OnItemSelecte
 
 	public void setupLayout(String spinnerName, List<String> values, int selectedIndex, OnDRSpinnerItemSelectedListener onDRSpinnerItemSelectedListener, boolean isTriggerEvent){
 		txtName = (TextView)this.getChildAt(0);
-		txtName.setText(spinnerName);
-
+		if (CCStringUtil.isEmpty(spinnerName)) {
+			txtName.setVisibility(View.GONE);
+		} else {
+			txtName.setText(spinnerName);
+		}
 		this.spinner = (Spinner)this.getChildAt(1);
 		this.listener = onDRSpinnerItemSelectedListener;
 
