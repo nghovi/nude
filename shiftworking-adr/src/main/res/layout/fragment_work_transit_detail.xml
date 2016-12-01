@@ -47,7 +47,7 @@
                 <TextView
                     style="@style/wl_common_text"
                     android:layout_width="wrap_content"
-                    android:text="Arrive"/>
+                    android:text="@string/sw_work_transit_arrive_item"/>
 
                 <TextView
                     android:id="@+id/txt_id_arrive"

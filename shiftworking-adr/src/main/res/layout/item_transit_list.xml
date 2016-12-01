@@ -10,14 +10,12 @@
 
     <TextView
         android:id="@+id/txt_id_leave"
-        style="@style/wl_common_text_single_line"
-        android:text="Leave:"/>
+        style="@style/wl_common_text_single_line"/>
 
     <TextView
         android:id="@+id/txt_id_arrive"
         style="@style/wl_common_text_single_line"
-        android:layout_marginTop="@dimen/margin_6dp"
-        android:text="Arrive:"/>
+        android:layout_marginTop="@dimen/margin_6dp"/>
 
 
     <LinearLayout
@@ -30,16 +28,14 @@
             style="@style/wl_common_text_single_line"
             android:layout_width="@dimen/margin_0dp"
             android:layout_marginRight="@dimen/margin_5dp"
-            android:layout_weight="1"
-            android:text="Way type:"/>
+            android:layout_weight="1"/>
 
         <TextView
             android:id="@+id/txt_id_cost_type"
             style="@style/wl_common_text_single_line"
             android:layout_width="@dimen/margin_0dp"
             android:layout_marginLeft="@dimen/margin_5dp"
-            android:layout_weight="1"
-            android:text="Cost type:"/>
+            android:layout_weight="1"/>
     </LinearLayout>
 
     <LinearLayout
@@ -52,16 +48,14 @@
             style="@style/wl_common_text_single_line"
             android:layout_width="@dimen/margin_0dp"
             android:layout_marginRight="@dimen/margin_5dp"
-            android:layout_weight="1"
-            android:text="Transit type:"/>
+            android:layout_weight="1"/>
 
         <TextView
             android:id="@+id/txt_id_fee"
             style="@style/wl_common_text_single_line"
             android:layout_width="@dimen/margin_0dp"
             android:layout_marginLeft="@dimen/margin_5dp"
-            android:layout_weight="1"
-            android:text="Fee:"/>
+            android:layout_weight="1"/>
     </LinearLayout>
 
 </LinearLayout>
