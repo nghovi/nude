@@ -90,4 +90,6 @@
     <string name="sw_work_transit_fee_item">交通費</string>
     <string name="sw_work_transit_note_item">ノート</string>
     <string name="sw_work_transit_attachment_item">添付</string>
+
+    <string name="sw_work_transit_list_title">Transit list</string>
 </resources>

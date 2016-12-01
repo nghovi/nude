@@ -16,7 +16,7 @@
             style="@style/wl_common_text"
             android:paddingLeft="@dimen/margin_16dp"
             android:paddingRight="@dimen/margin_16dp"
-            android:text="Work transit form"
+            android:text="@string/sw_work_transit_list_title"
             android:textStyle="bold"/>
 
         <ListView

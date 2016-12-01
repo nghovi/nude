@@ -87,6 +87,8 @@
     <string name="sw_work_transit_note_item">Note</string>
     <string name="sw_work_transit_attachment_item">Attachment</string>
 
+    <string name="sw_work_transit_list_title">Transit list</string>
+
     <string name="fragment_offer_detail_title">Offer Detail</string>
     <string name="fragment_offer_detail_comment_hint">Comment</string>
     <string name="fragment_offer_detail_approve">%1$s by %2$s</string>
