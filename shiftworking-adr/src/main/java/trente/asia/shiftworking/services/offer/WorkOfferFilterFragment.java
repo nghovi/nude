@@ -1,33 +1,20 @@
 package trente.asia.shiftworking.services.offer;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
 
-import asia.chiase.core.util.CCFormatUtil;
-import asia.chiase.core.util.CCJsonUtil;
+import trente.asia.android.activity.ChiaseActivity;
 import trente.asia.shiftworking.R;
-import trente.asia.shiftworking.common.defines.SwConst;
 import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
 import trente.asia.shiftworking.services.offer.model.WorkOffer;
-import trente.asia.shiftworking.services.offer.view.WorkOfferAdapter;
-import trente.asia.shiftworking.services.shiftworking.view.CommonMonthView;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.define.WfUrlConst;
-import trente.asia.welfare.adr.models.DeptModel;
-import trente.asia.welfare.adr.utils.WelfareUtil;
+import trente.asia.shiftworking.services.offer.model.WorkOffer.OfferDept;
 import trente.asia.welfare.adr.view.WfSpinner;
 
 public class WorkOfferFilterFragment extends AbstractSwFragment{
@@ -39,20 +26,24 @@ public class WorkOfferFilterFragment extends AbstractSwFragment{
 	WfSpinner					spnType;
 	WfSpinner					spnStatus;
 	WfSpinner					spnDept;
-	private String				selectedType;
-	private String				selectedStatus;
-	private String				selectedDept;
+	private int					selectedType;
+	private int					selectedStatus;
+	private int					selectedDept;
 	private Map<String, String>	depts;
+	private Map<String, String>	offerTypesMaster;
+	private Map<String, String>	offerStatusMaster;
 
-	public void setFiltersAndDepts(Map<String, String> filters, List<DeptModel> deptModels){
-		this.filters = filters;
-		depts = new HashMap<String, String>();
-		for(DeptModel deptModel : deptModels){
-			depts.put(deptModel.key, deptModel.deptName);
-		}
+	public void setOfferTypeStatusMaster(Map<String, String> offerTypesMaster, Map<String, String> offerStatusMaster){
+		this.offerTypesMaster = offerTypesMaster;
+		this.offerStatusMaster = offerStatusMaster;
 	}
 
-	private Map<String, String>	filters;
+	public void setFiltersAndDepts(Map<String, Integer> filters, Map<String, String> offerDepts){
+		this.filters = filters;
+		depts = offerDepts;
+	}
+
+	private Map<String, Integer>	filters;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -80,27 +71,39 @@ public class WorkOfferFilterFragment extends AbstractSwFragment{
 	}
 
 	private void buildSpinners(){
-		spnType.setupLayout("", new ArrayList<String>(SwConst.offerTypes.values()), 0, new WfSpinner.OnDRSpinnerItemSelectedListener() {
+		selectedType = 0;
+		if(filters.containsKey(TYPE)){
+			selectedType = filters.get(TYPE);
+		}
+		spnType.setupLayout("", new ArrayList<String>(offerTypesMaster.values()), selectedType, new WfSpinner.OnDRSpinnerItemSelectedListener() {
 
 			@Override
 			public void onItemSelected(int selectedPosition){
-				selectedType = (String)SwConst.offerTypes.keySet().toArray()[selectedPosition];
+				selectedType = selectedPosition;
 			}
 		}, false);
 
-		spnStatus.setupLayout("", new ArrayList<String>(SwConst.offerStatus.values()), 0, new WfSpinner.OnDRSpinnerItemSelectedListener() {
+		selectedStatus = 0;
+		if(filters.containsKey(STATUS)){
+			selectedStatus = filters.get(STATUS);
+		}
+		spnStatus.setupLayout("", new ArrayList<String>(offerStatusMaster.values()), selectedStatus, new WfSpinner.OnDRSpinnerItemSelectedListener() {
 
 			@Override
 			public void onItemSelected(int selectedPosition){
-				selectedStatus = String.valueOf(SwConst.offerStatus.keySet().toArray()[selectedPosition]);
+				selectedStatus = selectedPosition;
 			}
 		}, false);
 
-		spnDept.setupLayout("", new ArrayList<String>(depts.values()), 0, new WfSpinner.OnDRSpinnerItemSelectedListener() {
+		selectedDept = 0;
+		if(filters.containsKey(DEPT)){
+			selectedDept = filters.get(DEPT);
+		}
+		spnDept.setupLayout("", new ArrayList<String>(depts.values()), selectedDept, new WfSpinner.OnDRSpinnerItemSelectedListener() {
 
 			@Override
 			public void onItemSelected(int selectedPosition){
-				selectedDept = (String)depts.keySet().toArray()[selectedPosition];
+				selectedDept = selectedPosition;
 			}
 		}, false);
 	}
@@ -123,11 +126,16 @@ public class WorkOfferFilterFragment extends AbstractSwFragment{
 	public void onClick(View v){
 		switch(v.getId()){
 		case R.id.btn_fragment_filter_clear:
-			filters = null;
+			selectedType = 0;
+			selectedDept = 0;
+			selectedStatus = 0;
+			setFilterValues();
+			((ChiaseActivity)activity).isInitData = true;
 			onClickBackBtn();
 			break;
 		case R.id.btn_fragment_filter_update:
 			setFilterValues();
+			((ChiaseActivity)activity).isInitData = true;
 			onClickBackBtn();
 			break;
 		default:
@@ -136,11 +144,8 @@ public class WorkOfferFilterFragment extends AbstractSwFragment{
 	}
 
 	private void setFilterValues(){
-		if(filters == null){
-			filters = new HashMap<String, String>();
-		}
-		filters.put(TYPE, "2");
-		filters.put(STATUS, "2");
-		filters.put(DEPT, "2");
+		filters.put(TYPE, selectedType);
+		filters.put(STATUS, selectedStatus);
+		filters.put(DEPT, selectedDept);
 	}
 }

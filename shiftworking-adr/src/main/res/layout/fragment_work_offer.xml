@@ -46,7 +46,7 @@
                 style="@style/sf_text_value_black_bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/sw_work_offer_history"
+                android:text="@string/sw_work_offer_other_history"
                 android:id="@+id/textView"/>
 
             <LinearLayout
@@ -69,7 +69,7 @@
             </LinearLayout>
 
             <ListView
-                android:id="@+id/fragment_work_offer_other_history"
+                android:id="@+id/lst_fragment_work_offer_other"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"></ListView>
         </LinearLayout>

@@ -51,13 +51,11 @@ public class ApproveHistoryAdapter extends ArrayAdapter<ApproveHistory>{
 			viewHolder = (ViewHolder)convertView.getTag();
 		}
 		ApproveHistory history = getItem(position);
-		if(!CCStringUtil.isEmpty(history.historyName)){
-			WfPicassoHelper.loadImage(mContext, "TODO", viewHolder.imgAvatar, null);
-		}
-		viewHolder.txtUsername.setText("todo");
-		viewHolder.txtDate.setText("20232");
-		viewHolder.txtResult.setText("OK");
-		viewHolder.txtComment.setText("TODO");
+		WfPicassoHelper.loadImage(mContext, history.userAvatarPath, viewHolder.imgAvatar, null);
+		viewHolder.txtUsername.setText(history.userName);
+		viewHolder.txtDate.setText(history.historyDate);
+		viewHolder.txtResult.setText(history.historyStatus);
+		viewHolder.txtComment.setText(history.resultTypeName);
 		return convertView;
 	}
 

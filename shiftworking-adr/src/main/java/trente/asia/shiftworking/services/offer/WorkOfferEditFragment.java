@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCStringUtil;
@@ -37,8 +38,6 @@ import trente.asia.welfare.adr.view.WfSpinner;
 public class WorkOfferEditFragment extends AbstractSwFragment{
 
 	private WorkOffer			offer;
-	private List<String>		offerTypes	= new ArrayList<>(SwConst.offerTypes.values());
-
 	private WfSpinner			spnType;
 	private DatePickerDialog	datePickerDialogStart;
 	private DatePickerDialog	datePickerDialogEnd;
@@ -51,6 +50,8 @@ public class WorkOfferEditFragment extends AbstractSwFragment{
 	private TextView			txtEndDate;
 	private int					startYear, startMonthOfYear, startDay, startHour, startMinute, endYear, endMonthOfYear, endDay, endHour, endMinute;
 	private String				selectedType;
+	private Map<String, String>	offerTypesMaster;
+	private Map<String, String>	offerStatusMaster;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -81,16 +82,12 @@ public class WorkOfferEditFragment extends AbstractSwFragment{
 	}
 
 	private void buildOfferTypeSpinner(){
-		if(offer != null){
-			offerTypes = new ArrayList<>();
-			offerTypes.add(SwConst.offerTypes.get(offer.offerType));
-		}
 		spnType = (WfSpinner)getView().findViewById(R.id.spn_fragment_offer_edit_offer_type);
-		spnType.setupLayout("", new ArrayList<String>(SwConst.offerTypes.values()), 0, new WfSpinner.OnDRSpinnerItemSelectedListener() {
+		spnType.setupLayout("", new ArrayList<String>(offerTypesMaster.values()), 0, new WfSpinner.OnDRSpinnerItemSelectedListener() {
 
 			@Override
 			public void onItemSelected(int selectedPosition){
-				selectedType = (String)SwConst.offerTypes.keySet().toArray()[selectedPosition];
+				selectedType = (String)offerTypesMaster.keySet().toArray()[selectedPosition];
 			}
 		}, false);
 	}
@@ -112,24 +109,24 @@ public class WorkOfferEditFragment extends AbstractSwFragment{
 		if(offer != null){
 			txtStartDate.setText(offer.startDateString);
 			txtEndDate.setText(offer.endDateString);
-			txtStartTime.setText(offer.startTime);
-			txtEndTime.setText(offer.endTime);
+			txtStartTime.setText(offer.startTimeString);
+			txtEndTime.setText(offer.endTimeString);
 
-			Date starDate = CCDateUtil.makeDate(offer.startDate);
+			Date starDate = CCDateUtil.makeDate(offer.startDateString);
 			c.setTime(starDate);
 			startYear = c.get(Calendar.YEAR);
 			startMonthOfYear = c.get(Calendar.MONTH);
 			startDay = c.get(Calendar.DAY_OF_MONTH);
-			startHour = CCStringUtil.isEmpty(offer.startTime) ? 0 : Integer.parseInt(offer.startTime.split(":")[0]);
-			startMinute = CCStringUtil.isEmpty(offer.startTime) ? 0 : Integer.parseInt(offer.startTime.split(":")[1]);
+			startHour = CCStringUtil.isEmpty(offer.startTimeString) ? 0 : Integer.parseInt(offer.startTimeString.split(":")[0]);
+			startMinute = CCStringUtil.isEmpty(offer.startTimeString) ? 0 : Integer.parseInt(offer.startTimeString.split(":")[1]);
 
-			Date endDate = CCDateUtil.makeDate(offer.endDate);
+			Date endDate = CCDateUtil.makeDate(offer.endDateString);
 			c.setTime(endDate);
 			endYear = c.get(Calendar.YEAR);
 			endMonthOfYear = c.get(Calendar.MONTH);
 			endDay = c.get(Calendar.DAY_OF_MONTH);
-			endHour = CCStringUtil.isEmpty(offer.endTime) ? 0 : Integer.parseInt(offer.endTime.split(":")[0]);
-			endMinute = CCStringUtil.isEmpty(offer.endTime) ? 0 : Integer.parseInt(offer.endTime.split(":")[1]);
+			endHour = CCStringUtil.isEmpty(offer.endTimeString) ? 0 : Integer.parseInt(offer.endTimeString.split(":")[0]);
+			endMinute = CCStringUtil.isEmpty(offer.endTimeString) ? 0 : Integer.parseInt(offer.endTimeString.split(":")[1]);
 		}else{
 			startYear = c.get(Calendar.YEAR);
 			startMonthOfYear = c.get(Calendar.MONTH);
@@ -243,6 +240,11 @@ public class WorkOfferEditFragment extends AbstractSwFragment{
 		gotoFragment(fragment);
 	}
 
+	public void setOfferTypeStatusMaster(Map<String, String> offerTypesMaster, Map<String, String> offerStatusMaster){
+		this.offerTypesMaster = offerTypesMaster;
+		this.offerStatusMaster = offerStatusMaster;
+	}
+
 	@Override
 	public void onDestroy(){
 		super.onDestroy();
@@ -280,5 +282,9 @@ public class WorkOfferEditFragment extends AbstractSwFragment{
 			showEndTimePickerDialog();
 			break;
 		}
+	}
+
+	public void setOffer(WorkOffer offer){
+		this.offer = offer;
 	}
 }

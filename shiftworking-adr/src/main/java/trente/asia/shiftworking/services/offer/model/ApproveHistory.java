@@ -5,12 +5,12 @@ package trente.asia.shiftworking.services.offer.model;
  */
 
 public class ApproveHistory {
-    public String date;
-    public String flow;
-    public String flowName;
-    public String groupId;
-    public String historyNo;
-    public String historyName;
-    public String result;
-    public String note;
+    public String userId;
+    public String userName;
+    public String userAvatarPath;
+    public String historyDate;
+    public String historyStatus;
+    public String resultType;
+    public String resultTypeName;
+    public String key;
 }
