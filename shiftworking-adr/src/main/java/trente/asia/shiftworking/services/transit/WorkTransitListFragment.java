@@ -79,6 +79,7 @@ public class WorkTransitListFragment extends AbstractSwFragment{
         Date date = new Date();
         JSONObject jsonObject = new JSONObject();
         try{
+            jsonObject.put("targetUserId", myself.key);
             jsonObject.put("searchDateString", CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, date));
         }catch(JSONException e){
             e.printStackTrace();
