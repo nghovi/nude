@@ -21,6 +21,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
@@ -185,6 +186,20 @@ public class WorktimeCheckInFragment extends AbstractLocationFragment{
 			List<WorkingTimeModel> lstWorkingTime = CCJsonUtil.convertToModelList(response.optString("checkins"), WorkingTimeModel.class);
 			WorkTimeAdapter adapter = new WorkTimeAdapter(activity, lstWorkingTime, itemWorkTimeClickListener);
 			lsvWorkTime.setAdapter(adapter);
+
+//            show unread transit, unread notice offer
+            String noticeCount = response.optString("noticeCount");
+            String transitCount = response.optString("transitCount");
+            if(!CCStringUtil.isEmpty(noticeCount) && !CCConst.NONE.equals(noticeCount)){
+                TextView txtUnreadNotice = (TextView)getView().findViewById(R.id.txt_id_unread_notice_send);
+                txtUnreadNotice.setVisibility(View.VISIBLE);
+                txtUnreadNotice.setText(noticeCount);
+            }
+            if(!CCStringUtil.isEmpty(transitCount) && !CCConst.NONE.equals(transitCount)){
+                TextView txtUnreadTransit = (TextView)getView().findViewById(R.id.txt_id_unread_transit);
+                txtUnreadTransit.setVisibility(View.VISIBLE);
+                txtUnreadTransit.setText(transitCount);
+            }
 		}else{
 			super.successLoad(response, url);
 		}
