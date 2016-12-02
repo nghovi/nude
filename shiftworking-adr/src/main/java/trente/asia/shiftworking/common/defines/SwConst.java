@@ -3,8 +3,6 @@ package trente.asia.shiftworking.common.defines;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import trente.asia.shiftworking.services.offer.model.WorkOffer;
-
 /**
  * SwConst
  *
@@ -13,28 +11,31 @@ import trente.asia.shiftworking.services.offer.model.WorkOffer;
 
 public class SwConst{
 
-	public static final String			APP_FOLDER						= "Welfare/ShiftWorking";
-	public static final String			SW_WORK_NOTICE_TYPE_MODIFY		= "MR";
+	public static final String			APP_FOLDER					= "Welfare/ShiftWorking";
+	public static final String			SW_WORK_NOTICE_TYPE_MODIFY	= "MR";
 
-	public static final int				MAX_CHECK_USER					= 4;
-	public static final String			ACTION_TRANSIT_DELETE			= "ACTION_TRANSIT_DELETE";
-	public static final String			ACTION_TRANSIT_UPDATE			= "ACTION_TRANSIT_UPDATE";
+	public static final int				MAX_CHECK_USER				= 4;
+	public static final String			ACTION_TRANSIT_DELETE		= "ACTION_TRANSIT_DELETE";
+	public static final String			ACTION_TRANSIT_UPDATE		= "ACTION_TRANSIT_UPDATE";
 
-	public static final String			KEY_HISTORY_LIST				= "KEY_HISTORY_LIST";
-	public static final String			KEY_HISTORY_NAME				= "KEY_HISTORY_NAME";
+	public static final String			KEY_HISTORY_LIST			= "KEY_HISTORY_LIST";
+	public static final String			KEY_HISTORY_NAME			= "KEY_HISTORY_NAME";
 
-	public static final String			APPROVE_STATUS_YET				= "0";									// 0
-	public static final String			APPROVE_STATUS_REVERSE			= "2";
+	public static final String			SW_TRANSIT_STATUS_DRAFT		= "DRFT";
+	public static final String			SW_TRANSIT_STATUS_DONE		= "DONE";
+
+	public static final String			APPROVE_STATUS_YET			= "0";						// 0
+	public static final String			APPROVE_STATUS_REVERSE		= "2";
 	// 2
-	public static final String			APPROVE_STATUS_STOP				= "3";
+	public static final String			APPROVE_STATUS_STOP			= "3";
 	// 3
-	public static final String			APPROVE_STATUS_ACCEPT			= "1";
+	public static final String			APPROVE_STATUS_ACCEPT		= "1";
 	// 1
-	public static final String			APPROVE_STATUS_DISABLED			= "8";
+	public static final String			APPROVE_STATUS_DISABLED		= "8";
 	// 8
-	public static final String			APPROVE_STATUS_NA				= "9";									// 8
+	public static final String			APPROVE_STATUS_NA			= "9";						// 8
 
-	public static Map<String, String>	approveTypes					= new LinkedHashMap<>();
+	public static Map<String, String>	approveTypes				= new LinkedHashMap<>();
 
 	static{
 		approveTypes.put(APPROVE_STATUS_YET, "YET");
@@ -73,14 +74,14 @@ public class SwConst{
 		workTypeMap.put(WORK_TYPE_STATUS_NO_WORK, "Not working");
 	}
 
-	public static Map<String, String>	workTypeHolidayMap				= new LinkedHashMap<String, String>();
+	public static Map<String, String> workTypeHolidayMap = new LinkedHashMap<String, String>();
 
 	static{
 		workTypeHolidayMap.put(WORK_TYPE_STATUS_NORMAL_HOLIDAY, "Normal " + "holiday");
 		workTypeHolidayMap.put(WORK_TYPE_STATUS_HOLIDAY_WORK, "Holiday work");
 	}
 
-	public static Map<String, String>	workTypeNormalDayMap			= new LinkedHashMap<String, String>();
+	public static Map<String, String> workTypeNormalDayMap = new LinkedHashMap<String, String>();
 
 	static{
 		workTypeNormalDayMap.put(WORK_TYPE_STATUS_NORMAL_WORK, "Normal work");
@@ -94,11 +95,11 @@ public class SwConst{
 		workTypeNormalDayMap.put(WORK_TYPE_STATUS_NO_WORK, "Not working");
 	}
 
-	public static final String			WORK_SUMMARY_STATUS_UPDATE		= "U";
-	public static final String			WORK_SUMMARY_STATUS_APPROVE		= "A";
-	public static final String			WORK_SUMMARY_STATUS_YET			= "YET";
+	public static final String			WORK_SUMMARY_STATUS_UPDATE	= "U";
+	public static final String			WORK_SUMMARY_STATUS_APPROVE	= "A";
+	public static final String			WORK_SUMMARY_STATUS_YET		= "YET";
 
-	public static Map<String, String>	workSummaryStatusMap			= new LinkedHashMap<>();
+	public static Map<String, String>	workSummaryStatusMap		= new LinkedHashMap<>();
 
 	static{
 		workSummaryStatusMap.put(WORK_SUMMARY_STATUS_UPDATE, "Updated");
