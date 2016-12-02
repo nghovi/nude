@@ -34,6 +34,7 @@ import trente.asia.shiftworking.services.worktime.listener.ItemWorkTimeClickList
 import trente.asia.shiftworking.services.worktime.model.ProjectModel;
 import trente.asia.shiftworking.services.worktime.model.WorkingTimeModel;
 import trente.asia.shiftworking.services.worktime.view.WorkTimeAdapter;
+import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.utils.WelfareUtil;
@@ -74,7 +75,9 @@ public class WorktimeCheckInFragment extends AbstractLocationFragment{
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 		if(mRootView == null){
 			mRootView = inflater.inflate(R.layout.fragment_work_check_in, container, false);
-		}
+		}else{
+            ((WelfareActivity)activity).isInitData = true;
+        }
 		return mRootView;
 	}
 

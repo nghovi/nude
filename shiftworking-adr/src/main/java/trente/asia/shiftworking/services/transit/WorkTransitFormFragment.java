@@ -99,7 +99,7 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 		txtCostType = (ChiaseTextView)getView().findViewById(R.id.txt_id_cost_type);
 
 		lnrAttachment = (LinearLayout)getView().findViewById(R.id.lnr_id_attachment);
-		lnrAdd = (LinearLayout) getView().findViewById(R.id.lnr_id_add);
+		lnrAdd = (LinearLayout)getView().findViewById(R.id.lnr_id_add);
 		btnDelete = (Button)getView().findViewById(R.id.btn_id_delete);
 		ImageView imgRightIcon = (ImageView)getView().findViewById(R.id.img_id_header_right_icon);
 
@@ -239,6 +239,7 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 	protected void successUpload(JSONObject response, String url){
 		if(WfUrlConst.WF_TRANS_0003.equals(url)){
 			((WelfareActivity)activity).isInitData = true;
+			((WelfareActivity)activity).dataMap.put(SwConst.ACTION_TRANSIT_UPDATE, CCConst.YES);
 			getFragmentManager().popBackStack();
 		}else{
 			super.successLoad(response, url);

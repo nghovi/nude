@@ -29,14 +29,13 @@ import asia.chiase.core.model.KeyValueModel;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
+import trente.asia.android.util.AndroidUtil;
+import trente.asia.android.view.ChiaseListDialog;
+import trente.asia.android.view.ChiaseTextView;
 import trente.asia.shiftworking.R;
 import trente.asia.shiftworking.common.activities.CameraPhotoPreviewAccountActivity;
 import trente.asia.shiftworking.common.fragments.AbstractLocationFragment;
 import trente.asia.shiftworking.services.worktime.model.ProjectModel;
-import trente.asia.android.util.AndroidUtil;
-import trente.asia.android.view.ChiaseListDialog;
-import trente.asia.android.view.ChiaseTextView;
-import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.menu.OnMenuButtonsListener;
@@ -160,8 +159,8 @@ public class WorknoticeOfferFragment extends AbstractLocationFragment{
 		lnrTargetDept.setOnClickListener(this);
 		btnSend.setOnClickListener(this);
 
-        menuManager = new AccountMenuManager();
-        menuManager.setMenuLayout(activity, trente.asia.welfare.adr.R.id.menuMain, onMenuManagerListener, onMenuButtonsListener);
+		menuManager = new AccountMenuManager();
+		menuManager.setMenuLayout(activity, trente.asia.welfare.adr.R.id.menuMain, onMenuManagerListener, onMenuButtonsListener);
 		mViewForMenuBehind = getView().findViewById(R.id.viewForMenuBehind);
 		mViewForMenuBehind.setOnClickListener(new View.OnClickListener() {
 
@@ -245,7 +244,6 @@ public class WorknoticeOfferFragment extends AbstractLocationFragment{
 	@Override
 	protected void successUpload(JSONObject response, String url){
 		if(WfUrlConst.WF_NOTICE_0002.equals(url)){
-            ((WelfareActivity)activity).isInitData = true;
 			getFragmentManager().popBackStack();
 		}else{
 			super.successUpload(response, url);

@@ -114,10 +114,13 @@ public class WorkTransitDetailFragment extends AbstractSwFragment{
 
         if(!((WelfareActivity)activity).dataMap.isEmpty()){
             String isDelete = CCStringUtil.toString(((WelfareActivity)activity).dataMap.get(SwConst.ACTION_TRANSIT_DELETE));
-            if(CCConst.YES.equals(isDelete)){
+            String isUpdate = CCStringUtil.toString(((WelfareActivity)activity).dataMap.get(SwConst.ACTION_TRANSIT_UPDATE));
+            if(CCConst.YES.equals(isDelete) || CCConst.YES.equals(isUpdate)){
                 ((WelfareActivity)activity).dataMap.clear();
                 ((WelfareActivity)activity).isInitData = true;
-                getFragmentManager().popBackStack();
+                if(CCConst.YES.equals(isDelete)){
+                    getFragmentManager().popBackStack();
+                }
             }
         }
     }
