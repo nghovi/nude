@@ -52,7 +52,7 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 
 	private ImageView			activePhoto;
 	private LinearLayout		lnrAttachment;
-	private ImageView			imgAdd;
+	private LinearLayout		lnrAdd;
 	private Button				btnDelete;
 
 	private EditText			edtLeave;
@@ -99,7 +99,7 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 		txtCostType = (ChiaseTextView)getView().findViewById(R.id.txt_id_cost_type);
 
 		lnrAttachment = (LinearLayout)getView().findViewById(R.id.lnr_id_attachment);
-		imgAdd = (ImageView)getView().findViewById(R.id.img_id_add);
+		lnrAdd = (LinearLayout) getView().findViewById(R.id.lnr_id_add);
 		btnDelete = (Button)getView().findViewById(R.id.btn_id_delete);
 		ImageView imgRightIcon = (ImageView)getView().findViewById(R.id.img_id_header_right_icon);
 
@@ -112,7 +112,7 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 		lnrCostType.setOnClickListener(this);
 		imgRightIcon.setOnClickListener(this);
 		btnDelete.setOnClickListener(this);
-		imgAdd.setOnClickListener(this);
+		lnrAdd.setOnClickListener(this);
 
 		if(!CCStringUtil.isEmpty(activeTransitId)){
 			btnDelete.setVisibility(View.VISIBLE);
@@ -124,6 +124,16 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 		dlgTransitType = new ChiaseListDialog(activity, getString(R.string.sw_work_transit_trans_type_item), WelfareFormatUtil.convertList2Map(holder.transTypes), txtTransitType, null);
 		dlgWayType = new ChiaseListDialog(activity, getString(R.string.sw_work_transit_way_type_item), WelfareFormatUtil.convertList2Map(holder.wayTypes), txtWayType, null);
 		dlgCostType = new ChiaseListDialog(activity, getString(R.string.sw_work_transit_cost_type_item), WelfareFormatUtil.convertList2Map(holder.costTypes), txtCostType, null);
+
+		if(CCStringUtil.isEmpty(activeTransitId)){
+			// set default value
+			txtTransitType.setText(holder.transTypes.get(0).value);
+			txtTransitType.setValue(holder.transTypes.get(0).key);
+			txtWayType.setText(holder.wayTypes.get(0).value);
+			txtWayType.setValue(holder.wayTypes.get(0).key);
+			txtCostType.setText(holder.costTypes.get(0).value);
+			txtCostType.setValue(holder.costTypes.get(0).key);
+		}
 	}
 
 	private void initPlaceEditText(){
@@ -140,7 +150,7 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 						Bundle bundle = new Bundle();
 
 						bundle.putSerializable(SwConst.KEY_HISTORY_LIST, (Serializable)mHolder.historyNames);
-                        bundle.putString(SwConst.KEY_HISTORY_NAME, CCStringUtil.toString(edtLeave.getText()));
+						bundle.putString(SwConst.KEY_HISTORY_NAME, CCStringUtil.toString(edtLeave.getText()));
 						intent.putExtras(bundle);
 						startActivityForResult(intent, ENTRY_LEAVE);
 					}
@@ -158,7 +168,7 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 						Bundle bundle = new Bundle();
 
 						bundle.putSerializable(SwConst.KEY_HISTORY_LIST, (Serializable)mHolder.historyNames);
-                        bundle.putString(SwConst.KEY_HISTORY_NAME, CCStringUtil.toString(edtArrive.getText()));
+						bundle.putString(SwConst.KEY_HISTORY_NAME, CCStringUtil.toString(edtArrive.getText()));
 						intent.putExtras(bundle);
 						startActivityForResult(intent, ENTRY_ARRIVE);
 					}
@@ -216,7 +226,7 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 		LinearLayout lnrContent = (LinearLayout)getView().findViewById(R.id.lnr_id_content);
 		JSONObject jsonObject = CAObjectSerializeUtil.serializeObject(lnrContent, null);
 		try{
-            jsonObject.put("key", activeTransitId);
+			jsonObject.put("key", activeTransitId);
 			jsonObject.put("userId", myself.key);
 			jsonObject.put("transDate", CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, new Date()));
 		}catch(JSONException e){
@@ -279,13 +289,13 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 			Bundle bundle = returnedIntent.getExtras();
 			String leave = (String)bundle.getSerializable(SwConst.KEY_HISTORY_NAME);
 			edtLeave.setText(leave);
-            edtLeave.clearFocus();
+			edtLeave.clearFocus();
 			break;
 		case ENTRY_ARRIVE:
 			Bundle bundle1 = returnedIntent.getExtras();
 			String arrive = (String)bundle1.getSerializable(SwConst.KEY_HISTORY_NAME);
 			edtArrive.setText(arrive);
-            edtArrive.clearFocus();
+			edtArrive.clearFocus();
 			break;
 		default:
 			break;
@@ -314,7 +324,7 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 		case R.id.btn_id_delete:
 			deleteTransit();
 			break;
-		case R.id.img_id_add:
+		case R.id.lnr_id_add:
 			addAttachment();
 			break;
 		default:
@@ -355,9 +365,9 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 
 	private void judgeAdd(){
 		if(numberAttachment >= MAX_ATTACHMENT){
-			imgAdd.setEnabled(false);
+			lnrAdd.setEnabled(false);
 		}else{
-			imgAdd.setEnabled(true);
+			lnrAdd.setEnabled(true);
 		}
 	}
 
