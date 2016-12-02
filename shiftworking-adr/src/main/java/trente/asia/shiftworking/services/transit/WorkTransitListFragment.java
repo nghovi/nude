@@ -19,6 +19,7 @@ import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import trente.asia.shiftworking.R;
+import trente.asia.shiftworking.common.defines.SwConst;
 import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
 import trente.asia.shiftworking.services.transit.model.TransitModel;
 import trente.asia.shiftworking.services.transit.view.TransitAdapter;
@@ -52,11 +53,10 @@ public class WorkTransitListFragment extends AbstractSwFragment{
 	@Override
 	public void initView(){
 		super.initView();
-		super.initHeader(R.drawable.wf_back_white, myself.userName, R.drawable.bb_action_add);
+		super.initHeader(R.drawable.wf_back_white, myself.userName, null);
 
 		lsvTransit = (ListView)getView().findViewById(R.id.lsv_id_transit);
-		ImageView imgRightIcon = (ImageView)getView().findViewById(R.id.img_id_header_right_icon);
-		imgRightIcon.setOnClickListener(this);
+
 
         lsvTransit.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -94,6 +94,12 @@ public class WorkTransitListFragment extends AbstractSwFragment{
             if(!CCCollectionUtil.isEmpty(lstTransit)){
                 TransitAdapter adapter = new TransitAdapter(activity, lstTransit);
                 lsvTransit.setAdapter(adapter);
+            }
+            String summaryStatus = response.optString("summaryStatus");
+            if(!SwConst.SW_TRANSIT_STATUS_DONE.equals(summaryStatus)){
+                ImageView imgRightIcon = (ImageView)getView().findViewById(R.id.img_id_header_right_icon);
+                imgRightIcon.setImageResource(R.drawable.bb_action_add);
+                imgRightIcon.setOnClickListener(this);
             }
 		}else{
 			super.successLoad(response, url);

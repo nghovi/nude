@@ -55,7 +55,7 @@ public class WorkTransitDetailFragment extends AbstractSwFragment{
 	@Override
 	public void initView(){
 		super.initView();
-		super.initHeader(R.drawable.wf_back_white, myself.userName, R.drawable.cs_dummy_small);
+		super.initHeader(R.drawable.wf_back_white, myself.userName, null);
 
 		txtLeave = (TextView)getView().findViewById(R.id.txt_id_leave);
 		txtArrive = (TextView)getView().findViewById(R.id.txt_id_arrive);
@@ -67,10 +67,10 @@ public class WorkTransitDetailFragment extends AbstractSwFragment{
 		txtCostType = (TextView)getView().findViewById(R.id.txt_id_cost_type);
 
 		imgPhoto = (ImageView)getView().findViewById(R.id.img_id_photo);
-		ImageView imgRightIcon = (ImageView)getView().findViewById(R.id.img_id_header_right_icon);
+//		ImageView imgRightIcon = (ImageView)getView().findViewById(R.id.img_id_header_right_icon);
 
 		imgPhoto.setOnClickListener(this);
-		imgRightIcon.setOnClickListener(this);
+//		imgRightIcon.setOnClickListener(this);
 	}
 
 	@Override
@@ -91,8 +91,15 @@ public class WorkTransitDetailFragment extends AbstractSwFragment{
 	@Override
 	protected void successLoad(JSONObject response, String url){
 		if(WfUrlConst.WF_TRANS_0002.equals(url)){
-			TransitModelHolder holder = CCJsonUtil.convertToModel(CCStringUtil.toString(response), TransitModelHolder.class);
 
+            String summaryStatus = response.optString("summaryStatus");
+            if(!SwConst.SW_TRANSIT_STATUS_DONE.equals(summaryStatus)){
+                ImageView imgRightIcon = (ImageView)getView().findViewById(R.id.img_id_header_right_icon);
+                imgRightIcon.setImageResource(R.drawable.cs_dummy_small);
+                imgRightIcon.setOnClickListener(this);
+            }
+
+			TransitModelHolder holder = CCJsonUtil.convertToModel(CCStringUtil.toString(response), TransitModelHolder.class);
 			if(holder.transit != null){
 				txtLeave.setText(holder.transit.transLeave);
 				txtArrive.setText(holder.transit.transArrive);
