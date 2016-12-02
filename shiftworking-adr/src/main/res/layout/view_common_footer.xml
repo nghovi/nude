@@ -79,7 +79,7 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:paddingTop="@dimen/margin_5dp"
-                android:text="@string/sw_footer_who_work"
+                android:text="@string/sw_footer_work_offer"
                 android:textColor="@color/core_gray"/>
         </LinearLayout>
 
@@ -129,7 +129,7 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:paddingTop="@dimen/margin_5dp"
-                android:text="@string/sw_footer_notices"
+                android:text="@string/sw_footer_work_status"
                 android:textColor="@color/core_gray"/>
         </LinearLayout>
 

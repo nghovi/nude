@@ -33,6 +33,8 @@
     <string name="sw_footer_who_work">勤務ユーザー</string>
     <string name="sw_footer_notices">お知らせ</string>
     <string name="sw_footer_setting">設定</string>
+    <string name="sw_footer_work_status">勤務ステータス</string>
+    <string name="sw_footer_work_offer">勤務オファー</string>
 
     <!--Check in service-->
 

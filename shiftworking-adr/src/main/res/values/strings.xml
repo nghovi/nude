@@ -29,6 +29,8 @@
     <string name="sw_footer_who_work">Who\'s Working</string>
     <string name="sw_footer_notices">Notices</string>
     <string name="sw_footer_setting">Setting</string>
+    <string name="sw_footer_work_status">Work status</string>
+    <string name="sw_footer_work_offer">Work offer</string>
 
     <!--Check in service-->
 
