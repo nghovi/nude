@@ -17,14 +17,18 @@
 
                 <TextView
                     style="@style/wl_common_text"
+                    android:layout_marginBottom="@dimen/margin_10dp"
                     android:layout_marginTop="@dimen/margin_16dp"
                     android:paddingLeft="@dimen/margin_16dp"
                     android:paddingRight="@dimen/margin_16dp"
                     android:text="@string/sw_offer_title"
                     android:textStyle="bold"/>
 
+                <View style="@style/cs_common_divider"/>
+
                 <LinearLayout
                     style="@style/wf_common_item_linear"
+                    android:background="@color/chiase_white"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
@@ -135,17 +139,22 @@
 
                 <View style="@style/cs_common_divider"/>
 
+                <TextView
+                    style="@style/wl_common_text"
+                    android:layout_marginBottom="@dimen/margin_10dp"
+                    android:layout_marginTop="@dimen/margin_10dp"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/margin_16dp"
+                    android:paddingRight="@dimen/margin_16dp"
+                    android:text="@string/sw_work_item_notice_pic"
+                    android:textStyle="bold"/>
+
+                <View style="@style/cs_common_divider"/>
+
                 <LinearLayout
                     style="@style/wf_common_linear"
-                    android:paddingTop="@dimen/margin_0dp">
-
-                    <TextView
-                        style="@style/wl_common_text"
-                        android:layout_marginBottom="@dimen/margin_10dp"
-                        android:layout_marginTop="@dimen/margin_10dp"
-                        android:gravity="center_vertical"
-                        android:text="@string/sw_work_item_notice_pic"
-                        android:textStyle="bold"/>
+                    android:paddingTop="@dimen/margin_0dp"
+                    >
 
                     <RelativeLayout
                         style="@style/cs_common_match_wrap"

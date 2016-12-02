@@ -6,7 +6,7 @@
     <string name="wf_about_app">About App</string>
     <string name="wf_account_info_title">Account Information</string>
 
-    <string name="sw_offer_title">Notice send</string>
+    <string name="sw_offer_title">Work notice entry</string>
     <string name="sw_notice_list_title">Notice list</string>
     <string name="sw_worker_title">Who\'s working</string>
     <string name="sw_notice_detail_title">Notice detail</string>
