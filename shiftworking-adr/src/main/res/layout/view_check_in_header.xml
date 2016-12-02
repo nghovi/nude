@@ -19,6 +19,15 @@
             android:src="@drawable/wf_back_white"
             android:visibility="invisible"/>
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/margin_10dp"
+            android:layout_marginRight="@dimen/margin_10dp"
+            android:src="@drawable/wf_back_white"
+            android:visibility="invisible"/>
+
         <LinearLayout
             style="@style/cs_common_wrap"
             android:layout_marginBottom="@dimen/margin_10dp"
