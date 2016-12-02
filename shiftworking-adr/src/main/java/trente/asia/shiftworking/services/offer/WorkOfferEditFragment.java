@@ -1,5 +1,14 @@
 package trente.asia.shiftworking.services.offer;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
@@ -12,20 +21,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.activity.ChiaseActivity;
 import trente.asia.shiftworking.R;
-import trente.asia.shiftworking.common.defines.SwConst;
 import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
 import trente.asia.shiftworking.services.offer.model.WorkOffer;
 import trente.asia.welfare.adr.define.WfUrlConst;
@@ -83,13 +82,18 @@ public class WorkOfferEditFragment extends AbstractSwFragment{
 
 	private void buildOfferTypeSpinner(){
 		spnType = (WfSpinner)getView().findViewById(R.id.spn_fragment_offer_edit_offer_type);
-		spnType.setupLayout("", new ArrayList<String>(offerTypesMaster.values()), 0, new WfSpinner.OnDRSpinnerItemSelectedListener() {
+		int selectedPosition = 0;
+		if(offer != null){
+			selectedPosition = new ArrayList<String>(offerTypesMaster.keySet()).indexOf(offer.offerType);
+		}
+
+		spnType.setupLayout("", new ArrayList<String>(offerTypesMaster.values()), selectedPosition, new WfSpinner.OnDRSpinnerItemSelectedListener() {
 
 			@Override
 			public void onItemSelected(int selectedPosition){
 				selectedType = (String)offerTypesMaster.keySet().toArray()[selectedPosition];
 			}
-		}, false);
+		}, true);
 	}
 
 	private void buildEditText(){
@@ -224,24 +228,17 @@ public class WorkOfferEditFragment extends AbstractSwFragment{
 
 	@Override
 	protected void successUpdate(JSONObject response, String url){
-		if(offer != null){
-			((ChiaseActivity)activity).isInitData = true;
-			onClickBackBtn();
-		}else{
-			gotoOfferDetailFragment("1");
-		}
-	}
-
-	private void gotoOfferDetailFragment(String key){
-		WorkOfferDetailFragment fragment = new WorkOfferDetailFragment();
-		WorkOffer offer = new WorkOffer();
-		offer.key = key;
-		fragment.setWorkOffer(offer);
-		gotoFragment(fragment);
+		((ChiaseActivity)activity).isInitData = true;
+		onClickBackBtn();
 	}
 
 	public void setOfferTypeStatusMaster(Map<String, String> offerTypesMaster, Map<String, String> offerStatusMaster){
-		this.offerTypesMaster = offerTypesMaster;
+		this.offerTypesMaster = new LinkedHashMap<>();
+		for(String key : offerTypesMaster.keySet()){
+			if(!key.equals("0")){
+				this.offerTypesMaster.put(key, offerTypesMaster.get(key));
+			}
+		}
 		this.offerStatusMaster = offerStatusMaster;
 	}
 
@@ -256,7 +253,17 @@ public class WorkOfferEditFragment extends AbstractSwFragment{
 	private void onClickBtnDone(){
 		JSONObject jsonObject = new JSONObject();
 		try{
-			jsonObject.put("key", offer.key);
+			if(offer != null){
+				jsonObject.put("key", offer.key);
+			}
+			jsonObject.put("userId", myself.key);
+			jsonObject.put("offerType", selectedType);
+			jsonObject.put("startDateString", txtStartDate.getText().toString());
+			jsonObject.put("endDateString", txtEndDate.getText().toString());
+			jsonObject.put("startTimeString", txtStartTime.getText().toString());
+			jsonObject.put("endTimeString", txtEndTime.getText().toString());
+			jsonObject.put("note", edtNote.getText().toString());
+
 		}catch(JSONException e){
 			e.printStackTrace();
 		}

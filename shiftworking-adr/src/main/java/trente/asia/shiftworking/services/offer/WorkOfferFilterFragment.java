@@ -1,8 +1,6 @@
 package trente.asia.shiftworking.services.offer;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import android.os.Bundle;
@@ -13,8 +11,6 @@ import android.view.ViewGroup;
 import trente.asia.android.activity.ChiaseActivity;
 import trente.asia.shiftworking.R;
 import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
-import trente.asia.shiftworking.services.offer.model.WorkOffer;
-import trente.asia.shiftworking.services.offer.model.WorkOffer.OfferDept;
 import trente.asia.welfare.adr.view.WfSpinner;
 
 public class WorkOfferFilterFragment extends AbstractSwFragment{
@@ -108,12 +104,6 @@ public class WorkOfferFilterFragment extends AbstractSwFragment{
 		}, false);
 	}
 
-	private void gotoWorkOfferDetail(WorkOffer offer){
-		WorkOfferDetailFragment fragment = new WorkOfferDetailFragment();
-		fragment.setWorkOffer(offer);
-		gotoFragment(fragment);
-	}
-
 	@Override
 	public void onDestroy(){
 		this.spnType = null;
@@ -126,10 +116,7 @@ public class WorkOfferFilterFragment extends AbstractSwFragment{
 	public void onClick(View v){
 		switch(v.getId()){
 		case R.id.btn_fragment_filter_clear:
-			selectedType = 0;
-			selectedDept = 0;
-			selectedStatus = 0;
-			setFilterValues();
+			filters = null;
 			((ChiaseActivity)activity).isInitData = true;
 			onClickBackBtn();
 			break;

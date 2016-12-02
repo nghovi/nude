@@ -1,5 +1,10 @@
 package trente.asia.shiftworking.services.offer;
 
+import static trente.asia.shiftworking.services.offer.WorkOfferFragment
+        .buildOfferStatusMaster;
+import static trente.asia.shiftworking.services.offer.WorkOfferFragment
+        .buildOfferTypeMaster;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,19 +27,12 @@ import trente.asia.android.activity.ChiaseActivity;
 import trente.asia.android.view.ChiaseListViewNoScroll;
 import trente.asia.shiftworking.R;
 import trente.asia.shiftworking.common.activities.MainActivity;
-import trente.asia.shiftworking.common.defines.SwConst;
 import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
 import trente.asia.shiftworking.services.offer.model.WorkOffer;
 import trente.asia.shiftworking.services.offer.view.ApproveHistoryAdapter;
 import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.dialog.WfDialog;
 import trente.asia.welfare.adr.models.DeptModel;
-import trente.asia.welfare.adr.models.UserModel;
-
-import static trente.asia.shiftworking.services.offer.WorkOfferFragment
-        .buildOfferStatusMaster;
-import static trente.asia.shiftworking.services.offer.WorkOfferFragment
-        .buildOfferTypeMaster;
 
 public class WorkOfferDetailFragment extends AbstractSwFragment {
 
