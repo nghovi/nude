@@ -36,6 +36,7 @@ import trente.asia.shiftworking.services.worktime.model.ProjectModel;
 import trente.asia.android.util.AndroidUtil;
 import trente.asia.android.view.ChiaseListDialog;
 import trente.asia.android.view.ChiaseTextView;
+import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.menu.OnMenuButtonsListener;
@@ -244,6 +245,7 @@ public class WorknoticeOfferFragment extends AbstractLocationFragment{
 	@Override
 	protected void successUpload(JSONObject response, String url){
 		if(WfUrlConst.WF_NOTICE_0002.equals(url)){
+            ((WelfareActivity)activity).isInitData = true;
 			getFragmentManager().popBackStack();
 		}else{
 			super.successUpload(response, url);

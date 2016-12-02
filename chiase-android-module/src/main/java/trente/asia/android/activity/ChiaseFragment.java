@@ -37,16 +37,6 @@ public class ChiaseFragment extends Fragment implements HttpCallback {
     protected Activity activity;
 
     /**
-     * The Key.
-     */
-    // protected Integer key;
-
-    /**
-     * The Token key.
-     */
-    // protected String tokenKey;
-
-    /**
      * The Loading dialog.
      */
     protected ChiaseLoadingDialog loadingDialog;
