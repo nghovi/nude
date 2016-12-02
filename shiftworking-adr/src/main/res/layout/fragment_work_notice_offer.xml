@@ -153,11 +153,13 @@
 
                 <LinearLayout
                     style="@style/wf_common_linear"
-                    android:paddingTop="@dimen/margin_0dp"
-                    >
+                    android:background="@color/chiase_white"
+                    android:paddingBottom="@dimen/margin_0dp"
+                    android:paddingTop="@dimen/margin_0dp">
 
                     <RelativeLayout
                         style="@style/cs_common_match_wrap"
+                        android:layout_marginBottom="@dimen/margin_10dp"
                         android:layout_marginTop="@dimen/margin_10dp">
 
                         <ImageView
@@ -173,13 +175,14 @@
                             android:layout_marginBottom="@dimen/margin_5dp"
                             android:src="@drawable/wf_camera"/>
                     </RelativeLayout>
-
-                    <Button
-                        android:id="@+id/btn_id_send"
-                        style="@style/wl_common_button_10"
-                        android:layout_marginTop="@dimen/margin_16dp"
-                        android:text="@string/chiase_common_send"/>
                 </LinearLayout>
+
+                <Button
+                    android:id="@+id/btn_id_send"
+                    style="@style/wl_common_button_10"
+                    android:layout_marginBottom="@dimen/margin_16dp"
+                    android:layout_marginTop="@dimen/margin_16dp"
+                    android:text="@string/chiase_common_send"/>
             </LinearLayout>
         </ScrollView>
 
