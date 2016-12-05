@@ -14,7 +14,7 @@
         <attr name="isPressed" format="boolean"></attr>
 
         <!--set value to image view-->
-        <attr name="pathFileName" format="string"></attr>
+        <attr name="filePath" format="string"></attr>
 
         <attr name="mName" format="string"></attr>
 

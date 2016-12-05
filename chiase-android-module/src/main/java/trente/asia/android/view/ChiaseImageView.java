@@ -20,7 +20,7 @@ public class ChiaseImageView extends ImageView{
 
 	public File		srcFile;
 
-	public String	pathFileName;
+	public String filePath;
 
 	public ChiaseImageView(Context context){
 		super(context);
@@ -30,12 +30,12 @@ public class ChiaseImageView extends ImageView{
 		super(context, attributeSet);
 
 		// get view control value
-		int attrsResourceIdArray[] = {R.attr.viewControl, R.attr.pathFileName};
+		int attrsResourceIdArray[] = {R.attr.viewControl, R.attr.filePath};
 		TypedArray t = context.obtainStyledAttributes(attributeSet, attrsResourceIdArray);
 
 		List<Integer> list = CAMsgUtil.convertArray2List(attrsResourceIdArray);
 		viewControl = t.getString(list.indexOf(R.attr.viewControl));
-		pathFileName = t.getString(list.indexOf(R.attr.pathFileName));
+		filePath = t.getString(list.indexOf(R.attr.filePath));
 	}
 
 	public ChiaseImageView(Context context, AttributeSet attributeSet, int defStyle){
@@ -58,12 +58,12 @@ public class ChiaseImageView extends ImageView{
 		this.srcFile = srcFile;
 	}
 
-	public String getPathFileName(){
-		return pathFileName;
+	public String getFilePath(){
+		return filePath;
 	}
 
-	public void setPathFileName(String pathFileName){
-		this.pathFileName = pathFileName;
+	public void setFilePath(String filePath){
+		this.filePath = filePath;
 	}
 
 	@Override
