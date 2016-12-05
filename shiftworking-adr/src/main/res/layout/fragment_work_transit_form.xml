@@ -191,6 +191,7 @@
                         android:paddingTop="@dimen/margin_10dp">
 
                         <trente.asia.android.view.ChiaseImageView
+                            android:id="@+id/img_id_add"
                             style="@style/cs_common_wrap"
                             android:src="@drawable/cs_dummy_small"/>
                     </LinearLayout>

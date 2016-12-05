@@ -54,11 +54,11 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 	private ChiaseImageView		activePhoto;
 	private LinearLayout		lnrAttachment;
 	private LinearLayout		lnrAdd;
+	private ImageView			imgAdd;
 	private Button				btnDelete;
 
 	private EditText			edtLeave;
 	private EditText			edtArrive;
-//	private int					numberAttachment	= 0;
 
 	private LinearLayout		lnrTransitType;
 	private LinearLayout		lnrWayType;
@@ -69,9 +69,9 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 	private ChiaseListDialog	dlgCostType;
 
 	private TransitModelHolder	mHolder;
-	private final int			MAX_ATTACHMENT		= 3;
-	private final int			ENTRY_LEAVE			= 201;
-	private final int			ENTRY_ARRIVE		= 202;
+	private final int			MAX_ATTACHMENT	= 3;
+	private final int			ENTRY_LEAVE		= 201;
+	private final int			ENTRY_ARRIVE	= 202;
 
 	public void setActiveTransitId(String activeTransitId){
 		this.activeTransitId = activeTransitId;
@@ -101,6 +101,7 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 
 		lnrAttachment = (LinearLayout)getView().findViewById(R.id.lnr_id_attachment);
 		lnrAdd = (LinearLayout)getView().findViewById(R.id.lnr_id_add);
+		imgAdd = (ImageView)getView().findViewById(R.id.img_id_add);
 		btnDelete = (Button)getView().findViewById(R.id.btn_id_delete);
 		ImageView imgRightIcon = (ImageView)getView().findViewById(R.id.img_id_header_right_icon);
 
@@ -288,7 +289,7 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 					Uri uri = AndroidUtil.getUriFromFileInternal(activity, new File(mOriginalPath));
 					activePhoto.setImageURI(uri);
 					activePhoto.setFilePath(mOriginalPath);
-                    judgeAdd();
+					judgeAdd();
 				}
 			}
 
@@ -342,7 +343,6 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 	}
 
 	private void addAttachment(){
-		lnrAdd.setEnabled(false);
 		LayoutInflater mInflater = (LayoutInflater)activity.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 
 		final View view = mInflater.inflate(R.layout.item_attachment_list, null);
@@ -368,22 +368,26 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 		});
 
 		lnrAttachment.addView(view);
+        judgeAdd();
 	}
 
 	private void judgeAdd(){
-        if(lnrAttachment.getChildCount() >= MAX_ATTACHMENT){
-            lnrAdd.setEnabled(false);
-        }else{
-            for(int i = 0; i < lnrAttachment.getChildCount(); i++){
-                View view = lnrAttachment.getChildAt(i);
-                ChiaseImageView imgPhoto = (ChiaseImageView)view.findViewById(R.id.img_id_photo);
-                if(CCStringUtil.isEmpty(imgPhoto.getFilePath())){
-                    lnrAdd.setEnabled(false);
-                    return;
-                }
-            }
-            lnrAdd.setEnabled(true);
-        }
+		if(lnrAttachment.getChildCount() >= MAX_ATTACHMENT){
+			lnrAdd.setEnabled(false);
+			imgAdd.setEnabled(false);
+		}else{
+			for(int i = 0; i < lnrAttachment.getChildCount(); i++){
+				View view = lnrAttachment.getChildAt(i);
+				ChiaseImageView imgPhoto = (ChiaseImageView)view.findViewById(R.id.img_id_photo);
+				if(CCStringUtil.isEmpty(imgPhoto.getFilePath())){
+					lnrAdd.setEnabled(false);
+					imgAdd.setEnabled(false);
+					return;
+				}
+			}
+			lnrAdd.setEnabled(true);
+			imgAdd.setEnabled(true);
+		}
 	}
 
 	@Override
