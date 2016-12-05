@@ -58,7 +58,7 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 
 	private EditText			edtLeave;
 	private EditText			edtArrive;
-	private int					numberAttachment	= 0;
+//	private int					numberAttachment	= 0;
 
 	private LinearLayout		lnrTransitType;
 	private LinearLayout		lnrWayType;
@@ -288,6 +288,7 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 					Uri uri = AndroidUtil.getUriFromFileInternal(activity, new File(mOriginalPath));
 					activePhoto.setImageURI(uri);
 					activePhoto.setFilePath(mOriginalPath);
+                    judgeAdd();
 				}
 			}
 
@@ -341,8 +342,7 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 	}
 
 	private void addAttachment(){
-		numberAttachment++;
-		judgeAdd();
+		lnrAdd.setEnabled(false);
 		LayoutInflater mInflater = (LayoutInflater)activity.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 
 		final View view = mInflater.inflate(R.layout.item_attachment_list, null);
@@ -352,7 +352,6 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 			@Override
 			public void onClick(View v){
 				lnrAttachment.removeView(view);
-				numberAttachment--;
 				judgeAdd();
 			}
 		});
@@ -372,11 +371,19 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 	}
 
 	private void judgeAdd(){
-		if(numberAttachment >= MAX_ATTACHMENT){
-			lnrAdd.setEnabled(false);
-		}else{
-			lnrAdd.setEnabled(true);
-		}
+        if(lnrAttachment.getChildCount() >= MAX_ATTACHMENT){
+            lnrAdd.setEnabled(false);
+        }else{
+            for(int i = 0; i < lnrAttachment.getChildCount(); i++){
+                View view = lnrAttachment.getChildAt(i);
+                ChiaseImageView imgPhoto = (ChiaseImageView)view.findViewById(R.id.img_id_photo);
+                if(CCStringUtil.isEmpty(imgPhoto.getFilePath())){
+                    lnrAdd.setEnabled(false);
+                    return;
+                }
+            }
+            lnrAdd.setEnabled(true);
+        }
 	}
 
 	@Override
