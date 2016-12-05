@@ -92,8 +92,19 @@ public class WorkOfferEditFragment extends AbstractSwFragment{
 			@Override
 			public void onItemSelected(int selectedPosition){
 				selectedType = (String)offerTypesMaster.keySet().toArray()[selectedPosition];
+				OnOfferTypeChangedUpdateLayout();
 			}
 		}, true);
+	}
+
+	private void OnOfferTypeChangedUpdateLayout(){
+		if(WorkOffer.OFFER_TYPE_HOLIDAY_WORKING.equals(selectedType) || WorkOffer.OFFER_TYPE_OVERTIME.equals(selectedType)){
+			getView().findViewById(R.id.lnr_start_time).setVisibility(View.VISIBLE);
+			getView().findViewById(R.id.lnr_end_time).setVisibility(View.VISIBLE);
+		}else{
+			getView().findViewById(R.id.lnr_start_time).setVisibility(View.GONE);
+			getView().findViewById(R.id.lnr_end_time).setVisibility(View.GONE);
+		}
 	}
 
 	private void buildEditText(){
@@ -144,8 +155,8 @@ public class WorkOfferEditFragment extends AbstractSwFragment{
 			endMinute = 0;// c.get(Calendar.MINUTE);
 			txtStartDate.setText(startYear + "/" + getDisplayNum(startMonthOfYear + 1) + "/" + getDisplayNum(startDay));
 			txtEndDate.setText(endYear + "/" + getDisplayNum(endMonthOfYear + 1) + "/" + getDisplayNum(endDay));
-			txtStartTime.setText(getDisplayNum(startHour) + ":" + getDisplayNum(startMinute));
-			txtEndTime.setText(getDisplayNum(endHour) + ":" + getDisplayNum(endMinute));
+			// txtStartTime.setText(getDisplayNum(startHour) + ":" + getDisplayNum(startMinute));
+			// txtEndTime.setText(getDisplayNum(endHour) + ":" + getDisplayNum(endMinute));
 		}
 		getView().findViewById(R.id.lnr_start_date).setOnClickListener(this);
 		getView().findViewById(R.id.lnr_start_time).setOnClickListener(this);

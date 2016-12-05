@@ -129,7 +129,7 @@ public class WorkOfferFragment extends AbstractSwFragment{
 					jsonObject.put("offerType", new ArrayList<String>(offerTypesMaster.keySet()).get(filters.get(WorkOfferFilterFragment.TYPE)));
 				}
 			}
-			jsonObject.put("searchDateString", CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, monthView.workMonth));
+			jsonObject.put("searchDateString", CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_5, monthView.workMonth));
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
