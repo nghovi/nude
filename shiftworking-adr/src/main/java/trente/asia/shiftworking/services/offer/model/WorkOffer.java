@@ -8,6 +8,8 @@ import java.util.List;
 
 public class WorkOffer{
 
+	public static final String OFFER_TYPE_OVERTIME = "OTW";
+	public static final String OFFER_TYPE_HOLIDAY_WORKING = "HDW";
 	public String				permission;
 
 	public static final String	OFFER_STATUS_OFFER				= "OFFER";
