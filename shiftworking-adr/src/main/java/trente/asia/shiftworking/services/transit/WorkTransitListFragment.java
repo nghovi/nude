@@ -99,6 +99,7 @@ public class WorkTransitListFragment extends AbstractSwFragment{
             if(!SwConst.SW_TRANSIT_STATUS_DONE.equals(summaryStatus)){
                 ImageView imgRightIcon = (ImageView)getView().findViewById(R.id.img_id_header_right_icon);
                 imgRightIcon.setImageResource(R.drawable.bb_action_add);
+                imgRightIcon.setVisibility(View.VISIBLE);
                 imgRightIcon.setOnClickListener(this);
             }
 		}else{
