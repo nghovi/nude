@@ -29,6 +29,7 @@ import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.util.AndroidUtil;
+import trente.asia.android.view.ChiaseImageView;
 import trente.asia.android.view.ChiaseListDialog;
 import trente.asia.android.view.ChiaseTextView;
 import trente.asia.android.view.util.CAObjectSerializeUtil;
@@ -50,7 +51,7 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 	private ChiaseTextView		txtWayType;
 	private ChiaseTextView		txtCostType;
 
-	private ImageView			activePhoto;
+	private ChiaseImageView		activePhoto;
 	private LinearLayout		lnrAttachment;
 	private LinearLayout		lnrAdd;
 	private Button				btnDelete;
@@ -220,9 +221,14 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 
 	private void updateTransit(){
 		Map<String, File> photoMap = new HashMap<>();
-		if(!CCStringUtil.isEmpty(mOriginalPath)){
-			photoMap.put("photo", new File(mOriginalPath));
+		for(int i = 0; i < lnrAttachment.getChildCount(); i++){
+			View view = lnrAttachment.getChildAt(i);
+			ChiaseImageView imgPhoto = (ChiaseImageView)view.findViewById(R.id.img_id_photo);
+			if(!CCStringUtil.isEmpty(imgPhoto.getFilePath())){
+				photoMap.put("photo" + (i + 1), new File(imgPhoto.getFilePath()));
+			}
 		}
+
 		LinearLayout lnrContent = (LinearLayout)getView().findViewById(R.id.lnr_id_content);
 		JSONObject jsonObject = CAObjectSerializeUtil.serializeObject(lnrContent, null);
 		try{
@@ -281,6 +287,7 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 					mOriginalPath = returnedIntent.getExtras().getString(WelfareConst.IMAGE_PATH_KEY);
 					Uri uri = AndroidUtil.getUriFromFileInternal(activity, new File(mOriginalPath));
 					activePhoto.setImageURI(uri);
+					activePhoto.setFilePath(mOriginalPath);
 				}
 			}
 
@@ -350,7 +357,7 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 			}
 		});
 
-		final ImageView imgPhoto = (ImageView)view.findViewById(R.id.img_id_photo);
+		final ChiaseImageView imgPhoto = (ChiaseImageView)view.findViewById(R.id.img_id_photo);
 		imgPhoto.setOnClickListener(new View.OnClickListener() {
 
 			@Override
