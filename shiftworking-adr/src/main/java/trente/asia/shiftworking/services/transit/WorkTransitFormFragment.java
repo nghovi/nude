@@ -44,6 +44,7 @@ import trente.asia.shiftworking.services.transit.model.TransitModelHolder;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.define.WfUrlConst;
+import trente.asia.welfare.adr.models.FileModel;
 import trente.asia.welfare.adr.models.ImageAttachmentModel;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 import trente.asia.welfare.adr.utils.WfPicassoHelper;
@@ -230,19 +231,24 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
     private void setAttachment(List<ImageAttachmentModel> lstAttachment){
         for(ImageAttachmentModel attachmentModel : lstAttachment){
             if(attachmentModel.attachment != null && !CCStringUtil.isEmpty(attachmentModel.attachment.fileUrl)){
-                addAttachment(attachmentModel.attachment.fileUrl);
+                addAttachment(attachmentModel.attachment);
             }
         }
     }
 
 	private void updateTransit(){
 		Map<String, File> photoMap = new HashMap<>();
+        StringBuilder attachKeys = new StringBuilder();
 		for(int i = 0; i < lnrAttachment.getChildCount(); i++){
 			View view = lnrAttachment.getChildAt(i);
 			ChiaseImageView imgPhoto = (ChiaseImageView)view.findViewById(R.id.img_id_photo);
 			if(!CCStringUtil.isEmpty(imgPhoto.getFilePath())){
 				photoMap.put("photo" + (i + 1), new File(imgPhoto.getFilePath()));
-			}
+			}else{
+                if(!CCStringUtil.isEmpty(imgPhoto.imageId)){
+                    attachKeys.append(imgPhoto.imageId + ",");
+                }
+            }
 		}
 
 		LinearLayout lnrContent = (LinearLayout)getView().findViewById(R.id.lnr_id_content);
@@ -251,6 +257,7 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 			jsonObject.put("key", activeTransitId);
 			jsonObject.put("userId", myself.key);
 			jsonObject.put("transDate", CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, new Date()));
+            jsonObject.put("attachKeys", attachKeys.toString());
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
@@ -358,7 +365,7 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 		}
 	}
 
-	private void addAttachment(String fileUrl){
+	private void addAttachment(FileModel fileModel){
 		LayoutInflater mInflater = (LayoutInflater)activity.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 
 		final View view = mInflater.inflate(R.layout.item_attachment_list, null);
@@ -382,9 +389,10 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 				mViewForMenuBehind.setVisibility(View.VISIBLE);
 			}
 		});
-        if(!CCStringUtil.isEmpty(fileUrl)){
-            WfPicassoHelper.loadImage(activity, BuildConfig.HOST + fileUrl, imgPhoto, null);
+        if(fileModel != null && !CCStringUtil.isEmpty(fileModel.fileUrl)){
+            WfPicassoHelper.loadImage(activity, BuildConfig.HOST + fileModel.fileUrl, imgPhoto, null);
             imgPhoto.existData = true;
+            imgPhoto.imageId = fileModel.key;
         }
 
 		lnrAttachment.addView(view);

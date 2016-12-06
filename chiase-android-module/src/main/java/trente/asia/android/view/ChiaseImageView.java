@@ -22,6 +22,8 @@ public class ChiaseImageView extends ImageView{
 
 	public boolean	existData;
 
+	public String	imageId;
+
 	public ChiaseImageView(Context context){
 		super(context);
 	}
