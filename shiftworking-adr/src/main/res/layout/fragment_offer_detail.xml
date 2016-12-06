@@ -193,41 +193,59 @@
 
             </LinearLayout>
 
-
-            <TextView
-                style="@style/sf_text_value_black_bold"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/margin_8dp"
-                android:text="@string/fragment_offer_detail_approve_history"/>
+                android:orientation="vertical"
+                android:id="@+id/lnr_fragment_offer_detail_approve_history"
+                android:visibility="gone">
 
-            <trente.asia.android.view.ChiaseListViewNoScroll
-                android:id="@+id/lst_fragment_offer_detail_approve_history"
+                <TextView
+                    style="@style/sf_text_value_black_bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/margin_8dp"
+                    android:text="@string/fragment_offer_detail_approve_history"/>
+
+                <trente.asia.android.view.ChiaseListViewNoScroll
+                    android:id="@+id/lst_fragment_offer_detail_approve_history"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </trente.asia.android.view.ChiaseListViewNoScroll>
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-            </trente.asia.android.view.ChiaseListViewNoScroll>
-
-            <TextView
-                android:id="@+id/textView8"
-                style="@style/sf_text_title"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_8dp"
-                android:text="@string/fragment_offer_detail_approve_comment"/>
+                android:orientation="vertical"
+                android:id="@+id/lnr_fragment_offer_detail_comment"
+                android:visibility="gone">
+                <TextView
+                    android:id="@+id/textView8"
+                    style="@style/sf_text_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_8dp"
+                    android:text="@string/fragment_offer_detail_approve_comment"/>
 
-            <EditText
-                android:id="@+id/edt_fragment_offer_detail_comment"
-                style="@style/sf_edit_text"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_gravity="center_vertical"
-                android:hint="@string/fragment_offer_detail_comment_hint"
-                android:maxLines="2"
-                android:minHeight="2dp"
-                android:singleLine="false"
-                android:visibility="visible"
-                custome:mName="password"/>
+                <EditText
+                    android:id="@+id/edt_fragment_offer_detail_comment"
+                    style="@style/sf_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center_vertical"
+                    android:hint="@string/fragment_offer_detail_comment_hint"
+                    android:maxLines="2"
+                    android:minHeight="2dp"
+                    android:singleLine="false"
+                    android:visibility="visible"
+                    custome:mName="password"/>
+
+            </LinearLayout>
+
+
+
 
         </LinearLayout>
 

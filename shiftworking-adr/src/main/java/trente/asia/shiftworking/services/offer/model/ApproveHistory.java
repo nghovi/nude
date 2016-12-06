@@ -13,4 +13,5 @@ public class ApproveHistory {
     public String resultType;
     public String resultTypeName;
     public String key;
+    public String historyComment;
 }

@@ -56,7 +56,7 @@ public class ApproveHistoryAdapter extends ArrayAdapter<ApproveHistory>{
 		viewHolder.txtUsername.setText(history.userName);
 		viewHolder.txtDate.setText(history.historyDate);
 		viewHolder.txtResult.setText(history.historyStatus);
-		viewHolder.txtComment.setText(history.resultTypeName);
+		viewHolder.txtComment.setText(history.historyComment);
 		return convertView;
 	}
 

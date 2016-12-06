@@ -92,7 +92,16 @@ public class WorkOfferDetailFragment extends AbstractSwFragment{
 	private void buildWorkOfferDetail(){
 		buildOfferInfo();
 		buildWorkOfferApproveHistory();
+		buildOfferComment();
 		buildActionButtons();
+	}
+
+	private void buildOfferComment(){
+		if(WorkOffer.OFFER_STATUS_OFFER.equals(offer.approveResult) && WorkOffer.OFFER_PERMISSION_APPROVEABLE.equals(offerPermission)){
+			getView().findViewById(R.id.lnr_fragment_offer_detail_comment).setVisibility(View.VISIBLE);
+		}else{
+			getView().findViewById(R.id.lnr_fragment_offer_detail_comment).setVisibility(View.GONE);
+		}
 	}
 
 	private void buildOfferInfo(){
@@ -147,9 +156,14 @@ public class WorkOfferDetailFragment extends AbstractSwFragment{
 	}
 
 	private void buildWorkOfferApproveHistory(){
-		ChiaseListViewNoScroll lstApproveHistory = (ChiaseListViewNoScroll)getView().findViewById(R.id.lst_fragment_offer_detail_approve_history);
-		ApproveHistoryAdapter adapter = new ApproveHistoryAdapter(activity, offer.listHistories);
-		lstApproveHistory.setAdapter(adapter);
+		if(offer.userId.equals(myself.key)){
+			getView().findViewById(R.id.lnr_fragment_offer_detail_approve_history).setVisibility(View.VISIBLE);
+			ChiaseListViewNoScroll lstApproveHistory = (ChiaseListViewNoScroll)getView().findViewById(R.id.lst_fragment_offer_detail_approve_history);
+			ApproveHistoryAdapter adapter = new ApproveHistoryAdapter(activity, offer.listHistories);
+			lstApproveHistory.setAdapter(adapter);
+		}else{
+			getView().findViewById(R.id.lnr_fragment_offer_detail_approve_history).setVisibility(View.GONE);
+		}
 	}
 
 	//
