@@ -11,14 +11,16 @@
         android:orientation="vertical"
         android:paddingLeft="@dimen/wf_margin_16"
         android:paddingRight="@dimen/wf_margin_16"
-        android:visibility="visible">
+        android:visibility="visible"
+        android:background="@color/wf_login_background_color">
 
         <include layout="@layout/view_common_shift_working_month"/>
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scrollbars="none">
+            android:scrollbars="none"
+            android:id="@+id/src_fragment_work_offer">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -34,6 +36,8 @@
                         style="@style/sf_text_value_black_bold"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/margin_8dp"
+                        android:layout_marginTop="@dimen/margin_8dp"
                         android:text="@string/sw_work_offer_history"
                         />
 
@@ -57,12 +61,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_16dp"
+                        android:layout_marginBottom="@dimen/margin_8dp"
                         android:text="@string/sw_work_offer_other_history"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical|center_horizontal"
+                        android:gravity="center_vertical"
                         android:layout_marginBottom="@dimen/margin_8dp"
                         android:orientation="horizontal">
 

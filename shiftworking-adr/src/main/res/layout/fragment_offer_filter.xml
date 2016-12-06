@@ -17,9 +17,13 @@
                android:layout_width="@dimen/margin_100dp"
                android:layout_height="wrap_content"
                android:text="@string/fragment_offer_filter_offer_type"/>
-           <include
-               android:id="@+id/spn_fragment_offer_filter_type"
-               layout="@layout/view_wf_spinner"/>
+           <trente.asia.android.view.ChiaseTextView
+               android:id="@+id/txt_fragment_offer_filter_type"
+               style="@style/sf_text_value_black"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_marginRight="@dimen/margin_6dp"
+               android:background="@drawable/wf_background_gray_border_white_padding"/>
        </LinearLayout>
 
        <LinearLayout
@@ -31,9 +35,13 @@
                android:layout_width="@dimen/margin_100dp"
                android:layout_height="wrap_content"
                android:text="@string/fragment_offer_filter_offer_status"/>
-           <include
-               android:id="@+id/spn_fragment_offer_filter_status"
-               layout="@layout/view_wf_spinner"/>
+           <trente.asia.android.view.ChiaseTextView
+               android:id="@+id/txt_fragment_offer_filter_status"
+               style="@style/sf_text_value_black"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_marginRight="@dimen/margin_6dp"
+               android:background="@drawable/wf_background_gray_border_white_padding"/>
        </LinearLayout>
 
        <LinearLayout
@@ -45,9 +53,13 @@
                android:layout_width="@dimen/margin_100dp"
                android:layout_height="wrap_content"
                android:text="@string/fragment_offer_filter_offer_dept"/>
-           <include
-               android:id="@+id/spn_fragment_offer_filter_dept"
-               layout="@layout/view_wf_spinner"/>
+           <trente.asia.android.view.ChiaseTextView
+               android:id="@+id/txt_fragment_offer_filter_dept"
+               style="@style/sf_text_value_black"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_marginRight="@dimen/margin_6dp"
+               android:background="@drawable/wf_background_gray_border_white_padding"/>
        </LinearLayout>
 
        <LinearLayout

@@ -63,7 +63,7 @@ public class WorkOfferDetailFragment extends AbstractSwFragment{
 	@Override
 	protected void initView(){
 		super.initView();
-		buildHeaderWithBackBtn(myself.userName);
+		// buildHeaderWithBackBtn(myself.userName);
 		// buildWorkOfferDetail();
 	}
 
@@ -90,6 +90,7 @@ public class WorkOfferDetailFragment extends AbstractSwFragment{
 	}
 
 	private void buildWorkOfferDetail(){
+		buildHeaderWithBackBtn(myself.userName);
 		buildOfferInfo();
 		buildWorkOfferApproveHistory();
 		buildOfferComment();
@@ -113,16 +114,16 @@ public class WorkOfferDetailFragment extends AbstractSwFragment{
 
 		((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_end_date)).setText(offer.endDateString);
 
-		if(CCStringUtil.isEmpty(offer.startTimeString)){
-			getView().findViewById(R.id.lnr_start_time).setVisibility(View.INVISIBLE);
-		}else{
+		if(WorkOffer.OFFER_TYPE_HOLIDAY_WORKING.equals(offer.offerType) || WorkOffer.OFFER_TYPE_OVERTIME.equals(offer.offerType)){
 			((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_start_time)).setText(offer.startTimeString);
+		}else{
+			getView().findViewById(R.id.lnr_start_time).setVisibility(View.GONE);
 		}
 
-		if(CCStringUtil.isEmpty(offer.endTimeString)){
-			getView().findViewById(R.id.lnr_end_time).setVisibility(View.INVISIBLE);
-		}else{
+		if(WorkOffer.OFFER_TYPE_HOLIDAY_WORKING.equals(offer.offerType) || WorkOffer.OFFER_TYPE_OVERTIME.equals(offer.offerType)){
 			((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_end_time)).setText(offer.endTimeString);
+		}else{
+			getView().findViewById(R.id.lnr_end_time).setVisibility(View.GONE);
 		}
 
 		TextView txtNote = (TextView)getView().findViewById(R.id.txt_fragment_offer_detail_note);

@@ -11,6 +11,7 @@
 
     <ScrollView
         android:id="@+id/scrollView2"
+        android:background="@color/wf_login_background_color"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -29,7 +30,7 @@
                 style="@style/sf_text_value_black_bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/margin_10dp"
+                android:layout_marginBottom="@dimen/margin_8dp"
                 android:text="@string/fragment_offer_detail_header"/>
 
             <LinearLayout
@@ -148,7 +149,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/margin_8dp"
+                    android:layout_marginBottom="@dimen/margin_16dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
@@ -161,7 +162,7 @@
 
                     <TextView
                         android:id="@+id/txt_fragment_offer_detail_note"
-                        style="@style/sf_text_title"
+                        style="@style/sf_text_value_black"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:scrollbarAlwaysDrawVerticalTrack="true"
@@ -170,34 +171,13 @@
 
                 </LinearLayout>
 
-                <!--<LinearLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginBottom="@dimen/margin_8dp"-->
-                <!--android:gravity="center_vertical"-->
-                <!--android:orientation="horizontal">-->
-
-                <!--<TextView-->
-                <!--style="@style/sf_text_title"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_weight="1"-->
-                <!--android:text="Status"/>-->
-
-                <!--<TextView-->
-                <!--android:id="@+id/txt_fragment_offer_detail_status"-->
-                <!--style="@style/sf_text_value_black"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"/>-->
-                <!--</LinearLayout>-->
-
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/lnr_fragment_offer_detail_approve_history"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:id="@+id/lnr_fragment_offer_detail_approve_history"
                 android:visibility="gone">
 
                 <TextView
@@ -205,6 +185,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/margin_8dp"
+                    android:layout_marginBottom="@dimen/margin_8dp"
                     android:text="@string/fragment_offer_detail_approve_history"/>
 
                 <trente.asia.android.view.ChiaseListViewNoScroll
@@ -216,11 +197,12 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/lnr_fragment_offer_detail_comment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:id="@+id/lnr_fragment_offer_detail_comment"
                 android:visibility="gone">
+
                 <TextView
                     android:id="@+id/textView8"
                     style="@style/sf_text_title"
@@ -245,8 +227,6 @@
             </LinearLayout>
 
 
-
-
         </LinearLayout>
 
     </ScrollView>
@@ -254,8 +234,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical|center_horizontal"
+        android:background="@color/wf_login_background_color"
         android:layout_weight="1"
+        android:gravity="center_vertical|center_horizontal"
         android:orientation="vertical">
 
         <LinearLayout
