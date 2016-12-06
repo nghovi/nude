@@ -96,7 +96,7 @@
     <string name="sw_work_transit_fee_item">交通費</string>
     <string name="sw_work_transit_note_item">ノート</string>
     <string name="sw_work_transit_attachment_item">添付</string>
-    <string name="sw_work_transit_list_title">Transit list</string>
+    <string name="sw_work_transit_list_title">交通一覧</string>
     <string name="fragment_offer_filter_offer_type">Offer type</string>
     <string name="fragment_offer_filter_other_history_filter">Filter: %1$s</string>
     <string name="fragment_offer_filter_offer_status">Offer status</string>
