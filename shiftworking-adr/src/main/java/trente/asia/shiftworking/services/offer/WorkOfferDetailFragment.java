@@ -63,7 +63,7 @@ public class WorkOfferDetailFragment extends AbstractSwFragment{
 	@Override
 	protected void initView(){
 		super.initView();
-		buildHeaderWithBackBtn(myself.userName);
+		// buildHeaderWithBackBtn(myself.userName);
 		// buildWorkOfferDetail();
 	}
 
@@ -90,6 +90,7 @@ public class WorkOfferDetailFragment extends AbstractSwFragment{
 	}
 
 	private void buildWorkOfferDetail(){
+		buildHeaderWithBackBtn(myself.userName);
 		buildOfferInfo();
 		buildWorkOfferApproveHistory();
 		buildOfferComment();
