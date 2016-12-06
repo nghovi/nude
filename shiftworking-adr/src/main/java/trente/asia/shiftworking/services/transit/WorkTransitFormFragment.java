@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.json.JSONException;
@@ -33,6 +34,7 @@ import trente.asia.android.view.ChiaseImageView;
 import trente.asia.android.view.ChiaseListDialog;
 import trente.asia.android.view.ChiaseTextView;
 import trente.asia.android.view.util.CAObjectSerializeUtil;
+import trente.asia.shiftworking.BuildConfig;
 import trente.asia.shiftworking.R;
 import trente.asia.shiftworking.common.defines.SwConst;
 import trente.asia.shiftworking.common.fragments.AbstractPhotoFragment;
@@ -42,7 +44,9 @@ import trente.asia.shiftworking.services.transit.model.TransitModelHolder;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.define.WfUrlConst;
+import trente.asia.welfare.adr.models.ImageAttachmentModel;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
+import trente.asia.welfare.adr.utils.WfPicassoHelper;
 
 public class WorkTransitFormFragment extends AbstractPhotoFragment{
 
@@ -215,10 +219,21 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 			txtTransitType.setText(transitModel.transTypeName);
 			txtWayType.setText(transitModel.wayTypeName);
 			txtCostType.setText(transitModel.costTypeName);
+            if(!CCCollectionUtil.isEmpty(transitModel.attachmentFile2)){
+                setAttachment(transitModel.attachmentFile2);
+            }
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
 	}
+
+    private void setAttachment(List<ImageAttachmentModel> lstAttachment){
+        for(ImageAttachmentModel attachmentModel : lstAttachment){
+            if(attachmentModel.attachment != null && !CCStringUtil.isEmpty(attachmentModel.attachment.fileUrl)){
+                addAttachment(attachmentModel.attachment.fileUrl);
+            }
+        }
+    }
 
 	private void updateTransit(){
 		Map<String, File> photoMap = new HashMap<>();
@@ -335,14 +350,14 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 			deleteTransit();
 			break;
 		case R.id.lnr_id_add:
-			addAttachment();
+			addAttachment(null);
 			break;
 		default:
 			break;
 		}
 	}
 
-	private void addAttachment(){
+	private void addAttachment(String fileUrl){
 		LayoutInflater mInflater = (LayoutInflater)activity.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 
 		final View view = mInflater.inflate(R.layout.item_attachment_list, null);
@@ -366,6 +381,10 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 				mViewForMenuBehind.setVisibility(View.VISIBLE);
 			}
 		});
+        if(!CCStringUtil.isEmpty(fileUrl)){
+            WfPicassoHelper.loadImage(activity, BuildConfig.HOST + fileUrl, imgPhoto, null);
+            imgPhoto.setFilePath(fileUrl);
+        }
 
 		lnrAttachment.addView(view);
         judgeAdd();
