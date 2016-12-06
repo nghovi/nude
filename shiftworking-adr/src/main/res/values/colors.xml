@@ -10,7 +10,7 @@
     <!--Button color-->
     <color name="wf_app_button_color_off">#80f5716c</color>
     <color name="wf_app_button_color_on">#f5716c</color>
-    <color name="wf_login_background_color">#fd8f8a</color>
+    <color name="wf_login_background_color">#f8dfdd</color>
 
     <color name="wf_login_button_color_off">#80fe7f7a</color>
     <color name="wf_login_button_color_on">#fe7f7a</color>
