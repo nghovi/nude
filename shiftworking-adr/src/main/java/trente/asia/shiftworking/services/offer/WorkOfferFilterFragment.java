@@ -1,6 +1,7 @@
 package trente.asia.shiftworking.services.offer;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import android.os.Bundle;
@@ -116,7 +117,9 @@ public class WorkOfferFilterFragment extends AbstractSwFragment{
 	public void onClick(View v){
 		switch(v.getId()){
 		case R.id.btn_fragment_filter_clear:
-			filters = null;
+			filters.remove(TYPE);
+			filters.remove(STATUS);
+			filters.remove(DEPT);
 			((ChiaseActivity)activity).isInitData = true;
 			onClickBackBtn();
 			break;
