@@ -98,7 +98,7 @@ public class WorkTransitDetailFragment extends AbstractSwFragment{
 			String summaryStatus = response.optString("summaryStatus");
 			if(!SwConst.SW_TRANSIT_STATUS_DONE.equals(summaryStatus)){
 				ImageView imgRightIcon = (ImageView)getView().findViewById(R.id.img_id_header_right_icon);
-				imgRightIcon.setImageResource(R.drawable.cs_dummy_small);
+				imgRightIcon.setImageResource(R.drawable.sw_action_edit);
 				imgRightIcon.setVisibility(View.VISIBLE);
 				imgRightIcon.setOnClickListener(this);
 			}
