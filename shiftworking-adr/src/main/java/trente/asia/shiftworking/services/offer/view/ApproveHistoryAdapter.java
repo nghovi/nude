@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import asia.chiase.core.util.CCStringUtil;
+import trente.asia.shiftworking.BuildConfig;
 import trente.asia.shiftworking.R;
 import trente.asia.shiftworking.services.offer.model.ApproveHistory;
 import trente.asia.welfare.adr.utils.WfPicassoHelper;
@@ -51,7 +52,7 @@ public class ApproveHistoryAdapter extends ArrayAdapter<ApproveHistory>{
 			viewHolder = (ViewHolder)convertView.getTag();
 		}
 		ApproveHistory history = getItem(position);
-		WfPicassoHelper.loadImage(mContext, history.userAvatarPath, viewHolder.imgAvatar, null);
+		WfPicassoHelper.loadImageWithDefaultIcon(mContext, BuildConfig.HOST, viewHolder.imgAvatar, history.userAvatarPath, R.drawable.wf_profile);
 		viewHolder.txtUsername.setText(history.userName);
 		viewHolder.txtDate.setText(history.historyDate);
 		viewHolder.txtResult.setText(history.historyStatus);

@@ -12,12 +12,11 @@
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingBottom="@dimen/margin_16dp"
             android:paddingLeft="@dimen/margin_16dp"
@@ -238,11 +237,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical|center_horizontal"
+        android:layout_weight="1"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center_vertical|center_horizontal"
             android:orientation="horizontal">
 
@@ -250,13 +250,15 @@
                 android:id="@+id/btn_fragment_offer_detail_reject"
                 style="@style/wl_common_button_small"
                 android:layout_marginRight="@dimen/margin_30dp"
-                android:text="Reject"/>
+                android:text="Reject"
+                android:visibility="gone"/>
 
             <Button
                 android:id="@+id/btn_fragment_offer_detail_approve"
                 style="@style/wl_common_button_small"
                 android:layout_marginLeft="@dimen/margin_30dp"
-                android:text="Approve"/>
+                android:text="Approve"
+                android:visibility="gone"/>
         </LinearLayout>
 
         <Button
@@ -265,7 +267,8 @@
             android:layout_width="match_parent"
             android:layout_marginBottom="@dimen/margin_10dp"
             android:layout_marginTop="@dimen/margin_10dp"
-            android:text="Delete"/>
+            android:text="Delete"
+            android:visibility="gone"/>
     </LinearLayout>
 
     <include layout="@layout/view_common_footer"/>
