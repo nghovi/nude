@@ -90,6 +90,7 @@ public class WorkOfferEditFragment extends AbstractSwFragment{
 		if(offer != null){
 			selectedPosition = new ArrayList<String>(offerTypesMaster.keySet()).indexOf(offer.offerType);
 		}
+		selectedType = (String)offerTypesMaster.keySet().toArray()[selectedPosition];
 		String offerTypeCode = (String)offerTypesMaster.keySet().toArray()[selectedPosition];
 		txtOfferType.setText(offerTypesMaster.get(offerTypeCode));
 		txtOfferType.setValue(offerTypeCode);
@@ -102,6 +103,7 @@ public class WorkOfferEditFragment extends AbstractSwFragment{
 				OnOfferTypeChangedUpdateLayout();
 			}
 		});
+		OnOfferTypeChangedUpdateLayout();
 	}
 
 	private void OnOfferTypeChangedUpdateLayout(){

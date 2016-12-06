@@ -13,7 +13,8 @@
         android:id="@+id/scrollView3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:background="@color/wf_login_background_color">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -86,7 +87,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/margin_16dp"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <TextView
                         style="@style/sf_text_title"
@@ -135,7 +137,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/margin_16dp"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <TextView
                         style="@style/sf_text_title"
