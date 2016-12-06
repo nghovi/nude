@@ -153,8 +153,8 @@ public class WorkOfferEditFragment extends AbstractSwFragment{
 			endDay = c.get(Calendar.DAY_OF_MONTH);
 			endHour = 0;
 			endMinute = 0;// c.get(Calendar.MINUTE);
-			txtStartDate.setText(startYear + "/" + getDisplayNum(startMonthOfYear + 1) + "/" + getDisplayNum(startDay));
-			txtEndDate.setText(endYear + "/" + getDisplayNum(endMonthOfYear + 1) + "/" + getDisplayNum(endDay));
+			// txtStartDate.setText(startYear + "/" + getDisplayNum(startMonthOfYear + 1) + "/" + getDisplayNum(startDay));
+			// txtEndDate.setText(endYear + "/" + getDisplayNum(endMonthOfYear + 1) + "/" + getDisplayNum(endDay));
 			// txtStartTime.setText(getDisplayNum(startHour) + ":" + getDisplayNum(startMinute));
 			// txtEndTime.setText(getDisplayNum(endHour) + ":" + getDisplayNum(endMinute));
 		}

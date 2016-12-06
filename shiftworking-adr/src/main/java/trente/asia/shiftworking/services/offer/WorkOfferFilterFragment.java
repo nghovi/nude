@@ -120,8 +120,9 @@ public class WorkOfferFilterFragment extends AbstractSwFragment{
 			filters.remove(TYPE);
 			filters.remove(STATUS);
 			filters.remove(DEPT);
-			((ChiaseActivity)activity).isInitData = true;
-			onClickBackBtn();
+			buildSpinners();
+			// ((ChiaseActivity)activity).isInitData = true;
+			// onClickBackBtn();
 			break;
 		case R.id.btn_fragment_filter_update:
 			setFilterValues();
