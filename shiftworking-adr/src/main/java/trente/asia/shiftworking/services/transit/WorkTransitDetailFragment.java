@@ -129,6 +129,7 @@ public class WorkTransitDetailFragment extends AbstractSwFragment{
 
 	private void setAttachment(List<ImageAttachmentModel> lstAttachment){
 		LayoutInflater mInflater = (LayoutInflater)activity.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+        lnrAttachment.removeAllViews();
 		for(ImageAttachmentModel attachmentModel : lstAttachment){
 			if(attachmentModel.attachment != null && !CCStringUtil.isEmpty(attachmentModel.attachment.fileUrl)){
 				View view = mInflater.inflate(R.layout.item_attachment_show_list, null);
