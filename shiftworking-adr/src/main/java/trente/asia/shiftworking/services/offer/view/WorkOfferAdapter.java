@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import asia.chiase.core.util.CCStringUtil;
+import trente.asia.shiftworking.BuildConfig;
 import trente.asia.shiftworking.R;
 import trente.asia.shiftworking.common.defines.SwConst;
 import trente.asia.shiftworking.services.offer.model.WorkOffer;
@@ -24,10 +25,10 @@ import trente.asia.welfare.adr.utils.WfPicassoHelper;
  */
 public class WorkOfferAdapter extends ArrayAdapter<WorkOffer>{
 
-	private List<WorkOffer>				lstHistory;
-	private Context						mContext;
-	private int							layoutId;
-	private Map<String, String> offerTypesMaster;
+	private List<WorkOffer>		lstHistory;
+	private Context				mContext;
+	private int					layoutId;
+	private Map<String, String>	offerTypesMaster;
 	private Map<String, String>	offerStatusMaster;
 
 	public WorkOfferAdapter(Context context, List<WorkOffer> lstHistory, Map<String, String> types, Map<String, String> statuses){
@@ -56,11 +57,11 @@ public class WorkOfferAdapter extends ArrayAdapter<WorkOffer>{
 			viewHolder = (ViewHolder)convertView.getTag();
 		}
 		WorkOffer offer = getItem(position);
-		WfPicassoHelper.loadImage(mContext, offer.userAvatarPath, viewHolder.imgAvatar, null);
+		WfPicassoHelper.loadImageWithDefaultIcon(mContext, BuildConfig.HOST, viewHolder.imgAvatar, offer.userAvatarPath, R.drawable.wf_profile);
 		viewHolder.txtUsername.setText(offer.userName);
 		viewHolder.txtDate.setText(offer.startDateString);
 		viewHolder.txtType.setText(this.offerTypesMaster.get(offer.offerType));
-		viewHolder.txtStatus.setText(this.offerStatusMaster.get(offer.offerStatus));
+		viewHolder.txtStatus.setText(this.offerStatusMaster.get(offer.approveResult));
 		// convertView.findViewById(R.id.lnr_item_offer_main)
 		// .setBackgroundResource(getBackgroundColor(offer));
 
