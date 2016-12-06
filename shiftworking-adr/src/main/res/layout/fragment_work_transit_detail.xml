@@ -139,33 +139,26 @@
             <View style="@style/cs_common_divider"/>
 
             <LinearLayout
-                style="@style/wf_common_item_linear2"
-                android:orientation="vertical">
+                android:id="@+id/lnr_id_attachment_holder"
+                style="@style/cs_common_match_wrap">
 
-                <TextView
-                    style="@style/wl_common_text"
-                    android:layout_width="wrap_content"
-                    android:text="@string/sw_work_transit_attachment_item"/>
+                <LinearLayout
+                    style="@style/wf_common_item_linear2"
+                    android:orientation="vertical">
 
-                <RelativeLayout
-                    style="@style/cs_common_match_wrap"
-                    android:layout_marginTop="@dimen/margin_10dp">
+                    <TextView
+                        style="@style/wl_common_text"
+                        android:layout_width="wrap_content"
+                        android:text="@string/sw_work_transit_attachment_item"/>
 
-                    <ImageView
-                        android:id="@+id/img_id_photo"
-                        android:layout_width="@dimen/margin_100dp"
-                        android:layout_height="@dimen/margin_100dp"
-                        android:layout_centerInParent="true"/>
+                    <LinearLayout
+                        android:id="@+id/lnr_id_attachment"
+                        style="@style/cs_common_match_wrap"
+                        android:orientation="vertical"/>
+                </LinearLayout>
 
-                    <ImageView
-                        style="@style/cs_common_wrap"
-                        android:layout_alignBottom="@+id/img_id_photo"
-                        android:layout_alignRight="@+id/img_id_photo"
-                        android:layout_marginBottom="@dimen/margin_5dp"
-                        android:src="@drawable/wf_camera"/>
-                </RelativeLayout>
+                <View style="@style/cs_common_divider"/>
             </LinearLayout>
-
         </LinearLayout>
 
     </ScrollView>

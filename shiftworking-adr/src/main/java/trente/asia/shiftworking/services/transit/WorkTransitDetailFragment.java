@@ -1,39 +1,47 @@
 package trente.asia.shiftworking.services.transit;
 
+import java.util.List;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import asia.chiase.core.define.CCConst;
+import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
+import trente.asia.shiftworking.BuildConfig;
 import trente.asia.shiftworking.R;
 import trente.asia.shiftworking.common.defines.SwConst;
 import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
 import trente.asia.shiftworking.services.transit.model.TransitModelHolder;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WfUrlConst;
+import trente.asia.welfare.adr.models.ImageAttachmentModel;
+import trente.asia.welfare.adr.utils.WfPicassoHelper;
 
 public class WorkTransitDetailFragment extends AbstractSwFragment{
 
-	private String		activeTransitId;
-	private TextView	txtLeave;
-	private TextView	txtArrive;
-	private TextView	txtFee;
-	private TextView	txtNote;
+	private String			activeTransitId;
+	private TextView		txtLeave;
+	private TextView		txtArrive;
+	private TextView		txtFee;
+	private TextView		txtNote;
 
-	private TextView	txtTransitType;
-	private TextView	txtWayType;
-	private TextView	txtCostType;
+	private TextView		txtTransitType;
+	private TextView		txtWayType;
+	private TextView		txtCostType;
 
-	private ImageView	imgPhoto;
+	private LinearLayout	lnrAttachment;
 
 	public void setActiveTransitId(String activeTransitId){
 		this.activeTransitId = activeTransitId;
@@ -65,12 +73,7 @@ public class WorkTransitDetailFragment extends AbstractSwFragment{
 		txtTransitType = (TextView)getView().findViewById(R.id.txt_id_transit_type);
 		txtWayType = (TextView)getView().findViewById(R.id.txt_id_way_type);
 		txtCostType = (TextView)getView().findViewById(R.id.txt_id_cost_type);
-
-		imgPhoto = (ImageView)getView().findViewById(R.id.img_id_photo);
-//		ImageView imgRightIcon = (ImageView)getView().findViewById(R.id.img_id_header_right_icon);
-
-		imgPhoto.setOnClickListener(this);
-//		imgRightIcon.setOnClickListener(this);
+		lnrAttachment = (LinearLayout)getView().findViewById(R.id.lnr_id_attachment);
 	}
 
 	@Override
@@ -92,13 +95,13 @@ public class WorkTransitDetailFragment extends AbstractSwFragment{
 	protected void successLoad(JSONObject response, String url){
 		if(WfUrlConst.WF_TRANS_0002.equals(url)){
 
-            String summaryStatus = response.optString("summaryStatus");
-            if(!SwConst.SW_TRANSIT_STATUS_DONE.equals(summaryStatus)){
-                ImageView imgRightIcon = (ImageView)getView().findViewById(R.id.img_id_header_right_icon);
-                imgRightIcon.setImageResource(R.drawable.cs_dummy_small);
-                imgRightIcon.setVisibility(View.VISIBLE);
-                imgRightIcon.setOnClickListener(this);
-            }
+			String summaryStatus = response.optString("summaryStatus");
+			if(!SwConst.SW_TRANSIT_STATUS_DONE.equals(summaryStatus)){
+				ImageView imgRightIcon = (ImageView)getView().findViewById(R.id.img_id_header_right_icon);
+				imgRightIcon.setImageResource(R.drawable.cs_dummy_small);
+				imgRightIcon.setVisibility(View.VISIBLE);
+				imgRightIcon.setOnClickListener(this);
+			}
 
 			TransitModelHolder holder = CCJsonUtil.convertToModel(CCStringUtil.toString(response), TransitModelHolder.class);
 			if(holder.transit != null){
@@ -110,28 +113,47 @@ public class WorkTransitDetailFragment extends AbstractSwFragment{
 				txtFee.setText(CCFormatUtil.formatAmount(holder.transit.fee));
 				txtCostType.setText(holder.transit.costTypeName);
 				txtNote.setText(holder.transit.note);
+
+				if(!CCCollectionUtil.isEmpty(holder.transit.attachmentFile2)){
+					setAttachment(holder.transit.attachmentFile2);
+				}else{
+					LinearLayout lnrHolder = (LinearLayout)getView().findViewById(R.id.lnr_id_attachment_holder);
+					lnrHolder.setVisibility(View.GONE);
+				}
 			}
 		}else{
 			super.successLoad(response, url);
 		}
 	}
 
-    @Override
-    public void onResume(){
-        super.onResume();
+	private void setAttachment(List<ImageAttachmentModel> lstAttachment){
+		LayoutInflater mInflater = (LayoutInflater)activity.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+		for(ImageAttachmentModel attachmentModel : lstAttachment){
+			if(attachmentModel.attachment != null && !CCStringUtil.isEmpty(attachmentModel.attachment.fileUrl)){
+				View view = mInflater.inflate(R.layout.item_attachment_show_list, null);
+				ImageView imgPhoto = (ImageView)view.findViewById(R.id.img_id_photo);
+				WfPicassoHelper.loadImage(activity, BuildConfig.HOST + attachmentModel.attachment.fileUrl, imgPhoto, null);
+				lnrAttachment.addView(view);
+			}
+		}
+	}
 
-        if(!((WelfareActivity)activity).dataMap.isEmpty()){
-            String isDelete = CCStringUtil.toString(((WelfareActivity)activity).dataMap.get(SwConst.ACTION_TRANSIT_DELETE));
-            String isUpdate = CCStringUtil.toString(((WelfareActivity)activity).dataMap.get(SwConst.ACTION_TRANSIT_UPDATE));
-            if(CCConst.YES.equals(isDelete) || CCConst.YES.equals(isUpdate)){
-                ((WelfareActivity)activity).dataMap.clear();
-                ((WelfareActivity)activity).isInitData = true;
-                if(CCConst.YES.equals(isDelete)){
-                    getFragmentManager().popBackStack();
-                }
-            }
-        }
-    }
+	@Override
+	public void onResume(){
+		super.onResume();
+
+		if(!((WelfareActivity)activity).dataMap.isEmpty()){
+			String isDelete = CCStringUtil.toString(((WelfareActivity)activity).dataMap.get(SwConst.ACTION_TRANSIT_DELETE));
+			String isUpdate = CCStringUtil.toString(((WelfareActivity)activity).dataMap.get(SwConst.ACTION_TRANSIT_UPDATE));
+			if(CCConst.YES.equals(isDelete) || CCConst.YES.equals(isUpdate)){
+				((WelfareActivity)activity).dataMap.clear();
+				((WelfareActivity)activity).isInitData = true;
+				if(CCConst.YES.equals(isDelete)){
+					getFragmentManager().popBackStack();
+				}
+			}
+		}
+	}
 
 	@Override
 	public void onClick(View v){
