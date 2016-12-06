@@ -220,8 +220,8 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 			txtTransitType.setText(transitModel.transTypeName);
 			txtWayType.setText(transitModel.wayTypeName);
 			txtCostType.setText(transitModel.costTypeName);
-            if(!CCCollectionUtil.isEmpty(transitModel.attachmentFile2)){
-                setAttachment(transitModel.attachmentFile2);
+            if(!CCCollectionUtil.isEmpty(transitModel.attachmentFile)){
+                setAttachment(transitModel.attachmentFile);
             }
 		}catch(JSONException e){
 			e.printStackTrace();

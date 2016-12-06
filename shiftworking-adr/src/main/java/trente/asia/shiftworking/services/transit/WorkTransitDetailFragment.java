@@ -115,9 +115,9 @@ public class WorkTransitDetailFragment extends AbstractSwFragment{
 				txtNote.setText(holder.transit.note);
 
                 LinearLayout lnrHolder = (LinearLayout)getView().findViewById(R.id.lnr_id_attachment_holder);
-				if(!CCCollectionUtil.isEmpty(holder.transit.attachmentFile2)){
+				if(!CCCollectionUtil.isEmpty(holder.transit.attachmentFile)){
                     lnrHolder.setVisibility(View.VISIBLE);
-					setAttachment(holder.transit.attachmentFile2);
+					setAttachment(holder.transit.attachmentFile);
 				}else{
 					lnrHolder.setVisibility(View.GONE);
 				}

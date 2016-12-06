@@ -1,12 +1,13 @@
 package trente.asia.android.activity;
 
-import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import java.io.IOException;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -17,85 +18,131 @@ import trente.asia.android.util.CARequestUtil;
 /**
  * ChiaseActivity
  */
-public class ChiaseActivity extends FragmentActivity {
+public class ChiaseActivity extends FragmentActivity{
 
-    /**
-     * The Activity.
-     */
-    protected ChiaseActivity activity = this;
+	/**
+	 * The Activity.
+	 */
+	protected ChiaseActivity	activity	= this;
 
-    public boolean isInitData = false;
+	public boolean				isInitData	= false;
 
-    protected String host;
+	protected String			host;
 
-    /**
-     * Instantiates a new Chiase activity.
-     */
-    public ChiaseActivity() {
-        super();
-    }
+	/**
+	 * Instantiates a new Chiase activity.
+	 */
+	public ChiaseActivity(){
+		super();
+	}
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+	@Override
+	protected void onCreate(Bundle savedInstanceState){
+		super.onCreate(savedInstanceState);
+	}
 
+	OkHttpClient client = new OkHttpClient();
 
-    OkHttpClient client = new OkHttpClient();
+//	public void run(final String url, final boolean isAlert) throws IOException{
+//		final Request request = new Request.Builder().url(url).build();
+//		AsyncTask<Void, Void, String> asyncTask = new AsyncTask<Void, Void, String>() {
+//
+//			@Override
+//			protected String doInBackground(Void...params){
+//				try{
+//					Response response = client.newCall(request).execute();
+//					if(!response.isSuccessful()){
+//						return null;
+//					}
+//					return response.body().string();
+//				}catch(Exception e){
+//					e.printStackTrace();
+//					return null;
+//				}
+//			}
+//
+//			@Override
+//			protected void onPostExecute(String s){
+//				super.onPostExecute(s);
+//				try{
+//					JSONObject resJson = new JSONObject(s);
+//					onSuccessBackground(resJson, isAlert, url);
+//				}catch(JSONException e){
+//					e.printStackTrace();
+//				}
+//			}
+//		};
+//
+//		asyncTask.execute();
+//	}
 
+	/**
+	 * Request in background
+	 *
+	 * @param url the url
+	 * @param jsonObject the json object
+	 * @param isAlert the is alert
+	 */
+	protected void requestBackground(final String url, JSONObject jsonObject, final boolean isAlert){
 
-    public String run(String url) throws IOException {
-        Request request = new Request.Builder()
-                .url(url)
-                .build();
+		if(AndroidUtil.invalidInternet(activity)){
+			return;
+		}
 
-        Response response = client.newCall(request).execute();
-        return response.body().string();
-    }
+		initParams(jsonObject);
+		String fullUrl = CARequestUtil.getGetUrl(host + url, jsonObject);
 
+		try{
+            final Request request = new Request.Builder().url(fullUrl).build();
+            AsyncTask<Void, Void, String> asyncTask = new AsyncTask<Void, Void, String>() {
 
-    /**
-     * Request in background
-     *
-     * @param url        the url
-     * @param jsonObject the json object
-     * @param isAlert    the is alert
-     */
-    protected void requestBackground(final String url, JSONObject jsonObject, final boolean isAlert) {
+                @Override
+                protected String doInBackground(Void...params){
+                    try{
+                        Response response = client.newCall(request).execute();
+                        if(!response.isSuccessful()){
+                            return null;
+                        }
+                        return response.body().string();
+                    }catch(Exception e){
+                        e.printStackTrace();
+                        return null;
+                    }
+                }
 
-        if (AndroidUtil.invalidInternet(activity)) {
-            return;
-        }
+                @Override
+                protected void onPostExecute(String s){
+                    super.onPostExecute(s);
+                    try{
+                        JSONObject resJson = new JSONObject(s);
+                        onSuccessBackground(resJson, isAlert, url);
+                    }catch(JSONException e){
+                        e.printStackTrace();
+                    }
+                }
+            };
 
-        initParams(jsonObject);
-        String fullUrl = CARequestUtil.getGetUrl(host + url, jsonObject);
+            asyncTask.execute();
 
-        try {
-            String result = run(fullUrl);
-            JSONObject resJson = new JSONObject(result);
-            onSuccessBackground(resJson, isAlert, url);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
+	/**
+	 * Success background task.
+	 *
+	 * @param response the response
+	 */
+	protected void onSuccessBackground(JSONObject response, boolean isAlert, String url){
+	}
 
-    /**
-     * Success background task.
-     *
-     * @param response the response
-     */
-    protected void onSuccessBackground(JSONObject response, boolean isAlert, String url) {
-    }
+	protected void initParams(JSONObject jsonObject){
+	}
 
-    protected void initParams(JSONObject jsonObject) {
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        activity = null;
-    }
+	@Override
+	protected void onDestroy(){
+		super.onDestroy();
+		activity = null;
+	}
 }
