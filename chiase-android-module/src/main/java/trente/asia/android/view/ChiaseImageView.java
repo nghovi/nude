@@ -16,11 +16,11 @@ import trente.asia.android.util.CAMsgUtil;
  */
 public class ChiaseImageView extends ImageView{
 
-	public String	viewControl;
-
 	public File		srcFile;
 
-	public String filePath;
+	public String	filePath;
+
+	public boolean	existData;
 
 	public ChiaseImageView(Context context){
 		super(context);
@@ -34,20 +34,11 @@ public class ChiaseImageView extends ImageView{
 		TypedArray t = context.obtainStyledAttributes(attributeSet, attrsResourceIdArray);
 
 		List<Integer> list = CAMsgUtil.convertArray2List(attrsResourceIdArray);
-		viewControl = t.getString(list.indexOf(R.attr.viewControl));
 		filePath = t.getString(list.indexOf(R.attr.filePath));
 	}
 
 	public ChiaseImageView(Context context, AttributeSet attributeSet, int defStyle){
 		super(context, attributeSet, defStyle);
-	}
-
-	public String getViewControl(){
-		return viewControl;
-	}
-
-	public void setViewControl(String viewControl){
-		this.viewControl = viewControl;
 	}
 
 	public File getSrcFile(){

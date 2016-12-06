@@ -304,6 +304,7 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 					Uri uri = AndroidUtil.getUriFromFileInternal(activity, new File(mOriginalPath));
 					activePhoto.setImageURI(uri);
 					activePhoto.setFilePath(mOriginalPath);
+                    activePhoto.existData = true;
 					judgeAdd();
 				}
 			}
@@ -383,7 +384,7 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 		});
         if(!CCStringUtil.isEmpty(fileUrl)){
             WfPicassoHelper.loadImage(activity, BuildConfig.HOST + fileUrl, imgPhoto, null);
-            imgPhoto.setFilePath(fileUrl);
+            imgPhoto.existData = true;
         }
 
 		lnrAttachment.addView(view);
@@ -398,7 +399,7 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 			for(int i = 0; i < lnrAttachment.getChildCount(); i++){
 				View view = lnrAttachment.getChildAt(i);
 				ChiaseImageView imgPhoto = (ChiaseImageView)view.findViewById(R.id.img_id_photo);
-				if(CCStringUtil.isEmpty(imgPhoto.getFilePath())){
+				if(!imgPhoto.existData){
 					lnrAdd.setEnabled(false);
 					imgAdd.setEnabled(false);
 					return;

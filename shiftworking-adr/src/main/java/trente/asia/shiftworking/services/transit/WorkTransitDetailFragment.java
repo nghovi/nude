@@ -114,10 +114,11 @@ public class WorkTransitDetailFragment extends AbstractSwFragment{
 				txtCostType.setText(holder.transit.costTypeName);
 				txtNote.setText(holder.transit.note);
 
+                LinearLayout lnrHolder = (LinearLayout)getView().findViewById(R.id.lnr_id_attachment_holder);
 				if(!CCCollectionUtil.isEmpty(holder.transit.attachmentFile2)){
+                    lnrHolder.setVisibility(View.VISIBLE);
 					setAttachment(holder.transit.attachmentFile2);
 				}else{
-					LinearLayout lnrHolder = (LinearLayout)getView().findViewById(R.id.lnr_id_attachment_holder);
 					lnrHolder.setVisibility(View.GONE);
 				}
 			}
