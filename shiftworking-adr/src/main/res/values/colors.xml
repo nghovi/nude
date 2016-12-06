@@ -4,16 +4,16 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
-    <color name="wf_app_color_base">#f5716c</color>
-    <color name="wf_app_color_base_50">#80f5716c</color>
+    <color name="wf_app_color_base">#fe7f7a</color>
+    <color name="wf_app_color_base_50">#80fe7f7a</color>
 
     <!--Button color-->
     <color name="wf_app_button_color_off">#80f5716c</color>
     <color name="wf_app_button_color_on">#f5716c</color>
-    <color name="wf_login_background_color">#f0f8ff</color>
+    <color name="wf_login_background_color">#fd8f8a</color>
 
-    <color name="wf_login_button_color_off">#804099bc</color>
-    <color name="wf_login_button_color_on">#4099bc</color>
+    <color name="wf_login_button_color_off">#80fe7f7a</color>
+    <color name="wf_login_button_color_on">#fe7f7a</color>
 
     <color name="sw_data_text_color">#3F81F2</color>
 
