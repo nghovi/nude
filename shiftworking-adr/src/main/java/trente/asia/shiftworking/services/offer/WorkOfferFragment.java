@@ -85,16 +85,22 @@ public class WorkOfferFragment extends AbstractSwFragment{
 		monthView.initialization();
 		mLstOffer = (ListView)getView().findViewById(R.id.lst_work_offer);
 		mLstOfferOther = (ListView)getView().findViewById(R.id.lst_fragment_work_offer_other);
-		AdapterView.OnItemClickListener listener = new AdapterView.OnItemClickListener() {
+		mLstOffer.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id){
 				WorkOffer offer = offers.get(position);
 				gotoWorkOfferDetail(offer);
 			}
-		};
-		mLstOffer.setOnItemClickListener(listener);
-		mLstOfferOther.setOnItemClickListener(listener);
+		});
+		mLstOfferOther.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id){
+				WorkOffer offer = otherOffers.get(position);
+				gotoWorkOfferDetail(offer);
+			}
+		});
 
 		monthView.imgBack.setOnClickListener(this);
 		monthView.imgNext.setOnClickListener(this);
