@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import asia.chiase.core.util.CCFormatUtil;
@@ -153,6 +154,7 @@ public class WorkOfferFragment extends AbstractSwFragment{
 		mLstOffer.setAdapter(adapter);
 		adapterOther = new WorkOfferAdapter(activity, otherOffers, offerTypesMaster, offerStatusMaster);
 		mLstOfferOther.setAdapter(adapterOther);
+		((ScrollView)getView().findViewById(R.id.src_fragment_work_offer)).fullScroll(ScrollView.FOCUS_UP);
 	}
 
 	private Map<String, String> buildOfferDepts(Context context, JSONObject response){

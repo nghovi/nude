@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -24,6 +25,8 @@ import android.widget.TimePicker;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.activity.ChiaseActivity;
+import trente.asia.android.view.ChiaseListDialog;
+import trente.asia.android.view.ChiaseTextView;
 import trente.asia.shiftworking.R;
 import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
 import trente.asia.shiftworking.services.offer.model.WorkOffer;
@@ -37,7 +40,7 @@ import trente.asia.welfare.adr.view.WfSpinner;
 public class WorkOfferEditFragment extends AbstractSwFragment{
 
 	private WorkOffer			offer;
-	private WfSpinner			spnType;
+	private ChiaseListDialog	spnType;
 	private DatePickerDialog	datePickerDialogStart;
 	private DatePickerDialog	datePickerDialogEnd;
 	private TimePickerDialog	timePickerDialogStart;
@@ -51,6 +54,7 @@ public class WorkOfferEditFragment extends AbstractSwFragment{
 	private String				selectedType;
 	private Map<String, String>	offerTypesMaster;
 	private Map<String, String>	offerStatusMaster;
+	private ChiaseTextView		txtOfferType;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -81,20 +85,23 @@ public class WorkOfferEditFragment extends AbstractSwFragment{
 	}
 
 	private void buildOfferTypeSpinner(){
-		spnType = (WfSpinner)getView().findViewById(R.id.spn_fragment_offer_edit_offer_type);
+		txtOfferType = (ChiaseTextView)getView().findViewById(R.id.txt_fragment_offer_edit_offer_type);
 		int selectedPosition = 0;
 		if(offer != null){
 			selectedPosition = new ArrayList<String>(offerTypesMaster.keySet()).indexOf(offer.offerType);
 		}
-
-		spnType.setupLayout("", new ArrayList<String>(offerTypesMaster.values()), selectedPosition, new WfSpinner.OnDRSpinnerItemSelectedListener() {
+		String offerTypeCode = (String)offerTypesMaster.keySet().toArray()[selectedPosition];
+		txtOfferType.setText(offerTypesMaster.get(offerTypeCode));
+		txtOfferType.setValue(offerTypeCode);
+		txtOfferType.setOnClickListener(this);
+		spnType = new ChiaseListDialog(activity, getString(R.string.fragment_work_offer_edit_offer_type), offerTypesMaster, txtOfferType, new AdapterView.OnItemClickListener() {
 
 			@Override
-			public void onItemSelected(int selectedPosition){
-				selectedType = (String)offerTypesMaster.keySet().toArray()[selectedPosition];
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id){
+				selectedType = (String)offerTypesMaster.keySet().toArray()[position];
 				OnOfferTypeChangedUpdateLayout();
 			}
-		}, true);
+		});
 	}
 
 	private void OnOfferTypeChangedUpdateLayout(){
@@ -298,6 +305,9 @@ public class WorkOfferEditFragment extends AbstractSwFragment{
 			break;
 		case R.id.lnr_end_time:
 			showEndTimePickerDialog();
+			break;
+		case R.id.txt_fragment_offer_edit_offer_type:
+			spnType.show();
 			break;
 		}
 	}

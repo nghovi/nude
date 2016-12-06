@@ -18,7 +18,8 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scrollbars="none">
+            android:scrollbars="none"
+            android:id="@+id/src_fragment_work_offer">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -34,6 +35,8 @@
                         style="@style/sf_text_value_black_bold"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/margin_8dp"
+                        android:layout_marginTop="@dimen/margin_8dp"
                         android:text="@string/sw_work_offer_history"
                         />
 
@@ -57,6 +60,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_16dp"
+                        android:layout_marginBottom="@dimen/margin_8dp"
                         android:text="@string/sw_work_offer_other_history"/>
 
                     <LinearLayout

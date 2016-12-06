@@ -47,9 +47,13 @@
                         android:layout_height="wrap_content"
                         android:text="@string/fragment_offer_edit_offer_type"/>
 
-                    <include
-                        android:id="@+id/spn_fragment_offer_edit_offer_type"
-                        layout="@layout/view_wf_spinner"/>
+                    <trente.asia.android.view.ChiaseTextView
+                        android:id="@+id/txt_fragment_offer_edit_offer_type"
+                        style="@style/sf_text_value_black"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/margin_6dp"
+                        android:background="@drawable/wf_background_gray_border_white_padding"/>
                 </LinearLayout>
 
                 <LinearLayout
