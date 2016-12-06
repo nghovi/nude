@@ -23,7 +23,9 @@ public class WorkStatusFragment extends AbstractSwFragment{
 	private CommonMonthView		monthView;
 	private WorkPagerAdapter	adapter;
 	private List<Fragment>		lstFragment;
-    private SegmentedButton buttons;
+
+	private SegmentedButton		buttons;
+	private Fragment			activeFragment;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -54,6 +56,7 @@ public class WorkStatusFragment extends AbstractSwFragment{
 		workerFragment.setMonthView(monthView);
 		lstFragment.add(workerFragment);
 		lstFragment.add(new WorknoticeListFragment());
+//        activeFragment = workerFragment;
 		adapter = new WorkPagerAdapter(getFragmentManager(), lstFragment);
 		viewPager.setAdapter(adapter);
 		viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -65,16 +68,18 @@ public class WorkStatusFragment extends AbstractSwFragment{
 			}
 
 			public void onPageSelected(int position){
-                if(buttons.getSelectedButtonIndex() != position){
-                    buttons.setPushedButtonIndex(position);
-                }
+				if(buttons.getSelectedButtonIndex() != position){
+					buttons.setPushedButtonIndex(position);
+				}
 				switch(position){
 				case 0:
 					WorkerFragment workerFragment = (WorkerFragment)lstFragment.get(position);
+                    activeFragment = workerFragment;
 					workerFragment.initMonthView(monthView);
 					break;
 				case 1:
 					WorknoticeListFragment noticeFragment = (WorknoticeListFragment)lstFragment.get(position);
+                    activeFragment = noticeFragment;
 					noticeFragment.initMonthView(monthView);
 					break;
 				default:
@@ -86,19 +91,31 @@ public class WorkStatusFragment extends AbstractSwFragment{
 		initSegment();
 	}
 
-    private void initSegment(){
-        buttons = (SegmentedButton)getView().findViewById(R.id.seg_id_work);
-        buttons.clearButtons();
-        buttons.addButtons(getString(R.string.sw_worker_title), getString(R.string.sw_notice_list_title));
+	private void initSegment(){
+		buttons = (SegmentedButton)getView().findViewById(R.id.seg_id_work);
+		buttons.clearButtons();
+		buttons.addButtons(getString(R.string.sw_worker_title), getString(R.string.sw_notice_list_title));
 
-        buttons.setPushedButtonIndex(0);
-        buttons.setOnClickListener(new SegmentedButton.OnClickListenerSegmentedButton() {
-            @Override
-            public void onClick(int index) {
-                viewPager.setCurrentItem(index, true);
+		buttons.setPushedButtonIndex(0);
+		buttons.setOnClickListener(new SegmentedButton.OnClickListenerSegmentedButton() {
+
+			@Override
+			public void onClick(int index){
+				viewPager.setCurrentItem(index, true);
+			}
+		});
+	}
+
+	@Override
+	protected void initData(){
+        if(activeFragment != null){
+            if(activeFragment instanceof WorkerFragment){
+                ((WorkerFragment)activeFragment).initMonthView(monthView);
+            }else if(activeFragment instanceof WorknoticeListFragment){
+                ((WorknoticeListFragment)activeFragment).initMonthView(monthView);
             }
-        });
-    }
+        }
+	}
 
 	@Override
 	public void onClick(View v){
@@ -112,6 +129,7 @@ public class WorkStatusFragment extends AbstractSwFragment{
 	public void onDestroy(){
 		super.onDestroy();
 
+        activeFragment = null;
 		monthView = null;
 		adapter = null;
 		viewPager = null;
