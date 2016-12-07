@@ -58,8 +58,9 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 
 	private ChiaseImageView		activePhoto;
 	private LinearLayout		lnrAttachment;
-	private LinearLayout		lnrAdd;
-	private ImageView			imgAdd;
+//	private LinearLayout		lnrAdd;
+//	private ImageView			imgAdd;
+    private Button			btnAdd;
 	private Button				btnDelete;
 
 	private EditText			edtLeave;
@@ -105,8 +106,8 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 		txtCostType = (ChiaseTextView)getView().findViewById(R.id.txt_id_cost_type);
 
 		lnrAttachment = (LinearLayout)getView().findViewById(R.id.lnr_id_attachment);
-		lnrAdd = (LinearLayout)getView().findViewById(R.id.lnr_id_add);
-		imgAdd = (ImageView)getView().findViewById(R.id.img_id_add);
+		btnAdd = (Button) getView().findViewById(R.id.btn_id_add);
+//		imgAdd = (ImageView)getView().findViewById(R.id.img_id_add);
 		btnDelete = (Button)getView().findViewById(R.id.btn_id_delete);
 		ImageView imgRightIcon = (ImageView)getView().findViewById(R.id.img_id_header_right_icon);
 
@@ -119,7 +120,7 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 		lnrCostType.setOnClickListener(this);
 		imgRightIcon.setOnClickListener(this);
 		btnDelete.setOnClickListener(this);
-		lnrAdd.setOnClickListener(this);
+		btnAdd.setOnClickListener(this);
 
 		if(!CCStringUtil.isEmpty(activeTransitId)){
 			btnDelete.setVisibility(View.VISIBLE);
@@ -357,7 +358,7 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 		case R.id.btn_id_delete:
 			deleteTransit();
 			break;
-		case R.id.lnr_id_add:
+		case R.id.btn_id_add:
 			addAttachment(null);
 			break;
 		default:
@@ -401,20 +402,17 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 
 	private void judgeAdd(){
 		if(lnrAttachment.getChildCount() >= MAX_ATTACHMENT){
-			lnrAdd.setEnabled(false);
-			imgAdd.setEnabled(false);
+			btnAdd.setEnabled(false);
 		}else{
 			for(int i = 0; i < lnrAttachment.getChildCount(); i++){
 				View view = lnrAttachment.getChildAt(i);
 				ChiaseImageView imgPhoto = (ChiaseImageView)view.findViewById(R.id.img_id_photo);
 				if(!imgPhoto.existData){
-					lnrAdd.setEnabled(false);
-					imgAdd.setEnabled(false);
+					btnAdd.setEnabled(false);
 					return;
 				}
 			}
-			lnrAdd.setEnabled(true);
-			imgAdd.setEnabled(true);
+			btnAdd.setEnabled(true);
 		}
 	}
 
