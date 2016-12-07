@@ -12,10 +12,12 @@ import android.os.Build;
 import android.provider.MediaStore;
 import android.widget.Toast;
 
+import asia.chiase.core.util.CCNumberUtil;
 import trente.asia.android.util.AndroidUtil;
 import trente.asia.welfare.adr.R;
 import trente.asia.welfare.adr.activity.WelfareFragment;
 import trente.asia.welfare.adr.define.WelfareConst;
+import trente.asia.welfare.adr.models.SettingModel;
 
 /**
  * AbstractRecorderVideoFragment
@@ -96,7 +98,8 @@ public abstract class AbstractRecorderVideoFragment extends WelfareFragment{
 			}
 
 			File originalFile = new File(mOriginalPath);
-			if(originalFile.length() > WelfareConst.WF_MAX_FILE_SIZE){
+            SettingModel settingModel = prefAccUtil.getSetting();
+			if(CCNumberUtil.toLong(settingModel.WF_MAX_FILE_SIZE).compareTo(originalFile.length()) < 0){
 				Intent intent = activity.getIntent();
 				intent.putExtra("detail", WelfareConst.WF_FILE_SIZE_NG);
 				activity.setResult(Activity.RESULT_OK, intent);

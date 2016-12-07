@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import android.content.Context;
 
 import trente.asia.android.util.CAPreferences;
+import trente.asia.welfare.adr.models.SettingModel;
 import trente.asia.welfare.adr.models.UserModel;
 
 /**
@@ -12,7 +13,8 @@ import trente.asia.welfare.adr.models.UserModel;
  */
 public class PreferencesAccountUtil{
 
-	public static String	KEY_PREF_USER	= "pref_user";
+	public static String	KEY_PREF_USER		= "pref_user";
+	public static String	KEY_PREF_SETTING	= "pref_setting";
 
 	public CAPreferences	pref;
 
@@ -59,6 +61,43 @@ public class PreferencesAccountUtil{
 		userCS = gson.fromJson(json, UserModel.class);
 		if(userCS == null) userCS = new UserModel();
 		return userCS;
+	}
+
+	/**
+	 * Save Object setting to Prefers.
+	 *
+	 * @param setting
+	 */
+	public void saveSetting(SettingModel setting){
+		if(setting != null){
+			SettingModel data = getSetting();
+			if(isSettingChanged(setting, data)){
+				Gson gson = new Gson();
+				String json = gson.toJson(setting);
+				pref.set(KEY_PREF_SETTING, json);
+			}
+		}
+	}
+
+	private boolean isSettingChanged(SettingModel data1, SettingModel data2){
+		boolean isPublicLevel = !data1.DR_PUBLIC_LEVEL.equals(data2.DR_PUBLIC_LEVEL);
+		boolean isPushSetting = !data1.WF_PUSH_SETTING.equals(data2.WF_PUSH_SETTING);
+		boolean isMaxFile = !data1.WF_MAX_FILE_SIZE.equals(data2.WF_MAX_FILE_SIZE);
+		boolean isAppointment = !data1.SW_APPOINTMENT_ENABLED.equals(data2.SW_APPOINTMENT_ENABLED);
+		return isPublicLevel || isPushSetting || isMaxFile || isAppointment;
+	}
+
+	/**
+	 * Get Object setting from Prefers.
+	 *
+	 * @return
+	 */
+	public SettingModel getSetting(){
+		String json = pref.get(KEY_PREF_SETTING);
+		Gson gson = new Gson();
+		SettingModel setting = gson.fromJson(json, SettingModel.class);
+		if(setting == null) setting = new SettingModel();
+		return setting;
 	}
 
 	/**

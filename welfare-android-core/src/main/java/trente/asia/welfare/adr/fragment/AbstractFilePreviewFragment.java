@@ -12,9 +12,11 @@ import android.os.Build;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 
+import asia.chiase.core.util.CCNumberUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.welfare.adr.activity.WelfareFragment;
 import trente.asia.welfare.adr.define.WelfareConst;
+import trente.asia.welfare.adr.models.SettingModel;
 import trente.asia.welfare.adr.utils.BuildTempFileAsync;
 import trente.asia.welfare.adr.utils.WelfareUtil;
 
@@ -135,7 +137,8 @@ public abstract class AbstractFilePreviewFragment extends WelfareFragment{
 		if(resultOk == Activity.RESULT_OK){
 			mOriginalPath = filePath;
 			File originalFile = new File(mOriginalPath);
-			if(originalFile.length() > WelfareConst.WF_MAX_FILE_SIZE){
+            SettingModel settingModel = prefAccUtil.getSetting();
+			if(CCNumberUtil.toLong(settingModel.WF_MAX_FILE_SIZE).compareTo(originalFile.length()) < 0){
 				Intent intent = activity.getIntent();
 				intent.putExtra("detail", WelfareConst.WF_FILE_SIZE_NG);
 				activity.setResult(Activity.RESULT_OK, intent);

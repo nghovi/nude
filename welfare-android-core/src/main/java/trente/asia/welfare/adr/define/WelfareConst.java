@@ -56,7 +56,7 @@ public class WelfareConst{
 	public static final String		IMG_EXT_GIF						= "gif";
 
 	public static final String		NONE							= "0";
-	public static final int			WF_MAX_FILE_SIZE				= 52428800;
+//	public static final int			WF_MAX_FILE_SIZE				= 52428800;
 	public static final String		WF_FILE_SIZE_NG					= "WF_FILE_SIZE_NG";
 
 	public static final Set<String>	IMG_EXT_SET						= new HashSet<String>();

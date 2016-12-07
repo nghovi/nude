@@ -25,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import asia.chiase.core.util.CCJsonUtil;
+import asia.chiase.core.util.CCNumberUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.util.AndroidUtil;
 import trente.asia.shiftworking.BuildConfig;
@@ -328,7 +329,8 @@ public class SwAccInforFragment extends AbstractSwFragment{
 		case WelfareConst.RequestCode.PHOTO_CROP:
 			try{
 				File imageFile = new File(mImageUri.getPath());
-				if(imageFile.length() > WelfareConst.WF_MAX_FILE_SIZE){
+                SettingModel settingModel = prefAccUtil.getSetting();
+				if(CCNumberUtil.toLong(settingModel.WF_MAX_FILE_SIZE).compareTo(imageFile.length()) < 0){
 					alertDialog.setMessage("File is big");
 					alertDialog.show();
 				}else{

@@ -20,7 +20,6 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import asia.chiase.core.define.CCConst;
@@ -36,6 +35,7 @@ import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.define.WfErrorConst;
 import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.dialog.WfDialog;
+import trente.asia.welfare.adr.models.SettingModel;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
 import trente.asia.welfare.adr.pref.PreferencesSystemUtil;
@@ -114,13 +114,6 @@ public abstract class WelfareFragment extends ChiaseFragment implements WelfareA
 		}
 	}
 
-	// public WelfareUtil.JsonBuilder getJsonBuilder(){
-	// UserModel user = prefAccUtil.getUserPref();
-	// Map<String, Object> map = new LinkedHashMap<String, Object>();
-	// map.put("serviceCd", getServiceCd());
-	// return new WelfareUtil.JsonBuilder().build(map);
-	// }
-
 	protected String getServiceCd(){
 		return null;
 	}
@@ -143,14 +136,18 @@ public abstract class WelfareFragment extends ChiaseFragment implements WelfareA
 				myself = userModel;
 				prefAccUtil.saveUserPref(myself);
 			}
+			SettingModel settingModel = CCJsonUtil.convertToModel(response.optString("setting"), SettingModel.class);
+			if(settingModel != null){
+				prefAccUtil.saveSetting(settingModel);
+			}
 			successLoad(response, url);
 
-            if(lnrContentId != null && getView() != null){
-                View lnrContent = getView().findViewById(lnrContentId);
-                if(lnrContent != null && lnrContent.getVisibility() == View.INVISIBLE){
-                    lnrContent.setVisibility(View.VISIBLE);
-                }
-            }
+			if(lnrContentId != null && getView() != null){
+				View lnrContent = getView().findViewById(lnrContentId);
+				if(lnrContent != null && lnrContent.getVisibility() == View.INVISIBLE){
+					lnrContent.setVisibility(View.VISIBLE);
+				}
+			}
 			dismissLoad();
 		}else{
 			loadingDialog.continueShowing = false;
@@ -354,11 +351,11 @@ public abstract class WelfareFragment extends ChiaseFragment implements WelfareA
 		}
 	}
 
-    @Override
-    public void onPause(){
-        super.onPause();
-        lnrContentId = null;
-    }
+	@Override
+	public void onPause(){
+		super.onPause();
+		lnrContentId = null;
+	}
 
 	@Override
 	public void onDestroy(){
