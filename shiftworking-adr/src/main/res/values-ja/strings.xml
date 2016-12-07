@@ -7,24 +7,13 @@
     <string name="wf_account_info_title">アカウント情報</string>
 
     <string name="sw_offer_title">勤務お知らせエントリー</string>
-    <string name="sw_notice_list_title">お知らせ一覧</string>
+    <string name="sw_notice_list_title">勤務お知らせ</string>
     <string name="sw_worker_title">勤務ユーザー</string>
     <string name="sw_notice_detail_title">お知らせ詳細</string>
 
-    <string name="fragment_offer_edit_title">Offer Edit</string>
-    <string name="fragment_offer_edit_title_new">Offer New</string>
     <string name="fragment_offer_edit_confirm_delete_msg">Are you sure to delete this offer ?</string>
-    <string name="fragment_work_offer_edit_delete_success">Deleted
-        offer successfully</string>
-    <string name="fragment_offer_edit_user_name">User name</string>
-    <string name="fragment_offer_edit_offer_type">Offer Type</string>
-    <string name="fragment_offer_edit_sub_type">Sub Type</string>
-    <string name="fragment_offer_edit_start_date">Start Date</string>
-    <string name="fragment_offer_edit_end_date">End Date</string>
-    <string name="fragment_offer_edit_reason">Reason</string>
-    <string name="fragment_offer_edit_memo">Memo</string>
+    <string name="fragment_offer_edit_offer_type">申請タイプ</string>
 
-    <string name="fragment_offer_detail_title">Offer Detail</string>
     <string name="fragment_offer_detail_comment_hint">Comment</string>
     <string name="fragment_offer_detail_approve">%1$s by %2$s</string>
 
@@ -34,7 +23,7 @@
     <string name="sw_footer_notices">お知らせ</string>
     <string name="sw_footer_setting">設定</string>
     <string name="sw_footer_work_status">勤務ステータス</string>
-    <string name="sw_footer_work_offer">勤務オファー</string>
+    <string name="sw_footer_work_offer">勤務申請</string>
 
     <!--Check in service-->
 
@@ -88,7 +77,7 @@
     <string name="sw_work_transit_entry_title">勤務交通エントリー</string>
     <string name="sw_work_transit_leave_item">出発</string>
     <string name="sw_work_transit_arrive_item">到着</string>
-    <string name="sw_work_transit_way_type_item">ウェイタイプ</string>
+    <string name="sw_work_transit_way_type_item">往復区分</string>
     <string name="sw_work_transit_one_way_item">片道</string>
     <string name="sw_work_transit_two_way_item">往復</string>
     <string name="sw_work_transit_cost_type_item">支払側</string>
@@ -97,24 +86,25 @@
     <string name="sw_work_transit_note_item">ノート</string>
     <string name="sw_work_transit_attachment_item">添付</string>
     <string name="sw_work_transit_list_title">交通一覧</string>
-    <string name="fragment_offer_filter_offer_type">Offer type</string>
-    <string name="fragment_offer_filter_other_history_filter">Filter: %1$s</string>
-    <string name="fragment_offer_filter_offer_status">Offer status</string>
-    <string name="fragment_offer_filter_offer_dept">Offer dept</string>
-    <string name="fragment_offer_filter_title">Filter</string>
-    <string name="fragment_offer_filter_clear">Clear</string>
-    <string name="fragment_offer_filter_update">Update</string>
-    <string name="fragment_offer_detail_header">Work offer detail</string>
-    <string name="fragment_offer_detail_start_date">Offer date start date</string>
-    <string name="fragment_offer_detail_start_time">Offer date start time</string>
-    <string name="fragment_offer_detail_end_date">Offer date end date</string>
-    <string name="fragment_offer_detail_end_time">Offer date end time</string>
-    <string name="fragment_offer_detail_note">Note</string>
-    <string name="fragment_offer_detail_approve_history">Work offer approve history</string>
-    <string name="fragment_offer_detail_approve_comment">Approve comment</string>
-    <string name="fragment_offer_edit_header">Work offer entry</string>
-    <string name="sw_work_offer_other_history">Work other offer history</string>
-    <string name="fragment_work_offer_edit_offer_type">Offer Types</string>
-    <string name="fragment_work_offer_edit_offer_status">Offer Status</string>
-    <string name="fragment_work_offer_edit_offer_dept">Departments</string>
+
+    <string name="fragment_offer_filter_offer_type">申請タイプ</string>
+    <string name="fragment_offer_filter_other_history_filter">絞り込め: %1$s</string>
+    <string name="fragment_offer_filter_offer_status">申請ステータス</string>
+    <string name="fragment_offer_filter_offer_dept">申請部門</string>
+    <string name="fragment_offer_filter_title">絞り込め</string>
+    <string name="fragment_offer_filter_clear">クリア</string>
+    <string name="fragment_offer_filter_update">更新</string>
+    <string name="fragment_offer_detail_header">勤務申請詳細</string>
+    <string name="fragment_offer_detail_start_date">申請開始日</string>
+    <string name="fragment_offer_detail_start_time">申請開始時間</string>
+    <string name="fragment_offer_detail_end_date">申請終了日</string>
+    <string name="fragment_offer_detail_end_time">申請終了時間</string>
+    <string name="fragment_offer_detail_note">ノート</string>
+    <string name="fragment_offer_detail_approve_history">勤務申請履歴</string>
+    <string name="fragment_offer_detail_approve_comment">承認コメント</string>
+    <string name="fragment_offer_edit_header">勤務申請エントリー</string>
+    <string name="sw_work_offer_other_history">みんなの勤務申請履歴</string>
+    <string name="fragment_work_offer_edit_offer_type">申請タイプ</string>
+    <string name="fragment_work_offer_edit_offer_status">申請ステータス</string>
+    <string name="fragment_work_offer_edit_offer_dept">申請部門</string>
 </resources>

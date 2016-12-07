@@ -11,18 +11,8 @@
     <string name="sw_worker_title">Who\'s working</string>
     <string name="sw_notice_detail_title">Notice detail</string>
 
-    <string name="fragment_offer_edit_title">Offer Edit</string>
-    <string name="fragment_offer_edit_title_new">Offer New</string>
     <string name="fragment_offer_edit_confirm_delete_msg">Are you sure to delete this offer ?</string>
-    <string name="fragment_work_offer_edit_delete_success">Deleted
-        offer successfully</string>
-    <string name="fragment_offer_edit_user_name">User name</string>
     <string name="fragment_offer_edit_offer_type">Offer Type</string>
-    <string name="fragment_offer_edit_sub_type">Sub Type</string>
-    <string name="fragment_offer_edit_start_date">Start Date</string>
-    <string name="fragment_offer_edit_end_date">End Date</string>
-    <string name="fragment_offer_edit_reason">Reason</string>
-    <string name="fragment_offer_edit_memo">Memo</string>
 
     <string name="sw_footer_work_time">Work Time</string>
     <string name="sw_footer_work_shift">Work Shift</string>
@@ -95,7 +85,6 @@
 
     <string name="sw_work_transit_list_title">Transit list</string>
 
-    <string name="fragment_offer_detail_title">Offer Detail</string>
     <string name="fragment_offer_detail_comment_hint">Comment</string>
     <string name="fragment_offer_detail_approve">%1$s by %2$s</string>
     <string name="fragment_offer_filter_offer_type">Offer type</string>
