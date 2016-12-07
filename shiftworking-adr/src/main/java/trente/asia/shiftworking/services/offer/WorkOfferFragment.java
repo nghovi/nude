@@ -150,10 +150,12 @@ public class WorkOfferFragment extends AbstractSwFragment{
 		offerTypesMaster = buildOfferTypeMaster(activity, response);
 		offerStatusMaster = buildOfferStatusMaster(activity, response);
 		offerDepts = buildOfferDepts(activity, response);
-		adapter = new WorkOfferAdapter(activity, offers, offerTypesMaster, offerStatusMaster);
-		mLstOffer.setAdapter(adapter);
+
 		adapterOther = new WorkOfferAdapter(activity, otherOffers, offerTypesMaster, offerStatusMaster);
 		mLstOfferOther.setAdapter(adapterOther);
+
+		adapter = new WorkOfferAdapter(activity, offers, offerTypesMaster, offerStatusMaster);
+		mLstOffer.setAdapter(adapter);
 		((ScrollView)getView().findViewById(R.id.src_fragment_work_offer)).fullScroll(ScrollView.FOCUS_UP);
 	}
 
