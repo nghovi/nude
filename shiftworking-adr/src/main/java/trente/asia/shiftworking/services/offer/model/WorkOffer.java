@@ -15,6 +15,9 @@ public class WorkOffer{
 	public static final String	OFFER_PERMISSION_EDITABLE		= "ME";
 	public static final String	OFFER_PERMISSION_APPROVEABLE	= "AP";
 	public static final String	OFFER_PERMISSION_SHOW			= "VW";
+	public static final String APPROVE_STATUS_YET = "YET";
+	public static final String APPROVE_STATUS_OK = "OK";
+	public static final String APPROVE_STATUS_NA = "NA";
 
 	public WorkOffer(){
 	}

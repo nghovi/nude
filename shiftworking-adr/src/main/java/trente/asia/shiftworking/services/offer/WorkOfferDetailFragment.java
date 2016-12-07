@@ -137,7 +137,11 @@ public class WorkOfferDetailFragment extends AbstractSwFragment{
 
 		Button btnApprove = (Button)getView().findViewById(R.id.btn_fragment_offer_detail_approve);
 
-		if(WorkOffer.OFFER_STATUS_OFFER.equals(offer.approveResult) && WorkOffer.OFFER_PERMISSION_APPROVEABLE.equals(offerPermission)){
+		boolean isApprove1CanApprove = WorkOffer.OFFER_PERMISSION_APPROVEABLE.equals(offerPermission) && (myself.key.equals(offer.approveUser1) && WorkOffer.APPROVE_STATUS_YET.equals(offer.approveResult1));
+
+		boolean isApprove2CanApprove = WorkOffer.OFFER_PERMISSION_APPROVEABLE.equals(offerPermission) && myself.key.equals(offer.approveUser2) && WorkOffer.APPROVE_STATUS_OK.equals(offer.approveResult1) && WorkOffer.APPROVE_STATUS_YET.equals(offer.approveResult2);
+
+		if(isApprove1CanApprove || isApprove2CanApprove){
 			btnReject.setVisibility(View.VISIBLE);
 			btnApprove.setVisibility(View.VISIBLE);
 			btnReject.setOnClickListener(this);
