@@ -64,6 +64,7 @@
 
     <string name="wf_detail_photo_title">イメージ詳細</string>
     <string name="wf_invalid_photo_over">サイズは大きすぎです。ファイルの最大は50Mbです。</string>
+    <string name="wf_invalid_photo_over2">サイズは大きすぎです。</string>
 
     <string name="wf_setting_contact_us_title">お問い合わせ</string>
     <string name="wf_thanks_card_service_name">ThanksCard</string>

@@ -1,7 +1,6 @@
 package trente.asia.shiftworking.services.transit;
 
 import java.io.File;
-import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -31,6 +30,7 @@ import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
+import asia.chiase.core.util.CCNumberUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.util.AndroidUtil;
 import trente.asia.android.view.ChiaseImageView;
@@ -42,7 +42,6 @@ import trente.asia.shiftworking.BuildConfig;
 import trente.asia.shiftworking.R;
 import trente.asia.shiftworking.common.defines.SwConst;
 import trente.asia.shiftworking.common.fragments.AbstractPhotoFragment;
-import trente.asia.shiftworking.services.transit.activity.PlaceHistoryActivity;
 import trente.asia.shiftworking.services.transit.model.TransitModel;
 import trente.asia.shiftworking.services.transit.model.TransitModelHolder;
 import trente.asia.shiftworking.services.transit.view.PlaceHistoryAdapter;
@@ -51,6 +50,7 @@ import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.models.FileModel;
 import trente.asia.welfare.adr.models.ImageAttachmentModel;
+import trente.asia.welfare.adr.models.SettingModel;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 import trente.asia.welfare.adr.utils.WfPicassoHelper;
 
@@ -78,8 +78,8 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 
 	private ChiaseListViewNoScroll	lsvLeave;
 	private PlaceHistoryAdapter		adapterLeave;
-    private ChiaseListViewNoScroll	lsvArrive;
-    private PlaceHistoryAdapter		adapterArrive;
+	private ChiaseListViewNoScroll	lsvArrive;
+	private PlaceHistoryAdapter		adapterArrive;
 
 	private TransitModelHolder		mHolder;
 	private final int				MAX_ATTACHMENT	= 3;
@@ -120,7 +120,7 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 		lnrCostType = (LinearLayout)getView().findViewById(R.id.lnr_id_cost_type);
 
 		lsvLeave = (ChiaseListViewNoScroll)getView().findViewById(R.id.lsv_id_leave);
-        lsvArrive = (ChiaseListViewNoScroll)getView().findViewById(R.id.lsv_id_arrive);
+		lsvArrive = (ChiaseListViewNoScroll)getView().findViewById(R.id.lsv_id_arrive);
 
 		lnrTransitType.setOnClickListener(this);
 		lnrWayType.setOnClickListener(this);
@@ -172,42 +172,42 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 			public void afterTextChanged(Editable s){
 			}
 		});
-        lsvLeave.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+		lsvLeave.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id){
-                String place = (String)parent.getItemAtPosition(position);
-                edtLeave.setText(place);
-                adapterLeave.getFilter().filter("");
-            }
-        });
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id){
+				String place = (String)parent.getItemAtPosition(position);
+				edtLeave.setText(place);
+				adapterLeave.getFilter().filter("");
+			}
+		});
 
-        edtArrive.addTextChangedListener(new TextWatcher() {
+		edtArrive.addTextChangedListener(new TextWatcher() {
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count){
-                if(adapterArrive != null){
-                    adapterArrive.getFilter().filter(s);
-                }
-            }
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count){
+				if(adapterArrive != null){
+					adapterArrive.getFilter().filter(s);
+				}
+			}
 
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after){
-            }
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after){
+			}
 
-            @Override
-            public void afterTextChanged(Editable s){
-            }
-        });
-        lsvArrive.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			@Override
+			public void afterTextChanged(Editable s){
+			}
+		});
+		lsvArrive.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id){
-                String place = (String)parent.getItemAtPosition(position);
-                edtArrive.setText(place);
-                adapterArrive.getFilter().filter("");
-            }
-        });
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id){
+				String place = (String)parent.getItemAtPosition(position);
+				edtArrive.setText(place);
+				adapterArrive.getFilter().filter("");
+			}
+		});
 	}
 
 	@Override
@@ -238,8 +238,8 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 				adapterLeave = new PlaceHistoryAdapter(activity, mHolder.historyNames);
 				lsvLeave.setAdapter(adapterLeave);
 
-                adapterArrive = new PlaceHistoryAdapter(activity, mHolder.historyNames);
-                lsvArrive.setAdapter(adapterArrive);
+				adapterArrive = new PlaceHistoryAdapter(activity, mHolder.historyNames);
+				lsvArrive.setAdapter(adapterArrive);
 			}
 		}else{
 			super.successLoad(response, url);
@@ -342,11 +342,18 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 					alertDialog.show();
 				}else{
 					mOriginalPath = returnedIntent.getExtras().getString(WelfareConst.IMAGE_PATH_KEY);
-					Uri uri = AndroidUtil.getUriFromFileInternal(activity, new File(mOriginalPath));
-					activePhoto.setImageURI(uri);
-					activePhoto.setFilePath(mOriginalPath);
-					activePhoto.existData = true;
-					judgeAdd();
+					File file = new File(mOriginalPath);
+					SettingModel settingModel = prefAccUtil.getSetting();
+					if((CCNumberUtil.toLong(settingModel.WF_MAX_FILE_SIZE) / 4) < file.length()){
+						alertDialog.setMessage(getString(R.string.wf_invalid_photo_over2));
+						alertDialog.show();
+					}else{
+						Uri uri = AndroidUtil.getUriFromFileInternal(activity, file);
+						activePhoto.setImageURI(uri);
+						activePhoto.setFilePath(mOriginalPath);
+						activePhoto.existData = true;
+						judgeAdd();
+					}
 				}
 			}
 
