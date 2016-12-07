@@ -16,9 +16,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -32,6 +35,7 @@ import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.util.AndroidUtil;
 import trente.asia.android.view.ChiaseImageView;
 import trente.asia.android.view.ChiaseListDialog;
+import trente.asia.android.view.ChiaseListViewNoScroll;
 import trente.asia.android.view.ChiaseTextView;
 import trente.asia.android.view.util.CAObjectSerializeUtil;
 import trente.asia.shiftworking.BuildConfig;
@@ -41,6 +45,7 @@ import trente.asia.shiftworking.common.fragments.AbstractPhotoFragment;
 import trente.asia.shiftworking.services.transit.activity.PlaceHistoryActivity;
 import trente.asia.shiftworking.services.transit.model.TransitModel;
 import trente.asia.shiftworking.services.transit.model.TransitModelHolder;
+import trente.asia.shiftworking.services.transit.view.PlaceHistoryAdapter;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.define.WfUrlConst;
@@ -51,33 +56,33 @@ import trente.asia.welfare.adr.utils.WfPicassoHelper;
 
 public class WorkTransitFormFragment extends AbstractPhotoFragment{
 
-	private String				activeTransitId;
-	private ChiaseTextView		txtTransitType;
-	private ChiaseTextView		txtWayType;
-	private ChiaseTextView		txtCostType;
+	private String					activeTransitId;
+	private ChiaseTextView			txtTransitType;
+	private ChiaseTextView			txtWayType;
+	private ChiaseTextView			txtCostType;
 
-	private ChiaseImageView		activePhoto;
-	private LinearLayout		lnrAttachment;
-//	private LinearLayout		lnrAdd;
-//	private ImageView			imgAdd;
-    private Button			btnAdd;
-	private Button				btnDelete;
+	private ChiaseImageView			activePhoto;
+	private LinearLayout			lnrAttachment;
+	private Button					btnAdd;
+	private Button					btnDelete;
 
-	private EditText			edtLeave;
-	private EditText			edtArrive;
+	private EditText				edtLeave;
+	private EditText				edtArrive;
+	private LinearLayout			lnrTransitType;
+	private LinearLayout			lnrWayType;
+	private LinearLayout			lnrCostType;
 
-	private LinearLayout		lnrTransitType;
-	private LinearLayout		lnrWayType;
-	private LinearLayout		lnrCostType;
+	private ChiaseListDialog		dlgTransitType;
+	private ChiaseListDialog		dlgWayType;
+	private ChiaseListDialog		dlgCostType;
 
-	private ChiaseListDialog	dlgTransitType;
-	private ChiaseListDialog	dlgWayType;
-	private ChiaseListDialog	dlgCostType;
+	private ChiaseListViewNoScroll	lsvLeave;
+	private PlaceHistoryAdapter		adapterLeave;
+    private ChiaseListViewNoScroll	lsvArrive;
+    private PlaceHistoryAdapter		adapterArrive;
 
-	private TransitModelHolder	mHolder;
-	private final int			MAX_ATTACHMENT	= 3;
-	private final int			ENTRY_LEAVE		= 201;
-	private final int			ENTRY_ARRIVE	= 202;
+	private TransitModelHolder		mHolder;
+	private final int				MAX_ATTACHMENT	= 3;
 
 	public void setActiveTransitId(String activeTransitId){
 		this.activeTransitId = activeTransitId;
@@ -106,14 +111,16 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 		txtCostType = (ChiaseTextView)getView().findViewById(R.id.txt_id_cost_type);
 
 		lnrAttachment = (LinearLayout)getView().findViewById(R.id.lnr_id_attachment);
-		btnAdd = (Button) getView().findViewById(R.id.btn_id_add);
-//		imgAdd = (ImageView)getView().findViewById(R.id.img_id_add);
+		btnAdd = (Button)getView().findViewById(R.id.btn_id_add);
 		btnDelete = (Button)getView().findViewById(R.id.btn_id_delete);
 		ImageView imgRightIcon = (ImageView)getView().findViewById(R.id.img_id_header_right_icon);
 
 		lnrTransitType = (LinearLayout)getView().findViewById(R.id.lnr_id_transit_type);
 		lnrWayType = (LinearLayout)getView().findViewById(R.id.lnr_id_way_type);
 		lnrCostType = (LinearLayout)getView().findViewById(R.id.lnr_id_cost_type);
+
+		lsvLeave = (ChiaseListViewNoScroll)getView().findViewById(R.id.lsv_id_leave);
+        lsvArrive = (ChiaseListViewNoScroll)getView().findViewById(R.id.lsv_id_arrive);
 
 		lnrTransitType.setOnClickListener(this);
 		lnrWayType.setOnClickListener(this);
@@ -148,41 +155,59 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 		edtLeave = (EditText)getView().findViewById(R.id.edt_id_leave);
 		edtArrive = (EditText)getView().findViewById(R.id.edt_id_arrive);
 
-		edtLeave.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+		edtLeave.addTextChangedListener(new TextWatcher() {
 
 			@Override
-			public void onFocusChange(View v, boolean hasFocus){
-				if(hasFocus){
-					if(!CCCollectionUtil.isEmpty(mHolder.historyNames)){
-						Intent intent = new Intent(activity, PlaceHistoryActivity.class);
-						Bundle bundle = new Bundle();
-
-						bundle.putSerializable(SwConst.KEY_HISTORY_LIST, (Serializable)mHolder.historyNames);
-						bundle.putString(SwConst.KEY_HISTORY_NAME, CCStringUtil.toString(edtLeave.getText()));
-						intent.putExtras(bundle);
-						startActivityForResult(intent, ENTRY_LEAVE);
-					}
+			public void onTextChanged(CharSequence s, int start, int before, int count){
+				if(adapterLeave != null){
+					adapterLeave.getFilter().filter(s);
 				}
 			}
-		});
-
-		edtArrive.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 
 			@Override
-			public void onFocusChange(View v, boolean hasFocus){
-				if(hasFocus){
-					if(!CCCollectionUtil.isEmpty(mHolder.historyNames)){
-						Intent intent = new Intent(activity, PlaceHistoryActivity.class);
-						Bundle bundle = new Bundle();
+			public void beforeTextChanged(CharSequence s, int start, int count, int after){
+			}
 
-						bundle.putSerializable(SwConst.KEY_HISTORY_LIST, (Serializable)mHolder.historyNames);
-						bundle.putString(SwConst.KEY_HISTORY_NAME, CCStringUtil.toString(edtArrive.getText()));
-						intent.putExtras(bundle);
-						startActivityForResult(intent, ENTRY_ARRIVE);
-					}
-				}
+			@Override
+			public void afterTextChanged(Editable s){
 			}
 		});
+        lsvLeave.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id){
+                String place = (String)parent.getItemAtPosition(position);
+                edtLeave.setText(place);
+                adapterLeave.getFilter().filter("");
+            }
+        });
+
+        edtArrive.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count){
+                if(adapterArrive != null){
+                    adapterArrive.getFilter().filter(s);
+                }
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after){
+            }
+
+            @Override
+            public void afterTextChanged(Editable s){
+            }
+        });
+        lsvArrive.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id){
+                String place = (String)parent.getItemAtPosition(position);
+                edtArrive.setText(place);
+                adapterArrive.getFilter().filter("");
+            }
+        });
 	}
 
 	@Override
@@ -208,6 +233,14 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 			if(!CCStringUtil.isEmpty(activeTransitId)){
 				loadTransit(mHolder.transit);
 			}
+
+			if(!CCCollectionUtil.isEmpty(mHolder.historyNames)){
+				adapterLeave = new PlaceHistoryAdapter(activity, mHolder.historyNames);
+				lsvLeave.setAdapter(adapterLeave);
+
+                adapterArrive = new PlaceHistoryAdapter(activity, mHolder.historyNames);
+                lsvArrive.setAdapter(adapterArrive);
+			}
 		}else{
 			super.successLoad(response, url);
 		}
@@ -221,35 +254,35 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 			txtTransitType.setText(transitModel.transTypeName);
 			txtWayType.setText(transitModel.wayTypeName);
 			txtCostType.setText(transitModel.costTypeName);
-            if(!CCCollectionUtil.isEmpty(transitModel.attachmentFile)){
-                setAttachment(transitModel.attachmentFile);
-            }
+			if(!CCCollectionUtil.isEmpty(transitModel.attachmentFile)){
+				setAttachment(transitModel.attachmentFile);
+			}
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
 	}
 
-    private void setAttachment(List<ImageAttachmentModel> lstAttachment){
-        for(ImageAttachmentModel attachmentModel : lstAttachment){
-            if(attachmentModel.attachment != null && !CCStringUtil.isEmpty(attachmentModel.attachment.fileUrl)){
-                addAttachment(attachmentModel.attachment);
-            }
-        }
-    }
+	private void setAttachment(List<ImageAttachmentModel> lstAttachment){
+		for(ImageAttachmentModel attachmentModel : lstAttachment){
+			if(attachmentModel.attachment != null && !CCStringUtil.isEmpty(attachmentModel.attachment.fileUrl)){
+				addAttachment(attachmentModel.attachment);
+			}
+		}
+	}
 
 	private void updateTransit(){
 		Map<String, File> photoMap = new HashMap<>();
-        StringBuilder attachKeys = new StringBuilder();
+		StringBuilder attachKeys = new StringBuilder();
 		for(int i = 0; i < lnrAttachment.getChildCount(); i++){
 			View view = lnrAttachment.getChildAt(i);
 			ChiaseImageView imgPhoto = (ChiaseImageView)view.findViewById(R.id.img_id_photo);
 			if(!CCStringUtil.isEmpty(imgPhoto.getFilePath())){
 				photoMap.put("photo" + (i + 1), new File(imgPhoto.getFilePath()));
 			}else{
-                if(!CCStringUtil.isEmpty(imgPhoto.imageId)){
-                    attachKeys.append(imgPhoto.imageId + ",");
-                }
-            }
+				if(!CCStringUtil.isEmpty(imgPhoto.imageId)){
+					attachKeys.append(imgPhoto.imageId + ",");
+				}
+			}
 		}
 
 		LinearLayout lnrContent = (LinearLayout)getView().findViewById(R.id.lnr_id_content);
@@ -258,7 +291,7 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 			jsonObject.put("key", activeTransitId);
 			jsonObject.put("userId", myself.key);
 			jsonObject.put("transDate", CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, new Date()));
-            jsonObject.put("attachKeys", attachKeys.toString());
+			jsonObject.put("attachKeys", attachKeys.toString());
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
@@ -312,25 +345,25 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 					Uri uri = AndroidUtil.getUriFromFileInternal(activity, new File(mOriginalPath));
 					activePhoto.setImageURI(uri);
 					activePhoto.setFilePath(mOriginalPath);
-                    activePhoto.existData = true;
+					activePhoto.existData = true;
 					judgeAdd();
 				}
 			}
 
 			break;
 
-		case ENTRY_LEAVE:
-			Bundle bundle = returnedIntent.getExtras();
-			String leave = (String)bundle.getSerializable(SwConst.KEY_HISTORY_NAME);
-			edtLeave.setText(leave);
-			edtLeave.clearFocus();
-			break;
-		case ENTRY_ARRIVE:
-			Bundle bundle1 = returnedIntent.getExtras();
-			String arrive = (String)bundle1.getSerializable(SwConst.KEY_HISTORY_NAME);
-			edtArrive.setText(arrive);
-			edtArrive.clearFocus();
-			break;
+//		case ENTRY_LEAVE:
+//			Bundle bundle = returnedIntent.getExtras();
+//			String leave = (String)bundle.getSerializable(SwConst.KEY_HISTORY_NAME);
+//			edtLeave.setText(leave);
+//			edtLeave.clearFocus();
+//			break;
+//		case ENTRY_ARRIVE:
+//			Bundle bundle1 = returnedIntent.getExtras();
+//			String arrive = (String)bundle1.getSerializable(SwConst.KEY_HISTORY_NAME);
+//			edtArrive.setText(arrive);
+//			edtArrive.clearFocus();
+//			break;
 		default:
 			break;
 		}
@@ -390,14 +423,14 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 				mViewForMenuBehind.setVisibility(View.VISIBLE);
 			}
 		});
-        if(fileModel != null && !CCStringUtil.isEmpty(fileModel.fileUrl)){
-            WfPicassoHelper.loadImage(activity, BuildConfig.HOST + fileModel.fileUrl, imgPhoto, null);
-            imgPhoto.existData = true;
-            imgPhoto.imageId = fileModel.key;
-        }
+		if(fileModel != null && !CCStringUtil.isEmpty(fileModel.fileUrl)){
+			WfPicassoHelper.loadImage(activity, BuildConfig.HOST + fileModel.fileUrl, imgPhoto, null);
+			imgPhoto.existData = true;
+			imgPhoto.imageId = fileModel.key;
+		}
 
 		lnrAttachment.addView(view);
-        judgeAdd();
+		judgeAdd();
 	}
 
 	private void judgeAdd(){

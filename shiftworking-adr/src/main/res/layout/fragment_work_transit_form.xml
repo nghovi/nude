@@ -46,6 +46,12 @@
                         custom:mName="transLeave"/>
                 </LinearLayout>
 
+                <trente.asia.android.view.ChiaseListViewNoScroll
+                    android:id="@+id/lsv_id_leave"
+                    style="@style/cs_common_match_wrap"
+                    android:divider="@color/cs_common_divider"
+                    android:dividerHeight="1px"/>
+
                 <View style="@style/cs_common_divider"/>
 
                 <LinearLayout
@@ -63,6 +69,12 @@
                         android:hint="@string/chiase_common_please_entry"
                         custom:mName="transArrive"/>
                 </LinearLayout>
+
+                <trente.asia.android.view.ChiaseListViewNoScroll
+                    android:id="@+id/lsv_id_arrive"
+                    style="@style/cs_common_match_wrap"
+                    android:divider="@color/cs_common_divider"
+                    android:dividerHeight="1px"/>
 
                 <View style="@style/cs_common_divider"/>
 

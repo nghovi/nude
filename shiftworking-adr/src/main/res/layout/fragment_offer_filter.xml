@@ -3,89 +3,94 @@
 
     <include layout="@layout/view_common_header"/>
 
-   <LinearLayout
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:orientation="vertical"
-       android:layout_weight="1"
-       android:padding="@dimen/wf_margin_16">
-       <LinearLayout
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content">
-           <TextView
-               style="@style/sf_text_value_black_bold"
-               android:layout_width="@dimen/margin_100dp"
-               android:layout_height="wrap_content"
-               android:text="@string/fragment_offer_filter_offer_type"/>
-           <trente.asia.android.view.ChiaseTextView
-               android:id="@+id/txt_fragment_offer_filter_type"
-               style="@style/sf_text_value_black"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:layout_marginRight="@dimen/margin_6dp"
-               android:background="@drawable/wf_background_gray_border_white_padding"/>
-       </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:padding="@dimen/wf_margin_16">
 
-       <LinearLayout
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:layout_marginTop="@dimen/margin_32dp">
-           <TextView
-               style="@style/sf_text_value_black_bold"
-               android:layout_width="@dimen/margin_100dp"
-               android:layout_height="wrap_content"
-               android:text="@string/fragment_offer_filter_offer_status"/>
-           <trente.asia.android.view.ChiaseTextView
-               android:id="@+id/txt_fragment_offer_filter_status"
-               style="@style/sf_text_value_black"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:layout_marginRight="@dimen/margin_6dp"
-               android:background="@drawable/wf_background_gray_border_white_padding"/>
-       </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-       <LinearLayout
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:layout_marginTop="@dimen/margin_32dp">
-           <TextView
-               style="@style/sf_text_value_black_bold"
-               android:layout_width="@dimen/margin_100dp"
-               android:layout_height="wrap_content"
-               android:text="@string/fragment_offer_filter_offer_dept"/>
-           <trente.asia.android.view.ChiaseTextView
-               android:id="@+id/txt_fragment_offer_filter_dept"
-               style="@style/sf_text_value_black"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:layout_marginRight="@dimen/margin_6dp"
-               android:background="@drawable/wf_background_gray_border_white_padding"/>
-       </LinearLayout>
+            <TextView
+                style="@style/sf_text_value_black_bold"
+                android:layout_width="@dimen/margin_100dp"
+                android:layout_height="wrap_content"
+                android:text="@string/fragment_offer_filter_offer_type"/>
 
-       <LinearLayout
-           android:orientation="horizontal"
-           android:layout_width="match_parent"
-           android:layout_height="match_parent"
-           android:gravity="center_vertical|center_horizontal">
+            <trente.asia.android.view.ChiaseTextView
+                android:id="@+id/txt_fragment_offer_filter_type"
+                style="@style/sf_text_value_black"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/margin_6dp"
+                android:background="@drawable/wf_background_gray_border_white_padding"/>
+        </LinearLayout>
 
-           <Button
-               android:layout_width="@dimen/margin_150dp"
-               android:layout_height="@dimen/margin_30dp"
-               android:text="@string/fragment_offer_filter_clear"
-               android:id="@+id/btn_fragment_filter_clear"
-               style="@style/wl_common_button_small"
-               android:layout_marginRight="@dimen/margin_10dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_32dp">
 
-           <Button
-               android:layout_width="@dimen/margin_150dp"
-               android:layout_height="@dimen/margin_30dp"
-               android:text="@string/fragment_offer_filter_update"
-               android:id="@+id/btn_fragment_filter_update"
-               style="@style/wl_common_button_small"
-               android:layout_marginLeft="@dimen/margin_10dp"/>
-       </LinearLayout>
+            <TextView
+                style="@style/sf_text_value_black_bold"
+                android:layout_width="@dimen/margin_100dp"
+                android:layout_height="wrap_content"
+                android:text="@string/fragment_offer_filter_offer_status"/>
 
-   </LinearLayout>
+            <trente.asia.android.view.ChiaseTextView
+                android:id="@+id/txt_fragment_offer_filter_status"
+                style="@style/sf_text_value_black"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/margin_6dp"
+                android:background="@drawable/wf_background_gray_border_white_padding"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_32dp">
+
+            <TextView
+                style="@style/sf_text_value_black_bold"
+                android:layout_width="@dimen/margin_100dp"
+                android:layout_height="wrap_content"
+                android:text="@string/fragment_offer_filter_offer_dept"/>
+
+            <trente.asia.android.view.ChiaseTextView
+                android:id="@+id/txt_fragment_offer_filter_dept"
+                style="@style/sf_text_value_black"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/margin_6dp"
+                android:background="@drawable/wf_background_gray_border_white_padding"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical|center_horizontal"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_fragment_filter_clear"
+                style="@style/wl_common_button_small"
+                android:layout_height="@dimen/margin_30dp"
+                android:layout_marginRight="@dimen/margin_10dp"
+                android:text="@string/fragment_offer_filter_clear"/>
+
+            <Button
+                android:id="@+id/btn_fragment_filter_update"
+                style="@style/wl_common_button_small"
+                android:layout_height="@dimen/margin_30dp"
+                android:layout_marginLeft="@dimen/margin_10dp"
+                android:text="@string/fragment_offer_filter_update"/>
+        </LinearLayout>
+
+    </LinearLayout>
 
     <include layout="@layout/view_common_footer"/>
 

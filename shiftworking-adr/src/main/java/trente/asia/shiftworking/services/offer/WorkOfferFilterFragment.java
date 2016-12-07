@@ -29,6 +29,7 @@ public class WorkOfferFilterFragment extends AbstractSwFragment{
 	ChiaseTextView				txtType;
 	ChiaseTextView				txtStatus;
 	ChiaseTextView				txtDept;
+
 	private int					selectedType;
 	private int					selectedStatus;
 	private int					selectedDept;
