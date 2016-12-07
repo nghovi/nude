@@ -351,19 +351,6 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 			}
 
 			break;
-
-//		case ENTRY_LEAVE:
-//			Bundle bundle = returnedIntent.getExtras();
-//			String leave = (String)bundle.getSerializable(SwConst.KEY_HISTORY_NAME);
-//			edtLeave.setText(leave);
-//			edtLeave.clearFocus();
-//			break;
-//		case ENTRY_ARRIVE:
-//			Bundle bundle1 = returnedIntent.getExtras();
-//			String arrive = (String)bundle1.getSerializable(SwConst.KEY_HISTORY_NAME);
-//			edtArrive.setText(arrive);
-//			edtArrive.clearFocus();
-//			break;
 		default:
 			break;
 		}
