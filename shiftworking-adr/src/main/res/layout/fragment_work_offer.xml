@@ -22,7 +22,8 @@
         </LinearLayout>
 
         <ScrollView
-            style="@style/cs_common_match">
+            style="@style/cs_common_match"
+            android:layout_marginTop="@dimen/margin_10dp">
 
             <LinearLayout
                 style="@style/cs_common_match"
@@ -30,7 +31,6 @@
 
                 <TextView
                     style="@style/wl_common_text"
-                    android:layout_marginTop="@dimen/margin_10dp"
                     android:text="@string/sw_work_offer_history"
                     android:textStyle="bold"
                     android:paddingLeft="@dimen/margin_16dp"
