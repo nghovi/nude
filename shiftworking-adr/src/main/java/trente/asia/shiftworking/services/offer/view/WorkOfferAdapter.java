@@ -11,11 +11,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import asia.chiase.core.util.CCStringUtil;
 import trente.asia.shiftworking.BuildConfig;
 import trente.asia.shiftworking.R;
-import trente.asia.shiftworking.common.defines.SwConst;
-import trente.asia.shiftworking.services.offer.model.WorkOffer;
+import trente.asia.shiftworking.services.offer.model.WorkOfferModel;
 import trente.asia.welfare.adr.utils.WfPicassoHelper;
 
 /**
@@ -23,15 +21,15 @@ import trente.asia.welfare.adr.utils.WfPicassoHelper;
  *
  * @author TrungND
  */
-public class WorkOfferAdapter extends ArrayAdapter<WorkOffer>{
+public class WorkOfferAdapter extends ArrayAdapter<WorkOfferModel>{
 
-	private List<WorkOffer>		lstHistory;
+	private List<WorkOfferModel>		lstHistory;
 	private Context				mContext;
 	private int					layoutId;
 	private Map<String, String>	offerTypesMaster;
 	private Map<String, String>	offerStatusMaster;
 
-	public WorkOfferAdapter(Context context, List<WorkOffer> lstHistory, Map<String, String> types, Map<String, String> statuses){
+	public WorkOfferAdapter(Context context, List<WorkOfferModel> lstHistory, Map<String, String> types, Map<String, String> statuses){
 		super(context, R.layout.item_offer, lstHistory);
 		this.mContext = context;
 		this.layoutId = R.layout.item_offer;
@@ -56,7 +54,7 @@ public class WorkOfferAdapter extends ArrayAdapter<WorkOffer>{
 		}else{
 			viewHolder = (ViewHolder)convertView.getTag();
 		}
-		WorkOffer offer = getItem(position);
+		WorkOfferModel offer = getItem(position);
 		WfPicassoHelper.loadImageWithDefaultIcon(mContext, BuildConfig.HOST, viewHolder.imgAvatar, offer.userAvatarPath, R.drawable.wf_profile);
 		viewHolder.txtUsername.setText(offer.userName);
 		viewHolder.txtDate.setText(offer.startDateString);
@@ -68,12 +66,12 @@ public class WorkOfferAdapter extends ArrayAdapter<WorkOffer>{
 		return convertView;
 	}
 
-	// private int getBackgroundColor(WorkOffer offer) {
-	// if (offer.status == WorkOffer.OFFER_STATUS_OFFERING) {
+	// private int getBackgroundColor(WorkOfferModel offer) {
+	// if (offer.status == WorkOfferModel.OFFER_STATUS_OFFERING) {
 	// return R.color.core_white;
-	// } else if (offer.status == WorkOffer.OFFER_STATUS_APPROVING) {
+	// } else if (offer.status == WorkOfferModel.OFFER_STATUS_APPROVING) {
 	// return R.color.chiase_blue;
-	// } else if (offer.status == WorkOffer.OFFER_STATUS_DISABLED) {
+	// } else if (offer.status == WorkOfferModel.OFFER_STATUS_DISABLED) {
 	// return R.color.core_silver;
 	// }
 	// return R.color.chiase_filechooser_txt_actived;

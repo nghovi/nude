@@ -80,10 +80,10 @@ public class PreferencesAccountUtil{
 	}
 
 	private boolean isSettingChanged(SettingModel data1, SettingModel data2){
-		boolean isPublicLevel = !data1.DR_PUBLIC_LEVEL.equals(data2.DR_PUBLIC_LEVEL);
-		boolean isPushSetting = !data1.WF_PUSH_SETTING.equals(data2.WF_PUSH_SETTING);
-		boolean isMaxFile = !data1.WF_MAX_FILE_SIZE.equals(data2.WF_MAX_FILE_SIZE);
-		boolean isAppointment = !data1.SW_APPOINTMENT_ENABLED.equals(data2.SW_APPOINTMENT_ENABLED);
+		boolean isPublicLevel = data1.DR_PUBLIC_LEVEL != null && !data1.DR_PUBLIC_LEVEL.equals(data2.DR_PUBLIC_LEVEL);
+		boolean isPushSetting = data1.WF_PUSH_SETTING != null && !data1.WF_PUSH_SETTING.equals(data2.WF_PUSH_SETTING);
+		boolean isMaxFile = data1.WF_MAX_FILE_SIZE != null && !data1.WF_MAX_FILE_SIZE.equals(data2.WF_MAX_FILE_SIZE);
+		boolean isAppointment = data1.SW_APPOINTMENT_ENABLED != null && !data1.SW_APPOINTMENT_ENABLED.equals(data2.SW_APPOINTMENT_ENABLED);
 		return isPublicLevel || isPushSetting || isMaxFile || isAppointment;
 	}
 

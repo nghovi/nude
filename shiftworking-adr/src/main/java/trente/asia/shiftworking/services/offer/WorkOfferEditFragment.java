@@ -1,13 +1,12 @@
 package trente.asia.shiftworking.services.offer;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import com.google.gson.Gson;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -19,19 +18,23 @@ import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.LinearLayout;
 import android.widget.TimePicker;
 
 import asia.chiase.core.util.CCDateUtil;
+import asia.chiase.core.util.CCJsonUtil;
+import asia.chiase.core.util.CCNumberUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.activity.ChiaseActivity;
 import trente.asia.android.view.ChiaseListDialog;
 import trente.asia.android.view.ChiaseTextView;
+import trente.asia.android.view.util.CAObjectSerializeUtil;
 import trente.asia.shiftworking.R;
 import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
-import trente.asia.shiftworking.services.offer.model.WorkOffer;
+import trente.asia.shiftworking.services.offer.model.WorkOfferModel;
+import trente.asia.shiftworking.services.offer.model.WorkOfferModelHolder;
 import trente.asia.welfare.adr.define.WfUrlConst;
-import trente.asia.welfare.adr.view.WfSpinner;
+import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 
 /**
  * Created by viet on 11/25/2016.
@@ -39,22 +42,23 @@ import trente.asia.welfare.adr.view.WfSpinner;
 
 public class WorkOfferEditFragment extends AbstractSwFragment{
 
-	private WorkOffer			offer;
 	private ChiaseListDialog	spnType;
 	private DatePickerDialog	datePickerDialogStart;
 	private DatePickerDialog	datePickerDialogEnd;
 	private TimePickerDialog	timePickerDialogStart;
 	private TimePickerDialog	timePickerDialogEnd;
-	private TextView			txtStartTime;
-	private TextView			txtEndTime;
-	private EditText			edtNote;
-	private TextView			txtStartDate;
-	private TextView			txtEndDate;
-	private int					startYear, startMonthOfYear, startDay, startHour, startMinute, endYear, endMonthOfYear, endDay, endHour, endMinute;
-	private String				selectedType;
-	private Map<String, String>	offerTypesMaster;
-	private Map<String, String>	offerStatusMaster;
+	private ChiaseTextView		txtStartTime;
+	private ChiaseTextView		txtEndTime;
+//	private EditText			edtNote;
+	private ChiaseTextView		txtStartDate;
+	private ChiaseTextView		txtEndDate;
+
 	private ChiaseTextView		txtOfferType;
+	private String				activeOfferId;
+
+	public void setActiveOfferId(String activeOfferId){
+		this.activeOfferId = activeOfferId;
+	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -65,49 +69,102 @@ public class WorkOfferEditFragment extends AbstractSwFragment{
 	}
 
 	@Override
-	protected void initView(){
-		super.initView();
-		buildHeaderWithBackBtn();
-		buildOfferTypeSpinner();
-		buildDatePickerDialogs();
-		buildEditText();
-	}
-
-	private void buildHeaderWithBackBtn(){
-		super.initHeader(R.drawable.wf_back_white, myself.userName, R.drawable.ic_action_remove);
-		ImageView btnDone = (ImageView)getView().findViewById(R.id.img_id_header_right_icon);
-		btnDone.setOnClickListener(this);
+	public int getFooterItemId(){
+		return R.id.lnr_view_footer_offer;
 	}
 
 	@Override
-	public int getFooterItemId(){
-		return 0;
+	protected void initView(){
+		super.initView();
+		super.initHeader(R.drawable.wf_back_white, myself.userName, R.drawable.sw_action_save);
+		ImageView imgRightIcon = (ImageView)getView().findViewById(R.id.img_id_header_right_icon);
+		imgRightIcon.setOnClickListener(this);
+
+		txtOfferType = (ChiaseTextView)getView().findViewById(R.id.txt_fragment_offer_edit_offer_type);
+		txtStartDate = (ChiaseTextView)getView().findViewById(R.id.txt_fragment_offer_edit_start_date);
+		txtEndDate = (ChiaseTextView)getView().findViewById(R.id.txt_fragment_offer_edit_end_date);
+		txtStartTime = (ChiaseTextView)getView().findViewById(R.id.txt_fragment_offer_edit_start_time);
+		txtEndTime = (ChiaseTextView)getView().findViewById(R.id.txt_fragment_offer_edit_end_time);
+//		edtNote = (EditText)getView().findViewById(R.id.edt_fragment_offer_edit_note);
+
+		setOnClickListener();
 	}
 
-	private void buildOfferTypeSpinner(){
-		txtOfferType = (ChiaseTextView)getView().findViewById(R.id.txt_fragment_offer_edit_offer_type);
-		int selectedPosition = 0;
-		if(offer != null){
-			selectedPosition = new ArrayList<String>(offerTypesMaster.keySet()).indexOf(offer.offerType);
+	@Override
+	protected void initData(){
+		loadOfferForm();
+	}
+
+	private void loadOfferForm(){
+		JSONObject jsonObject = new JSONObject();
+		try{
+			jsonObject.put("key", activeOfferId);
+		}catch(JSONException e){
+			e.printStackTrace();
 		}
-		selectedType = (String)offerTypesMaster.keySet().toArray()[selectedPosition];
-		String offerTypeCode = (String)offerTypesMaster.keySet().toArray()[selectedPosition];
-		txtOfferType.setText(offerTypesMaster.get(offerTypeCode));
-		txtOfferType.setValue(offerTypeCode);
-		txtOfferType.setOnClickListener(this);
-		spnType = new ChiaseListDialog(activity, getString(R.string.fragment_work_offer_edit_offer_type), offerTypesMaster, txtOfferType, new AdapterView.OnItemClickListener() {
+		requestLoad(WfUrlConst.WF_SW_OFFER_DETAIL, jsonObject, true);
+	}
+
+	@Override
+	protected void successLoad(JSONObject response, String url){
+		if(WfUrlConst.WF_SW_OFFER_DETAIL.equals(url)){
+			WorkOfferModelHolder holder = CCJsonUtil.convertToModel(CCStringUtil.toString(response), WorkOfferModelHolder.class);
+			initDialog(holder);
+            buildDatePickerDialogs(holder.offer);
+			if(!CCStringUtil.isEmpty(activeOfferId)){
+				loadWorkOffer(holder.offer);
+			}
+		}else{
+			super.successLoad(response, url);
+		}
+	}
+
+	private void setOnClickListener(){
+		getView().findViewById(R.id.lnr_id_type).setOnClickListener(this);
+		getView().findViewById(R.id.lnr_start_date).setOnClickListener(this);
+		getView().findViewById(R.id.lnr_start_time).setOnClickListener(this);
+		getView().findViewById(R.id.lnr_end_date).setOnClickListener(this);
+		getView().findViewById(R.id.lnr_end_time).setOnClickListener(this);
+	}
+
+	private void initDialog(WorkOfferModelHolder holder){
+		if(CCStringUtil.isEmpty(activeOfferId)){
+			txtOfferType.setText(holder.offerTypeList.get(0).value);
+			txtOfferType.setValue(holder.offerTypeList.get(0).key);
+		}
+
+		spnType = new ChiaseListDialog(activity, getString(R.string.fragment_work_offer_edit_offer_type), WelfareFormatUtil.convertList2Map(holder.offerTypeList), txtOfferType, new AdapterView.OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id){
-				selectedType = (String)offerTypesMaster.keySet().toArray()[position];
 				OnOfferTypeChangedUpdateLayout();
 			}
 		});
 		OnOfferTypeChangedUpdateLayout();
 	}
 
+	private void loadWorkOffer(WorkOfferModel offerModel){
+		LinearLayout lnrContent = (LinearLayout)getView().findViewById(R.id.lnr_id_content);
+		try{
+			Gson gson = new Gson();
+			CAObjectSerializeUtil.deserializeObject(lnrContent, new JSONObject(gson.toJson(offerModel)));
+			txtOfferType.setText(offerModel.approveResult);
+			txtStartDate.setText(offerModel.startDateString);
+            txtStartDate.setValue(offerModel.startDateString);
+			txtStartTime.setText(offerModel.startTimeString);
+            txtStartTime.setValue(offerModel.startTimeString);
+			txtEndDate.setText(offerModel.endDateString);
+            txtEndDate.setValue(offerModel.endDateString);
+			txtEndTime.setText(offerModel.endTimeString);
+            txtEndTime.setValue(offerModel.endTimeString);
+		}catch(JSONException e){
+			e.printStackTrace();
+		}
+	}
+
 	private void OnOfferTypeChangedUpdateLayout(){
-		if(WorkOffer.OFFER_TYPE_HOLIDAY_WORKING.equals(selectedType) || WorkOffer.OFFER_TYPE_OVERTIME.equals(selectedType)){
+		String selectedType = txtOfferType.getValue();
+		if(WorkOfferModel.OFFER_TYPE_HOLIDAY_WORKING.equals(selectedType) || WorkOfferModel.OFFER_TYPE_OVERTIME.equals(selectedType)){
 			getView().findViewById(R.id.lnr_start_time).setVisibility(View.VISIBLE);
 			getView().findViewById(R.id.lnr_end_time).setVisibility(View.VISIBLE);
 		}else{
@@ -116,127 +173,62 @@ public class WorkOfferEditFragment extends AbstractSwFragment{
 		}
 	}
 
-	private void buildEditText(){
-		edtNote = (EditText)getView().findViewById(R.id.edt_fragment_offer_edit_note);
-		if(offer != null){
-			edtNote.setText(offer.note);
-		}
-	}
+	private void buildDatePickerDialogs(WorkOfferModel offerModel){
+		Calendar calendar = Calendar.getInstance();
+        Date starDate = new Date();
+        Date endDate = new Date();
+        int startHour = 0, startMinute = 0;
+        int endHour = 0, endMinute = 0;
 
-	private void buildDatePickerDialogs(){
-		txtStartDate = (TextView)getView().findViewById(R.id.txt_fragment_offer_edit_start_date);
-		txtEndDate = (TextView)getView().findViewById(R.id.txt_fragment_offer_edit_end_date);
-		txtStartTime = (TextView)getView().findViewById(R.id.txt_fragment_offer_edit_start_time);
-		txtEndTime = (TextView)getView().findViewById(R.id.txt_fragment_offer_edit_end_time);
-
-		Calendar c = Calendar.getInstance();
-		if(offer != null){
-			txtStartDate.setText(offer.startDateString);
-			txtEndDate.setText(offer.endDateString);
-			txtStartTime.setText(offer.startTimeString);
-			txtEndTime.setText(offer.endTimeString);
-
-			Date starDate = CCDateUtil.makeDate(offer.startDateString);
-			c.setTime(starDate);
-			startYear = c.get(Calendar.YEAR);
-			startMonthOfYear = c.get(Calendar.MONTH);
-			startDay = c.get(Calendar.DAY_OF_MONTH);
-			startHour = CCStringUtil.isEmpty(offer.startTimeString) ? 0 : Integer.parseInt(offer.startTimeString.split(":")[0]);
-			startMinute = CCStringUtil.isEmpty(offer.startTimeString) ? 0 : Integer.parseInt(offer.startTimeString.split(":")[1]);
-
-			Date endDate = CCDateUtil.makeDate(offer.endDateString);
-			c.setTime(endDate);
-			endYear = c.get(Calendar.YEAR);
-			endMonthOfYear = c.get(Calendar.MONTH);
-			endDay = c.get(Calendar.DAY_OF_MONTH);
-			endHour = CCStringUtil.isEmpty(offer.endTimeString) ? 0 : Integer.parseInt(offer.endTimeString.split(":")[0]);
-			endMinute = CCStringUtil.isEmpty(offer.endTimeString) ? 0 : Integer.parseInt(offer.endTimeString.split(":")[1]);
+		if(!CCStringUtil.isEmpty(activeOfferId)){
+			starDate = CCDateUtil.makeDate(offerModel.startDateString);
+			endDate = CCDateUtil.makeDate(offerModel.endDateString);
+            startHour = CCStringUtil.isEmpty(offerModel.startTimeString) ? 0 : CCNumberUtil.toInteger(offerModel.startTimeString.split(":")[0]);
+            startMinute = CCStringUtil.isEmpty(offerModel.startTimeString) ? 0 : CCNumberUtil.toInteger(offerModel.startTimeString.split(":")[1]);
+            endHour = CCStringUtil.isEmpty(offerModel.endTimeString) ? 0 : CCNumberUtil.toInteger(offerModel.endTimeString.split(":")[0]);
+            endMinute = CCStringUtil.isEmpty(offerModel.endTimeString) ? 0 : CCNumberUtil.toInteger(offerModel.endTimeString.split(":")[1]);
 		}else{
-			startYear = c.get(Calendar.YEAR);
-			startMonthOfYear = c.get(Calendar.MONTH);
-			startDay = c.get(Calendar.DAY_OF_MONTH);
-			startHour = 0;
-			startMinute = 0;// c.get(Calendar.MINUTE);
-			endYear = c.get(Calendar.YEAR);
-			endMonthOfYear = c.get(Calendar.MONTH);
-			endDay = c.get(Calendar.DAY_OF_MONTH);
-			endHour = 0;
-			endMinute = 0;// c.get(Calendar.MINUTE);
-			// txtStartDate.setText(startYear + "/" + getDisplayNum(startMonthOfYear + 1) + "/" + getDisplayNum(startDay));
-			// txtEndDate.setText(endYear + "/" + getDisplayNum(endMonthOfYear + 1) + "/" + getDisplayNum(endDay));
-			// txtStartTime.setText(getDisplayNum(startHour) + ":" + getDisplayNum(startMinute));
-			// txtEndTime.setText(getDisplayNum(endHour) + ":" + getDisplayNum(endMinute));
 		}
-		getView().findViewById(R.id.lnr_start_date).setOnClickListener(this);
-		getView().findViewById(R.id.lnr_start_time).setOnClickListener(this);
-		getView().findViewById(R.id.lnr_end_date).setOnClickListener(this);
-		getView().findViewById(R.id.lnr_end_time).setOnClickListener(this);
-	}
 
-	private void showEndTimePickerDialog(){
-		if(timePickerDialogEnd == null){
-			timePickerDialogEnd = new TimePickerDialog(activity, new TimePickerDialog.OnTimeSetListener() {
+        calendar.setTime(starDate);
+        datePickerDialogStart = new DatePickerDialog(activity, new DatePickerDialog.OnDateSetListener() {
 
-				@Override
-				public void onTimeSet(TimePicker view, int hourOfDay, int minute){
-					endHour = hourOfDay;
-					endMinute = minute;
-					txtEndTime.setText(getDisplayNum(endHour) + ":" + getDisplayNum(endMinute));
-				}
-			}, endHour, endMinute, true);
-		}
-		timePickerDialogEnd.show();
-	}
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth){
+                String startDate = year + "/" + getDisplayNum(month + 1) + "/" + getDisplayNum(dayOfMonth);
+                txtStartDate.setText(startDate);
+                txtStartDate.setValue(startDate);
+            }
+        }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
 
-	private void showStartTimePickerDialog(){
-		if(timePickerDialogStart == null){
-			timePickerDialogStart = new TimePickerDialog(activity, new TimePickerDialog.OnTimeSetListener() {
+        calendar.setTime(endDate);
+        datePickerDialogEnd = new DatePickerDialog(activity, new DatePickerDialog.OnDateSetListener() {
 
-				@Override
-				public void onTimeSet(TimePicker view, int hourOfDay, int minute){
-					startHour = hourOfDay;
-					startMinute = minute;
-					txtStartTime.setText(getDisplayNum(startHour) + ":" + getDisplayNum(startMinute));
-				}
-			}, startHour, startMinute, true);
-		}
-		timePickerDialogStart.show();
-	}
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth){
+                String startDate = year + "/" + getDisplayNum(month + 1) + "/" + getDisplayNum(dayOfMonth);
+                txtEndDate.setText(startDate);
+                txtEndDate.setValue(startDate);
+            }
+        }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
 
-	private void showStartDatePickerDialog(){
-		if(datePickerDialogStart == null){
-			datePickerDialogStart = new DatePickerDialog(activity, new DatePickerDialog.OnDateSetListener() {
+        timePickerDialogEnd = new TimePickerDialog(activity, new TimePickerDialog.OnTimeSetListener() {
 
-				@Override
-				public void onDateSet(DatePicker view, int year, int month, int dayOfMonth){
-					startYear = year;
-					startMonthOfYear = month;
-					startDay = dayOfMonth;
-					String startDate = startYear + "/" + getDisplayNum(startMonthOfYear + 1) + "/" + getDisplayNum(startDay);
-					txtStartDate.setText(startDate);
-				}
-			}, startYear, startMonthOfYear, startDay);
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute){
+                txtEndTime.setText(getDisplayNum(hourOfDay) + ":" + getDisplayNum(minute));
+                txtEndTime.setValue(getDisplayNum(hourOfDay) + ":" + getDisplayNum(minute));
+            }
+        }, endHour, endMinute, true);
 
-		}
-		datePickerDialogStart.show();
-	}
+        timePickerDialogStart = new TimePickerDialog(activity, new TimePickerDialog.OnTimeSetListener() {
 
-	private void showEndDatePickerDialog(){
-		if(datePickerDialogEnd == null){
-			datePickerDialogEnd = new DatePickerDialog(activity, new DatePickerDialog.OnDateSetListener() {
-
-				@Override
-				public void onDateSet(DatePicker view, int year, int month, int dayOfMonth){
-					endYear = year;
-					endMonthOfYear = month;
-					endDay = dayOfMonth;
-					String endDate = endYear + "/" + getDisplayNum(endMonthOfYear + 1) + "/" + getDisplayNum(endDay);
-					txtEndDate.setText(endDate);
-				}
-			}, endYear, endMonthOfYear, endDay);
-
-		}
-		datePickerDialogEnd.show();
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute){
+                txtStartTime.setText(getDisplayNum(hourOfDay) + ":" + getDisplayNum(minute));
+                txtStartTime.setValue(getDisplayNum(hourOfDay) + ":" + getDisplayNum(minute));
+            }
+        }, startHour, startMinute, true);
 	}
 
 	public String getDisplayNum(int num){
@@ -247,48 +239,33 @@ public class WorkOfferEditFragment extends AbstractSwFragment{
 	}
 
 	@Override
-	protected void successUpdate(JSONObject response, String url){
-		((ChiaseActivity)activity).isInitData = true;
-		onClickBackBtn();
-	}
-
-	public void setOfferTypeStatusMaster(Map<String, String> offerTypesMaster, Map<String, String> offerStatusMaster){
-		this.offerTypesMaster = new LinkedHashMap<>();
-		for(String key : offerTypesMaster.keySet()){
-			if(!key.equals("0")){
-				this.offerTypesMaster.put(key, offerTypesMaster.get(key));
-			}
-		}
-		this.offerStatusMaster = offerStatusMaster;
-	}
-
-	@Override
 	public void onDestroy(){
 		super.onDestroy();
-		edtNote = null;
 		txtEndDate = null;
 		txtStartDate = null;
 	}
 
 	private void onClickBtnDone(){
-		JSONObject jsonObject = new JSONObject();
+        LinearLayout lnrContent = (LinearLayout)getView().findViewById(R.id.lnr_id_content);
+		JSONObject jsonObject = CAObjectSerializeUtil.serializeObject(lnrContent, null);
 		try{
-			if(offer != null){
-				jsonObject.put("key", offer.key);
-			}
+			jsonObject.put("key", activeOfferId);
 			jsonObject.put("userId", myself.key);
-			jsonObject.put("offerType", selectedType);
-			jsonObject.put("startDateString", txtStartDate.getText().toString());
-			jsonObject.put("endDateString", txtEndDate.getText().toString());
-			jsonObject.put("startTimeString", txtStartTime.getText().toString());
-			jsonObject.put("endTimeString", txtEndTime.getText().toString());
-			jsonObject.put("note", edtNote.getText().toString());
-
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
 		requestUpdate(WfUrlConst.WF_SW_OFFER_UPDATE, jsonObject, true);
 	}
+
+    @Override
+    protected void successUpdate(JSONObject response, String url){
+        if(WfUrlConst.WF_SW_OFFER_UPDATE.equals(url)){
+            ((ChiaseActivity)activity).isInitData = true;
+            onClickBackBtn();
+        }else{
+            super.successLoad(response, url);
+        }
+    }
 
 	@Override
 	public void onClick(View v){
@@ -297,24 +274,20 @@ public class WorkOfferEditFragment extends AbstractSwFragment{
 			onClickBtnDone();
 			break;
 		case R.id.lnr_start_date:
-			showStartDatePickerDialog();
+            datePickerDialogStart.show();
 			break;
 		case R.id.lnr_end_date:
-			showEndDatePickerDialog();
+            datePickerDialogEnd.show();
 			break;
 		case R.id.lnr_start_time:
-			showStartTimePickerDialog();
+			timePickerDialogStart.show();
 			break;
 		case R.id.lnr_end_time:
-			showEndTimePickerDialog();
+			timePickerDialogEnd.show();
 			break;
-		case R.id.txt_fragment_offer_edit_offer_type:
+		case R.id.lnr_id_type:
 			spnType.show();
 			break;
 		}
-	}
-
-	public void setOffer(WorkOffer offer){
-		this.offer = offer;
 	}
 }

@@ -17,7 +17,7 @@ import trente.asia.shiftworking.R;
 import trente.asia.shiftworking.common.activities.MainActivity;
 import trente.asia.shiftworking.common.models.SwApiHolder;
 import trente.asia.shiftworking.services.login.SwLoginFragment;
-import trente.asia.shiftworking.services.offer.WorkOfferFragment;
+import trente.asia.shiftworking.services.offer.WorkOfferListFragment;
 import trente.asia.shiftworking.services.setting.SwSettingFragment;
 import trente.asia.shiftworking.services.shiftworking.ShiftWorkingFragment;
 import trente.asia.shiftworking.services.worktime.WorkStatusFragment;
@@ -130,7 +130,7 @@ public abstract class AbstractSwFragment extends WelfareFragment implements View
 
 	public void onClickFooterItemOffer(){
 		emptyBackStack();
-		gotoFragment(new WorkOfferFragment());
+		gotoFragment(new WorkOfferListFragment());
 	}
 
 	public void onClickFooterItemWorkStatus(){

@@ -6,7 +6,7 @@ import java.util.List;
  * Created by viet on 11/25/2016.
  */
 
-public class WorkOffer{
+public class WorkOfferModel {
 
 	public static final String	OFFER_TYPE_OVERTIME				= "OTW";
 	public static final String	OFFER_TYPE_HOLIDAY_WORKING		= "HDW";
@@ -19,7 +19,7 @@ public class WorkOffer{
 	public static final String APPROVE_STATUS_OK = "OK";
 	public static final String APPROVE_STATUS_NA = "NA";
 
-	public WorkOffer(){
+	public WorkOfferModel(){
 	}
 
 	public class OfferType{
