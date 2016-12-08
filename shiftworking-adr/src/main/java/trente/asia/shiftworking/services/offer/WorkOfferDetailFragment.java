@@ -31,7 +31,6 @@ import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
 import trente.asia.shiftworking.services.offer.model.WorkOfferModel;
 import trente.asia.shiftworking.services.offer.view.ApproveHistoryAdapter;
 import trente.asia.welfare.adr.define.WfUrlConst;
-import trente.asia.welfare.adr.dialog.WfDialog;
 import trente.asia.welfare.adr.models.ApiObjectModel;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 
@@ -177,8 +176,6 @@ public class WorkOfferDetailFragment extends AbstractSwFragment{
 			btnReject.setVisibility(View.GONE);
 			btnApprove.setVisibility(View.GONE);
 		}
-
-
 	}
 
 	private void buildWorkOfferApproveHistory(){
@@ -201,37 +198,10 @@ public class WorkOfferDetailFragment extends AbstractSwFragment{
 		}
 	}
 
-	private void onClickBtnDelete(){
-		final WfDialog dlgConfirmDelete = new WfDialog(activity);
-		dlgConfirmDelete.setDialogTitleButton(getString(R.string.fragment_offer_edit_confirm_delete_msg), getString(android.R.string.ok), getString(android.R.string.cancel), new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v){
-				sendDeleteOfferRequest();
-				dlgConfirmDelete.dismiss();
-			}
-		}).show();
-	}
-
-	private void sendDeleteOfferRequest(){
-		JSONObject jsonObject = new JSONObject();
-		try{
-			jsonObject.put("key", offer.key);
-		}catch(JSONException e){
-			e.printStackTrace();
-		}
-		requestUpdate(WfUrlConst.WF_SW_OFFER_DELETE, jsonObject, true);
-	}
-
 	@Override
 	protected void successUpdate(JSONObject response, String url){
-		if(WfUrlConst.WF_SW_OFFER_DELETE.equals(url)){
-			((ChiaseActivity)activity).isInitData = true;
-			onClickBackBtn();
-		}else{
-			((ChiaseActivity)activity).isInitData = true;
-			onClickBackBtn();
-		}
+		((ChiaseActivity)activity).isInitData = true;
+		onClickBackBtn();
 	}
 
 	private void gotoWorkOfferEditFragment(){
@@ -245,9 +215,6 @@ public class WorkOfferDetailFragment extends AbstractSwFragment{
 		switch(v.getId()){
 		case R.id.img_id_header_right_icon:
 			gotoWorkOfferEditFragment();
-			break;
-		case R.id.btn_fragment_offer_detail_delete:
-			onClickBtnDelete();
 			break;
 		case R.id.btn_fragment_offer_detail_approve:
 			onClickBtnApprove();
