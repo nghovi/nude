@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -160,6 +161,14 @@ public class WorkOfferEditFragment extends AbstractSwFragment{
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
+
+        Button btnDelete = (Button)getView().findViewById(R.id.btn_fragment_offer_detail_delete);
+        if(WorkOfferModel.OFFER_STATUS_OFFER.equals(offerModel.approveResult) && offerModel.userId.equals(myself.key)){
+            btnDelete.setVisibility(View.VISIBLE);
+            btnDelete.setOnClickListener(this);
+        }else{
+            btnDelete.setVisibility(View.GONE);
+        }
 	}
 
 	private void OnOfferTypeChangedUpdateLayout(){

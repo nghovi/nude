@@ -1,15 +1,14 @@
 package trente.asia.shiftworking.services.offer;
 
-import static trente.asia.shiftworking.services.offer.WorkOfferListFragment.buildOfferStatusMaster;
-import static trente.asia.shiftworking.services.offer.WorkOfferListFragment.buildOfferTypeMaster;
-
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import com.google.gson.Gson;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -18,11 +17,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCJsonUtil;
 import trente.asia.android.activity.ChiaseActivity;
 import trente.asia.android.view.ChiaseListViewNoScroll;
+import trente.asia.android.view.util.CAObjectSerializeUtil;
 import trente.asia.shiftworking.R;
 import trente.asia.shiftworking.common.activities.MainActivity;
 import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
@@ -30,26 +32,24 @@ import trente.asia.shiftworking.services.offer.model.WorkOfferModel;
 import trente.asia.shiftworking.services.offer.view.ApproveHistoryAdapter;
 import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.dialog.WfDialog;
-import trente.asia.welfare.adr.models.DeptModel;
+import trente.asia.welfare.adr.models.ApiObjectModel;
+import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 
 public class WorkOfferDetailFragment extends AbstractSwFragment{
 
-	private WorkOfferModel offer;
-	private String				selectedWorkOfferStatusCode;
+	private WorkOfferModel		offer;
 	Map<String, String>			targetUserModels	= new HashMap<String, String>();
 	Map<String, List<Double>>	groupInfo;
-	private int					approveGroupType;
-	private ImageView			btnEdit;
-	private Map<String, String>	offerTypesMaster;
+	private ImageView			imgEdit;
 	private Map<String, String>	offerStatusMaster;
 	private String				offerPermission;
+
 	private EditText			edtComment;
+	private String				activeOfferId;
 
-	public void setFromPush(boolean fromPush){
-		isFromPush = fromPush;
+	public void setActiveOfferId(String activeOfferId){
+		this.activeOfferId = activeOfferId;
 	}
-
-	private boolean	isFromPush	= false;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -62,8 +62,10 @@ public class WorkOfferDetailFragment extends AbstractSwFragment{
 	@Override
 	protected void initView(){
 		super.initView();
-		// buildHeaderWithBackBtn(myself.userName);
-		// buildWorkOfferDetail();
+		super.initHeader(R.drawable.wf_back_white, myself.userName, R.drawable.sw_action_edit);
+
+		edtComment = (EditText)getView().findViewById(R.id.edt_fragment_offer_detail_comment);
+		imgEdit = (ImageView)getView().findViewById(R.id.img_id_header_right_icon);
 	}
 
 	@Override
@@ -73,14 +75,14 @@ public class WorkOfferDetailFragment extends AbstractSwFragment{
 
 	@Override
 	protected void initData(){
-		requestWorkOfferDetail();
+		loadWorkOffer();
 	}
 
-	private void requestWorkOfferDetail(){
+	private void loadWorkOffer(){
 
 		JSONObject jsonObject = new JSONObject();
 		try{
-			jsonObject.put("key", offer.key);
+			jsonObject.put("key", activeOfferId);
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
@@ -88,9 +90,64 @@ public class WorkOfferDetailFragment extends AbstractSwFragment{
 		requestLoad(WfUrlConst.WF_SW_OFFER_DETAIL, jsonObject, true);
 	}
 
+	@Override
+	protected void successLoad(JSONObject response, String url){
+		if(WfUrlConst.WF_SW_OFFER_DETAIL.equals(url)){
+			offer = CCJsonUtil.convertToModel(response.optString("offer"), WorkOfferModel.class);
+			setWorkOffer(offer);
+
+			offerPermission = response.optString("permission");
+			offerStatusMaster = buildOfferStatusMaster(response);
+
+			groupInfo = CCJsonUtil.convertToModel(response.optString("groupJoinMap"), Map.class);
+			if(offer == null){
+				((MainActivity)activity).isInitData = true;
+				onClickBackBtn();
+			}else{
+				targetUserModels = CCJsonUtil.convertToModel(response.optString("targetUserModel"), Map.class);
+				buildWorkOfferDetail();
+			}
+		}else{
+			super.successLoad(response, url);
+		}
+	}
+
+	private Map<String, String> buildOfferStatusMaster(JSONObject response){
+		Map<String, String> offerStatusMaster = new LinkedHashMap<>();
+		List<ApiObjectModel> lstStatus = CCJsonUtil.convertToModelList(response.optString("offerStatusList"), ApiObjectModel.class);
+		lstStatus.add(new ApiObjectModel(CCConst.NONE, getString(R.string.chiase_common_all)));
+		return WelfareFormatUtil.convertList2Map(lstStatus);
+	}
+
+	private void setWorkOffer(WorkOfferModel offerModel){
+		try{
+			LinearLayout lnrContent = (LinearLayout)getView().findViewById(R.id.lnr_id_content);
+			Gson gson = new Gson();
+			CAObjectSerializeUtil.deserializeObject(lnrContent, new JSONObject(gson.toJson(offerModel)));
+		}catch(JSONException e){
+			e.printStackTrace();
+		}
+
+		((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_offer_type)).setText(offerModel.approveResult);
+		((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_start_date)).setText(offerModel.startDateString);
+		((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_end_date)).setText(offerModel.endDateString);
+		((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_note)).setText(offerModel.note);
+
+		if(WorkOfferModel.OFFER_TYPE_HOLIDAY_WORKING.equals(offer.offerType) || WorkOfferModel.OFFER_TYPE_OVERTIME.equals(offerModel.offerType)){
+			((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_start_time)).setText(offerModel.startTimeString);
+		}else{
+			getView().findViewById(R.id.lnr_start_time).setVisibility(View.GONE);
+		}
+
+		if(WorkOfferModel.OFFER_TYPE_HOLIDAY_WORKING.equals(offer.offerType) || WorkOfferModel.OFFER_TYPE_OVERTIME.equals(offerModel.offerType)){
+			((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_end_time)).setText(offerModel.endTimeString);
+		}else{
+			getView().findViewById(R.id.lnr_end_time).setVisibility(View.GONE);
+		}
+	}
+
 	private void buildWorkOfferDetail(){
-		buildHeaderWithBackBtn(myself.userName);
-		buildOfferInfo();
+		judgeEditPermission();
 		buildWorkOfferApproveHistory();
 		buildOfferComment();
 		buildActionButtons();
@@ -104,40 +161,11 @@ public class WorkOfferDetailFragment extends AbstractSwFragment{
 		}
 	}
 
-	private void buildOfferInfo(){
-		String offerType = offerTypesMaster.get(offer.offerType);
-
-		((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_offer_type)).setText(offerType);
-
-		((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_start_date)).setText(offer.startDateString);
-
-		((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_end_date)).setText(offer.endDateString);
-
-		if(WorkOfferModel.OFFER_TYPE_HOLIDAY_WORKING.equals(offer.offerType) || WorkOfferModel.OFFER_TYPE_OVERTIME.equals(offer.offerType)){
-			((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_start_time)).setText(offer.startTimeString);
-		}else{
-			getView().findViewById(R.id.lnr_start_time).setVisibility(View.GONE);
-		}
-
-		if(WorkOfferModel.OFFER_TYPE_HOLIDAY_WORKING.equals(offer.offerType) || WorkOfferModel.OFFER_TYPE_OVERTIME.equals(offer.offerType)){
-			((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_end_time)).setText(offer.endTimeString);
-		}else{
-			getView().findViewById(R.id.lnr_end_time).setVisibility(View.GONE);
-		}
-
-		TextView txtNote = (TextView)getView().findViewById(R.id.txt_fragment_offer_detail_note);
-		txtNote.setText(offer.note);
-
-		edtComment = (EditText)getView().findViewById(R.id.edt_fragment_offer_detail_comment);
-	}
-
 	private void buildActionButtons(){
 		Button btnReject = (Button)getView().findViewById(R.id.btn_fragment_offer_detail_reject);
-
 		Button btnApprove = (Button)getView().findViewById(R.id.btn_fragment_offer_detail_approve);
 
 		boolean isApprove1CanApprove = WorkOfferModel.OFFER_PERMISSION_APPROVEABLE.equals(offerPermission) && (myself.key.equals(offer.approveUser1) && WorkOfferModel.APPROVE_STATUS_YET.equals(offer.approveResult1));
-
 		boolean isApprove2CanApprove = WorkOfferModel.OFFER_PERMISSION_APPROVEABLE.equals(offerPermission) && myself.key.equals(offer.approveUser2) && WorkOfferModel.APPROVE_STATUS_OK.equals(offer.approveResult1) && WorkOfferModel.APPROVE_STATUS_YET.equals(offer.approveResult2);
 
 		if(isApprove1CanApprove || isApprove2CanApprove){
@@ -150,13 +178,7 @@ public class WorkOfferDetailFragment extends AbstractSwFragment{
 			btnApprove.setVisibility(View.GONE);
 		}
 
-		Button btnDelete = (Button)getView().findViewById(R.id.btn_fragment_offer_detail_delete);
-		if(WorkOfferModel.OFFER_STATUS_OFFER.equals(offer.approveResult) && offer.userId.equals(myself.key)){
-			btnDelete.setVisibility(View.VISIBLE);
-			btnDelete.setOnClickListener(this);
-		}else{
-			btnDelete.setVisibility(View.GONE);
-		}
+
 	}
 
 	private void buildWorkOfferApproveHistory(){
@@ -170,14 +192,12 @@ public class WorkOfferDetailFragment extends AbstractSwFragment{
 		}
 	}
 
-	protected void buildHeaderWithBackBtn(String title){
-		super.initHeader(R.drawable.wf_back_white, title, R.drawable.sw_action_edit);
-		btnEdit = (ImageView)getView().findViewById(R.id.img_id_header_right_icon);
+	protected void judgeEditPermission(){
 		if(WorkOfferModel.OFFER_PERMISSION_EDITABLE.equals(offerPermission)){
-			btnEdit.setVisibility(View.VISIBLE);
-			btnEdit.setOnClickListener(this);
+			imgEdit.setVisibility(View.VISIBLE);
+			imgEdit.setOnClickListener(this);
 		}else{
-			btnEdit.setVisibility(View.INVISIBLE);
+			imgEdit.setVisibility(View.INVISIBLE);
 		}
 	}
 
@@ -212,28 +232,6 @@ public class WorkOfferDetailFragment extends AbstractSwFragment{
 			((ChiaseActivity)activity).isInitData = true;
 			onClickBackBtn();
 		}
-	}
-
-	@Override
-	protected void successLoad(JSONObject response, String url){
-		offer = CCJsonUtil.convertToModel(response.optString("offer"), WorkOfferModel.class);
-		offerPermission = response.optString("permission");
-		offerTypesMaster = buildOfferTypeMaster(activity, response);
-		offerStatusMaster = buildOfferStatusMaster(activity, response);
-
-		groupInfo = CCJsonUtil.convertToModel(response.optString("groupJoinMap"), Map.class);
-		if(offer == null){
-			((MainActivity)activity).isInitData = true;
-			onClickBackBtn();
-		}else{
-			targetUserModels = CCJsonUtil.convertToModel(response.optString("targetUserModel"), Map.class);
-			buildWorkOfferDetail();
-		}
-	}
-
-	public void setOfferTypeStatusMaster(Map<String, String> offerTypesMaster, Map<String, String> offerStatusMaster){
-		this.offerTypesMaster = offerTypesMaster;
-		this.offerStatusMaster = offerStatusMaster;
 	}
 
 	private void gotoWorkOfferEditFragment(){
@@ -315,9 +313,5 @@ public class WorkOfferDetailFragment extends AbstractSwFragment{
 			final ApproveStatus other = (ApproveStatus)obj;
 			return this.status1.equals(other.status1) && this.status2.equals(other.status2) && this.userType == other.userType && this.approveGroupType == other.approveGroupType;
 		}
-	}
-
-	public void setWorkOffer(WorkOfferModel offer){
-		this.offer = offer;
 	}
 }

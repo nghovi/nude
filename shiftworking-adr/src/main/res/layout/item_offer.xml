@@ -2,74 +2,59 @@
               xmlns:custom="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:background="@color/chiase_white"
+              android:background="@drawable/state_common_selectable_row"
               android:gravity="center_vertical"
-              android:orientation="horizontal">
-
+              android:orientation="horizontal"
+              android:paddingBottom="@dimen/margin_10dp"
+              android:paddingLeft="@dimen/margin_16dp"
+              android:paddingRight="@dimen/margin_16dp"
+              android:paddingTop="@dimen/margin_10dp">
 
     <trente.asia.welfare.adr.view.SelectableRoundedImageView
         android:id="@+id/img_item_offer_avatar"
         android:layout_width="@dimen/margin_32dp"
         android:layout_height="@dimen/margin_32dp"
         android:scaleType="fitXY"
-        custom:sriv_oval="true"
-        android:layout_margin="@dimen/margin_2dp"/>
+        custom:sriv_oval="true"/>
 
     <LinearLayout
-        android:id="@+id/lnr_item_offer_main"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingBottom="@dimen/margin_6dp"
-        android:paddingTop="@dimen/margin_6dp"
-        >
+        style="@style/cs_common_match_wrap"
+        android:layout_marginLeft="@dimen/margin_10dp"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/margin_10dp"
-            android:paddingRight="@dimen/margin_10dp">
+            style="@style/cs_common_match_wrap"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/txt_item_offer_username"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Username"
-                android:textColor="@color/core_gray"/>
+                style="@style/wl_common_text_single_line"
+                android:layout_weight="1"/>
 
             <TextView
                 android:id="@+id/txt_item_offer_date"
-                style="@style/sf_text_value_blue_bold"
+                style="@style/wl_common_text"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textAlignment="viewEnd"/>
+                android:layout_marginLeft="@dimen/margin_10dp"
+                android:textColor="@color/sw_data_text_color"/>
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/margin_10dp"
-            android:paddingRight="@dimen/margin_10dp">
+            style="@style/cs_common_match_wrap"
+            android:layout_marginTop="@dimen/margin_6dp"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/txt_item_offer_type"
-                style="@style/sf_text_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/margin_4dp"
-                android:text="Type:"/>
+                style="@style/wl_common_text_single_line"
+                android:layout_weight="1"/>
 
             <TextView
                 android:id="@+id/txt_item_offer_status"
-                style="@style/sf_text_value_blue_bold"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAlignment="viewEnd"/>
+                style="@style/wl_common_text"
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="@dimen/margin_10dp"
+                android:textColor="@color/sw_data_text_color"/>
         </LinearLayout>
-
     </LinearLayout>
-
 </LinearLayout>

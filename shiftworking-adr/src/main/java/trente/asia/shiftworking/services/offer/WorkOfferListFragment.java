@@ -16,9 +16,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
+import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import trente.asia.shiftworking.R;
@@ -28,12 +28,14 @@ import trente.asia.shiftworking.services.offer.view.WorkOfferAdapter;
 import trente.asia.shiftworking.services.shiftworking.view.CommonMonthView;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.define.WfUrlConst;
+import trente.asia.welfare.adr.models.ApiObjectModel;
+import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 import trente.asia.welfare.adr.utils.WelfareUtil;
 
 public class WorkOfferListFragment extends AbstractSwFragment{
 
 	WorkOfferAdapter				adapter;
-	private List<WorkOfferModel>			offers;
+	private List<WorkOfferModel>	offers;
 	private ListView				mLstOffer;
 	private CommonMonthView			monthView;
 	private Map<String, Integer>	filters;
@@ -41,7 +43,7 @@ public class WorkOfferListFragment extends AbstractSwFragment{
 	private Map<String, String>		offerTypesMaster;
 	private Map<String, String>		offerStatusMaster;
 	private Map<String, String>		offerDepts;
-	private List<WorkOfferModel>			otherOffers;
+	private List<WorkOfferModel>	otherOffers;
 	private WorkOfferAdapter		adapterOther;
 	private ListView				mLstOfferOther;
 
@@ -110,13 +112,12 @@ public class WorkOfferListFragment extends AbstractSwFragment{
 		getView().findViewById(R.id.img_id_header_right_icon).setOnClickListener(this);
 
 		txtFilterDesc = (TextView)getView().findViewById(R.id.fragment_work_offer_filter_desc);
-		getView().findViewById(R.id.img_fragment_work_offer_filter).setOnClickListener(this);
+		getView().findViewById(R.id.lnr_id_filter).setOnClickListener(this);
 	}
 
 	private void gotoWorkOfferDetail(WorkOfferModel offer){
 		WorkOfferDetailFragment fragment = new WorkOfferDetailFragment();
-		fragment.setOfferTypeStatusMaster(offerTypesMaster, offerStatusMaster);
-		fragment.setWorkOffer(offer);
+		fragment.setActiveOfferId(offer.key);
 		gotoFragment(fragment);
 	}
 
@@ -145,18 +146,21 @@ public class WorkOfferListFragment extends AbstractSwFragment{
 
 	@Override
 	protected void successLoad(JSONObject response, String url){
-		offers = CCJsonUtil.convertToModelList(response.optString("myOffers"), WorkOfferModel.class);
-		otherOffers = CCJsonUtil.convertToModelList(response.optString("otherOffers"), WorkOfferModel.class);
-		offerTypesMaster = buildOfferTypeMaster(activity, response);
-		offerStatusMaster = buildOfferStatusMaster(activity, response);
-		offerDepts = buildOfferDepts(activity, response);
+        if(WfUrlConst.WF_SW_OFFER_LIST.equals(url)){
+            offers = CCJsonUtil.convertToModelList(response.optString("myOffers"), WorkOfferModel.class);
+            otherOffers = CCJsonUtil.convertToModelList(response.optString("otherOffers"), WorkOfferModel.class);
+            offerTypesMaster = buildOfferTypeMaster(activity, response);
+            offerStatusMaster = buildOfferStatusMaster(response);
+            offerDepts = buildOfferDepts(activity, response);
 
-		adapterOther = new WorkOfferAdapter(activity, otherOffers, offerTypesMaster, offerStatusMaster);
-		mLstOfferOther.setAdapter(adapterOther);
+            adapterOther = new WorkOfferAdapter(activity, otherOffers, offerTypesMaster, offerStatusMaster);
+            mLstOfferOther.setAdapter(adapterOther);
 
-		adapter = new WorkOfferAdapter(activity, offers, offerTypesMaster, offerStatusMaster);
-		mLstOffer.setAdapter(adapter);
-		((ScrollView)getView().findViewById(R.id.src_fragment_work_offer)).fullScroll(ScrollView.FOCUS_UP);
+            adapter = new WorkOfferAdapter(activity, offers, offerTypesMaster, offerStatusMaster);
+            mLstOffer.setAdapter(adapter);
+        }else {
+            super.successLoad(response, url);
+        }
 	}
 
 	private Map<String, String> buildOfferDepts(Context context, JSONObject response){
@@ -180,15 +184,11 @@ public class WorkOfferListFragment extends AbstractSwFragment{
 		return offerTypesMaster;
 	}
 
-	public static Map<String, String> buildOfferStatusMaster(Context context, JSONObject response){
+	public Map<String, String> buildOfferStatusMaster(JSONObject response){
 		Map<String, String> offerStatusMaster = new LinkedHashMap<>();
-		List<WorkOfferModel.OfferStatus> statuses = CCJsonUtil.convertToModelList(response.optString("offerStatusList"), WorkOfferModel.OfferStatus.class);
-		offerStatusMaster.put("0", context.getResources().getString(R.string.chiase_common_all));
-		for(WorkOfferModel.OfferStatus status : statuses){
-			offerStatusMaster.put(status.key, status.value);
-		}
-
-		return offerStatusMaster;
+        List<ApiObjectModel> lstStatus = CCJsonUtil.convertToModelList(response.optString("offerStatusList"), ApiObjectModel.class);
+		lstStatus.add(new ApiObjectModel(CCConst.NONE, getString(R.string.chiase_common_all)));
+		return WelfareFormatUtil.convertList2Map(lstStatus);
 	}
 
 	@Override
@@ -199,7 +199,7 @@ public class WorkOfferListFragment extends AbstractSwFragment{
 	@Override
 	public void onClick(View v){
 		switch(v.getId()){
-		case R.id.img_fragment_work_offer_filter:
+		case R.id.lnr_id_filter:
 			gotoOfferFilterFragment();
 			break;
 		case R.id.img_id_header_right_icon:

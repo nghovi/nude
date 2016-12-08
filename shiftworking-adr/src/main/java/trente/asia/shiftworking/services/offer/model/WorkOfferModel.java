@@ -28,12 +28,6 @@ public class WorkOfferModel {
 		public String	value;
 	}
 
-	public class OfferStatus{
-
-		public String	key;
-		public String	value;
-	}
-
 	public class OfferDept{
 
 		public String	key;

@@ -11,4 +11,13 @@ public class ApiObjectModel{
 
 	public String	key;
 	public String	value;
+
+    public ApiObjectModel(){
+
+    }
+
+    public ApiObjectModel(String key, String value){
+        this.key = key;
+        this.value = value;
+    }
 }
