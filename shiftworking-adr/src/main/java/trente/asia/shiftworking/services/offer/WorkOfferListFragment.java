@@ -153,10 +153,10 @@ public class WorkOfferListFragment extends AbstractSwFragment{
             offerStatusMaster = buildOfferStatusMaster(response);
             offerDepts = buildOfferDepts(activity, response);
 
-            adapterOther = new WorkOfferAdapter(activity, otherOffers, offerTypesMaster, offerStatusMaster);
+            adapterOther = new WorkOfferAdapter(activity, otherOffers);
             mLstOfferOther.setAdapter(adapterOther);
 
-            adapter = new WorkOfferAdapter(activity, offers, offerTypesMaster, offerStatusMaster);
+            adapter = new WorkOfferAdapter(activity, offers);
             mLstOffer.setAdapter(adapter);
         }else {
             super.successLoad(response, url);

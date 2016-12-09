@@ -26,16 +26,12 @@ public class WorkOfferAdapter extends ArrayAdapter<WorkOfferModel>{
 	private List<WorkOfferModel>		lstHistory;
 	private Context				mContext;
 	private int					layoutId;
-	private Map<String, String>	offerTypesMaster;
-	private Map<String, String>	offerStatusMaster;
 
-	public WorkOfferAdapter(Context context, List<WorkOfferModel> lstHistory, Map<String, String> types, Map<String, String> statuses){
+	public WorkOfferAdapter(Context context, List<WorkOfferModel> lstHistory){
 		super(context, R.layout.item_offer, lstHistory);
 		this.mContext = context;
 		this.layoutId = R.layout.item_offer;
 		this.lstHistory = lstHistory;
-		this.offerTypesMaster = types;
-		this.offerStatusMaster = statuses;
 	}
 
 	@Override
@@ -58,10 +54,8 @@ public class WorkOfferAdapter extends ArrayAdapter<WorkOfferModel>{
 		WfPicassoHelper.loadImageWithDefaultIcon(mContext, BuildConfig.HOST, viewHolder.imgAvatar, offer.userAvatarPath, R.drawable.wf_profile);
 		viewHolder.txtUsername.setText(offer.userName);
 		viewHolder.txtDate.setText(offer.startDateString);
-		viewHolder.txtType.setText(this.offerTypesMaster.get(offer.offerType));
-		viewHolder.txtStatus.setText(this.offerStatusMaster.get(offer.approveResult));
-		// convertView.findViewById(R.id.lnr_item_offer_main)
-		// .setBackgroundResource(getBackgroundColor(offer));
+		viewHolder.txtType.setText(offer.offerTypeName);
+		viewHolder.txtStatus.setText(offer.offerStatusName);
 
 		return convertView;
 	}
