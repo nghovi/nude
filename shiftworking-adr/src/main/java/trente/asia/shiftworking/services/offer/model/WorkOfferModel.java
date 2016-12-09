@@ -11,24 +11,7 @@ public class WorkOfferModel{
 	public static final String	OFFER_TYPE_OVERTIME			= "OTW";
 	public static final String	OFFER_TYPE_HOLIDAY_WORKING	= "HDW";
 
-	public static final String	OFFER_STATUS_OFFER			= "OFFER";
-	public static final String	APPROVE_STATUS_YET			= "YET";
-	public static final String	APPROVE_STATUS_OK			= "OK";
-	public static final String	APPROVE_STATUS_NA			= "NA";
-
 	public WorkOfferModel(){
-	}
-
-	public class OfferType{
-
-		public String	key;
-		public String	value;
-	}
-
-	public class OfferDept{
-
-		public String	key;
-		public String	value;
 	}
 
 	public String				userId;

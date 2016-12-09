@@ -165,10 +165,10 @@ public class WorkOfferListFragment extends AbstractSwFragment{
 
 	private Map<String, String> buildOfferDepts(Context context, JSONObject response){
 		Map<String, String> offerDepts = new LinkedHashMap<>();
-		List<WorkOfferModel.OfferDept> depts = CCJsonUtil.convertToModelList(response.optString("offerDeptList"), WorkOfferModel.OfferDept.class);
+		List<ApiObjectModel> depts = CCJsonUtil.convertToModelList(response.optString("offerDeptList"), ApiObjectModel.class);
 		offerDepts.put("0", context.getResources().getString(R.string.chiase_common_all));
 
-		for(WorkOfferModel.OfferDept dept : depts){
+		for(ApiObjectModel dept : depts){
 			offerDepts.put(dept.key, dept.value);
 		}
 		return offerDepts;
@@ -176,9 +176,9 @@ public class WorkOfferListFragment extends AbstractSwFragment{
 
 	public static Map<String, String> buildOfferTypeMaster(Context context, JSONObject response){
 		Map<String, String> offerTypesMaster = new LinkedHashMap<>();
-		List<WorkOfferModel.OfferType> types = CCJsonUtil.convertToModelList(response.optString("offerTypeList"), WorkOfferModel.OfferType.class);
+		List<ApiObjectModel> types = CCJsonUtil.convertToModelList(response.optString("offerTypeList"), ApiObjectModel.class);
 		offerTypesMaster.put("0", context.getResources().getString(R.string.chiase_common_all));
-		for(WorkOfferModel.OfferType type : types){
+		for(ApiObjectModel type : types){
 			offerTypesMaster.put(type.key, type.value);
 		}
 		return offerTypesMaster;
