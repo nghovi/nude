@@ -151,7 +151,7 @@ public class WorkOfferEditFragment extends AbstractSwFragment{
 		try{
 			Gson gson = new Gson();
 			CAObjectSerializeUtil.deserializeObject(lnrContent, new JSONObject(gson.toJson(holder.offer)));
-			txtOfferType.setText(holder.offer.approveResult);
+			txtOfferType.setText(holder.offer.offerTypeName);
 			txtStartDate.setText(holder.offer.startDateString);
 			txtStartTime.setText(holder.offer.startTimeString);
 			txtEndDate.setText(CCStringUtil.toString(holder.offer.endDateString));
