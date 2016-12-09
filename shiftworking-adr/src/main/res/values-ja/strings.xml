@@ -80,7 +80,7 @@
     <string name="sw_work_transit_way_type_item">往復区分</string>
     <string name="sw_work_transit_one_way_item">片道</string>
     <string name="sw_work_transit_two_way_item">往復</string>
-    <string name="sw_work_transit_cost_type_item">支払側</string>
+    <string name="sw_work_transit_cost_type_item">費用区分</string>
     <string name="sw_work_transit_trans_type_item">交通機関</string>
     <string name="sw_work_transit_fee_item">交通費</string>
     <string name="sw_work_transit_note_item">ノート</string>
@@ -107,4 +107,5 @@
     <string name="fragment_work_offer_edit_offer_type">申請タイプ</string>
     <string name="fragment_work_offer_edit_offer_status">申請ステータス</string>
     <string name="fragment_work_offer_edit_offer_dept">申請部門</string>
+    <string name="sw_work_offer_history">勤務申請履歴</string>
 </resources>
