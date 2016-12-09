@@ -14,4 +14,5 @@ public class WorkOfferModelHolder{
 
 	public WorkOfferModel		offer;
 	public List<ApiObjectModel>	offerTypeList;
+	public String				permission;
 }

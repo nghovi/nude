@@ -11,40 +11,22 @@ import java.util.Map;
 
 public class SwConst{
 
-	public static final String			APP_FOLDER					= "Welfare/ShiftWorking";
-	public static final String			SW_WORK_NOTICE_TYPE_MODIFY	= "MR";
+	public static final String			APP_FOLDER						= "Welfare/ShiftWorking";
+	public static final String			SW_WORK_NOTICE_TYPE_MODIFY		= "MR";
 
-	public static final int				MAX_CHECK_USER				= 4;
-	public static final String			ACTION_TRANSIT_DELETE		= "ACTION_TRANSIT_DELETE";
-	public static final String			ACTION_TRANSIT_UPDATE		= "ACTION_TRANSIT_UPDATE";
+	public static final int				MAX_CHECK_USER					= 4;
+	public static final String			ACTION_TRANSIT_DELETE			= "ACTION_TRANSIT_DELETE";
+	public static final String			ACTION_TRANSIT_UPDATE			= "ACTION_TRANSIT_UPDATE";
 
-	public static final String			KEY_HISTORY_LIST			= "KEY_HISTORY_LIST";
-	public static final String			KEY_HISTORY_NAME			= "KEY_HISTORY_NAME";
+	public static final String			KEY_HISTORY_LIST				= "KEY_HISTORY_LIST";
+	public static final String			KEY_HISTORY_NAME				= "KEY_HISTORY_NAME";
 
-	public static final String			SW_TRANSIT_STATUS_DRAFT		= "DRFT";
-	public static final String			SW_TRANSIT_STATUS_DONE		= "DONE";
+	public static final String			OFFER_CAN_EDIT_DELETE			= "ME";
+	public static final String			OFFER_CAN_APPROVE				= "AP";
+	public static final String			OFFER_ONLY_SHOW					= "VW";
 
-	public static final String			APPROVE_STATUS_YET			= "0";						// 0
-	public static final String			APPROVE_STATUS_REVERSE		= "2";
-	// 2
-	public static final String			APPROVE_STATUS_STOP			= "3";
-	// 3
-	public static final String			APPROVE_STATUS_ACCEPT		= "1";
-	// 1
-	public static final String			APPROVE_STATUS_DISABLED		= "8";
-	// 8
-	public static final String			APPROVE_STATUS_NA			= "9";						// 8
-
-	public static Map<String, String>	approveTypes				= new LinkedHashMap<>();
-
-	static{
-		approveTypes.put(APPROVE_STATUS_YET, "YET");
-		approveTypes.put(APPROVE_STATUS_REVERSE, "REVERSE");
-		approveTypes.put(APPROVE_STATUS_STOP, "STOP");
-		approveTypes.put(APPROVE_STATUS_ACCEPT, "ACCEPT");
-		approveTypes.put(APPROVE_STATUS_DISABLED, "DISABLED");
-		approveTypes.put(APPROVE_STATUS_NA, "N/A");
-	}
+	public static final String			SW_TRANSIT_STATUS_DRAFT			= "DRFT";
+	public static final String			SW_TRANSIT_STATUS_DONE			= "DONE";
 
 	public static final String			WORK_TYPE_STATUS_NORMAL_WORK	= "11";
 	public static final String			WORK_TYPE_STATUS_PAID_VACT_ALL	= "12";
@@ -74,36 +56,7 @@ public class SwConst{
 		workTypeMap.put(WORK_TYPE_STATUS_NO_WORK, "Not working");
 	}
 
-	public static Map<String, String> workTypeHolidayMap = new LinkedHashMap<String, String>();
-
-	static{
-		workTypeHolidayMap.put(WORK_TYPE_STATUS_NORMAL_HOLIDAY, "Normal " + "holiday");
-		workTypeHolidayMap.put(WORK_TYPE_STATUS_HOLIDAY_WORK, "Holiday work");
-	}
-
-	public static Map<String, String> workTypeNormalDayMap = new LinkedHashMap<String, String>();
-
-	static{
-		workTypeNormalDayMap.put(WORK_TYPE_STATUS_NORMAL_WORK, "Normal work");
-		workTypeNormalDayMap.put(WORK_TYPE_STATUS_PAID_VACT_ALL, "Paid " + "vacation (all)");
-		workTypeNormalDayMap.put(WORK_TYPE_STATUS_PAID_VACT_HALF, "Paid " + "vacation (half)");
-		workTypeNormalDayMap.put(WORK_TYPE_STATUS_ABSENT, "Absent");
-		workTypeNormalDayMap.put(WORK_TYPE_STATUS_BE_LATE, "Be late");
-		workTypeNormalDayMap.put(WORK_TYPE_STATUS_LEAVE_EARLY, "Leave early");
-		workTypeNormalDayMap.put(WORK_TYPE_STATUS_SPCIAL_VACT, "Special " + "vacation");
-		workTypeNormalDayMap.put(WORK_TYPE_STATUS_COMP_HOLIDAY, "Compensatory" + " holiday");
-		workTypeNormalDayMap.put(WORK_TYPE_STATUS_NO_WORK, "Not working");
-	}
-
-	public static final String			WORK_SUMMARY_STATUS_UPDATE	= "U";
-	public static final String			WORK_SUMMARY_STATUS_APPROVE	= "A";
-	public static final String			WORK_SUMMARY_STATUS_YET		= "YET";
-
-	public static Map<String, String>	workSummaryStatusMap		= new LinkedHashMap<>();
-
-	static{
-		workSummaryStatusMap.put(WORK_SUMMARY_STATUS_UPDATE, "Updated");
-		workSummaryStatusMap.put(WORK_SUMMARY_STATUS_APPROVE, "Approved");
-		workSummaryStatusMap.put(WORK_SUMMARY_STATUS_YET, "Yet");
-	}
+	public static final String	WORK_SUMMARY_STATUS_UPDATE	= "U";
+	public static final String	WORK_SUMMARY_STATUS_APPROVE	= "A";
+	public static final String	WORK_SUMMARY_STATUS_YET		= "YET";
 }

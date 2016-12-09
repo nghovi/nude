@@ -30,6 +30,7 @@ import trente.asia.android.view.ChiaseListDialog;
 import trente.asia.android.view.ChiaseTextView;
 import trente.asia.android.view.util.CAObjectSerializeUtil;
 import trente.asia.shiftworking.R;
+import trente.asia.shiftworking.common.defines.SwConst;
 import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
 import trente.asia.shiftworking.services.offer.model.WorkOfferModel;
 import trente.asia.shiftworking.services.offer.model.WorkOfferModelHolder;
@@ -50,7 +51,7 @@ public class WorkOfferEditFragment extends AbstractSwFragment{
 	private TimePickerDialog	timePickerDialogEnd;
 	private ChiaseTextView		txtStartTime;
 	private ChiaseTextView		txtEndTime;
-	// private EditText edtNote;
+
 	private ChiaseTextView		txtStartDate;
 	private ChiaseTextView		txtEndDate;
 
@@ -86,7 +87,6 @@ public class WorkOfferEditFragment extends AbstractSwFragment{
 		txtEndDate = (ChiaseTextView)getView().findViewById(R.id.txt_fragment_offer_edit_end_date);
 		txtStartTime = (ChiaseTextView)getView().findViewById(R.id.txt_fragment_offer_edit_start_time);
 		txtEndTime = (ChiaseTextView)getView().findViewById(R.id.txt_fragment_offer_edit_end_time);
-		// edtNote = (EditText)getView().findViewById(R.id.edt_fragment_offer_edit_note);
 
 		setOnClickListener();
 	}
@@ -113,7 +113,7 @@ public class WorkOfferEditFragment extends AbstractSwFragment{
 			initDialog(holder);
 			buildDatePickerDialogs(holder.offer);
 			if(!CCStringUtil.isEmpty(activeOfferId)){
-				loadWorkOffer(holder.offer);
+				loadWorkOffer(holder);
 			}
 		}else{
 			super.successLoad(response, url);
@@ -144,26 +144,22 @@ public class WorkOfferEditFragment extends AbstractSwFragment{
 		OnOfferTypeChangedUpdateLayout();
 	}
 
-	private void loadWorkOffer(WorkOfferModel offerModel){
+	private void loadWorkOffer(WorkOfferModelHolder holder){
 		LinearLayout lnrContent = (LinearLayout)getView().findViewById(R.id.lnr_id_content);
 		try{
 			Gson gson = new Gson();
-			CAObjectSerializeUtil.deserializeObject(lnrContent, new JSONObject(gson.toJson(offerModel)));
-			txtOfferType.setText(offerModel.approveResult);
-			txtStartDate.setText(offerModel.startDateString);
-			txtStartDate.setValue(offerModel.startDateString);
-			txtStartTime.setText(offerModel.startTimeString);
-			txtStartTime.setValue(offerModel.startTimeString);
-			txtEndDate.setText(offerModel.endDateString);
-			txtEndDate.setValue(offerModel.endDateString);
-			txtEndTime.setText(offerModel.endTimeString);
-			txtEndTime.setValue(offerModel.endTimeString);
+			CAObjectSerializeUtil.deserializeObject(lnrContent, new JSONObject(gson.toJson(holder.offer)));
+			txtOfferType.setText(holder.offer.approveResult);
+			txtStartDate.setText(holder.offer.startDateString);
+			txtStartTime.setText(holder.offer.startTimeString);
+			txtEndDate.setText(holder.offer.endDateString);
+			txtEndTime.setText(holder.offer.endTimeString);
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
 
 		Button btnDelete = (Button)getView().findViewById(R.id.btn_fragment_offer_detail_delete);
-		if(WorkOfferModel.OFFER_STATUS_OFFER.equals(offerModel.approveResult) && offerModel.userId.equals(myself.key)){
+		if(SwConst.OFFER_CAN_EDIT_DELETE.equals(holder.permission)){
 			btnDelete.setVisibility(View.VISIBLE);
 			btnDelete.setOnClickListener(this);
 		}else{
