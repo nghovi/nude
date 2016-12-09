@@ -174,20 +174,16 @@ public class WorkOfferListFragment extends AbstractSwFragment{
 		return offerDepts;
 	}
 
-	public static Map<String, String> buildOfferTypeMaster(Context context, JSONObject response){
-		Map<String, String> offerTypesMaster = new LinkedHashMap<>();
-		List<ApiObjectModel> types = CCJsonUtil.convertToModelList(response.optString("offerTypeList"), ApiObjectModel.class);
-		offerTypesMaster.put("0", context.getResources().getString(R.string.chiase_common_all));
-		for(ApiObjectModel type : types){
-			offerTypesMaster.put(type.key, type.value);
-		}
-		return offerTypesMaster;
+	public Map<String, String> buildOfferTypeMaster(Context context, JSONObject response){
+		List<ApiObjectModel> lstType = CCJsonUtil.convertToModelList(response.optString("offerTypeList"), ApiObjectModel.class);
+        lstType.add(0, new ApiObjectModel(CCConst.NONE, getString(R.string.chiase_common_all)));
+        return WelfareFormatUtil.convertList2Map(lstType);
 	}
 
 	public Map<String, String> buildOfferStatusMaster(JSONObject response){
 		Map<String, String> offerStatusMaster = new LinkedHashMap<>();
         List<ApiObjectModel> lstStatus = CCJsonUtil.convertToModelList(response.optString("offerStatusList"), ApiObjectModel.class);
-		lstStatus.add(new ApiObjectModel(CCConst.NONE, getString(R.string.chiase_common_all)));
+		lstStatus.add(0, new ApiObjectModel(CCConst.NONE, getString(R.string.chiase_common_all)));
 		return WelfareFormatUtil.convertList2Map(lstStatus);
 	}
 
