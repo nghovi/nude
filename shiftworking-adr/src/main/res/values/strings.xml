@@ -108,4 +108,7 @@
     <string name="fragment_work_offer_edit_offer_type">Offer Types</string>
     <string name="fragment_work_offer_edit_offer_status">Offer Status</string>
     <string name="fragment_work_offer_edit_offer_dept">Departments</string>
+
+    <string name="sw_work_offer_action_approve">Approve</string>
+    <string name="sw_work_offer_action_reject">Reject</string>
 </resources>

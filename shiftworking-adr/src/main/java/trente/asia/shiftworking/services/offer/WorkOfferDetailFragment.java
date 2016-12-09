@@ -37,15 +37,15 @@ import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 
 public class WorkOfferDetailFragment extends AbstractSwFragment{
 
-	private WorkOfferModel		offer;
+	private WorkOfferModel				offer;
 	private Map<String, String>			targetUserModels	= new HashMap<String, String>();
 	private Map<String, List<Double>>	groupInfo;
-	private ImageView			imgEdit;
-	private Map<String, String>	offerStatusMaster;
-	private String				offerPermission;
+	private ImageView					imgEdit;
+	private Map<String, String>			offerStatusMaster;
+	private String						offerPermission;
 
-	private EditText			edtComment;
-	private String				activeOfferId;
+	private EditText					edtComment;
+	private String						activeOfferId;
 
 	public void setActiveOfferId(String activeOfferId){
 		this.activeOfferId = activeOfferId;
@@ -148,34 +148,30 @@ public class WorkOfferDetailFragment extends AbstractSwFragment{
 
 	private void buildWorkOfferDetail(){
 		judgeEditPermission();
+        judgeAprovePermission();
 		buildWorkOfferApproveHistory();
-		buildOfferComment();
-		buildActionButtons();
+//		buildOfferComment();
 	}
 
-	private void buildOfferComment(){
-		if(WorkOfferModel.OFFER_STATUS_OFFER.equals(offer.approveResult) && SwConst.OFFER_CAN_APPROVE.equals(offerPermission)){
-			getView().findViewById(R.id.lnr_fragment_offer_detail_comment).setVisibility(View.VISIBLE);
-		}else{
-			getView().findViewById(R.id.lnr_fragment_offer_detail_comment).setVisibility(View.GONE);
-		}
-	}
+//	private void buildOfferComment(){
+//		if(WorkOfferModel.OFFER_STATUS_OFFER.equals(offer.approveResult) && SwConst.OFFER_CAN_APPROVE.equals(offerPermission)){
+//			getView().findViewById(R.id.lnr_fragment_offer_detail_comment).setVisibility(View.VISIBLE);
+//		}else{
+//			getView().findViewById(R.id.lnr_fragment_offer_detail_comment).setVisibility(View.GONE);
+//		}
+//	}
 
-	private void buildActionButtons(){
-		Button btnReject = (Button)getView().findViewById(R.id.btn_fragment_offer_detail_reject);
-		Button btnApprove = (Button)getView().findViewById(R.id.btn_fragment_offer_detail_approve);
-
-		boolean isApprove1CanApprove = SwConst.OFFER_CAN_APPROVE.equals(offerPermission) && (myself.key.equals(offer.approveUser1) && WorkOfferModel.APPROVE_STATUS_YET.equals(offer.approveResult1));
-		boolean isApprove2CanApprove = SwConst.OFFER_CAN_APPROVE.equals(offerPermission) && myself.key.equals(offer.approveUser2) && WorkOfferModel.APPROVE_STATUS_OK.equals(offer.approveResult1) && WorkOfferModel.APPROVE_STATUS_YET.equals(offer.approveResult2);
-
-		if(isApprove1CanApprove || isApprove2CanApprove){
-			btnReject.setVisibility(View.VISIBLE);
-			btnApprove.setVisibility(View.VISIBLE);
+	private void judgeAprovePermission(){
+		boolean permissionApprove = SwConst.OFFER_CAN_APPROVE.equals(offerPermission);
+		LinearLayout lnrApproveArea = (LinearLayout)getView().findViewById(R.id.lnr_id_approve_area);
+		if(permissionApprove){
+            lnrApproveArea.setVisibility(View.VISIBLE);
+			Button btnReject = (Button)getView().findViewById(R.id.btn_fragment_offer_detail_reject);
+			Button btnApprove = (Button)getView().findViewById(R.id.btn_fragment_offer_detail_approve);
 			btnReject.setOnClickListener(this);
 			btnApprove.setOnClickListener(this);
 		}else{
-			btnReject.setVisibility(View.GONE);
-			btnApprove.setVisibility(View.GONE);
+            lnrApproveArea.setVisibility(View.GONE);
 		}
 	}
 
@@ -192,7 +188,7 @@ public class WorkOfferDetailFragment extends AbstractSwFragment{
 
 	protected void judgeEditPermission(){
 		if(SwConst.OFFER_CAN_EDIT_DELETE.equals(offerPermission)){
-            imgEdit.setImageResource(R.drawable.sw_action_edit);
+			imgEdit.setImageResource(R.drawable.sw_action_edit);
 			imgEdit.setVisibility(View.VISIBLE);
 			imgEdit.setOnClickListener(this);
 		}else{

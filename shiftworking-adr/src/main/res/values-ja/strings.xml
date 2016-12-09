@@ -108,4 +108,7 @@
     <string name="fragment_work_offer_edit_offer_status">申請ステータス</string>
     <string name="fragment_work_offer_edit_offer_dept">申請部門</string>
     <string name="sw_work_offer_history">勤務申請履歴</string>
+
+    <string name="sw_work_offer_action_approve">承認</string>
+    <string name="sw_work_offer_action_reject">却下</string>
 </resources>
