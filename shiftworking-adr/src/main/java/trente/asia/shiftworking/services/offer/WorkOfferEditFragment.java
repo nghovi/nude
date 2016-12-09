@@ -152,8 +152,8 @@ public class WorkOfferEditFragment extends AbstractSwFragment{
 			txtOfferType.setText(holder.offer.approveResult);
 			txtStartDate.setText(holder.offer.startDateString);
 			txtStartTime.setText(holder.offer.startTimeString);
-			txtEndDate.setText(holder.offer.endDateString);
-			txtEndTime.setText(holder.offer.endTimeString);
+			txtEndDate.setText(CCStringUtil.toString(holder.offer.endDateString));
+			txtEndTime.setText(CCStringUtil.toString(holder.offer.endTimeString));
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
