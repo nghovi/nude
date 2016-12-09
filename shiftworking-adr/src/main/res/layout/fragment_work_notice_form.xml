@@ -9,131 +9,148 @@
 
         <LinearLayout
             android:id="@+id/lnr_id_content"
-            style="@style/wf_common_linear"
+            style="@style/cs_common_match_wrap"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/margin_16dp"
+            android:paddingTop="@dimen/margin_16dp"
             android:visibility="invisible">
 
             <TextView
                 style="@style/wl_common_text"
+                android:layout_marginBottom="@dimen/margin_10dp"
+                android:paddingLeft="@dimen/margin_16dp"
+                android:paddingRight="@dimen/margin_16dp"
                 android:text="@string/sw_notice_detail_title"
                 android:textStyle="bold"/>
 
+            <View style="@style/cs_common_divider"/>
+
             <LinearLayout
-                style="@style/cs_common_match_wrap"
-                android:layout_marginTop="@dimen/margin_10dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                style="@style/wf_common_item_linear2">
 
                 <TextView
                     style="@style/wl_common_text"
-                    android:layout_width="@dimen/margin_100dp"
+                    android:layout_width="wrap_content"
                     android:text="@string/sw_work_item_target_dept"
                     android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/txt_id_target_dept"
-                    style="@style/wl_common_text"/>
-
+                    style="@style/wl_common_edit_text2"
+                    android:layout_marginLeft="@dimen/margin_10dp"/>
             </LinearLayout>
 
+            <View style="@style/cs_common_divider"/>
+
             <LinearLayout
-                style="@style/cs_common_match_wrap"
-                android:layout_marginTop="@dimen/margin_10dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                style="@style/wf_common_item_linear2">
 
                 <TextView
                     style="@style/wl_common_text"
-                    android:layout_width="@dimen/margin_100dp"
+                    android:layout_width="wrap_content"
                     android:text="@string/sw_work_item_notice_user"
                     android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/txt_id_notice_user"
-                    style="@style/wl_common_text"/>
+                    style="@style/wl_common_edit_text2"
+                    android:layout_marginLeft="@dimen/margin_10dp"/>
             </LinearLayout>
 
+            <View style="@style/cs_common_divider"/>
+
             <LinearLayout
-                style="@style/cs_common_match_wrap"
-                android:layout_marginTop="@dimen/margin_10dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                style="@style/wf_common_item_linear2">
 
                 <TextView
                     style="@style/wl_common_text"
-                    android:layout_width="@dimen/margin_100dp"
+                    android:layout_width="wrap_content"
                     android:text="@string/sw_work_item_project"
                     android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/txt_id_project_name"
-                    style="@style/wl_common_text"/>
+                    style="@style/wl_common_edit_text2"
+                    android:layout_marginLeft="@dimen/margin_10dp"/>
             </LinearLayout>
 
+            <View style="@style/cs_common_divider"/>
+
             <LinearLayout
-                style="@style/cs_common_match_wrap"
-                android:layout_marginTop="@dimen/margin_10dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                style="@style/wf_common_item_linear2">
 
                 <TextView
                     style="@style/wl_common_text"
-                    android:layout_width="@dimen/margin_100dp"
+                    android:layout_width="wrap_content"
                     android:text="@string/sw_work_item_notice_date"
                     android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/txt_id_notice_date"
-                    style="@style/wl_common_text"/>
+                    style="@style/wl_common_edit_text2"
+                    android:layout_marginLeft="@dimen/margin_10dp"/>
             </LinearLayout>
 
+            <View style="@style/cs_common_divider"/>
+
             <LinearLayout
-                style="@style/cs_common_match_wrap"
-                android:layout_marginTop="@dimen/margin_10dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                style="@style/wf_common_item_linear2">
 
                 <TextView
                     style="@style/wl_common_text"
-                    android:layout_width="@dimen/margin_100dp"
+                    android:layout_width="wrap_content"
                     android:text="@string/sw_work_item_notice_type"
                     android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/txt_id_notice_type"
-                    style="@style/wl_common_text"/>
+                    style="@style/wl_common_edit_text2"
+                    android:layout_marginLeft="@dimen/margin_10dp"/>
             </LinearLayout>
 
-            <TextView
-                style="@style/wl_common_text"
-                android:layout_marginTop="@dimen/margin_10dp"
-                android:text="@string/sw_work_item_reason"
-                android:textStyle="bold"/>
+            <View style="@style/cs_common_divider"/>
 
-            <TextView
-                android:id="@+id/txt_id_reason"
-                style="@style/wl_common_text"
-                android:layout_marginTop="@dimen/margin_10dp"/>
+            <LinearLayout
+                style="@style/wf_common_item_linear2"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/wl_common_text"
+                    android:text="@string/sw_work_item_reason"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/txt_id_reason"
+                    style="@style/wl_common_text"
+                    android:layout_marginTop="@dimen/margin_10dp"/>
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/lnr_id_location"
                 style="@style/cs_common_match_wrap"
                 android:orientation="vertical">
 
-                <TextView
-                    style="@style/wl_common_text"
-                    android:layout_marginTop="@dimen/margin_10dp"
-                    android:text="@string/sw_work_item_notice_loc"
-                    android:textStyle="bold"/>
+                <View style="@style/cs_common_divider"/>
 
-                <TextView
-                    android:id="@+id/txt_id_location"
-                    style="@style/wl_common_text"
-                    android:layout_marginTop="@dimen/margin_10dp"/>
+                <LinearLayout
+                    style="@style/wf_common_item_linear2"
+                    android:orientation="vertical">
 
-                <trente.asia.android.view.ChiaseImageViewRatioWidth
-                    android:id="@+id/img_id_map"
-                    style="@style/cs_common_match_wrap"
-                    android:layout_marginTop="@dimen/margin_10dp"/>
+                    <TextView
+                        style="@style/wl_common_text"
+                        android:text="@string/sw_work_item_notice_loc"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/txt_id_location"
+                        style="@style/wl_common_text"
+                        android:layout_marginTop="@dimen/margin_10dp"/>
+
+                    <trente.asia.android.view.ChiaseImageViewRatioWidth
+                        android:id="@+id/img_id_map"
+                        style="@style/cs_common_match_wrap"
+                        android:layout_marginTop="@dimen/margin_10dp"/>
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -141,16 +158,22 @@
                 style="@style/cs_common_match_wrap"
                 android:orientation="vertical">
 
-                <TextView
-                    style="@style/wl_common_text"
-                    android:layout_marginTop="@dimen/margin_10dp"
-                    android:text="@string/sw_work_item_notice_pic"
-                    android:textStyle="bold"/>
+                <View style="@style/cs_common_divider"/>
 
-                <trente.asia.android.view.ChiaseImageViewRatioWidth
-                    android:id="@+id/img_id_photo"
-                    style="@style/cs_common_match_wrap"
-                    android:layout_marginTop="@dimen/margin_10dp"/>
+                <LinearLayout
+                    style="@style/wf_common_item_linear2"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/wl_common_text"
+                        android:text="@string/sw_work_item_notice_pic"
+                        android:textStyle="bold"/>
+
+                    <trente.asia.android.view.ChiaseImageViewRatioWidth
+                        android:id="@+id/img_id_photo"
+                        style="@style/cs_common_match_wrap"
+                        android:layout_marginTop="@dimen/margin_10dp"/>
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -159,20 +182,25 @@
                 android:orientation="vertical"
                 android:visibility="gone">
 
-                <TextView
-                    style="@style/wl_common_text"
-                    android:layout_marginTop="@dimen/margin_10dp"
-                    android:text="@string/sw_work_item_check_user"
-                    android:textStyle="bold"/>
+                <View style="@style/cs_common_divider"/>
 
                 <LinearLayout
-                    android:id="@+id/lnr_id_check_user"
-                    style="@style/cs_common_match_wrap"
-                    android:layout_marginTop="@dimen/margin_10dp"
+                    style="@style/wf_common_item_linear2"
                     android:orientation="vertical">
-                </LinearLayout>
 
+                    <TextView
+                        style="@style/wl_common_text"
+                        android:text="@string/sw_work_item_check_user"
+                        android:textStyle="bold"/>
+
+                    <LinearLayout
+                        android:id="@+id/lnr_id_check_user"
+                        style="@style/cs_common_match_wrap"
+                        android:orientation="vertical"/>
+                </LinearLayout>
             </LinearLayout>
+
+            <View style="@style/cs_common_divider"/>
 
             <Button
                 android:id="@+id/btn_id_check"
