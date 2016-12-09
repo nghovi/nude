@@ -12,9 +12,6 @@ public class WorkOfferModel {
 	public static final String	OFFER_TYPE_HOLIDAY_WORKING		= "HDW";
 
 	public static final String	OFFER_STATUS_OFFER				= "OFFER";
-	public static final String	OFFER_PERMISSION_EDITABLE		= "ME";
-	public static final String	OFFER_PERMISSION_APPROVEABLE	= "AP";
-	public static final String	OFFER_PERMISSION_SHOW			= "VW";
 	public static final String APPROVE_STATUS_YET = "YET";
 	public static final String APPROVE_STATUS_OK = "OK";
 	public static final String APPROVE_STATUS_NA = "NA";

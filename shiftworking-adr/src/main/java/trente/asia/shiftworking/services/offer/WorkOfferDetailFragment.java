@@ -27,6 +27,7 @@ import trente.asia.android.view.ChiaseListViewNoScroll;
 import trente.asia.android.view.util.CAObjectSerializeUtil;
 import trente.asia.shiftworking.R;
 import trente.asia.shiftworking.common.activities.MainActivity;
+import trente.asia.shiftworking.common.defines.SwConst;
 import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
 import trente.asia.shiftworking.services.offer.model.WorkOfferModel;
 import trente.asia.shiftworking.services.offer.view.ApproveHistoryAdapter;
@@ -37,8 +38,8 @@ import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 public class WorkOfferDetailFragment extends AbstractSwFragment{
 
 	private WorkOfferModel		offer;
-	Map<String, String>			targetUserModels	= new HashMap<String, String>();
-	Map<String, List<Double>>	groupInfo;
+	private Map<String, String>			targetUserModels	= new HashMap<String, String>();
+	private Map<String, List<Double>>	groupInfo;
 	private ImageView			imgEdit;
 	private Map<String, String>	offerStatusMaster;
 	private String				offerPermission;
@@ -61,7 +62,7 @@ public class WorkOfferDetailFragment extends AbstractSwFragment{
 	@Override
 	protected void initView(){
 		super.initView();
-		super.initHeader(R.drawable.wf_back_white, myself.userName, R.drawable.sw_action_edit);
+		super.initHeader(R.drawable.wf_back_white, myself.userName, null);
 
 		edtComment = (EditText)getView().findViewById(R.id.edt_fragment_offer_detail_comment);
 		imgEdit = (ImageView)getView().findViewById(R.id.img_id_header_right_icon);
@@ -153,7 +154,7 @@ public class WorkOfferDetailFragment extends AbstractSwFragment{
 	}
 
 	private void buildOfferComment(){
-		if(WorkOfferModel.OFFER_STATUS_OFFER.equals(offer.approveResult) && WorkOfferModel.OFFER_PERMISSION_APPROVEABLE.equals(offerPermission)){
+		if(WorkOfferModel.OFFER_STATUS_OFFER.equals(offer.approveResult) && SwConst.OFFER_CAN_APPROVE.equals(offerPermission)){
 			getView().findViewById(R.id.lnr_fragment_offer_detail_comment).setVisibility(View.VISIBLE);
 		}else{
 			getView().findViewById(R.id.lnr_fragment_offer_detail_comment).setVisibility(View.GONE);
@@ -164,8 +165,8 @@ public class WorkOfferDetailFragment extends AbstractSwFragment{
 		Button btnReject = (Button)getView().findViewById(R.id.btn_fragment_offer_detail_reject);
 		Button btnApprove = (Button)getView().findViewById(R.id.btn_fragment_offer_detail_approve);
 
-		boolean isApprove1CanApprove = WorkOfferModel.OFFER_PERMISSION_APPROVEABLE.equals(offerPermission) && (myself.key.equals(offer.approveUser1) && WorkOfferModel.APPROVE_STATUS_YET.equals(offer.approveResult1));
-		boolean isApprove2CanApprove = WorkOfferModel.OFFER_PERMISSION_APPROVEABLE.equals(offerPermission) && myself.key.equals(offer.approveUser2) && WorkOfferModel.APPROVE_STATUS_OK.equals(offer.approveResult1) && WorkOfferModel.APPROVE_STATUS_YET.equals(offer.approveResult2);
+		boolean isApprove1CanApprove = SwConst.OFFER_CAN_APPROVE.equals(offerPermission) && (myself.key.equals(offer.approveUser1) && WorkOfferModel.APPROVE_STATUS_YET.equals(offer.approveResult1));
+		boolean isApprove2CanApprove = SwConst.OFFER_CAN_APPROVE.equals(offerPermission) && myself.key.equals(offer.approveUser2) && WorkOfferModel.APPROVE_STATUS_OK.equals(offer.approveResult1) && WorkOfferModel.APPROVE_STATUS_YET.equals(offer.approveResult2);
 
 		if(isApprove1CanApprove || isApprove2CanApprove){
 			btnReject.setVisibility(View.VISIBLE);
@@ -190,7 +191,8 @@ public class WorkOfferDetailFragment extends AbstractSwFragment{
 	}
 
 	protected void judgeEditPermission(){
-		if(WorkOfferModel.OFFER_PERMISSION_EDITABLE.equals(offerPermission)){
+		if(SwConst.OFFER_CAN_EDIT_DELETE.equals(offerPermission)){
+            imgEdit.setImageResource(R.drawable.sw_action_edit);
 			imgEdit.setVisibility(View.VISIBLE);
 			imgEdit.setOnClickListener(this);
 		}else{
@@ -245,40 +247,5 @@ public class WorkOfferDetailFragment extends AbstractSwFragment{
 
 	private void onClickBtnApprove(){
 		sendApproveResult("OK");
-	}
-
-	public static class ApproveStatus{
-
-		public static final int	APPROVE0	= 0;
-		public static final int	APPROVE1	= 1;
-		public static final int	APPROVE2	= 2;
-
-		public String			status1;			// approve 1 result;
-		public String			status2;			// approve 2 result;
-		public int				userType;
-		public int				approveGroupType;
-
-		public ApproveStatus(String status1, String status2, int userType, int approveGroupType){
-			this.status1 = status1;
-			this.status2 = status2;
-			this.userType = userType;
-			this.approveGroupType = approveGroupType;
-		}
-
-		@Override
-		public int hashCode(){
-			String result = "1";
-			result += this.status1 + this.status2 + this.userType + this.approveGroupType;
-			return Integer.parseInt(result);
-		}
-
-		@Override
-		public boolean equals(final Object obj){
-			if(this == obj) return true;
-			if(obj == null) return false;
-			if(getClass() != obj.getClass()) return false;
-			final ApproveStatus other = (ApproveStatus)obj;
-			return this.status1.equals(other.status1) && this.status2.equals(other.status2) && this.userType == other.userType && this.approveGroupType == other.approveGroupType;
-		}
 	}
 }
