@@ -263,4 +263,14 @@ public class WorkOfferDetailFragment extends AbstractSwFragment{
 	private void onClickBtnApprove(){
 		sendApproveResult("OK");
 	}
+
+    @Override
+    protected void onClickBackBtn(){
+        if(isClickNotification){
+            emptyBackStack();
+            gotoFragment(new WorkOfferListFragment());
+        }else{
+            super.onClickBackBtn();
+        }
+    }
 }

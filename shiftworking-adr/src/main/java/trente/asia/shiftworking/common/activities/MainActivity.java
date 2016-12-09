@@ -20,6 +20,7 @@ import trente.asia.android.util.AndroidUtil;
 import trente.asia.shiftworking.BuildConfig;
 import trente.asia.shiftworking.R;
 import trente.asia.shiftworking.services.login.SwLoginFragment;
+import trente.asia.shiftworking.services.offer.WorkOfferDetailFragment;
 import trente.asia.shiftworking.services.worktime.WorkerFragment;
 import trente.asia.shiftworking.services.worktime.WorknoticeFormFragment;
 import trente.asia.shiftworking.services.worktime.WorktimeCheckInFragment;
@@ -73,6 +74,12 @@ public class MainActivity extends WelfareActivity{
 			fragment.setNoticeModel(noticeModel);
 			fragment.isClickNotification = true;
 			addFragment(fragment);
+        }else if(WelfareConst.NotificationType.SW_NOTI_OFFER.equals(serviceCode)){
+            String key = mExtras.getString(WelfareConst.NotificationReceived.USER_INFO_NOTI_KEY);
+            WorkOfferDetailFragment offerDetailFragment = new WorkOfferDetailFragment();
+            offerDetailFragment.setActiveOfferId(key);
+            offerDetailFragment.isClickNotification = true;
+            addFragment(offerDetailFragment);
 		}else{
 			addFragment(new WorktimeCheckInFragment());
 		}
