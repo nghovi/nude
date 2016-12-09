@@ -12,7 +12,8 @@
 
         <LinearLayout
             style="@style/wf_common_linear"
-            android:paddingBottom="@dimen/margin_0dp">
+            android:paddingBottom="@dimen/margin_0dp"
+            android:paddingTop="@dimen/margin_6dp">
 
             <include layout="@layout/view_common_shift_working_month"/>
 
