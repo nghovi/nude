@@ -265,7 +265,7 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 	private void setAttachment(List<ImageAttachmentModel> lstAttachment){
 		for(ImageAttachmentModel attachmentModel : lstAttachment){
 			if(attachmentModel.attachment != null && !CCStringUtil.isEmpty(attachmentModel.attachment.fileUrl)){
-				addAttachment(attachmentModel.attachment);
+				addAttachment(attachmentModel);
 			}
 		}
 	}
@@ -393,7 +393,7 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 		}
 	}
 
-	private void addAttachment(FileModel fileModel){
+	private void addAttachment(ImageAttachmentModel attachmentModel){
 		LayoutInflater mInflater = (LayoutInflater)activity.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 
 		final View view = mInflater.inflate(R.layout.item_attachment_list, null);
@@ -417,10 +417,10 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 				mViewForMenuBehind.setVisibility(View.VISIBLE);
 			}
 		});
-		if(fileModel != null && !CCStringUtil.isEmpty(fileModel.fileUrl)){
-			WfPicassoHelper.loadImage(activity, BuildConfig.HOST + fileModel.fileUrl, imgPhoto, null);
+		if(attachmentModel.attachment != null && !CCStringUtil.isEmpty(attachmentModel.attachment.fileUrl)){
+			WfPicassoHelper.loadImage(activity, BuildConfig.HOST + attachmentModel.attachment.fileUrl, imgPhoto, null);
 			imgPhoto.existData = true;
-			imgPhoto.imageId = fileModel.key;
+			imgPhoto.imageId = attachmentModel.attachKey;
 		}
 
 		lnrAttachment.addView(view);

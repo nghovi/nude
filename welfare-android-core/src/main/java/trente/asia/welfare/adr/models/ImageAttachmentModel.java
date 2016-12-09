@@ -7,6 +7,7 @@ package trente.asia.welfare.adr.models;
  */
 public class ImageAttachmentModel{
 
+	public String		attachKey;
 	public FileModel	attachment;
 	public FileModel	thumbnail;
 }
