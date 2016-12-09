@@ -269,7 +269,6 @@ public class WorktimeCheckInFragment extends AbstractLocationFragment{
 			break;
 		case R.id.img_id_header_right_sub_icon:
 			WorkTransitListFragment transitFragment = new WorkTransitListFragment();
-			transitFragment.setActiveProject(activeProject);
 			gotoFragment(transitFragment);
 			break;
 		case R.id.btn_id_check_in:

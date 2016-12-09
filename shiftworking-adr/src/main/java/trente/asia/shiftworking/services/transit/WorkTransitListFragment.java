@@ -1,5 +1,8 @@
 package trente.asia.shiftworking.services.transit;
 
+import java.util.Date;
+import java.util.List;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -11,10 +14,6 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
@@ -23,19 +22,13 @@ import trente.asia.shiftworking.common.defines.SwConst;
 import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
 import trente.asia.shiftworking.services.transit.model.TransitModel;
 import trente.asia.shiftworking.services.transit.view.TransitAdapter;
-import trente.asia.shiftworking.services.worktime.model.ProjectModel;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.define.WfUrlConst;
 
 public class WorkTransitListFragment extends AbstractSwFragment{
 
 	private ListView		lsvTransit;
-
-	private ProjectModel	activeProject;
-
-	public void setActiveProject(ProjectModel activeProject){
-		this.activeProject = activeProject;
-	}
+	private TransitAdapter	mAdapter;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -57,17 +50,16 @@ public class WorkTransitListFragment extends AbstractSwFragment{
 
 		lsvTransit = (ListView)getView().findViewById(R.id.lsv_id_transit);
 
+		lsvTransit.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-        lsvTransit.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id){
-                TransitModel transitModel = (TransitModel)parent.getItemAtPosition(position);
-                WorkTransitDetailFragment fragment = new WorkTransitDetailFragment();
-                fragment.setActiveTransitId(transitModel.key);
-                gotoFragment(fragment);
-            }
-        });
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id){
+				TransitModel transitModel = (TransitModel)parent.getItemAtPosition(position);
+				WorkTransitDetailFragment fragment = new WorkTransitDetailFragment();
+				fragment.setActiveTransitId(transitModel.key);
+				gotoFragment(fragment);
+			}
+		});
 	}
 
 	@Override
@@ -76,32 +68,36 @@ public class WorkTransitListFragment extends AbstractSwFragment{
 	}
 
 	private void loadTransitList(){
-        Date date = new Date();
-        JSONObject jsonObject = new JSONObject();
-        try{
-            jsonObject.put("targetUserId", myself.key);
-            jsonObject.put("searchDateString", CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, date));
-        }catch(JSONException e){
-            e.printStackTrace();
-        }
-        requestLoad(WfUrlConst.WF_TRANS_0001, jsonObject, true);
+		Date date = new Date();
+		JSONObject jsonObject = new JSONObject();
+		try{
+			jsonObject.put("targetUserId", myself.key);
+			jsonObject.put("searchDateString", CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, date));
+		}catch(JSONException e){
+			e.printStackTrace();
+		}
+		requestLoad(WfUrlConst.WF_TRANS_0001, jsonObject, true);
 	}
 
 	@Override
 	protected void successLoad(JSONObject response, String url){
 		if(WfUrlConst.WF_TRANS_0001.equals(url)){
-            List<TransitModel> lstTransit = CCJsonUtil.convertToModelList(response.optString("transits"), TransitModel.class);
-            if(!CCCollectionUtil.isEmpty(lstTransit)){
-                TransitAdapter adapter = new TransitAdapter(activity, lstTransit);
-                lsvTransit.setAdapter(adapter);
+			List<TransitModel> lstTransit = CCJsonUtil.convertToModelList(response.optString("transits"), TransitModel.class);
+			if(!CCCollectionUtil.isEmpty(lstTransit)){
+				mAdapter = new TransitAdapter(activity, lstTransit);
+				lsvTransit.setAdapter(mAdapter);
+			}else{
+                if(mAdapter != null){
+                    mAdapter.clearAll();
+                }
             }
-            String summaryStatus = response.optString("summaryStatus");
-            if(!SwConst.SW_TRANSIT_STATUS_DONE.equals(summaryStatus)){
-                ImageView imgRightIcon = (ImageView)getView().findViewById(R.id.img_id_header_right_icon);
-                imgRightIcon.setImageResource(R.drawable.bb_action_add);
-                imgRightIcon.setVisibility(View.VISIBLE);
-                imgRightIcon.setOnClickListener(this);
-            }
+			String summaryStatus = response.optString("summaryStatus");
+			if(!SwConst.SW_TRANSIT_STATUS_DONE.equals(summaryStatus)){
+				ImageView imgRightIcon = (ImageView)getView().findViewById(R.id.img_id_header_right_icon);
+				imgRightIcon.setImageResource(R.drawable.bb_action_add);
+				imgRightIcon.setVisibility(View.VISIBLE);
+				imgRightIcon.setOnClickListener(this);
+			}
 		}else{
 			super.successLoad(response, url);
 		}
