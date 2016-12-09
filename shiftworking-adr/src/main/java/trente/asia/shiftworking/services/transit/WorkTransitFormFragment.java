@@ -417,7 +417,7 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 				mViewForMenuBehind.setVisibility(View.VISIBLE);
 			}
 		});
-		if(attachmentModel.attachment != null && !CCStringUtil.isEmpty(attachmentModel.attachment.fileUrl)){
+		if(attachmentModel != null && attachmentModel.attachment != null && !CCStringUtil.isEmpty(attachmentModel.attachment.fileUrl)){
 			WfPicassoHelper.loadImage(activity, BuildConfig.HOST + attachmentModel.attachment.fileUrl, imgPhoto, null);
 			imgPhoto.existData = true;
 			imgPhoto.imageId = attachmentModel.attachKey;
