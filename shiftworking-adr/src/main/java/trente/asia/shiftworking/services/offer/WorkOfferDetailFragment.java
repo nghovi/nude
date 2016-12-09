@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCJsonUtil;
+import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.activity.ChiaseActivity;
 import trente.asia.android.view.ChiaseListViewNoScroll;
 import trente.asia.android.view.util.CAObjectSerializeUtil;
@@ -31,6 +32,7 @@ import trente.asia.shiftworking.common.defines.SwConst;
 import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
 import trente.asia.shiftworking.services.offer.model.WorkOfferModel;
 import trente.asia.shiftworking.services.offer.view.ApproveHistoryAdapter;
+import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.models.ApiObjectModel;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
@@ -111,6 +113,23 @@ public class WorkOfferDetailFragment extends AbstractSwFragment{
 			super.successLoad(response, url);
 		}
 	}
+
+    @Override
+    public void onResume(){
+        super.onResume();
+
+        if(!((WelfareActivity)activity).dataMap.isEmpty()){
+            String isDelete = CCStringUtil.toString(((WelfareActivity)activity).dataMap.get(SwConst.ACTION_OFFER_DELETE));
+            String isUpdate = CCStringUtil.toString(((WelfareActivity)activity).dataMap.get(SwConst.ACTION_OFFER_UPDATE));
+            if(CCConst.YES.equals(isDelete) || CCConst.YES.equals(isUpdate)){
+                ((WelfareActivity)activity).dataMap.clear();
+                ((WelfareActivity)activity).isInitData = true;
+                if(CCConst.YES.equals(isDelete)){
+                    getFragmentManager().popBackStack();
+                }
+            }
+        }
+    }
 
 	private Map<String, String> buildOfferStatusMaster(JSONObject response){
 		Map<String, String> offerStatusMaster = new LinkedHashMap<>();

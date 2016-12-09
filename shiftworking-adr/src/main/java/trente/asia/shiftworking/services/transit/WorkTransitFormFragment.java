@@ -305,7 +305,7 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 			((WelfareActivity)activity).dataMap.put(SwConst.ACTION_TRANSIT_UPDATE, CCConst.YES);
 			getFragmentManager().popBackStack();
 		}else{
-			super.successLoad(response, url);
+			super.successUpload(response, url);
 		}
 	}
 

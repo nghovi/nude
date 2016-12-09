@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TimePicker;
 
+import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCNumberUtil;
@@ -34,6 +35,7 @@ import trente.asia.shiftworking.common.defines.SwConst;
 import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
 import trente.asia.shiftworking.services.offer.model.WorkOfferModel;
 import trente.asia.shiftworking.services.offer.model.WorkOfferModelHolder;
+import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.dialog.WfDialog;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
@@ -266,10 +268,11 @@ public class WorkOfferEditFragment extends AbstractSwFragment{
 	protected void successUpdate(JSONObject response, String url){
 		if(WfUrlConst.WF_SW_OFFER_UPDATE.equals(url)){
 			((ChiaseActivity)activity).isInitData = true;
+            ((WelfareActivity)activity).dataMap.put(SwConst.ACTION_OFFER_UPDATE, CCConst.YES);
 			getFragmentManager().popBackStack();
 		}else if(WfUrlConst.WF_SW_OFFER_DELETE.equals(url)){
-			((ChiaseActivity)activity).isInitData = true;
 			getFragmentManager().popBackStack();
+            ((WelfareActivity)activity).dataMap.put(SwConst.ACTION_OFFER_DELETE, CCConst.YES);
 		}else{
 			super.successLoad(response, url);
 		}

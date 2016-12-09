@@ -17,6 +17,8 @@ public class SwConst{
 	public static final int				MAX_CHECK_USER					= 4;
 	public static final String			ACTION_TRANSIT_DELETE			= "ACTION_TRANSIT_DELETE";
 	public static final String			ACTION_TRANSIT_UPDATE			= "ACTION_TRANSIT_UPDATE";
+	public static final String			ACTION_OFFER_DELETE				= "ACTION_OFFER_DELETE";
+    public static final String			ACTION_OFFER_UPDATE				= "ACTION_OFFER_UPDATE";
 
 	public static final String			KEY_HISTORY_LIST				= "KEY_HISTORY_LIST";
 	public static final String			KEY_HISTORY_NAME				= "KEY_HISTORY_NAME";
