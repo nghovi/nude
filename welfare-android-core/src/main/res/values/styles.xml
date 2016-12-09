@@ -77,8 +77,8 @@
     <style name="wl_common_edit_text2" parent="@style/wl_common_text">
         <item name="android:background">@android:color/transparent</item>
         <item name="android:gravity">right</item>
-        <item name="android:maxLines">1</item>
-        <item name="android:inputType">text</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">end</item>
         <item name="android:textColorHint">@color/wf_common_color_hint</item>
     </style>
 
