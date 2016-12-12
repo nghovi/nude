@@ -180,7 +180,7 @@ public class WorkOfferListFragment extends AbstractSwFragment{
 	private Map<String, String> buildOfferDepts(Context context, JSONObject response){
 		Map<String, String> offerDepts = new LinkedHashMap<>();
 		List<ApiObjectModel> depts = CCJsonUtil.convertToModelList(response.optString("offerDeptList"), ApiObjectModel.class);
-		offerDepts.put("0", context.getResources().getString(R.string.chiase_common_all));
+		offerDepts.put("0", getString(R.string.chiase_common_all));
 
 		for(ApiObjectModel dept : depts){
 			offerDepts.put(dept.key, dept.value);
