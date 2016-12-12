@@ -138,7 +138,7 @@ public class WorknoticeOfferFragment extends AbstractLocationFragment{
 	@Override
 	public void initView(){
 		super.initView();
-		super.initHeader(R.drawable.wf_back_white, myself.userName, null);
+		super.initHeader(R.drawable.sw_back_white, myself.userName, null);
 
 		imgPhoto = (ImageView)getView().findViewById(R.id.img_id_photo);
 		lnrLocation = (LinearLayout)getView().findViewById(R.id.lnr_id_location);

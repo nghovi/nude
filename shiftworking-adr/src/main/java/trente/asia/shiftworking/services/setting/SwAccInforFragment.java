@@ -131,7 +131,7 @@ public class SwAccInforFragment extends AbstractSwFragment{
 	@Override
 	public void initView(){
 		super.initView();
-		super.initHeader(R.drawable.wf_back_white, getString(R.string.wf_account_info_title), null);
+		super.initHeader(R.drawable.sw_back_white, getString(R.string.wf_account_info_title), null);
 
 		imgAvatar = (ImageView)getView().findViewById(trente.asia.welfare.adr.R.id.img_fragment_setting_avatar);
 

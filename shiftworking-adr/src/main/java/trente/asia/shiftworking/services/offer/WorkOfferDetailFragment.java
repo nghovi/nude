@@ -64,7 +64,7 @@ public class WorkOfferDetailFragment extends AbstractSwFragment{
 	@Override
 	protected void initView(){
 		super.initView();
-		super.initHeader(R.drawable.wf_back_white, myself.userName, null);
+		super.initHeader(R.drawable.sw_back_white, myself.userName, null);
 
 		edtComment = (EditText)getView().findViewById(R.id.edt_fragment_offer_detail_comment);
 		imgEdit = (ImageView)getView().findViewById(R.id.img_id_header_right_icon);

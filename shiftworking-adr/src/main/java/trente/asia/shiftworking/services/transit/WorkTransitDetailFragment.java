@@ -63,7 +63,7 @@ public class WorkTransitDetailFragment extends AbstractSwFragment{
 	@Override
 	public void initView(){
 		super.initView();
-		super.initHeader(R.drawable.wf_back_white, myself.userName, null);
+		super.initHeader(R.drawable.sw_back_white, myself.userName, null);
 
 		txtLeave = (TextView)getView().findViewById(R.id.txt_id_leave);
 		txtArrive = (TextView)getView().findViewById(R.id.txt_id_arrive);

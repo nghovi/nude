@@ -67,7 +67,7 @@ public class WorkOfferFilterFragment extends AbstractSwFragment{
 	@Override
 	public void initView(){
 		super.initView();
-		super.initHeader(R.drawable.wf_back_white, getString(R.string.fragment_offer_filter_title), null);
+		super.initHeader(R.drawable.sw_back_white, getString(R.string.fragment_offer_filter_title), null);
 		txtType = (ChiaseTextView)getView().findViewById(R.id.txt_fragment_offer_filter_type);
 		txtStatus = (ChiaseTextView)getView().findViewById(R.id.txt_fragment_offer_filter_status);
 		txtDept = (ChiaseTextView)getView().findViewById(R.id.txt_fragment_offer_filter_dept);

@@ -55,7 +55,7 @@ public class SwContactUsFragment extends AbstractSwFragment implements View.OnCl
 	@Override
 	public void initView(){
         super.initView();
-        initHeader(R.drawable.wf_back_white, getString(R.string.wf_setting_contact_us_title), null);
+        initHeader(R.drawable.sw_back_white, getString(R.string.wf_setting_contact_us_title), null);
 
 		spnType = (WfSpinner)getView().findViewById(R.id.spn_id_type);
 		spnServiceName = (WfSpinner)getView().findViewById(R.id.spn_id_service_name);

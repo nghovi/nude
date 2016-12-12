@@ -33,7 +33,7 @@ public class SwAboutAppFragment extends AbstractSwFragment{
 	@Override
 	public void initView(){
 		super.initView();
-		super.initHeader(R.drawable.wf_back_white, getString(R.string.wf_about_app), null);
+		super.initHeader(R.drawable.sw_back_white, getString(R.string.wf_about_app), null);
 
 		TextView version = (TextView)getView().findViewById(R.id.txt_fragment_about_version);
 		version.setText(getString(R.string.fragment_about_version, AndroidUtil.getVersionName(activity)));

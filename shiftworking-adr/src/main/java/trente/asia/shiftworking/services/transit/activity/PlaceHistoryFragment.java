@@ -53,7 +53,7 @@ public class PlaceHistoryFragment extends AbstractSwFragment{
 	@Override
 	public void initView(){
 		// super.initView();
-		super.initHeader(R.drawable.wf_back_white, "Place entry", null);
+		super.initHeader(R.drawable.sw_back_white, "Place entry", null);
 		lnrContentId = null;
 
 		edtPlace = (EditText)getView().findViewById(R.id.edt_id_place);

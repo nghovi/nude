@@ -74,7 +74,7 @@ public class WorknoticeFormFragment extends AbstractSwFragment{
 	@Override
 	public void initView(){
 		super.initView();
-		super.initHeader(R.drawable.wf_back_white, myself.userName, null);
+		super.initHeader(R.drawable.sw_back_white, myself.userName, null);
 
 		txtNoticeUser = (TextView)getView().findViewById(R.id.txt_id_notice_user);
 		txtNoticeDate = (TextView)getView().findViewById(R.id.txt_id_notice_date);

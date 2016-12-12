@@ -104,7 +104,7 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 	@Override
 	public void initView(){
 		super.initView();
-		super.initHeader(R.drawable.wf_back_white, myself.userName, R.drawable.sw_action_save);
+		super.initHeader(R.drawable.sw_back_white, myself.userName, R.drawable.sw_action_save);
 
 		txtTransitType = (ChiaseTextView)getView().findViewById(R.id.txt_id_transit_type);
 		txtWayType = (ChiaseTextView)getView().findViewById(R.id.txt_id_way_type);

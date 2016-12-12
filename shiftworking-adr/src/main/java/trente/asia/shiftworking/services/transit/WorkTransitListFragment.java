@@ -46,7 +46,7 @@ public class WorkTransitListFragment extends AbstractSwFragment{
 	@Override
 	public void initView(){
 		super.initView();
-		super.initHeader(R.drawable.wf_back_white, myself.userName, null);
+		super.initHeader(R.drawable.sw_back_white, myself.userName, null);
 
 		lsvTransit = (ListView)getView().findViewById(R.id.lsv_id_transit);
 
