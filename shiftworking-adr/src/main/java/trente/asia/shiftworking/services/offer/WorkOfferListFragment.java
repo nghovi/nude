@@ -69,10 +69,19 @@ public class WorkOfferListFragment extends AbstractSwFragment{
 	public void onActivityCreated(Bundle savedInstanceState){
 		super.onActivityCreated(savedInstanceState);
 		if(filters != null){
-			String filterType = filters.containsKey(WorkOfferFilterFragment.TYPE) ? new ArrayList<String>(offerTypesMaster.values()).get(filters.get(WorkOfferFilterFragment.TYPE)) : "All";
-			String filterStatus = filters.containsKey(WorkOfferFilterFragment.STATUS) ? new ArrayList<String>(offerStatusMaster.values()).get(filters.get(WorkOfferFilterFragment.STATUS)) : "All";
-			String filterDept = filters.containsKey(WorkOfferFilterFragment.DEPT) ? new ArrayList<String>(offerDepts.values()).get(filters.get(WorkOfferFilterFragment.DEPT)) : "All";
-			String filtersDesc = filterType + "-" + filterStatus + "-" + filterDept;
+            String filterType = getString(R.string.chiase_common_all);
+            if(filters.containsKey(WorkOfferFilterFragment.TYPE)){
+                filterType = new ArrayList<String>(offerTypesMaster.values()).get(filters.get(WorkOfferFilterFragment.TYPE));
+            }
+			String filterStatus = getString(R.string.chiase_common_all);
+            if(filters.containsKey(WorkOfferFilterFragment.STATUS)){
+                filterStatus = new ArrayList<String>(offerStatusMaster.values()).get(filters.get(WorkOfferFilterFragment.STATUS));
+            }
+			String filterDept = getString(R.string.chiase_common_all);
+            if(filters.containsKey(WorkOfferFilterFragment.DEPT)){
+                filterDept = new ArrayList<String>(offerDepts.values()).get(filters.get(WorkOfferFilterFragment.DEPT));
+            }
+			String filtersDesc = filterType + " - " + filterStatus + " - " + filterDept;
 			txtFilterDesc.setText(filtersDesc);
 		}else{
 			txtFilterDesc.setText(getString(R.string.chiase_common_none));
@@ -152,6 +161,11 @@ public class WorkOfferListFragment extends AbstractSwFragment{
             offerTypesMaster = buildOfferTypeMaster(activity, response);
             offerStatusMaster = buildOfferStatusMaster(response);
             offerDepts = buildOfferDepts(activity, response);
+
+            if(filters == null || filters.isEmpty()){
+                String filtersDesc = getString(R.string.chiase_common_all) + " - " + getString(R.string.chiase_common_all) + " - " + getString(R.string.chiase_common_all);
+                txtFilterDesc.setText(filtersDesc);
+            }
 
             adapterOther = new WorkOfferAdapter(activity, otherOffers);
             mLstOfferOther.setAdapter(adapterOther);
