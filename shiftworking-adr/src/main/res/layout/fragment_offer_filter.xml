@@ -80,7 +80,8 @@
                 android:layout_height="@dimen/margin_30dp"
                 android:layout_marginRight="@dimen/margin_10dp"
                 android:layout_weight="1"
-                android:text="@string/fragment_offer_filter_clear"/>
+                android:text="@string/fragment_offer_filter_clear"
+                android:textSize="@dimen/margin_12dp"/>
 
             <Button
                 android:id="@+id/btn_fragment_filter_update"
@@ -89,7 +90,8 @@
                 android:layout_height="@dimen/margin_30dp"
                 android:layout_marginLeft="@dimen/margin_10dp"
                 android:layout_weight="1"
-                android:text="@string/fragment_offer_filter_update"/>
+                android:text="@string/fragment_offer_filter_update"
+                android:textSize="@dimen/margin_12dp"/>
         </LinearLayout>
 
     </LinearLayout>
