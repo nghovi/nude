@@ -11,7 +11,7 @@
     <string name="sw_worker_title">勤務ユーザー</string>
     <string name="sw_notice_detail_title">お知らせ詳細</string>
 
-    <string name="fragment_offer_edit_confirm_delete_msg">Are you sure to delete this offer ?</string>
+    <string name="fragment_offer_edit_confirm_delete_msg">この勤務申請を削除しますか。</string>
     <string name="fragment_offer_edit_offer_type">申請タイプ</string>
 
     <string name="fragment_offer_detail_comment_hint">Comment</string>
@@ -86,6 +86,8 @@
     <string name="sw_work_transit_note_item">ノート</string>
     <string name="sw_work_transit_attachment_item">添付</string>
     <string name="sw_work_transit_list_title">交通一覧</string>
+
+    <string name="fragment_transit_confirm_delete_msg">この交通費申請を削除しますか。</string>
 
     <string name="fragment_offer_filter_offer_type">申請タイプ</string>
     <string name="fragment_offer_filter_other_history_filter">絞り込め: %1$s</string>

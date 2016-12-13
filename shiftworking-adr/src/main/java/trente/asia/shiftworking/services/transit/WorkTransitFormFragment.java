@@ -365,7 +365,7 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 
 	private void onClickBtnDelete(){
 		final WfDialog dlgConfirmDelete = new WfDialog(activity);
-		dlgConfirmDelete.setDialogTitleButton(getString(R.string.fragment_offer_edit_confirm_delete_msg), getString(R.string.chiase_common_ok), getString(R.string.chiase_common_cancel), new View.OnClickListener() {
+		dlgConfirmDelete.setDialogTitleButton(getString(R.string.fragment_transit_confirm_delete_msg), getString(R.string.chiase_common_ok), getString(R.string.chiase_common_cancel), new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v){
