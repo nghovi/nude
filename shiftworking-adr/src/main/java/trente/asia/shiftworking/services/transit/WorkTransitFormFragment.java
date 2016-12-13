@@ -48,7 +48,7 @@ import trente.asia.shiftworking.services.transit.view.PlaceHistoryAdapter;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.define.WfUrlConst;
-import trente.asia.welfare.adr.models.FileModel;
+import trente.asia.welfare.adr.dialog.WfDialog;
 import trente.asia.welfare.adr.models.ImageAttachmentModel;
 import trente.asia.welfare.adr.models.SettingModel;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
@@ -363,6 +363,18 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 		}
 	}
 
+	private void onClickBtnDelete(){
+		final WfDialog dlgConfirmDelete = new WfDialog(activity);
+		dlgConfirmDelete.setDialogTitleButton(getString(R.string.fragment_offer_edit_confirm_delete_msg), getString(R.string.chiase_common_ok), getString(R.string.chiase_common_cancel), new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v){
+				deleteTransit();
+				dlgConfirmDelete.dismiss();
+			}
+		}).show();
+	}
+
 	@Override
 	public void onClick(View v){
 		switch(v.getId()){
@@ -383,7 +395,7 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 			updateTransit();
 			break;
 		case R.id.btn_id_delete:
-			deleteTransit();
+			onClickBtnDelete();
 			break;
 		case R.id.btn_id_add:
 			addAttachment(null);
