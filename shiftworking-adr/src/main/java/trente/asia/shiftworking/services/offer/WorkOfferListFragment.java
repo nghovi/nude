@@ -82,7 +82,7 @@ public class WorkOfferListFragment extends AbstractSwFragment{
                 filterDept = new ArrayList<String>(offerDepts.values()).get(filters.get(WorkOfferFilterFragment.DEPT));
             }
 			String filtersDesc = filterType + " - " + filterStatus + " - " + filterDept;
-			txtFilterDesc.setText(filtersDesc);
+			txtFilterDesc.setText(getString(R.string.sw_work_offer_list_filter, filtersDesc));
 		}else{
 			txtFilterDesc.setText(getString(R.string.chiase_common_none));
 			filters = new HashMap<>();
@@ -164,7 +164,7 @@ public class WorkOfferListFragment extends AbstractSwFragment{
 
             if(filters == null || filters.isEmpty()){
                 String filtersDesc = getString(R.string.chiase_common_all) + " - " + getString(R.string.chiase_common_all) + " - " + getString(R.string.chiase_common_all);
-                txtFilterDesc.setText(filtersDesc);
+                txtFilterDesc.setText(getString(R.string.sw_work_offer_list_filter, filtersDesc));
             }
 
             adapterOther = new WorkOfferAdapter(activity, otherOffers);
