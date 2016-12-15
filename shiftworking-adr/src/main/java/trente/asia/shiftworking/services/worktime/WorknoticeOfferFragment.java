@@ -1,6 +1,7 @@
 package trente.asia.shiftworking.services.worktime;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -64,6 +65,7 @@ public class WorknoticeOfferFragment extends AbstractLocationFragment{
 	private String					latitude;
 	private String					longitude;
 	private String					mOriginalPath;
+	private Uri						mImageUri;
 
 	private ChiaseListDialog		dlgNoticeType;
 	private ChiaseListDialog		dlgTargetDept;
@@ -223,8 +225,8 @@ public class WorknoticeOfferFragment extends AbstractLocationFragment{
 	private void sendNotice(){
 		JSONObject jsonObject = new JSONObject();
 		Map<String, File> photoMap = new HashMap<>();
-		if(!CCStringUtil.isEmpty(mOriginalPath)){
-			photoMap.put("photo", new File(mOriginalPath));
+		if(mImageUri != null){
+			photoMap.put("photo", new File(mImageUri.getPath()));
 		}
 		try{
 			jsonObject.put("projectId", activeProject.key);
@@ -304,10 +306,18 @@ public class WorknoticeOfferFragment extends AbstractLocationFragment{
 					alertDialog.setMessage(getString(R.string.wf_invalid_photo_over));
 					alertDialog.show();
 				}else{
-					mOriginalPath = returnedIntent.getExtras().getString(WelfareConst.IMAGE_PATH_KEY);
-					Uri uri = AndroidUtil.getUriFromFileInternal(activity, new File(mOriginalPath));
-					imgPhoto.setImageURI(uri);
+					String imagePath = returnedIntent.getExtras().getString(WelfareConst.IMAGE_PATH_KEY);
+					Uri uri = AndroidUtil.getUriFromFileInternal(activity, new File(imagePath));
+					cropImage(uri);
 				}
+			}
+
+			break;
+		case WelfareConst.RequestCode.PHOTO_CROP:
+			try{
+                imgPhoto.setImageURI(mImageUri);
+			}catch(Exception ex){
+				ex.printStackTrace();
 			}
 
 			break;
@@ -315,6 +325,21 @@ public class WorknoticeOfferFragment extends AbstractLocationFragment{
 		default:
 			break;
 		}
+	}
+
+	private void cropImage(Uri imageUri){
+		long date = System.currentTimeMillis();
+		String filename = WelfareConst.FilesName.CAMERA_TEMP_FILE_NAME + String.valueOf(date) + WelfareConst.FilesName.CAMERA_TEMP_FILE_EXT;
+		String filePath = makeAppFile(filename);
+		File imageFile = new File(filePath);
+		try{
+			imageFile.createNewFile();
+		}catch(IOException ex){
+			ex.printStackTrace();
+		}
+
+		mImageUri = Uri.fromFile(imageFile);
+		WelfareUtil.startCropActivity(this, imageUri, mImageUri);
 	}
 
 	private void onButtonMenuOpenedClicked(){

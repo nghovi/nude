@@ -1,6 +1,7 @@
 package trente.asia.shiftworking.services.transit;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -52,6 +53,7 @@ import trente.asia.welfare.adr.dialog.WfDialog;
 import trente.asia.welfare.adr.models.ImageAttachmentModel;
 import trente.asia.welfare.adr.models.SettingModel;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
+import trente.asia.welfare.adr.utils.WelfareUtil;
 import trente.asia.welfare.adr.utils.WfPicassoHelper;
 
 public class WorkTransitFormFragment extends AbstractPhotoFragment{
@@ -81,6 +83,7 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 	private ChiaseListViewNoScroll	lsvArrive;
 	private PlaceHistoryAdapter		adapterArrive;
 
+	private Uri						mImageUri;
 	private TransitModelHolder		mHolder;
 	private final int				MAX_ATTACHMENT	= 3;
 
@@ -343,24 +346,47 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 				}else{
 					mOriginalPath = returnedIntent.getExtras().getString(WelfareConst.IMAGE_PATH_KEY);
 					File file = new File(mOriginalPath);
-					SettingModel settingModel = prefAccUtil.getSetting();
-					if((CCNumberUtil.toLong(settingModel.WF_MAX_FILE_SIZE) / 4) < file.length()){
-						alertDialog.setMessage(getString(R.string.wf_invalid_photo_over2));
-						alertDialog.show();
-					}else{
-						Uri uri = AndroidUtil.getUriFromFileInternal(activity, file);
-						activePhoto.setImageURI(uri);
-						activePhoto.setFilePath(mOriginalPath);
-						activePhoto.existData = true;
-						judgeAdd();
-					}
+					Uri uri = AndroidUtil.getUriFromFileInternal(activity, file);
+					cropImage(uri);
 				}
 			}
 
 			break;
+		case WelfareConst.RequestCode.PHOTO_CROP:
+			try{
+				SettingModel settingModel = prefAccUtil.getSetting();
+				File file = new File(mImageUri.getPath());
+				if((CCNumberUtil.toLong(settingModel.WF_MAX_FILE_SIZE) / 4) < file.length()){
+					alertDialog.setMessage(getString(R.string.wf_invalid_photo_over2));
+					alertDialog.show();
+				}else{
+					activePhoto.setImageURI(mImageUri);
+					activePhoto.setFilePath(mImageUri.getPath());
+					activePhoto.existData = true;
+					judgeAdd();
+				}
+			}catch(Exception ex){
+				ex.printStackTrace();
+			}
+			break;
 		default:
 			break;
 		}
+	}
+
+	private void cropImage(Uri imageUri){
+		long date = System.currentTimeMillis();
+		String filename = WelfareConst.FilesName.CAMERA_TEMP_FILE_NAME + String.valueOf(date) + WelfareConst.FilesName.CAMERA_TEMP_FILE_EXT;
+		String filePath = makeAppFile(filename);
+		File imageFile = new File(filePath);
+		try{
+			imageFile.createNewFile();
+		}catch(IOException ex){
+			ex.printStackTrace();
+		}
+
+		mImageUri = Uri.fromFile(imageFile);
+		WelfareUtil.startCropActivity(this, imageUri, mImageUri);
 	}
 
 	private void onClickBtnDelete(){

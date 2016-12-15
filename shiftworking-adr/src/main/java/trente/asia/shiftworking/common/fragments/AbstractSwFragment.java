@@ -16,6 +16,7 @@ import trente.asia.shiftworking.BuildConfig;
 import trente.asia.shiftworking.R;
 import trente.asia.shiftworking.common.activities.MainActivity;
 import trente.asia.shiftworking.common.models.SwApiHolder;
+import trente.asia.shiftworking.common.utils.SwUtil;
 import trente.asia.shiftworking.services.login.SwLoginFragment;
 import trente.asia.shiftworking.services.offer.WorkOfferListFragment;
 import trente.asia.shiftworking.services.setting.SwSettingFragment;
@@ -153,6 +154,11 @@ public abstract class AbstractSwFragment extends WelfareFragment implements View
 		super.gotoSignIn();
 		gotoFragment(new SwLoginFragment());
 	}
+
+    protected String makeAppFile(String fileName){
+        String filePath = SwUtil.getFilesFolderPath() + "/" + fileName;
+        return filePath;
+    }
 
     /**
      * emptyLocalData
