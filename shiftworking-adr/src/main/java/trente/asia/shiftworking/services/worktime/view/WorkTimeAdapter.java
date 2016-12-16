@@ -58,40 +58,41 @@ public class WorkTimeAdapter extends BaseSwipeAdapter{
 
 	@Override
 	public View generateView(int position, ViewGroup parent){
-		final WorkingTimeModel model = this.lstWorkingTime.get(position);
 		LayoutInflater mInflater = (LayoutInflater)mContext.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 		View convertView = mInflater.inflate(R.layout.item_work_checkin_list, null);
-		final BoardViewHolder holder = new BoardViewHolder(convertView);
-
-		holder.txtWorkTime.setText(model.timeLog);
-		holder.txtWorkingType.setText(model.workingTypeName);
-		holder.btnModify.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v){
-				if(listener != null){
-                    holder.swipeLayout.close(true);
-					listener.onItemModifyListener(model);
-				}
-			}
-		});
-
-		holder.btnDelete.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v){
-				if(listener != null){
-					listener.onItemDeleteListener(model);
-				}
-			}
-		});
 
 		return convertView;
 	}
 
 	@Override
 	public void fillValues(int position, View convertView){
+        final WorkingTimeModel model = this.lstWorkingTime.get(position);
+        final BoardViewHolder holder = new BoardViewHolder(convertView);
 
+        holder.txtWorkTime.setText(model.timeLog);
+        holder.txtWorkingType.setText(model.workingTypeName);
+        holder.txtWorkTime.setText(model.timeLog);
+        holder.txtWorkingType.setText(model.workingTypeName);
+        holder.btnModify.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v){
+                if(listener != null){
+                    holder.swipeLayout.close(true);
+                    listener.onItemModifyListener(model);
+                }
+            }
+        });
+
+        holder.btnDelete.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v){
+                if(listener != null){
+                    listener.onItemDeleteListener(model);
+                }
+            }
+        });
 	}
 
 	@Override
@@ -101,7 +102,7 @@ public class WorkTimeAdapter extends BaseSwipeAdapter{
 
 	@Override
 	public Object getItem(int position){
-		return null;
+		return this.lstWorkingTime.get(position);
 	}
 
 	@Override
