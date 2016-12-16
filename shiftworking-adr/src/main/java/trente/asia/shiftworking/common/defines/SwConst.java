@@ -26,6 +26,7 @@ public class SwConst{
 	public static final String			OFFER_CAN_EDIT_DELETE			= "ME";
 	public static final String			OFFER_CAN_APPROVE				= "AP";
 	public static final String			OFFER_ONLY_SHOW					= "VW";
+    public static final String			OFFER_CAN_ONLY_EDIT			= "ME";
 
 	public static final String			SW_TRANSIT_STATUS_DRAFT			= "DRFT";
 	public static final String			SW_TRANSIT_STATUS_DONE			= "DONE";
