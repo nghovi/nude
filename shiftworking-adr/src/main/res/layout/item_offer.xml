@@ -54,7 +54,8 @@
                 style="@style/wl_common_text"
                 android:layout_width="wrap_content"
                 android:layout_marginLeft="@dimen/margin_10dp"
-                android:textColor="@color/sw_data_text_color"/>
+                android:textColor="@color/sw_data_text_color"
+                android:textStyle="italic"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
