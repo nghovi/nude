@@ -18,7 +18,7 @@ public class SwConst{
 	public static final String			ACTION_TRANSIT_DELETE			= "ACTION_TRANSIT_DELETE";
 	public static final String			ACTION_TRANSIT_UPDATE			= "ACTION_TRANSIT_UPDATE";
 	public static final String			ACTION_OFFER_DELETE				= "ACTION_OFFER_DELETE";
-    public static final String			ACTION_OFFER_UPDATE				= "ACTION_OFFER_UPDATE";
+	public static final String			ACTION_OFFER_UPDATE				= "ACTION_OFFER_UPDATE";
 
 	public static final String			KEY_HISTORY_LIST				= "KEY_HISTORY_LIST";
 	public static final String			KEY_HISTORY_NAME				= "KEY_HISTORY_NAME";
@@ -26,7 +26,7 @@ public class SwConst{
 	public static final String			OFFER_CAN_EDIT_DELETE			= "ME";
 	public static final String			OFFER_CAN_APPROVE				= "AP";
 	public static final String			OFFER_ONLY_SHOW					= "VW";
-    public static final String			OFFER_CAN_ONLY_EDIT			= "ME";
+	public static final String			OFFER_CAN_ONLY_EDIT				= "OM";
 
 	public static final String			SW_TRANSIT_STATUS_DRAFT			= "DRFT";
 	public static final String			SW_TRANSIT_STATUS_DONE			= "DONE";
