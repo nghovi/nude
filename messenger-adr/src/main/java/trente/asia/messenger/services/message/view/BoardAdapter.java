@@ -17,6 +17,7 @@ import trente.asia.messenger.BuildConfig;
 import trente.asia.messenger.R;
 import trente.asia.messenger.services.message.model.BoardModel;
 import trente.asia.messenger.services.message.model.MessageContentModel;
+import trente.asia.welfare.adr.activity.WelfareFragment;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.utils.WelfareUtil;
 import trente.asia.welfare.adr.utils.WfPicassoHelper;
@@ -28,8 +29,9 @@ import trente.asia.welfare.adr.utils.WfPicassoHelper;
  */
 public class BoardAdapter extends ArrayAdapter<BoardModel>{
 
-	private List<BoardModel>	boardList;
-	private Context				mContext;
+	private List<BoardModel>						boardList;
+	private Context									mContext;
+	private WelfareFragment.OnAvatarClickListener	listener;
 
 	public class BoardViewHolder{
 
@@ -47,19 +49,20 @@ public class BoardAdapter extends ArrayAdapter<BoardModel>{
 		}
 	}
 
-	public BoardAdapter(Context context, List<BoardModel> boardList){
+	public BoardAdapter(Context context, List<BoardModel> boardList, WelfareFragment.OnAvatarClickListener listener){
 		super(context, R.layout.item_board_list, boardList);
 		this.mContext = context;
 		this.boardList = boardList;
+		this.listener = listener;
 	}
 
 	public View getView(int position, View convertView, ViewGroup parent){
 
-		BoardModel model = this.boardList.get(position);
+		final BoardModel model = this.boardList.get(position);
 
 		LayoutInflater mInflater = (LayoutInflater)mContext.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 		convertView = mInflater.inflate(R.layout.item_board_list, null);
-		BoardViewHolder holder = new BoardViewHolder(convertView);
+		final BoardViewHolder holder = new BoardViewHolder(convertView);
 
 		if(WelfareConst.BOARD_TYPE_DEPT.equals(model.boardType)){
 			holder.txtBoardType.setText(mContext.getString(R.string.wf_common_board_type_dept, String.valueOf(WelfareUtil.size(model.memberList))));
@@ -72,6 +75,13 @@ public class BoardAdapter extends ArrayAdapter<BoardModel>{
 
 		if(!CCStringUtil.isEmpty(model.avatarPath)){
 			WfPicassoHelper.loadImage(mContext, BuildConfig.HOST + model.avatarPath, holder.imgAvatar, null);
+			holder.imgAvatar.setOnClickListener(new View.OnClickListener() {
+
+				@Override
+				public void onClick(View v){
+					listener.OnAvatarClick(model.boardName, model.avatarPath);
+				}
+			});
 		}else{
 			// WfPicassoHelper.loadImage(mContext, "https://upload.wikimedia.org/wikipedia/en/8/86/Avatar_Aang.png", holder.imgAvatar, null);
 		}

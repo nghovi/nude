@@ -53,6 +53,7 @@ import trente.asia.welfare.adr.define.EmotionConst;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.dialog.WfDialog;
+import trente.asia.welfare.adr.dialog.WfProfileDialog;
 import trente.asia.welfare.adr.models.CommentModel;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WelfareUtil;
@@ -102,6 +103,7 @@ public class MessageDetailFragment extends AbstractMsgFragment implements View.O
 	private boolean						isSuccessLoad	= false;
 	private final int					TIME_RELOAD		= 10000;
 	private List<String>				mLstCommentId	= new ArrayList<>();
+	private WfProfileDialog				mDlgProfile;
 
 	public void setActiveMessage(MessageContentModel activeMessage){
 		this.activeMessage = activeMessage;
@@ -141,7 +143,7 @@ public class MessageDetailFragment extends AbstractMsgFragment implements View.O
 
 		mEdtComment = (ChiaseEditText)getView().findViewById(R.id.edt_comment);
 		addTextWatcher(mBtnComment, Arrays.asList((View)mEdtComment));
-        addTextWatcher(mLnrSend, Arrays.asList((View)mEdtComment));
+		addTextWatcher(mLnrSend, Arrays.asList((View)mEdtComment));
 
 		mBtnLikeCmt = (ImageButton)getView().findViewById(R.id.btn_like_cmt);
 		mLnrLike = (LinearLayout)getView().findViewById(R.id.lnr_id_like);
@@ -161,6 +163,8 @@ public class MessageDetailFragment extends AbstractMsgFragment implements View.O
 
 		mDlgCheckUser = new MsChiaseDialog(activity);
 		mDlgCheckUser.setDialogCheckUserList();
+		mDlgProfile = new WfProfileDialog(activity);
+		mDlgProfile.setDialogProfileDetail(95, 95);
 	}
 
 	@Override
@@ -330,7 +334,7 @@ public class MessageDetailFragment extends AbstractMsgFragment implements View.O
 		}
 	}
 
-	private void addComment(CommentModel commentModel){
+	private void addComment(final CommentModel commentModel){
 		if(!mLstCommentId.contains(commentModel.key)){
 			LayoutInflater mInflater = (LayoutInflater)activity.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 			View commentView = mInflater.inflate(R.layout.item_comment_list, null);
@@ -346,6 +350,14 @@ public class MessageDetailFragment extends AbstractMsgFragment implements View.O
 			txtDateCmt.setText(commentDateFormat);
 			if(!CCStringUtil.isEmpty(commentModel.commentUser.avatarPath)){
 				WfPicassoHelper.loadImage(activity, BuildConfig.HOST + commentModel.commentUser.avatarPath, imgAvatar, null);
+				imgAvatar.setOnClickListener(new View.OnClickListener() {
+
+					@Override
+					public void onClick(View v){
+						mDlgProfile.updateProfileDetail(BuildConfig.HOST, commentModel.commentUser.userName, commentModel.commentUser.avatarPath);
+						mDlgProfile.show();
+					}
+				});
 			}
 
 			if(!commentModel.commentContent.equals(EmotionConst.EMO_LIKE)){

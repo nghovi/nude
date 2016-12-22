@@ -25,6 +25,7 @@ import trente.asia.messenger.BuildConfig;
 import trente.asia.messenger.R;
 import trente.asia.messenger.services.message.listener.ItemMsgClickListener;
 import trente.asia.messenger.services.message.model.MessageContentModel;
+import trente.asia.welfare.adr.activity.WelfareFragment;
 import trente.asia.welfare.adr.define.EmotionConst;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.models.CommentModel;
@@ -37,12 +38,13 @@ import trente.asia.welfare.adr.utils.WfPicassoHelper;
  */
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageViewHolder>{
 
-	private Context						mContext;
-	private List<MessageContentModel>	mLstMessage;
-	public ItemMsgClickListener			itemMsgClickListener;
+	private final WelfareFragment.OnAvatarClickListener	onAvatarClickListener;
+	private Context										mContext;
+	private List<MessageContentModel>					mLstMessage;
+	public ItemMsgClickListener							itemMsgClickListener;
 
-	private List<String>				lstDate	= new ArrayList<>();
-	private List<String>				lstKey	= new ArrayList<>();
+	private List<String>								lstDate	= new ArrayList<>();
+	private List<String>								lstKey	= new ArrayList<>();
 
 	public class MessageViewHolder extends RecyclerView.ViewHolder{
 
@@ -92,7 +94,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 				}else if(viewType == R.layout.item_messages_text){
 					txtContent = (TextView)itemView.findViewById(R.id.txt_id_content);
 				}else if(viewType == R.layout.item_messages_photo || viewType == R.layout.item_messages_movie){
-                    txtContent = (TextView)itemView.findViewById(R.id.txt_id_content);
+					txtContent = (TextView)itemView.findViewById(R.id.txt_id_content);
 					pgrLoading = (ProgressBar)itemView.findViewById(R.id.pgr_id_loading);
 				}
 			}
@@ -134,7 +136,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 		}
 	}
 
-	public MessageAdapter(Context context, List<MessageContentModel> contentModelList, ItemMsgClickListener itemMsgClickListener){
+	public MessageAdapter(Context context, List<MessageContentModel> contentModelList, ItemMsgClickListener itemMsgClickListener, WelfareFragment.OnAvatarClickListener listener){
 		super();
 		this.mContext = context;
 		this.mLstMessage = contentModelList;
@@ -142,6 +144,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 			lstKey.add(contentModel.key);
 		}
 		this.itemMsgClickListener = itemMsgClickListener;
+		this.onAvatarClickListener = listener;
 	}
 
 	@Override
@@ -153,7 +156,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 	@Override
 	public void onBindViewHolder(MessageViewHolder viewHolder, int position){
 		// boolean isEmotion = false;
-		MessageContentModel contentModel = mLstMessage.get(position);
+		final MessageContentModel contentModel = mLstMessage.get(position);
 		if(WelfareConst.ITEM_TEXT_TYPE_DATE.equals(contentModel.messageType)){
 			viewHolder.txtDate.setText(contentModel.messageDate);
 		}else{
@@ -166,7 +169,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 				if(contentModel.bitmap != null){
 					viewHolder.imgViewContent.setImageBitmap(contentModel.bitmap);
 				}else{
-                    viewHolder.imgViewContent.setImageBitmap(null);
+					viewHolder.imgViewContent.setImageBitmap(null);
 					if(contentModel.thumbnailAttachment != null && !CCStringUtil.isEmpty(contentModel.thumbnailAttachment.fileUrl)){
 						if(!contentModel.started){
 							String fullUrl = BuildConfig.HOST + contentModel.thumbnailAttachment.fileUrl;
@@ -195,6 +198,13 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 			viewHolder.txtMessageDate.setText(messageDateFormat);
 			if(!CCStringUtil.isEmpty(contentModel.messageSender.avatarPath)){
 				WfPicassoHelper.loadImage(mContext, BuildConfig.HOST + contentModel.messageSender.avatarPath, viewHolder.imgAvatar, null);
+				viewHolder.imgAvatar.setOnClickListener(new View.OnClickListener() {
+
+					@Override
+					public void onClick(View v){
+						onAvatarClickListener.OnAvatarClick(contentModel.messageSender.userName, contentModel.messageSender.avatarPath);
+					}
+				});
 			}else{
 				viewHolder.imgAvatar.setImageResource(R.drawable.wf_profile);
 			}

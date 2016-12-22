@@ -18,6 +18,7 @@ import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCNumberUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.view.ChiaseCheckableImageView;
+import trente.asia.messenger.BuildConfig;
 import trente.asia.messenger.R;
 import trente.asia.messenger.fragment.AbstractMsgFragment;
 import trente.asia.messenger.services.message.listener.OnChangedBoardListener;
@@ -28,6 +29,7 @@ import trente.asia.messenger.services.user.MsgSettingFragment;
 import trente.asia.messenger.services.user.listener.OnAddedContactListener;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WfUrlConst;
+import trente.asia.welfare.adr.dialog.WfProfileDialog;
 import trente.asia.welfare.adr.utils.WfPicassoHelper;
 
 /**
@@ -55,6 +57,7 @@ public class BoardListFragment extends AbstractMsgFragment implements View.OnCli
 																			BoardListFragment.this.refreshBoardList(lstBoard);
 																		}
 																	};
+	private WfProfileDialog				mDlgProfile;
 
 	public void setOnChangedBoardListener(OnChangedBoardListener onChangedBoardListener){
 		this.onChangedBoardListener = onChangedBoardListener;
@@ -99,6 +102,8 @@ public class BoardListFragment extends AbstractMsgFragment implements View.OnCli
 		txtUserMail = (TextView)getView().findViewById(R.id.txt_loginUserMail);
 		btnSetting = (ChiaseCheckableImageView)getView().findViewById(R.id.btn_setting);
 		btnSetting.setOnClickListener(this);
+		mDlgProfile = new WfProfileDialog(activity);
+		mDlgProfile.setDialogProfileDetail(95, 95);
 	}
 
 	@Override
@@ -122,11 +127,26 @@ public class BoardListFragment extends AbstractMsgFragment implements View.OnCli
 		if(!CCStringUtil.isEmpty(myself.avatarPath)){
 			mAvatarPath = myself.avatarPath;
 			WfPicassoHelper.loadImage(activity, host + myself.avatarPath, imgUserAvatar, null);
+			imgUserAvatar.setOnClickListener(new View.OnClickListener() {
+
+				@Override
+				public void onClick(View v){
+					mDlgProfile.updateProfileDetail(BuildConfig.HOST, myself.userName, myself.avatarPath);
+					mDlgProfile.show();
+				}
+			});
 		}
 
 		List<BoardModel> boardList = CCJsonUtil.convertToModelList(response.optString("boards"), BoardModel.class);
 		if(!CCCollectionUtil.isEmpty(boardList)){
-			mAdapter = new BoardAdapter(activity, boardList);
+			mAdapter = new BoardAdapter(activity, boardList, new OnAvatarClickListener() {
+
+				@Override
+				public void OnAvatarClick(String userName, String avatarPath){
+					mDlgProfile.updateProfileDetail(BuildConfig.HOST, userName, avatarPath);
+					mDlgProfile.show();
+				}
+			});
 			lsvBoard.setAdapter(mAdapter);
 
 			// set active board
@@ -186,7 +206,14 @@ public class BoardListFragment extends AbstractMsgFragment implements View.OnCli
 		}
 
 		if(!CCCollectionUtil.isEmpty(lstBoard)){
-			mAdapter = new BoardAdapter(activity, lstBoard);
+			mAdapter = new BoardAdapter(activity, lstBoard, new OnAvatarClickListener() {
+
+				@Override
+				public void OnAvatarClick(String userName, String avatarPath){
+					mDlgProfile.updateProfileDetail(BuildConfig.HOST, userName, avatarPath);
+					mDlgProfile.show();
+				}
+			});
 			lsvBoard.setAdapter(mAdapter);
 
 			boolean isActive = false;

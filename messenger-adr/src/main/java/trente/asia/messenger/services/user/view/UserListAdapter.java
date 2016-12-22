@@ -17,6 +17,7 @@ import asia.chiase.core.util.CCStringUtil;
 import trente.asia.messenger.BuildConfig;
 import trente.asia.messenger.R;
 import trente.asia.messenger.services.user.listener.OnAddUserListener;
+import trente.asia.welfare.adr.activity.WelfareFragment;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WfPicassoHelper;
 
@@ -27,10 +28,11 @@ import trente.asia.welfare.adr.utils.WfPicassoHelper;
  */
 public class UserListAdapter extends ArrayAdapter<UserModel>{
 
-	private List<UserModel>		mLstUser		= new ArrayList<>();
-	private Context				mContext;
-	private OnAddUserListener	mListener;
-	private List<UserModel>		mLstUserDisplay	= new ArrayList<>();
+	private final WelfareFragment.OnAvatarClickListener	onAvatarClickListener;
+	private List<UserModel>								mLstUser		= new ArrayList<>();
+	private Context										mContext;
+	private OnAddUserListener							mListener;
+	private List<UserModel>								mLstUserDisplay	= new ArrayList<>();
 
 	public class UserViewHolder{
 
@@ -47,7 +49,7 @@ public class UserListAdapter extends ArrayAdapter<UserModel>{
 		}
 	}
 
-	public UserListAdapter(Context context, List<UserModel> userList, OnAddUserListener listener){
+	public UserListAdapter(Context context, List<UserModel> userList, OnAddUserListener listener, WelfareFragment.OnAvatarClickListener onAvatarClickListener){
 		super(context, R.layout.item_user_list, userList);
 		this.mContext = context;
 		this.mLstUserDisplay = userList;
@@ -55,6 +57,7 @@ public class UserListAdapter extends ArrayAdapter<UserModel>{
 		for(UserModel userModel : userList){
 			this.mLstUser.add(userModel);
 		}
+		this.onAvatarClickListener = onAvatarClickListener;
 	}
 
 	@Override
@@ -74,6 +77,13 @@ public class UserListAdapter extends ArrayAdapter<UserModel>{
 		holder.txtAccountName.setText(model.userAccount);
 		if(!CCStringUtil.isEmpty(model.avatarPath)){
 			WfPicassoHelper.loadImage(mContext, BuildConfig.HOST + model.avatarPath, holder.imgAvatar, null);
+			holder.imgAvatar.setOnClickListener(new View.OnClickListener() {
+
+				@Override
+				public void onClick(View v){
+					onAvatarClickListener.OnAvatarClick(model.userName, model.avatarPath);
+				}
+			});
 		}else{
 		}
 

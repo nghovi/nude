@@ -19,11 +19,13 @@ import android.widget.ListView;
 
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCJsonUtil;
+import trente.asia.messenger.BuildConfig;
 import trente.asia.messenger.R;
 import trente.asia.messenger.fragment.AbstractMsgFragment;
 import trente.asia.messenger.services.user.listener.OnAddUserListener;
 import trente.asia.messenger.services.user.view.UserListAdapter;
 import trente.asia.welfare.adr.define.WfUrlConst;
+import trente.asia.welfare.adr.dialog.WfProfileDialog;
 import trente.asia.welfare.adr.models.UserModel;
 
 /**
@@ -36,6 +38,7 @@ public class UserListFragment extends AbstractMsgFragment implements OnAddUserLi
 	private ListView		mLsvUser;
 	private EditText		mEdtSearch;
 	private UserListAdapter	mAdapter;
+	private WfProfileDialog	mDlgProfile;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -70,6 +73,8 @@ public class UserListFragment extends AbstractMsgFragment implements OnAddUserLi
 			public void afterTextChanged(Editable s){
 			}
 		});
+		mDlgProfile = new WfProfileDialog(activity);
+		mDlgProfile.setDialogProfileDetail(95, 95);
 	}
 
 	@Override
@@ -86,11 +91,19 @@ public class UserListFragment extends AbstractMsgFragment implements OnAddUserLi
 	protected void successLoad(JSONObject response, String url){
 		if(WfUrlConst.WF_MSG_CTA_0001.equals(url)){
 			List<UserModel> lstUser = CCJsonUtil.convertToModelList(response.optString("userList"), UserModel.class);
+			OnAvatarClickListener listener = new OnAvatarClickListener() {
+
+				@Override
+				public void OnAvatarClick(String userName, String avatarPath){
+					mDlgProfile.updateProfileDetail(BuildConfig.HOST, userName, avatarPath);
+					mDlgProfile.show();
+				}
+			};
 			if(!CCCollectionUtil.isEmpty(lstUser)){
-				mAdapter = new UserListAdapter(activity, lstUser, UserListFragment.this);
+				mAdapter = new UserListAdapter(activity, lstUser, UserListFragment.this, listener);
 				mLsvUser.setAdapter(mAdapter);
 			}else{
-				mAdapter = new UserListAdapter(activity, new ArrayList<UserModel>(), UserListFragment.this);
+				mAdapter = new UserListAdapter(activity, new ArrayList<UserModel>(), UserListFragment.this, listener);
 				mLsvUser.setAdapter(mAdapter);
 			}
 		}else{

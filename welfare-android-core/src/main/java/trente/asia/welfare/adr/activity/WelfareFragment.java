@@ -349,6 +349,11 @@ public abstract class WelfareFragment extends ChiaseFragment implements WelfareA
 		}
 	}
 
+	public interface OnAvatarClickListener{
+
+		public void OnAvatarClick(String userName, String avatarPath);
+	}
+
 	@Override
 	public void onPause(){
 		super.onPause();

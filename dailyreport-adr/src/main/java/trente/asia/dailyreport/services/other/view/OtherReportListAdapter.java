@@ -19,6 +19,7 @@ import trente.asia.dailyreport.DRConst;
 import trente.asia.dailyreport.R;
 import trente.asia.dailyreport.services.report.model.ReportModel;
 import trente.asia.dailyreport.utils.DRUtil;
+import trente.asia.welfare.adr.activity.WelfareFragment;
 import trente.asia.welfare.adr.utils.WfPicassoHelper;
 import trente.asia.welfare.adr.view.SelectableRoundedImageView;
 
@@ -29,14 +30,9 @@ public class OtherReportListAdapter extends ArrayAdapter<ReportModel>{
 
 	Context					context;
 	int						layoutId;
-	OnAvatarClickListener	onAvatarClickListener;
+	WelfareFragment.OnAvatarClickListener onAvatarClickListener;
 
-	public interface OnAvatarClickListener{
-
-		public void OnAvatarClick(String userName, String avatarPath);
-	}
-
-	public OtherReportListAdapter(Context context, int resource, List<ReportModel> objects, OnAvatarClickListener onAvatarClickedListener){
+	public OtherReportListAdapter(Context context, int resource, List<ReportModel> objects, WelfareFragment.OnAvatarClickListener onAvatarClickedListener){
 		super(context, resource, objects);
 		this.context = context;
 		this.layoutId = resource;

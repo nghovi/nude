@@ -44,6 +44,7 @@ import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCNumberUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.view.model.ChiaseListItemModel;
+import trente.asia.messenger.BuildConfig;
 import trente.asia.messenger.R;
 import trente.asia.messenger.activities.CameraPhotoPreviewActivity;
 import trente.asia.messenger.activities.FilePreviewActivity;
@@ -68,9 +69,11 @@ import trente.asia.messenger.services.message.view.MessageView;
 import trente.asia.messenger.services.message.view.NoteView;
 import trente.asia.messenger.services.user.UserListActivity;
 import trente.asia.welfare.adr.activity.WelfareActivity;
+import trente.asia.welfare.adr.activity.WelfareFragment;
 import trente.asia.welfare.adr.define.EmotionConst;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.define.WfUrlConst;
+import trente.asia.welfare.adr.dialog.WfProfileDialog;
 import trente.asia.welfare.adr.menu.OnMenuButtonsListener;
 import trente.asia.welfare.adr.menu.OnMenuManageListener;
 import trente.asia.welfare.adr.models.UserModel;
@@ -100,8 +103,8 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 
 	private BoardListFragment							boardListFragment;
 	private MessageMenuManager							menuManager;
-	private final int									TIME_RELOAD					= 10000;																																																				// 10
-																																																																											// seconds
+	private final int									TIME_RELOAD					= 10000;				// 10
+																											// seconds
 	private Timer										mTimer;
 	private boolean										isFirstScroll2Top			= true;
 	private String										latestMessageId				= "0";
@@ -220,36 +223,36 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 																							PendingResult<LocationSettingsResult> result = LocationServices.SettingsApi.checkLocationSettings(mGoogleApiClient, builder.build());
 																							result.setResultCallback(new ResultCallback<LocationSettingsResult>() {
 
-																																												@Override
-																																												public void onResult(LocationSettingsResult result){
-																																													final Status status = result.getStatus();
-																																													// final
-																																													// LocationSettingsStates
-																																													// =
-																																													// result.getLocationSettingsStates();
-																																													switch(status.getStatusCode()){
-																																													case LocationSettingsStatusCodes.SUCCESS:
-																																														// All-location-settings-are-satisfied.
-																																														sendLocation();
-																																														break;
-																																													case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
-																																														// Location-settings-are-not-satisfied.
-																																														// But-could-be-fixed-by-showing-the-user-a-dialog.
-																																														try{
-																																															// Show-the-dialog-by-calling-startResolutionForResult(),
-																																															// and-check-the-result-in-onActivityResult().
-																																															status.startResolutionForResult(activity, REQUEST_CHECK_SETTINGS);
-																																														}catch(IntentSender.SendIntentException e){
-																																															// Ignore-the-error.
-																																														}
-																																														break;
-																																													case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
-																																														// Location-settings-are-not-satisfied.However,we-have-no-way
-																																														// to-fix-the-settings-so-we-won't-show-the-dialog.
-																																														break;
-																																													}
-																																												}
-																																											});
+																								@Override
+																								public void onResult(LocationSettingsResult result){
+																									final Status status = result.getStatus();
+																									// final
+																									// LocationSettingsStates
+																									// =
+																									// result.getLocationSettingsStates();
+																									switch(status.getStatusCode()){
+																									case LocationSettingsStatusCodes.SUCCESS:
+																										// All-location-settings-are-satisfied.
+																										sendLocation();
+																										break;
+																									case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
+																										// Location-settings-are-not-satisfied.
+																										// But-could-be-fixed-by-showing-the-user-a-dialog.
+																										try{
+																											// Show-the-dialog-by-calling-startResolutionForResult(),
+																											// and-check-the-result-in-onActivityResult().
+																											status.startResolutionForResult(activity, REQUEST_CHECK_SETTINGS);
+																										}catch(IntentSender.SendIntentException e){
+																											// Ignore-the-error.
+																										}
+																										break;
+																									case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
+																										// Location-settings-are-not-satisfied.However,we-have-no-way
+																										// to-fix-the-settings-so-we-won't-show-the-dialog.
+																										break;
+																									}
+																								}
+																							});
 
 																							//
 																							onButtonMenuOpenedClicked();
@@ -297,6 +300,8 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 																							}
 																						}
 																					};
+
+	private WfProfileDialog								mDlgProfile;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState){
@@ -351,8 +356,17 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 		messageView.lnrLike.setOnClickListener(this);
 		lnrRightHeader.setOnClickListener(this);
 		noteView.btnSave.setOnClickListener(this);
+		mDlgProfile = new WfProfileDialog(activity);
+		mDlgProfile.setDialogProfileDetail(95, 95);
 
-		mMsgAdapter = new MessageAdapter(activity, mMsgContentList, this);
+		mMsgAdapter = new MessageAdapter(activity, mMsgContentList, this, new OnAvatarClickListener() {
+
+			@Override
+			public void OnAvatarClick(String userName, String avatarPath){
+				mDlgProfile.updateProfileDetail(BuildConfig.HOST, userName, avatarPath);
+				mDlgProfile.show();
+			}
+		});
 		messageView.revMessage.setAdapter(mMsgAdapter);
 
 		initDialog();
@@ -662,7 +676,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 		}else if(WfUrlConst.WF_NOT_0001.equals(url)){
 			noteView.changeMode(false);
 			loadMessageLatest();
-//			mPagerBoard.setCurrentItem(0, true);
+			// mPagerBoard.setCurrentItem(0, true);
 		}else{
 			super.successUpdate(response, url);
 		}
@@ -884,16 +898,15 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 		messageView.imgSend.setEnabled(true);
 	}
 
-//	protected void errorRequest(VolleyError error){
-//		super.errorRequest(error);
-//		messageView.imgSend.setEnabled(true);
-//	}
+	// protected void errorRequest(VolleyError error){
+	// super.errorRequest(error);
+	// messageView.imgSend.setEnabled(true);
+	// }
 
 	protected void errorRequest2(){
 		super.errorRequest2();
 		messageView.imgSend.setEnabled(true);
 	}
-
 
 	@Override
 	public void onDestroy(){

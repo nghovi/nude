@@ -655,7 +655,7 @@ public class OthersFragment extends AbstractDRFragment{
 	}
 
 	private void buildListView(final List<ReportModel> filteredReports){
-		OtherReportListAdapter otherReportListAdapter = new OtherReportListAdapter(activity, R.layout.item_other_report, filteredReports, new OtherReportListAdapter.OnAvatarClickListener() {
+		OtherReportListAdapter otherReportListAdapter = new OtherReportListAdapter(activity, R.layout.item_other_report, filteredReports, new OnAvatarClickListener() {
 
 			@Override
 			public void OnAvatarClick(String userName, String avatarPath){
