@@ -137,9 +137,7 @@ public abstract class WelfareFragment extends ChiaseFragment implements WelfareA
 				prefAccUtil.saveUserPref(myself);
 			}
 			SettingModel settingModel = CCJsonUtil.convertToModel(response.optString("setting"), SettingModel.class);
-			if(settingModel != null){
-				prefAccUtil.saveSetting(settingModel);
-			}
+			prefAccUtil.saveSetting(settingModel);
 			successLoad(response, url);
 
 			if(lnrContentId != null && getView() != null){

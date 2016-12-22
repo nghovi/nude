@@ -110,4 +110,6 @@ public class WfUrlConst{
 	public static final String	API_TEAM_STAMP_LIST									= "/api/team/stamp/list";
 
 	public static final String	WF_CON_0001											= "/api/account/info/request";
+	public static final String	WF_ACC_INFO_REQUEST_FORM							= "/api/account/info/request/form";
+
 }

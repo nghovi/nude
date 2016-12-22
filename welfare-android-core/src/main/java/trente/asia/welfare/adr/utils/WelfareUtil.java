@@ -365,7 +365,8 @@ public class WelfareUtil{
 		return null;
 	}
 
-    public static List<String> getServiceName(Context context){
+	//// TODO: 12/22/2016 delete this function 
+	public static List<String> getServiceName(Context context){
         List<String> lstService = new ArrayList<>();
         lstService.add(context.getString(R.string.wf_thanks_card_service_name));
         lstService.add(context.getString(R.string.wf_messenger_service_name));

@@ -16,9 +16,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import asia.chiase.core.util.CCJsonUtil;
+import asia.chiase.core.util.CCStringUtil;
 import trente.asia.messenger.R;
 import trente.asia.messenger.fragment.AbstractMsgFragment;
 import trente.asia.welfare.adr.define.WfUrlConst;
+import trente.asia.welfare.adr.models.ApiObjectModel;
 import trente.asia.welfare.adr.utils.WelfareUtil;
 import trente.asia.welfare.adr.view.WfSpinner;
 
@@ -58,7 +61,6 @@ public class MsContactUsFragment extends AbstractMsgFragment implements View.OnC
 		txtContentNumber = (TextView)getView().findViewById(R.id.txt_id_content_number);
 		btnSend = (Button)getView().findViewById(R.id.btn_id_send);
 
-		initSpinner();
 		edtContent.addTextChangedListener(new TextWatcher() {
 
 			@Override
@@ -79,37 +81,63 @@ public class MsContactUsFragment extends AbstractMsgFragment implements View.OnC
 		btnSend.setOnClickListener(this);
 	}
 
-	private void initSpinner(){
-		List<String> lstType = new ArrayList<>();
-        lstType.add(getString(R.string.wf_contact_us_select_item));
-		lstType.add(getString(R.string.wf_contact_us_problem_item));
-		lstType.add(getString(R.string.wf_contact_us_improve_item));
-
+	private void initSpinner(List<String> lstType, List<String> lstServiceName){
 		spnType.setupLayout(getString(R.string.wf_contact_us_content_title), lstType, 0,
 
-						new WfSpinner.OnDRSpinnerItemSelectedListener() {
+		new WfSpinner.OnDRSpinnerItemSelectedListener() {
 
-							@Override
-							public void onItemSelected(int selectedPosition){
-                                requestType = WelfareUtil.getContactTypeCd().get(selectedPosition);
-							}
-						}, true);
+			@Override
+			public void onItemSelected(int selectedPosition){
+				requestType = WelfareUtil.getContactTypeCd().get(selectedPosition);
+			}
+		}, true);
 
-		List<String> lstServiceName = WelfareUtil.getServiceName(activity);
-        lstServiceName.add(0, getString(R.string.wf_contact_us_select_item));
 		spnServiceName.setupLayout(getString(R.string.wf_contact_us_service_title), lstServiceName, 0,
 
-						new WfSpinner.OnDRSpinnerItemSelectedListener() {
+		new WfSpinner.OnDRSpinnerItemSelectedListener() {
 
-							@Override
-							public void onItemSelected(int selectedPosition){
-                                serviceType = WelfareUtil.getServiceCd().get(selectedPosition);
-							}
-						}, true);
+			@Override
+			public void onItemSelected(int selectedPosition){
+				serviceType = WelfareUtil.getServiceCd().get(selectedPosition);
+			}
+		}, true);
 	}
 
 	@Override
 	public void initData(){
+		requestAccountInfoForm();
+	}
+
+	private void requestAccountInfoForm(){
+		JSONObject jsonObject = new JSONObject();
+		requestLoad(WfUrlConst.WF_ACC_INFO_REQUEST_FORM, jsonObject, true);
+	}
+
+	@Override
+	protected void successLoad(JSONObject response, String url){
+		if(WfUrlConst.WF_ACC_INFO_REQUEST_FORM.equals(url)){
+			onRequestAccountInfoFormSuccess(response);
+		}else{
+			super.successLoad(response, url);
+		}
+	}
+
+	private void onRequestAccountInfoFormSuccess(JSONObject response){
+		List<ApiObjectModel> requestTypes = CCJsonUtil.convertToModelList(response.optString("requestTypes"), ApiObjectModel.class);
+		List<ApiObjectModel> services = CCJsonUtil.convertToModelList(response.optString("serviceTypes"), ApiObjectModel.class);
+		List<String> lstType = new ArrayList<>();
+		lstType.add(getString(R.string.wf_contact_us_select_item));
+		for(ApiObjectModel requestType : requestTypes){
+			if(!CCStringUtil.isEmpty(requestType.value)) lstType.add(requestType.value);
+		}
+
+		List<String> lstServiceName = new ArrayList<>();
+		lstServiceName.add(getString(R.string.wf_contact_us_select_item));
+		for(ApiObjectModel service : services){
+			if(!CCStringUtil.isEmpty(service.value)) lstServiceName.add(service.value);
+		}
+
+		initSpinner(lstType, lstServiceName);
 	}
 
 	private void contactAdmin(){
