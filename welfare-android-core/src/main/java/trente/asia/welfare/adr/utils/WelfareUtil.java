@@ -17,6 +17,7 @@ import java.util.Map;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.location.Address;
 import android.location.Geocoder;
@@ -394,4 +395,8 @@ public class WelfareUtil{
         lstCd.add(WelfareConst.WF_CONTACT_IMPROVE);
         return lstCd;
     }
+
+	public static int dpToPx(int dp){
+		return (int)(dp * Resources.getSystem().getDisplayMetrics().density);
+	}
 }

@@ -32,6 +32,7 @@
     <color name="dr_text_day_color_sat">#558AD6</color>
     <color name="dr_text_user_name">#558AD6</color>
     <color name="dr_other_month">#AAAAAA</color>
+    <color name="service_profile_bg_color">#D972bd4b</color>
 
 
 </resources>

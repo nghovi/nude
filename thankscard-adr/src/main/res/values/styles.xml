@@ -65,7 +65,8 @@
         <item name="android:textSize">12dp</item>
         <item name="android:textColor">@color/tc_edittext_text_color</item>
         <item name="android:textColorHint">@color/tc_edittext_text_color</item>
-        <item name="android:background">@drawable/shape_common_gray_border</item>
+        <item name="android:background">@drawable/shape_common_gray_border
+        </item>
         <item name="android:padding">10dp</item>
         <item name="android:singleLine">true</item>
     </style>
@@ -76,7 +77,8 @@
         <item name="android:textSize">12dp</item>
         <item name="android:textColor">@color/tc_edittext_text_color</item>
         <item name="android:textColorHint">@color/tc_edittext_text_color</item>
-        <item name="android:background">@drawable/shape_common_gray_border2</item>
+        <item name="android:background">@drawable/shape_common_gray_border2
+        </item>
         <item name="android:padding">10dp</item>
         <item name="android:singleLine">true</item>
     </style>
@@ -129,7 +131,8 @@
     </style>
 
     <style name="tc_text_ranking">
-        <item name="android:textColor">@color/tc_item_indicator_background</item>
+        <item name="android:textColor">@color/tc_item_indicator_background
+        </item>
         <item name="android:textSize">20sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:gravity">center_vertical|center_horizontal</item>
@@ -169,14 +172,8 @@
     </style>
 
     <style name="spinner_style">
-        <item name="android:background">@drawable/shape_common_gray_border</item>
+        <item name="android:background">@drawable/shape_common_gray_border
+        </item>
         <item name="android:prompt">@string/fragment_tc_detail_date</item>
-    </style>
-
-    <style name="tc_profile_dialog">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:background">@android:color/transparent</item>
     </style>
 </resources>

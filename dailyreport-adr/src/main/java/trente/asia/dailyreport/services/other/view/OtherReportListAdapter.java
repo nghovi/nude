@@ -27,19 +27,26 @@ import trente.asia.welfare.adr.view.SelectableRoundedImageView;
  */
 public class OtherReportListAdapter extends ArrayAdapter<ReportModel>{
 
-	Context	context;
-	int		layoutId;
+	Context					context;
+	int						layoutId;
+	OnAvatarClickListener	onAvatarClickListener;
 
-	public OtherReportListAdapter(Context context, int resource, List<ReportModel> objects){
+	public interface OnAvatarClickListener{
+
+		public void OnAvatarClick(String userName, String avatarPath);
+	}
+
+	public OtherReportListAdapter(Context context, int resource, List<ReportModel> objects, OnAvatarClickListener onAvatarClickedListener){
 		super(context, resource, objects);
 		this.context = context;
 		this.layoutId = resource;
+		this.onAvatarClickListener = onAvatarClickedListener;
 	}
 
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent){
 		ViewHolder viewHolder;
-		ReportModel reportModel = getItem(position);
+		final ReportModel reportModel = getItem(position);
 		if(convertView == null){
 			LayoutInflater vi = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			convertView = vi.inflate(layoutId, null);
@@ -104,6 +111,13 @@ public class OtherReportListAdapter extends ArrayAdapter<ReportModel>{
 
 		viewHolder.txtUsername.setText(reportModel.reportUser.userName);
 		WfPicassoHelper.loadImageWithDefaultIcon(context, BuildConfig.HOST, viewHolder.avatar, reportModel.reportUser.avatarPath, R.drawable.wf_profile);
+		viewHolder.avatar.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v){
+				onAvatarClickListener.OnAvatarClick(reportModel.reportUser.userName, reportModel.reportUser.avatarPath);
+			}
+		});
 		viewHolder.txtDate.setText(DRUtil.getDateString(reportModel.reportDate, DRConst.DATE_FORMAT_YYYY_MM_DD_HH_MM_SS, DRConst.DATE_FORMAT_YYYY_MM_DD));
 		return convertView;
 	}

@@ -11,17 +11,14 @@ import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 
-import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import trente.asia.thankscard.R;
-import trente.asia.thankscard.commons.defines.TcConst;
 import trente.asia.thankscard.services.common.TCDetailFragment;
 import trente.asia.thankscard.services.common.model.HistoryModel;
 import trente.asia.thankscard.services.common.model.Template;
-import trente.asia.thankscard.utils.TCUtil;
 import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.models.DeptModel;
+import trente.asia.welfare.adr.utils.WelfareUtil;
 
 /**
  * Created by viet on 3/16/2016.
@@ -67,7 +64,7 @@ public class TemplateSelectionDialog extends TCDialog{
 				if(i % 2 == 0){
 					tableRow = new TableRow(getActivity());
 					TableLayout.LayoutParams params = new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.MATCH_PARENT, 1.0f);
-					params.setMargins(0, 0, 0, TCUtil.dpToPx(MARGIN_BOTTOM_DP));
+					params.setMargins(0, 0, 0, WelfareUtil.dpToPx(MARGIN_BOTTOM_DP));
 					tableRow.setLayoutParams(params);
 					tableRow.setGravity(Gravity.CENTER_HORIZONTAL);
 					tableRow.setGravity(Gravity.CENTER_VERTICAL);

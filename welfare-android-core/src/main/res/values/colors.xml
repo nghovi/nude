@@ -40,6 +40,7 @@
     <color name="core_red">#FF0000</color>
     <color name="core_silver">#C0C0C0</color>
     <color name="core_white">#FFFFFF</color>
+    <color name="service_profile_bg_color">@android:color/transparent</color>
 
 
 </resources>

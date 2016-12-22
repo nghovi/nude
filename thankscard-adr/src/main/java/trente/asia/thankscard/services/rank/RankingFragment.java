@@ -23,7 +23,7 @@ import asia.chiase.core.util.CCJsonUtil;
 import trente.asia.thankscard.BuildConfig;
 import trente.asia.thankscard.R;
 import trente.asia.thankscard.fragments.AbstractTCFragment;
-import trente.asia.thankscard.fragments.dialogs.TCProfileDialog;
+import trente.asia.welfare.adr.dialog.WfProfileDialog;
 import trente.asia.thankscard.services.rank.model.RankModel;
 import trente.asia.thankscard.services.rank.view.RankingListAdapter;
 import trente.asia.welfare.adr.define.WelfareConst;
@@ -44,7 +44,7 @@ public class RankingFragment extends AbstractTCFragment implements DatePickerDia
 	private TextView			txtDateValue;
 	private Button				btnBack;
 	private Button				btnNext;
-	private TCProfileDialog		mDlgProfile;
+	private WfProfileDialog		mDlgProfile;
 
 	public boolean hasBackBtn(){
 		return false;
@@ -83,18 +83,18 @@ public class RankingFragment extends AbstractTCFragment implements DatePickerDia
 		btnBack.setOnClickListener(this);
 		btnNext.setOnClickListener(this);
 
-        mDlgProfile = new TCProfileDialog(activity);
-        mDlgProfile.setDialogProfileDetail();
-        lsvRanking.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+		mDlgProfile = new WfProfileDialog(activity);
+		mDlgProfile.setDialogProfileDetail(50, 50);
+		lsvRanking.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id){
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id){
 
-                RankModel model = (RankModel) parent.getItemAtPosition(position);
-                mDlgProfile.updateProfileDetail(model.userName, model.avatarPath);
-                mDlgProfile.show();
-            }
-        });
+				RankModel model = (RankModel)parent.getItemAtPosition(position);
+				mDlgProfile.updateProfileDetail(BuildConfig.HOST, model.userName, model.avatarPath);
+				mDlgProfile.show();
+			}
+		});
 	}
 
 	private void buildSelectMonthBtn(){

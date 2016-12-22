@@ -26,6 +26,7 @@ import android.widget.TextView;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
+import trente.asia.dailyreport.BuildConfig;
 import trente.asia.dailyreport.DRConst;
 import trente.asia.dailyreport.R;
 import trente.asia.dailyreport.fragments.AbstractDRFragment;
@@ -38,6 +39,7 @@ import trente.asia.dailyreport.services.report.model.ReportModel;
 import trente.asia.dailyreport.utils.DRUtil;
 import trente.asia.dailyreport.view.DRCalendarHeader;
 import trente.asia.welfare.adr.define.WfUrlConst;
+import trente.asia.welfare.adr.dialog.WfProfileDialog;
 import trente.asia.welfare.adr.models.DeptModel;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WelfareUtil;
@@ -80,6 +82,7 @@ public class OthersFragment extends AbstractDRFragment{
 	private List<DRUserModel>					drUserModels;
 	private boolean								deptSpinnerInited	= false;
 	private TextView							txtDate;
+	private WfProfileDialog						mDlgProfile;
 
 	@Override
 	public int getFragmentLayoutId(){
@@ -217,13 +220,21 @@ public class OthersFragment extends AbstractDRFragment{
 		return false;
 	}
 
-	private void addCalendarCellUser(LayoutInflater inflater, UserModel user){
+	private void addCalendarCellUser(LayoutInflater inflater, final UserModel user){
 		View userView = inflater.inflate(R.layout.item_calendar_other_user, null);
 		((LinearLayout)userView.findViewById(R.id.view_user_other_repport_lnr_content)).setBackgroundColor(ContextCompat.getColor(activity, R.color.core_white));
 		SelectableRoundedImageView avatar = (SelectableRoundedImageView)userView.findViewById(R.id.img_id_avatar);
 		TextView txtName = (TextView)userView.findViewById(R.id.txt_id_name);
 		if(user != null){
 			WfPicassoHelper.loadImage2(activity, host, avatar, user.avatarPath);
+			avatar.setOnClickListener(new View.OnClickListener() {
+
+				@Override
+				public void onClick(View v){
+					mDlgProfile.updateProfileDetail(BuildConfig.HOST, user.userName, user.avatarPath);
+					mDlgProfile.show();
+				}
+			});
 			txtName.setText(user.userName);
 		}else{
 			avatar.setVisibility(View.INVISIBLE);
@@ -374,6 +385,8 @@ public class OthersFragment extends AbstractDRFragment{
 
 		wfSpinnerDept = (WfSpinner)getView().findViewById(R.id.fragment_other_report_spn_dept);
 		wfSpinnerUser = (WfSpinner)getView().findViewById(R.id.fragment_other_report_spn_user);
+		mDlgProfile = new WfProfileDialog(activity);
+		mDlgProfile.setDialogProfileDetail(95, 95);
 	}
 
 	private void switchView(int viewType){
@@ -642,7 +655,14 @@ public class OthersFragment extends AbstractDRFragment{
 	}
 
 	private void buildListView(final List<ReportModel> filteredReports){
-		OtherReportListAdapter otherReportListAdapter = new OtherReportListAdapter(activity, R.layout.item_other_report, filteredReports);
+		OtherReportListAdapter otherReportListAdapter = new OtherReportListAdapter(activity, R.layout.item_other_report, filteredReports, new OtherReportListAdapter.OnAvatarClickListener() {
+
+			@Override
+			public void OnAvatarClick(String userName, String avatarPath){
+				mDlgProfile.updateProfileDetail(BuildConfig.HOST, userName, avatarPath);
+				mDlgProfile.show();
+			}
+		});
 		lstReports.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
 			@Override

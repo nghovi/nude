@@ -29,7 +29,6 @@ import trente.asia.thankscard.services.common.model.HistoryModel;
 import trente.asia.thankscard.services.common.model.Template;
 import trente.asia.thankscard.services.posted.ThanksCardEditFragment;
 import trente.asia.thankscard.services.rank.view.TCTabLinearLayout;
-import trente.asia.thankscard.utils.TCUtil;
 import trente.asia.welfare.adr.models.DeptModel;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WelfareUtil;
@@ -357,7 +356,7 @@ public abstract class AbstractTCListFragment extends AbstractTCFragment implemen
 			if(i % 2 == 0){
 				tableRow = new TableRow(getActivity());
 				TableLayout.LayoutParams params = new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.MATCH_PARENT, 1.0f);
-				params.setMargins(0, 0, 0, TCUtil.dpToPx(16));
+				params.setMargins(0, 0, 0, WelfareUtil.dpToPx(16));
 				tableRow.setLayoutParams(params);
 				tableRow.setGravity(Gravity.CENTER_HORIZONTAL);
 				tableRow.setGravity(Gravity.CENTER_VERTICAL);

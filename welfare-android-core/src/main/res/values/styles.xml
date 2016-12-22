@@ -47,7 +47,8 @@
     <style name="wl_common_button_login">
         <item name="android:layout_width">@dimen/margin_150dp</item>
         <item name="android:layout_height">@dimen/margin_40dp</item>
-        <item name="android:background">@drawable/common_welfare_login_button</item>
+        <item name="android:background">@drawable/common_welfare_login_button
+        </item>
         <item name="android:textColor">@color/chiase_white</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:gravity">center</item>
@@ -140,5 +141,12 @@
         <item name="colorControlActivated">@color/wf_app_color_base</item>
         <item name="colorSwitchThumbNormal">#f1f1f1</item>
         <item name="android:colorForeground">@color/chiase_gray</item>
+    </style>
+
+    <style name="wf_profile_dialog">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:background">@android:color/transparent</item>
     </style>
 </resources>
