@@ -131,10 +131,10 @@ public class WorkTransitDetailFragment extends AbstractSwFragment{
 		LayoutInflater mInflater = (LayoutInflater)activity.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         lnrAttachment.removeAllViews();
 		for(ImageAttachmentModel attachmentModel : lstAttachment){
-			if(attachmentModel.attachment != null && !CCStringUtil.isEmpty(attachmentModel.attachment.fileUrl)){
+			if(attachmentModel.thumbnail != null && !CCStringUtil.isEmpty(attachmentModel.thumbnail.fileUrl)){
 				View view = mInflater.inflate(R.layout.item_attachment_show_list, null);
 				ImageView imgPhoto = (ImageView)view.findViewById(R.id.img_id_photo);
-				WfPicassoHelper.loadImage(activity, BuildConfig.HOST + attachmentModel.attachment.fileUrl, imgPhoto, null);
+				WfPicassoHelper.loadImage(activity, BuildConfig.HOST + attachmentModel.thumbnail.fileUrl, imgPhoto, null);
 				lnrAttachment.addView(view);
 			}
 		}
