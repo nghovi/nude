@@ -14,6 +14,6 @@
 
     <color name="wf_app_color_base_active">#477DC3</color>
     <color name="msg_message_action_active">#880007</color>
-    <color name="service_profile_bg_color">#D278b8d1</color>
+    <color name="service_profile_bg_color">#e04099bc</color>
 
 </resources>
