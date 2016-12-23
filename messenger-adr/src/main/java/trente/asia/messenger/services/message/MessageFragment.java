@@ -69,7 +69,6 @@ import trente.asia.messenger.services.message.view.MessageView;
 import trente.asia.messenger.services.message.view.NoteView;
 import trente.asia.messenger.services.user.UserListActivity;
 import trente.asia.welfare.adr.activity.WelfareActivity;
-import trente.asia.welfare.adr.activity.WelfareFragment;
 import trente.asia.welfare.adr.define.EmotionConst;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.define.WfUrlConst;
@@ -363,8 +362,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 
 			@Override
 			public void OnAvatarClick(String userName, String avatarPath){
-				mDlgProfile.updateProfileDetail(BuildConfig.HOST, userName, avatarPath);
-				mDlgProfile.show();
+				mDlgProfile.show(BuildConfig.HOST, userName, avatarPath);
 			}
 		});
 		messageView.revMessage.setAdapter(mMsgAdapter);

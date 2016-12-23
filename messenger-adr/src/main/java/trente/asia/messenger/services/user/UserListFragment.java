@@ -95,8 +95,7 @@ public class UserListFragment extends AbstractMsgFragment implements OnAddUserLi
 
 				@Override
 				public void OnAvatarClick(String userName, String avatarPath){
-					mDlgProfile.updateProfileDetail(BuildConfig.HOST, userName, avatarPath);
-					mDlgProfile.show();
+					mDlgProfile.show(BuildConfig.HOST, userName, avatarPath);
 				}
 			};
 			if(!CCCollectionUtil.isEmpty(lstUser)){

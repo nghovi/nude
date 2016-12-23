@@ -54,7 +54,7 @@ public class WfProfileDialog extends ChiaseDialog{
 		return this;
 	}
 
-	public WfProfileDialog updateProfileDetail(String host, String userName, String photoUrl){
+	public void show(String host, String userName, String photoUrl){
 
 		ImageView imgPhoto = (ImageView)this.findViewById(R.id.img_id_photo);
 		imgPhoto.setImageResource(R.drawable.wf_profile);
@@ -65,6 +65,6 @@ public class WfProfileDialog extends ChiaseDialog{
 		TextView txtUserName = (TextView)this.findViewById(R.id.txt_id_user_name);
 		txtUserName.setText(userName);
 
-		return this;
+		this.show();
 	}
 }

@@ -132,8 +132,7 @@ public class BoardListFragment extends AbstractMsgFragment implements View.OnCli
 
 			@Override
 			public void onClick(View v){
-				mDlgProfile.updateProfileDetail(BuildConfig.HOST, myself.userName, myself.avatarPath);
-				mDlgProfile.show();
+				mDlgProfile.show(BuildConfig.HOST, myself.userName, myself.avatarPath);
 			}
 		});
 
@@ -143,8 +142,7 @@ public class BoardListFragment extends AbstractMsgFragment implements View.OnCli
 
 				@Override
 				public void OnAvatarClick(String userName, String avatarPath){
-					mDlgProfile.updateProfileDetail(BuildConfig.HOST, userName, avatarPath);
-					mDlgProfile.show();
+					mDlgProfile.show(BuildConfig.HOST, userName, avatarPath);
 				}
 			});
 			lsvBoard.setAdapter(mAdapter);
@@ -210,8 +208,7 @@ public class BoardListFragment extends AbstractMsgFragment implements View.OnCli
 
 				@Override
 				public void OnAvatarClick(String userName, String avatarPath){
-					mDlgProfile.updateProfileDetail(BuildConfig.HOST, userName, avatarPath);
-					mDlgProfile.show();
+					mDlgProfile.show(BuildConfig.HOST, userName, avatarPath);
 				}
 			});
 			lsvBoard.setAdapter(mAdapter);

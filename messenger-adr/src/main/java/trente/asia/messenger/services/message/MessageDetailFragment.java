@@ -220,6 +220,12 @@ public class MessageDetailFragment extends AbstractMsgFragment implements View.O
 			if(!CCStringUtil.isEmpty(messageModel.messageSender.avatarPath)){
 				WfPicassoHelper.loadImage(activity, host + messageModel.messageSender.avatarPath, mImgAvatar, null);
 			}
+			mImgAvatar.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					mDlgProfile.show(BuildConfig.HOST, messageModel.messageSender.userName, messageModel.messageSender.avatarPath);
+				}
+			});
 
 			Date messageDate = CCDateUtil.makeDateCustom(messageModel.messageDate, WelfareConst.WL_DATE_TIME_1);
 			String messageDateFormat = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_2, messageDate);
@@ -355,8 +361,7 @@ public class MessageDetailFragment extends AbstractMsgFragment implements View.O
 
 				@Override
 				public void onClick(View v){
-					mDlgProfile.updateProfileDetail(BuildConfig.HOST, commentModel.commentUser.userName, commentModel.commentUser.avatarPath);
-					mDlgProfile.show();
+					mDlgProfile.show(BuildConfig.HOST, commentModel.commentUser.userName, commentModel.commentUser.avatarPath);
 				}
 			});
 

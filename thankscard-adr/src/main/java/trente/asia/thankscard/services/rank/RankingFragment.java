@@ -91,8 +91,7 @@ public class RankingFragment extends AbstractTCFragment implements DatePickerDia
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id){
 
 				RankModel model = (RankModel)parent.getItemAtPosition(position);
-				mDlgProfile.updateProfileDetail(BuildConfig.HOST, model.userName, model.avatarPath);
-				mDlgProfile.show();
+				mDlgProfile.show(BuildConfig.HOST, model.userName, model.avatarPath);
 			}
 		});
 	}

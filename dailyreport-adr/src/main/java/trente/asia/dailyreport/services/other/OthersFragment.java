@@ -231,8 +231,7 @@ public class OthersFragment extends AbstractDRFragment{
 
 				@Override
 				public void onClick(View v){
-					mDlgProfile.updateProfileDetail(BuildConfig.HOST, user.userName, user.avatarPath);
-					mDlgProfile.show();
+					mDlgProfile.show(BuildConfig.HOST, user.userName, user.avatarPath);
 				}
 			});
 			txtName.setText(user.userName);
@@ -659,8 +658,7 @@ public class OthersFragment extends AbstractDRFragment{
 
 			@Override
 			public void OnAvatarClick(String userName, String avatarPath){
-				mDlgProfile.updateProfileDetail(BuildConfig.HOST, userName, avatarPath);
-				mDlgProfile.show();
+				mDlgProfile.show(BuildConfig.HOST, userName, avatarPath);
 			}
 		});
 		lstReports.setOnItemClickListener(new AdapterView.OnItemClickListener() {
