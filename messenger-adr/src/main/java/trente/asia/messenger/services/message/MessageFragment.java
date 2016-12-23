@@ -357,7 +357,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 		lnrRightHeader.setOnClickListener(this);
 		noteView.btnSave.setOnClickListener(this);
 		mDlgProfile = new WfProfileDialog(activity);
-		mDlgProfile.setDialogProfileDetail(95, 95);
+		mDlgProfile.setDialogProfileDetail(50, 50);
 
 		mMsgAdapter = new MessageAdapter(activity, mMsgContentList, this, new OnAvatarClickListener() {
 

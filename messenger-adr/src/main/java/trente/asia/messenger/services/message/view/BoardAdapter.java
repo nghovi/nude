@@ -75,16 +75,16 @@ public class BoardAdapter extends ArrayAdapter<BoardModel>{
 
 		if(!CCStringUtil.isEmpty(model.avatarPath)){
 			WfPicassoHelper.loadImage(mContext, BuildConfig.HOST + model.avatarPath, holder.imgAvatar, null);
-			holder.imgAvatar.setOnClickListener(new View.OnClickListener() {
-
-				@Override
-				public void onClick(View v){
-					listener.OnAvatarClick(model.boardName, model.avatarPath);
-				}
-			});
 		}else{
 			// WfPicassoHelper.loadImage(mContext, "https://upload.wikimedia.org/wikipedia/en/8/86/Avatar_Aang.png", holder.imgAvatar, null);
 		}
+		holder.imgAvatar.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v){
+				listener.OnAvatarClick(model.boardName, model.avatarPath);
+			}
+		});
 
 		if(!CCStringUtil.isEmpty(model.boardUnread) && !WelfareConst.NONE.equals(model.boardUnread)){
 			holder.txtBoardUnread.setText(model.boardUnread);

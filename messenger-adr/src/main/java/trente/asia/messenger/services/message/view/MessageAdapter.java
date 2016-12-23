@@ -198,16 +198,16 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 			viewHolder.txtMessageDate.setText(messageDateFormat);
 			if(!CCStringUtil.isEmpty(contentModel.messageSender.avatarPath)){
 				WfPicassoHelper.loadImage(mContext, BuildConfig.HOST + contentModel.messageSender.avatarPath, viewHolder.imgAvatar, null);
-				viewHolder.imgAvatar.setOnClickListener(new View.OnClickListener() {
-
-					@Override
-					public void onClick(View v){
-						onAvatarClickListener.OnAvatarClick(contentModel.messageSender.userName, contentModel.messageSender.avatarPath);
-					}
-				});
 			}else{
 				viewHolder.imgAvatar.setImageResource(R.drawable.wf_profile);
 			}
+			viewHolder.imgAvatar.setOnClickListener(new View.OnClickListener() {
+
+				@Override
+				public void onClick(View v){
+					onAvatarClickListener.OnAvatarClick(contentModel.messageSender.userName, contentModel.messageSender.avatarPath);
+				}
+			});
 
 			if(!WelfareConst.ITEM_TEXT_TYPE_TEXT.equals(contentModel.messageType) && !WelfareConst.ITEM_TEXT_TYPE_ICON.equals(contentModel.messageType)){
 				viewHolder.txtCommentNumber.setText(String.valueOf(WelfareUtil.size(contentModel.comments)));

@@ -9,9 +9,7 @@
         android:background="@color/wf_app_color_base"
         android:baselineAligned="false"
         android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingBottom="@dimen/margin_5dp"
-        android:paddingTop="@dimen/margin_5dp">
+        android:orientation="horizontal">
 
         <RelativeLayout
             android:id="@+id/lnr_view_common_footer_myreport"
@@ -32,7 +30,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:paddingTop="@dimen/margin_40dp"
+                android:paddingTop="@dimen/margin_30dp"
                 android:text="@string/footer_item1"
                 android:textColor="@color/core_gray"/>
         </RelativeLayout>
@@ -55,7 +53,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:paddingTop="@dimen/margin_40dp"
+                android:paddingTop="@dimen/margin_30dp"
                 android:text="@string/footer_item2"
                 android:textColor="@color/core_gray"
                 android:layout_centerInParent="true"/>
@@ -80,7 +78,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:paddingTop="@dimen/margin_40dp"
+                android:paddingTop="@dimen/margin_30dp"
                 android:text="KPI"
                 android:textColor="@color/core_gray"
                 />
@@ -104,7 +102,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:paddingTop="@dimen/margin_40dp"
+                android:paddingTop="@dimen/margin_30dp"
                 android:text="@string/footer_item3"
                 android:textColor="@color/core_gray"
                 android:layout_centerInParent="true"/>
@@ -128,7 +126,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:paddingTop="@dimen/margin_40dp"
+                android:paddingTop="@dimen/margin_30dp"
                 android:text="@string/footer_item4"
                 android:textColor="@color/core_gray"/>
         </RelativeLayout>

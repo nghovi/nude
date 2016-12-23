@@ -103,7 +103,7 @@ public class BoardListFragment extends AbstractMsgFragment implements View.OnCli
 		btnSetting = (ChiaseCheckableImageView)getView().findViewById(R.id.btn_setting);
 		btnSetting.setOnClickListener(this);
 		mDlgProfile = new WfProfileDialog(activity);
-		mDlgProfile.setDialogProfileDetail(95, 95);
+		mDlgProfile.setDialogProfileDetail(50, 50);
 	}
 
 	@Override
@@ -127,15 +127,15 @@ public class BoardListFragment extends AbstractMsgFragment implements View.OnCli
 		if(!CCStringUtil.isEmpty(myself.avatarPath)){
 			mAvatarPath = myself.avatarPath;
 			WfPicassoHelper.loadImage(activity, host + myself.avatarPath, imgUserAvatar, null);
-			imgUserAvatar.setOnClickListener(new View.OnClickListener() {
-
-				@Override
-				public void onClick(View v){
-					mDlgProfile.updateProfileDetail(BuildConfig.HOST, myself.userName, myself.avatarPath);
-					mDlgProfile.show();
-				}
-			});
 		}
+		imgUserAvatar.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v){
+				mDlgProfile.updateProfileDetail(BuildConfig.HOST, myself.userName, myself.avatarPath);
+				mDlgProfile.show();
+			}
+		});
 
 		List<BoardModel> boardList = CCJsonUtil.convertToModelList(response.optString("boards"), BoardModel.class);
 		if(!CCCollectionUtil.isEmpty(boardList)){

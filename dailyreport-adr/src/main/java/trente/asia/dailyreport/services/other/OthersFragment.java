@@ -386,7 +386,7 @@ public class OthersFragment extends AbstractDRFragment{
 		wfSpinnerDept = (WfSpinner)getView().findViewById(R.id.fragment_other_report_spn_dept);
 		wfSpinnerUser = (WfSpinner)getView().findViewById(R.id.fragment_other_report_spn_user);
 		mDlgProfile = new WfProfileDialog(activity);
-		mDlgProfile.setDialogProfileDetail(95, 95);
+		mDlgProfile.setDialogProfileDetail(50, 50);
 	}
 
 	private void switchView(int viewType){

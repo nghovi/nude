@@ -74,7 +74,7 @@ public class UserListFragment extends AbstractMsgFragment implements OnAddUserLi
 			}
 		});
 		mDlgProfile = new WfProfileDialog(activity);
-		mDlgProfile.setDialogProfileDetail(95, 95);
+		mDlgProfile.setDialogProfileDetail(50, 50);
 	}
 
 	@Override

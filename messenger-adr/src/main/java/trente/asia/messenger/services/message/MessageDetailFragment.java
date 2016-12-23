@@ -164,7 +164,7 @@ public class MessageDetailFragment extends AbstractMsgFragment implements View.O
 		mDlgCheckUser = new MsChiaseDialog(activity);
 		mDlgCheckUser.setDialogCheckUserList();
 		mDlgProfile = new WfProfileDialog(activity);
-		mDlgProfile.setDialogProfileDetail(95, 95);
+		mDlgProfile.setDialogProfileDetail(50, 50);
 	}
 
 	@Override
@@ -350,15 +350,15 @@ public class MessageDetailFragment extends AbstractMsgFragment implements View.O
 			txtDateCmt.setText(commentDateFormat);
 			if(!CCStringUtil.isEmpty(commentModel.commentUser.avatarPath)){
 				WfPicassoHelper.loadImage(activity, BuildConfig.HOST + commentModel.commentUser.avatarPath, imgAvatar, null);
-				imgAvatar.setOnClickListener(new View.OnClickListener() {
-
-					@Override
-					public void onClick(View v){
-						mDlgProfile.updateProfileDetail(BuildConfig.HOST, commentModel.commentUser.userName, commentModel.commentUser.avatarPath);
-						mDlgProfile.show();
-					}
-				});
 			}
+			imgAvatar.setOnClickListener(new View.OnClickListener() {
+
+				@Override
+				public void onClick(View v){
+					mDlgProfile.updateProfileDetail(BuildConfig.HOST, commentModel.commentUser.userName, commentModel.commentUser.avatarPath);
+					mDlgProfile.show();
+				}
+			});
 
 			if(!commentModel.commentContent.equals(EmotionConst.EMO_LIKE)){
 				txtContentCmt.setText(commentModel.commentContent);

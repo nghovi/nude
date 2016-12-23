@@ -77,15 +77,15 @@ public class UserListAdapter extends ArrayAdapter<UserModel>{
 		holder.txtAccountName.setText(model.userAccount);
 		if(!CCStringUtil.isEmpty(model.avatarPath)){
 			WfPicassoHelper.loadImage(mContext, BuildConfig.HOST + model.avatarPath, holder.imgAvatar, null);
-			holder.imgAvatar.setOnClickListener(new View.OnClickListener() {
-
-				@Override
-				public void onClick(View v){
-					onAvatarClickListener.OnAvatarClick(model.userName, model.avatarPath);
-				}
-			});
 		}else{
 		}
+		holder.imgAvatar.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v){
+				onAvatarClickListener.OnAvatarClick(model.userName, model.avatarPath);
+			}
+		});
 
 		holder.imgAdd.setOnClickListener(new View.OnClickListener() {
 
