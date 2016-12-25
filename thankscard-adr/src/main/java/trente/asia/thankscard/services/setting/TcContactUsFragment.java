@@ -159,12 +159,12 @@ public class TcContactUsFragment extends AbstractTCFragment implements View.OnCl
 		}catch(JSONException ex){
 			ex.printStackTrace();
 		}
-		requestUpdate(WfUrlConst.WF_CON_0001, jsonObject, true);
+		requestUpdate(WfUrlConst.WF_ACC_INFO_REQUEST_UPDATE, jsonObject, true);
 	}
 
 	@Override
 	protected void successUpdate(JSONObject response, String url){
-		if(WfUrlConst.WF_CON_0001.equals(url)){
+		if(WfUrlConst.WF_ACC_INFO_REQUEST_UPDATE.equals(url)){
 			getFragmentManager().popBackStack();
 		}else{
 			super.successUpdate(response, url);
