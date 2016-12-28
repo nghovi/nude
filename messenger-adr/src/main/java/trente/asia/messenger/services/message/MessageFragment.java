@@ -48,6 +48,7 @@ import trente.asia.messenger.BuildConfig;
 import trente.asia.messenger.R;
 import trente.asia.messenger.activities.CameraPhotoPreviewActivity;
 import trente.asia.messenger.activities.FilePreviewActivity;
+import trente.asia.messenger.activities.RecorderVideoActivity;
 import trente.asia.messenger.commons.defines.MsConst;
 import trente.asia.messenger.commons.dialog.MsChiaseDialog;
 import trente.asia.messenger.commons.menu.MessageMenuManager;
@@ -185,12 +186,11 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 
 																						@Override
 																						public void onVideoClicked(){
-																							alertDialog.setMessage(getString(R.string.chiase_common_disabled_function));
-																							alertDialog.show();
-																							onButtonMenuOpenedClicked();
-																							// RecorderVideoActivity.starVideoPreviewActivity(MessageFragment.this,
-																							// activeBoard.key);
+																							// alertDialog.setMessage(getString(R.string.chiase_common_disabled_function));
+																							// alertDialog.show();
 																							// onButtonMenuOpenedClicked();
+																							RecorderVideoActivity.starVideoPreviewActivity(MessageFragment.this, activeBoard.key);
+																							onButtonMenuOpenedClicked();
 																						}
 
 																						@Override
