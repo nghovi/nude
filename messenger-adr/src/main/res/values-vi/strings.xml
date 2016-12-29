@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Messenger</string>
+    <string name="msg_app_title">Tin nhắn</string>
+    <string name="msg_preview_title">Xem lại</string>
+    <string name="msg_message_info">%1$s %2$s</string>
+    <string name="msg_message_title">Tin nhắn</string>
+    <string name="msg_message_detail_title">Chi tiết</string>
+    <string name="msg_message_edittext_hint">Viết tin nhắn</string>
+    <string name="msg_message_detail_edittext_hint">Viết bình luận</string>
+
+    <string name="msg_contract_list">Danh sách liên lạc</string>
+    <string name="msg_user_checked">Người dùng đã đọc</string>
+    <string name="msg_user_list">Người dùng đã đọc</string>
+    <string name="msg_started">Tin nhắn đã mở bắt đầu</string>
+    <string name="msg_setting">Cài đặt</string>
+    <string name="msg_action_list">Hãy lựa chọn</string>
+
+    <string name="msg_msg_action_edit">Điều chỉnh tin nhắn</string>
+    <string name="msg_msg_action_delete">Xóa tin nhắn</string>
+    <string name="msg_msg_action_copy">Ghi chú</string>
+
+    <string name="msg_msg_detail_photo_title">Chi tiết hình ảnh</string>
+
+    <string name="msg_board_note_title">Ghi chú</string>
+    <string name="msg_board_note_member_title">Danh sách thành viên</string>
+
+    <string name="msg_user_list_search_contact">Tìm kiếm</string>
+
+    <string name="msg_msg_invalid_empty">Hãy viết tin nhắn trong khoảng từ 1 đến 1000 ký tự.</string>
+    <string name="msg_comment_invalid_empty">Hãy viết bình luận trong khoảng từ 0 đến 1000 ký tự.</string>
+
+    <!--Notifications-->
+    <string name="FM_MS_001">%1$s: Có tin nhắn mới</string>
+    <string name="FM_MS_002">%1$s: Có bình luận mới</string>
+</resources>

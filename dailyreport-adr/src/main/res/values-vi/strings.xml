@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">DailyReport</string>
+
+    <string name="dr_at_time">&#160;%1$s</string>
+
+    <!-- footer -->
+    <string name="footer_item1">Báo cáo </string>
+    <string name="footer_item2">Báo cáo khác</string>
+    <string name="footer_item3">Hoạt động</string>
+    <string name="footer_item4">Cài đặt</string>
+    <string name="fragment_report_edit_change_template_confirm">Bạn muốn thay đổi mẫu này?</string>
+    <string name="fragment_other_title">Báo cáo khác</string>
+    <string name="fragment_follower_title_checker">Danh sách đã đọc</string>
+    <string name="fragment_follower_title_liker">Danh sách người dùng đã [Like]</string>
+    <string name="dr_report_comment_title">Bình luận</string>
+    <string name="spinner_name_template">Mẫu</string>
+    <string name="spinner_name_dept">Phòng ban</string>
+    <string name="spinner_name_user">Người dùng</string>
+
+    <string name="fragment_setting_title">Cài đặt</string>
+    <string name="fragment_title_empty"></string>
+    <string name="header_calendar_this_month">Tháng này</string>
+    <string name="fragment_common_list_empty">Rất tiếc, hiện chưa có dữ liệu</string>
+    <string name="fragment_activities_title">Hoạt động</string>
+
+    <string name="fragment_about_version">Version %1$s</string>
+    <string name="dr_preview_title">Trước</string>
+    <string name="btn_prev">Trước</string>
+    <string name="btn_next">Sau</string>
+
+    <string name="dlr_report_content">Báo cáo hàng ngày</string>
+    <string name="dlr_add_comment">Bình luận</string>
+    <string name="dlr_like">Like!</string>
+
+    <string name="dlr_send">Gửi</string>
+    <string name="dlr_save">Lưu vào nháp</string>
+    <string name="dlr_plan">Dự định</string>
+    <string name="dlr_actual">Thành tích</string>
+    <string name="dlr_content">Báo cáo hàng ngày</string>
+
+    <string name="dlr_add_kpi">Thêm</string>
+    <string name="dlr_unit">Đơn vị</string>
+
+    <string name="dlr_saturday">Thứ bảy</string>
+    <string name="dlr_sunday">Chủ nhật</string>
+    <string name="dlr_monday">Thứ hai</string>
+    <string name="dlr_tue">Thứ ba</string>
+    <string name="dlr_wed">Thứ tư</string>
+    <string name="dlr_thu">Thứ năm</string>
+    <string name="dlr_fri">Thứ sáu</string>
+    <string name="str_all">Tất cả</string>
+    <string name="str_none">Không có</string>
+    <string name="view_kpi_monthly_goal">Mục tiêu tháng</string>
+    <string name="view_kpi_actual_plan">Kế hoạch hành động</string>
+    <string name="dlr_copy">Sao chép</string>
+    <string name="dlr_item">Mục tiêu</string>
+    <string name="dlr_goal">Giá trị mục tiêu</string>
+    <string name="dlr_sum">Lũy kế</string>
+    <string name="dlr_avg">Bình quân</string>
+    <string name="dlr_monthly_goal">Mục tiêu tháng</string>
+    <string name="dlr_input_rule">Giải thích</string>
+    <string name="dlr_clear">Xóa</string>
+    <string name="dlr_done">Hoàn thành</string>
+    <string name="dlr_delete">Xóa</string>
+    <string name="dlr_archievement">Tỷ lệ đạt</string>
+
+    <string name="dr_report_kpi_item_required">You have to make KPI item.</string>
+
+    <string name="dr_comment_edittext_hint">Nhập tin nhắn</string>
+    <string name="spinner_name_report_user">Người báo cáo</string>
+    <string name="spinner_name_action_user">Người hoạt động</string>
+
+    <string name="dr_activity_item_desc">Báo cáo hàng ngày: %1$s Báo cáo từ %2$s</string>
+    <string name="dlg_monthly_goal_title">Nhập mục tiêu tháng</string>
+    <string name="dlg_add_actual_plan_title">Nhập kế hoạch hành động</string>
+    <string name="dr_item_name">Tên hạng mục</string>
+    <string name="dlr_monthly_goal_achievement">Trạng thái đạt mục tiêu tháng</string>
+    <string name="dlr_now">Lũy kế</string>
+    <string name="dlr_max_entries">Có thể đăng ký tối đa 10 hạng mục</string>
+    <string name="dlr_action_plan">Dự định</string>
+    <string name="dr_action_name">Kế hoạch hành động</string>
+    <string name="dlr_action_actual">Thành tích</string>
+    <string name="dlr_monthly_goal_title">Mục tiêu tháng</string>
+    <string name="spn_goal_title">Mục tiêu</string>
+    <string name="dr_item">Mục tiêu</string>
+    <string name="kpi_empty">Chưa có mục tiêu \n Hãy liên lạc đến người quản lý!</string>
+    <string name="kpi_graph_byuser">Biểu đồ (từng người dùng)</string>
+    <string name="kpi_graph_bymonth">Biểu đồ (từng tháng)</string>
+    <string name="msg_msg_invalid_empty">Bình luận trong khoảng từ 1 đến 1,000 ký tự</string>
+    <string name="msg_msg_report_content_null">Báo cáo hàng ngày trong khoảng từ 3 đến 10000 ký tự</string>
+    <string name="msg_msg_report_custome_null">%1$s : trong khoảng từ 3 đến 10,000 ký tự</string>
+
+    <!--Notifications-->
+    <string name="FM_DR_001">%1$s đã tạo báo cáo hàng ngày mới</string>
+    <string name="FM_DR_002">Có %1$s Like! mới</string>
+    <string name="FM_DR_003">Có %1$s bình luận mới</string>
+</resources>
