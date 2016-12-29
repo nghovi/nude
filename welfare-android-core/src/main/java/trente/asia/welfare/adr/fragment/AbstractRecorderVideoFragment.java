@@ -59,7 +59,7 @@ public abstract class AbstractRecorderVideoFragment extends WelfareFragment{
 				// String filePath = video.getPath();
 
 				// but on older devices don't work with EXTRA_OUTPUT
-				if(Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT_WATCH){
+				if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
 					cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriSavedVideo);
 				}
 
