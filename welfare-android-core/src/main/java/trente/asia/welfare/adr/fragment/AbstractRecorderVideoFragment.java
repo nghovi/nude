@@ -26,7 +26,7 @@ import trente.asia.welfare.adr.models.SettingModel;
  */
 public abstract class AbstractRecorderVideoFragment extends WelfareFragment{
 
-	protected String mOriginalPath;
+	protected String	mOriginalPath;
 
 	@Override
 	public void initView(){
@@ -91,14 +91,18 @@ public abstract class AbstractRecorderVideoFragment extends WelfareFragment{
 				mOriginalPath = AndroidUtil.getVideoPath(activity, selectedVideoUri);
 			}else{
 				if(selectedVideoUri.getScheme().equals("content") || selectedVideoUri.getScheme().equals("file")){
-					mOriginalPath = AndroidUtil.getVideoPath(activity, selectedVideoUri);
+					// Fix camera upload function for android N. uri is false
+					// should it be fixed at getUriFromFile ?
+					if(Build.VERSION.SDK_INT < Build.VERSION_CODES.N){
+						mOriginalPath = AndroidUtil.getVideoPath(activity, selectedVideoUri);
+					}
 				}else{
 					mOriginalPath = selectedVideoUri.toString();
 				}
 			}
 
 			File originalFile = new File(mOriginalPath);
-            SettingModel settingModel = prefAccUtil.getSetting();
+			SettingModel settingModel = prefAccUtil.getSetting();
 			if(CCNumberUtil.toLong(settingModel.WF_MAX_FILE_SIZE).compareTo(originalFile.length()) < 0){
 				Intent intent = activity.getIntent();
 				intent.putExtra("detail", WelfareConst.WF_FILE_SIZE_NG);
