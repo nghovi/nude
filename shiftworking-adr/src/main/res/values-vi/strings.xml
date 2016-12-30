@@ -2,28 +2,28 @@
     <string name="app_name">Work Record</string>
 
     <string name="fragment_setting_title">Cài đặt</string>
-    <string name="fragment_about_version">Version %1$s</string>
+    <string name="fragment_about_version">Phiên bản %1$s</string>
     <string name="wf_about_app">Giới thiệu về app</string>
     <string name="wf_account_info_title">Thông tin tài khoản</string>
 
     <string name="sw_offer_title">Nhập thông báo làm việc</string>
     <string name="sw_notice_list_title">Thông báo làm việc</string>
-    <string name="sw_worker_title">Người </string>
+    <string name="sw_worker_title">Thành viên</string>
     <string name="sw_notice_detail_title">Chi tiết thông báo</string>
 
     <string name="fragment_offer_edit_confirm_delete_msg">Bạn muốn xóa đăng ký làm việc này?</string>
     <string name="fragment_offer_edit_offer_type">Phân loại đăng ký</string>
 
-    <string name="fragment_offer_detail_comment_hint">Comment</string>
+    <string name="fragment_offer_detail_comment_hint">Bình luận</string>
     <string name="fragment_offer_detail_approve">%1$s by %2$s</string>
 
-    <string name="sw_footer_work_time">Thời gian làm việc</string>
-    <string name="sw_footer_work_shift">Ca làm việc</string>
-    <string name="sw_footer_who_work">Người dùng đang làm việc</string>
+    <string name="sw_footer_work_time">Thời gian</string>
+    <string name="sw_footer_work_shift">Phân ca</string>
+    <string name="sw_footer_who_work">Thành viên</string>
     <string name="sw_footer_notices">Thông báo</string>
     <string name="sw_footer_setting">Cài đặt</string>
-    <string name="sw_footer_work_status">Trạng thái làm việc</string>
-    <string name="sw_footer_work_offer">Đăng ký làm việc</string>
+    <string name="sw_footer_work_status">Trạng thái</string>
+    <string name="sw_footer_work_offer">Đăng ký</string>
 
     <!--Check in service-->
 
@@ -41,7 +41,7 @@
     <string name="sw_work_item_notice_date">Ngày làm việc</string>
     <string name="sw_work_item_check_user">Người dùng đã xem</string>
 
-    <string name="sw_work_notice_item_offer_dept">申請部門</string>
+    <string name="sw_work_notice_item_offer_dept">Phòng ban đăng ký</string>
 
     <string name="sw_work_time_modify_request_title">Yêu cầu chỉnh sửa</string>
     <string name="sw_work_time_modify_request">Yêu cầu chỉnh sửa %1$s checkin</string>
