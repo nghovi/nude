@@ -1,11 +1,11 @@
 <resources>
     <string name="app_name">ThanksCard</string>
 
-    <string name="main_activity_back_btn_guide">Click back again to exit</string>
-    <string name="common_server_api_error">Server Api Error</string>
+    <string name="main_activity_back_btn_guide">Click lần nữa để thoát</string>
+    <string name="common_server_api_error">Lỗi máy chủ</string>
 
     <string name="fragment_signin_login_button">Đăng nhập</string>
-    <string name="fragment_signin_user_id">User ID</string>
+    <string name="fragment_signin_user_id">ID người dùng</string>
     <string name="fragment_signin_password">Mật khẩu</string>
     <string name="fragment_signin_title">Đăng nhập</string>
     <string name="fragment_signin_login_error_title">Lỗi</string>
@@ -17,10 +17,10 @@
     <string name="fragment_mypage_rank_receive">Thứ tự nhận: %1$s</string>
     <string name="fragment_mypage_btn_post">Đăng</string>
     <string name="fragment_mypage_btn_rank">Xếp hạng</string>
-    <string name="fragment_mypage_user_info">Thông tin user</string>
-    <string name="fragment_mypage_title">My Page</string>
+    <string name="fragment_mypage_user_info">Thông tin thành viên</string>
+    <string name="fragment_mypage_title">Trang của tôi</string>
     <string name="fragment_mypage_dialog_title">Tin nhắn xác nhận</string>
-    <string name="fragment_mypage_notice_new">NEW</string>
+    <string name="fragment_mypage_notice_new">MỚI</string>
     <string name="fragment_mypage_dialog_message">Bạn muốn đăng xuất?</string>
 
     <string name="page_ranking_post">Thứ tự đăng</string>
@@ -30,9 +30,9 @@
 
     <string name="fragment_setting_pass_cur">Mật khẩu hiện tại</string>
     <string name="fragment_setting_pass_new">Mật khẩu mới</string>
-    <string name="fragment_setting_pass_confirm">Mật khẩu mới (Xác nhận lại)</string>
+    <string name="fragment_setting_pass_confirm">Xác nhận mật khẩu</string>
     <string name="fragment_setting_login_button">Cài đặt</string>
-    <string name="fragment_setting_push_notification">Thông báo Push</string>
+    <string name="fragment_setting_push_notification">Thông báo</string>
     <string name="fragment_setting_password">Thay đổi mật khẩu</string>
     <string name="fragment_setting_title">Cài đặt</string>
     <string name="fragment_setting_change_success_title">Đã thay đổi mật khẩu</string>
@@ -46,19 +46,19 @@
     <string name="fragment_tc_list_next">Sau</string>
     <string name="fragment_tc_list_date">Năm tháng</string>
     <string name="fragment_tc_list_dept">Phòng ban</string>
-    <string name="fragment_tc_list_user">User</string>
+    <string name="fragment_tc_list_user">Thành viên</string>
 
     <string name="fragment_tc_detail_date">%1$s</string>
-    <string name="fragment_tc_detail_to">Dear: %1$s</string>
-    <string name="fragment_tc_detail_from">From: %1$s</string>
+    <string name="fragment_tc_detail_to">Gửi %1$s</string>
+    <string name="fragment_tc_detail_from">Từ %1$s</string>
     <string name="fragment_tc_detail_title_pos">Chi tiết đăng</string>
     <string name="fragment_tc_detail_title_receive">Chi tiết nhận</string>
-    <string name="fragment_tc_detail_send_post">Gửi tin nhắn đến user này</string>
-    <string name="fragment_tc_detail_like">Like</string>
-    <string name="fragment_tc_detail_dislike">Dislike</string>
+    <string name="fragment_tc_detail_send_post">Gửi tin nhắn đến người này</string>
+    <string name="fragment_tc_detail_like">Thích</string>
+    <string name="fragment_tc_detail_dislike">Không thích</string>
 
-    <string name="fragment_post_template_title">Post - Template</string>
-    <string name="fragment_post_template_sample_message">Thank you</string>
+    <string name="fragment_post_template_title">Mẫu</string>
+    <string name="fragment_post_template_sample_message">Cảm ơn</string>
 
     <string name="fragment_post_edit_title">Chỉnh sửa</string>
     <string name="fragment_post_edit_button">Gửi</string>
@@ -66,20 +66,20 @@
     <string name="fragment_post_edit_alert_dlg_title">Lỗi</string>
     <string name="txt_fragment_post_edit_template">Mẫu ></string>
     <string name="fragment_post_edit_dept">Phòng ban</string>
-    <string name="fragment_post_edit_user">User</string>
-    <string name="fragment_post_edit_category">Category</string>
+    <string name="fragment_post_edit_user">Thành viên</string>
+    <string name="fragment_post_edit_category">Thể loại</string>
     <string name="txt_fragment_post_edit_message">Tin nhắn</string>
-    <string name="fragment_post_edit_alert_dlg_message1">Hãy lựa chọn user</string>
+    <string name="fragment_post_edit_alert_dlg_message1">Hãy chọn người dùng</string>
     <string name="fragment_post_edit_alert_dlg_message2">Tin nhắn trong khoảng 1 đến %1$s ký tự</string>
-    <string name="fragment_post_edit_alert_dlg_message3">Hãy lựa chọn mẫu</string>
+    <string name="fragment_post_edit_alert_dlg_message3">Hãy chọn mẫu</string>
 
     <string name="fragment_post_edit_alert_dlg_confirm_title">Tin nhắn xác nhận</string>
     <string name="fragment_post_edit_alert_dlg_confirm_message">Gửi tin nhắn đến %1$s?</string>
 
 
-    <string name="fragment_post_confirm_title">Post - Confirm</string>
+    <string name="fragment_post_confirm_title">Xác nhận</string>
     <string name="fragment_post_confirm_btn_cancel">Hủy</string>
-    <string name="fragment_post_confirm_btn_submit">Submit</string>
+    <string name="fragment_post_confirm_btn_submit">Gửi</string>
     <string name="fragment_posted_confirm_success_title">Thành công</string>
     <string name="fragment_posted_confirm_success_message">Tin nhắn đã được gửi</string>
 
@@ -88,30 +88,30 @@
     <string name="spinner_default_prompt"></string>
     <string name="spinner_dept_selection_prompt">Tất cả</string>
     <string name="spinner_user_selection_prompt">Tất cả</string>
-    <string name="dialog_category_selection_category">Category</string>
+    <string name="dialog_category_selection_category">Thể loại</string>
     <string name="dialog_template_selection_template">Mẫu</string>
 
 
-    <string name="dialog_avatar_handlers_camera">Chụp ảnh</string>
+    <string name="dialog_avatar_handlers_camera">Máy ảnh</string>
     <string name="dialog_avatar_handlers_gallery">Thư viện</string>
     <string name="dialog_avatar_handlers_delete">Xóa ảnh</string>
 
     <string name="tc_crop_message">Trimming</string>
     <string name="tc_crop_tip">Điều chỉnh vị trí và kích cỡ ảnh</string>
-    <string name="fragment_upload_photo_title">Trimming</string>
+    <string name="fragment_upload_photo_title">Cắt ảnh</string>
 
     <string name="dialog_rank_stage_title">Tổng số: %1$sP</string>
     <string name="dialog_rank_stage_cancel">Hủy</string>
-    <string name="dialog_rank_stage_require">Cần thiết: %1$sP</string>
+    <string name="dialog_rank_stage_require">Cần %1$sP</string>
     <string name="dialog_rank_stage_status_ok">Đạt</string>
     <string name="dialog_rank_stage_status_not_ok">Chưa đạt</string>
 
     <!-- footer -->
-    <string name="footer_item1">MyPage</string>
-    <string name="footer_item2">Posted</string>
-    <string name="footer_item3">Receive</string>
-    <string name="footer_item4">Ranking</string>
-    <string name="fragment_tc_detail_liked">Liked</string>
+    <string name="footer_item1">Trang của tôi</string>
+    <string name="footer_item2">Đăng</string>
+    <string name="footer_item3">Nhận</string>
+    <string name="footer_item4">Xếp hạng</string>
+    <string name="fragment_tc_detail_liked">Đã thích</string>
 
     <string name="tc_common_point">%1$spt</string>
     <string name="msg_msg_invalid_empty">Tin nhắn từ 1 ký tự đến 75 ký tự</string>
@@ -121,7 +121,7 @@
     <string name="FM_TC_002">Hôm nay là sinh nhật của %1$s</string>
     <string name="FM_TC_003">Đã nhận được ThanksCard từ %1$s</string>
 
-    <string name="tc_dialog_profile_title">Chi tiết về user</string>
+    <string name="tc_dialog_profile_title">Chi tiết về người dùng</string>
     <string name="tc_contact_us_problem_item">Báo cáo vấn đề</string>
     <string name="tc_contact_us_improve_item">Đề xuất cải thiện</string>
     <string name="tc_contact_us_content_title">Nội dung</string>
