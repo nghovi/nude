@@ -26,7 +26,7 @@
     <string name="wf_user_name_kana">Tên người dùng (Kana)</string>
     <string name="wf_change_profile">Thay đổi thông tin cá nhân</string>
 
-    <string name="wf_push_notification">Thông báo Push</string>
+    <string name="wf_push_notification">Thông báo</string>
     <string name="wf_password_change_title">Thay đổi mật khẩu</string>
     <string name="wf_old_password">Mật khẩu cũ</string>
     <string name="wf_new_password">Mật khẩu mới</string>
