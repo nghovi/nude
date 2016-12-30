@@ -49,8 +49,8 @@
     <string name="fragment_tc_list_user">Thành viên</string>
 
     <string name="fragment_tc_detail_date">%1$s</string>
-    <string name="fragment_tc_detail_to">Gửi %1$s</string>
-    <string name="fragment_tc_detail_from">Từ %1$s</string>
+    <string name="fragment_tc_detail_to">Gửi: %1$s</string>
+    <string name="fragment_tc_detail_from">Từ: %1$s</string>
     <string name="fragment_tc_detail_title_pos">Chi tiết đăng</string>
     <string name="fragment_tc_detail_title_receive">Chi tiết nhận</string>
     <string name="fragment_tc_detail_send_post">Gửi tin nhắn đến người này</string>
