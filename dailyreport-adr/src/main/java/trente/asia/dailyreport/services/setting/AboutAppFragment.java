@@ -30,7 +30,7 @@ public class AboutAppFragment extends AbstractDRFragment{
 		version.setText(getString(R.string.fragment_about_version, AndroidUtil.getVersionName(activity)));
 
 		WebView webView = (WebView)getView().findViewById(R.id.webview_fragment_about);
-		webView.loadUrl("file:///android_asset/license/license-dependency.html");
+		webView.loadUrl("file:///android_asset/license_info.html");
 	}
 
 }
