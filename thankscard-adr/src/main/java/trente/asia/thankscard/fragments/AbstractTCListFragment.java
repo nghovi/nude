@@ -89,7 +89,7 @@ public abstract class AbstractTCListFragment extends AbstractTCFragment implemen
 		month = month == 0 ? Calendar.getInstance().get(Calendar.MONTH) + 1 : month;
 		year = year == 0 ? Calendar.getInstance().get(Calendar.YEAR) : year;
 
-		//Don't show future post/receive
+		// Don't show future post/receive
 		maxMonth = Calendar.getInstance().get(Calendar.MONTH) + 1;
 		maxYear = Calendar.getInstance().get(Calendar.YEAR);
 
@@ -191,7 +191,7 @@ public abstract class AbstractTCListFragment extends AbstractTCFragment implemen
 
 			@Override
 			public void onClick(View v){
-				//design change, now don't show future post/receive
+				// design change, now don't show future post/receive
 				showLimitedMonthPickerDialog(AbstractTCListFragment.this, AbstractTCListFragment.this.year, AbstractTCListFragment.this.month, maxYear, maxMonth);
 			}
 		};
@@ -249,7 +249,7 @@ public abstract class AbstractTCListFragment extends AbstractTCFragment implemen
 		((TextView)getView().findViewById(R.id.txt_fragment_tc_list_month)).setText(this.year + "-" + CCFormatUtil.formatZero(this.month));
 		mLstHistory = CCJsonUtil.convertToModelList(response.optString("histories"), HistoryModel.class);
 		departments = CCJsonUtil.convertToModelList(response.optString("depts"), DeptModel.class);
-		if(WelfareUtil.size(departments) == 1 && WelfareUtil.size(departments.get(0).members) == 1){
+		if(WelfareUtil.size(departments) == 1 && WelfareUtil.size(departments.get(0).members) == 1 && btnPost != null){
 			btnPost.setEnabled(false);
 		}
 		templates = CCJsonUtil.convertToModelList(response.optString("templates"), Template.class);

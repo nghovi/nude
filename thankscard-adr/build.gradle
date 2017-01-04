@@ -35,7 +35,7 @@ android {
     productFlavors {
         develop {
             buildConfigField "Boolean", "DEVELOP", "true"
-            buildConfigField "String", "HOST", "\"http://10.253.130.38:9000\""
+            buildConfigField "String", "HOST", "\"http://192.168.1.124:9000\""
         }
         production {
             buildConfigField "String", "HOST", "\"https://tr-fukuri.jp\""
