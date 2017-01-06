@@ -34,7 +34,7 @@
 
     <string name="wf_select_attach_file">Chọn và đính kèm tệp</string>
     <string name="wf_file">Tệp tin</string>
-    <string name="wf_camera">Camera</string>
+    <string name="wf_camera">Máy ảnh</string>
     <string name="wf_gallery">Thư viện</string>
     <string name="wf_location">Vị trí</string>
     <string name="wf_video">Video</string>
