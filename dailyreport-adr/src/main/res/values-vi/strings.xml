@@ -52,7 +52,7 @@
     <string name="str_all">Tất cả</string>
     <string name="str_none">Không có</string>
     <string name="view_kpi_monthly_goal">Mục tiêu tháng</string>
-    <string name="view_kpi_actual_plan">Kế hoạch làm việc</string>
+    <string name="view_kpi_actual_plan">Kế hoạch hành động</string>
     <string name="dlr_copy">Sao chép</string>
     <string name="dlr_item">Mục tiêu</string>
     <string name="dlr_goal">Giá trị mục tiêu</string>
