@@ -11,8 +11,8 @@
     <string name="chiase_title_movie_choose">Chọn video</string>
     <string name="chiase_title_movie_take">Quay video</string>
 
-    <string name="chiase_common_ok">Chọn</string>
-    <string name="chiase_common_cancel">Hủy</string>
+    <string name="chiase_common_ok">Có</string>
+    <string name="chiase_common_cancel">Không</string>
     <string name="chiase_common_edit">Chỉnh sửa</string>
     <string name="chiase_common_delete">Xóa</string>
     <string name="chiase_common_copy">Ghi chú</string>
