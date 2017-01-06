@@ -52,7 +52,7 @@
     <string name="str_all">Tất cả</string>
     <string name="str_none">Không có</string>
     <string name="view_kpi_monthly_goal">Mục tiêu tháng</string>
-    <string name="view_kpi_actual_plan">Kế hoạch hành động</string>
+    <string name="view_kpi_actual_plan">Kế hoạch làm việc</string>
     <string name="dlr_copy">Sao chép</string>
     <string name="dlr_item">Mục tiêu</string>
     <string name="dlr_goal">Giá trị mục tiêu</string>
@@ -80,7 +80,7 @@
     <string name="dlr_max_entries">Không thể thêm nhiều hơn 10 hạng mục</string>
     <string name="dlr_action_plan">Dự định</string>
     <string name="dr_action_name">Kế hoạch hành động</string>
-    <string name="dlr_action_actual">Thành tích</string>
+    <string name="dlr_action_actual">Thực tế</string>
     <string name="dlr_monthly_goal_title">Mục tiêu tháng</string>
     <string name="spn_goal_title">Mục tiêu</string>
     <string name="dr_item">Mục tiêu</string>

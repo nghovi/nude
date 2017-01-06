@@ -16,7 +16,7 @@
     <string name="msg_setting">Cài đặt</string>
     <string name="msg_action_list">Hãy lựa chọn</string>
 
-    <string name="msg_msg_action_edit">Điều chỉnh tin nhắn</string>
+    <string name="msg_msg_action_edit">Chỉnh sửa tin nhắn</string>
     <string name="msg_msg_action_delete">Xóa tin nhắn</string>
     <string name="msg_msg_action_copy">Ghi chú</string>
 

@@ -3,7 +3,7 @@
 
     <string name="fragment_setting_title">Cài đặt</string>
     <string name="fragment_about_version">Phiên bản %1$s</string>
-    <string name="wf_about_app">Giới thiệu về app</string>
+    <string name="wf_about_app">Giới thiệu về ứng dụng</string>
     <string name="wf_account_info_title">Thông tin tài khoản</string>
 
     <string name="sw_offer_title">Nhập thông báo làm việc</string>
@@ -38,7 +38,7 @@
     <string name="sw_work_item_notice_loc">Địa chỉ</string>
     <string name="sw_work_item_notice_pic">Hình ảnh</string>
     <string name="sw_work_item_notice_user">Người dùng</string>
-    <string name="sw_work_item_notice_date">Ngày làm việc</string>
+    <string name="sw_work_item_notice_date">Ngày thông báo</string>
     <string name="sw_work_item_check_user">Người dùng đã xem</string>
 
     <string name="sw_work_notice_item_offer_dept">Phòng ban đăng ký</string>
@@ -56,7 +56,7 @@
 
 
     <string name="sw_work_action_check_in">Checkin</string>
-    <string name="sw_work_action_choose_loc">Chọn thông tin địa điểm</string>
+    <string name="sw_work_action_choose_loc">Chọn thông tin địa chỉnh</string>
 
     <string name="sw_msg_no_project">Dự án chưa được thiết lập</string>
     <string name="sw_notice_title">%1$s -> %2$s</string>
@@ -80,9 +80,9 @@
     <string name="sw_work_transit_way_type_item">Phân loại</string>
     <string name="sw_work_transit_one_way_item">Một chiều</string>
     <string name="sw_work_transit_two_way_item">Khứ hồi</string>
-    <string name="sw_work_transit_cost_type_item">Phân loại chi phí</string>
-    <string name="sw_work_transit_trans_type_item">Phương tiện đi lại</string>
-    <string name="sw_work_transit_fee_item">Chi phí đi lại</string>
+    <string name="sw_work_transit_cost_type_item">Loại phí</string>
+    <string name="sw_work_transit_trans_type_item">Phương tiện</string>
+    <string name="sw_work_transit_fee_item">Chi phí</string>
     <string name="sw_work_transit_note_item">Ghi chú</string>
     <string name="sw_work_transit_attachment_item">Đính kèm</string>
     <string name="sw_work_transit_list_title">Danh sách</string>
@@ -102,14 +102,14 @@
     <string name="fragment_offer_detail_end_date">Ngày kết thúc</string>
     <string name="fragment_offer_detail_end_time">Thời gian kết thúc</string>
     <string name="fragment_offer_detail_note">Ghi chú</string>
-    <string name="fragment_offer_detail_approve_history">Lịch sử đăng ký làm việc</string>
+    <string name="fragment_offer_detail_approve_history">Lịch sử phê duyệt</string>
     <string name="fragment_offer_detail_approve_comment">Bình luận</string>
     <string name="fragment_offer_edit_header">Nhập đăng ký làm việc</string>
-    <string name="sw_work_offer_other_history">Lịch sử đăng ký làm việc khác</string>
+    <string name="sw_work_offer_other_history">Đăng ký của thành viên khác</string>
     <string name="fragment_work_offer_edit_offer_type">Phân loại đăng ký</string>
     <string name="fragment_work_offer_edit_offer_status">Trạng thái đăng ký</string>
     <string name="fragment_work_offer_edit_offer_dept">Phòng ban đăng ký</string>
-    <string name="sw_work_offer_history">Lịch sử đăng ký làm việc</string>
+    <string name="sw_work_offer_history">Đăng ký của tôi</string>
 
     <string name="sw_work_offer_action_approve">Phê duyệt</string>
     <string name="sw_work_offer_action_reject">Hủy</string>
