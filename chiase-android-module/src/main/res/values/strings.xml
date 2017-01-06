@@ -13,6 +13,7 @@
 
     <string name="chiase_common_ok">OK</string>
     <string name="chiase_common_cancel">Cancel</string>
+    <string name="chiase_common_cancel1">Cancel</string>
     <string name="chiase_common_edit">Edit</string>
     <string name="chiase_common_delete">Delete</string>
     <string name="chiase_common_copy">Copy</string>

@@ -13,6 +13,7 @@
 
     <string name="chiase_common_ok">Có</string>
     <string name="chiase_common_cancel">Không</string>
+    <string name="chiase_common_cancel1">Hủy</string>
     <string name="chiase_common_edit">Chỉnh sửa</string>
     <string name="chiase_common_delete">Xóa</string>
     <string name="chiase_common_copy">Ghi chú</string>

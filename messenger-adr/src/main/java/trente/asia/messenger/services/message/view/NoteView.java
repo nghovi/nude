@@ -83,7 +83,7 @@ public class NoteView extends LinearLayout{
 			edtNote.setKeyListener(mDefaultKeyListener);
 			// edtNote.setFocusable(true);
 			btnSave.setEnabled(true);
-			btnEdit.setText(mContext.getString(R.string.chiase_common_cancel));
+			btnEdit.setText(mContext.getString(R.string.chiase_common_cancel1));
 		}else{
 			noteContent = "";
 			// edtNote.setEnabled(false);

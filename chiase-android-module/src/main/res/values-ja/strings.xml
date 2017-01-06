@@ -13,6 +13,7 @@
 
     <string name="chiase_common_ok">OK</string>
     <string name="chiase_common_cancel">キャンセル</string>
+    <string name="chiase_common_cancel1">キャンセル</string>
     <string name="chiase_common_edit">編集</string>
     <string name="chiase_common_delete">削除</string>
     <string name="chiase_common_copy">ノート</string>
