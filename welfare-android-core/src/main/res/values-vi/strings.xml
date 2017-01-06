@@ -28,7 +28,7 @@
 
     <string name="wf_push_notification">Thông báo</string>
     <string name="wf_password_change_title">Thay đổi mật khẩu</string>
-    <string name="wf_old_password">Mật khẩu cũ</string>
+    <string name="wf_old_password">Mật khẩu hiện tại</string>
     <string name="wf_new_password">Mật khẩu mới</string>
     <string name="wf_confirm_password">Xác nhận mật khẩu</string>
 
@@ -40,7 +40,7 @@
     <string name="wf_video">Video</string>
     <string name="wf_cancel">Hủy</string>
     <string name="wf_done">Hoàn thành</string>
-    <string name="wf_about_app">Giới thiệu về app</string>
+    <string name="wf_about_app">Giới thiệu về ứng dụng</string>
     <string name="wf_setting_contact_us">Liên hệ</string>
     <string name="wf_pricacy_policy">Chính sách riêng tư</string>
     <string name="wf_term_service">Quy ước sử dụng</string>
