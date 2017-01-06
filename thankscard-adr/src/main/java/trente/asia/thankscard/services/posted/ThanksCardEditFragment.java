@@ -433,7 +433,7 @@ public class ThanksCardEditFragment extends AbstractTCFragment{
 					requestPostNewCard();
 				}
 			};
-			showAlertDialogWithOption(getString(R.string.fragment_post_edit_alert_dlg_confirm_title), getString(R.string.fragment_post_edit_alert_dlg_confirm_message, selectedUser.userName), getString(android.R.string.ok), getString(android.R.string.cancel), listener, null);
+			showAlertDialogWithOption(getString(R.string.fragment_post_edit_alert_dlg_confirm_title), getString(R.string.fragment_post_edit_alert_dlg_confirm_message, selectedUser.userName), getString(R.string.chiase_common_ok), getString(R.string.chiase_common_cancel), listener, null);
 			// gotoConfirmFragment();
 		}
 	}
