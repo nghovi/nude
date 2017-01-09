@@ -139,25 +139,25 @@
 
                 <View style="@style/cs_common_divider"/>
 
-                <LinearLayout
-                    android:id="@+id/lnr_id_cost_type"
-                    style="@style/wf_common_item_linear2"
-                    android:background="@drawable/state_common_selectable_row">
+                <!--<LinearLayout-->
+                    <!--android:id="@+id/lnr_id_cost_type"-->
+                    <!--style="@style/wf_common_item_linear2"-->
+                    <!--android:background="@drawable/state_common_selectable_row">-->
 
-                    <TextView
-                        style="@style/wl_common_text"
-                        android:layout_width="wrap_content"
-                        android:text="@string/sw_work_transit_cost_type_item"/>
+                    <!--<TextView-->
+                        <!--style="@style/wl_common_text"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:text="@string/sw_work_transit_cost_type_item"/>-->
 
-                    <trente.asia.android.view.ChiaseTextView
-                        android:id="@+id/txt_id_cost_type"
-                        style="@style/wl_common_edit_text2"
-                        android:layout_marginLeft="@dimen/margin_10dp"
-                        android:hint="@string/chiase_common_please_select"
-                        custom:mName="costType"/>
-                </LinearLayout>
+                    <!--<trente.asia.android.view.ChiaseTextView-->
+                        <!--android:id="@+id/txt_id_cost_type"-->
+                        <!--style="@style/wl_common_edit_text2"-->
+                        <!--android:layout_marginLeft="@dimen/margin_10dp"-->
+                        <!--android:hint="@string/chiase_common_please_select"-->
+                        <!--custom:mName="costType"/>-->
+                <!--</LinearLayout>-->
 
-                <View style="@style/cs_common_divider"/>
+                <!--<View style="@style/cs_common_divider"/>-->
 
                 <LinearLayout
                     style="@style/wf_common_item_linear2"

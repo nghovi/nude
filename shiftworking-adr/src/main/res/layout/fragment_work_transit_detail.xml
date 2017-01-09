@@ -105,21 +105,21 @@
 
             <View style="@style/cs_common_divider"/>
 
-            <LinearLayout
-                style="@style/wf_common_item_linear2">
+            <!--<LinearLayout-->
+                <!--style="@style/wf_common_item_linear2">-->
 
-                <TextView
-                    style="@style/wl_common_text"
-                    android:layout_width="wrap_content"
-                    android:text="@string/sw_work_transit_cost_type_item"/>
+                <!--<TextView-->
+                    <!--style="@style/wl_common_text"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:text="@string/sw_work_transit_cost_type_item"/>-->
 
-                <trente.asia.android.view.ChiaseTextView
-                    android:id="@+id/txt_id_cost_type"
-                    style="@style/wl_common_edit_text2"
-                    android:layout_marginLeft="@dimen/margin_10dp"/>
-            </LinearLayout>
+                <!--<trente.asia.android.view.ChiaseTextView-->
+                    <!--android:id="@+id/txt_id_cost_type"-->
+                    <!--style="@style/wl_common_edit_text2"-->
+                    <!--android:layout_marginLeft="@dimen/margin_10dp"/>-->
+            <!--</LinearLayout>-->
 
-            <View style="@style/cs_common_divider"/>
+            <!--<View style="@style/cs_common_divider"/>-->
 
             <LinearLayout
                 style="@style/wf_common_item_linear2"

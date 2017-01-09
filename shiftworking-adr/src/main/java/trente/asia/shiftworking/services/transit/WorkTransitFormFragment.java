@@ -61,7 +61,7 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 	private String					activeTransitId;
 	private ChiaseTextView			txtTransitType;
 	private ChiaseTextView			txtWayType;
-	private ChiaseTextView			txtCostType;
+//	private ChiaseTextView			txtCostType;
 
 	private ChiaseImageView			activePhoto;
 	private LinearLayout			lnrAttachment;
@@ -72,11 +72,11 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 	private EditText				edtArrive;
 	private LinearLayout			lnrTransitType;
 	private LinearLayout			lnrWayType;
-	private LinearLayout			lnrCostType;
+//	private LinearLayout			lnrCostType;
 
 	private ChiaseListDialog		dlgTransitType;
 	private ChiaseListDialog		dlgWayType;
-	private ChiaseListDialog		dlgCostType;
+//	private ChiaseListDialog		dlgCostType;
 
 	private ChiaseListViewNoScroll	lsvLeave;
 	private PlaceHistoryAdapter		adapterLeave;
@@ -111,7 +111,7 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 
 		txtTransitType = (ChiaseTextView)getView().findViewById(R.id.txt_id_transit_type);
 		txtWayType = (ChiaseTextView)getView().findViewById(R.id.txt_id_way_type);
-		txtCostType = (ChiaseTextView)getView().findViewById(R.id.txt_id_cost_type);
+//		txtCostType = (ChiaseTextView)getView().findViewById(R.id.txt_id_cost_type);
 
 		lnrAttachment = (LinearLayout)getView().findViewById(R.id.lnr_id_attachment);
 		btnAdd = (Button)getView().findViewById(R.id.btn_id_add);
@@ -120,14 +120,14 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 
 		lnrTransitType = (LinearLayout)getView().findViewById(R.id.lnr_id_transit_type);
 		lnrWayType = (LinearLayout)getView().findViewById(R.id.lnr_id_way_type);
-		lnrCostType = (LinearLayout)getView().findViewById(R.id.lnr_id_cost_type);
+//		lnrCostType = (LinearLayout)getView().findViewById(R.id.lnr_id_cost_type);
 
 		lsvLeave = (ChiaseListViewNoScroll)getView().findViewById(R.id.lsv_id_leave);
 		lsvArrive = (ChiaseListViewNoScroll)getView().findViewById(R.id.lsv_id_arrive);
 
 		lnrTransitType.setOnClickListener(this);
 		lnrWayType.setOnClickListener(this);
-		lnrCostType.setOnClickListener(this);
+//		lnrCostType.setOnClickListener(this);
 		imgRightIcon.setOnClickListener(this);
 		btnDelete.setOnClickListener(this);
 		btnAdd.setOnClickListener(this);
@@ -141,7 +141,7 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 	private void initDialog(TransitModelHolder holder){
 		dlgTransitType = new ChiaseListDialog(activity, getString(R.string.sw_work_transit_trans_type_item), WelfareFormatUtil.convertList2Map(holder.transTypes), txtTransitType, null);
 		dlgWayType = new ChiaseListDialog(activity, getString(R.string.sw_work_transit_way_type_item), WelfareFormatUtil.convertList2Map(holder.wayTypes), txtWayType, null);
-		dlgCostType = new ChiaseListDialog(activity, getString(R.string.sw_work_transit_cost_type_item), WelfareFormatUtil.convertList2Map(holder.costTypes), txtCostType, null);
+//		dlgCostType = new ChiaseListDialog(activity, getString(R.string.sw_work_transit_cost_type_item), WelfareFormatUtil.convertList2Map(holder.costTypes), txtCostType, null);
 
 		if(CCStringUtil.isEmpty(activeTransitId)){
 			// set default value
@@ -149,8 +149,8 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 			txtTransitType.setValue(holder.transTypes.get(0).key);
 			txtWayType.setText(holder.wayTypes.get(0).value);
 			txtWayType.setValue(holder.wayTypes.get(0).key);
-			txtCostType.setText(holder.costTypes.get(0).value);
-			txtCostType.setValue(holder.costTypes.get(0).key);
+//			txtCostType.setText(holder.costTypes.get(0).value);
+//			txtCostType.setValue(holder.costTypes.get(0).key);
 		}
 	}
 
@@ -256,7 +256,7 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 			CAObjectSerializeUtil.deserializeObject(lnrContent, new JSONObject(gson.toJson(transitModel)));
 			txtTransitType.setText(transitModel.transTypeName);
 			txtWayType.setText(transitModel.wayTypeName);
-			txtCostType.setText(transitModel.costTypeName);
+//			txtCostType.setText(transitModel.costTypeName);
 			if(!CCCollectionUtil.isEmpty(transitModel.attachmentFile)){
 				setAttachment(transitModel.attachmentFile);
 			}
@@ -410,9 +410,9 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 		case R.id.lnr_id_way_type:
 			dlgWayType.show();
 			break;
-		case R.id.lnr_id_cost_type:
-			dlgCostType.show();
-			break;
+//		case R.id.lnr_id_cost_type:
+//			dlgCostType.show();
+//			break;
 		case R.id.img_id_photo:
 			// menuManager.openMenu(imgPhoto1);
 			mViewForMenuBehind.setVisibility(View.VISIBLE);

@@ -39,7 +39,7 @@ public class WorkTransitDetailFragment extends AbstractSwFragment{
 
 	private TextView		txtTransitType;
 	private TextView		txtWayType;
-	private TextView		txtCostType;
+//	private TextView		txtCostType;
 
 	private LinearLayout	lnrAttachment;
 
@@ -72,7 +72,7 @@ public class WorkTransitDetailFragment extends AbstractSwFragment{
 
 		txtTransitType = (TextView)getView().findViewById(R.id.txt_id_transit_type);
 		txtWayType = (TextView)getView().findViewById(R.id.txt_id_way_type);
-		txtCostType = (TextView)getView().findViewById(R.id.txt_id_cost_type);
+//		txtCostType = (TextView)getView().findViewById(R.id.txt_id_cost_type);
 		lnrAttachment = (LinearLayout)getView().findViewById(R.id.lnr_id_attachment);
 	}
 
@@ -111,7 +111,7 @@ public class WorkTransitDetailFragment extends AbstractSwFragment{
 				txtWayType.setText(holder.transit.wayTypeName);
 
 				txtFee.setText(CCFormatUtil.formatAmount(holder.transit.fee));
-				txtCostType.setText(holder.transit.costTypeName);
+//				txtCostType.setText(holder.transit.costTypeName);
 				txtNote.setText(holder.transit.note);
 
                 LinearLayout lnrHolder = (LinearLayout)getView().findViewById(R.id.lnr_id_attachment_holder);

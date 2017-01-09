@@ -30,7 +30,7 @@ public class TransitAdapter extends ArrayAdapter<TransitModel>{
 		public TextView	txtLeave;
 		public TextView	txtArrive;
 		public TextView	txtWayType;
-		public TextView	txtCostType;
+//		public TextView	txtCostType;
 		public TextView	txtTransitType;
 		public TextView	txtFee;
 
@@ -38,14 +38,14 @@ public class TransitAdapter extends ArrayAdapter<TransitModel>{
 			txtLeave = (TextView)view.findViewById(R.id.txt_id_leave);
 			txtArrive = (TextView)view.findViewById(R.id.txt_id_arrive);
 			txtWayType = (TextView)view.findViewById(R.id.txt_id_way_type);
-			txtCostType = (TextView)view.findViewById(R.id.txt_id_cost_type);
+//			txtCostType = (TextView)view.findViewById(R.id.txt_id_cost_type);
 			txtTransitType = (TextView)view.findViewById(R.id.txt_id_transit_type);
 			txtFee = (TextView)view.findViewById(R.id.txt_id_fee);
 		}
 	}
 
 	public TransitAdapter(Context context, List<TransitModel> lstTransit){
-		super(context, R.layout.item_shift_working_list, lstTransit);
+		super(context, R.layout.item_transit_list, lstTransit);
 		this.mContext = context;
 		this.lstTransit = lstTransit;
 	}
@@ -61,7 +61,7 @@ public class TransitAdapter extends ArrayAdapter<TransitModel>{
         holder.txtLeave.setText(WelfareFormatUtil.connect2String(mContext.getString(R.string.sw_work_transit_leave_item), model.transLeave, ":"));
         holder.txtArrive.setText(WelfareFormatUtil.connect2String(mContext.getString(R.string.sw_work_transit_arrive_item), model.transArrive, ":"));
         holder.txtWayType.setText(WelfareFormatUtil.connect2String(mContext.getString(R.string.sw_work_transit_way_type_item), model.wayTypeName, ":"));
-        holder.txtCostType.setText(WelfareFormatUtil.connect2String(mContext.getString(R.string.sw_work_transit_cost_type_item), model.costTypeName, ":"));
+//        holder.txtCostType.setText(WelfareFormatUtil.connect2String(mContext.getString(R.string.sw_work_transit_cost_type_item), model.costTypeName, ":"));
         holder.txtTransitType.setText(WelfareFormatUtil.connect2String(mContext.getString(R.string.sw_work_transit_trans_type_item), model.transTypeName, ":"));
         holder.txtFee.setText(WelfareFormatUtil.connect2String(mContext.getString(R.string.sw_work_transit_fee_item), CCFormatUtil.formatAmount(model.fee), ":"));
 
