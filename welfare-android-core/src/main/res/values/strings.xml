@@ -18,7 +18,7 @@
     <string name="wlf_update_info">Update</string>
     <string name="wf_account_info_title">Account Information</string>
     <string name="wf_sign_in_remember">Save your account name</string>
-    <string name="wf_common_signin_user_id">User Id</string>
+    <string name="wf_common_signin_user_id">Account name</string>
     <string name="wf_common_signin_password">Password</string>
 
     <string name="wf_signout_confirm">Are you sure to sign out?</string>
