@@ -53,7 +53,7 @@
     <string name="sw_work_action_check_in">Check in</string>
     <string name="sw_work_action_choose_loc">Choose location</string>
 
-    <string name="sw_msg_no_project">You need add project in server.</string>
+    <string name="sw_msg_no_project">You don’t have project.</string>
     <string name="sw_notice_title">%1$s -> %2$s</string>
 
     <!--Notifications-->
