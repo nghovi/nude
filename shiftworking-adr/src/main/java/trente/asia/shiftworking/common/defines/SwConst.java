@@ -59,7 +59,11 @@ public class SwConst{
 		workTypeMap.put(WORK_TYPE_STATUS_NO_WORK, "Not working");
 	}
 
-	public static final String	WORK_SUMMARY_STATUS_UPDATE	= "U";
-	public static final String	WORK_SUMMARY_STATUS_APPROVE	= "A";
-	public static final String	WORK_SUMMARY_STATUS_YET		= "YET";
+	public static final String	WORK_SUMMARY_STATUS_UPDATE		= "U";
+	public static final String	WORK_SUMMARY_STATUS_APPROVE		= "A";
+	public static final String	WORK_SUMMARY_STATUS_YET			= "YET";
+
+	public static final String	SW_SHIFTWORKING_TYPE_SHIFT		= "SI";
+	public static final String	SW_SHIFTWORKING_TYPE_SUMMARY	= "SU";
+	public static final String	SW_SHIFTWORKING_TYPE_TITLE		= "TI";
 }

@@ -46,6 +46,17 @@
     <string name="sw_shift_work_this_month">This month</string>
     <string name="sw_shift_work_history">Work history</string>
     <string name="sw_shift_work_item_status">Status</string>
+    <string name="sw_shift_work_regular_day">Regular days</string>
+    <string name="sw_shift_work_working_day">Working days</string>
+    <string name="sw_shift_work_paid_vacation">Paid vacation</string>
+    <string name="sw_shift_work_special_vacation">Special vacation</string>
+    <string name="sw_shift_work_compensatory_holiday">Compensatory holiday</string>
+    <string name="sw_shift_work_short_time">Short time</string>
+    <string name="sw_shift_work_holiday_working">Holiday working</string>
+    <string name="sw_shift_work_be_late">Be late</string>
+    <string name="sw_shift_work_leave_early">Leave early</string>
+    <string name="sw_shift_work_summary_title">Summary</string>
+
     <string name="sw_shift_work_item_night_time">Night time</string>
     <string name="sw_shift_work_item_over_time">Over time</string>
     <string name="sw_shift_work_item_total">Total</string>

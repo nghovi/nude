@@ -1,6 +1,7 @@
 package trente.asia.shiftworking.services.shiftworking;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -10,18 +11,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.shiftworking.R;
+import trente.asia.shiftworking.common.defines.SwConst;
 import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
 import trente.asia.shiftworking.services.shiftworking.model.ShiftWorkingModel;
 import trente.asia.shiftworking.services.shiftworking.model.WorkHistoryModel;
 import trente.asia.shiftworking.services.shiftworking.view.CommonMonthView;
 import trente.asia.shiftworking.services.shiftworking.view.ShiftWorkingAdapter;
+import trente.asia.shiftworking.services.worktime.model.WorkingTimeSummaryModel;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.utils.WelfareUtil;
@@ -32,9 +34,9 @@ public class ShiftWorkingFragment extends AbstractSwFragment{
 	private CommonMonthView		monthView;
 	private ShiftWorkingModel	shiftWorkingModel;
 
-	private TextView			txtNightTime;
-	private TextView			txtOverTime;
-	private TextView			txtTotal;
+	// private TextView txtNightTime;
+	// private TextView txtOverTime;
+	// private TextView txtTotal;
 	private ShiftWorkingAdapter	mAdapter;
 
 	@Override
@@ -59,9 +61,6 @@ public class ShiftWorkingFragment extends AbstractSwFragment{
 		monthView = (CommonMonthView)getView().findViewById(R.id.view_id_month);
 		monthView.initialization();
 
-		txtNightTime = (TextView)getView().findViewById(R.id.txt_id_night_time);
-		txtOverTime = (TextView)getView().findViewById(R.id.txt_id_over_time);
-		txtTotal = (TextView)getView().findViewById(R.id.txt_id_total);
 		mAdapter = new ShiftWorkingAdapter(activity, new ArrayList<WorkHistoryModel>());
 		lsvShiftWorking.setAdapter(mAdapter);
 
@@ -92,22 +91,39 @@ public class ShiftWorkingFragment extends AbstractSwFragment{
 		if(WfUrlConst.WF_API_WORK_HISTORY.equals(url)){
 			shiftWorkingModel = CCJsonUtil.convertToModel(CCStringUtil.toString(response), ShiftWorkingModel.class);
 			mAdapter.clearAll();
-			if(!CCCollectionUtil.isEmpty(shiftWorkingModel.workHistory)){
-				mAdapter.addAll(shiftWorkingModel.workHistory);
+
+			List<WorkHistoryModel> lstHistory = new ArrayList<>();
+			lstHistory.add(new WorkHistoryModel(SwConst.SW_SHIFTWORKING_TYPE_TITLE, getString(R.string.sw_shift_work_summary_title)));
+			if(shiftWorkingModel.workSummary != null){
+				loadSummary(lstHistory, shiftWorkingModel.workSummary);
 			}
 
-			if(shiftWorkingModel.workSummary != null){
-				loadSummary();
+			lstHistory.add(new WorkHistoryModel(SwConst.SW_SHIFTWORKING_TYPE_TITLE, getString(R.string.sw_shift_work_history)));
+			if(!CCCollectionUtil.isEmpty(shiftWorkingModel.workHistory)){
+				lstHistory.addAll(shiftWorkingModel.workHistory);
 			}
+
+			mAdapter.addAll(lstHistory);
 		}else{
 			super.successLoad(response, url);
 		}
 	}
 
-	private void loadSummary(){
-		txtNightTime.setText(CCStringUtil.toString(shiftWorkingModel.workSummary.timeNight));
-		txtOverTime.setText(CCStringUtil.toString(shiftWorkingModel.workSummary.timeOver));
-		txtTotal.setText(CCStringUtil.toString(shiftWorkingModel.workSummary.timeWorking));
+	private void loadSummary(List<WorkHistoryModel> lstHistory, WorkingTimeSummaryModel summaryModel){
+		lstHistory.add(new WorkHistoryModel(SwConst.SW_SHIFTWORKING_TYPE_SUMMARY, getString(R.string.sw_shift_work_item_status), summaryModel.status));
+		lstHistory.add(new WorkHistoryModel(SwConst.SW_SHIFTWORKING_TYPE_SUMMARY, getString(R.string.sw_shift_work_regular_day), summaryModel.regularDays));
+		lstHistory.add(new WorkHistoryModel(SwConst.SW_SHIFTWORKING_TYPE_SUMMARY, getString(R.string.sw_shift_work_working_day), summaryModel.workingDays));
+		lstHistory.add(new WorkHistoryModel(SwConst.SW_SHIFTWORKING_TYPE_SUMMARY, getString(R.string.sw_shift_work_paid_vacation), summaryModel.countPaidVacation));
+		lstHistory.add(new WorkHistoryModel(SwConst.SW_SHIFTWORKING_TYPE_SUMMARY, getString(R.string.sw_shift_work_special_vacation), summaryModel.countSpcialVacation));
+		lstHistory.add(new WorkHistoryModel(SwConst.SW_SHIFTWORKING_TYPE_SUMMARY, getString(R.string.sw_shift_work_compensatory_holiday), summaryModel.countCompVacation));
+		lstHistory.add(new WorkHistoryModel(SwConst.SW_SHIFTWORKING_TYPE_SUMMARY, getString(R.string.sw_shift_work_item_over_time), summaryModel.timeOver));
+		lstHistory.add(new WorkHistoryModel(SwConst.SW_SHIFTWORKING_TYPE_SUMMARY, getString(R.string.sw_shift_work_short_time), summaryModel.timeShort));
+		lstHistory.add(new WorkHistoryModel(SwConst.SW_SHIFTWORKING_TYPE_SUMMARY, getString(R.string.sw_shift_work_be_late), summaryModel.countBeLate));
+		lstHistory.add(new WorkHistoryModel(SwConst.SW_SHIFTWORKING_TYPE_SUMMARY, getString(R.string.sw_shift_work_leave_early), summaryModel.countLeaveEarly));
+
+		// txtNightTime.setText(CCStringUtil.toString(shiftWorkingModel.workSummary.timeNight));
+		// txtOverTime.setText(CCStringUtil.toString(shiftWorkingModel.workSummary.timeOver));
+		// txtTotal.setText(CCStringUtil.toString(shiftWorkingModel.workSummary.timeWorking));
 	}
 
 	@Override

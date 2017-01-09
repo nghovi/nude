@@ -1,5 +1,6 @@
 package trente.asia.shiftworking.services.shiftworking.model;
 
+import trente.asia.shiftworking.common.defines.SwConst;
 import trente.asia.shiftworking.services.worktime.model.ProjectModel;
 
 /**
@@ -10,6 +11,12 @@ import trente.asia.shiftworking.services.worktime.model.ProjectModel;
 
 public class WorkHistoryModel{
 
+	public String		itemType	= SwConst.SW_SHIFTWORKING_TYPE_SHIFT;
+
+	public String		title;
+
+	public String		value;
+
 	public String		workDate;
 
 	public ProjectModel	project;
@@ -19,4 +26,19 @@ public class WorkHistoryModel{
 
 	public String		startShift;
 	public String		endShift;
+
+	public WorkHistoryModel(){
+
+	}
+
+	public WorkHistoryModel(String itemType, String title){
+		this.itemType = itemType;
+		this.title = title;
+	}
+
+	public WorkHistoryModel(String itemType, String title, String value){
+		this.itemType = itemType;
+		this.title = title;
+		this.value = value;
+	}
 }

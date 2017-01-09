@@ -8,11 +8,37 @@ package trente.asia.shiftworking.services.worktime.model;
 
 public class WorkingTimeSummaryModel{
 
-	public String	timeWorking;
+	public String						status;
 
-	public String	timeOverNight;
+	public String						regularDays;
 
-	public String	timeOver;
+	public String						workingDays;
 
-	public String	timeNight;
+	public String						timeWorking;
+
+	public String						timeOver;
+
+	public String						timeShort;
+
+	public String						timeNight;
+
+	public String						timeOverNight;
+
+	public String						countPaidVacation;
+
+	public String						countSpcialVacation;
+
+	public String						countCompVacation;
+
+	public String						countAbsent;
+
+	public String						countHolidayWork;
+
+	public String						countBeLate;
+
+//	public List<WorkingTimeMonthlyItem>	listBeLate;
+
+	public String						countLeaveEarly;
+
+//	public List<WorkingTimeMonthlyItem>	listLeaveEarly;
 }
