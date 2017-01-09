@@ -48,7 +48,7 @@ import trente.asia.welfare.adr.utils.WelfareUtil;
 public class WorknoticeOfferFragment extends AbstractLocationFragment{
 
 	private ImageView				imgPhoto;
-	private TextView				txtProjectName;
+//	private TextView				txtProjectName;
 	private LinearLayout			lnrLocation;
 	private TextView				txtLocation;
 	private EditText				edtReason;
@@ -59,7 +59,7 @@ public class WorknoticeOfferFragment extends AbstractLocationFragment{
 	private LinearLayout			lnrTargetDept;
 	private Button					btnSend;
 
-	private ProjectModel			activeProject;
+//	private ProjectModel			activeProject;
 	private List<DeptModel>			deptModels;
 
 	private String					latitude;
@@ -120,9 +120,9 @@ public class WorknoticeOfferFragment extends AbstractLocationFragment{
 																}
 															};
 
-	public void setActiveProject(ProjectModel activeProject){
-		this.activeProject = activeProject;
-	}
+//	public void setActiveProject(ProjectModel activeProject){
+//		this.activeProject = activeProject;
+//	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -145,8 +145,8 @@ public class WorknoticeOfferFragment extends AbstractLocationFragment{
 		imgPhoto = (ImageView)getView().findViewById(R.id.img_id_photo);
 		lnrLocation = (LinearLayout)getView().findViewById(R.id.lnr_id_location);
 		txtLocation = (TextView)getView().findViewById(R.id.txt_id_location);
-		txtProjectName = (TextView)getView().findViewById(R.id.txt_id_project_name);
-		txtProjectName.setText(activeProject.projectName);
+//		txtProjectName = (TextView)getView().findViewById(R.id.txt_id_project_name);
+//		txtProjectName.setText(activeProject.projectName);
 
 		btnSend = (Button)getView().findViewById(R.id.btn_id_send);
 		edtReason = (EditText)getView().findViewById(R.id.edt_id_reason);
@@ -229,7 +229,7 @@ public class WorknoticeOfferFragment extends AbstractLocationFragment{
 			photoMap.put("photo", new File(mImageUri.getPath()));
 		}
 		try{
-			jsonObject.put("projectId", activeProject.key);
+//			jsonObject.put("projectId", activeProject.key);
 			jsonObject.put("deptId", txtTargetDept.value);
 			jsonObject.put("noticeType", txtNoticeType.value);
 			jsonObject.put("reason", CCStringUtil.toString(edtReason.getText()));
@@ -369,7 +369,7 @@ public class WorknoticeOfferFragment extends AbstractLocationFragment{
 		edtReason = null;
 
 		btnSend = null;
-		activeProject = null;
+//		activeProject = null;
 		dlgNoticeType = null;
 		dlgTargetDept = null;
 	}

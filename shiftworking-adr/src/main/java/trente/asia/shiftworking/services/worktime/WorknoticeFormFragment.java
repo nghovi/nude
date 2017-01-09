@@ -40,7 +40,7 @@ public class WorknoticeFormFragment extends AbstractSwFragment{
 
 	private TextView		txtNoticeUser;
 	private TextView		txtNoticeDate;
-	private TextView		txtProjectName;
+//	private TextView		txtProjectName;
 	private TextView		txtNoticeType;
 	private TextView		txtTargetDept;
 
@@ -78,7 +78,7 @@ public class WorknoticeFormFragment extends AbstractSwFragment{
 
 		txtNoticeUser = (TextView)getView().findViewById(R.id.txt_id_notice_user);
 		txtNoticeDate = (TextView)getView().findViewById(R.id.txt_id_notice_date);
-		txtProjectName = (TextView)getView().findViewById(R.id.txt_id_project_name);
+//		txtProjectName = (TextView)getView().findViewById(R.id.txt_id_project_name);
 		txtNoticeType = (TextView)getView().findViewById(R.id.txt_id_notice_type);
 		txtTargetDept = (TextView)getView().findViewById(R.id.txt_id_target_dept);
 		txtTargetDept = (TextView)getView().findViewById(R.id.txt_id_target_dept);
@@ -117,21 +117,21 @@ public class WorknoticeFormFragment extends AbstractSwFragment{
 		if(WfUrlConst.WF_NOTICE_0003.equals(url)){
 			holder = new SwApiHolder(response);
 			noticeModel = CCJsonUtil.convertToModel(response.optString("notice"), NoticeModel.class);
-			loadNoticeInfo(noticeModel, holder.projects);
+			loadNoticeInfo(noticeModel);
 			showChecks(noticeModel);
 		}else{
 			super.successLoad(response, url);
 		}
 	}
 
-	private void loadNoticeInfo(NoticeModel notice, List<ProjectModel> lstProject){
+	private void loadNoticeInfo(NoticeModel notice){
 		canCheck(notice);
 		txtNoticeUser.setText(notice.userName);
 		txtNoticeDate.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_2, WelfareUtil.makeDate(notice.noticeDate)));
 
 		txtNoticeType.setText(SwUtil.getNoticeTypeName(holder.noticeTypes, notice.noticeType));
 		txtTargetDept.setText(notice.deptName);
-		txtProjectName.setText(SwUtil.getProjectName(lstProject, notice.projectId));
+//		txtProjectName.setText(SwUtil.getProjectName(lstProject, notice.projectId));
 
 		txtReason.setText(notice.reason);
 		if(!CCStringUtil.isEmpty(notice.location)){

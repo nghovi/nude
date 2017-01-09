@@ -264,7 +264,7 @@ public class WorktimeCheckInFragment extends AbstractLocationFragment{
 		switch(v.getId()){
 		case R.id.img_id_header_right_icon:
 			WorknoticeOfferFragment fragment = new WorknoticeOfferFragment();
-			fragment.setActiveProject(activeProject);
+//			fragment.setActiveProject(activeProject);
 			gotoFragment(fragment);
 			break;
 		case R.id.img_id_header_right_sub_icon:
