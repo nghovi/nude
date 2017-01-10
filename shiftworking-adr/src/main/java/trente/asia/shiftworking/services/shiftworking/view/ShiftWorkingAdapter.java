@@ -72,7 +72,7 @@ public class ShiftWorkingAdapter extends ArrayAdapter<WorkHistoryModel>{
 			holder.txtWorkDate.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_10, CCDateUtil.makeDateCustom(model.workDate, WelfareConst.WL_DATE_TIME_1)));
 //			holder.txtLocation.setText(model.project.projectLocation);
 			holder.txtWorkShift.setText(WelfareFormatUtil.connect2String(model.startShift, model.endShift, "-"));
-			holder.txtWorktime.setText(WelfareFormatUtil.connect2String(model.startTime, model.endTime, "-"));
+			holder.txtWorktime.setText(WelfareFormatUtil.connect2String(model.startCheckin, model.endCheckin, "-"));
 		}else if(SwConst.SW_SHIFTWORKING_TYPE_SUMMARY.equals(model.itemType)){
 			convertView = mInflater.inflate(R.layout.item_shiftworking_summary_list, null);
 			holder = new BoardViewHolder(convertView, model.itemType);

@@ -21,11 +21,14 @@ public class WorkHistoryModel{
 
 	public ProjectModel	project;
 
-	public String		startTime;
-	public String		endTime;
+	public String		startCheckin;
+	public String		endCheckin;
 
 	public String		startShift;
 	public String		endShift;
+
+    public String		startWorking;
+    public String		endWorking;
 
 	public WorkHistoryModel(){
 
