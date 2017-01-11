@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
+import asia.chiase.core.util.CCStringUtil;
 import trente.asia.shiftworking.R;
 import trente.asia.shiftworking.common.defines.SwConst;
 import trente.asia.shiftworking.services.shiftworking.model.WorkHistoryModel;
@@ -33,6 +34,7 @@ public class ShiftWorkingAdapter extends ArrayAdapter<WorkHistoryModel>{
 		public TextView	txtWorkDate;
 		public TextView	txtLocation;
 		public TextView	txtWorkShift;
+        public TextView	txtCheckIn;
 		public TextView	txtWorktime;
 
 		public TextView	txtTitle;
@@ -43,6 +45,7 @@ public class ShiftWorkingAdapter extends ArrayAdapter<WorkHistoryModel>{
 				txtWorkDate = (TextView)view.findViewById(R.id.txt_id_work_date);
 				txtLocation = (TextView)view.findViewById(R.id.txt_id_location);
 				txtWorkShift = (TextView)view.findViewById(R.id.txt_id_work_shift);
+                txtCheckIn = (TextView)view.findViewById(R.id.txt_id_check_in);
 				txtWorktime = (TextView)view.findViewById(R.id.txt_id_work_time);
 			}else if(SwConst.SW_SHIFTWORKING_TYPE_SUMMARY.equals(itemType)){
 				txtTitle = (TextView)view.findViewById(R.id.txt_id_summary_title);
@@ -70,9 +73,33 @@ public class ShiftWorkingAdapter extends ArrayAdapter<WorkHistoryModel>{
 			holder = new BoardViewHolder(convertView, model.itemType);
 
 			holder.txtWorkDate.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_10, CCDateUtil.makeDateCustom(model.workDate, WelfareConst.WL_DATE_TIME_1)));
-//			holder.txtLocation.setText(model.project.projectLocation);
-			holder.txtWorkShift.setText(WelfareFormatUtil.connect2String(model.startShift, model.endShift, "-"));
-			holder.txtWorktime.setText(WelfareFormatUtil.connect2String(model.startCheckin, model.endCheckin, "-"));
+			if(model.project != null){
+                holder.txtLocation.setVisibility(View.VISIBLE);
+                holder.txtLocation.setText(model.project.projectLocation);
+            }else{
+                holder.txtLocation.setVisibility(View.GONE);
+            }
+
+            if(CCStringUtil.isEmpty(model.startShift) && CCStringUtil.isEmpty(model.endShift)){
+                holder.txtWorkShift.setVisibility(View.GONE);
+            }else{
+                holder.txtWorkShift.setVisibility(View.VISIBLE);
+                holder.txtWorkShift.setText(WelfareFormatUtil.connect2String(model.startShift, model.endShift, "-"));
+            }
+
+            if(CCStringUtil.isEmpty(model.startCheckin) && CCStringUtil.isEmpty(model.endCheckin)){
+                holder.txtCheckIn.setVisibility(View.GONE);
+            }else{
+                holder.txtCheckIn.setVisibility(View.VISIBLE);
+                holder.txtCheckIn.setText(WelfareFormatUtil.connect2String(model.startCheckin, model.endCheckin, "-"));
+            }
+
+            if(CCStringUtil.isEmpty(model.startWorking) && CCStringUtil.isEmpty(model.endWorking)){
+                holder.txtWorktime.setVisibility(View.GONE);
+            }else{
+                holder.txtWorktime.setVisibility(View.VISIBLE);
+                holder.txtWorktime.setText(WelfareFormatUtil.connect2String(model.startWorking, model.endWorking, "-"));
+            }
 		}else if(SwConst.SW_SHIFTWORKING_TYPE_SUMMARY.equals(model.itemType)){
 			convertView = mInflater.inflate(R.layout.item_shiftworking_summary_list, null);
 			holder = new BoardViewHolder(convertView, model.itemType);
