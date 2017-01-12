@@ -1,5 +1,6 @@
 package trente.asia.shiftworking.services.transit.view;
 
+import java.util.Date;
 import java.util.List;
 
 import android.app.Activity;
@@ -15,6 +16,8 @@ import asia.chiase.core.util.CCFormatUtil;
 import trente.asia.shiftworking.R;
 import trente.asia.shiftworking.common.defines.SwConst;
 import trente.asia.shiftworking.services.transit.model.TransitModel;
+import trente.asia.welfare.adr.define.WelfareConst;
+import trente.asia.welfare.adr.utils.WelfareUtil;
 
 /**
  * TransitAdapter.
@@ -62,7 +65,8 @@ public class TransitAdapter extends ArrayAdapter<TransitModel>{
 		BoardViewHolder holder = new BoardViewHolder(convertView);
 
 		holder.txtLeave.setText(model.transLeave);
-		holder.txtDate.setText(model.transDate);
+        Date transDate = WelfareUtil.makeDate(model.transDate);
+		holder.txtDate.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, transDate));
 		holder.txtArrive.setText(model.transArrive);
 		holder.txtFee.setText(CCFormatUtil.formatAmount(model.fee));
 
