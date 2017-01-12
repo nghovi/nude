@@ -34,9 +34,6 @@ public class ShiftWorkingFragment extends AbstractSwFragment{
 	private CommonMonthView		monthView;
 	private ShiftWorkingModel	shiftWorkingModel;
 
-	// private TextView txtNightTime;
-	// private TextView txtOverTime;
-	// private TextView txtTotal;
 	private ShiftWorkingAdapter	mAdapter;
 
 	@Override

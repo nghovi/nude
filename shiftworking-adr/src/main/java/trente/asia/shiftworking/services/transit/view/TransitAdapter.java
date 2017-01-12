@@ -8,12 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import asia.chiase.core.util.CCFormatUtil;
 import trente.asia.shiftworking.R;
+import trente.asia.shiftworking.common.defines.SwConst;
 import trente.asia.shiftworking.services.transit.model.TransitModel;
-import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 
 /**
  * TransitAdapter.
@@ -27,20 +28,22 @@ public class TransitAdapter extends ArrayAdapter<TransitModel>{
 
 	public class BoardViewHolder{
 
-		public TextView	txtLeave;
-		public TextView	txtArrive;
-		public TextView	txtWayType;
-//		public TextView	txtCostType;
-		public TextView	txtTransitType;
-		public TextView	txtFee;
+		public ImageView	imgTransitType;
+		public ImageView	imgWayType;
+
+		public TextView		txtLeave;
+		public TextView		txtDate;
+		public TextView		txtArrive;
+		public TextView		txtFee;
 
 		public BoardViewHolder(View view){
 			txtLeave = (TextView)view.findViewById(R.id.txt_id_leave);
+			txtDate = (TextView)view.findViewById(R.id.txt_id_transit_date);
 			txtArrive = (TextView)view.findViewById(R.id.txt_id_arrive);
-			txtWayType = (TextView)view.findViewById(R.id.txt_id_way_type);
-//			txtCostType = (TextView)view.findViewById(R.id.txt_id_cost_type);
-			txtTransitType = (TextView)view.findViewById(R.id.txt_id_transit_type);
 			txtFee = (TextView)view.findViewById(R.id.txt_id_fee);
+
+			imgTransitType = (ImageView)view.findViewById(R.id.img_id_transit_type);
+			imgWayType = (ImageView)view.findViewById(R.id.img_id_way_type);
 		}
 	}
 
@@ -58,12 +61,26 @@ public class TransitAdapter extends ArrayAdapter<TransitModel>{
 		convertView = mInflater.inflate(R.layout.item_transit_list, null);
 		BoardViewHolder holder = new BoardViewHolder(convertView);
 
-        holder.txtLeave.setText(WelfareFormatUtil.connect2String(mContext.getString(R.string.sw_work_transit_leave_item), model.transLeave, ":"));
-        holder.txtArrive.setText(WelfareFormatUtil.connect2String(mContext.getString(R.string.sw_work_transit_arrive_item), model.transArrive, ":"));
-        holder.txtWayType.setText(WelfareFormatUtil.connect2String(mContext.getString(R.string.sw_work_transit_way_type_item), model.wayTypeName, ":"));
-//        holder.txtCostType.setText(WelfareFormatUtil.connect2String(mContext.getString(R.string.sw_work_transit_cost_type_item), model.costTypeName, ":"));
-        holder.txtTransitType.setText(WelfareFormatUtil.connect2String(mContext.getString(R.string.sw_work_transit_trans_type_item), model.transTypeName, ":"));
-        holder.txtFee.setText(WelfareFormatUtil.connect2String(mContext.getString(R.string.sw_work_transit_fee_item), CCFormatUtil.formatAmount(model.fee), ":"));
+		holder.txtLeave.setText(model.transLeave);
+		holder.txtDate.setText(model.transDate);
+		holder.txtArrive.setText(model.transArrive);
+		holder.txtFee.setText(CCFormatUtil.formatAmount(model.fee));
+
+		if(SwConst.SW_TRANSIT_WAY_TYPE_ONE_WAY.equals(model.wayType)){
+			holder.imgWayType.setImageResource(R.drawable.sw_icon_way1);
+		}else if(SwConst.SW_TRANSIT_WAY_TYPE_TWO_WAY.equals(model.wayType)){
+			holder.imgWayType.setImageResource(R.drawable.sw_icon_way2);
+		}
+
+		if(SwConst.SW_TRANSIT_TYPE_BUS.equals(model.transType)){
+			holder.imgTransitType.setImageResource(R.drawable.sw_icon_bus);
+		}else if(SwConst.SW_TRANSIT_TYPE_TAXI.equals(model.transType)){
+			holder.imgTransitType.setImageResource(R.drawable.sw_icon_taxi);
+		}else if(SwConst.SW_TRANSIT_TYPE_TRAIN.equals(model.transType)){
+			holder.imgTransitType.setImageResource(R.drawable.sw_icon_train);
+		}else if(SwConst.SW_TRANSIT_TYPE_OTHER.equals(model.transType)){
+			holder.imgTransitType.setImageResource(R.drawable.sw_icon_other);
+		}
 
 		return convertView;
 	}

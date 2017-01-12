@@ -26,4 +26,6 @@ public class TransitModel{
 	public String						fee;
 	public String						note;
 	public List<ImageAttachmentModel>	attachmentFile;
+
+	public String						transDate;
 }
