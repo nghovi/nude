@@ -55,4 +55,10 @@
             android:gravity="right"/>
     </LinearLayout>
 
+    <ImageView
+        style="@style/cs_common_wrap"
+        android:layout_marginLeft="@dimen/margin_6dp"
+        android:src="@drawable/cs_row_arrow_right"
+        android:layout_gravity="center_vertical"/>
+
 </LinearLayout>
