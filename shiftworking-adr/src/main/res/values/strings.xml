@@ -103,8 +103,8 @@
     <string name="fragment_work_offer_other_history">Work other offer history</string>
     <string name="fragment_offer_filter_other_history_filter">Filter: %1$s</string>
     <string name="fragment_offer_filter_offer_status">Offer status</string>
-    <string name="fragment_offer_filter_offer_dept">Offer dept</string>
-    <string name="fragment_offer_filter_title">Filter</string>
+    <string name="fragment_offer_filter_offer_dept">Target department</string>
+    <string name="fragment_offer_filter_title">Work offer filter</string>
     <string name="fragment_offer_filter_clear">Clear</string>
     <string name="fragment_offer_filter_update">Update</string>
     <string name="fragment_offer_detail_header">Work offer detail</string>
