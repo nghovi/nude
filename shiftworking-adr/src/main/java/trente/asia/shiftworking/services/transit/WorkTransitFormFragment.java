@@ -76,7 +76,6 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 
 	private ChiaseListDialog		dlgTransitType;
 	private ChiaseListDialog		dlgWayType;
-//	private ChiaseListDialog		dlgCostType;
 
 	private ChiaseListViewNoScroll	lsvLeave;
 	private PlaceHistoryAdapter		adapterLeave;
@@ -141,7 +140,6 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 	private void initDialog(TransitModelHolder holder){
 		dlgTransitType = new ChiaseListDialog(activity, getString(R.string.sw_work_transit_trans_type_item), WelfareFormatUtil.convertList2Map(holder.transTypes), txtTransitType, null);
 		dlgWayType = new ChiaseListDialog(activity, getString(R.string.sw_work_transit_way_type_item), WelfareFormatUtil.convertList2Map(holder.wayTypes), txtWayType, null);
-//		dlgCostType = new ChiaseListDialog(activity, getString(R.string.sw_work_transit_cost_type_item), WelfareFormatUtil.convertList2Map(holder.costTypes), txtCostType, null);
 
 		if(CCStringUtil.isEmpty(activeTransitId)){
 			// set default value
@@ -149,8 +147,6 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 			txtTransitType.setValue(holder.transTypes.get(0).key);
 			txtWayType.setText(holder.wayTypes.get(0).value);
 			txtWayType.setValue(holder.wayTypes.get(0).key);
-//			txtCostType.setText(holder.costTypes.get(0).value);
-//			txtCostType.setValue(holder.costTypes.get(0).key);
 		}
 	}
 
