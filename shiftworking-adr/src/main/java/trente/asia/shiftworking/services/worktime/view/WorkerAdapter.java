@@ -14,6 +14,7 @@ import asia.chiase.core.util.CCStringUtil;
 import trente.asia.shiftworking.BuildConfig;
 import trente.asia.shiftworking.R;
 import trente.asia.shiftworking.services.worktime.model.WorkingTimeDailyModel;
+import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 import trente.asia.welfare.adr.utils.WfPicassoHelper;
 import trente.asia.welfare.adr.view.SelectableRoundedImageView;
 
@@ -71,11 +72,11 @@ public class WorkerAdapter extends ArrayAdapter<WorkingTimeDailyModel>{
 		}
 
 		if(!CCStringUtil.isEmpty(model.startShift)){
-			holder.txtShiftTime.setText(model.startShift + "-" + model.endShift);
+            holder.txtShiftTime.setText(WelfareFormatUtil.connect2String(model.startShift, model.endShift, "-"));
 		}
 
-		if(!CCStringUtil.isEmpty(model.startTime)){
-			holder.txtWorkTime.setText(model.startTime + "-" + model.endTime);
+		if(!CCStringUtil.isEmpty(model.startCheckin)){
+            holder.txtWorkTime.setText(WelfareFormatUtil.connect2String(model.startCheckin, model.endCheckin, "-"));
 		}
 
 		return convertView;

@@ -49,12 +49,12 @@
 
         <TextView
             android:id="@+id/txt_id_shift_time"
-            style="@style/sw_common_data"
+            style="@style/wl_common_text"
             android:layout_width="wrap_content"/>
 
         <TextView
             android:id="@+id/txt_id_work_time"
-            style="@style/sw_common_data"
+            style="@style/wl_common_text"
             android:layout_width="wrap_content"
             android:layout_marginTop="@dimen/margin_6dp"
             android:textStyle="italic"/>

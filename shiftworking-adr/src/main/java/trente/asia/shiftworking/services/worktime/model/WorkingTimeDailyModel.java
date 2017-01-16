@@ -23,9 +23,13 @@ public class WorkingTimeDailyModel extends BitmapModel{
 
 	public String		endShift;
 
-	public String		startTime;
+    public String		startCheckin;
 
-	public String		endTime;
+    public String		endCheckin;
+
+	public String		startWorking;
+
+	public String		endWorking;
 
 	public String		totalWorktime;
 
