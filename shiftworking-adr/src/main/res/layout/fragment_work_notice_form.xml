@@ -57,23 +57,6 @@
                     android:layout_marginLeft="@dimen/margin_10dp"/>
             </LinearLayout>
 
-            <!--<View style="@style/cs_common_divider"/>-->
-
-            <!--<LinearLayout-->
-                <!--style="@style/wf_common_item_linear2">-->
-
-                <!--<TextView-->
-                    <!--style="@style/wl_common_text"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:text="@string/sw_work_item_project"-->
-                    <!--android:textStyle="bold"/>-->
-
-                <!--<TextView-->
-                    <!--android:id="@+id/txt_id_project_name"-->
-                    <!--style="@style/wl_common_edit_text2"-->
-                    <!--android:layout_marginLeft="@dimen/margin_10dp"/>-->
-            <!--</LinearLayout>-->
-
             <View style="@style/cs_common_divider"/>
 
             <LinearLayout
