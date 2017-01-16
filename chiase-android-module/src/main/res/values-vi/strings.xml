@@ -21,6 +21,7 @@
     <string name="chiase_common_save">Lưu</string>
     <string name="chiase_common_modify">Chỉnh sửa</string>
     <string name="chiase_common_add">Thêm</string>
+    <string name="chiase_common_request">Xóa</string>
 
     <string name="chiase_common_send">Gửi</string>
     <string name="chiase_common_prev">Trước</string>

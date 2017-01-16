@@ -23,7 +23,8 @@
             android:paddingRight="@dimen/margin_10dp"
             android:text="@string/chiase_common_modify"
             android:textColor="@color/chiase_white"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:textAllCaps="false"/>
 
         <Button
             android:id="@+id/btn_id_delete"
@@ -33,9 +34,10 @@
             android:background="@drawable/common_chiase_delete_button2"
             android:paddingLeft="@dimen/margin_10dp"
             android:paddingRight="@dimen/margin_10dp"
-            android:text="@string/chiase_common_delete"
+            android:text="@string/chiase_common_request"
             android:textColor="@color/chiase_white"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:textAllCaps="false"/>
     </LinearLayout>
 
     <LinearLayout
@@ -50,8 +52,7 @@
         <TextView
             android:id="@+id/txt_id_work_time"
             style="@style/wl_common_text"
-            android:layout_width="wrap_content"
-            android:textStyle="bold"/>
+            android:layout_width="wrap_content"/>
 
         <TextView
             android:id="@+id/txt_id_working_type"

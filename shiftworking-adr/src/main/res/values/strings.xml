@@ -24,9 +24,9 @@
     <!--Check in service-->
 
 
-    <string name="sw_work_item_project">Project</string>
+    <string name="sw_work_item_project">Project name</string>
     <string name="sw_work_item_project_loc">Location</string>
-    <string name="sw_work_item_checkin_list">Today check history</string>
+    <string name="sw_work_item_checkin_list">Check in history</string>
 
     <string name="sw_work_item_notice_type">Notice type</string>
     <string name="sw_work_item_target_dept">Target department</string>

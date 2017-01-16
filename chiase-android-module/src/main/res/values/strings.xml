@@ -21,6 +21,7 @@
     <string name="chiase_common_save">Save</string>
     <string name="chiase_common_modify">Modify</string>
     <string name="chiase_common_add">Add</string>
+    <string name="chiase_common_request">Request</string>
 
     <string name="chiase_common_send">Send</string>
     <string name="chiase_common_prev">Prev</string>
