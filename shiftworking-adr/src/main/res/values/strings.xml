@@ -116,7 +116,7 @@
     <string name="fragment_offer_detail_approve_history">Work offer approve history</string>
     <string name="fragment_offer_detail_approve_comment">Approve comment</string>
     <string name="fragment_offer_edit_header">Work offer entry</string>
-    <string name="sw_work_offer_other_history">Other's offer history</string>
+    <string name="sw_work_offer_other_history">Other\'s offer history</string>
     <string name="fragment_work_offer_edit_offer_type">Offer Types</string>
     <string name="fragment_work_offer_edit_offer_status">Offer Status</string>
     <string name="fragment_work_offer_edit_offer_dept">Departments</string>
