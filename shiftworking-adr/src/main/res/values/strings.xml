@@ -6,7 +6,7 @@
     <string name="wf_about_app">About App</string>
     <string name="wf_account_info_title">Account Information</string>
 
-    <string name="sw_offer_title">Work notice entry</string>
+    <string name="sw_offer_title">Notice information</string>
     <string name="sw_notice_list_title">Notice list</string>
     <string name="sw_worker_title">Who\'s working</string>
     <string name="sw_notice_detail_title">Notice detail</string>
@@ -29,10 +29,10 @@
     <string name="sw_work_item_checkin_list">Today check history</string>
 
     <string name="sw_work_item_notice_type">Notice type</string>
-    <string name="sw_work_item_target_dept">Target dept</string>
+    <string name="sw_work_item_target_dept">Target department</string>
     <string name="sw_work_item_reason">Reason</string>
     <string name="sw_work_item_notice_loc">Location</string>
-    <string name="sw_work_item_notice_pic">Photo</string>
+    <string name="sw_work_item_notice_pic">Attachment</string>
     <string name="sw_work_item_notice_user">Notice user</string>
     <string name="sw_work_item_notice_date">Notice date</string>
     <string name="sw_work_item_check_user">Check user list</string>
@@ -62,7 +62,7 @@
     <string name="sw_shift_work_item_total">Total</string>
 
     <string name="sw_work_action_check_in">Check in</string>
-    <string name="sw_work_action_choose_loc">Choose location</string>
+    <string name="sw_work_action_choose_loc">Set location</string>
 
     <string name="sw_msg_no_project">You don’t have project.</string>
     <string name="sw_notice_title">%1$s -> %2$s</string>

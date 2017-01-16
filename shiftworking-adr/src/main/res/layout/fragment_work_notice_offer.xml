@@ -24,23 +24,6 @@
                     android:text="@string/sw_offer_title"
                     android:textStyle="bold"/>
 
-                <!--<View style="@style/cs_common_divider"/>-->
-
-                <!--<LinearLayout-->
-                    <!--style="@style/wf_common_item_linear2">-->
-
-                    <!--<TextView-->
-                        <!--style="@style/wl_common_text"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:text="@string/sw_work_item_project"-->
-                        <!--android:textStyle="bold"/>-->
-
-                    <!--<TextView-->
-                        <!--android:id="@+id/txt_id_project_name"-->
-                        <!--style="@style/wl_common_edit_text2"-->
-                        <!--android:layout_marginLeft="@dimen/margin_10dp"/>-->
-                <!--</LinearLayout>-->
-
                 <View style="@style/cs_common_divider"/>
 
                 <LinearLayout
@@ -57,7 +40,13 @@
                     <trente.asia.android.view.ChiaseTextView
                         android:id="@+id/txt_id_notice_type"
                         style="@style/wl_common_edit_text2"
-                        android:layout_marginLeft="@dimen/margin_10dp"/>
+                        android:layout_marginLeft="@dimen/margin_10dp"
+                        android:layout_weight="1"/>
+
+                    <ImageView
+                        style="@style/cs_common_wrap"
+                        android:layout_marginLeft="@dimen/margin_10dp"
+                        android:src="@drawable/cs_row_arrow_right"/>
                 </LinearLayout>
 
                 <View style="@style/cs_common_divider"/>
@@ -76,7 +65,13 @@
                     <trente.asia.android.view.ChiaseTextView
                         android:id="@+id/txt_id_target_dept"
                         style="@style/wl_common_edit_text2"
-                        android:layout_marginLeft="@dimen/margin_10dp"/>
+                        android:layout_marginLeft="@dimen/margin_10dp"
+                        android:layout_weight="1"/>
+
+                    <ImageView
+                        style="@style/cs_common_wrap"
+                        android:layout_marginLeft="@dimen/margin_10dp"
+                        android:src="@drawable/cs_row_arrow_right"/>
 
                 </LinearLayout>
 
@@ -128,6 +123,7 @@
                     <TextView
                         android:id="@+id/txt_id_location"
                         style="@style/wl_common_text"
+                        android:gravity="center"
                         android:hint="@string/sw_work_action_choose_loc"/>
                 </LinearLayout>
 

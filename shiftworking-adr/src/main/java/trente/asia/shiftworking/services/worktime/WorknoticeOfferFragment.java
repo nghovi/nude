@@ -120,10 +120,6 @@ public class WorknoticeOfferFragment extends AbstractLocationFragment{
 																}
 															};
 
-//	public void setActiveProject(ProjectModel activeProject){
-//		this.activeProject = activeProject;
-//	}
-
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 		if(mRootView == null){
