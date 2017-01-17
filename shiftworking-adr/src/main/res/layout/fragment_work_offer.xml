@@ -32,7 +32,6 @@
                 <TextView
                     style="@style/wl_common_text"
                     android:text="@string/sw_work_offer_history"
-                    android:textStyle="bold"
                     android:paddingLeft="@dimen/margin_16dp"
                     android:paddingRight="@dimen/margin_16dp"/>
 
@@ -48,7 +47,6 @@
                     style="@style/wl_common_text"
                     android:layout_marginTop="@dimen/margin_10dp"
                     android:text="@string/sw_work_offer_other_history"
-                    android:textStyle="bold"
                     android:paddingLeft="@dimen/margin_16dp"
                     android:paddingRight="@dimen/margin_16dp"/>
 

@@ -16,8 +16,7 @@
             style="@style/wl_common_text"
             android:paddingLeft="@dimen/margin_16dp"
             android:paddingRight="@dimen/margin_16dp"
-            android:text="@string/sw_work_transit_list_title"
-            android:textStyle="bold"/>
+            android:text="@string/sw_work_transit_list_title"/>
 
         <ListView
             android:id="@+id/lsv_id_transit"

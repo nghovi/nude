@@ -21,8 +21,7 @@
                     android:layout_marginTop="@dimen/margin_16dp"
                     android:paddingLeft="@dimen/margin_16dp"
                     android:paddingRight="@dimen/margin_16dp"
-                    android:text="@string/sw_offer_title"
-                    android:textStyle="bold"/>
+                    android:text="@string/sw_offer_title"/>
 
                 <View style="@style/cs_common_divider"/>
 
@@ -34,8 +33,7 @@
                     <TextView
                         style="@style/wl_common_text"
                         android:layout_width="wrap_content"
-                        android:text="@string/sw_work_item_notice_type"
-                        android:textStyle="bold"/>
+                        android:text="@string/sw_work_item_notice_type"/>
 
                     <trente.asia.android.view.ChiaseTextView
                         android:id="@+id/txt_id_notice_type"
@@ -59,8 +57,7 @@
                     <TextView
                         style="@style/wl_common_text"
                         android:layout_width="wrap_content"
-                        android:text="@string/sw_work_item_target_dept"
-                        android:textStyle="bold"/>
+                        android:text="@string/sw_work_item_target_dept"/>
 
                     <trente.asia.android.view.ChiaseTextView
                         android:id="@+id/txt_id_target_dept"
@@ -84,8 +81,7 @@
                     android:gravity="center_vertical"
                     android:paddingLeft="@dimen/margin_16dp"
                     android:paddingRight="@dimen/margin_16dp"
-                    android:text="@string/sw_work_item_reason"
-                    android:textStyle="bold"/>
+                    android:text="@string/sw_work_item_reason"/>
 
                 <View style="@style/cs_common_divider"/>
 
@@ -106,8 +102,7 @@
                     android:gravity="center_vertical"
                     android:paddingLeft="@dimen/margin_16dp"
                     android:paddingRight="@dimen/margin_16dp"
-                    android:text="@string/sw_work_item_notice_loc"
-                    android:textStyle="bold"/>
+                    android:text="@string/sw_work_item_notice_loc"/>
 
                 <View style="@style/cs_common_divider"/>
 
@@ -136,8 +131,7 @@
                     android:gravity="center_vertical"
                     android:paddingLeft="@dimen/margin_16dp"
                     android:paddingRight="@dimen/margin_16dp"
-                    android:text="@string/sw_work_item_notice_pic"
-                    android:textStyle="bold"/>
+                    android:text="@string/sw_work_item_notice_pic"/>
 
                 <View style="@style/cs_common_divider"/>
 
