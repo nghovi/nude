@@ -107,7 +107,7 @@ public class ShiftWorkingFragment extends AbstractSwFragment{
 	}
 
 	private void loadSummary(List<WorkHistoryModel> lstHistory, WorkingTimeSummaryModel summaryModel){
-		lstHistory.add(new WorkHistoryModel(SwConst.SW_SHIFTWORKING_TYPE_SUMMARY, getString(R.string.sw_shift_work_item_status), summaryModel.status));
+		lstHistory.add(new WorkHistoryModel(SwConst.SW_SHIFTWORKING_TYPE_SUMMARY, getString(R.string.sw_shift_work_item_status), summaryModel.statusName));
 		lstHistory.add(new WorkHistoryModel(SwConst.SW_SHIFTWORKING_TYPE_SUMMARY, getString(R.string.sw_shift_work_regular_day), summaryModel.regularDays));
 		lstHistory.add(new WorkHistoryModel(SwConst.SW_SHIFTWORKING_TYPE_SUMMARY, getString(R.string.sw_shift_work_working_day), summaryModel.workingDays));
 		lstHistory.add(new WorkHistoryModel(SwConst.SW_SHIFTWORKING_TYPE_SUMMARY, getString(R.string.sw_shift_work_paid_vacation), summaryModel.countPaidVacation));
