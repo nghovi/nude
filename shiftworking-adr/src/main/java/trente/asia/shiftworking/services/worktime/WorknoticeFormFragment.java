@@ -68,7 +68,7 @@ public class WorknoticeFormFragment extends AbstractSwFragment{
 
 	@Override
 	public int getFooterItemId(){
-		return R.id.lnr_view_footer_work_status;
+		return 0;
 	}
 
 	@Override

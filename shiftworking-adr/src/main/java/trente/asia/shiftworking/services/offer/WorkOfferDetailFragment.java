@@ -72,7 +72,7 @@ public class WorkOfferDetailFragment extends AbstractSwFragment{
 
 	@Override
 	public int getFooterItemId(){
-		return R.id.lnr_view_footer_offer;
+		return 0;
 	}
 
 	@Override

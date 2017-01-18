@@ -57,7 +57,7 @@ public class WorkTransitDetailFragment extends AbstractSwFragment{
 
 	@Override
 	public int getFooterItemId(){
-		return R.id.lnr_view_footer_work_time;
+		return 0;
 	}
 
 	@Override
