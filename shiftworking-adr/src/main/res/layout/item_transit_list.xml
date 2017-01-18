@@ -4,6 +4,7 @@
               style="@style/cs_common_match_wrap"
               xmlns:android="http://schemas.android.com/apk/res/android"
               android:background="@drawable/state_common_selectable_row"
+              android:gravity="center_vertical"
               android:orientation="horizontal"
               android:paddingBottom="@dimen/margin_10dp"
               android:paddingLeft="@dimen/margin_16dp"
@@ -12,25 +13,21 @@
 
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_4dp">
 
         <ImageView
             android:id="@+id/img_id_transit_type"
             style="@style/cs_common_wrap"
             android:visibility="visible"
-            android:layout_alignParentTop="true"
             android:src="@drawable/sw_icon_other"/>
 
         <ImageView
             android:id="@+id/img_id_way_type"
             style="@style/cs_common_wrap"
+            android:layout_marginTop="@dimen/margin_18dp"
             android:src="@drawable/sw_icon_way1"
-            android:layout_centerVertical="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentBottom="true"
-            android:paddingBottom="@dimen/margin_6dp"
             />
-
     </RelativeLayout>
 
 
