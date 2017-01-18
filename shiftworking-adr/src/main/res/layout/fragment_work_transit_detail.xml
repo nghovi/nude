@@ -120,15 +120,15 @@
 
                 <TextView
                     android:id="@+id/txt_id_note"
-                    style="@style/wl_common_text"
-                    android:layout_marginTop="@dimen/margin_10dp"/>
+                    style="@style/wl_common_text"/>
             </LinearLayout>
 
             <View style="@style/cs_common_divider"/>
 
             <LinearLayout
                 android:id="@+id/lnr_id_attachment_holder"
-                style="@style/cs_common_match_wrap">
+                style="@style/cs_common_match_wrap"
+                android:orientation="vertical">
 
                 <LinearLayout
                     style="@style/wf_common_item_linear">
@@ -142,7 +142,8 @@
                 <View style="@style/cs_common_divider"/>
 
                 <LinearLayout
-                    style="@style/wf_common_item_linear2">
+                    style="@style/wf_common_item_linear2"
+                    android:paddingTop="@dimen/margin_0dp">
 
                     <LinearLayout
                         android:id="@+id/lnr_id_attachment"

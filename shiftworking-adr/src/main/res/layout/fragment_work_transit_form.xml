@@ -157,7 +157,6 @@
                     <trente.asia.android.view.ChiaseEditText
                         android:id="@+id/edt_id_note"
                         style="@style/wl_common_edit_text_multi_line2"
-                        android:layout_marginTop="@dimen/margin_10dp"
                         android:inputType="textMultiLine"
                         custom:mName="note"/>
                 </LinearLayout>
