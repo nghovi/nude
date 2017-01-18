@@ -35,7 +35,7 @@
     <string name="sw_work_item_notice_pic">Attachment</string>
     <string name="sw_work_item_notice_user">User</string>
     <string name="sw_work_item_notice_date">Notice date</string>
-    <string name="sw_work_item_check_user">Check user list</string>
+    <string name="sw_work_item_check_user">Checked users</string>
 
     <string name="sw_work_notice_item_offer_dept">Department</string>
 
