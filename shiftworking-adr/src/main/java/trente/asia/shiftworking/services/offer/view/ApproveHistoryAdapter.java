@@ -47,10 +47,12 @@ public class ApproveHistoryAdapter extends ArrayAdapter<ApproveHistory>{
 		viewHolder.txtUsername = (TextView)convertView.findViewById(R.id.txt_item_approve_history_username);
 		viewHolder.txtComment = (TextView)convertView.findViewById(R.id.txt_item_approve_history_comment);
 		viewHolder.txtResult = (TextView)convertView.findViewById(R.id.txt_item_approve_history_status);
+		viewHolder.txtTime = (TextView)convertView.findViewById(R.id.txt_item_approve_history_time);
 
 		ApproveHistory history = getItem(position);
 		WfPicassoHelper.loadImageWithDefaultIcon(mContext, BuildConfig.HOST, viewHolder.imgAvatar, history.userAvatarPath, R.drawable.wf_profile);
-		viewHolder.txtUsername.setText(history.userName + " " + CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, CCDateUtil.makeDate(history.historyDate)));
+		viewHolder.txtUsername.setText(history.userName);
+		viewHolder.txtTime.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, CCDateUtil.makeDate(history.historyDate)));
 		viewHolder.txtResult.setText(history.historyStatus);
 		viewHolder.txtComment.setText(history.historyComment);
 		return convertView;
@@ -58,10 +60,11 @@ public class ApproveHistoryAdapter extends ArrayAdapter<ApproveHistory>{
 
 	private class ViewHolder{
 
-		TextView	txtUsername;
+		TextView		txtUsername;
 		// TextView txtDate;
-		TextView	txtResult;
-		TextView	txtComment;
-		ImageView	imgAvatar;
+		TextView		txtResult;
+		TextView		txtComment;
+		ImageView		imgAvatar;
+		public TextView	txtTime;
 	}
 }

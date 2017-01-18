@@ -65,7 +65,7 @@ public class TransitAdapter extends ArrayAdapter<TransitModel>{
 		BoardViewHolder holder = new BoardViewHolder(convertView);
 
 		holder.txtLeave.setText(model.transLeave);
-        Date transDate = WelfareUtil.makeDate(model.transDate);
+		Date transDate = WelfareUtil.makeDate(model.transDate);
 		holder.txtDate.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, transDate));
 		holder.txtArrive.setText(model.transArrive);
 		holder.txtFee.setText(CCFormatUtil.formatAmount(model.fee));

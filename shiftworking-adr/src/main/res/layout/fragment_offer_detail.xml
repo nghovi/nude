@@ -41,11 +41,9 @@
                     style="@style/wl_common_edit_text2"
                     android:layout_marginLeft="@dimen/margin_10dp"
                     custom:mName="offerType"/>
-
-                <View style="@style/cs_common_divider"/>
-
             </LinearLayout>
 
+            <View style="@style/cs_common_divider"/>
 
             <LinearLayout
                 style="@style/wf_common_item_linear2">
