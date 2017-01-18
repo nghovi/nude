@@ -23,10 +23,29 @@
                 android:layout_marginBottom="@dimen/margin_10dp"
                 android:paddingLeft="@dimen/margin_16dp"
                 android:paddingRight="@dimen/margin_16dp"
-                android:text="@string/fragment_offer_detail_header"
-                android:textStyle="bold"/>
+                android:text="@string/fragment_offer_detail_header"/>
 
             <View style="@style/cs_common_divider"/>
+
+            <LinearLayout
+                android:id="@+id/lnr_frament_offer_detail_status"
+                style="@style/wf_common_item_linear2">
+
+                <TextView
+                    style="@style/wl_common_text"
+                    android:layout_width="wrap_content"
+                    android:text="@string/fragment_work_offer_edit_offer_status"/>
+
+                <trente.asia.android.view.ChiaseTextView
+                    android:id="@+id/txt_fragment_offer_detail_offer_status"
+                    style="@style/wl_common_edit_text2"
+                    android:layout_marginLeft="@dimen/margin_10dp"
+                    custom:mName="offerType"/>
+
+                <View style="@style/cs_common_divider"/>
+
+            </LinearLayout>
+
 
             <LinearLayout
                 style="@style/wf_common_item_linear2">
@@ -126,19 +145,28 @@
             </LinearLayout>
 
             <LinearLayout
-                style="@style/wf_common_item_linear2"
+                style="@style/cs_common_match"
                 android:orientation="vertical">
 
                 <TextView
                     style="@style/wl_common_text"
                     android:layout_width="wrap_content"
+                    android:paddingBottom="@dimen/margin_10dp"
+                    android:paddingLeft="@dimen/margin_16dp"
+                    android:paddingRight="@dimen/margin_16dp"
+                    android:paddingTop="@dimen/margin_10dp"
                     android:text="@string/fragment_offer_detail_note"/>
 
-                <trente.asia.android.view.ChiaseTextView
-                    android:id="@+id/txt_fragment_offer_detail_note"
-                    style="@style/wl_common_text"
-                    android:layout_marginTop="@dimen/margin_10dp"
-                    custom:mName="note"/>
+                <View style="@style/cs_common_divider"/>
+
+                <LinearLayout
+                    style="@style/wf_common_item_linear2">
+
+                    <trente.asia.android.view.ChiaseTextView
+                        android:id="@+id/txt_fragment_offer_detail_note"
+                        style="@style/wl_common_text"
+                        custom:mName="note"/>
+                </LinearLayout>
             </LinearLayout>
 
             <View style="@style/cs_common_divider"/>
@@ -155,8 +183,7 @@
                     style="@style/wl_common_text"
                     android:paddingLeft="@dimen/margin_16dp"
                     android:paddingRight="@dimen/margin_16dp"
-                    android:text="@string/fragment_offer_detail_approve_history"
-                    android:textStyle="bold"/>
+                    android:text="@string/fragment_offer_detail_approve_history"/>
 
                 <trente.asia.android.view.ChiaseListViewNoScroll
                     android:id="@+id/lst_fragment_offer_detail_approve_history"

@@ -114,22 +114,22 @@ public class WorkOfferDetailFragment extends AbstractSwFragment{
 		}
 	}
 
-    @Override
-    public void onResume(){
-        super.onResume();
+	@Override
+	public void onResume(){
+		super.onResume();
 
-        if(!((WelfareActivity)activity).dataMap.isEmpty()){
-            String isDelete = CCStringUtil.toString(((WelfareActivity)activity).dataMap.get(SwConst.ACTION_OFFER_DELETE));
-            String isUpdate = CCStringUtil.toString(((WelfareActivity)activity).dataMap.get(SwConst.ACTION_OFFER_UPDATE));
-            if(CCConst.YES.equals(isDelete) || CCConst.YES.equals(isUpdate)){
-                ((WelfareActivity)activity).dataMap.clear();
-                ((WelfareActivity)activity).isInitData = true;
-                if(CCConst.YES.equals(isDelete)){
-                    getFragmentManager().popBackStack();
-                }
-            }
-        }
-    }
+		if(!((WelfareActivity)activity).dataMap.isEmpty()){
+			String isDelete = CCStringUtil.toString(((WelfareActivity)activity).dataMap.get(SwConst.ACTION_OFFER_DELETE));
+			String isUpdate = CCStringUtil.toString(((WelfareActivity)activity).dataMap.get(SwConst.ACTION_OFFER_UPDATE));
+			if(CCConst.YES.equals(isDelete) || CCConst.YES.equals(isUpdate)){
+				((WelfareActivity)activity).dataMap.clear();
+				((WelfareActivity)activity).isInitData = true;
+				if(CCConst.YES.equals(isDelete)){
+					getFragmentManager().popBackStack();
+				}
+			}
+		}
+	}
 
 	private Map<String, String> buildOfferStatusMaster(JSONObject response){
 		Map<String, String> offerStatusMaster = new LinkedHashMap<>();
@@ -145,6 +145,13 @@ public class WorkOfferDetailFragment extends AbstractSwFragment{
 			CAObjectSerializeUtil.deserializeObject(lnrContent, new JSONObject(gson.toJson(offerModel)));
 		}catch(JSONException e){
 			e.printStackTrace();
+		}
+
+		if(!offerModel.userId.equals(myself.key)){
+			getView().findViewById(R.id.lnr_frament_offer_detail_status).setVisibility(View.GONE);
+		}else{
+			getView().findViewById(R.id.lnr_frament_offer_detail_status).setVisibility(View.VISIBLE);
+			((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_offer_status)).setText(offerModel.offerStatusName);
 		}
 
 		((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_offer_type)).setText(offerModel.offerTypeName);
@@ -167,30 +174,30 @@ public class WorkOfferDetailFragment extends AbstractSwFragment{
 
 	private void buildWorkOfferDetail(){
 		judgeEditPermission();
-        judgeAprovePermission();
+		judgeAprovePermission();
 		buildWorkOfferApproveHistory();
-//		buildOfferComment();
+		// buildOfferComment();
 	}
 
-//	private void buildOfferComment(){
-//		if(WorkOfferModel.OFFER_STATUS_OFFER.equals(offer.approveResult) && SwConst.OFFER_CAN_APPROVE.equals(offerPermission)){
-//			getView().findViewById(R.id.lnr_fragment_offer_detail_comment).setVisibility(View.VISIBLE);
-//		}else{
-//			getView().findViewById(R.id.lnr_fragment_offer_detail_comment).setVisibility(View.GONE);
-//		}
-//	}
+	// private void buildOfferComment(){
+	// if(WorkOfferModel.OFFER_STATUS_OFFER.equals(offer.approveResult) && SwConst.OFFER_CAN_APPROVE.equals(offerPermission)){
+	// getView().findViewById(R.id.lnr_fragment_offer_detail_comment).setVisibility(View.VISIBLE);
+	// }else{
+	// getView().findViewById(R.id.lnr_fragment_offer_detail_comment).setVisibility(View.GONE);
+	// }
+	// }
 
 	private void judgeAprovePermission(){
 		boolean permissionApprove = SwConst.OFFER_CAN_APPROVE.equals(offerPermission);
 		LinearLayout lnrApproveArea = (LinearLayout)getView().findViewById(R.id.lnr_id_approve_area);
 		if(permissionApprove){
-            lnrApproveArea.setVisibility(View.VISIBLE);
+			lnrApproveArea.setVisibility(View.VISIBLE);
 			Button btnReject = (Button)getView().findViewById(R.id.btn_fragment_offer_detail_reject);
 			Button btnApprove = (Button)getView().findViewById(R.id.btn_fragment_offer_detail_approve);
 			btnReject.setOnClickListener(this);
 			btnApprove.setOnClickListener(this);
 		}else{
-            lnrApproveArea.setVisibility(View.GONE);
+			lnrApproveArea.setVisibility(View.GONE);
 		}
 	}
 
@@ -264,13 +271,13 @@ public class WorkOfferDetailFragment extends AbstractSwFragment{
 		sendApproveResult("OK");
 	}
 
-    @Override
-    protected void onClickBackBtn(){
-        if(isClickNotification){
-            emptyBackStack();
-            gotoFragment(new WorkOfferListFragment());
-        }else{
-            super.onClickBackBtn();
-        }
-    }
+	@Override
+	protected void onClickBackBtn(){
+		if(isClickNotification){
+			emptyBackStack();
+			gotoFragment(new WorkOfferListFragment());
+		}else{
+			super.onClickBackBtn();
+		}
+	}
 }

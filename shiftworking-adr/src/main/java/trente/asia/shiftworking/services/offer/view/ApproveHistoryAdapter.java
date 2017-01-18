@@ -10,10 +10,13 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import asia.chiase.core.util.CCDateUtil;
+import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.shiftworking.BuildConfig;
 import trente.asia.shiftworking.R;
 import trente.asia.shiftworking.services.offer.model.ApproveHistory;
+import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.utils.WfPicassoHelper;
 
 /**
@@ -23,31 +26,31 @@ import trente.asia.welfare.adr.utils.WfPicassoHelper;
  */
 public class ApproveHistoryAdapter extends ArrayAdapter<ApproveHistory>{
 
-//	private List<ApproveHistory>	lstHistory;
-	private Context					mContext;
-	private int						layoutId;
-    private LayoutInflater mInflater;
+	// private List<ApproveHistory> lstHistory;
+	private Context			mContext;
+	private int				layoutId;
+	private LayoutInflater	mInflater;
 
 	public ApproveHistoryAdapter(Context context, List<ApproveHistory> lstHistory){
 		super(context, R.layout.item_approve_history, lstHistory);
 		this.mContext = context;
 		this.layoutId = R.layout.item_approve_history;
-        mInflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		mInflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}
 
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent){
 		ViewHolder viewHolder;
-        convertView = mInflater.inflate(layoutId, null);
-        viewHolder = new ViewHolder();
-        viewHolder.imgAvatar = (ImageView)convertView.findViewById(R.id.img_item_approve_history_avatar);
-        viewHolder.txtUsername = (TextView)convertView.findViewById(R.id.txt_item_approve_history_username);
-        viewHolder.txtComment = (TextView)convertView.findViewById(R.id.txt_item_approve_history_comment);
-        viewHolder.txtResult = (TextView)convertView.findViewById(R.id.txt_item_approve_history_status);
+		convertView = mInflater.inflate(layoutId, null);
+		viewHolder = new ViewHolder();
+		viewHolder.imgAvatar = (ImageView)convertView.findViewById(R.id.img_item_approve_history_avatar);
+		viewHolder.txtUsername = (TextView)convertView.findViewById(R.id.txt_item_approve_history_username);
+		viewHolder.txtComment = (TextView)convertView.findViewById(R.id.txt_item_approve_history_comment);
+		viewHolder.txtResult = (TextView)convertView.findViewById(R.id.txt_item_approve_history_status);
 
 		ApproveHistory history = getItem(position);
 		WfPicassoHelper.loadImageWithDefaultIcon(mContext, BuildConfig.HOST, viewHolder.imgAvatar, history.userAvatarPath, R.drawable.wf_profile);
-		viewHolder.txtUsername.setText(history.userName + " " + history.historyDate);
+		viewHolder.txtUsername.setText(history.userName + " " + CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, CCDateUtil.makeDate(history.historyDate)));
 		viewHolder.txtResult.setText(history.historyStatus);
 		viewHolder.txtComment.setText(history.historyComment);
 		return convertView;
@@ -56,7 +59,7 @@ public class ApproveHistoryAdapter extends ArrayAdapter<ApproveHistory>{
 	private class ViewHolder{
 
 		TextView	txtUsername;
-//		TextView	txtDate;
+		// TextView txtDate;
 		TextView	txtResult;
 		TextView	txtComment;
 		ImageView	imgAvatar;

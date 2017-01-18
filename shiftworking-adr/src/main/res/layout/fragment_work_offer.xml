@@ -69,10 +69,11 @@
                         android:src="@drawable/sw_icon_filter"/>
                 </LinearLayout>
 
+                <View style="@style/cs_common_divider"/>
+
                 <trente.asia.android.view.ChiaseListViewNoScroll
                     android:id="@+id/lst_fragment_work_offer_other"
                     style="@style/cs_common_match_wrap"
-                    android:layout_marginTop="@dimen/margin_10dp"
                     android:divider="@color/cs_common_divider"
                     android:dividerHeight="1px"/>
             </LinearLayout>
