@@ -24,7 +24,6 @@
                     android:layout_height="@dimen/margin_60dp"
                     android:layout_gravity="center_horizontal"
                     android:scaleType="fitXY"
-                    android:src="@drawable/wf_profile"
                     custom:sriv_oval="true"/>
 
                 <ImageView

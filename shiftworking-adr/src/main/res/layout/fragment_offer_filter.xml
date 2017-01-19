@@ -31,7 +31,7 @@
             <ImageView
                 style="@style/cs_common_wrap"
                 android:layout_marginLeft="@dimen/margin_10dp"
-                android:src="@drawable/cs_row_arrow_right"/>
+                android:src="@drawable/wf_row_arrow_right"/>
         </LinearLayout>
 
         <View style="@style/cs_common_divider"/>
@@ -55,7 +55,7 @@
             <ImageView
                 style="@style/cs_common_wrap"
                 android:layout_marginLeft="@dimen/margin_10dp"
-                android:src="@drawable/cs_row_arrow_right"/>
+                android:src="@drawable/wf_row_arrow_right"/>
         </LinearLayout>
 
         <View style="@style/cs_common_divider"/>
@@ -79,7 +79,7 @@
             <ImageView
                 style="@style/cs_common_wrap"
                 android:layout_marginLeft="@dimen/margin_10dp"
-                android:src="@drawable/cs_row_arrow_right"/>
+                android:src="@drawable/wf_row_arrow_right"/>
         </LinearLayout>
 
         <View style="@style/cs_common_divider"/>
