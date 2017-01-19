@@ -26,8 +26,7 @@
                 android:layout_marginBottom="@dimen/margin_10dp"
                 android:paddingLeft="@dimen/margin_16dp"
                 android:paddingRight="@dimen/margin_16dp"
-                android:text="@string/fragment_offer_edit_header"
-                android:textStyle="bold"/>
+                android:text="@string/fragment_offer_edit_header"/>
 
             <View style="@style/cs_common_divider"/>
 
@@ -45,7 +44,11 @@
                     android:id="@+id/txt_fragment_offer_edit_offer_type"
                     style="@style/wl_common_edit_text2"
                     android:layout_marginLeft="@dimen/margin_10dp"
+                    android:layout_weight="1"
                     custom:mName="offerType"/>
+
+                <ImageView style="@style/sw_right_hand_arrow_image"/>
+
             </LinearLayout>
 
             <View style="@style/cs_common_divider"/>
@@ -156,14 +159,19 @@
                 <View style="@style/cs_common_divider"/>
             </LinearLayout>
 
+            <TextView
+                style="@style/wl_common_text"
+                android:layout_marginBottom="@dimen/margin_10dp"
+                android:layout_marginTop="@dimen/margin_10dp"
+                android:paddingLeft="@dimen/margin_16dp"
+                android:paddingRight="@dimen/margin_16dp"
+                android:text="@string/fragment_offer_detail_note"/>
+
+            <View style="@style/cs_common_divider"/>
+
             <LinearLayout
                 style="@style/wf_common_item_linear2"
                 android:orientation="vertical">
-
-                <TextView
-                    style="@style/wl_common_text"
-                    android:layout_width="wrap_content"
-                    android:text="@string/fragment_offer_detail_note"/>
 
                 <trente.asia.android.view.ChiaseEditText
                     android:id="@+id/edt_fragment_offer_edit_note"
