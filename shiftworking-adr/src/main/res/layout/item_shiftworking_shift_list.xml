@@ -30,7 +30,7 @@
 
     <LinearLayout
         style="@style/cs_common_wrap"
-        android:gravity="right"
+        android:gravity="left"
         android:orientation="vertical">
 
         <TextView
