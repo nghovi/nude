@@ -45,7 +45,6 @@
                     android:id="@+id/txt_fragment_offer_edit_offer_type"
                     style="@style/wl_common_edit_text2"
                     android:layout_marginLeft="@dimen/margin_10dp"
-                    android:hint="@string/chiase_common_please_entry"
                     custom:mName="offerType"/>
             </LinearLayout>
 
@@ -65,8 +64,12 @@
                     android:id="@+id/txt_fragment_offer_edit_start_date"
                     style="@style/wl_common_edit_text2"
                     android:layout_marginLeft="@dimen/margin_10dp"
-                    android:hint="@string/chiase_common_please_select"
+                    android:layout_weight="1"
                     custom:mName="startDateString"/>
+
+                <ImageView style="@style/sw_right_hand_arrow_image"/>
+
+
             </LinearLayout>
 
             <View style="@style/cs_common_divider"/>
@@ -89,9 +92,12 @@
                         android:id="@+id/txt_fragment_offer_edit_start_time"
                         style="@style/wl_common_edit_text2"
                         android:layout_marginLeft="@dimen/margin_10dp"
+                        android:layout_weight="1"
                         android:enabled="false"
-                        android:hint="@string/chiase_common_please_select"
                         custom:mName="startTimeString"/>
+
+                    <ImageView style="@style/sw_right_hand_arrow_image"/>
+
                 </LinearLayout>
 
                 <View style="@style/cs_common_divider"/>
@@ -111,9 +117,12 @@
                     android:id="@+id/txt_fragment_offer_edit_end_date"
                     style="@style/wl_common_edit_text2"
                     android:layout_marginLeft="@dimen/margin_10dp"
+                    android:layout_weight="1"
                     android:enabled="false"
-                    android:hint="@string/chiase_common_please_select"
                     custom:mName="endDateString"/>
+
+                <ImageView style="@style/sw_right_hand_arrow_image"/>
+
             </LinearLayout>
 
             <View style="@style/cs_common_divider"/>
@@ -136,9 +145,12 @@
                         android:id="@+id/txt_fragment_offer_edit_end_time"
                         style="@style/wl_common_edit_text2"
                         android:layout_marginLeft="@dimen/margin_10dp"
+                        android:layout_weight="1"
                         android:enabled="false"
-                        android:hint="@string/chiase_common_please_select"
                         custom:mName="endTimeString"/>
+
+                    <ImageView style="@style/sw_right_hand_arrow_image"/>
+
                 </LinearLayout>
 
                 <View style="@style/cs_common_divider"/>
@@ -157,7 +169,6 @@
                     android:id="@+id/edt_fragment_offer_edit_note"
                     style="@style/wl_common_edit_text_multi_line2"
                     android:layout_marginTop="@dimen/margin_10dp"
-                    android:hint="@string/chiase_common_please_entry"
                     android:inputType="textMultiLine"
                     custom:mName="note"/>
             </LinearLayout>

@@ -95,11 +95,7 @@
                         android:layout_weight="1"
                         custom:mName="transType"/>
 
-                    <ImageView
-                        style="@style/cs_common_wrap"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="@dimen/margin_6dp"
-                        android:src="@drawable/cs_row_arrow_right"/>
+                    <ImageView style="@style/sw_right_hand_arrow_image"/>
                 </LinearLayout>
 
                 <View style="@style/cs_common_divider"/>
@@ -122,11 +118,8 @@
                         android:layout_weight="1"
                         custom:mName="wayType"/>
 
-                    <ImageView
-                        style="@style/cs_common_wrap"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="@dimen/margin_6dp"
-                        android:src="@drawable/cs_row_arrow_right"/>
+                    <ImageView style="@style/sw_right_hand_arrow_image"/>
+
                 </LinearLayout>
 
                 <View style="@style/cs_common_divider"/>
