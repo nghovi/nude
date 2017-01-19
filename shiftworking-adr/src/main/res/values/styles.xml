@@ -117,7 +117,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_gravity">center_vertical</item>
         <item name="android:layout_marginLeft">@dimen/margin_6dp</item>
-        <item name="android:src">@drawable/cs_row_arrow_right</item>
+        <item name="android:src">@drawable/wf_row_arrow_right</item>
     </style>
 
 </resources>
