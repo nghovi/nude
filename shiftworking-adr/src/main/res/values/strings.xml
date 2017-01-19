@@ -14,9 +14,9 @@
     <string name="fragment_offer_edit_confirm_delete_msg">Are you sure to delete this offer?</string>
     <string name="fragment_offer_edit_offer_type">Offer Type</string>
 
-    <string name="sw_footer_work_time">Work Time</string>
-    <string name="sw_footer_work_shift">Work Shift</string>
-    <string name="sw_footer_work_offer">Work Offer</string>
+    <string name="sw_footer_work_time">Check in</string>
+    <string name="sw_footer_work_shift">Work shift</string>
+    <string name="sw_footer_work_offer">Work offer</string>
     <string name="sw_footer_notices">Notices</string>
     <string name="sw_footer_setting">Setting</string>
     <string name="sw_footer_work_status">Work status</string>
