@@ -112,11 +112,11 @@ public class WorkOfferEditFragment extends AbstractSwFragment{
 	protected void successLoad(JSONObject response, String url){
 		if(WfUrlConst.WF_SW_OFFER_DETAIL.equals(url)){
 			WorkOfferModelHolder holder = CCJsonUtil.convertToModel(CCStringUtil.toString(response), WorkOfferModelHolder.class);
-			initDialog(holder);
 			buildDatePickerDialogs(holder.offer);
 			if(!CCStringUtil.isEmpty(activeOfferId)){
 				loadWorkOffer(holder);
 			}
+            initDialog(holder);
 		}else{
 			super.successLoad(response, url);
 		}
