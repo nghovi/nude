@@ -15,12 +15,9 @@
     <string name="fragment_offer_edit_offer_type">申請タイプ</string>
 
     <string name="fragment_offer_detail_comment_hint">Comment</string>
-    <string name="fragment_offer_detail_approve">%1$s by %2$s</string>
 
     <string name="sw_footer_work_time">勤務時間</string>
     <string name="sw_footer_work_shift">勤務シフト</string>
-    <string name="sw_footer_who_work">勤務ユーザー</string>
-    <string name="sw_footer_notices">お知らせ</string>
     <string name="sw_footer_setting">設定</string>
     <string name="sw_footer_work_status">勤務ステータス</string>
     <string name="sw_footer_work_offer">勤務申請</string>
@@ -61,37 +58,21 @@
     <string name="sw_shift_work_leave_early">早退</string>
     <string name="sw_shift_work_summary_title">集計</string>
 
-    <string name="sw_shift_work_item_night_time">深夜勤務時間</string>
     <string name="sw_shift_work_item_over_time">残業時間</string>
-    <string name="sw_shift_work_item_total">勤務時間</string>
 
 
     <string name="sw_work_action_check_in">チェックイン</string>
     <string name="sw_work_action_choose_loc">場所情報を選択</string>
 
     <string name="sw_msg_no_project">プロジェクトが設定されていません</string>
-    <string name="sw_notice_title">%1$s -> %2$s</string>
 
     <!--Notifications-->
-    <string name="FM_SW_001">新しい勤怠お知らせを受け取りました</string>
-    <string name="FM_SW_002">まだチェックインしていません</string>
-    <string name="FM_SW_003">まだチェックアウトしていません</string>
-    <string name="FM_SW_0041">%1$s:残業時間を超えました</string>
-    <string name="FM_SW_0042">%1$sユーザーが残業時間を超えました</string>
-    <string name="FM_SW_005">勤怠予定が更新されました</string>
-    <string name="FM_SW_006">申請が却下されました</string>
-    <string name="FM_SW_007">新しい申請があります</string>
-    <string name="FM_SW_008">申請が承認されました</string>
-    <string name="FM_SW_009">承認が却下されました</string>
 
     <!--Work transit service-->
     <string name="sw_work_transit_entry_title">勤務交通エントリー</string>
     <string name="sw_work_transit_leave_item">出発</string>
     <string name="sw_work_transit_arrive_item">到着</string>
     <string name="sw_work_transit_way_type_item">往復区分</string>
-    <string name="sw_work_transit_one_way_item">片道</string>
-    <string name="sw_work_transit_two_way_item">往復</string>
-    <string name="sw_work_transit_cost_type_item">費用区分</string>
     <string name="sw_work_transit_trans_type_item">交通機関</string>
     <string name="sw_work_transit_fee_item">交通費</string>
     <string name="sw_work_transit_note_item">ノート</string>

@@ -15,12 +15,9 @@
     <string name="fragment_offer_edit_offer_type">Phân loại đăng ký</string>
 
     <string name="fragment_offer_detail_comment_hint">Bình luận</string>
-    <string name="fragment_offer_detail_approve">%1$s by %2$s</string>
 
     <string name="sw_footer_work_time">Thời gian</string>
     <string name="sw_footer_work_shift">Phân ca</string>
-    <string name="sw_footer_who_work">Thành viên</string>
-    <string name="sw_footer_notices">Thông báo</string>
     <string name="sw_footer_setting">Cài đặt</string>
     <string name="sw_footer_work_status">Trạng thái</string>
     <string name="sw_footer_work_offer">Đăng ký</string>
@@ -61,37 +58,21 @@
     <string name="sw_shift_work_leave_early">Về sớm</string>
     <string name="sw_shift_work_summary_title">Tổng</string>
 
-    <string name="sw_shift_work_item_night_time">Thời gian làm đêm</string>
     <string name="sw_shift_work_item_over_time">Thời gian làm thêm</string>
-    <string name="sw_shift_work_item_total">Thời gian làm việc</string>
 
 
     <string name="sw_work_action_check_in">Checkin</string>
     <string name="sw_work_action_choose_loc">Chọn thông tin địa chỉnh</string>
 
     <string name="sw_msg_no_project">Dự án chưa được thiết lập</string>
-    <string name="sw_notice_title">%1$s -> %2$s</string>
 
     <!--Notifications-->
-    <string name="FM_SW_001">Đã nhận được thông báo mới</string>
-    <string name="FM_SW_002">Bạn vẫn chưa checkin</string>
-    <string name="FM_SW_003">Bạn vẫn chưa checkout</string>
-    <string name="FM_SW_0041">%1$s:đã vượt quá thời gian làm thêm</string>
-    <string name="FM_SW_0042">Người dùng %1$s đã vượt quá thời gian làm thêm</string>
-    <string name="FM_SW_005">Dự định làm việc đã được cập nhập</string>
-    <string name="FM_SW_006">Đăng ký đã bị hủy</string>
-    <string name="FM_SW_007">Có đăng ký mới</string>
-    <string name="FM_SW_008">Đăng ký đã được phê duyệt</string>
-    <string name="FM_SW_009">Phê duyệt đã bị hủy</string>
 
     <!--Work transit service-->
     <string name="sw_work_transit_entry_title">Nhập thông tin đi lại</string>
     <string name="sw_work_transit_leave_item">Điểm xuất phát</string>
     <string name="sw_work_transit_arrive_item">Điểm đến</string>
     <string name="sw_work_transit_way_type_item">Phân loại</string>
-    <string name="sw_work_transit_one_way_item">Một chiều</string>
-    <string name="sw_work_transit_two_way_item">Khứ hồi</string>
-    <string name="sw_work_transit_cost_type_item">Loại phí</string>
     <string name="sw_work_transit_trans_type_item">Phương tiện</string>
     <string name="sw_work_transit_fee_item">Chi phí</string>
     <string name="sw_work_transit_note_item">Ghi chú</string>

@@ -32,7 +32,7 @@ public class TransitAdapter extends ArrayAdapter<TransitModel>{
 	public class BoardViewHolder{
 
 		public ImageView	imgTransitType;
-		public ImageView	imgWayType;
+		// public ImageView imgWayType;
 
 		public TextView		txtLeave;
 		public TextView		txtDate;
@@ -46,7 +46,7 @@ public class TransitAdapter extends ArrayAdapter<TransitModel>{
 			txtFee = (TextView)view.findViewById(R.id.txt_id_fee);
 
 			imgTransitType = (ImageView)view.findViewById(R.id.img_id_transit_type);
-			imgWayType = (ImageView)view.findViewById(R.id.img_id_way_type);
+			// imgWayType = (ImageView)view.findViewById(R.id.img_id_way_type);
 		}
 	}
 
@@ -70,20 +70,22 @@ public class TransitAdapter extends ArrayAdapter<TransitModel>{
 		holder.txtArrive.setText(model.transArrive);
 		holder.txtFee.setText(CCFormatUtil.formatAmount(model.fee));
 
-		if(SwConst.SW_TRANSIT_WAY_TYPE_ONE_WAY.equals(model.wayType)){
-			holder.imgWayType.setImageResource(R.drawable.sw_icon_way1);
-		}else if(SwConst.SW_TRANSIT_WAY_TYPE_TWO_WAY.equals(model.wayType)){
-			holder.imgWayType.setImageResource(R.drawable.sw_icon_way2);
-		}
-
-		if(SwConst.SW_TRANSIT_TYPE_BUS.equals(model.transType)){
-			holder.imgTransitType.setImageResource(R.drawable.sw_icon_bus);
-		}else if(SwConst.SW_TRANSIT_TYPE_TAXI.equals(model.transType)){
-			holder.imgTransitType.setImageResource(R.drawable.sw_icon_taxi);
-		}else if(SwConst.SW_TRANSIT_TYPE_TRAIN.equals(model.transType)){
-			holder.imgTransitType.setImageResource(R.drawable.sw_icon_train);
-		}else if(SwConst.SW_TRANSIT_TYPE_OTHER.equals(model.transType)){
-			holder.imgTransitType.setImageResource(R.drawable.sw_icon_other);
+		if(SwConst.SW_TRANSIT_TYPE_BUS.equals(model.transType) && SwConst.SW_TRANSIT_WAY_TYPE_ONE_WAY.equals(model.wayType)){
+			holder.imgTransitType.setImageResource(R.drawable.sw_icon_bus_1way);
+		}else if(SwConst.SW_TRANSIT_TYPE_TAXI.equals(model.transType) && SwConst.SW_TRANSIT_WAY_TYPE_ONE_WAY.equals(model.wayType)){
+			holder.imgTransitType.setImageResource(R.drawable.sw_icon_taxi_1way);
+		}else if(SwConst.SW_TRANSIT_TYPE_TRAIN.equals(model.transType) && SwConst.SW_TRANSIT_WAY_TYPE_ONE_WAY.equals(model.wayType)){
+			holder.imgTransitType.setImageResource(R.drawable.sw_icon_train_1way);
+		}else if(SwConst.SW_TRANSIT_TYPE_OTHER.equals(model.transType) && SwConst.SW_TRANSIT_WAY_TYPE_ONE_WAY.equals(model.wayType)){
+			holder.imgTransitType.setImageResource(R.drawable.sw_icon_other_1way);
+		}else if(SwConst.SW_TRANSIT_TYPE_BUS.equals(model.transType) && SwConst.SW_TRANSIT_WAY_TYPE_TWO_WAY.equals(model.wayType)){
+			holder.imgTransitType.setImageResource(R.drawable.sw_icon_bus_2way);
+		}else if(SwConst.SW_TRANSIT_TYPE_TAXI.equals(model.transType) && SwConst.SW_TRANSIT_WAY_TYPE_TWO_WAY.equals(model.wayType)){
+			holder.imgTransitType.setImageResource(R.drawable.sw_icon_taxi_2way);
+		}else if(SwConst.SW_TRANSIT_TYPE_TRAIN.equals(model.transType) && SwConst.SW_TRANSIT_WAY_TYPE_TWO_WAY.equals(model.wayType)){
+			holder.imgTransitType.setImageResource(R.drawable.sw_icon_train_2way);
+		}else if(SwConst.SW_TRANSIT_TYPE_OTHER.equals(model.transType) && SwConst.SW_TRANSIT_WAY_TYPE_TWO_WAY.equals(model.wayType)){
+			holder.imgTransitType.setImageResource(R.drawable.sw_icon_other_2way);
 		}
 
 		return convertView;

@@ -17,7 +17,6 @@
     <string name="sw_footer_work_time">Check in</string>
     <string name="sw_footer_work_shift">Work shift</string>
     <string name="sw_footer_work_offer">Work offer</string>
-    <string name="sw_footer_notices">Notices</string>
     <string name="sw_footer_setting">Setting</string>
     <string name="sw_footer_work_status">Work status</string>
 
@@ -57,27 +56,14 @@
     <string name="sw_shift_work_leave_early">Leave early</string>
     <string name="sw_shift_work_summary_title">Summary</string>
 
-    <string name="sw_shift_work_item_night_time">Night time</string>
     <string name="sw_shift_work_item_over_time">Over time</string>
-    <string name="sw_shift_work_item_total">Total</string>
 
     <string name="sw_work_action_check_in">Check in</string>
     <string name="sw_work_action_choose_loc">Set location</string>
 
     <string name="sw_msg_no_project">You don’t have project.</string>
-    <string name="sw_notice_title">%1$s -> %2$s</string>
 
     <!--Notifications-->
-    <string name="FM_SW_001">You have new work notice</string>
-    <string name="FM_SW_002">You haven\'t check in yet</string>
-    <string name="FM_SW_003">You haven\'t check out yet</string>
-    <string name="FM_SW_0041">%1$s: limit overtime</string>
-    <string name="FM_SW_0042">%1$s users: limit overtime</string>
-    <string name="FM_SW_005">Your shift work is updated</string>
-    <string name="FM_SW_006">Your offer is rejected</string>
-    <string name="FM_SW_007">You have new offer</string>
-    <string name="FM_SW_008">Your offer is approved</string>
-    <string name="FM_SW_009">Your approve is rejected</string>
 
     <string name="sw_work_offer_history">My offer history</string>
 
@@ -86,9 +72,6 @@
     <string name="sw_work_transit_leave_item">Leave</string>
     <string name="sw_work_transit_arrive_item">Arrive</string>
     <string name="sw_work_transit_way_type_item">Way type</string>
-    <string name="sw_work_transit_one_way_item">One way</string>
-    <string name="sw_work_transit_two_way_item">Two way</string>
-    <string name="sw_work_transit_cost_type_item">Cost type</string>
     <string name="sw_work_transit_trans_type_item">Transit type</string>
     <string name="sw_work_transit_fee_item">Fee</string>
     <string name="sw_work_transit_note_item">Note</string>
@@ -98,9 +81,7 @@
     <string name="fragment_transit_confirm_delete_msg">Are you sure to delete this transit?</string>
 
     <string name="fragment_offer_detail_comment_hint">Comment</string>
-    <string name="fragment_offer_detail_approve">%1$s by %2$s</string>
     <string name="fragment_offer_filter_offer_type">Offer type</string>
-    <string name="fragment_work_offer_other_history">Work other offer history</string>
     <string name="fragment_offer_filter_other_history_filter">Filter: %1$s</string>
     <string name="fragment_offer_filter_offer_status">Offer status</string>
     <string name="fragment_offer_filter_offer_dept">Target department</string>
