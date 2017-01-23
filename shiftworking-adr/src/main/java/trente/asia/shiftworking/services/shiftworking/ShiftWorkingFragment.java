@@ -115,7 +115,7 @@ public class ShiftWorkingFragment extends AbstractSwFragment{
 		lstHistory.add(new WorkHistoryModel(SwConst.SW_SHIFTWORKING_TYPE_SUMMARY, getString(R.string.sw_shift_work_compensatory_holiday), summaryModel.countCompVacation));
 		lstHistory.add(new WorkHistoryModel(SwConst.SW_SHIFTWORKING_TYPE_SUMMARY, getString(R.string.sw_shift_work_item_over_time), summaryModel.timeOver));
 		lstHistory.add(new WorkHistoryModel(SwConst.SW_SHIFTWORKING_TYPE_SUMMARY, getString(R.string.sw_shift_work_short_time), summaryModel.timeShort));
-        lstHistory.add(new WorkHistoryModel(SwConst.SW_SHIFTWORKING_TYPE_SUMMARY, getString(R.string.sw_shift_work_holiday_working), summaryModel.countHolidayWork));
+        lstHistory.add(new WorkHistoryModel(SwConst.SW_SHIFTWORKING_TYPE_SUMMARY, getString(R.string.sw_shift_work_holiday_working), summaryModel.timeHoliday));
 		lstHistory.add(new WorkHistoryModel(SwConst.SW_SHIFTWORKING_TYPE_SUMMARY, getString(R.string.sw_shift_work_be_late), summaryModel.countBeLate));
 		lstHistory.add(new WorkHistoryModel(SwConst.SW_SHIFTWORKING_TYPE_SUMMARY, getString(R.string.sw_shift_work_leave_early), summaryModel.countLeaveEarly));
 	}

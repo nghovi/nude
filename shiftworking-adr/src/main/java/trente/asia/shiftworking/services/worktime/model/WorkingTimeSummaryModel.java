@@ -40,6 +40,7 @@ public class WorkingTimeSummaryModel{
 	// public List<WorkingTimeMonthlyItem> listBeLate;
 
 	public String	countLeaveEarly;
+	public String	timeHoliday;
 
 	// public List<WorkingTimeMonthlyItem> listLeaveEarly;
 }
