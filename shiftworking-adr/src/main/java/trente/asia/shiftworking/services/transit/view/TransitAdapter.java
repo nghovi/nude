@@ -71,21 +71,21 @@ public class TransitAdapter extends ArrayAdapter<TransitModel>{
 		holder.txtFee.setText(CCFormatUtil.formatAmount(model.fee));
 
 		if(SwConst.SW_TRANSIT_TYPE_BUS.equals(model.transType) && SwConst.SW_TRANSIT_WAY_TYPE_ONE_WAY.equals(model.wayType)){
-			holder.imgTransitType.setImageResource(R.drawable.sw_icon_bus_1way);
+			holder.imgTransitType.setImageResource(R.drawable.sw_icon_transit_bus1way);
 		}else if(SwConst.SW_TRANSIT_TYPE_TAXI.equals(model.transType) && SwConst.SW_TRANSIT_WAY_TYPE_ONE_WAY.equals(model.wayType)){
-			holder.imgTransitType.setImageResource(R.drawable.sw_icon_taxi_1way);
+			holder.imgTransitType.setImageResource(R.drawable.sw_icon_transit_taxi1way);
 		}else if(SwConst.SW_TRANSIT_TYPE_TRAIN.equals(model.transType) && SwConst.SW_TRANSIT_WAY_TYPE_ONE_WAY.equals(model.wayType)){
-			holder.imgTransitType.setImageResource(R.drawable.sw_icon_train_1way);
+			holder.imgTransitType.setImageResource(R.drawable.sw_icon_transit_train1way);
 		}else if(SwConst.SW_TRANSIT_TYPE_OTHER.equals(model.transType) && SwConst.SW_TRANSIT_WAY_TYPE_ONE_WAY.equals(model.wayType)){
-			holder.imgTransitType.setImageResource(R.drawable.sw_icon_other_1way);
+			holder.imgTransitType.setImageResource(R.drawable.sw_icon_transit_other1way);
 		}else if(SwConst.SW_TRANSIT_TYPE_BUS.equals(model.transType) && SwConst.SW_TRANSIT_WAY_TYPE_TWO_WAY.equals(model.wayType)){
-			holder.imgTransitType.setImageResource(R.drawable.sw_icon_bus_2way);
+			holder.imgTransitType.setImageResource(R.drawable.sw_icon_transit_bus2way);
 		}else if(SwConst.SW_TRANSIT_TYPE_TAXI.equals(model.transType) && SwConst.SW_TRANSIT_WAY_TYPE_TWO_WAY.equals(model.wayType)){
-			holder.imgTransitType.setImageResource(R.drawable.sw_icon_taxi_2way);
+			holder.imgTransitType.setImageResource(R.drawable.sw_icon_transit_taxi2way);
 		}else if(SwConst.SW_TRANSIT_TYPE_TRAIN.equals(model.transType) && SwConst.SW_TRANSIT_WAY_TYPE_TWO_WAY.equals(model.wayType)){
-			holder.imgTransitType.setImageResource(R.drawable.sw_icon_train_2way);
+			holder.imgTransitType.setImageResource(R.drawable.sw_icon_transit_train2way);
 		}else if(SwConst.SW_TRANSIT_TYPE_OTHER.equals(model.transType) && SwConst.SW_TRANSIT_WAY_TYPE_TWO_WAY.equals(model.wayType)){
-			holder.imgTransitType.setImageResource(R.drawable.sw_icon_other_2way);
+			holder.imgTransitType.setImageResource(R.drawable.sw_icon_transit_other2way);
 		}
 
 		return convertView;
