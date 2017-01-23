@@ -10,6 +10,7 @@ public class WorkOfferModel{
 
 	public static final String	OFFER_TYPE_OVERTIME			= "OTW";
 	public static final String	OFFER_TYPE_HOLIDAY_WORKING	= "HDW";
+	public static final String	OFFER_TYPE_SHORT_TIME		= "STO";
 
 	public WorkOfferModel(){
 	}
@@ -17,7 +18,7 @@ public class WorkOfferModel{
 	public String				userId;
 	public String				userName;
 	public String				offerType;
-    public String				offerTypeName;
+	public String				offerTypeName;
 	public String				startDateString;
 	public String				startTimeString;
 	public String				endDateString;

@@ -116,7 +116,7 @@ public class WorkOfferEditFragment extends AbstractSwFragment{
 			if(!CCStringUtil.isEmpty(activeOfferId)){
 				loadWorkOffer(holder);
 			}
-            initDialog(holder);
+			initDialog(holder);
 		}else{
 			super.successLoad(response, url);
 		}
@@ -171,7 +171,7 @@ public class WorkOfferEditFragment extends AbstractSwFragment{
 
 	private void OnOfferTypeChangedUpdateLayout(){
 		String selectedType = txtOfferType.getValue();
-		if(WorkOfferModel.OFFER_TYPE_HOLIDAY_WORKING.equals(selectedType) || WorkOfferModel.OFFER_TYPE_OVERTIME.equals(selectedType)){
+		if(WorkOfferModel.OFFER_TYPE_HOLIDAY_WORKING.equals(selectedType) || WorkOfferModel.OFFER_TYPE_OVERTIME.equals(selectedType) || WorkOfferModel.OFFER_TYPE_SHORT_TIME.equals(selectedType)){
 			getView().findViewById(R.id.lnr_start_time).setVisibility(View.VISIBLE);
 			getView().findViewById(R.id.lnr_end_time).setVisibility(View.VISIBLE);
 		}else{
@@ -268,13 +268,13 @@ public class WorkOfferEditFragment extends AbstractSwFragment{
 	protected void successUpdate(JSONObject response, String url){
 		if(WfUrlConst.WF_SW_OFFER_UPDATE.equals(url)){
 			((ChiaseActivity)activity).isInitData = true;
-            ((WelfareActivity)activity).dataMap.put(SwConst.ACTION_OFFER_UPDATE, CCConst.YES);
+			((WelfareActivity)activity).dataMap.put(SwConst.ACTION_OFFER_UPDATE, CCConst.YES);
 			getFragmentManager().popBackStack();
 		}else if(WfUrlConst.WF_SW_OFFER_DELETE.equals(url)){
 			getFragmentManager().popBackStack();
-            ((WelfareActivity)activity).dataMap.put(SwConst.ACTION_OFFER_DELETE, CCConst.YES);
+			((WelfareActivity)activity).dataMap.put(SwConst.ACTION_OFFER_DELETE, CCConst.YES);
 		}else{
-			super.successLoad(response, url);
+			super.successUpdate(response, url);
 		}
 	}
 
