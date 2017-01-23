@@ -159,13 +159,13 @@ public class WorkOfferDetailFragment extends AbstractSwFragment{
 		((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_end_date)).setText(offerModel.endDateString);
 		((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_note)).setText(offerModel.note);
 
-		if(WorkOfferModel.OFFER_TYPE_HOLIDAY_WORKING.equals(offer.offerType) || WorkOfferModel.OFFER_TYPE_OVERTIME.equals(offerModel.offerType)){
+		if(WorkOfferModel.OFFER_TYPE_HOLIDAY_WORKING.equals(offer.offerType) || WorkOfferModel.OFFER_TYPE_OVERTIME.equals(offerModel.offerType) || WorkOfferModel.OFFER_TYPE_SHORT_TIME.equals(offerModel.offerType)){
 			((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_start_time)).setText(offerModel.startTimeString);
 		}else{
 			getView().findViewById(R.id.lnr_start_time).setVisibility(View.GONE);
 		}
 
-		if(WorkOfferModel.OFFER_TYPE_HOLIDAY_WORKING.equals(offer.offerType) || WorkOfferModel.OFFER_TYPE_OVERTIME.equals(offerModel.offerType)){
+		if(WorkOfferModel.OFFER_TYPE_HOLIDAY_WORKING.equals(offer.offerType) || WorkOfferModel.OFFER_TYPE_OVERTIME.equals(offerModel.offerType) || WorkOfferModel.OFFER_TYPE_SHORT_TIME.equals(offerModel.offerType)){
 			((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_end_time)).setText(offerModel.endTimeString);
 		}else{
 			getView().findViewById(R.id.lnr_end_time).setVisibility(View.GONE);
