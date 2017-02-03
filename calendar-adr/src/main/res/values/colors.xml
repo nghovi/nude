@@ -4,8 +4,8 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
-    <color name="wf_app_color_base">#F1DFAD</color>
-    <color name="wf_app_color_base_50">#80F1DFAD</color>
+    <color name="wf_app_color_base">#797252</color>
+    <color name="wf_app_color_base_50">#80797252</color>
 
     <color name="wf_login_background_color">#FAF7ED</color>
     <color name="wf_app_button_color_off">#80797252</color>

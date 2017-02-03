@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Calendar</string>
+
+    <string name="cl_footer_monthly">Monthly</string>
+    <string name="cl_footer_weekly">Weekly</string>
+    <string name="cl_footer_daily">Daily</string>
+    <string name="cl_footer_summary">Summary</string>
+    <string name="cl_footer_setting">Setting</string>
 </resources>

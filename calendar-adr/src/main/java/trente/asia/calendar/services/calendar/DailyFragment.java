@@ -13,7 +13,7 @@ import trente.asia.calendar.commons.fragments.AbstractClFragment;
  *
  * @author TrungND
  */
-public class MonthlyFragment extends AbstractClFragment{
+public class DailyFragment extends AbstractClFragment{
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -26,7 +26,7 @@ public class MonthlyFragment extends AbstractClFragment{
 	@Override
 	protected void initView(){
 		super.initView();
-		initHeader(R.drawable.wf_back_white, "Monthly", null);
+//		initHeader(R.drawable.wf_back_white, "Monthly", null);
 	}
 
 	@Override

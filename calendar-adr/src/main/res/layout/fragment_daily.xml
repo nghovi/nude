@@ -1,0 +1,12 @@
+<LinearLayout style="@style/cs_common_match"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:custom="http://schemas.android.com/apk/res-auto"
+              android:background="@color/wf_app_color_base"
+              android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Daily view"/>
+
+</LinearLayout>

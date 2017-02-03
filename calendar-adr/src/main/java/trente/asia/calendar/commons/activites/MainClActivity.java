@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.calendar.R;
+import trente.asia.calendar.services.calendar.MonthlyFragment;
 import trente.asia.calendar.services.user.ClLoginFragment;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.models.UserModel;
@@ -22,7 +23,7 @@ public class MainClActivity extends WelfareActivity{
 
 //        commit3
         if(!CCStringUtil.isEmpty(userModel.key)){
-            addFragment(new ClLoginFragment());
+            addFragment(new MonthlyFragment());
 //            if(mExtras != null){
 //                showFragment(mExtras);
 //            }else{
