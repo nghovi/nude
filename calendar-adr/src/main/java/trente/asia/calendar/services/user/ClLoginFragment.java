@@ -9,6 +9,7 @@ import android.view.View;
 
 import trente.asia.calendar.BuildConfig;
 import trente.asia.calendar.R;
+import trente.asia.calendar.services.calendar.MonthlyFragment;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.services.user.LoginFragment;
@@ -39,7 +40,7 @@ public class ClLoginFragment extends LoginFragment{
 
 		if(WfUrlConst.WF_ACC_0003.equals(url)){
 			emptyBackStack();
-//			gotoFragment(new MessageFragment());
+			gotoFragment(new MonthlyFragment());
 		}
 	}
 
