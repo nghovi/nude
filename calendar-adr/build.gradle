@@ -1,0 +1,46 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+
+    defaultConfig {
+        applicationId "trente.asia.calendar"
+        minSdkVersion 14
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
+
+    productFlavors {
+        develop {
+            buildConfigField "Boolean", "DEVELOP", "true"
+            buildConfigField "String", "HOST", "\"http://192.168.1.124:9000\""
+        }
+        production {
+            buildConfigField "Boolean", "DEVELOP", "false"
+            buildConfigField "String", "HOST", "\"https://tr-fukuri.jp\""
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile project(':welfare-android-core')
+    compile 'com.android.support:multidex:1.0.0'
+    compile 'com.google.firebase:firebase-messaging:9.2.1'
+}
