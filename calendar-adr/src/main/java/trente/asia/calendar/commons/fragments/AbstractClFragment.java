@@ -5,11 +5,16 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import trente.asia.android.view.ChiaseImageView;
 import trente.asia.android.view.ChiaseTextView;
 import trente.asia.calendar.BuildConfig;
+import trente.asia.calendar.R;
 import trente.asia.calendar.commons.utils.ClUtil;
+import trente.asia.calendar.services.calendar.DailyFragment;
+import trente.asia.calendar.services.calendar.MonthlyFragment;
+import trente.asia.calendar.services.calendar.WeeklyFragment;
 import trente.asia.calendar.services.user.ClLoginFragment;
 import trente.asia.welfare.adr.activity.WelfareFragment;
 import trente.asia.welfare.adr.define.WelfareConst;
@@ -58,41 +63,41 @@ public abstract class AbstractClFragment extends WelfareFragment implements View
 
 	protected void buildFooter(){
 		final int footerItemId = getFooterItemId();
-		// if(footerItemId != 0){
-		// View.OnClickListener listener = new View.OnClickListener() {
-		//
-		// @Override
-		// public void onClick(View view){
-		// switch(view.getId()){
-		// case R.id.lnr_view_footer_work_time:
-		// onClickFooterItemWorkTime();
-		// break;
-		// case R.id.lnr_view_footer_shift_working:
-		// onClickFooterItemShiftWorking();
-		// break;
-		// case R.id.lnr_view_footer_offer:
-		// onClickFooterItemOffer();
-		// break;
-		// case R.id.lnr_view_footer_work_status:
-		// onClickFooterItemWorkStatus();
-		// break;
-		// case R.id.lnr_view_footer_setting:
-		// onClickFooterItemSetting();
-		// break;
-		// default:
-		// break;
-		// }
-		// }
-		// }; // end listener
+		if(footerItemId != 0){
+			View.OnClickListener listener = new View.OnClickListener() {
 
-		// getView().findViewById(R.id.lnr_view_footer_work_time).setOnClickListener(listener);
-		// getView().findViewById(R.id.lnr_view_footer_shift_working).setOnClickListener(listener);
-		// getView().findViewById(R.id.lnr_view_footer_offer).setOnClickListener(listener);
-		// getView().findViewById(R.id.lnr_view_footer_work_status).setOnClickListener(listener);
-		// getView().findViewById(R.id.lnr_view_footer_setting).setOnClickListener(listener);
-		// LinearLayout lnrFooter = (LinearLayout)getView().findViewById(footerItemId);
-		// setSelectedFooterItem(lnrFooter);
-//	}
+				@Override
+				public void onClick(View view){
+					switch(view.getId()){
+					case R.id.lnr_view_footer_monthly:
+						onClickFooterItemMonthly();
+						break;
+					case R.id.lnr_view_footer_weekly:
+						onClickFooterItemWeekly();
+						break;
+					case R.id.lnr_view_footer_daily:
+						onClickFooterItemDaily();
+						break;
+					case R.id.lnr_view_footer_summary:
+						onClickFooterItemSummary();
+						break;
+					case R.id.lnr_view_footer_setting:
+						onClickFooterItemSetting();
+						break;
+					default:
+						break;
+					}
+				}
+			}; // end listener
+
+			getView().findViewById(R.id.lnr_view_footer_monthly).setOnClickListener(listener);
+			getView().findViewById(R.id.lnr_view_footer_weekly).setOnClickListener(listener);
+			getView().findViewById(R.id.lnr_view_footer_daily).setOnClickListener(listener);
+			getView().findViewById(R.id.lnr_view_footer_summary).setOnClickListener(listener);
+			getView().findViewById(R.id.lnr_view_footer_setting).setOnClickListener(listener);
+			LinearLayout lnrFooter = (LinearLayout)getView().findViewById(footerItemId);
+			setSelectedFooterItem(lnrFooter);
+		}
 
 	}
 
@@ -109,30 +114,30 @@ public abstract class AbstractClFragment extends WelfareFragment implements View
 		}
 	}
 
-	// public void onClickFooterItemWorkTime(){
-	// emptyBackStack();
-	// gotoFragment(new WorktimeCheckInFragment());
-	// }
-	//
-	// public void onClickFooterItemShiftWorking(){
-	// emptyBackStack();
-	// gotoFragment(new ShiftWorkingFragment());
-	// }
-	//
-	// public void onClickFooterItemOffer(){
-	// emptyBackStack();
-	// gotoFragment(new WorkOfferListFragment());
-	// }
-	//
-	// public void onClickFooterItemWorkStatus(){
-	// emptyBackStack();
-	// gotoFragment(new WorkStatusFragment());
-	// }
-	//
-	// public void onClickFooterItemSetting(){
-	// emptyBackStack();
-	// gotoFragment(new SwSettingFragment());
-	// }
+	public void onClickFooterItemMonthly(){
+		emptyBackStack();
+		gotoFragment(new MonthlyFragment());
+	}
+
+	public void onClickFooterItemWeekly(){
+		emptyBackStack();
+		gotoFragment(new WeeklyFragment());
+	}
+
+	public void onClickFooterItemDaily(){
+		emptyBackStack();
+		gotoFragment(new DailyFragment());
+	}
+
+	public void onClickFooterItemSummary(){
+		emptyBackStack();
+		gotoFragment(new MonthlyFragment());
+	}
+
+	public void onClickFooterItemSetting(){
+		emptyBackStack();
+		gotoFragment(new MonthlyFragment());
+	}
 
 	@Override
 	protected String getServiceCd(){

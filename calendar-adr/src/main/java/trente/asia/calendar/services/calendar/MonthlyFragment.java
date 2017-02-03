@@ -35,7 +35,7 @@ public class MonthlyFragment extends AbstractClFragment{
 
 	@Override
 	public int getFooterItemId(){
-		return 0;
+		return R.id.lnr_view_footer_monthly;
 	}
 
 	@Override

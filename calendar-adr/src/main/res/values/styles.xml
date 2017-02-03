@@ -8,15 +8,6 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="cl_common_match">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:orientation">vertical</item>
-        <item name="android:background">@color/wf_login_background_color</item>
-        <item name="android:descendantFocusability">beforeDescendants</item>
-        <item name="android:focusableInTouchMode">true</item>
-    </style>
-
     <style name="cl_text_footer_item">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>

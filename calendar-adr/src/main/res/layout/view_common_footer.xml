@@ -60,7 +60,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/lnr_view_daily"
+            android:id="@+id/lnr_view_footer_daily"
             style="@style/cs_common_wrap"
             android:layout_width="@dimen/margin_0dp"
             android:layout_weight="1"

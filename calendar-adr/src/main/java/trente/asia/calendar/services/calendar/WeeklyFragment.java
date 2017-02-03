@@ -18,7 +18,7 @@ public class WeeklyFragment extends AbstractClFragment{
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 		if(mRootView == null){
-			mRootView = inflater.inflate(R.layout.fragment_monthly, container, false);
+			mRootView = inflater.inflate(R.layout.fragment_weekly, container, false);
 		}
 		return mRootView;
 	}
@@ -26,7 +26,7 @@ public class WeeklyFragment extends AbstractClFragment{
 	@Override
 	protected void initView(){
 		super.initView();
-//		initHeader(R.drawable.wf_back_white, "Monthly", null);
+		initHeader(R.drawable.wf_back_white, "Weekly", null);
 	}
 
 	@Override
@@ -35,7 +35,7 @@ public class WeeklyFragment extends AbstractClFragment{
 
 	@Override
 	public int getFooterItemId(){
-		return 0;
+		return R.id.lnr_view_footer_weekly;
 	}
 
 	@Override
