@@ -33,6 +33,7 @@ public abstract class AbstractSwFragment extends WelfareFragment implements View
 
 	protected SwApiHolder holder;
 
+//    test
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
