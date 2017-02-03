@@ -8,6 +8,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/calendar-adr" />
             <option value="$PROJECT_DIR$/chiase-android-module" />
             <option value="$PROJECT_DIR$/dailyreport-adr" />
             <option value="$PROJECT_DIR$/messenger-adr" />
