@@ -2,7 +2,7 @@
 <trente.asia.android.view.layout.CheckableLinearLayout style="@style/cs_common_match_wrap"
                                                        xmlns:android="http://schemas.android.com/apk/res/android"
                                                        xmlns:custom="http://schemas.android.com/apk/res-auto"
-                                                       android:background="@drawable/state_common_selectable_row2"
+                                                       android:background="@drawable/state_common_selectable_row3"
                                                        android:gravity="center_vertical"
                                                        android:orientation="horizontal"
                                                        android:padding="@dimen/margin_10dp">
@@ -11,6 +11,7 @@
         android:id="@+id/img_id_avatar"
         android:layout_width="@dimen/margin_40dp"
         android:layout_height="@dimen/margin_40dp"
+        android:focusable="false"
         android:scaleType="fitXY"
         android:src="@drawable/wf_profile"
         custom:sriv_oval="true"/>
@@ -20,6 +21,7 @@
         android:layout_marginLeft="@dimen/margin_8dp"
         android:layout_marginRight="@dimen/margin_8dp"
         android:layout_weight="1"
+        android:focusable="false"
         android:orientation="vertical">
 
         <TextView
@@ -34,5 +36,12 @@
             android:textColor="@color/chiase_white"/>
 
     </LinearLayout>
+
+    <trente.asia.android.view.ChiaseSingleCheckBox
+        android:id="@+id/cbx_item_selected"
+        style="@style/cs_custom_checkbox"
+        android:layout_marginLeft="@dimen/margin_6dp"
+        android:focusable="false"
+        android:padding="@dimen/margin_0dp"/>
 
 </trente.asia.android.view.layout.CheckableLinearLayout>
