@@ -1,16 +1,39 @@
-<LinearLayout style="@style/wf_common_match"
-              xmlns:android="http://schemas.android.com/apk/res/android">
+<LinearLayout style="@style/cs_common_match"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              android:background="@color/wf_app_color_base"
+              android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/lnr_id_content"
+    <ListView
+        android:id="@+id/lsv_id_calendar"
         style="@style/cs_common_match_wrap"
         android:layout_weight="1"
-        android:orientation="vertical">
+        android:choiceMode="singleChoice"
+        android:divider="@color/cs_common_divider"
+        android:dividerHeight="1px"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Calendar list"/>
+    <LinearLayout
+        style="@style/cs_common_match_wrap"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/margin_16dp"
+        android:paddingLeft="@dimen/margin_10dp"
+        android:paddingRight="@dimen/margin_10dp"
+        android:paddingTop="@dimen/margin_16dp">
+
+        <Button
+            android:id="@+id/btn_id_my_calendar"
+            style="@style/wl_common_button_10"
+            android:layout_marginLeft="@dimen/margin_0dp"
+            android:layout_marginRight="@dimen/margin_5dp"
+            android:layout_weight="1"
+            android:text="My calendar"/>
+
+        <Button
+            android:id="@+id/btn_id_all"
+            style="@style/wl_common_button_10"
+            android:layout_marginLeft="@dimen/margin_0dp"
+            android:layout_marginRight="@dimen/margin_5dp"
+            android:layout_weight="1"
+            android:text="Check all"/>
     </LinearLayout>
 
 </LinearLayout>

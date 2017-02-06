@@ -1,12 +1,18 @@
 package trente.asia.calendar.services.calendar;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.fragments.AbstractClFragment;
+import trente.asia.calendar.services.calendar.model.CalendarModel;
+import trente.asia.calendar.services.calendar.view.CalendarAdapter;
 
 /**
  * MonthlyFragment
@@ -14,6 +20,8 @@ import trente.asia.calendar.commons.fragments.AbstractClFragment;
  * @author TrungND
  */
 public class CalendarListFragment extends AbstractClFragment{
+
+	private ListView lvCalendar;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -26,10 +34,22 @@ public class CalendarListFragment extends AbstractClFragment{
 	@Override
 	protected void initView(){
 		super.initView();
+
+		lvCalendar = (ListView)getView().findViewById(R.id.lsv_id_calendar);
 	}
 
 	@Override
 	protected void initData(){
+		makeDummyData();
+	}
+
+	private void makeDummyData(){
+		List<CalendarModel> lstCalendar = new ArrayList<>();
+		lstCalendar.add(new CalendarModel("Calendar 01", ""));
+		lstCalendar.add(new CalendarModel("Calendar 02", ""));
+
+		CalendarAdapter calendarAdapter = new CalendarAdapter(activity, lstCalendar);
+		lvCalendar.setAdapter(calendarAdapter);
 	}
 
 	@Override

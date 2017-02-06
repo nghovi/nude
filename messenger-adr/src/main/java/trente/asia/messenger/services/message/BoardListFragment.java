@@ -119,8 +119,8 @@ public class BoardListFragment extends AbstractMsgFragment implements View.OnCli
 
 	@Override
 	protected void successLoad(JSONObject response, String url){
-		System.out.println("===========================================");
-		System.out.println(isDestroy);
+//		System.out.println("===========================================");
+//		System.out.println(isDestroy);
 
 		txtUserName.setText(myself.userName);
 		txtUserMail.setText(myself.userMail);
