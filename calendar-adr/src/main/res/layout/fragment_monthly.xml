@@ -1,20 +1,30 @@
-<LinearLayout style="@style/wf_common_match"
-              xmlns:android="http://schemas.android.com/apk/res/android">
+<trente.asia.welfare.adr.view.WfSlideMenuLayout android:id="@+id/drawer_layout"
+                                                style="@style/cs_common_match"
+                                                xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <include layout="@layout/view_common_header"/>
-
+    <!-- Slide Menu  -->
     <LinearLayout
-        android:id="@+id/lnr_id_content"
-        style="@style/cs_common_match_wrap"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:visibility="visible">
+        android:id="@+id/slice_menu_board"
+        style="@style/cs_common_match"
+        android:orientation="vertical"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Monthly view"/>
+    <LinearLayout style="@style/wf_common_match">
+
+        <include layout="@layout/view_navigation_header"/>
+
+        <LinearLayout
+            android:id="@+id/lnr_id_content"
+            style="@style/cs_common_match_wrap"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Monthly view"/>
+        </LinearLayout>
+
+        <include layout="@layout/view_common_footer"/>
     </LinearLayout>
-
-    <include layout="@layout/view_common_footer"/>
-</LinearLayout>
+</trente.asia.welfare.adr.view.WfSlideMenuLayout>

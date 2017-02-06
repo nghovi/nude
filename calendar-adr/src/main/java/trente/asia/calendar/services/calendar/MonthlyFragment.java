@@ -1,12 +1,16 @@
 package trente.asia.calendar.services.calendar;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.fragments.AbstractClFragment;
+import trente.asia.welfare.adr.view.WfSlideMenuLayout;
 
 /**
  * MonthlyFragment
@@ -14,6 +18,9 @@ import trente.asia.calendar.commons.fragments.AbstractClFragment;
  * @author TrungND
  */
 public class MonthlyFragment extends AbstractClFragment{
+
+	private ImageView			mImgLeftHeader;
+	private WfSlideMenuLayout	mSlideMenuLayout;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -26,7 +33,16 @@ public class MonthlyFragment extends AbstractClFragment{
 	@Override
 	protected void initView(){
 		super.initView();
-		initHeader(R.drawable.wf_back_white, "Monthly", null);
+
+		mImgLeftHeader = (ImageView)getView().findViewById(R.id.img_id_header_left_icon);
+
+		mSlideMenuLayout = (WfSlideMenuLayout)getView().findViewById(R.id.drawer_layout);
+		FragmentManager fragmentManager = getFragmentManager();
+		FragmentTransaction transaction = fragmentManager.beginTransaction();
+		CalendarListFragment calendarListFragment = new CalendarListFragment();
+		transaction.replace(R.id.slice_menu_board, calendarListFragment).commit();
+
+		mImgLeftHeader.setOnClickListener(this);
 	}
 
 	@Override
@@ -41,6 +57,9 @@ public class MonthlyFragment extends AbstractClFragment{
 	@Override
 	public void onClick(View v){
 		switch(v.getId()){
+		case R.id.img_id_header_left_icon:
+			mSlideMenuLayout.toggleMenu();
+			break;
 		default:
 			break;
 		}
