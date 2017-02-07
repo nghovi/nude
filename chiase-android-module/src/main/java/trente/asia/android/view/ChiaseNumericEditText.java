@@ -16,7 +16,7 @@ import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCNumberUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.R;
-import trente.asia.android.util.CAMsgUtil;
+import trente.asia.android.util.CsMsgUtil;
 
 /**
  * Created by VietNH on 2015/07/17.
@@ -58,7 +58,7 @@ public class ChiaseNumericEditText extends ChiaseEditText{
 		int attrsResourceIdArray[] = {R.attr.unitName, R.attr.formatString};
 		TypedArray t = context.obtainStyledAttributes(attributeSet, attrsResourceIdArray);
 
-		List<Integer> list = CAMsgUtil.convertArray2List(attrsResourceIdArray);
+		List<Integer> list = CsMsgUtil.convertArray2List(attrsResourceIdArray);
 		mUnitName = CCStringUtil.toString(t.getString(list.indexOf(R.attr.unitName)));
 		mFormatString = t.getString(list.indexOf(R.attr.formatString));
 

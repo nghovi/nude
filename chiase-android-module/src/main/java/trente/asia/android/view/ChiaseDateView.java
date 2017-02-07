@@ -16,7 +16,7 @@ import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.R;
-import trente.asia.android.util.CAMsgUtil;
+import trente.asia.android.util.CsMsgUtil;
 
 /**
  * Created by TrungND on 07/09/2014.
@@ -40,7 +40,7 @@ public class ChiaseDateView extends EditText{
 		int attrsResourceIdArray[] = {R.attr.mName};
 		TypedArray t = context.obtainStyledAttributes(attributeSet, attrsResourceIdArray);
 
-		List<Integer> list = CAMsgUtil.convertArray2List(attrsResourceIdArray);
+		List<Integer> list = CsMsgUtil.convertArray2List(attrsResourceIdArray);
 		mName = t.getString(list.indexOf(R.attr.mName));
 
 		Calendar calendar = Calendar.getInstance();

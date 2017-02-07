@@ -8,7 +8,7 @@ import android.util.AttributeSet;
 import android.widget.CheckBox;
 
 import trente.asia.android.R;
-import trente.asia.android.util.CAMsgUtil;
+import trente.asia.android.util.CsMsgUtil;
 
 /**
  * Created by TrungND on 16/09/2014.
@@ -28,7 +28,7 @@ public class ChiaseCheckBox extends CheckBox{
 		int attrsResourceIdArray[] = {R.attr.viewControl};
 		TypedArray t = context.obtainStyledAttributes(attributeSet, attrsResourceIdArray);
 
-		List<Integer> list = CAMsgUtil.convertArray2List(attrsResourceIdArray);
+		List<Integer> list = CsMsgUtil.convertArray2List(attrsResourceIdArray);
 		viewControl = t.getString(list.indexOf(R.attr.viewControl));
 	}
 

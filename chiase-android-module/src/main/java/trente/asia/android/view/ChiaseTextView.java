@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.R;
-import trente.asia.android.util.CAMsgUtil;
+import trente.asia.android.util.CsMsgUtil;
 
 /**
  * Created by TrungND on 13/11/2014.
@@ -38,7 +38,7 @@ public class ChiaseTextView extends TextView{
 		int attrsResourceIdArray[] = {R.attr.value, R.attr.isPressed, R.attr.mName, R.attr.mPrefix};
 		TypedArray t = context.obtainStyledAttributes(attributeSet, attrsResourceIdArray);
 
-		List<Integer> list = CAMsgUtil.convertArray2List(attrsResourceIdArray);
+		List<Integer> list = CsMsgUtil.convertArray2List(attrsResourceIdArray);
 		value = t.getString(list.indexOf(R.attr.value));
 		isPressed = t.getBoolean(list.indexOf(R.attr.isPressed), false);
 		mName = t.getString(list.indexOf(R.attr.mName));

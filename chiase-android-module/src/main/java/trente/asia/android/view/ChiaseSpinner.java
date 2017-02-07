@@ -8,7 +8,7 @@ import android.util.AttributeSet;
 import android.widget.Spinner;
 
 import trente.asia.android.R;
-import trente.asia.android.util.CAMsgUtil;
+import trente.asia.android.util.CsMsgUtil;
 
 /**
  * Created by TrungND on 16/09/2014.
@@ -47,7 +47,7 @@ public class ChiaseSpinner extends Spinner{
 		int attrsResourceIdArray[] = {R.attr.viewControl, R.attr.nameMap, R.attr.isCustom, R.attr.customValue, R.attr.mName, R.attr.defaultValue, R.attr.mIsGray};
 		TypedArray t = context.obtainStyledAttributes(attributeSet, attrsResourceIdArray);
 
-		List<Integer> list = CAMsgUtil.convertArray2List(attrsResourceIdArray);
+		List<Integer> list = CsMsgUtil.convertArray2List(attrsResourceIdArray);
 		viewControl = t.getString(list.indexOf(R.attr.viewControl));
 		nameMap = t.getString(list.indexOf(R.attr.nameMap));
 		isCustom = t.getBoolean(list.indexOf(R.attr.isCustom), false);

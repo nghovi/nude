@@ -8,7 +8,7 @@ import android.util.AttributeSet;
 import android.widget.SeekBar;
 
 import trente.asia.android.R;
-import trente.asia.android.util.CAMsgUtil;
+import trente.asia.android.util.CsMsgUtil;
 
 /**
  * Created by TrungND on 16/09/2014.
@@ -39,7 +39,7 @@ public class ChiaseSeekBar extends SeekBar{
 		int attrsResourceIdArray[] = {R.attr.viewControl, R.attr.mName, R.attr.min, R.attr.interval};
 		TypedArray t = context.obtainStyledAttributes(attributeSet, attrsResourceIdArray);
 
-		List<Integer> list = CAMsgUtil.convertArray2List(attrsResourceIdArray);
+		List<Integer> list = CsMsgUtil.convertArray2List(attrsResourceIdArray);
 		viewControl = t.getString(list.indexOf(R.attr.viewControl));
 		mName = t.getString(list.indexOf(R.attr.mName));
 		min = t.getInt(list.indexOf(R.attr.min), 0);

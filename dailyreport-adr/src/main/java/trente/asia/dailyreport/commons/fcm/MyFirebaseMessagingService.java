@@ -13,7 +13,7 @@ import android.support.v7.app.NotificationCompat;
 
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.android.util.CAMsgUtil;
+import trente.asia.android.util.CsMsgUtil;
 import trente.asia.dailyreport.R;
 import trente.asia.dailyreport.activities.MainDLActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
@@ -63,7 +63,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService{
 
         String content = "";
         if(!CCStringUtil.isEmpty(model.body_loc_key)){
-            content = CAMsgUtil.message(this, model.body_loc_key, model.body_loc_args);
+            content = CsMsgUtil.message(this, model.body_loc_key, model.body_loc_args);
         }
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = (NotificationCompat.Builder)new NotificationCompat.Builder(this).setSmallIcon(R.mipmap.dr_ic_launcher).setContentTitle(getString(R.string.app_name)).setContentText(content).setAutoCancel(true).setSound(defaultSoundUri).setContentIntent(pendingIntent);

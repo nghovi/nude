@@ -3,6 +3,7 @@ package trente.asia.calendar.services.calendar;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.fragments.AbstractClFragment;
+import trente.asia.calendar.services.calendar.view.MonthlyCalendarPagerAdapter;
 import trente.asia.welfare.adr.view.WfSlideMenuLayout;
 
 /**
@@ -21,6 +23,8 @@ public class MonthlyFragment extends AbstractClFragment{
 
 	private ImageView			mImgLeftHeader;
 	private WfSlideMenuLayout	mSlideMenuLayout;
+
+	private ViewPager			viewPager;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -35,6 +39,10 @@ public class MonthlyFragment extends AbstractClFragment{
 		super.initView();
 
 		mImgLeftHeader = (ImageView)getView().findViewById(R.id.img_id_header_left_icon);
+		viewPager = (ViewPager)getView().findViewById(R.id.view_pager_id_calendar);
+		MonthlyCalendarPagerAdapter pagerAdapter = new MonthlyCalendarPagerAdapter(activity);
+		viewPager.setAdapter(pagerAdapter);
+		viewPager.setCurrentItem(Integer.MAX_VALUE / 2);
 
 		mSlideMenuLayout = (WfSlideMenuLayout)getView().findViewById(R.id.drawer_layout);
 		FragmentManager fragmentManager = getFragmentManager();

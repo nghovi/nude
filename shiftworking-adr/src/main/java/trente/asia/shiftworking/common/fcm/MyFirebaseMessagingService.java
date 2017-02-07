@@ -14,7 +14,7 @@ import android.util.Log;
 
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.android.util.CAMsgUtil;
+import trente.asia.android.util.CsMsgUtil;
 import trente.asia.shiftworking.R;
 import trente.asia.shiftworking.common.activities.MainActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
@@ -64,7 +64,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService{
 
         String content = "";
         if(!CCStringUtil.isEmpty(model.body_loc_key)){
-            content = CAMsgUtil.message(this, model.body_loc_key, model.body_loc_args);
+            content = CsMsgUtil.message(this, model.body_loc_key, model.body_loc_args);
         }
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = (NotificationCompat.Builder)new NotificationCompat.Builder(this).setSmallIcon(R.mipmap.ic_launcher).setContentTitle(getString(R.string.app_name)).setContentText(content).setAutoCancel(true).setSound(defaultSoundUri).setContentIntent(pendingIntent);

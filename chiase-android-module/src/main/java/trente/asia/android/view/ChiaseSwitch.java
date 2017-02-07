@@ -8,7 +8,7 @@ import android.util.AttributeSet;
 import android.widget.Switch;
 
 import trente.asia.android.R;
-import trente.asia.android.util.CAMsgUtil;
+import trente.asia.android.util.CsMsgUtil;
 
 /**
  * Created by TrungND on 16/09/2014.
@@ -30,7 +30,7 @@ public class ChiaseSwitch extends Switch{
 		int attrsResourceIdArray[] = {R.attr.viewControl, R.attr.mName};
 		TypedArray t = context.obtainStyledAttributes(attributeSet, attrsResourceIdArray);
 
-		List<Integer> list = CAMsgUtil.convertArray2List(attrsResourceIdArray);
+		List<Integer> list = CsMsgUtil.convertArray2List(attrsResourceIdArray);
 		viewControl = t.getString(list.indexOf(R.attr.viewControl));
 		mName = t.getString(list.indexOf(R.attr.mName));
 	}

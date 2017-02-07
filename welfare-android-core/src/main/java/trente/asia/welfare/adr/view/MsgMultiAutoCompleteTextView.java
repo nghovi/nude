@@ -10,7 +10,7 @@ import android.text.method.QwertyKeyListener;
 import android.util.AttributeSet;
 import android.widget.MultiAutoCompleteTextView;
 
-import trente.asia.android.util.CAMsgUtil;
+import trente.asia.android.util.CsMsgUtil;
 import trente.asia.welfare.adr.models.UserModel;
 
 /**
@@ -35,7 +35,7 @@ public class MsgMultiAutoCompleteTextView extends MultiAutoCompleteTextView{
 		// get view control value
 		int attrsResourceIdArray[] = {trente.asia.android.R.attr.viewControl, trente.asia.android.R.attr.mName};
 		TypedArray t = context.obtainStyledAttributes(attributeSet, attrsResourceIdArray);
-		List<Integer> list = CAMsgUtil.convertArray2List(attrsResourceIdArray);
+		List<Integer> list = CsMsgUtil.convertArray2List(attrsResourceIdArray);
 		mName = t.getString(list.indexOf(trente.asia.android.R.attr.mName));
 	}
 
