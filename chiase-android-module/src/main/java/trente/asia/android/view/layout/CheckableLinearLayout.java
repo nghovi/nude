@@ -10,16 +10,19 @@ import android.view.ViewGroup;
 import android.widget.Checkable;
 import android.widget.LinearLayout;
 
+import trente.asia.android.listener.CsOnCheckedChangeListener;
+
 /**
  * Created by TrungND on 10/23/2014.
  */
 public class CheckableLinearLayout extends LinearLayout implements Checkable{
 
-	protected boolean			isChecked;
+	protected boolean					isChecked;
 
-	protected List<Checkable>	checkableViews;
+	protected List<Checkable>			checkableViews;
 
-	private final int[]			CHECKED_STATE_SET	= {android.R.attr.state_checked};
+	private final int[]					CHECKED_STATE_SET	= {android.R.attr.state_checked};
+	private CsOnCheckedChangeListener	mOnCheckedChangeListener;
 
 	public CheckableLinearLayout(Context context, AttributeSet attrs, int defStyle){
 		super(context, attrs, defStyle);
@@ -65,6 +68,9 @@ public class CheckableLinearLayout extends LinearLayout implements Checkable{
 			c.setChecked(isChecked);
 		}
 
+		if(mOnCheckedChangeListener != null){
+			mOnCheckedChangeListener.onCheckedChanged(this, isChecked);
+		}
 		refreshDrawableState();
 	}
 
@@ -112,5 +118,15 @@ public class CheckableLinearLayout extends LinearLayout implements Checkable{
 				findCheckableChildren(vg.getChildAt(i));
 			}
 		}
+	}
+
+	/**
+	 * Register a callback to be invoked when the checked state of this view
+	 * changes.
+	 *
+	 * @param listener the callback to call on checked state change
+	 */
+	public void setOnCheckedChangeListener(CsOnCheckedChangeListener listener){
+		mOnCheckedChangeListener = listener;
 	}
 }

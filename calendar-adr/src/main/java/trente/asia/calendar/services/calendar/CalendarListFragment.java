@@ -37,14 +37,14 @@ public class CalendarListFragment extends AbstractClFragment{
 		super.initView();
 
 		lvCalendar = (ListView)getView().findViewById(R.id.lsv_id_calendar);
-        lvCalendar.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id){
-                boolean isChecked = lvCalendar.isItemChecked(position);
-                lvCalendar.setItemChecked(position, !isChecked);
-            }
-        });
+//        lvCalendar.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id){
+//                boolean isChecked = lvCalendar.isItemChecked(position);
+//                lvCalendar.setItemChecked(position, !isChecked);
+//            }
+//        });
 	}
 
 	@Override

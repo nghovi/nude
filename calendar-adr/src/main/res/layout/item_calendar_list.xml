@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<trente.asia.android.view.layout.CheckableLinearLayout style="@style/cs_common_match_wrap"
-                                                       xmlns:android="http://schemas.android.com/apk/res/android"
-                                                       xmlns:custom="http://schemas.android.com/apk/res-auto"
-                                                       android:background="@drawable/state_common_selectable_row3"
-                                                       android:gravity="center_vertical"
-                                                       android:orientation="horizontal"
-                                                       android:padding="@dimen/margin_10dp">
+<trente.asia.android.view.layout.CheckableLinearLayout
+    android:id="@+id/lnr_id_item"
+    style="@style/cs_common_match_wrap"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/state_common_selectable_row3"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="@dimen/margin_10dp">
 
     <trente.asia.welfare.adr.view.SelectableRoundedImageView
         android:id="@+id/img_id_avatar"
