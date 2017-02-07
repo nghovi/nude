@@ -6,7 +6,6 @@
     <LinearLayout
         android:id="@+id/lnr_id_content"
         style="@style/cs_common_match_wrap"
-        android:layout_weight="1"
         android:orientation="vertical"
         android:visibility="visible">
 
@@ -14,6 +13,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Weekly view"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/lst_calendar_day">
+
+        </ListView>
     </LinearLayout>
 
     <include layout="@layout/view_common_footer"/>
