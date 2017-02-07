@@ -1,7 +1,9 @@
 package trente.asia.android.util;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCStringUtil;
@@ -13,7 +15,38 @@ import asia.chiase.core.util.CCStringUtil;
  * @author HoanLV
  * @version $Id$
  */
-public class CsDateUtil {
+public class CsDateUtil{
+
+	/**
+	 * <strong>getAllDate4Month</strong><br>
+	 * <br> get all date in month with start: Sunday and end: Saturday
+	 *
+	 * @param calendar
+	 * @return
+	 */
+	public static List<Date> getAllDate4Month(Calendar calendar){
+		if(calendar == null){
+			return null;
+		}else{
+			List<Date> lstDate = new ArrayList<>();
+
+			// int start = calendar.get(Calendar.WEEK_OF_YEAR);
+			Calendar firstDay = (Calendar)calendar.clone();
+			firstDay.set(Calendar.DAY_OF_WEEK, calendar.getFirstDayOfWeek());
+			Date firstDate = firstDay.getTime();
+
+			calendar.add(Calendar.MONTH, 1);
+			calendar.add(Calendar.DATE, -1);
+			Calendar lastDay = (Calendar)calendar.clone();
+			lastDay.set(Calendar.DAY_OF_WEEK, calendar.getFirstDayOfWeek());
+			lastDay.add(Calendar.DATE, 6);
+			Date lastDate = lastDay.getTime();
+
+			lstDate = CCDateUtil.makeDateList(firstDate, lastDate);
+
+			return lstDate;
+		}
+	}
 
 	public static Integer getAge(String birthday){
 

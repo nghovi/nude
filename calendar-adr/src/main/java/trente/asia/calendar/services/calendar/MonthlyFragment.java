@@ -9,6 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
+import asia.chiase.core.util.CCDateUtil;
+import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.fragments.AbstractClFragment;
 import trente.asia.calendar.services.calendar.view.MonthlyCalendarPagerAdapter;
@@ -51,6 +57,13 @@ public class MonthlyFragment extends AbstractClFragment{
 		transaction.replace(R.id.slice_menu_board, calendarListFragment).commit();
 
 		mImgLeftHeader.setOnClickListener(this);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        Calendar calendar1 = Calendar.getInstance();
+        calendar1.setTime(CCDateUtil.makeDate(calendar.getTime()));
+        List<Date> lstDate = CsDateUtil.getAllDate4Month(calendar1);
+        System.out.println("Hello");
 	}
 
 	@Override
