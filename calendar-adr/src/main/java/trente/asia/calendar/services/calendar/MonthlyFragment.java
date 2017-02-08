@@ -18,6 +18,7 @@ import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.fragments.AbstractClFragment;
 import trente.asia.calendar.services.calendar.view.MonthlyCalendarPagerAdapter;
+import trente.asia.welfare.adr.utils.WelfareUtil;
 import trente.asia.welfare.adr.view.WfSlideMenuLayout;
 
 /**
@@ -58,11 +59,8 @@ public class MonthlyFragment extends AbstractClFragment{
 
 		mImgLeftHeader.setOnClickListener(this);
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.DAY_OF_MONTH, 1);
-        Calendar calendar1 = Calendar.getInstance();
-        calendar1.setTime(CCDateUtil.makeDate(calendar.getTime()));
-        List<Date> lstDate = CsDateUtil.getAllDate4Month(calendar1);
+        Calendar calendar = CCDateUtil.makeCalendar(CsDateUtil.makeMonthWithFirstDate());
+        List<Date> lstDate = CsDateUtil.getAllDate4Month(calendar);
         System.out.println("Hello");
 	}
 

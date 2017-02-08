@@ -181,6 +181,9 @@ public class WelfareUtil{
     public static Date makeMonthWithFirstDate(){
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.DATE, 1);
+        calendar.set(Calendar.HOUR, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
         return calendar.getTime();
     }
 

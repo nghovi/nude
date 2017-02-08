@@ -17,6 +17,27 @@ import asia.chiase.core.util.CCStringUtil;
  */
 public class CsDateUtil{
 
+	public static Date makeMonthWithFirstDate(){
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(Calendar.DATE, 1);
+		calendar.set(Calendar.HOUR, 0);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		return calendar.getTime();
+	}
+
+	public static Date addMonth(Date date, int add){
+		Calendar calendar = CCDateUtil.makeCalendar(date);
+		calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH) + add);
+		return calendar.getTime();
+	}
+
+	public static Date addDate(Date date, int add){
+		Calendar calendar = CCDateUtil.makeCalendar(date);
+		calendar.add(Calendar.DATE, add);
+		return calendar.getTime();
+	}
+
 	/**
 	 * <strong>getAllDate4Month</strong><br>
 	 * <br> get all date in month with start: Sunday and end: Saturday
