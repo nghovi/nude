@@ -1,0 +1,63 @@
+<LinearLayout style="@style/cs_common_match_wrap"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical">
+
+    <LinearLayout
+        style="@style/cs_common_match_wrap"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/margin_10dp"
+        android:paddingTop="@dimen/margin_10dp">
+
+        <TextView
+            style="@style/wl_common_text"
+            android:layout_width="@dimen/margin_0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="SUN"/>
+
+        <TextView
+            style="@style/wl_common_text"
+            android:layout_width="@dimen/margin_0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="MON"/>
+
+        <TextView
+            style="@style/wl_common_text"
+            android:layout_width="@dimen/margin_0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="TUE"/>
+
+        <TextView
+            style="@style/wl_common_text"
+            android:layout_width="@dimen/margin_0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="WED"/>
+
+        <TextView
+            style="@style/wl_common_text"
+            android:layout_width="@dimen/margin_0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="THU"/>
+
+        <TextView
+            style="@style/wl_common_text"
+            android:layout_width="@dimen/margin_0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="FRI"/>
+
+        <TextView
+            style="@style/wl_common_text"
+            android:layout_width="@dimen/margin_0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="SAT"/>
+
+    </LinearLayout>
+
+    <View style="@style/cs_common_divider"/>
+</LinearLayout>

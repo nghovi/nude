@@ -1,28 +1,17 @@
 package trente.asia.welfare.adr.activity;
 
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.widget.Toast;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.HashMap;
 import java.util.Map;
-import java.util.TimeZone;
 
-import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.activity.ChiaseActivity;
-import trente.asia.android.define.CAConst;
-import trente.asia.android.exception.CAException;
-import trente.asia.android.util.AndroidUtil;
 import trente.asia.welfare.adr.R;
-import trente.asia.welfare.adr.models.UserModel;
-import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
 
 /**
  * WelfareActivity

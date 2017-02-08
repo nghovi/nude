@@ -5,7 +5,7 @@ import android.Manifest;
 /**
  * Created by takyas on 27/11/14.
  */
-public class CAConst{
+public class CsConst {
 
 	public static String			ROOT						= "CA-ROOT";
 
@@ -48,6 +48,8 @@ public class CAConst{
 	// Static string
 	public static final String		STATUS						= "status";
 	public static final String		MESSAGES					= "messages";
+
+	public static final int			DAY_NUMBER_A_WEEK			= 7;
 
 	public static final String		STATUS_NG					= "NG";
 	public static final String		STATUS_OK					= "OK";

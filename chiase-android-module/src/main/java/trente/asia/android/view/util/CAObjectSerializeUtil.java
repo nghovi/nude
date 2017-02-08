@@ -12,7 +12,7 @@ import android.widget.Spinner;
 import android.widget.Switch;
 
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.android.define.CAConst;
+import trente.asia.android.define.CsConst;
 import trente.asia.android.view.ChiaseButton;
 import trente.asia.android.view.ChiaseDateView;
 import trente.asia.android.view.ChiaseEditText;
@@ -91,7 +91,7 @@ public class CAObjectSerializeUtil{
 			}
 		}catch(JSONException e){
 			e.printStackTrace();
-			Log.e(CAConst.ROOT, e.getMessage());
+			Log.e(CsConst.ROOT, e.getMessage());
 		}
 		return jsonObject;
 	}

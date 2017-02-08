@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.android.define.CAConst;
+import trente.asia.android.define.CsConst;
 import trente.asia.android.exception.CAException;
 import trente.asia.android.util.AndroidUtil;
 import trente.asia.shiftworking.BuildConfig;
@@ -132,12 +132,12 @@ public class MainActivity extends WelfareActivity{
 			try{
 				jsonObject.put("loginUserId", CCStringUtil.toString(userModel.key));
 				jsonObject.put("companyId", CCStringUtil.toString(userModel.companyId));
-				jsonObject.put(CAConst.ARG_TOKEN, userModel.token);
+				jsonObject.put(CsConst.ARG_TOKEN, userModel.token);
 				jsonObject.put("language", Resources.getSystem().getConfiguration().locale.getLanguage());
 				TimeZone timeZone = TimeZone.getDefault();
-				jsonObject.put(CAConst.ARG_TIMEZONE, timeZone.getID());
-				jsonObject.put(CAConst.ARG_DEVICE, "A");
-				jsonObject.put(CAConst.ARG_VERSION, AndroidUtil.getVersionName(activity));
+				jsonObject.put(CsConst.ARG_TIMEZONE, timeZone.getID());
+				jsonObject.put(CsConst.ARG_DEVICE, "A");
+				jsonObject.put(CsConst.ARG_VERSION, AndroidUtil.getVersionName(activity));
 				jsonObject.put("serviceCd", WelfareConst.SERVICE_CD_SW);
 			}catch(JSONException ex){
 				new CAException(ex);
@@ -152,9 +152,9 @@ public class MainActivity extends WelfareActivity{
 	 */
 	@Override
 	protected void onSuccessBackground(JSONObject response, boolean isAlert, String url){
-		String status = response.optString(CAConst.STATUS);
+		String status = response.optString(CsConst.STATUS);
 		String returnCd = response.optString(WelfareConst.RETURN_CODE_PARAM);
-		if(CAConst.STATUS_OK.equals(status) && (CCStringUtil.isEmpty(returnCd) || CCConst.NONE.equals(returnCd))){
+		if(CsConst.STATUS_OK.equals(status) && (CCStringUtil.isEmpty(returnCd) || CCConst.NONE.equals(returnCd))){
 			if(WfUrlConst.WF_NOTICE_0005.equals(url)){
 				final TextView txtUnread = (TextView)activity.findViewById(R.id.txt_id_unread_message);
 				if(txtUnread != null){

@@ -27,7 +27,7 @@ import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.activity.ChiaseActivity;
 import trente.asia.android.activity.ChiaseFragment;
-import trente.asia.android.define.CAConst;
+import trente.asia.android.define.CsConst;
 import trente.asia.android.exception.CAException;
 import trente.asia.android.util.AndroidUtil;
 import trente.asia.welfare.adr.R;
@@ -125,9 +125,9 @@ public abstract class WelfareFragment extends ChiaseFragment implements WelfareA
 	 */
 	@Override
 	protected void onSuccessLoad(JSONObject response, boolean isAlert, String url){
-		String status = response.optString(CAConst.STATUS);
+		String status = response.optString(CsConst.STATUS);
 		String returnCd = response.optString(WelfareConst.RETURN_CODE_PARAM);
-		if(CAConst.STATUS_OK.equals(status) && (CCStringUtil.isEmpty(returnCd) || CCConst.NONE.equals(returnCd))){
+		if(CsConst.STATUS_OK.equals(status) && (CCStringUtil.isEmpty(returnCd) || CCConst.NONE.equals(returnCd))){
 			UserModel userModel = CCJsonUtil.convertToModel(response.optString("myself"), UserModel.class);
 			if(userModel != null && !CCStringUtil.isEmpty(userModel.key)){
 				if(userModel.dept == null){
@@ -165,7 +165,7 @@ public abstract class WelfareFragment extends ChiaseFragment implements WelfareA
 			dlgUpgrade.show();
 			gotoSignIn();
 		}else{
-			String msg = response.optString(CAConst.MESSAGES);
+			String msg = response.optString(CsConst.MESSAGES);
 			alertDialog.setMessage(Html.fromHtml(msg).toString());
 			alertDialog.show();
 		}
@@ -199,8 +199,8 @@ public abstract class WelfareFragment extends ChiaseFragment implements WelfareA
 	 */
 	@Override
 	protected void onSuccessUpdate(JSONObject response, boolean isAlert, String url){
-		String status = response.optString(CAConst.STATUS);
-		if(CAConst.STATUS_OK.equals(status)){
+		String status = response.optString(CsConst.STATUS);
+		if(CsConst.STATUS_OK.equals(status)){
 			dismissLoad();
 			successUpdate(response, url);
 		}else{
@@ -225,8 +225,8 @@ public abstract class WelfareFragment extends ChiaseFragment implements WelfareA
 	 */
 	@Override
 	protected void onSuccessUpLoad(JSONObject response, boolean isAlert, String url){
-		String status = response.optString(CAConst.STATUS);
-		if(CAConst.STATUS_OK.equals(status)){
+		String status = response.optString(CsConst.STATUS);
+		if(CsConst.STATUS_OK.equals(status)){
 			dismissLoad();
 			successUpload(response, url);
 		}else{
@@ -270,12 +270,12 @@ public abstract class WelfareFragment extends ChiaseFragment implements WelfareA
 			try{
 				jsonObject.put("loginUserId", CCStringUtil.toString(userModel.key));
 				jsonObject.put("companyId", CCStringUtil.toString(userModel.companyId));
-				jsonObject.put(CAConst.ARG_TOKEN, userModel.token);
+				jsonObject.put(CsConst.ARG_TOKEN, userModel.token);
 				jsonObject.put("language", Resources.getSystem().getConfiguration().locale.getLanguage());
 				TimeZone timeZone = TimeZone.getDefault();
-				jsonObject.put(CAConst.ARG_TIMEZONE, timeZone.getID());
-				jsonObject.put(CAConst.ARG_DEVICE, "A");
-				jsonObject.put(CAConst.ARG_VERSION, AndroidUtil.getVersionName(getContext()));
+				jsonObject.put(CsConst.ARG_TIMEZONE, timeZone.getID());
+				jsonObject.put(CsConst.ARG_DEVICE, "A");
+				jsonObject.put(CsConst.ARG_VERSION, AndroidUtil.getVersionName(getContext()));
 				jsonObject.put("serviceCd", getServiceCd());
 			}catch(JSONException ex){
 				new CAException(ex);

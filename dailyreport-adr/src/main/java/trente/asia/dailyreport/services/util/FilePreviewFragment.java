@@ -23,7 +23,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import trente.asia.android.define.CAConst;
+import trente.asia.android.define.CsConst;
 import trente.asia.dailyreport.BuildConfig;
 import trente.asia.dailyreport.R;
 import trente.asia.dailyreport.services.user.DrLoginFragment;
@@ -123,7 +123,7 @@ public class FilePreviewFragment extends AbstractFilePreviewFragment implements 
 				bmThumbnail.compress(Bitmap.CompressFormat.JPEG, 100, outStream);
 				fileMap.put("thumbnailFile", thumbnailFile);
 			}catch(IOException ex){
-				Log.e(CAConst.ROOT, ex.toString());
+				Log.e(CsConst.ROOT, ex.toString());
 			}
 		}
 

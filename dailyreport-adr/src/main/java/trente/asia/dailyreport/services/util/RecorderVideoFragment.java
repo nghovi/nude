@@ -21,7 +21,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import trente.asia.android.define.CAConst;
+import trente.asia.android.define.CsConst;
 import trente.asia.dailyreport.BuildConfig;
 import trente.asia.dailyreport.R;
 import trente.asia.dailyreport.services.user.DrLoginFragment;
@@ -79,7 +79,7 @@ public class RecorderVideoFragment extends AbstractRecorderVideoFragment impleme
 			outStream = new FileOutputStream(mThumbnailFile);
 			bmThumbnail.compress(Bitmap.CompressFormat.JPEG, 100, outStream);
 		}catch(IOException ex){
-			Log.e(CAConst.ROOT, ex.toString());
+			Log.e(CsConst.ROOT, ex.toString());
 		}
 	}
 

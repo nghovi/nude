@@ -47,6 +47,7 @@ public class WelfareConst{
 	public static final String		WL_DATE_TIME_8					= "yyyy-MM";
 	public static final String		WL_DATE_TIME_9					= "HH:mm";
 	public static final String		WL_DATE_TIME_10					= "yyyy/MM/dd (EEE)";
+    public static final String		WL_DATE_TIME_11					= "dd";
 
 	public static final String		WF_CONTACT_PROBLEM				= "B";
 	public static final String		WF_CONTACT_IMPROVE				= "I";

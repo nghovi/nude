@@ -8,7 +8,9 @@
         style="@style/cs_common_match"
         android:orientation="vertical"/>
 
-    <LinearLayout style="@style/wf_common_match">
+    <LinearLayout
+        style="@style/wf_common_match"
+        android:background="@color/chiase_white">
 
         <include layout="@layout/view_navigation_header"/>
 

@@ -1,13 +1,22 @@
 package trente.asia.calendar.services.calendar.view;
 
+import java.util.Date;
+import java.util.List;
+
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import asia.chiase.core.util.CCDateUtil;
+import asia.chiase.core.util.CCFormatUtil;
+import trente.asia.android.define.CsConst;
+import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.R;
+import trente.asia.welfare.adr.define.WelfareConst;
 
 /**
  * BoardPagerAdapter
@@ -18,20 +27,13 @@ public class MonthlyCalendarPagerAdapter extends PagerAdapter{
 
 	private Context			mContext;
 	private LayoutInflater	mInflater;
+	private final int		ACTIVE_PAGE	= Integer.MAX_VALUE / 2;
+	private final Date		TODAY		= CsDateUtil.makeMonthWithFirstDate();
 
 	public MonthlyCalendarPagerAdapter(Context context){
 		this.mContext = context;
 		mInflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}
-
-    public class MonthlyViewHolder{
-
-        public TextView txtText;
-
-        public MonthlyViewHolder(View view){
-            txtText = (TextView)view.findViewById(R.id.txt_id_text);
-        }
-    }
 
 	/**
 	 * @return the number of pages to display
@@ -56,13 +58,34 @@ public class MonthlyCalendarPagerAdapter extends PagerAdapter{
 	 */
 	@Override
 	public Object instantiateItem(ViewGroup container, int position){
-		View view = mInflater.inflate(R.layout.monthly_view_1, null);
-		MonthlyViewHolder holder = new MonthlyViewHolder(view);
-        holder.txtText.setText(String.valueOf(position));
+		Date activeDate = CsDateUtil.addMonth(TODAY, position - ACTIVE_PAGE);
 
-		container.addView(view);
+		MonthlyCalendarView calendarView = new MonthlyCalendarView(mContext);
+		View titleView = mInflater.inflate(R.layout.monthly_calendar_title, null);
+		calendarView.addView(titleView);
 
-		return view;
+		List<Date> lstDate = CsDateUtil.getAllDate4Month(CCDateUtil.makeCalendar(activeDate));
+		View rowView = null;
+		LinearLayout lnrRowContent = null;
+		for(int index = 0; index < lstDate.size(); index++){
+			Date itemDate = lstDate.get(index);
+			if(index % CsConst.DAY_NUMBER_A_WEEK == 0){
+				rowView = mInflater.inflate(R.layout.monthly_calendar_row, null);
+				lnrRowContent = (LinearLayout)rowView.findViewById(R.id.lnr_id_row_content);
+				calendarView.addView(rowView);
+			}
+			View rowItemView = mInflater.inflate(R.layout.monthly_calendar_row_item, null);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
+            rowItemView.setLayoutParams(layoutParams);
+			TextView txtContent = (TextView)rowItemView.findViewById(R.id.txt_id_row_content);
+			txtContent.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_11, itemDate));
+
+			lnrRowContent.addView(rowItemView);
+		}
+
+		container.addView(calendarView);
+
+		return calendarView;
 	}
 
 	/**

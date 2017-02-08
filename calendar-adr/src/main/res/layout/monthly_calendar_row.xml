@@ -1,0 +1,15 @@
+<LinearLayout style="@style/cs_common_match_wrap"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/lnr_id_row_content"
+        style="@style/cs_common_match_wrap"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/margin_10dp"
+        android:paddingTop="@dimen/margin_10dp"
+        android:weightSum="7"/>
+
+    <View style="@style/cs_common_divider"/>
+
+</LinearLayout>

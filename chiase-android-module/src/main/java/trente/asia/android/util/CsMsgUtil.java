@@ -12,7 +12,7 @@ import android.util.Log;
 
 import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.android.define.CAConst;
+import trente.asia.android.define.CsConst;
 
 //import org.apache.http.conn.ClientConnectionManager;
 //import org.apache.http.impl.client.DefaultHttpClient;
@@ -78,7 +78,7 @@ public class CsMsgUtil {
 				}
 			}
 		}catch(Exception ex){
-			Log.e(CAConst.ROOT, ex.toString());
+			Log.e(CsConst.ROOT, ex.toString());
 		}
 		return key;
 	}

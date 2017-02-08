@@ -31,7 +31,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.FileProvider;
 import android.util.DisplayMetrics;
 
-import trente.asia.android.define.CAConst;
+import trente.asia.android.define.CsConst;
 
 /**
  * Created by takyas on 9/1/15.
@@ -306,7 +306,7 @@ public class AndroidUtil{
 
 		if(writePermission != PackageManager.PERMISSION_GRANTED || readPermission != PackageManager.PERMISSION_GRANTED){
 			// We don't have permission so prompt the user
-			ActivityCompat.requestPermissions(activity, CAConst.PERMISSIONS_STORAGE, CAConst.REQUEST_EXTERNAL_STORAGE);
+			ActivityCompat.requestPermissions(activity, CsConst.PERMISSIONS_STORAGE, CsConst.REQUEST_EXTERNAL_STORAGE);
 			return false;
 		}
 		return true;
@@ -324,7 +324,7 @@ public class AndroidUtil{
 
 		if(permission != PackageManager.PERMISSION_GRANTED){
 			// We don't have permission so prompt the user
-			ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, CAConst.REQUEST_EXTERNAL_STORAGE);
+			ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, CsConst.REQUEST_EXTERNAL_STORAGE);
 			return false;
 		}
 		return true;

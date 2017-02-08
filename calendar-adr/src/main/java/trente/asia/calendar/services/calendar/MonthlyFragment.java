@@ -61,7 +61,6 @@ public class MonthlyFragment extends AbstractClFragment{
 
         Calendar calendar = CCDateUtil.makeCalendar(CsDateUtil.makeMonthWithFirstDate());
         List<Date> lstDate = CsDateUtil.getAllDate4Month(calendar);
-        System.out.println("Hello");
 	}
 
 	@Override
