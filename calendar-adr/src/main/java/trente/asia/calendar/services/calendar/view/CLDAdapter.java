@@ -106,13 +106,14 @@ public class CLDAdapter extends BaseAdapter {
         int dayColor = Color.BLACK;
         RelativeLayout rltBackground = (RelativeLayout) v.findViewById(R.id
                 .item_calendar_background);
-
-        // checking whether the day is in current month or not.
-        if (getCount() > 7 && ((gridvalue > 1 && position < firstDay) ||
-                (gridvalue < 7 &&
-                        position > 28))) {
+        Calendar c = Calendar.getInstance();
+        c.setTime(CCDateUtil.makeDateCustom(calendarDay.date, WelfareConst
+                .WL_DATE_TIME_7));
+        // if not current month
+        if (c.get(Calendar.MONTH) != month.get(Calendar.MONTH)) {
             dayColor = ContextCompat.getColor(mContext, R.color
                     .ripple_material_dark);
+            txtDay.setText("");
             txtDay.setClickable(false);
             txtDay.setFocusable(false);
             imgReportStatus.setVisibility(View.INVISIBLE);
@@ -168,10 +169,10 @@ public class CLDAdapter extends BaseAdapter {
             // imgReportStatus.setImageResource(R.drawable.wf_check);
             // }
             // }
+            txtDay.setTextColor(dayColor);
+            txtDay.setText(String.valueOf(gridvalue));
         }
 
-        txtDay.setTextColor(dayColor);
-        txtDay.setText(String.valueOf(gridvalue));
         return v;
     }
 

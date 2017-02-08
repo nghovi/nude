@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import trente.asia.calendar.R;
@@ -28,8 +30,10 @@ import static trente.asia.calendar.services.calendar.model.CalendarDay.*;
  */
 public class WeeklyFragment extends AbstractClFragment{
 
-	private ViewPager	mViewPager;
-	private ScreenSlidePagerAdapter mPagerAdapter;
+	private ViewPager				mViewPager;
+	private ScreenSlidePagerAdapter	mPagerAdapter;
+	private Calendar				selectedDate;
+	private List<Date>				dates	= new ArrayList<>();
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -43,9 +47,25 @@ public class WeeklyFragment extends AbstractClFragment{
 	protected void initView(){
 		super.initView();
 		initHeader(R.drawable.wf_back_white, "Weekly", null);
+		selectedDate = Calendar.getInstance();
+		createDates();
 		mViewPager = (ViewPager)getView().findViewById(R.id.pager);
 		mPagerAdapter = new ScreenSlidePagerAdapter(getChildFragmentManager());
 		mViewPager.setAdapter(mPagerAdapter);
+	}
+
+	private void createDates(){
+		Calendar c = Calendar.getInstance();
+		int currentMonth = c.get(Calendar.MONTH);
+		c.setFirstDayOfWeek(Calendar.SUNDAY);
+		int maxWeek = c.getActualMaximum(Calendar.WEEK_OF_MONTH);
+		for(int i = 1; i <= maxWeek; i++){
+			c.set(Calendar.WEEK_OF_MONTH, i);
+			if(c.get(Calendar.MONTH) != currentMonth){
+				c.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+			}
+			dates.add(c.getTime());
+		}
 	}
 
 	@Override
@@ -74,7 +94,7 @@ public class WeeklyFragment extends AbstractClFragment{
 	 * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in
 	 * sequence.
 	 */
-	private class ScreenSlidePagerAdapter extends FragmentPagerAdapter {
+	private class ScreenSlidePagerAdapter extends FragmentPagerAdapter{
 
 		public ScreenSlidePagerAdapter(FragmentManager fm){
 			super(fm);
@@ -82,12 +102,14 @@ public class WeeklyFragment extends AbstractClFragment{
 
 		@Override
 		public Fragment getItem(int position){
-			return new WeeklyPageFragment();
+			WeeklyPageFragment weeklyPageFragment = new WeeklyPageFragment();
+			weeklyPageFragment.setSelectedDate(dates.get(position));
+			return weeklyPageFragment;
 		}
 
 		@Override
 		public int getCount(){
-			return 5;
+			return dates.size();
 		}
 	}
 }
