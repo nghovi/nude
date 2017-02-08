@@ -22,7 +22,7 @@ android {
     productFlavors {
         develop {
             buildConfigField "Boolean", "DEVELOP", "true"
-            buildConfigField "String", "HOST", "\"http://192.168.1.135:9000\""
+            buildConfigField "String", "HOST", "\"http://192.168.1.124:9000\""
         }
         production {
             buildConfigField "Boolean", "DEVELOP", "false"
@@ -43,4 +43,5 @@ dependencies {
     compile project(':welfare-android-core')
     compile 'com.android.support:multidex:1.0.0'
     compile 'com.google.firebase:firebase-messaging:9.2.1'
+    compile 'com.github.ksoichiro:android-observablescrollview:1.6.0'
 }

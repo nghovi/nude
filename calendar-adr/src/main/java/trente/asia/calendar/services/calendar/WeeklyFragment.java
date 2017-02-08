@@ -1,6 +1,11 @@
 package trente.asia.calendar.services.calendar;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,13 +28,13 @@ import static trente.asia.calendar.services.calendar.model.CalendarDay.*;
  */
 public class WeeklyFragment extends AbstractClFragment{
 
-	private ListView				lstCalendarDay;
-	private CalendarDayListAdapter	adapter;
+	private ViewPager	mViewPager;
+	private ScreenSlidePagerAdapter mPagerAdapter;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 		if(mRootView == null){
-			mRootView = inflater.inflate(R.layout.fragment_weekly, container, false);
+			mRootView = inflater.inflate(R.layout.fragment_weekly_pager, container, false);
 		}
 		return mRootView;
 	}
@@ -38,9 +43,9 @@ public class WeeklyFragment extends AbstractClFragment{
 	protected void initView(){
 		super.initView();
 		initHeader(R.drawable.wf_back_white, "Weekly", null);
-		lstCalendarDay = (ListView)getView().findViewById(R.id.lst_calendar_day);
-		adapter = new CalendarDayListAdapter(activity, R.layout.item_calendar_day, getDummyData());
-		lstCalendarDay.setAdapter(adapter);
+		mViewPager = (ViewPager)getView().findViewById(R.id.pager);
+		mPagerAdapter = new ScreenSlidePagerAdapter(getChildFragmentManager());
+		mViewPager.setAdapter(mPagerAdapter);
 	}
 
 	@Override
@@ -65,31 +70,24 @@ public class WeeklyFragment extends AbstractClFragment{
 		super.onDestroy();
 	}
 
-	public List<CalendarDay> getDummyData(){
-		List<CalendarDay> dummyData = new ArrayList<>();
+	/**
+	 * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in
+	 * sequence.
+	 */
+	private class ScreenSlidePagerAdapter extends FragmentPagerAdapter {
 
-		CalendarDay.Event e1 = new CalendarDay.Event();
-		e1.startTime = "10:00";
-		e1.endTime = "12:00";
+		public ScreenSlidePagerAdapter(FragmentManager fm){
+			super(fm);
+		}
 
-		CalendarDay.Event e2 = new CalendarDay.Event();
-		e2.startTime = "08:00";
-		e2.endTime = "11:00";
+		@Override
+		public Fragment getItem(int position){
+			return new WeeklyPageFragment();
+		}
 
-		CalendarDay d1 = new CalendarDay();
-		d1.date = "2017/06/02";
-		d1.events = new ArrayList<>();
-		d1.events.add(e1);
-		d1.events.add(e2);
-
-		CalendarDay d2 = new CalendarDay();
-		d2.date = "2017/08/02";
-		d2.events = new ArrayList<>();
-		d2.events.add(e1);
-		d2.events.add(e2);
-
-		dummyData.add(d1);
-		dummyData.add(d2);
-		return dummyData;
+		@Override
+		public int getCount(){
+			return 5;
+		}
 	}
 }
