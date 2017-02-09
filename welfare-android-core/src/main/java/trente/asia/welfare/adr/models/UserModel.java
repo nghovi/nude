@@ -139,7 +139,16 @@ public class UserModel implements Serializable{
 		this.userNameKana = userNameKana;
 	}
 
-	public static String KEY_ALL = "-1";
+	public static String	KEY_ALL	= "-1";
+
+	public static UserModel getUserModel(int key, List<UserModel> userModels){
+		for(UserModel userModel : userModels){
+			if(userModel.key.equals(key)){
+				return userModel;
+			}
+		}
+		return null;
+	}
 
 	public static boolean contain(List<UserModel> lstUser, UserModel userModel){
 		if(CCCollectionUtil.isEmpty(lstUser) || userModel == null){
