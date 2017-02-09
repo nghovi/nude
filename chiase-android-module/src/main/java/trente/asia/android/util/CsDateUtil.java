@@ -6,7 +6,9 @@ import java.util.Date;
 import java.util.List;
 
 import asia.chiase.core.util.CCDateUtil;
+import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCStringUtil;
+import trente.asia.android.define.CsConst;
 
 /**
  * <strong>CsDateUtil</strong><br>
@@ -16,6 +18,8 @@ import asia.chiase.core.util.CCStringUtil;
  * @version $Id$
  */
 public class CsDateUtil{
+
+    public static final String		CS_DATE_TIME_1					= "EEE";
 
 	public static Date makeMonthWithFirstDate(){
 		Calendar calendar = Calendar.getInstance();
@@ -49,9 +53,9 @@ public class CsDateUtil{
 		if(calendar == null){
 			return null;
 		}else{
+			// calendar.setFirstDayOfWeek(Calendar.THURSDAY);
 			List<Date> lstDate = new ArrayList<>();
 
-			// int start = calendar.get(Calendar.WEEK_OF_YEAR);
 			Calendar firstDay = (Calendar)calendar.clone();
 			firstDay.set(Calendar.DAY_OF_WEEK, calendar.getFirstDayOfWeek());
 			Date firstDate = firstDay.getTime();
@@ -67,6 +71,27 @@ public class CsDateUtil{
 
 			return lstDate;
 		}
+	}
+
+	/**
+	 * <strong>getAllDay4Week</strong><br>
+	 * <br> get all day in week: MON, TUE, WED, THU, FRI, SAT, SUN
+	 *
+	 * @param firstDay
+	 * @return
+	 */
+	public static List<String> getAllDay4Week(int firstDay){
+		List<String> lstDay = new ArrayList<>();
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_WEEK, firstDay);
+        for(int index = 0; index < CsConst.DAY_NUMBER_A_WEEK; index++){
+            if(index > 0){
+                calendar.add(Calendar.DATE, 1);
+            }
+            lstDay.add(CCFormatUtil.formatDateCustom(CS_DATE_TIME_1, calendar.getTime()));
+        }
+
+        return lstDay;
 	}
 
 	public static Integer getAge(String birthday){

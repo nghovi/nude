@@ -10,10 +10,13 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import org.json.JSONObject;
+
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.fragments.AbstractClFragment;
 import trente.asia.calendar.services.calendar.model.CalendarModel;
 import trente.asia.calendar.services.calendar.view.CalendarAdapter;
+import trente.asia.welfare.adr.define.WfUrlConst;
 
 /**
  * MonthlyFragment
@@ -37,20 +40,17 @@ public class CalendarListFragment extends AbstractClFragment{
 		super.initView();
 
 		lvCalendar = (ListView)getView().findViewById(R.id.lsv_id_calendar);
-//        lvCalendar.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id){
-//                boolean isChecked = lvCalendar.isItemChecked(position);
-//                lvCalendar.setItemChecked(position, !isChecked);
-//            }
-//        });
 	}
 
 	@Override
 	protected void initData(){
 		makeDummyData();
 	}
+
+    private void loadCalendarList(){
+        JSONObject jsonObject = new JSONObject();
+        requestLoad(WfUrlConst.WF_MSG_0001, jsonObject, false);
+    }
 
 	private void makeDummyData(){
 		List<CalendarModel> lstCalendar = new ArrayList<>();

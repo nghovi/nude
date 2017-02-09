@@ -13,7 +13,6 @@
             android:id="@+id/calendar_view"
             layout="@layout/view_calendar"/>
 
-
         <com.github.ksoichiro.android.observablescrollview.ObservableListView
             android:id="@+id/lst_calendar_day"
             xmlns:android="http://schemas.android.com/apk/res/android"

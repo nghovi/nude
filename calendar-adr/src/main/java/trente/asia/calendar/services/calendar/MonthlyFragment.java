@@ -58,9 +58,6 @@ public class MonthlyFragment extends AbstractClFragment{
 		transaction.replace(R.id.slice_menu_board, calendarListFragment).commit();
 
 		mImgLeftHeader.setOnClickListener(this);
-
-        Calendar calendar = CCDateUtil.makeCalendar(CsDateUtil.makeMonthWithFirstDate());
-        List<Date> lstDate = CsDateUtil.getAllDate4Month(calendar);
 	}
 
 	@Override
