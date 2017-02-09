@@ -57,9 +57,9 @@ public class CalendarAdapter extends ArrayAdapter<CalendarModel>{
 		convertView = mInflater.inflate(R.layout.item_calendar_list, null);
 		CalendarViewHolder holder = new CalendarViewHolder(convertView);
 
-		holder.txtName.setText(model.name);
-		if(!CCStringUtil.isEmpty(model.imagePath)){
-			WfPicassoHelper.loadImage(mContext, BuildConfig.HOST + model.imagePath, holder.imgAvatar, null);
+		holder.txtName.setText(model.calendarName);
+		if(!CCStringUtil.isEmpty(model.calendarPath)){
+			WfPicassoHelper.loadImage(mContext, BuildConfig.HOST + model.calendarPath, holder.imgAvatar, null);
 		}
         holder.lnrItem.setOnCheckedChangeListener(new CsOnCheckedChangeListener() {
             @Override

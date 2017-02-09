@@ -6,15 +6,10 @@ package trente.asia.calendar.services.calendar.model;
 
 public class CalendarModel{
 
-	public String	name;
-	public String	imagePath;
+	public String calendarName;
+	public String calendarPath;
 
 	public CalendarModel(){
 
 	}
-
-    public CalendarModel(String name, String imagePath){
-        this.name = name;
-        this.imagePath = imagePath;
-    }
 }

@@ -3,15 +3,16 @@ package trente.asia.calendar.services.calendar;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONObject;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
-import org.json.JSONObject;
-
+import asia.chiase.core.util.CCCollectionUtil;
+import asia.chiase.core.util.CCJsonUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.fragments.AbstractClFragment;
 import trente.asia.calendar.services.calendar.model.CalendarModel;
@@ -44,21 +45,25 @@ public class CalendarListFragment extends AbstractClFragment{
 
 	@Override
 	protected void initData(){
-		makeDummyData();
+		loadCalendarList();
 	}
 
-    private void loadCalendarList(){
-        JSONObject jsonObject = new JSONObject();
-        requestLoad(WfUrlConst.WF_MSG_0001, jsonObject, false);
-    }
+	private void loadCalendarList(){
+		JSONObject jsonObject = new JSONObject();
+		requestLoad(WfUrlConst.WF_CL_CAL_0001, jsonObject, false);
+	}
 
-	private void makeDummyData(){
-		List<CalendarModel> lstCalendar = new ArrayList<>();
-		lstCalendar.add(new CalendarModel("Calendar 01", ""));
-		lstCalendar.add(new CalendarModel("Calendar 02", ""));
-
-		CalendarAdapter calendarAdapter = new CalendarAdapter(activity, lstCalendar);
-		lvCalendar.setAdapter(calendarAdapter);
+	@Override
+	protected void successLoad(JSONObject response, String url){
+		if(WfUrlConst.WF_CL_CAL_0001.equals(url)){
+            List<CalendarModel> lstCalendar = CCJsonUtil.convertToModelList(response.optString("calendars"), CalendarModel.class);
+            if(!CCCollectionUtil.isEmpty(lstCalendar)){
+                CalendarAdapter calendarAdapter = new CalendarAdapter(activity, lstCalendar);
+                lvCalendar.setAdapter(calendarAdapter);
+            }
+		}else{
+			super.successLoad(response, url);
+		}
 	}
 
 	@Override
