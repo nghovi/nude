@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
@@ -19,7 +18,6 @@ import com.github.ksoichiro.android.observablescrollview.ScrollState;
 
 import asia.chiase.core.util.CCFormatUtil;
 import trente.asia.calendar.R;
-import trente.asia.calendar.commons.fragments.AbstractClFragment;
 import trente.asia.calendar.services.calendar.model.CalendarDay;
 import trente.asia.calendar.services.calendar.view.CalendarDayListAdapter;
 import trente.asia.calendar.services.calendar.view.CalendarView;
@@ -104,17 +102,23 @@ public class WeeklyPageFragment extends WelfareFragment implements ObservableScr
 		List<CalendarDay> dummyData = new ArrayList<>();
 
 		Schedule e1 = new Schedule();
+		e1.startDate = "2017/07/09";
+		e1.endDate = "2017/07/09";
 		e1.startTime = "10:00";
 		e1.endTime = "12:00";
-		e1.name="Date Thuy";
-		e1.url="google.com.vn";
-		e1.note = "she refused";
+		e1.scheduleName = "Date Thuy";
+		e1.key = "1";
+		e1.url = "google.com.vn";
+		e1.scheduleNote = "she refused";
 
 		Schedule e2 = new Schedule();
+		e2.startDate = "2017/07/09";
+		e2.endDate = "2017/07/09";
 		e2.startTime = "08:00";
+		e2.key = "1";
 		e2.endTime = "11:00";
-		e2.name = "Go to MocChau with ...";
-		e2.note = "done";
+		e2.scheduleName = "Go to MocChau with ...";
+		e2.scheduleNote = "done";
 
 		CalendarDay d1 = new CalendarDay();
 		d1.date = "2017/06/02";

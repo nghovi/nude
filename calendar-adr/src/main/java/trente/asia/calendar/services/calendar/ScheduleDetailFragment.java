@@ -1,15 +1,6 @@
 package trente.asia.calendar.services.calendar;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,10 +11,17 @@ import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import asia.chiase.core.util.CCJsonUtil;
 import trente.asia.android.view.util.CAObjectSerializeUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.fragments.AbstractClFragment;
 import trente.asia.calendar.services.calendar.model.CalendarDay;
+import trente.asia.calendar.services.calendar.view.HorizontalUserListView;
+import trente.asia.welfare.adr.define.WfUrlConst;
+import trente.asia.welfare.adr.models.UserModel;
 
 /**
  * ScheduleDetailFragment
@@ -33,6 +31,7 @@ import trente.asia.calendar.services.calendar.model.CalendarDay;
 public class ScheduleDetailFragment extends AbstractClFragment{
 
 	private CalendarDay.Schedule	schedule;
+	private HorizontalUserListView	horizontalUserListView;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -46,7 +45,33 @@ public class ScheduleDetailFragment extends AbstractClFragment{
 	protected void initView(){
 		super.initView();
 		initHeader(R.drawable.wf_back_white, "Weekly", null);
+		horizontalUserListView = (HorizontalUserListView)getView().findViewById(R.id.view_horizontal_user_list);
+	}
 
+	@Override
+	protected void initData(){
+		JSONObject jsonObject = new JSONObject();
+		try{
+			jsonObject.put("key", schedule.key);
+		}catch(JSONException e){
+			e.printStackTrace();
+		}
+		requestLoad(WfUrlConst.WF_CL_SCHEDULE_DETAIL, jsonObject, true);
+	}
+
+	@Override
+	protected void successLoad(JSONObject response, String url){
+		if(WfUrlConst.WF_CL_SCHEDULE_DETAIL.equals(url)){
+			onLoadScheduleDetailSuccess(response);
+		}else{
+			super.successLoad(response, url);
+		}
+	}
+
+	private void onLoadScheduleDetailSuccess(JSONObject response){
+		schedule = CCJsonUtil.convertToModel(response.optString("schedule"), CalendarDay.Schedule.class);
+
+		List<UserModel> joinUserList = getJoinedUserModels(schedule, CCJsonUtil.convertToModelList(response.optString("calendarUsers"), UserModel.class));
 		try{
 			Gson gson = new Gson();
 			CAObjectSerializeUtil.deserializeObject((ViewGroup)getView().findViewById(R.id.lnr_id_content), new JSONObject(gson.toJson(schedule)));
@@ -54,15 +79,41 @@ public class ScheduleDetailFragment extends AbstractClFragment{
 			e.printStackTrace();
 		}
 
+		horizontalUserListView.inflateWith(joinUserList);
+
 		ImageView imgRightIcon = (ImageView)getView().findViewById(R.id.img_id_header_right_icon);
 		imgRightIcon.setImageResource(R.drawable.abc_btn_check_material);
 		imgRightIcon.setVisibility(View.VISIBLE);
 		imgRightIcon.setOnClickListener(this);
-
 	}
 
-	@Override
-	protected void initData(){
+	private List<UserModel> getJoinedUserModels(CalendarDay.Schedule schedule, List<UserModel> userModels){
+		List<UserModel> joinUsers = new ArrayList<>();
+		if(userModels != null && schedule.joinUsers != null){
+			for(int userId : schedule.joinUsers){
+				joinUsers.add(UserModel.getUserModel(userId, userModels));
+			}
+		}
+		UserModel userModel = new UserModel();
+		userModel.avatarPath = "abc";
+		joinUsers.add(userModel);
+		joinUsers.add(userModel);
+		joinUsers.add(userModel);
+		joinUsers.add(userModel);
+		joinUsers.add(userModel);
+		joinUsers.add(userModel);
+		joinUsers.add(userModel);
+		joinUsers.add(userModel);
+		joinUsers.add(userModel);
+		joinUsers.add(userModel);
+		joinUsers.add(userModel);
+		joinUsers.add(userModel);
+		joinUsers.add(userModel);
+		joinUsers.add(userModel);
+		joinUsers.add(userModel);
+		joinUsers.add(userModel);
+		joinUsers.add(userModel);
+		return joinUsers;
 	}
 
 	@Override
