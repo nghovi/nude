@@ -1,30 +1,29 @@
 package trente.asia.calendar.services.calendar;
 
-import static trente.asia.calendar.services.calendar.model.CalendarDay.Event;
+import static trente.asia.calendar.services.calendar.model.CalendarDay.Schedule;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import android.app.FragmentManager;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import com.github.ksoichiro.android.observablescrollview.ObservableListView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
 
-import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.fragments.AbstractClFragment;
 import trente.asia.calendar.services.calendar.model.CalendarDay;
 import trente.asia.calendar.services.calendar.view.CalendarDayListAdapter;
 import trente.asia.calendar.services.calendar.view.CalendarView;
+import trente.asia.welfare.adr.activity.WelfareFragment;
 import trente.asia.welfare.adr.define.WelfareConst;
 
 /**
@@ -32,7 +31,7 @@ import trente.asia.welfare.adr.define.WelfareConst;
  *
  * @author TrungND
  */
-public class WeeklyPageFragment extends AbstractClFragment implements ObservableScrollViewCallbacks,CalendarView.OnCalendarDaySelectedListener{
+public class WeeklyPageFragment extends WelfareFragment implements ObservableScrollViewCallbacks,CalendarView.OnCalendarDaySelectedListener{
 
 	private ObservableListView		lstCalendarDay;
 	private CalendarDayListAdapter	adapter;
@@ -53,29 +52,48 @@ public class WeeklyPageFragment extends AbstractClFragment implements Observable
 		lstCalendarDay = (ObservableListView)getView().findViewById(R.id.lst_calendar_day);
 		lstCalendarDay.setScrollViewCallbacks(this);
 		List<CalendarDay> dummy = getDummyData();
-		adapter = new CalendarDayListAdapter(activity, R.layout.item_calendar_day, dummy);
+		adapter = new CalendarDayListAdapter(activity, R.layout.item_calendar_day, dummy, new CalendarDayListAdapter.OnScheduleClickListener() {
+
+			@Override
+			public void onClick(Schedule schedule){
+				onClickSchedule(schedule);
+			}
+		});
 		lstCalendarDay.setAdapter(adapter);
 		calendarView = (CalendarView)getView().findViewById(R.id.calendar_view);
 		calendarView.setOnCalendarDaySelectedListener(this);
 		calendarView.updateLayout(activity, 2017, 2, dummy);
 	}
 
+	private void onClickSchedule(Schedule schedule){
+		ScheduleDetailFragment fragment = new ScheduleDetailFragment();
+		fragment.setSchedule(schedule);
+
+		android.support.v4.app.FragmentManager manager = getParentFragment().getFragmentManager();
+		FragmentTransaction transaction = manager.beginTransaction();
+		transaction.replace(trente.asia.android.R.id.ipt_id_body, fragment);
+		transaction.addToBackStack(null);
+		transaction.commit();
+
+		// gotoFragment(fragment);
+	}
+
 	@Override
 	protected void initData(){
 	}
 
-	@Override
-	public int getFooterItemId(){
-		return 0;
-	}
+	// @Override
+	// public int getFooterItemId(){
+	// return 0;
+	// }
 
-	@Override
-	public void onClick(View v){
-		switch(v.getId()){
-		default:
-			break;
-		}
-	}
+	// @Override
+	// public void onClick(View v){
+	// switch(v.getId()){
+	// default:
+	// break;
+	// }
+	// }
 
 	@Override
 	public void onDestroy(){
@@ -85,25 +103,30 @@ public class WeeklyPageFragment extends AbstractClFragment implements Observable
 	public List<CalendarDay> getDummyData(){
 		List<CalendarDay> dummyData = new ArrayList<>();
 
-		Event e1 = new Event();
+		Schedule e1 = new Schedule();
 		e1.startTime = "10:00";
 		e1.endTime = "12:00";
+		e1.name="Date Thuy";
+		e1.url="google.com.vn";
+		e1.note = "she refused";
 
-		Event e2 = new Event();
+		Schedule e2 = new Schedule();
 		e2.startTime = "08:00";
 		e2.endTime = "11:00";
+		e2.name = "Go to MocChau with ...";
+		e2.note = "done";
 
 		CalendarDay d1 = new CalendarDay();
 		d1.date = "2017/06/02";
-		d1.events = new ArrayList<>();
-		d1.events.add(e1);
-		d1.events.add(e2);
+		d1.schedules = new ArrayList<>();
+		d1.schedules.add(e1);
+		d1.schedules.add(e2);
 
 		CalendarDay d2 = new CalendarDay();
 		d2.date = "2017/08/02";
-		d2.events = new ArrayList<>();
-		d2.events.add(e1);
-		d2.events.add(e2);
+		d2.schedules = new ArrayList<>();
+		d2.schedules.add(e1);
+		d2.schedules.add(e2);
 
 		dummyData.add(d1);
 		dummyData.add(d2);

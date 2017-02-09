@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import trente.asia.calendar.R;
@@ -20,15 +19,22 @@ import trente.asia.calendar.services.calendar.model.CalendarDay;
  */
 public class CalendarDayListAdapter extends ArrayAdapter<CalendarDay>{
 
-	Context			context;
-	int				layoutId;
-	LayoutInflater	layoutInflater;
+	Context							context;
+	int								layoutId;
+	LayoutInflater					layoutInflater;
+	private OnScheduleClickListener	onScheduleClickListener;
 
-	public CalendarDayListAdapter(Context context, int resource, List<CalendarDay> objects){
+	public interface OnScheduleClickListener{
+
+		public void onClick(CalendarDay.Schedule schedule);
+	}
+
+	public CalendarDayListAdapter(Context context, int resource, List<CalendarDay> objects, OnScheduleClickListener onScheduleClickListener){
 		super(context, resource, objects);
 		this.context = context;
 		this.layoutId = resource;
 		layoutInflater = ((Activity)context).getLayoutInflater();
+		this.onScheduleClickListener = onScheduleClickListener;
 	}
 
 	@Override
@@ -52,18 +58,25 @@ public class CalendarDayListAdapter extends ArrayAdapter<CalendarDay>{
 
 	private void buildEventList(ViewHolder viewHolder, CalendarDay calendarDay){
 		viewHolder.lnrEventList.removeAllViews();
-		for(CalendarDay.Event event : calendarDay.events){
+		for(final CalendarDay.Schedule schedule : calendarDay.schedules){
 			View calendarEvents = layoutInflater.inflate(R.layout.item_calendar_event, null);
 
 			TextView txtContent = (TextView)calendarEvents.findViewById(R.id.txt_item_calendar_event_content);
 			txtContent.setText("Content");
 
 			TextView txtStartTime = (TextView)calendarEvents.findViewById(R.id.txt_item_calendar_event_start_time);
-			txtStartTime.setText(event.startTime);
+			txtStartTime.setText(schedule.startTime);
 
 			TextView txtEndTime = (TextView)calendarEvents.findViewById(R.id.txt_item_calendar_event_end_time);
-			txtEndTime.setText(event.endTime);
+			txtEndTime.setText(schedule.endTime);
 
+			calendarEvents.setOnClickListener(new View.OnClickListener() {
+
+				@Override
+				public void onClick(View v){
+					onScheduleClickListener.onClick(schedule);
+				}
+			});
 			viewHolder.lnrEventList.addView(calendarEvents);
 		}
 	}

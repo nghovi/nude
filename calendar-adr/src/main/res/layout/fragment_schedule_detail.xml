@@ -1,0 +1,212 @@
+<LinearLayout style="@style/wf_common_match"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:custom="http://schemas.android.com/apk/res-auto">
+
+    <include layout="@layout/view_common_header"/>
+
+    <ScrollView
+        style="@style/wf_common_match"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:id="@+id/lnr_id_content"
+            style="@style/cs_common_match"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/margin_16dp"
+            android:paddingTop="@dimen/margin_16dp"
+            android:visibility="visible">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/margin_16dp"
+                    android:paddingRight="@dimen/margin_16dp"
+                    android:layout_marginBottom="@dimen/margin_10dp"
+                    android:gravity="left">
+
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/margin_30dp"
+                        android:text="@string/fragment_schedule_detail_day_period"/>
+
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/fragment_schedule_detail_repeat"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_10dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="2017/02/09"
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="10:30"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="2017/02/09"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="10:30"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                style="@style/wl_common_text"
+                android:layout_marginBottom="@dimen/margin_10dp"
+                android:paddingLeft="@dimen/margin_16dp"
+                android:paddingRight="@dimen/margin_16dp"
+                android:text="Schedule Info"/>
+
+            <View style="@style/cs_common_divider"/>
+
+            <LinearLayout
+                style="@style/wf_common_item_linear2">
+
+                <TextView
+                    style="@style/wl_common_text"
+                    android:layout_width="wrap_content"
+                    android:text="Name"/>
+
+                <trente.asia.android.view.ChiaseEditText
+                    android:id="@+id/txt_id_leave"
+                    style="@style/wl_common_edit_text2"
+                    android:layout_marginLeft="@dimen/margin_10dp"
+                    custom:mName="name"/>
+            </LinearLayout>
+
+            <View style="@style/cs_common_divider"/>
+
+            <LinearLayout
+                style="@style/wf_common_item_linear2">
+
+                <TextView
+                    style="@style/wl_common_text"
+                    android:layout_width="wrap_content"
+                    android:text="Room"/>
+
+                <trente.asia.android.view.ChiaseEditText
+                    android:id="@+id/txt_id_arrive"
+                    style="@style/wl_common_edit_text2"
+                    custom:mName="room"
+                    android:layout_marginLeft="@dimen/margin_10dp"/>
+            </LinearLayout>
+
+            <View style="@style/cs_common_divider"/>
+
+            <LinearLayout
+                style="@style/wf_common_item_linear2">
+
+                <TextView
+                    style="@style/wl_common_text"
+                    android:layout_width="wrap_content"
+                    android:text="URL"/>
+
+                <trente.asia.android.view.ChiaseEditText
+                    android:id="@+id/txt_id_transit_type"
+                    style="@style/wl_common_edit_text2"
+                    custom:mName="url"
+                    android:layout_marginLeft="@dimen/margin_10dp"/>
+            </LinearLayout>
+
+            <View style="@style/cs_common_divider"/>
+
+            <LinearLayout
+                style="@style/wf_common_item_linear2">
+
+                <TextView
+                    style="@style/wl_common_text"
+                    android:layout_width="wrap_content"
+                    android:text="Color"/>
+
+                <trente.asia.android.view.ChiaseEditText
+                    android:id="@+id/txt_id_way_type"
+                    style="@style/wl_common_edit_text2"
+                    custom:mName="color"
+                    android:layout_marginLeft="@dimen/margin_10dp"/>
+            </LinearLayout>
+
+            <View style="@style/cs_common_divider"/>
+
+            <LinearLayout
+                android:id="@+id/lnr_id_attachment_holder"
+                style="@style/cs_common_match_wrap"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/wl_common_text"
+                    android:layout_marginBottom="@dimen/margin_10dp"
+                    android:paddingLeft="@dimen/margin_16dp"
+                    android:paddingRight="@dimen/margin_16dp"
+                    android:text="Join users"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"></LinearLayout>
+
+                <View style="@style/cs_common_divider"/>
+
+                <TextView
+                    style="@style/wl_common_text"
+                    android:layout_marginBottom="@dimen/margin_10dp"
+                    android:paddingLeft="@dimen/margin_16dp"
+                    android:paddingRight="@dimen/margin_16dp"
+                    android:text="Schedule note"/>
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/wf_common_item_linear2"
+                android:orientation="vertical">
+
+                <trente.asia.android.view.ChiaseEditText
+                    android:id="@+id/edt_id_note"
+                    style="@style/wl_common_edit_text_multi_line2"
+                    android:inputType="textMultiLine"
+                    custom:mName="note"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+    <include layout="@layout/view_common_footer"/>
+
+</LinearLayout>
