@@ -7,11 +7,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/chiase_white">
 
-        <include
-            android:id="@+id/calendar_view"
-            layout="@layout/view_calendar"/>
+        <LinearLayout
+            android:id="@+id/lnr_id_content_header"
+            style="@style/cs_common_match_wrap"
+            android:orientation="vertical"/>
 
         <com.github.ksoichiro.android.observablescrollview.ObservableListView
             android:id="@+id/lst_calendar_day"
