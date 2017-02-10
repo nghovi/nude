@@ -12,12 +12,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import trente.asia.calendar.R;
-import trente.asia.calendar.services.calendar.model.CalendarDay;
+import trente.asia.calendar.services.calendar.model.CalendarDayModel;
+import trente.asia.calendar.services.calendar.model.ScheduleModel;
 
 /**
  * Created by viet on 5/13/2016.
  */
-public class CalendarDayListAdapter extends ArrayAdapter<CalendarDay>{
+public class CalendarDayListAdapter extends ArrayAdapter<CalendarDayModel>{
 
 	Context							context;
 	int								layoutId;
@@ -26,10 +27,10 @@ public class CalendarDayListAdapter extends ArrayAdapter<CalendarDay>{
 
 	public interface OnScheduleClickListener{
 
-		public void onClick(CalendarDay.Schedule schedule);
+		public void onClick(ScheduleModel schedule);
 	}
 
-	public CalendarDayListAdapter(Context context, int resource, List<CalendarDay> objects, OnScheduleClickListener onScheduleClickListener){
+	public CalendarDayListAdapter(Context context, int resource, List<CalendarDayModel> objects, OnScheduleClickListener onScheduleClickListener){
 		super(context, resource, objects);
 		this.context = context;
 		this.layoutId = resource;
@@ -50,15 +51,15 @@ public class CalendarDayListAdapter extends ArrayAdapter<CalendarDay>{
 		}else{
 			viewHolder = (ViewHolder)convertView.getTag();
 		}
-		CalendarDay calendarDay = getItem(position);
+		CalendarDayModel calendarDay = getItem(position);
 		viewHolder.txtDate.setText(calendarDay.date);
 		buildEventList(viewHolder, calendarDay);
 		return convertView;
 	}
 
-	private void buildEventList(ViewHolder viewHolder, CalendarDay calendarDay){
+	private void buildEventList(ViewHolder viewHolder, CalendarDayModel calendarDay){
 		viewHolder.lnrEventList.removeAllViews();
-		for(final CalendarDay.Schedule schedule : calendarDay.schedules){
+		for(final ScheduleModel schedule : calendarDay.schedules){
 			View calendarEvents = layoutInflater.inflate(R.layout.item_calendar_event, null);
 
 			TextView txtContent = (TextView)calendarEvents.findViewById(R.id.txt_item_calendar_event_content);

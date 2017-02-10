@@ -13,9 +13,8 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.RelativeLayout;
 
-import trente.asia.android.view.ChiaseListDialog;
 import trente.asia.calendar.R;
-import trente.asia.calendar.services.calendar.model.CalendarDay;
+import trente.asia.calendar.services.calendar.model.CalendarDayModel;
 
 /**
  * Created by viet on 7/12/2016.
@@ -48,7 +47,7 @@ public class CalendarView extends RelativeLayout{
 
 	public interface OnCalendarDaySelectedListener{
 
-		public void onCalendarDaySelected(CalendarDay reportModel);
+		public void onCalendarDaySelected(CalendarDayModel reportModel);
 	}
 
 	public void setOnCalendarDaySelectedListener(OnCalendarDaySelectedListener onCalendarDaySelectedListener){
@@ -65,7 +64,7 @@ public class CalendarView extends RelativeLayout{
 		adapter.setWeekVisibleOnly(date, false);
 	}
 
-	public void updateLayout(Activity activity, int year, int month, final List<CalendarDay> reportModelList){
+	public void updateLayout(Activity activity, int year, int month, final List<CalendarDayModel> reportModelList){
 		this.activity = activity;
 		Locale.setDefault(Locale.US);
 

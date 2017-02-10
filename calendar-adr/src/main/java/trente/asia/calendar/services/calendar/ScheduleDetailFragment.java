@@ -15,10 +15,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import asia.chiase.core.util.CCJsonUtil;
+import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.view.util.CAObjectSerializeUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.fragments.AbstractClFragment;
-import trente.asia.calendar.services.calendar.model.CalendarDay;
+import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.view.HorizontalUserListView;
 import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.models.UserModel;
@@ -30,7 +31,7 @@ import trente.asia.welfare.adr.models.UserModel;
  */
 public class ScheduleDetailFragment extends AbstractClFragment{
 
-	private CalendarDay.Schedule	schedule;
+	private ScheduleModel			schedule;
 	private HorizontalUserListView	horizontalUserListView;
 
 	@Override
@@ -69,7 +70,7 @@ public class ScheduleDetailFragment extends AbstractClFragment{
 	}
 
 	private void onLoadScheduleDetailSuccess(JSONObject response){
-		schedule = CCJsonUtil.convertToModel(response.optString("schedule"), CalendarDay.Schedule.class);
+		schedule = CCJsonUtil.convertToModel(response.optString("schedule"), ScheduleModel.class);
 
 		List<UserModel> joinUserList = getJoinedUserModels(schedule, CCJsonUtil.convertToModelList(response.optString("calendarUsers"), UserModel.class));
 		try{
@@ -79,7 +80,7 @@ public class ScheduleDetailFragment extends AbstractClFragment{
 			e.printStackTrace();
 		}
 
-		horizontalUserListView.inflateWith(joinUserList);
+		horizontalUserListView.inflateWith(joinUserList, schedule.calendar.calendarUsers, true);
 
 		ImageView imgRightIcon = (ImageView)getView().findViewById(R.id.img_id_header_right_icon);
 		imgRightIcon.setImageResource(R.drawable.abc_btn_check_material);
@@ -87,32 +88,13 @@ public class ScheduleDetailFragment extends AbstractClFragment{
 		imgRightIcon.setOnClickListener(this);
 	}
 
-	private List<UserModel> getJoinedUserModels(CalendarDay.Schedule schedule, List<UserModel> userModels){
+	private List<UserModel> getJoinedUserModels(ScheduleModel schedule, List<UserModel> userModels){
 		List<UserModel> joinUsers = new ArrayList<>();
-		if(userModels != null && schedule.joinUsers != null){
-			for(int userId : schedule.joinUsers){
+		if(userModels != null && !CCStringUtil.isEmpty(schedule.joinUsers)){
+			for(String userId : schedule.joinUsers.split(",")){
 				joinUsers.add(UserModel.getUserModel(userId, userModels));
 			}
 		}
-		UserModel userModel = new UserModel();
-		userModel.avatarPath = "abc";
-		joinUsers.add(userModel);
-		joinUsers.add(userModel);
-		joinUsers.add(userModel);
-		joinUsers.add(userModel);
-		joinUsers.add(userModel);
-		joinUsers.add(userModel);
-		joinUsers.add(userModel);
-		joinUsers.add(userModel);
-		joinUsers.add(userModel);
-		joinUsers.add(userModel);
-		joinUsers.add(userModel);
-		joinUsers.add(userModel);
-		joinUsers.add(userModel);
-		joinUsers.add(userModel);
-		joinUsers.add(userModel);
-		joinUsers.add(userModel);
-		joinUsers.add(userModel);
 		return joinUsers;
 	}
 
@@ -138,7 +120,7 @@ public class ScheduleDetailFragment extends AbstractClFragment{
 		super.onDestroy();
 	}
 
-	public void setSchedule(CalendarDay.Schedule schedule){
+	public void setSchedule(ScheduleModel schedule){
 		this.schedule = schedule;
 	}
 }

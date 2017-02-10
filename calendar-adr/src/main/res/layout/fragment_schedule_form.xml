@@ -55,16 +55,20 @@
                         android:gravity="center_horizontal"
                         android:orientation="vertical">
 
-                        <TextView
+                        <trente.asia.android.view.ChiaseEditText
+                            android:id="@+id/fragment_schedule_detail_start_date"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="2017/02/09"
+                            custom:mName="startDate"
                             />
 
-                        <TextView
+                        <trente.asia.android.view.ChiaseEditText
+                            android:id="@+id/fragment_schedule_detail_start_time"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="10:30"/>
+                            android:text="10:30"
+                            custom:mName="startTime"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -74,15 +78,19 @@
                         android:gravity="center_horizontal"
                         android:orientation="vertical">
 
-                        <TextView
+                        <trente.asia.android.view.ChiaseEditText
+                            android:id="@+id/fragment_schedule_detail_end_date"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="2017/02/09"/>
+                            android:text="2017/02/09"
+                            custom:mName="endDate"/>
 
-                        <TextView
+                        <trente.asia.android.view.ChiaseEditText
+                            android:id="@+id/fragment_schedule_detail_end_time"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="10:30"/>
+                            android:text="10:30"
+                            custom:mName="endTime"/>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -108,7 +116,7 @@
                     android:id="@+id/txt_id_leave"
                     style="@style/wl_common_edit_text2"
                     android:layout_marginLeft="@dimen/margin_10dp"
-                    custom:mName="name"/>
+                    custom:mName="scheduleName"/>
             </LinearLayout>
 
             <View style="@style/cs_common_divider"/>
@@ -159,7 +167,7 @@
                     android:id="@+id/txt_id_way_type"
                     style="@style/wl_common_edit_text2"
                     android:layout_marginLeft="@dimen/margin_10dp"
-                    custom:mName="color"/>
+                    custom:mName="scheduleColor"/>
             </LinearLayout>
 
             <View style="@style/cs_common_divider"/>
@@ -182,6 +190,8 @@
 
                 <View style="@style/cs_common_divider"/>
 
+                <include layout="@layout/view_horizontal_user_list"/>
+
                 <TextView
                     style="@style/wl_common_text"
                     android:layout_marginBottom="@dimen/margin_10dp"
@@ -198,7 +208,7 @@
                     android:id="@+id/edt_id_note"
                     style="@style/wl_common_edit_text_multi_line2"
                     android:inputType="textMultiLine"
-                    custom:mName="note"/>
+                    custom:mName="scheduleNote"/>
             </LinearLayout>
 
 
