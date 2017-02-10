@@ -9,6 +9,7 @@ import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.define.CsConst;
+import trente.asia.android.model.DayModel;
 
 /**
  * <strong>CsDateUtil</strong><br>
@@ -80,15 +81,18 @@ public class CsDateUtil{
 	 * @param firstDay
 	 * @return
 	 */
-	public static List<String> getAllDay4Week(int firstDay){
-		List<String> lstDay = new ArrayList<>();
+	public static List<DayModel> getAllDay4Week(int firstDay){
+		List<DayModel> lstDay = new ArrayList<>();
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.DAY_OF_WEEK, firstDay);
         for(int index = 0; index < CsConst.DAY_NUMBER_A_WEEK; index++){
             if(index > 0){
                 calendar.add(Calendar.DATE, 1);
             }
-            lstDay.add(CCFormatUtil.formatDateCustom(CS_DATE_TIME_1, calendar.getTime()));
+            DayModel dayModel = new DayModel();
+            dayModel.day = CCFormatUtil.formatDateCustom(CS_DATE_TIME_1, calendar.getTime());
+            dayModel.dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+            lstDay.add(dayModel);
         }
 
         return lstDay;
