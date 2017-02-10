@@ -29,6 +29,7 @@ import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.view.CalendarDayListAdapter;
 import trente.asia.calendar.services.calendar.view.CalendarView;
 import trente.asia.calendar.services.calendar.view.WeeklyCalendarDayView;
+import trente.asia.calendar.services.calendar.view.WeeklyCalendarHeaderRowView;
 import trente.asia.welfare.adr.activity.WelfareFragment;
 
 /**
@@ -38,10 +39,11 @@ import trente.asia.welfare.adr.activity.WelfareFragment;
  */
 public class WeeklyPageFragment extends WelfareFragment implements ObservableScrollViewCallbacks,CalendarView.OnCalendarDaySelectedListener{
 
-	private ObservableListView	lstCalendarDay;
-	private Date				selectedDate;
+	private ObservableListView					lstCalendarDay;
+	private Date								selectedDate;
 
-	private LinearLayout		lnrContentHeader;
+	private LinearLayout						lnrContentHeader;
+	private List<WeeklyCalendarHeaderRowView>	lstHeaderRow	= new ArrayList<>();
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -83,20 +85,19 @@ public class WeeklyPageFragment extends WelfareFragment implements ObservableScr
 		lnrContentHeader.addView(titleView);
 
 		List<Date> lstDate = CsDateUtil.getAllDate4Month(CCDateUtil.makeCalendar(selectedDate));
-		View rowView = null;
-		LinearLayout lnrRowContent = null;
+		WeeklyCalendarHeaderRowView rowView = null;
 		for(int index = 0; index < lstDate.size(); index++){
 			Date itemDate = lstDate.get(index);
 			if(index % CsConst.DAY_NUMBER_A_WEEK == 0){
-				rowView = mInflater.inflate(R.layout.monthly_calendar_row, null);
-				lnrRowContent = (LinearLayout)rowView.findViewById(R.id.lnr_id_row_content);
+				rowView = new WeeklyCalendarHeaderRowView(activity, index / CsConst.DAY_NUMBER_A_WEEK);
+				rowView.initialization();
 				lnrContentHeader.addView(rowView);
+                lstHeaderRow.add(rowView);
 			}
 
 			WeeklyCalendarDayView dayView = new WeeklyCalendarDayView(activity);
 			dayView.initialization(itemDate);
-
-			lnrRowContent.addView(dayView);
+			rowView.lnrRowContent.addView(dayView);
 		}
 	}
 
@@ -110,7 +111,6 @@ public class WeeklyPageFragment extends WelfareFragment implements ObservableScr
 		transaction.addToBackStack(null);
 		transaction.commit();
 
-		// gotoFragment(fragment);
 	}
 
 	@Override
@@ -188,12 +188,17 @@ public class WeeklyPageFragment extends WelfareFragment implements ObservableScr
 
 	@Override
 	public void onUpOrCancelMotionEvent(ScrollState scrollState){
-		// CalendarView calendarView = (CalendarView)getView().findViewById(R.id.calendar_view);
-		// if(scrollState == ScrollState.UP){
-		// calendarView.showWeekOnly(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, selectedDate));// // TODO: 2/8/2017
-		// }else if(scrollState == ScrollState.DOWN){
-		// calendarView.showAll(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, selectedDate));// // TODO: 2/8/2017
-		// }
+		if(scrollState == ScrollState.UP){
+			for(WeeklyCalendarHeaderRowView rowView : lstHeaderRow){
+                if(rowView.index != 0){
+                    rowView.setVisibility(View.GONE);
+                }
+            }
+		}else if(scrollState == ScrollState.DOWN){
+            for(WeeklyCalendarHeaderRowView rowView : lstHeaderRow){
+                rowView.setVisibility(View.VISIBLE);
+            }
+		}
 	}
 
 	@Override

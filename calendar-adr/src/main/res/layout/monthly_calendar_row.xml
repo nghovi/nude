@@ -1,6 +1,8 @@
-<LinearLayout style="@style/cs_common_match_wrap"
-              xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical">
+<LinearLayout
+    android:id="@+id/lnr_id_weekly_header_row"
+    style="@style/cs_common_match_wrap"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/lnr_id_row_content"
