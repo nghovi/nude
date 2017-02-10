@@ -141,7 +141,7 @@ public class UserModel implements Serializable{
 
 	public static String	KEY_ALL	= "-1";
 
-	public static UserModel getUserModel(int key, List<UserModel> userModels){
+	public static UserModel getUserModel(String key, List<UserModel> userModels){
 		for(UserModel userModel : userModels){
 			if(userModel.key.equals(key)){
 				return userModel;

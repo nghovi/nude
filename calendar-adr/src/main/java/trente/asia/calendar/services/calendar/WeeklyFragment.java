@@ -4,12 +4,10 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -18,10 +16,6 @@ import java.util.List;
 
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.fragments.AbstractClFragment;
-import trente.asia.calendar.services.calendar.model.CalendarDay;
-import trente.asia.calendar.services.calendar.view.CalendarDayListAdapter;
-
-import static trente.asia.calendar.services.calendar.model.CalendarDay.*;
 
 /**
  * WeeklyFragment

@@ -1,6 +1,5 @@
 package trente.asia.calendar.services.calendar;
 
-import static trente.asia.calendar.services.calendar.model.CalendarDay.Schedule;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,7 +17,8 @@ import com.github.ksoichiro.android.observablescrollview.ScrollState;
 
 import asia.chiase.core.util.CCFormatUtil;
 import trente.asia.calendar.R;
-import trente.asia.calendar.services.calendar.model.CalendarDay;
+import trente.asia.calendar.services.calendar.model.CalendarDayModel;
+import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.view.CalendarDayListAdapter;
 import trente.asia.calendar.services.calendar.view.CalendarView;
 import trente.asia.welfare.adr.activity.WelfareFragment;
@@ -49,11 +49,11 @@ public class WeeklyPageFragment extends WelfareFragment implements ObservableScr
 		super.initView();
 		lstCalendarDay = (ObservableListView)getView().findViewById(R.id.lst_calendar_day);
 		lstCalendarDay.setScrollViewCallbacks(this);
-		List<CalendarDay> dummy = getDummyData();
+		List<CalendarDayModel> dummy = getDummyData();
 		adapter = new CalendarDayListAdapter(activity, R.layout.item_calendar_day, dummy, new CalendarDayListAdapter.OnScheduleClickListener() {
 
 			@Override
-			public void onClick(Schedule schedule){
+			public void onClick(ScheduleModel schedule){
 				onClickSchedule(schedule);
 			}
 		});
@@ -63,7 +63,7 @@ public class WeeklyPageFragment extends WelfareFragment implements ObservableScr
 		calendarView.updateLayout(activity, 2017, 2, dummy);
 	}
 
-	private void onClickSchedule(Schedule schedule){
+	private void onClickSchedule(ScheduleModel schedule){
 		ScheduleDetailFragment fragment = new ScheduleDetailFragment();
 		fragment.setSchedule(schedule);
 
@@ -98,10 +98,10 @@ public class WeeklyPageFragment extends WelfareFragment implements ObservableScr
 		super.onDestroy();
 	}
 
-	public List<CalendarDay> getDummyData(){
-		List<CalendarDay> dummyData = new ArrayList<>();
+	public List<CalendarDayModel> getDummyData(){
+		List<CalendarDayModel> dummyData = new ArrayList<>();
 
-		Schedule e1 = new Schedule();
+		ScheduleModel e1 = new ScheduleModel();
 		e1.startDate = "2017/07/09";
 		e1.endDate = "2017/07/09";
 		e1.startTime = "10:00";
@@ -111,7 +111,7 @@ public class WeeklyPageFragment extends WelfareFragment implements ObservableScr
 		e1.url = "google.com.vn";
 		e1.scheduleNote = "she refused";
 
-		Schedule e2 = new Schedule();
+		ScheduleModel e2 = new ScheduleModel();
 		e2.startDate = "2017/07/09";
 		e2.endDate = "2017/07/09";
 		e2.startTime = "08:00";
@@ -120,13 +120,13 @@ public class WeeklyPageFragment extends WelfareFragment implements ObservableScr
 		e2.scheduleName = "Go to MocChau with ...";
 		e2.scheduleNote = "done";
 
-		CalendarDay d1 = new CalendarDay();
+		CalendarDayModel d1 = new CalendarDayModel();
 		d1.date = "2017/06/02";
 		d1.schedules = new ArrayList<>();
 		d1.schedules.add(e1);
 		d1.schedules.add(e2);
 
-		CalendarDay d2 = new CalendarDay();
+		CalendarDayModel d2 = new CalendarDayModel();
 		d2.date = "2017/08/02";
 		d2.schedules = new ArrayList<>();
 		d2.schedules.add(e1);
@@ -164,7 +164,7 @@ public class WeeklyPageFragment extends WelfareFragment implements ObservableScr
 	}
 
 	@Override
-	public void onCalendarDaySelected(CalendarDay reportModel){
+	public void onCalendarDaySelected(CalendarDayModel reportModel){
 		// // TODO: 2/8/2017
 	}
 
