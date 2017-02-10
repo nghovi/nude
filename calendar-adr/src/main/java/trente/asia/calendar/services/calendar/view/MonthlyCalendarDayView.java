@@ -5,6 +5,7 @@ import java.util.Date;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,6 +64,8 @@ public class MonthlyCalendarDayView extends LinearLayout{
 
 	public void addSchedule(ScheduleModel scheduleModel){
 		TextView txtSchedule = new TextView(mContext);
+        txtSchedule.setMaxLines(1);
+//        txtSchedule.setEllipsize(TextUtils.TruncateAt.END);
 		txtSchedule.setTextColor(ContextCompat.getColor(mContext, R.color.wf_common_color_text));
         int textSize = (int)(getResources().getDimension(R.dimen.margin_12dp)/getResources().getDisplayMetrics().density);
 		txtSchedule.setTextSize(textSize);

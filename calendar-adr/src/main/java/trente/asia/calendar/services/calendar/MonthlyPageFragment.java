@@ -102,9 +102,11 @@ public class MonthlyPageFragment extends WelfareFragment{
 	private void makeDummyData(){
 		ScheduleModel scheduleModel1 = new ScheduleModel("Leader meeting", "2017/02/08", ClConst.SCHEDULE_COLOR_BLUE);
 		ScheduleModel scheduleModel2 = new ScheduleModel("Developer meeting", "2017/02/16", ClConst.SCHEDULE_COLOR_RED);
+        ScheduleModel scheduleModel3 = new ScheduleModel("Learning meeting", "2017/02/07", ClConst.SCHEDULE_COLOR_RED);
 
 		lstSchedule.add(scheduleModel1);
 		lstSchedule.add(scheduleModel2);
+        lstSchedule.add(scheduleModel3);
 
 		for(ScheduleModel model : lstSchedule){
 			MonthlyCalendarDayView activeView = ClUtil.findView4Day(lstCalendarDay, model.scheduleDate);
