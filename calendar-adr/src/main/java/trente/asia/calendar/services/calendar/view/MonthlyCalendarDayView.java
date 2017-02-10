@@ -1,5 +1,6 @@
 package trente.asia.calendar.services.calendar.view;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import android.content.Context;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
@@ -54,8 +56,15 @@ public class MonthlyCalendarDayView extends LinearLayout{
 		View rowItemView = inflater.inflate(R.layout.monthly_calendar_row_item, null);
 		LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
 		rowItemView.setLayoutParams(layoutParams);
+
 		TextView txtContent = (TextView)rowItemView.findViewById(R.id.txt_id_row_content);
 		txtContent.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_11, itemDate));
+		Calendar itemCalendar = CCDateUtil.makeCalendar(itemDate);
+		if(Calendar.SUNDAY == itemCalendar.get(Calendar.DAY_OF_WEEK)){
+			txtContent.setTextColor(Color.RED);
+		}else if(Calendar.SATURDAY == itemCalendar.get(Calendar.DAY_OF_WEEK)){
+			txtContent.setTextColor(Color.BLUE);
+		}
 		lnrRowContent = (LinearLayout)rowItemView.findViewById(R.id.lnr_id_row_content);
 
 		this.addView(rowItemView);
@@ -68,7 +77,7 @@ public class MonthlyCalendarDayView extends LinearLayout{
 		if(ClConst.SCHEDULE_TYPE_PERIOD.equals(scheduleModel.scheduleType)){
 			txtSchedule.setTextColor(Color.parseColor(scheduleModel.scheduleColor));
 		}else{
-            txtSchedule.setPadding(2, 2, 2, 2);
+			txtSchedule.setPadding(2, 2, 2, 2);
 			txtSchedule.setTextColor(Color.WHITE);
 			txtSchedule.setBackgroundColor(Color.parseColor(scheduleModel.scheduleColor));
 		}

@@ -20,7 +20,7 @@ import trente.asia.android.model.DayModel;
  */
 public class CsDateUtil{
 
-    public static final String		CS_DATE_TIME_1					= "EEE";
+	public static final String CS_DATE_TIME_1 = "EEE";
 
 	public static Date makeMonthWithFirstDate(){
 		Calendar calendar = Calendar.getInstance();
@@ -54,7 +54,7 @@ public class CsDateUtil{
 		if(calendar == null){
 			return null;
 		}else{
-			// calendar.setFirstDayOfWeek(Calendar.THURSDAY);
+			calendar.setFirstDayOfWeek(Calendar.THURSDAY);
 			List<Date> lstDate = new ArrayList<>();
 
 			Calendar firstDay = (Calendar)calendar.clone();
@@ -83,19 +83,19 @@ public class CsDateUtil{
 	 */
 	public static List<DayModel> getAllDay4Week(int firstDay){
 		List<DayModel> lstDay = new ArrayList<>();
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.DAY_OF_WEEK, firstDay);
-        for(int index = 0; index < CsConst.DAY_NUMBER_A_WEEK; index++){
-            if(index > 0){
-                calendar.add(Calendar.DATE, 1);
-            }
-            DayModel dayModel = new DayModel();
-            dayModel.day = CCFormatUtil.formatDateCustom(CS_DATE_TIME_1, calendar.getTime());
-            dayModel.dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
-            lstDay.add(dayModel);
-        }
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(Calendar.DAY_OF_WEEK, firstDay);
+		for(int index = 0; index < CsConst.DAY_NUMBER_A_WEEK; index++){
+			if(index > 0){
+				calendar.add(Calendar.DATE, 1);
+			}
+			DayModel dayModel = new DayModel();
+			dayModel.day = CCFormatUtil.formatDateCustom(CS_DATE_TIME_1, calendar.getTime());
+			dayModel.dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+			lstDay.add(dayModel);
+		}
 
-        return lstDay;
+		return lstDay;
 	}
 
 	public static Integer getAge(String birthday){
