@@ -4,8 +4,6 @@ import java.util.Date;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.v4.content.ContextCompat;
-import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +13,7 @@ import android.widget.TextView;
 
 import asia.chiase.core.util.CCFormatUtil;
 import trente.asia.calendar.R;
+import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.welfare.adr.define.WelfareConst;
 
@@ -64,14 +63,20 @@ public class MonthlyCalendarDayView extends LinearLayout{
 
 	public void addSchedule(ScheduleModel scheduleModel){
 		TextView txtSchedule = new TextView(mContext);
-        txtSchedule.setMaxLines(1);
-//        txtSchedule.setEllipsize(TextUtils.TruncateAt.END);
-		txtSchedule.setTextColor(ContextCompat.getColor(mContext, R.color.wf_common_color_text));
-        int textSize = (int)(getResources().getDimension(R.dimen.margin_12dp)/getResources().getDisplayMetrics().density);
-		txtSchedule.setTextSize(textSize);
-        txtSchedule.setTextColor(Color.parseColor(scheduleModel.scheduleColor));
+		txtSchedule.setMaxLines(1);
+		// txtSchedule.setEllipsize(TextUtils.TruncateAt.END);
+		if(ClConst.SCHEDULE_TYPE_PERIOD.equals(scheduleModel.scheduleType)){
+			txtSchedule.setTextColor(Color.parseColor(scheduleModel.scheduleColor));
+		}else{
+            txtSchedule.setPadding(2, 2, 2, 2);
+			txtSchedule.setTextColor(Color.WHITE);
+			txtSchedule.setBackgroundColor(Color.parseColor(scheduleModel.scheduleColor));
+		}
 
-        txtSchedule.setText(scheduleModel.scheduleName);
-        lnrRowContent.addView(txtSchedule);
+		int textSize = (int)(getResources().getDimension(R.dimen.margin_12dp) / getResources().getDisplayMetrics().density);
+		txtSchedule.setTextSize(textSize);
+
+		txtSchedule.setText(scheduleModel.scheduleName);
+		lnrRowContent.addView(txtSchedule);
 	}
 }

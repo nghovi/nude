@@ -1,9 +1,5 @@
 package trente.asia.calendar.services.calendar.model;
 
-import java.util.List;
-
-import trente.asia.welfare.adr.models.UserModel;
-
 /**
  * ScheduleModel
  *
@@ -12,18 +8,7 @@ import trente.asia.welfare.adr.models.UserModel;
 
 public class ScheduleModel{
 
-	public String	scheduleDate;
-
-	public ScheduleModel(){
-
-	}
-
-	public ScheduleModel(String scheduleName, String scheduleDate, String scheduleColor){
-		this.scheduleName = scheduleName;
-		this.scheduleDate = scheduleDate;
-		this.scheduleColor = scheduleColor;
-	}
-
+	public String			scheduleDate;
 	public String			scheduleName;
 	public String			scheduleNote;
 	public String			url;
@@ -32,9 +17,23 @@ public class ScheduleModel{
 	public String			endDate;
 	public String			startTime;
 	public String			endTime;
+
 	public String			key;
 	public String			calendarId;
 	public String			roomId;
 	public String			joinUsers;
 	public CalendarModel	calendar;
+
+	public String			scheduleType;
+
+	public ScheduleModel(){
+
+	}
+
+	public ScheduleModel(String scheduleName, String scheduleDate, String scheduleColor, String scheduleType){
+		this.scheduleName = scheduleName;
+		this.scheduleDate = scheduleDate;
+		this.scheduleColor = scheduleColor;
+		this.scheduleType = scheduleType;
+	}
 }
