@@ -1,5 +1,6 @@
 package trente.asia.calendar.services.calendar;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -18,6 +19,9 @@ import trente.asia.android.define.CsConst;
 import trente.asia.android.model.DayModel;
 import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.R;
+import trente.asia.calendar.commons.defines.ClConst;
+import trente.asia.calendar.commons.utils.ClUtil;
+import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.view.MonthlyCalendarDayView;
 import trente.asia.welfare.adr.activity.WelfareFragment;
 
@@ -28,9 +32,11 @@ import trente.asia.welfare.adr.activity.WelfareFragment;
  */
 public class MonthlyPageFragment extends WelfareFragment{
 
-	private Date			activeMonth;
+	private Date							activeMonth;
 
-	private LinearLayout	lnrMonthlyPage;
+	private LinearLayout					lnrMonthlyPage;
+	private List<ScheduleModel>				lstSchedule		= new ArrayList<>();
+	private List<MonthlyCalendarDayView>	lstCalendarDay	= new ArrayList<>();
 
 	public void setActiveMonth(Date activeMonth){
 		this.activeMonth = activeMonth;
@@ -82,6 +88,7 @@ public class MonthlyPageFragment extends WelfareFragment{
 
 			MonthlyCalendarDayView dayView = new MonthlyCalendarDayView(activity);
 			dayView.initialization(itemDate);
+			lstCalendarDay.add(dayView);
 
 			lnrRowContent.addView(dayView);
 		}
@@ -89,6 +96,22 @@ public class MonthlyPageFragment extends WelfareFragment{
 
 	@Override
 	protected void initData(){
+		makeDummyData();
+	}
+
+	private void makeDummyData(){
+		ScheduleModel scheduleModel1 = new ScheduleModel("Leader meeting", "2017/02/08", ClConst.SCHEDULE_COLOR_BLUE);
+		ScheduleModel scheduleModel2 = new ScheduleModel("Developer meeting", "2017/02/16", ClConst.SCHEDULE_COLOR_RED);
+
+		lstSchedule.add(scheduleModel1);
+		lstSchedule.add(scheduleModel2);
+
+		for(ScheduleModel model : lstSchedule){
+			MonthlyCalendarDayView activeView = ClUtil.findView4Day(lstCalendarDay, model.scheduleDate);
+			if(activeView != null){
+                activeView.addSchedule(model);
+			}
+		}
 	}
 
 }

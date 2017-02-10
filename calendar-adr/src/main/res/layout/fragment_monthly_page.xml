@@ -1,7 +1,11 @@
-<LinearLayout
-    android:id="@+id/lnr_id_monthly_page"
+<ScrollView
     style="@style/cs_common_match_wrap"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical">
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-</LinearLayout>
+    <LinearLayout
+        android:id="@+id/lnr_id_monthly_page"
+        style="@style/cs_common_match_wrap"
+        android:orientation="vertical">
+
+    </LinearLayout>
+</ScrollView>
