@@ -26,6 +26,7 @@
                 android:background="@color/chiase_white">
 
                 <TextView
+                    android:id="@+id/txt_id_month"
                     style="@style/wl_common_text"
                     android:gravity="center"
                     android:text="January, 2017"/>
