@@ -1,18 +1,16 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="@dimen/margin_0dp"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_weight="1">
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/txt_id_row_content"
+        style="@style/wl_common_text"
+        android:gravity="center"/>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/txt_id_row_content"
-            style="@style/wl_common_text"
-            android:gravity="center"/>
-    </LinearLayout>
-
+        android:id="@+id/lnr_id_row_content"
+        style="@style/cs_common_match_wrap"
+        android:orientation="vertical"/>
 </LinearLayout>

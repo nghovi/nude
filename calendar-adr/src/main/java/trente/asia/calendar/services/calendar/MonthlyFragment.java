@@ -47,7 +47,7 @@ public class MonthlyFragment extends AbstractClFragment{
 
 		mImgLeftHeader = (ImageView)getView().findViewById(R.id.img_id_header_left_icon);
 		viewPager = (ViewPager)getView().findViewById(R.id.view_pager_id_calendar);
-		MonthlyCalendarPagerAdapter pagerAdapter = new MonthlyCalendarPagerAdapter(activity);
+		MonthlyCalendarPagerAdapter pagerAdapter = new MonthlyCalendarPagerAdapter(getFragmentManager());
 		viewPager.setAdapter(pagerAdapter);
 		viewPager.setCurrentItem(Integer.MAX_VALUE / 2);
 
