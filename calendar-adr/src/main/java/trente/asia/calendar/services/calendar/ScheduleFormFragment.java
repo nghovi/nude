@@ -1,5 +1,8 @@
 package trente.asia.calendar.services.calendar;
 
+import java.util.List;
+import java.util.Map;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -12,18 +15,20 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
+import trente.asia.android.view.ChiaseListDialog;
+import trente.asia.android.view.ChiaseTextView;
 import trente.asia.android.view.util.CAObjectSerializeUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.fragments.AbstractClFragment;
+import trente.asia.calendar.services.calendar.model.CalendarModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.view.HorizontalUserListView;
 import trente.asia.welfare.adr.define.WfUrlConst;
+import trente.asia.welfare.adr.models.ApiObjectModel;
 import trente.asia.welfare.adr.models.UserModel;
+import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 
 /**
  * ScheduleDetailFragment
@@ -34,6 +39,10 @@ public class ScheduleFormFragment extends AbstractClFragment{
 
 	private ScheduleModel			schedule;
 	private HorizontalUserListView	horizontalUserListView;
+	private ChiaseListDialog		dlgChooseRoom;
+	private List<CalendarModel>		calendars;
+	private Map<String, String>		rooms;
+	private ChiaseTextView			txtRoom;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -47,7 +56,6 @@ public class ScheduleFormFragment extends AbstractClFragment{
 	protected void initView(){
 		super.initView();
 		initHeader(R.drawable.wf_back_white, "Weekly", null);
-		horizontalUserListView = (HorizontalUserListView)getView().findViewById(R.id.view_horizontal_user_list);
 
 		try{
 			Gson gson = new Gson();
@@ -56,14 +64,35 @@ public class ScheduleFormFragment extends AbstractClFragment{
 			e.printStackTrace();
 		}
 
-		List<UserModel> joinedUserList = getJoinedUserModels(schedule, schedule.calendar.calendarUsers);
-		horizontalUserListView.inflateWith(joinedUserList, schedule.calendar.calendarUsers, false);
-
 		ImageView imgRightIcon = (ImageView)getView().findViewById(R.id.img_id_header_right_icon);
 		imgRightIcon.setImageResource(R.drawable.abc_btn_radio_material);
 		imgRightIcon.setVisibility(View.VISIBLE);
 		imgRightIcon.setOnClickListener(this);
 
+		txtRoom = (ChiaseTextView)getView().findViewById(R.id.txt_fragment_schedule_form_room);
+		if(schedule != null){
+			txtRoom.setText(rooms.get(schedule.roomId));
+			txtRoom.setValue(schedule.roomId);
+		}
+		getView().findViewById(R.id.lnr_fragment_schedule_form_room).setOnClickListener(this);
+		final List<UserModel> joinedUserList = ScheduleDetailFragment.getJoinedUserModels(schedule, schedule.calendar.calendarUsers);
+		horizontalUserListView = (HorizontalUserListView)getView().findViewById(R.id.view_horizontal_user_list);
+		horizontalUserListView.post(new Runnable() {
+
+			@Override
+			public void run(){
+				horizontalUserListView.inflateWith(joinedUserList, schedule.calendar.calendarUsers, false, 32, 10);
+			}
+		});
+	}
+
+	private void showChooseRoomDialog(){
+		if(dlgChooseRoom != null){
+			dlgChooseRoom.show();
+		}else{
+			dlgChooseRoom = new ChiaseListDialog(getContext(), "Select venue", rooms, txtRoom, null);
+			dlgChooseRoom.show();
+		}
 	}
 
 	@Override
@@ -80,6 +109,10 @@ public class ScheduleFormFragment extends AbstractClFragment{
 		switch(v.getId()){
 		case R.id.img_id_header_right_icon:
 			sendUpdatedRequest();
+			break;
+		case R.id.lnr_fragment_schedule_form_room:
+			showChooseRoomDialog();
+			break;
 		default:
 			break;
 		}
@@ -93,7 +126,7 @@ public class ScheduleFormFragment extends AbstractClFragment{
 			if(schedule != null && !CCStringUtil.isEmpty(schedule.key)){
 				jsonObject.put("key", schedule.key);
 				jsonObject.put("calendarId", schedule.calendarId);
-				jsonObject.put("roomId", schedule.roomId);
+				jsonObject.put("roomId", txtRoom.getValue());
 				jsonObject.put("joinUsers", joinUsers);
 				jsonObject.put("isDayPeriod", isDayPeriod);
 				jsonObject.put("scheduleColor", schedule.scheduleColor);
@@ -129,13 +162,7 @@ public class ScheduleFormFragment extends AbstractClFragment{
 		this.schedule = schedule;
 	}
 
-	private List<UserModel> getJoinedUserModels(ScheduleModel schedule, List<UserModel> userModels){
-		List<UserModel> joinUsers = new ArrayList<>();
-		if(userModels != null && !CCStringUtil.isEmpty(schedule.joinUsers)){
-			for(String userId : schedule.joinUsers.split(",")){
-				joinUsers.add(UserModel.getUserModel(userId, userModels));
-			}
-		}
-		return joinUsers;
+	public void setRooms(List<ApiObjectModel> rooms){
+		this.rooms = WelfareFormatUtil.convertList2Map(rooms);
 	}
 }

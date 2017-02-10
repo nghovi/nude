@@ -1,27 +1,29 @@
 package trente.asia.calendar.services.calendar;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.google.gson.Gson;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.google.gson.Gson;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.view.util.CAObjectSerializeUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.fragments.AbstractClFragment;
+import trente.asia.calendar.services.calendar.model.CalendarModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.view.HorizontalUserListView;
 import trente.asia.welfare.adr.define.WfUrlConst;
+import trente.asia.welfare.adr.models.ApiObjectModel;
 import trente.asia.welfare.adr.models.UserModel;
 
 /**
@@ -33,6 +35,8 @@ public class ScheduleDetailFragment extends AbstractClFragment{
 
 	private ScheduleModel			schedule;
 	private HorizontalUserListView	horizontalUserListView;
+	private List<CalendarModel>		calendars;
+	private List<ApiObjectModel>	rooms;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -47,6 +51,7 @@ public class ScheduleDetailFragment extends AbstractClFragment{
 		super.initView();
 		initHeader(R.drawable.wf_back_white, "Weekly", null);
 		horizontalUserListView = (HorizontalUserListView)getView().findViewById(R.id.view_horizontal_user_list);
+		String t = "sfds";
 	}
 
 	@Override
@@ -71,6 +76,8 @@ public class ScheduleDetailFragment extends AbstractClFragment{
 
 	private void onLoadScheduleDetailSuccess(JSONObject response){
 		schedule = CCJsonUtil.convertToModel(response.optString("schedule"), ScheduleModel.class);
+		rooms = CCJsonUtil.convertToModelList(response.optString("rooms"), ApiObjectModel.class);
+		// calendars = CCJsonUtil.convertToModelList(response.optString("calendarUsers"), CalendarModel.class);
 
 		List<UserModel> joinUserList = getJoinedUserModels(schedule, CCJsonUtil.convertToModelList(response.optString("calendarUsers"), UserModel.class));
 		try{
@@ -80,7 +87,7 @@ public class ScheduleDetailFragment extends AbstractClFragment{
 			e.printStackTrace();
 		}
 
-		horizontalUserListView.inflateWith(joinUserList, schedule.calendar.calendarUsers, true);
+		horizontalUserListView.inflateWith(joinUserList, schedule.calendar.calendarUsers, true, 32, 10);
 
 		ImageView imgRightIcon = (ImageView)getView().findViewById(R.id.img_id_header_right_icon);
 		imgRightIcon.setImageResource(R.drawable.abc_btn_check_material);
@@ -88,11 +95,14 @@ public class ScheduleDetailFragment extends AbstractClFragment{
 		imgRightIcon.setOnClickListener(this);
 	}
 
-	private List<UserModel> getJoinedUserModels(ScheduleModel schedule, List<UserModel> userModels){
+	public static List<UserModel> getJoinedUserModels(ScheduleModel schedule, List<UserModel> userModels){
 		List<UserModel> joinUsers = new ArrayList<>();
 		if(userModels != null && !CCStringUtil.isEmpty(schedule.joinUsers)){
 			for(String userId : schedule.joinUsers.split(",")){
-				joinUsers.add(UserModel.getUserModel(userId, userModels));
+				UserModel userModel = UserModel.getUserModel(userId, userModels);
+				if(userModel != null){
+					joinUsers.add(userModel);
+				}
 			}
 		}
 		return joinUsers;
@@ -108,6 +118,7 @@ public class ScheduleDetailFragment extends AbstractClFragment{
 		switch(v.getId()){
 		case R.id.img_id_header_right_icon:
 			ScheduleFormFragment fragment = new ScheduleFormFragment();
+			fragment.setRooms(rooms);
 			fragment.setSchedule(schedule);
 			gotoFragment(fragment);
 		default:
@@ -118,6 +129,7 @@ public class ScheduleDetailFragment extends AbstractClFragment{
 	@Override
 	public void onDestroy(){
 		super.onDestroy();
+		horizontalUserListView = null;
 	}
 
 	public void setSchedule(ScheduleModel schedule){

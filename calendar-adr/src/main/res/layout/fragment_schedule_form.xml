@@ -122,6 +122,7 @@
             <View style="@style/cs_common_divider"/>
 
             <LinearLayout
+                android:id="@+id/lnr_fragment_schedule_form_room"
                 style="@style/wf_common_item_linear2">
 
                 <TextView
@@ -129,8 +130,8 @@
                     android:layout_width="wrap_content"
                     android:text="Room"/>
 
-                <trente.asia.android.view.ChiaseEditText
-                    android:id="@+id/txt_id_arrive"
+                <trente.asia.android.view.ChiaseTextView
+                    android:id="@+id/txt_fragment_schedule_form_room"
                     style="@style/wl_common_edit_text2"
                     android:layout_marginLeft="@dimen/margin_10dp"
                     custom:mName="room"/>
@@ -180,6 +181,7 @@
                 <TextView
                     style="@style/wl_common_text"
                     android:layout_marginBottom="@dimen/margin_10dp"
+                    android:layout_marginTop="@dimen/margin_10dp"
                     android:paddingLeft="@dimen/margin_16dp"
                     android:paddingRight="@dimen/margin_16dp"
                     android:text="Join users"/>
@@ -190,7 +192,12 @@
 
                 <View style="@style/cs_common_divider"/>
 
-                <include layout="@layout/view_horizontal_user_list"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <include layout="@layout/view_horizontal_user_list"/>
+                </LinearLayout>
 
                 <TextView
                     style="@style/wl_common_text"

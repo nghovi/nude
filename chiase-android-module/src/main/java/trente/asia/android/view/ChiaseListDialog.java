@@ -31,7 +31,7 @@ public class ChiaseListDialog extends ChiaseDialog{
 	private Map<String, String>			mValues;
 	private ChiaseTextView				mTxtItem;
 	private ListView					mLsvValues;
-	private ChiaseItemListAdapter mAdapter;
+	private ChiaseItemListAdapter		mAdapter;
 
 	public ChiaseListDialog(Context context, String title, Map<String, String> map, final ChiaseTextView txtItem, final AdapterView.OnItemClickListener itemClickListener){
 		super(context);
@@ -51,7 +51,7 @@ public class ChiaseListDialog extends ChiaseDialog{
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id){
-                ChiaseListItemModel valueSelect = (ChiaseListItemModel)parent.getItemAtPosition(position);
+				ChiaseListItemModel valueSelect = (ChiaseListItemModel)parent.getItemAtPosition(position);
 				if(txtItem != null){
 					txtItem.setText(valueSelect.value);
 					txtItem.setValue(valueSelect.key);
@@ -70,7 +70,7 @@ public class ChiaseListDialog extends ChiaseDialog{
 	private void initDialog(){
 		mLstValue.clear();
 		for(String key : mValues.keySet()){
-            ChiaseListItemModel selected = new ChiaseListItemModel();
+			ChiaseListItemModel selected = new ChiaseListItemModel();
 			selected.key = key;
 			selected.value = mValues.get(key);
 			mLstValue.add(selected);
