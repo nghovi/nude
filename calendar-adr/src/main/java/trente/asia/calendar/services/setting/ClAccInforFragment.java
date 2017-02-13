@@ -30,6 +30,7 @@ import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.util.AndroidUtil;
 import trente.asia.calendar.BuildConfig;
 import trente.asia.calendar.R;
+import trente.asia.calendar.commons.activites.CameraPhotoPreviewAccountActivity;
 import trente.asia.calendar.commons.fragments.AbstractClFragment;
 import trente.asia.calendar.commons.utils.ClUtil;
 import trente.asia.calendar.services.user.ClLoginFragment;
@@ -376,11 +377,11 @@ public class ClAccInforFragment extends AbstractClFragment{
 	}
 
 	protected void eventCameraClicked(){
-		// CameraPhotoPreviewAccountActivity.starCameraPhotoPreviewActivity(SwAccInforFragment.this);
+		CameraPhotoPreviewAccountActivity.starCameraPhotoPreviewActivity(ClAccInforFragment.this);
 	}
 
 	protected void eventGalleryClicked(){
-		// CameraPhotoPreviewAccountActivity.starCameraFromGalleryPhotoPreviewActivity(SwAccInforFragment.this);
+		CameraPhotoPreviewAccountActivity.starCameraFromGalleryPhotoPreviewActivity(ClAccInforFragment.this);
 	}
 
 	@Override
