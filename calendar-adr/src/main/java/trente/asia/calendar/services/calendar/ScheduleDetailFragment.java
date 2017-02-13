@@ -51,7 +51,6 @@ public class ScheduleDetailFragment extends AbstractClFragment{
 		super.initView();
 		initHeader(R.drawable.wf_back_white, "Weekly", null);
 		horizontalUserListView = (HorizontalUserListView)getView().findViewById(R.id.view_horizontal_user_list);
-		String t = "sfds";
 	}
 
 	@Override
@@ -117,13 +116,17 @@ public class ScheduleDetailFragment extends AbstractClFragment{
 	public void onClick(View v){
 		switch(v.getId()){
 		case R.id.img_id_header_right_icon:
-			ScheduleFormFragment fragment = new ScheduleFormFragment();
-			fragment.setRooms(rooms);
-			fragment.setSchedule(schedule);
-			gotoFragment(fragment);
+			gotoScheduleFormFragment();
 		default:
 			break;
 		}
+	}
+
+	private void gotoScheduleFormFragment(){
+		ScheduleFormFragment fragment = new ScheduleFormFragment();
+		// fragment.setRooms(rooms);
+		fragment.setSchedule(schedule);
+		gotoFragment(fragment);
 	}
 
 	@Override

@@ -56,19 +56,19 @@
                         android:orientation="vertical">
 
                         <trente.asia.android.view.ChiaseEditText
-                            android:editable="false"
                             android:id="@+id/fragment_schedule_detail_start_date"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:editable="false"
                             android:text="2017/02/09"
                             custom:mName="startDate"
                             />
 
                         <trente.asia.android.view.ChiaseEditText
-                            android:editable="false"
                             android:id="@+id/fragment_schedule_detail_start_time"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:editable="false"
                             android:text="10:30"
                             custom:mName="startTime"/>
                     </LinearLayout>
@@ -81,18 +81,18 @@
                         android:orientation="vertical">
 
                         <trente.asia.android.view.ChiaseEditText
-                            android:editable="false"
                             android:id="@+id/fragment_schedule_detail_end_date"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:editable="false"
                             android:text="2017/02/09"
                             custom:mName="endDate"/>
 
                         <trente.asia.android.view.ChiaseEditText
-                            android:editable="false"
                             android:id="@+id/fragment_schedule_detail_end_time"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:editable="false"
                             android:text="10:30"
                             custom:mName="endTime"/>
                     </LinearLayout>
@@ -117,10 +117,10 @@
                     android:text="Name"/>
 
                 <trente.asia.android.view.ChiaseEditText
-                    android:editable="false"
                     android:id="@+id/txt_id_leave"
                     style="@style/wl_common_edit_text2"
                     android:layout_marginLeft="@dimen/margin_10dp"
+                    android:editable="false"
                     custom:mName="scheduleName"/>
             </LinearLayout>
 
@@ -135,10 +135,10 @@
                     android:text="Room"/>
 
                 <trente.asia.android.view.ChiaseEditText
-                    android:editable="false"
                     android:id="@+id/txt_id_arrive"
                     style="@style/wl_common_edit_text2"
                     android:layout_marginLeft="@dimen/margin_10dp"
+                    android:editable="false"
                     custom:mName="room"/>
             </LinearLayout>
 
@@ -153,10 +153,10 @@
                     android:text="URL"/>
 
                 <trente.asia.android.view.ChiaseEditText
-                    android:editable="false"
                     android:id="@+id/txt_id_transit_type"
                     style="@style/wl_common_edit_text2"
                     android:layout_marginLeft="@dimen/margin_10dp"
+                    android:editable="false"
                     custom:mName="url"/>
             </LinearLayout>
 
@@ -171,10 +171,10 @@
                     android:text="Color"/>
 
                 <trente.asia.android.view.ChiaseEditText
-                    android:editable="false"
                     android:id="@+id/txt_id_way_type"
                     style="@style/wl_common_edit_text2"
                     android:layout_marginLeft="@dimen/margin_10dp"
+                    android:editable="false"
                     custom:mName="scheduleColor"/>
             </LinearLayout>
 
@@ -197,8 +197,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"></LinearLayout>
 
-                <View style="@style/cs_common_divider"/>
-
                 <include layout="@layout/view_horizontal_user_list"/>
 
                 <TextView
@@ -216,8 +214,8 @@
                 <trente.asia.android.view.ChiaseEditText
                     android:id="@+id/edt_id_note"
                     style="@style/wl_common_edit_text_multi_line2"
-                    android:inputType="textMultiLine"
                     android:editable="false"
+                    android:inputType="textMultiLine"
                     custom:mName="scheduleNote"/>
             </LinearLayout>
 

@@ -49,13 +49,14 @@
                     android:orientation="horizontal">
 
                     <LinearLayout
+                        android:id="@+id/lnr_start_date"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center_horizontal"
                         android:orientation="vertical">
 
-                        <trente.asia.android.view.ChiaseEditText
+                        <trente.asia.android.view.ChiaseTextView
                             android:id="@+id/fragment_schedule_detail_start_date"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -63,7 +64,7 @@
                             custom:mName="startDate"
                             />
 
-                        <trente.asia.android.view.ChiaseEditText
+                        <trente.asia.android.view.ChiaseTextView
                             android:id="@+id/fragment_schedule_detail_start_time"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -78,14 +79,14 @@
                         android:gravity="center_horizontal"
                         android:orientation="vertical">
 
-                        <trente.asia.android.view.ChiaseEditText
+                        <trente.asia.android.view.ChiaseTextView
                             android:id="@+id/fragment_schedule_detail_end_date"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="2017/02/09"
                             custom:mName="endDate"/>
 
-                        <trente.asia.android.view.ChiaseEditText
+                        <trente.asia.android.view.ChiaseTextView
                             android:id="@+id/fragment_schedule_detail_end_time"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -190,14 +191,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"></LinearLayout>
 
-                <View style="@style/cs_common_divider"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <include layout="@layout/view_horizontal_user_list"/>
-                </LinearLayout>
+                <include layout="@layout/view_horizontal_user_list"/>
 
                 <TextView
                     style="@style/wl_common_text"
