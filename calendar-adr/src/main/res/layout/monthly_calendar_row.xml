@@ -8,8 +8,6 @@
         android:id="@+id/lnr_id_row_content"
         style="@style/cs_common_match_wrap"
         android:orientation="horizontal"
-        android:paddingBottom="@dimen/margin_10dp"
-        android:paddingTop="@dimen/margin_10dp"
         android:weightSum="7"/>
 
     <View style="@style/cs_common_divider"/>

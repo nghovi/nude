@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
@@ -54,8 +55,15 @@ public class MonthlyCalendarDayView extends LinearLayout{
 
 		LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View rowItemView = inflater.inflate(R.layout.monthly_calendar_row_item, null);
-		LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
+		LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 1);
 		rowItemView.setLayoutParams(layoutParams);
+		rowItemView.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v){
+				Toast.makeText(mContext, "Click here!!", Toast.LENGTH_LONG).show();
+			}
+		});
 
 		TextView txtContent = (TextView)rowItemView.findViewById(R.id.txt_id_row_content);
 		txtContent.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_11, itemDate));
