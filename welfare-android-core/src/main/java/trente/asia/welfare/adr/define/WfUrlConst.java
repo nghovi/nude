@@ -118,5 +118,6 @@ public class WfUrlConst{
 	public static final String	WF_CL_SCHEDULE_LIST									= "/api/cl/schedules";
 	public static final String	WF_CL_SCHEDULE_UPD									= "/api/cl/schedule/upd";
 	public static final String	WF_CL_WEEK_SCHEDULE									= "/api/cl/week/schedules";
+	public static final String	WF_CL_SCHEDULE_MONTH_LIST							= "/api/cl/month/schedules";
 
 }

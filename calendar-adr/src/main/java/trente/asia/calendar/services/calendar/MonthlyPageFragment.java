@@ -5,6 +5,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -18,12 +21,14 @@ import asia.chiase.core.util.CCDateUtil;
 import trente.asia.android.define.CsConst;
 import trente.asia.android.model.DayModel;
 import trente.asia.android.util.CsDateUtil;
+import trente.asia.calendar.BuildConfig;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.utils.ClUtil;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.view.MonthlyCalendarDayView;
 import trente.asia.welfare.adr.activity.WelfareFragment;
+import trente.asia.welfare.adr.define.WfUrlConst;
 
 /**
  * MonthlyPageFragment
@@ -49,6 +54,12 @@ public class MonthlyPageFragment extends WelfareFragment{
 		}
 		return mRootView;
 	}
+
+    @Override
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+        host = BuildConfig.HOST;
+    }
 
 	@Override
 	protected void initView(){
@@ -97,25 +108,47 @@ public class MonthlyPageFragment extends WelfareFragment{
 	@Override
 	protected void initData(){
 		makeDummyData();
+		loadScheduleList();
+	}
+
+	private void loadScheduleList(){
+		JSONObject jsonObject = new JSONObject();
+		try{
+			jsonObject.put("targetUserId", myself.key);
+			jsonObject.put("targetMonth", "2017/02");
+			jsonObject.put("calendars", "6, 7");
+		}catch(JSONException e){
+			e.printStackTrace();
+		}
+		requestLoad(WfUrlConst.WF_CL_SCHEDULE_MONTH_LIST, jsonObject, true);
+	}
+
+	@Override
+	protected void successLoad(JSONObject response, String url){
+		if(WfUrlConst.WF_CL_SCHEDULE_MONTH_LIST.equals(url)){
+
+		}else{
+			super.successLoad(response, url);
+		}
 	}
 
 	private void makeDummyData(){
 		ScheduleModel scheduleModel1 = new ScheduleModel("Leader meeting", "2017/02/08", ClConst.SCHEDULE_COLOR_BLUE, ClConst.SCHEDULE_TYPE_PERIOD);
 		ScheduleModel scheduleModel2 = new ScheduleModel("Developer meeting", "2017/02/16", ClConst.SCHEDULE_COLOR_RED, ClConst.SCHEDULE_TYPE_PERIOD);
-        ScheduleModel scheduleModel3 = new ScheduleModel("Learning meeting", "2017/02/07", ClConst.SCHEDULE_COLOR_RED, ClConst.SCHEDULE_TYPE_ALL);
-        ScheduleModel scheduleModel4 = new ScheduleModel("Learning meeting", "2017/02/01", ClConst.SCHEDULE_COLOR_RED, ClConst.SCHEDULE_TYPE_ALL);
-        ScheduleModel scheduleModel5 = new ScheduleModel("Fukuri meeting", "2017/02/02", ClConst.SCHEDULE_COLOR_BLUE, ClConst.SCHEDULE_TYPE_ALL);
+		ScheduleModel scheduleModel3 = new ScheduleModel("Learning meeting", "2017/02/07", ClConst.SCHEDULE_COLOR_RED, ClConst.SCHEDULE_TYPE_ALL);
+		ScheduleModel scheduleModel4 = new ScheduleModel("Learning meeting", "2017/02/01", ClConst.SCHEDULE_COLOR_RED, ClConst.SCHEDULE_TYPE_ALL);
+		ScheduleModel scheduleModel5 = new ScheduleModel("Fukuri meeting", "2017/02/02", ClConst.SCHEDULE_COLOR_BLUE, ClConst.SCHEDULE_TYPE_ALL);
 
 		lstSchedule.add(scheduleModel1);
 		lstSchedule.add(scheduleModel2);
-        lstSchedule.add(scheduleModel3);
-        lstSchedule.add(scheduleModel4);
-        lstSchedule.add(scheduleModel5);
+		lstSchedule.add(scheduleModel3);
+		lstSchedule.add(scheduleModel4);
+		lstSchedule.add(scheduleModel5);
 
 		for(ScheduleModel model : lstSchedule){
 			MonthlyCalendarDayView activeView = ClUtil.findView4Day(lstCalendarDay, model.scheduleDate);
 			if(activeView != null){
-                activeView.addSchedule(model);
+				activeView.addSchedule(model);
 			}
 		}
 	}
