@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import asia.chiase.core.util.CCDateUtil;
 import trente.asia.android.define.CsConst;
@@ -24,7 +25,9 @@ import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.BuildConfig;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
+import trente.asia.calendar.commons.dialogs.ClDialog;
 import trente.asia.calendar.commons.utils.ClUtil;
+import trente.asia.calendar.services.calendar.listener.DailyScheduleClickListener;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.view.MonthlyCalendarDayView;
 import trente.asia.welfare.adr.activity.WelfareFragment;
@@ -35,13 +38,15 @@ import trente.asia.welfare.adr.define.WfUrlConst;
  *
  * @author TrungND
  */
-public class MonthlyPageFragment extends WelfareFragment{
+public class MonthlyPageFragment extends WelfareFragment implements DailyScheduleClickListener{
 
 	private Date							activeMonth;
 
 	private LinearLayout					lnrMonthlyPage;
 	private List<ScheduleModel>				lstSchedule		= new ArrayList<>();
 	private List<MonthlyCalendarDayView>	lstCalendarDay	= new ArrayList<>();
+
+	private ClDialog						dialogScheduleList;
 
 	public void setActiveMonth(Date activeMonth){
 		this.activeMonth = activeMonth;
@@ -55,11 +60,11 @@ public class MonthlyPageFragment extends WelfareFragment{
 		return mRootView;
 	}
 
-    @Override
-    public void onCreate(Bundle savedInstanceState){
-        super.onCreate(savedInstanceState);
-        host = BuildConfig.HOST;
-    }
+	@Override
+	public void onCreate(Bundle savedInstanceState){
+		super.onCreate(savedInstanceState);
+		host = BuildConfig.HOST;
+	}
 
 	@Override
 	protected void initView(){
@@ -98,12 +103,19 @@ public class MonthlyPageFragment extends WelfareFragment{
 			}
 
 			MonthlyCalendarDayView dayView = new MonthlyCalendarDayView(activity);
-			dayView.initialization(itemDate);
+			dayView.initialization(itemDate, this);
 			lstCalendarDay.add(dayView);
 
 			lnrRowContent.addView(dayView);
 		}
+
+        initDialog();
 	}
+
+    private void initDialog(){
+        dialogScheduleList = new ClDialog(activity);
+        dialogScheduleList.setDialogScheduleList();
+    }
 
 	@Override
 	protected void initData(){
@@ -153,4 +165,8 @@ public class MonthlyPageFragment extends WelfareFragment{
 		}
 	}
 
+    @Override
+    public void onDailyScheduleClickListener(String day) {
+        dialogScheduleList.show();
+    }
 }

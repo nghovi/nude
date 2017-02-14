@@ -11,12 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
+import trente.asia.calendar.services.calendar.listener.DailyScheduleClickListener;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.welfare.adr.define.WelfareConst;
 
@@ -27,10 +27,11 @@ import trente.asia.welfare.adr.define.WelfareConst;
  */
 public class MonthlyCalendarDayView extends LinearLayout{
 
-	private Context			mContext;
-	private LinearLayout	lnrRowContent;
+	private Context						mContext;
+	private LinearLayout				lnrRowContent;
 
-	public String			day;
+	public String						day;
+	private DailyScheduleClickListener	mListener;
 
 	public MonthlyCalendarDayView(Context context){
 		super(context);
@@ -48,10 +49,11 @@ public class MonthlyCalendarDayView extends LinearLayout{
 		this.mContext = context;
 	}
 
-	public void initialization(Date itemDate){
+	public void initialization(Date itemDate, DailyScheduleClickListener listener){
 		LayoutParams params = new LayoutParams(0, LayoutParams.WRAP_CONTENT, 1);
 		this.setLayoutParams(params);
 		this.day = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, itemDate);
+		this.mListener = listener;
 
 		LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View rowItemView = inflater.inflate(R.layout.monthly_calendar_row_item, null);
@@ -61,7 +63,9 @@ public class MonthlyCalendarDayView extends LinearLayout{
 
 			@Override
 			public void onClick(View v){
-				Toast.makeText(mContext, "Click here!!", Toast.LENGTH_LONG).show();
+				if(mListener != null){
+					mListener.onDailyScheduleClickListener(day);
+				}
 			}
 		});
 
