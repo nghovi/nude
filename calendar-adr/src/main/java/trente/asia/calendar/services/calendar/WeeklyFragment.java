@@ -1,5 +1,13 @@
 package trente.asia.calendar.services.calendar;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -7,20 +15,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
+import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.fragments.AbstractClFragment;
 import trente.asia.calendar.services.calendar.model.CalendarDayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
-import trente.asia.calendar.services.calendar.view.CalendarDayListAdapter;
 import trente.asia.calendar.services.calendar.view.WeeklyCalendarPagerAdapter;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.define.WfUrlConst;
@@ -37,6 +38,7 @@ public class WeeklyFragment extends AbstractClFragment{
 	private WeeklyCalendarPagerAdapter	mPagerAdapter;
 
 	private final int					ACTIVE_PAGE	= Integer.MAX_VALUE / 2;
+	private final Date					TODAY		= CsDateUtil.makeMonthWithFirstDate();
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -54,10 +56,28 @@ public class WeeklyFragment extends AbstractClFragment{
 		mPagerAdapter = new WeeklyCalendarPagerAdapter(getChildFragmentManager());
 		mViewPager.setAdapter(mPagerAdapter);
 		mViewPager.setCurrentItem(ACTIVE_PAGE);
+		setActiveDate(ACTIVE_PAGE);
+		mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+			public void onPageScrollStateChanged(int state){
+			}
+
+			public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels){
+			}
+
+			public void onPageSelected(int position){
+				setActiveDate(position);
+			}
+		});
 
 		ImageView imgRightIcon = (ImageView)getView().findViewById(R.id.img_id_header_right_icon);
 		imgRightIcon.setVisibility(View.VISIBLE);
 		imgRightIcon.setOnClickListener(this);
+	}
+
+	private void setActiveDate(int position){
+		Date activeDate = CsDateUtil.addMonth(TODAY, position - ACTIVE_PAGE);
+        prefAccUtil.saveActiveDate(activeDate);
 	}
 
 	@Override
@@ -71,7 +91,7 @@ public class WeeklyFragment extends AbstractClFragment{
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
-//		 requestLoad(WfUrlConst.WF_CL_WEEK_SCHEDULE, jsonObject, true);
+		// requestLoad(WfUrlConst.WF_CL_WEEK_SCHEDULE, jsonObject, true);
 	}
 
 	@Override

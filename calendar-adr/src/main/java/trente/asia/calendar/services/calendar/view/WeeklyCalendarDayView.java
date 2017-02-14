@@ -15,9 +15,9 @@ import android.widget.TextView;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import trente.asia.calendar.R;
-import trente.asia.calendar.commons.defines.ClConst;
-import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.welfare.adr.define.WelfareConst;
+import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
+import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 
 /**
  * MonthlyCalendarDayView
@@ -26,8 +26,8 @@ import trente.asia.welfare.adr.define.WelfareConst;
  */
 public class WeeklyCalendarDayView extends LinearLayout{
 
-	private Context			mContext;
-	public String			day;
+	private Context	mContext;
+	public String	day;
 
 	public WeeklyCalendarDayView(Context context){
 		super(context);
@@ -57,6 +57,13 @@ public class WeeklyCalendarDayView extends LinearLayout{
 
 		TextView txtContent = (TextView)rowItemView.findViewById(R.id.txt_id_row_content);
 		txtContent.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_11, itemDate));
+		PreferencesAccountUtil preferencesAccountUtil = new PreferencesAccountUtil(mContext);
+		String itemDateString = WelfareFormatUtil.formatDate(itemDate);
+		String activeDateString = preferencesAccountUtil.getActiveDate();
+		if(itemDateString.equals(activeDateString)){
+			txtContent.setBackgroundResource(R.drawable.shape_active_date_border);
+		}
+
 		Calendar itemCalendar = CCDateUtil.makeCalendar(itemDate);
 		if(Calendar.SUNDAY == itemCalendar.get(Calendar.DAY_OF_WEEK)){
 			txtContent.setTextColor(Color.RED);

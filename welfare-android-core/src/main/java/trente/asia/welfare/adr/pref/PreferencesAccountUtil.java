@@ -1,20 +1,25 @@
 package trente.asia.welfare.adr.pref;
 
+import java.util.Date;
+
 import com.google.gson.Gson;
 
 import android.content.Context;
 
+import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.util.CAPreferences;
 import trente.asia.welfare.adr.models.SettingModel;
 import trente.asia.welfare.adr.models.UserModel;
+import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 
 /**
  * Created by TuVD on 8/6/2015.
  */
 public class PreferencesAccountUtil{
 
-	public static String	KEY_PREF_USER		= "pref_user";
-	public static String	KEY_PREF_SETTING	= "pref_setting";
+	public static String	KEY_PREF_USER			= "pref_user";
+	public static String	KEY_PREF_SETTING		= "pref_setting";
+	public static String	KEY_PREF_ACTIVE_DATE	= "pref_active_date";
 
 	public CAPreferences	pref;
 
@@ -109,5 +114,24 @@ public class PreferencesAccountUtil{
 		Gson gson = new Gson();
 		String json = gson.toJson(object);
 		pref.set(key, json);
+	}
+
+	/**
+	 * Save active date to Prefers.
+	 *
+	 * @param activeDate
+	 */
+	public void saveActiveDate(Date activeDate){
+		pref.set(KEY_PREF_ACTIVE_DATE, WelfareFormatUtil.formatDate(activeDate));
+	}
+
+	/**
+	 * Get active date from Prefers.
+	 *
+	 * @return
+	 */
+	public String getActiveDate(){
+		String dateString = pref.get(KEY_PREF_ACTIVE_DATE);
+		return dateString;
 	}
 }

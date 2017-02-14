@@ -1,16 +1,15 @@
 package trente.asia.calendar.services.calendar.view;
 
-import java.util.Calendar;
 import java.util.Date;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import asia.chiase.core.util.CCDateUtil;
 import trente.asia.android.util.CsDateUtil;
-import trente.asia.calendar.services.calendar.MonthlyPageFragment;
 import trente.asia.calendar.services.calendar.WeeklyPageFragment;
+import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
 
 /**
  * WeeklyCalendarPagerAdapter
@@ -28,12 +27,12 @@ public class WeeklyCalendarPagerAdapter extends FragmentPagerAdapter{
 
 	@Override
 	public Fragment getItem(int position){
-		Date activeMonth = CsDateUtil.addMonth(TODAY, position - ACTIVE_PAGE);
-		Calendar activeCalendar = CCDateUtil.makeCalendar(activeMonth);
-		activeCalendar.setFirstDayOfWeek(Calendar.THURSDAY);
+		Date activeDate = CsDateUtil.addWeek(TODAY, position - ACTIVE_PAGE);
+		// Calendar activeCalendar = CCDateUtil.makeCalendar(activeMonth);
+		// activeCalendar.setFirstDayOfWeek(Calendar.THURSDAY);
 
-        WeeklyPageFragment weeklyPageFragment = new WeeklyPageFragment();
-        weeklyPageFragment.setSelectedDate(activeMonth);
+		WeeklyPageFragment weeklyPageFragment = new WeeklyPageFragment();
+		weeklyPageFragment.setSelectedDate(activeDate);
 		return weeklyPageFragment;
 	}
 

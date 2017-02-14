@@ -101,7 +101,7 @@ public class WeeklyPageFragment extends WelfareFragment implements ObservableScr
 		}
 		lnrContentHeader.addView(titleView);
 
-		List<Date> lstDate = CsDateUtil.getAllDate4Month(CCDateUtil.makeCalendar(selectedDate));
+		List<Date> lstDate = CsDateUtil.getAllDate4Week(CCDateUtil.makeCalendar(selectedDate));
 		WeeklyCalendarHeaderRowView rowView = null;
 		for(int index = 0; index < lstDate.size(); index++){
 			Date itemDate = lstDate.get(index);

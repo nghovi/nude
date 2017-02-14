@@ -1,11 +1,15 @@
 package trente.asia.welfare.adr.utils;
 
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import asia.chiase.core.util.CCCollectionUtil;
+import asia.chiase.core.util.CCDateUtil;
+import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCStringUtil;
+import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.models.ApiObjectModel;
 
 /**
@@ -56,4 +60,26 @@ public class WelfareFormatUtil{
 		}
 		return map;
 	}
+
+    /**
+     * make date with server format: yyyy/MM/dd HH:mm:ss
+     *
+     * @param data
+     * @return
+     */
+    public static Date makeDate(String data){
+        Date date = CCDateUtil.makeDateCustom(data, WelfareConst.WL_DATE_TIME_7);
+        return date;
+    }
+
+    /**
+     * format date with server format: yyyy/MM/dd HH:mm:ss
+     *
+     * @param date
+     * @return
+     */
+    public static String formatDate(Date date){
+        String data = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, date);
+        return data;
+    }
 }
