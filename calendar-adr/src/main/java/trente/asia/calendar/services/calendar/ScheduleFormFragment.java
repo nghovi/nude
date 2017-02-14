@@ -55,6 +55,7 @@ public class ScheduleFormFragment extends AbstractClFragment{
 	private HorizontalUserListView	horizontalUserListView;
 	private ChiaseListDialog		dlgChooseRoom;
 	private ChiaseListDialog		dlgChooseCalendar;
+	private ChiaseListDialog		dlgChooseCategory;
 	private List<CalendarModel>		calendars;
 	private List<ApiObjectModel>	calendarHolders;
 	private List<ApiObjectModel>	rooms;
@@ -69,6 +70,8 @@ public class ScheduleFormFragment extends AbstractClFragment{
 	private ChiaseTextView			txtEndDate;
 	private ChiaseTextView			txtCalendar;
 	private List<UserModel>			allCalenarUsers;
+	private List<ApiObjectModel>	categories;
+	private ChiaseTextView			txtCategory;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -88,15 +91,11 @@ public class ScheduleFormFragment extends AbstractClFragment{
 		imgRightIcon.setOnClickListener(this);
 
 		txtRoom = (ChiaseTextView)getView().findViewById(R.id.txt_fragment_schedule_form_room);
-		txtCalendar = (ChiaseTextView)getView().findViewById(R.id.txt_id_calendar);
-		if(schedule != null){
-			txtRoom.setText(convertList2Map(rooms).get(Integer.parseInt(schedule.roomId)));
-			txtRoom.setValue(schedule.roomId);
-			// // TODO: 2/13/2017
-			txtCalendar.setText(convertList2Map(calendarHolders).get(Integer.parseInt(schedule.calendarId)));
-			txtCalendar.setValue(schedule.calendarId);
-		}
+		txtCalendar = (ChiaseTextView)getView().findViewById(R.id.txt_fragment_schedule_form_calendar);
+		txtCategory = (ChiaseTextView)getView().findViewById(R.id.txt_fragment_schedule_form_category);
+
 		getView().findViewById(R.id.lnr_fragment_schedule_form_room).setOnClickListener(this);
+		getView().findViewById(R.id.lnr_fragment_schedule_form_category).setOnClickListener(this);
 		getView().findViewById(R.id.lnr_fragment_schedule_form_calendar).setOnClickListener(this);
 		txtStartDate = (ChiaseTextView)getView().findViewById(R.id.fragment_schedule_detail_start_date);
 		txtEndDate = (ChiaseTextView)getView().findViewById(R.id.fragment_schedule_detail_end_date);
@@ -192,6 +191,15 @@ public class ScheduleFormFragment extends AbstractClFragment{
 		}
 	}
 
+	private void showChooseCategoryDialog(){
+		if(dlgChooseCategory != null){
+			dlgChooseCategory.show();
+		}else{
+			dlgChooseCategory = new ChiaseListDialog(getContext(), "Select " + "Category", convertList2Map(categories), txtCategory, null);
+			dlgChooseCategory.show();
+		}
+	}
+
 	private void showChooseCalendarDialog(){
 		if(dlgChooseCalendar != null){
 			dlgChooseCalendar.show();
@@ -239,6 +247,14 @@ public class ScheduleFormFragment extends AbstractClFragment{
 		rooms = CCJsonUtil.convertToModelList(response.optString("rooms"), ApiObjectModel.class);
 		calendars = CCJsonUtil.convertToModelList(response.optString("calendars"), CalendarModel.class);
 		calendarHolders = getCalendarHolders(calendars);
+		categories = CCJsonUtil.convertToModelList(response.optString("categories"), ApiObjectModel.class);
+
+		if(!CCStringUtil.isEmpty(schedule.key)){
+			txtRoom.setText(convertList2Map(rooms).get(Integer.parseInt(schedule.roomId)));
+			txtRoom.setValue(schedule.roomId);
+			txtCalendar.setText(convertList2Map(calendarHolders).get(Integer.parseInt(schedule.calendarId)));
+			txtCalendar.setValue(schedule.calendarId);
+		}
 
 		List<UserModel> joinUserList = ScheduleDetailFragment.getJoinedUserModels(schedule, CCJsonUtil.convertToModelList(response.optString("calendarUsers"), UserModel.class));
 		try{
@@ -264,7 +280,7 @@ public class ScheduleFormFragment extends AbstractClFragment{
 		return new ArrayList<>();
 	}
 
-	private List<ApiObjectModel> getCalendarHolders(List<CalendarModel> calendars){
+	public static List<ApiObjectModel> getCalendarHolders(List<CalendarModel> calendars){
 		List<ApiObjectModel> apiObjectModels = new ArrayList<>();
 		for(CalendarModel calendarModel : calendars){
 			ApiObjectModel apiObjectModel = new ApiObjectModel(calendarModel.key, calendarModel.calendarName);
@@ -286,6 +302,9 @@ public class ScheduleFormFragment extends AbstractClFragment{
 			break;
 		case R.id.lnr_fragment_schedule_form_room:
 			showChooseRoomDialog();
+			break;
+		case R.id.lnr_fragment_schedule_form_category:
+			showChooseCategoryDialog();
 			break;
 		case R.id.lnr_fragment_schedule_form_calendar:
 			showChooseCalendarDialog();

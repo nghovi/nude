@@ -42,6 +42,53 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/lnr_fragment_schedule_form_repeat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Repeat pattern"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/margin_10dp"
+                        android:gravity="left"
+                        android:paddingLeft="@dimen/margin_16dp"
+                        android:paddingRight="@dimen/margin_16dp">
+
+                        <CheckBox
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="@dimen/margin_30dp"
+                            android:text="Mon"/>
+
+                        <CheckBox
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Tue"/>
+
+                        <CheckBox
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Wed"/>
+
+                        <CheckBox
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Thu"/>
+
+                        <CheckBox
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Fri"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/margin_10dp"
@@ -115,7 +162,7 @@
                     android:text="Calendar"/>
 
                 <trente.asia.android.view.ChiaseTextView
-                    android:id="@+id/txt_id_calendar"
+                    android:id="@+id/txt_fragment_schedule_form_calendar"
                     style="@style/wl_common_edit_text2"
                     android:layout_marginLeft="@dimen/margin_10dp"
                     custom:mName="calendarName"/>
@@ -176,18 +223,19 @@
             <View style="@style/cs_common_divider"/>
 
             <LinearLayout
+                android:id="@+id/lnr_fragment_schedule_form_category"
                 style="@style/wf_common_item_linear2">
 
                 <TextView
                     style="@style/wl_common_text"
                     android:layout_width="wrap_content"
-                    android:text="Color"/>
+                    android:text="Category"/>
 
-                <trente.asia.android.view.ChiaseEditText
-                    android:id="@+id/txt_id_way_type"
+                <trente.asia.android.view.ChiaseTextView
+                    android:id="@+id/txt_fragment_schedule_form_category"
                     style="@style/wl_common_edit_text2"
                     android:layout_marginLeft="@dimen/margin_10dp"
-                    custom:mName="scheduleColor"/>
+                    custom:mName="scheduleCategory"/>
             </LinearLayout>
 
             <View style="@style/cs_common_divider"/>

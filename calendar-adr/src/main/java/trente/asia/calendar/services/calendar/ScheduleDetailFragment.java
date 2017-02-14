@@ -8,6 +8,7 @@ import org.json.JSONObject;
 
 import com.google.gson.Gson;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.widget.ImageView;
 
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
+import trente.asia.android.view.ChiaseTextView;
 import trente.asia.android.view.util.CAObjectSerializeUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.fragments.AbstractClFragment;
@@ -25,6 +27,8 @@ import trente.asia.calendar.services.calendar.view.HorizontalUserListView;
 import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.models.ApiObjectModel;
 import trente.asia.welfare.adr.models.UserModel;
+
+import static trente.asia.welfare.adr.utils.WelfareFormatUtil.convertList2Map;
 
 /**
  * ScheduleDetailFragment
@@ -37,6 +41,10 @@ public class ScheduleDetailFragment extends AbstractClFragment{
 	private HorizontalUserListView	horizontalUserListView;
 	private List<CalendarModel>		calendars;
 	private List<ApiObjectModel>	rooms;
+	private ChiaseTextView			txtRoom;
+	private ChiaseTextView			txtCalendar;
+	private ChiaseTextView			txtCategory;
+	private List<ApiObjectModel>	categories;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -51,6 +59,9 @@ public class ScheduleDetailFragment extends AbstractClFragment{
 		super.initView();
 		initHeader(R.drawable.wf_back_white, "Weekly", null);
 		horizontalUserListView = (HorizontalUserListView)getView().findViewById(R.id.view_horizontal_user_list);
+		txtRoom = (ChiaseTextView)getView().findViewById(R.id.txt_fragment_schedule_detail_form);
+		txtCalendar = (ChiaseTextView)getView().findViewById(R.id.txt_fragment_schedule_detail_calendar);
+		txtCategory = (ChiaseTextView)getView().findViewById(R.id.txt_fragment_schedule_detail_category);
 	}
 
 	@Override
@@ -76,7 +87,8 @@ public class ScheduleDetailFragment extends AbstractClFragment{
 	private void onLoadScheduleDetailSuccess(JSONObject response){
 		schedule = CCJsonUtil.convertToModel(response.optString("schedule"), ScheduleModel.class);
 		rooms = CCJsonUtil.convertToModelList(response.optString("rooms"), ApiObjectModel.class);
-		// calendars = CCJsonUtil.convertToModelList(response.optString("calendarUsers"), CalendarModel.class);
+		categories = CCJsonUtil.convertToModelList(response.optString("categories"), ApiObjectModel.class);
+		calendars = CCJsonUtil.convertToModelList(response.optString("calendars"), CalendarModel.class);
 
 		List<UserModel> joinUserList = getJoinedUserModels(schedule, CCJsonUtil.convertToModelList(response.optString("calendarUsers"), UserModel.class));
 		try{
@@ -84,6 +96,16 @@ public class ScheduleDetailFragment extends AbstractClFragment{
 			CAObjectSerializeUtil.deserializeObject((ViewGroup)getView().findViewById(R.id.lnr_id_content), new JSONObject(gson.toJson(schedule)));
 		}catch(JSONException e){
 			e.printStackTrace();
+		}
+
+		if(!CCStringUtil.isEmpty(schedule.key)){
+			txtRoom.setText(convertList2Map(rooms).get(Integer.parseInt(schedule.roomId)));
+			txtRoom.setValue(schedule.roomId);
+			txtCalendar.setText(convertList2Map(ScheduleFormFragment.getCalendarHolders(calendars)).get(Integer.parseInt(schedule.calendarId)));
+			txtCalendar.setValue(schedule.calendarId);
+			txtCategory.setValue(schedule.scheduleCategory);
+			txtCategory.setTextColor(Color.parseColor("#" + schedule.scheduleCategory));
+			txtCategory.setText(convertList2Map(categories).get(schedule.scheduleCategory));
 		}
 
 		horizontalUserListView.inflateWith(joinUserList, schedule.calendar.calendarUsers, true, 32, 10);

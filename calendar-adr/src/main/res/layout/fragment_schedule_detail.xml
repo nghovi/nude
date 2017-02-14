@@ -126,6 +126,25 @@
 
             <View style="@style/cs_common_divider"/>
 
+
+            <LinearLayout
+                android:id="@+id/lnr_fragment_schedule_detail_calendar"
+                style="@style/wf_common_item_linear2">
+
+                <TextView
+                    style="@style/wl_common_text"
+                    android:layout_width="wrap_content"
+                    android:text="Calendar"/>
+
+                <trente.asia.android.view.ChiaseTextView
+                    android:id="@+id/txt_fragment_schedule_detail_calendar"
+                    style="@style/wl_common_edit_text2"
+                    android:layout_marginLeft="@dimen/margin_10dp"
+                    custom:mName="calendarName"/>
+            </LinearLayout>
+
+            <View style="@style/cs_common_divider"/>
+
             <LinearLayout
                 style="@style/wf_common_item_linear2">
 
@@ -134,8 +153,8 @@
                     android:layout_width="wrap_content"
                     android:text="Room"/>
 
-                <trente.asia.android.view.ChiaseEditText
-                    android:id="@+id/txt_id_arrive"
+                <trente.asia.android.view.ChiaseTextView
+                    android:id="@+id/txt_fragment_schedule_detail_form"
                     style="@style/wl_common_edit_text2"
                     android:layout_marginLeft="@dimen/margin_10dp"
                     android:editable="false"
@@ -168,10 +187,10 @@
                 <TextView
                     style="@style/wl_common_text"
                     android:layout_width="wrap_content"
-                    android:text="Color"/>
+                    android:text="Category"/>
 
-                <trente.asia.android.view.ChiaseEditText
-                    android:id="@+id/txt_id_way_type"
+                <trente.asia.android.view.ChiaseTextView
+                    android:id="@+id/txt_fragment_schedule_detail_category"
                     style="@style/wl_common_edit_text2"
                     android:layout_marginLeft="@dimen/margin_10dp"
                     android:editable="false"
