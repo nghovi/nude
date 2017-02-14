@@ -34,6 +34,8 @@ public class CalendarAdapter extends ArrayAdapter<CalendarModel>{
 	public class CalendarViewHolder{
 
 		public ImageView				imgAvatar;
+
+		public HorizontalUserListView	horizontalUserList;
 		public TextView					txtName;
 		public CheckableLinearLayout	lnrItem;
 
@@ -41,6 +43,7 @@ public class CalendarAdapter extends ArrayAdapter<CalendarModel>{
 			imgAvatar = (ImageView)view.findViewById(R.id.img_id_avatar);
 			txtName = (TextView)view.findViewById(R.id.txt_id_name);
 			lnrItem = (CheckableLinearLayout)view.findViewById(R.id.lnr_id_item);
+			horizontalUserList = (HorizontalUserListView)view.findViewById(R.id.view_horizontal_user_list);
 		}
 	}
 
@@ -52,21 +55,30 @@ public class CalendarAdapter extends ArrayAdapter<CalendarModel>{
 
 	public View getView(final int position, View convertView, final ViewGroup parent){
 
-		CalendarModel model = this.calendarList.get(position);
+		final CalendarModel model = this.calendarList.get(position);
 		LayoutInflater mInflater = (LayoutInflater)mContext.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 		convertView = mInflater.inflate(R.layout.item_calendar_list, null);
-		CalendarViewHolder holder = new CalendarViewHolder(convertView);
+		final CalendarViewHolder holder = new CalendarViewHolder(convertView);
 
 		holder.txtName.setText(model.calendarName);
-		if(!CCStringUtil.isEmpty(model.calendarPath)){
-			WfPicassoHelper.loadImage(mContext, BuildConfig.HOST + model.calendarPath, holder.imgAvatar, null);
+		if(!CCStringUtil.isEmpty(model.calendarImagePath)){
+			WfPicassoHelper.loadImage(mContext, BuildConfig.HOST + model.calendarImagePath, holder.imgAvatar, null);
 		}
-        holder.lnrItem.setOnCheckedChangeListener(new CsOnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(Checkable view, boolean isChecked) {
-                (((ListView)parent)).setItemChecked(position, isChecked);
-            }
-        });
+		holder.lnrItem.setOnCheckedChangeListener(new CsOnCheckedChangeListener() {
+
+			@Override
+			public void onCheckedChanged(Checkable view, boolean isChecked){
+				(((ListView)parent)).setItemChecked(position, isChecked);
+			}
+		});
+
+		holder.horizontalUserList.post(new Runnable() {
+
+			@Override
+			public void run(){
+				holder.horizontalUserList.inflateWith(model.calendarUsers, model.calendarUsers, true, 32, 10);
+			}
+		});
 
 		return convertView;
 	}

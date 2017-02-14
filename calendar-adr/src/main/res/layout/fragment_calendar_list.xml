@@ -7,7 +7,7 @@
         android:id="@+id/lsv_id_calendar"
         style="@style/cs_common_match_wrap"
         android:layout_weight="1"
-        android:choiceMode="multipleChoice"
+        android:choiceMode="singleChoice"
         android:divider="@color/cs_common_divider"
         android:dividerHeight="1px"/>
 

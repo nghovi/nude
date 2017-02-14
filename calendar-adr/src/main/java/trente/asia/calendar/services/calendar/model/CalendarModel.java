@@ -10,15 +10,14 @@ import trente.asia.welfare.adr.models.UserModel;
 
 public class CalendarModel{
 
-	public String			calendarPath;
-
 	public String			calendarName;
 	public String			ownerId;
 	public Boolean			isMyself;
 	public List<UserModel>	calendarUsers;
-	public List<String>		calendarUserList;
+	public List<Integer>	calendarUserList;
 	public String			key;
 	public String			companyId;
+	public String calendarImagePath;
 
 	public CalendarModel(){
 

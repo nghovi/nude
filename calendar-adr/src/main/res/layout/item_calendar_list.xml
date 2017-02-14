@@ -31,11 +31,7 @@
             style="@style/wl_common_text"
             android:textColor="@color/chiase_white"/>
 
-        <TextView
-            android:id="@+id/txt_id_note"
-            style="@style/wl_common_text"
-            android:layout_marginTop="@dimen/margin_6dp"
-            android:textColor="@color/chiase_white"/>
+        <include layout="@layout/view_horizontal_user_list"/>
 
     </LinearLayout>
 

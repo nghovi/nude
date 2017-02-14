@@ -4,6 +4,7 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -34,7 +36,7 @@ public class HorizontalUserListView extends LinearLayout{
 	private List<UserModel>		allUsers;
 	private ChiaseListDialog	dlgChooseUser;
 	private boolean				isViewOnly;
-	private int					imgSizePx			= 80;
+	private int					imgSizeDp			= 80;
 	private int					imageNum			= 10;
 	private TextView			txtShowMore;
 	private GridLayout			gridUsers;
@@ -53,7 +55,8 @@ public class HorizontalUserListView extends LinearLayout{
 		selectedUsers = users;
 		allUsers = calendarUsers;
 		this.isViewOnly = isViewOnly;
-		this.imgSizePx = WelfareUtil.dpToPx(imageSizeDp);
+		this.imgSizeDp = imageSizeDp;
+		int imageSizePx = WelfareUtil.dpToPx(imageSizeDp);
 		txtShowMore = (TextView)findViewById(R.id.txt_view_horizontal_user_list_more);
 
 		if(!isViewOnly){
@@ -68,16 +71,17 @@ public class HorizontalUserListView extends LinearLayout{
 		gridUsers = (GridLayout)this.findViewById(R.id.lnr_view_horizontal_user_list);
 
 		int paddingPx = WelfareUtil.dpToPx(6);
-		this.imageNum = gridUsers.getMeasuredWidth() / (this.imgSizePx + paddingPx);
+		this.imageNum = gridUsers.getMeasuredWidth() / (imageSizePx + paddingPx);
 		this.imageNum = imgNum < this.imageNum ? imgNum : this.imageNum;
 		gridUsers.removeAllViews();
 		gridUsers.setColumnCount(this.imageNum);
-		vp = new LinearLayout.LayoutParams(this.imgSizePx, this.imgSizePx);
+		vp = new LinearLayout.LayoutParams(imageSizePx, imageSizePx);
 		vp.setMargins(paddingPx, paddingPx, paddingPx, paddingPx);
 		for(; onDisplayingUserIdx < this.imageNum && onDisplayingUserIdx < selectedUsers.size(); onDisplayingUserIdx++){
 			addUserImage();
 		}
-		if(imageNum < selectedUsers.size()){
+		int selectedUsersNum = selectedUsers.size();
+		if(imageNum < selectedUsersNum){
 			txtShowMore.setVisibility(View.VISIBLE);
 			txtShowMore.setOnClickListener(new OnClickListener() {
 
@@ -87,6 +91,9 @@ public class HorizontalUserListView extends LinearLayout{
 				}
 			});
 			txtShowMore.setText("+" + (selectedUsers.size() - imageNum));
+		}else if(selectedUsersNum == 0 && allUsers.size() > 0){
+			txtShowMore.setVisibility(View.VISIBLE);
+			txtShowMore.setText("Choose User");
 		}else{
 			txtShowMore.setVisibility(View.GONE);
 		}
@@ -111,9 +118,62 @@ public class HorizontalUserListView extends LinearLayout{
 		if(dlgChooseUser != null){
 			dlgChooseUser.show();
 		}else{
-			dlgChooseUser = new ChiaseListDialog(getContext(), "Select attendant", getUserMap(), null, null);
+			final Map<String, String> userMap = getUserMap();
+			dlgChooseUser = new ChiaseListDialog(getContext(), "Select " + "attendant", userMap, null, new ChiaseListDialog.OnItemClicked() {
+
+				@Override
+				public void onClicked(String selectedKey, boolean isSelected){
+					onUserClicked(selectedKey, isSelected);
+				}
+			});
+
+			List<String> selectedUserIds = getSelectedUserIds();
+			dlgChooseUser.setMultipleChoice(selectedUserIds);
 			dlgChooseUser.show();
 		}
+	}
+
+	private void onUserClicked(String selectedKey, boolean isSelected){
+		UserModel selectedUser = UserModel.getUserModel(selectedKey, allUsers);
+		if(isSelected){
+			addNewJoinedUser(selectedUser);
+		}else{
+			deleteJoinedUser(selectedUser);
+		}
+	}
+
+	private void deleteJoinedUser(UserModel selectedUser){
+		Iterator<UserModel> it = selectedUsers.iterator();
+		while(it.hasNext()){
+			UserModel userMoel = it.next();
+			if(userMoel.key.equals(selectedUser.key)){
+				for(int i = 0; i < onDisplayingUserIdx; i++){
+					if(selectedUsers.get(i).key.equals(userMoel.key)){
+						gridUsers.removeViewAt(i);
+					}
+				}
+				it.remove();
+				onDisplayingUserIdx--;
+			}
+		}
+	}
+
+	private void addNewJoinedUser(UserModel selectedUser){
+		if(onDisplayingUserIdx < selectedUsers.size() - 1){
+			selectedUsers.add(selectedUser);
+			addUserImage();
+		}else{
+			selectedUsers.add(selectedUser);
+			showMoreUsers();
+		}
+	}
+
+	private List<String> getSelectedUserIds(){
+		List<String> selectedUserIds = new ArrayList<>();
+		for(UserModel userModel : selectedUsers){
+			selectedUserIds.add(userModel.key);
+		}
+		return selectedUserIds;
 	}
 
 	public String getUserListString(){
@@ -130,5 +190,12 @@ public class HorizontalUserListView extends LinearLayout{
 			userMap.put(userModel.key, userModel.userName);
 		}
 		return userMap;
+	}
+
+	public void updateAllUsers(List<UserModel> allUsers){
+		this.selectedUsers = new ArrayList<>();
+		this.allUsers = allUsers;
+		this.dlgChooseUser = null;
+		this.inflateWith(selectedUsers, allUsers, isViewOnly, imgSizeDp, imageNum);
 	}
 }
