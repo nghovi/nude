@@ -61,8 +61,8 @@ public class CalendarAdapter extends ArrayAdapter<CalendarModel>{
 		final CalendarViewHolder holder = new CalendarViewHolder(convertView);
 
 		holder.txtName.setText(model.calendarName);
-		if(!CCStringUtil.isEmpty(model.calendarImagePath)){
-			WfPicassoHelper.loadImage(mContext, BuildConfig.HOST + model.calendarImagePath, holder.imgAvatar, null);
+		if(!CCStringUtil.isEmpty(model.imagePath)){
+			WfPicassoHelper.loadImage(mContext, BuildConfig.HOST + model.imagePath, holder.imgAvatar, null);
 		}
 		holder.lnrItem.setOnCheckedChangeListener(new CsOnCheckedChangeListener() {
 

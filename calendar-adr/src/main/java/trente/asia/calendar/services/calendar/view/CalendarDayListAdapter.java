@@ -82,15 +82,15 @@ public class CalendarDayListAdapter extends ArrayAdapter<CalendarDayModel>{
 			txtScheduleTime.setText(schedule.startTime + " - " + schedule.endTime);
 
 			SelectableRoundedImageView imgCalendar = (SelectableRoundedImageView)calendarEvents.findViewById(R.id.img_item_schedule_calendar);
-			WfPicassoHelper.loadImage(getContext(), BuildConfig.HOST + schedule.calendar.calendarImagePath, imgCalendar, null);
+			WfPicassoHelper.loadImage(getContext(), BuildConfig.HOST + schedule.calendar.imagePath, imgCalendar, null);
 
 			SelectableRoundedImageView imgDup = (SelectableRoundedImageView)calendarEvents.findViewById(R.id.img_item_schedule_calendar);
 			// WfPicassoHelper.loadImage(getContext(), BuildConfig.HOST +
-			// schedule.calendar.calendarImagePath, imgDup, null);
+			// schedule.calendar.imagePath, imgDup, null);
 
 			SelectableRoundedImageView imgType = (SelectableRoundedImageView)calendarEvents.findViewById(R.id.img_item_schedule_calendar);
 			// WfPicassoHelper.loadImage(getContext(), BuildConfig.HOST +
-			// schedule.calendar.calendarImagePath, imgType, null);
+			// schedule.calendar.imagePath, imgType, null);
 
 			final HorizontalUserListView horizontalUserListView = (HorizontalUserListView)calendarEvents.findViewById(R.id.view_horizontal_user_list);
 			final List<UserModel> joinedUser = ScheduleDetailFragment.getJoinedUserModels(schedule, schedule.calendar.calendarUsers);

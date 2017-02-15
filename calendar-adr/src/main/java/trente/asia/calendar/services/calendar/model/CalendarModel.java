@@ -17,7 +17,7 @@ public class CalendarModel{
 	public List<Integer>	calendarUserList;
 	public String			key;
 	public String			companyId;
-	public String calendarImagePath;
+	public String			imagePath;
 
 	public CalendarModel(){
 

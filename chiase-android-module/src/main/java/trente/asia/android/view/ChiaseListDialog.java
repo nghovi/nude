@@ -107,7 +107,6 @@ public class ChiaseListDialog extends ChiaseDialog{
 			if(mTxtItem != null){
 				if(!CCStringUtil.isEmpty(mTxtItem.getValue())){
 					int position = mAdapter.findPosition4Code(mTxtItem.getValue());
-
 					mLsvValues.setItemChecked(position, true);
 				}
 			}
