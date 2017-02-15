@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import com.github.ksoichiro.android.observablescrollview.ObservableListView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
-import com.google.gson.Gson;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -26,14 +26,13 @@ import org.json.JSONObject;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
-import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.define.CsConst;
 import trente.asia.android.model.DayModel;
 import trente.asia.android.util.CsDateUtil;
-import trente.asia.android.view.util.CAObjectSerializeUtil;
 import trente.asia.calendar.BuildConfig;
 import trente.asia.calendar.R;
 import trente.asia.calendar.services.calendar.model.CalendarDayModel;
+import trente.asia.calendar.services.calendar.model.CalendarModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.view.CalendarDayListAdapter;
 import trente.asia.calendar.services.calendar.view.CalendarView;
@@ -43,7 +42,8 @@ import trente.asia.welfare.adr.activity.WelfareFragment;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.models.ApiObjectModel;
-import trente.asia.welfare.adr.models.UserModel;
+
+import static trente.asia.welfare.adr.utils.WelfareFormatUtil.convertList2Map;
 
 /**
  * WeeklyPageFragment
@@ -133,6 +133,7 @@ public class WeeklyPageFragment extends WelfareFragment implements ObservableScr
 	protected void initData(){
 
 		Calendar c = Calendar.getInstance();
+		c.setTime(selectedDate);
 		JSONObject jsonObject = new JSONObject();
 		try{
 			jsonObject.put("startDateString", CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, c.getTime()));
@@ -157,8 +158,10 @@ public class WeeklyPageFragment extends WelfareFragment implements ObservableScr
 		List<ScheduleModel> schedules = CCJsonUtil.convertToModelList(response.optString("schedules"), ScheduleModel.class);
 		separateDateTime(schedules);
 		// rooms = CCJsonUtil.convertToModelList(response.optString("rooms"), ApiObjectModel.class);
-		List<UserModel> calendarUsers = CCJsonUtil.convertToModelList(response.optString("calendarUsers"), UserModel.class);
-
+		List<ApiObjectModel> categories = CCJsonUtil.convertToModelList(response.optString("categories"), ApiObjectModel.class);
+		List<CalendarModel> calendars = CCJsonUtil.convertToModelList(response.optString("calendars"), CalendarModel.class);
+		// List<UserModel> calendarUsers = CCJsonUtil.convertToModelList(response.optString("calendarUsers"), UserModel.class);
+		updateSchedules(schedules, categories);
 		List<CalendarDayModel> dummy = getCalendarDayModels(schedules);
 		CalendarDayListAdapter adapter = new CalendarDayListAdapter(activity, R.layout.item_calendar_day, dummy, new CalendarDayListAdapter.OnScheduleClickListener() {
 
@@ -169,6 +172,13 @@ public class WeeklyPageFragment extends WelfareFragment implements ObservableScr
 		});
 		lstCalendarDay.setAdapter(adapter);
 
+	}
+
+	public static void updateSchedules(List<ScheduleModel> schedules, List<ApiObjectModel> categories){
+		Map<String, String> categoriesMap = convertList2Map(categories);
+		for(ScheduleModel schedule : schedules){
+			schedule.categoryName = categoriesMap.get(schedule.categoryId);
+		}
 	}
 
 	private List<CalendarDayModel> getCalendarDayModels(List<ScheduleModel> schedules){

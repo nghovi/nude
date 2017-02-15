@@ -82,15 +82,15 @@ public class WeeklyFragment extends AbstractClFragment{
 
 	@Override
 	protected void initData(){
-		Calendar c = Calendar.getInstance();
-		JSONObject jsonObject = new JSONObject();
-		try{
-			jsonObject.put("startDateString", CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, c.getTime()));
-			c.add(Calendar.DATE, 7);
-			jsonObject.put("endDateString", CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, c.getTime()));
-		}catch(JSONException e){
-			e.printStackTrace();
-		}
+		// Calendar c = Calendar.getInstance();
+		// JSONObject jsonObject = new JSONObject();
+		// try{
+		// jsonObject.put("startDateString", CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, c.getTime()));
+		// c.add(Calendar.DATE, 7);
+		// jsonObject.put("endDateString", CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, c.getTime()));
+		// }catch(JSONException e){
+		// e.printStackTrace();
+		// }
 		// requestLoad(WfUrlConst.WF_CL_WEEK_SCHEDULE, jsonObject, true);
 	}
 
@@ -104,11 +104,11 @@ public class WeeklyFragment extends AbstractClFragment{
 	}
 
 	private void onLoadWeeklySchedulesSuccess(JSONObject response){
-		List<ScheduleModel> schedules = CCJsonUtil.convertToModelList(response.optString("schedules"), ScheduleModel.class);
-		// rooms = CCJsonUtil.convertToModelList(response.optString("rooms"), ApiObjectModel.class);
-		List<UserModel> calendarUsers = CCJsonUtil.convertToModelList(response.optString("calendarUsers"), UserModel.class);
-
-		List<CalendarDayModel> dummy = getCalendarDayModels(schedules);
+//		List<ScheduleModel> schedules = CCJsonUtil.convertToModelList(response.optString("schedules"), ScheduleModel.class);
+//		// rooms = CCJsonUtil.convertToModelList(response.optString("rooms"), ApiObjectModel.class);
+//		List<UserModel> calendarUsers = CCJsonUtil.convertToModelList(response.optString("calendarUsers"), UserModel.class);
+//
+//		List<CalendarDayModel> dummy = getCalendarDayModels(schedules);
 
 	}
 

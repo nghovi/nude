@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
@@ -90,10 +91,22 @@ public class ScheduleDetailFragment extends AbstractClFragment{
 		categories = CCJsonUtil.convertToModelList(response.optString("categories"), ApiObjectModel.class);
 		calendars = CCJsonUtil.convertToModelList(response.optString("calendars"), CalendarModel.class);
 
-		List<UserModel> joinUserList = getJoinedUserModels(schedule, CCJsonUtil.convertToModelList(response.optString("calendarUsers"), UserModel.class));
+		inflateWithData((ViewGroup)getView(), txtRoom, txtCalendar, txtCategory, rooms, calendars, categories, schedule);
+
+		List<UserModel> joinUserList = getJoinedUserModels(schedule, schedule.calendar.calendarUsers);
+		horizontalUserListView.inflateWith(joinUserList, schedule.calendar.calendarUsers, true, 32, 10);
+
+		ImageView imgRightIcon = (ImageView)getView().findViewById(R.id.img_id_header_right_icon);
+		imgRightIcon.setImageResource(R.drawable.abc_btn_check_material);
+		imgRightIcon.setVisibility(View.VISIBLE);
+		imgRightIcon.setOnClickListener(this);
+	}
+
+	public static void inflateWithData(ViewGroup view, ChiaseTextView txtRoom, ChiaseTextView txtCalendar, ChiaseTextView txtCategory, List<ApiObjectModel> rooms, List<CalendarModel> calendars, List<ApiObjectModel> categories, ScheduleModel schedule){
+
 		try{
 			Gson gson = new Gson();
-			CAObjectSerializeUtil.deserializeObject((ViewGroup)getView().findViewById(R.id.lnr_id_content), new JSONObject(gson.toJson(schedule)));
+			CAObjectSerializeUtil.deserializeObject((ViewGroup)view.findViewById(R.id.lnr_id_content), new JSONObject(gson.toJson(schedule)));
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
@@ -103,17 +116,12 @@ public class ScheduleDetailFragment extends AbstractClFragment{
 			txtRoom.setValue(schedule.roomId);
 			txtCalendar.setText(convertList2Map(ScheduleFormFragment.getCalendarHolders(calendars)).get(Integer.parseInt(schedule.calendarId)));
 			txtCalendar.setValue(schedule.calendarId);
-			txtCategory.setValue(schedule.scheduleCategory);
-			txtCategory.setTextColor(Color.parseColor("#" + schedule.scheduleCategory));
-			txtCategory.setText(convertList2Map(categories).get(schedule.scheduleCategory));
+			txtCategory.setValue(schedule.categoryId);
+			if(!CCStringUtil.isEmpty(schedule.categoryId)){
+				txtCategory.setTextColor(Color.parseColor("#" + schedule.categoryId));
+			}
+			txtCategory.setText(convertList2Map(categories).get(schedule.categoryId));
 		}
-
-		horizontalUserListView.inflateWith(joinUserList, schedule.calendar.calendarUsers, true, 32, 10);
-
-		ImageView imgRightIcon = (ImageView)getView().findViewById(R.id.img_id_header_right_icon);
-		imgRightIcon.setImageResource(R.drawable.abc_btn_check_material);
-		imgRightIcon.setVisibility(View.VISIBLE);
-		imgRightIcon.setOnClickListener(this);
 	}
 
 	public static List<UserModel> getJoinedUserModels(ScheduleModel schedule, List<UserModel> userModels){

@@ -25,7 +25,8 @@ public class ScheduleModel{
 	public CalendarModel	calendar;
 
 	public String			scheduleType;
-	public String			scheduleCategory;
+	public String			categoryId;
+	public String			categoryName;
 
 	public ScheduleModel(){
 

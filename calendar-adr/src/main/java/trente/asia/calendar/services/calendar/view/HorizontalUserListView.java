@@ -70,7 +70,7 @@ public class HorizontalUserListView extends LinearLayout{
 		}
 		gridUsers = (GridLayout)this.findViewById(R.id.lnr_view_horizontal_user_list);
 
-		int paddingPx = WelfareUtil.dpToPx(6);
+		int paddingPx = WelfareUtil.dpToPx(2);
 		this.imageNum = gridUsers.getMeasuredWidth() / (imageSizePx + paddingPx);
 		this.imageNum = imgNum < this.imageNum ? imgNum : this.imageNum;
 		gridUsers.removeAllViews();
@@ -101,6 +101,7 @@ public class HorizontalUserListView extends LinearLayout{
 
 	private void addUserImage(){
 		SelectableRoundedImageView imgAvatar = new SelectableRoundedImageView(getContext());
+		imgAvatar.setOval(true);
 		imgAvatar.setLayoutParams(vp);
 		WfPicassoHelper.loadImage(getContext(), BuildConfig.HOST + selectedUsers.get(onDisplayingUserIdx).avatarPath, imgAvatar, null);
 		imgAvatar.setScaleType(ImageView.ScaleType.FIT_XY);

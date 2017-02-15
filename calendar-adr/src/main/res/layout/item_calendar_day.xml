@@ -7,6 +7,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
+    <View style="@style/cs_common_divider"/>
+
     <LinearLayout
         android:id="@+id/lnr_item_calendar_item_list"
         android:layout_width="match_parent"

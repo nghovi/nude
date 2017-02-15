@@ -1,5 +1,8 @@
 package trente.asia.calendar.services.calendar;
 
+import static trente.asia.calendar.services.calendar.ScheduleDetailFragment.inflateWithData;
+import static trente.asia.welfare.adr.utils.WelfareFormatUtil.convertList2Map;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -12,11 +15,11 @@ import com.google.gson.Gson;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TimePicker;
@@ -41,8 +44,6 @@ import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.models.ApiObjectModel;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
-
-import static trente.asia.welfare.adr.utils.WelfareFormatUtil.convertList2Map;
 
 /**
  * ScheduleDetailFragment
@@ -195,7 +196,13 @@ public class ScheduleFormFragment extends AbstractClFragment{
 		if(dlgChooseCategory != null){
 			dlgChooseCategory.show();
 		}else{
-			dlgChooseCategory = new ChiaseListDialog(getContext(), "Select " + "Category", convertList2Map(categories), txtCategory, null);
+			dlgChooseCategory = new ChiaseListDialog(getContext(), "Select " + "Category", convertList2Map(categories), txtCategory, new ChiaseListDialog.OnItemClicked() {
+
+				@Override
+				public void onClicked(String selectedKey, boolean isSelected){
+					txtCategory.setTextColor(Color.parseColor("#" + selectedKey));
+				}
+			});
 			dlgChooseCategory.show();
 		}
 	}
@@ -249,23 +256,12 @@ public class ScheduleFormFragment extends AbstractClFragment{
 		calendarHolders = getCalendarHolders(calendars);
 		categories = CCJsonUtil.convertToModelList(response.optString("categories"), ApiObjectModel.class);
 
-		if(!CCStringUtil.isEmpty(schedule.key)){
-			txtRoom.setText(convertList2Map(rooms).get(Integer.parseInt(schedule.roomId)));
-			txtRoom.setValue(schedule.roomId);
-			txtCalendar.setText(convertList2Map(calendarHolders).get(Integer.parseInt(schedule.calendarId)));
-			txtCalendar.setValue(schedule.calendarId);
-		}
+		inflateWithData((ViewGroup)getView(), txtRoom, txtCalendar, txtCategory, rooms, calendars, categories, schedule);
 
 		List<UserModel> joinUserList = ScheduleDetailFragment.getJoinedUserModels(schedule, CCJsonUtil.convertToModelList(response.optString("calendarUsers"), UserModel.class));
-		try{
-			Gson gson = new Gson();
-			CAObjectSerializeUtil.deserializeObject((ViewGroup)getView().findViewById(R.id.lnr_id_content), new JSONObject(gson.toJson(schedule)));
-		}catch(JSONException e){
-			e.printStackTrace();
-		}
-
 		allCalenarUsers = getAllCalendarUsers(calendars, schedule != null && schedule.calendarId != null ? schedule.calendarId : null);
 		horizontalUserListView.inflateWith(joinUserList, allCalenarUsers, false, 32, 10);
+
 		buildDatePickerDialogs(schedule);
 	}
 
@@ -335,7 +331,7 @@ public class ScheduleFormFragment extends AbstractClFragment{
 				jsonObject.put("key", schedule.key);
 				// 2/13/2017
 			}
-			jsonObject.put("scheduleColor", schedule.scheduleColor);
+			jsonObject.put("categoryId", txtCategory.getValue());
 			jsonObject.put("isDayPeriod", isDayPeriod);
 			jsonObject.put("joinUsers", joinUsers);
 			jsonObject.put("roomId", txtRoom.getValue());
