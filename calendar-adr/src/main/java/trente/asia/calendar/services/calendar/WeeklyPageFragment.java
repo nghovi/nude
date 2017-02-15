@@ -78,6 +78,7 @@ public class WeeklyPageFragment extends WelfareFragment implements ObservableScr
 		lnrContentHeader = (LinearLayout)getView().findViewById(R.id.lnr_id_content_header);
 		lstCalendarDay = (ObservableListView)getView().findViewById(R.id.lst_calendar_day);
 		lstCalendarDay.setScrollViewCallbacks(this);
+		lstCalendarDay.setDivider(null);
 		initContentHeader();
 	}
 

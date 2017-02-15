@@ -85,7 +85,7 @@ public class ScheduleFormFragment extends AbstractClFragment{
 	@Override
 	protected void initView(){
 		super.initView();
-		initHeader(R.drawable.wf_back_white, "Weekly", R.drawable.wf_check);
+		initHeader(R.drawable.wf_back_white, getString(R.string.fragment_schedule_form_title), R.drawable.wf_check);
 
 		ImageView imgRightIcon = (ImageView)getView().findViewById(R.id.img_id_header_right_icon);
 		imgRightIcon.setVisibility(View.VISIBLE);

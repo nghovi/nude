@@ -5,7 +5,9 @@
     <TextView
         android:id="@+id/txt_item_calendar_day_date"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/margin_2dp"
+        android:paddingLeft="@dimen/margin_2dp"/>
 
     <View style="@style/cs_common_divider"/>
 
@@ -13,7 +15,8 @@
         android:id="@+id/lnr_item_calendar_item_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/margin_10dp">
 
     </LinearLayout>
 

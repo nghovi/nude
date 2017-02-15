@@ -7,8 +7,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:orientation="vertical"
-        android:background="@color/chiase_white">
+        android:background="@color/chiase_white"
+        android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/lnr_id_content_header"
@@ -19,7 +19,9 @@
             android:id="@+id/lst_calendar_day"
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:paddingLeft="@dimen/margin_16dp"
+            android:paddingRight="@dimen/margin_16dp"/>
     </LinearLayout>
 
 

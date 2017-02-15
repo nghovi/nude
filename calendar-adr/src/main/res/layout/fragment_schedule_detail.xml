@@ -214,9 +214,13 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"></LinearLayout>
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/margin_16dp"
+                    android:paddingRight="@dimen/margin_16dp">
 
-                <include layout="@layout/view_horizontal_user_list"/>
+                    <include layout="@layout/view_horizontal_user_list"/>
+                </LinearLayout>
+
 
                 <TextView
                     style="@style/wl_common_text"

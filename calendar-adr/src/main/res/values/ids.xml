@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="fragment_schedule_form_title" type="id">New schedule</item>
+</resources>

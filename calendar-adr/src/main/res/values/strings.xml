@@ -20,5 +20,6 @@
     <string name="dlr_fri">Fri</string>
     <string name="fragment_schedule_detail_day_period">Day period</string>
     <string name="fragment_schedule_detail_repeat">Repeat</string>
+    <string name="fragment_schedule_form_title">New schedule</string>
 
 </resources>

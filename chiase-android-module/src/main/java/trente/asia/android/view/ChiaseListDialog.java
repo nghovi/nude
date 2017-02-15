@@ -54,7 +54,9 @@ public class ChiaseListDialog extends ChiaseDialog{
 		}
 
 		mLsvValues = (ListView)this.findViewById(R.id.lst_values_select);
-		mLsvValues.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+		if(!isSingleChoice){
+			mLsvValues.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+		}
 		mAdapter = new ChiaseItemListAdapter(mContext, mLstValue);
 		mLsvValues.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
