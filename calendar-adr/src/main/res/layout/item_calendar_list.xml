@@ -9,14 +9,28 @@
     android:orientation="horizontal"
     android:padding="@dimen/margin_10dp">
 
-    <trente.asia.welfare.adr.view.SelectableRoundedImageView
-        android:id="@+id/img_id_avatar"
-        android:layout_width="@dimen/margin_40dp"
-        android:layout_height="@dimen/margin_40dp"
-        android:focusable="false"
-        android:scaleType="fitXY"
-        android:src="@drawable/wf_profile"
-        custom:sriv_oval="true"/>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <trente.asia.welfare.adr.view.SelectableRoundedImageView
+            android:id="@+id/img_id_avatar"
+            android:layout_width="@dimen/margin_40dp"
+            android:layout_height="@dimen/margin_40dp"
+            android:focusable="false"
+            android:scaleType="fitXY"
+            android:src="@drawable/wf_profile"
+            custom:sriv_oval="true"/>
+
+        <ImageView
+            android:id="@+id/img_checked"
+            android:layout_width="@dimen/margin_32dp"
+            android:layout_height="@dimen/margin_32dp"
+            android:layout_marginLeft="@dimen/margin_6dp"
+            android:src="@drawable/cs_row_check"
+            android:visibility="gone"/>
+    </RelativeLayout>
+
 
     <LinearLayout
         style="@style/cs_common_match_wrap"
@@ -35,11 +49,5 @@
 
     </LinearLayout>
 
-    <trente.asia.android.view.ChiaseSingleCheckBox
-        android:id="@+id/cbx_item_selected"
-        style="@style/cs_custom_checkbox"
-        android:layout_marginLeft="@dimen/margin_6dp"
-        android:focusable="false"
-        android:padding="@dimen/margin_0dp"/>
 
 </trente.asia.android.view.layout.CheckableLinearLayout>

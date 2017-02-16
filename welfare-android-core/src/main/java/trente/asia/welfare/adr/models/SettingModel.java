@@ -1,6 +1,8 @@
 package trente.asia.welfare.adr.models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Huy-nq on 8/25/2016.
@@ -9,8 +11,8 @@ public class SettingModel implements Serializable{
 
 	public String	DR_PUBLIC_LEVEL;
 	public String	WF_PUSH_SETTING;
-    public String	WF_MAX_FILE_SIZE;
-    public String	SW_APPOINTMENT_ENABLED;
+	public String	WF_MAX_FILE_SIZE;
+	public String	SW_APPOINTMENT_ENABLED;
 
 	public String getDR_PUBLIC_LEVEL(){
 		return DR_PUBLIC_LEVEL;

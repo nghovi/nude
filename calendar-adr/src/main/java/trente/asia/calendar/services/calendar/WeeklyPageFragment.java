@@ -172,7 +172,6 @@ public class WeeklyPageFragment extends WelfareFragment implements ObservableScr
 			}
 		});
 		lstCalendarDay.setAdapter(adapter);
-
 	}
 
 	public static void updateSchedules(List<ScheduleModel> schedules, List<ApiObjectModel> categories){

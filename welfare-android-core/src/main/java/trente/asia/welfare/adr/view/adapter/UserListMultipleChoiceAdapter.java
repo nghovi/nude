@@ -44,7 +44,7 @@ public class UserListMultipleChoiceAdapter extends ArrayAdapter<UserModel>{
 		ViewHolder holder;
 		UserModel user = this.getItem(position);
 		if(convertView == null){
-			convertView = ((LayoutInflater)this.getContext().getSystemService(Activity.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.adapter_dialog_list_item, null);
+			convertView = ((LayoutInflater)this.getContext().getSystemService(Activity.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.item_user_list_multiple_choice_dialog, null);
 			holder = new ViewHolder();
 			holder.txtUserName = (TextView)convertView.findViewById(R.id.txt_item_value);
 			holder.imgUser = (ImageView)convertView.findViewById(R.id.img_user_list_multiple_choice_dialog);

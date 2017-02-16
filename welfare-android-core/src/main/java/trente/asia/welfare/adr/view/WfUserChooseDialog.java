@@ -1,8 +1,6 @@
 package trente.asia.welfare.adr.view;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import android.content.Context;
 import android.view.View;
@@ -55,15 +53,16 @@ public class WfUserChooseDialog extends ChiaseDialog{
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id){
+			public void onItemClick(AdapterView<?> parent, View view, final int position, long id){
 				UserModel selectedUser = (UserModel)parent.getItemAtPosition(position);
-				boolean check = getCheckedStatus(selectedUser.key);
+				final boolean check = getCheckedStatus(selectedUser.key);
 				if(!check){
+					view.findViewById(R.id.img_checked).setVisibility(View.VISIBLE);
 					selectedUsers.add(userModels.get(position));
 				}else{
+					view.findViewById(R.id.img_checked).setVisibility(View.GONE);
 					selectedUsers.remove(userModels.get(position));
 				}
-				listView.setItemChecked(position, !check);
 				if(onUserClickedListener != null) onUserClickedListener.onClicked(selectedUser.key, !check);
 			}
 		});

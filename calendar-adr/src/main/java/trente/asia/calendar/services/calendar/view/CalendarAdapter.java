@@ -19,6 +19,7 @@ import trente.asia.android.view.layout.CheckableLinearLayout;
 import trente.asia.calendar.BuildConfig;
 import trente.asia.calendar.R;
 import trente.asia.calendar.services.calendar.model.CalendarModel;
+import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WfPicassoHelper;
 
 /**
@@ -38,12 +39,14 @@ public class CalendarAdapter extends ArrayAdapter<CalendarModel>{
 		public HorizontalUserListView	horizontalUserList;
 		public TextView					txtName;
 		public CheckableLinearLayout	lnrItem;
+		public ImageView				imgCheck;
 
 		public CalendarViewHolder(View view){
 			imgAvatar = (ImageView)view.findViewById(R.id.img_id_avatar);
 			txtName = (TextView)view.findViewById(R.id.txt_id_name);
 			lnrItem = (CheckableLinearLayout)view.findViewById(R.id.lnr_id_item);
 			horizontalUserList = (HorizontalUserListView)view.findViewById(R.id.view_horizontal_user_list);
+			imgCheck = (ImageView)view.findViewById(R.id.img_checked);
 		}
 	}
 
@@ -64,11 +67,17 @@ public class CalendarAdapter extends ArrayAdapter<CalendarModel>{
 		if(!CCStringUtil.isEmpty(model.imagePath)){
 			WfPicassoHelper.loadImage(mContext, BuildConfig.HOST + model.imagePath, holder.imgAvatar, null);
 		}
+		final View finalConvertView = convertView;
 		holder.lnrItem.setOnCheckedChangeListener(new CsOnCheckedChangeListener() {
 
 			@Override
 			public void onCheckedChanged(Checkable view, boolean isChecked){
 				(((ListView)parent)).setItemChecked(position, isChecked);
+				if(isChecked){
+					holder.imgCheck.setVisibility(View.VISIBLE);
+				}else{
+					holder.imgCheck.setVisibility(View.GONE);
+				}
 			}
 		});
 
@@ -87,4 +96,17 @@ public class CalendarAdapter extends ArrayAdapter<CalendarModel>{
 		this.calendarList.add(position, item);
 		this.notifyDataSetChanged();
 	}
+
+	public int findPosition4Code(String calendarId){
+		int position = -1;
+		for(int i = 0; i < calendarList.size(); i++){
+			CalendarModel calendarModel = calendarList.get(i);
+			if(calendarModel.key.equals(calendarId)){
+				position = i;
+				break;
+			}
+		}
+		return position;
+	}
+
 }

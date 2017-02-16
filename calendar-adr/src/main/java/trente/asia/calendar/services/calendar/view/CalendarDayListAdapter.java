@@ -102,6 +102,7 @@ public class CalendarDayListAdapter extends ArrayAdapter<CalendarDayModel>{
 				}
 			});
 
+			calendarEvents.setFocusable(true);
 			calendarEvents.setOnClickListener(new View.OnClickListener() {
 
 				@Override

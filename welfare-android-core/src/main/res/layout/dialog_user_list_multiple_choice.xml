@@ -23,6 +23,6 @@
     <ListView
         android:id="@+id/lst_values_select"
         style="@style/cs_common_match_wrap"
-        android:choiceMode="singleChoice"
+        android:choiceMode="multipleChoice"
         android:divider="@null"/>
 </LinearLayout>
