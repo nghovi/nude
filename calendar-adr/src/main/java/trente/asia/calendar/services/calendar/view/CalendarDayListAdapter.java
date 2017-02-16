@@ -98,7 +98,7 @@ public class CalendarDayListAdapter extends ArrayAdapter<CalendarDayModel>{
 
 				@Override
 				public void run(){
-					horizontalUserListView.inflateWith(joinedUser, joinedUser, true, 32, 10);
+					horizontalUserListView.show(joinedUser, joinedUser, true, 32, 10);
 				}
 			});
 

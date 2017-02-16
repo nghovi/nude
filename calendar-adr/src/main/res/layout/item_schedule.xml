@@ -17,13 +17,15 @@
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
 
                 <trente.asia.welfare.adr.view.SelectableRoundedImageView
                     android:id="@+id/img_item_schedule_calendar"
                     android:layout_width="@dimen/margin_32dp"
                     android:layout_height="@dimen/margin_32dp"
                     android:layout_gravity="center_horizontal"
+                    android:layout_marginRight="@dimen/margin_10dp"
                     android:scaleType="fitXY"
                     custom:sriv_oval="true"/>
 
@@ -35,8 +37,8 @@
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:gravity="center_vertical"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
 
                 <trente.asia.welfare.adr.view.SelectableRoundedImageView
                     android:id="@+id/img_item_schedule_dup"
@@ -44,8 +46,8 @@
                     android:layout_height="@dimen/margin_32dp"
                     android:layout_gravity="center_horizontal"
                     android:scaleType="fitXY"
-                    custom:sriv_oval="true"
-                    android:src="@drawable/abc_btn_radio_material"/>
+                    android:src="@drawable/abc_btn_radio_material"
+                    custom:sriv_oval="true"/>
 
                 <trente.asia.welfare.adr.view.SelectableRoundedImageView
                     android:id="@+id/img_item_schedule_type"
@@ -68,6 +70,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:gravity="center_vertical"
             android:orientation="vertical">
 
 

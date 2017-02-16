@@ -14,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
@@ -94,7 +93,7 @@ public class ScheduleDetailFragment extends AbstractClFragment{
 		inflateWithData((ViewGroup)getView(), txtRoom, txtCalendar, txtCategory, rooms, calendars, categories, schedule);
 
 		List<UserModel> joinUserList = getJoinedUserModels(schedule, schedule.calendar.calendarUsers);
-		horizontalUserListView.inflateWith(joinUserList, schedule.calendar.calendarUsers, true, 32, 10);
+		horizontalUserListView.show(joinUserList, schedule.calendar.calendarUsers, true, 32, 10);
 
 		ImageView imgRightIcon = (ImageView)getView().findViewById(R.id.img_id_header_right_icon);
 		imgRightIcon.setImageResource(R.drawable.abc_btn_check_material);

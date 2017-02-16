@@ -33,8 +33,6 @@ public class ChiaseListDialog extends ChiaseDialog{
 	private ChiaseTextView				mTxtItem;
 	private ListView					mLsvValues;
 	private ChiaseItemListAdapter		mAdapter;
-	private boolean						isSingleChoice		= true;
-	private List<String>				selectedValues		= new ArrayList<>();
 
 	public interface OnItemClicked{
 
@@ -54,45 +52,26 @@ public class ChiaseListDialog extends ChiaseDialog{
 		}
 
 		mLsvValues = (ListView)this.findViewById(R.id.lst_values_select);
-		if(!isSingleChoice){
-			mLsvValues.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-		}
 		mAdapter = new ChiaseItemListAdapter(mContext, mLstValue);
 		mLsvValues.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id){
 				ChiaseListItemModel valueSelect = (ChiaseListItemModel)parent.getItemAtPosition(position);
-				if(txtItem != null && isSingleChoice){
+				if(txtItem != null){
 					txtItem.setText(valueSelect.value);
 					txtItem.setValue(valueSelect.key);
 				}
 				mQkItemListModel = new ChiaseListItemModel();
 				mQkItemListModel.setKey(valueSelect.key);
 				mQkItemListModel.setValue(valueSelect.value);
-				boolean check = getCheckedStatus(valueSelect.key);
-				if(!check){
-					selectedValues.add(valueSelect.key);
-				}else{
-					selectedValues.remove(valueSelect.key);
-				}
-				mLsvValues.setItemChecked(position, !check);
-				if(itemClickListener != null) itemClickListener.onClicked(valueSelect.key, !check);
-				if(isSingleChoice){
-					ChiaseListDialog.this.dismiss();
-				}
+
+				mLsvValues.setItemChecked(position, true);
+				if(itemClickListener != null) itemClickListener.onClicked(valueSelect.key, true);
+				ChiaseListDialog.this.dismiss();
 			}
 		});
 		mLsvValues.setAdapter(mAdapter);
-	}
-
-	private boolean getCheckedStatus(String selectedValue){
-		for(String value : selectedValues){
-			if(value.equals(selectedValue)){
-				return true;
-			}
-		}
-		return false;
 	}
 
 	private void initDialog(){
@@ -104,18 +83,9 @@ public class ChiaseListDialog extends ChiaseDialog{
 			mLstValue.add(selected);
 		}
 
-		// set default value
-		if(isSingleChoice){
-			if(mTxtItem != null){
-				if(!CCStringUtil.isEmpty(mTxtItem.getValue())){
-					int position = mAdapter.findPosition4Code(mTxtItem.getValue());
-					mLsvValues.setItemChecked(position, true);
-				}
-			}
-		}else{
-			mLsvValues.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
-			for(String selectedValue : selectedValues){
-				int position = mAdapter.findPosition4Code(selectedValue);
+		if(mTxtItem != null){
+			if(!CCStringUtil.isEmpty(mTxtItem.getValue())){
+				int position = mAdapter.findPosition4Code(mTxtItem.getValue());
 				mLsvValues.setItemChecked(position, true);
 			}
 		}
@@ -138,10 +108,5 @@ public class ChiaseListDialog extends ChiaseDialog{
 	public void show(){
 		initDialog();
 		super.show();
-	}
-
-	public void setMultipleChoice(List<String> selectedValues){
-		isSingleChoice = false;
-		this.selectedValues = selectedValues;
 	}
 }

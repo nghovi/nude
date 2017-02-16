@@ -4,7 +4,6 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -16,15 +15,14 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.view.ChiaseListDialog;
 import trente.asia.calendar.BuildConfig;
 import trente.asia.calendar.R;
 import trente.asia.welfare.adr.models.UserModel;
-import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 import trente.asia.welfare.adr.utils.WelfareUtil;
 import trente.asia.welfare.adr.utils.WfPicassoHelper;
 import trente.asia.welfare.adr.view.SelectableRoundedImageView;
+import trente.asia.welfare.adr.view.WfUserChooseDialog;
 
 /**
  * Created by viet on 2/9/2017.
@@ -34,7 +32,7 @@ public class HorizontalUserListView extends LinearLayout{
 
 	private List<UserModel>		selectedUsers;
 	private List<UserModel>		allUsers;
-	private ChiaseListDialog	dlgChooseUser;
+	private WfUserChooseDialog	dlgChooseUser;
 	private boolean				isViewOnly;
 	private int					imgSizeDp			= 80;
 	private int					imageNum			= 10;
@@ -51,7 +49,7 @@ public class HorizontalUserListView extends LinearLayout{
 		super(context, attrs);
 	}
 
-	public void inflateWith(List<UserModel> users, List<UserModel> calendarUsers, boolean isViewOnly, int imageSizeDp, int imgNum){
+	public void show(List<UserModel> users, List<UserModel> calendarUsers, boolean isViewOnly, int imageSizeDp, int imgNum){
 		selectedUsers = users;
 		allUsers = calendarUsers;
 		this.isViewOnly = isViewOnly;
@@ -120,7 +118,7 @@ public class HorizontalUserListView extends LinearLayout{
 			dlgChooseUser.show();
 		}else{
 			final Map<String, String> userMap = getUserMap();
-			dlgChooseUser = new ChiaseListDialog(getContext(), "Select " + "attendant", userMap, null, new ChiaseListDialog.OnItemClicked() {
+			dlgChooseUser = new WfUserChooseDialog(getContext(), "Select " + "attendant", allUsers, new WfUserChooseDialog.OnUserClicked() {
 
 				@Override
 				public void onClicked(String selectedKey, boolean isSelected){
@@ -128,8 +126,6 @@ public class HorizontalUserListView extends LinearLayout{
 				}
 			});
 
-			List<String> selectedUserIds = getSelectedUserIds();
-			dlgChooseUser.setMultipleChoice(selectedUserIds);
 			dlgChooseUser.show();
 		}
 	}
@@ -197,6 +193,6 @@ public class HorizontalUserListView extends LinearLayout{
 		this.selectedUsers = new ArrayList<>();
 		this.allUsers = allUsers;
 		this.dlgChooseUser = null;
-		this.inflateWith(selectedUsers, allUsers, isViewOnly, imgSizeDp, imageNum);
+		this.show(selectedUsers, allUsers, isViewOnly, imgSizeDp, imageNum);
 	}
 }

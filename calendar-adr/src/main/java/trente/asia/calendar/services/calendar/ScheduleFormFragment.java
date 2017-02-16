@@ -11,8 +11,6 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.google.gson.Gson;
-
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.graphics.Color;
@@ -260,7 +258,7 @@ public class ScheduleFormFragment extends AbstractClFragment{
 
 		List<UserModel> joinUserList = ScheduleDetailFragment.getJoinedUserModels(schedule, CCJsonUtil.convertToModelList(response.optString("calendarUsers"), UserModel.class));
 		allCalenarUsers = getAllCalendarUsers(calendars, schedule != null && schedule.calendarId != null ? schedule.calendarId : null);
-		horizontalUserListView.inflateWith(joinUserList, allCalenarUsers, false, 32, 10);
+		horizontalUserListView.show(joinUserList, allCalenarUsers, false, 32, 10);
 
 		buildDatePickerDialogs(schedule);
 	}

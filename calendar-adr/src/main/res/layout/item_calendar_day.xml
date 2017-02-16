@@ -6,8 +6,8 @@
         android:id="@+id/txt_item_calendar_day_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/margin_2dp"
-        android:paddingLeft="@dimen/margin_2dp"/>
+        android:paddingBottom="@dimen/margin_6dp"
+        android:paddingLeft="@dimen/margin_6dp"/>
 
     <View style="@style/cs_common_divider"/>
 

@@ -76,7 +76,7 @@ public class CalendarAdapter extends ArrayAdapter<CalendarModel>{
 
 			@Override
 			public void run(){
-				holder.horizontalUserList.inflateWith(model.calendarUsers, model.calendarUsers, true, 32, 10);
+				holder.horizontalUserList.show(model.calendarUsers, model.calendarUsers, true, 32, 10);
 			}
 		});
 
