@@ -30,15 +30,16 @@ import trente.asia.welfare.adr.view.WfUserChooseDialog;
 
 public class HorizontalUserListView extends LinearLayout{
 
+	private static final int	HORIZONTAL_USER_LIST_TAG	= 10001;
 	private List<UserModel>		selectedUsers;
 	private List<UserModel>		allUsers;
 	private WfUserChooseDialog	dlgChooseUser;
 	private boolean				isViewOnly;
-	private int					imgSizeDp			= 80;
-	private int					imageNum			= 10;
+	private int					imgSizeDp					= 80;
+	private int					imageNum					= 10;
 	private TextView			txtShowMore;
 	private GridLayout			gridUsers;
-	private int					onDisplayingUserIdx	= 0;
+	private int					onDisplayingUserIdx			= 0;
 	private LayoutParams		vp;
 
 	public HorizontalUserListView(Context context){
@@ -101,8 +102,10 @@ public class HorizontalUserListView extends LinearLayout{
 		SelectableRoundedImageView imgAvatar = new SelectableRoundedImageView(getContext());
 		imgAvatar.setOval(true);
 		imgAvatar.setLayoutParams(vp);
-		WfPicassoHelper.loadImage(getContext(), BuildConfig.HOST + selectedUsers.get(onDisplayingUserIdx).avatarPath, imgAvatar, null);
+		UserModel userModel = selectedUsers.get(onDisplayingUserIdx);
+		WfPicassoHelper.loadImage(getContext(), BuildConfig.HOST + userModel.avatarPath, imgAvatar, null);
 		imgAvatar.setScaleType(ImageView.ScaleType.FIT_XY);
+		imgAvatar.setTag(userModel);
 		gridUsers.addView(imgAvatar);
 	}
 
@@ -118,7 +121,7 @@ public class HorizontalUserListView extends LinearLayout{
 			dlgChooseUser.show();
 		}else{
 			final Map<String, String> userMap = getUserMap();
-			dlgChooseUser = new WfUserChooseDialog(getContext(), "Select " + "attendant", allUsers, new WfUserChooseDialog.OnUserClicked() {
+			dlgChooseUser = new WfUserChooseDialog(getContext(), "Select " + "attendant", selectedUsers, allUsers, new WfUserChooseDialog.OnUserClicked() {
 
 				@Override
 				public void onClicked(String selectedKey, boolean isSelected){
@@ -140,27 +143,20 @@ public class HorizontalUserListView extends LinearLayout{
 	}
 
 	private void deleteJoinedUser(UserModel selectedUser){
-		Iterator<UserModel> it = selectedUsers.iterator();
-		while(it.hasNext()){
-			UserModel userMoel = it.next();
-			if(userMoel.key.equals(selectedUser.key)){
-				for(int i = 0; i < onDisplayingUserIdx; i++){
-					if(selectedUsers.get(i).key.equals(userMoel.key)){
-						gridUsers.removeViewAt(i);
-					}
-				}
-				it.remove();
+		for(int i = 0; i < gridUsers.getChildCount(); i++){
+			View v = gridUsers.getChildAt(i);
+			if(((UserModel)v.getTag()).key.equals(selectedUser.key)){
+				gridUsers.removeViewAt(i);
 				onDisplayingUserIdx--;
+				return;
 			}
 		}
 	}
 
 	private void addNewJoinedUser(UserModel selectedUser){
 		if(onDisplayingUserIdx < selectedUsers.size() - 1){
-			selectedUsers.add(selectedUser);
 			addUserImage();
 		}else{
-			selectedUsers.add(selectedUser);
 			showMoreUsers();
 		}
 	}

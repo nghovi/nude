@@ -256,8 +256,8 @@ public class ScheduleFormFragment extends AbstractClFragment{
 
 		inflateWithData((ViewGroup)getView(), txtRoom, txtCalendar, txtCategory, rooms, calendars, categories, schedule);
 
-		List<UserModel> joinUserList = ScheduleDetailFragment.getJoinedUserModels(schedule, CCJsonUtil.convertToModelList(response.optString("calendarUsers"), UserModel.class));
 		allCalenarUsers = getAllCalendarUsers(calendars, schedule != null && schedule.calendarId != null ? schedule.calendarId : null);
+		List<UserModel> joinUserList = ScheduleDetailFragment.getJoinedUserModels(schedule, allCalenarUsers);
 		horizontalUserListView.show(joinUserList, allCalenarUsers, false, 32, 10);
 
 		buildDatePickerDialogs(schedule);

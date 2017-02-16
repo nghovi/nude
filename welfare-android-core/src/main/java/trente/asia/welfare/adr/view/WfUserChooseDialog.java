@@ -27,7 +27,7 @@ public class WfUserChooseDialog extends ChiaseDialog{
 
 	private ListView						listView;
 	private UserListMultipleChoiceAdapter	mAdapter;
-	private List<UserModel>					selectedUsers	= new ArrayList<>();
+	private List<UserModel>					selectedUsers;
 	private OnUserClicked					onUserClickedListener;
 	private List<UserModel>					userModels;
 
@@ -36,10 +36,11 @@ public class WfUserChooseDialog extends ChiaseDialog{
 		public void onClicked(String selectedKey, boolean isSelected);
 	}
 
-	public WfUserChooseDialog(Context context, String title, final List<UserModel> userModels, OnUserClicked itemClickListener){
+	public WfUserChooseDialog(Context context, String title, List<UserModel> selectedOnes, final List<UserModel> userModels, OnUserClicked itemClickListener){
 		super(context);
 		this.setContentView(R.layout.dialog_user_list_multiple_choice);
 		this.mContext = context;
+		this.selectedUsers = selectedOnes;
 		this.userModels = userModels;
 		this.onUserClickedListener = itemClickListener;
 
