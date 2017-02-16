@@ -3,6 +3,7 @@ package trente.asia.calendar.services.calendar;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.os.Bundle;
@@ -87,6 +88,11 @@ public class CalendarListFragment extends AbstractClFragment{
 
 	private void loadCalendarList(){
 		JSONObject jsonObject = new JSONObject();
+        try{
+            jsonObject.put("targetUserId", myself.key);
+        }catch(JSONException e){
+            e.printStackTrace();
+        }
 		requestLoad(WfUrlConst.WF_CL_CAL_0001, jsonObject, false);
 	}
 
