@@ -48,15 +48,24 @@ public class UserListLinearLayout extends LinearLayout{
 			int maxUserNumber = this.getWidth() / 40;
 			if(lstUser.size() <= maxUserNumber){
 				for(UserModel userModel : lstUser){
-					LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-					View userItemView = inflater.inflate(R.layout.view_user_item, null);
-                    if(!CCStringUtil.isEmpty(userModel.avatarPath)){
-                        ImageView imgAvatar = (ImageView)userItemView.findViewById(R.id.img_id_avatar);
-                        WfPicassoHelper.loadImage(mContext, BuildConfig.HOST + userModel.avatarPath, imgAvatar, null);
-                    }
-                    this.addView(userItemView);
+					addUserView(userModel);
+				}
+			}else{
+				for(int index = 0; index < maxUserNumber - 1; index++){
+					UserModel userModel = lstUser.get(index);
+					addUserView(userModel);
 				}
 			}
 		}
+	}
+
+	private void addUserView(UserModel userModel){
+		LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		View userItemView = inflater.inflate(R.layout.view_user_item, null);
+		if(!CCStringUtil.isEmpty(userModel.avatarPath)){
+			ImageView imgAvatar = (ImageView)userItemView.findViewById(R.id.img_id_avatar);
+			WfPicassoHelper.loadImage(mContext, BuildConfig.HOST + userModel.avatarPath, imgAvatar, null);
+		}
+		this.addView(userItemView);
 	}
 }

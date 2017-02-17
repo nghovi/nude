@@ -15,6 +15,7 @@ import android.widget.TextView;
 import asia.chiase.core.util.CCFormatUtil;
 import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.R;
+import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.fragments.AbstractClFragment;
 import trente.asia.calendar.services.calendar.view.MonthlyCalendarPagerAdapter;
 import trente.asia.welfare.adr.define.WelfareConst;
@@ -27,14 +28,15 @@ import trente.asia.welfare.adr.view.WfSlideMenuLayout;
  */
 public class MonthlyFragment extends AbstractClFragment{
 
-	private ImageView			mImgLeftHeader;
-	private WfSlideMenuLayout	mSlideMenuLayout;
+	private ImageView					mImgLeftHeader;
+	private WfSlideMenuLayout			mSlideMenuLayout;
 
-	private ViewPager			viewPager;
-	private TextView			txtMonth;
+	private ViewPager					viewPager;
+	private TextView					txtMonth;
+	private MonthlyCalendarPagerAdapter	pagerAdapter;
 
-    private final Date	TODAY		= CsDateUtil.makeMonthWithFirstDate();
-    private final int	ACTIVE_PAGE	= Integer.MAX_VALUE / 2;
+	private final Date					TODAY		= CsDateUtil.makeMonthWithFirstDate();
+	private final int					ACTIVE_PAGE	= Integer.MAX_VALUE / 2;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -52,10 +54,10 @@ public class MonthlyFragment extends AbstractClFragment{
 		viewPager = (ViewPager)getView().findViewById(R.id.view_pager_id_calendar);
 		txtMonth = (TextView)getView().findViewById(R.id.txt_id_month);
 
-		MonthlyCalendarPagerAdapter pagerAdapter = new MonthlyCalendarPagerAdapter(getChildFragmentManager());
+		pagerAdapter = new MonthlyCalendarPagerAdapter(getChildFragmentManager());
 		viewPager.setAdapter(pagerAdapter);
 		viewPager.setCurrentItem(ACTIVE_PAGE);
-        setActiveMonth(ACTIVE_PAGE);
+		setActiveMonth(ACTIVE_PAGE);
 		viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
 			public void onPageScrollStateChanged(int state){
@@ -65,7 +67,10 @@ public class MonthlyFragment extends AbstractClFragment{
 			}
 
 			public void onPageSelected(int position){
-                setActiveMonth(position);
+				setActiveMonth(position);
+//                load schedule list
+				MonthlyPageFragment fragment = (MonthlyPageFragment)pagerAdapter.getItem(position);
+				fragment.loadScheduleList();
 			}
 		});
 
@@ -87,10 +92,11 @@ public class MonthlyFragment extends AbstractClFragment{
 		return R.id.lnr_view_footer_monthly;
 	}
 
-    private void setActiveMonth(int position){
-        Date activeMonth = CsDateUtil.addMonth(TODAY, position - ACTIVE_PAGE);
-        txtMonth.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_12, activeMonth));
-    }
+	private void setActiveMonth(int position){
+		Date activeMonth = CsDateUtil.addMonth(TODAY, position - ACTIVE_PAGE);
+		txtMonth.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_12, activeMonth));
+        prefAccUtil.set(ClConst.PREF_ACTIVE_DATE, CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, activeMonth));
+	}
 
 	@Override
 	public void onClick(View v){

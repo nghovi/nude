@@ -1,13 +1,13 @@
 package trente.asia.calendar.services.calendar.view;
 
-import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import asia.chiase.core.util.CCDateUtil;
 import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.services.calendar.MonthlyPageFragment;
 
@@ -18,8 +18,9 @@ import trente.asia.calendar.services.calendar.MonthlyPageFragment;
  */
 public class MonthlyCalendarPagerAdapter extends FragmentPagerAdapter{
 
-	private final int	ACTIVE_PAGE	= Integer.MAX_VALUE / 2;
-	private final Date	TODAY		= CsDateUtil.makeMonthWithFirstDate();
+	private final int							ACTIVE_PAGE	= Integer.MAX_VALUE / 2;
+	private final Date							TODAY		= CsDateUtil.makeMonthWithFirstDate();
+	private Map<Integer, MonthlyPageFragment>	monthlyMap	= new HashMap<>();
 
 	public MonthlyCalendarPagerAdapter(FragmentManager fm){
 		super(fm);
@@ -27,12 +28,14 @@ public class MonthlyCalendarPagerAdapter extends FragmentPagerAdapter{
 
 	@Override
 	public Fragment getItem(int position){
-		Date activeMonth = CsDateUtil.addMonth(TODAY, position - ACTIVE_PAGE);
-		Calendar activeCalendar = CCDateUtil.makeCalendar(activeMonth);
-		activeCalendar.setFirstDayOfWeek(Calendar.THURSDAY);
+		MonthlyPageFragment monthlyPageFragment = this.monthlyMap.get(position);
+		if(monthlyPageFragment == null){
+			Date activeMonth = CsDateUtil.addMonth(TODAY, position - ACTIVE_PAGE);
+			monthlyPageFragment = new MonthlyPageFragment();
+			monthlyPageFragment.setActiveMonth(activeMonth);
+			this.monthlyMap.put(position, monthlyPageFragment);
+		}
 
-		MonthlyPageFragment monthlyPageFragment = new MonthlyPageFragment();
-		monthlyPageFragment.setActiveMonth(activeMonth);
 		return monthlyPageFragment;
 	}
 

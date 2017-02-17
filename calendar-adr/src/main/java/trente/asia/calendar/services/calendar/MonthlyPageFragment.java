@@ -126,10 +126,13 @@ public class MonthlyPageFragment extends WelfareFragment implements DailySchedul
 
 	@Override
 	protected void initData(){
-		loadScheduleList();
+        String activeDateString = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, activeMonth);
+        if(activeDateString.equals(prefAccUtil.get(ClConst.PREF_ACTIVE_DATE))){
+            loadScheduleList();
+        }
 	}
 
-	private void loadScheduleList(){
+	public void loadScheduleList(){
 		JSONObject jsonObject = new JSONObject();
 		try{
 			jsonObject.put("targetUserList", "");

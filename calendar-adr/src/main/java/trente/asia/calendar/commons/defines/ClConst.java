@@ -17,4 +17,5 @@ public class ClConst{
 	public static final String	SCHEDULE_TYPE_PERIOD		= "2";
 
 	public static final String	SELECTED_CALENDAR_STRING	= "SELECTED_CALENDAR_STRING";
+	public static final String	PREF_ACTIVE_DATE			= "PREF_ACTIVE_DATE";
 }
