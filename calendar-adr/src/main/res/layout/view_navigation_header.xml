@@ -65,7 +65,8 @@
 
             <ImageView
                 android:id="@+id/img_id_header_right_icon"
-                style="@style/cs_common_wrap"/>
+                style="@style/cs_common_wrap"
+                android:src="@drawable/cl_action_add"/>
         </LinearLayout>
     </LinearLayout>
 

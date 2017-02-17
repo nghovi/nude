@@ -51,6 +51,7 @@ public class MonthlyFragment extends AbstractClFragment{
 		super.initView();
 
 		mImgLeftHeader = (ImageView)getView().findViewById(R.id.img_id_header_left_icon);
+		ImageView imgRightHeader = (ImageView)getView().findViewById(R.id.img_id_header_right_icon);
 		viewPager = (ViewPager)getView().findViewById(R.id.view_pager_id_calendar);
 		txtMonth = (TextView)getView().findViewById(R.id.txt_id_month);
 
@@ -68,7 +69,7 @@ public class MonthlyFragment extends AbstractClFragment{
 
 			public void onPageSelected(int position){
 				setActiveMonth(position);
-//                load schedule list
+				// load schedule list
 				MonthlyPageFragment fragment = (MonthlyPageFragment)pagerAdapter.getItem(position);
 				fragment.loadScheduleList();
 			}
@@ -81,6 +82,7 @@ public class MonthlyFragment extends AbstractClFragment{
 		transaction.replace(R.id.slice_menu_board, calendarListFragment).commit();
 
 		mImgLeftHeader.setOnClickListener(this);
+		imgRightHeader.setOnClickListener(this);
 	}
 
 	@Override
@@ -95,7 +97,7 @@ public class MonthlyFragment extends AbstractClFragment{
 	private void setActiveMonth(int position){
 		Date activeMonth = CsDateUtil.addMonth(TODAY, position - ACTIVE_PAGE);
 		txtMonth.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_12, activeMonth));
-        prefAccUtil.set(ClConst.PREF_ACTIVE_DATE, CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, activeMonth));
+		prefAccUtil.set(ClConst.PREF_ACTIVE_DATE, CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, activeMonth));
 	}
 
 	@Override
@@ -103,6 +105,10 @@ public class MonthlyFragment extends AbstractClFragment{
 		switch(v.getId()){
 		case R.id.img_id_header_left_icon:
 			mSlideMenuLayout.toggleMenu();
+			break;
+		case R.id.img_id_header_right_icon:
+			ScheduleFormFragment fragment = new ScheduleFormFragment();
+			gotoFragment(fragment);
 			break;
 		default:
 			break;

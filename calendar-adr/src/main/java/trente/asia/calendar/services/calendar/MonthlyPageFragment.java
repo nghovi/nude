@@ -161,6 +161,14 @@ public class MonthlyPageFragment extends WelfareFragment implements DailySchedul
 				}
 			}
 			List<UserModel> lstCalendarUser = CCJsonUtil.convertToModelList(response.optString("calendarUsers"), UserModel.class);
+//            List<UserModel> testCalendarUser = new ArrayList<>();
+//            for(UserModel userModel : lstCalendarUser){
+//                testCalendarUser.add(userModel);
+//            }
+//            lstCalendarUser.addAll(testCalendarUser);
+//            lstCalendarUser.addAll(testCalendarUser);
+//            lstCalendarUser.addAll(testCalendarUser);
+
 			UserListLinearLayout lnrUserList = (UserListLinearLayout)activity.findViewById(R.id.lnr_id_user_list);
 			lnrUserList.removeAllViews();
 			if(!CCCollectionUtil.isEmpty(lstCalendarUser)){

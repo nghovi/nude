@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCStringUtil;
@@ -45,7 +46,7 @@ public class UserListLinearLayout extends LinearLayout{
 			this.setOrientation(HORIZONTAL);
 
 			// image size 20 x 20:
-			int maxUserNumber = this.getWidth() / 40;
+			int maxUserNumber = (int)(this.getWidth() / 30 / mContext.getResources().getDisplayMetrics().density);
 			if(lstUser.size() <= maxUserNumber){
 				for(UserModel userModel : lstUser){
 					addUserView(userModel);
@@ -55,6 +56,17 @@ public class UserListLinearLayout extends LinearLayout{
 					UserModel userModel = lstUser.get(index);
 					addUserView(userModel);
 				}
+
+				// add text
+				TextView txtSchedule = new TextView(mContext);
+				int textDimension = (int)mContext.getResources().getDimension(R.dimen.margin_40dp);
+				LayoutParams textLayout = new LayoutParams(textDimension, textDimension);
+				txtSchedule.setLayoutParams(textLayout);
+				int textSize = (int)(getResources().getDimension(R.dimen.margin_20dp) / getResources().getDisplayMetrics().density);
+				txtSchedule.setTextSize(textSize);
+				txtSchedule.setText("+" + (lstUser.size() - maxUserNumber + 1));
+                txtSchedule.setGravity(Gravity.CENTER);
+                this.addView(txtSchedule);
 			}
 		}
 	}
