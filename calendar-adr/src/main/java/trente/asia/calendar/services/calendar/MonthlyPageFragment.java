@@ -152,7 +152,10 @@ public class MonthlyPageFragment extends WelfareFragment implements DailySchedul
 				for(ScheduleModel model : lstSchedule){
 					Date startDate = WelfareUtil.makeDate(model.startDate);
 					MonthlyCalendarDayView activeView = ClUtil.findView4Day(lstCalendarDay, WelfareFormatUtil.formatDate(startDate));
-					if(activeView != null){
+//					TODO Trung: care view is deleted calendar
+                    activeView.removeAllData();
+
+                    if(activeView != null){
 						activeView.addSchedule(model);
 					}
 				}

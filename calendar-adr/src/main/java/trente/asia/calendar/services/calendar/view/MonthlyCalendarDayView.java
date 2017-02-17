@@ -15,6 +15,7 @@ import android.widget.TextView;
 import asia.chiase.core.util.CCBooleanUtil;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
+import asia.chiase.core.util.CCStringUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.services.calendar.listener.DailyScheduleClickListener;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
@@ -88,7 +89,9 @@ public class MonthlyCalendarDayView extends LinearLayout{
 		txtSchedule.setMaxLines(1);
 		// txtSchedule.setEllipsize(TextUtils.TruncateAt.END);
 		if(!CCBooleanUtil.checkBoolean(scheduleModel.isDayPeriod) && !CCBooleanUtil.checkBoolean(scheduleModel.isRepeat)){
-			txtSchedule.setTextColor(Color.parseColor(WelfareFormatUtil.formatColor(scheduleModel.scheduleColor)));
+			if(!CCStringUtil.isEmpty(scheduleModel.scheduleColor)){
+				txtSchedule.setTextColor(Color.parseColor(WelfareFormatUtil.formatColor(scheduleModel.scheduleColor)));
+			}
 		}else{
 			txtSchedule.setPadding(2, 2, 2, 2);
 			txtSchedule.setTextColor(Color.WHITE);
@@ -101,4 +104,8 @@ public class MonthlyCalendarDayView extends LinearLayout{
 		txtSchedule.setText(scheduleModel.scheduleName);
 		lnrRowContent.addView(txtSchedule);
 	}
+
+    public void removeAllData(){
+        lnrRowContent.removeAllViews();
+    }
 }
