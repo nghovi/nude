@@ -10,6 +10,8 @@
         android:background="@color/chiase_white"
         android:orientation="vertical">
 
+        <include layout="@layout/view_horizontal_user_list"/>
+
         <LinearLayout
             android:id="@+id/lnr_id_content_header"
             style="@style/cs_common_match_wrap"

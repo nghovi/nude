@@ -25,15 +25,17 @@ import trente.asia.calendar.services.calendar.view.CalendarAdapter;
 import trente.asia.welfare.adr.define.WfUrlConst;
 
 /**
- * MonthlyFragment
+ * CalendarListFragment
  *
  * @author TrungND
  */
 public class CalendarListFragment extends AbstractClFragment{
 
+	public static final String	SELECTED_CALENDAR_STRING	= "SELECTED_CALENDAR_STRING";
 	private ListView			lvCalendar;
-	private List<CalendarModel>	selectedCalendars	= new ArrayList<>();
+	private List<CalendarModel>	selectedCalendars			= new ArrayList<>();
 	private List<CalendarModel>	calendars;
+	CalendarAdapter				calendarAdapter;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -56,11 +58,14 @@ public class CalendarListFragment extends AbstractClFragment{
 				onClickCalendar(view, position);
 			}
 		});
+
+		getView().findViewById(R.id.btn_id_my_calendar).setOnClickListener(this);
+		getView().findViewById(R.id.btn_id_all).setOnClickListener(this);
+
 	}
 
 	private void onClickCalendar(View lnrCalendar, int position){
 		boolean check = getCheckedStatus(position);
-		// lvCalendar.setItemChecked(position, !check);
 		CalendarModel calendar = calendars.get(position);
 		if(check){
 			lnrCalendar.findViewById(trente.asia.welfare.adr.R.id.img_checked).setVisibility(View.GONE);
@@ -120,7 +125,7 @@ public class CalendarListFragment extends AbstractClFragment{
 		calendars = CCJsonUtil.convertToModelList(response.optString("calendars"), CalendarModel.class);
 		buildSelectedCalendars();
 		if(!CCCollectionUtil.isEmpty(calendars)){
-			CalendarAdapter calendarAdapter = new CalendarAdapter(activity, calendars);
+			calendarAdapter = new CalendarAdapter(activity, calendars);
 			lvCalendar.setAdapter(calendarAdapter);
 			for(CalendarModel calendarModel : selectedCalendars){
 				int position = calendarAdapter.findPosition4Code(calendarModel.key);
@@ -155,8 +160,38 @@ public class CalendarListFragment extends AbstractClFragment{
 	@Override
 	public void onClick(View v){
 		switch(v.getId()){
+		case R.id.btn_id_my_calendar:
+			selectMyCalendarOnly();
+			break;
+		case R.id.btn_id_all:
+			selectAllCalendars();
+			break;
 		default:
 			break;
+		}
+	}
+
+	private void selectAllCalendars(){
+		for(int i = 0; i < calendars.size(); i++){
+			CalendarModel calendarModel = calendars.get(i);
+			lvCalendar.setItemChecked(i, true);
+			int position = calendarAdapter.findPosition4Code(calendarModel.key);
+			lvCalendar.setItemChecked(position, true);
+			checkAndAddSelectedCalendar(calendarModel);
+		}
+	}
+
+	private void selectMyCalendarOnly(){
+		for(int i = 0; i < calendars.size(); i++){
+			CalendarModel calendarModel = calendars.get(i);
+			int position = calendarAdapter.findPosition4Code(calendarModel.key);
+			if(calendarModel.isMyself){
+				checkAndAddSelectedCalendar(calendarModel);
+				lvCalendar.setItemChecked(position, true);
+			}else{
+				selectedCalendars.remove(calendarModel);
+				lvCalendar.setItemChecked(position, false);
+			}
 		}
 	}
 

@@ -1,6 +1,7 @@
 package trente.asia.welfare.adr.models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import asia.chiase.core.util.CCCollectionUtil;
@@ -148,6 +149,14 @@ public class UserModel implements Serializable{
 			}
 		}
 		return null;
+	}
+
+	public static List<String> getSelectedUserIds(List<UserModel> selectedUsers){
+		List<String> selectedUserIds = new ArrayList<>();
+		for(UserModel userModel : selectedUsers){
+			selectedUserIds.add(userModel.key);
+		}
+		return selectedUserIds;
 	}
 
 	public static boolean contain(List<UserModel> lstUser, UserModel userModel){

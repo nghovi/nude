@@ -1,8 +1,11 @@
 package trente.asia.welfare.adr.view;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -26,21 +29,32 @@ public class WfUserChooseDialog extends ChiaseDialog{
 	private ListView						listView;
 	private UserListMultipleChoiceAdapter	mAdapter;
 	private List<UserModel>					selectedUsers;
-	private OnUserClicked					onUserClickedListener;
+	private OnUserClickedListener			onUserClickedListenerListener;
 	private List<UserModel>					userModels;
 
-	public interface OnUserClicked{
+	private onSelectedUsersChangedListener	onSelectedUsersChangedListener;
+
+	public void setOnSelectedUsersChangedListener(WfUserChooseDialog.onSelectedUsersChangedListener onSelectedUsersChangedListener){
+		this.onSelectedUsersChangedListener = onSelectedUsersChangedListener;
+	}
+
+	public interface OnUserClickedListener{
 
 		public void onClicked(String selectedKey, boolean isSelected);
 	}
 
-	public WfUserChooseDialog(Context context, String title, List<UserModel> selectedOnes, final List<UserModel> userModels, OnUserClicked itemClickListener){
+	public interface onSelectedUsersChangedListener{
+
+		public void onChange();
+	}
+
+	public WfUserChooseDialog(Context context, String title, List<UserModel> selectedOnes, final List<UserModel> userModels, OnUserClickedListener itemClickListener){
 		super(context);
 		this.setContentView(R.layout.dialog_user_list_multiple_choice);
 		this.mContext = context;
 		this.selectedUsers = selectedOnes;
 		this.userModels = userModels;
-		this.onUserClickedListener = itemClickListener;
+		this.onUserClickedListenerListener = itemClickListener;
 
 		if(!CCStringUtil.isEmpty(title)){
 			TextView txtTitle = (TextView)this.findViewById(R.id.txt_title);
@@ -63,7 +77,7 @@ public class WfUserChooseDialog extends ChiaseDialog{
 					view.findViewById(R.id.img_checked).setVisibility(View.GONE);
 					selectedUsers.remove(userModels.get(position));
 				}
-				if(onUserClickedListener != null) onUserClickedListener.onClicked(selectedUser.key, !check);
+				if(onUserClickedListenerListener != null) onUserClickedListenerListener.onClicked(selectedUser.key, !check);
 			}
 		});
 		listView.setAdapter(mAdapter);
@@ -84,6 +98,20 @@ public class WfUserChooseDialog extends ChiaseDialog{
 			int position = mAdapter.findPosition4Code(userModel.key, userModels);
 			listView.setItemChecked(position, true);
 		}
+
+		final Set<String> userIdsBefore = new HashSet<String>(UserModel.getSelectedUserIds(selectedUsers));
+		this.setOnDismissListener(new OnDismissListener() {
+
+			@Override
+			public void onDismiss(DialogInterface dialog){
+
+				Set<String> userIdsAfter = new HashSet<String>(UserModel.getSelectedUserIds(selectedUsers));
+
+				if(onSelectedUsersChangedListener != null && !userIdsBefore.equals(userIdsAfter)){
+					onSelectedUsersChangedListener.onChange();
+				}
+			}
+		});
 		super.show();
 	}
 }

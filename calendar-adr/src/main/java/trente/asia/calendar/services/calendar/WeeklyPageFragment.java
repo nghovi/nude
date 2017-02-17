@@ -26,6 +26,7 @@ import org.json.JSONObject;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
+import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.define.CsConst;
 import trente.asia.android.model.DayModel;
 import trente.asia.android.util.CsDateUtil;
@@ -36,13 +37,17 @@ import trente.asia.calendar.services.calendar.model.CalendarModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.view.CalendarDayListAdapter;
 import trente.asia.calendar.services.calendar.view.CalendarView;
+import trente.asia.calendar.services.calendar.view.HorizontalUserListView;
 import trente.asia.calendar.services.calendar.view.WeeklyCalendarDayView;
 import trente.asia.calendar.services.calendar.view.WeeklyCalendarHeaderRowView;
 import trente.asia.welfare.adr.activity.WelfareFragment;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.models.ApiObjectModel;
+import trente.asia.welfare.adr.models.UserModel;
+import trente.asia.welfare.adr.view.WfUserChooseDialog;
 
+import static trente.asia.calendar.services.calendar.CalendarListFragment.SELECTED_CALENDAR_STRING;
 import static trente.asia.welfare.adr.utils.WelfareFormatUtil.convertList2Map;
 
 /**
@@ -57,6 +62,8 @@ public class WeeklyPageFragment extends WelfareFragment implements ObservableScr
 
 	private LinearLayout						lnrContentHeader;
 	private List<WeeklyCalendarHeaderRowView>	lstHeaderRow	= new ArrayList<>();
+	private HorizontalUserListView				horizontalUserListView;
+	private List<UserModel>						filteredUsers	= new ArrayList<>();
 
 	@Override
 	public void onCreate(Bundle savedInstanceState){
@@ -79,7 +86,35 @@ public class WeeklyPageFragment extends WelfareFragment implements ObservableScr
 		lstCalendarDay = (ObservableListView)getView().findViewById(R.id.lst_calendar_day);
 		lstCalendarDay.setScrollViewCallbacks(this);
 		lstCalendarDay.setDivider(null);
+		horizontalUserListView = (HorizontalUserListView)getView().findViewById(R.id.view_horizontal_user_list);
+		horizontalUserListView.setOnSelectedUsersChangedListener(new WfUserChooseDialog.onSelectedUsersChangedListener() {
+
+			@Override
+			public void onChange(){
+				requestLoadWeeklyScheule();
+			}
+		});
 		initContentHeader();
+	}
+
+	private void requestLoadWeeklyScheule(){
+		Calendar c = Calendar.getInstance();
+		c.setTime(selectedDate);
+
+		String selectedCalendarStr = prefAccUtil.get(SELECTED_CALENDAR_STRING);
+		String targetUserList = horizontalUserListView.getSelectedUserListString();
+		JSONObject jsonObject = new JSONObject();
+		try{
+			// jsonObject.put("targetUserId", myself.key);
+			jsonObject.put("targetUserList", targetUserList);
+			jsonObject.put("calendars", selectedCalendarStr);
+			jsonObject.put("startDateString", CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, c.getTime()));
+			c.add(Calendar.DATE, 7);
+			jsonObject.put("endDateString", CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, c.getTime()));
+		}catch(JSONException e){
+			e.printStackTrace();
+		}
+		requestLoad(WfUrlConst.WF_CL_WEEK_SCHEDULE, jsonObject, true);
 	}
 
 	private void initContentHeader(){
@@ -132,18 +167,7 @@ public class WeeklyPageFragment extends WelfareFragment implements ObservableScr
 
 	@Override
 	protected void initData(){
-
-		Calendar c = Calendar.getInstance();
-		c.setTime(selectedDate);
-		JSONObject jsonObject = new JSONObject();
-		try{
-			jsonObject.put("startDateString", CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, c.getTime()));
-			c.add(Calendar.DATE, 7);
-			jsonObject.put("endDateString", CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, c.getTime()));
-		}catch(JSONException e){
-			e.printStackTrace();
-		}
-		requestLoad(WfUrlConst.WF_CL_WEEK_SCHEDULE, jsonObject, true);
+		requestLoadWeeklyScheule();
 	}
 
 	@Override
@@ -161,7 +185,9 @@ public class WeeklyPageFragment extends WelfareFragment implements ObservableScr
 		// rooms = CCJsonUtil.convertToModelList(response.optString("rooms"), ApiObjectModel.class);
 		List<ApiObjectModel> categories = CCJsonUtil.convertToModelList(response.optString("categories"), ApiObjectModel.class);
 		List<CalendarModel> calendars = CCJsonUtil.convertToModelList(response.optString("calendars"), CalendarModel.class);
-		// List<UserModel> calendarUsers = CCJsonUtil.convertToModelList(response.optString("calendarUsers"), UserModel.class);
+		List<UserModel> calendarUsers = CCJsonUtil.convertToModelList(response.optString("calendarUsers"), UserModel.class);
+		filteredUsers = initFilteredUser(calendarUsers);
+		horizontalUserListView.show(filteredUsers, calendarUsers, false, 32, 10);
 		updateSchedules(schedules, categories);
 		List<CalendarDayModel> dummy = getCalendarDayModels(schedules);
 		CalendarDayListAdapter adapter = new CalendarDayListAdapter(activity, R.layout.item_calendar_day, dummy, new CalendarDayListAdapter.OnScheduleClickListener() {
@@ -172,6 +198,14 @@ public class WeeklyPageFragment extends WelfareFragment implements ObservableScr
 			}
 		});
 		lstCalendarDay.setAdapter(adapter);
+	}
+
+	private List<UserModel> initFilteredUser(List<UserModel> allUsers){
+		List<UserModel> userModels = new ArrayList<>();
+		for(UserModel userModel : allUsers){
+			userModels.add(userModel);
+		}
+		return userModels;
 	}
 
 	public static void updateSchedules(List<ScheduleModel> schedules, List<ApiObjectModel> categories){

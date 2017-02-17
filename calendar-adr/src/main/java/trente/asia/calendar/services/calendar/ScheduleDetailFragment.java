@@ -1,5 +1,7 @@
 package trente.asia.calendar.services.calendar;
 
+import static trente.asia.welfare.adr.utils.WelfareFormatUtil.convertList2Map;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,8 +29,6 @@ import trente.asia.calendar.services.calendar.view.HorizontalUserListView;
 import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.models.ApiObjectModel;
 import trente.asia.welfare.adr.models.UserModel;
-
-import static trente.asia.welfare.adr.utils.WelfareFormatUtil.convertList2Map;
 
 /**
  * ScheduleDetailFragment

@@ -322,7 +322,7 @@ public class ScheduleFormFragment extends AbstractClFragment{
 
 	private void sendUpdatedRequest(){
 		JSONObject jsonObject = CAObjectSerializeUtil.serializeObject((ViewGroup)getView().findViewById(R.id.lnr_id_content), null);
-		String joinUsers = horizontalUserListView.getUserListString();
+		String joinUsers = horizontalUserListView.getSelectedUserListString();
 		boolean isDayPeriod = true;// / TODO: 2/10/2017
 		try{
 			if(schedule != null && !CCStringUtil.isEmpty(schedule.key)){

@@ -11,11 +11,9 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import trente.asia.android.view.ChiaseListDialog;
 import trente.asia.calendar.BuildConfig;
 import trente.asia.calendar.R;
 import trente.asia.welfare.adr.models.UserModel;
@@ -30,17 +28,17 @@ import trente.asia.welfare.adr.view.WfUserChooseDialog;
 
 public class HorizontalUserListView extends LinearLayout{
 
-	private static final int	HORIZONTAL_USER_LIST_TAG	= 10001;
-	private List<UserModel>		selectedUsers;
-	private List<UserModel>		allUsers;
-	private WfUserChooseDialog	dlgChooseUser;
-	private boolean				isViewOnly;
-	private int					imgSizeDp					= 80;
-	private int					imageNum					= 10;
-	private TextView			txtShowMore;
-	private GridLayout			gridUsers;
-	private int					onDisplayingUserIdx			= 0;
-	private LayoutParams		vp;
+	private List<UserModel>										selectedUsers		= new ArrayList<>();
+	private List<UserModel>										allUsers			= new ArrayList<>();
+	private WfUserChooseDialog									dlgChooseUser;
+	private boolean												isViewOnly;
+	private int													imgSizeDp			= 80;
+	private int													imageNum			= 10;
+	private TextView											txtShowMore;
+	private GridLayout											gridUsers;
+	private int													onDisplayingUserIdx	= 0;
+	private LayoutParams										vp;
+	private WfUserChooseDialog.onSelectedUsersChangedListener	onSelectedUsersChangedListener;
 
 	public HorizontalUserListView(Context context){
 		super(context);
@@ -121,13 +119,14 @@ public class HorizontalUserListView extends LinearLayout{
 			dlgChooseUser.show();
 		}else{
 			final Map<String, String> userMap = getUserMap();
-			dlgChooseUser = new WfUserChooseDialog(getContext(), "Select " + "attendant", selectedUsers, allUsers, new WfUserChooseDialog.OnUserClicked() {
+			dlgChooseUser = new WfUserChooseDialog(getContext(), "Select " + "attendant", selectedUsers, allUsers, new WfUserChooseDialog.OnUserClickedListener() {
 
 				@Override
 				public void onClicked(String selectedKey, boolean isSelected){
 					onUserClicked(selectedKey, isSelected);
 				}
 			});
+			dlgChooseUser.setOnSelectedUsersChangedListener(this.onSelectedUsersChangedListener);
 
 			dlgChooseUser.show();
 		}
@@ -162,18 +161,11 @@ public class HorizontalUserListView extends LinearLayout{
 	}
 
 	private List<String> getSelectedUserIds(){
-		List<String> selectedUserIds = new ArrayList<>();
-		for(UserModel userModel : selectedUsers){
-			selectedUserIds.add(userModel.key);
-		}
-		return selectedUserIds;
+		return UserModel.getSelectedUserIds(selectedUsers);
 	}
 
-	public String getUserListString(){
-		List<String> userIds = new ArrayList<>();
-		for(UserModel userModel : selectedUsers){// // TODO: 2/10/2017
-			userIds.add(userModel.key);
-		}
+	public String getSelectedUserListString(){
+		List<String> userIds = getSelectedUserIds();
 		return TextUtils.join(",", userIds);
 	}
 
@@ -190,5 +182,9 @@ public class HorizontalUserListView extends LinearLayout{
 		this.allUsers = allUsers;
 		this.dlgChooseUser = null;
 		this.show(selectedUsers, allUsers, isViewOnly, imgSizeDp, imageNum);
+	}
+
+	public void setOnSelectedUsersChangedListener(WfUserChooseDialog.onSelectedUsersChangedListener onSelectedUsersChangedListener){
+		this.onSelectedUsersChangedListener = onSelectedUsersChangedListener;
 	}
 }
