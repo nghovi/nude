@@ -8,7 +8,6 @@ package trente.asia.calendar.services.calendar.model;
 
 public class ScheduleModel{
 
-	public String			scheduleDate;
 	public String			scheduleName;
 	public String			scheduleNote;
 	public String			url;
@@ -24,18 +23,13 @@ public class ScheduleModel{
 	public String			joinUsers;
 	public CalendarModel	calendar;
 
-	public String			scheduleType;
+	// public String scheduleType;
 	public String			categoryId;
 	public String			categoryName;
+	public Boolean			isDayPeriod;
+	public Boolean			isRepeat;
 
 	public ScheduleModel(){
 
-	}
-
-	public ScheduleModel(String scheduleName, String scheduleDate, String scheduleColor, String scheduleType){
-		this.scheduleName = scheduleName;
-		this.scheduleDate = scheduleDate;
-		this.scheduleColor = scheduleColor;
-		this.scheduleType = scheduleType;
 	}
 }

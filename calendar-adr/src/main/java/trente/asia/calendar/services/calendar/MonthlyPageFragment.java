@@ -16,9 +16,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
+import asia.chiase.core.util.CCFormatUtil;
+import asia.chiase.core.util.CCJsonUtil;
 import trente.asia.android.define.CsConst;
 import trente.asia.android.model.DayModel;
 import trente.asia.android.util.CsDateUtil;
@@ -27,11 +29,16 @@ import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.dialogs.ClDialog;
 import trente.asia.calendar.commons.utils.ClUtil;
+import trente.asia.calendar.commons.views.UserListLinearLayout;
 import trente.asia.calendar.services.calendar.listener.DailyScheduleClickListener;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.view.MonthlyCalendarDayView;
 import trente.asia.welfare.adr.activity.WelfareFragment;
+import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.define.WfUrlConst;
+import trente.asia.welfare.adr.models.UserModel;
+import trente.asia.welfare.adr.utils.WelfareFormatUtil;
+import trente.asia.welfare.adr.utils.WelfareUtil;
 
 /**
  * MonthlyPageFragment
@@ -109,26 +116,25 @@ public class MonthlyPageFragment extends WelfareFragment implements DailySchedul
 			lnrRowContent.addView(dayView);
 		}
 
-        initDialog();
+		initDialog();
 	}
 
-    private void initDialog(){
-        dialogScheduleList = new ClDialog(activity);
-        dialogScheduleList.setDialogScheduleList();
-    }
+	private void initDialog(){
+		dialogScheduleList = new ClDialog(activity);
+		dialogScheduleList.setDialogScheduleList();
+	}
 
 	@Override
 	protected void initData(){
-		makeDummyData();
 		loadScheduleList();
 	}
 
 	private void loadScheduleList(){
 		JSONObject jsonObject = new JSONObject();
 		try{
-			jsonObject.put("targetUserId", myself.key);
-			jsonObject.put("targetMonth", "2017/02");
-			jsonObject.put("calendars", "6, 7");
+			jsonObject.put("targetUserList", "");
+			jsonObject.put("targetMonth", CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_5, activeMonth));
+			jsonObject.put("calendars", prefAccUtil.get(ClConst.SELECTED_CALENDAR_STRING));
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
@@ -138,35 +144,29 @@ public class MonthlyPageFragment extends WelfareFragment implements DailySchedul
 	@Override
 	protected void successLoad(JSONObject response, String url){
 		if(WfUrlConst.WF_CL_SCHEDULE_MONTH_LIST.equals(url)){
-
+			lstSchedule = CCJsonUtil.convertToModelList(response.optString("schedules"), ScheduleModel.class);
+			if(!CCCollectionUtil.isEmpty(lstSchedule)){
+				for(ScheduleModel model : lstSchedule){
+					Date startDate = WelfareUtil.makeDate(model.startDate);
+					MonthlyCalendarDayView activeView = ClUtil.findView4Day(lstCalendarDay, WelfareFormatUtil.formatDate(startDate));
+					if(activeView != null){
+						activeView.addSchedule(model);
+					}
+				}
+			}
+			List<UserModel> lstCalendarUser = CCJsonUtil.convertToModelList(response.optString("calendarUsers"), UserModel.class);
+			UserListLinearLayout lnrUserList = (UserListLinearLayout)activity.findViewById(R.id.lnr_id_user_list);
+			lnrUserList.removeAllViews();
+			if(!CCCollectionUtil.isEmpty(lstCalendarUser)){
+				lnrUserList.show(lstCalendarUser);
+			}
 		}else{
 			super.successLoad(response, url);
 		}
 	}
 
-	private void makeDummyData(){
-		ScheduleModel scheduleModel1 = new ScheduleModel("Leader meeting", "2017/02/08", ClConst.SCHEDULE_COLOR_BLUE, ClConst.SCHEDULE_TYPE_PERIOD);
-		ScheduleModel scheduleModel2 = new ScheduleModel("Developer meeting", "2017/02/16", ClConst.SCHEDULE_COLOR_RED, ClConst.SCHEDULE_TYPE_PERIOD);
-		ScheduleModel scheduleModel3 = new ScheduleModel("Learning meeting", "2017/02/07", ClConst.SCHEDULE_COLOR_RED, ClConst.SCHEDULE_TYPE_ALL);
-		ScheduleModel scheduleModel4 = new ScheduleModel("Learning meeting", "2017/02/01", ClConst.SCHEDULE_COLOR_RED, ClConst.SCHEDULE_TYPE_ALL);
-		ScheduleModel scheduleModel5 = new ScheduleModel("Fukuri meeting", "2017/02/02", ClConst.SCHEDULE_COLOR_BLUE, ClConst.SCHEDULE_TYPE_ALL);
-
-		lstSchedule.add(scheduleModel1);
-		lstSchedule.add(scheduleModel2);
-		lstSchedule.add(scheduleModel3);
-		lstSchedule.add(scheduleModel4);
-		lstSchedule.add(scheduleModel5);
-
-		for(ScheduleModel model : lstSchedule){
-			MonthlyCalendarDayView activeView = ClUtil.findView4Day(lstCalendarDay, model.scheduleDate);
-			if(activeView != null){
-				activeView.addSchedule(model);
-			}
-		}
+	@Override
+	public void onDailyScheduleClickListener(String day){
+		dialogScheduleList.show();
 	}
-
-    @Override
-    public void onDailyScheduleClickListener(String day) {
-        dialogScheduleList.show();
-    }
 }

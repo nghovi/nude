@@ -82,4 +82,15 @@ public class WelfareFormatUtil{
         String data = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, date);
         return data;
     }
+
+    /**
+     * add # character at prefix
+     *
+     * @param color
+     * @return
+     */
+    public static String formatColor(String color){
+        String formatColor = "#" + color;
+        return formatColor;
+    }
 }

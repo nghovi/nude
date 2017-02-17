@@ -18,6 +18,7 @@ import android.widget.ListView;
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import trente.asia.calendar.R;
+import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.fragments.AbstractClFragment;
 import trente.asia.calendar.services.calendar.model.CalendarModel;
 import trente.asia.calendar.services.calendar.view.CalendarAdapter;
@@ -30,9 +31,8 @@ import trente.asia.welfare.adr.define.WfUrlConst;
  */
 public class CalendarListFragment extends AbstractClFragment{
 
-	private static final String	SELECTED_CALENDAR_STRING	= "SELECTED_CALENDAR_STRING";
 	private ListView			lvCalendar;
-	private List<CalendarModel>	selectedCalendars			= new ArrayList<>();
+	private List<CalendarModel>	selectedCalendars	= new ArrayList<>();
 	private List<CalendarModel>	calendars;
 
 	@Override
@@ -71,7 +71,7 @@ public class CalendarListFragment extends AbstractClFragment{
 		}
 
 		String selectedCalendarIds = getSelectedCalendarIds();
-		prefAccUtil.set(SELECTED_CALENDAR_STRING, selectedCalendarIds);
+		prefAccUtil.set(ClConst.SELECTED_CALENDAR_STRING, selectedCalendarIds);
 	}
 
 	private String getSelectedCalendarIds(){
@@ -130,7 +130,7 @@ public class CalendarListFragment extends AbstractClFragment{
 	}
 
 	private void buildSelectedCalendars(){
-		List<String> selectedCalendarIds = Arrays.asList(prefAccUtil.get(SELECTED_CALENDAR_STRING).split(","));
+		List<String> selectedCalendarIds = Arrays.asList(prefAccUtil.get(ClConst.SELECTED_CALENDAR_STRING).split(","));
 		for(CalendarModel calendarModel : calendars){
 			if(selectedCalendarIds.indexOf(calendarModel.key) >= 0){
 				checkAndAddSelectedCalendar(calendarModel);

@@ -23,11 +23,18 @@
 
             <LinearLayout
                 style="@style/wf_common_linear"
-                android:background="@color/chiase_white">
+                android:background="@color/chiase_white"
+                android:paddingBottom="@dimen/margin_0dp">
+
+                <trente.asia.calendar.commons.views.UserListLinearLayout
+                    android:id="@+id/lnr_id_user_list"
+                    style="@style/cs_common_match_wrap">
+                </trente.asia.calendar.commons.views.UserListLinearLayout>
 
                 <TextView
                     android:id="@+id/txt_id_month"
                     style="@style/wl_common_text"
+                    android:layout_marginTop="@dimen/margin_10dp"
                     android:gravity="center"/>
             </LinearLayout>
 
