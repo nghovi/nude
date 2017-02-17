@@ -65,6 +65,7 @@ public class CalendarAdapter extends ArrayAdapter<CalendarModel>{
 		final CalendarModel model = this.calendarList.get(position);
 		LayoutInflater mInflater = (LayoutInflater)mContext.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 		convertView = mInflater.inflate(R.layout.item_calendar_list, null);
+
 		final CalendarViewHolder holder = new CalendarViewHolder(convertView);
 
 		holder.txtName.setText(model.calendarName);
@@ -102,6 +103,10 @@ public class CalendarAdapter extends ArrayAdapter<CalendarModel>{
 		});
 
 		return convertView;
+	}
+
+	public void buildItemLayout() {
+
 	}
 
 	public void add(CalendarModel item, int position){

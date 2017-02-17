@@ -17,6 +17,7 @@ import android.widget.ListView;
 
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCJsonUtil;
+import trente.asia.android.view.layout.CheckableLinearLayout;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.fragments.AbstractClFragment;
@@ -36,6 +37,7 @@ public class CalendarListFragment extends AbstractClFragment{
 	private List<CalendarModel>	selectedCalendars			= new ArrayList<>();
 	private List<CalendarModel>	calendars;
 	CalendarAdapter				calendarAdapter;
+	CheckableLinearLayout		lnrMyCalendar;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -61,7 +63,7 @@ public class CalendarListFragment extends AbstractClFragment{
 
 		getView().findViewById(R.id.btn_id_my_calendar).setOnClickListener(this);
 		getView().findViewById(R.id.btn_id_all).setOnClickListener(this);
-
+		lnrMyCalendar = (CheckableLinearLayout)getView().findViewById(R.id.lnr_id_item);
 	}
 
 	private void onClickCalendar(View lnrCalendar, int position){
@@ -74,9 +76,7 @@ public class CalendarListFragment extends AbstractClFragment{
 			lnrCalendar.findViewById(trente.asia.welfare.adr.R.id.img_checked).setVisibility(View.VISIBLE);
 			selectedCalendars.add(calendar);
 		}
-
-		String selectedCalendarIds = getSelectedCalendarIds();
-		prefAccUtil.set(ClConst.SELECTED_CALENDAR_STRING, selectedCalendarIds);
+		saveSelectedCalendarToPref();
 	}
 
 	private String getSelectedCalendarIds(){
@@ -179,6 +179,7 @@ public class CalendarListFragment extends AbstractClFragment{
 			lvCalendar.setItemChecked(position, true);
 			checkAndAddSelectedCalendar(calendarModel);
 		}
+		saveSelectedCalendarToPref();
 	}
 
 	private void selectMyCalendarOnly(){
@@ -193,6 +194,12 @@ public class CalendarListFragment extends AbstractClFragment{
 				lvCalendar.setItemChecked(position, false);
 			}
 		}
+		saveSelectedCalendarToPref();
+	}
+
+	private void saveSelectedCalendarToPref(){
+		String selectedCalendarIds = getSelectedCalendarIds();
+		prefAccUtil.set(ClConst.SELECTED_CALENDAR_STRING, selectedCalendarIds);
 	}
 
 	@Override
