@@ -38,7 +38,7 @@ public class UserListLinearLayout extends LinearLayout{
 		this.mContext = context;
 	}
 
-	public void show(List<UserModel> lstUser){
+	public void show(List<UserModel> lstUser, int imageSize){
 		if(!CCCollectionUtil.isEmpty(lstUser)){
 			LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 			this.setLayoutParams(params);
@@ -46,7 +46,7 @@ public class UserListLinearLayout extends LinearLayout{
 			this.setOrientation(HORIZONTAL);
 
 			// image size 20 x 20:
-			int maxUserNumber = (int)(this.getWidth() / 30 / mContext.getResources().getDisplayMetrics().density);
+			int maxUserNumber = (int)(this.getWidth() / imageSize);
 			if(lstUser.size() <= maxUserNumber){
 				for(UserModel userModel : lstUser){
 					addUserView(userModel);
@@ -59,8 +59,8 @@ public class UserListLinearLayout extends LinearLayout{
 
 				// add text
 				TextView txtSchedule = new TextView(mContext);
-				int textDimension = (int)mContext.getResources().getDimension(R.dimen.margin_40dp);
-				LayoutParams textLayout = new LayoutParams(textDimension, textDimension);
+//				int textDimension = (int)mContext.getResources().getDimension(R.dimen.margin_40dp);
+				LayoutParams textLayout = new LayoutParams(imageSize, imageSize);
 				txtSchedule.setLayoutParams(textLayout);
 				int textSize = (int)(getResources().getDimension(R.dimen.margin_20dp) / getResources().getDisplayMetrics().density);
 				txtSchedule.setTextSize(textSize);

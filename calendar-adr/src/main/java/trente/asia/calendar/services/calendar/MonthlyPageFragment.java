@@ -163,6 +163,13 @@ public class MonthlyPageFragment extends WelfareFragment implements DailySchedul
 				}
 			}
 			List<UserModel> lstCalendarUser = CCJsonUtil.convertToModelList(response.optString("calendarUsers"), UserModel.class);
+//            List<UserModel> lstTestUser = new ArrayList<>();
+//            for(UserModel userModel : lstCalendarUser){
+//                lstTestUser.add(userModel);
+//            }
+//            lstCalendarUser.addAll(lstTestUser);
+//            lstCalendarUser.addAll(lstTestUser);
+
 			UserListLinearLayout lnrUserList = (UserListLinearLayout)activity.findViewById(R.id.lnr_id_user_list);
 			lnrUserList.setOnClickListener(new View.OnClickListener() {
 
@@ -174,7 +181,7 @@ public class MonthlyPageFragment extends WelfareFragment implements DailySchedul
 			});
 			lnrUserList.removeAllViews();
 			if(!CCCollectionUtil.isEmpty(lstCalendarUser)){
-				lnrUserList.show(lstCalendarUser);
+				lnrUserList.show(lstCalendarUser, (int)getResources().getDimension(R.dimen.margin_30dp));
 				filterDialog = new ClFilterUserListDialog(activity, lstCalendarUser);
 			}
 		}else{
