@@ -4,22 +4,25 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ArrayAdapter;
 import android.widget.Checkable;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.listener.CsOnCheckedChangeListener;
 import trente.asia.android.view.layout.CheckableLinearLayout;
 import trente.asia.calendar.BuildConfig;
 import trente.asia.calendar.R;
+import trente.asia.calendar.commons.views.UserListLinearLayout;
 import trente.asia.calendar.services.calendar.model.CalendarModel;
-import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WfPicassoHelper;
 
 /**
@@ -36,16 +39,17 @@ public class CalendarAdapter extends ArrayAdapter<CalendarModel>{
 
 		public ImageView				imgAvatar;
 
-		public HorizontalUserListView	horizontalUserList;
+		public UserListLinearLayout		lnrUserList;
 		public TextView					txtName;
 		public CheckableLinearLayout	lnrItem;
 		public ImageView				imgCheck;
+		public Boolean					isLoaded	= false;
 
 		public CalendarViewHolder(View view){
 			imgAvatar = (ImageView)view.findViewById(R.id.img_id_avatar);
 			txtName = (TextView)view.findViewById(R.id.txt_id_name);
 			lnrItem = (CheckableLinearLayout)view.findViewById(R.id.lnr_id_item);
-			horizontalUserList = (HorizontalUserListView)view.findViewById(R.id.view_horizontal_user_list);
+			lnrUserList = (UserListLinearLayout)view.findViewById(R.id.lnr_id_user_list);
 			imgCheck = (ImageView)view.findViewById(R.id.img_checked);
 		}
 	}
@@ -67,7 +71,7 @@ public class CalendarAdapter extends ArrayAdapter<CalendarModel>{
 		if(!CCStringUtil.isEmpty(model.imagePath)){
 			WfPicassoHelper.loadImage(mContext, BuildConfig.HOST + model.imagePath, holder.imgAvatar, null);
 		}
-		final View finalConvertView = convertView;
+		// final View finalConvertView = convertView;
 		holder.lnrItem.setOnCheckedChangeListener(new CsOnCheckedChangeListener() {
 
 			@Override
@@ -81,11 +85,19 @@ public class CalendarAdapter extends ArrayAdapter<CalendarModel>{
 			}
 		});
 
-		holder.horizontalUserList.post(new Runnable() {
+		holder.lnrUserList.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
 
 			@Override
-			public void run(){
-				holder.horizontalUserList.show(model.calendarUsers, model.calendarUsers, true, 32, 10);
+			public boolean onPreDraw(){
+				if(holder.lnrUserList.getWidth() > 0 && !holder.isLoaded){
+					holder.isLoaded = true;
+					if(!CCCollectionUtil.isEmpty(model.calendarUsers)){
+						holder.lnrUserList.setGravity(Gravity.LEFT);
+						holder.lnrUserList.show(model.calendarUsers, (int)mContext.getResources().getDimension(R.dimen.margin_30dp));
+					}
+				}
+
+				return true;
 			}
 		});
 

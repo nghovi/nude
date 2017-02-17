@@ -4,7 +4,7 @@
     style="@style/cs_common_match_wrap"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/state_common_selectable_row2"
+    android:background="@drawable/cl_state_common_selectable_row"
     android:gravity="center_vertical"
     android:orientation="horizontal"
     android:padding="@dimen/margin_10dp">
@@ -15,11 +15,10 @@
 
         <trente.asia.welfare.adr.view.SelectableRoundedImageView
             android:id="@+id/img_id_avatar"
-            android:layout_width="@dimen/margin_40dp"
-            android:layout_height="@dimen/margin_40dp"
+            android:layout_width="@dimen/margin_50dp"
+            android:layout_height="@dimen/margin_50dp"
             android:focusable="false"
             android:scaleType="fitXY"
-            android:src="@drawable/wf_profile"
             custom:sriv_oval="true"/>
 
         <ImageView
@@ -34,8 +33,8 @@
 
     <LinearLayout
         style="@style/cs_common_match_wrap"
-        android:layout_marginLeft="@dimen/margin_8dp"
-        android:layout_marginRight="@dimen/margin_8dp"
+        android:layout_width="@dimen/margin_0dp"
+        android:layout_marginLeft="@dimen/margin_10dp"
         android:layout_weight="1"
         android:focusable="false"
         android:orientation="vertical">
@@ -45,7 +44,10 @@
             style="@style/wl_common_text"
             android:textColor="@color/chiase_white"/>
 
-        <include layout="@layout/view_horizontal_user_list"/>
+        <trente.asia.calendar.commons.views.UserListLinearLayout
+            android:id="@+id/lnr_id_user_list"
+            style="@style/cs_common_match_wrap"
+            android:layout_marginTop="@dimen/margin_6dp"/>
 
     </LinearLayout>
 

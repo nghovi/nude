@@ -31,19 +31,22 @@ public class UserListLinearLayout extends LinearLayout{
 	public UserListLinearLayout(Context context){
 		super(context);
 		this.mContext = context;
+        this.setGravity(Gravity.CENTER);
+        this.setOrientation(HORIZONTAL);
 	}
 
 	public UserListLinearLayout(Context context, AttributeSet attrs){
 		super(context, attrs);
 		this.mContext = context;
+        this.setGravity(Gravity.CENTER);
+        this.setOrientation(HORIZONTAL);
 	}
 
 	public void show(List<UserModel> lstUser, int imageSize){
+        this.removeAllViews();
 		if(!CCCollectionUtil.isEmpty(lstUser)){
 			LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 			this.setLayoutParams(params);
-			this.setGravity(Gravity.CENTER);
-			this.setOrientation(HORIZONTAL);
 
 			// image size 20 x 20:
 			int maxUserNumber = (int)(this.getWidth() / imageSize);
