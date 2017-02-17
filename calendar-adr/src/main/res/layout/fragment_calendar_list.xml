@@ -3,6 +3,8 @@
               android:background="@color/wf_app_color_base"
               android:orientation="vertical">
 
+    <!--<include layout="@layout/item_calendar_list"/>-->
+
     <ListView
         android:id="@+id/lsv_id_calendar"
         style="@style/cs_common_match_wrap"
