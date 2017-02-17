@@ -28,6 +28,7 @@ import trente.asia.calendar.BuildConfig;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.dialogs.ClDialog;
+import trente.asia.calendar.commons.dialogs.ClFilterUserListDialog;
 import trente.asia.calendar.commons.utils.ClUtil;
 import trente.asia.calendar.commons.views.UserListLinearLayout;
 import trente.asia.calendar.services.calendar.listener.DailyScheduleClickListener;
@@ -54,6 +55,7 @@ public class MonthlyPageFragment extends WelfareFragment implements DailySchedul
 	private List<MonthlyCalendarDayView>	lstCalendarDay	= new ArrayList<>();
 
 	private ClDialog						dialogScheduleList;
+	private ClFilterUserListDialog			filterDialog;
 
 	public void setActiveMonth(Date activeMonth){
 		this.activeMonth = activeMonth;
@@ -126,10 +128,10 @@ public class MonthlyPageFragment extends WelfareFragment implements DailySchedul
 
 	@Override
 	protected void initData(){
-        String activeDateString = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, activeMonth);
-        if(activeDateString.equals(prefAccUtil.get(ClConst.PREF_ACTIVE_DATE))){
-            loadScheduleList();
-        }
+		String activeDateString = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, activeMonth);
+		if(activeDateString.equals(prefAccUtil.get(ClConst.PREF_ACTIVE_DATE))){
+			loadScheduleList();
+		}
 	}
 
 	public void loadScheduleList(){
@@ -152,27 +154,28 @@ public class MonthlyPageFragment extends WelfareFragment implements DailySchedul
 				for(ScheduleModel model : lstSchedule){
 					Date startDate = WelfareUtil.makeDate(model.startDate);
 					MonthlyCalendarDayView activeView = ClUtil.findView4Day(lstCalendarDay, WelfareFormatUtil.formatDate(startDate));
-//					TODO Trung: care view is deleted calendar
-                    activeView.removeAllData();
+					// TODO Trung: care view is deleted calendar
+					activeView.removeAllData();
 
-                    if(activeView != null){
+					if(activeView != null){
 						activeView.addSchedule(model);
 					}
 				}
 			}
 			List<UserModel> lstCalendarUser = CCJsonUtil.convertToModelList(response.optString("calendarUsers"), UserModel.class);
-//            List<UserModel> testCalendarUser = new ArrayList<>();
-//            for(UserModel userModel : lstCalendarUser){
-//                testCalendarUser.add(userModel);
-//            }
-//            lstCalendarUser.addAll(testCalendarUser);
-//            lstCalendarUser.addAll(testCalendarUser);
-//            lstCalendarUser.addAll(testCalendarUser);
-
 			UserListLinearLayout lnrUserList = (UserListLinearLayout)activity.findViewById(R.id.lnr_id_user_list);
+			lnrUserList.setOnClickListener(new View.OnClickListener() {
+
+				@Override
+				public void onClick(View v){
+					filterDialog.show();
+
+				}
+			});
 			lnrUserList.removeAllViews();
 			if(!CCCollectionUtil.isEmpty(lstCalendarUser)){
 				lnrUserList.show(lstCalendarUser);
+				filterDialog = new ClFilterUserListDialog(activity, lstCalendarUser);
 			}
 		}else{
 			super.successLoad(response, url);

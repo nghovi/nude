@@ -28,7 +28,8 @@
 
                 <trente.asia.calendar.commons.views.UserListLinearLayout
                     android:id="@+id/lnr_id_user_list"
-                    style="@style/cs_common_match_wrap">
+                    style="@style/cs_common_match_wrap"
+                    android:background="@drawable/state_common_selectable_row">
                 </trente.asia.calendar.commons.views.UserListLinearLayout>
 
                 <TextView

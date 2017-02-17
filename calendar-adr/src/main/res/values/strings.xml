@@ -22,4 +22,6 @@
     <string name="fragment_schedule_detail_repeat">Repeat</string>
     <string name="fragment_schedule_form_title">New schedule</string>
 
+    <string name="cl_filter_user_dialog_title">Filter user</string>
+
 </resources>
