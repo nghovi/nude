@@ -42,6 +42,8 @@ public class ClFilterUserListDialog extends ChiaseDialog{
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id){
+//                boolean isChecked = mLsvUser.isItemChecked(position);
+//                mLsvUser.setItemChecked(position, !isChecked);
 			}
 		});
 		mLsvUser.setAdapter(mAdapter);

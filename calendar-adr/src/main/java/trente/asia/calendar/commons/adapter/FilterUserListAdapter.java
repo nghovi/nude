@@ -8,10 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Checkable;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import asia.chiase.core.util.CCStringUtil;
+import trente.asia.android.listener.CsOnCheckedChangeListener;
+import trente.asia.android.view.layout.CheckableLinearLayout;
 import trente.asia.calendar.BuildConfig;
 import trente.asia.calendar.R;
 import trente.asia.welfare.adr.models.UserModel;
@@ -34,12 +38,14 @@ public class FilterUserListAdapter extends ArrayAdapter<UserModel>{
 	/* private view holder class */
 	private class ViewHolder{
 
-		public ImageView	imgAvatar;
-		public TextView		txtUserName;
+		public ImageView				imgAvatar;
+		public TextView					txtUserName;
+		public CheckableLinearLayout	lnrItem;
 
 		public ViewHolder(View view){
 			imgAvatar = (ImageView)view.findViewById(R.id.img_id_avatar);
 			txtUserName = (TextView)view.findViewById(R.id.txt_id_user_name);
+			lnrItem = (CheckableLinearLayout)view.findViewById(R.id.lnr_id_item);
 		}
 	}
 
@@ -49,7 +55,7 @@ public class FilterUserListAdapter extends ArrayAdapter<UserModel>{
 	}
 
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent){
+	public View getView(final int position, View convertView, final ViewGroup parent){
 		ViewHolder holder;
 		UserModel userModel = this.getItem(position);
 		if(convertView == null){
@@ -65,6 +71,14 @@ public class FilterUserListAdapter extends ArrayAdapter<UserModel>{
 		if(!CCStringUtil.isEmpty(userModel.avatarPath)){
 			WfPicassoHelper.loadImage(this.getContext(), BuildConfig.HOST + userModel.avatarPath, holder.imgAvatar, null);
 		}
+
+		holder.lnrItem.setOnCheckedChangeListener(new CsOnCheckedChangeListener() {
+
+			@Override
+			public void onCheckedChanged(Checkable view, boolean isChecked){
+				(((ListView)parent)).setItemChecked(position, isChecked);
+			}
+		});
 		return convertView;
 	}
 }
