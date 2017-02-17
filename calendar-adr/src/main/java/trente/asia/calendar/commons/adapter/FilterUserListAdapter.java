@@ -41,11 +41,13 @@ public class FilterUserListAdapter extends ArrayAdapter<UserModel>{
 		public ImageView				imgAvatar;
 		public TextView					txtUserName;
 		public CheckableLinearLayout	lnrItem;
+		public ImageView				imgCheck;
 
 		public ViewHolder(View view){
 			imgAvatar = (ImageView)view.findViewById(R.id.img_id_avatar);
 			txtUserName = (TextView)view.findViewById(R.id.txt_id_user_name);
 			lnrItem = (CheckableLinearLayout)view.findViewById(R.id.lnr_id_item);
+			imgCheck = (ImageView)view.findViewById(R.id.img_id_check);
 		}
 	}
 
@@ -56,7 +58,7 @@ public class FilterUserListAdapter extends ArrayAdapter<UserModel>{
 
 	@Override
 	public View getView(final int position, View convertView, final ViewGroup parent){
-		ViewHolder holder;
+		final ViewHolder holder;
 		UserModel userModel = this.getItem(position);
 		if(convertView == null){
 			LayoutInflater mInflater = (LayoutInflater)this.getContext().getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
@@ -77,6 +79,11 @@ public class FilterUserListAdapter extends ArrayAdapter<UserModel>{
 			@Override
 			public void onCheckedChanged(Checkable view, boolean isChecked){
 				(((ListView)parent)).setItemChecked(position, isChecked);
+				if(isChecked){
+					holder.imgCheck.setVisibility(View.VISIBLE);
+				}else{
+					holder.imgCheck.setVisibility(View.INVISIBLE);
+				}
 			}
 		});
 		return convertView;
