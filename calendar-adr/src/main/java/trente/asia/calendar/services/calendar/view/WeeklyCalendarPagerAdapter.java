@@ -1,5 +1,6 @@
 package trente.asia.calendar.services.calendar.view;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import android.content.Context;
@@ -8,6 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import trente.asia.android.util.CsDateUtil;
+import trente.asia.calendar.services.calendar.CalendarListFragment;
 import trente.asia.calendar.services.calendar.WeeklyPageFragment;
 import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
 
@@ -19,7 +21,8 @@ import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
 public class WeeklyCalendarPagerAdapter extends FragmentPagerAdapter{
 
 	private final int	ACTIVE_PAGE	= Integer.MAX_VALUE / 2;
-	private final Date	TODAY		= CsDateUtil.makeMonthWithFirstDate();
+	// private final Date TODAY = CsDateUtil.makeMonthWithFirstDate();
+	private final Date	TODAY		= Calendar.getInstance().getTime();
 
 	public WeeklyCalendarPagerAdapter(FragmentManager fm){
 		super(fm);
