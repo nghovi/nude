@@ -90,17 +90,17 @@ public class ScheduleFormFragment extends AbstractClFragment{
 		imgRightIcon.setVisibility(View.VISIBLE);
 		imgRightIcon.setOnClickListener(this);
 
-		txtRoom = (ChiaseTextView)getView().findViewById(R.id.txt_fragment_schedule_form_room);
-		txtCalendar = (ChiaseTextView)getView().findViewById(R.id.txt_fragment_schedule_form_calendar);
-		txtCategory = (ChiaseTextView)getView().findViewById(R.id.txt_fragment_schedule_form_category);
+		txtRoom = (ChiaseTextView)getView().findViewById(R.id.txt_id_meeting_room);
+		txtCalendar = (ChiaseTextView)getView().findViewById(R.id.txt_id_calendar);
+		txtCategory = (ChiaseTextView)getView().findViewById(R.id.txt_id_category);
 
-		getView().findViewById(R.id.lnr_fragment_schedule_form_room).setOnClickListener(this);
-		getView().findViewById(R.id.lnr_fragment_schedule_form_category).setOnClickListener(this);
-		getView().findViewById(R.id.lnr_fragment_schedule_form_calendar).setOnClickListener(this);
-		txtStartDate = (ChiaseTextView)getView().findViewById(R.id.fragment_schedule_detail_start_date);
-		txtEndDate = (ChiaseTextView)getView().findViewById(R.id.fragment_schedule_detail_end_date);
-		txtStartTime = (ChiaseTextView)getView().findViewById(R.id.fragment_schedule_detail_start_time);
-		txtEndTime = (ChiaseTextView)getView().findViewById(R.id.fragment_schedule_detail_end_time);
+		getView().findViewById(R.id.lnr_id_meeting_room).setOnClickListener(this);
+		getView().findViewById(R.id.lnr_id_category).setOnClickListener(this);
+		getView().findViewById(R.id.lnr_id_calendar).setOnClickListener(this);
+		txtStartDate = (ChiaseTextView)getView().findViewById(R.id.txt_id_start_date);
+		txtEndDate = (ChiaseTextView)getView().findViewById(R.id.txt_id_end_date);
+		txtStartTime = (ChiaseTextView)getView().findViewById(R.id.txt_id_start_time);
+		txtEndTime = (ChiaseTextView)getView().findViewById(R.id.txt_id_end_time);
 
 		txtStartDate.setOnClickListener(this);
 		txtEndDate.setOnClickListener(this);
@@ -233,7 +233,7 @@ public class ScheduleFormFragment extends AbstractClFragment{
 			if(schedule != null){
 				jsonObject.put("key", schedule.key);
 			}
-            jsonObject.put("calendars", prefAccUtil.get(ClConst.SELECTED_CALENDAR_STRING));
+			jsonObject.put("calendars", prefAccUtil.get(ClConst.SELECTED_CALENDAR_STRING));
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
@@ -296,25 +296,25 @@ public class ScheduleFormFragment extends AbstractClFragment{
 		case R.id.img_id_header_right_icon:
 			sendUpdatedRequest();
 			break;
-		case R.id.lnr_fragment_schedule_form_room:
+		case R.id.lnr_id_meeting_room:
 			showChooseRoomDialog();
 			break;
-		case R.id.lnr_fragment_schedule_form_category:
+		case R.id.lnr_id_category:
 			showChooseCategoryDialog();
 			break;
-		case R.id.lnr_fragment_schedule_form_calendar:
+		case R.id.lnr_id_calendar:
 			showChooseCalendarDialog();
 			break;
-		case R.id.fragment_schedule_detail_start_date:
+		case R.id.txt_id_start_date:
 			datePickerDialogStart.show();
 			break;
-		case R.id.fragment_schedule_detail_end_date:
+		case R.id.txt_id_end_date:
 			datePickerDialogEnd.show();
 			break;
-		case R.id.fragment_schedule_detail_start_time:
+		case R.id.txt_id_start_time:
 			timePickerDialogStart.show();
 			break;
-		case R.id.fragment_schedule_detail_end_time:
+		case R.id.txt_id_end_time:
 			timePickerDialogEnd.show();
 			break;
 		default:
@@ -358,7 +358,6 @@ public class ScheduleFormFragment extends AbstractClFragment{
 	}
 
 	private void onScheduleUpdateSuccess(){
-		Toast.makeText(activity, "Updated successfully", Toast.LENGTH_LONG).show();
 		((ChiaseActivity)activity).isInitData = true;
 		onClickBackBtn();
 	}
@@ -371,8 +370,4 @@ public class ScheduleFormFragment extends AbstractClFragment{
 	public void setSchedule(ScheduleModel schedule){
 		this.schedule = schedule;
 	}
-
-	// public void setRooms(List<ApiObjectModel> rooms){
-	// this.rooms = WelfareFormatUtil.convertList2Map(rooms);
-	// }
 }
