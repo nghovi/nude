@@ -26,24 +26,26 @@ import trente.asia.welfare.adr.utils.WfPicassoHelper;
 
 public class UserListLinearLayout extends LinearLayout{
 
-	private Context mContext;
+	private Context			mContext;
+	private List<UserModel>	lstUser;
 
 	public UserListLinearLayout(Context context){
 		super(context);
 		this.mContext = context;
-        this.setGravity(Gravity.CENTER);
-        this.setOrientation(HORIZONTAL);
+		this.setGravity(Gravity.CENTER);
+		this.setOrientation(HORIZONTAL);
 	}
 
 	public UserListLinearLayout(Context context, AttributeSet attrs){
 		super(context, attrs);
 		this.mContext = context;
-        this.setGravity(Gravity.CENTER);
-        this.setOrientation(HORIZONTAL);
+		this.setGravity(Gravity.CENTER);
+		this.setOrientation(HORIZONTAL);
 	}
 
 	public void show(List<UserModel> lstUser, int imageSize){
-        this.removeAllViews();
+		this.removeAllViews();
+        this.lstUser = lstUser;
 		if(!CCCollectionUtil.isEmpty(lstUser)){
 			LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 			this.setLayoutParams(params);
@@ -62,14 +64,14 @@ public class UserListLinearLayout extends LinearLayout{
 
 				// add text
 				TextView txtSchedule = new TextView(mContext);
-//				int textDimension = (int)mContext.getResources().getDimension(R.dimen.margin_40dp);
+				// int textDimension = (int)mContext.getResources().getDimension(R.dimen.margin_40dp);
 				LayoutParams textLayout = new LayoutParams(imageSize, imageSize);
 				txtSchedule.setLayoutParams(textLayout);
 				int textSize = (int)(getResources().getDimension(R.dimen.margin_20dp) / getResources().getDisplayMetrics().density);
 				txtSchedule.setTextSize(textSize);
 				txtSchedule.setText("+" + (lstUser.size() - maxUserNumber + 1));
-                txtSchedule.setGravity(Gravity.CENTER);
-                this.addView(txtSchedule);
+				txtSchedule.setGravity(Gravity.CENTER);
+				this.addView(txtSchedule);
 			}
 		}
 	}
@@ -83,4 +85,14 @@ public class UserListLinearLayout extends LinearLayout{
 		}
 		this.addView(userItemView);
 	}
+
+    public String formatUserList(){
+        StringBuilder builder = new StringBuilder();
+        if(!CCCollectionUtil.isEmpty(lstUser)){
+            for(UserModel userModel : lstUser){
+                builder.append(userModel.key + ",");
+            }
+        }
+        return builder.toString();
+    }
 }

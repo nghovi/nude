@@ -16,6 +16,7 @@
         android:id="@+id/img_id_avatar"
         android:layout_width="@dimen/margin_25dp"
         android:layout_height="@dimen/margin_25dp"
+        android:focusable="false"
         android:scaleType="fitXY"
         custom:sriv_oval="true"/>
 
@@ -24,14 +25,14 @@
         style="@style/wl_common_text"
         android:layout_width="wrap_content"
         android:layout_marginLeft="@dimen/margin_10dp"
-        android:focusable="false"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:focusable="false"/>
 
     <ImageView
         android:id="@+id/img_id_check"
         style="@style/cs_common_wrap"
-        android:src="@drawable/cs_row_check"
         android:layout_marginLeft="@dimen/margin_10dp"
         android:focusable="false"
+        android:src="@drawable/cs_row_check"
         android:visibility="invisible"/>
 </trente.asia.android.view.layout.CheckableLinearLayout>

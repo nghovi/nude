@@ -11,7 +11,7 @@ import asia.chiase.core.util.CCCollectionUtil;
  *
  * @author TrungND
  */
-public class UserModel implements Serializable{
+public class UserModel extends BitmapModel implements Serializable{
 
 	public String		key;
 	public String		userName;
@@ -140,7 +140,7 @@ public class UserModel implements Serializable{
 		this.userNameKana = userNameKana;
 	}
 
-	public static String	KEY_ALL	= "-1";
+	public static String KEY_ALL = "-1";
 
 	public static UserModel getUserModel(String key, List<UserModel> userModels){
 		for(UserModel userModel : userModels){

@@ -182,7 +182,8 @@ public class MonthlyPageFragment extends WelfareFragment implements DailySchedul
 //			lnrUserList.removeAllViews();
 			if(!CCCollectionUtil.isEmpty(lstCalendarUser)){
 				lnrUserList.show(lstCalendarUser, (int)getResources().getDimension(R.dimen.margin_30dp));
-				filterDialog = new ClFilterUserListDialog(activity, lstCalendarUser);
+				filterDialog = new ClFilterUserListDialog(activity, lnrUserList);
+                filterDialog.updateUserList(lstCalendarUser);
 			}
 		}else{
 			super.successLoad(response, url);
