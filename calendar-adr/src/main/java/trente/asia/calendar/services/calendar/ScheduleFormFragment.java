@@ -33,6 +33,7 @@ import trente.asia.android.view.ChiaseListDialog;
 import trente.asia.android.view.ChiaseTextView;
 import trente.asia.android.view.util.CAObjectSerializeUtil;
 import trente.asia.calendar.R;
+import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.fragments.AbstractClFragment;
 import trente.asia.calendar.services.calendar.model.CalendarModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
@@ -83,7 +84,7 @@ public class ScheduleFormFragment extends AbstractClFragment{
 	@Override
 	protected void initView(){
 		super.initView();
-		initHeader(R.drawable.wf_back_white, getString(R.string.fragment_schedule_form_title), R.drawable.wf_check);
+		initHeader(R.drawable.wf_back_white, getString(R.string.fragment_schedule_form_title), R.drawable.cl_action_save);
 
 		ImageView imgRightIcon = (ImageView)getView().findViewById(R.id.img_id_header_right_icon);
 		imgRightIcon.setVisibility(View.VISIBLE);
@@ -232,6 +233,7 @@ public class ScheduleFormFragment extends AbstractClFragment{
 			if(schedule != null){
 				jsonObject.put("key", schedule.key);
 			}
+            jsonObject.put("calendars", prefAccUtil.get(ClConst.SELECTED_CALENDAR_STRING));
 		}catch(JSONException e){
 			e.printStackTrace();
 		}

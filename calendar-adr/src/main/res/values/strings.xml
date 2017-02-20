@@ -21,6 +21,8 @@
     <string name="fragment_schedule_detail_day_period">Day period</string>
     <string name="fragment_schedule_detail_repeat">Repeat</string>
     <string name="fragment_schedule_form_title">New schedule</string>
+    <string name="cl_schedule_form_all_day">All day</string>
+    <string name="cl_schedule_form_repeat">Repeat</string>
 
     <string name="cl_filter_user_dialog_title">Filter user</string>
 

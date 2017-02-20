@@ -17,6 +17,92 @@
             android:visibility="visible">
 
             <LinearLayout
+                style="@style/wf_common_item_linear2">
+
+                <TextView
+                    style="@style/wl_common_text"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/cl_schedule_form_all_day"/>
+
+                <android.support.v7.widget.SwitchCompat
+                    android:id="@+id/swt_id_all_day"
+                    style="@style/cs_common_wrap"
+                    android:theme="@style/wf_common_switch"/>
+            </LinearLayout>
+
+            <View style="@style/cs_common_divider"/>
+
+            <LinearLayout
+                android:id="@+id/lnr_id_start_date"
+                style="@style/wf_common_item_linear2">
+
+                <trente.asia.android.view.ChiaseTextView
+                    android:id="@+id/txt_id_start_date"
+                    style="@style/wl_common_text"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    custom:mName="startDate"/>
+
+                <trente.asia.android.view.ChiaseTextView
+                    android:id="@+id/txt_id_start_time"
+                    style="@style/wl_common_edit_text2"
+                    android:layout_marginLeft="@dimen/margin_10dp"
+                    android:text="10:00"
+                    custom:mName="startTime"/>
+            </LinearLayout>
+
+            <View style="@style/cs_common_divider"/>
+
+            <LinearLayout
+                android:id="@+id/lnr_id_end_date"
+                style="@style/wf_common_item_linear2">
+
+                <trente.asia.android.view.ChiaseTextView
+                    android:id="@+id/txt_id_end_date"
+                    style="@style/wl_common_text"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    custom:mName="startDate"/>
+
+                <trente.asia.android.view.ChiaseTextView
+                    android:id="@+id/txt_id_end_time"
+                    style="@style/wl_common_edit_text2"
+                    android:layout_marginLeft="@dimen/margin_10dp"
+                    android:text="11:00"
+                    custom:mName="startTime"/>
+            </LinearLayout>
+
+            <View style="@style/cs_common_divider"/>
+
+            <LinearLayout
+                android:id="@+id/lnr_id_repeat"
+                style="@style/wf_common_item_linear2"
+                android:background="@drawable/state_common_selectable_row">
+
+                <TextView
+                    style="@style/wl_common_text"
+                    android:layout_width="wrap_content"
+                    android:text="@string/cl_schedule_form_repeat"/>
+
+                <trente.asia.android.view.ChiaseTextView
+                    android:id="@+id/txt_id_repeat"
+                    style="@style/wl_common_edit_text2"
+                    android:layout_marginLeft="@dimen/margin_10dp"
+                    android:layout_weight="1"
+                    android:text="@string/chiase_common_none"/>
+
+                <ImageView
+                    style="@style/cs_common_wrap"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/margin_6dp"
+                    android:src="@drawable/wf_row_arrow_right"/>
+            </LinearLayout>
+
+            <View style="@style/cs_common_divider"/>
+
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
