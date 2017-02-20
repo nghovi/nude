@@ -150,12 +150,16 @@ public class MonthlyPageFragment extends WelfareFragment implements DailySchedul
 	protected void successLoad(JSONObject response, String url){
 		if(WfUrlConst.WF_CL_SCHEDULE_MONTH_LIST.equals(url)){
 			lstSchedule = CCJsonUtil.convertToModelList(response.optString("schedules"), ScheduleModel.class);
+
+//            clear old data
+            for(MonthlyCalendarDayView dayView : lstCalendarDay){
+                dayView.removeAllData();
+            }
+
 			if(!CCCollectionUtil.isEmpty(lstSchedule)){
 				for(ScheduleModel model : lstSchedule){
 					Date startDate = WelfareUtil.makeDate(model.startDate);
 					MonthlyCalendarDayView activeView = ClUtil.findView4Day(lstCalendarDay, WelfareFormatUtil.formatDate(startDate));
-					// TODO Trung: care view is deleted calendar
-					activeView.removeAllData();
 
 					if(activeView != null){
 						activeView.addSchedule(model);
