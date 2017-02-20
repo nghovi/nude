@@ -64,7 +64,7 @@
                     style="@style/wl_common_text"
                     android:layout_width="wrap_content"
                     android:layout_weight="1"
-                    custom:mName="startDate"/>
+                    custom:mName="endDate"/>
 
                 <trente.asia.android.view.ChiaseTextView
                     android:id="@+id/txt_id_end_time"
@@ -72,7 +72,7 @@
                     android:layout_width="wrap_content"
                     android:layout_marginLeft="@dimen/margin_10dp"
                     android:text="11:00"
-                    custom:mName="startTime"/>
+                    custom:mName="endTime"/>
             </LinearLayout>
 
             <View style="@style/cs_common_divider"/>
@@ -258,7 +258,7 @@
                     android:layout_marginLeft="@dimen/margin_10dp"
                     android:layout_weight="1"
                     android:hint="@string/chiase_common_please_select"
-                    custom:mName="calendarName"/>
+                    custom:mName="calendarId"/>
 
                 <ImageView
                     style="@style/cs_common_wrap"
@@ -303,7 +303,7 @@
                     android:layout_marginLeft="@dimen/margin_10dp"
                     android:layout_weight="1"
                     android:hint="@string/chiase_common_please_select"
-                    custom:mName="room"/>
+                    custom:mName="roomId"/>
 
                 <ImageView
                     style="@style/cs_common_wrap"
@@ -327,7 +327,7 @@
                     style="@style/wl_common_edit_text2"
                     android:layout_marginLeft="@dimen/margin_10dp"
                     android:hint="@string/chiase_common_please_entry"
-                    custom:mName="url"/>
+                    custom:mName="scheduleUrl"/>
             </LinearLayout>
 
             <View style="@style/cs_common_divider"/>

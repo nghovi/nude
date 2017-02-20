@@ -53,11 +53,11 @@ import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 public class ScheduleFormFragment extends AbstractClFragment{
 
 	private ScheduleModel			schedule;
-	// private HorizontalUserListView horizontalUserListView;
 	private ChiaseListDialog		dlgChooseRoom;
 	private ChiaseListDialog		dlgChooseCalendar;
 	private ChiaseListDialog		dlgChooseCategory;
 	private List<CalendarModel>		calendars;
+	private CalendarModel			activeCalendar;
 	private List<ApiObjectModel>	calendarHolders;
 	private UserListLinearLayout	lnrUserList;
 
@@ -73,7 +73,6 @@ public class ScheduleFormFragment extends AbstractClFragment{
 	private ChiaseTextView			txtEndDate;
 	private ChiaseTextView			txtCalendar;
 
-	// private List<UserModel> allCalenarUsers;
 	private List<ApiObjectModel>	categories;
 	private ChiaseTextView			txtCategory;
 
@@ -250,6 +249,7 @@ public class ScheduleFormFragment extends AbstractClFragment{
 		if(!CCStringUtil.isEmpty(calendarId)){
 			for(CalendarModel calendarModel : calendars){
 				if(calendarModel.key.equals(calendarId)){
+					activeCalendar = calendarModel;
 					if(CCBooleanUtil.checkBoolean(calendarModel.isMyself)){
 						calendarModel.calendarUsers = new ArrayList<>();
 						calendarModel.calendarUsers.add(prefAccUtil.getUserPref());
@@ -309,21 +309,13 @@ public class ScheduleFormFragment extends AbstractClFragment{
 
 	private void sendUpdatedRequest(){
 		JSONObject jsonObject = CAObjectSerializeUtil.serializeObject((ViewGroup)getView().findViewById(R.id.lnr_id_content), null);
-		// String joinUsers = horizontalUserListView.getSelectedUserListString();
 		boolean isDayPeriod = true;// / TODO: 2/10/2017
 		try{
 			if(schedule != null && !CCStringUtil.isEmpty(schedule.key)){
 				jsonObject.put("key", schedule.key);
 			}
-			jsonObject.put("categoryId", txtCategory.getValue());
 			jsonObject.put("isDayPeriod", isDayPeriod);
-			// jsonObject.put("joinUsers", joinUsers);
-			jsonObject.put("roomId", txtRoom.getValue());
-			jsonObject.put("calendarId", txtCalendar.getValue());
-			jsonObject.put("startDate", txtStartDate.getText());
-			jsonObject.put("endDate", txtEndDate.getText());
-			jsonObject.put("startTime", txtStartTime.getText());
-			jsonObject.put("endTime", txtEndTime.getText());
+			jsonObject.put("joinUsers", lnrUserList.formatUserList());
 
 		}catch(JSONException e){
 			e.printStackTrace();
