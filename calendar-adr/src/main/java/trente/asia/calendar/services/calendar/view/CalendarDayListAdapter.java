@@ -27,10 +27,11 @@ import trente.asia.welfare.adr.view.SelectableRoundedImageView;
  */
 public class CalendarDayListAdapter extends ArrayAdapter<CalendarDayModel>{
 
-	Context							context;
-	int								layoutId;
-	LayoutInflater					layoutInflater;
-	private OnScheduleClickListener	onScheduleClickListener;
+	private final List<CalendarDayModel>	calendarDayModels;
+	Context									context;
+	int										layoutId;
+	LayoutInflater							layoutInflater;
+	private OnScheduleClickListener			onScheduleClickListener;
 
 	public interface OnScheduleClickListener{
 
@@ -39,6 +40,7 @@ public class CalendarDayListAdapter extends ArrayAdapter<CalendarDayModel>{
 
 	public CalendarDayListAdapter(Context context, int resource, List<CalendarDayModel> objects, OnScheduleClickListener onScheduleClickListener){
 		super(context, resource, objects);
+		this.calendarDayModels = objects;
 		this.context = context;
 		this.layoutId = resource;
 		layoutInflater = ((Activity)context).getLayoutInflater();
@@ -118,5 +120,17 @@ public class CalendarDayListAdapter extends ArrayAdapter<CalendarDayModel>{
 
 		public TextView		txtDay;
 		public LinearLayout	lnrEventList;
+	}
+
+	public Integer findPosition4Code(String date){
+		int position = -1;
+		for(int i = 0; i < this.calendarDayModels.size(); i++){
+			CalendarDayModel calendarDayModel = calendarDayModels.get(i);
+			if(calendarDayModel.date.equals(date)){
+				position = i;
+				break;
+			}
+		}
+		return position;
 	}
 }
