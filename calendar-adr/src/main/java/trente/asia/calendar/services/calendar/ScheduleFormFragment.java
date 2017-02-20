@@ -21,7 +21,6 @@ import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
@@ -109,123 +108,6 @@ public class ScheduleFormFragment extends AbstractClFragment{
 		horizontalUserListView = (HorizontalUserListView)getView().findViewById(R.id.view_horizontal_user_list);
 	}
 
-	private void buildDatePickerDialogs(ScheduleModel schedule){
-		Calendar calendar = Calendar.getInstance();
-		Date starDate = new Date();
-		Date endDate = new Date();
-		int startHour = 0, startMinute = 0;
-		int endHour = 0, endMinute = 0;
-
-		if(schedule != null && !CCStringUtil.isEmpty(schedule.key)){
-			starDate = CCDateUtil.makeDateCustom(schedule.startDate, WelfareConst.WL_DATE_TIME_7);
-			endDate = CCDateUtil.makeDateCustom(schedule.endDate, WelfareConst.WL_DATE_TIME_7);
-			startHour = CCStringUtil.isEmpty(schedule.startTime) ? 0 : CCNumberUtil.toInteger(schedule.startTime.split(":")[0]);
-			startMinute = CCStringUtil.isEmpty(schedule.startTime) ? 0 : CCNumberUtil.toInteger(schedule.startTime.split(":")[1]);
-			endHour = CCStringUtil.isEmpty(schedule.endTime) ? 0 : CCNumberUtil.toInteger(schedule.endTime.split(":")[0]);
-			endMinute = CCStringUtil.isEmpty(schedule.endTime) ? 0 : CCNumberUtil.toInteger(schedule.endTime.split(":")[1]);
-			calendar.setTime(starDate);
-		}else{
-			starDate = calendar.getTime();
-			endDate = calendar.getTime();
-		}
-
-		txtStartDate.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, starDate));
-		txtStartTime.setText(getDisplayNum(startHour) + ":" + getDisplayNum(startMinute));
-		txtEndDate.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, endDate));
-		txtEndTime.setText(getDisplayNum(startHour) + ":" + getDisplayNum(startMinute));
-
-		calendar.setTime(starDate);
-		datePickerDialogStart = new DatePickerDialog(activity, new DatePickerDialog.OnDateSetListener() {
-
-			@Override
-			public void onDateSet(DatePicker view, int year, int month, int dayOfMonth){
-				String startDateStr = year + "/" + getDisplayNum(month + 1) + "/" + getDisplayNum(dayOfMonth);
-				txtStartDate.setText(startDateStr);
-				txtStartDate.setValue(startDateStr);
-			}
-		}, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
-
-		calendar.setTime(endDate);
-		datePickerDialogEnd = new DatePickerDialog(activity, new DatePickerDialog.OnDateSetListener() {
-
-			@Override
-			public void onDateSet(DatePicker view, int year, int month, int dayOfMonth){
-				String endDateStr = year + "/" + getDisplayNum(month + 1) + "/" + getDisplayNum(dayOfMonth);
-				txtEndDate.setText(endDateStr);
-				txtEndDate.setValue(endDateStr);
-			}
-		}, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
-
-		timePickerDialogEnd = new TimePickerDialog(activity, new TimePickerDialog.OnTimeSetListener() {
-
-			@Override
-			public void onTimeSet(TimePicker view, int hourOfDay, int minute){
-				txtEndTime.setText(getDisplayNum(hourOfDay) + ":" + getDisplayNum(minute));
-				txtEndTime.setValue(getDisplayNum(hourOfDay) + ":" + getDisplayNum(minute));
-			}
-		}, endHour, endMinute, true);
-
-		timePickerDialogStart = new TimePickerDialog(activity, new TimePickerDialog.OnTimeSetListener() {
-
-			@Override
-			public void onTimeSet(TimePicker view, int hourOfDay, int minute){
-				txtStartTime.setText(getDisplayNum(hourOfDay) + ":" + getDisplayNum(minute));
-				txtStartTime.setValue(getDisplayNum(hourOfDay) + ":" + getDisplayNum(minute));
-			}
-		}, startHour, startMinute, true);
-	}
-
-	public String getDisplayNum(int num){
-		if(num <= 9){
-			return "0" + num;
-		}
-		return String.valueOf(num);
-	}
-
-	private void showChooseRoomDialog(){
-		if(dlgChooseRoom != null){
-			dlgChooseRoom.show();
-		}else{
-			dlgChooseRoom = new ChiaseListDialog(getContext(), "Select " + "venue", convertList2Map(rooms), txtRoom, null);
-			dlgChooseRoom.show();
-		}
-	}
-
-	private void showChooseCategoryDialog(){
-		if(dlgChooseCategory != null){
-			dlgChooseCategory.show();
-		}else{
-			dlgChooseCategory = new ChiaseListDialog(getContext(), "Select " + "Category", convertList2Map(categories), txtCategory, new ChiaseListDialog.OnItemClicked() {
-
-				@Override
-				public void onClicked(String selectedKey, boolean isSelected){
-					txtCategory.setTextColor(Color.parseColor("#" + selectedKey));
-				}
-			});
-			dlgChooseCategory.show();
-		}
-	}
-
-	private void showChooseCalendarDialog(){
-		if(dlgChooseCalendar != null){
-			dlgChooseCalendar.show();
-		}else{
-			dlgChooseCalendar = new ChiaseListDialog(getContext(), "Select " + "calendar", WelfareFormatUtil.convertList2Map(calendarHolders), txtCalendar, new ChiaseListDialog.OnItemClicked() {
-
-				@Override
-				public void onClicked(String selectedKey, boolean isSelected){
-					onCalendarSelected(selectedKey, isSelected);
-				}
-			});
-			dlgChooseCalendar.show();
-		}
-	}
-
-	private void onCalendarSelected(String selectedKey, boolean isSelected){
-		allCalenarUsers = getAllCalendarUsers(calendars, selectedKey);
-		horizontalUserListView.updateAllUsers(allCalenarUsers);
-	}
-
 	@Override
 	protected void initData(){
 		JSONObject jsonObject = new JSONObject();
@@ -247,6 +129,98 @@ public class ScheduleFormFragment extends AbstractClFragment{
 		}else{
 			super.successLoad(response, url);
 		}
+	}
+
+	private void buildDatePickerDialogs(ScheduleModel schedule){
+        initListDialog();
+
+		Calendar calendar = Calendar.getInstance();
+		Date starDate = new Date();
+		Date endDate = new Date();
+		int startHour = 0, startMinute = 0;
+		int endHour = 0, endMinute = 0;
+
+		if(schedule != null && !CCStringUtil.isEmpty(schedule.key)){
+			starDate = CCDateUtil.makeDateCustom(schedule.startDate, WelfareConst.WL_DATE_TIME_7);
+			endDate = CCDateUtil.makeDateCustom(schedule.endDate, WelfareConst.WL_DATE_TIME_7);
+			startHour = CCStringUtil.isEmpty(schedule.startTime) ? 0 : CCNumberUtil.toInteger(schedule.startTime.split(":")[0]);
+			startMinute = CCStringUtil.isEmpty(schedule.startTime) ? 0 : CCNumberUtil.toInteger(schedule.startTime.split(":")[1]);
+			endHour = CCStringUtil.isEmpty(schedule.endTime) ? 0 : CCNumberUtil.toInteger(schedule.endTime.split(":")[0]);
+			endMinute = CCStringUtil.isEmpty(schedule.endTime) ? 0 : CCNumberUtil.toInteger(schedule.endTime.split(":")[1]);
+			calendar.setTime(starDate);
+		}else{
+			starDate = calendar.getTime();
+			endDate = calendar.getTime();
+		}
+
+		txtStartDate.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, starDate));
+		txtStartTime.setText(CCFormatUtil.formatZero(startHour) + ":" + CCFormatUtil.formatZero(startMinute));
+		txtEndDate.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, endDate));
+		txtEndTime.setText(CCFormatUtil.formatZero(startHour) + ":" + CCFormatUtil.formatZero(startMinute));
+
+		calendar.setTime(starDate);
+		datePickerDialogStart = new DatePickerDialog(activity, new DatePickerDialog.OnDateSetListener() {
+
+			@Override
+			public void onDateSet(DatePicker view, int year, int month, int dayOfMonth){
+				String startDateStr = year + "/" + CCFormatUtil.formatZero(month + 1) + "/" + CCFormatUtil.formatZero(dayOfMonth);
+				txtStartDate.setText(startDateStr);
+				txtStartDate.setValue(startDateStr);
+			}
+		}, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+
+		calendar.setTime(endDate);
+		datePickerDialogEnd = new DatePickerDialog(activity, new DatePickerDialog.OnDateSetListener() {
+
+			@Override
+			public void onDateSet(DatePicker view, int year, int month, int dayOfMonth){
+				String endDateStr = year + "/" + CCFormatUtil.formatZero(month + 1) + "/" + CCFormatUtil.formatZero(dayOfMonth);
+				txtEndDate.setText(endDateStr);
+				txtEndDate.setValue(endDateStr);
+			}
+		}, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+
+		timePickerDialogEnd = new TimePickerDialog(activity, new TimePickerDialog.OnTimeSetListener() {
+
+			@Override
+			public void onTimeSet(TimePicker view, int hourOfDay, int minute){
+				txtEndTime.setText(CCFormatUtil.formatZero(hourOfDay) + ":" + CCFormatUtil.formatZero(minute));
+				txtEndTime.setValue(CCFormatUtil.formatZero(hourOfDay) + ":" + CCFormatUtil.formatZero(minute));
+			}
+		}, endHour, endMinute, true);
+
+		timePickerDialogStart = new TimePickerDialog(activity, new TimePickerDialog.OnTimeSetListener() {
+
+			@Override
+			public void onTimeSet(TimePicker view, int hourOfDay, int minute){
+				txtStartTime.setText(CCFormatUtil.formatZero(hourOfDay) + ":" + CCFormatUtil.formatZero(minute));
+				txtStartTime.setValue(CCFormatUtil.formatZero(hourOfDay) + ":" + CCFormatUtil.formatZero(minute));
+			}
+		}, startHour, startMinute, true);
+	}
+
+    private void initListDialog(){
+        dlgChooseRoom = new ChiaseListDialog(activity, getString(R.string.cl_schedule_form_item_meeting_room), convertList2Map(rooms), txtRoom, null);
+        dlgChooseCategory = new ChiaseListDialog(activity, getString(R.string.cl_schedule_form_item_category), convertList2Map(categories), txtCategory, new ChiaseListDialog.OnItemClicked() {
+
+            @Override
+            public void onClicked(String selectedKey, boolean isSelected){
+                txtCategory.setTextColor(Color.parseColor("#" + selectedKey));
+            }
+        });
+
+        dlgChooseCalendar = new ChiaseListDialog(getContext(), getString(R.string.cl_schedule_form_item_calendar), WelfareFormatUtil.convertList2Map(calendarHolders), txtCalendar, new ChiaseListDialog.OnItemClicked() {
+
+            @Override
+            public void onClicked(String selectedKey, boolean isSelected){
+                onCalendarSelected(selectedKey, isSelected);
+            }
+        });
+    }
+
+	private void onCalendarSelected(String selectedKey, boolean isSelected){
+		allCalenarUsers = getAllCalendarUsers(calendars, selectedKey);
+		horizontalUserListView.updateAllUsers(allCalenarUsers);
 	}
 
 	private void onLoadScheduleDetailSuccess(JSONObject response){
@@ -297,13 +271,13 @@ public class ScheduleFormFragment extends AbstractClFragment{
 			sendUpdatedRequest();
 			break;
 		case R.id.lnr_id_meeting_room:
-			showChooseRoomDialog();
+			dlgChooseRoom.show();
 			break;
 		case R.id.lnr_id_category:
-			showChooseCategoryDialog();
+			dlgChooseCategory.show();
 			break;
 		case R.id.lnr_id_calendar:
-			showChooseCalendarDialog();
+			dlgChooseCalendar.show();
 			break;
 		case R.id.txt_id_start_date:
 			datePickerDialogStart.show();
@@ -329,7 +303,6 @@ public class ScheduleFormFragment extends AbstractClFragment{
 		try{
 			if(schedule != null && !CCStringUtil.isEmpty(schedule.key)){
 				jsonObject.put("key", schedule.key);
-				// 2/13/2017
 			}
 			jsonObject.put("categoryId", txtCategory.getValue());
 			jsonObject.put("isDayPeriod", isDayPeriod);
