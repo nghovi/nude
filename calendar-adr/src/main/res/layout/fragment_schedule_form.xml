@@ -14,7 +14,7 @@
             android:orientation="vertical"
             android:paddingBottom="@dimen/margin_16dp"
             android:paddingTop="@dimen/margin_16dp"
-            android:visibility="visible">
+            android:visibility="invisible">
 
             <LinearLayout
                 style="@style/wf_common_item_linear2">
@@ -371,9 +371,14 @@
             <View style="@style/cs_common_divider"/>
 
             <LinearLayout
-                style="@style/wf_common_item_linear">
+                style="@style/wf_common_item_linear2">
 
-                <include layout="@layout/view_horizontal_user_list"/>
+                <trente.asia.calendar.commons.views.UserListLinearLayout
+                    android:id="@+id/lnr_id_user_list"
+                    style="@style/cs_common_match_wrap"
+                    android:background="@drawable/state_common_selectable_row"/>
+
+                <!--<include layout="@layout/view_horizontal_user_list"/>-->
             </LinearLayout>
 
             <View style="@style/cs_common_divider"/>
@@ -405,8 +410,5 @@
         </LinearLayout>
 
     </ScrollView>
-
-
-    <include layout="@layout/view_common_footer"/>
 
 </LinearLayout>

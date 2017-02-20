@@ -22,6 +22,8 @@ import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TimePicker;
 
+import asia.chiase.core.util.CCBooleanUtil;
+import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
@@ -34,9 +36,9 @@ import trente.asia.android.view.util.CAObjectSerializeUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.fragments.AbstractClFragment;
+import trente.asia.calendar.commons.views.UserListLinearLayout;
 import trente.asia.calendar.services.calendar.model.CalendarModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
-import trente.asia.calendar.services.calendar.view.HorizontalUserListView;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.models.ApiObjectModel;
@@ -51,12 +53,14 @@ import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 public class ScheduleFormFragment extends AbstractClFragment{
 
 	private ScheduleModel			schedule;
-	private HorizontalUserListView	horizontalUserListView;
+	// private HorizontalUserListView horizontalUserListView;
 	private ChiaseListDialog		dlgChooseRoom;
 	private ChiaseListDialog		dlgChooseCalendar;
 	private ChiaseListDialog		dlgChooseCategory;
 	private List<CalendarModel>		calendars;
 	private List<ApiObjectModel>	calendarHolders;
+	private UserListLinearLayout	lnrUserList;
+
 	private List<ApiObjectModel>	rooms;
 	private ChiaseTextView			txtRoom;
 	private DatePickerDialog		datePickerDialogStart;
@@ -68,7 +72,8 @@ public class ScheduleFormFragment extends AbstractClFragment{
 	private ChiaseTextView			txtStartDate;
 	private ChiaseTextView			txtEndDate;
 	private ChiaseTextView			txtCalendar;
-	private List<UserModel>			allCalenarUsers;
+
+	// private List<UserModel> allCalenarUsers;
 	private List<ApiObjectModel>	categories;
 	private ChiaseTextView			txtCategory;
 
@@ -92,6 +97,7 @@ public class ScheduleFormFragment extends AbstractClFragment{
 		txtRoom = (ChiaseTextView)getView().findViewById(R.id.txt_id_meeting_room);
 		txtCalendar = (ChiaseTextView)getView().findViewById(R.id.txt_id_calendar);
 		txtCategory = (ChiaseTextView)getView().findViewById(R.id.txt_id_category);
+		lnrUserList = (UserListLinearLayout)getView().findViewById(R.id.lnr_id_user_list);
 
 		getView().findViewById(R.id.lnr_id_meeting_room).setOnClickListener(this);
 		getView().findViewById(R.id.lnr_id_category).setOnClickListener(this);
@@ -105,7 +111,6 @@ public class ScheduleFormFragment extends AbstractClFragment{
 		txtEndDate.setOnClickListener(this);
 		txtStartTime.setOnClickListener(this);
 		txtEndTime.setOnClickListener(this);
-		horizontalUserListView = (HorizontalUserListView)getView().findViewById(R.id.view_horizontal_user_list);
 	}
 
 	@Override
@@ -132,7 +137,7 @@ public class ScheduleFormFragment extends AbstractClFragment{
 	}
 
 	private void buildDatePickerDialogs(ScheduleModel schedule){
-        initListDialog();
+		initListDialog();
 
 		Calendar calendar = Calendar.getInstance();
 		Date starDate = new Date();
@@ -199,28 +204,30 @@ public class ScheduleFormFragment extends AbstractClFragment{
 		}, startHour, startMinute, true);
 	}
 
-    private void initListDialog(){
-        dlgChooseRoom = new ChiaseListDialog(activity, getString(R.string.cl_schedule_form_item_meeting_room), convertList2Map(rooms), txtRoom, null);
-        dlgChooseCategory = new ChiaseListDialog(activity, getString(R.string.cl_schedule_form_item_category), convertList2Map(categories), txtCategory, new ChiaseListDialog.OnItemClicked() {
+	private void initListDialog(){
+		dlgChooseRoom = new ChiaseListDialog(activity, getString(R.string.cl_schedule_form_item_meeting_room), convertList2Map(rooms), txtRoom, null);
+		dlgChooseCategory = new ChiaseListDialog(activity, getString(R.string.cl_schedule_form_item_category), convertList2Map(categories), txtCategory, new ChiaseListDialog.OnItemClicked() {
 
-            @Override
-            public void onClicked(String selectedKey, boolean isSelected){
-                txtCategory.setTextColor(Color.parseColor("#" + selectedKey));
-            }
-        });
+			@Override
+			public void onClicked(String selectedKey, boolean isSelected){
+				txtCategory.setTextColor(Color.parseColor("#" + selectedKey));
+			}
+		});
 
-        dlgChooseCalendar = new ChiaseListDialog(getContext(), getString(R.string.cl_schedule_form_item_calendar), WelfareFormatUtil.convertList2Map(calendarHolders), txtCalendar, new ChiaseListDialog.OnItemClicked() {
+		dlgChooseCalendar = new ChiaseListDialog(getContext(), getString(R.string.cl_schedule_form_item_calendar), WelfareFormatUtil.convertList2Map(calendarHolders), txtCalendar, new ChiaseListDialog.OnItemClicked() {
 
-            @Override
-            public void onClicked(String selectedKey, boolean isSelected){
-                onCalendarSelected(selectedKey, isSelected);
-            }
-        });
-    }
+			@Override
+			public void onClicked(String selectedKey, boolean isSelected){
+				onCalendarSelected(selectedKey);
+			}
+		});
+	}
 
-	private void onCalendarSelected(String selectedKey, boolean isSelected){
-		allCalenarUsers = getAllCalendarUsers(calendars, selectedKey);
-		horizontalUserListView.updateAllUsers(allCalenarUsers);
+	private void onCalendarSelected(String selectedKey){
+		List<UserModel> calendarUsers = getAllCalendarUsers(calendars, selectedKey);
+		if(!CCCollectionUtil.isEmpty(calendarUsers)){
+			lnrUserList.show(calendarUsers, (int)getResources().getDimension(R.dimen.margin_30dp));
+		}
 	}
 
 	private void onLoadScheduleDetailSuccess(JSONObject response){
@@ -232,9 +239,9 @@ public class ScheduleFormFragment extends AbstractClFragment{
 
 		inflateWithData((ViewGroup)getView(), txtRoom, txtCalendar, txtCategory, rooms, calendars, categories, schedule);
 
-		allCalenarUsers = getAllCalendarUsers(calendars, schedule != null && schedule.calendarId != null ? schedule.calendarId : null);
-		List<UserModel> joinUserList = ScheduleDetailFragment.getJoinedUserModels(schedule, allCalenarUsers);
-		horizontalUserListView.show(joinUserList, allCalenarUsers, false, 32, 10);
+		// allCalenarUsers = getAllCalendarUsers(calendars, schedule != null && schedule.calendarId != null ? schedule.calendarId : null);
+		// List<UserModel> joinUserList = ScheduleDetailFragment.getJoinedUserModels(schedule, allCalenarUsers);
+		// horizontalUserListView.show(joinUserList, allCalenarUsers, false, 32, 10);
 
 		buildDatePickerDialogs(schedule);
 	}
@@ -243,6 +250,10 @@ public class ScheduleFormFragment extends AbstractClFragment{
 		if(!CCStringUtil.isEmpty(calendarId)){
 			for(CalendarModel calendarModel : calendars){
 				if(calendarModel.key.equals(calendarId)){
+					if(CCBooleanUtil.checkBoolean(calendarModel.isMyself)){
+						calendarModel.calendarUsers = new ArrayList<>();
+						calendarModel.calendarUsers.add(prefAccUtil.getUserPref());
+					}
 					return calendarModel.calendarUsers;
 				}
 			}
@@ -261,7 +272,7 @@ public class ScheduleFormFragment extends AbstractClFragment{
 
 	@Override
 	public int getFooterItemId(){
-		return R.id.lnr_view_footer_weekly;
+		return 0;
 	}
 
 	@Override
@@ -298,7 +309,7 @@ public class ScheduleFormFragment extends AbstractClFragment{
 
 	private void sendUpdatedRequest(){
 		JSONObject jsonObject = CAObjectSerializeUtil.serializeObject((ViewGroup)getView().findViewById(R.id.lnr_id_content), null);
-		String joinUsers = horizontalUserListView.getSelectedUserListString();
+		// String joinUsers = horizontalUserListView.getSelectedUserListString();
 		boolean isDayPeriod = true;// / TODO: 2/10/2017
 		try{
 			if(schedule != null && !CCStringUtil.isEmpty(schedule.key)){
@@ -306,7 +317,7 @@ public class ScheduleFormFragment extends AbstractClFragment{
 			}
 			jsonObject.put("categoryId", txtCategory.getValue());
 			jsonObject.put("isDayPeriod", isDayPeriod);
-			jsonObject.put("joinUsers", joinUsers);
+			// jsonObject.put("joinUsers", joinUsers);
 			jsonObject.put("roomId", txtRoom.getValue());
 			jsonObject.put("calendarId", txtCalendar.getValue());
 			jsonObject.put("startDate", txtStartDate.getText());

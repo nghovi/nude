@@ -42,6 +42,8 @@ public abstract class AbstractClFragment extends WelfareFragment implements View
 	protected void initView(){
 		super.initView();
 
+        lnrContentId = R.id.lnr_id_content;
+
 		// int footerItemId = getFooterItemId();
 		// if(footerItemId != 0){
 		// TextView txtUnread = (TextView)activity.findViewById(R.id.txt_id_unread_message);
