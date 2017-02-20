@@ -1,5 +1,6 @@
 package trente.asia.calendar.commons.adapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
@@ -28,11 +29,15 @@ import trente.asia.welfare.adr.utils.WfPicassoHelper;
  */
 public class FilterUserListAdapter extends ArrayAdapter<UserModel>{
 
-	private List<UserModel> lstUser;
+	private List<UserModel>	lstUser;
+	private List<UserModel>	mLstSelectedUser	= new ArrayList<>();
 
 	public FilterUserListAdapter(Context context, List<UserModel> lstUser){
 		super(context, R.layout.adapter_dialog_user_item, lstUser);
 		this.lstUser = lstUser;
+		for(UserModel userModel : this.lstUser){
+			this.mLstSelectedUser.add(userModel);
+		}
 	}
 
 	/* private view holder class */
@@ -59,7 +64,7 @@ public class FilterUserListAdapter extends ArrayAdapter<UserModel>{
 	@Override
 	public View getView(final int position, View convertView, final ViewGroup parent){
 		final ViewHolder holder;
-		UserModel userModel = this.getItem(position);
+        UserModel userModel = this.getItem(position);
 		if(convertView == null){
 			LayoutInflater mInflater = (LayoutInflater)this.getContext().getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 			convertView = mInflater.inflate(R.layout.adapter_dialog_user_item, null);
@@ -70,22 +75,41 @@ public class FilterUserListAdapter extends ArrayAdapter<UserModel>{
 		}
 
 		holder.txtUserName.setText(userModel.userName);
-		if(!CCStringUtil.isEmpty(userModel.avatarPath)){
-			WfPicassoHelper.loadImage(this.getContext(), BuildConfig.HOST + userModel.avatarPath, holder.imgAvatar, null);
+		if(userModel.bitmap != null){
+			holder.imgAvatar.setImageBitmap(userModel.bitmap);
+		}else{
+			if(!CCStringUtil.isEmpty(userModel.avatarPath)){
+				WfPicassoHelper.loadImage(this.getContext(), BuildConfig.HOST + userModel.avatarPath, holder.imgAvatar, null, userModel);
+			}
+		}
+
+		if(this.mLstSelectedUser.contains(userModel)){
+            (((ListView)parent)).setItemChecked(position, true);
+            holder.lnrItem.setChecked(true);
+			holder.imgCheck.setVisibility(View.VISIBLE);
+		}else{
+            (((ListView)parent)).setItemChecked(position, false);
+            holder.lnrItem.setChecked(false);
+			holder.imgCheck.setVisibility(View.INVISIBLE);
 		}
 
 		holder.lnrItem.setOnCheckedChangeListener(new CsOnCheckedChangeListener() {
 
 			@Override
 			public void onCheckedChanged(Checkable view, boolean isChecked){
-				(((ListView)parent)).setItemChecked(position, isChecked);
 				if(isChecked){
+//                    (((ListView)parent)).setItemChecked(position, true);
 					holder.imgCheck.setVisibility(View.VISIBLE);
 				}else{
+//                    (((ListView)parent)).setItemChecked(position, false);
 					holder.imgCheck.setVisibility(View.INVISIBLE);
 				}
 			}
 		});
 		return convertView;
+	}
+
+	public List<UserModel> getSelectedUser(){
+		return this.mLstSelectedUser;
 	}
 }

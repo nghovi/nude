@@ -214,6 +214,21 @@ public class WelfareUtil{
 		return lstUserName;
 	}
 
+    /**
+     * convert user model list -> user id list
+     *
+     * @param lstUser
+     */
+    public static List<String> convert2UserId(List<UserModel> lstUser){
+        List<String> lstUserName = new ArrayList<>();
+        if(!CCCollectionUtil.isEmpty(lstUser)){
+            for(UserModel userModel : lstUser){
+                lstUserName.add(userModel.key);
+            }
+        }
+        return lstUserName;
+    }
+
 	/**
 	 * convert user model list -> user name list
 	 *

@@ -35,6 +35,7 @@ import trente.asia.android.view.ChiaseTextView;
 import trente.asia.android.view.util.CAObjectSerializeUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
+import trente.asia.calendar.commons.dialogs.ClFilterUserListDialog;
 import trente.asia.calendar.commons.fragments.AbstractClFragment;
 import trente.asia.calendar.commons.views.UserListLinearLayout;
 import trente.asia.calendar.services.calendar.model.CalendarModel;
@@ -75,6 +76,7 @@ public class ScheduleFormFragment extends AbstractClFragment{
 
 	private List<ApiObjectModel>	categories;
 	private ChiaseTextView			txtCategory;
+	private ClFilterUserListDialog	filterDialog;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -97,6 +99,7 @@ public class ScheduleFormFragment extends AbstractClFragment{
 		txtCalendar = (ChiaseTextView)getView().findViewById(R.id.txt_id_calendar);
 		txtCategory = (ChiaseTextView)getView().findViewById(R.id.txt_id_category);
 		lnrUserList = (UserListLinearLayout)getView().findViewById(R.id.lnr_id_user_list);
+		filterDialog = new ClFilterUserListDialog(activity, lnrUserList);
 
 		getView().findViewById(R.id.lnr_id_meeting_room).setOnClickListener(this);
 		getView().findViewById(R.id.lnr_id_category).setOnClickListener(this);
@@ -110,6 +113,7 @@ public class ScheduleFormFragment extends AbstractClFragment{
 		txtEndDate.setOnClickListener(this);
 		txtStartTime.setOnClickListener(this);
 		txtEndTime.setOnClickListener(this);
+		lnrUserList.setOnClickListener(this);
 	}
 
 	@Override
@@ -225,6 +229,7 @@ public class ScheduleFormFragment extends AbstractClFragment{
 	private void onCalendarSelected(String selectedKey){
 		List<UserModel> calendarUsers = getAllCalendarUsers(calendars, selectedKey);
 		if(!CCCollectionUtil.isEmpty(calendarUsers)){
+			filterDialog.updateUserList(calendarUsers);
 			lnrUserList.show(calendarUsers, (int)getResources().getDimension(R.dimen.margin_30dp));
 		}
 	}
@@ -301,6 +306,9 @@ public class ScheduleFormFragment extends AbstractClFragment{
 			break;
 		case R.id.txt_id_end_time:
 			timePickerDialogEnd.show();
+			break;
+		case R.id.lnr_id_user_list:
+			filterDialog.show();
 			break;
 		default:
 			break;
