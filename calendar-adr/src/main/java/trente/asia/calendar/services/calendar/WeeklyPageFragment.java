@@ -106,7 +106,9 @@ public class WeeklyPageFragment extends WelfareFragment implements ObservableScr
 		JSONObject jsonObject = new JSONObject();
 		try{
 			// jsonObject.put("targetUserId", myself.key);
-			jsonObject.put("targetUserList", targetUserList);
+			if(!CCStringUtil.isEmpty(targetUserList)){
+				jsonObject.put("targetUserList", targetUserList);
+			}
 			jsonObject.put("calendars", selectedCalendarStr);
 			jsonObject.put("startDateString", CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, c.getTime()));
 			c.add(Calendar.DATE, 7);
