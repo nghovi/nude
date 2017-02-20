@@ -9,6 +9,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +28,7 @@ import trente.asia.calendar.services.calendar.view.WeeklyCalendarPagerAdapter;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.models.UserModel;
+import trente.asia.welfare.adr.view.WfSlideMenuLayout;
 
 /**
  * WeeklyFragment
@@ -36,9 +39,12 @@ public class WeeklyFragment extends AbstractClFragment{
 
 	private ViewPager					mViewPager;
 	private WeeklyCalendarPagerAdapter	mPagerAdapter;
+	private WfSlideMenuLayout			mSlideMenuLayout;
 
 	private final int					ACTIVE_PAGE	= Integer.MAX_VALUE / 2;
 	private final Date					TODAY		= CsDateUtil.makeMonthWithFirstDate();
+
+	private ImageView					mImgLeftHeader;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -51,7 +57,9 @@ public class WeeklyFragment extends AbstractClFragment{
 	@Override
 	protected void initView(){
 		super.initView();
-		initHeader(R.drawable.wf_back_white, "Weekly", null);
+		mImgLeftHeader = (ImageView)getView().findViewById(R.id.img_id_header_left_icon);
+
+		// initHeader(R.drawable.wf_back_white, "Weekly", null);
 		mViewPager = (ViewPager)getView().findViewById(R.id.pager);
 		mPagerAdapter = new WeeklyCalendarPagerAdapter(getChildFragmentManager());
 		mViewPager.setAdapter(mPagerAdapter);
@@ -73,11 +81,18 @@ public class WeeklyFragment extends AbstractClFragment{
 		ImageView imgRightIcon = (ImageView)getView().findViewById(R.id.img_id_header_right_icon);
 		imgRightIcon.setVisibility(View.VISIBLE);
 		imgRightIcon.setOnClickListener(this);
+
+		mImgLeftHeader.setOnClickListener(this);
+		mSlideMenuLayout = (WfSlideMenuLayout)getView().findViewById(R.id.drawer_layout);
+		FragmentManager fragmentManager = getFragmentManager();
+		FragmentTransaction transaction = fragmentManager.beginTransaction();
+		CalendarListFragment calendarListFragment = new CalendarListFragment();
+		transaction.replace(R.id.slice_menu_board, calendarListFragment).commit();
 	}
 
 	private void setActiveDate(int position){
 		Date activeDate = CsDateUtil.addMonth(TODAY, position - ACTIVE_PAGE);
-        prefAccUtil.saveActiveDate(activeDate);
+		prefAccUtil.saveActiveDate(activeDate);
 	}
 
 	@Override
@@ -104,11 +119,11 @@ public class WeeklyFragment extends AbstractClFragment{
 	}
 
 	private void onLoadWeeklySchedulesSuccess(JSONObject response){
-//		List<ScheduleModel> schedules = CCJsonUtil.convertToModelList(response.optString("schedules"), ScheduleModel.class);
-//		// rooms = CCJsonUtil.convertToModelList(response.optString("rooms"), ApiObjectModel.class);
-//		List<UserModel> calendarUsers = CCJsonUtil.convertToModelList(response.optString("calendarUsers"), UserModel.class);
-//
-//		List<CalendarDayModel> dummy = getCalendarDayModels(schedules);
+		// List<ScheduleModel> schedules = CCJsonUtil.convertToModelList(response.optString("schedules"), ScheduleModel.class);
+		// // rooms = CCJsonUtil.convertToModelList(response.optString("rooms"), ApiObjectModel.class);
+		// List<UserModel> calendarUsers = CCJsonUtil.convertToModelList(response.optString("calendarUsers"), UserModel.class);
+		//
+		// List<CalendarDayModel> dummy = getCalendarDayModels(schedules);
 
 	}
 
@@ -143,6 +158,9 @@ public class WeeklyFragment extends AbstractClFragment{
 	@Override
 	public void onClick(View v){
 		switch(v.getId()){
+		case R.id.img_id_header_left_icon:
+			mSlideMenuLayout.toggleMenu();
+			break;
 		case R.id.img_id_header_right_icon:
 			gotoScheduleFormFragment();
 			break;
