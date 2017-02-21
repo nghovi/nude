@@ -41,7 +41,7 @@
 
         <TextView
             android:id="@+id/txt_id_name"
-            style="@style/wl_common_text"
+            style="@style/wl_common_text_single_line"
             android:textColor="@color/chiase_white"/>
 
         <trente.asia.calendar.commons.views.UserListLinearLayout
