@@ -33,5 +33,14 @@
     <string name="cl_schedule_form_item_schedule_note">Schedule note</string>
 
     <string name="cl_filter_user_dialog_title">Filter user</string>
+    <string name="cl_schedule_repeat_dialog_title">Schedule repeat</string>
+
+    <string name="cl_schedule_repeat_type_weekly">Weekly</string>
+    <string name="cl_schedule_repeat_type_monthly">Monthly</string>
+    <string name="cl_schedule_repeat_type_yearly">Yearly</string>
+
+    <string name="cl_schedule_repeat_limit_forever">Forever</string>
+    <string name="cl_schedule_repeat_limit_until">Until</string>
+    <string name="cl_schedule_repeat_limit_after">After</string>
 
 </resources>
