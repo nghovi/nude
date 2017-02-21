@@ -13,11 +13,11 @@ import android.widget.TextView;
 
 import asia.chiase.core.util.CCFormatUtil;
 import trente.asia.android.view.ChiaseDialog;
-import trente.asia.android.view.ChiaseTextViewCheckable;
 import trente.asia.android.view.adapter.ChiaseSpinnerAdapter;
 import trente.asia.android.view.model.ChiaseSpinnerModel;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
+import trente.asia.calendar.commons.views.RepeatWeeklyDayLinearLayout;
 import trente.asia.welfare.adr.define.WelfareConst;
 
 /**
@@ -27,17 +27,17 @@ import trente.asia.welfare.adr.define.WelfareConst;
  */
 public class ClScheduleRepeatDialog extends ChiaseDialog{
 
-	private Context					mContext;
-	private Spinner					spnRepeatType;
-	private Spinner					spnRepeatLimit;
+	private Context						mContext;
+	private Spinner						spnRepeatType;
+	private Spinner						spnRepeatLimit;
 
-	private LinearLayout			lnrWeeklyDay;
-	private LinearLayout			lnrLimitUtil;
-	private LinearLayout			lnrLimitAfter;
-	private TextView				txtLimitUtil;
-	private ChiaseTextViewCheckable	txtSunday;
+	private LinearLayout				lnrWeeklyDay;
+	private LinearLayout				lnrLimitUtil;
+	private LinearLayout				lnrLimitAfter;
+	private TextView					txtLimitUtil;
 
-	private Calendar				calendarLimit	= Calendar.getInstance();
+	private RepeatWeeklyDayLinearLayout	lnrRepeatWeeklyDay;
+	private Calendar					calendarLimit	= Calendar.getInstance();
 
 	public ClScheduleRepeatDialog(Context context){
 		super(context);
@@ -56,13 +56,8 @@ public class ClScheduleRepeatDialog extends ChiaseDialog{
 		lnrLimitAfter = (LinearLayout)this.findViewById(R.id.lnr_id_repeat_after);
 		txtLimitUtil = (TextView)this.findViewById(R.id.txt_id_repeat_limit_util);
 
-		txtSunday = (ChiaseTextViewCheckable) this.findViewById(R.id.txt_id_sunday);
-        txtSunday.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                txtSunday.toggle();
-            }
-        });
+		lnrRepeatWeeklyDay = (RepeatWeeklyDayLinearLayout)this.findViewById(R.id.lnr_id_repeat_weekly_day);
+        lnrRepeatWeeklyDay.initialization();
 
 		calendarLimit.add(Calendar.MONTH, 1);
 

@@ -43,70 +43,7 @@
         style="@style/cs_common_match_wrap"
         android:orientation="vertical">
 
-        <LinearLayout
-            style="@style/wf_common_item_linear2"
-            android:gravity="center">
-
-            <trente.asia.android.view.ChiaseTextViewCheckable
-                android:id="@+id/txt_id_sunday"
-                style="@style/wl_common_text"
-                android:layout_width="wrap_content"
-                android:background="@drawable/state_repeat_day_item"
-                android:gravity="center"
-                android:text="SUN"/>
-
-            <TextView
-                style="@style/wl_common_text"
-                android:layout_width="wrap_content"
-                android:layout_marginLeft="@dimen/margin_10dp"
-                android:background="@drawable/shape_repeat_weekly_date_actived"
-                android:gravity="center"
-                android:text="MON"/>
-
-            <TextView
-                style="@style/wl_common_text"
-                android:layout_width="wrap_content"
-                android:layout_marginLeft="@dimen/margin_10dp"
-                android:background="@drawable/shape_repeat_weekly_date"
-                android:gravity="center"
-                android:text="TUE"/>
-
-            <TextView
-                style="@style/wl_common_text"
-                android:layout_width="wrap_content"
-                android:layout_marginLeft="@dimen/margin_10dp"
-                android:background="@drawable/shape_repeat_weekly_date"
-                android:gravity="center"
-                android:text="WED"/>
-        </LinearLayout>
-
-        <LinearLayout
-            style="@style/wf_common_item_linear2"
-            android:gravity="center">
-
-            <TextView
-                style="@style/wl_common_text"
-                android:layout_width="wrap_content"
-                android:background="@drawable/shape_repeat_weekly_date"
-                android:gravity="center"
-                android:text="THU"/>
-
-            <TextView
-                style="@style/wl_common_text"
-                android:layout_width="wrap_content"
-                android:layout_marginLeft="@dimen/margin_10dp"
-                android:background="@drawable/shape_repeat_weekly_date_actived"
-                android:gravity="center"
-                android:text="FRI"/>
-
-            <TextView
-                style="@style/wl_common_text"
-                android:layout_width="wrap_content"
-                android:layout_marginLeft="@dimen/margin_10dp"
-                android:background="@drawable/shape_repeat_weekly_date"
-                android:gravity="center"
-                android:text="SAT"/>
-        </LinearLayout>
+        <include layout="@layout/view_repeat_weekly_day"/>
 
         <View style="@style/cs_common_divider"/>
 

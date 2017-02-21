@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<trente.asia.calendar.commons.views.RepeatWeeklyDayLinearLayout
+    android:id="@+id/lnr_id_repeat_weekly_day"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/margin_0dp"
+    android:paddingLeft="@dimen/margin_0dp"
+    android:paddingRight="@dimen/margin_0dp"
+    android:paddingTop="@dimen/margin_0dp">
+
+    <LinearLayout
+        style="@style/wf_common_item_linear2"
+        android:weightSum="4">
+
+        <LinearLayout
+            style="@style/cs_common_wrap"
+            android:layout_width="@dimen/margin_0dp"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <trente.asia.android.view.ChiaseTextViewCheckable
+                android:id="@+id/txt_id_day1"
+                style="@style/wl_common_text"
+                android:layout_width="wrap_content"
+                android:background="@drawable/state_repeat_day_item"
+                android:gravity="center"/>
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/cs_common_wrap"
+            android:layout_width="@dimen/margin_0dp"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <trente.asia.android.view.ChiaseTextViewCheckable
+                android:id="@+id/txt_id_day2"
+                style="@style/wl_common_text"
+                android:layout_width="wrap_content"
+                android:background="@drawable/state_repeat_day_item"
+                android:gravity="center"/>
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/cs_common_wrap"
+            android:layout_width="@dimen/margin_0dp"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <trente.asia.android.view.ChiaseTextViewCheckable
+                android:id="@+id/txt_id_day3"
+                style="@style/wl_common_text"
+                android:layout_width="wrap_content"
+                android:background="@drawable/state_repeat_day_item"
+                android:gravity="center"/>
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/cs_common_wrap"
+            android:layout_width="@dimen/margin_0dp"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <trente.asia.android.view.ChiaseTextViewCheckable
+                android:id="@+id/txt_id_day4"
+                style="@style/wl_common_text"
+                android:layout_width="wrap_content"
+                android:background="@drawable/state_repeat_day_item"
+                android:gravity="center"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/wf_common_item_linear2"
+        android:weightSum="4">
+
+        <LinearLayout
+            style="@style/cs_common_wrap"
+            android:layout_width="@dimen/margin_0dp"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <trente.asia.android.view.ChiaseTextViewCheckable
+                android:id="@+id/txt_id_day5"
+                style="@style/wl_common_text"
+                android:layout_width="wrap_content"
+                android:background="@drawable/state_repeat_day_item"
+                android:gravity="center"/>
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/cs_common_wrap"
+            android:layout_width="@dimen/margin_0dp"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <trente.asia.android.view.ChiaseTextViewCheckable
+                android:id="@+id/txt_id_day6"
+                style="@style/wl_common_text"
+                android:layout_width="wrap_content"
+                android:background="@drawable/state_repeat_day_item"
+                android:gravity="center"/>
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/cs_common_wrap"
+            android:layout_width="@dimen/margin_0dp"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <trente.asia.android.view.ChiaseTextViewCheckable
+                android:id="@+id/txt_id_day7"
+                style="@style/wl_common_text"
+                android:layout_width="wrap_content"
+                android:background="@drawable/state_repeat_day_item"
+                android:gravity="center"/>
+        </LinearLayout>
+    </LinearLayout>
+</trente.asia.calendar.commons.views.RepeatWeeklyDayLinearLayout>
