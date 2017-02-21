@@ -31,6 +31,7 @@
             android:id="@+id/swt_id_all_day"
             style="@style/cs_common_wrap"
             android:layout_weight="1"
+            android:checked="true"
             android:gravity="right"
             android:theme="@style/wf_common_switch"/>
     </LinearLayout>
@@ -109,7 +110,7 @@
         <View style="@style/cs_common_divider"/>
 
     </LinearLayout>
-    
+
     <LinearLayout
         style="@style/wf_common_item_linear2">
 
@@ -117,12 +118,42 @@
             android:id="@+id/spn_id_repeat_limit"
             style="@style/cs_common_wrap"/>
 
-        <TextView
-            android:id="@+id/txt_id_repeat_limit"
-            style="@style/wl_common_text"
-            android:layout_width="wrap_content"
-            android:layout_marginLeft="@dimen/margin_10dp"
-            android:text="on 2017.02.25"/>
+        <LinearLayout
+            android:id="@+id/lnr_id_repeat_until"
+            style="@style/cs_common_wrap"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/txt_id_repeat_limit_util"
+                style="@style/wl_common_text"
+                android:layout_width="wrap_content"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lnr_id_repeat_after"
+            style="@style/cs_common_wrap"
+            android:layout_weight="1"
+            android:gravity="right|center_vertical"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <EditText
+                style="@style/wl_common_text"
+                android:layout_width="wrap_content"
+                android:inputType="number"
+                android:paddingLeft="@dimen/margin_15dp"
+                android:paddingRight="@dimen/margin_15dp"
+                android:text="3"/>
+
+            <TextView
+                style="@style/wl_common_text"
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="@dimen/margin_6dp"
+                android:text="@string/cl_schedule_repeat_dialog_times"/>
+        </LinearLayout>
+
     </LinearLayout>
 
     <View style="@style/cs_common_divider"/>
