@@ -22,6 +22,7 @@ import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.view.ChiaseTextView;
 import trente.asia.android.view.util.CAObjectSerializeUtil;
 import trente.asia.calendar.R;
+import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.fragments.AbstractClFragment;
 import trente.asia.calendar.services.calendar.model.CalendarModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
@@ -69,6 +70,7 @@ public class ScheduleDetailFragment extends AbstractClFragment{
 		JSONObject jsonObject = new JSONObject();
 		try{
 			jsonObject.put("key", schedule.key);
+			jsonObject.put("calendars", prefAccUtil.get(ClConst.SELECTED_CALENDAR_STRING));
 		}catch(JSONException e){
 			e.printStackTrace();
 		}

@@ -21,8 +21,9 @@ import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
 public class WeeklyCalendarPagerAdapter extends FragmentPagerAdapter{
 
 	private final int	ACTIVE_PAGE	= Integer.MAX_VALUE / 2;
-	// private final Date TODAY = CsDateUtil.makeMonthWithFirstDate();
+	// private final Date TODAY = CsDateUtil.getFirstDateOfCurrentMonth();
 	private final Date	TODAY		= Calendar.getInstance().getTime();
+	private NavigationHeader navigationHeader;
 
 	public WeeklyCalendarPagerAdapter(FragmentManager fm){
 		super(fm);
@@ -35,6 +36,7 @@ public class WeeklyCalendarPagerAdapter extends FragmentPagerAdapter{
 		// activeCalendar.setFirstDayOfWeek(Calendar.THURSDAY);
 
 		WeeklyPageFragment weeklyPageFragment = new WeeklyPageFragment();
+		weeklyPageFragment.setNavigationHeader(navigationHeader);
 		weeklyPageFragment.setSelectedDate(activeDate);
 		return weeklyPageFragment;
 	}
@@ -45,5 +47,9 @@ public class WeeklyCalendarPagerAdapter extends FragmentPagerAdapter{
 	@Override
 	public int getCount(){
 		return Integer.MAX_VALUE;
+	}
+
+	public void setNavigationHeader(NavigationHeader navigationHeader) {
+		this.navigationHeader = navigationHeader;
 	}
 }

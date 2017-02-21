@@ -85,11 +85,11 @@ public class WeeklyCalendarDayView extends LinearLayout{
 			txtContent.setBackgroundResource(R.drawable.shape_active_date_border);
 		}
 
-		ImageView imgScheduleSign = (ImageView)rowItemView.findViewById(R.id.img_schedule_sign);
+		TextView txtScheduleMark = (TextView)rowItemView.findViewById(R.id.txt_id_row_schedule_mark);
 		if(calendarDayModel != null && !CCCollectionUtil.isEmpty(calendarDayModel.schedules)){
-			imgScheduleSign.setVisibility(View.VISIBLE);
+			txtScheduleMark.setVisibility(View.VISIBLE);
 		}else{
-			imgScheduleSign.setVisibility(View.GONE);
+			txtScheduleMark.setVisibility(View.GONE);
 		}
 
 		Calendar itemCalendar = CCDateUtil.makeCalendar(itemDate);

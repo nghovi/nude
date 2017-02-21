@@ -20,9 +20,9 @@ import trente.asia.android.model.DayModel;
  */
 public class CsDateUtil{
 
-	public static final String CS_DATE_TIME_1 = "EEE";
+	public static final String	CS_DATE_TIME_1	= "EEE";
 
-	public static Date makeMonthWithFirstDate(){
+	public static Date getFirstDateOfCurrentMonth(){
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(Calendar.DATE, 1);
 		calendar.set(Calendar.HOUR, 0);
@@ -37,11 +37,11 @@ public class CsDateUtil{
 		return calendar.getTime();
 	}
 
-    public static Date addWeek(Date date, int add){
-        Calendar calendar = CCDateUtil.makeCalendar(date);
-        calendar.add(Calendar.WEEK_OF_YEAR, add);
-        return calendar.getTime();
-    }
+	public static Date addWeek(Date date, int add){
+		Calendar calendar = CCDateUtil.makeCalendar(date);
+		calendar.add(Calendar.WEEK_OF_YEAR, add);
+		return calendar.getTime();
+	}
 
 	public static Date addDate(Date date, int add){
 		Calendar calendar = CCDateUtil.makeCalendar(date);
@@ -80,30 +80,30 @@ public class CsDateUtil{
 		}
 	}
 
-    /**
-     * <strong>getAllDate4Week</strong><br>
-     * <br> get all date in week with start: Sunday and end: Saturday
-     *
-     * @param calendar
-     * @return
-     */
-    public static List<Date> getAllDate4Week(Calendar calendar){
-        if(calendar == null){
-            return null;
-        }else{
-            calendar.setFirstDayOfWeek(Calendar.THURSDAY);
-            List<Date> lstDate = new ArrayList<>();
+	/**
+	 * <strong>getAllDate4Week</strong><br>
+	 * <br> get all date in week with start: Sunday and end: Saturday
+	 *
+	 * @param calendar
+	 * @return
+	 */
+	public static List<Date> getAllDate4Week(Calendar calendar){
+		if(calendar == null){
+			return null;
+		}else{
+			calendar.setFirstDayOfWeek(Calendar.THURSDAY);
+			List<Date> lstDate = new ArrayList<>();
 
-            calendar.set(Calendar.DAY_OF_WEEK, calendar.getFirstDayOfWeek());
-            Date firstDate = calendar.getTime();
-            calendar.add(Calendar.DATE, 6);
-            Date lastDate = calendar.getTime();
+			calendar.set(Calendar.DAY_OF_WEEK, calendar.getFirstDayOfWeek());
+			Date firstDate = calendar.getTime();
+			calendar.add(Calendar.DATE, 6);
+			Date lastDate = calendar.getTime();
 
-            lstDate = CCDateUtil.makeDateList(firstDate, lastDate);
+			lstDate = CCDateUtil.makeDateList(firstDate, lastDate);
 
-            return lstDate;
-        }
-    }
+			return lstDate;
+		}
+	}
 
 	/**
 	 * <strong>getAllDay4Week</strong><br>
@@ -121,6 +121,7 @@ public class CsDateUtil{
 				calendar.add(Calendar.DATE, 1);
 			}
 			DayModel dayModel = new DayModel();
+			dayModel.date = calendar.getTime();
 			dayModel.day = CCFormatUtil.formatDateCustom(CS_DATE_TIME_1, calendar.getTime());
 			dayModel.dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
 			lstDay.add(dayModel);
