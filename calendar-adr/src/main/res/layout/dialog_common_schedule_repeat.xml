@@ -47,10 +47,11 @@
             style="@style/wf_common_item_linear2"
             android:gravity="center">
 
-            <TextView
+            <trente.asia.android.view.ChiaseTextViewCheckable
+                android:id="@+id/txt_id_sunday"
                 style="@style/wl_common_text"
                 android:layout_width="wrap_content"
-                android:background="@drawable/shape_repeat_weekly_date"
+                android:background="@drawable/state_repeat_day_item"
                 android:gravity="center"
                 android:text="SUN"/>
 

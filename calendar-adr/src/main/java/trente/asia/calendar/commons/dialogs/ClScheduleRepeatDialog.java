@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import asia.chiase.core.util.CCFormatUtil;
 import trente.asia.android.view.ChiaseDialog;
+import trente.asia.android.view.ChiaseTextViewCheckable;
 import trente.asia.android.view.adapter.ChiaseSpinnerAdapter;
 import trente.asia.android.view.model.ChiaseSpinnerModel;
 import trente.asia.calendar.R;
@@ -26,16 +27,17 @@ import trente.asia.welfare.adr.define.WelfareConst;
  */
 public class ClScheduleRepeatDialog extends ChiaseDialog{
 
-	private Context			mContext;
-	private Spinner			spnRepeatType;
-	private Spinner			spnRepeatLimit;
+	private Context					mContext;
+	private Spinner					spnRepeatType;
+	private Spinner					spnRepeatLimit;
 
-	private LinearLayout	lnrWeeklyDay;
-	private LinearLayout	lnrLimitUtil;
-	private LinearLayout	lnrLimitAfter;
-	private TextView		txtLimitUtil;
+	private LinearLayout			lnrWeeklyDay;
+	private LinearLayout			lnrLimitUtil;
+	private LinearLayout			lnrLimitAfter;
+	private TextView				txtLimitUtil;
+	private ChiaseTextViewCheckable	txtSunday;
 
-	private Calendar		calendarLimit	= Calendar.getInstance();
+	private Calendar				calendarLimit	= Calendar.getInstance();
 
 	public ClScheduleRepeatDialog(Context context){
 		super(context);
@@ -53,6 +55,14 @@ public class ClScheduleRepeatDialog extends ChiaseDialog{
 		lnrLimitUtil = (LinearLayout)this.findViewById(R.id.lnr_id_repeat_until);
 		lnrLimitAfter = (LinearLayout)this.findViewById(R.id.lnr_id_repeat_after);
 		txtLimitUtil = (TextView)this.findViewById(R.id.txt_id_repeat_limit_util);
+
+		txtSunday = (ChiaseTextViewCheckable) this.findViewById(R.id.txt_id_sunday);
+        txtSunday.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                txtSunday.toggle();
+            }
+        });
 
 		calendarLimit.add(Calendar.MONTH, 1);
 
@@ -114,7 +124,7 @@ public class ClScheduleRepeatDialog extends ChiaseDialog{
 		}else if(ClConst.SCHEDULE_REPEAT_LIMIT_UNTIL.equals(model.key)){
 			lnrLimitUtil.setVisibility(View.VISIBLE);
 			lnrLimitAfter.setVisibility(View.GONE);
-            txtLimitUtil.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, calendarLimit.getTime()));
+			txtLimitUtil.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, calendarLimit.getTime()));
 		}else{
 			lnrLimitUtil.setVisibility(View.GONE);
 			lnrLimitAfter.setVisibility(View.VISIBLE);
