@@ -15,6 +15,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,7 +60,6 @@ public class ScheduleFormFragment extends AbstractClFragment{
 	private ChiaseListDialog		dlgChooseCalendar;
 	private ChiaseListDialog		dlgChooseCategory;
 	private List<CalendarModel>		calendars;
-	private CalendarModel			activeCalendar;
 	private List<ApiObjectModel>	calendarHolders;
 	private UserListLinearLayout	lnrUserList;
 
@@ -79,6 +79,7 @@ public class ScheduleFormFragment extends AbstractClFragment{
 	private ChiaseTextView			txtCategory;
 	private ClFilterUserListDialog	filterDialog;
 	private ClScheduleRepeatDialog	repeatDialog;
+	private SwitchCompat			swtAllDay;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -101,6 +102,8 @@ public class ScheduleFormFragment extends AbstractClFragment{
 		txtCalendar = (ChiaseTextView)getView().findViewById(R.id.txt_id_calendar);
 		txtCategory = (ChiaseTextView)getView().findViewById(R.id.txt_id_category);
 		lnrUserList = (UserListLinearLayout)getView().findViewById(R.id.lnr_id_user_list);
+		swtAllDay = (SwitchCompat)getView().findViewById(R.id.swt_id_all_day);
+
 		filterDialog = new ClFilterUserListDialog(activity, lnrUserList);
 		repeatDialog = new ClScheduleRepeatDialog(activity);
 
@@ -247,10 +250,6 @@ public class ScheduleFormFragment extends AbstractClFragment{
 
 		inflateWithData((ViewGroup)getView(), txtRoom, txtCalendar, txtCategory, rooms, calendars, categories, schedule);
 
-		// allCalenarUsers = getAllCalendarUsers(calendars, schedule != null && schedule.calendarId != null ? schedule.calendarId : null);
-		// List<UserModel> joinUserList = ScheduleDetailFragment.getJoinedUserModels(schedule, allCalenarUsers);
-		// horizontalUserListView.show(joinUserList, allCalenarUsers, false, 32, 10);
-
 		buildDatePickerDialogs(schedule);
 	}
 
@@ -258,7 +257,7 @@ public class ScheduleFormFragment extends AbstractClFragment{
 		if(!CCStringUtil.isEmpty(calendarId)){
 			for(CalendarModel calendarModel : calendars){
 				if(calendarModel.key.equals(calendarId)){
-					activeCalendar = calendarModel;
+					// activeCalendar = calendarModel;
 					if(CCBooleanUtil.checkBoolean(calendarModel.isMyself)){
 						calendarModel.calendarUsers = new ArrayList<>();
 						calendarModel.calendarUsers.add(prefAccUtil.getUserPref());
@@ -331,7 +330,7 @@ public class ScheduleFormFragment extends AbstractClFragment{
 			}
 			jsonObject.put("isDayPeriod", isDayPeriod);
 			jsonObject.put("joinUsers", lnrUserList.formatUserList());
-
+            jsonObject.put("isDayPeriod", swtAllDay.isChecked());
 		}catch(JSONException e){
 			e.printStackTrace();
 		}

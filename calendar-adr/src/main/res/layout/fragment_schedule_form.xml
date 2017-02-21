@@ -348,7 +348,7 @@
                     android:layout_marginLeft="@dimen/margin_10dp"
                     android:layout_weight="1"
                     android:hint="@string/chiase_common_please_select"
-                    custom:mName="scheduleCategory"/>
+                    custom:mName="categoryId"/>
 
                 <ImageView
                     style="@style/cs_common_wrap"

@@ -158,12 +158,12 @@ public class MonthlyPageFragment extends WelfareFragment implements DailySchedul
 
 			if(!CCCollectionUtil.isEmpty(lstSchedule)){
 				for(ScheduleModel model : lstSchedule){
-					Date startDate = WelfareUtil.makeDate(model.startDate);
-					MonthlyCalendarDayView activeView = ClUtil.findView4Day(lstCalendarDay, WelfareFormatUtil.formatDate(startDate));
+//					Date startDate = WelfareUtil.makeDate(model.startDate);
+					List<MonthlyCalendarDayView> lstActiveCalendarDay = ClUtil.findView4Day(lstCalendarDay, model);
 
-					if(activeView != null){
-						activeView.addSchedule(model);
-					}
+                    for(MonthlyCalendarDayView calendarDayView : lstActiveCalendarDay){
+                        calendarDayView.addSchedule(model);
+                    }
 				}
 			}
 			List<UserModel> lstCalendarUser = CCJsonUtil.convertToModelList(response.optString("calendarUsers"), UserModel.class);

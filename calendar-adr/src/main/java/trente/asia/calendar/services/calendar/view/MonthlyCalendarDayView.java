@@ -21,6 +21,7 @@ import trente.asia.calendar.services.calendar.listener.DailyScheduleClickListene
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
+import trente.asia.welfare.adr.utils.WelfareUtil;
 
 /**
  * MonthlyCalendarDayView
@@ -88,14 +89,28 @@ public class MonthlyCalendarDayView extends LinearLayout{
 		TextView txtSchedule = new TextView(mContext);
 		txtSchedule.setMaxLines(1);
 		// txtSchedule.setEllipsize(TextUtils.TruncateAt.END);
-		if(!CCBooleanUtil.checkBoolean(scheduleModel.isDayPeriod) && !CCBooleanUtil.checkBoolean(scheduleModel.isRepeat)){
+		Date startDate = WelfareUtil.makeDate(scheduleModel.startDate);
+		Date endDate = WelfareUtil.makeDate(scheduleModel.endDate);
+		if(CCDateUtil.compareDate(startDate, endDate, false) != 0){
+			txtSchedule.setPadding(2, 2, 2, 2);
+			txtSchedule.setTextColor(Color.WHITE);
+			if(!CCStringUtil.isEmpty(scheduleModel.scheduleColor)){
+				txtSchedule.setBackgroundColor(Color.parseColor(WelfareFormatUtil.formatColor(scheduleModel.scheduleColor)));
+			}else{
+				txtSchedule.setBackgroundColor(Color.RED);
+			}
+		}else if(!CCBooleanUtil.checkBoolean(scheduleModel.isDayPeriod) && !CCBooleanUtil.checkBoolean(scheduleModel.isRepeat)){
 			if(!CCStringUtil.isEmpty(scheduleModel.scheduleColor)){
 				txtSchedule.setTextColor(Color.parseColor(WelfareFormatUtil.formatColor(scheduleModel.scheduleColor)));
 			}
 		}else{
 			txtSchedule.setPadding(2, 2, 2, 2);
 			txtSchedule.setTextColor(Color.WHITE);
-			txtSchedule.setBackgroundColor(Color.parseColor(WelfareFormatUtil.formatColor(scheduleModel.scheduleColor)));
+			if(!CCStringUtil.isEmpty(scheduleModel.scheduleColor)){
+				txtSchedule.setBackgroundColor(Color.parseColor(WelfareFormatUtil.formatColor(scheduleModel.scheduleColor)));
+			}else{
+				txtSchedule.setBackgroundColor(Color.RED);
+			}
 		}
 
 		int textSize = (int)(getResources().getDimension(R.dimen.margin_12dp) / getResources().getDisplayMetrics().density);
@@ -105,7 +120,7 @@ public class MonthlyCalendarDayView extends LinearLayout{
 		lnrRowContent.addView(txtSchedule);
 	}
 
-    public void removeAllData(){
-        lnrRowContent.removeAllViews();
-    }
+	public void removeAllData(){
+		lnrRowContent.removeAllViews();
+	}
 }
