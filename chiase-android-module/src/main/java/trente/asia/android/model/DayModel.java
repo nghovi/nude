@@ -1,5 +1,7 @@
 package trente.asia.android.model;
 
+import java.util.Date;
+
 /**
  * <strong>DayModel</strong><br>
  * <br>
@@ -10,6 +12,7 @@ package trente.asia.android.model;
 public class DayModel{
 
 	public String	day;
+	public Date		date;
 
 	public int		dayOfWeek;
 }

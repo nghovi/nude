@@ -1,8 +1,6 @@
 <LinearLayout style="@style/wf_common_match"
               xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <View style="@style/cs_common_divider"/>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -10,7 +8,14 @@
         android:background="@color/chiase_white"
         android:orientation="vertical">
 
-        <include layout="@layout/view_horizontal_user_list"/>
+        <!--<include layout="@layout/view_horizontal_user_list"/>-->
+        <trente.asia.calendar.commons.views.UserListLinearLayout
+            android:id="@+id/lnr_id_user_list"
+            style="@style/cs_common_match_wrap"
+            android:background="@drawable/state_common_selectable_row"
+            android:paddingBottom="@dimen/margin_10dp"
+            android:paddingTop="@dimen/margin_10dp">
+        </trente.asia.calendar.commons.views.UserListLinearLayout>
 
         <LinearLayout
             android:id="@+id/lnr_id_content_header"

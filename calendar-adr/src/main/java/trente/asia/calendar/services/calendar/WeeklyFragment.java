@@ -1,11 +1,11 @@
 package trente.asia.calendar.services.calendar;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.os.Bundle;
@@ -16,18 +16,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
-import asia.chiase.core.util.CCJsonUtil;
 import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.R;
+import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.fragments.AbstractClFragment;
 import trente.asia.calendar.services.calendar.model.CalendarDayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
+import trente.asia.calendar.services.calendar.view.NavigationHeader;
 import trente.asia.calendar.services.calendar.view.WeeklyCalendarPagerAdapter;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.define.WfUrlConst;
-import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.view.WfSlideMenuLayout;
 
 /**
@@ -42,9 +44,10 @@ public class WeeklyFragment extends AbstractClFragment{
 	private WfSlideMenuLayout			mSlideMenuLayout;
 
 	private final int					ACTIVE_PAGE	= Integer.MAX_VALUE / 2;
-	private final Date					TODAY		= CsDateUtil.makeMonthWithFirstDate();
+	private final Date					TODAY		= Calendar.getInstance().getTime();
 
 	private ImageView					mImgLeftHeader;
+	private NavigationHeader			navigationHeader;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -57,13 +60,16 @@ public class WeeklyFragment extends AbstractClFragment{
 	@Override
 	protected void initView(){
 		super.initView();
+		navigationHeader = (NavigationHeader)getView().findViewById(R.id.lnr_navigation_header);
 		mImgLeftHeader = (ImageView)getView().findViewById(R.id.img_id_header_left_icon);
 
 		// initHeader(R.drawable.wf_back_white, "Weekly", null);
 		mViewPager = (ViewPager)getView().findViewById(R.id.pager);
 		mPagerAdapter = new WeeklyCalendarPagerAdapter(getChildFragmentManager());
+		mPagerAdapter.setNavigationHeader(navigationHeader);
 		mViewPager.setAdapter(mPagerAdapter);
 		mViewPager.setCurrentItem(ACTIVE_PAGE);
+		prefAccUtil.saveActiveDate(TODAY);
 		setActiveDate(ACTIVE_PAGE);
 		mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
@@ -75,6 +81,7 @@ public class WeeklyFragment extends AbstractClFragment{
 
 			public void onPageSelected(int position){
 				setActiveDate(position);
+				navigationHeader.isUpdated = false;
 			}
 		});
 
@@ -90,9 +97,10 @@ public class WeeklyFragment extends AbstractClFragment{
 		transaction.replace(R.id.slice_menu_board, calendarListFragment).commit();
 	}
 
-	private void setActiveDate(int position){
-		Date activeDate = CsDateUtil.addMonth(TODAY, position - ACTIVE_PAGE);
+	private Date setActiveDate(int position){
+		Date activeDate = CsDateUtil.addWeek(TODAY, position - ACTIVE_PAGE);
 		prefAccUtil.saveActiveDate(activeDate);
+		return activeDate;
 	}
 
 	@Override

@@ -10,7 +10,8 @@
         android:paddingBottom="@dimen/margin_6dp"
         android:paddingLeft="@dimen/margin_6dp"/>
 
-    <View style="@style/cs_common_divider"/>
+    <View style="@style/cs_common_divider"
+        android:layout_marginBottom="@dimen/margin_6dp"/>
 
     <LinearLayout
         android:id="@+id/lnr_item_calendar_item_list"

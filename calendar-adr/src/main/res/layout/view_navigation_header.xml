@@ -1,7 +1,8 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <LinearLayout
+    <trente.asia.calendar.services.calendar.view.NavigationHeader
         style="@style/cs_common_match_wrap"
+        android:id="@+id/lnr_navigation_header"
         android:background="@color/wf_app_color_base"
         android:gravity="center_vertical"
         android:orientation="horizontal">
@@ -43,17 +44,30 @@
             <LinearLayout
                 android:id="@+id/lnr_id_content_header_title"
                 style="@style/cs_common_match"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/txt_id_header_title"
                     style="@style/cs_common_match_wrap"
                     android:layout_marginLeft="@dimen/margin_10dp"
                     android:ellipsize="end"
+                    android:gravity="center_horizontal"
                     android:singleLine="true"
-                    android:text="Calendar 001"
+                    android:text="December, 2017"
                     android:textColor="@color/chiase_white"
-                    android:gravity="center_horizontal"/>
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:id="@+id/txt_id_header_title_sub"
+                    style="@style/cs_common_match_wrap"
+                    android:layout_marginLeft="@dimen/margin_10dp"
+                    android:ellipsize="end"
+                    android:gravity="center_horizontal"
+                    android:singleLine="true"
+                    android:text="2 calendar"
+                    android:textColor="@color/chiase_white"
+                    android:textSize="12sp"/>
             </LinearLayout>
 
         </LinearLayout>
@@ -68,6 +82,6 @@
                 style="@style/cs_common_wrap"
                 android:src="@drawable/cl_action_add"/>
         </LinearLayout>
-    </LinearLayout>
+    </trente.asia.calendar.services.calendar.view.NavigationHeader>
 
 </merge>

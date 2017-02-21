@@ -35,7 +35,7 @@ public class MonthlyFragment extends AbstractClFragment{
 	private TextView					txtMonth;
 	private MonthlyCalendarPagerAdapter	pagerAdapter;
 
-	private final Date					TODAY		= CsDateUtil.makeMonthWithFirstDate();
+	private final Date					TODAY		= CsDateUtil.getFirstDateOfCurrentMonth();
 	private final int					ACTIVE_PAGE	= Integer.MAX_VALUE / 2;
 
 	@Override

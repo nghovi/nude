@@ -19,7 +19,7 @@ import trente.asia.calendar.services.calendar.MonthlyPageFragment;
 public class MonthlyCalendarPagerAdapter extends FragmentPagerAdapter{
 
 	private final int							ACTIVE_PAGE	= Integer.MAX_VALUE / 2;
-	private final Date							TODAY		= CsDateUtil.makeMonthWithFirstDate();
+	private final Date							TODAY		= CsDateUtil.getFirstDateOfCurrentMonth();
 	private Map<Integer, MonthlyPageFragment>	monthlyMap	= new HashMap<>();
 
 	public MonthlyCalendarPagerAdapter(FragmentManager fm){
