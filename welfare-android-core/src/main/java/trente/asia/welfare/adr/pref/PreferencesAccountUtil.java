@@ -71,25 +71,27 @@ public class PreferencesAccountUtil{
 	/**
 	 * Save Object setting to Prefers.
 	 *
-	 * @param setting
+	 * @param newSetting
 	 */
-	public void saveSetting(SettingModel setting){
-		if(setting != null){
-			SettingModel data = getSetting();
-			if(isSettingChanged(setting, data)){
+	public void saveSetting(SettingModel newSetting){
+		if(newSetting != null){
+			SettingModel oldSetting = getSetting();
+			if(isSettingChanged(newSetting, oldSetting)){
 				Gson gson = new Gson();
-				String json = gson.toJson(setting);
+				String json = gson.toJson(newSetting);
 				pref.set(KEY_PREF_SETTING, json);
 			}
 		}
 	}
 
-	private boolean isSettingChanged(SettingModel data1, SettingModel data2){
-		boolean isPublicLevel = data1.DR_PUBLIC_LEVEL != null && !data1.DR_PUBLIC_LEVEL.equals(data2.DR_PUBLIC_LEVEL);
-		boolean isPushSetting = data1.WF_PUSH_SETTING != null && !data1.WF_PUSH_SETTING.equals(data2.WF_PUSH_SETTING);
-		boolean isMaxFile = data1.WF_MAX_FILE_SIZE != null && !data1.WF_MAX_FILE_SIZE.equals(data2.WF_MAX_FILE_SIZE);
-		boolean isAppointment = data1.SW_APPOINTMENT_ENABLED != null && !data1.SW_APPOINTMENT_ENABLED.equals(data2.SW_APPOINTMENT_ENABLED);
-		return isPublicLevel || isPushSetting || isMaxFile || isAppointment;
+	private boolean isSettingChanged(SettingModel newS, SettingModel old){
+		boolean isPublicLevelChanged = newS.DR_PUBLIC_LEVEL != null && !newS.DR_PUBLIC_LEVEL.equals(old.DR_PUBLIC_LEVEL);
+		boolean isPushSettingChanged = newS.WF_PUSH_SETTING != null && !newS.WF_PUSH_SETTING.equals(old.WF_PUSH_SETTING);
+		boolean isMaxFileChanged = newS.WF_MAX_FILE_SIZE != null && !newS.WF_MAX_FILE_SIZE.equals(old.WF_MAX_FILE_SIZE);
+		boolean isAppointmentChanged = newS.SW_APPOINTMENT_ENABLED != null && !newS.SW_APPOINTMENT_ENABLED.equals(old.SW_APPOINTMENT_ENABLED);
+		boolean isFirstDayOfWeekChanged = newS.CL_START_DAY_IN_WEEK != null && !newS.CL_START_DAY_IN_WEEK.equals(old.CL_START_DAY_IN_WEEK);
+
+		return isPublicLevelChanged || isPushSettingChanged || isMaxFileChanged || isAppointmentChanged || isFirstDayOfWeekChanged;
 	}
 
 	/**

@@ -31,6 +31,7 @@
 
                 <TextView
                     android:id="@+id/txt_item_schedule_time"
+                    style="@style/wl_common_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
@@ -60,6 +61,7 @@
 
                 <TextView
                     android:id="@+id/txt_item_schedule_name"
+                    style="@style/wl_common_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
@@ -77,6 +79,7 @@
             <TextView
                 android:id="@+id/txt_item_schedule_category"
                 android:layout_width="match_parent"
+                style="@style/wl_common_text"
                 android:layout_height="wrap_content"/>
 
             <include layout="@layout/view_horizontal_user_list"/>

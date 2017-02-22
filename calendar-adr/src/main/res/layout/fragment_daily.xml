@@ -1,21 +1,27 @@
-<LinearLayout style="@style/wf_common_match"
-              xmlns:android="http://schemas.android.com/apk/res/android">
+<trente.asia.welfare.adr.view.WfSlideMenuLayout android:id="@+id/drawer_layout"
+                                                style="@style/cs_common_match"
+                                                xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <include layout="@layout/view_common_header"/>
+    <!-- Slide Menu  -->
+    <LinearLayout
+        android:id="@+id/slice_menu_board"
+        style="@style/cs_common_match"
+        android:orientation="vertical"/>
 
     <LinearLayout
-        android:id="@+id/lnr_id_content"
-        style="@style/cs_common_match_wrap"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:visibility="visible">
+        style="@style/wf_common_match"
+        android:background="@color/chiase_white">
 
-        <TextView
+        <include layout="@layout/view_navigation_header"/>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/pager"
+            xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Daily view"/>
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+        <include layout="@layout/view_common_footer"/>
     </LinearLayout>
 
-    <include layout="@layout/view_common_footer"/>
-
-</LinearLayout>
+</trente.asia.welfare.adr.view.WfSlideMenuLayout>

@@ -115,7 +115,7 @@ public class WfUrlConst{
 	public static final String	API_TEAM_STAMP_LIST									= "/api/team/stamp/list";
 
 	public static final String	WF_CL_SCHEDULE_DETAIL								= "/api/cl/schedule/detail";
-	public static final String	WF_CL_SCHEDULE_LIST									= "/api/cl/schedules";
+	public static final String	WF_CL_SCHEDULE_DAY_LIST								= "/api/cl/day/schedules";
 	public static final String	WF_CL_SCHEDULE_UPD									= "/api/cl/schedule/upd";
 	public static final String	WF_CL_WEEK_SCHEDULE									= "/api/cl/week/schedules";
 	public static final String	WF_CL_SCHEDULE_MONTH_LIST							= "/api/cl/month/schedules";
