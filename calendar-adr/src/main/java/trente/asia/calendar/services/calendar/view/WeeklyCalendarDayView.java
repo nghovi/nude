@@ -9,7 +9,6 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -30,9 +29,19 @@ import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 public class WeeklyCalendarDayView extends LinearLayout{
 
 	private Context				mContext;
-	public String				day;
+	public String				dayStr;
 	private CalendarDayModel	calendarDayModel;
 	private OnDayClickListener	onDayClickListener;
+
+	public void setDate(Date date){
+		this.date = date;
+	}
+
+	private Date	date;
+
+	public Date getDate() {
+		return date;
+	}
 
 	public interface OnDayClickListener{
 
@@ -55,12 +64,16 @@ public class WeeklyCalendarDayView extends LinearLayout{
 		this.mContext = context;
 	}
 
-	public void initialization(Date itemDate, final CalendarDayModel calendarDayModel, OnDayClickListener listener){
-		LayoutParams params = new LayoutParams(0, LayoutParams.WRAP_CONTENT, 1);
-		this.setLayoutParams(params);
-		this.day = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, itemDate);
+	public void setData(final CalendarDayModel calendarDayModel, OnDayClickListener listener){
 		this.calendarDayModel = calendarDayModel;
 		this.onDayClickListener = listener;
+	}
+
+	public void initialization(Date itemDate){
+		LayoutParams params = new LayoutParams(0, LayoutParams.WRAP_CONTENT, 1);
+		this.setLayoutParams(params);
+		this.date = itemDate;
+		this.dayStr = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, this.date);
 
 		LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View rowItemView = inflater.inflate(R.layout.weekly_calendar_row_header_item, null);

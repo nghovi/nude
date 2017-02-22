@@ -115,8 +115,8 @@ public class CLDAdapter extends BaseAdapter{
 			// R.color.core_silver));
 		}else{
 			imgReportStatus.setVisibility(View.VISIBLE);
-			// setting day text color: red for sundays, blue for saturday and
-			// black for normal day
+			// setting dayStr text color: red for sundays, blue for saturday and
+			// black for normal dayStr
 			if(position % 7 == 0){// Sundays
 				// dayColor = ContextCompat.getColor(mContext, R.color
 				// .dr_day_color_sun);
@@ -239,13 +239,13 @@ public class CLDAdapter extends BaseAdapter{
 		cells.clear();
 		Locale.setDefault(Locale.US);
 		pmonth = (GregorianCalendar)month.clone();
-		// gregorianCalendar start day. ie; sun, mon, etc
+		// gregorianCalendar start dayStr. ie; sun, mon, etc
 		firstDay = month.get(GregorianCalendar.DAY_OF_WEEK);
 		// finding number of weeks in current gregorianCalendar.
 		maxWeeknumber = month.getActualMaximum(GregorianCalendar.WEEK_OF_MONTH);
 		// allocating maximum row number for the gridview.
 		mnthlength = maxWeeknumber * 7;
-		maxP = getMaxP(); // previous gregorianCalendar maximum day 31,30....
+		maxP = getMaxP(); // previous gregorianCalendar maximum dayStr 31,30....
 		calMaxP = maxP - (firstDay - 1);// view_dr_calendar offday starting
 		// 24,25 ...
 		/**

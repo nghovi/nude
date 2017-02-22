@@ -1,6 +1,11 @@
 package trente.asia.calendar.services.calendar;
 
+import static trente.asia.calendar.services.calendar.WeeklyPageFragment.buildCalendarDayModels;
+
+import static trente.asia.calendar.services.calendar.WeeklyPageFragment.getCalendarDayModelByDate;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -26,6 +31,7 @@ import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCNumberUtil;
+import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.define.CsConst;
 import trente.asia.android.model.DayModel;
 import trente.asia.android.util.CsDateUtil;
@@ -37,8 +43,10 @@ import trente.asia.calendar.commons.dialogs.ClFilterUserListDialog;
 import trente.asia.calendar.commons.utils.ClUtil;
 import trente.asia.calendar.commons.views.UserListLinearLayout;
 import trente.asia.calendar.services.calendar.listener.DailyScheduleClickListener;
+import trente.asia.calendar.services.calendar.model.CalendarDayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
-import trente.asia.calendar.services.calendar.view.MonthlyCalendarDayView;
+import trente.asia.calendar.services.calendar.view.CalendarDayListAdapter;
+import trente.asia.calendar.services.calendar.view.WeeklyCalendarDayView;
 import trente.asia.calendar.services.calendar.view.NavigationHeader;
 import trente.asia.welfare.adr.activity.WelfareFragment;
 import trente.asia.welfare.adr.define.WelfareConst;
@@ -50,17 +58,21 @@ import trente.asia.welfare.adr.models.UserModel;
  *
  * @author Vietnh
  */
-public class DailyPageFragment extends WelfareFragment implements DailyScheduleClickListener,ObservableScrollViewCallbacks{
+public class DailyPageFragment extends WelfareFragment implements DailyScheduleClickListener,ObservableScrollViewCallbacks,WeeklyCalendarDayView.OnDayClickListener{
 
-	private LinearLayout					lnrMonthlyPage;
-	private List<ScheduleModel>				scheduleModels		= new ArrayList<>();
-	private List<MonthlyCalendarDayView>	calendarDayViews	= new ArrayList<>();
+	private LinearLayout				lnrCalendarSection;
+	private List<ScheduleModel>			scheduleModels		= new ArrayList<>();
+	private List<WeeklyCalendarDayView>	calendarDayViews	= new ArrayList<>();
 
-	private ClDialog						dialogScheduleList;
-	private ClFilterUserListDialog			filterDialog;
-	private ObservableListView				observableListView;
-	private NavigationHeader				navigationHeader;
-	private Date							selectedDate;
+	private ClDialog					dialogScheduleList;
+	private ClFilterUserListDialog		filterDialog;
+	private ObservableListView			observableListView;
+	private NavigationHeader			navigationHeader;
+	private Date						selectedDate;
+	private UserListLinearLayout		userListLinearLayout;
+	private CalendarDayListAdapter		adapter;
+	private List<CalendarDayModel>		calendarDayModels;
+	LayoutInflater						mInflater;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -68,6 +80,20 @@ public class DailyPageFragment extends WelfareFragment implements DailyScheduleC
 			mRootView = inflater.inflate(R.layout.fragment_daily_page, container, false);
 		}
 		return mRootView;
+	}
+
+
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState){
+		super.onActivityCreated(savedInstanceState);
+		if(navigationHeader != null && !navigationHeader.isUpdated){
+			// String title = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_12, this.week.get(0));
+			// List<String> selectedCalendarIds = Arrays.asList(prefAccUtil.get(ClConst.SELECTED_CALENDAR_STRING).split(","));
+			// int selectedCalendarSize = selectedCalendarIds.size();
+			// String subtitle = selectedCalendarSize > 1 ? selectedCalendarSize + " calendars" : getCalendarName(selectedCalendarIds.get(0));
+			// navigationHeader.updateHeaderTitles(title, subtitle);
+			// navigationHeader.isUpdated = true;
+		}
 	}
 
 	@Override
@@ -80,8 +106,18 @@ public class DailyPageFragment extends WelfareFragment implements DailyScheduleC
 	protected void initView(){
 		super.initView();
 
-		LayoutInflater mInflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		lnrMonthlyPage = (LinearLayout)getView().findViewById(R.id.lnr_id_monthly_page);
+		userListLinearLayout = (UserListLinearLayout)activity.findViewById(R.id.lnr_id_user_list);
+		userListLinearLayout.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v){
+				filterDialog.show();
+
+			}
+		});
+
+		mInflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		lnrCalendarSection = (LinearLayout)getView().findViewById(R.id.lnr_id_monthly_page);
 
 		observableListView = (ObservableListView)getView().findViewById(R.id.lst_calendar_day);
 		observableListView.setScrollViewCallbacks(this);
@@ -90,7 +126,7 @@ public class DailyPageFragment extends WelfareFragment implements DailyScheduleC
 		// add calendar title
 		View titleView = mInflater.inflate(R.layout.monthly_calendar_title, null);
 		LinearLayout lnrRowTitle = (LinearLayout)titleView.findViewById(R.id.lnr_id_row_title);
-		for(DayModel dayModel : CsDateUtil.getAllDay4Week(Calendar.THURSDAY)){
+		for(DayModel dayModel : CsDateUtil.getAllDay4Week(Integer.parseInt(prefAccUtil.getSetting().CL_START_DAY_IN_WEEK))){
 			View titleItem = mInflater.inflate(R.layout.monthly_calendar_title_item, null);
 			LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
 			titleItem.setLayoutParams(layoutParams);
@@ -103,28 +139,41 @@ public class DailyPageFragment extends WelfareFragment implements DailyScheduleC
 			txtTitleItem.setText(dayModel.day);
 			lnrRowTitle.addView(titleItem);
 		}
-		lnrMonthlyPage.addView(titleView);
+		lnrCalendarSection.addView(titleView);
 
-		List<Date> lstDate = CsDateUtil.getAllDate4Month(CCDateUtil.makeCalendar(selectedDate), CCNumberUtil.toInteger(prefAccUtil.getSetting().CL_START_DAY_IN_WEEK));
+		initDayViews();
 
+		initDialog();
+	}
+
+	public void initDayViews(){
+		WeeklyCalendarDayView.OnDayClickListener listener = new WeeklyCalendarDayView.OnDayClickListener() {
+
+			@Override
+			public void onClick(CalendarDayModel calendarDayModel){
+				int selectedPosition = adapter.findPosition4Code(calendarDayModel.date);
+				observableListView.setSelection(selectedPosition);
+			}
+		};
 		View rowView = null;
 		LinearLayout lnrRowContent = null;
+		Date firstDateOfMonth = CCDateUtil.makeDateWithFirstday(selectedDate);
+		List<Date> lstDate = CsDateUtil.getAllDate4Month(CCDateUtil.makeCalendar(firstDateOfMonth), CCNumberUtil.toInteger(prefAccUtil.getSetting().CL_START_DAY_IN_WEEK));
+
 		for(int index = 0; index < lstDate.size(); index++){
 			Date itemDate = lstDate.get(index);
 			if(index % CsConst.DAY_NUMBER_A_WEEK == 0){
 				rowView = mInflater.inflate(R.layout.monthly_calendar_row, null);
 				lnrRowContent = (LinearLayout)rowView.findViewById(R.id.lnr_id_row_content);
-				lnrMonthlyPage.addView(rowView);
+				lnrCalendarSection.addView(rowView);
 			}
 
-			MonthlyCalendarDayView dayView = new MonthlyCalendarDayView(activity);
-			dayView.initialization(itemDate, this);
+			WeeklyCalendarDayView dayView = new WeeklyCalendarDayView(activity);
+			dayView.initialization(itemDate);
 			calendarDayViews.add(dayView);
 
 			lnrRowContent.addView(dayView);
 		}
-
-		initDialog();
 	}
 
 	private void initDialog(){
@@ -138,10 +187,19 @@ public class DailyPageFragment extends WelfareFragment implements DailyScheduleC
 	}
 
 	public void loadDailyScheduleList(){
+		String targetUserList = "";
+		if(userListLinearLayout != null){
+			targetUserList = userListLinearLayout.formatUserList();
+		}
+
 		JSONObject jsonObject = new JSONObject();
 		try{
-			jsonObject.put("targetUserList", "");
+			if(!CCStringUtil.isEmpty(targetUserList)){
+				jsonObject.put("targetUserList", targetUserList);
+			}
+
 			jsonObject.put("searchDateString", CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, selectedDate));
+			// jsonObject.put("endDateString", CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, selectedDate));
 			jsonObject.put("calendars", prefAccUtil.get(ClConst.SELECTED_CALENDAR_STRING));
 		}catch(JSONException e){
 			e.printStackTrace();
@@ -160,23 +218,21 @@ public class DailyPageFragment extends WelfareFragment implements DailyScheduleC
 
 	private void onLoadDailySchedulesSuccess(JSONObject response, String url){
 		scheduleModels = CCJsonUtil.convertToModelList(response.optString("schedules"), ScheduleModel.class);
+		calendarDayModels = buildCalendarDayModels(scheduleModels);
 
 		// clear old data
-		for(MonthlyCalendarDayView dayView : calendarDayViews){
-			dayView.removeAllData();
+		for(WeeklyCalendarDayView dayView : calendarDayViews){
+			CalendarDayModel calendarDayModel = getCalendarDayModelByDate(dayView.getDate(), calendarDayModels);
+			dayView.setData(calendarDayModel, this);
 		}
 
-		if(!CCCollectionUtil.isEmpty(scheduleModels)){
-			for(ScheduleModel model : scheduleModels){
-				// Date startDate = WelfareUtil.makeDate(model.startDate);
-				List<MonthlyCalendarDayView> lstActiveCalendarDay = ClUtil.findView4Day(calendarDayViews, model);
+		List<UserModel> calendarUsers = CCJsonUtil.convertToModelList(response.optString("calendarUsers"), UserModel.class);
 
-				for(MonthlyCalendarDayView calendarDayView : lstActiveCalendarDay){
-					calendarDayView.addSchedule(model);
-				}
-			}
+		if(!CCCollectionUtil.isEmpty(calendarUsers)){
+			userListLinearLayout.show(calendarUsers, (int)getResources().getDimension(R.dimen.margin_30dp));
+			filterDialog = new ClFilterUserListDialog(activity, userListLinearLayout);
+			filterDialog.updateUserList(calendarUsers);
 		}
-		List<UserModel> lstCalendarUser = CCJsonUtil.convertToModelList(response.optString("calendarUsers"), UserModel.class);
 
 		UserListLinearLayout lnrUserList = (UserListLinearLayout)activity.findViewById(R.id.lnr_id_user_list);
 		lnrUserList.setOnClickListener(new View.OnClickListener() {
@@ -187,12 +243,20 @@ public class DailyPageFragment extends WelfareFragment implements DailyScheduleC
 
 			}
 		});
-		// lnrUserList.removeAllViews();
-		if(!CCCollectionUtil.isEmpty(lstCalendarUser)){
-			lnrUserList.show(lstCalendarUser, (int)getResources().getDimension(R.dimen.margin_30dp));
-			filterDialog = new ClFilterUserListDialog(activity, lnrUserList);
-			filterDialog.updateUserList(lstCalendarUser);
-		}
+
+		adapter = new CalendarDayListAdapter(activity, R.layout.item_calendar_day, calendarDayModels, new CalendarDayListAdapter.OnScheduleClickListener() {
+
+			@Override
+			public void onClick(ScheduleModel schedule){
+				onClickSchedule(schedule);
+			}
+		});
+		observableListView.setAdapter(adapter);
+
+	}
+
+	private void onClickSchedule(ScheduleModel schedule){
+
 	}
 
 	@Override
@@ -212,7 +276,11 @@ public class DailyPageFragment extends WelfareFragment implements DailyScheduleC
 
 	@Override
 	public void onUpOrCancelMotionEvent(ScrollState scrollState){
-
+		if(scrollState == ScrollState.UP){
+			lnrCalendarSection.setVisibility(View.GONE);
+		}else if(scrollState == ScrollState.DOWN){
+			lnrCalendarSection.setVisibility(View.VISIBLE);
+		}
 	}
 
 	public void setNavigationHeader(NavigationHeader navigationHeader){
@@ -221,5 +289,11 @@ public class DailyPageFragment extends WelfareFragment implements DailyScheduleC
 
 	public void setSelectedDate(Date selectedDate){
 		this.selectedDate = selectedDate;
+	}
+
+	@Override
+	public void onClick(CalendarDayModel calendarDayModel){
+		int selectedPosition = adapter.findPosition4Code(calendarDayModel.date);
+		observableListView.setSelection(selectedPosition);
 	}
 }

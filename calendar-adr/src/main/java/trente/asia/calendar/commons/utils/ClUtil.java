@@ -34,7 +34,7 @@ public class ClUtil{
 	}
 
 	/**
-	 * find calendar day
+	 * find calendar dayStr
 	 *
 	 * @return MonthlyCalendarDayView
 	 */
