@@ -9,10 +9,12 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import asia.chiase.core.util.CCNumberUtil;
 import trente.asia.android.model.DayModel;
 import trente.asia.android.util.CsDateUtil;
 import trente.asia.android.view.ChiaseTextViewCheckable;
 import trente.asia.calendar.R;
+import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
 
 /**
  * RepeatWeeklyDayLinearLayout
@@ -43,7 +45,8 @@ public class RepeatWeeklyDayLinearLayout extends LinearLayout{
 		TextView txtDay6 = (TextView)this.findViewById(R.id.txt_id_day6);
 		TextView txtDay7 = (TextView)this.findViewById(R.id.txt_id_day7);
 
-		List<DayModel> lstDay = CsDateUtil.getAllDay4Week(Calendar.THURSDAY);
+        PreferencesAccountUtil accountUtil = new PreferencesAccountUtil(mContext);
+		List<DayModel> lstDay = CsDateUtil.getAllDay4Week(CCNumberUtil.toInteger(accountUtil.getSetting().CL_START_DAY_IN_WEEK));
 		txtDay1.setText(lstDay.get(0).day);
 		txtDay2.setText(lstDay.get(1).day);
 		txtDay3.setText(lstDay.get(2).day);

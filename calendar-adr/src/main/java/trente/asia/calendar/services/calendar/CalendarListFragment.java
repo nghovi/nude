@@ -17,10 +17,12 @@ import android.widget.ListView;
 
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCJsonUtil;
+import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.view.layout.CheckableLinearLayout;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.fragments.AbstractClFragment;
+import trente.asia.calendar.services.calendar.listener.OnChangeCalendarListener;
 import trente.asia.calendar.services.calendar.model.CalendarModel;
 import trente.asia.calendar.services.calendar.view.CalendarAdapter;
 import trente.asia.welfare.adr.define.WfUrlConst;
@@ -32,14 +34,20 @@ import trente.asia.welfare.adr.define.WfUrlConst;
  */
 public class CalendarListFragment extends AbstractClFragment{
 
-	public static final String	SELECTED_CALENDAR_STRING	= "SELECTED_CALENDAR_STRING";
-	private ListView			lvCalendar;
-	private List<CalendarModel>	selectedCalendars			= new ArrayList<>();
-	private List<CalendarModel>	calendars;
-	CalendarAdapter				calendarAdapter;
-	CheckableLinearLayout		lnrMyCalendar;
+	public static final String			SELECTED_CALENDAR_STRING	= "SELECTED_CALENDAR_STRING";
+	private ListView					lvCalendar;
+	private List<CalendarModel>			selectedCalendars			= new ArrayList<>();
+	private List<CalendarModel>			calendars;
 
-	@Override
+	private CalendarAdapter				calendarAdapter;
+	private CheckableLinearLayout		lnrMyCalendar;
+	private OnChangeCalendarListener	changeCalendarListener;
+
+    public void setOnChangeCalendarListener(OnChangeCalendarListener onChangeCalendarListener) {
+        this.changeCalendarListener = onChangeCalendarListener;
+    }
+
+    @Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 		if(mRootView == null){
 			mRootView = inflater.inflate(R.layout.fragment_calendar_list, container, false);
@@ -52,7 +60,6 @@ public class CalendarListFragment extends AbstractClFragment{
 		super.initView();
 
 		lvCalendar = (ListView)getView().findViewById(R.id.lsv_id_calendar);
-		lvCalendar.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 		lvCalendar.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
 			@Override
@@ -77,6 +84,9 @@ public class CalendarListFragment extends AbstractClFragment{
 			selectedCalendars.add(calendar);
 		}
 		saveSelectedCalendarToPref();
+        if(changeCalendarListener != null){
+            changeCalendarListener.onChangeCalendarListener();
+        }
 	}
 
 	private String getSelectedCalendarIds(){
@@ -123,8 +133,18 @@ public class CalendarListFragment extends AbstractClFragment{
 
 	private void onLoadCalendarsSuccess(JSONObject response){
 		calendars = CCJsonUtil.convertToModelList(response.optString("calendars"), CalendarModel.class);
-		buildSelectedCalendars();
+
 		if(!CCCollectionUtil.isEmpty(calendars)){
+            buildSelectedCalendars();
+            if(CCStringUtil.isEmpty(prefAccUtil.get(ClConst.SELECTED_CALENDAR_STRING))){
+//                default my calendar is checked
+                selectedCalendars.add(calendars.get(0));
+                saveSelectedCalendarToPref();
+                if(changeCalendarListener != null){
+                    changeCalendarListener.onChangeCalendarListener();
+                }
+            }
+
 			calendarAdapter = new CalendarAdapter(activity, calendars);
 			lvCalendar.setAdapter(calendarAdapter);
 			for(CalendarModel calendarModel : selectedCalendars){

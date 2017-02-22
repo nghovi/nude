@@ -17,6 +17,7 @@ import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.fragments.AbstractClFragment;
+import trente.asia.calendar.services.calendar.listener.OnChangeCalendarListener;
 import trente.asia.calendar.services.calendar.view.MonthlyCalendarPagerAdapter;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.view.WfSlideMenuLayout;
@@ -35,8 +36,18 @@ public class MonthlyFragment extends AbstractClFragment{
 	private TextView					txtMonth;
 	private MonthlyCalendarPagerAdapter	pagerAdapter;
 
-	private final Date					TODAY		= CsDateUtil.getFirstDateOfCurrentMonth();
-	private final int					ACTIVE_PAGE	= Integer.MAX_VALUE / 2;
+	private final Date					TODAY						= CsDateUtil.getFirstDateOfCurrentMonth();
+	private final int					ACTIVE_PAGE					= Integer.MAX_VALUE / 2;
+	private int							activePositon;
+	private OnChangeCalendarListener	onChangeCalendarListener	= new OnChangeCalendarListener() {
+
+																		@Override
+																		public void onChangeCalendarListener(){
+																			// load schedule list
+																			MonthlyPageFragment fragment = (MonthlyPageFragment)pagerAdapter.getItem(activePositon);
+																			fragment.loadScheduleList();
+																		}
+																	};
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -79,6 +90,7 @@ public class MonthlyFragment extends AbstractClFragment{
 		FragmentManager fragmentManager = getFragmentManager();
 		FragmentTransaction transaction = fragmentManager.beginTransaction();
 		CalendarListFragment calendarListFragment = new CalendarListFragment();
+		calendarListFragment.setOnChangeCalendarListener(onChangeCalendarListener);
 		transaction.replace(R.id.slice_menu_board, calendarListFragment).commit();
 
 		mImgLeftHeader.setOnClickListener(this);
@@ -95,6 +107,7 @@ public class MonthlyFragment extends AbstractClFragment{
 	}
 
 	private void setActiveMonth(int position){
+		activePositon = position;
 		Date activeMonth = CsDateUtil.addMonth(TODAY, position - ACTIVE_PAGE);
 		txtMonth.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_12, activeMonth));
 		prefAccUtil.set(ClConst.PREF_ACTIVE_DATE, CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, activeMonth));

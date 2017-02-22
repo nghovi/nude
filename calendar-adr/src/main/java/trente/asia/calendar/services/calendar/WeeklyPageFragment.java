@@ -30,6 +30,7 @@ import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
+import asia.chiase.core.util.CCNumberUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.define.CsConst;
 import trente.asia.android.model.DayModel;
@@ -99,7 +100,7 @@ public class WeeklyPageFragment extends WelfareFragment implements ObservableScr
 		lstCalendarDay = (ObservableListView)getView().findViewById(R.id.lst_calendar_day);
 		lstCalendarDay.setScrollViewCallbacks(this);
 		lstCalendarDay.setDivider(null);
-		this.week = CsDateUtil.getAllDate4Week(CCDateUtil.makeCalendar(selectedDate));
+		this.week = CsDateUtil.getAllDate4Week(CCDateUtil.makeCalendar(selectedDate), CCNumberUtil.toInteger(prefAccUtil.getSetting().CL_START_DAY_IN_WEEK));
 		// horizontalUserListView = (HorizontalUserListView)getView().findViewById(R.id.view_horizontal_user_list);
 		// horizontalUserListView.setOnSelectedUsersChangedListener(new WfUserChooseDialog.onSelectedUsersChangedListener() {
 		//
@@ -142,7 +143,7 @@ public class WeeklyPageFragment extends WelfareFragment implements ObservableScr
 		// add calendar title
 		View titleView = mInflater.inflate(R.layout.monthly_calendar_title, null);
 		LinearLayout lnrRowTitle = (LinearLayout)titleView.findViewById(R.id.lnr_id_row_title);
-		List<DayModel> dayModels = CsDateUtil.getAllDay4Week(Calendar.THURSDAY);
+		List<DayModel> dayModels = CsDateUtil.getAllDay4Week(CCNumberUtil.toInteger(prefAccUtil.getSetting().CL_START_DAY_IN_WEEK));
 		for(DayModel dayModel : dayModels){
 			View titleItem = mInflater.inflate(R.layout.monthly_calendar_title_item, null);
 			LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1);

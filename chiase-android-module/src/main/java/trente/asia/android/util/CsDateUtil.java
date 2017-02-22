@@ -56,11 +56,11 @@ public class CsDateUtil{
 	 * @param calendar
 	 * @return
 	 */
-	public static List<Date> getAllDate4Month(Calendar calendar){
+	public static List<Date> getAllDate4Month(Calendar calendar, int startDay){
 		if(calendar == null){
 			return null;
 		}else{
-			calendar.setFirstDayOfWeek(Calendar.THURSDAY);
+			calendar.setFirstDayOfWeek(startDay);
 			List<Date> lstDate = new ArrayList<>();
 
 			Calendar firstDay = (Calendar)calendar.clone();
@@ -87,11 +87,11 @@ public class CsDateUtil{
 	 * @param calendar
 	 * @return
 	 */
-	public static List<Date> getAllDate4Week(Calendar calendar){
+	public static List<Date> getAllDate4Week(Calendar calendar, int startDay){
 		if(calendar == null){
 			return null;
 		}else{
-			calendar.setFirstDayOfWeek(Calendar.THURSDAY);
+			calendar.setFirstDayOfWeek(startDay);
 			List<Date> lstDate = new ArrayList<>();
 
 			calendar.set(Calendar.DAY_OF_WEEK, calendar.getFirstDayOfWeek());

@@ -144,7 +144,7 @@ public abstract class AbstractClFragment extends WelfareFragment implements View
 
 	@Override
 	protected String getServiceCd(){
-		return WelfareConst.SERVICE_CD_SW;
+		return WelfareConst.SERVICE_CD_CL;
 	}
 
 	@Override
