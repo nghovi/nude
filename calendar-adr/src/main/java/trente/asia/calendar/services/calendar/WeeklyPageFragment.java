@@ -1,7 +1,6 @@
 package trente.asia.calendar.services.calendar;
 
-import static trente.asia.calendar.services.calendar.CalendarListFragment
-		.SELECTED_CALENDAR_STRING;
+import static trente.asia.calendar.services.calendar.CalendarListFragment.SELECTED_CALENDAR_STRING;
 import static trente.asia.welfare.adr.utils.WelfareFormatUtil.convertList2Map;
 
 import java.util.ArrayList;
@@ -17,8 +16,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.github.ksoichiro.android.observablescrollview.ObservableListView;
-import com.github.ksoichiro.android.observablescrollview
-		.ObservableScrollViewCallbacks;
+import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
 
 import android.content.Context;
@@ -64,14 +62,14 @@ import trente.asia.welfare.adr.models.UserModel;
  *
  * @author TrungND
  */
-public class WeeklyPageFragment extends WelfareFragment implements ObservableScrollViewCallbacks,CalendarView.OnCalendarDaySelectedListener{
+public class WeeklyPageFragment extends WelfareFragment implements ObservableScrollViewCallbacks,CalendarView.OnCalendarDaySelectedListener,WeeklyCalendarDayView.OnDayClickListener{
 
 	private ObservableListView					observableListView;
 	private Date								selectedDate;
 
 	private LinearLayout						lnrContentHeader;
-	private List<WeeklyCalendarHeaderRowView>	lstHeaderRow	= new ArrayList<>();
-	private List<UserModel>						filteredUsers	= new ArrayList<>();
+	private List<WeeklyCalendarHeaderRowView>	lstHeaderRow		= new ArrayList<>();
+	private List<UserModel>						filteredUsers		= new ArrayList<>();
 	private ClFilterUserListDialog				filterDialog;
 	private List<CalendarDayModel>				calendarDayModels;
 	private CalendarDayListAdapter				adapter;
@@ -79,6 +77,7 @@ public class WeeklyPageFragment extends WelfareFragment implements ObservableScr
 	private List<Date>							week;
 	private NavigationHeader					navigationHeader;
 	List<CalendarModel>							calendars;
+	private List<WeeklyCalendarDayView>			calendarDayViews	= new ArrayList<>();
 
 	@Override
 	public void onCreate(Bundle savedInstanceState){
@@ -102,7 +101,19 @@ public class WeeklyPageFragment extends WelfareFragment implements ObservableScr
 		observableListView.setScrollViewCallbacks(this);
 		observableListView.setDivider(null);
 		this.week = CsDateUtil.getAllDate4Week(CCDateUtil.makeCalendar(selectedDate), CCNumberUtil.toInteger(prefAccUtil.getSetting().CL_START_DAY_IN_WEEK));
+
+		userListLinearLayout = (UserListLinearLayout)activity.findViewById(R.id.lnr_id_user_list);
+		userListLinearLayout.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v){
+				filterDialog.show();
+
+			}
+		});
+
 		initContentHeader();
+		initDayViews();
 	}
 
 	private void requestLoadWeeklyScheule(){
@@ -151,15 +162,8 @@ public class WeeklyPageFragment extends WelfareFragment implements ObservableScr
 
 	}
 
-	private void inflateDates(){
-		WeeklyCalendarDayView.OnDayClickListener listener = new WeeklyCalendarDayView.OnDayClickListener() {
+	private void initDayViews(){
 
-			@Override
-			public void onClick(CalendarDayModel calendarDayModel){
-				int selectedPosition = adapter.findPosition4Code(calendarDayModel.date);
-				observableListView.setSelection(selectedPosition);
-			}
-		};
 		WeeklyCalendarHeaderRowView rowView = null;
 		for(int index = 0; index < this.week.size(); index++){
 			Date itemDate = this.week.get(index);
@@ -171,10 +175,9 @@ public class WeeklyPageFragment extends WelfareFragment implements ObservableScr
 			}
 
 			WeeklyCalendarDayView dayView = new WeeklyCalendarDayView(activity);
-			CalendarDayModel calendarDayModel = getCalendarDayModelByDate(itemDate);
-			dayView.initialization(itemDate, calendarDayModel, listener);
+			dayView.initialization(itemDate);
 			rowView.lnrRowContent.addView(dayView);
-
+			calendarDayViews.add(dayView);
 		}
 	}
 
@@ -203,6 +206,25 @@ public class WeeklyPageFragment extends WelfareFragment implements ObservableScr
 		}
 	}
 
+	@Override
+	public void onClick(CalendarDayModel calendarDayModel){
+		int selectedPosition = adapter.findPosition4Code(calendarDayModel.date);
+		observableListView.setSelection(selectedPosition);
+	}
+
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState){
+		super.onActivityCreated(savedInstanceState);
+		if(navigationHeader != null && !navigationHeader.isUpdated){
+			String title = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_12, this.week.get(0));
+			List<String> selectedCalendarIds = Arrays.asList(prefAccUtil.get(ClConst.SELECTED_CALENDAR_STRING).split(","));
+			int selectedCalendarSize = selectedCalendarIds.size();
+			String subtitle = selectedCalendarSize > 1 ? selectedCalendarSize + " calendars" : getCalendarName(selectedCalendarIds.get(0));
+			navigationHeader.updateHeaderTitles(title, subtitle);
+			navigationHeader.isUpdated = true;
+		}
+	}
+
 	private void onLoadWeeklySchedulesSuccess(JSONObject response){
 		List<ScheduleModel> schedules = CCJsonUtil.convertToModelList(response.optString("schedules"), ScheduleModel.class);
 		separateDateTime(schedules);
@@ -212,40 +234,17 @@ public class WeeklyPageFragment extends WelfareFragment implements ObservableScr
 		filteredUsers = initFilteredUser(calendarUsers);
 		updateSchedules(schedules, categories);
 		calendarDayModels = buildCalendarDayModels(schedules);
-		adapter = new CalendarDayListAdapter(activity, R.layout.item_calendar_day, calendarDayModels, new CalendarDayListAdapter.OnScheduleClickListener() {
 
-			@Override
-			public void onClick(ScheduleModel schedule){
-				onClickSchedule(schedule);
-			}
-		});
-		observableListView.setAdapter(adapter);
-
-		inflateDates();
-
-		userListLinearLayout = (UserListLinearLayout)activity.findViewById(R.id.lnr_id_user_list);
-		userListLinearLayout.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v){
-				filterDialog.show();
-
-			}
-		});
+		// clear old data
+		for(WeeklyCalendarDayView dayView : calendarDayViews){
+			CalendarDayModel calendarDayModel = getCalendarDayModelByDate(dayView.getDate(), calendarDayModels);
+			dayView.setData(calendarDayModel, this);
+		}
 
 		if(!CCCollectionUtil.isEmpty(calendarUsers)){
 			userListLinearLayout.show(calendarUsers, (int)getResources().getDimension(R.dimen.margin_30dp));
 			filterDialog = new ClFilterUserListDialog(activity, userListLinearLayout);
 			filterDialog.updateUserList(calendarUsers);
-		}
-
-		if(!navigationHeader.isUpdated){
-			String title = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_12, this.week.get(0));
-			List<String> selectedCalendarIds = Arrays.asList(prefAccUtil.get(ClConst.SELECTED_CALENDAR_STRING).split(","));
-			int selectedCalendarSize = selectedCalendarIds.size();
-			String subtitle = selectedCalendarSize > 1 ? selectedCalendarSize + " calendars" : getCalendarName(selectedCalendarIds.get(0));
-			navigationHeader.updateHeaderTitles(title, subtitle);
-			navigationHeader.isUpdated = true;
 		}
 
 	}
@@ -274,7 +273,7 @@ public class WeeklyPageFragment extends WelfareFragment implements ObservableScr
 		}
 	}
 
-	private List<CalendarDayModel> buildCalendarDayModels(List<ScheduleModel> schedules){
+	public static List<CalendarDayModel> buildCalendarDayModels(List<ScheduleModel> schedules){
 		List<CalendarDayModel> calendarDayModels = new ArrayList<>();
 		for(ScheduleModel scheduleModel : schedules){
 			CalendarDayModel calendarDayModel = getCalendarDayModel(scheduleModel.startDate, calendarDayModels);
@@ -313,7 +312,7 @@ public class WeeklyPageFragment extends WelfareFragment implements ObservableScr
 		}
 	}
 
-	private CalendarDayModel getCalendarDayModelByDate(Date date){
+	public static CalendarDayModel getCalendarDayModelByDate(Date date, List<CalendarDayModel> calendarDayModels){
 		for(CalendarDayModel calendarDayModel : calendarDayModels){
 			if(calendarDayModel.date.equals(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, date))){
 				return calendarDayModel;
@@ -322,7 +321,7 @@ public class WeeklyPageFragment extends WelfareFragment implements ObservableScr
 		return null;
 	}
 
-	private CalendarDayModel getCalendarDayModel(String day, List<CalendarDayModel> calendarDayModels){
+	public static CalendarDayModel getCalendarDayModel(String day, List<CalendarDayModel> calendarDayModels){
 		for(CalendarDayModel calendarDayModel : calendarDayModels){
 			if(calendarDayModel.date.equals(day)){
 				return calendarDayModel;
