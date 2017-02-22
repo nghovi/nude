@@ -58,7 +58,7 @@ public class MonthlyPageFragment extends AbstractClFragment implements DailySche
 	private List<MonthlyCalendarDayView>	lstCalendarDay	= new ArrayList<>();
 
 	private ClDialog						dialogScheduleList;
-	private ClFilterUserListDialog			filterDialog;
+//	private ClFilterUserListDialog			filterDialog;
 	private OnChangeCalendarUserListener	changeCalendarUserListener;
 	private List<Date>						lstDate4Month;
 
@@ -168,7 +168,8 @@ public class MonthlyPageFragment extends AbstractClFragment implements DailySche
 		}
 		JSONObject jsonObject = new JSONObject();
 		try{
-			jsonObject.put("targetUserList", "");
+//			jsonObject.put("targetUserList", prefAccUtil.get(ClConst.PREF_ACTIVE_USER_LIST));
+            jsonObject.put("targetUserList", "");
 			jsonObject.put("targetMonth", CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_5, activeMonth));
 			jsonObject.put("calendars", prefAccUtil.get(ClConst.SELECTED_CALENDAR_STRING));
             jsonObject.put("startDateString", WelfareFormatUtil.formatDate(lstDate4Month.get(0)));
@@ -199,20 +200,20 @@ public class MonthlyPageFragment extends AbstractClFragment implements DailySche
 				}
 			}
 			List<UserModel> lstCalendarUser = CCJsonUtil.convertToModelList(response.optString("calendarUsers"), UserModel.class);
-			UserListLinearLayout lnrUserList = (UserListLinearLayout)activity.findViewById(R.id.lnr_id_user_list);
-			lnrUserList.setOnClickListener(new View.OnClickListener() {
-
-				@Override
-				public void onClick(View v){
-					filterDialog.show();
-
-				}
-			});
-
-			if(!CCCollectionUtil.isEmpty(lstCalendarUser)){
-				filterDialog = new ClFilterUserListDialog(activity, lnrUserList);
-				filterDialog.updateUserList(lstCalendarUser);
-			}
+//			UserListLinearLayout lnrUserList = (UserListLinearLayout)activity.findViewById(R.id.lnr_id_user_list);
+//			lnrUserList.setOnClickListener(new View.OnClickListener() {
+//
+//				@Override
+//				public void onClick(View v){
+//					filterDialog.show();
+//
+//				}
+//			});
+//
+//			if(!CCCollectionUtil.isEmpty(lstCalendarUser)){
+//				filterDialog = new ClFilterUserListDialog(activity, lnrUserList);
+//				filterDialog.updateUserList(lstCalendarUser);
+//			}
 			if(changeCalendarUserListener != null){
 				changeCalendarUserListener.onChangeCalendarUserListener(lstCalendarUser);
 			}

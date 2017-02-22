@@ -12,8 +12,11 @@ import android.widget.ListView;
 import trente.asia.android.view.ChiaseDialog;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.adapter.FilterUserListAdapter;
+import trente.asia.calendar.commons.defines.ClConst;
+import trente.asia.calendar.commons.utils.ClUtil;
 import trente.asia.calendar.commons.views.UserListLinearLayout;
 import trente.asia.welfare.adr.models.UserModel;
+import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
 
 /**
  * QkChiaseDialog
@@ -40,15 +43,6 @@ public class ClFilterUserListDialog extends ChiaseDialog{
 
 		mImgDone = (ImageView)this.findViewById(R.id.img_id_done);
 		mLsvUser = (ListView)this.findViewById(R.id.lsv_id_user);
-
-		mImgDone.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v){
-				ClFilterUserListDialog.this.dismiss();
-				saveActiveUserList();
-			}
-		});
 	}
 
 	public void updateUserList(List<UserModel> lstUser){
@@ -64,7 +58,7 @@ public class ClFilterUserListDialog extends ChiaseDialog{
 		mLsvUser.setAdapter(mAdapter);
 	}
 
-	private void saveActiveUserList(){
+	public void saveActiveUserList(){
 		this.mAdapter.getSelectedUser().clear();
 		SparseBooleanArray array = mLsvUser.getCheckedItemPositions();
 		for(int index = 0; index < array.size(); index++){
@@ -78,6 +72,9 @@ public class ClFilterUserListDialog extends ChiaseDialog{
 		if(mLnrUserList != null){
 			mLnrUserList.show(this.mAdapter.getSelectedUser(), (int)this.mContext.getResources().getDimension(R.dimen.margin_30dp));
 		}
+
+        PreferencesAccountUtil prefAccUtil = new PreferencesAccountUtil(mContext);
+        prefAccUtil.set(ClConst.PREF_ACTIVE_USER_LIST, ClUtil.convertUserList2String(this.mAdapter.getSelectedUser()));
 	}
 
 	public List<UserModel> getSelectedUser(){

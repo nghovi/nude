@@ -30,12 +30,7 @@
                     android:id="@+id/lnr_id_user_list"
                     style="@style/cs_common_match_wrap"
                     android:background="@drawable/state_common_selectable_row"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="User list"/>
+                    android:orientation="horizontal">
                 </trente.asia.calendar.commons.views.UserListLinearLayout>
 
                 <TextView

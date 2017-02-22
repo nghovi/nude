@@ -12,6 +12,7 @@ import asia.chiase.core.util.CCDateUtil;
 import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.view.MonthlyCalendarDayView;
+import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 
 /**
@@ -54,4 +55,18 @@ public class ClUtil{
 		}
 		return lstCalendarDay;
 	}
+
+    /**
+     * convertUserList2String
+     *
+     */
+    public static String convertUserList2String(List<UserModel> lstUser){
+        StringBuilder builder = new StringBuilder();
+        if(!CCCollectionUtil.isEmpty(lstUser)){
+            for(UserModel userModel : lstUser){
+                builder.append(userModel.key + ",");
+            }
+        }
+        return builder.toString();
+    }
 }
