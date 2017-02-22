@@ -32,4 +32,13 @@ public class ScheduleModel{
 	public ScheduleModel(){
 
 	}
+
+	public ScheduleModel(HolidayModel holidayModel){
+		this.scheduleName = holidayModel.holidayName;
+		this.startDate = holidayModel.startDate;
+		this.endDate = holidayModel.endDate;
+		// pink color
+		this.scheduleColor = "D22DB6";
+		this.isDayPeriod = true;
+	}
 }

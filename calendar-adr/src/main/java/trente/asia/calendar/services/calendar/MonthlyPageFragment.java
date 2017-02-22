@@ -35,6 +35,7 @@ import trente.asia.calendar.commons.utils.ClUtil;
 import trente.asia.calendar.commons.views.UserListLinearLayout;
 import trente.asia.calendar.services.calendar.listener.DailyScheduleClickListener;
 import trente.asia.calendar.services.calendar.listener.OnChangeCalendarUserListener;
+import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.view.MonthlyCalendarDayView;
 import trente.asia.welfare.adr.define.WelfareConst;
@@ -184,6 +185,7 @@ public class MonthlyPageFragment extends AbstractClFragment implements DailySche
 	protected void successLoad(JSONObject response, String url){
 		if(WfUrlConst.WF_CL_WEEK_SCHEDULE.equals(url)){
 			lstSchedule = CCJsonUtil.convertToModelList(response.optString("schedules"), ScheduleModel.class);
+            List<HolidayModel> lstHoliday = CCJsonUtil.convertToModelList(response.optString("holidayList"), HolidayModel.class);
 
 			// clear old data
 			for(MonthlyCalendarDayView dayView : lstCalendarDay){
@@ -192,28 +194,25 @@ public class MonthlyPageFragment extends AbstractClFragment implements DailySche
 
 			if(!CCCollectionUtil.isEmpty(lstSchedule)){
 				for(ScheduleModel model : lstSchedule){
-					List<MonthlyCalendarDayView> lstActiveCalendarDay = ClUtil.findView4Day(lstCalendarDay, model);
+					List<MonthlyCalendarDayView> lstActiveCalendarDay = ClUtil.findView4Day(lstCalendarDay, model.startDate, model.endDate);
 
 					for(MonthlyCalendarDayView calendarDayView : lstActiveCalendarDay){
 						calendarDayView.addSchedule(model);
 					}
 				}
 			}
+
+//            add holiday
+            if(!CCCollectionUtil.isEmpty(lstHoliday)){
+                for(HolidayModel holidayModel : lstHoliday){
+                    List<MonthlyCalendarDayView> lstActiveCalendarDay = ClUtil.findView4Day(lstCalendarDay, holidayModel.startDate, holidayModel.endDate);
+                    ScheduleModel scheduleModel = new ScheduleModel(holidayModel);
+                    for(MonthlyCalendarDayView calendarDayView : lstActiveCalendarDay){
+                        calendarDayView.addSchedule(scheduleModel);
+                    }
+                }
+            }
 			List<UserModel> lstCalendarUser = CCJsonUtil.convertToModelList(response.optString("calendarUsers"), UserModel.class);
-//			UserListLinearLayout lnrUserList = (UserListLinearLayout)activity.findViewById(R.id.lnr_id_user_list);
-//			lnrUserList.setOnClickListener(new View.OnClickListener() {
-//
-//				@Override
-//				public void onClick(View v){
-//					filterDialog.show();
-//
-//				}
-//			});
-//
-//			if(!CCCollectionUtil.isEmpty(lstCalendarUser)){
-//				filterDialog = new ClFilterUserListDialog(activity, lnrUserList);
-//				filterDialog.updateUserList(lstCalendarUser);
-//			}
 			if(changeCalendarUserListener != null){
 				changeCalendarUserListener.onChangeCalendarUserListener(lstCalendarUser);
 			}

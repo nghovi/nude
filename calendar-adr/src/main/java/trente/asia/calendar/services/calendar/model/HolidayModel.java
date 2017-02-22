@@ -1,23 +1,16 @@
 package trente.asia.calendar.services.calendar.model;
 
-import java.util.List;
-
-import trente.asia.welfare.adr.models.UserModel;
-
 /**
- * Created by viet on 11/25/2016.
+ * HolidayModel
+ *
+ * @author TrungND
  */
 
-public class HolidayModel {
+public class HolidayModel{
 
-	public String			calendarName;
-	public String			ownerId;
-	public Boolean			isMyself;
-	public List<UserModel>	calendarUsers;
-	public List<Integer>	calendarUserList;
-	public String			key;
-	public String			companyId;
-	public String			imagePath;
+	public String	holidayName;
+	public String	startDate;
+	public String	endDate;
 
 	public HolidayModel(){
 

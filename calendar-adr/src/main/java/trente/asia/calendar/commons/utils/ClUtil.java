@@ -39,14 +39,14 @@ public class ClUtil{
 	 *
 	 * @return MonthlyCalendarDayView
 	 */
-	public static List<MonthlyCalendarDayView> findView4Day(List<MonthlyCalendarDayView> lstView, ScheduleModel scheduleModel){
+	public static List<MonthlyCalendarDayView> findView4Day(List<MonthlyCalendarDayView> lstView, String startDateString, String endDateString){
 		List<MonthlyCalendarDayView> lstCalendarDay = new ArrayList<>();
 		if(CCCollectionUtil.isEmpty(lstView)){
 			return lstCalendarDay;
 		}
 
-		Date startDate = CCDateUtil.makeDate(WelfareFormatUtil.makeDate(scheduleModel.startDate));
-		Date endDate = CCDateUtil.makeDate(WelfareFormatUtil.makeDate(scheduleModel.endDate));
+		Date startDate = CCDateUtil.makeDate(WelfareFormatUtil.makeDate(startDateString));
+		Date endDate = CCDateUtil.makeDate(WelfareFormatUtil.makeDate(endDateString));
 		for(MonthlyCalendarDayView dayView : lstView){
 			Date dateView = WelfareFormatUtil.makeDate(dayView.day);
 			if(dateView.compareTo(startDate) >= 0 && dateView.compareTo(endDate) <= 0){
