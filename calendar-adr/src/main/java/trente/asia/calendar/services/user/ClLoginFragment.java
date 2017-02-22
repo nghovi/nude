@@ -7,11 +7,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 
+import asia.chiase.core.util.CCJsonUtil;
 import trente.asia.calendar.BuildConfig;
 import trente.asia.calendar.R;
+import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.services.calendar.MonthlyFragment;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.define.WfUrlConst;
+import trente.asia.welfare.adr.models.SettingModel;
 import trente.asia.welfare.adr.services.user.LoginFragment;
 
 /**
@@ -39,6 +42,9 @@ public class ClLoginFragment extends LoginFragment{
 		super.successUpdate(response, url);
 
 		if(WfUrlConst.WF_ACC_0003.equals(url)){
+			prefAccUtil.set(ClConst.SELECTED_CALENDAR_STRING, response.optString("myCalendar"));
+            SettingModel settingModel = CCJsonUtil.convertToModel(response.optString("setting"), SettingModel.class);
+            prefAccUtil.saveSetting(settingModel);
 			emptyBackStack();
 			gotoFragment(new MonthlyFragment());
 		}

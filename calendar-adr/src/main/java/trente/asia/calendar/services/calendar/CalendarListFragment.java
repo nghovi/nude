@@ -136,14 +136,6 @@ public class CalendarListFragment extends AbstractClFragment{
 
 		if(!CCCollectionUtil.isEmpty(calendars)){
             buildSelectedCalendars();
-            if(CCStringUtil.isEmpty(prefAccUtil.get(ClConst.SELECTED_CALENDAR_STRING))){
-//                default my calendar is checked
-                selectedCalendars.add(calendars.get(0));
-                saveSelectedCalendarToPref();
-                if(changeCalendarListener != null){
-                    changeCalendarListener.onChangeCalendarListener();
-                }
-            }
 
 			calendarAdapter = new CalendarAdapter(activity, calendars);
 			lvCalendar.setAdapter(calendarAdapter);

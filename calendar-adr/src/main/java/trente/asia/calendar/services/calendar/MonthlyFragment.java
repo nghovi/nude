@@ -1,6 +1,7 @@
 package trente.asia.calendar.services.calendar;
 
 import java.util.Date;
+import java.util.List;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -12,14 +13,18 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.fragments.AbstractClFragment;
+import trente.asia.calendar.commons.views.UserListLinearLayout;
 import trente.asia.calendar.services.calendar.listener.OnChangeCalendarListener;
+import trente.asia.calendar.services.calendar.listener.OnChangeCalendarUserListener;
 import trente.asia.calendar.services.calendar.view.MonthlyCalendarPagerAdapter;
 import trente.asia.welfare.adr.define.WelfareConst;
+import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.view.WfSlideMenuLayout;
 
 /**
@@ -29,25 +34,44 @@ import trente.asia.welfare.adr.view.WfSlideMenuLayout;
  */
 public class MonthlyFragment extends AbstractClFragment{
 
-	private ImageView					mImgLeftHeader;
-	private WfSlideMenuLayout			mSlideMenuLayout;
+	private ImageView						mImgLeftHeader;
+	private WfSlideMenuLayout				mSlideMenuLayout;
 
-	private ViewPager					viewPager;
-	private TextView					txtMonth;
-	private MonthlyCalendarPagerAdapter	pagerAdapter;
+	private ViewPager						viewPager;
+	private TextView						txtMonth;
+	private MonthlyCalendarPagerAdapter		pagerAdapter;
 
-	private final Date					TODAY						= CsDateUtil.getFirstDateOfCurrentMonth();
-	private final int					ACTIVE_PAGE					= Integer.MAX_VALUE / 2;
-	private int							activePositon;
-	private OnChangeCalendarListener	onChangeCalendarListener	= new OnChangeCalendarListener() {
+	private final Date						TODAY						= CsDateUtil.getFirstDateOfCurrentMonth();
+	private final int						ACTIVE_PAGE					= Integer.MAX_VALUE / 2;
+	private int								activePositon;
 
-																		@Override
-																		public void onChangeCalendarListener(){
-																			// load schedule list
-																			MonthlyPageFragment fragment = (MonthlyPageFragment)pagerAdapter.getItem(activePositon);
-																			fragment.loadScheduleList();
-																		}
-																	};
+	private OnChangeCalendarListener		onChangeCalendarListener	= new OnChangeCalendarListener() {
+
+																			@Override
+																			public void onChangeCalendarListener(){
+																				// load schedule list
+																				MonthlyPageFragment fragment = (MonthlyPageFragment)pagerAdapter.getItem(activePositon);
+																				fragment.loadScheduleList();
+																			}
+																		};
+
+	private OnChangeCalendarUserListener	changeCalendarUserListener	= new OnChangeCalendarUserListener() {
+
+																			@Override
+																			public void onChangeCalendarUserListener(List<UserModel> lstCalendarUser){
+																				UserListLinearLayout lnrUserList = (UserListLinearLayout)getView().findViewById(R.id.lnr_id_user_list);
+//                                                                                if(lnrUserList.getVisibility() == View.VISIBLE){
+//                                                                                    lnrUserList.setVisibility(View.GONE);
+//                                                                                }else{
+//                                                                                    lnrUserList.setVisibility(View.VISIBLE);
+//                                                                                }
+																				if(!CCCollectionUtil.isEmpty(lstCalendarUser)){
+																					lnrUserList.show(lstCalendarUser, (int)getResources().getDimension(R.dimen.margin_30dp));
+																				}else{
+																					lnrUserList.removeAllViews();
+																				}
+																			}
+																		};
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -66,7 +90,7 @@ public class MonthlyFragment extends AbstractClFragment{
 		viewPager = (ViewPager)getView().findViewById(R.id.view_pager_id_calendar);
 		txtMonth = (TextView)getView().findViewById(R.id.txt_id_month);
 
-		pagerAdapter = new MonthlyCalendarPagerAdapter(getChildFragmentManager());
+		pagerAdapter = new MonthlyCalendarPagerAdapter(getChildFragmentManager(), changeCalendarUserListener);
 		viewPager.setAdapter(pagerAdapter);
 		viewPager.setCurrentItem(ACTIVE_PAGE);
 		setActiveMonth(ACTIVE_PAGE);
@@ -111,6 +135,13 @@ public class MonthlyFragment extends AbstractClFragment{
 		Date activeMonth = CsDateUtil.addMonth(TODAY, position - ACTIVE_PAGE);
 		txtMonth.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_12, activeMonth));
 		prefAccUtil.set(ClConst.PREF_ACTIVE_DATE, CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, activeMonth));
+
+//		UserListLinearLayout lnrUserList = (UserListLinearLayout)getView().findViewById(R.id.lnr_id_user_list);
+//		if(lnrUserList.getVisibility() == View.VISIBLE){
+//			lnrUserList.setVisibility(View.GONE);
+//		}else{
+//			lnrUserList.setVisibility(View.VISIBLE);
+//		}
 	}
 
 	@Override

@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.services.calendar.MonthlyPageFragment;
+import trente.asia.calendar.services.calendar.listener.OnChangeCalendarUserListener;
 
 /**
  * BoardPagerAdapter
@@ -22,8 +23,11 @@ public class MonthlyCalendarPagerAdapter extends FragmentPagerAdapter{
 	private final Date							TODAY		= CsDateUtil.getFirstDateOfCurrentMonth();
 	private Map<Integer, MonthlyPageFragment>	monthlyMap	= new HashMap<>();
 
-	public MonthlyCalendarPagerAdapter(FragmentManager fm){
+	private OnChangeCalendarUserListener		listener;
+
+	public MonthlyCalendarPagerAdapter(FragmentManager fm, OnChangeCalendarUserListener listener){
 		super(fm);
+        this.listener = listener;
 	}
 
 	@Override
@@ -33,6 +37,7 @@ public class MonthlyCalendarPagerAdapter extends FragmentPagerAdapter{
 			Date activeMonth = CsDateUtil.addMonth(TODAY, position - ACTIVE_PAGE);
 			monthlyPageFragment = new MonthlyPageFragment();
 			monthlyPageFragment.setActiveMonth(activeMonth);
+            monthlyPageFragment.setChangeCalendarUserListener(listener);
 			this.monthlyMap.put(position, monthlyPageFragment);
 		}
 
