@@ -17,8 +17,11 @@ import trente.asia.android.util.CsDateUtil;
 import trente.asia.android.view.ChiaseDialog;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.utils.ClUtil;
+import trente.asia.calendar.services.calendar.ScheduleDetailFragment;
+import trente.asia.calendar.services.calendar.listener.OnScheduleClickListener;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.view.DailySummaryPagerAdapter;
+import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 
@@ -38,6 +41,15 @@ public class ClDailySummaryDialog extends ChiaseDialog{
 
 	private final int							ACTIVE_PAGE	= Integer.MAX_VALUE / 2;
 	private final Date							TODAY		= Calendar.getInstance().getTime();
+    private OnScheduleClickListener scheduleClickListener = new OnScheduleClickListener() {
+        @Override
+        public void onScheduleClickListener(ScheduleModel scheduleModel) {
+            ClDailySummaryDialog.this.dismiss();
+            ScheduleDetailFragment detailFragment = new ScheduleDetailFragment();
+            detailFragment.setSchedule(scheduleModel);
+            ((WelfareActivity)mContext).addFragment(detailFragment);
+        }
+    };
 
 	public ClDailySummaryDialog(Context context, List<ScheduleModel> lstSchedule, List<Date> lstDate4Month){
 		super(context);
@@ -49,7 +61,7 @@ public class ClDailySummaryDialog extends ChiaseDialog{
 
 		convertList2Map(lstSchedule, lstDate4Month);
 
-		pagerAdapter = new DailySummaryPagerAdapter(mContext, mapSchedule);
+		pagerAdapter = new DailySummaryPagerAdapter(mContext, mapSchedule, scheduleClickListener);
 		viewPagerSchedule.setAdapter(pagerAdapter);
 		viewPagerSchedule.setCurrentItem(ACTIVE_PAGE);
 		setActiveDate(ACTIVE_PAGE);

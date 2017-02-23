@@ -10,12 +10,14 @@ import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import asia.chiase.core.util.CCCollectionUtil;
 import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.R;
+import trente.asia.calendar.services.calendar.listener.OnScheduleClickListener;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 
@@ -29,6 +31,7 @@ public class DailySummaryPagerAdapter extends PagerAdapter{
 	private Context								mContext;
 	private LayoutInflater						mInflater;
 	private Map<String, List<ScheduleModel>>	mapSchedule;
+	private OnScheduleClickListener				listener;
 
 	private final Date							TODAY		= Calendar.getInstance().getTime();
 	private final int							ACTIVE_PAGE	= Integer.MAX_VALUE / 2;
@@ -41,13 +44,24 @@ public class DailySummaryPagerAdapter extends PagerAdapter{
 		public DailySummaryViewHolder(View view){
 			lnrNoData = (LinearLayout)view.findViewById(R.id.lnr_id_no_data);
 			lvSchedule = (ListView)view.findViewById(R.id.lsv_id_schedule);
+			lvSchedule.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+				@Override
+				public void onItemClick(AdapterView<?> parent, View view, int position, long id){
+					ScheduleModel scheduleModel = (ScheduleModel)parent.getItemAtPosition(position);
+                    if(listener != null){
+                        listener.onScheduleClickListener(scheduleModel);
+                    }
+				}
+			});
 		}
 	}
 
-	public DailySummaryPagerAdapter(Context context, Map<String, List<ScheduleModel>> mapSchedule){
+	public DailySummaryPagerAdapter(Context context, Map<String, List<ScheduleModel>> mapSchedule, OnScheduleClickListener listener){
 		this.mContext = context;
 		this.mapSchedule = mapSchedule;
 		mInflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		this.listener = listener;
 	}
 
 	/**

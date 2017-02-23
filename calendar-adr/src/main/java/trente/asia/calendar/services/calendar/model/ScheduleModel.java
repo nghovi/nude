@@ -39,5 +39,6 @@ public class ScheduleModel{
 		this.endDate = holidayModel.endDate;
 		// pink color
 		this.scheduleColor = "D22DB6";
+        this.isDayPeriod = true;
 	}
 }
