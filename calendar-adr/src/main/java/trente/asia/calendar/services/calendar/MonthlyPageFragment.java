@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -38,6 +39,7 @@ import trente.asia.calendar.services.calendar.listener.OnChangeCalendarUserListe
 import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.view.MonthlyCalendarDayView;
+import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.models.SettingModel;
@@ -110,7 +112,7 @@ public class MonthlyPageFragment extends AbstractClFragment implements DailySche
 
 		lnrMonthlyPage = (LinearLayout)getView().findViewById(R.id.lnr_id_monthly_page);
 		initCalendar();
-		initDialog();
+//		initDialog();
 	}
 
 	private void initCalendar(){
@@ -169,7 +171,9 @@ public class MonthlyPageFragment extends AbstractClFragment implements DailySche
 	}
 
 	private void initDialog(){
-		dialogDailySummary = new ClDailySummaryDialog(activity, null);
+		dialogDailySummary = new ClDailySummaryDialog(activity, lstSchedule, lstDate4Month);
+		ImageView imgAdd = (ImageView)dialogDailySummary.findViewById(R.id.img_id_add);
+		imgAdd.setOnClickListener(this);
 	}
 
 	@Override
@@ -241,6 +245,9 @@ public class MonthlyPageFragment extends AbstractClFragment implements DailySche
 			if(changeCalendarUserListener != null){
 				changeCalendarUserListener.onChangeCalendarUserListener(lstCalendarUser);
 			}
+
+//            make daily summary dialog
+            initDialog();
 		}else{
 			super.successLoad(response, url);
 		}
@@ -253,6 +260,13 @@ public class MonthlyPageFragment extends AbstractClFragment implements DailySche
 
 	@Override
 	public void onClick(View v){
-
+        switch(v.getId()){
+            case R.id.img_id_add:
+                dialogDailySummary.dismiss();
+                ((WelfareActivity)activity).addFragment(new ScheduleFormFragment());
+                break;
+            default:
+                break;
+        }
 	}
 }

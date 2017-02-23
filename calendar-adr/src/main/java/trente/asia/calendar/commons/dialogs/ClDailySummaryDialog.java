@@ -1,20 +1,26 @@
 package trente.asia.calendar.commons.dialogs;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import android.content.Context;
 import android.support.v4.view.ViewPager;
 import android.widget.TextView;
 
+import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import trente.asia.android.util.CsDateUtil;
 import trente.asia.android.view.ChiaseDialog;
 import trente.asia.calendar.R;
+import trente.asia.calendar.commons.utils.ClUtil;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.view.DailySummaryPagerAdapter;
 import trente.asia.welfare.adr.define.WelfareConst;
+import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 
 /**
  * QkChiaseDialog
@@ -23,15 +29,17 @@ import trente.asia.welfare.adr.define.WelfareConst;
  */
 public class ClDailySummaryDialog extends ChiaseDialog{
 
-	private Context						mContext;
-	private ViewPager					viewPagerSchedule;
-	private TextView					txtActiveDate;
-	private DailySummaryPagerAdapter	pagerAdapter;
+	private Context								mContext;
+	private ViewPager							viewPagerSchedule;
+	private TextView							txtActiveDate;
 
-	private final int					ACTIVE_PAGE	= Integer.MAX_VALUE / 2;
-	private final Date					TODAY		= Calendar.getInstance().getTime();
+	private DailySummaryPagerAdapter			pagerAdapter;
+	private Map<String, List<ScheduleModel>>	mapSchedule;
 
-	public ClDailySummaryDialog(Context context, List<ScheduleModel> lstSchedule){
+	private final int							ACTIVE_PAGE	= Integer.MAX_VALUE / 2;
+	private final Date							TODAY		= Calendar.getInstance().getTime();
+
+	public ClDailySummaryDialog(Context context, List<ScheduleModel> lstSchedule, List<Date> lstDate4Month){
 		super(context);
 		this.setContentView(R.layout.dialog_common_daily_summary);
 		this.mContext = context;
@@ -39,7 +47,9 @@ public class ClDailySummaryDialog extends ChiaseDialog{
 		txtActiveDate = (TextView)this.findViewById(R.id.txt_id_active_date);
 		viewPagerSchedule = (ViewPager)this.findViewById(R.id.view_pager_id_schedule);
 
-		pagerAdapter = new DailySummaryPagerAdapter(mContext);
+		convertList2Map(lstSchedule, lstDate4Month);
+
+		pagerAdapter = new DailySummaryPagerAdapter(mContext, mapSchedule);
 		viewPagerSchedule.setAdapter(pagerAdapter);
 		viewPagerSchedule.setCurrentItem(ACTIVE_PAGE);
 		setActiveDate(ACTIVE_PAGE);
@@ -57,6 +67,28 @@ public class ClDailySummaryDialog extends ChiaseDialog{
 			}
 		});
 	}
+
+	private void convertList2Map(List<ScheduleModel> lstSchedule, List<Date> lstDate4Month){
+        mapSchedule = new HashMap<>();
+        if(!CCCollectionUtil.isEmpty(lstSchedule)){
+            for(Date date : lstDate4Month){
+                for(ScheduleModel scheduleModel : lstSchedule){
+                    if(ClUtil.belongPeriod(date, scheduleModel.startDate, scheduleModel.endDate)){
+                        String dateFormat = WelfareFormatUtil.formatDate(date);
+                        if(mapSchedule.containsKey(dateFormat)){
+                            List<ScheduleModel> lstSchedule4Date = mapSchedule.get(dateFormat);
+                            lstSchedule4Date.add(scheduleModel);
+                            mapSchedule.put(dateFormat, lstSchedule4Date);
+                        }else{
+                            List<ScheduleModel> lstSchedule4Date = new ArrayList<>();
+                            lstSchedule4Date.add(scheduleModel);
+                            mapSchedule.put(dateFormat, lstSchedule4Date);
+                        }
+                    }
+                }
+            }
+        }
+    }
 
 	private void setActiveDate(int position){
 		Date activeDate = CsDateUtil.addDate(TODAY, position - ACTIVE_PAGE);

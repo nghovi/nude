@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/lnr_id_item"
+    style="@style/cs_common_match_wrap"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/cl_state_common_selectable_row"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="@dimen/margin_10dp">
+
+    <LinearLayout
+        style="@style/cs_common_match_wrap"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            style="@style/cs_common_wrap"
+            android:orientation="vertical">
+
+            <LinearLayout
+                style="@style/cs_common_match_wrap"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <trente.asia.welfare.adr.view.SelectableRoundedImageView
+                    android:id="@+id/img_id_calendar"
+                    android:layout_width="@dimen/margin_20dp"
+                    android:layout_height="@dimen/margin_20dp"
+                    android:focusable="false"
+                    android:scaleType="fitXY"
+                    custom:sriv_oval="true"/>
+
+                <TextView
+                    android:id="@+id/txt_id_schedule_time"
+                    style="@style/wl_common_text"
+                    android:layout_width="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_10dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/cs_common_match_wrap"
+                android:layout_marginTop="@dimen/margin_6dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    style="@style/cs_common_wrap"
+                    android:src="@drawable/ol_icon_duplicate"/>
+
+                <ImageView
+                    style="@style/cs_common_wrap"
+                    android:layout_marginLeft="@dimen/margin_10dp"
+                    android:src="@drawable/ol_icon_repeat"/>
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/cs_common_match_wrap"
+            android:layout_marginLeft="@dimen/margin_15dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txt_id_schedule_name"
+                style="@style/wl_common_text_single_line"/>
+
+            <trente.asia.calendar.commons.views.UserListLinearLayout
+                android:id="@+id/lnr_id_user_list"
+                style="@style/cs_common_match_wrap"
+                android:layout_marginTop="@dimen/margin_6dp"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>
