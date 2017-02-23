@@ -30,7 +30,7 @@ import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.BuildConfig;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
-import trente.asia.calendar.commons.dialogs.ClDialog;
+import trente.asia.calendar.commons.dialogs.ClDailySummaryDialog;
 import trente.asia.calendar.commons.fragments.AbstractClFragment;
 import trente.asia.calendar.commons.utils.ClUtil;
 import trente.asia.calendar.services.calendar.listener.DailyScheduleClickListener;
@@ -59,8 +59,7 @@ public class MonthlyPageFragment extends AbstractClFragment implements DailySche
 	private List<ScheduleModel>				lstSchedule		= new ArrayList<>();
 	private List<MonthlyCalendarDayView>	lstCalendarDay	= new ArrayList<>();
 
-	private ClDialog						dialogScheduleList;
-	// private ClFilterUserListDialog filterDialog;
+	private ClDailySummaryDialog			dialogDailySummary;
 	private OnChangeCalendarUserListener	changeCalendarUserListener;
 	private List<Date>						lstDate4Month;
 
@@ -170,8 +169,7 @@ public class MonthlyPageFragment extends AbstractClFragment implements DailySche
 	}
 
 	private void initDialog(){
-		dialogScheduleList = new ClDialog(activity);
-		dialogScheduleList.setDialogScheduleList();
+		dialogDailySummary = new ClDailySummaryDialog(activity, null);
 	}
 
 	@Override
@@ -250,7 +248,7 @@ public class MonthlyPageFragment extends AbstractClFragment implements DailySche
 
 	@Override
 	public void onDailyScheduleClickListener(String day){
-		dialogScheduleList.show();
+		dialogDailySummary.show();
 	}
 
 	@Override

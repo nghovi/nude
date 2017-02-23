@@ -44,4 +44,6 @@
     <string name="cl_schedule_repeat_limit_until">Until</string>
     <string name="cl_schedule_repeat_limit_after">After</string>
 
+    <string name="cl_dialog_daily_summary_not_data">No schedule</string>
+
 </resources>
