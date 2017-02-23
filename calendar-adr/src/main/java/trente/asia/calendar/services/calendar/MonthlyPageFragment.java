@@ -2,6 +2,8 @@ package trente.asia.calendar.services.calendar;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -29,10 +31,8 @@ import trente.asia.calendar.BuildConfig;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.dialogs.ClDialog;
-import trente.asia.calendar.commons.dialogs.ClFilterUserListDialog;
 import trente.asia.calendar.commons.fragments.AbstractClFragment;
 import trente.asia.calendar.commons.utils.ClUtil;
-import trente.asia.calendar.commons.views.UserListLinearLayout;
 import trente.asia.calendar.services.calendar.listener.DailyScheduleClickListener;
 import trente.asia.calendar.services.calendar.listener.OnChangeCalendarUserListener;
 import trente.asia.calendar.services.calendar.model.HolidayModel;
@@ -43,6 +43,7 @@ import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.models.SettingModel;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
+import trente.asia.welfare.adr.utils.WelfareUtil;
 import trente.asia.welfare.adr.view.WfSlideMenuLayout;
 
 /**
@@ -59,9 +60,28 @@ public class MonthlyPageFragment extends AbstractClFragment implements DailySche
 	private List<MonthlyCalendarDayView>	lstCalendarDay	= new ArrayList<>();
 
 	private ClDialog						dialogScheduleList;
-//	private ClFilterUserListDialog			filterDialog;
+	// private ClFilterUserListDialog filterDialog;
 	private OnChangeCalendarUserListener	changeCalendarUserListener;
 	private List<Date>						lstDate4Month;
+
+	public class ScheduleComparator implements Comparator<ScheduleModel>{
+
+		@Override
+		public int compare(ScheduleModel schedule1, ScheduleModel schedule2){
+			Date startDate1 = WelfareUtil.makeDate(schedule1.startDate);
+			Date endDate1 = WelfareUtil.makeDate(schedule1.endDate);
+
+			Date startDate2 = WelfareUtil.makeDate(schedule2.startDate);
+			Date endDate2 = WelfareUtil.makeDate(schedule2.endDate);
+
+			boolean diff1 = WelfareFormatUtil.formatDate(startDate1).equals(WelfareFormatUtil.formatDate(endDate1));
+			boolean diff2 = WelfareFormatUtil.formatDate(startDate2).equals(WelfareFormatUtil.formatDate(endDate2));
+
+			if(!diff1 && diff2) return -1;
+			if(diff1 && !diff2) return 1;
+			return 0;
+		}
+	}
 
 	public void setChangeCalendarUserListener(OnChangeCalendarUserListener changeCalendarUserListener){
 		this.changeCalendarUserListener = changeCalendarUserListener;
@@ -90,7 +110,7 @@ public class MonthlyPageFragment extends AbstractClFragment implements DailySche
 		super.initView();
 
 		lnrMonthlyPage = (LinearLayout)getView().findViewById(R.id.lnr_id_monthly_page);
-        initCalendar();
+		initCalendar();
 		initDialog();
 	}
 
@@ -159,6 +179,12 @@ public class MonthlyPageFragment extends AbstractClFragment implements DailySche
 		String activeDateString = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, activeMonth);
 		if(activeDateString.equals(prefAccUtil.get(ClConst.PREF_ACTIVE_DATE))){
 			loadScheduleList();
+			// try{
+			// JSONObject jsonObject = new JSONObject(string);
+			// successLoad(jsonObject, WfUrlConst.WF_CL_WEEK_SCHEDULE);
+			// }catch(JSONException e){
+			// e.printStackTrace();
+			// }
 		}
 	}
 
@@ -169,12 +195,12 @@ public class MonthlyPageFragment extends AbstractClFragment implements DailySche
 		}
 		JSONObject jsonObject = new JSONObject();
 		try{
-//			jsonObject.put("targetUserList", prefAccUtil.get(ClConst.PREF_ACTIVE_USER_LIST));
-            jsonObject.put("targetUserList", "");
+			// jsonObject.put("targetUserList", prefAccUtil.get(ClConst.PREF_ACTIVE_USER_LIST));
+			jsonObject.put("targetUserList", "");
 			jsonObject.put("targetMonth", CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_5, activeMonth));
 			jsonObject.put("calendars", prefAccUtil.get(ClConst.SELECTED_CALENDAR_STRING));
-            jsonObject.put("startDateString", WelfareFormatUtil.formatDate(lstDate4Month.get(0)));
-            jsonObject.put("endDateString", WelfareFormatUtil.formatDate(lstDate4Month.get(lstDate4Month.size() - 1)));
+			jsonObject.put("startDateString", WelfareFormatUtil.formatDate(lstDate4Month.get(0)));
+			jsonObject.put("endDateString", WelfareFormatUtil.formatDate(lstDate4Month.get(lstDate4Month.size() - 1)));
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
@@ -185,7 +211,7 @@ public class MonthlyPageFragment extends AbstractClFragment implements DailySche
 	protected void successLoad(JSONObject response, String url){
 		if(WfUrlConst.WF_CL_WEEK_SCHEDULE.equals(url)){
 			lstSchedule = CCJsonUtil.convertToModelList(response.optString("schedules"), ScheduleModel.class);
-            List<HolidayModel> lstHoliday = CCJsonUtil.convertToModelList(response.optString("holidayList"), HolidayModel.class);
+			List<HolidayModel> lstHoliday = CCJsonUtil.convertToModelList(response.optString("holidayList"), HolidayModel.class);
 
 			// clear old data
 			for(MonthlyCalendarDayView dayView : lstCalendarDay){
@@ -193,6 +219,7 @@ public class MonthlyPageFragment extends AbstractClFragment implements DailySche
 			}
 
 			if(!CCCollectionUtil.isEmpty(lstSchedule)){
+				Collections.sort(lstSchedule, new ScheduleComparator());
 				for(ScheduleModel model : lstSchedule){
 					List<MonthlyCalendarDayView> lstActiveCalendarDay = ClUtil.findView4Day(lstCalendarDay, model.startDate, model.endDate);
 
@@ -202,16 +229,16 @@ public class MonthlyPageFragment extends AbstractClFragment implements DailySche
 				}
 			}
 
-//            add holiday
-            if(!CCCollectionUtil.isEmpty(lstHoliday)){
-                for(HolidayModel holidayModel : lstHoliday){
-                    List<MonthlyCalendarDayView> lstActiveCalendarDay = ClUtil.findView4Day(lstCalendarDay, holidayModel.startDate, holidayModel.endDate);
-                    ScheduleModel scheduleModel = new ScheduleModel(holidayModel);
-                    for(MonthlyCalendarDayView calendarDayView : lstActiveCalendarDay){
-                        calendarDayView.addSchedule(scheduleModel);
-                    }
-                }
-            }
+			// add holiday
+			if(!CCCollectionUtil.isEmpty(lstHoliday)){
+				for(HolidayModel holidayModel : lstHoliday){
+					List<MonthlyCalendarDayView> lstActiveCalendarDay = ClUtil.findView4Day(lstCalendarDay, holidayModel.startDate, holidayModel.endDate);
+					ScheduleModel scheduleModel = new ScheduleModel(holidayModel);
+					for(MonthlyCalendarDayView calendarDayView : lstActiveCalendarDay){
+						calendarDayView.addSchedule(scheduleModel);
+					}
+				}
+			}
 			List<UserModel> lstCalendarUser = CCJsonUtil.convertToModelList(response.optString("calendarUsers"), UserModel.class);
 			if(changeCalendarUserListener != null){
 				changeCalendarUserListener.onChangeCalendarUserListener(lstCalendarUser);
