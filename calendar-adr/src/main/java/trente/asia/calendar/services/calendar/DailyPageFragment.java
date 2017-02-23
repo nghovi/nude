@@ -53,17 +53,10 @@ public class DailyPageFragment extends SchedulesPageFragment implements
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        host = BuildConfig.HOST;
-    }
-
-    @Override
     protected void initView() {
         super.initView();
         initDialog();
     }
-
 
     private void initDialog() {
         dialogScheduleList = new ClDialog(activity);
@@ -81,21 +74,13 @@ public class DailyPageFragment extends SchedulesPageFragment implements
 
     @Override
     protected JSONObject prepareJsonObject() {
-        String targetUserList = "";
-        if (userListLinearLayout != null) {
-            targetUserList = userListLinearLayout.formatUserList();
-        }
+        String targetUserList = getTargetUserList();
 
         JSONObject jsonObject = new JSONObject();
         try {
-            if (!CCStringUtil.isEmpty(targetUserList)) {
-                jsonObject.put("targetUserList", targetUserList);
-            }
-
+            jsonObject.put("targetUserList", targetUserList);
             jsonObject.put("searchDateString", CCFormatUtil.formatDateCustom
                     (WelfareConst.WL_DATE_TIME_7, selectedDate));
-            // jsonObject.put("endDateString", CCFormatUtil.formatDateCustom
-            // (WelfareConst.WL_DATE_TIME_7, selectedDate));
             jsonObject.put("calendars", prefAccUtil.get(ClConst
                     .SELECTED_CALENDAR_STRING));
         } catch (JSONException e) {

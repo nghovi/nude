@@ -101,7 +101,7 @@ public class ScheduleFormFragment extends AbstractClFragment{
 		txtRoom = (ChiaseTextView)getView().findViewById(R.id.txt_id_meeting_room);
 		txtCalendar = (ChiaseTextView)getView().findViewById(R.id.txt_id_calendar);
 		txtCategory = (ChiaseTextView)getView().findViewById(R.id.txt_id_category);
-		lnrUserList = (UserListLinearLayout)getView().findViewById(R.id.lnr_id_user_list);
+		lnrUserList = (UserListLinearLayout)getView().findViewById(R.id.lnr_fragment_pager_container_user_list);
 		swtAllDay = (SwitchCompat)getView().findViewById(R.id.swt_id_all_day);
 
 		filterDialog = new ClFilterUserListDialog(activity, lnrUserList);
@@ -310,7 +310,7 @@ public class ScheduleFormFragment extends AbstractClFragment{
 		case R.id.txt_id_end_time:
 			timePickerDialogEnd.show();
 			break;
-		case R.id.lnr_id_user_list:
+		case R.id.lnr_fragment_pager_container_user_list:
 			filterDialog.show();
 			break;
 		case R.id.lnr_id_repeat:

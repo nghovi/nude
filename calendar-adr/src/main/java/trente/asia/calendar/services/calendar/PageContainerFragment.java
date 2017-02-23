@@ -15,7 +15,9 @@ import java.util.Date;
 import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.fragments.AbstractClFragment;
+import trente.asia.calendar.commons.views.UserListLinearLayout;
 import trente.asia.calendar.services.calendar.view.NavigationHeader;
+import trente.asia.calendar.services.calendar.view.PageSharingHolder;
 import trente.asia.calendar.services.calendar.view.SchedulesPagerAdapter;
 import trente.asia.welfare.adr.view.WfSlideMenuLayout;
 
@@ -35,12 +37,14 @@ public class PageContainerFragment extends AbstractClFragment {
 
     protected ImageView mImgLeftHeader;
     protected NavigationHeader navigationHeader;
+    protected UserListLinearLayout userListLinearLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         if (mRootView == null) {
-            mRootView = inflater.inflate(R.layout.fragment_weekly, container,
+            mRootView = inflater.inflate(R.layout.fragment_pager_container,
+                    container,
                     false);
         }
         return mRootView;
@@ -49,13 +53,17 @@ public class PageContainerFragment extends AbstractClFragment {
     @Override
     protected void initView() {
         super.initView();
+        userListLinearLayout = (UserListLinearLayout) activity.findViewById(R
+                .id.lnr_fragment_pager_container_user_list);
         navigationHeader = (NavigationHeader) getView().findViewById(R.id
                 .lnr_navigation_header);
         mImgLeftHeader = (ImageView) getView().findViewById(R.id
                 .img_id_header_left_icon);
         mViewPager = (ViewPager) getView().findViewById(R.id.pager);
         mPagerAdapter = initPagerAdapter();
-        mPagerAdapter.setNavigationHeader(navigationHeader);
+        PageSharingHolder holder = new PageSharingHolder(navigationHeader,
+                userListLinearLayout);
+        mPagerAdapter.setPageSharingHolder(holder);
         mViewPager.setAdapter(mPagerAdapter);
         mViewPager.setCurrentItem(ACTIVE_PAGE);
         prefAccUtil.saveActiveDate(TODAY);

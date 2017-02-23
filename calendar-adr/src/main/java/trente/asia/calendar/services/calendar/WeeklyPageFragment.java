@@ -61,15 +61,10 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements
         c.setTime(this.week.get(0));
 
         String selectedCalendarStr = prefAccUtil.get(SELECTED_CALENDAR_STRING);
-        String targetUserList = "";
-        if (userListLinearLayout != null) {
-            targetUserList = userListLinearLayout.formatUserList();
-        }
+        String targetUserList = getTargetUserList();
         JSONObject jsonObject = new JSONObject();
         try {
-            if (!CCStringUtil.isEmpty(targetUserList)) {
-                jsonObject.put("targetUserList", targetUserList);
-            }
+            jsonObject.put("targetUserList", targetUserList);
             jsonObject.put("calendars", selectedCalendarStr);
             jsonObject.put("startDateString", CCFormatUtil.formatDateCustom
                     (WelfareConst.WL_DATE_TIME_7, c.getTime()));
@@ -99,5 +94,5 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements
         }
         return this.week;
     }
-
 }
+

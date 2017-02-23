@@ -117,7 +117,7 @@ public class MonthlyFragment extends AbstractClFragment{
 		calendarListFragment.setOnChangeCalendarListener(onChangeCalendarListener);
 		transaction.replace(R.id.slice_menu_board, calendarListFragment).commit();
 
-		lnrUserList = (UserListLinearLayout)activity.findViewById(R.id.lnr_id_user_list);
+		lnrUserList = (UserListLinearLayout)activity.findViewById(R.id.lnr_fragment_pager_container_user_list);
 		filterDialog = new ClFilterUserListDialog(activity, lnrUserList);
 		ImageView imgDone = (ImageView)filterDialog.findViewById(R.id.img_id_done);
 
@@ -167,7 +167,7 @@ public class MonthlyFragment extends AbstractClFragment{
 			MonthlyPageFragment monthlyPageFragment = (MonthlyPageFragment)pagerAdapter.getItem(activePositon);
 			monthlyPageFragment.loadScheduleList();
 			break;
-		case R.id.lnr_id_user_list:
+		case R.id.lnr_fragment_pager_container_user_list:
 			filterDialog.show();
 			break;
 		default:

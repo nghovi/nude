@@ -49,7 +49,7 @@ public class CalendarAdapter extends ArrayAdapter<CalendarModel>{
 			imgAvatar = (ImageView)view.findViewById(R.id.img_id_avatar);
 			txtName = (TextView)view.findViewById(R.id.txt_id_name);
 			lnrItem = (CheckableLinearLayout)view.findViewById(R.id.lnr_id_item);
-			lnrUserList = (UserListLinearLayout)view.findViewById(R.id.lnr_id_user_list);
+			lnrUserList = (UserListLinearLayout)view.findViewById(R.id.lnr_fragment_pager_container_user_list);
 			imgCheck = (ImageView)view.findViewById(R.id.img_checked);
 		}
 	}

@@ -45,7 +45,7 @@
             android:textColor="@color/chiase_white"/>
 
         <trente.asia.calendar.commons.views.UserListLinearLayout
-            android:id="@+id/lnr_id_user_list"
+            android:id="@+id/lnr_fragment_pager_container_user_list"
             style="@style/cs_common_match_wrap"
             android:layout_marginTop="@dimen/margin_6dp"/>
 

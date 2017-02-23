@@ -24,6 +24,7 @@ public class SchedulesPagerAdapter extends FragmentPagerAdapter {
     private final int ACTIVE_PAGE = Integer.MAX_VALUE / 2;
     private final Date TODAY = Calendar.getInstance().getTime();
     private NavigationHeader navigationHeader;
+    private PageSharingHolder pageSharingHolder;
 
     public SchedulesPagerAdapter(FragmentManager fm) {
         super(fm);
@@ -33,7 +34,7 @@ public class SchedulesPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         Date activeDate = CsDateUtil.addWeek(TODAY, position - ACTIVE_PAGE);
         SchedulesPageFragment fragment = getFragment();
-        fragment.setNavigationHeader(navigationHeader);
+        fragment.setPageSharingHolder(this.pageSharingHolder);
         fragment.setSelectedDate(activeDate);
         return fragment;
     }
@@ -52,5 +53,9 @@ public class SchedulesPagerAdapter extends FragmentPagerAdapter {
 
     public void setNavigationHeader(NavigationHeader navigationHeader) {
         this.navigationHeader = navigationHeader;
+    }
+
+    public void setPageSharingHolder(PageSharingHolder pageSharingHolder) {
+        this.pageSharingHolder = pageSharingHolder;
     }
 }

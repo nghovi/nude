@@ -45,6 +45,7 @@ import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.view.CalendarDayListAdapter;
 import trente.asia.calendar.services.calendar.view.CalendarView;
 import trente.asia.calendar.services.calendar.view.NavigationHeader;
+import trente.asia.calendar.services.calendar.view.PageSharingHolder;
 import trente.asia.calendar.services.calendar.view.WeeklyCalendarDayView;
 import trente.asia.calendar.services.calendar.view.WeeklyCalendarHeaderRowView;
 import trente.asia.welfare.adr.activity.WelfareFragment;
@@ -71,14 +72,12 @@ public class SchedulesPageFragment extends WelfareFragment implements
     protected List<WeeklyCalendarHeaderRowView> lstHeaderRow = new
             ArrayList<>();
     protected List<UserModel> filteredUsers = new ArrayList<>();
-    protected ClFilterUserListDialog filterDialog;
     protected List<CalendarDayModel> calendarDayModels;
     protected CalendarDayListAdapter adapter;
-    protected UserListLinearLayout userListLinearLayout;
     protected List<Date> week;
-    protected NavigationHeader navigationHeader;
     protected List<CalendarModel> calendars;
     protected List<WeeklyCalendarDayView> calendarDayViews = new ArrayList<>();
+    protected PageSharingHolder pageSharingHolder;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -109,16 +108,6 @@ public class SchedulesPageFragment extends WelfareFragment implements
                 (selectedDate), CCNumberUtil.toInteger(prefAccUtil.getSetting
                 ().CL_START_DAY_IN_WEEK));
 
-        userListLinearLayout = (UserListLinearLayout) activity.findViewById(R
-                .id.lnr_id_user_list);
-        userListLinearLayout.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                filterDialog.show();
-
-            }
-        });
 
         initCalendarView();
     }
@@ -188,6 +177,10 @@ public class SchedulesPageFragment extends WelfareFragment implements
         requestLoad(api, jsonObject, true);
     }
 
+    protected String getTargetUserList() {
+        return this.pageSharingHolder.userListLinearLayout
+                .formatUserList();
+    }
 
     protected JSONObject prepareJsonObject() {
         return null;
@@ -234,7 +227,7 @@ public class SchedulesPageFragment extends WelfareFragment implements
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if (navigationHeader != null && !navigationHeader.isUpdated) {
+        if (pageSharingHolder.navigationHeader.isUpdated) {
             String title = CCFormatUtil.formatDateCustom(WelfareConst
                     .WL_DATE_TIME_12, this.week.get(0));
             List<String> selectedCalendarIds = Arrays.asList(prefAccUtil.get
@@ -243,8 +236,9 @@ public class SchedulesPageFragment extends WelfareFragment implements
             String subtitle = selectedCalendarSize > 1 ? selectedCalendarSize
                     + " calendars" : getCalendarName(selectedCalendarIds.get
                     (0));
-            navigationHeader.updateHeaderTitles(title, subtitle);
-            navigationHeader.isUpdated = true;
+            pageSharingHolder.navigationHeader.updateHeaderTitles(title,
+                    subtitle);
+            pageSharingHolder.navigationHeader.isUpdated = true;
         }
     }
 
@@ -270,11 +264,7 @@ public class SchedulesPageFragment extends WelfareFragment implements
         }
 
         if (!CCCollectionUtil.isEmpty(calendarUsers)) {
-            userListLinearLayout.show(calendarUsers, (int) getResources()
-                    .getDimension(R.dimen.margin_30dp));
-            filterDialog = new ClFilterUserListDialog(activity,
-                    userListLinearLayout);
-            filterDialog.updateUserList(calendarUsers);
+            pageSharingHolder.updateFilter(calendarUsers);
         }
 
         adapter = new CalendarDayListAdapter(activity, R.layout
@@ -431,9 +421,7 @@ public class SchedulesPageFragment extends WelfareFragment implements
         this.selectedDate = selectedDate;
     }
 
-    public void setNavigationHeader(NavigationHeader navigationHeader) {
-        this.navigationHeader = navigationHeader;
+    public void setPageSharingHolder(PageSharingHolder pageSharingHolder) {
+        this.pageSharingHolder = pageSharingHolder;
     }
-
-
 }
