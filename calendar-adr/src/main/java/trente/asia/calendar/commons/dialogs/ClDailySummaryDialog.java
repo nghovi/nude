@@ -23,7 +23,7 @@ import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 
 /**
- * QkChiaseDialog
+ * ClDailySummaryDialog
  *
  * @author TrungND
  */
