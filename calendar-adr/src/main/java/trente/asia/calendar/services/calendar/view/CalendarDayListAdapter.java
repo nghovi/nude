@@ -15,7 +15,7 @@ import android.widget.TextView;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.calendar.BuildConfig;
 import trente.asia.calendar.R;
-import trente.asia.calendar.services.calendar.ScheduleDetailFragment;
+import trente.asia.calendar.commons.utils.ClUtil;
 import trente.asia.calendar.services.calendar.model.CalendarDayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.welfare.adr.models.UserModel;
@@ -95,7 +95,7 @@ public class CalendarDayListAdapter extends ArrayAdapter<CalendarDayModel>{
 			// schedule.calendar.imagePath, imgType, null);
 
 			final HorizontalUserListView horizontalUserListView = (HorizontalUserListView)calendarEvents.findViewById(R.id.view_horizontal_user_list);
-			final List<UserModel> joinedUser = ScheduleDetailFragment.getJoinedUserModels(schedule, schedule.calendar.calendarUsers);
+			final List<UserModel> joinedUser = ClUtil.getJoinedUserModels(schedule, schedule.calendar.calendarUsers);
 			horizontalUserListView.post(new Runnable() {
 
 				@Override

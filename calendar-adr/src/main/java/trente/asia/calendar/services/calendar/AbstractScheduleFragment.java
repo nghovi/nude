@@ -1,6 +1,6 @@
 package trente.asia.calendar.services.calendar;
 
-import static trente.asia.calendar.services.calendar.ScheduleDetailFragment.inflateWithData;
+import static trente.asia.welfare.adr.utils.WelfareFormatUtil.convertList2Map;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,13 +8,20 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.google.gson.Gson;
+
+import android.graphics.Color;
 import android.support.v7.widget.SwitchCompat;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import asia.chiase.core.util.CCBooleanUtil;
+import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCJsonUtil;
+import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.view.ChiaseTextView;
+import trente.asia.android.view.util.CAObjectSerializeUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.fragments.AbstractClFragment;
@@ -23,6 +30,7 @@ import trente.asia.calendar.services.calendar.model.CalendarModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.models.ApiObjectModel;
+import trente.asia.welfare.adr.models.UserModel;
 
 /**
  * AbstractScheduleFragment
@@ -46,7 +54,6 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 
 	protected List<ApiObjectModel>	categories;
 	protected ChiaseTextView		txtCategory;
-	// protected ClScheduleRepeatDialog repeatDialog;
 	protected SwitchCompat			swtAllDay;
 
 	@Override
@@ -92,7 +99,7 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 		}
 	}
 
-	private void onLoadScheduleDetailSuccess(JSONObject response){
+	protected void onLoadScheduleDetailSuccess(JSONObject response){
 		schedule = CCJsonUtil.convertToModel(response.optString("schedule"), ScheduleModel.class);
 		rooms = CCJsonUtil.convertToModelList(response.optString("rooms"), ApiObjectModel.class);
 		calendars = CCJsonUtil.convertToModelList(response.optString("calendars"), CalendarModel.class);
@@ -102,13 +109,58 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 		inflateWithData((ViewGroup)getView(), txtRoom, txtCalendar, txtCategory, rooms, calendars, categories, schedule);
 	}
 
-	public static List<ApiObjectModel> getCalendarHolders(List<CalendarModel> calendars){
+	protected void inflateWithData(ViewGroup view, ChiaseTextView txtRoom, ChiaseTextView txtCalendar, ChiaseTextView txtCategory, List<ApiObjectModel> rooms, List<CalendarModel> calendars, List<ApiObjectModel> categories, ScheduleModel schedule){
+
+		try{
+			Gson gson = new Gson();
+			CAObjectSerializeUtil.deserializeObject((ViewGroup)view.findViewById(R.id.lnr_id_content), new JSONObject(gson.toJson(schedule)));
+		}catch(JSONException e){
+			e.printStackTrace();
+		}
+
+		if(!CCStringUtil.isEmpty(schedule.key)){
+			txtRoom.setText(convertList2Map(rooms).get(Integer.parseInt(schedule.roomId)));
+			txtRoom.setValue(schedule.roomId);
+			txtCalendar.setText(convertList2Map(getCalendarHolders(calendars)).get(Integer.parseInt(schedule.calendarId)));
+			txtCalendar.setValue(schedule.calendarId);
+			txtCategory.setValue(schedule.categoryId);
+			if(!CCStringUtil.isEmpty(schedule.categoryId)){
+				txtCategory.setTextColor(Color.parseColor("#" + schedule.categoryId));
+			}
+			txtCategory.setText(convertList2Map(categories).get(schedule.categoryId));
+		}
+	}
+
+	protected List<ApiObjectModel> getCalendarHolders(List<CalendarModel> calendars){
 		List<ApiObjectModel> apiObjectModels = new ArrayList<>();
 		for(CalendarModel calendarModel : calendars){
 			ApiObjectModel apiObjectModel = new ApiObjectModel(calendarModel.key, calendarModel.calendarName);
 			apiObjectModels.add(apiObjectModel);
 		}
 		return apiObjectModels;
+	}
+
+	protected List<UserModel> getAllCalendarUsers(List<CalendarModel> calendars, String calendarId){
+		if(!CCStringUtil.isEmpty(calendarId)){
+			for(CalendarModel calendarModel : calendars){
+				if(calendarModel.key.equals(calendarId)){
+					// activeCalendar = calendarModel;
+					if(CCBooleanUtil.checkBoolean(calendarModel.isMyself)){
+						calendarModel.calendarUsers = new ArrayList<>();
+						calendarModel.calendarUsers.add(prefAccUtil.getUserPref());
+					}
+					return calendarModel.calendarUsers;
+				}
+			}
+		}
+		return new ArrayList<>();
+	}
+
+	protected void onChangeCalendar(String calendarId){
+		List<UserModel> calendarUsers = getAllCalendarUsers(calendars, calendarId);
+		if(!CCCollectionUtil.isEmpty(calendarUsers)){
+			lnrUserList.show(calendarUsers, (int)getResources().getDimension(R.dimen.margin_30dp));
+		}
 	}
 
 	@Override
@@ -120,7 +172,7 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 	public void onClick(View v){
 		switch(v.getId()){
 		case R.id.img_id_header_right_icon:
-//			sendUpdatedRequest();
+			// sendUpdatedRequest();
 			break;
 		default:
 			break;

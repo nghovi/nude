@@ -9,7 +9,9 @@ import android.os.Environment;
 
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
+import asia.chiase.core.util.CCStringUtil;
 import trente.asia.calendar.commons.defines.ClConst;
+import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.view.MonthlyCalendarDayView;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
@@ -85,4 +87,17 @@ public class ClUtil{
 		}
 		return builder.toString();
 	}
+
+    public static List<UserModel> getJoinedUserModels(ScheduleModel schedule, List<UserModel> userModels){
+        List<UserModel> joinUsers = new ArrayList<>();
+        if(userModels != null && !CCStringUtil.isEmpty(schedule.joinUsers)){
+            for(String userId : schedule.joinUsers.split(",")){
+                UserModel userModel = UserModel.getUserModel(userId, userModels);
+                if(userModel != null){
+                    joinUsers.add(userModel);
+                }
+            }
+        }
+        return joinUsers;
+    }
 }
