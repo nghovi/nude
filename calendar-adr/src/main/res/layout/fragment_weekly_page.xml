@@ -18,7 +18,7 @@
         </trente.asia.calendar.commons.views.UserListLinearLayout>
 
         <LinearLayout
-            android:id="@+id/lnr_id_content_header"
+            android:id="@+id/lnr_calendar_container"
             style="@style/cs_common_match_wrap"
             android:orientation="vertical"/>
 

@@ -14,10 +14,9 @@
 
 
     <LinearLayout
-        android:id="@+id/lnr_id_monthly_page"
+        android:id="@+id/lnr_calendar_container"
         style="@style/cs_common_match_wrap"
-        android:orientation="vertical">
-    </LinearLayout>
+        android:orientation="vertical"/>
 
     <com.github.ksoichiro.android.observablescrollview.ObservableListView
         android:id="@+id/lst_calendar_day"
