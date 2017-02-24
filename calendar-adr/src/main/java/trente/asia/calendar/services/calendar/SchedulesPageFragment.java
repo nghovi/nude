@@ -15,6 +15,7 @@ import com.github.ksoichiro.android.observablescrollview
         .ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -37,15 +38,12 @@ import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.BuildConfig;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
-import trente.asia.calendar.commons.dialogs.ClFilterUserListDialog;
-import trente.asia.calendar.commons.views.UserListLinearLayout;
 import trente.asia.calendar.services.calendar.model.CalendarDayModel;
 import trente.asia.calendar.services.calendar.model.CalendarModel;
 import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.view.CalendarDayListAdapter;
 import trente.asia.calendar.services.calendar.view.CalendarView;
-import trente.asia.calendar.services.calendar.view.NavigationHeader;
 import trente.asia.calendar.services.calendar.view.PageSharingHolder;
 import trente.asia.calendar.services.calendar.view.WeeklyCalendarDayView;
 import trente.asia.calendar.services.calendar.view.WeeklyCalendarHeaderRowView;
@@ -75,11 +73,12 @@ public class SchedulesPageFragment extends WelfareFragment implements
     protected List<UserModel> filteredUsers = new ArrayList<>();
     protected List<CalendarDayModel> calendarDayModels;
     protected CalendarDayListAdapter adapter;
-    protected List<Date> week;
+    protected List<Date> dates;
     protected List<CalendarModel> calendars;
     protected List<WeeklyCalendarDayView> calendarDayViews = new ArrayList<>();
     protected PageSharingHolder pageSharingHolder;
     protected List<HolidayModel> holidayModels;
+    protected List<ScheduleModel> schedules;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -106,11 +105,6 @@ public class SchedulesPageFragment extends WelfareFragment implements
                 .lst_calendar_day);
         observableListView.setScrollViewCallbacks(this);
         observableListView.setDivider(null);
-        this.week = CsDateUtil.getAllDate4Week(CCDateUtil.makeCalendar
-                (selectedDate), CCNumberUtil.toInteger(prefAccUtil.getSetting
-                ().CL_START_DAY_IN_WEEK));
-
-
         initCalendarView();
     }
 
@@ -151,7 +145,7 @@ public class SchedulesPageFragment extends WelfareFragment implements
 
     protected void initDayViews() {
         WeeklyCalendarHeaderRowView rowView = null;
-        List<Date> dates = getCalendarDates();
+        dates = getCalendarDates();
         for (int index = 0; index < dates.size(); index++) {
             Date date = dates.get(index);
             if (index % CsConst.DAY_NUMBER_A_WEEK == 0) {
@@ -185,7 +179,27 @@ public class SchedulesPageFragment extends WelfareFragment implements
     }
 
     protected JSONObject prepareJsonObject() {
-        return null;
+        String targetUserList = getTargetUserList();
+
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("targetUserList", targetUserList);
+//            jsonObject.put("searchDateString", CCFormatUtil.formatDateCustom
+//                    (WelfareConst.WL_DATE_TIME_7, selectedDate));
+            jsonObject.put("calendars", prefAccUtil.get(ClConst
+                    .SELECTED_CALENDAR_STRING));
+
+
+            jsonObject.put("startDateString", CCFormatUtil.formatDateCustom
+                    (WelfareConst.WL_DATE_TIME_7, dates.get(0)));
+            jsonObject.put("endDateString", CCFormatUtil.formatDateCustom
+                    (WelfareConst.WL_DATE_TIME_7, dates.get(dates.size() - 1)));
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return jsonObject;
     }
 
 
@@ -228,7 +242,7 @@ public class SchedulesPageFragment extends WelfareFragment implements
         observableListView.setSelection(selectedPosition);
     }
 
-    private void updateDayViews(WeeklyCalendarDayView dayView) {
+    protected void updateDayViews(WeeklyCalendarDayView dayView) {
         for (WeeklyCalendarDayView view : calendarDayViews) {
             if (CCDateUtil.compareDate(dayView.getDate(), view.getDate(),
                     false) == 0) {
@@ -244,7 +258,7 @@ public class SchedulesPageFragment extends WelfareFragment implements
         super.onActivityCreated(savedInstanceState);
         if (pageSharingHolder.navigationHeader.isUpdated) {
             String title = CCFormatUtil.formatDateCustom(WelfareConst
-                    .WL_DATE_TIME_12, this.week.get(0));
+                    .WL_DATE_TIME_12, dates.get(0));
             List<String> selectedCalendarIds = Arrays.asList(prefAccUtil.get
                     (ClConst.SELECTED_CALENDAR_STRING).split(","));
             int selectedCalendarSize = selectedCalendarIds.size();
@@ -257,8 +271,8 @@ public class SchedulesPageFragment extends WelfareFragment implements
         }
     }
 
-    private void onLoadSchedulesSuccess(JSONObject response) {
-        List<ScheduleModel> schedules = CCJsonUtil.convertToModelList
+    protected void onLoadSchedulesSuccess(JSONObject response) {
+        schedules = CCJsonUtil.convertToModelList
                 (response.optString("schedules"), ScheduleModel.class);
         separateDateTime(schedules);
         List<ApiObjectModel> categories = CCJsonUtil.convertToModelList
@@ -284,8 +298,14 @@ public class SchedulesPageFragment extends WelfareFragment implements
             pageSharingHolder.updateFilter(calendarUsers);
         }
 
+        updateObservableListView();
+
+    }
+
+    protected void updateObservableListView() {
+        List<CalendarDayModel> displayedModels = getDisplayedDayForList();
         adapter = new CalendarDayListAdapter(activity, R.layout
-                .item_calendar_day, calendarDayModels, new
+                .item_calendar_day, displayedModels, new
                 CalendarDayListAdapter.OnScheduleClickListener() {
 
                     @Override
@@ -294,7 +314,6 @@ public class SchedulesPageFragment extends WelfareFragment implements
                     }
                 });
         observableListView.setAdapter(adapter);
-
     }
 
     protected String getCalendarName(String calendarId) {
@@ -440,5 +459,9 @@ public class SchedulesPageFragment extends WelfareFragment implements
 
     public void setPageSharingHolder(PageSharingHolder pageSharingHolder) {
         this.pageSharingHolder = pageSharingHolder;
+    }
+
+    protected List<CalendarDayModel> getDisplayedDayForList() {
+        return calendarDayModels;
     }
 }

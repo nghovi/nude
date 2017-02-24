@@ -1,7 +1,9 @@
 <LinearLayout
     style="@style/cs_common_match_wrap"
-    android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical">
+
+    <include layout="@layout/view_day_shift_time"/>
 
     <LinearLayout
         android:id="@+id/lnr_calendar_container"

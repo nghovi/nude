@@ -99,7 +99,7 @@ public class WeeklyCalendarDayView extends LinearLayout {
     public void setSelected(boolean selected) {
         if (selected) {
             //// TODO: 2/23/2017 why setBackgroundResource doesn't work
-            txtContent.setTextColor(Color.WHITE);
+            txtContent.setTextColor(Color.YELLOW);
             txtContent.setBackgroundResource(R.drawable
                     .circle_background_selected);
         } else {
