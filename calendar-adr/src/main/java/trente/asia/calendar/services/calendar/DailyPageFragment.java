@@ -12,6 +12,7 @@ import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -79,10 +80,17 @@ public class DailyPageFragment extends SchedulesPageFragment implements
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("targetUserList", targetUserList);
-            jsonObject.put("searchDateString", CCFormatUtil.formatDateCustom
-                    (WelfareConst.WL_DATE_TIME_7, selectedDate));
+//            jsonObject.put("searchDateString", CCFormatUtil.formatDateCustom
+//                    (WelfareConst.WL_DATE_TIME_7, selectedDate));
             jsonObject.put("calendars", prefAccUtil.get(ClConst
                     .SELECTED_CALENDAR_STRING));
+
+
+            jsonObject.put("startDateString", CCFormatUtil.formatDateCustom
+                    (WelfareConst.WL_DATE_TIME_7, selectedDate));
+            jsonObject.put("endDateString", CCFormatUtil.formatDateCustom
+                    (WelfareConst.WL_DATE_TIME_7, selectedDate));
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -92,7 +100,8 @@ public class DailyPageFragment extends SchedulesPageFragment implements
 
     @Override
     protected String getApi() {
-        return WfUrlConst.WF_CL_SCHEDULE_DAY_LIST;
+        //// TODO: 2/23/2017
+        return WfUrlConst.WF_CL_WEEK_SCHEDULE;
     }
 
 

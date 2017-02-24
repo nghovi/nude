@@ -41,6 +41,7 @@ import trente.asia.calendar.commons.dialogs.ClFilterUserListDialog;
 import trente.asia.calendar.commons.views.UserListLinearLayout;
 import trente.asia.calendar.services.calendar.model.CalendarDayModel;
 import trente.asia.calendar.services.calendar.model.CalendarModel;
+import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.view.CalendarDayListAdapter;
 import trente.asia.calendar.services.calendar.view.CalendarView;
@@ -78,6 +79,7 @@ public class SchedulesPageFragment extends WelfareFragment implements
     protected List<CalendarModel> calendars;
     protected List<WeeklyCalendarDayView> calendarDayViews = new ArrayList<>();
     protected PageSharingHolder pageSharingHolder;
+    protected List<HolidayModel> holidayModels;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -219,9 +221,22 @@ public class SchedulesPageFragment extends WelfareFragment implements
     }
 
     @Override
-    public void onClick(CalendarDayModel calendarDayModel) {
-        int selectedPosition = adapter.findPosition4Code(calendarDayModel.date);
+    public void onDayClick(WeeklyCalendarDayView dayView) {
+        updateDayViews(dayView);
+        int selectedPosition = adapter.findPosition4Code(dayView
+                .calendarDayModel.date);
         observableListView.setSelection(selectedPosition);
+    }
+
+    private void updateDayViews(WeeklyCalendarDayView dayView) {
+        for (WeeklyCalendarDayView view : calendarDayViews) {
+            if (CCDateUtil.compareDate(dayView.getDate(), view.getDate(),
+                    false) == 0) {
+                dayView.setSelected(true);
+            } else {
+                dayView.setSelected(false);
+            }
+        }
     }
 
     @Override
@@ -255,12 +270,14 @@ public class SchedulesPageFragment extends WelfareFragment implements
         filteredUsers = initFilteredUser(calendarUsers);
         updateSchedules(schedules, categories);
         calendarDayModels = buildCalendarDayModels(schedules);
+        holidayModels = CCJsonUtil.convertToModelList(response.optString
+                ("holidayList"), HolidayModel.class);
 
         // clear old data
         for (WeeklyCalendarDayView dayView : calendarDayViews) {
             CalendarDayModel calendarDayModel = getCalendarDayModelByDate
                     (dayView.getDate(), calendarDayModels);
-            dayView.setData(calendarDayModel, this);
+            dayView.setData(calendarDayModel, this, holidayModels);
         }
 
         if (!CCCollectionUtil.isEmpty(calendarUsers)) {

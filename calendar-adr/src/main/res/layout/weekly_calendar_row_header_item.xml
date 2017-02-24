@@ -25,5 +25,6 @@
         android:layout_marginTop="@dimen/margin_10dp"
         android:gravity="center"
         android:text="&#8226;"
-        android:textStyle="normal|bold"/>
+        android:textStyle="normal|bold"
+        android:visibility="gone"/>
 </RelativeLayout>
