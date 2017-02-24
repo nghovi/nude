@@ -1,5 +1,9 @@
 package trente.asia.calendar.services.calendar.model;
 
+import java.util.List;
+
+import trente.asia.welfare.adr.models.UserModel;
+
 /**
  * ScheduleModel
  *
@@ -28,6 +32,7 @@ public class ScheduleModel{
 	public String			categoryName;
 	public Boolean			isDayPeriod;
 	public Boolean			isRepeat;
+	public List<UserModel>	scheduleJoinUsers;
 
 	public ScheduleModel(){
 
@@ -39,6 +44,6 @@ public class ScheduleModel{
 		this.endDate = holidayModel.endDate;
 		// pink color
 		this.scheduleColor = "D22DB6";
-        this.isDayPeriod = true;
+		this.isDayPeriod = true;
 	}
 }

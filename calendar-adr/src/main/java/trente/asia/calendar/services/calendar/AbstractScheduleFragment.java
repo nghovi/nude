@@ -3,6 +3,7 @@ package trente.asia.calendar.services.calendar;
 import static trente.asia.welfare.adr.utils.WelfareFormatUtil.convertList2Map;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.json.JSONException;
@@ -18,6 +19,7 @@ import android.widget.ImageView;
 
 import asia.chiase.core.util.CCBooleanUtil;
 import asia.chiase.core.util.CCCollectionUtil;
+import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.view.ChiaseTextView;
@@ -25,12 +27,16 @@ import trente.asia.android.view.util.CAObjectSerializeUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.fragments.AbstractClFragment;
+import trente.asia.calendar.commons.utils.ClUtil;
 import trente.asia.calendar.commons.views.UserListLinearLayout;
 import trente.asia.calendar.services.calendar.model.CalendarModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
+import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.models.ApiObjectModel;
 import trente.asia.welfare.adr.models.UserModel;
+import trente.asia.welfare.adr.utils.WelfareFormatUtil;
+import trente.asia.welfare.adr.utils.WelfareUtil;
 
 /**
  * AbstractScheduleFragment
@@ -119,15 +125,23 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 		}
 
 		if(!CCStringUtil.isEmpty(schedule.key)){
-			txtRoom.setText(convertList2Map(rooms).get(Integer.parseInt(schedule.roomId)));
-			txtRoom.setValue(schedule.roomId);
-			txtCalendar.setText(convertList2Map(getCalendarHolders(calendars)).get(Integer.parseInt(schedule.calendarId)));
-			txtCalendar.setValue(schedule.calendarId);
-			txtCategory.setValue(schedule.categoryId);
+            txtRoom.setText(WelfareUtil.findApiObject4Id(rooms, schedule.roomId).value);
+            txtCalendar.setText(schedule.calendar.calendarName);
+            swtAllDay.setChecked(CCBooleanUtil.checkBoolean(schedule.isDayPeriod));
+
+            txtCategory.setText(WelfareUtil.findApiObject4Id(categories, schedule.categoryId).value);
 			if(!CCStringUtil.isEmpty(schedule.categoryId)){
 				txtCategory.setTextColor(Color.parseColor("#" + schedule.categoryId));
 			}
-			txtCategory.setText(convertList2Map(categories).get(schedule.categoryId));
+            lnrUserList.show(schedule.scheduleJoinUsers, (int)getResources().getDimension(R.dimen.margin_30dp));
+
+//            set time
+            Date startDate = WelfareUtil.makeDate(schedule.startDate);
+            Date endDate = WelfareUtil.makeDate(schedule.endDate);
+            txtStartDate.setText(WelfareFormatUtil.formatDate(startDate));
+            txtStartTime.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_9, startDate));
+            txtEndDate.setText(WelfareFormatUtil.formatDate(endDate));
+            txtEndTime.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_9, endDate));
 		}
 	}
 

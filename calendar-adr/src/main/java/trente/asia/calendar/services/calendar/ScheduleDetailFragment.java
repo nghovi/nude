@@ -50,16 +50,9 @@ public class ScheduleDetailFragment extends AbstractScheduleFragment{
 	protected void onLoadScheduleDetailSuccess(JSONObject response){
 		super.onLoadScheduleDetailSuccess(response);
 
-		txtCalendar.setText(schedule.calendar.calendarName);
 		txtScheduleName.setText(schedule.scheduleName);
-		txtRoom.setText(WelfareUtil.findApiObject4Id(rooms, schedule.roomId).value);
 		txtScheduleUrl.setText(schedule.scheduleUrl);
-		txtCategory.setText(WelfareUtil.findApiObject4Id(categories, schedule.categoryId).value);
         txtScheduleNote.setText(schedule.scheduleNote);
-        swtAllDay.setChecked(CCBooleanUtil.checkBoolean(schedule.isDayPeriod));
-
-		List<UserModel> joinUserList = ClUtil.getJoinedUserModels(schedule, schedule.calendar.calendarUsers);
-		lnrUserList.show(joinUserList, (int)getResources().getDimension(R.dimen.margin_30dp));
 
 		ImageView imgRightIcon = (ImageView)getView().findViewById(R.id.img_id_header_right_icon);
 		imgRightIcon.setImageResource(R.drawable.cl_action_edit);
