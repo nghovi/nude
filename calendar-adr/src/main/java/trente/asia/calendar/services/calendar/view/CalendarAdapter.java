@@ -69,15 +69,19 @@ public class CalendarAdapter extends ArrayAdapter<CalendarModel>{
 		final CalendarViewHolder holder = new CalendarViewHolder(convertView);
 
 		holder.txtName.setText(model.calendarName);
-		if(!CCStringUtil.isEmpty(model.imagePath)){
-			WfPicassoHelper.loadImage(mContext, BuildConfig.HOST + model.imagePath, holder.imgAvatar, null);
+		if(model.bitmap != null){
+			holder.imgAvatar.setImageBitmap(model.bitmap);
+		}else{
+			if(!CCStringUtil.isEmpty(model.imagePath)){
+				WfPicassoHelper.loadImage(mContext, BuildConfig.HOST + model.imagePath, holder.imgAvatar, null, model);
+			}
 		}
 
 		holder.lnrItem.setOnCheckedChangeListener(new CsOnCheckedChangeListener() {
 
 			@Override
 			public void onCheckedChanged(Checkable view, boolean isChecked){
-				(((ListView)parent)).setItemChecked(position, isChecked);
+//				(((ListView)parent)).setItemChecked(position, isChecked);
 				if(isChecked){
 					holder.imgCheck.setVisibility(View.VISIBLE);
 				}else{
@@ -105,7 +109,7 @@ public class CalendarAdapter extends ArrayAdapter<CalendarModel>{
 		return convertView;
 	}
 
-	public void buildItemLayout() {
+	public void buildItemLayout(){
 
 	}
 
