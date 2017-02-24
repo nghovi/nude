@@ -18,35 +18,35 @@ import trente.asia.welfare.adr.define.WelfareConst;
  * Created by viet on 2/21/2017.
  */
 
-public class NavigationHeader extends LinearLayout{
+public class NavigationHeader extends LinearLayout {
 
-	public boolean	isUpdated	= false;
 
-	public NavigationHeader(Context context){
-		super(context);
-	}
+    public NavigationHeader(Context context) {
+        super(context);
+    }
 
-	public NavigationHeader(Context context, AttributeSet attrs){
-		super(context, attrs);
-	}
+    public NavigationHeader(Context context, AttributeSet attrs) {
+        super(context, attrs);
+    }
 
-	public NavigationHeader(Context context, AttributeSet attrs, int defStyleAttr){
-		super(context, attrs, defStyleAttr);
-	}
+    public NavigationHeader(Context context, AttributeSet attrs, int
+            defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+    }
 
-	private TextView	txtHeaderTitle;
-	private TextView	txtHeaderSubtitle;
+    private TextView txtHeaderTitle;
+    private TextView txtHeaderSubtitle;
 
-	public void updateHeaderTitles(String title, String subTitle){
-		if(txtHeaderTitle == null){
-			txtHeaderTitle = (TextView)findViewById(R.id.txt_id_header_title);
-		}
+    public void updateHeaderTitles(String title, String subTitle) {
+        if (txtHeaderTitle == null) {
+            txtHeaderTitle = (TextView) findViewById(R.id.txt_id_header_title);
+        }
 
-		if(txtHeaderSubtitle == null){
-			txtHeaderSubtitle = (TextView)findViewById(R.id.txt_id_header_title_sub);
-		}
+        if (txtHeaderSubtitle == null) {
+            txtHeaderSubtitle = (TextView) findViewById(R.id.txt_id_header_title_sub);
+        }
 
-		txtHeaderTitle.setText(title);
-		txtHeaderSubtitle.setText(subTitle);
-	}
+        txtHeaderTitle.setText(title);
+        txtHeaderSubtitle.setText(subTitle);
+    }
 }
