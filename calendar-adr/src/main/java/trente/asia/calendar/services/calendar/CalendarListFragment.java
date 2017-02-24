@@ -75,28 +75,29 @@ public class CalendarListFragment extends AbstractClFragment{
 		getView().findViewById(R.id.btn_id_my_calendar).setOnClickListener(this);
 		getView().findViewById(R.id.btn_id_all).setOnClickListener(this);
 		lnrMyCalendar = (MyCalendarLinearLayout)getView().findViewById(R.id.lnr_id_my_calendar);
-        lnrMyCalendar.initView();
-        lnrMyCalendar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                boolean isChecked = lnrMyCalendar.isChecked();
-                lnrMyCalendar.setChecked(!isChecked);
-            }
-        });
+		lnrMyCalendar.initView();
+		lnrMyCalendar.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v){
+				boolean isChecked = lnrMyCalendar.isChecked();
+				lnrMyCalendar.setChecked(!isChecked);
+			}
+		});
 		lnrMyCalendar.setOnCheckedChangeListener(new CsOnCheckedChangeListener() {
 
 			@Override
 			public void onCheckedChanged(Checkable view, boolean isChecked){
-				onClickCalendar(lstCalendar.get(0), !isChecked);
+				onClickCalendar(lstCalendar.get(0), isChecked);
 			}
 		});
 	}
 
 	private void onClickCalendar(CalendarModel calendarModel, boolean isChecked){
 		if(isChecked){
-			lstSelectedCalendar.remove(calendarModel);
-		}else{
 			lstSelectedCalendar.add(calendarModel);
+		}else{
+			lstSelectedCalendar.remove(calendarModel);
 		}
 		saveSelectedCalendarToPref();
 		if(changeCalendarListener != null){
@@ -157,9 +158,7 @@ public class CalendarListFragment extends AbstractClFragment{
 
 				for(CalendarModel calendarModel : lstSelectedCalendar){
 					int position = calendarAdapter.findPosition4Id(calendarModel.key);
-					if(position > 0){
-						lvCalendar.setItemChecked(position, true);
-					}
+					lvCalendar.setItemChecked(position, true);
 				}
 			}
 			if(lstSelectedCalendar.contains(lstCalendar.get(0))){
@@ -236,13 +235,13 @@ public class CalendarListFragment extends AbstractClFragment{
 		prefAccUtil.set(ClConst.SELECTED_CALENDAR_STRING, selectedCalendarIds);
 	}
 
-    private String getSelectedCalendarIds(){
-        List<String> selectedCalendarIds = new ArrayList<>();
-        for(CalendarModel calendarModel : lstSelectedCalendar){
-            selectedCalendarIds.add(calendarModel.key);
-        }
-        return TextUtils.join(",", selectedCalendarIds);
-    }
+	private String getSelectedCalendarIds(){
+		List<String> selectedCalendarIds = new ArrayList<>();
+		for(CalendarModel calendarModel : lstSelectedCalendar){
+			selectedCalendarIds.add(calendarModel.key);
+		}
+		return TextUtils.join(",", selectedCalendarIds);
+	}
 
 	@Override
 	public void onDestroy(){
