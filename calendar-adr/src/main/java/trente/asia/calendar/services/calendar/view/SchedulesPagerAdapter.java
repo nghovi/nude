@@ -1,18 +1,13 @@
 package trente.asia.calendar.services.calendar.view;
 
-import java.util.Calendar;
-import java.util.Date;
-
-import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import trente.asia.android.util.CsDateUtil;
-import trente.asia.calendar.services.calendar.CalendarListFragment;
+import java.util.Calendar;
+import java.util.Date;
+
 import trente.asia.calendar.services.calendar.SchedulesPageFragment;
-import trente.asia.calendar.services.calendar.WeeklyPageFragment;
-import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
 
 /**
  * SchedulesPagerAdapter
@@ -21,10 +16,10 @@ import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
  */
 public class SchedulesPagerAdapter extends FragmentPagerAdapter {
 
-    private final int ACTIVE_PAGE = Integer.MAX_VALUE / 2;
-    private final Date TODAY = Calendar.getInstance().getTime();
-    private NavigationHeader navigationHeader;
-    private PageSharingHolder pageSharingHolder;
+    protected final Date TODAY = Calendar.getInstance().getTime();
+    protected NavigationHeader navigationHeader;
+    protected PageSharingHolder pageSharingHolder;
+    protected int initialPosition;
 
     public SchedulesPagerAdapter(FragmentManager fm) {
         super(fm);
@@ -32,11 +27,16 @@ public class SchedulesPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        Date activeDate = CsDateUtil.addWeek(TODAY, position - ACTIVE_PAGE);
+        Date selectedDate = choseSelectedDate(position);
         SchedulesPageFragment fragment = getFragment();
         fragment.setPageSharingHolder(this.pageSharingHolder);
-        fragment.setSelectedDate(activeDate);
+        fragment.setSelectedDate(selectedDate);
+        fragment.setPagePosition(position);
         return fragment;
+    }
+
+    protected Date choseSelectedDate(int position) {
+        return TODAY;
     }
 
     protected SchedulesPageFragment getFragment() {
@@ -57,5 +57,9 @@ public class SchedulesPagerAdapter extends FragmentPagerAdapter {
 
     public void setPageSharingHolder(PageSharingHolder pageSharingHolder) {
         this.pageSharingHolder = pageSharingHolder;
+    }
+
+    public void setInitialPosition(int initialPosition) {
+        this.initialPosition = initialPosition;
     }
 }

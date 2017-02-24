@@ -32,7 +32,7 @@ public class PageContainerFragment extends AbstractClFragment {
     protected SchedulesPagerAdapter mPagerAdapter;
     protected WfSlideMenuLayout mSlideMenuLayout;
 
-    protected final int ACTIVE_PAGE = Integer.MAX_VALUE / 2;
+    protected final int INITIAL_POSITION = Integer.MAX_VALUE / 2;
     protected final Date TODAY = Calendar.getInstance().getTime();
 
     protected ImageView mImgLeftHeader;
@@ -61,13 +61,15 @@ public class PageContainerFragment extends AbstractClFragment {
                 .img_id_header_left_icon);
         mViewPager = (ViewPager) getView().findViewById(R.id.pager);
         mPagerAdapter = initPagerAdapter();
-        PageSharingHolder holder = new PageSharingHolder(navigationHeader,
+        final PageSharingHolder holder = new PageSharingHolder(navigationHeader,
                 userListLinearLayout);
         mPagerAdapter.setPageSharingHolder(holder);
+        mPagerAdapter.setInitialPosition(INITIAL_POSITION);
         mViewPager.setAdapter(mPagerAdapter);
-        mViewPager.setCurrentItem(ACTIVE_PAGE);
+        mViewPager.setCurrentItem(INITIAL_POSITION);
+        holder.selectedPagePosition = INITIAL_POSITION;
         prefAccUtil.saveActiveDate(TODAY);
-        setActiveDate(ACTIVE_PAGE);
+        setActiveDate(INITIAL_POSITION);
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener
                 () {
@@ -81,7 +83,7 @@ public class PageContainerFragment extends AbstractClFragment {
 
             public void onPageSelected(int position) {
                 setActiveDate(position);
-                navigationHeader.isUpdated = false;
+                holder.selectedPagePosition = position;
             }
         });
 
@@ -101,7 +103,8 @@ public class PageContainerFragment extends AbstractClFragment {
     }
 
     private Date setActiveDate(int position) {
-        Date activeDate = CsDateUtil.addWeek(TODAY, position - ACTIVE_PAGE);
+        Date activeDate = CsDateUtil.addWeek(TODAY, position -
+                INITIAL_POSITION);
         prefAccUtil.saveActiveDate(activeDate);
         return activeDate;
     }

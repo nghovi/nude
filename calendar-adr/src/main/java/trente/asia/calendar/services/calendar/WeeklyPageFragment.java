@@ -15,7 +15,6 @@ import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCNumberUtil;
 import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.R;
-import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.services.calendar.view.CalendarView;
 import trente.asia.calendar.services.calendar.view.WeeklyCalendarDayView;
 import trente.asia.welfare.adr.define.WfUrlConst;

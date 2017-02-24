@@ -79,11 +79,32 @@ public class SchedulesPageFragment extends WelfareFragment implements
     protected PageSharingHolder pageSharingHolder;
     protected List<HolidayModel> holidayModels;
     protected List<ScheduleModel> schedules;
+    protected int pagePosition;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         host = BuildConfig.HOST;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        updateHeaderTitles();
+    }
+
+    private void updateHeaderTitles() {
+        if (pagePosition == pageSharingHolder.selectedPagePosition) {
+            String title = getUpperTitle();
+            List<String> selectedCalendarIds = Arrays.asList(prefAccUtil.get
+                    (ClConst.SELECTED_CALENDAR_STRING).split(","));
+            int selectedCalendarSize = selectedCalendarIds.size();
+            String subtitle = selectedCalendarSize > 1 ? selectedCalendarSize
+                    + " calendars" : getCalendarName(selectedCalendarIds.get
+                    (0));
+            pageSharingHolder.navigationHeader.updateHeaderTitles(title,
+                    subtitle);
+        }
     }
 
     @Override
@@ -253,23 +274,6 @@ public class SchedulesPageFragment extends WelfareFragment implements
         }
     }
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        if (pageSharingHolder.navigationHeader.isUpdated) {
-            String title = CCFormatUtil.formatDateCustom(WelfareConst
-                    .WL_DATE_TIME_12, dates.get(0));
-            List<String> selectedCalendarIds = Arrays.asList(prefAccUtil.get
-                    (ClConst.SELECTED_CALENDAR_STRING).split(","));
-            int selectedCalendarSize = selectedCalendarIds.size();
-            String subtitle = selectedCalendarSize > 1 ? selectedCalendarSize
-                    + " calendars" : getCalendarName(selectedCalendarIds.get
-                    (0));
-            pageSharingHolder.navigationHeader.updateHeaderTitles(title,
-                    subtitle);
-            pageSharingHolder.navigationHeader.isUpdated = true;
-        }
-    }
 
     protected void onLoadSchedulesSuccess(JSONObject response) {
         schedules = CCJsonUtil.convertToModelList
@@ -372,9 +376,7 @@ public class SchedulesPageFragment extends WelfareFragment implements
                     }
                 };
 
-        Collections.sort(calendarDayModels, comparator); // use the
-        // comparator as much as u want
-
+        Collections.sort(calendarDayModels, comparator);
         return calendarDayModels;
     }
 
@@ -463,5 +465,14 @@ public class SchedulesPageFragment extends WelfareFragment implements
 
     protected List<CalendarDayModel> getDisplayedDayForList() {
         return calendarDayModels;
+    }
+
+    protected String getUpperTitle() {
+        return CCFormatUtil.formatDateCustom(WelfareConst
+                .WL_DATE_TIME_12, dates.get(0));
+    }
+
+    public void setPagePosition(int pagePosition) {
+        this.pagePosition = pagePosition;
     }
 }

@@ -16,6 +16,7 @@ import java.util.Date;
 import java.util.List;
 
 import asia.chiase.core.util.CCDateUtil;
+import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCNumberUtil;
 import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.R;
@@ -25,6 +26,7 @@ import trente.asia.calendar.services.calendar.listener
 import trente.asia.calendar.services.calendar.model.CalendarDayModel;
 import trente.asia.calendar.services.calendar.view.ViewDayShiftTime;
 import trente.asia.calendar.services.calendar.view.WeeklyCalendarDayView;
+import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.define.WfUrlConst;
 
 /**
@@ -38,7 +40,6 @@ public class DailyPageFragment extends SchedulesPageFragment implements
 
     private ClDialog dialogScheduleList;
     private ViewDayShiftTime viewDayShiftTime;
-    LayoutInflater mInflater;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -120,6 +121,11 @@ public class DailyPageFragment extends SchedulesPageFragment implements
         } else if (scrollState == ScrollState.DOWN) {
             lnrDaysContainer.setVisibility(View.VISIBLE);
         }
+    }
+
+    protected String getUpperTitle() {
+        return CCFormatUtil.formatDateCustom(WelfareConst
+                .WL_DATE_TIME_12, selectedDate);
     }
 
 }
