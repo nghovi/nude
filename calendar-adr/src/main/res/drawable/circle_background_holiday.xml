@@ -5,6 +5,6 @@
     <solid android:color="@color/cl_circle_bg_holiday"/>
 
     <size
-        android:width="@dimen/margin_16dp"
-        android:height="@dimen/margin_16dp"/>
+        android:width="@dimen/margin_18dp"
+        android:height="@dimen/margin_18dp"/>
 </shape>

@@ -9,26 +9,22 @@ import com.github.ksoichiro.android.observablescrollview
         .ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Calendar;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import asia.chiase.core.util.CCDateUtil;
-import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCNumberUtil;
-import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.util.CsDateUtil;
-import trente.asia.calendar.BuildConfig;
 import trente.asia.calendar.R;
-import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.dialogs.ClDialog;
 import trente.asia.calendar.services.calendar.listener
         .DailyScheduleClickListener;
+import trente.asia.calendar.services.calendar.model.CalendarDayModel;
+import trente.asia.calendar.services.calendar.view.ViewDayShiftTime;
 import trente.asia.calendar.services.calendar.view.WeeklyCalendarDayView;
-import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.define.WfUrlConst;
 
 /**
@@ -41,6 +37,7 @@ public class DailyPageFragment extends SchedulesPageFragment implements
         WeeklyCalendarDayView.OnDayClickListener {
 
     private ClDialog dialogScheduleList;
+    private ViewDayShiftTime viewDayShiftTime;
     LayoutInflater mInflater;
 
     @Override
@@ -56,7 +53,19 @@ public class DailyPageFragment extends SchedulesPageFragment implements
     @Override
     protected void initView() {
         super.initView();
+        viewDayShiftTime = (ViewDayShiftTime) getView().findViewById(R.id
+                .view_day_shift_time);
         initDialog();
+    }
+
+    @Override
+    protected void onLoadSchedulesSuccess(JSONObject response) {
+        super.onLoadSchedulesSuccess(response);
+        CalendarDayModel calendarDayModel = getCalendarDayModelByDate
+                (selectedDate, calendarDayModels);
+        if (calendarDayModel != null) {
+            viewDayShiftTime.showCategoriesSigns(calendarDayModel);
+        }
     }
 
     private void initDialog() {
@@ -74,28 +83,22 @@ public class DailyPageFragment extends SchedulesPageFragment implements
     }
 
     @Override
-    protected JSONObject prepareJsonObject() {
-        String targetUserList = getTargetUserList();
+    public void onDayClick(WeeklyCalendarDayView dayView) {
+        selectedDate = dayView.getDate();
+        updateDayViews(dayView);
+        updateObservableListView();
+    }
 
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("targetUserList", targetUserList);
-//            jsonObject.put("searchDateString", CCFormatUtil.formatDateCustom
-//                    (WelfareConst.WL_DATE_TIME_7, selectedDate));
-            jsonObject.put("calendars", prefAccUtil.get(ClConst
-                    .SELECTED_CALENDAR_STRING));
-
-
-            jsonObject.put("startDateString", CCFormatUtil.formatDateCustom
-                    (WelfareConst.WL_DATE_TIME_7, selectedDate));
-            jsonObject.put("endDateString", CCFormatUtil.formatDateCustom
-                    (WelfareConst.WL_DATE_TIME_7, selectedDate));
-
-        } catch (JSONException e) {
-            e.printStackTrace();
+    //Display schedules for selected day only
+    @Override
+    protected List<CalendarDayModel> getDisplayedDayForList() {
+        List<CalendarDayModel> result = new ArrayList<>();
+        CalendarDayModel calendarDayModel = getCalendarDayModelByDate
+                (selectedDate, calendarDayModels);
+        if (calendarDayModel != null) {
+            result.add(calendarDayModel);
         }
-
-        return jsonObject;
+        return result;
     }
 
     @Override
