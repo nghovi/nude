@@ -18,9 +18,11 @@
     <string name="dlr_wed">Wed</string>
     <string name="dlr_thu">Thu</string>
     <string name="dlr_fri">Fri</string>
+
     <string name="fragment_schedule_detail_day_period">Day period</string>
     <string name="fragment_schedule_detail_repeat">Repeat</string>
     <string name="fragment_schedule_form_title">New schedule</string>
+    <string name="fragment_schedule_detail_title">Schedule detail</string>
     <string name="cl_schedule_form_all_day">All day</string>
     <string name="cl_schedule_form_repeat">Repeat</string>
     <string name="cl_schedule_form_schedule_info_title">Schedule information</string>

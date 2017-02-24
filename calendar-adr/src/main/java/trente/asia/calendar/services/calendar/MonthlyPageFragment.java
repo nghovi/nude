@@ -199,7 +199,7 @@ public class MonthlyPageFragment extends AbstractClFragment implements DailySche
 		try{
 			// jsonObject.put("targetUserList", prefAccUtil.get(ClConst.PREF_ACTIVE_USER_LIST));
 			jsonObject.put("targetUserList", "");
-			jsonObject.put("targetMonth", CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_5, activeMonth));
+//			jsonObject.put("targetMonth", CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_5, activeMonth));
 			jsonObject.put("calendars", prefAccUtil.get(ClConst.SELECTED_CALENDAR_STRING));
 			jsonObject.put("startDateString", WelfareFormatUtil.formatDate(lstDate4Month.get(0)));
 			jsonObject.put("endDateString", WelfareFormatUtil.formatDate(lstDate4Month.get(lstDate4Month.size() - 1)));

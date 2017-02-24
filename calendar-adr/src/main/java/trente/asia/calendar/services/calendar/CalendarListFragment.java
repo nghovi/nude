@@ -67,8 +67,8 @@ public class CalendarListFragment extends AbstractClFragment{
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id){
 				CalendarModel calendarModel = (CalendarModel)parent.getItemAtPosition(position);
-				boolean isCheck = getCheckedStatus(position);
-				onClickCalendar(calendarModel, isCheck);
+				boolean isChecked = getCheckedStatus(position);
+				onClickCalendar(calendarModel, !isChecked);
 			}
 		});
 
@@ -106,7 +106,7 @@ public class CalendarListFragment extends AbstractClFragment{
 	}
 
 	private boolean getCheckedStatus(int position){
-		CalendarModel calendarModel = lstCalendar.get(position);
+		CalendarModel calendarModel = lstCalendarWithoutMyCalendar.get(position);
 		for(CalendarModel calendar : lstSelectedCalendar){
 			if(calendar.key.equals(calendarModel.key)){
 				return true;

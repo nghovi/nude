@@ -106,14 +106,14 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 		calendarHolders = getCalendarHolders(calendars);
 		categories = CCJsonUtil.convertToModelList(response.optString("categories"), ApiObjectModel.class);
 
-		inflateWithData((ViewGroup)getView(), txtRoom, txtCalendar, txtCategory, rooms, calendars, categories, schedule);
+		inflateWithData(txtRoom, txtCalendar, txtCategory, rooms, calendars, categories, schedule);
 	}
 
-	protected void inflateWithData(ViewGroup view, ChiaseTextView txtRoom, ChiaseTextView txtCalendar, ChiaseTextView txtCategory, List<ApiObjectModel> rooms, List<CalendarModel> calendars, List<ApiObjectModel> categories, ScheduleModel schedule){
+	protected void inflateWithData(ChiaseTextView txtRoom, ChiaseTextView txtCalendar, ChiaseTextView txtCategory, List<ApiObjectModel> rooms, List<CalendarModel> calendars, List<ApiObjectModel> categories, ScheduleModel schedule){
 
 		try{
 			Gson gson = new Gson();
-			CAObjectSerializeUtil.deserializeObject((ViewGroup)view.findViewById(R.id.lnr_id_content), new JSONObject(gson.toJson(schedule)));
+			CAObjectSerializeUtil.deserializeObject((ViewGroup)getView().findViewById(R.id.lnr_id_content), new JSONObject(gson.toJson(schedule)));
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
