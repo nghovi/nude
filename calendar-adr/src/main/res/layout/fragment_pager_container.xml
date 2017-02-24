@@ -9,8 +9,7 @@
         android:orientation="vertical"/>
 
     <LinearLayout
-        style="@style/wf_common_match"
-        android:background="@color/chiase_white">
+        style="@style/wf_common_match">
 
         <include layout="@layout/view_navigation_header"/>
 
