@@ -10,7 +10,7 @@ public class ScheduleModel{
 
 	public String			scheduleName;
 	public String			scheduleNote;
-	public String			url;
+	public String			scheduleUrl;
 	public String			scheduleColor;
 	public String			startDate;
 	public String			endDate;

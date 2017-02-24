@@ -11,9 +11,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import asia.chiase.core.util.CCBooleanUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.utils.ClUtil;
 import trente.asia.welfare.adr.models.UserModel;
+import trente.asia.welfare.adr.utils.WelfareUtil;
 
 /**
  * ScheduleDetailFragment
@@ -22,7 +24,9 @@ import trente.asia.welfare.adr.models.UserModel;
  */
 public class ScheduleDetailFragment extends AbstractScheduleFragment{
 
-	private TextView txtScheduleName;
+	private TextView	txtScheduleName;
+	private TextView	txtScheduleUrl;
+    private TextView	txtScheduleNote;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -38,14 +42,22 @@ public class ScheduleDetailFragment extends AbstractScheduleFragment{
 		initHeader(R.drawable.wf_back_white, getString(R.string.fragment_schedule_detail_title), null);
 
 		txtScheduleName = (TextView)getView().findViewById(R.id.txt_id_schedule_name);
+		txtScheduleUrl = (TextView)getView().findViewById(R.id.txt_id_schedule_url);
+        txtScheduleNote = (TextView)getView().findViewById(R.id.txt_id_schedule_note);
 	}
 
 	@Override
 	protected void onLoadScheduleDetailSuccess(JSONObject response){
 		super.onLoadScheduleDetailSuccess(response);
 
+		txtCalendar.setText(schedule.calendar.calendarName);
 		txtScheduleName.setText(schedule.scheduleName);
-//        txtCategory.setText(schedule.ca);
+		txtRoom.setText(WelfareUtil.findApiObject4Id(rooms, schedule.roomId).value);
+		txtScheduleUrl.setText(schedule.scheduleUrl);
+		txtCategory.setText(WelfareUtil.findApiObject4Id(categories, schedule.categoryId).value);
+        txtScheduleNote.setText(schedule.scheduleNote);
+        swtAllDay.setChecked(CCBooleanUtil.checkBoolean(schedule.isDayPeriod));
+
 		List<UserModel> joinUserList = ClUtil.getJoinedUserModels(schedule, schedule.calendar.calendarUsers);
 		lnrUserList.show(joinUserList, (int)getResources().getDimension(R.dimen.margin_30dp));
 

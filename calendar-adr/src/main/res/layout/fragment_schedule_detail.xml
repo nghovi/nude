@@ -165,7 +165,7 @@
                     android:text="@string/cl_schedule_form_item_url"/>
 
                 <trente.asia.android.view.ChiaseTextView
-                    android:id="@+id/txt_id_url"
+                    android:id="@+id/txt_id_schedule_url"
                     style="@style/wl_common_edit_text2"
                     android:layout_marginLeft="@dimen/margin_10dp"
                     custom:mName="scheduleUrl"/>
@@ -229,6 +229,7 @@
                 android:orientation="vertical">
 
                 <trente.asia.android.view.ChiaseTextView
+                    android:id="@+id/txt_id_schedule_note"
                     style="@style/wl_common_text"
                     custom:mName="scheduleNote"/>
             </LinearLayout>

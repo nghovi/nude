@@ -37,6 +37,7 @@ import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.util.AndroidUtil;
 import trente.asia.welfare.adr.R;
 import trente.asia.welfare.adr.define.WelfareConst;
+import trente.asia.welfare.adr.models.ApiObjectModel;
 import trente.asia.welfare.adr.models.DeptModel;
 import trente.asia.welfare.adr.models.UserModel;
 
@@ -412,6 +413,19 @@ public class WelfareUtil{
         lstCd.add(WelfareConst.WF_CONTACT_PROBLEM);
         lstCd.add(WelfareConst.WF_CONTACT_IMPROVE);
         return lstCd;
+    }
+
+    public static ApiObjectModel findApiObject4Id(List<ApiObjectModel> lstObject, String key){
+        ApiObjectModel apiObjectModel = null;
+        if(!CCCollectionUtil.isEmpty(lstObject)){
+            for(ApiObjectModel model : lstObject){
+                if(model.key.equals(key)){
+                    apiObjectModel = model;
+                    break;
+                }
+            }
+        }
+        return apiObjectModel;
     }
 
 	public static int dpToPx(int dp){
