@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
 
@@ -82,6 +83,20 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 		txtStartTime.setOnClickListener(this);
 		txtEndTime.setOnClickListener(this);
 		lnrUserList.setOnClickListener(this);
+
+		swtAllDay.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked){
+				if(isChecked){
+					txtStartTime.setVisibility(View.INVISIBLE);
+					txtEndTime.setVisibility(View.INVISIBLE);
+				}else{
+					txtStartTime.setVisibility(View.VISIBLE);
+					txtEndTime.setVisibility(View.VISIBLE);
+				}
+			}
+		});
 	}
 
 	private void buildDatePickerDialogs(ScheduleModel schedule){

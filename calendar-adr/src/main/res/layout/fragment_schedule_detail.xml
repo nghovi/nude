@@ -28,7 +28,8 @@
                 <android.support.v7.widget.SwitchCompat
                     android:id="@+id/swt_id_all_day"
                     style="@style/cs_common_wrap"
-                    android:theme="@style/wf_common_switch"/>
+                    android:theme="@style/wf_common_switch"
+                    android:clickable="false"/>
             </LinearLayout>
 
             <View style="@style/cs_common_divider"/>
