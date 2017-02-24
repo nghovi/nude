@@ -17,25 +17,29 @@ import trente.asia.android.listener.CsOnCheckedChangeListener;
  */
 public class CheckableLinearLayout extends LinearLayout implements Checkable{
 
+	protected Context					mContext;
 	protected boolean					isChecked;
 
 	protected List<Checkable>			checkableViews;
 
 	private final int[]					CHECKED_STATE_SET	= {android.R.attr.state_checked};
-	private CsOnCheckedChangeListener	mOnCheckedChangeListener;
+	protected CsOnCheckedChangeListener	mOnCheckedChangeListener;
 
 	public CheckableLinearLayout(Context context, AttributeSet attrs, int defStyle){
 		super(context, attrs, defStyle);
+		this.mContext = context;
 		initialise(attrs);
 	}
 
 	public CheckableLinearLayout(Context context, AttributeSet attrs){
 		super(context, attrs);
+		this.mContext = context;
 		initialise(attrs);
 	}
 
-	public CheckableLinearLayout(Context context, int checkableId){
+	public CheckableLinearLayout(Context context){
 		super(context);
+		this.mContext = context;
 		initialise(null);
 	}
 

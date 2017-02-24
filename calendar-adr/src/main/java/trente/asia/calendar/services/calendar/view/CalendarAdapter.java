@@ -72,7 +72,7 @@ public class CalendarAdapter extends ArrayAdapter<CalendarModel>{
 		if(!CCStringUtil.isEmpty(model.imagePath)){
 			WfPicassoHelper.loadImage(mContext, BuildConfig.HOST + model.imagePath, holder.imgAvatar, null);
 		}
-		// final View finalConvertView = convertView;
+
 		holder.lnrItem.setOnCheckedChangeListener(new CsOnCheckedChangeListener() {
 
 			@Override
@@ -114,7 +114,7 @@ public class CalendarAdapter extends ArrayAdapter<CalendarModel>{
 		this.notifyDataSetChanged();
 	}
 
-	public int findPosition4Code(String calendarId){
+	public int findPosition4Id(String calendarId){
 		int position = -1;
 		for(int i = 0; i < calendarList.size(); i++){
 			CalendarModel calendarModel = calendarList.get(i);

@@ -1,9 +1,53 @@
 <LinearLayout style="@style/cs_common_match"
               xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:custom="http://schemas.android.com/apk/res-auto"
               android:background="@color/wf_app_color_base"
               android:orientation="vertical">
 
-    <!--<include layout="@layout/item_calendar_list"/>-->
+    <trente.asia.calendar.commons.views.MyCalendarLinearLayout
+        android:id="@+id/lnr_id_my_calendar"
+        style="@style/cs_common_match_wrap"
+        android:background="@drawable/cl_state_common_selectable_row"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/margin_10dp">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <trente.asia.welfare.adr.view.SelectableRoundedImageView
+                android:id="@+id/img_id_my_avatar"
+                android:layout_width="@dimen/margin_50dp"
+                android:layout_height="@dimen/margin_50dp"
+                android:focusable="false"
+                android:scaleType="fitXY"
+                custom:sriv_oval="true"/>
+
+            <ImageView
+                android:id="@+id/img_id_my_calendar_checked"
+                android:layout_width="@dimen/margin_32dp"
+                android:layout_height="@dimen/margin_32dp"
+                android:layout_marginLeft="@dimen/margin_6dp"
+                android:src="@drawable/cs_row_check"
+                android:visibility="gone"/>
+        </RelativeLayout>
+
+        <LinearLayout
+            style="@style/cs_common_match_wrap"
+            android:layout_width="@dimen/margin_0dp"
+            android:layout_marginLeft="@dimen/margin_10dp"
+            android:layout_weight="1"
+            android:focusable="false"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txt_id_my_calendar_name"
+                style="@style/wl_common_text_single_line"
+                android:textColor="@color/chiase_white"/>
+
+        </LinearLayout>
+    </trente.asia.calendar.commons.views.MyCalendarLinearLayout>
 
     <ListView
         android:id="@+id/lsv_id_calendar"

@@ -22,13 +22,11 @@ import asia.chiase.core.util.CCNumberUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.R;
+import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.services.calendar.view.CalendarView;
 import trente.asia.calendar.services.calendar.view.WeeklyCalendarDayView;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.define.WfUrlConst;
-
-import static trente.asia.calendar.services.calendar.CalendarListFragment
-        .SELECTED_CALENDAR_STRING;
 
 /**
  * WeeklyPageFragment
@@ -60,7 +58,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements
         Calendar c = Calendar.getInstance();
         c.setTime(this.week.get(0));
 
-        String selectedCalendarStr = prefAccUtil.get(SELECTED_CALENDAR_STRING);
+        String selectedCalendarStr = prefAccUtil.get(ClConst.SELECTED_CALENDAR_STRING);
         String targetUserList = getTargetUserList();
         JSONObject jsonObject = new JSONObject();
         try {
