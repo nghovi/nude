@@ -112,7 +112,7 @@ public class MonthlyPageFragment extends AbstractClFragment implements DailySche
 
 		lnrMonthlyPage = (LinearLayout)getView().findViewById(R.id.lnr_id_monthly_page);
 		initCalendar();
-//		initDialog();
+		// initDialog();
 	}
 
 	private void initCalendar(){
@@ -199,7 +199,7 @@ public class MonthlyPageFragment extends AbstractClFragment implements DailySche
 		try{
 			// jsonObject.put("targetUserList", prefAccUtil.get(ClConst.PREF_ACTIVE_USER_LIST));
 			jsonObject.put("targetUserList", "");
-//			jsonObject.put("targetMonth", CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_5, activeMonth));
+			// jsonObject.put("targetMonth", CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_5, activeMonth));
 			jsonObject.put("calendars", prefAccUtil.get(ClConst.SELECTED_CALENDAR_STRING));
 			jsonObject.put("startDateString", WelfareFormatUtil.formatDate(lstDate4Month.get(0)));
 			jsonObject.put("endDateString", WelfareFormatUtil.formatDate(lstDate4Month.get(lstDate4Month.size() - 1)));
@@ -246,8 +246,8 @@ public class MonthlyPageFragment extends AbstractClFragment implements DailySche
 				changeCalendarUserListener.onChangeCalendarUserListener(lstCalendarUser);
 			}
 
-//            make daily summary dialog
-            initDialog();
+			// make daily summary dialog
+			initDialog();
 		}else{
 			super.successLoad(response, url);
 		}
@@ -255,18 +255,19 @@ public class MonthlyPageFragment extends AbstractClFragment implements DailySche
 
 	@Override
 	public void onDailyScheduleClickListener(String day){
+		dialogDailySummary.setActiveDate(CCDateUtil.makeDateCustom(day, WelfareConst.WL_DATE_TIME_7));
 		dialogDailySummary.show();
 	}
 
 	@Override
 	public void onClick(View v){
-        switch(v.getId()){
-            case R.id.img_id_add:
-                dialogDailySummary.dismiss();
-                ((WelfareActivity)activity).addFragment(new ScheduleFormFragment());
-                break;
-            default:
-                break;
-        }
+		switch(v.getId()){
+		case R.id.img_id_add:
+			dialogDailySummary.dismiss();
+			((WelfareActivity)activity).addFragment(new ScheduleFormFragment());
+			break;
+		default:
+			break;
+		}
 	}
 }

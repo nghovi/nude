@@ -12,6 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.widget.TextView;
 
 import asia.chiase.core.util.CCCollectionUtil;
+import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import trente.asia.android.util.CsDateUtil;
 import trente.asia.android.view.ChiaseDialog;
@@ -39,17 +40,20 @@ public class ClDailySummaryDialog extends ChiaseDialog{
 	private DailySummaryPagerAdapter			pagerAdapter;
 	private Map<String, List<ScheduleModel>>	mapSchedule;
 
-	private final int							ACTIVE_PAGE	= Integer.MAX_VALUE / 2;
-	private final Date							TODAY		= Calendar.getInstance().getTime();
-    private OnScheduleClickListener scheduleClickListener = new OnScheduleClickListener() {
-        @Override
-        public void onScheduleClickListener(ScheduleModel scheduleModel) {
-            ClDailySummaryDialog.this.dismiss();
-            ScheduleDetailFragment detailFragment = new ScheduleDetailFragment();
-            detailFragment.setSchedule(scheduleModel);
-            ((WelfareActivity)mContext).addFragment(detailFragment);
-        }
-    };
+	private final int							ACTIVE_PAGE				= Integer.MAX_VALUE / 2;
+	private final Date							TODAY					= CCDateUtil.makeCalendarToday().getTime();
+//	private Date								activeDate;
+
+	private OnScheduleClickListener				scheduleClickListener	= new OnScheduleClickListener() {
+
+																			@Override
+																			public void onScheduleClickListener(ScheduleModel scheduleModel){
+																				ClDailySummaryDialog.this.dismiss();
+																				ScheduleDetailFragment detailFragment = new ScheduleDetailFragment();
+																				detailFragment.setSchedule(scheduleModel);
+																				((WelfareActivity)mContext).addFragment(detailFragment);
+																			}
+																		};
 
 	public ClDailySummaryDialog(Context context, List<ScheduleModel> lstSchedule, List<Date> lstDate4Month){
 		super(context);
@@ -81,29 +85,44 @@ public class ClDailySummaryDialog extends ChiaseDialog{
 	}
 
 	private void convertList2Map(List<ScheduleModel> lstSchedule, List<Date> lstDate4Month){
-        mapSchedule = new HashMap<>();
-        if(!CCCollectionUtil.isEmpty(lstSchedule)){
-            for(Date date : lstDate4Month){
-                for(ScheduleModel scheduleModel : lstSchedule){
-                    if(ClUtil.belongPeriod(date, scheduleModel.startDate, scheduleModel.endDate)){
-                        String dateFormat = WelfareFormatUtil.formatDate(date);
-                        if(mapSchedule.containsKey(dateFormat)){
-                            List<ScheduleModel> lstSchedule4Date = mapSchedule.get(dateFormat);
-                            lstSchedule4Date.add(scheduleModel);
-                            mapSchedule.put(dateFormat, lstSchedule4Date);
-                        }else{
-                            List<ScheduleModel> lstSchedule4Date = new ArrayList<>();
-                            lstSchedule4Date.add(scheduleModel);
-                            mapSchedule.put(dateFormat, lstSchedule4Date);
-                        }
-                    }
-                }
-            }
-        }
-    }
+		mapSchedule = new HashMap<>();
+		if(!CCCollectionUtil.isEmpty(lstSchedule)){
+			for(Date date : lstDate4Month){
+				for(ScheduleModel scheduleModel : lstSchedule){
+					if(ClUtil.belongPeriod(date, scheduleModel.startDate, scheduleModel.endDate)){
+						String dateFormat = WelfareFormatUtil.formatDate(date);
+						if(mapSchedule.containsKey(dateFormat)){
+							List<ScheduleModel> lstSchedule4Date = mapSchedule.get(dateFormat);
+							lstSchedule4Date.add(scheduleModel);
+							mapSchedule.put(dateFormat, lstSchedule4Date);
+						}else{
+							List<ScheduleModel> lstSchedule4Date = new ArrayList<>();
+							lstSchedule4Date.add(scheduleModel);
+							mapSchedule.put(dateFormat, lstSchedule4Date);
+						}
+					}
+				}
+			}
+		}
+	}
 
 	private void setActiveDate(int position){
 		Date activeDate = CsDateUtil.addDate(TODAY, position - ACTIVE_PAGE);
 		txtActiveDate.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, activeDate));
+	}
+
+	public void setActiveDate(Date activeDate){
+//		this.activeDate = activeDate;
+		if(activeDate != null){
+			int diff = CsDateUtil.diffDate(activeDate, TODAY);
+			int activePosition = ACTIVE_PAGE + diff;
+			viewPagerSchedule.setCurrentItem(activePosition);
+			setActiveDate(activePosition);
+		}
+	}
+
+	@Override
+	public void show(){
+		super.show();
 	}
 }

@@ -168,6 +168,10 @@ public class CsDateUtil{
 			Integer age = calNow.get(Calendar.YEAR) - calBirthday.get(Calendar.YEAR) + factor;
 			return age;
 		}
-
 	}
+
+    public static int diffDate(Date date1, Date date2) {
+        int dayDiff = (int)((date1.getTime() - date2.getTime()) / 86400000L);
+        return dayDiff;
+    }
 }
