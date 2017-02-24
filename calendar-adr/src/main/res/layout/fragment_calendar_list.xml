@@ -8,7 +8,6 @@
         android:id="@+id/lnr_id_my_calendar"
         style="@style/cs_common_match_wrap"
         android:background="@drawable/cl_state_common_selectable_row"
-        android:gravity="center_vertical"
         android:orientation="horizontal"
         android:padding="@dimen/margin_10dp">
 
