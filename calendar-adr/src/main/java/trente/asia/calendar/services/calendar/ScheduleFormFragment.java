@@ -136,6 +136,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 				txtStartDate.setValue(startDateStr);
 			}
 		}, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+		txtStartDate.setValue(WelfareFormatUtil.formatDate(calendar.getTime()));
 
 		calendar.setTime(endDate);
 		datePickerDialogEnd = new DatePickerDialog(activity, new DatePickerDialog.OnDateSetListener() {
@@ -147,6 +148,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 				txtEndDate.setValue(endDateStr);
 			}
 		}, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+		txtEndDate.setValue(WelfareFormatUtil.formatDate(calendar.getTime()));
 
 		timePickerDialogEnd = new TimePickerDialog(activity, new TimePickerDialog.OnTimeSetListener() {
 
@@ -156,6 +158,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 				txtEndTime.setValue(CCFormatUtil.formatZero(hourOfDay) + ":" + CCFormatUtil.formatZero(minute));
 			}
 		}, endHour, endMinute, true);
+		txtEndTime.setValue(CCFormatUtil.formatZero(endHour) + ":" + CCFormatUtil.formatZero(endMinute));
 
 		timePickerDialogStart = new TimePickerDialog(activity, new TimePickerDialog.OnTimeSetListener() {
 
@@ -165,6 +168,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 				txtStartTime.setValue(CCFormatUtil.formatZero(hourOfDay) + ":" + CCFormatUtil.formatZero(minute));
 			}
 		}, startHour, startMinute, true);
+		txtStartTime.setValue(CCFormatUtil.formatZero(startHour) + ":" + CCFormatUtil.formatZero(startMinute));
 	}
 
 	private void initListDialog(){
