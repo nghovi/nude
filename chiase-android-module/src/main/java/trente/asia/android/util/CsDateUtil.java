@@ -180,7 +180,7 @@ public class CsDateUtil{
             return false;
         }
         Calendar calendar1 = CCDateUtil.makeCalendar(date1);
-        Calendar calendar2 = CCDateUtil.makeCalendar(date1);
-        return calendar1.get(Calendar.MONTH) == calendar2.get(Calendar.MONTH);
+        Calendar calendar2 = CCDateUtil.makeCalendar(date2);
+        return !(calendar1.get(Calendar.MONTH) == calendar2.get(Calendar.MONTH));
     }
 }
