@@ -30,9 +30,11 @@ import trente.asia.android.activity.ChiaseActivity;
 import trente.asia.android.view.ChiaseListDialog;
 import trente.asia.android.view.util.CAObjectSerializeUtil;
 import trente.asia.calendar.R;
+import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.dialogs.ClFilterUserListDialog;
 import trente.asia.calendar.commons.dialogs.ClScheduleRepeatDialog;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
+import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.models.UserModel;
@@ -84,7 +86,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 		txtEndDate.setOnClickListener(this);
 		txtStartTime.setOnClickListener(this);
 		txtEndTime.setOnClickListener(this);
-//		lnrUserList.setOnClickListener(this);
+		// lnrUserList.setOnClickListener(this);
 
 		swtAllDay.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
@@ -240,19 +242,19 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 		case R.id.txt_id_end_time:
 			timePickerDialogEnd.show();
 			break;
-//		case R.id.lnr_id_container_join_user_list:
-//			filterDialog.show();
-//			break;
+		// case R.id.lnr_id_container_join_user_list:
+		// filterDialog.show();
+		// break;
 		case R.id.lnr_id_repeat:
 			repeatDialog.show();
 			break;
 		case R.id.img_id_done:
 			filterDialog.dismiss();
 			filterDialog.saveActiveUserList();
-            break;
+			break;
 		case R.id.lnr_id_join_user_list:
-            filterDialog.show();
-            break;
+			filterDialog.show();
+			break;
 		default:
 			break;
 		}
@@ -286,6 +288,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 
 	private void onScheduleUpdateSuccess(){
 		((ChiaseActivity)activity).isInitData = true;
+		((WelfareActivity)activity).dataMap.put(ClConst.IS_UPDATE_SCHEDULE, true);
 		onClickBackBtn();
 	}
 

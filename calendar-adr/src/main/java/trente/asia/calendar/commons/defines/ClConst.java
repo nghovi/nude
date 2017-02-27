@@ -28,4 +28,6 @@ public class ClConst{
 	public static final String	SCHEDULE_REPEAT_LIMIT_AFTER		= "A";
 
 	public static final int		TEXT_VIEW_HEIGHT				= 22;
+
+	public static final String	IS_UPDATE_SCHEDULE				= "IS_UPDATE_SCHEDULE";
 }

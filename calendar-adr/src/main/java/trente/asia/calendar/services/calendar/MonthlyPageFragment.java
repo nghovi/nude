@@ -20,11 +20,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import asia.chiase.core.util.CCBooleanUtil;
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
+import trente.asia.android.activity.ChiaseActivity;
 import trente.asia.android.define.CsConst;
 import trente.asia.android.model.DayModel;
 import trente.asia.android.util.CsDateUtil;
@@ -98,7 +100,12 @@ public class MonthlyPageFragment extends AbstractClFragment implements DailySche
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 		if(mRootView == null){
 			mRootView = inflater.inflate(R.layout.fragment_monthly_page, container, false);
-		}
+		}else{
+            if(CCBooleanUtil.checkBoolean(((WelfareActivity)activity).dataMap.get(ClConst.IS_UPDATE_SCHEDULE))){
+                ((WelfareActivity)activity).dataMap.clear();
+                ((ChiaseActivity)activity).isInitData = true;
+            }
+        }
 		return mRootView;
 	}
 
@@ -187,12 +194,6 @@ public class MonthlyPageFragment extends AbstractClFragment implements DailySche
 		String activeDateString = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, activeMonth);
 		if(activeDateString.equals(prefAccUtil.get(ClConst.PREF_ACTIVE_DATE))){
 			loadScheduleList();
-			// try{
-			// JSONObject jsonObject = new JSONObject(string);
-			// successLoad(jsonObject, WfUrlConst.WF_CL_WEEK_SCHEDULE);
-			// }catch(JSONException e){
-			// e.printStackTrace();
-			// }
 		}
 	}
 
