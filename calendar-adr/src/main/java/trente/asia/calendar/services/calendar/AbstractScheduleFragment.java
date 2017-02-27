@@ -70,7 +70,7 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 		txtRoom = (ChiaseTextView)getView().findViewById(R.id.txt_id_meeting_room);
 		txtCalendar = (ChiaseTextView)getView().findViewById(R.id.txt_id_calendar);
 		txtCategory = (ChiaseTextView)getView().findViewById(R.id.txt_id_category);
-		lnrUserList = (UserListLinearLayout)getView().findViewById(R.id.lnr_fragment_pager_container_user_list);
+		lnrUserList = (UserListLinearLayout)getView().findViewById(R.id.lnr_id_container_join_user_list);
 		swtAllDay = (SwitchCompat)getView().findViewById(R.id.swt_id_all_day);
 		txtRepeat = (ChiaseTextView)getView().findViewById(R.id.txt_id_repeat);
 

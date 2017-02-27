@@ -56,6 +56,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 
 	private ClFilterUserListDialog	filterDialog;
 	private ClScheduleRepeatDialog	repeatDialog;
+	// private LinearLayout lnrJoinUserList;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -77,12 +78,13 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 		getView().findViewById(R.id.lnr_id_category).setOnClickListener(this);
 		getView().findViewById(R.id.lnr_id_calendar).setOnClickListener(this);
 		getView().findViewById(R.id.lnr_id_repeat).setOnClickListener(this);
+		getView().findViewById(R.id.lnr_id_join_user_list).setOnClickListener(this);
 
 		txtStartDate.setOnClickListener(this);
 		txtEndDate.setOnClickListener(this);
 		txtStartTime.setOnClickListener(this);
 		txtEndTime.setOnClickListener(this);
-		lnrUserList.setOnClickListener(this);
+//		lnrUserList.setOnClickListener(this);
 
 		swtAllDay.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
@@ -238,15 +240,19 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 		case R.id.txt_id_end_time:
 			timePickerDialogEnd.show();
 			break;
-		case R.id.lnr_fragment_pager_container_user_list:
-			filterDialog.show();
-			break;
+//		case R.id.lnr_id_container_join_user_list:
+//			filterDialog.show();
+//			break;
 		case R.id.lnr_id_repeat:
 			repeatDialog.show();
 			break;
 		case R.id.img_id_done:
 			filterDialog.dismiss();
 			filterDialog.saveActiveUserList();
+            break;
+		case R.id.lnr_id_join_user_list:
+            filterDialog.show();
+            break;
 		default:
 			break;
 		}
