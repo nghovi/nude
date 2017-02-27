@@ -202,8 +202,8 @@ public class MonthlyPageFragment extends AbstractClFragment implements DailySche
 		}
 		JSONObject jsonObject = new JSONObject();
 		try{
-			// jsonObject.put("targetUserList", prefAccUtil.get(ClConst.PREF_ACTIVE_USER_LIST));
-			jsonObject.put("targetUserList", "");
+			jsonObject.put("targetUserList", prefAccUtil.get(ClConst.PREF_ACTIVE_USER_LIST));
+			// jsonObject.put("targetUserList", "");
 			// jsonObject.put("targetMonth", CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_5, activeMonth));
 			jsonObject.put("calendars", prefAccUtil.get(ClConst.SELECTED_CALENDAR_STRING));
 			jsonObject.put("startDateString", WelfareFormatUtil.formatDate(lstDate4Month.get(0)));
@@ -229,13 +229,13 @@ public class MonthlyPageFragment extends AbstractClFragment implements DailySche
 				Collections.sort(lstSchedule, new ScheduleComparator());
 				for(ScheduleModel model : lstSchedule){
 					if(model.isPeriodSchedule()){
-                        for(MonthlyCalendarRowView rowView : lstCalendarRow){
-                            String minDay = rowView.lstCalendarDay.get(0).day;
-                            String maxDay = rowView.lstCalendarDay.get(rowView.lstCalendarDay.size() - 1).day;
-                            if(ClUtil.belongPeriod(WelfareUtil.makeDate(model.startDate), minDay, maxDay) || ClUtil.belongPeriod(WelfareUtil.makeDate(model.endDate), minDay, maxDay)){
-                                rowView.addSchedule(model);
-                            }
-                        }
+						for(MonthlyCalendarRowView rowView : lstCalendarRow){
+							String minDay = rowView.lstCalendarDay.get(0).day;
+							String maxDay = rowView.lstCalendarDay.get(rowView.lstCalendarDay.size() - 1).day;
+							if(ClUtil.belongPeriod(WelfareUtil.makeDate(model.startDate), minDay, maxDay) || ClUtil.belongPeriod(WelfareUtil.makeDate(model.endDate), minDay, maxDay)){
+								rowView.addSchedule(model);
+							}
+						}
 					}else{
 						List<MonthlyCalendarDayView> lstActiveCalendarDay = ClUtil.findView4Day(lstCalendarDay, model.startDate, model.endDate);
 
@@ -257,9 +257,9 @@ public class MonthlyPageFragment extends AbstractClFragment implements DailySche
 				}
 			}
 
-            for(MonthlyCalendarRowView rowView : lstCalendarRow){
-                rowView.refreshLayout();
-            }
+			for(MonthlyCalendarRowView rowView : lstCalendarRow){
+				rowView.refreshLayout();
+			}
 
 			List<UserModel> lstCalendarUser = CCJsonUtil.convertToModelList(response.optString("calendarUsers"), UserModel.class);
 			if(changeCalendarUserListener != null){
