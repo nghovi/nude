@@ -174,4 +174,13 @@ public class CsDateUtil{
         int dayDiff = (int)((date1.getTime() - date2.getTime()) / 86400000L);
         return dayDiff;
     }
+
+    public static boolean isDiffMonth(Date date1, Date date2) {
+        if(date1 == null || date2 == null){
+            return false;
+        }
+        Calendar calendar1 = CCDateUtil.makeCalendar(date1);
+        Calendar calendar2 = CCDateUtil.makeCalendar(date1);
+        return calendar1.get(Calendar.MONTH) == calendar2.get(Calendar.MONTH);
+    }
 }
