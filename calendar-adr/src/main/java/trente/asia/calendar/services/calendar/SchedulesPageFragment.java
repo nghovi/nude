@@ -187,7 +187,7 @@ public class SchedulesPageFragment extends WelfareFragment implements
         return new ArrayList<>();
     }
 
-    private void callApi() {
+    final protected void callApi() {
         JSONObject jsonObject = prepareJsonObject();
         String api = getApi();
         requestLoad(api, jsonObject, true);

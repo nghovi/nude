@@ -38,6 +38,7 @@ public class PageContainerFragment extends AbstractClFragment {
     protected ImageView mImgLeftHeader;
     protected NavigationHeader navigationHeader;
     protected UserListLinearLayout userListLinearLayout;
+    private PageSharingHolder holder;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,8 +62,8 @@ public class PageContainerFragment extends AbstractClFragment {
                 .img_id_header_left_icon);
         mViewPager = (ViewPager) getView().findViewById(R.id.pager);
         mPagerAdapter = initPagerAdapter();
-        final PageSharingHolder holder = new PageSharingHolder(navigationHeader,
-                userListLinearLayout);
+        holder = new PageSharingHolder(navigationHeader,
+                userListLinearLayout, this);
         mPagerAdapter.setPageSharingHolder(holder);
         mPagerAdapter.setInitialPosition(INITIAL_POSITION);
         mViewPager.setAdapter(mPagerAdapter);
@@ -129,6 +130,12 @@ public class PageContainerFragment extends AbstractClFragment {
                 break;
             case R.id.img_id_header_right_icon:
                 gotoScheduleFormFragment();
+                break;
+            case R.id.img_id_done:
+                SchedulesPageFragment schedulesPageFragment =
+                        (SchedulesPageFragment) mPagerAdapter.getItem(holder
+                                .selectedPagePosition);
+                schedulesPageFragment.callApi();
                 break;
             default:
                 break;
