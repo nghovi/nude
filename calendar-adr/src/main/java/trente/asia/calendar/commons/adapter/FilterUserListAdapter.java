@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.listener.CsOnCheckedChangeListener;
 import trente.asia.android.view.layout.CheckableLinearLayout;
@@ -31,12 +32,18 @@ import trente.asia.welfare.adr.utils.WfPicassoHelper;
 public class FilterUserListAdapter extends ArrayAdapter<UserModel>{
 
 	private List<UserModel>	lstUser;
-	private List<UserModel>	mLstSelectedUser	= new ArrayList<>();
+	private List<UserModel>	mLstSelectedUser;
+	public List<UserModel>	mLstShowUser	= new ArrayList<>();
 
 	public FilterUserListAdapter(Context context, List<UserModel> lstUser, List<UserModel> lstSelectedUser){
 		super(context, R.layout.adapter_dialog_user_item, lstUser);
 		this.lstUser = lstUser;
 		this.mLstSelectedUser = lstSelectedUser;
+		if(!CCCollectionUtil.isEmpty(lstSelectedUser)){
+			for(UserModel userModel : lstSelectedUser){
+				mLstShowUser.add(userModel);
+			}
+		}
 	}
 
 	/* private view holder class */
@@ -63,7 +70,7 @@ public class FilterUserListAdapter extends ArrayAdapter<UserModel>{
 	@Override
 	public View getView(final int position, View convertView, final ViewGroup parent){
 		final ViewHolder holder;
-		UserModel userModel = this.getItem(position);
+		final UserModel userModel = this.getItem(position);
 		if(convertView == null){
 			LayoutInflater mInflater = (LayoutInflater)this.getContext().getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 			convertView = mInflater.inflate(R.layout.adapter_dialog_user_item, null);
@@ -82,7 +89,7 @@ public class FilterUserListAdapter extends ArrayAdapter<UserModel>{
 			}
 		}
 
-		if(WelfareUtil.containUserInList(this.mLstSelectedUser, userModel)){
+		if(WelfareUtil.containUserInList(this.mLstShowUser, userModel)){
 			(((ListView)parent)).setItemChecked(position, true);
 			holder.lnrItem.setChecked(true);
 			holder.imgCheck.setVisibility(View.VISIBLE);
@@ -97,11 +104,11 @@ public class FilterUserListAdapter extends ArrayAdapter<UserModel>{
 			@Override
 			public void onCheckedChanged(Checkable view, boolean isChecked){
 				if(isChecked){
-					// (((ListView)parent)).setItemChecked(position, true);
 					holder.imgCheck.setVisibility(View.VISIBLE);
+					WelfareUtil.addInList(mLstShowUser, userModel);
 				}else{
-					// (((ListView)parent)).setItemChecked(position, false);
 					holder.imgCheck.setVisibility(View.INVISIBLE);
+					WelfareUtil.removeInList(mLstShowUser, userModel);
 				}
 			}
 		});

@@ -1,19 +1,18 @@
 package trente.asia.calendar.commons.dialogs;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
-import android.util.SparseBooleanArray;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ImageView;
-import android.widget.ListView;
+import android.widget.CheckBox;
 
 import trente.asia.android.view.ChiaseDialog;
+import trente.asia.android.view.layout.CheckableLinearLayout;
 import trente.asia.calendar.R;
-import trente.asia.calendar.commons.adapter.FilterUserListAdapter;
 import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.utils.ClUtil;
+import trente.asia.calendar.commons.views.FilterUserLinearLayout;
 import trente.asia.calendar.commons.views.UserListLinearLayout;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
@@ -26,14 +25,11 @@ import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
 public class ClFilterUserListDialog extends ChiaseDialog{
 
 	private Context					mContext;
-
-	private ListView				mLsvUser;
-	private FilterUserListAdapter	mAdapter;
+	private FilterUserLinearLayout	mLnrFilterUser;
 
 	private List<UserModel>			mLstUser;
 	private UserListLinearLayout	mLnrUserList;
-
-	private ImageView				mImgDone;
+	private CheckBox				mCbxAll;
 
 	public ClFilterUserListDialog(Context context, UserListLinearLayout lnrUserList){
 		super(context);
@@ -41,43 +37,49 @@ public class ClFilterUserListDialog extends ChiaseDialog{
 		this.mContext = context;
 		this.mLnrUserList = lnrUserList;
 
-		mImgDone = (ImageView)this.findViewById(R.id.img_id_done);
-		mLsvUser = (ListView)this.findViewById(R.id.lsv_id_user);
+		mCbxAll = (CheckBox)this.findViewById(R.id.cbx_id_all);
+		mLnrFilterUser = (FilterUserLinearLayout)this.findViewById(R.id.lnr_id_user);
+		mCbxAll.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v){
+				clickCheckbox();
+			}
+		});
+	}
+
+	private void clickCheckbox(){
+		boolean isChecked = mCbxAll.isChecked();
+		for(CheckableLinearLayout checkableLinearLayout : mLnrFilterUser.lstCheckable){
+			checkableLinearLayout.setChecked(isChecked);
+		}
 	}
 
 	public void updateUserList(List<UserModel> lstUser){
 		this.mLstUser = lstUser;
-		mAdapter = new FilterUserListAdapter(mContext, mLstUser, mLnrUserList.getLstUser());
-
-		mLsvUser.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id){
-			}
-		});
-		mLsvUser.setAdapter(mAdapter);
 	}
 
 	public void saveActiveUserList(){
-		this.mAdapter.getSelectedUser().clear();
-		SparseBooleanArray array = mLsvUser.getCheckedItemPositions();
-		for(int index = 0; index < array.size(); index++){
-			boolean isChecked = array.valueAt(index);
-			if(isChecked){
-				UserModel userModel = (UserModel)this.mLsvUser.getItemAtPosition(index);
-				this.mAdapter.getSelectedUser().add(userModel);
+		List<UserModel> lstSelectedUser = new ArrayList<>();
+		for(int index = 0; index < mLnrFilterUser.lstCheckable.size(); index++){
+			CheckableLinearLayout checkableLinearLayout = mLnrFilterUser.lstCheckable.get(index);
+			if(checkableLinearLayout.isChecked()){
+				UserModel userModel = (UserModel)this.mLstUser.get(index);
+				lstSelectedUser.add(userModel);
 			}
 		}
 
 		if(mLnrUserList != null){
-			mLnrUserList.show(this.mAdapter.getSelectedUser(), (int)this.mContext.getResources().getDimension(R.dimen.margin_30dp));
+			mLnrUserList.show(lstSelectedUser, (int)this.mContext.getResources().getDimension(R.dimen.margin_30dp));
 		}
 
-        PreferencesAccountUtil prefAccUtil = new PreferencesAccountUtil(mContext);
-        prefAccUtil.set(ClConst.PREF_ACTIVE_USER_LIST, ClUtil.convertUserList2String(this.mAdapter.getSelectedUser()));
+		PreferencesAccountUtil prefAccUtil = new PreferencesAccountUtil(mContext);
+		prefAccUtil.set(ClConst.PREF_ACTIVE_USER_LIST, ClUtil.convertUserList2String(lstSelectedUser));
 	}
 
-	public List<UserModel> getSelectedUser(){
-		return this.mAdapter.getSelectedUser();
-	}
+    @Override
+    public void show(){
+        this.mLnrFilterUser.addUserList(this.mLstUser, mLnrUserList.getLstUser(), mCbxAll);
+        super.show();
+    }
 }
