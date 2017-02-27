@@ -1,7 +1,5 @@
 package trente.asia.calendar.services.calendar;
 
-import static trente.asia.welfare.adr.utils.WelfareFormatUtil.convertList2Map;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -18,7 +16,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import asia.chiase.core.util.CCBooleanUtil;
-import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
@@ -27,7 +24,6 @@ import trente.asia.android.view.util.CAObjectSerializeUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.fragments.AbstractClFragment;
-import trente.asia.calendar.commons.utils.ClUtil;
 import trente.asia.calendar.commons.views.UserListLinearLayout;
 import trente.asia.calendar.services.calendar.model.CalendarModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
@@ -57,6 +53,7 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 	protected ChiaseTextView		txtStartDate;
 	protected ChiaseTextView		txtEndDate;
 	protected ChiaseTextView		txtCalendar;
+	protected ChiaseTextView		txtRepeat;
 
 	protected List<ApiObjectModel>	categories;
 	protected ChiaseTextView		txtCategory;
@@ -75,6 +72,7 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 		txtCategory = (ChiaseTextView)getView().findViewById(R.id.txt_id_category);
 		lnrUserList = (UserListLinearLayout)getView().findViewById(R.id.lnr_fragment_pager_container_user_list);
 		swtAllDay = (SwitchCompat)getView().findViewById(R.id.swt_id_all_day);
+		txtRepeat = (ChiaseTextView)getView().findViewById(R.id.txt_id_repeat);
 
 		txtStartDate = (ChiaseTextView)getView().findViewById(R.id.txt_id_start_date);
 		txtEndDate = (ChiaseTextView)getView().findViewById(R.id.txt_id_end_date);
@@ -125,23 +123,23 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 		}
 
 		if(!CCStringUtil.isEmpty(schedule.key)){
-            txtRoom.setText(WelfareUtil.findApiObject4Id(rooms, schedule.roomId).value);
-            txtCalendar.setText(schedule.calendar.calendarName);
-            swtAllDay.setChecked(CCBooleanUtil.checkBoolean(schedule.isDayPeriod));
+			txtRoom.setText(WelfareUtil.findApiObject4Id(rooms, schedule.roomId).value);
+			txtCalendar.setText(schedule.calendar.calendarName);
+			swtAllDay.setChecked(CCBooleanUtil.checkBoolean(schedule.isDayPeriod));
 
-            txtCategory.setText(WelfareUtil.findApiObject4Id(categories, schedule.categoryId).value);
+			txtCategory.setText(WelfareUtil.findApiObject4Id(categories, schedule.categoryId).value);
 			if(!CCStringUtil.isEmpty(schedule.categoryId)){
 				txtCategory.setTextColor(Color.parseColor("#" + schedule.categoryId));
 			}
-            lnrUserList.show(schedule.scheduleJoinUsers, (int)getResources().getDimension(R.dimen.margin_30dp));
+			lnrUserList.show(schedule.scheduleJoinUsers, (int)getResources().getDimension(R.dimen.margin_30dp));
 
-//            set time
-            Date startDate = WelfareUtil.makeDate(schedule.startDate);
-            Date endDate = WelfareUtil.makeDate(schedule.endDate);
-            txtStartDate.setText(WelfareFormatUtil.formatDate(startDate));
-            txtStartTime.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_9, startDate));
-            txtEndDate.setText(WelfareFormatUtil.formatDate(endDate));
-            txtEndTime.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_9, endDate));
+			// set time
+			Date startDate = WelfareUtil.makeDate(schedule.startDate);
+			Date endDate = WelfareUtil.makeDate(schedule.endDate);
+			txtStartDate.setText(WelfareFormatUtil.formatDate(startDate));
+			txtStartTime.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_9, startDate));
+			txtEndDate.setText(WelfareFormatUtil.formatDate(endDate));
+			txtEndTime.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_9, endDate));
 		}
 	}
 
@@ -171,13 +169,13 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 	}
 
 	protected void onChangeCalendar(String calendarId){
-        List<UserModel> lstCalendar = new ArrayList<>();
-        lstCalendar.add(myself);
-        lnrUserList.show(lstCalendar, (int)getResources().getDimension(R.dimen.margin_30dp));
-//		List<UserModel> calendarUsers = getAllCalendarUsers(calendars, calendarId);
-//		if(!CCCollectionUtil.isEmpty(calendarUsers)){
-//			lnrUserList.show(calendarUsers, (int)getResources().getDimension(R.dimen.margin_30dp));
-//		}
+		List<UserModel> lstCalendar = new ArrayList<>();
+		lstCalendar.add(myself);
+		lnrUserList.show(lstCalendar, (int)getResources().getDimension(R.dimen.margin_30dp));
+		// List<UserModel> calendarUsers = getAllCalendarUsers(calendars, calendarId);
+		// if(!CCCollectionUtil.isEmpty(calendarUsers)){
+		// lnrUserList.show(calendarUsers, (int)getResources().getDimension(R.dimen.margin_30dp));
+		// }
 	}
 
 	@Override

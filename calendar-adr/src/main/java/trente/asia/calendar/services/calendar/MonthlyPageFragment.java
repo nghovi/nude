@@ -226,12 +226,6 @@ public class MonthlyPageFragment extends AbstractClFragment implements DailySche
 			}
 
 			if(!CCCollectionUtil.isEmpty(lstSchedule)){
-				// Todo Trung: test in here
-				// for(ScheduleModel scheduleModel : lstSchedule){
-				// lstCalendarRow.get(4).addSchedule(scheduleModel);
-				// }
-				// lstCalendarRow.get(4).refreshLayout();
-
 				Collections.sort(lstSchedule, new ScheduleComparator());
 				for(ScheduleModel model : lstSchedule){
 					if(model.isPeriodSchedule()){

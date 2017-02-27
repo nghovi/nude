@@ -6,14 +6,17 @@ import java.util.List;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.support.v7.widget.SwitchCompat;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import asia.chiase.core.util.CCFormatUtil;
+import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.view.ChiaseDialog;
 import trente.asia.android.view.adapter.ChiaseSpinnerAdapter;
 import trente.asia.android.view.model.ChiaseSpinnerModel;
@@ -30,6 +33,7 @@ import trente.asia.welfare.adr.define.WelfareConst;
 public class ClScheduleRepeatDialog extends ChiaseDialog{
 
 	private Context						mContext;
+	private TextView					txtRepeat;
 	private Spinner						spnRepeatType;
 	private Spinner						spnRepeatLimit;
 
@@ -41,11 +45,14 @@ public class ClScheduleRepeatDialog extends ChiaseDialog{
 	private RepeatWeeklyDayLinearLayout	lnrRepeatWeeklyDay;
 	private Calendar					calendarLimit	= Calendar.getInstance();
 	private DatePickerDialog			datePickerDialogLimit;
+	private SwitchCompat				swtRepeat;
+	private EditText					edtLimitTimes;
 
-	public ClScheduleRepeatDialog(Context context){
+	public ClScheduleRepeatDialog(Context context, TextView txtRepeat){
 		super(context);
 		this.setContentView(R.layout.dialog_common_schedule_repeat);
 		this.mContext = context;
+		this.txtRepeat = txtRepeat;
 
 		this.initialization();
 	}
@@ -58,6 +65,8 @@ public class ClScheduleRepeatDialog extends ChiaseDialog{
 		lnrLimitUtil = (LinearLayout)this.findViewById(R.id.lnr_id_repeat_until);
 		lnrLimitAfter = (LinearLayout)this.findViewById(R.id.lnr_id_repeat_after);
 		txtLimitUtil = (TextView)this.findViewById(R.id.txt_id_repeat_limit_util);
+		swtRepeat = (SwitchCompat)this.findViewById(R.id.swt_id_repeat);
+		edtLimitTimes = (EditText)this.findViewById(R.id.edt_id_limit_times);
 
 		lnrRepeatWeeklyDay = (RepeatWeeklyDayLinearLayout)this.findViewById(R.id.lnr_id_repeat_weekly_day);
 		lnrRepeatWeeklyDay.initialization();
@@ -126,6 +135,7 @@ public class ClScheduleRepeatDialog extends ChiaseDialog{
 			@Override
 			public void onClick(View v){
 				ClScheduleRepeatDialog.this.dismiss();
+				txtRepeat.setText(getRepeatValue());
 			}
 		});
 	}
@@ -152,16 +162,41 @@ public class ClScheduleRepeatDialog extends ChiaseDialog{
 		}
 	}
 
-    public String getRepeatValue(){
-        StringBuilder builder = new StringBuilder();
-        ChiaseSpinnerModel repeatType = (ChiaseSpinnerModel)spnRepeatType.getSelectedItem();
-        if(ClConst.SCHEDULE_REPEAT_TYPE_WEEKLY.equals(repeatType.key)){
-            builder.append("Repeats weekly ");
-        }else if(ClConst.SCHEDULE_REPEAT_TYPE_MONTHLY.equals(repeatType.key)){
-            builder.append("Repeats monthly ");
-        }else if(ClConst.SCHEDULE_REPEAT_TYPE_YEARLY.equals(repeatType.key)){
-            builder.append("Repeats yearly ");
-        }
-        return builder.toString();
-    }
+	public String getRepeatValue(){
+		StringBuilder builder = new StringBuilder();
+
+		if(!swtRepeat.isChecked()){
+			builder.append(mContext.getString(R.string.chiase_common_none));
+			return builder.toString();
+		}
+
+		ChiaseSpinnerModel repeatType = (ChiaseSpinnerModel)spnRepeatType.getSelectedItem();
+		if(ClConst.SCHEDULE_REPEAT_TYPE_WEEKLY.equals(repeatType.key)){
+			String selectedDays = lnrRepeatWeeklyDay.getSelectedDays();
+			if(CCStringUtil.isEmpty(selectedDays)){
+				builder.append(mContext.getString(R.string.chiase_common_none));
+			}else{
+				builder.append("Repeats weekly on " + selectedDays);
+			}
+		}else if(ClConst.SCHEDULE_REPEAT_TYPE_MONTHLY.equals(repeatType.key)){
+			builder.append("Repeats monthly");
+		}else if(ClConst.SCHEDULE_REPEAT_TYPE_YEARLY.equals(repeatType.key)){
+			builder.append("Repeats yearly");
+		}
+
+		ChiaseSpinnerModel repeatLimit = (ChiaseSpinnerModel)spnRepeatLimit.getSelectedItem();
+		if(ClConst.SCHEDULE_REPEAT_LIMIT_FOREVER.equals(repeatLimit.key)){
+		}else if(ClConst.SCHEDULE_REPEAT_LIMIT_UNTIL.equals(repeatLimit.key)){
+			builder.append(", until " + txtLimitUtil.getText());
+		}else{
+			String timesValue = edtLimitTimes.getText().toString();
+			if(CCStringUtil.isEmpty(timesValue)){
+				builder.append(", for 1 times");
+			}else{
+				builder.append(", for " + timesValue + " times");
+			}
+		}
+
+		return builder.toString();
+	}
 }

@@ -30,7 +30,7 @@
             style="@style/cs_common_wrap"/>
 
         <android.support.v7.widget.SwitchCompat
-            android:id="@+id/swt_id_all_day"
+            android:id="@+id/swt_id_repeat"
             style="@style/cs_common_wrap"
             android:layout_weight="1"
             android:checked="true"
@@ -80,6 +80,7 @@
             android:visibility="gone">
 
             <EditText
+                android:id="@+id/edt_id_limit_times"
                 style="@style/wl_common_text"
                 android:layout_width="wrap_content"
                 android:inputType="number"
