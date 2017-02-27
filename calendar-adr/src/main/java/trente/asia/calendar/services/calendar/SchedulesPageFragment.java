@@ -92,12 +92,10 @@ public class SchedulesPageFragment extends WelfareFragment implements
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        updateHeaderTitles();
     }
 
     public void updateHeaderTitles() {
         if (pagePosition == pageSharingHolder.selectedPagePosition) {
-            pageSharingHolder.selectedFragment = this;
             String title = getUpperTitle();
             List<String> selectedCalendarIds = Arrays.asList(prefAccUtil.get
                     (ClConst.SELECTED_CALENDAR_STRING).split(","));
@@ -305,8 +303,8 @@ public class SchedulesPageFragment extends WelfareFragment implements
             pageSharingHolder.updateFilter(calendarUsers);
         }
 
+        updateHeaderTitles();
         updateObservableListView();
-
     }
 
     protected void updateObservableListView() {

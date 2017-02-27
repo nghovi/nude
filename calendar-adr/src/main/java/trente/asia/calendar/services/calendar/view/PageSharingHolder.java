@@ -21,7 +21,6 @@ public class PageSharingHolder {
     public final UserListLinearLayout userListLinearLayout;
     public ClFilterUserListDialog filterDialog;
     private Context mContext;
-    public SchedulesPageFragment selectedFragment;
     public int selectedPagePosition;
 
     public PageSharingHolder(NavigationHeader navigationHeader,
