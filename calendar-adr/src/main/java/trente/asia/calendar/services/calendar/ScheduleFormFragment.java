@@ -70,7 +70,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 		super.initView();
 		initHeader(R.drawable.wf_back_white, getString(R.string.fragment_schedule_form_title), R.drawable.cl_action_save);
 
-		filterDialog = new ClFilterUserListDialog(activity, lnrUserList);
+//		filterDialog = new ClFilterUserListDialog(activity, lnrUserList);
 		repeatDialog = new ClScheduleRepeatDialog(activity, txtRepeat);
 
 		getView().findViewById(R.id.lnr_id_meeting_room).setOnClickListener(this);
@@ -201,6 +201,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 	@Override
 	protected void onLoadScheduleDetailSuccess(JSONObject response){
 		super.onLoadScheduleDetailSuccess(response);
+        filterDialog = new ClFilterUserListDialog(activity, lnrUserList);
 		buildDatePickerDialogs(schedule);
 	}
 

@@ -20,6 +20,7 @@ import trente.asia.android.view.layout.CheckableLinearLayout;
 import trente.asia.calendar.BuildConfig;
 import trente.asia.calendar.R;
 import trente.asia.welfare.adr.models.UserModel;
+import trente.asia.welfare.adr.utils.WelfareUtil;
 import trente.asia.welfare.adr.utils.WfPicassoHelper;
 
 /**
@@ -81,7 +82,7 @@ public class FilterUserListAdapter extends ArrayAdapter<UserModel>{
 			}
 		}
 
-		if(this.mLstSelectedUser.contains(userModel)){
+		if(WelfareUtil.containUserInList(this.mLstSelectedUser, userModel)){
 			(((ListView)parent)).setItemChecked(position, true);
 			holder.lnrItem.setChecked(true);
 			holder.imgCheck.setVisibility(View.VISIBLE);

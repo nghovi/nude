@@ -324,6 +324,17 @@ public class WelfareUtil{
 		return index;
 	}
 
+    public static boolean containUserInList(List<UserModel> lstUser, UserModel findUser){
+        if(!CCCollectionUtil.isEmpty(lstUser) && findUser != null){
+            for(UserModel userModel : lstUser){
+                if(userModel.key.equals(findUser.key)){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
 	public static int findDeptInList(List<DeptModel> lstDept, DeptModel findDept){
 		int index = 0;
 		if(!CCCollectionUtil.isEmpty(lstDept) && findDept != null){
