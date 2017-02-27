@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:gravity="center"
     android:paddingBottom="@dimen/margin_5dp"
-    android:paddingTop="@dimen/margin_5dp">
+    android:paddingTop="@dimen/margin_8dp">
 
     <RelativeLayout
         android:id="@+id/rlt_day_view"
