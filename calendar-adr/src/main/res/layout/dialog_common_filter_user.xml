@@ -28,11 +28,15 @@
             android:src="@drawable/cl_action_save"/>
     </LinearLayout>
 
-    <trente.asia.calendar.commons.views.FilterUserLinearLayout
-        android:id="@+id/lnr_id_user"
+    <ScrollView
         style="@style/cs_common_match_wrap"
-        android:layout_weight="1"
-        android:orientation="vertical"/>
+        android:layout_weight="1">
+
+        <trente.asia.calendar.commons.views.FilterUserLinearLayout
+            android:id="@+id/lnr_id_user"
+            style="@style/cs_common_match_wrap"
+            android:orientation="vertical"/>
+    </ScrollView>
 
     <View style="@style/cs_common_divider"/>
 
