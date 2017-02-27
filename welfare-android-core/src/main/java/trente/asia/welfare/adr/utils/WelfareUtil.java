@@ -335,6 +335,27 @@ public class WelfareUtil{
         return false;
     }
 
+    public static void addInList(List<UserModel> lstUser, UserModel findUser){
+        if(!CCCollectionUtil.isEmpty(lstUser) && findUser != null){
+            if(!containUserInList(lstUser, findUser)){
+                lstUser.add(findUser);
+            }
+        }
+    }
+
+    public static void removeInList(List<UserModel> lstUser, UserModel findUser){
+        if(!CCCollectionUtil.isEmpty(lstUser) && findUser != null){
+            if(containUserInList(lstUser, findUser)){
+                for(UserModel userModel : lstUser){
+                    if(userModel.key.equals(findUser.key)){
+                        findUser = userModel;
+                    }
+                }
+                lstUser.remove(findUser);
+            }
+        }
+    }
+
 	public static int findDeptInList(List<DeptModel> lstDept, DeptModel findDept){
 		int index = 0;
 		if(!CCCollectionUtil.isEmpty(lstDept) && findDept != null){
