@@ -1,15 +1,17 @@
-<LinearLayout
-    android:id="@+id/lnr_id_weekly_header_row"
+<trente.asia.calendar.services.calendar.view.MonthlyCalendarRowView
+    android:id="@+id/rlt_id_weekly_header_row"
     style="@style/cs_common_match_wrap"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical">
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
         android:id="@+id/lnr_id_row_content"
-        style="@style/cs_common_match_wrap"
+        style="@style/cs_common_match"
         android:orientation="horizontal"
         android:weightSum="7"/>
 
-    <View style="@style/cs_common_divider"/>
+    <View
+        android:id="@+id/view_id_divider"
+        style="@style/cs_common_divider"
+        android:layout_below="@+id/lnr_id_row_content"/>
 
-</LinearLayout>
+</trente.asia.calendar.services.calendar.view.MonthlyCalendarRowView>

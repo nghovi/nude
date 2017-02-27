@@ -99,7 +99,9 @@
     <View style="@style/cs_common_divider"/>
 
     <LinearLayout
-        style="@style/wf_common_item_linear2">
+        android:id="@+id/lnr_id_done"
+        style="@style/wf_common_item_linear2"
+        android:background="@drawable/state_common_selectable_row">
 
         <TextView
             android:id="@+id/txt_id_done"

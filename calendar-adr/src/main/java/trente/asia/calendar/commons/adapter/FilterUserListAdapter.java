@@ -32,12 +32,10 @@ public class FilterUserListAdapter extends ArrayAdapter<UserModel>{
 	private List<UserModel>	lstUser;
 	private List<UserModel>	mLstSelectedUser	= new ArrayList<>();
 
-	public FilterUserListAdapter(Context context, List<UserModel> lstUser){
+	public FilterUserListAdapter(Context context, List<UserModel> lstUser, List<UserModel> lstSelectedUser){
 		super(context, R.layout.adapter_dialog_user_item, lstUser);
 		this.lstUser = lstUser;
-		for(UserModel userModel : this.lstUser){
-			this.mLstSelectedUser.add(userModel);
-		}
+		this.mLstSelectedUser = lstSelectedUser;
 	}
 
 	/* private view holder class */
@@ -64,7 +62,7 @@ public class FilterUserListAdapter extends ArrayAdapter<UserModel>{
 	@Override
 	public View getView(final int position, View convertView, final ViewGroup parent){
 		final ViewHolder holder;
-        UserModel userModel = this.getItem(position);
+		UserModel userModel = this.getItem(position);
 		if(convertView == null){
 			LayoutInflater mInflater = (LayoutInflater)this.getContext().getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 			convertView = mInflater.inflate(R.layout.adapter_dialog_user_item, null);
@@ -84,12 +82,12 @@ public class FilterUserListAdapter extends ArrayAdapter<UserModel>{
 		}
 
 		if(this.mLstSelectedUser.contains(userModel)){
-            (((ListView)parent)).setItemChecked(position, true);
-            holder.lnrItem.setChecked(true);
+			(((ListView)parent)).setItemChecked(position, true);
+			holder.lnrItem.setChecked(true);
 			holder.imgCheck.setVisibility(View.VISIBLE);
 		}else{
-            (((ListView)parent)).setItemChecked(position, false);
-            holder.lnrItem.setChecked(false);
+			(((ListView)parent)).setItemChecked(position, false);
+			holder.lnrItem.setChecked(false);
 			holder.imgCheck.setVisibility(View.INVISIBLE);
 		}
 
@@ -98,10 +96,10 @@ public class FilterUserListAdapter extends ArrayAdapter<UserModel>{
 			@Override
 			public void onCheckedChanged(Checkable view, boolean isChecked){
 				if(isChecked){
-//                    (((ListView)parent)).setItemChecked(position, true);
+					// (((ListView)parent)).setItemChecked(position, true);
 					holder.imgCheck.setVisibility(View.VISIBLE);
 				}else{
-//                    (((ListView)parent)).setItemChecked(position, false);
+					// (((ListView)parent)).setItemChecked(position, false);
 					holder.imgCheck.setVisibility(View.INVISIBLE);
 				}
 			}

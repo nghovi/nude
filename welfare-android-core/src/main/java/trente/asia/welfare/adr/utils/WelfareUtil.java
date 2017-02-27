@@ -168,25 +168,25 @@ public class WelfareUtil{
 		return year + "/" + getDisplayNum(monthOfYear);
 	}
 
-    /**
-     * make date with server format: yyyy/MM/dd HH:mm:ss
-     *
-     * @param data
-     * @return
-     */
-    public static Date makeDate(String data){
-        Date date = CCDateUtil.makeDateCustom(data, WelfareConst.WL_DATE_TIME_1);
-        return date;
-    }
+	/**
+	 * make date with server format: yyyy/MM/dd HH:mm:ss
+	 *
+	 * @param data
+	 * @return
+	 */
+	public static Date makeDate(String data){
+		Date date = CCDateUtil.makeDateCustom(data, WelfareConst.WL_DATE_TIME_1);
+		return date;
+	}
 
-    public static Date makeMonthWithFirstDate(){
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.DATE, 1);
-        calendar.set(Calendar.HOUR, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        return calendar.getTime();
-    }
+	public static Date makeMonthWithFirstDate(){
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(Calendar.DATE, 1);
+		calendar.set(Calendar.HOUR, 0);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		return calendar.getTime();
+	}
 
 	public static Date addMonth(Date date, int add){
 		Calendar calendar = CCDateUtil.makeCalendar(date);
@@ -194,11 +194,11 @@ public class WelfareUtil{
 		return calendar.getTime();
 	}
 
-    public static Date addDate(Date date, int add){
-        Calendar calendar = CCDateUtil.makeCalendar(date);
-        calendar.add(Calendar.DATE, add);
-        return calendar.getTime();
-    }
+	public static Date addDate(Date date, int add){
+		Calendar calendar = CCDateUtil.makeCalendar(date);
+		calendar.add(Calendar.DATE, add);
+		return calendar.getTime();
+	}
 
 	/**
 	 * convert user model list -> user name list
@@ -215,20 +215,20 @@ public class WelfareUtil{
 		return lstUserName;
 	}
 
-    /**
-     * convert user model list -> user id list
-     *
-     * @param lstUser
-     */
-    public static List<String> convert2UserId(List<UserModel> lstUser){
-        List<String> lstUserName = new ArrayList<>();
-        if(!CCCollectionUtil.isEmpty(lstUser)){
-            for(UserModel userModel : lstUser){
-                lstUserName.add(userModel.key);
-            }
-        }
-        return lstUserName;
-    }
+	/**
+	 * convert user model list -> user id list
+	 *
+	 * @param lstUser
+	 */
+	public static List<String> convert2UserId(List<UserModel> lstUser){
+		List<String> lstUserName = new ArrayList<>();
+		if(!CCCollectionUtil.isEmpty(lstUser)){
+			for(UserModel userModel : lstUser){
+				lstUserName.add(userModel.key);
+			}
+		}
+		return lstUserName;
+	}
 
 	/**
 	 * convert user model list -> user name list
@@ -286,18 +286,17 @@ public class WelfareUtil{
 		return null;
 	}
 
-    /**
-     * convert dept model list -> map
-     *
-     */
-    public static Map<String, String> convertDept2Map(List<DeptModel> lstDept, Context context){
-        Map<String, String> map = new LinkedHashMap<>();
-        map.put(CCConst.NONE, context.getString(R.string.chiase_common_all));
-        for(DeptModel deptModel : lstDept){
-            map.put(deptModel.key, deptModel.deptName);
-        }
-        return map;
-    }
+	/**
+	 * convert dept model list -> map
+	 */
+	public static Map<String, String> convertDept2Map(List<DeptModel> lstDept, Context context){
+		Map<String, String> map = new LinkedHashMap<>();
+		map.put(CCConst.NONE, context.getString(R.string.chiase_common_all));
+		for(DeptModel deptModel : lstDept){
+			map.put(deptModel.key, deptModel.deptName);
+		}
+		return map;
+	}
 
 	// // TODO: 9/6/2016 how to turn 1000.25 into 1,000.25 ?
 	// Requirement: if kpi is SALE or COUNT, use format Account
@@ -339,20 +338,20 @@ public class WelfareUtil{
 	}
 
 	public static void startCropActivity(Fragment fragment, Uri inputImage, Uri outputUri){
-        try{
-            Intent intent = new Intent("com.android.camera.action.CROP");
-            intent.setData(inputImage);
-            intent.putExtra("outputX", WelfareConst.PROFILE_SIZE_TB);
-            intent.putExtra("outputY", WelfareConst.PROFILE_SIZE_TB);
-            intent.putExtra("aspectX", 1);
-            intent.putExtra("aspectY", 1);
-            intent.putExtra("scale", true);
-            intent.putExtra("noFaceDetection", true);
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, outputUri);
-            fragment.startActivityForResult(intent, WelfareConst.RequestCode.PHOTO_CROP);
-        }catch (Exception ex){
-            ex.printStackTrace();
-        }
+		try{
+			Intent intent = new Intent("com.android.camera.action.CROP");
+			intent.setData(inputImage);
+			intent.putExtra("outputX", WelfareConst.PROFILE_SIZE_TB);
+			intent.putExtra("outputY", WelfareConst.PROFILE_SIZE_TB);
+			intent.putExtra("aspectX", 1);
+			intent.putExtra("aspectY", 1);
+			intent.putExtra("scale", true);
+			intent.putExtra("noFaceDetection", true);
+			intent.putExtra(MediaStore.EXTRA_OUTPUT, outputUri);
+			fragment.startActivityForResult(intent, WelfareConst.RequestCode.PHOTO_CROP);
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
 	}
 
 	/**
@@ -385,50 +384,54 @@ public class WelfareUtil{
 		return null;
 	}
 
-	//// TODO: 12/22/2016 delete this function 
+	//// TODO: 12/22/2016 delete this function
 	public static List<String> getServiceName(Context context){
-        List<String> lstService = new ArrayList<>();
-        lstService.add(context.getString(R.string.wf_thanks_card_service_name));
-        lstService.add(context.getString(R.string.wf_messenger_service_name));
-        lstService.add(context.getString(R.string.wf_daily_report_service_name));
-        lstService.add(context.getString(R.string.wf_shift_working_service_name));
-        lstService.add(context.getString(R.string.wf_fukuri_service_name));
-        return lstService;
-    }
+		List<String> lstService = new ArrayList<>();
+		lstService.add(context.getString(R.string.wf_thanks_card_service_name));
+		lstService.add(context.getString(R.string.wf_messenger_service_name));
+		lstService.add(context.getString(R.string.wf_daily_report_service_name));
+		lstService.add(context.getString(R.string.wf_shift_working_service_name));
+		lstService.add(context.getString(R.string.wf_fukuri_service_name));
+		return lstService;
+	}
 
-    public static List<String> getServiceCd(){
-        List<String> lstCd = new ArrayList<>();
-        lstCd.add("");
-        lstCd.add(WelfareConst.SERVICE_CD_TC);
-        lstCd.add(WelfareConst.SERVICE_CD_MS);
-        lstCd.add(WelfareConst.SERVICE_CD_DR);
-        lstCd.add(WelfareConst.SERVICE_CD_SW);
-        lstCd.add(WelfareConst.SERVICE_CD_FUKURI);
-        return lstCd;
-    }
+	public static List<String> getServiceCd(){
+		List<String> lstCd = new ArrayList<>();
+		lstCd.add("");
+		lstCd.add(WelfareConst.SERVICE_CD_TC);
+		lstCd.add(WelfareConst.SERVICE_CD_MS);
+		lstCd.add(WelfareConst.SERVICE_CD_DR);
+		lstCd.add(WelfareConst.SERVICE_CD_SW);
+		lstCd.add(WelfareConst.SERVICE_CD_FUKURI);
+		return lstCd;
+	}
 
-    public static List<String> getContactTypeCd(){
-        List<String> lstCd = new ArrayList<>();
-        lstCd.add("");
-        lstCd.add(WelfareConst.WF_CONTACT_PROBLEM);
-        lstCd.add(WelfareConst.WF_CONTACT_IMPROVE);
-        return lstCd;
-    }
+	public static List<String> getContactTypeCd(){
+		List<String> lstCd = new ArrayList<>();
+		lstCd.add("");
+		lstCd.add(WelfareConst.WF_CONTACT_PROBLEM);
+		lstCd.add(WelfareConst.WF_CONTACT_IMPROVE);
+		return lstCd;
+	}
 
-    public static ApiObjectModel findApiObject4Id(List<ApiObjectModel> lstObject, String key){
-        ApiObjectModel apiObjectModel = null;
-        if(!CCCollectionUtil.isEmpty(lstObject)){
-            for(ApiObjectModel model : lstObject){
-                if(model.key.equals(key)){
-                    apiObjectModel = model;
-                    break;
-                }
-            }
-        }
-        return apiObjectModel;
-    }
+	public static ApiObjectModel findApiObject4Id(List<ApiObjectModel> lstObject, String key){
+		ApiObjectModel apiObjectModel = null;
+		if(!CCCollectionUtil.isEmpty(lstObject)){
+			for(ApiObjectModel model : lstObject){
+				if(model.key.equals(key)){
+					apiObjectModel = model;
+					break;
+				}
+			}
+		}
+		return apiObjectModel;
+	}
 
 	public static int dpToPx(int dp){
 		return (int)(dp * Resources.getSystem().getDisplayMetrics().density);
+	}
+
+	public static int convertSp2Px(int sp, Context context){
+		return (int)(context.getResources().getDisplayMetrics().scaledDensity * sp);
 	}
 }

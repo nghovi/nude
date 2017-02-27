@@ -43,7 +43,7 @@ public class MonthlyFragment extends AbstractClFragment{
 	private MonthlyCalendarPagerAdapter		pagerAdapter;
 
 	private final Date						TODAY						= CsDateUtil.getFirstDateOfCurrentMonth();
-	private final int						ACTIVE_PAGE					= Integer.MAX_VALUE / 2;
+	private final int						ACTIVE_PAGE					= ClConst.CALENDAR_MAX_PAGE / 2;
 	private int								activePositon;
 	private ClFilterUserListDialog			filterDialog;
 	private UserListLinearLayout			lnrUserList;
@@ -65,7 +65,7 @@ public class MonthlyFragment extends AbstractClFragment{
 
 																				if(!CCCollectionUtil.isEmpty(lstCalendarUser)){
 																					lnrUserList.show(lstCalendarUser, (int)getResources().getDimension(R.dimen.margin_30dp));
-                                                                                    filterDialog.updateUserList(lstCalendarUser);
+																					filterDialog.updateUserList(lstCalendarUser);
 																				}else{
 																					lnrUserList.removeAllViews();
 																					lnrUserList.setVisibility(View.GONE);
@@ -161,8 +161,8 @@ public class MonthlyFragment extends AbstractClFragment{
 			gotoFragment(fragment);
 			break;
 		case R.id.img_id_done:
-            filterDialog.dismiss();
-            filterDialog.saveActiveUserList();
+			filterDialog.dismiss();
+			filterDialog.saveActiveUserList();
 			// load schedule list
 			MonthlyPageFragment monthlyPageFragment = (MonthlyPageFragment)pagerAdapter.getItem(activePositon);
 			monthlyPageFragment.loadScheduleList();

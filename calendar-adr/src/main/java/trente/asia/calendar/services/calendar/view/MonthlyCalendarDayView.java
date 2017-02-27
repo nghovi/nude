@@ -6,9 +6,7 @@ import java.util.Date;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -34,6 +32,7 @@ public class MonthlyCalendarDayView extends LinearLayout{
 	private LinearLayout				lnrRowContent;
 
 	public String						day;
+	public int							dayOfTheWeek;
 	private DailyScheduleClickListener	mListener;
 
 	public MonthlyCalendarDayView(Context context){
@@ -53,16 +52,12 @@ public class MonthlyCalendarDayView extends LinearLayout{
 	}
 
 	public void initialization(Date itemDate, DailyScheduleClickListener listener){
-		LayoutParams params = new LayoutParams(0, LayoutParams.WRAP_CONTENT, 1);
+		LayoutParams params = new LayoutParams(0, LayoutParams.MATCH_PARENT, 1);
 		this.setLayoutParams(params);
 		this.day = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, itemDate);
 		this.mListener = listener;
 
-		LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		View rowItemView = inflater.inflate(R.layout.monthly_calendar_row_item, null);
-		LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 1);
-		rowItemView.setLayoutParams(layoutParams);
-		rowItemView.setOnClickListener(new OnClickListener() {
+		this.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v){
@@ -72,7 +67,7 @@ public class MonthlyCalendarDayView extends LinearLayout{
 			}
 		});
 
-		TextView txtContent = (TextView)rowItemView.findViewById(R.id.txt_id_row_content);
+		TextView txtContent = (TextView)this.findViewById(R.id.txt_id_row_content);
 		txtContent.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_11, itemDate));
 		Calendar itemCalendar = CCDateUtil.makeCalendar(itemDate);
 		if(Calendar.SUNDAY == itemCalendar.get(Calendar.DAY_OF_WEEK)){
@@ -80,15 +75,14 @@ public class MonthlyCalendarDayView extends LinearLayout{
 		}else if(Calendar.SATURDAY == itemCalendar.get(Calendar.DAY_OF_WEEK)){
 			txtContent.setTextColor(Color.BLUE);
 		}
-		lnrRowContent = (LinearLayout)rowItemView.findViewById(R.id.lnr_id_row_content);
-
-		this.addView(rowItemView);
+		lnrRowContent = (LinearLayout)this.findViewById(R.id.lnr_id_row_content);
 	}
 
 	public void addSchedule(ScheduleModel scheduleModel){
 		TextView txtSchedule = new TextView(mContext);
 		txtSchedule.setMaxLines(1);
 		// txtSchedule.setEllipsize(TextUtils.TruncateAt.END);
+
 		Date startDate = WelfareUtil.makeDate(scheduleModel.startDate);
 		Date endDate = WelfareUtil.makeDate(scheduleModel.endDate);
 		if(CCDateUtil.compareDate(startDate, endDate, false) != 0){
@@ -113,7 +107,7 @@ public class MonthlyCalendarDayView extends LinearLayout{
 			}
 		}
 
-		int textSize = (int)(getResources().getDimension(R.dimen.margin_12dp) / getResources().getDisplayMetrics().density);
+		int textSize = 10;
 		txtSchedule.setTextSize(textSize);
 
 		txtSchedule.setText(scheduleModel.scheduleName);

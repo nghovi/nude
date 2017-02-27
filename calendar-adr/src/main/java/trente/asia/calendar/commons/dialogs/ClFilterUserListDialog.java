@@ -47,7 +47,7 @@ public class ClFilterUserListDialog extends ChiaseDialog{
 
 	public void updateUserList(List<UserModel> lstUser){
 		this.mLstUser = lstUser;
-		mAdapter = new FilterUserListAdapter(mContext, mLstUser);
+		mAdapter = new FilterUserListAdapter(mContext, mLstUser, mLnrUserList.getLstUser());
 
 		mLsvUser.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 

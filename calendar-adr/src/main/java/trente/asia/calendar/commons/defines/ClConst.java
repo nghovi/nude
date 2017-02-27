@@ -10,6 +10,8 @@ public class ClConst{
 
 	public static final String	APP_FOLDER						= "Welfare/Calendar";
 
+	public static final int		CALENDAR_MAX_PAGE				= 1000;
+
 	public static final String	SCHEDULE_TYPE_ALL				= "1";
 	public static final String	SCHEDULE_TYPE_PERIOD			= "2";
 
@@ -24,4 +26,6 @@ public class ClConst{
 	public static final String	SCHEDULE_REPEAT_LIMIT_FOREVER	= "F";
 	public static final String	SCHEDULE_REPEAT_LIMIT_UNTIL		= "U";
 	public static final String	SCHEDULE_REPEAT_LIMIT_AFTER		= "A";
+
+	public static final int		TEXT_VIEW_HEIGHT				= 22;
 }

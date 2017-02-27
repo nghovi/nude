@@ -84,13 +84,6 @@ public class CalendarListFragment extends AbstractClFragment{
 				lnrMyCalendar.setChecked(!isChecked);
 			}
 		});
-		lnrMyCalendar.setOnCheckedChangeListener(new CsOnCheckedChangeListener() {
-
-			@Override
-			public void onCheckedChanged(Checkable view, boolean isChecked){
-				onClickCalendar(lstCalendar.get(0), isChecked);
-			}
-		});
 	}
 
 	private void onClickCalendar(CalendarModel calendarModel, boolean isChecked){
@@ -161,11 +154,22 @@ public class CalendarListFragment extends AbstractClFragment{
 					lvCalendar.setItemChecked(position, true);
 				}
 			}
-			if(lstSelectedCalendar.contains(lstCalendar.get(0))){
-				lnrMyCalendar.setChecked(true);
-			}
+            setMyCalendarValue();
 		}
 	}
+
+    private void setMyCalendarValue(){
+        if(lstSelectedCalendar.contains(lstCalendar.get(0))){
+            lnrMyCalendar.setChecked(true);
+        }
+        lnrMyCalendar.setOnCheckedChangeListener(new CsOnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(Checkable view, boolean isChecked){
+                onClickCalendar(lstCalendar.get(0), isChecked);
+            }
+        });
+    }
 
 	private void buildSelectedCalendars(){
 		List<String> selectedCalendarIds = Arrays.asList(prefAccUtil.get(ClConst.SELECTED_CALENDAR_STRING).split(","));

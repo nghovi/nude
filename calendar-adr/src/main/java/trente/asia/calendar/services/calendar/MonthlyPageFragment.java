@@ -39,6 +39,7 @@ import trente.asia.calendar.services.calendar.listener.OnChangeCalendarUserListe
 import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.view.MonthlyCalendarDayView;
+import trente.asia.calendar.services.calendar.view.MonthlyCalendarRowView;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.define.WfUrlConst;
@@ -60,6 +61,7 @@ public class MonthlyPageFragment extends AbstractClFragment implements DailySche
 	private LinearLayout					lnrMonthlyPage;
 	private List<ScheduleModel>				lstSchedule		= new ArrayList<>();
 	private List<MonthlyCalendarDayView>	lstCalendarDay	= new ArrayList<>();
+	private List<MonthlyCalendarRowView>	lstCalendarRow	= new ArrayList<>();
 
 	private ClDailySummaryDialog			dialogDailySummary;
 	private OnChangeCalendarUserListener	changeCalendarUserListener;
@@ -147,19 +149,22 @@ public class MonthlyPageFragment extends AbstractClFragment implements DailySche
 		}
 		lnrMonthlyPage.addView(titleView);
 		lstDate4Month = CsDateUtil.getAllDate4Month(CCDateUtil.makeCalendar(activeMonth), firstDay);
-		View rowView = null;
+		MonthlyCalendarRowView rowView = null;
 		LinearLayout lnrRowContent = null;
 		for(int index = 0; index < lstDate4Month.size(); index++){
 			Date itemDate = lstDate4Month.get(index);
 			if(index % CsConst.DAY_NUMBER_A_WEEK == 0){
-				rowView = mInflater.inflate(R.layout.monthly_calendar_row, null);
+				rowView = (MonthlyCalendarRowView)mInflater.inflate(R.layout.monthly_calendar_row, null);
 				lnrRowContent = (LinearLayout)rowView.findViewById(R.id.lnr_id_row_content);
 				lnrMonthlyPage.addView(rowView);
+				lstCalendarRow.add(rowView);
 			}
 
-			MonthlyCalendarDayView dayView = new MonthlyCalendarDayView(activity);
+			MonthlyCalendarDayView dayView = (MonthlyCalendarDayView)mInflater.inflate(R.layout.monthly_calendar_row_item, null);
 			dayView.initialization(itemDate, this);
+			dayView.dayOfTheWeek = index % CsConst.DAY_NUMBER_A_WEEK;
 			lstCalendarDay.add(dayView);
+			rowView.lstCalendarDay.add(dayView);
 
 			lnrRowContent.addView(dayView);
 		}
@@ -221,12 +226,28 @@ public class MonthlyPageFragment extends AbstractClFragment implements DailySche
 			}
 
 			if(!CCCollectionUtil.isEmpty(lstSchedule)){
+				// Todo Trung: test in here
+				// for(ScheduleModel scheduleModel : lstSchedule){
+				// lstCalendarRow.get(4).addSchedule(scheduleModel);
+				// }
+				// lstCalendarRow.get(4).refreshLayout();
+
 				Collections.sort(lstSchedule, new ScheduleComparator());
 				for(ScheduleModel model : lstSchedule){
-					List<MonthlyCalendarDayView> lstActiveCalendarDay = ClUtil.findView4Day(lstCalendarDay, model.startDate, model.endDate);
+					if(model.isPeriodSchedule()){
+                        for(MonthlyCalendarRowView rowView : lstCalendarRow){
+                            String minDay = rowView.lstCalendarDay.get(0).day;
+                            String maxDay = rowView.lstCalendarDay.get(rowView.lstCalendarDay.size() - 1).day;
+                            if(ClUtil.belongPeriod(WelfareUtil.makeDate(model.startDate), minDay, maxDay) || ClUtil.belongPeriod(WelfareUtil.makeDate(model.endDate), minDay, maxDay)){
+                                rowView.addSchedule(model);
+                            }
+                        }
+					}else{
+						List<MonthlyCalendarDayView> lstActiveCalendarDay = ClUtil.findView4Day(lstCalendarDay, model.startDate, model.endDate);
 
-					for(MonthlyCalendarDayView calendarDayView : lstActiveCalendarDay){
-						calendarDayView.addSchedule(model);
+						for(MonthlyCalendarDayView calendarDayView : lstActiveCalendarDay){
+							calendarDayView.addSchedule(model);
+						}
 					}
 				}
 			}
@@ -241,6 +262,11 @@ public class MonthlyPageFragment extends AbstractClFragment implements DailySche
 					}
 				}
 			}
+
+            for(MonthlyCalendarRowView rowView : lstCalendarRow){
+                rowView.refreshLayout();
+            }
+
 			List<UserModel> lstCalendarUser = CCJsonUtil.convertToModelList(response.optString("calendarUsers"), UserModel.class);
 			if(changeCalendarUserListener != null){
 				changeCalendarUserListener.onChangeCalendarUserListener(lstCalendarUser);

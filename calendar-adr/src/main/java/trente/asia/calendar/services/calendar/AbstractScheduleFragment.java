@@ -171,10 +171,13 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 	}
 
 	protected void onChangeCalendar(String calendarId){
-		List<UserModel> calendarUsers = getAllCalendarUsers(calendars, calendarId);
-		if(!CCCollectionUtil.isEmpty(calendarUsers)){
-			lnrUserList.show(calendarUsers, (int)getResources().getDimension(R.dimen.margin_30dp));
-		}
+        List<UserModel> lstCalendar = new ArrayList<>();
+        lstCalendar.add(myself);
+        lnrUserList.show(lstCalendar, (int)getResources().getDimension(R.dimen.margin_30dp));
+//		List<UserModel> calendarUsers = getAllCalendarUsers(calendars, calendarId);
+//		if(!CCCollectionUtil.isEmpty(calendarUsers)){
+//			lnrUserList.show(calendarUsers, (int)getResources().getDimension(R.dimen.margin_30dp));
+//		}
 	}
 
 	@Override

@@ -95,4 +95,8 @@ public class UserListLinearLayout extends LinearLayout{
         }
         return builder.toString();
     }
+
+    public List<UserModel> getLstUser() {
+        return lstUser;
+    }
 }

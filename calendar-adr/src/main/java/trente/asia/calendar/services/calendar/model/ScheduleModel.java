@@ -1,8 +1,11 @@
 package trente.asia.calendar.services.calendar.model;
 
+import java.util.Date;
 import java.util.List;
 
 import trente.asia.welfare.adr.models.UserModel;
+import trente.asia.welfare.adr.utils.WelfareFormatUtil;
+import trente.asia.welfare.adr.utils.WelfareUtil;
 
 /**
  * ScheduleModel
@@ -46,4 +49,14 @@ public class ScheduleModel{
 		this.scheduleColor = "D22DB6";
 		this.isDayPeriod = true;
 	}
+
+    public boolean isPeriodSchedule(){
+        if(startDate == null || endDate == null){
+            return false;
+        }
+
+        String startDateFormat = WelfareFormatUtil.formatDate(WelfareUtil.makeDate(startDate));
+        String endDateFormat = WelfareFormatUtil.formatDate(WelfareUtil.makeDate(endDate));
+        return !startDateFormat.equals(endDateFormat);
+    }
 }

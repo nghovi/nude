@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import trente.asia.android.util.CsDateUtil;
+import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.services.calendar.MonthlyPageFragment;
 import trente.asia.calendar.services.calendar.listener.OnChangeCalendarUserListener;
 
@@ -19,7 +20,7 @@ import trente.asia.calendar.services.calendar.listener.OnChangeCalendarUserListe
  */
 public class MonthlyCalendarPagerAdapter extends FragmentPagerAdapter{
 
-	private final int							ACTIVE_PAGE	= Integer.MAX_VALUE / 2;
+	private final int							ACTIVE_PAGE	= ClConst.CALENDAR_MAX_PAGE / 2;
 	private final Date							TODAY		= CsDateUtil.getFirstDateOfCurrentMonth();
 	private Map<Integer, MonthlyPageFragment>	monthlyMap	= new HashMap<>();
 
@@ -49,6 +50,6 @@ public class MonthlyCalendarPagerAdapter extends FragmentPagerAdapter{
 	 */
 	@Override
 	public int getCount(){
-		return Integer.MAX_VALUE;
+		return ClConst.CALENDAR_MAX_PAGE;
 	}
 }

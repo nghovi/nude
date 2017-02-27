@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -38,6 +40,7 @@ public class ClScheduleRepeatDialog extends ChiaseDialog{
 
 	private RepeatWeeklyDayLinearLayout	lnrRepeatWeeklyDay;
 	private Calendar					calendarLimit	= Calendar.getInstance();
+	private DatePickerDialog			datePickerDialogLimit;
 
 	public ClScheduleRepeatDialog(Context context){
 		super(context);
@@ -57,9 +60,17 @@ public class ClScheduleRepeatDialog extends ChiaseDialog{
 		txtLimitUtil = (TextView)this.findViewById(R.id.txt_id_repeat_limit_util);
 
 		lnrRepeatWeeklyDay = (RepeatWeeklyDayLinearLayout)this.findViewById(R.id.lnr_id_repeat_weekly_day);
-        lnrRepeatWeeklyDay.initialization();
+		lnrRepeatWeeklyDay.initialization();
 
 		calendarLimit.add(Calendar.MONTH, 1);
+		datePickerDialogLimit = new DatePickerDialog(mContext, new DatePickerDialog.OnDateSetListener() {
+
+			@Override
+			public void onDateSet(DatePicker view, int year, int month, int dayOfMonth){
+				String dateString = year + "/" + CCFormatUtil.formatZero(month + 1) + "/" + CCFormatUtil.formatZero(dayOfMonth);
+				txtLimitUtil.setText(dateString);
+			}
+		}, calendarLimit.get(Calendar.YEAR), calendarLimit.get(Calendar.MONTH), calendarLimit.get(Calendar.DAY_OF_MONTH));
 
 		List<ChiaseSpinnerModel> lstRepeatType = new ArrayList<>();
 		lstRepeatType.add(new ChiaseSpinnerModel(ClConst.SCHEDULE_REPEAT_TYPE_WEEKLY, mContext.getString(R.string.cl_schedule_repeat_type_weekly)));
@@ -102,6 +113,21 @@ public class ClScheduleRepeatDialog extends ChiaseDialog{
 
 			}
 		});
+
+		txtLimitUtil.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v){
+				datePickerDialogLimit.show();
+			}
+		});
+		this.findViewById(R.id.lnr_id_done).setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v){
+				ClScheduleRepeatDialog.this.dismiss();
+			}
+		});
 	}
 
 	private void onChangeRepeatType(ChiaseSpinnerModel model){
@@ -125,4 +151,17 @@ public class ClScheduleRepeatDialog extends ChiaseDialog{
 			lnrLimitAfter.setVisibility(View.VISIBLE);
 		}
 	}
+
+    public String getRepeatValue(){
+        StringBuilder builder = new StringBuilder();
+        ChiaseSpinnerModel repeatType = (ChiaseSpinnerModel)spnRepeatType.getSelectedItem();
+        if(ClConst.SCHEDULE_REPEAT_TYPE_WEEKLY.equals(repeatType.key)){
+            builder.append("Repeats weekly ");
+        }else if(ClConst.SCHEDULE_REPEAT_TYPE_MONTHLY.equals(repeatType.key)){
+            builder.append("Repeats monthly ");
+        }else if(ClConst.SCHEDULE_REPEAT_TYPE_YEARLY.equals(repeatType.key)){
+            builder.append("Repeats yearly ");
+        }
+        return builder.toString();
+    }
 }

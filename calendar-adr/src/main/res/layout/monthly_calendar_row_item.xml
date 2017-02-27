@@ -1,7 +1,8 @@
-<LinearLayout
+<trente.asia.calendar.services.calendar.view.MonthlyCalendarDayView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="@dimen/margin_0dp"
     android:layout_height="match_parent"
+    android:layout_weight="1"
     android:background="@drawable/state_common_selectable_row2"
     android:orientation="vertical"
     android:paddingBottom="@dimen/margin_10dp"
@@ -10,10 +11,12 @@
     <TextView
         android:id="@+id/txt_id_row_content"
         style="@style/wl_common_text"
+        android:layout_height="@dimen/margin_20dp"
         android:gravity="center"/>
 
     <LinearLayout
         android:id="@+id/lnr_id_row_content"
         style="@style/cs_common_match_wrap"
-        android:orientation="vertical"/>
-</LinearLayout>
+        android:orientation="vertical"
+        android:layout_weight="1"/>
+</trente.asia.calendar.services.calendar.view.MonthlyCalendarDayView>
