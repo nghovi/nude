@@ -1,5 +1,6 @@
 package trente.asia.calendar.services.calendar;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -51,6 +52,7 @@ import trente.asia.welfare.adr.activity.WelfareFragment;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.models.ApiObjectModel;
 import trente.asia.welfare.adr.models.UserModel;
+import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
 
 import static trente.asia.welfare.adr.utils.WelfareFormatUtil.convertList2Map;
 
@@ -93,8 +95,9 @@ public class SchedulesPageFragment extends WelfareFragment implements
         updateHeaderTitles();
     }
 
-    private void updateHeaderTitles() {
+    public void updateHeaderTitles() {
         if (pagePosition == pageSharingHolder.selectedPagePosition) {
+            pageSharingHolder.selectedFragment = this;
             String title = getUpperTitle();
             List<String> selectedCalendarIds = Arrays.asList(prefAccUtil.get
                     (ClConst.SELECTED_CALENDAR_STRING).split(","));
@@ -165,8 +168,8 @@ public class SchedulesPageFragment extends WelfareFragment implements
     }
 
     protected void initDayViews() {
-        WeeklyCalendarHeaderRowView rowView = null;
         dates = getCalendarDates();
+        WeeklyCalendarHeaderRowView rowView = null;
         for (int index = 0; index < dates.size(); index++) {
             Date date = dates.get(index);
             if (index % CsConst.DAY_NUMBER_A_WEEK == 0) {
@@ -475,4 +478,6 @@ public class SchedulesPageFragment extends WelfareFragment implements
     public void setPagePosition(int pagePosition) {
         this.pagePosition = pagePosition;
     }
+
+
 }

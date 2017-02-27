@@ -1,12 +1,16 @@
 package trente.asia.calendar.services.calendar.view;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
+import trente.asia.calendar.services.calendar.MonthlyPageFragment;
 import trente.asia.calendar.services.calendar.SchedulesPageFragment;
 
 /**
@@ -21,17 +25,26 @@ public class SchedulesPagerAdapter extends FragmentPagerAdapter {
     protected PageSharingHolder pageSharingHolder;
     protected int initialPosition;
 
-    public SchedulesPagerAdapter(FragmentManager fm) {
+    private Map<Integer, SchedulesPageFragment> pagesMap = new HashMap<>();
+    private Context mContext;
+
+
+    public SchedulesPagerAdapter(FragmentManager fm, Context context) {
         super(fm);
+        mContext = context;
     }
 
     @Override
     public Fragment getItem(int position) {
-        Date selectedDate = choseSelectedDate(position);
-        SchedulesPageFragment fragment = getFragment();
-        fragment.setPageSharingHolder(this.pageSharingHolder);
-        fragment.setSelectedDate(selectedDate);
-        fragment.setPagePosition(position);
+        SchedulesPageFragment fragment = pagesMap.get(position);
+        if (fragment == null) {
+            fragment = getFragment();
+            Date selectedDate = choseSelectedDate(position);
+            fragment.setPageSharingHolder(this.pageSharingHolder);
+            fragment.setSelectedDate(selectedDate);
+            fragment.setPagePosition(position);
+            pagesMap.put(position, fragment);
+        }
         return fragment;
     }
 

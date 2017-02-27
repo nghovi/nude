@@ -8,6 +8,7 @@ import java.util.List;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.dialogs.ClFilterUserListDialog;
 import trente.asia.calendar.commons.views.UserListLinearLayout;
+import trente.asia.calendar.services.calendar.SchedulesPageFragment;
 import trente.asia.welfare.adr.models.UserModel;
 
 /**
@@ -20,6 +21,7 @@ public class PageSharingHolder {
     public final UserListLinearLayout userListLinearLayout;
     public ClFilterUserListDialog filterDialog;
     private Context mContext;
+    public SchedulesPageFragment selectedFragment;
     public int selectedPagePosition;
 
     public PageSharingHolder(NavigationHeader navigationHeader,

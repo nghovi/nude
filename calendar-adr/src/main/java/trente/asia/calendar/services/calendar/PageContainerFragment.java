@@ -66,10 +66,11 @@ public class PageContainerFragment extends AbstractClFragment {
         mPagerAdapter.setPageSharingHolder(holder);
         mPagerAdapter.setInitialPosition(INITIAL_POSITION);
         mViewPager.setAdapter(mPagerAdapter);
-        mViewPager.setCurrentItem(INITIAL_POSITION);
         holder.selectedPagePosition = INITIAL_POSITION;
         prefAccUtil.saveActiveDate(TODAY);
         setActiveDate(INITIAL_POSITION);
+        mViewPager.setCurrentItem(INITIAL_POSITION);
+
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener
                 () {
@@ -84,8 +85,14 @@ public class PageContainerFragment extends AbstractClFragment {
             public void onPageSelected(int position) {
                 setActiveDate(position);
                 holder.selectedPagePosition = position;
+                SchedulesPageFragment fragment = (SchedulesPageFragment)
+                        mPagerAdapter.getItem(position);
+                if (fragment != null) {
+                    fragment.updateHeaderTitles();
+                }
             }
         });
+
 
         ImageView imgRightIcon = (ImageView) getView().findViewById(R.id
                 .img_id_header_right_icon);
@@ -139,6 +146,6 @@ public class PageContainerFragment extends AbstractClFragment {
     }
 
     protected SchedulesPagerAdapter initPagerAdapter() {
-        return new SchedulesPagerAdapter(getChildFragmentManager());
+        return new SchedulesPagerAdapter(getChildFragmentManager(), activity);
     }
 }

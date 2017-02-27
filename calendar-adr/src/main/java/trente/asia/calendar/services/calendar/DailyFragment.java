@@ -18,7 +18,8 @@ public class DailyFragment extends PageContainerFragment {
 
     @Override
     protected SchedulesPagerAdapter initPagerAdapter() {
-        return new DailySchedulesPagerAdapter(getChildFragmentManager());
+        return new DailySchedulesPagerAdapter(getChildFragmentManager(),
+                activity);
     }
 
 

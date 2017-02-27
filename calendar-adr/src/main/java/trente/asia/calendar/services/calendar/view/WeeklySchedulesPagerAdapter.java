@@ -1,5 +1,6 @@
 package trente.asia.calendar.services.calendar.view;
 
+import android.content.Context;
 import android.support.v4.app.FragmentManager;
 
 import java.util.Date;
@@ -16,8 +17,8 @@ import trente.asia.calendar.services.calendar.WeeklyPageFragment;
 public class WeeklySchedulesPagerAdapter extends SchedulesPagerAdapter {
 
 
-    public WeeklySchedulesPagerAdapter(FragmentManager fm) {
-        super(fm);
+    public WeeklySchedulesPagerAdapter(FragmentManager fm, Context context) {
+        super(fm, context);
     }
 
     @Override
