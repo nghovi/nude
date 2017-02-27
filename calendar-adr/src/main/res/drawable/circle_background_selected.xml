@@ -5,6 +5,6 @@
     <solid android:color="@color/cl_circle_bg_selected"/>
 
     <size
-        android:width="@dimen/margin_18dp"
-        android:height="@dimen/margin_18dp"/>
+        android:width="@dimen/circle_bg_size"
+        android:height="@dimen/circle_bg_size"/>
 </shape>

@@ -42,7 +42,7 @@ public class WeeklyCalendarHeaderRowView extends LinearLayout{
 
 	public void initialization(){
 		LayoutInflater mInflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		View rowView = mInflater.inflate(R.layout.monthly_calendar_row, null);
+		View rowView = mInflater.inflate(R.layout.weekly_calendar_row, null);
 		lnrRowContent = (LinearLayout)rowView.findViewById(R.id.lnr_id_row_content);
 
 		this.addView(rowView);

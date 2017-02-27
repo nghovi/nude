@@ -1,9 +1,5 @@
 package trente.asia.calendar.services.calendar.view;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-
 import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
@@ -13,6 +9,10 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
@@ -20,8 +20,6 @@ import trente.asia.calendar.R;
 import trente.asia.calendar.services.calendar.model.CalendarDayModel;
 import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
-import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 
 /**
  * WeeklyCalendarDayView
@@ -38,6 +36,7 @@ public class WeeklyCalendarDayView extends LinearLayout {
     private TextView txtContent;
     private int bgResource = 0;
     private TextView txtScheduleMark;
+    View rowItemView;
 
     public void setDate(Date date) {
         this.date = date;
@@ -51,7 +50,7 @@ public class WeeklyCalendarDayView extends LinearLayout {
 
     public interface OnDayClickListener {
 
-        public void onDayClick(WeeklyCalendarDayView calendarDayModel);
+        public void onDayClick(String dayStr);
     }
 
     public WeeklyCalendarDayView(Context context) {
@@ -87,23 +86,19 @@ public class WeeklyCalendarDayView extends LinearLayout {
 
         if (calendarDayModel != null && !CCCollectionUtil.isEmpty
                 (calendarDayModel
-                        .schedules))
-
-        {
+                        .schedules)) {
             txtScheduleMark.setVisibility(View.VISIBLE);
         } else {
-            txtScheduleMark.setVisibility(View.GONE);
+            txtScheduleMark.setVisibility(View.INVISIBLE);
         }
     }
 
     public void setSelected(boolean selected) {
         if (selected) {
-            //// TODO: 2/23/2017 why setBackgroundResource doesn't work
-            txtContent.setTextColor(Color.YELLOW);
-            txtContent.setBackgroundResource(R.drawable
+            rowItemView.setBackgroundResource(R.drawable
                     .circle_background_selected);
         } else {
-            txtContent.setBackgroundResource(this.bgResource);
+            rowItemView.setBackgroundResource(this.bgResource);
         }
     }
 
@@ -116,20 +111,21 @@ public class WeeklyCalendarDayView extends LinearLayout {
 
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService
                 (Context.LAYOUT_INFLATER_SERVICE);
-        View rowItemView = inflater.inflate(R.layout
+        LinearLayout itemView = (LinearLayout) inflater.inflate(R.layout
                 .weekly_calendar_row_header_item, null);
+        rowItemView = itemView.findViewById(R.id.rlt_day_view);
         txtContent = (TextView) rowItemView.findViewById(R.id
                 .txt_id_row_content);
         LayoutParams layoutParams = new LayoutParams(0, ViewGroup
                 .LayoutParams.WRAP_CONTENT, 1);
-        rowItemView.setLayoutParams(layoutParams);
+        itemView.setLayoutParams(layoutParams);
 
-        rowItemView.setOnClickListener(new OnClickListener() {
+        itemView.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 if (onDayClickListener != null && calendarDayModel != null) {
-                    onDayClickListener.onDayClick(WeeklyCalendarDayView.this);
+                    onDayClickListener.onDayClick(dayStr);
                 }
             }
         });
@@ -144,7 +140,7 @@ public class WeeklyCalendarDayView extends LinearLayout {
 
         setSelected(false);
 
-        txtScheduleMark = (TextView) rowItemView.findViewById(R.id
+        txtScheduleMark = (TextView) itemView.findViewById(R.id
                 .txt_id_row_schedule_mark);
 
 
@@ -159,8 +155,6 @@ public class WeeklyCalendarDayView extends LinearLayout {
             txtContent.setTextColor(Color.BLUE);
         }
 
-        this.
-
-                addView(rowItemView);
+        this.addView(itemView);
     }
 }

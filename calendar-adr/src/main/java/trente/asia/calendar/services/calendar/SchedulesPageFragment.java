@@ -1,6 +1,5 @@
 package trente.asia.calendar.services.calendar;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -52,7 +51,6 @@ import trente.asia.welfare.adr.activity.WelfareFragment;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.models.ApiObjectModel;
 import trente.asia.welfare.adr.models.UserModel;
-import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
 
 import static trente.asia.welfare.adr.utils.WelfareFormatUtil.convertList2Map;
 
@@ -257,20 +255,18 @@ public class SchedulesPageFragment extends WelfareFragment implements
     }
 
     @Override
-    public void onDayClick(WeeklyCalendarDayView dayView) {
-        updateDayViews(dayView);
-        int selectedPosition = adapter.findPosition4Code(dayView
-                .calendarDayModel.date);
+    public void onDayClick(String dayStr) {
+        updateDayViews(dayStr);
+        int selectedPosition = adapter.findPosition4Code(dayStr);
         observableListView.setSelection(selectedPosition);
     }
 
-    protected void updateDayViews(WeeklyCalendarDayView dayView) {
+    protected void updateDayViews(String dayStr) {
         for (WeeklyCalendarDayView view : calendarDayViews) {
-            if (CCDateUtil.compareDate(dayView.getDate(), view.getDate(),
-                    false) == 0) {
-                dayView.setSelected(true);
+            if (dayStr.equals(view.dayStr)) {
+                view.setSelected(true);
             } else {
-                dayView.setSelected(false);
+                view.setSelected(false);
             }
         }
     }

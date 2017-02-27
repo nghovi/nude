@@ -84,9 +84,10 @@ public class DailyPageFragment extends SchedulesPageFragment implements
     }
 
     @Override
-    public void onDayClick(WeeklyCalendarDayView dayView) {
-        selectedDate = dayView.getDate();
-        updateDayViews(dayView);
+    public void onDayClick(String dayStr) {
+        selectedDate = CCDateUtil.makeDateCustom(dayStr, WelfareConst
+                .WL_DATE_TIME_7);
+        updateDayViews(dayStr);
         updateObservableListView();
     }
 
