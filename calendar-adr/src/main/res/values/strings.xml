@@ -42,6 +42,13 @@
     <string name="cl_schedule_repeat_type_monthly">Monthly</string>
     <string name="cl_schedule_repeat_type_yearly">Yearly</string>
 
+    <string name="cl_schedule_repeat_weekly_message">Repeats weekly on %1$s</string>
+    <string name="cl_schedule_repeat_monthly_message">Repeats monthly</string>
+    <string name="cl_schedule_repeat_yearly_message">Repeats yearly</string>
+    <string name="cl_schedule_repeat_until_message">, until %1$s.</string>
+    <string name="cl_schedule_repeat_for_message">, for %1$s times.</string>
+    <string name="cl_schedule_repeat_for_one_message">, for 1 time.</string>
+
     <string name="cl_schedule_repeat_limit_forever">Forever</string>
     <string name="cl_schedule_repeat_limit_until">Until</string>
     <string name="cl_schedule_repeat_limit_after">After</string>

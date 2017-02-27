@@ -176,24 +176,24 @@ public class ClScheduleRepeatDialog extends ChiaseDialog{
 			if(CCStringUtil.isEmpty(selectedDays)){
 				builder.append(mContext.getString(R.string.chiase_common_none));
 			}else{
-				builder.append("Repeats weekly on " + selectedDays);
+				builder.append(mContext.getString(R.string.cl_schedule_repeat_weekly_message, selectedDays));
 			}
 		}else if(ClConst.SCHEDULE_REPEAT_TYPE_MONTHLY.equals(repeatType.key)){
-			builder.append("Repeats monthly");
+			builder.append(mContext.getString(R.string.cl_schedule_repeat_monthly_message));
 		}else if(ClConst.SCHEDULE_REPEAT_TYPE_YEARLY.equals(repeatType.key)){
-			builder.append("Repeats yearly");
+			builder.append(mContext.getString(R.string.cl_schedule_repeat_yearly_message));
 		}
 
 		ChiaseSpinnerModel repeatLimit = (ChiaseSpinnerModel)spnRepeatLimit.getSelectedItem();
 		if(ClConst.SCHEDULE_REPEAT_LIMIT_FOREVER.equals(repeatLimit.key)){
 		}else if(ClConst.SCHEDULE_REPEAT_LIMIT_UNTIL.equals(repeatLimit.key)){
-			builder.append(", until " + txtLimitUtil.getText());
+			builder.append(mContext.getString(R.string.cl_schedule_repeat_until_message, txtLimitUtil.getText()));
 		}else{
 			String timesValue = edtLimitTimes.getText().toString();
 			if(CCStringUtil.isEmpty(timesValue)){
-				builder.append(", for 1 times");
+				builder.append(mContext.getString(R.string.cl_schedule_repeat_for_one_message));
 			}else{
-				builder.append(", for " + timesValue + " times");
+				builder.append(mContext.getString(R.string.cl_schedule_repeat_for_message, timesValue));
 			}
 		}
 
