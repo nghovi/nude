@@ -243,14 +243,15 @@
             <View style="@style/cs_common_divider"/>
 
             <LinearLayout
-                style="@style/wf_common_item_linear2">
+                android:id="@+id/lnr_id_join_user_list"
+                style="@style/wf_common_item_linear2"
+                android:background="@drawable/state_common_selectable_row"
+                android:minHeight="@dimen/margin_30dp">
 
                 <trente.asia.calendar.commons.views.UserListLinearLayout
-                    android:id="@+id/lnr_fragment_pager_container_user_list"
-                    style="@style/cs_common_match_wrap"
-                    android:background="@drawable/state_common_selectable_row"/>
+                    android:id="@+id/lnr_id_container_join_user_list"
+                    style="@style/cs_common_match_wrap"/>
 
-                <!--<include layout="@layout/view_horizontal_user_list"/>-->
             </LinearLayout>
 
             <View style="@style/cs_common_divider"/>
