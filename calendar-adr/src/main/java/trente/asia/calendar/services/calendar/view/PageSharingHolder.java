@@ -2,13 +2,13 @@ package trente.asia.calendar.services.calendar.view;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.ImageView;
 
 import java.util.List;
 
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.dialogs.ClFilterUserListDialog;
 import trente.asia.calendar.commons.views.UserListLinearLayout;
-import trente.asia.calendar.services.calendar.SchedulesPageFragment;
 import trente.asia.welfare.adr.models.UserModel;
 
 /**
@@ -24,12 +24,23 @@ public class PageSharingHolder {
     public int selectedPagePosition;
 
     public PageSharingHolder(NavigationHeader navigationHeader,
-                             UserListLinearLayout userListLinearLayout) {
+                             UserListLinearLayout userListLinearLayout, final
+                             View.OnClickListener listener) {
         this.mContext = navigationHeader.getContext();
         this.navigationHeader = navigationHeader;
         this.userListLinearLayout = userListLinearLayout;
         filterDialog = new ClFilterUserListDialog(mContext,
                 userListLinearLayout);
+        ImageView imgDone = (ImageView) filterDialog.findViewById(R.id
+                .img_id_done);
+        imgDone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                filterDialog.dismiss();
+                filterDialog.saveActiveUserList();
+                listener.onClick(v);
+            }
+        });
         this.userListLinearLayout.setOnClickListener(new View.OnClickListener
                 () {
 
