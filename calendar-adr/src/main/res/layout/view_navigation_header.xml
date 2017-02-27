@@ -1,8 +1,8 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android">
 
     <trente.asia.calendar.services.calendar.view.NavigationHeader
-        style="@style/cs_common_match_wrap"
         android:id="@+id/lnr_navigation_header"
+        style="@style/cs_common_match_wrap"
         android:background="@color/wf_app_color_base"
         android:gravity="center_vertical"
         android:orientation="horizontal">
@@ -54,7 +54,6 @@
                     android:ellipsize="end"
                     android:gravity="center_horizontal"
                     android:singleLine="true"
-                    android:text="December, 2017"
                     android:textColor="@color/chiase_white"
                     android:textSize="14sp"/>
 
@@ -65,7 +64,6 @@
                     android:ellipsize="end"
                     android:gravity="center_horizontal"
                     android:singleLine="true"
-                    android:text="2 calendar"
                     android:textColor="@color/chiase_white"
                     android:textSize="12sp"/>
             </LinearLayout>
