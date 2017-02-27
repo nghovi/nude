@@ -144,6 +144,7 @@ public class MonthlyPageFragment extends AbstractClFragment implements DailySche
 			}else if(Calendar.SATURDAY == dayModel.dayOfWeek){
 				txtTitleItem.setTextColor(Color.BLUE);
 			}
+
 			txtTitleItem.setText(dayModel.day);
 			lnrRowTitle.addView(titleItem);
 		}
@@ -161,7 +162,7 @@ public class MonthlyPageFragment extends AbstractClFragment implements DailySche
 			}
 
 			MonthlyCalendarDayView dayView = (MonthlyCalendarDayView)mInflater.inflate(R.layout.monthly_calendar_row_item, null);
-			dayView.initialization(itemDate, this);
+			dayView.initialization(itemDate, this, CsDateUtil.isDiffMonth(itemDate, activeMonth));
 			dayView.dayOfTheWeek = index % CsConst.DAY_NUMBER_A_WEEK;
 			lstCalendarDay.add(dayView);
 			rowView.lstCalendarDay.add(dayView);
