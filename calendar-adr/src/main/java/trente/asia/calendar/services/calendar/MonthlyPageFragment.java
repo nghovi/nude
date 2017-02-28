@@ -261,6 +261,11 @@ public class MonthlyPageFragment extends AbstractClFragment implements DailySche
 			}
 
 			List<UserModel> lstCalendarUser = CCJsonUtil.convertToModelList(response.optString("calendarUsers"), UserModel.class);
+//            check is my calendar
+            if(CCCollectionUtil.isEmpty(lstCalendarUser)){
+                lstCalendarUser = new ArrayList<>();
+                lstCalendarUser.add(prefAccUtil.getUserPref());
+            }
 			if(changeCalendarUserListener != null){
 				changeCalendarUserListener.onChangeCalendarUserListener(lstCalendarUser);
 			}

@@ -119,7 +119,7 @@ public class ClUtil{
 	 * getTargetUserList
 	 */
 	public static List<UserModel> getTargetUserList(List<UserModel> lstUser, String targetUserData){
-		if(!CCStringUtil.isEmpty(targetUserData)){
+		if(CCStringUtil.isEmpty(targetUserData)){
 			return lstUser;
 		}
 
