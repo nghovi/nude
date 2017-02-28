@@ -11,12 +11,15 @@
     <TextView
         android:id="@+id/txt_id_row_content"
         style="@style/wl_common_text"
-        android:layout_height="@dimen/margin_20dp"
-        android:gravity="center"/>
+        android:layout_width="@dimen/margin_18dp"
+        android:layout_height="@dimen/margin_18dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textSize="@dimen/margin_10dp"/>
 
     <LinearLayout
         android:id="@+id/lnr_id_row_content"
         style="@style/cs_common_match_wrap"
-        android:orientation="vertical"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:orientation="vertical"/>
 </trente.asia.calendar.services.calendar.view.MonthlyCalendarDayView>

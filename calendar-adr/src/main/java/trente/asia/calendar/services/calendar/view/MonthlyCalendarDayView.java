@@ -78,10 +78,15 @@ public class MonthlyCalendarDayView extends LinearLayout{
 		if(isWithoutMonth){
 			txtContent.setTextColor(Color.GRAY);
 		}else{
-			if(Calendar.SUNDAY == itemCalendar.get(Calendar.DAY_OF_WEEK)){
-				txtContent.setTextColor(Color.RED);
-			}else if(Calendar.SATURDAY == itemCalendar.get(Calendar.DAY_OF_WEEK)){
-				txtContent.setTextColor(Color.BLUE);
+			if(CCDateUtil.isToday(itemDate)){
+				txtContent.setBackgroundResource(R.drawable.shape_background_today);
+				txtContent.setTextColor(Color.WHITE);
+			}else{
+				if(Calendar.SUNDAY == itemCalendar.get(Calendar.DAY_OF_WEEK)){
+					txtContent.setTextColor(Color.RED);
+				}else if(Calendar.SATURDAY == itemCalendar.get(Calendar.DAY_OF_WEEK)){
+					txtContent.setTextColor(Color.BLUE);
+				}
 			}
 		}
 
