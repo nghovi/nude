@@ -20,6 +20,7 @@ import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.dialogs.ClFilterUserListDialog;
 import trente.asia.calendar.commons.fragments.AbstractClFragment;
+import trente.asia.calendar.commons.utils.ClUtil;
 import trente.asia.calendar.commons.views.UserListLinearLayout;
 import trente.asia.calendar.services.calendar.listener.OnChangeCalendarListener;
 import trente.asia.calendar.services.calendar.listener.OnChangeCalendarUserListener;
@@ -47,11 +48,14 @@ public class MonthlyFragment extends AbstractClFragment{
 	private int								activePositon;
 	private ClFilterUserListDialog			filterDialog;
 	private UserListLinearLayout			lnrUserList;
+	private boolean							isRefreshFilterUser			= true;
 
 	private OnChangeCalendarListener		onChangeCalendarListener	= new OnChangeCalendarListener() {
 
 																			@Override
 																			public void onChangeCalendarListener(){
+                                                                                prefAccUtil.set(ClConst.PREF_ACTIVE_USER_LIST, "");
+																				isRefreshFilterUser = true;
 																				// load schedule list
 																				MonthlyPageFragment fragment = (MonthlyPageFragment)pagerAdapter.getItem(activePositon);
 																				fragment.loadScheduleList();
@@ -62,13 +66,16 @@ public class MonthlyFragment extends AbstractClFragment{
 
 																			@Override
 																			public void onChangeCalendarUserListener(List<UserModel> lstCalendarUser){
-
-																				if(!CCCollectionUtil.isEmpty(lstCalendarUser)){
-																					lnrUserList.show(lstCalendarUser, (int)getResources().getDimension(R.dimen.margin_30dp));
-																					filterDialog.updateUserList(lstCalendarUser);
-																				}else{
-																					lnrUserList.removeAllViews();
-																					lnrUserList.setVisibility(View.GONE);
+																				if(isRefreshFilterUser){
+																					isRefreshFilterUser = false;
+																					if(!CCCollectionUtil.isEmpty(lstCalendarUser)){
+																						String targetUserData = prefAccUtil.get(ClConst.PREF_ACTIVE_USER_LIST);
+																						lnrUserList.show(ClUtil.getTargetUserList(lstCalendarUser, targetUserData), (int)getResources().getDimension(R.dimen.margin_30dp));
+																						filterDialog.updateUserList(lstCalendarUser);
+																					}else{
+																						lnrUserList.removeAllViews();
+																						lnrUserList.setVisibility(View.GONE);
+																					}
 																				}
 																			}
 																		};

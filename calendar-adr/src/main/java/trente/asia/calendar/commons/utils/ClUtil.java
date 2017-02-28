@@ -2,6 +2,7 @@ package trente.asia.calendar.commons.utils;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -46,8 +47,8 @@ public class ClUtil{
 			return lstCalendarDay;
 		}
 
-//		Date startDate = CCDateUtil.makeDate(WelfareFormatUtil.makeDate(startDateString));
-//		Date endDate = CCDateUtil.makeDate(WelfareFormatUtil.makeDate(endDateString));
+		// Date startDate = CCDateUtil.makeDate(WelfareFormatUtil.makeDate(startDateString));
+		// Date endDate = CCDateUtil.makeDate(WelfareFormatUtil.makeDate(endDateString));
 		for(MonthlyCalendarDayView dayView : lstView){
 			Date dateView = WelfareFormatUtil.makeDate(dayView.day);
 			if(belongPeriod(dateView, startDateString, endDateString)){
@@ -67,7 +68,7 @@ public class ClUtil{
 
 		Date minDate = CCDateUtil.makeDate(WelfareFormatUtil.makeDate(min));
 		Date maxDate = CCDateUtil.makeDate(WelfareFormatUtil.makeDate(max));
-        Date activeDate = CCDateUtil.makeDate(date);
+		Date activeDate = CCDateUtil.makeDate(date);
 
 		if(activeDate.compareTo(minDate) >= 0 && activeDate.compareTo(maxDate) <= 0){
 			return true;
@@ -88,29 +89,47 @@ public class ClUtil{
 		return builder.toString();
 	}
 
-    public static List<UserModel> getJoinedUserModels(ScheduleModel schedule, List<UserModel> userModels){
-        List<UserModel> joinUsers = new ArrayList<>();
-        if(userModels != null && !CCStringUtil.isEmpty(schedule.joinUsers)){
-            for(String userId : schedule.joinUsers.split(",")){
-                UserModel userModel = UserModel.getUserModel(userId, userModels);
-                if(userModel != null){
-                    joinUsers.add(userModel);
-                }
-            }
-        }
-        return joinUsers;
-    }
+	public static List<UserModel> getJoinedUserModels(ScheduleModel schedule, List<UserModel> userModels){
+		List<UserModel> joinUsers = new ArrayList<>();
+		if(userModels != null && !CCStringUtil.isEmpty(schedule.joinUsers)){
+			for(String userId : schedule.joinUsers.split(",")){
+				UserModel userModel = UserModel.getUserModel(userId, userModels);
+				if(userModel != null){
+					joinUsers.add(userModel);
+				}
+			}
+		}
+		return joinUsers;
+	}
 
-    /**
-     * getMaxInList
-     */
-    public static int getMaxInList(List<MonthlyCalendarDayView> lstDay){
-        int maxSchedule = 0;
-        for(MonthlyCalendarDayView dayView : lstDay){
-            if(maxSchedule < dayView.getNumberOfSchedule()){
-                maxSchedule = dayView.getNumberOfSchedule();
-            }
-        }
-        return maxSchedule;
-    }
+	/**
+	 * getMaxInList
+	 */
+	public static int getMaxInList(List<MonthlyCalendarDayView> lstDay){
+		int maxSchedule = 0;
+		for(MonthlyCalendarDayView dayView : lstDay){
+			if(maxSchedule < dayView.getNumberOfSchedule()){
+				maxSchedule = dayView.getNumberOfSchedule();
+			}
+		}
+		return maxSchedule;
+	}
+
+	/**
+	 * getTargetUserList
+	 */
+	public static List<UserModel> getTargetUserList(List<UserModel> lstUser, String targetUserData){
+		if(!CCStringUtil.isEmpty(targetUserData)){
+			return lstUser;
+		}
+
+		List<String> targetUserListId = Arrays.asList(targetUserData.split(","));
+		List<UserModel> lstTargetUser = new ArrayList<>();
+		for(UserModel userModel : lstUser){
+			if(targetUserListId.contains(userModel.key)){
+				lstTargetUser.add(userModel);
+			}
+		}
+		return lstTargetUser;
+	}
 }
