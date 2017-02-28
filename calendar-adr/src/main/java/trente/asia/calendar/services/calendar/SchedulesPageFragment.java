@@ -303,9 +303,11 @@ public abstract class SchedulesPageFragment extends WelfareFragment implements
     abstract protected void updateObservableScrollableView();
 
     protected String getCalendarName(String calendarId) {
-        for (CalendarModel calendarModel : calendars) {
-            if (calendarModel.key.equals(calendarId)) {
-                return calendarModel.calendarName;
+        if (!CCCollectionUtil.isEmpty(calendars)) {
+            for (CalendarModel calendarModel : calendars) {
+                if (calendarModel.key.equals(calendarId)) {
+                    return calendarModel.calendarName;
+                }
             }
         }
         return "";

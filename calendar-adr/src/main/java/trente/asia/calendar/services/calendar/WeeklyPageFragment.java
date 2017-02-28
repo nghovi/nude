@@ -17,7 +17,6 @@ import asia.chiase.core.util.CCNumberUtil;
 import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.services.calendar.model.CalendarDayModel;
-import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.view.CalendarDayListAdapter;
 import trente.asia.calendar.services.calendar.view.CalendarView;
 import trente.asia.calendar.services.calendar.view.WeeklyCalendarDayView;
@@ -60,14 +59,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements
     protected void updateObservableScrollableView() {
         List<CalendarDayModel> displayedModels = getDisplayedDayForList();
         adapter = new CalendarDayListAdapter(activity, R.layout
-                .item_calendar_day, displayedModels, new
-                CalendarDayListAdapter.OnScheduleClickListener() {
-
-                    @Override
-                    public void onClickSchedule(ScheduleModel schedule) {
-                        onClickSchedule(schedule);
-                    }
-                });
+                .item_calendar_day, displayedModels, this);
         observableListView.setAdapter(adapter);
     }
 

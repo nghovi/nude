@@ -131,6 +131,7 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 			if(!CCStringUtil.isEmpty(schedule.categoryId)){
 				txtCategory.setTextColor(Color.parseColor("#" + schedule.categoryId));
 			}
+			if (lnrUserList != null)
 			lnrUserList.show(schedule.scheduleJoinUsers, (int)getResources().getDimension(R.dimen.margin_30dp));
 
 			// set time
