@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.github.ksoichiro.android.observablescrollview.ObservableListView;
 import com.github.ksoichiro.android.observablescrollview
         .ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
@@ -59,12 +58,11 @@ import static trente.asia.welfare.adr.utils.WelfareFormatUtil.convertList2Map;
  *
  * @author TrungND
  */
-public class SchedulesPageFragment extends WelfareFragment implements
+public abstract class SchedulesPageFragment extends WelfareFragment implements
         ObservableScrollViewCallbacks, CalendarView
         .OnCalendarDaySelectedListener, WeeklyCalendarDayView
-        .OnDayClickListener {
+        .OnDayClickListener, CalendarDayListAdapter.OnScheduleClickListener {
 
-    protected ObservableListView observableListView;
     protected Date selectedDate;
 
     protected LinearLayout lnrDaysContainer;
@@ -72,7 +70,6 @@ public class SchedulesPageFragment extends WelfareFragment implements
             ArrayList<>();
     protected List<UserModel> filteredUsers = new ArrayList<>();
     protected List<CalendarDayModel> calendarDayModels;
-    protected CalendarDayListAdapter adapter;
     protected List<Date> dates;
     protected List<CalendarModel> calendars;
     protected List<WeeklyCalendarDayView> calendarDayViews = new ArrayList<>();
@@ -80,6 +77,7 @@ public class SchedulesPageFragment extends WelfareFragment implements
     protected List<HolidayModel> holidayModels;
     protected List<ScheduleModel> schedules;
     protected int pagePosition;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -121,10 +119,6 @@ public class SchedulesPageFragment extends WelfareFragment implements
         super.initView();
         lnrDaysContainer = (LinearLayout) getView().findViewById(R.id
                 .lnr_calendar_container);
-        observableListView = (ObservableListView) getView().findViewById(R.id
-                .lst_calendar_day);
-        observableListView.setScrollViewCallbacks(this);
-        observableListView.setDivider(null);
         initCalendarView();
     }
 
@@ -228,7 +222,8 @@ public class SchedulesPageFragment extends WelfareFragment implements
     }
 
 
-    private void onClickSchedule(ScheduleModel schedule) {
+    @Override
+    final public void onClickSchedule(ScheduleModel schedule) {
         ScheduleDetailFragment fragment = new ScheduleDetailFragment();
         fragment.setSchedule(schedule);
         android.support.v4.app.FragmentManager manager = getParentFragment()
@@ -237,7 +232,6 @@ public class SchedulesPageFragment extends WelfareFragment implements
         transaction.replace(trente.asia.android.R.id.ipt_id_body, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
-
     }
 
     @Override
@@ -255,11 +249,7 @@ public class SchedulesPageFragment extends WelfareFragment implements
     }
 
     @Override
-    public void onDayClick(String dayStr) {
-        updateDayViews(dayStr);
-        int selectedPosition = adapter.findPosition4Code(dayStr);
-        observableListView.setSelection(selectedPosition);
-    }
+    abstract public void onDayClick(String dayStr);
 
     protected void updateDayViews(String dayStr) {
         for (WeeklyCalendarDayView view : calendarDayViews) {
@@ -300,22 +290,10 @@ public class SchedulesPageFragment extends WelfareFragment implements
         }
 
         updateHeaderTitles();
-        updateObservableListView();
+        updateObservableScrollableView();
     }
 
-    protected void updateObservableListView() {
-        List<CalendarDayModel> displayedModels = getDisplayedDayForList();
-        adapter = new CalendarDayListAdapter(activity, R.layout
-                .item_calendar_day, displayedModels, new
-                CalendarDayListAdapter.OnScheduleClickListener() {
-
-                    @Override
-                    public void onClick(ScheduleModel schedule) {
-                        onClickSchedule(schedule);
-                    }
-                });
-        observableListView.setAdapter(adapter);
-    }
+    abstract protected void updateObservableScrollableView();
 
     protected String getCalendarName(String calendarId) {
         for (CalendarModel calendarModel : calendars) {

@@ -1,7 +1,5 @@
 package trente.asia.calendar.services.calendar.view;
 
-import java.util.List;
-
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
@@ -11,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import java.util.List;
 
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.calendar.BuildConfig;
@@ -36,7 +36,7 @@ public class CalendarDayListAdapter extends ArrayAdapter<CalendarDayModel> {
 
     public interface OnScheduleClickListener {
 
-        public void onClick(ScheduleModel schedule);
+        void onClickSchedule(ScheduleModel schedule);
     }
 
     public CalendarDayListAdapter(Context context, int resource,
@@ -70,57 +70,68 @@ public class CalendarDayListAdapter extends ArrayAdapter<CalendarDayModel> {
         }
         CalendarDayModel calendarDay = getItem(position);
         viewHolder.txtDay.setText(calendarDay.date);
-        buildEventList(viewHolder, calendarDay);
+        buildScheduleList(viewHolder, calendarDay);
         return convertView;
     }
 
-    private void buildEventList(ViewHolder viewHolder, CalendarDayModel
+    private void buildScheduleList(ViewHolder viewHolder, CalendarDayModel
             calendarDay) {
         viewHolder.lnrEventList.removeAllViews();
         for (final ScheduleModel schedule : calendarDay.schedules) {
-            View lnrSchedulesContainer = layoutInflater.inflate(R.layout
-                    .item_schedule, null);
+            View lnrSchedulesContainer = buildScheduleItem(getContext(),
+                    layoutInflater, schedule, onScheduleClickListener);
+            viewHolder.lnrEventList.addView(lnrSchedulesContainer);
+        }
+    }
 
-            TextView txtScheduleName = (TextView) lnrSchedulesContainer
-                    .findViewById(R.id.txt_item_schedule_name);
-            txtScheduleName.setText(schedule.scheduleName);
+    public static View buildScheduleItem(Context context, LayoutInflater
+            layoutInflater, final ScheduleModel schedule, final
+                                         OnScheduleClickListener
+                                                 onScheduleClickListener) {
+        LinearLayout lnrSchedulesContainer = (LinearLayout) layoutInflater
+                .inflate(R.layout
+                        .item_schedule, null);
 
-            TextView txtScheduleCategory = (TextView) lnrSchedulesContainer
-                    .findViewById(R.id.txt_item_schedule_category);
-            if (!CCStringUtil.isEmpty(schedule.categoryId)) {
-                txtScheduleCategory.setTextColor(Color.parseColor("#" +
-                        schedule.categoryId));
-            }
-            txtScheduleCategory.setText(schedule.categoryName);
+        TextView txtScheduleName = (TextView) lnrSchedulesContainer
+                .findViewById(R.id.txt_item_schedule_name);
+        txtScheduleName.setText(schedule.scheduleName);
 
-            TextView txtScheduleTime = (TextView) lnrSchedulesContainer
-                    .findViewById(R.id.txt_item_schedule_time);
-            txtScheduleTime.setText(schedule.startTime + " - " + schedule
-                    .endTime);
+        TextView txtScheduleCategory = (TextView) lnrSchedulesContainer
+                .findViewById(R.id.txt_item_schedule_category);
+        if (!CCStringUtil.isEmpty(schedule.categoryId)) {
+            txtScheduleCategory.setTextColor(Color.parseColor("#" +
+                    schedule.categoryId));
+        }
+        txtScheduleCategory.setText(schedule.categoryName);
 
-            SelectableRoundedImageView imgCalendar =
-                    (SelectableRoundedImageView) lnrSchedulesContainer
-                            .findViewById(R.id.img_item_schedule_calendar);
-            WfPicassoHelper.loadImage(getContext(), BuildConfig.HOST +
-                    schedule.calendar.imagePath, imgCalendar, null);
+        TextView txtScheduleTime = (TextView) lnrSchedulesContainer
+                .findViewById(R.id.txt_item_schedule_time);
+        txtScheduleTime.setText(schedule.startTime + " - " + schedule
+                .endTime);
 
-            SelectableRoundedImageView imgDup = (SelectableRoundedImageView)
-                    lnrSchedulesContainer.findViewById(R.id
-                            .img_item_schedule_calendar);
-            // WfPicassoHelper.loadImage(getContext(), BuildConfig.HOST +
-            // schedule.calendar.imagePath, imgDup, null);
+        SelectableRoundedImageView imgCalendar =
+                (SelectableRoundedImageView) lnrSchedulesContainer
+                        .findViewById(R.id.img_item_schedule_calendar);
+        WfPicassoHelper.loadImage(context, BuildConfig.HOST +
+                schedule.calendar.imagePath, imgCalendar, null);
 
-            SelectableRoundedImageView imgType = (SelectableRoundedImageView)
-                    lnrSchedulesContainer.findViewById(R.id
-                            .img_item_schedule_calendar);
-            // WfPicassoHelper.loadImage(getContext(), BuildConfig.HOST +
-            // schedule.calendar.imagePath, imgType, null);
+        SelectableRoundedImageView imgDup = (SelectableRoundedImageView)
+                lnrSchedulesContainer.findViewById(R.id
+                        .img_item_schedule_calendar);
+        // WfPicassoHelper.loadImage(getContext(), BuildConfig.HOST +
+        // schedule.calendar.imagePath, imgDup, null);
+
+        SelectableRoundedImageView imgType = (SelectableRoundedImageView)
+                lnrSchedulesContainer.findViewById(R.id
+                        .img_item_schedule_calendar);
+        // WfPicassoHelper.loadImage(getContext(), BuildConfig.HOST +
+        // schedule.calendar.imagePath, imgType, null);
 
 //			final HorizontalUserListView horizontalUserListView =
 // (HorizontalUserListView)calendarEvents.findViewById(R.id
 // .view_horizontal_user_list);
-            final List<UserModel> joinedUser = ClUtil.getJoinedUserModels
-                    (schedule, schedule.calendar.calendarUsers);
+        final List<UserModel> joinedUser = ClUtil.getJoinedUserModels
+                (schedule, schedule.calendar.calendarUsers);
 //			horizontalUserListView.post(new Runnable() {
 //
 //				@Override
@@ -130,24 +141,25 @@ public class CalendarDayListAdapter extends ArrayAdapter<CalendarDayModel> {
 //				}
 //			});
 
-            UserListLinearLayout userListLinearLayout =
-                    (UserListLinearLayout) lnrSchedulesContainer.findViewById
-                            (R.id.item_schedule_user_list_linear_layout);
-            userListLinearLayout.show(joinedUser, (int) context.getResources
-                    ().getDimension(R.dimen.margin_30dp));
+        UserListLinearLayout userListLinearLayout =
+                (UserListLinearLayout) lnrSchedulesContainer.findViewById
+                        (R.id.item_schedule_user_list_linear_layout);
+        userListLinearLayout.show(joinedUser, (int) context.getResources
+                ().getDimension(R.dimen.margin_30dp));
 
 
-            lnrSchedulesContainer.setFocusable(true);
-            lnrSchedulesContainer.setOnClickListener(new View.OnClickListener
-                    () {
+        lnrSchedulesContainer.setFocusable(true);
+        lnrSchedulesContainer.setOnClickListener(new View.OnClickListener
+                () {
 
-                @Override
-                public void onClick(View v) {
-                    onScheduleClickListener.onClick(schedule);
-                }
-            });
-            viewHolder.lnrEventList.addView(lnrSchedulesContainer);
-        }
+            @Override
+            public void onClick(View v) {
+                onScheduleClickListener.onClickSchedule
+                        (schedule);
+            }
+        });
+
+        return lnrSchedulesContainer;
     }
 
     private class ViewHolder {

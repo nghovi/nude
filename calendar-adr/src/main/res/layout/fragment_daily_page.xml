@@ -3,18 +3,62 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical">
 
-    <include layout="@layout/view_day_shift_time"/>
+    <!--<include layout="@layout/view_day_shift_time"/>-->
 
     <LinearLayout
         android:id="@+id/lnr_calendar_container"
         style="@style/cs_common_match_wrap"
         android:orientation="vertical"/>
 
-    <com.github.ksoichiro.android.observablescrollview.ObservableListView
-        android:id="@+id/lst_calendar_day"
+    <com.github.ksoichiro.android.observablescrollview.ObservableScrollView
+        android:id="@+id/scr_calendar_day"
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/margin_10dp"/>
+        android:layout_marginTop="@dimen/margin_10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/margin_16dp"
+            android:paddingRight="@dimen/margin_16dp">
+
+            <LinearLayout
+                android:id="@+id/lnr_fragment_daily_page_all_day"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lnr_fragment_daily_page_morning"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lnr_fragment_daily_page_afternoon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lnr_fragment_daily_page_work_offer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </com.github.ksoichiro.android.observablescrollview.ObservableScrollView>
 
 </LinearLayout>

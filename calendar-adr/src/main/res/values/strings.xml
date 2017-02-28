@@ -55,5 +55,8 @@
     <string name="cl_schedule_repeat_limit_after">After</string>
 
     <string name="cl_dialog_daily_summary_not_data">No schedule</string>
+    <string name="daily_page_all_day">All day</string>
+    <string name="daily_page_morning">Morning</string>
+    <string name="daily_page_afternoon">Afternoon</string>
 
 </resources>

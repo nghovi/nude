@@ -4,7 +4,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.github.ksoichiro.android.observablescrollview.ObservableScrollView;
 import com.github.ksoichiro.android.observablescrollview
         .ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
@@ -13,8 +16,11 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCNumberUtil;
@@ -24,8 +30,8 @@ import trente.asia.calendar.commons.dialogs.ClDialog;
 import trente.asia.calendar.services.calendar.listener
         .DailyScheduleClickListener;
 import trente.asia.calendar.services.calendar.model.CalendarDayModel;
-import trente.asia.calendar.services.calendar.view.ViewDayShiftTime;
-import trente.asia.calendar.services.calendar.view.WeeklyCalendarDayView;
+import trente.asia.calendar.services.calendar.model.ScheduleModel;
+import trente.asia.calendar.services.calendar.view.CalendarDayListAdapter;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.define.WfUrlConst;
 
@@ -35,11 +41,20 @@ import trente.asia.welfare.adr.define.WfUrlConst;
  * @author Vietnh
  */
 public class DailyPageFragment extends SchedulesPageFragment implements
-        DailyScheduleClickListener, ObservableScrollViewCallbacks,
-        WeeklyCalendarDayView.OnDayClickListener {
+        DailyScheduleClickListener, ObservableScrollViewCallbacks {
 
+    private static final String TIME_NOON = "12:00";
+    private static final Integer SCHEDULES_ALL_DAY = 1;
+    private static final Integer SCHEDULES_MORNING = 2;
+    private static final Integer SCHEDULES_AFTERNOON = 3;
     private ClDialog dialogScheduleList;
-    private ViewDayShiftTime viewDayShiftTime;
+    //    private ViewDayShiftTime viewDayShiftTime;
+    private ObservableScrollView observableScrollView;
+    private LinearLayout lnrOffers;
+
+    private List<CalendarDayModel> displayedDayAfternoon;
+    private Map<Integer, List<ScheduleModel>> schedulesMap;
+    private LayoutInflater layoutInflater;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,8 +69,13 @@ public class DailyPageFragment extends SchedulesPageFragment implements
     @Override
     protected void initView() {
         super.initView();
-        viewDayShiftTime = (ViewDayShiftTime) getView().findViewById(R.id
-                .view_day_shift_time);
+        layoutInflater = getLayoutInflater(null);
+//        viewDayShiftTime = (ViewDayShiftTime) getView().findViewById(R.id
+//                .view_day_shift_time);
+        observableScrollView = (ObservableScrollView) getView().findViewById
+                (R.id.scr_calendar_day);
+        lnrOffers = (LinearLayout) getView().findViewById(R.id
+                .lnr_fragment_daily_page_work_offer);
         initDialog();
     }
 
@@ -64,11 +84,12 @@ public class DailyPageFragment extends SchedulesPageFragment implements
         super.onLoadSchedulesSuccess(response);
         CalendarDayModel calendarDayModel = getCalendarDayModelByDate
                 (selectedDate, calendarDayModels);
-        if (calendarDayModel != null) {
-            viewDayShiftTime.showCategoriesSigns(calendarDayModel);
-        }
+//        if (calendarDayModel != null) {
+//            viewDayShiftTime.showCategoriesSigns(calendarDayModel);
+//        }
     }
 
+    //
     private void initDialog() {
         dialogScheduleList = new ClDialog(activity);
         dialogScheduleList.setDialogScheduleList();
@@ -88,19 +109,55 @@ public class DailyPageFragment extends SchedulesPageFragment implements
         selectedDate = CCDateUtil.makeDateCustom(dayStr, WelfareConst
                 .WL_DATE_TIME_7);
         updateDayViews(dayStr);
-        updateObservableListView();
+        updateObservableScrollableView();
     }
 
-    //Display schedules for selected day only
-    @Override
-    protected List<CalendarDayModel> getDisplayedDayForList() {
-        List<CalendarDayModel> result = new ArrayList<>();
-        CalendarDayModel calendarDayModel = getCalendarDayModelByDate
-                (selectedDate, calendarDayModels);
-        if (calendarDayModel != null) {
-            result.add(calendarDayModel);
+    protected void updateObservableScrollableView() {
+        schedulesMap = getDisplayedSchedulesMaps();
+        buildTimelySchedules(R.id.lnr_fragment_daily_page_all_day, R.string
+                .daily_page_all_day, schedulesMap.get(SCHEDULES_ALL_DAY));
+        buildTimelySchedules(R.id.lnr_fragment_daily_page_morning, R.string
+                .daily_page_morning, schedulesMap.get(SCHEDULES_MORNING));
+        buildTimelySchedules(R.id.lnr_fragment_daily_page_afternoon, R.string
+                .daily_page_afternoon, schedulesMap.get(SCHEDULES_AFTERNOON));
+        buildOffers();
+    }
+
+    private void buildOffers() {
+        //// TODO: 2/28/2017
+    }
+
+    private void buildTimelySchedules(int parentId, int titleId,
+                                      List<ScheduleModel> scheduleModels) {
+        LinearLayout lnrParent = (LinearLayout) getView().findViewById
+                (parentId);
+        if (!CCCollectionUtil.isEmpty(scheduleModels)) {
+            String title = getString(titleId);
+            buildSchedulesList(lnrParent, title, scheduleModels);
+        } else {
+            lnrParent.removeAllViews();
         }
-        return result;
+    }
+
+    private void buildSchedulesList(LinearLayout lnrParent, String title,
+                                    List<ScheduleModel>
+                                            scheduleModels) {
+        lnrParent.removeAllViews();
+        TextView textView = new TextView(getContext());
+        textView.setText(title);
+        lnrParent.addView(textView);
+
+        for (ScheduleModel scheduleModel : scheduleModels) {
+            buildScheduleItem(lnrParent, scheduleModel);
+        }
+    }
+
+    private void buildScheduleItem(LinearLayout lnrParent, ScheduleModel
+            scheduleModel) {
+        LinearLayout item = (LinearLayout) CalendarDayListAdapter
+                .buildScheduleItem
+                        (activity, layoutInflater, scheduleModel, this);
+        lnrParent.addView(item);
     }
 
     @Override
@@ -129,4 +186,34 @@ public class DailyPageFragment extends SchedulesPageFragment implements
                 .WL_DATE_TIME_12, selectedDate);
     }
 
+
+    private Map<Integer, List<ScheduleModel>> getDisplayedSchedulesMaps() {
+        Map<Integer, List<ScheduleModel>> result = new HashMap<>();
+        result.put(SCHEDULES_ALL_DAY, new ArrayList<ScheduleModel>());
+        result.put(SCHEDULES_MORNING, new ArrayList<ScheduleModel>());
+        result.put(SCHEDULES_AFTERNOON, new ArrayList<ScheduleModel>());
+        for (ScheduleModel scheduleModel : schedules) {
+            if (isScheduleOf(scheduleModel, selectedDate)) {
+                if (scheduleModel.isAllDay) {
+                    result.get(SCHEDULES_ALL_DAY).add(scheduleModel);
+                } else if (isBeforeNoon(scheduleModel.startTime)) {
+                    result.get(SCHEDULES_MORNING).add(scheduleModel);
+                } else {
+                    result.get(SCHEDULES_AFTERNOON).add(scheduleModel);
+                }
+            }
+        }
+        return result;
+    }
+
+    private boolean isBeforeNoon(String startTime) {
+        int startMinute = CCDateUtil.convertTime2Min(startTime);
+        int noonMinute = CCDateUtil.convertTime2Min(TIME_NOON);
+        return startMinute < noonMinute;
+    }
+
+    private boolean isScheduleOf(ScheduleModel scheduleModel, Date date) {
+        return scheduleModel.startDate.equals(CCFormatUtil.formatDateCustom
+                (WelfareConst.WL_DATE_TIME_7, date));
+    }
 }

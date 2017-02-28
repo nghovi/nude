@@ -10,7 +10,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import trente.asia.calendar.services.calendar.MonthlyPageFragment;
 import trente.asia.calendar.services.calendar.SchedulesPageFragment;
 
 /**
@@ -18,7 +17,7 @@ import trente.asia.calendar.services.calendar.SchedulesPageFragment;
  *
  * @author Vietnh
  */
-public class SchedulesPagerAdapter extends FragmentPagerAdapter {
+public abstract class SchedulesPagerAdapter extends FragmentPagerAdapter {
 
     protected final Date TODAY = Calendar.getInstance().getTime();
     protected NavigationHeader navigationHeader;
@@ -52,9 +51,7 @@ public class SchedulesPagerAdapter extends FragmentPagerAdapter {
         return TODAY;
     }
 
-    protected SchedulesPageFragment getFragment() {
-        return new SchedulesPageFragment();
-    }
+    abstract SchedulesPageFragment getFragment();
 
     /**
      * @return the number of pages to display

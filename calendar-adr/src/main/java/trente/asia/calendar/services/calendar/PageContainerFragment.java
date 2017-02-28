@@ -26,7 +26,7 @@ import trente.asia.welfare.adr.view.WfSlideMenuLayout;
  *
  * @author TrungND
  */
-public class PageContainerFragment extends AbstractClFragment {
+public abstract class PageContainerFragment extends AbstractClFragment {
 
     protected ViewPager mViewPager;
     protected SchedulesPagerAdapter mPagerAdapter;
@@ -152,7 +152,5 @@ public class PageContainerFragment extends AbstractClFragment {
         super.onDestroy();
     }
 
-    protected SchedulesPagerAdapter initPagerAdapter() {
-        return new SchedulesPagerAdapter(getChildFragmentManager(), activity);
-    }
+    abstract SchedulesPagerAdapter initPagerAdapter();
 }

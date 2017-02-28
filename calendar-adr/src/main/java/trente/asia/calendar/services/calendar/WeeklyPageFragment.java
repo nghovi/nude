@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.github.ksoichiro.android.observablescrollview.ObservableListView;
 import com.github.ksoichiro.android.observablescrollview
         .ObservableScrollViewCallbacks;
 
@@ -15,6 +16,9 @@ import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCNumberUtil;
 import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.R;
+import trente.asia.calendar.services.calendar.model.CalendarDayModel;
+import trente.asia.calendar.services.calendar.model.ScheduleModel;
+import trente.asia.calendar.services.calendar.view.CalendarDayListAdapter;
 import trente.asia.calendar.services.calendar.view.CalendarView;
 import trente.asia.calendar.services.calendar.view.WeeklyCalendarDayView;
 import trente.asia.welfare.adr.define.WfUrlConst;
@@ -29,6 +33,10 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements
         .OnCalendarDaySelectedListener, WeeklyCalendarDayView
         .OnDayClickListener {
 
+    protected ObservableListView observableListView;
+    protected CalendarDayListAdapter adapter;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -42,6 +50,31 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements
     @Override
     protected void initView() {
         super.initView();
+        observableListView = (ObservableListView) getView().findViewById(R.id
+                .scr_calendar_day);
+        observableListView.setScrollViewCallbacks(this);
+        observableListView.setDivider(null);
+    }
+
+    @Override
+    public void onDayClick(String dayStr) {
+        updateDayViews(dayStr);
+        int selectedPosition = adapter.findPosition4Code(dayStr);
+        observableListView.setSelection(selectedPosition);
+    }
+
+    protected void updateObservableScrollableView() {
+        List<CalendarDayModel> displayedModels = getDisplayedDayForList();
+        adapter = new CalendarDayListAdapter(activity, R.layout
+                .item_calendar_day, displayedModels, new
+                CalendarDayListAdapter.OnScheduleClickListener() {
+
+                    @Override
+                    public void onClickSchedule(ScheduleModel schedule) {
+                        onClickSchedule(schedule);
+                    }
+                });
+        observableListView.setAdapter(adapter);
     }
 
     protected String getApi() {

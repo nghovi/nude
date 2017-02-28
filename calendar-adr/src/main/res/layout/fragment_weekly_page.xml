@@ -23,7 +23,7 @@
             android:orientation="vertical"/>
 
         <com.github.ksoichiro.android.observablescrollview.ObservableListView
-            android:id="@+id/lst_calendar_day"
+            android:id="@+id/scr_calendar_day"
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
