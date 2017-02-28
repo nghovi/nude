@@ -9,18 +9,16 @@ import trente.asia.calendar.services.calendar.view.WeeklySchedulesPagerAdapter;
  *
  * @author TrungND
  */
-public class WeeklyFragment extends PageContainerFragment {
+public class WeeklyFragment extends PageContainerFragment{
 
+	@Override
+	public int getFooterItemId(){
+		return R.id.lnr_view_footer_weekly;
+	}
 
-    @Override
-    public int getFooterItemId() {
-        return R.id.lnr_view_footer_weekly;
-    }
-
-    @Override
-    protected SchedulesPagerAdapter initPagerAdapter() {
-        return new WeeklySchedulesPagerAdapter(getChildFragmentManager(),
-                activity);
-    }
+	@Override
+	protected SchedulesPagerAdapter initPagerAdapter(){
+		return new WeeklySchedulesPagerAdapter(getChildFragmentManager(), activity);
+	}
 
 }

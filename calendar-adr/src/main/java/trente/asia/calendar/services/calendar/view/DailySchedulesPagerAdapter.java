@@ -18,7 +18,7 @@ public class DailySchedulesPagerAdapter extends SchedulesPagerAdapter {
 
 
     public DailySchedulesPagerAdapter(FragmentManager fm, Context context) {
-        super(fm, context);
+        super(fm);
     }
 
     @Override

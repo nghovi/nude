@@ -12,7 +12,7 @@ public class ClConst{
 
 	public static final String	APP_FOLDER						= "Welfare/Calendar";
 
-	public static final int		CALENDAR_MAX_PAGE				= 1000;
+//	public static final int		CALENDAR_MAX_PAGE				= 1000;
 
 	public static final String	SCHEDULE_TYPE_ALL				= "1";
 	public static final String	SCHEDULE_TYPE_PERIOD			= "2";

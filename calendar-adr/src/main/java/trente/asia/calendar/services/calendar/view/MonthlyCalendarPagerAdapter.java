@@ -1,16 +1,13 @@
 package trente.asia.calendar.services.calendar.view;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 
 import trente.asia.android.util.CsDateUtil;
-import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.services.calendar.MonthlyPageFragment;
+import trente.asia.calendar.services.calendar.SchedulesPageFragment;
 import trente.asia.calendar.services.calendar.listener.OnChangeCalendarUserListener;
 
 /**
@@ -18,38 +15,20 @@ import trente.asia.calendar.services.calendar.listener.OnChangeCalendarUserListe
  *
  * @author TrungND
  */
-public class MonthlyCalendarPagerAdapter extends FragmentPagerAdapter{
-
-	private final int							ACTIVE_PAGE	= ClConst.CALENDAR_MAX_PAGE / 2;
-	private final Date							TODAY		= CsDateUtil.getFirstDateOfCurrentMonth();
-	private Map<Integer, MonthlyPageFragment>	monthlyMap	= new HashMap<>();
-
-	private OnChangeCalendarUserListener		listener;
+public class MonthlyCalendarPagerAdapter extends SchedulesPagerAdapter{
 
 	public MonthlyCalendarPagerAdapter(FragmentManager fm, OnChangeCalendarUserListener listener){
 		super(fm);
-        this.listener = listener;
+		this.listener = listener;
 	}
 
 	@Override
-	public Fragment getItem(int position){
-		MonthlyPageFragment monthlyPageFragment = this.monthlyMap.get(position);
-		if(monthlyPageFragment == null){
-			Date activeMonth = CsDateUtil.addMonth(TODAY, position - ACTIVE_PAGE);
-			monthlyPageFragment = new MonthlyPageFragment();
-			monthlyPageFragment.setActiveMonth(activeMonth);
-            monthlyPageFragment.setChangeCalendarUserListener(listener);
-			this.monthlyMap.put(position, monthlyPageFragment);
-		}
-
-		return monthlyPageFragment;
+	Date choseSelectedDate(int position){
+		return CsDateUtil.addMonth(TODAY, position - initialPosition);
 	}
 
-	/**
-	 * @return the number of pages to display
-	 */
 	@Override
-	public int getCount(){
-		return ClConst.CALENDAR_MAX_PAGE;
+	SchedulesPageFragment getFragment(){
+		return new MonthlyPageFragment();
 	}
 }
