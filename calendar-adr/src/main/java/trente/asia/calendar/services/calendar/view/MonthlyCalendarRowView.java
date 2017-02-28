@@ -6,10 +6,13 @@ import java.util.List;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
+import android.view.Gravity;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
@@ -27,7 +30,8 @@ public class MonthlyCalendarRowView extends RelativeLayout{
 	private Context						mContext;
 	public List<MonthlyCalendarDayView>	lstCalendarDay;
 
-	private int							indexOfSchedule	= 0;
+	public List<TextView>				lstTextPeriod	= new ArrayList<>();
+	// private int indexOfSchedule = 0;
 
 	public MonthlyCalendarRowView(Context context){
 		super(context);
@@ -52,15 +56,17 @@ public class MonthlyCalendarRowView extends RelativeLayout{
 	}
 
 	public void addSchedule(ScheduleModel scheduleModel){
-		indexOfSchedule++;
 		int itemWidth = this.getWidth() / 7;
 		int textSize = 10;
 
 		List<MonthlyCalendarDayView> lstActiveCalendarDay = ClUtil.findView4Day(lstCalendarDay, scheduleModel.startDate, scheduleModel.endDate);
+		for(MonthlyCalendarDayView dayView : lstActiveCalendarDay){
+			dayView.addPeriod();
+		}
 		MonthlyCalendarDayView theFirstCalendarDay = lstActiveCalendarDay.get(0);
 		MonthlyCalendarDayView theLastCalendarDay = lstActiveCalendarDay.get(lstActiveCalendarDay.size() - 1);
 
-		int marginTop = (int)getResources().getDimension(R.dimen.margin_30dp) + (indexOfSchedule - 1) * ClConst.TEXT_VIEW_HEIGHT;
+		int marginTop = (int)getResources().getDimension(R.dimen.margin_30dp) + (ClUtil.getMaxInList(lstActiveCalendarDay) - 1) * ClConst.TEXT_VIEW_HEIGHT;
 		LayoutParams layoutParams = new LayoutParams(itemWidth * (theLastCalendarDay.dayOfTheWeek - theFirstCalendarDay.dayOfTheWeek + 1), ClConst.TEXT_VIEW_HEIGHT);
 		layoutParams.setMargins(itemWidth * theFirstCalendarDay.dayOfTheWeek, marginTop, 0, 0);
 
@@ -70,7 +76,7 @@ public class MonthlyCalendarRowView extends RelativeLayout{
 
 		// set data
 		// txtSchedule.setPadding(2, 2, 2, 2);
-		txtSchedule.setGravity(CENTER_VERTICAL);
+		txtSchedule.setGravity(Gravity.CENTER_VERTICAL);
 		txtSchedule.setTextColor(Color.WHITE);
 		if(!CCStringUtil.isEmpty(scheduleModel.scheduleColor)){
 			txtSchedule.setBackgroundColor(Color.parseColor(WelfareFormatUtil.formatColor(scheduleModel.scheduleColor)));
@@ -80,15 +86,33 @@ public class MonthlyCalendarRowView extends RelativeLayout{
 
 		txtSchedule.setTextSize(textSize);
 		txtSchedule.setText(scheduleModel.scheduleName);
+		this.lstTextPeriod.add(txtSchedule);
 		this.addView(txtSchedule);
 	}
 
 	public void refreshLayout(){
-		if(indexOfSchedule != 0){
-			for(MonthlyCalendarDayView dayView : lstCalendarDay){
-				LinearLayout.LayoutParams layoutParamsDay = new LinearLayout.LayoutParams(0, dayView.getHeight() + indexOfSchedule * ClConst.TEXT_VIEW_HEIGHT, 1);
-				dayView.setLayoutParams(layoutParamsDay);
+		int maxSchedule = 0;
+		for(MonthlyCalendarDayView dayView : lstCalendarDay){
+			if(dayView.getNumberOfSchedule() > maxSchedule){
+				maxSchedule = dayView.getNumberOfSchedule();
 			}
 		}
+		// refresh layout
+		for(MonthlyCalendarDayView dayView : lstCalendarDay){
+			LinearLayout.LayoutParams layoutParamsDay = new LinearLayout.LayoutParams(0, dayView.getHeight() + maxSchedule * ClConst.TEXT_VIEW_HEIGHT, 1);
+			dayView.setLayoutParams(layoutParamsDay);
+		}
+	}
+
+	public void removeAllData(){
+		if(!CCCollectionUtil.isEmpty(this.lstTextPeriod)){
+			for(TextView textView : this.lstTextPeriod){
+				this.removeView(textView);
+			}
+		}
+        for(MonthlyCalendarDayView dayView : lstCalendarDay){
+            LinearLayout.LayoutParams layoutParamsDay = new LinearLayout.LayoutParams(0, 45, 1);
+            dayView.setLayoutParams(layoutParamsDay);
+        }
 	}
 }

@@ -34,7 +34,8 @@
     <string name="cl_schedule_form_item_join_user">Join users</string>
     <string name="cl_schedule_form_item_schedule_note">Schedule note</string>
 
-    <string name="cl_filter_user_dialog_title">Filter user</string>
+    <string name="cl_filter_user_dialog_title">Filter users</string>
+    <string name="cl_join_user_dialog_title">Join users</string>
     <string name="cl_schedule_repeat_dialog_title">Schedule repeat</string>
     <string name="cl_schedule_repeat_dialog_times">times</string>
 

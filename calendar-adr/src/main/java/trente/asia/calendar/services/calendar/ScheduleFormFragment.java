@@ -205,7 +205,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 	@Override
 	protected void onLoadScheduleDetailSuccess(JSONObject response){
 		super.onLoadScheduleDetailSuccess(response);
-		filterDialog = new ClFilterUserListDialog(activity, lnrUserList);
+		filterDialog = new ClFilterUserListDialog(activity, lnrUserList, getString(R.string.cl_join_user_dialog_title));
 		filterDialog.findViewById(R.id.img_id_done).setOnClickListener(this);
 		buildDatePickerDialogs(schedule);
 	}
@@ -262,14 +262,12 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 
 	private void sendUpdatedRequest(){
 		JSONObject jsonObject = CAObjectSerializeUtil.serializeObject((ViewGroup)getView().findViewById(R.id.lnr_id_content), null);
-		boolean isDayPeriod = true;// / TODO: 2/10/2017
 		try{
 			if(schedule != null && !CCStringUtil.isEmpty(schedule.key)){
 				jsonObject.put("key", schedule.key);
 			}
-			jsonObject.put("isDayPeriod", isDayPeriod);
 			jsonObject.put("joinUsers", lnrUserList.formatUserList());
-			jsonObject.put("isDayPeriod", swtAllDay.isChecked());
+			jsonObject.put("isAllDay", swtAllDay.isChecked());
 		}catch(JSONException e){
 			e.printStackTrace();
 		}

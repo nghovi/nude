@@ -118,7 +118,7 @@ public class MonthlyFragment extends AbstractClFragment{
 		transaction.replace(R.id.slice_menu_board, calendarListFragment).commit();
 
 		lnrUserList = (UserListLinearLayout)activity.findViewById(R.id.lnr_fragment_pager_container_user_list);
-		filterDialog = new ClFilterUserListDialog(activity, lnrUserList);
+		filterDialog = new ClFilterUserListDialog(activity, lnrUserList, null);
 		ImageView imgDone = (ImageView)filterDialog.findViewById(R.id.img_id_done);
 
 		mImgLeftHeader.setOnClickListener(this);

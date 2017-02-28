@@ -6,7 +6,9 @@ import java.util.Date;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -14,13 +16,12 @@ import asia.chiase.core.util.CCBooleanUtil;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.R;
+import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.services.calendar.listener.DailyScheduleClickListener;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
-import trente.asia.welfare.adr.utils.WelfareUtil;
 
 /**
  * MonthlyCalendarDayView
@@ -31,10 +32,13 @@ public class MonthlyCalendarDayView extends LinearLayout{
 
 	private Context						mContext;
 	private LinearLayout				lnrRowContent;
+	private DailyScheduleClickListener	mListener;
 
 	public String						day;
 	public int							dayOfTheWeek;
-	private DailyScheduleClickListener	mListener;
+	private int							numberOfPeriod;
+	private int							numberOfSchedule;
+	private boolean						isTheFirst	= true;
 
 	public MonthlyCalendarDayView(Context context){
 		super(context);
@@ -85,31 +89,25 @@ public class MonthlyCalendarDayView extends LinearLayout{
 	}
 
 	public void addSchedule(ScheduleModel scheduleModel){
+		numberOfSchedule++;
 		TextView txtSchedule = new TextView(mContext);
 		txtSchedule.setMaxLines(1);
-		// txtSchedule.setEllipsize(TextUtils.TruncateAt.END);
 
-		Date startDate = WelfareUtil.makeDate(scheduleModel.startDate);
-		Date endDate = WelfareUtil.makeDate(scheduleModel.endDate);
-		if(CCDateUtil.compareDate(startDate, endDate, false) != 0){
-			txtSchedule.setPadding(2, 2, 2, 2);
+		LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ClConst.TEXT_VIEW_HEIGHT);
+		txtSchedule.setLayoutParams(layoutParams);
+		txtSchedule.setGravity(Gravity.CENTER_VERTICAL);
+
+		if(CCBooleanUtil.checkBoolean(scheduleModel.isAllDay)){
+			// txtSchedule.setPadding(2, 2, 2, 2);
 			txtSchedule.setTextColor(Color.WHITE);
 			if(!CCStringUtil.isEmpty(scheduleModel.scheduleColor)){
 				txtSchedule.setBackgroundColor(Color.parseColor(WelfareFormatUtil.formatColor(scheduleModel.scheduleColor)));
 			}else{
 				txtSchedule.setBackgroundColor(Color.RED);
-			}
-		}else if(!CCBooleanUtil.checkBoolean(scheduleModel.isDayPeriod) && !CCBooleanUtil.checkBoolean(scheduleModel.isRepeat)){
-			if(!CCStringUtil.isEmpty(scheduleModel.scheduleColor)){
-				txtSchedule.setTextColor(Color.parseColor(WelfareFormatUtil.formatColor(scheduleModel.scheduleColor)));
 			}
 		}else{
-			txtSchedule.setPadding(2, 2, 2, 2);
-			txtSchedule.setTextColor(Color.WHITE);
 			if(!CCStringUtil.isEmpty(scheduleModel.scheduleColor)){
-				txtSchedule.setBackgroundColor(Color.parseColor(WelfareFormatUtil.formatColor(scheduleModel.scheduleColor)));
-			}else{
-				txtSchedule.setBackgroundColor(Color.RED);
+				txtSchedule.setTextColor(Color.parseColor(WelfareFormatUtil.formatColor(scheduleModel.scheduleColor)));
 			}
 		}
 
@@ -117,10 +115,29 @@ public class MonthlyCalendarDayView extends LinearLayout{
 		txtSchedule.setTextSize(textSize);
 
 		txtSchedule.setText(scheduleModel.scheduleName);
+		if(isTheFirst){
+			isTheFirst = false;
+			setMarginTop();
+		}
 		lnrRowContent.addView(txtSchedule);
+	}
+
+	private void setMarginTop(){
+		LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+		layoutParams.setMargins(0, numberOfPeriod * ClConst.TEXT_VIEW_HEIGHT, 0, 0);
+		lnrRowContent.setLayoutParams(layoutParams);
 	}
 
 	public void removeAllData(){
 		lnrRowContent.removeAllViews();
+	}
+
+	public void addPeriod(){
+		numberOfPeriod++;
+		numberOfSchedule++;
+	}
+
+	public int getNumberOfSchedule(){
+		return numberOfSchedule;
 	}
 }

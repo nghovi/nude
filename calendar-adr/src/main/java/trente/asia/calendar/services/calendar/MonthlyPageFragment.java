@@ -223,9 +223,7 @@ public class MonthlyPageFragment extends AbstractClFragment implements DailySche
 			List<HolidayModel> lstHoliday = CCJsonUtil.convertToModelList(response.optString("holidayList"), HolidayModel.class);
 
 			// clear old data
-			for(MonthlyCalendarDayView dayView : lstCalendarDay){
-				dayView.removeAllData();
-			}
+            clearOldData();
 
 			if(!CCCollectionUtil.isEmpty(lstSchedule)){
 				Collections.sort(lstSchedule, new ScheduleComparator());
@@ -274,6 +272,16 @@ public class MonthlyPageFragment extends AbstractClFragment implements DailySche
 			super.successLoad(response, url);
 		}
 	}
+
+    private void clearOldData(){
+        for(MonthlyCalendarDayView dayView : lstCalendarDay){
+            dayView.removeAllData();
+        }
+
+        for(MonthlyCalendarRowView rowView : lstCalendarRow){
+            rowView.removeAllData();
+        }
+    }
 
 	@Override
 	public void onDailyScheduleClickListener(String day){

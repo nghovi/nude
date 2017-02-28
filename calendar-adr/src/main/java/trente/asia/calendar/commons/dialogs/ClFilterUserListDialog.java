@@ -6,7 +6,9 @@ import java.util.List;
 import android.content.Context;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.TextView;
 
+import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.view.ChiaseDialog;
 import trente.asia.android.view.layout.CheckableLinearLayout;
 import trente.asia.calendar.R;
@@ -26,16 +28,22 @@ public class ClFilterUserListDialog extends ChiaseDialog{
 
 	private Context					mContext;
 	private FilterUserLinearLayout	mLnrFilterUser;
+	private TextView				txtTitle;
 
 	private List<UserModel>			mLstUser;
 	private UserListLinearLayout	mLnrUserList;
 	private CheckBox				mCbxAll;
 
-	public ClFilterUserListDialog(Context context, UserListLinearLayout lnrUserList){
+	public ClFilterUserListDialog(Context context, UserListLinearLayout lnrUserList, String title){
 		super(context);
 		this.setContentView(R.layout.dialog_common_filter_user);
 		this.mContext = context;
 		this.mLnrUserList = lnrUserList;
+
+        txtTitle = (TextView) this.findViewById(R.id.txt_id_title);
+        if(!CCStringUtil.isEmpty(title)){
+            txtTitle.setText(title);
+        }
 
 		mCbxAll = (CheckBox)this.findViewById(R.id.cbx_id_all);
 		mLnrFilterUser = (FilterUserLinearLayout)this.findViewById(R.id.lnr_id_user);
@@ -77,9 +85,9 @@ public class ClFilterUserListDialog extends ChiaseDialog{
 		prefAccUtil.set(ClConst.PREF_ACTIVE_USER_LIST, ClUtil.convertUserList2String(lstSelectedUser));
 	}
 
-    @Override
-    public void show(){
-        this.mLnrFilterUser.addUserList(this.mLstUser, mLnrUserList.getLstUser(), mCbxAll);
-        super.show();
-    }
+	@Override
+	public void show(){
+		this.mLnrFilterUser.addUserList(this.mLstUser, mLnrUserList.getLstUser(), mCbxAll);
+		super.show();
+	}
 }

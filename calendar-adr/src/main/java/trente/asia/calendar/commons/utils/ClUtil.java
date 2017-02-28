@@ -100,4 +100,17 @@ public class ClUtil{
         }
         return joinUsers;
     }
+
+    /**
+     * getMaxInList
+     */
+    public static int getMaxInList(List<MonthlyCalendarDayView> lstDay){
+        int maxSchedule = 0;
+        for(MonthlyCalendarDayView dayView : lstDay){
+            if(maxSchedule < dayView.getNumberOfSchedule()){
+                maxSchedule = dayView.getNumberOfSchedule();
+            }
+        }
+        return maxSchedule;
+    }
 }

@@ -1,8 +1,8 @@
 package trente.asia.calendar.services.calendar.model;
 
-import java.util.Date;
 import java.util.List;
 
+import asia.chiase.core.util.CCBooleanUtil;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 import trente.asia.welfare.adr.utils.WelfareUtil;
@@ -33,7 +33,7 @@ public class ScheduleModel{
 	// public String scheduleType;
 	public String			categoryId;
 	public String			categoryName;
-	public Boolean			isDayPeriod;
+	public Boolean			isAllDay;
 	public Boolean			isRepeat;
 	public List<UserModel>	scheduleJoinUsers;
 
@@ -45,18 +45,18 @@ public class ScheduleModel{
 		this.scheduleName = holidayModel.holidayName;
 		this.startDate = holidayModel.startDate;
 		this.endDate = holidayModel.endDate;
+        this.isAllDay = true;
 		// pink color
 		this.scheduleColor = "D22DB6";
-		this.isDayPeriod = true;
 	}
 
-    public boolean isPeriodSchedule(){
-        if(startDate == null || endDate == null){
-            return false;
-        }
+	public boolean isPeriodSchedule(){
+		if(startDate == null || endDate == null){
+			return false;
+		}
 
-        String startDateFormat = WelfareFormatUtil.formatDate(WelfareUtil.makeDate(startDate));
-        String endDateFormat = WelfareFormatUtil.formatDate(WelfareUtil.makeDate(endDate));
-        return !startDateFormat.equals(endDateFormat);
-    }
+		String startDateFormat = WelfareFormatUtil.formatDate(WelfareUtil.makeDate(startDate));
+		String endDateFormat = WelfareFormatUtil.formatDate(WelfareUtil.makeDate(endDate));
+		return !startDateFormat.equals(endDateFormat);
+	}
 }

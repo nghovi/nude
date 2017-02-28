@@ -125,7 +125,7 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 		if(!CCStringUtil.isEmpty(schedule.key)){
 			txtRoom.setText(WelfareUtil.findApiObject4Id(rooms, schedule.roomId).value);
 			txtCalendar.setText(schedule.calendar.calendarName);
-			swtAllDay.setChecked(CCBooleanUtil.checkBoolean(schedule.isDayPeriod));
+			swtAllDay.setChecked(CCBooleanUtil.checkBoolean(schedule.isAllDay));
 
 			txtCategory.setText(WelfareUtil.findApiObject4Id(categories, schedule.categoryId).value);
 			if(!CCStringUtil.isEmpty(schedule.categoryId)){
