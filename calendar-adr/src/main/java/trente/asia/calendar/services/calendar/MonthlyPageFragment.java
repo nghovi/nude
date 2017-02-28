@@ -101,11 +101,11 @@ public class MonthlyPageFragment extends AbstractClFragment implements DailySche
 		if(mRootView == null){
 			mRootView = inflater.inflate(R.layout.fragment_monthly_page, container, false);
 		}else{
-            if(CCBooleanUtil.checkBoolean(((WelfareActivity)activity).dataMap.get(ClConst.IS_UPDATE_SCHEDULE))){
-                ((WelfareActivity)activity).dataMap.clear();
-                ((ChiaseActivity)activity).isInitData = true;
-            }
-        }
+			if(CCBooleanUtil.checkBoolean(((WelfareActivity)activity).dataMap.get(ClConst.IS_UPDATE_SCHEDULE))){
+				((WelfareActivity)activity).dataMap.clear();
+				((ChiaseActivity)activity).isInitData = true;
+			}
+		}
 		return mRootView;
 	}
 
@@ -224,6 +224,16 @@ public class MonthlyPageFragment extends AbstractClFragment implements DailySche
 
 			// clear old data
             clearOldData();
+            // add holiday
+            if(!CCCollectionUtil.isEmpty(lstHoliday)){
+                if(lstSchedule == null){
+                    lstSchedule = new ArrayList<>();
+                }
+                for(HolidayModel holidayModel : lstHoliday){
+                    ScheduleModel scheduleModel = new ScheduleModel(holidayModel);
+                    lstSchedule.add(scheduleModel);
+                }
+            }
 
 			if(!CCCollectionUtil.isEmpty(lstSchedule)){
 				Collections.sort(lstSchedule, new ScheduleComparator());
@@ -246,17 +256,6 @@ public class MonthlyPageFragment extends AbstractClFragment implements DailySche
 				}
 			}
 
-			// add holiday
-			if(!CCCollectionUtil.isEmpty(lstHoliday)){
-				for(HolidayModel holidayModel : lstHoliday){
-					List<MonthlyCalendarDayView> lstActiveCalendarDay = ClUtil.findView4Day(lstCalendarDay, holidayModel.startDate, holidayModel.endDate);
-					ScheduleModel scheduleModel = new ScheduleModel(holidayModel);
-					for(MonthlyCalendarDayView calendarDayView : lstActiveCalendarDay){
-						calendarDayView.addSchedule(scheduleModel);
-					}
-				}
-			}
-
 			for(MonthlyCalendarRowView rowView : lstCalendarRow){
 				rowView.refreshLayout();
 			}
@@ -273,15 +272,15 @@ public class MonthlyPageFragment extends AbstractClFragment implements DailySche
 		}
 	}
 
-    private void clearOldData(){
-        for(MonthlyCalendarDayView dayView : lstCalendarDay){
-            dayView.removeAllData();
-        }
+	private void clearOldData(){
+		for(MonthlyCalendarDayView dayView : lstCalendarDay){
+			dayView.removeAllData();
+		}
 
-        for(MonthlyCalendarRowView rowView : lstCalendarRow){
-            rowView.removeAllData();
-        }
-    }
+		for(MonthlyCalendarRowView rowView : lstCalendarRow){
+			rowView.removeAllData();
+		}
+	}
 
 	@Override
 	public void onDailyScheduleClickListener(String day){

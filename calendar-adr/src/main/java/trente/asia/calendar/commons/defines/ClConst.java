@@ -1,5 +1,7 @@
 package trente.asia.calendar.commons.defines;
 
+import android.content.res.Resources;
+
 /**
  * SwConst
  *
@@ -27,7 +29,7 @@ public class ClConst{
 	public static final String	SCHEDULE_REPEAT_LIMIT_UNTIL		= "U";
 	public static final String	SCHEDULE_REPEAT_LIMIT_AFTER		= "A";
 
-	public static final int		TEXT_VIEW_HEIGHT				= 22;
+	public static final int		TEXT_VIEW_HEIGHT				= (int)(Resources.getSystem().getDisplayMetrics().density * 15);
 
 	public static final String	IS_UPDATE_SCHEDULE				= "IS_UPDATE_SCHEDULE";
 }

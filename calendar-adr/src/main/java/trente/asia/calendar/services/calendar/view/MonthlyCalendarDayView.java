@@ -31,6 +31,7 @@ import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 public class MonthlyCalendarDayView extends LinearLayout{
 
 	private Context						mContext;
+	private TextView					txtContent;
 	private LinearLayout				lnrRowContent;
 	private DailyScheduleClickListener	mListener;
 
@@ -72,7 +73,7 @@ public class MonthlyCalendarDayView extends LinearLayout{
 			}
 		});
 
-		TextView txtContent = (TextView)this.findViewById(R.id.txt_id_row_content);
+		txtContent = (TextView)this.findViewById(R.id.txt_id_row_content);
 		txtContent.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_11, itemDate));
 		Calendar itemCalendar = CCDateUtil.makeCalendar(itemDate);
 		if(isWithoutMonth){
@@ -97,6 +98,9 @@ public class MonthlyCalendarDayView extends LinearLayout{
 		numberOfSchedule++;
 		TextView txtSchedule = new TextView(mContext);
 		txtSchedule.setMaxLines(1);
+		if(CCBooleanUtil.checkBoolean(scheduleModel.isHoliday)){
+			setLayoutHoliday();
+		}
 
 		LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ClConst.TEXT_VIEW_HEIGHT);
 		txtSchedule.setLayoutParams(layoutParams);
@@ -137,12 +141,20 @@ public class MonthlyCalendarDayView extends LinearLayout{
 		lnrRowContent.removeAllViews();
 	}
 
-	public void addPeriod(){
+	public void addPeriod(ScheduleModel scheduleModel){
 		numberOfPeriod++;
 		numberOfSchedule++;
+		if(CCBooleanUtil.checkBoolean(scheduleModel.isHoliday)){
+			setLayoutHoliday();
+		}
 	}
 
 	public int getNumberOfSchedule(){
 		return numberOfSchedule;
+	}
+
+	private void setLayoutHoliday(){
+		txtContent.setBackgroundResource(R.drawable.shape_background_holiday);
+        txtContent.setTextColor(Color.WHITE);
 	}
 }

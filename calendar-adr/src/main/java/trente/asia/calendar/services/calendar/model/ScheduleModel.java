@@ -2,7 +2,6 @@ package trente.asia.calendar.services.calendar.model;
 
 import java.util.List;
 
-import asia.chiase.core.util.CCBooleanUtil;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 import trente.asia.welfare.adr.utils.WelfareUtil;
@@ -36,6 +35,7 @@ public class ScheduleModel{
 	public Boolean			isAllDay;
 	public Boolean			isRepeat;
 	public List<UserModel>	scheduleJoinUsers;
+	public Boolean			isHoliday;
 
 	public ScheduleModel(){
 
@@ -45,9 +45,10 @@ public class ScheduleModel{
 		this.scheduleName = holidayModel.holidayName;
 		this.startDate = holidayModel.startDate;
 		this.endDate = holidayModel.endDate;
-        this.isAllDay = true;
+		this.isAllDay = true;
 		// pink color
 		this.scheduleColor = "D22DB6";
+        this.isHoliday = true;
 	}
 
 	public boolean isPeriodSchedule(){

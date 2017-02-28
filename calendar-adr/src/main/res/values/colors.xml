@@ -14,7 +14,7 @@
     <color name="wf_login_button_color_off">#80b5ac84</color>
     <color name="wf_login_button_color_on">#b5ac84</color>
     <color name="cl_circle_bg_today">#ff0000</color>
-    <color name="cl_circle_bg_holiday">#8c8464</color>
+    <color name="cl_circle_bg_holiday">#D22DB6</color>
     <color name="cl_circle_bg_selected">#303F9F</color>
     <color name="cl_circle_bg_scheduled">#ff0000</color>
 

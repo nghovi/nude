@@ -61,11 +61,12 @@ public class MonthlyCalendarRowView extends RelativeLayout{
 
 		List<MonthlyCalendarDayView> lstActiveCalendarDay = ClUtil.findView4Day(lstCalendarDay, scheduleModel.startDate, scheduleModel.endDate);
 		for(MonthlyCalendarDayView dayView : lstActiveCalendarDay){
-			dayView.addPeriod();
+			dayView.addPeriod(scheduleModel);
 		}
 		MonthlyCalendarDayView theFirstCalendarDay = lstActiveCalendarDay.get(0);
 		MonthlyCalendarDayView theLastCalendarDay = lstActiveCalendarDay.get(lstActiveCalendarDay.size() - 1);
 
+        int textViewHeight = (int)getResources().getDimension(R.dimen.margin_15dp);
 		int marginTop = (int)getResources().getDimension(R.dimen.margin_30dp) + (ClUtil.getMaxInList(lstActiveCalendarDay) - 1) * ClConst.TEXT_VIEW_HEIGHT;
 		LayoutParams layoutParams = new LayoutParams(itemWidth * (theLastCalendarDay.dayOfTheWeek - theFirstCalendarDay.dayOfTheWeek + 1), ClConst.TEXT_VIEW_HEIGHT);
 		layoutParams.setMargins(itemWidth * theFirstCalendarDay.dayOfTheWeek, marginTop, 0, 0);
