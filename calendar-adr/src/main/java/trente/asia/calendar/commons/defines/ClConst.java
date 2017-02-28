@@ -21,9 +21,9 @@ public class ClConst{
 	public static final String	PREF_ACTIVE_DATE				= "PREF_ACTIVE_DATE";
 	public static final String	PREF_ACTIVE_USER_LIST			= "PREF_ACTIVE_USER_LIST";
 
-	public static final String	SCHEDULE_REPEAT_TYPE_WEEKLY		= "W";
-	public static final String	SCHEDULE_REPEAT_TYPE_MONTHLY	= "M";
-	public static final String	SCHEDULE_REPEAT_TYPE_YEARLY		= "Y";
+	public static final String	SCHEDULE_REPEAT_TYPE_WEEKLY		= "WL";
+	public static final String	SCHEDULE_REPEAT_TYPE_MONTHLY	= "ML";
+	public static final String	SCHEDULE_REPEAT_TYPE_YEARLY		= "YL";
 
 	public static final String	SCHEDULE_REPEAT_LIMIT_FOREVER	= "F";
 	public static final String	SCHEDULE_REPEAT_LIMIT_UNTIL		= "U";

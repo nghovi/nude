@@ -37,6 +37,12 @@ public class ScheduleModel{
 	public List<UserModel>	scheduleJoinUsers;
 	public Boolean			isHoliday;
 
+	public String			repeatType;
+	public String			repeatLimitType;
+	public String			repeatData;
+	public String			repeatEnd;
+	public String			repeatInterval;
+
 	public ScheduleModel(){
 
 	}
@@ -48,7 +54,7 @@ public class ScheduleModel{
 		this.isAllDay = true;
 		// pink color
 		this.scheduleColor = "D22DB6";
-        this.isHoliday = true;
+		this.isHoliday = true;
 	}
 
 	public boolean isPeriodSchedule(){

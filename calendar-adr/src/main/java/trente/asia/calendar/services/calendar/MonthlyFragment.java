@@ -71,7 +71,7 @@ public class MonthlyFragment extends AbstractClFragment{
 																					if(!CCCollectionUtil.isEmpty(lstCalendarUser)){
 																						String targetUserData = prefAccUtil.get(ClConst.PREF_ACTIVE_USER_LIST);
 																						lnrUserList.show(ClUtil.getTargetUserList(lstCalendarUser, targetUserData), (int)getResources().getDimension(R.dimen.margin_30dp));
-																						filterDialog.updateUserList(lstCalendarUser);
+//																						filterDialog.updateUserList(lstCalendarUser);
 																					}else{
 																						lnrUserList.removeAllViews();
 																						lnrUserList.setVisibility(View.GONE);

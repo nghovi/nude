@@ -1,5 +1,8 @@
 package trente.asia.calendar.commons.views;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import android.content.Context;
@@ -7,6 +10,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCNumberUtil;
 import trente.asia.android.model.DayModel;
@@ -15,6 +19,7 @@ import trente.asia.android.view.ChiaseTextViewCheckable;
 import trente.asia.calendar.R;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
+import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 
 /**
  * RepeatWeeklyDayLinearLayout
@@ -25,7 +30,9 @@ import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
 public class RepeatWeeklyDayLinearLayout extends LinearLayout{
 
 	private Context					mContext;
-	private List<DayModel>			lstDay;
+	private List<RepeatDayModel>	lstRepeatDay	= new ArrayList<>();
+	private String					repeatData;
+	private String					startDate;
 
 	private ChiaseTextViewCheckable	txtDay1;
 	private ChiaseTextViewCheckable	txtDay2;
@@ -34,6 +41,28 @@ public class RepeatWeeklyDayLinearLayout extends LinearLayout{
 	private ChiaseTextViewCheckable	txtDay5;
 	private ChiaseTextViewCheckable	txtDay6;
 	private ChiaseTextViewCheckable	txtDay7;
+
+	private class RepeatDayModel{
+
+		public DayModel					dayModel;
+		public ChiaseTextViewCheckable	txtDay;
+
+		public RepeatDayModel(){
+		}
+
+		public RepeatDayModel(DayModel dayModel, ChiaseTextViewCheckable txtDay){
+			this.dayModel = dayModel;
+			this.txtDay = txtDay;
+			this.txtDay.setText(dayModel.day);
+			this.txtDay.setOnClickListener(new View.OnClickListener() {
+
+				@Override
+				public void onClick(View view){
+					((ChiaseTextViewCheckable)view).toggle();
+				}
+			});
+		}
+	}
 
 	public RepeatWeeklyDayLinearLayout(Context context){
 		super(context);
@@ -55,99 +84,53 @@ public class RepeatWeeklyDayLinearLayout extends LinearLayout{
 		txtDay7 = (ChiaseTextViewCheckable)this.findViewById(R.id.txt_id_day7);
 
 		PreferencesAccountUtil accountUtil = new PreferencesAccountUtil(mContext);
-		lstDay = CsDateUtil.getAllDay4Week(CCNumberUtil.toInteger(accountUtil.getSetting().CL_START_DAY_IN_WEEK));
-		txtDay1.setText(lstDay.get(0).day);
-		txtDay2.setText(lstDay.get(1).day);
-		txtDay3.setText(lstDay.get(2).day);
-		txtDay4.setText(lstDay.get(3).day);
-		txtDay5.setText(lstDay.get(4).day);
-		txtDay6.setText(lstDay.get(5).day);
-		txtDay7.setText(lstDay.get(6).day);
-
-		txtDay1.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View view){
-				((ChiaseTextViewCheckable)view).toggle();
-			}
-		});
-		txtDay2.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View view){
-				((ChiaseTextViewCheckable)view).toggle();
-			}
-		});
-		txtDay3.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View view){
-				((ChiaseTextViewCheckable)view).toggle();
-			}
-		});
-		txtDay4.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View view){
-				((ChiaseTextViewCheckable)view).toggle();
-			}
-		});
-		txtDay5.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View view){
-				((ChiaseTextViewCheckable)view).toggle();
-			}
-		});
-		txtDay6.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View view){
-				((ChiaseTextViewCheckable)view).toggle();
-			}
-		});
-		txtDay7.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View view){
-				((ChiaseTextViewCheckable)view).toggle();
-			}
-		});
+		List<DayModel> lstDay = CsDateUtil.getAllDay4Week(CCNumberUtil.toInteger(accountUtil.getSetting().CL_START_DAY_IN_WEEK));
+		lstRepeatDay.add(new RepeatDayModel(lstDay.get(0), txtDay1));
+		lstRepeatDay.add(new RepeatDayModel(lstDay.get(1), txtDay2));
+		lstRepeatDay.add(new RepeatDayModel(lstDay.get(2), txtDay3));
+		lstRepeatDay.add(new RepeatDayModel(lstDay.get(3), txtDay4));
+		lstRepeatDay.add(new RepeatDayModel(lstDay.get(4), txtDay5));
+		lstRepeatDay.add(new RepeatDayModel(lstDay.get(5), txtDay6));
+		lstRepeatDay.add(new RepeatDayModel(lstDay.get(6), txtDay7));
 	}
 
 	public String getSelectedDays(){
-		StringBuilder builder = new StringBuilder();
-		if(txtDay1.isChecked()){
-			builder.append(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_13, lstDay.get(0).date) + ", ");
+		StringBuilder textBuilder = new StringBuilder();
+		StringBuilder idBuilder = new StringBuilder();
+		for(RepeatDayModel repeatDayModel : lstRepeatDay){
+			if(repeatDayModel.txtDay.isChecked()){
+				textBuilder.append(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_13, repeatDayModel.dayModel.date) + ", ");
+				idBuilder.append(CCDateUtil.makeCalendar(repeatDayModel.dayModel.date).get(Calendar.DAY_OF_WEEK) + ",");
+			}
 		}
 
-		if(txtDay2.isChecked()){
-			builder.append(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_13, lstDay.get(1).date) + ", ");
+		if(textBuilder.length() > 0){
+			repeatData = idBuilder.substring(0, idBuilder.length() - 2);
+			return textBuilder.substring(0, textBuilder.length() - 2);
 		}
 
-		if(txtDay3.isChecked()){
-			builder.append(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_13, lstDay.get(2).date) + ", ");
-		}
+		// set start date value
+		Calendar startCalendar = CCDateUtil.makeCalendar(WelfareFormatUtil.makeDate(this.startDate));
+		repeatData = String.valueOf(startCalendar.get(Calendar.DAY_OF_WEEK));
+        initDefaultValue(this.startDate);
+		return CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_13, WelfareFormatUtil.makeDate(this.startDate));
+	}
 
-		if(txtDay4.isChecked()){
-			builder.append(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_13, lstDay.get(3).date) + ", ");
+	public void initDefaultValue(String startDate){
+		this.startDate = startDate;
+		Date activeDate = WelfareFormatUtil.makeDate(startDate);
+		Calendar activeCalendar = CCDateUtil.makeCalendar(activeDate);
+		for(RepeatDayModel repeatDayModel : lstRepeatDay){
+			Calendar repeatCalendar = CCDateUtil.makeCalendar(repeatDayModel.dayModel.date);
+			if(activeCalendar.get(Calendar.DAY_OF_WEEK) == repeatCalendar.get(Calendar.DAY_OF_WEEK)){
+				repeatDayModel.txtDay.setChecked(true);
+			}else{
+				repeatDayModel.txtDay.setChecked(false);
+			}
 		}
+	}
 
-		if(txtDay5.isChecked()){
-			builder.append(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_13, lstDay.get(4).date) + ", ");
-		}
-
-		if(txtDay6.isChecked()){
-			builder.append(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_13, lstDay.get(5).date) + ", ");
-		}
-
-		if(txtDay7.isChecked()){
-			builder.append(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_13, lstDay.get(6).date) + ", ");
-		}
-
-		if(builder.length() > 0){
-			return builder.substring(0, builder.length() - 2);
-		}
-		return builder.toString();
+	public String getRepeatData(){
+		return this.repeatData;
 	}
 }

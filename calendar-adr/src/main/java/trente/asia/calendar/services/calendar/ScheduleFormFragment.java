@@ -33,6 +33,7 @@ import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.dialogs.ClFilterUserListDialog;
 import trente.asia.calendar.commons.dialogs.ClScheduleRepeatDialog;
+import trente.asia.calendar.commons.model.ScheduleRepeatModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
@@ -58,7 +59,6 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 
 	private ClFilterUserListDialog	filterDialog;
 	private ClScheduleRepeatDialog	repeatDialog;
-	// private LinearLayout lnrJoinUserList;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -126,6 +126,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 		}
 
 		txtStartDate.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, starDate));
+		repeatDialog.setStartDate(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, starDate));
 		txtStartTime.setText(CCFormatUtil.formatZero(startHour) + ":" + CCFormatUtil.formatZero(startMinute));
 		txtEndDate.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, endDate));
 		txtEndTime.setText(CCFormatUtil.formatZero(startHour) + ":" + CCFormatUtil.formatZero(startMinute));
@@ -138,6 +139,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 				String startDateStr = year + "/" + CCFormatUtil.formatZero(month + 1) + "/" + CCFormatUtil.formatZero(dayOfMonth);
 				txtStartDate.setText(startDateStr);
 				txtStartDate.setValue(startDateStr);
+				repeatDialog.setStartDate(startDateStr);
 			}
 		}, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
 		txtStartDate.setValue(WelfareFormatUtil.formatDate(calendar.getTime()));
@@ -219,7 +221,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 	public void onClick(View v){
 		switch(v.getId()){
 		case R.id.img_id_header_right_icon:
-			sendUpdatedRequest();
+			updateSchedule();
 			break;
 		case R.id.lnr_id_meeting_room:
 			dlgChooseRoom.show();
@@ -242,9 +244,6 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 		case R.id.txt_id_end_time:
 			timePickerDialogEnd.show();
 			break;
-		// case R.id.lnr_id_container_join_user_list:
-		// filterDialog.show();
-		// break;
 		case R.id.lnr_id_repeat:
 			repeatDialog.show();
 			break;
@@ -260,7 +259,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 		}
 	}
 
-	private void sendUpdatedRequest(){
+	private void updateSchedule(){
 		JSONObject jsonObject = CAObjectSerializeUtil.serializeObject((ViewGroup)getView().findViewById(R.id.lnr_id_content), null);
 		try{
 			if(schedule != null && !CCStringUtil.isEmpty(schedule.key)){
@@ -268,6 +267,21 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 			}
 			jsonObject.put("joinUsers", lnrUserList.formatUserList());
 			jsonObject.put("isAllDay", swtAllDay.isChecked());
+
+			ScheduleRepeatModel scheduleRepeatModel = repeatDialog.getRepeatModel();
+			if(scheduleRepeatModel != null && !CCStringUtil.isEmpty(scheduleRepeatModel.repeatType)){
+				jsonObject.put("repeatType", scheduleRepeatModel.repeatType);
+				if(ClConst.SCHEDULE_REPEAT_TYPE_WEEKLY.equals(scheduleRepeatModel.repeatType)){
+					jsonObject.put("repeatData", scheduleRepeatModel.repeatData);
+				}
+
+				jsonObject.put("repeatLimitType", scheduleRepeatModel.repeatLimitType);
+				if(ClConst.SCHEDULE_REPEAT_LIMIT_UNTIL.equals(scheduleRepeatModel.repeatLimitType)){
+					jsonObject.put("repeatEnd", scheduleRepeatModel.repeatEnd);
+				}else if(ClConst.SCHEDULE_REPEAT_LIMIT_AFTER.equals(scheduleRepeatModel.repeatLimitType)){
+					jsonObject.put("repeatInterval", scheduleRepeatModel.repeatInterval);
+				}
+			}
 		}catch(JSONException e){
 			e.printStackTrace();
 		}

@@ -223,17 +223,17 @@ public class MonthlyPageFragment extends AbstractClFragment implements DailySche
 			List<HolidayModel> lstHoliday = CCJsonUtil.convertToModelList(response.optString("holidayList"), HolidayModel.class);
 
 			// clear old data
-            clearOldData();
-            // add holiday
-            if(!CCCollectionUtil.isEmpty(lstHoliday)){
-                if(lstSchedule == null){
-                    lstSchedule = new ArrayList<>();
-                }
-                for(HolidayModel holidayModel : lstHoliday){
-                    ScheduleModel scheduleModel = new ScheduleModel(holidayModel);
-                    lstSchedule.add(scheduleModel);
-                }
-            }
+			clearOldData();
+			// add holiday
+			if(!CCCollectionUtil.isEmpty(lstHoliday)){
+				if(lstSchedule == null){
+					lstSchedule = new ArrayList<>();
+				}
+				for(HolidayModel holidayModel : lstHoliday){
+					ScheduleModel scheduleModel = new ScheduleModel(holidayModel);
+					lstSchedule.add(scheduleModel);
+				}
+			}
 
 			if(!CCCollectionUtil.isEmpty(lstSchedule)){
 				Collections.sort(lstSchedule, new ScheduleComparator());
@@ -247,7 +247,14 @@ public class MonthlyPageFragment extends AbstractClFragment implements DailySche
 							}
 						}
 					}else{
-						List<MonthlyCalendarDayView> lstActiveCalendarDay = ClUtil.findView4Day(lstCalendarDay, model.startDate, model.endDate);
+						List<MonthlyCalendarDayView> lstActiveCalendarDay = null;
+						if(!CCStringUtil.isEmpty(model.repeatType)){
+							if(ClConst.SCHEDULE_REPEAT_TYPE_WEEKLY.equals(model.repeatType)){
+								lstActiveCalendarDay = ClUtil.findView4RepeatWeek(lstCalendarDay, model.startDate, model.repeatEnd, model.repeatData);
+							}
+						}else{
+							lstActiveCalendarDay = ClUtil.findView4Day(lstCalendarDay, model.startDate, model.endDate);
+						}
 
 						for(MonthlyCalendarDayView calendarDayView : lstActiveCalendarDay){
 							calendarDayView.addSchedule(model);
@@ -261,11 +268,11 @@ public class MonthlyPageFragment extends AbstractClFragment implements DailySche
 			}
 
 			List<UserModel> lstCalendarUser = CCJsonUtil.convertToModelList(response.optString("calendarUsers"), UserModel.class);
-//            check is my calendar
-            if(CCCollectionUtil.isEmpty(lstCalendarUser)){
-                lstCalendarUser = new ArrayList<>();
-                lstCalendarUser.add(prefAccUtil.getUserPref());
-            }
+			// check is my calendar
+			if(CCCollectionUtil.isEmpty(lstCalendarUser)){
+				lstCalendarUser = new ArrayList<>();
+				lstCalendarUser.add(prefAccUtil.getUserPref());
+			}
 			if(changeCalendarUserListener != null){
 				changeCalendarUserListener.onChangeCalendarUserListener(lstCalendarUser);
 			}

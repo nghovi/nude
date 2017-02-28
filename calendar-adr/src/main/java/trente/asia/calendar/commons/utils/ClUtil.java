@@ -3,6 +3,7 @@ package trente.asia.calendar.commons.utils;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -47,12 +48,33 @@ public class ClUtil{
 			return lstCalendarDay;
 		}
 
-		// Date startDate = CCDateUtil.makeDate(WelfareFormatUtil.makeDate(startDateString));
-		// Date endDate = CCDateUtil.makeDate(WelfareFormatUtil.makeDate(endDateString));
 		for(MonthlyCalendarDayView dayView : lstView){
 			Date dateView = WelfareFormatUtil.makeDate(dayView.day);
 			if(belongPeriod(dateView, startDateString, endDateString)){
 				lstCalendarDay.add(dayView);
+			}
+		}
+		return lstCalendarDay;
+	}
+
+	/**
+	 * find calendar day or repeat schedule
+	 *
+	 * @return MonthlyCalendarDayView
+	 */
+	public static List<MonthlyCalendarDayView> findView4RepeatWeek(List<MonthlyCalendarDayView> lstView, String repeatStartDate, String repeatEndDate, String repeatData){
+		List<MonthlyCalendarDayView> lstCalendarDay = new ArrayList<>();
+		if(CCCollectionUtil.isEmpty(lstView) || CCStringUtil.isEmpty(repeatData)){
+			return lstCalendarDay;
+		}
+
+        List<String> lstRepeatData = Arrays.asList(repeatData.split(","));
+		for(MonthlyCalendarDayView dayView : lstView){
+			Date dateView = WelfareFormatUtil.makeDate(dayView.day);
+			if(belongPeriod(dateView, repeatStartDate, repeatEndDate)){
+                if(lstRepeatData.contains(String.valueOf(CCDateUtil.makeCalendar(dateView).get(Calendar.DAY_OF_WEEK)))){
+                    lstCalendarDay.add(dayView);
+                }
 			}
 		}
 		return lstCalendarDay;
