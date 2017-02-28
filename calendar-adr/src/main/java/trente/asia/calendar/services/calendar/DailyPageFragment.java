@@ -70,8 +70,6 @@ public class DailyPageFragment extends SchedulesPageFragment implements
     protected void initView() {
         super.initView();
         layoutInflater = getLayoutInflater(null);
-//        viewDayShiftTime = (ViewDayShiftTime) getView().findViewById(R.id
-//                .view_day_shift_time);
         observableScrollView = (ObservableScrollView) getView().findViewById
                 (R.id.scr_calendar_day);
         lnrOffers = (LinearLayout) getView().findViewById(R.id
@@ -79,17 +77,6 @@ public class DailyPageFragment extends SchedulesPageFragment implements
         initDialog();
     }
 
-    @Override
-    protected void onLoadSchedulesSuccess(JSONObject response) {
-        super.onLoadSchedulesSuccess(response);
-        CalendarDayModel calendarDayModel = getCalendarDayModelByDate
-                (selectedDate, calendarDayModels);
-//        if (calendarDayModel != null) {
-//            viewDayShiftTime.showCategoriesSigns(calendarDayModel);
-//        }
-    }
-
-    //
     private void initDialog() {
         dialogScheduleList = new ClDialog(activity);
         dialogScheduleList.setDialogScheduleList();
@@ -105,13 +92,6 @@ public class DailyPageFragment extends SchedulesPageFragment implements
     }
 
     @Override
-    public void onDayClick(String dayStr) {
-        selectedDate = CCDateUtil.makeDateCustom(dayStr, WelfareConst
-                .WL_DATE_TIME_7);
-        updateDayViews(dayStr);
-        updateObservableScrollableView();
-    }
-
     protected void updateObservableScrollableView() {
         schedulesMap = getDisplayedSchedulesMaps();
         buildTimelySchedules(R.id.lnr_fragment_daily_page_all_day, R.string
@@ -166,6 +146,12 @@ public class DailyPageFragment extends SchedulesPageFragment implements
         return WfUrlConst.WF_CL_WEEK_SCHEDULE;
     }
 
+    @Override
+    public void updateList(String dayStr) {
+        selectedDate = CCDateUtil.makeDateCustom(dayStr, WelfareConst
+                .WL_DATE_TIME_7);
+        updateObservableScrollableView();
+    }
 
     @Override
     public void onDailyScheduleClickListener(String day) {

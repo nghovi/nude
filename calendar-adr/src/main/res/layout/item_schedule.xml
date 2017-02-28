@@ -39,18 +39,20 @@
 
             <trente.asia.welfare.adr.view.SelectableRoundedImageView
                 android:id="@+id/img_item_schedule_dup"
-                android:layout_width="@dimen/margin_24dp"
-                android:layout_height="@dimen/margin_24dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:scaleType="fitXY"
                 android:src="@drawable/ol_icon_repeat"
+                android:visibility="gone"
                 custom:sriv_oval="true"/>
 
             <trente.asia.welfare.adr.view.SelectableRoundedImageView
                 android:id="@+id/img_item_schedule_type"
-                android:layout_width="@dimen/margin_24dp"
+                android:layout_width="wrap_content"
                 android:layout_height="@dimen/margin_24dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/ol_icon_duplicate"
+                android:visibility="gone"
                 custom:sriv_oval="true"/>
 
             <TextView
@@ -58,8 +60,8 @@
                 style="@style/wl_common_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="aaa"
-                android:layout_marginLeft="@dimen/margin_10dp"/>
+                android:layout_marginLeft="@dimen/margin_10dp"
+                android:text="aaa"/>
         </LinearLayout>
 
     </LinearLayout>

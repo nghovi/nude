@@ -57,12 +57,6 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements
     }
 
     @Override
-    public void onDayClick(String dayStr) {
-        updateDayViews(dayStr);
-        int selectedPosition = adapter.findPosition4Code(dayStr);
-        observableListView.setSelection(selectedPosition);
-    }
-
     protected void updateObservableScrollableView() {
         List<CalendarDayModel> displayedModels = getDisplayedDayForList();
         adapter = new CalendarDayListAdapter(activity, R.layout
@@ -79,6 +73,12 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements
 
     protected String getApi() {
         return WfUrlConst.WF_CL_WEEK_SCHEDULE;
+    }
+
+    @Override
+    public void updateList(String dayStr) {
+        int selectedPosition = adapter.findPosition4Code(dayStr);
+        observableListView.setSelection(selectedPosition);
     }
 
     @Override

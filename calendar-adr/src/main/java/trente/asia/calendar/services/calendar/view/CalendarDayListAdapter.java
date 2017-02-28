@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import asia.chiase.core.util.CCBooleanUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.calendar.BuildConfig;
 import trente.asia.calendar.R;
@@ -106,8 +107,15 @@ public class CalendarDayListAdapter extends ArrayAdapter<CalendarDayModel> {
 
         TextView txtScheduleTime = (TextView) lnrSchedulesContainer
                 .findViewById(R.id.txt_item_schedule_time);
-        txtScheduleTime.setText(schedule.startTime + " - " + schedule
-                .endTime);
+        String time;
+        if (CCBooleanUtil.checkBoolean(schedule.isAllDay)) {
+            time = context.getResources().getString(R.string
+                    .daily_page_all_day);
+        } else {
+            time = schedule.startTime + " - " + schedule
+                    .endTime;
+        }
+        txtScheduleTime.setText(time);
 
         SelectableRoundedImageView imgCalendar =
                 (SelectableRoundedImageView) lnrSchedulesContainer
@@ -118,14 +126,25 @@ public class CalendarDayListAdapter extends ArrayAdapter<CalendarDayModel> {
         SelectableRoundedImageView imgDup = (SelectableRoundedImageView)
                 lnrSchedulesContainer.findViewById(R.id
                         .img_item_schedule_calendar);
-        // WfPicassoHelper.loadImage(getContext(), BuildConfig.HOST +
-        // schedule.calendar.imagePath, imgDup, null);
+
+        if (CCBooleanUtil.checkBoolean(schedule.isRepeat)) {
+            imgDup.setVisibility(View.VISIBLE);
+            WfPicassoHelper.loadImage(context, BuildConfig.HOST +
+                    schedule.calendar.imagePath, imgDup, null);
+        } else {
+            imgDup.setVisibility(View.GONE);
+        }
 
         SelectableRoundedImageView imgType = (SelectableRoundedImageView)
                 lnrSchedulesContainer.findViewById(R.id
                         .img_item_schedule_calendar);
-        // WfPicassoHelper.loadImage(getContext(), BuildConfig.HOST +
-        // schedule.calendar.imagePath, imgType, null);
+        if (CCBooleanUtil.checkBoolean(schedule.isAllDay)) {
+            imgType.setVisibility(View.VISIBLE);
+            WfPicassoHelper.loadImage(context, BuildConfig.HOST +
+                    schedule.calendar.imagePath, imgType, null);
+        } else {
+            imgType.setVisibility(View.GONE);
+        }
 
 //			final HorizontalUserListView horizontalUserListView =
 // (HorizontalUserListView)calendarEvents.findViewById(R.id

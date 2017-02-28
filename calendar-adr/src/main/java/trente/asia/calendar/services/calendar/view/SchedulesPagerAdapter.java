@@ -47,9 +47,7 @@ public abstract class SchedulesPagerAdapter extends FragmentPagerAdapter {
         return fragment;
     }
 
-    protected Date choseSelectedDate(int position) {
-        return TODAY;
-    }
+    abstract Date choseSelectedDate(int position);
 
     abstract SchedulesPageFragment getFragment();
 

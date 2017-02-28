@@ -248,15 +248,22 @@ public abstract class SchedulesPageFragment extends WelfareFragment implements
         }
     }
 
+    abstract public void updateList(String dayStr);
+
+
     @Override
-    abstract public void onDayClick(String dayStr);
+    final public void onDayClick(String dayStr) {
+        updateDayViews(dayStr);
+        updateList(dayStr);
+    }
 
     protected void updateDayViews(String dayStr) {
+        pageSharingHolder.cancelPreviousClickedDayView();
         for (WeeklyCalendarDayView view : calendarDayViews) {
             if (dayStr.equals(view.dayStr)) {
                 view.setSelected(true);
-            } else {
-                view.setSelected(false);
+                pageSharingHolder.setClickedDayView(view);
+                return;
             }
         }
     }
