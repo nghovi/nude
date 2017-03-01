@@ -39,7 +39,7 @@
             android:text="&#8226;"
             android:textAlignment="center"
             android:textStyle="normal|bold|italic"
-            android:visibility="visible"/>
+            android:visibility="invisible"/>
 
 
     </RelativeLayout>
