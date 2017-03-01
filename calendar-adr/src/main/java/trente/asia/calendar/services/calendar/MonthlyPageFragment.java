@@ -154,7 +154,7 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 					List<MonthlyCalendarDayView> lstActiveCalendarDay = null;
 					if(!CCStringUtil.isEmpty(model.repeatType)){
 						if(ClConst.SCHEDULE_REPEAT_TYPE_WEEKLY.equals(model.repeatType)){
-							lstActiveCalendarDay = ClUtil.findView4RepeatWeek(lstCalendarDay, model.startDate, model.repeatEnd, model.repeatData);
+							lstActiveCalendarDay = ClUtil.findView4RepeatSchedule(lstCalendarDay, model);
 						}
 					}else{
 						lstActiveCalendarDay = ClUtil.findView4Day(lstCalendarDay, model.startDate, model.endDate);

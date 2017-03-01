@@ -1,8 +1,8 @@
 package trente.asia.calendar.services.calendar;
 
-import android.widget.TextView;
-
 import java.util.Date;
+
+import android.widget.TextView;
 
 import asia.chiase.core.util.CCFormatUtil;
 import trente.asia.android.util.CsDateUtil;
@@ -29,9 +29,9 @@ public class MonthlyFragment extends PageContainerFragment{
 		Date activeDate = CsDateUtil.addMonth(TODAY, position - INITIAL_POSITION);
 		prefAccUtil.set(ClConst.PREF_ACTIVE_DATE, CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, activeDate));
 
-        String title = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_12, activeDate);
-        TextView txtHeaderTitle = (TextView)getView().findViewById(R.id.txt_id_header_title);
-        txtHeaderTitle.setText(title);
+		String title = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_12, activeDate);
+		TextView txtHeaderTitle = (TextView)getView().findViewById(R.id.txt_id_header_title);
+		txtHeaderTitle.setText(title);
 	}
 
 	@Override

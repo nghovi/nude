@@ -1,5 +1,7 @@
 package trente.asia.calendar.commons.model;
 
+import trente.asia.calendar.services.calendar.model.ScheduleModel;
+
 /**
  * ScheduleRepeatModel
  *
@@ -14,4 +16,8 @@ public class ScheduleRepeatModel{
 
 	public String	repeatEnd;
 	public String	repeatInterval;
+
+    public ScheduleRepeatModel(){
+
+    }
 }
