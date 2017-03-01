@@ -126,7 +126,12 @@ public class ClUtil{
 					}
 				}
 			}else if(ClConst.SCHEDULE_REPEAT_LIMIT_AFTER.equals(scheduleModel.repeatLimitType)){
-
+				List<String> lstActiveDate = ClUtil.getDateList4RepeatTimes(scheduleModel);
+				for(MonthlyCalendarDayView dayView : lstView){
+					if(lstActiveDate.contains(dayView.day)){
+						lstCalendarDay.add(dayView);
+					}
+				}
 			}
 			break;
 		case ClConst.SCHEDULE_REPEAT_TYPE_YEARLY:
@@ -153,7 +158,12 @@ public class ClUtil{
 					}
 				}
 			}else if(ClConst.SCHEDULE_REPEAT_LIMIT_AFTER.equals(scheduleModel.repeatLimitType)){
-
+				List<String> lstActiveDate = ClUtil.getDateList4RepeatTimes(scheduleModel);
+				for(MonthlyCalendarDayView dayView : lstView){
+					if(lstActiveDate.contains(dayView.day)){
+						lstCalendarDay.add(dayView);
+					}
+				}
 			}
 
 			break;

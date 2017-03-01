@@ -124,15 +124,17 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 
 		if(!CCStringUtil.isEmpty(schedule.key)){
 			txtRoom.setText(WelfareUtil.findApiObject4Id(rooms, schedule.roomId).value);
+			txtRoom.setValue(schedule.roomId);
 			txtCalendar.setText(schedule.calendar.calendarName);
+			txtCalendar.setValue(schedule.calendar.key);
 			swtAllDay.setChecked(CCBooleanUtil.checkBoolean(schedule.isAllDay));
 
 			txtCategory.setText(WelfareUtil.findApiObject4Id(categories, schedule.categoryId).value);
+            txtCategory.setValue(schedule.categoryId);
 			if(!CCStringUtil.isEmpty(schedule.categoryId)){
 				txtCategory.setTextColor(Color.parseColor("#" + schedule.categoryId));
 			}
-			if (lnrUserList != null)
-			lnrUserList.show(schedule.scheduleJoinUsers, (int)getResources().getDimension(R.dimen.margin_30dp));
+			if(lnrUserList != null) lnrUserList.show(schedule.scheduleJoinUsers, (int)getResources().getDimension(R.dimen.margin_30dp));
 
 			// set time
 			Date startDate = WelfareUtil.makeDate(schedule.startDate);
@@ -141,6 +143,13 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 			txtStartTime.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_9, startDate));
 			txtEndDate.setText(WelfareFormatUtil.formatDate(endDate));
 			txtEndTime.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_9, endDate));
+		}else{
+			txtCalendar.setText(calendars.get(0).calendarName);
+			txtCalendar.setValue(calendars.get(0).key);
+			txtRoom.setText(rooms.get(0).value);
+			txtRoom.setValue(rooms.get(0).key);
+            txtCategory.setText(calendars.get(0).calendarName);
+            txtCategory.setValue(calendars.get(0).key);
 		}
 	}
 
