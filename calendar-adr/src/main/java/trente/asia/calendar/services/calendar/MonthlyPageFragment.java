@@ -20,7 +20,6 @@ import asia.chiase.core.util.CCBooleanUtil;
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
-import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.activity.ChiaseActivity;
 import trente.asia.android.define.CsConst;
@@ -30,14 +29,12 @@ import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.dialogs.ClDailySummaryDialog;
 import trente.asia.calendar.commons.utils.ClUtil;
 import trente.asia.calendar.services.calendar.listener.DailyScheduleClickListener;
-import trente.asia.calendar.services.calendar.listener.OnChangeCalendarUserListener;
 import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.view.MonthlyCalendarDayView;
 import trente.asia.calendar.services.calendar.view.MonthlyCalendarRowView;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 import trente.asia.welfare.adr.utils.WelfareUtil;
 
@@ -90,7 +87,7 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 		return CsDateUtil.getAllDate4Month(CCDateUtil.makeCalendar(selectedDate), firstDay);
 	}
 
-    @Override
+	@Override
 	protected void initDayViews(){
 		LayoutInflater mInflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		MonthlyCalendarRowView rowView = null;
@@ -130,7 +127,7 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 
 	@Override
 	protected void onLoadSchedulesSuccess(JSONObject response){
-        super.onLoadSchedulesSuccess(response);
+		super.onLoadSchedulesSuccess(response);
 		// add holiday
 		if(!CCCollectionUtil.isEmpty(lstHoliday)){
 			if(lstSchedule == null){

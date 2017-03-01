@@ -76,8 +76,8 @@ public abstract class PageContainerFragment extends AbstractClFragment{
 																					isRefreshFilterUser = false;
 																					if(!CCCollectionUtil.isEmpty(lstCalendarUser)){
 																						String targetUserData = prefAccUtil.get(ClConst.PREF_ACTIVE_USER_LIST);
-																						lnrUserList.show(ClUtil.getTargetUserList(lstCalendarUser, targetUserData), (int)getResources().getDimension(R.dimen.margin_30dp));
-																						// filterDialog.updateUserList(lstCalendarUser);
+//																						lnrUserList.show(ClUtil.getTargetUserList(lstCalendarUser, targetUserData), (int)getResources().getDimension(R.dimen.margin_30dp));
+																						holder.updateFilter(ClUtil.getTargetUserList(lstCalendarUser, targetUserData));
 																					}else{
 																						lnrUserList.removeAllViews();
 																						lnrUserList.setVisibility(View.GONE);
@@ -123,7 +123,9 @@ public abstract class PageContainerFragment extends AbstractClFragment{
 			public void onPageSelected(int position){
 				setActiveDate(position);
 				holder.selectedPagePosition = position;
+                // load schedule list
 				SchedulesPageFragment fragment = (SchedulesPageFragment)mPagerAdapter.getItem(position);
+                fragment.loadScheduleList();
 			}
 		});
 
