@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:gravity="center"
-            android:text="16"
+            android:textColor="@color/core_white"
             android:visibility="visible">
         </TextView>
 

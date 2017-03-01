@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import asia.chiase.core.util.CCCollectionUtil;
@@ -16,6 +17,7 @@ import asia.chiase.core.util.CCStringUtil;
 import trente.asia.calendar.BuildConfig;
 import trente.asia.calendar.R;
 import trente.asia.welfare.adr.models.UserModel;
+import trente.asia.welfare.adr.utils.WelfareUtil;
 import trente.asia.welfare.adr.utils.WfPicassoHelper;
 
 /**
@@ -26,10 +28,12 @@ import trente.asia.welfare.adr.utils.WfPicassoHelper;
 
 public class UserListLinearLayout extends LinearLayout {
 
+    private static final int OWNER_USER_DISTANCE_DP = 10;
     private Context mContext;
     private boolean isGravityLeft = false;
 
     private List<UserModel> lstUser;
+    private UserModel ownerUser;
 
     public void setGravityLeft(boolean gravityLeft) {
         isGravityLeft = gravityLeft;
@@ -50,6 +54,7 @@ public class UserListLinearLayout extends LinearLayout {
     }
 
     public void show(List<UserModel> lstUser, int imageSize) {
+        lstUser = sortByOwner(lstUser);
         if (isGravityLeft) {
             this.setGravity(Gravity.LEFT);
         }
@@ -91,6 +96,21 @@ public class UserListLinearLayout extends LinearLayout {
 
     }
 
+    private List<UserModel> sortByOwner(List<UserModel> lstUser) {
+        if (ownerUser == null) {
+            return lstUser;
+        }
+        List<UserModel> result = new ArrayList<>();
+        for (UserModel userModel : lstUser) {
+            if (userModel.key.equals(ownerUser.key)) {
+                result.add(0, userModel);
+            } else {
+                result.add(userModel);
+            }
+        }
+        return result;
+    }
+
     private void addUserView(UserModel userModel) {
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService
                 (Context.LAYOUT_INFLATER_SERVICE);
@@ -98,6 +118,10 @@ public class UserListLinearLayout extends LinearLayout {
         if (!CCStringUtil.isEmpty(userModel.avatarPath)) {
             ImageView imgAvatar = (ImageView) userItemView.findViewById(R.id
                     .img_id_avatar);
+            if (ownerUser != null && ownerUser.key.equals(userModel.key)) {
+                imgAvatar.setPadding(0, 0, WelfareUtil.dpToPx
+                        (OWNER_USER_DISTANCE_DP), 0);
+            }
             WfPicassoHelper.loadImage(mContext, BuildConfig.HOST + userModel
                     .avatarPath, imgAvatar, null);
         }
@@ -116,5 +140,9 @@ public class UserListLinearLayout extends LinearLayout {
 
     public List<UserModel> getLstUser() {
         return lstUser;
+    }
+
+    public void setOwnerUser(UserModel ownerUser) {
+        this.ownerUser = ownerUser;
     }
 }
