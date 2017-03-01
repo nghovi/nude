@@ -16,9 +16,7 @@ import java.util.Date;
 import java.util.List;
 
 import asia.chiase.core.util.CCDateUtil;
-import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCNumberUtil;
-import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.services.calendar.model.CalendarDayModel;
@@ -26,7 +24,6 @@ import trente.asia.calendar.services.calendar.view.CalendarDayListAdapter;
 import trente.asia.calendar.services.calendar.view.CalendarView;
 import trente.asia.calendar.services.calendar.view.WeeklyCalendarDayView;
 import trente.asia.calendar.services.calendar.view.WeeklyCalendarHeaderRowView;
-import trente.asia.welfare.adr.define.WelfareConst;
 
 /**
  * WeeklyPageFragment
@@ -114,48 +111,8 @@ public class WeeklyPageFragment extends SchedulesPageListViewFragment
     }
 
     @Override
-    public void onDayClick(String dayStr) {
-        updateDayViews(dayStr);
-        updateList(dayStr);
-    }
-
-    protected void updateDayViews(String dayStr) {
-        pageSharingHolder.cancelPreviousClickedDayView();
-        for (WeeklyCalendarDayView view : calendarDayViews) {
-            if (dayStr.equals(view.dayStr)) {
-                view.setSelected(true);
-                pageSharingHolder.setClickedDayView(view);
-                return;
-            }
-        }
-    }
-
-    @Override
     public void onCalendarDaySelected(CalendarDayModel reportModel) {
 
-    }
-
-    @Override
-    protected void clearOldData() {
-        for (WeeklyCalendarDayView dayView : calendarDayViews) {
-            CalendarDayModel calendarDayModel = getCalendarDayModelByDate
-                    (dayView.getDate(), calendarDayModels);
-            dayView.setData(calendarDayModel, this, lstHoliday);
-        }
-    }
-
-    private CalendarDayModel getCalendarDayModelByDate(Date date,
-                                                       List<CalendarDayModel>
-                                                               calendarDayModels) {
-        if (!CCStringUtil.isEmpty(calendarDayModels)) {
-            for (CalendarDayModel calendarDayModel : calendarDayModels) {
-                if (calendarDayModel.date.equals(CCFormatUtil
-                        .formatDateCustom(WelfareConst.WL_DATE_TIME_7, date))) {
-                    return calendarDayModel;
-                }
-            }
-        }
-        return null;
     }
 
     @Override

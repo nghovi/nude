@@ -75,6 +75,8 @@ public abstract class SchedulesPageFragment extends AbstractClFragment
 
     abstract protected List<Date> getAllDate();
 
+    abstract protected void clearOldData();
+
     @Override
     protected void initView() {
         super.initView();
@@ -183,9 +185,6 @@ public abstract class SchedulesPageFragment extends AbstractClFragment
             changeCalendarUserListener.onChangeCalendarUserListener
                     (lstCalendarUser);
         }
-
-        // clear old data
-        clearOldData();
     }
 
     @Override
@@ -199,8 +198,6 @@ public abstract class SchedulesPageFragment extends AbstractClFragment
     protected void initData() {
         loadScheduleList();
     }
-
-    abstract protected void clearOldData();
 
     @Override
     public void onDestroy() {

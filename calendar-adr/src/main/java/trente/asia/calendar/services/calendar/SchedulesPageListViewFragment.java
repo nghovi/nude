@@ -1,7 +1,5 @@
 package trente.asia.calendar.services.calendar;
 
-import android.os.Bundle;
-
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -15,14 +13,12 @@ import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import trente.asia.android.define.CsConst;
-import trente.asia.calendar.BuildConfig;
 import trente.asia.calendar.services.calendar.model.CalendarDayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.view.WeeklyCalendarDayView;
 import trente.asia.calendar.services.calendar.view.WeeklyCalendarHeaderRowView;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.models.ApiObjectModel;
-import trente.asia.welfare.adr.models.UserModel;
 
 import static trente.asia.welfare.adr.utils.WelfareFormatUtil.convertList2Map;
 
@@ -32,20 +28,15 @@ import static trente.asia.welfare.adr.utils.WelfareFormatUtil.convertList2Map;
  * @author TrungND
  */
 public abstract class SchedulesPageListViewFragment extends
-        SchedulesPageFragment {
+        SchedulesPageFragment implements WeeklyCalendarDayView
+        .OnDayClickListener {
 
     protected List<WeeklyCalendarHeaderRowView> lstHeaderRow = new
             ArrayList<>();
-    protected List<UserModel> filteredUsers = new ArrayList<>();
     protected List<CalendarDayModel> calendarDayModels;
 
     protected List<WeeklyCalendarDayView> calendarDayViews = new ArrayList<>();
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        host = BuildConfig.HOST;
-    }
 
     @Override
     protected void initDayViews() {
@@ -68,35 +59,29 @@ public abstract class SchedulesPageListViewFragment extends
         }
     }
 
-    @Override
-    protected void initData() {
-        loadScheduleList();
-    }
-
     abstract public void updateList(String dayStr);
 
     protected void onLoadSchedulesSuccess(JSONObject response) {
         super.onLoadSchedulesSuccess(response);
         separateDateTime(lstSchedule);
-        filteredUsers = initFilteredUser(lstCalendarUser);
         updateSchedules(lstSchedule, lstCategories);
         calendarDayModels = buildCalendarDayModels(lstSchedule);
         if (!CCCollectionUtil.isEmpty(lstCalendarUser)) {
             pageSharingHolder.updateFilter(lstCalendarUser);
         }
+        clearOldData();
+    }
+
+    @Override
+    protected void clearOldData() {
+        for (WeeklyCalendarDayView dayView : calendarDayViews) {
+            CalendarDayModel calendarDayModel = getCalendarDayModel
+                    (dayView.dayStr, calendarDayModels);
+            dayView.setData(calendarDayModel, this, lstHoliday);
+        }
     }
 
     abstract protected void updateObservableScrollableView();
-
-    abstract protected void clearOldData();
-
-    private List<UserModel> initFilteredUser(List<UserModel> allUsers) {
-        List<UserModel> userModels = new ArrayList<>();
-        for (UserModel userModel : allUsers) {
-            userModels.add(userModel);
-        }
-        return userModels;
-    }
 
     public void updateSchedules(List<ScheduleModel> schedules,
                                 List<ApiObjectModel> categories) {
@@ -176,5 +161,23 @@ public abstract class SchedulesPageListViewFragment extends
 
     protected List<CalendarDayModel> getDisplayedDayForList() {
         return calendarDayModels;
+    }
+
+
+    @Override
+    public void onDayClick(String dayStr) {
+        updateDayViews(dayStr);
+        updateList(dayStr);
+    }
+
+    protected void updateDayViews(String dayStr) {
+        pageSharingHolder.cancelPreviousClickedDayView();
+        for (WeeklyCalendarDayView view : calendarDayViews) {
+            if (dayStr.equals(view.dayStr)) {
+                view.setSelected(true);
+                pageSharingHolder.setClickedDayView(view);
+                return;
+            }
+        }
     }
 }
