@@ -94,9 +94,18 @@ public class CalendarListFragment extends AbstractClFragment{
 		}
 		saveSelectedCalendarToPref();
 		if(changeCalendarListener != null){
-			changeCalendarListener.onChangeCalendarListener();
+			changeCalendarListener.onChangeCalendarListener(getCalendarName(), true);
 		}
 	}
+
+    private String getCalendarName(){
+        StringBuilder builder = new StringBuilder();
+        if(!CCCollectionUtil.isEmpty(lstSelectedCalendar)){
+            String multiCalendarName = getString(R.string.cl_common_calendar_sub_title, String.valueOf(lstSelectedCalendar.size()));
+            builder.append(lstSelectedCalendar.size() == 1 ? lstSelectedCalendar.get(0).calendarName : multiCalendarName);
+        }
+        return builder.toString();
+    }
 
 	private boolean getCheckedStatus(int position){
 		CalendarModel calendarModel = lstCalendarWithoutMyCalendar.get(position);
@@ -155,6 +164,9 @@ public class CalendarListFragment extends AbstractClFragment{
 				}
 			}
             setMyCalendarValue();
+            if(changeCalendarListener != null){
+                changeCalendarListener.onChangeCalendarListener(getCalendarName(), false);
+            }
 		}
 	}
 

@@ -89,8 +89,6 @@ public abstract class SchedulesPageListViewFragment extends SchedulesPageFragmen
 		if(!CCCollectionUtil.isEmpty(calendarUsers)){
 			pageSharingHolder.updateFilter(calendarUsers);
 		}
-
-		updateHeaderTitles();
 	}
 
 	abstract protected void updateObservableScrollableView();

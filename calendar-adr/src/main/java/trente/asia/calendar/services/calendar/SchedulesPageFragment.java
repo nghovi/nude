@@ -69,18 +69,6 @@ public abstract class SchedulesPageFragment extends AbstractClFragment implement
 		super.onActivityCreated(savedInstanceState);
 	}
 
-	public void updateHeaderTitles(){
-		if(pagePosition == pageSharingHolder.selectedPagePosition){
-			String title = getUpperTitle();
-			List<String> selectedCalendarIds = Arrays.asList(prefAccUtil.get(ClConst.SELECTED_CALENDAR_STRING).split(","));
-			int selectedCalendarSize = selectedCalendarIds.size();
-			// TODO Trung: show calendar name
-			// String subtitle = selectedCalendarSize > 1 ? selectedCalendarSize + " calendars" : getCalendarName(selectedCalendarIds.get(0));
-			String subtitle = selectedCalendarSize > 1 ? selectedCalendarSize + " calendars" : "";
-			pageSharingHolder.navigationHeader.updateHeaderTitles(title, subtitle);
-		}
-	}
-
 	abstract protected List<Date> getAllDate();
 
 	@Override

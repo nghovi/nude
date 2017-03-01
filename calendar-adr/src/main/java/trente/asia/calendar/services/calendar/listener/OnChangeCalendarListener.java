@@ -7,5 +7,5 @@ package trente.asia.calendar.services.calendar.listener;
  */
 public interface OnChangeCalendarListener{
 
-	public void onChangeCalendarListener();
+	public void onChangeCalendarListener(String subTitle, boolean isRefresh);
 }

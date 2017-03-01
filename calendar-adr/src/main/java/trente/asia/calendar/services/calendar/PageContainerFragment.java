@@ -12,8 +12,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import asia.chiase.core.util.CCCollectionUtil;
+import asia.chiase.core.util.CCFormatUtil;
 import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
@@ -25,6 +27,7 @@ import trente.asia.calendar.services.calendar.listener.OnChangeCalendarUserListe
 import trente.asia.calendar.services.calendar.view.NavigationHeader;
 import trente.asia.calendar.services.calendar.view.PageSharingHolder;
 import trente.asia.calendar.services.calendar.view.SchedulesPagerAdapter;
+import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.view.WfSlideMenuLayout;
 
@@ -51,16 +54,21 @@ public abstract class PageContainerFragment extends AbstractClFragment{
 	protected OnChangeCalendarListener		onChangeCalendarListener	= new OnChangeCalendarListener() {
 
 																			@Override
-																			public void onChangeCalendarListener(){
-																				prefAccUtil.set(ClConst.PREF_ACTIVE_USER_LIST, "");
-																				isRefreshFilterUser = true;
-																				// load schedule list
-																				SchedulesPageFragment fragment = (SchedulesPageFragment)mPagerAdapter.getItem(holder.selectedPagePosition);
-																				fragment.loadScheduleList();
+																			public void onChangeCalendarListener(String subTitle, boolean isRefresh){
+																				TextView txtHeaderSubtitle = (TextView)PageContainerFragment.this.getView().findViewById(R.id.txt_id_header_title_sub);
+																				txtHeaderSubtitle.setText(subTitle);
+
+																				if(isRefresh){
+																					prefAccUtil.set(ClConst.PREF_ACTIVE_USER_LIST, "");
+																					isRefreshFilterUser = true;
+																					// load schedule list
+																					SchedulesPageFragment fragment = (SchedulesPageFragment)mPagerAdapter.getItem(holder.selectedPagePosition);
+																					fragment.loadScheduleList();
+																				}
 																			}
 																		};
 
-    protected OnChangeCalendarUserListener	changeCalendarUserListener	= new OnChangeCalendarUserListener() {
+	protected OnChangeCalendarUserListener	changeCalendarUserListener	= new OnChangeCalendarUserListener() {
 
 																			@Override
 																			public void onChangeCalendarUserListener(List<UserModel> lstCalendarUser){
@@ -116,9 +124,6 @@ public abstract class PageContainerFragment extends AbstractClFragment{
 				setActiveDate(position);
 				holder.selectedPagePosition = position;
 				SchedulesPageFragment fragment = (SchedulesPageFragment)mPagerAdapter.getItem(position);
-				if(fragment != null){
-					fragment.updateHeaderTitles();
-				}
 			}
 		});
 
@@ -131,13 +136,16 @@ public abstract class PageContainerFragment extends AbstractClFragment{
 		FragmentManager fragmentManager = getFragmentManager();
 		FragmentTransaction transaction = fragmentManager.beginTransaction();
 		CalendarListFragment calendarListFragment = new CalendarListFragment();
-        calendarListFragment.setOnChangeCalendarListener(onChangeCalendarListener);
+		calendarListFragment.setOnChangeCalendarListener(onChangeCalendarListener);
 		transaction.replace(R.id.slice_menu_board, calendarListFragment).commit();
 	}
 
 	protected void setActiveDate(int position){
 		Date activeDate = CsDateUtil.addWeek(TODAY, position - INITIAL_POSITION);
 		prefAccUtil.saveActiveDate(activeDate);
+		String title = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_12, activeDate);
+		TextView txtHeaderTitle = (TextView)getView().findViewById(R.id.txt_id_header_title);
+		txtHeaderTitle.setText(title);
 	}
 
 	@Override
