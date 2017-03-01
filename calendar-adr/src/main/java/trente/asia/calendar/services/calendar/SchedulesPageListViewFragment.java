@@ -1,6 +1,8 @@
 package trente.asia.calendar.services.calendar;
 
-import static trente.asia.welfare.adr.utils.WelfareFormatUtil.convertList2Map;
+import android.os.Bundle;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,14 +11,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.json.JSONObject;
-
-import android.os.Bundle;
-
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
-import asia.chiase.core.util.CCJsonUtil;
 import trente.asia.android.define.CsConst;
 import trente.asia.calendar.BuildConfig;
 import trente.asia.calendar.services.calendar.model.CalendarDayModel;
@@ -27,143 +24,157 @@ import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.models.ApiObjectModel;
 import trente.asia.welfare.adr.models.UserModel;
 
+import static trente.asia.welfare.adr.utils.WelfareFormatUtil.convertList2Map;
+
 /**
  * WeeklyPageFragment
  *
  * @author TrungND
  */
-public abstract class SchedulesPageListViewFragment extends SchedulesPageFragment{
+public abstract class SchedulesPageListViewFragment extends
+        SchedulesPageFragment {
 
-	protected Date								selectedDate;
+    protected List<WeeklyCalendarHeaderRowView> lstHeaderRow = new
+            ArrayList<>();
+    protected List<UserModel> filteredUsers = new ArrayList<>();
+    protected List<CalendarDayModel> calendarDayModels;
 
-	protected List<WeeklyCalendarHeaderRowView>	lstHeaderRow		= new ArrayList<>();
-	protected List<UserModel>					filteredUsers		= new ArrayList<>();
-	protected List<CalendarDayModel>			calendarDayModels;
+    protected List<WeeklyCalendarDayView> calendarDayViews = new ArrayList<>();
 
-	protected List<WeeklyCalendarDayView>		calendarDayViews	= new ArrayList<>();
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        host = BuildConfig.HOST;
+    }
 
-	@Override
-	public void onCreate(Bundle savedInstanceState){
-		super.onCreate(savedInstanceState);
-		host = BuildConfig.HOST;
-	}
+    @Override
+    protected void initDayViews() {
+        dates = getAllDate();
+        WeeklyCalendarHeaderRowView rowView = null;
+        for (int index = 0; index < dates.size(); index++) {
+            Date date = dates.get(index);
+            if (index % CsConst.DAY_NUMBER_A_WEEK == 0) {
+                rowView = new WeeklyCalendarHeaderRowView(activity, index /
+                        CsConst.DAY_NUMBER_A_WEEK);
+                rowView.initialization();
+                lnrCalendarContainer.addView(rowView);
+                lstHeaderRow.add(rowView);
+            }
 
-	@Override
-	protected void initDayViews(){
-		dates = getAllDate();
-		WeeklyCalendarHeaderRowView rowView = null;
-		for(int index = 0; index < dates.size(); index++){
-			Date date = dates.get(index);
-			if(index % CsConst.DAY_NUMBER_A_WEEK == 0){
-				rowView = new WeeklyCalendarHeaderRowView(activity, index / CsConst.DAY_NUMBER_A_WEEK);
-				rowView.initialization();
-				lnrCalendarContainer.addView(rowView);
-				lstHeaderRow.add(rowView);
-			}
+            WeeklyCalendarDayView dayView = new WeeklyCalendarDayView(activity);
+            dayView.initialization(date);
+            rowView.lnrRowContent.addView(dayView);
+            calendarDayViews.add(dayView);
+        }
+    }
 
-			WeeklyCalendarDayView dayView = new WeeklyCalendarDayView(activity);
-			dayView.initialization(date);
-			rowView.lnrRowContent.addView(dayView);
-			calendarDayViews.add(dayView);
-		}
-	}
+    @Override
+    protected void initData() {
+        loadScheduleList();
+    }
 
-	@Override
-	protected void initData(){
-		loadScheduleList();
-	}
+    abstract public void updateList(String dayStr);
 
-	abstract public void updateList(String dayStr);
+    protected void onLoadSchedulesSuccess(JSONObject response) {
+        super.onLoadSchedulesSuccess(response);
+        separateDateTime(lstSchedule);
+        filteredUsers = initFilteredUser(lstCalendarUser);
+        updateSchedules(lstSchedule, lstCategories);
+        calendarDayModels = buildCalendarDayModels(lstSchedule);
+        if (!CCCollectionUtil.isEmpty(lstCalendarUser)) {
+            pageSharingHolder.updateFilter(lstCalendarUser);
+        }
+    }
 
-	protected void onLoadSchedulesSuccess(JSONObject response){
-		separateDateTime(lstSchedule);
-		List<ApiObjectModel> categories = CCJsonUtil.convertToModelList(response.optString("categories"), ApiObjectModel.class);
-		List<UserModel> calendarUsers = CCJsonUtil.convertToModelList(response.optString("calendarUsers"), UserModel.class);
-		filteredUsers = initFilteredUser(calendarUsers);
-		updateSchedules(lstSchedule, categories);
-		calendarDayModels = buildCalendarDayModels(lstSchedule);
+    abstract protected void updateObservableScrollableView();
 
-		// clear old data
-		clearOldData();
+    abstract protected void clearOldData();
 
-		if(!CCCollectionUtil.isEmpty(calendarUsers)){
-			pageSharingHolder.updateFilter(calendarUsers);
-		}
-	}
+    private List<UserModel> initFilteredUser(List<UserModel> allUsers) {
+        List<UserModel> userModels = new ArrayList<>();
+        for (UserModel userModel : allUsers) {
+            userModels.add(userModel);
+        }
+        return userModels;
+    }
 
-	abstract protected void updateObservableScrollableView();
+    public void updateSchedules(List<ScheduleModel> schedules,
+                                List<ApiObjectModel> categories) {
+        Map<String, String> categoriesMap = convertList2Map(categories);
+        for (ScheduleModel schedule : schedules) {
+            schedule.categoryName = categoriesMap.get(schedule.categoryId);
+        }
+    }
 
-	abstract protected void clearOldData();
+    public List<CalendarDayModel> buildCalendarDayModels(List<ScheduleModel>
+                                                                 schedules) {
+        List<CalendarDayModel> calendarDayModels = new ArrayList<>();
+        for (ScheduleModel scheduleModel : schedules) {
+            CalendarDayModel calendarDayModel = getCalendarDayModel
+                    (scheduleModel.startDate, calendarDayModels);
+            if (calendarDayModel == null) {
+                calendarDayModel = new CalendarDayModel();
+                calendarDayModel.date = scheduleModel.startDate;
+                calendarDayModel.schedules = new ArrayList<>();
+                calendarDayModel.schedules.add(scheduleModel);
+                calendarDayModels.add(calendarDayModel);
+            } else {
+                calendarDayModel.schedules.add(scheduleModel);
+            }
+        }
 
-	private List<UserModel> initFilteredUser(List<UserModel> allUsers){
-		List<UserModel> userModels = new ArrayList<>();
-		for(UserModel userModel : allUsers){
-			userModels.add(userModel);
-		}
-		return userModels;
-	}
+        Comparator<CalendarDayModel> comparator = new
+                Comparator<CalendarDayModel>() {
 
-	public void updateSchedules(List<ScheduleModel> schedules, List<ApiObjectModel> categories){
-		Map<String, String> categoriesMap = convertList2Map(categories);
-		for(ScheduleModel schedule : schedules){
-			schedule.categoryName = categoriesMap.get(schedule.categoryId);
-		}
-	}
+                    @Override
+                    public int compare(CalendarDayModel left,
+                                       CalendarDayModel right) {
+                        return CCDateUtil.makeDateCustom(left.date, WelfareConst
+                                .WL_DATE_TIME_7).compareTo(CCDateUtil
+                                .makeDateCustom
+                                        (right.date, WelfareConst
+                                                .WL_DATE_TIME_7));
+                    }
+                };
 
-	public List<CalendarDayModel> buildCalendarDayModels(List<ScheduleModel> schedules){
-		List<CalendarDayModel> calendarDayModels = new ArrayList<>();
-		for(ScheduleModel scheduleModel : schedules){
-			CalendarDayModel calendarDayModel = getCalendarDayModel(scheduleModel.startDate, calendarDayModels);
-			if(calendarDayModel == null){
-				calendarDayModel = new CalendarDayModel();
-				calendarDayModel.date = scheduleModel.startDate;
-				calendarDayModel.schedules = new ArrayList<>();
-				calendarDayModel.schedules.add(scheduleModel);
-				calendarDayModels.add(calendarDayModel);
-			}else{
-				calendarDayModel.schedules.add(scheduleModel);
-			}
-		}
+        Collections.sort(calendarDayModels, comparator);
+        return calendarDayModels;
+    }
 
-		Comparator<CalendarDayModel> comparator = new Comparator<CalendarDayModel>() {
+    private void separateDateTime(List<ScheduleModel> scheduleModels) {
+        for (ScheduleModel scheduleModel : scheduleModels) {
+            Date startDate = CCDateUtil.makeDateCustom(scheduleModel
+                    .startDate, WelfareConst.WL_DATE_TIME_1);
+            Date endDate = CCDateUtil.makeDateCustom(scheduleModel.endDate,
+                    WelfareConst.WL_DATE_TIME_1);
+            scheduleModel.startDate = CCFormatUtil.formatDateCustom
+                    (WelfareConst.WL_DATE_TIME_7, startDate);
+            scheduleModel.endDate = CCFormatUtil.formatDateCustom
+                    (WelfareConst.WL_DATE_TIME_7, endDate);
+            scheduleModel.startTime = CCFormatUtil.formatDateCustom
+                    (WelfareConst.WL_DATE_TIME_9, startDate);
+            scheduleModel.endTime = CCFormatUtil.formatDateCustom
+                    (WelfareConst.WL_DATE_TIME_9, endDate);
+        }
+    }
 
-			@Override
-			public int compare(CalendarDayModel left, CalendarDayModel right){
-				return CCDateUtil.makeDateCustom(left.date, WelfareConst.WL_DATE_TIME_7).compareTo(CCDateUtil.makeDateCustom(right.date, WelfareConst.WL_DATE_TIME_7));
-			}
-		};
+    public CalendarDayModel getCalendarDayModel(String day,
+                                                List<CalendarDayModel>
+                                                        calendarDayModels) {
+        for (CalendarDayModel calendarDayModel : calendarDayModels) {
+            if (calendarDayModel.date.equals(day)) {
+                return calendarDayModel;
+            }
+        }
+        return null;
+    }
 
-		Collections.sort(calendarDayModels, comparator);
-		return calendarDayModels;
-	}
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
 
-	private void separateDateTime(List<ScheduleModel> scheduleModels){
-		for(ScheduleModel scheduleModel : scheduleModels){
-			Date startDate = CCDateUtil.makeDateCustom(scheduleModel.startDate, WelfareConst.WL_DATE_TIME_1);
-			Date endDate = CCDateUtil.makeDateCustom(scheduleModel.endDate, WelfareConst.WL_DATE_TIME_1);
-			scheduleModel.startDate = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, startDate);
-			scheduleModel.endDate = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, endDate);
-			scheduleModel.startTime = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_9, startDate);
-			scheduleModel.endTime = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_9, endDate);
-		}
-	}
-
-	public CalendarDayModel getCalendarDayModel(String day, List<CalendarDayModel> calendarDayModels){
-		for(CalendarDayModel calendarDayModel : calendarDayModels){
-			if(calendarDayModel.date.equals(day)){
-				return calendarDayModel;
-			}
-		}
-		return null;
-	}
-
-	@Override
-	public void onDestroy(){
-		super.onDestroy();
-	}
-
-	protected List<CalendarDayModel> getDisplayedDayForList(){
-		return calendarDayModels;
-	}
-
+    protected List<CalendarDayModel> getDisplayedDayForList() {
+        return calendarDayModels;
+    }
 }
