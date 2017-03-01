@@ -13,14 +13,13 @@
 
         <include layout="@layout/view_navigation_header"/>
 
-        <!--<include layout="@layout/view_horizontal_user_list"/>-->
+
         <trente.asia.calendar.commons.views.UserListLinearLayout
             android:id="@+id/lnr_fragment_pager_container_user_list"
             style="@style/cs_common_match_wrap"
-            android:background="@drawable/state_common_selectable_row"
-            android:paddingBottom="@dimen/margin_10dp"
-            android:paddingTop="@dimen/margin_10dp">
+            android:background="@color/wf_app_color_base">
         </trente.asia.calendar.commons.views.UserListLinearLayout>
+
 
         <android.support.v4.view.ViewPager
             android:id="@+id/view_id_pager"

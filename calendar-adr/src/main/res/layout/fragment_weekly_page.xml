@@ -12,14 +12,15 @@
         <trente.asia.calendar.commons.views.UserListLinearLayout
             android:id="@+id/lnr_fragment_pager_container_user_list"
             style="@style/cs_common_match_wrap"
-            android:background="@drawable/state_common_selectable_row"
-            android:paddingBottom="@dimen/margin_10dp"
-            android:paddingTop="@dimen/margin_10dp">
+            android:background="@color/wf_app_color_base">
         </trente.asia.calendar.commons.views.UserListLinearLayout>
+
+        <!--android:background="@drawable/state_common_selectable_row"-->
 
         <LinearLayout
             android:id="@+id/lnr_calendar_container"
             style="@style/cs_common_match_wrap"
+            android:background="@color/wf_app_color_base"
             android:orientation="vertical"/>
 
         <com.github.ksoichiro.android.observablescrollview.ObservableListView

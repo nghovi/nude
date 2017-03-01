@@ -84,6 +84,8 @@ public class WeeklyCalendarDayView extends LinearLayout {
                     .circle_background_holiday;
         }
 
+        rowItemView.setBackgroundResource(this.bgResource);
+
         if (calendarDayModel != null && !CCCollectionUtil.isEmpty
                 (calendarDayModel
                         .schedules)) {
@@ -105,7 +107,7 @@ public class WeeklyCalendarDayView extends LinearLayout {
     public void initialization(Date itemDate) {
         LayoutParams params = new LayoutParams(0, LayoutParams.WRAP_CONTENT, 1);
         this.setLayoutParams(params);
-        this.date = itemDate;
+        this.date = CCDateUtil.makeDate(itemDate);
         this.dayStr = CCFormatUtil.formatDateCustom(WelfareConst
                 .WL_DATE_TIME_7, this.date);
 
@@ -142,7 +144,6 @@ public class WeeklyCalendarDayView extends LinearLayout {
 
         txtScheduleMark = (TextView) itemView.findViewById(R.id
                 .txt_id_row_schedule_mark);
-
 
         Calendar itemCalendar = CCDateUtil.makeCalendar(itemDate);
         if (Calendar.SUNDAY == itemCalendar.get(Calendar.DAY_OF_WEEK))

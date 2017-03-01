@@ -85,7 +85,7 @@ public class CalendarDayListAdapter extends ArrayAdapter<CalendarDayModel> {
         }
     }
 
-    public static View buildScheduleItem(Context context, LayoutInflater
+    public static View buildScheduleItem(final Context context, LayoutInflater
             layoutInflater, final ScheduleModel schedule, final
                                          OnScheduleClickListener
                                                  onScheduleClickListener) {
@@ -93,17 +93,10 @@ public class CalendarDayListAdapter extends ArrayAdapter<CalendarDayModel> {
                 .inflate(R.layout
                         .item_schedule, null);
 
-        TextView txtScheduleName = (TextView) lnrSchedulesContainer
-                .findViewById(R.id.txt_item_schedule_name);
-        txtScheduleName.setText(schedule.scheduleName);
+//        TextView txtScheduleName = (TextView) lnrSchedulesContainer
+//                .findViewById(R.id.txt_item_schedule_name);
+//        txtScheduleName.setText(schedule.scheduleName);
 
-        TextView txtScheduleCategory = (TextView) lnrSchedulesContainer
-                .findViewById(R.id.txt_item_schedule_category);
-        if (!CCStringUtil.isEmpty(schedule.categoryId)) {
-            txtScheduleCategory.setTextColor(Color.parseColor("#" +
-                    schedule.categoryId));
-        }
-        txtScheduleCategory.setText(schedule.categoryName);
 
         TextView txtScheduleTime = (TextView) lnrSchedulesContainer
                 .findViewById(R.id.txt_item_schedule_time);
@@ -116,6 +109,16 @@ public class CalendarDayListAdapter extends ArrayAdapter<CalendarDayModel> {
                     .endTime;
         }
         txtScheduleTime.setText(time);
+
+        TextView txtScheduleName = (TextView) lnrSchedulesContainer
+                .findViewById(R.id.txt_item_schedule_category);
+        if (!CCStringUtil.isEmpty(schedule.categoryId)) {
+            int categoryColor = Color.parseColor("#" +
+                    schedule.categoryId);
+            txtScheduleName.setTextColor(categoryColor);
+            txtScheduleTime.setTextColor(categoryColor);
+        }
+        txtScheduleName.setText(schedule.scheduleName);
 
         SelectableRoundedImageView imgCalendar =
                 (SelectableRoundedImageView) lnrSchedulesContainer
@@ -157,14 +160,20 @@ public class CalendarDayListAdapter extends ArrayAdapter<CalendarDayModel> {
 //				public void run(){
 //					horizontalUserListView.show(joinedUser, joinedUser, true,
 // 32, 10);
-//				}
+//				}f
 //			});
 
-        UserListLinearLayout userListLinearLayout =
+        final UserListLinearLayout userListLinearLayout =
                 (UserListLinearLayout) lnrSchedulesContainer.findViewById
-                        (R.id.item_schedule_user_list_linear_layout);
-        userListLinearLayout.show(joinedUser, (int) context.getResources
-                ().getDimension(R.dimen.margin_30dp));
+                        (R.id.lnr_id_container_join_user_list);
+        userListLinearLayout.setGravityLeft(true);
+        userListLinearLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                userListLinearLayout.show(joinedUser, (int) context.getResources
+                        ().getDimension(R.dimen.margin_30dp));
+            }
+        });
 
 
         lnrSchedulesContainer.setFocusable(true);

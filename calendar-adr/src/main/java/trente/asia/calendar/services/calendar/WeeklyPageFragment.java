@@ -59,7 +59,6 @@ public class WeeklyPageFragment extends SchedulesPageListViewFragment
 
     protected void onLoadSchedulesSuccess(JSONObject response) {
         super.onLoadSchedulesSuccess(response);
-        updateObservableScrollableView();
     }
 
     protected void updateObservableScrollableView() {

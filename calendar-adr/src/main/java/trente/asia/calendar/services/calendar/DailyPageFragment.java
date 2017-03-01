@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import asia.chiase.core.util.CCBooleanUtil;
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
@@ -180,7 +181,7 @@ public class DailyPageFragment extends SchedulesPageListViewFragment
         result.put(SCHEDULES_AFTERNOON, new ArrayList<ScheduleModel>());
         for (ScheduleModel scheduleModel : lstSchedule) {
             if (isScheduleOf(scheduleModel, selectedDate)) {
-                if (scheduleModel.isAllDay) {
+                if (CCBooleanUtil.checkBoolean(scheduleModel.isAllDay)) {
                     result.get(SCHEDULES_ALL_DAY).add(scheduleModel);
                 } else if (isBeforeNoon(scheduleModel.startTime)) {
                     result.get(SCHEDULES_MORNING).add(scheduleModel);
@@ -199,7 +200,8 @@ public class DailyPageFragment extends SchedulesPageListViewFragment
     }
 
     private boolean isScheduleOf(ScheduleModel scheduleModel, Date date) {
-        return scheduleModel.startDate.equals(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, date));
+        return scheduleModel.startDate.equals(CCFormatUtil.formatDateCustom
+                (WelfareConst.WL_DATE_TIME_7, date));
     }
 
     @Override

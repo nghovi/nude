@@ -70,6 +70,7 @@ public abstract class SchedulesPageListViewFragment extends
             pageSharingHolder.updateFilter(lstCalendarUser);
         }
         clearOldData();
+        updateObservableScrollableView();
     }
 
     @Override

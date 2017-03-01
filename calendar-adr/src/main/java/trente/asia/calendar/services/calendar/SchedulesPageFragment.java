@@ -120,9 +120,7 @@ public abstract class SchedulesPageFragment extends AbstractClFragment
         lnrCalendarContainer.addView(titleView);
     }
 
-    protected void initDayViews() {
-
-    }
+    abstract void initDayViews();
 
     protected String getTargetUserList() {
         return this.pageSharingHolder.userListLinearLayout.formatUserList();
