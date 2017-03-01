@@ -148,8 +148,9 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 			txtCalendar.setValue(calendars.get(0).key);
 			txtRoom.setText(rooms.get(0).value);
 			txtRoom.setValue(rooms.get(0).key);
-            txtCategory.setText(calendars.get(0).calendarName);
-            txtCategory.setValue(calendars.get(0).key);
+            txtCategory.setText(categories.get(0).value);
+            txtCategory.setValue(categories.get(0).key);
+            txtCategory.setTextColor(Color.parseColor("#" + categories.get(0).key));
 		}
 	}
 
