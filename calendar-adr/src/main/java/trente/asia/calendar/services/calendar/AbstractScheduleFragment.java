@@ -128,13 +128,19 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 			txtCalendar.setText(schedule.calendar.calendarName);
 			txtCalendar.setValue(schedule.calendar.key);
 			swtAllDay.setChecked(CCBooleanUtil.checkBoolean(schedule.isAllDay));
+			if(CCBooleanUtil.checkBoolean(schedule.isAllDay)){
+				txtStartTime.setVisibility(View.INVISIBLE);
+				txtEndTime.setVisibility(View.INVISIBLE);
+			}
 
 			txtCategory.setText(WelfareUtil.findApiObject4Id(categories, schedule.categoryId).value);
-            txtCategory.setValue(schedule.categoryId);
+			txtCategory.setValue(schedule.categoryId);
 			if(!CCStringUtil.isEmpty(schedule.categoryId)){
 				txtCategory.setTextColor(Color.parseColor("#" + schedule.categoryId));
 			}
-			if(lnrUserList != null) lnrUserList.show(schedule.scheduleJoinUsers, (int)getResources().getDimension(R.dimen.margin_30dp));
+			if(lnrUserList != null){
+				lnrUserList.show(schedule.scheduleJoinUsers, (int)getResources().getDimension(R.dimen.margin_30dp));
+			}
 
 			// set time
 			Date startDate = WelfareUtil.makeDate(schedule.startDate);
@@ -148,9 +154,9 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 			txtCalendar.setValue(calendars.get(0).key);
 			txtRoom.setText(rooms.get(0).value);
 			txtRoom.setValue(rooms.get(0).key);
-            txtCategory.setText(categories.get(0).value);
-            txtCategory.setValue(categories.get(0).key);
-            txtCategory.setTextColor(Color.parseColor("#" + categories.get(0).key));
+			txtCategory.setText(categories.get(0).value);
+			txtCategory.setValue(categories.get(0).key);
+			txtCategory.setTextColor(Color.parseColor("#" + categories.get(0).key));
 		}
 	}
 

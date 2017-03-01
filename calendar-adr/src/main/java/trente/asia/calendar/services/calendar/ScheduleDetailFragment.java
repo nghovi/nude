@@ -1,7 +1,5 @@
 package trente.asia.calendar.services.calendar;
 
-import java.util.List;
-
 import org.json.JSONObject;
 
 import android.os.Bundle;
@@ -11,11 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import asia.chiase.core.util.CCBooleanUtil;
+import asia.chiase.core.util.CCStringUtil;
 import trente.asia.calendar.R;
-import trente.asia.calendar.commons.utils.ClUtil;
-import trente.asia.welfare.adr.models.UserModel;
-import trente.asia.welfare.adr.utils.WelfareUtil;
 
 /**
  * ScheduleDetailFragment
@@ -26,7 +21,7 @@ public class ScheduleDetailFragment extends AbstractScheduleFragment{
 
 	private TextView	txtScheduleName;
 	private TextView	txtScheduleUrl;
-    private TextView	txtScheduleNote;
+	private TextView	txtScheduleNote;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -43,7 +38,7 @@ public class ScheduleDetailFragment extends AbstractScheduleFragment{
 
 		txtScheduleName = (TextView)getView().findViewById(R.id.txt_id_schedule_name);
 		txtScheduleUrl = (TextView)getView().findViewById(R.id.txt_id_schedule_url);
-        txtScheduleNote = (TextView)getView().findViewById(R.id.txt_id_schedule_note);
+		txtScheduleNote = (TextView)getView().findViewById(R.id.txt_id_schedule_note);
 	}
 
 	@Override
@@ -51,8 +46,11 @@ public class ScheduleDetailFragment extends AbstractScheduleFragment{
 		super.onLoadScheduleDetailSuccess(response);
 
 		txtScheduleName.setText(schedule.scheduleName);
-		txtScheduleUrl.setText(schedule.scheduleUrl);
-        txtScheduleNote.setText(schedule.scheduleNote);
+		txtScheduleNote.setText(schedule.scheduleNote);
+		if(!CCStringUtil.isEmpty(schedule.scheduleUrl)){
+			txtScheduleUrl.setText(schedule.scheduleUrl);
+			getView().findViewById(R.id.lnr_id_schedule_url).setOnClickListener(this);
+		}
 
 		ImageView imgRightIcon = (ImageView)getView().findViewById(R.id.img_id_header_right_icon);
 		imgRightIcon.setImageResource(R.drawable.cl_action_edit);
@@ -70,6 +68,10 @@ public class ScheduleDetailFragment extends AbstractScheduleFragment{
 		switch(v.getId()){
 		case R.id.img_id_header_right_icon:
 			gotoScheduleFormFragment();
+            break;
+		case R.id.lnr_id_schedule_url:
+			gotoBrowser(schedule.scheduleUrl);
+            break;
 		default:
 			break;
 		}

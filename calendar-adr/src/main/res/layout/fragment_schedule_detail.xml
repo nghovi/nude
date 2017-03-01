@@ -158,6 +158,7 @@
             <View style="@style/cs_common_divider"/>
 
             <LinearLayout
+                android:id="@+id/lnr_id_schedule_url"
                 style="@style/wf_common_item_linear2">
 
                 <TextView
@@ -207,7 +208,7 @@
                 style="@style/wf_common_item_linear2">
 
                 <trente.asia.calendar.commons.views.UserListLinearLayout
-                    android:id="@+id/lnr_fragment_pager_container_user_list"
+                    android:id="@+id/lnr_id_container_join_user_list"
                     style="@style/cs_common_match_wrap"
                     android:background="@drawable/state_common_selectable_row"/>
             </LinearLayout>
