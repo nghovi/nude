@@ -105,7 +105,7 @@ public class RepeatWeeklyDayLinearLayout extends LinearLayout{
 		}
 
 		if(textBuilder.length() > 0){
-			repeatData = idBuilder.substring(0, idBuilder.length() - 2);
+			repeatData = idBuilder.substring(0, idBuilder.length() - 1);
 			return textBuilder.substring(0, textBuilder.length() - 2);
 		}
 
