@@ -3,6 +3,7 @@ package trente.asia.calendar.services.calendar;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -113,6 +114,8 @@ public abstract class SchedulesPageFragment extends AbstractClFragment
                 txtTitleItem.setTextColor(Color.RED);
             } else if (Calendar.SATURDAY == dayModel.dayOfWeek) {
                 txtTitleItem.setTextColor(Color.BLUE);
+            } else {
+                txtTitleItem.setTextColor(getNormalDayColor());
             }
             txtTitleItem.setText(dayModel.day);
             lnrRowTitle.addView(titleItem);
@@ -227,5 +230,9 @@ public abstract class SchedulesPageFragment extends AbstractClFragment
     @Override
     public int getFooterItemId() {
         return 0;
+    }
+
+    protected int getNormalDayColor() {
+        return ContextCompat.getColor(activity, R.color.wf_common_color_text);
     }
 }

@@ -1,5 +1,7 @@
 package trente.asia.calendar.services.calendar;
 
+import android.graphics.Color;
+
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -37,6 +39,10 @@ public abstract class SchedulesPageListViewFragment extends
 
     protected List<WeeklyCalendarDayView> calendarDayViews = new ArrayList<>();
 
+    @Override
+    protected int getNormalDayColor() {
+        return Color.WHITE;
+    }
 
     @Override
     protected void initDayViews() {

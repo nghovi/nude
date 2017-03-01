@@ -16,6 +16,7 @@ import asia.chiase.core.util.CCBooleanUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.calendar.BuildConfig;
 import trente.asia.calendar.R;
+import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.utils.ClUtil;
 import trente.asia.calendar.commons.views.UserListLinearLayout;
 import trente.asia.calendar.services.calendar.model.CalendarDayModel;
@@ -130,7 +131,7 @@ public class CalendarDayListAdapter extends ArrayAdapter<CalendarDayModel> {
                 lnrSchedulesContainer.findViewById(R.id
                         .img_item_schedule_calendar);
 
-        if (CCBooleanUtil.checkBoolean(schedule.isRepeat)) {
+        if (CCBooleanUtil.checkBoolean(schedule.isWarning)) {
             imgDup.setVisibility(View.VISIBLE);
             WfPicassoHelper.loadImage(context, BuildConfig.HOST +
                     schedule.calendar.imagePath, imgDup, null);
@@ -141,7 +142,7 @@ public class CalendarDayListAdapter extends ArrayAdapter<CalendarDayModel> {
         SelectableRoundedImageView imgType = (SelectableRoundedImageView)
                 lnrSchedulesContainer.findViewById(R.id
                         .img_item_schedule_calendar);
-        if (CCBooleanUtil.checkBoolean(schedule.isAllDay)) {
+        if (!ClConst.SCHEDULE_REPEAT_TYPE_NONE.equals(schedule.repeatType)) {
             imgType.setVisibility(View.VISIBLE);
             WfPicassoHelper.loadImage(context, BuildConfig.HOST +
                     schedule.calendar.imagePath, imgType, null);
@@ -149,24 +150,15 @@ public class CalendarDayListAdapter extends ArrayAdapter<CalendarDayModel> {
             imgType.setVisibility(View.GONE);
         }
 
-//			final HorizontalUserListView horizontalUserListView =
-// (HorizontalUserListView)calendarEvents.findViewById(R.id
-// .view_horizontal_user_list);
         final List<UserModel> joinedUser = ClUtil.getJoinedUserModels
                 (schedule, schedule.calendar.calendarUsers);
-//			horizontalUserListView.post(new Runnable() {
-//
-//				@Override
-//				public void run(){
-//					horizontalUserListView.show(joinedUser, joinedUser, true,
-// 32, 10);
-//				}f
-//			});
 
         final UserListLinearLayout userListLinearLayout =
                 (UserListLinearLayout) lnrSchedulesContainer.findViewById
                         (R.id.lnr_id_container_join_user_list);
         userListLinearLayout.setGravityLeft(true);
+        UserModel owner = UserModel.getUserModel(schedule.ownerId, joinedUser);
+        userListLinearLayout.setOwnerUser(owner);
         userListLinearLayout.post(new Runnable() {
             @Override
             public void run() {
