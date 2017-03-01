@@ -131,6 +131,7 @@ public abstract class PageContainerFragment extends AbstractClFragment{
 		FragmentManager fragmentManager = getFragmentManager();
 		FragmentTransaction transaction = fragmentManager.beginTransaction();
 		CalendarListFragment calendarListFragment = new CalendarListFragment();
+        calendarListFragment.setOnChangeCalendarListener(onChangeCalendarListener);
 		transaction.replace(R.id.slice_menu_board, calendarListFragment).commit();
 	}
 
