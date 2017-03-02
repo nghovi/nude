@@ -60,7 +60,7 @@ public class ScheduleDetailFragment extends AbstractScheduleFragment{
 
 	@Override
 	public int getFooterItemId(){
-		return R.id.lnr_view_footer_weekly;
+		return 0;
 	}
 
 	@Override

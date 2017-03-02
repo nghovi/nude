@@ -79,7 +79,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 		repeatDialog = new ClScheduleRepeatDialog(activity, txtRepeat);
 		editModeDialog = new ClDialog(activity);
 		editModeDialog.setDialogScheduleEditMode();
-		if(!CCStringUtil.isEmpty(schedule.key)){
+        if(schedule != null && !CCStringUtil.isEmpty(schedule.key)){
 			editModeDialog.findViewById(R.id.lnr_id_only_this).setOnClickListener(this);
 			editModeDialog.findViewById(R.id.lnr_id_only_future).setOnClickListener(this);
 			editModeDialog.findViewById(R.id.lnr_id_all).setOnClickListener(this);
@@ -230,8 +230,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 	public void onClick(View v){
 		switch(v.getId()){
 		case R.id.img_id_header_right_icon:
-			ScheduleRepeatModel scheduleRepeatModel = repeatDialog.getRepeatModel();
-			if(!CCStringUtil.isEmpty(schedule.key) && !CCStringUtil.isEmpty(schedule.repeatType) && !CCConst.NONE.equals(schedule.repeatType)){
+			if(schedule != null && !CCStringUtil.isEmpty(schedule.key) && !CCStringUtil.isEmpty(schedule.repeatType) && !CCConst.NONE.equals(schedule.repeatType)){
 				editModeDialog.show();
 			}else{
 				updateSchedule(null);
