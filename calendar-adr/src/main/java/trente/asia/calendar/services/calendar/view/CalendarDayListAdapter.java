@@ -123,6 +123,7 @@ public class CalendarDayListAdapter extends ArrayAdapter<CalendarDayModel>{
 		userListLinearLayout.setGravityLeft(true);
 
         final List<UserModel> joinedUserList = schedule.scheduleJoinUsers;
+		userListLinearLayout.setOwnerUser(schedule.owner);
 		userListLinearLayout.post(new Runnable() {
 
 			@Override

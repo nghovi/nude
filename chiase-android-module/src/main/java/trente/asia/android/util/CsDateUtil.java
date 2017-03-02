@@ -122,7 +122,7 @@ public class CsDateUtil{
 			}
 			DayModel dayModel = new DayModel();
 			dayModel.date = calendar.getTime();
-			dayModel.day = CCFormatUtil.formatDateCustom(CS_DATE_TIME_1, calendar.getTime());
+			dayModel.day = CCFormatUtil.formatDateCustom(CS_DATE_TIME_1, calendar.getTime()).toUpperCase();
 			dayModel.dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
 			lstDay.add(dayModel);
 		}

@@ -73,33 +73,33 @@ public class ClUtil{
 		Date dateStart = WelfareFormatUtil.makeDate(scheduleModel.startDate);
 		switch(CCStringUtil.checkNull(scheduleModel.repeatType)){
 		case ClConst.SCHEDULE_REPEAT_TYPE_WEEKLY:
-			List<String> lstRepeatData = Arrays.asList(scheduleModel.repeatData.split(","));
-			if(ClConst.SCHEDULE_REPEAT_LIMIT_FOREVER.equals(scheduleModel.repeatLimitType)){
-				for(MonthlyCalendarDayView dayView : lstView){
-					Date dateView = WelfareFormatUtil.makeDate(dayView.day);
-					if(WfDateUtil.diffDate(dateView, dateStart) >= 0){
-						if(lstRepeatData.contains(String.valueOf(CCDateUtil.makeCalendar(dateView).get(Calendar.DAY_OF_WEEK)))){
-							lstCalendarDay.add(dayView);
-						}
-					}
-				}
-			}else if(ClConst.SCHEDULE_REPEAT_LIMIT_UNTIL.equals(scheduleModel.repeatLimitType)){
-				for(MonthlyCalendarDayView dayView : lstView){
-					Date dateView = WelfareFormatUtil.makeDate(dayView.day);
-					if(belongPeriod(dateView, scheduleModel.startDate, scheduleModel.repeatEnd)){
-						if(lstRepeatData.contains(String.valueOf(CCDateUtil.makeCalendar(dateView).get(Calendar.DAY_OF_WEEK)))){
-							lstCalendarDay.add(dayView);
-						}
-					}
-				}
-			}else if(ClConst.SCHEDULE_REPEAT_LIMIT_AFTER.equals(scheduleModel.repeatLimitType)){
-				List<String> lstActiveDate = ClUtil.getDateList4RepeatTimes(scheduleModel);
-				for(MonthlyCalendarDayView dayView : lstView){
-					if(lstActiveDate.contains(dayView.day)){
-						lstCalendarDay.add(dayView);
-					}
-				}
-			}
+//			List<String> lstRepeatData = Arrays.asList(scheduleModel.repeatData.split(","));
+//			if(ClConst.SCHEDULE_REPEAT_LIMIT_FOREVER.equals(scheduleModel.repeatLimitType)){
+//				for(MonthlyCalendarDayView dayView : lstView){
+//					Date dateView = WelfareFormatUtil.makeDate(dayView.day);
+//					if(WfDateUtil.diffDate(dateView, dateStart) >= 0){
+//						if(lstRepeatData.contains(String.valueOf(CCDateUtil.makeCalendar(dateView).get(Calendar.DAY_OF_WEEK)))){
+//							lstCalendarDay.add(dayView);
+//						}
+//					}
+//				}
+//			}else if(ClConst.SCHEDULE_REPEAT_LIMIT_UNTIL.equals(scheduleModel.repeatLimitType)){
+//				for(MonthlyCalendarDayView dayView : lstView){
+//					Date dateView = WelfareFormatUtil.makeDate(dayView.day);
+//					if(belongPeriod(dateView, scheduleModel.startDate, scheduleModel.repeatEnd)){
+//						if(lstRepeatData.contains(String.valueOf(CCDateUtil.makeCalendar(dateView).get(Calendar.DAY_OF_WEEK)))){
+//							lstCalendarDay.add(dayView);
+//						}
+//					}
+//				}
+//			}else if(ClConst.SCHEDULE_REPEAT_LIMIT_AFTER.equals(scheduleModel.repeatLimitType)){
+//				List<String> lstActiveDate = ClUtil.getDateList4RepeatTimes(scheduleModel);
+//				for(MonthlyCalendarDayView dayView : lstView){
+//					if(lstActiveDate.contains(dayView.day)){
+//						lstCalendarDay.add(dayView);
+//					}
+//				}
+//			}
 
 			break;
 		case ClConst.SCHEDULE_REPEAT_TYPE_MONTHLY:
