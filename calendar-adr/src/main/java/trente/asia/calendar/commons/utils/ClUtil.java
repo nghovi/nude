@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import android.os.Environment;
 
@@ -13,6 +15,7 @@ import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.calendar.commons.defines.ClConst;
+import trente.asia.calendar.services.calendar.model.CategoryModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.view.MonthlyCalendarDayView;
 import trente.asia.welfare.adr.models.UserModel;
@@ -302,4 +305,33 @@ public class ClUtil{
 			return 0;
 		}
 	}
+
+	public static CategoryModel findCategory4Id(List<CategoryModel> lstCategory, String key){
+		CategoryModel categoryModel = null;
+		if(!CCCollectionUtil.isEmpty(lstCategory)){
+			for(CategoryModel model : lstCategory){
+				if(model.key.equals(key)){
+					categoryModel = model;
+					break;
+				}
+			}
+		}
+		return categoryModel;
+	}
+
+	/**
+	 * <strong>convert category list to Map</strong><br>
+	 * 
+	 * @return
+	 */
+    public static Map<String, String> convertCategoryList2Map(List<CategoryModel> list){
+        if(CCCollectionUtil.isEmpty(list)){
+            return null;
+        }
+        Map<String, String> map = new LinkedHashMap<>();
+        for(CategoryModel model : list){
+            map.put(model.key, model.categoryName);
+        }
+        return map;
+    }
 }
