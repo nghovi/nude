@@ -49,6 +49,7 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 	private List<MonthlyCalendarRowView>	lstCalendarRow	= new ArrayList<>();
 
 	private ClDailySummaryDialog			dialogDailySummary;
+	private List<ScheduleModel>				lstScheduleWithoutHoliday = new ArrayList<>();
 
 	public class ScheduleComparator implements Comparator<ScheduleModel>{
 
@@ -112,7 +113,7 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 	}
 
 	private void initDialog(){
-		dialogDailySummary = new ClDailySummaryDialog(activity, lstSchedule, dates);
+		dialogDailySummary = new ClDailySummaryDialog(activity, lstScheduleWithoutHoliday, dates);
 		ImageView imgAdd = (ImageView)dialogDailySummary.findViewById(R.id.img_id_add);
 		imgAdd.setOnClickListener(this);
 	}
@@ -128,11 +129,13 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 	@Override
 	protected void onLoadSchedulesSuccess(JSONObject response){
 		super.onLoadSchedulesSuccess(response);
+        lstScheduleWithoutHoliday.clear();
 		// add holiday
 		if(!CCCollectionUtil.isEmpty(lstHoliday)){
 			if(lstSchedule == null){
 				lstSchedule = new ArrayList<>();
 			}
+            lstScheduleWithoutHoliday.addAll(lstSchedule);
 			for(HolidayModel holidayModel : lstHoliday){
 				ScheduleModel scheduleModel = new ScheduleModel(holidayModel);
 				lstSchedule.add(scheduleModel);
