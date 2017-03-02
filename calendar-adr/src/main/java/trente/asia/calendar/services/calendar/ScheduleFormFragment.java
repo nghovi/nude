@@ -36,6 +36,8 @@ import trente.asia.calendar.commons.dialogs.ClDialog;
 import trente.asia.calendar.commons.dialogs.ClFilterUserListDialog;
 import trente.asia.calendar.commons.dialogs.ClScheduleRepeatDialog;
 import trente.asia.calendar.commons.model.ScheduleRepeatModel;
+import trente.asia.calendar.commons.utils.ClUtil;
+import trente.asia.calendar.services.calendar.model.CategoryModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
@@ -79,7 +81,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 		repeatDialog = new ClScheduleRepeatDialog(activity, txtRepeat);
 		editModeDialog = new ClDialog(activity);
 		editModeDialog.setDialogScheduleEditMode();
-        if(schedule != null && !CCStringUtil.isEmpty(schedule.key)){
+		if(schedule != null && !CCStringUtil.isEmpty(schedule.key)){
 			editModeDialog.findViewById(R.id.lnr_id_only_this).setOnClickListener(this);
 			editModeDialog.findViewById(R.id.lnr_id_only_future).setOnClickListener(this);
 			editModeDialog.findViewById(R.id.lnr_id_all).setOnClickListener(this);
@@ -153,6 +155,16 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 		}, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
 		txtStartDate.setValue(WelfareFormatUtil.formatDate(calendar.getTime()));
 
+		timePickerDialogStart = new TimePickerDialog(activity, new TimePickerDialog.OnTimeSetListener() {
+
+			@Override
+			public void onTimeSet(TimePicker view, int hourOfDay, int minute){
+				txtStartTime.setText(CCFormatUtil.formatZero(hourOfDay) + ":" + CCFormatUtil.formatZero(minute));
+				txtStartTime.setValue(CCFormatUtil.formatZero(hourOfDay) + ":" + CCFormatUtil.formatZero(minute));
+			}
+		}, startHour, startMinute, true);
+		txtStartTime.setValue(CCFormatUtil.formatZero(startHour) + ":" + CCFormatUtil.formatZero(startMinute));
+
 		calendar.setTime(endDate);
 		datePickerDialogEnd = new DatePickerDialog(activity, new DatePickerDialog.OnDateSetListener() {
 
@@ -175,28 +187,22 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 		}, endHour, endMinute, true);
 		txtEndTime.setValue(CCFormatUtil.formatZero(endHour) + ":" + CCFormatUtil.formatZero(endMinute));
 
-		timePickerDialogStart = new TimePickerDialog(activity, new TimePickerDialog.OnTimeSetListener() {
-
-			@Override
-			public void onTimeSet(TimePicker view, int hourOfDay, int minute){
-				txtStartTime.setText(CCFormatUtil.formatZero(hourOfDay) + ":" + CCFormatUtil.formatZero(minute));
-				txtStartTime.setValue(CCFormatUtil.formatZero(hourOfDay) + ":" + CCFormatUtil.formatZero(minute));
-			}
-		}, startHour, startMinute, true);
-		txtStartTime.setValue(CCFormatUtil.formatZero(startHour) + ":" + CCFormatUtil.formatZero(startMinute));
 	}
 
 	private void initListDialog(){
 		dlgChooseRoom = new ChiaseListDialog(activity, getString(R.string.cl_schedule_form_item_meeting_room), convertList2Map(rooms), txtRoom, null);
-		dlgChooseCategory = new ChiaseListDialog(activity, getString(R.string.cl_schedule_form_item_category), convertList2Map(categories), txtCategory, new ChiaseListDialog.OnItemClicked() {
+		dlgChooseCategory = new ChiaseListDialog(activity, getString(R.string.cl_schedule_form_item_category), ClUtil.convertCategoryList2Map(categories), txtCategory, new ChiaseListDialog.OnItemClicked() {
 
 			@Override
 			public void onClicked(String selectedKey, boolean isSelected){
-				txtCategory.setTextColor(Color.parseColor("#" + selectedKey));
+                CategoryModel categoryModel = ClUtil.findCategory4Id(categories, selectedKey);
+                if(categoryModel != null && !CCStringUtil.isEmpty(categoryModel.categoryColor)){
+                    txtCategory.setTextColor(Color.parseColor(WelfareFormatUtil.formatColor(categoryModel.categoryColor)));
+                }
 			}
 		});
 
-        onChangeCalendar(calendars.get(0).key);
+		onChangeCalendar(calendars.get(0).key);
 		dlgChooseCalendar = new ChiaseListDialog(getContext(), getString(R.string.cl_schedule_form_item_calendar), WelfareFormatUtil.convertList2Map(calendarHolders), txtCalendar, new ChiaseListDialog.OnItemClicked() {
 
 			@Override
