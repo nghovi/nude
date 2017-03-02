@@ -4,14 +4,13 @@
               android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="@dimen/margin_30dp"
-        android:layout_height="@dimen/margin_30dp"
-        android:padding="@dimen/margin_2dp">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
         <trente.asia.welfare.adr.view.SelectableRoundedImageView
             android:id="@+id/img_id_avatar"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:scaleType="fitXY"
             custom:sriv_oval="true"/>
 

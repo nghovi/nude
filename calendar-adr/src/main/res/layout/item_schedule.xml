@@ -1,96 +1,90 @@
 <LinearLayout style="@style/wf_common_match"
               xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:custom="http://schemas.android.com/apk/res-auto"
-              android:orientation="horizontal"
-              android:paddingBottom="@dimen/margin_10dp">
-
+              android:orientation="horizontal">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center_vertical"
-        android:orientation="vertical">
+        style="@style/cs_common_match_wrap"
+        android:orientation="horizontal">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/margin_32dp"
-            android:gravity="center_vertical">
+            style="@style/cs_common_wrap"
+            android:orientation="vertical">
 
-            <trente.asia.welfare.adr.view.SelectableRoundedImageView
-                android:id="@+id/img_item_schedule_calendar"
-                android:layout_width="@dimen/margin_24dp"
+            <LinearLayout
+                style="@style/cs_common_match_wrap"
                 android:layout_height="@dimen/margin_24dp"
-                android:layout_marginRight="@dimen/margin_10dp"
-                android:scaleType="fitXY"
-                custom:sriv_oval="true"/>
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/txt_item_schedule_time"
-                style="@style/wl_common_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                <trente.asia.welfare.adr.view.SelectableRoundedImageView
+                    android:id="@+id/img_item_schedule_calendar"
+                    android:layout_width="@dimen/margin_24dp"
+                    android:layout_height="@dimen/margin_24dp"
+                    android:layout_marginRight="@dimen/margin_10dp"
+                    android:scaleType="fitXY"
+                    custom:sriv_oval="true"/>
+
+                <TextView
+                    android:id="@+id/txt_item_schedule_time"
+                    style="@style/wl_common_text"
+                    android:layout_width="wrap_content"/>
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/cs_common_match_wrap"
+                android:layout_marginTop="@dimen/margin_10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <trente.asia.welfare.adr.view.SelectableRoundedImageView
+                    android:id="@+id/img_item_schedule_dup"
+                    style="@style/cs_common_wrap"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ol_icon_repeat"
+                    android:visibility="gone"
+                    custom:sriv_oval="true"/>
+
+                <trente.asia.welfare.adr.view.SelectableRoundedImageView
+                    android:id="@+id/img_item_schedule_repeat"
+                    style="@style/cs_common_wrap"
+                    android:layout_marginLeft="@dimen/margin_10dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ol_icon_duplicate"
+                    android:visibility="gone"
+                    custom:sriv_oval="true"/>
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/margin_32dp"
-            android:gravity="center_vertical">
-
-            <trente.asia.welfare.adr.view.SelectableRoundedImageView
-                android:id="@+id/img_item_schedule_dup"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:scaleType="fitXY"
-                android:src="@drawable/ol_icon_repeat"
-                android:visibility="gone"
-                custom:sriv_oval="true"/>
-
-            <trente.asia.welfare.adr.view.SelectableRoundedImageView
-                android:id="@+id/img_item_schedule_type"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/margin_24dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/ol_icon_duplicate"
-                android:visibility="gone"
-                custom:sriv_oval="true"/>
+            style="@style/cs_common_match_wrap"
+            android:layout_marginLeft="@dimen/margin_15dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/txt_item_schedule_name"
-                style="@style/wl_common_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_10dp"/>
+                style="@style/wl_common_text_single_line"
+                android:layout_height="@dimen/margin_24dp"
+                android:gravity="center_vertical"/>
+
+            <LinearLayout
+                style="@style/cs_common_match_wrap"
+                android:layout_marginTop="@dimen/margin_10dp"
+                android:orientation="horizontal">
+
+                <trente.asia.welfare.adr.view.SelectableRoundedImageView
+                    android:id="@+id/img_id_owner"
+                    android:layout_width="@dimen/margin_24dp"
+                    android:layout_height="@dimen/margin_24dp"
+                    android:scaleType="fitXY"
+                    custom:sriv_oval="true"/>
+
+                <trente.asia.calendar.commons.views.UserListLinearLayout
+                    android:id="@+id/lnr_id_container_join_user_list"
+                    style="@style/cs_common_match_wrap"
+                    android:layout_marginLeft="@dimen/margin_10dp"/>
+            </LinearLayout>
         </LinearLayout>
-
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center_vertical"
-        android:orientation="vertical">
-
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/margin_32dp"
-            android:gravity="center_vertical">
-
-            <TextView
-                android:id="@+id/txt_item_schedule_category"
-                style="@style/wl_common_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
-
-
-        <trente.asia.calendar.commons.views.UserListLinearLayout
-            android:id="@+id/lnr_id_container_join_user_list"
-            style="@style/cs_common_match_wrap"/>
-
-    </LinearLayout>
-
-
 </LinearLayout>
