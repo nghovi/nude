@@ -114,9 +114,9 @@ public abstract class SchedulesPageFragment extends AbstractClFragment implement
 
 	abstract void initDayViews();
 
-	protected String getTargetUserList(){
-		return this.pageSharingHolder.userListLinearLayout.formatUserList();
-	}
+	// protected String getTargetUserList(){
+	// return this.pageSharingHolder.userListLinearLayout.formatUserList();
+	// }
 
 	protected void loadScheduleList(){
 		JSONObject jsonObject = prepareJsonObject();
@@ -124,8 +124,7 @@ public abstract class SchedulesPageFragment extends AbstractClFragment implement
 	}
 
 	protected JSONObject prepareJsonObject(){
-		String targetUserList = getTargetUserList();
-
+		String targetUserList = prefAccUtil.get(ClConst.PREF_ACTIVE_USER_LIST);
 		JSONObject jsonObject = new JSONObject();
 		try{
 			jsonObject.put("targetUserList", targetUserList);
@@ -165,7 +164,7 @@ public abstract class SchedulesPageFragment extends AbstractClFragment implement
 		if(changeCalendarUserListener != null){
 			changeCalendarUserListener.onChangeCalendarUserListener(lstCalendarUser);
 		}
-        clearOldData();
+		clearOldData();
 	}
 
 	@Override
