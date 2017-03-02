@@ -8,6 +8,7 @@ import android.widget.ImageView;
 
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.dialogs.ClFilterUserListDialog;
+import trente.asia.calendar.commons.utils.ClUtil;
 import trente.asia.calendar.commons.views.UserListLinearLayout;
 import trente.asia.welfare.adr.models.UserModel;
 
@@ -48,8 +49,8 @@ public class PageSharingHolder{
 		});
 	}
 
-	public void updateFilter(List<UserModel> calendarUsers){
-		userListLinearLayout.show(calendarUsers, (int)mContext.getResources().getDimension(R.dimen.margin_30dp));
+	public void updateFilter(List<UserModel> calendarUsers, String targetUserData){
+		userListLinearLayout.show(ClUtil.getTargetUserList(calendarUsers, targetUserData), (int)mContext.getResources().getDimension(R.dimen.margin_30dp));
 		filterDialog.updateUserList(calendarUsers);
 	}
 
