@@ -139,6 +139,8 @@ public class MonthlyCalendarDayView extends LinearLayout{
 
 	public void removeAllData(){
 		lnrRowContent.removeAllViews();
+        numberOfPeriod = 0;
+        numberOfSchedule = 0;
 	}
 
 	public void addPeriod(ScheduleModel scheduleModel){

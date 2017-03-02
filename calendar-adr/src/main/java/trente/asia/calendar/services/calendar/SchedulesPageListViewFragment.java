@@ -72,10 +72,10 @@ public abstract class SchedulesPageListViewFragment extends
         separateDateTime(lstSchedule);
         updateSchedules(lstSchedule, lstCategories);
         calendarDayModels = buildCalendarDayModels(lstSchedule);
-        if (!CCCollectionUtil.isEmpty(lstCalendarUser)) {
-            pageSharingHolder.updateFilter(lstCalendarUser);
-        }
-        clearOldData();
+//        if (!CCCollectionUtil.isEmpty(lstCalendarUser)) {
+//            pageSharingHolder.updateFilter(lstCalendarUser);
+//        }
+//        clearOldData();
         updateObservableScrollableView();
     }
 

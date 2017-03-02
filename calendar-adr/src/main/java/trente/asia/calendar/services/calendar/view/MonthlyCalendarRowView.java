@@ -100,7 +100,7 @@ public class MonthlyCalendarRowView extends RelativeLayout{
 		}
 		// refresh layout
 		for(MonthlyCalendarDayView dayView : lstCalendarDay){
-			LinearLayout.LayoutParams layoutParamsDay = new LinearLayout.LayoutParams(0, dayView.getHeight() + maxSchedule * ClConst.TEXT_VIEW_HEIGHT, 1);
+			LinearLayout.LayoutParams layoutParamsDay = new LinearLayout.LayoutParams(0, (int)getResources().getDimension(R.dimen.margin_40dp) + maxSchedule * ClConst.TEXT_VIEW_HEIGHT, 1);
 			dayView.setLayoutParams(layoutParamsDay);
 		}
 	}
@@ -111,9 +111,13 @@ public class MonthlyCalendarRowView extends RelativeLayout{
 				this.removeView(textView);
 			}
 		}
-        for(MonthlyCalendarDayView dayView : lstCalendarDay){
-            LinearLayout.LayoutParams layoutParamsDay = new LinearLayout.LayoutParams(0, 45, 1);
-            dayView.setLayoutParams(layoutParamsDay);
-        }
+        this.lstTextPeriod.clear();
+//        this.lstCalendarDay.clear();
+
+//        for(MonthlyCalendarDayView dayView : lstCalendarDay){
+//            LinearLayout.LayoutParams layoutParamsDay = new LinearLayout.LayoutParams(0, (int)getResources().getDimension(R.dimen.margin_40dp), 1);
+////            LinearLayout.LayoutParams layoutParamsDay = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
+//            dayView.setLayoutParams(layoutParamsDay);
+//        }
 	}
 }
