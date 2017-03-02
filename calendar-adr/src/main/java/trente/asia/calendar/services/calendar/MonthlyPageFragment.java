@@ -130,12 +130,14 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 	protected void onLoadSchedulesSuccess(JSONObject response){
 		super.onLoadSchedulesSuccess(response);
         lstScheduleWithoutHoliday.clear();
+
+        if(lstSchedule == null){
+            lstSchedule = new ArrayList<>();
+        }
+        lstScheduleWithoutHoliday.addAll(lstSchedule);
+
 		// add holiday
 		if(!CCCollectionUtil.isEmpty(lstHoliday)){
-			if(lstSchedule == null){
-				lstSchedule = new ArrayList<>();
-			}
-            lstScheduleWithoutHoliday.addAll(lstSchedule);
 			for(HolidayModel holidayModel : lstHoliday){
 				ScheduleModel scheduleModel = new ScheduleModel(holidayModel);
 				lstSchedule.add(scheduleModel);
