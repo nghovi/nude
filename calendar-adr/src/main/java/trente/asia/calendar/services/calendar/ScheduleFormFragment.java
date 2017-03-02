@@ -20,6 +20,7 @@ import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
 
+import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
@@ -31,6 +32,7 @@ import trente.asia.android.view.ChiaseListDialog;
 import trente.asia.android.view.util.CAObjectSerializeUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
+import trente.asia.calendar.commons.dialogs.ClDialog;
 import trente.asia.calendar.commons.dialogs.ClFilterUserListDialog;
 import trente.asia.calendar.commons.dialogs.ClScheduleRepeatDialog;
 import trente.asia.calendar.commons.model.ScheduleRepeatModel;
@@ -59,6 +61,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 
 	private ClFilterUserListDialog	filterDialog;
 	private ClScheduleRepeatDialog	repeatDialog;
+	private ClDialog				editModeDialog;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -73,8 +76,15 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 		super.initView();
 		initHeader(R.drawable.wf_back_white, getString(R.string.fragment_schedule_form_title), R.drawable.cl_action_save);
 
-		// filterDialog = new ClFilterUserListDialog(activity, lnrUserList);
 		repeatDialog = new ClScheduleRepeatDialog(activity, txtRepeat);
+		editModeDialog = new ClDialog(activity);
+		editModeDialog.setDialogScheduleEditMode();
+		if(!CCStringUtil.isEmpty(schedule.key)){
+			editModeDialog.findViewById(R.id.lnr_id_only_this).setOnClickListener(this);
+			editModeDialog.findViewById(R.id.lnr_id_only_future).setOnClickListener(this);
+			editModeDialog.findViewById(R.id.lnr_id_all).setOnClickListener(this);
+			editModeDialog.findViewById(R.id.lnr_id_cancel).setOnClickListener(this);
+		}
 
 		getView().findViewById(R.id.lnr_id_meeting_room).setOnClickListener(this);
 		getView().findViewById(R.id.lnr_id_category).setOnClickListener(this);
@@ -86,7 +96,6 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 		txtEndDate.setOnClickListener(this);
 		txtStartTime.setOnClickListener(this);
 		txtEndTime.setOnClickListener(this);
-		// lnrUserList.setOnClickListener(this);
 
 		swtAllDay.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
@@ -221,7 +230,12 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 	public void onClick(View v){
 		switch(v.getId()){
 		case R.id.img_id_header_right_icon:
-			updateSchedule();
+			ScheduleRepeatModel scheduleRepeatModel = repeatDialog.getRepeatModel();
+			if(!CCStringUtil.isEmpty(schedule.key) && !CCStringUtil.isEmpty(schedule.repeatType) && !CCConst.NONE.equals(schedule.repeatType)){
+				editModeDialog.show();
+			}else{
+				updateSchedule(null);
+			}
 			break;
 		case R.id.lnr_id_meeting_room:
 			dlgChooseRoom.show();
@@ -254,12 +268,24 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 		case R.id.lnr_id_join_user_list:
 			filterDialog.show();
 			break;
+		case R.id.lnr_id_only_this:
+			updateSchedule(ClConst.SCHEDULE_MODIFY_TYPE_ONLY_THIS);
+			break;
+		case R.id.lnr_id_only_future:
+			updateSchedule(ClConst.SCHEDULE_MODIFY_TYPE_ONLY_FUTURE);
+			break;
+		case R.id.lnr_id_all:
+			updateSchedule(ClConst.SCHEDULE_MODIFY_TYPE_ALL);
+			break;
+		case R.id.lnr_id_cancel:
+			editModeDialog.dismiss();
+			break;
 		default:
 			break;
 		}
 	}
 
-	private void updateSchedule(){
+	private void updateSchedule(String modifyType){
 		JSONObject jsonObject = CAObjectSerializeUtil.serializeObject((ViewGroup)getView().findViewById(R.id.lnr_id_content), null);
 		try{
 			if(schedule != null && !CCStringUtil.isEmpty(schedule.key)){
@@ -281,6 +307,11 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 				}else if(ClConst.SCHEDULE_REPEAT_LIMIT_AFTER.equals(scheduleRepeatModel.repeatLimitType)){
 					jsonObject.put("repeatInterval", scheduleRepeatModel.repeatInterval);
 				}
+
+			}
+
+			if(!CCStringUtil.isEmpty(modifyType)){
+				jsonObject.put("modifyType", modifyType);
 			}
 		}catch(JSONException e){
 			e.printStackTrace();

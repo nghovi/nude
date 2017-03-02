@@ -29,4 +29,10 @@ public class ClDialog extends ChiaseDialog{
 
 		return this;
 	}
+
+    public ClDialog setDialogScheduleEditMode(){
+        this.setContentView(R.layout.dialog_schedule_edit_mode);
+
+        return this;
+    }
 }
