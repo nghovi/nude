@@ -196,6 +196,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 			}
 		});
 
+        onChangeCalendar(calendars.get(0).key);
 		dlgChooseCalendar = new ChiaseListDialog(getContext(), getString(R.string.cl_schedule_form_item_calendar), WelfareFormatUtil.convertList2Map(calendarHolders), txtCalendar, new ChiaseListDialog.OnItemClicked() {
 
 			@Override
