@@ -16,7 +16,6 @@ import android.view.ViewGroup;
 
 import asia.chiase.core.util.CCBooleanUtil;
 import asia.chiase.core.util.CCDateUtil;
-import asia.chiase.core.util.CCNumberUtil;
 import trente.asia.android.activity.ChiaseActivity;
 import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.R;
@@ -43,11 +42,11 @@ public class WeeklyPageFragment extends SchedulesPageListViewFragment implements
 		if(mRootView == null){
 			mRootView = inflater.inflate(R.layout.fragment_weekly_page, container, false);
 		}else{
-            if(CCBooleanUtil.checkBoolean(((WelfareActivity)activity).dataMap.get(ClConst.IS_UPDATE_SCHEDULE))){
-                ((WelfareActivity)activity).dataMap.clear();
-                ((ChiaseActivity)activity).isInitData = true;
-            }
-        }
+			if(CCBooleanUtil.checkBoolean(((WelfareActivity)activity).dataMap.get(ClConst.IS_UPDATE_SCHEDULE))){
+				((WelfareActivity)activity).dataMap.clear();
+				((ChiaseActivity)activity).isInitData = true;
+			}
+		}
 		return mRootView;
 	}
 
@@ -77,9 +76,8 @@ public class WeeklyPageFragment extends SchedulesPageListViewFragment implements
 
 	@Override
 	protected List<Date> getAllDate(){
-		List<Date> dates = CsDateUtil.getAllDate4Week(CCDateUtil.makeCalendar(selectedDate), CCNumberUtil.toInteger(prefAccUtil.getSetting
-
-		().CL_START_DAY_IN_WEEK));
+		int firstDay = Integer.parseInt(prefAccUtil.getSetting().CL_START_DAY_IN_WEEK);
+		List<Date> dates = CsDateUtil.getAllDate4Week(CCDateUtil.makeCalendar(selectedDate), firstDay);
 		return dates;
 	}
 
