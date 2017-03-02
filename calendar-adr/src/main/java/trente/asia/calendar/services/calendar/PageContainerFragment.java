@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCFormatUtil;
+import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
@@ -162,7 +163,13 @@ public abstract class PageContainerFragment extends AbstractClFragment{
 			mSlideMenuLayout.toggleMenu();
 			break;
 		case R.id.img_id_header_right_icon:
-			gotoScheduleFormFragment();
+            String selectedCalendarString = prefAccUtil.get(ClConst.SELECTED_CALENDAR_STRING);
+            if(!CCStringUtil.isEmpty(selectedCalendarString)){
+                gotoScheduleFormFragment();
+            }else{
+                alertDialog.setMessage(getString(R.string.cl_common_validate_no_calendar_msg));
+                alertDialog.show();
+            }
 			break;
 		case R.id.img_id_done:
 			SchedulesPageFragment schedulesPageFragment = (SchedulesPageFragment)mPagerAdapter.getItem(holder.selectedPagePosition);
