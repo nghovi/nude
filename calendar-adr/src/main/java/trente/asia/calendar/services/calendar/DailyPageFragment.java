@@ -70,6 +70,7 @@ public class DailyPageFragment extends SchedulesPageListViewFragment
         layoutInflater = getLayoutInflater(null);
         observableScrollView = (ObservableScrollView) getView().findViewById
                 (R.id.scr_calendar_day);
+        observableScrollView.setScrollViewCallbacks(this);
         lnrOffers = (LinearLayout) getView().findViewById(R.id
                 .lnr_fragment_daily_page_work_offer);
         initDialog();
