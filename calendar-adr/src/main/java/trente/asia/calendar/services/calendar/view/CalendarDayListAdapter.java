@@ -91,7 +91,7 @@ public class CalendarDayListAdapter extends ArrayAdapter<CalendarDayModel>{
 
 		TextView txtScheduleName = (TextView)lnrSchedulesContainer.findViewById(R.id.txt_item_schedule_name);
 		if(!CCStringUtil.isEmpty(schedule.categoryId)){
-			String categoryColor = WelfareFormatUtil.formatColor(schedule.categoryId);
+			String categoryColor = WelfareFormatUtil.formatColor(schedule.scheduleColor);
 			txtScheduleName.setTextColor(Color.parseColor(categoryColor));
 			txtScheduleTime.setTextColor(Color.parseColor(categoryColor));
 		}
