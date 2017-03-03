@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCBooleanUtil;
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
@@ -45,11 +46,11 @@ import trente.asia.welfare.adr.utils.WelfareUtil;
  */
 public class MonthlyPageFragment extends SchedulesPageFragment implements DailyScheduleClickListener{
 
-	private List<MonthlyCalendarDayView>	lstCalendarDay	= new ArrayList<>();
-	private List<MonthlyCalendarRowView>	lstCalendarRow	= new ArrayList<>();
+	private List<MonthlyCalendarDayView>	lstCalendarDay				= new ArrayList<>();
+	private List<MonthlyCalendarRowView>	lstCalendarRow				= new ArrayList<>();
 
 	private ClDailySummaryDialog			dialogDailySummary;
-	private List<ScheduleModel>				lstScheduleWithoutHoliday = new ArrayList<>();
+	private List<ScheduleModel>				lstScheduleWithoutHoliday	= new ArrayList<>();
 
 	public class ScheduleComparator implements Comparator<ScheduleModel>{
 
@@ -121,7 +122,7 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 	@Override
 	protected void initData(){
 		String activeMonth = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_5, selectedDate);
-        Date activeDate = WelfareFormatUtil.makeDate(prefAccUtil.get(ClConst.PREF_ACTIVE_DATE));
+		Date activeDate = WelfareFormatUtil.makeDate(prefAccUtil.get(ClConst.PREF_ACTIVE_DATE));
 		if(activeMonth.equals(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_5, activeDate))){
 			loadScheduleList();
 		}
@@ -132,10 +133,10 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 		super.onLoadSchedulesSuccess(response);
 		clearOldData();
 
-        if(lstSchedule == null){
-            lstSchedule = new ArrayList<>();
-        }
-        lstScheduleWithoutHoliday.addAll(lstSchedule);
+		if(lstSchedule == null){
+			lstSchedule = new ArrayList<>();
+		}
+		lstScheduleWithoutHoliday.addAll(lstSchedule);
 
 		// add holiday
 		if(!CCCollectionUtil.isEmpty(lstHoliday)){
@@ -158,16 +159,16 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 					}
 				}else{
 					List<MonthlyCalendarDayView> lstActiveCalendarDay = null;
-					if(!CCStringUtil.isEmpty(model.repeatType)){
-						if(ClConst.SCHEDULE_REPEAT_TYPE_WEEKLY.equals(model.repeatType)){
-							lstActiveCalendarDay = ClUtil.findView4RepeatSchedule(lstCalendarDay, model);
-						}
+					if(!CCStringUtil.isEmpty(model.repeatType) && !CCConst.NONE.equals(model.repeatType)){
+						lstActiveCalendarDay = ClUtil.findView4RepeatSchedule(lstCalendarDay, model);
 					}else{
 						lstActiveCalendarDay = ClUtil.findView4Day(lstCalendarDay, model.startDate, model.endDate);
 					}
 
-					for(MonthlyCalendarDayView calendarDayView : lstActiveCalendarDay){
-						calendarDayView.addSchedule(model, lstCategories);
+					if(!CCCollectionUtil.isEmpty(lstActiveCalendarDay)){
+						for(MonthlyCalendarDayView calendarDayView : lstActiveCalendarDay){
+							calendarDayView.addSchedule(model, lstCategories);
+						}
 					}
 				}
 			}
@@ -190,7 +191,7 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 		for(MonthlyCalendarRowView rowView : lstCalendarRow){
 			rowView.removeAllData();
 		}
-        lstScheduleWithoutHoliday.clear();
+		lstScheduleWithoutHoliday.clear();
 	}
 
 	@Override
