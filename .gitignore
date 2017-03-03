@@ -13,10 +13,11 @@ proguard/
 *.iws
 .idea/workspace.xml
 .idea/tasks.xml
+.idea/misc.xml
 .idea/libraries/
 .gradle
 app/build/
-
+calendar-adr/build/
 
 .DS_Store
 
