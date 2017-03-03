@@ -1,10 +1,11 @@
 package trente.asia.calendar.services.calendar.view;
 
+import java.util.Calendar;
 import java.util.Date;
 
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
+import asia.chiase.core.util.CCDateUtil;
 import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.services.calendar.MonthlyPageFragment;
 import trente.asia.calendar.services.calendar.SchedulesPageFragment;
@@ -24,7 +25,9 @@ public class MonthlyCalendarPagerAdapter extends SchedulesPagerAdapter{
 
 	@Override
 	Date choseSelectedDate(int position){
-		return CsDateUtil.addMonth(TODAY, position - initialPosition);
+        Date date = new Date();
+        Date firstDay = CCDateUtil.makeDateWithFirstday(date);
+		return CsDateUtil.addMonth(firstDay, position - initialPosition);
 	}
 
 	@Override
