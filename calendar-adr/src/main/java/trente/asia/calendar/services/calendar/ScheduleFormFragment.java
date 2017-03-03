@@ -20,9 +20,7 @@ import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
 
-import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCCollectionUtil;
-import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
@@ -35,6 +33,7 @@ import trente.asia.calendar.commons.dialogs.ClDialog;
 import trente.asia.calendar.commons.dialogs.ClFilterUserListDialog;
 import trente.asia.calendar.commons.dialogs.ClScheduleRepeatDialog;
 import trente.asia.calendar.commons.model.ScheduleRepeatModel;
+import trente.asia.calendar.commons.utils.ClRepeatUtil;
 import trente.asia.calendar.commons.utils.ClUtil;
 import trente.asia.calendar.services.calendar.model.CategoryModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
@@ -135,13 +134,16 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 			endDate = calendar.getTime();
 		}
 
-		repeatDialog.setStartDate(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, starDate));
-		txtStartDate.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, starDate));
-		txtStartDate.setValue(WelfareFormatUtil.formatDate(starDate));
-		txtStartTime.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_9, starDate));
-		txtEndDate.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, endDate));
-        txtEndDate.setValue(WelfareFormatUtil.formatDate(endDate));
-		txtEndTime.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_9, endDate));
+		if(CCStringUtil.isEmpty(schedule.key)){
+			repeatDialog.setStartDate(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, starDate));
+		}else{
+
+		}
+
+		WelfareFormatUtil.setChiaseTextView(txtStartDate, WelfareFormatUtil.formatDate(starDate));
+		WelfareFormatUtil.setChiaseTextView(txtStartTime, CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_9, starDate));
+		WelfareFormatUtil.setChiaseTextView(txtEndDate, WelfareFormatUtil.formatDate(endDate));
+		WelfareFormatUtil.setChiaseTextView(txtEndTime, CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_9, endDate));
 
 		calendar.setTime(starDate);
 		datePickerDialogStart = new DatePickerDialog(activity, new DatePickerDialog.OnDateSetListener() {
@@ -174,7 +176,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 				txtEndDate.setValue(endDateStr);
 			}
 		}, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
-//		txtEndDate.setValue(WelfareFormatUtil.formatDate(calendar.getTime()));
+		// txtEndDate.setValue(WelfareFormatUtil.formatDate(calendar.getTime()));
 
 		timePickerDialogEnd = new TimePickerDialog(activity, new TimePickerDialog.OnTimeSetListener() {
 
@@ -236,7 +238,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 	public void onClick(View v){
 		switch(v.getId()){
 		case R.id.img_id_header_right_icon:
-			if(schedule != null && !CCStringUtil.isEmpty(schedule.key) && !CCStringUtil.isEmpty(schedule.repeatType) && !CCConst.NONE.equals(schedule.repeatType)){
+			if(schedule != null && !CCStringUtil.isEmpty(schedule.key) && ClRepeatUtil.isRepeat(schedule.repeatType)){
 				editModeDialog.show();
 			}else{
 				updateSchedule(null);
@@ -300,8 +302,8 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 			jsonObject.put("isAllDay", swtAllDay.isChecked());
 
 			ScheduleRepeatModel scheduleRepeatModel = repeatDialog.getRepeatModel();
-			if(scheduleRepeatModel != null && !CCStringUtil.isEmpty(scheduleRepeatModel.repeatType)){
-				jsonObject.put("repeatType", scheduleRepeatModel.repeatType);
+			jsonObject.put("repeatType", scheduleRepeatModel.repeatType);
+			if(ClRepeatUtil.isRepeat(scheduleRepeatModel.repeatType)){
 				if(ClConst.SCHEDULE_REPEAT_TYPE_WEEKLY.equals(scheduleRepeatModel.repeatType)){
 					jsonObject.put("repeatData", scheduleRepeatModel.repeatData);
 				}

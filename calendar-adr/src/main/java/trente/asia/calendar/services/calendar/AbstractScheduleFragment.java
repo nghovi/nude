@@ -26,6 +26,8 @@ import trente.asia.android.view.util.CAObjectSerializeUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.fragments.AbstractClFragment;
+import trente.asia.calendar.commons.model.ScheduleRepeatModel;
+import trente.asia.calendar.commons.utils.ClRepeatUtil;
 import trente.asia.calendar.commons.utils.ClUtil;
 import trente.asia.calendar.commons.views.UserListLinearLayout;
 import trente.asia.calendar.services.calendar.model.CalendarModel;
@@ -158,6 +160,12 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 			txtStartTime.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_9, startDate));
 			txtEndDate.setText(WelfareFormatUtil.formatDate(endDate));
 			txtEndTime.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_9, endDate));
+
+//            show repeat data
+            if(ClRepeatUtil.isRepeat(schedule.repeatType)){
+                ScheduleRepeatModel repeatModel = new ScheduleRepeatModel(schedule);
+                txtRepeat.setText(ClRepeatUtil.getRepeatDescription(repeatModel, activity));
+            }
 		}else{
 			txtCalendar.setText(calendars.get(0).calendarName);
 			txtCalendar.setValue(calendars.get(0).key);

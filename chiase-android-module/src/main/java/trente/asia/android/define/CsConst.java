@@ -5,7 +5,7 @@ import android.Manifest;
 /**
  * Created by takyas on 27/11/14.
  */
-public class CsConst {
+public class CsConst{
 
 	public static String			ROOT						= "CA-ROOT";
 
@@ -56,4 +56,6 @@ public class CsConst {
 
 	public static final int			REQUEST_EXTERNAL_STORAGE	= 1;
 	public static final String[]	PERMISSIONS_STORAGE			= {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+
+	public static final String		ONE							= "1";
 }

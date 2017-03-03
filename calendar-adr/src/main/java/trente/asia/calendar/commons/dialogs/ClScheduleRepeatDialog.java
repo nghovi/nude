@@ -23,6 +23,7 @@ import trente.asia.android.view.model.ChiaseSpinnerModel;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.model.ScheduleRepeatModel;
+import trente.asia.calendar.commons.utils.ClRepeatUtil;
 import trente.asia.calendar.commons.views.RepeatWeeklyDayLinearLayout;
 import trente.asia.welfare.adr.define.WelfareConst;
 
@@ -49,7 +50,7 @@ public class ClScheduleRepeatDialog extends ChiaseDialog{
 	private SwitchCompat				swtRepeat;
 	private EditText					edtLimitTimes;
 
-	private ScheduleRepeatModel			repeatModel;
+	private ScheduleRepeatModel			repeatModel		= new ScheduleRepeatModel();
 	private String						startDate;
 
 	public ClScheduleRepeatDialog(Context context, TextView txtRepeat){
@@ -167,7 +168,7 @@ public class ClScheduleRepeatDialog extends ChiaseDialog{
 	}
 
 	private void initDefaultValue(){
-		if(repeatModel != null){
+		if(ClRepeatUtil.isRepeat(repeatModel.repeatType)){
 
 		}else{
 			if(!CCStringUtil.isEmpty(startDate)){
@@ -177,29 +178,21 @@ public class ClScheduleRepeatDialog extends ChiaseDialog{
 	}
 
 	public String getRepeatValue(){
-		StringBuilder builder = new StringBuilder();
-
 		if(!swtRepeat.isChecked()){
-			repeatModel = null;
-			builder.append(mContext.getString(R.string.chiase_common_none));
-			return builder.toString();
+			repeatModel.repeatType = ClConst.SCHEDULE_REPEAT_TYPE_NONE;
+			return ClRepeatUtil.getRepeatDescription(repeatModel, mContext);
 		}
 
-		repeatModel = new ScheduleRepeatModel();
 		ChiaseSpinnerModel repeatType = (ChiaseSpinnerModel)spnRepeatType.getSelectedItem();
 		repeatModel.repeatType = repeatType.key;
 		if(ClConst.SCHEDULE_REPEAT_TYPE_WEEKLY.equals(repeatType.key)){
 			String selectedDays = lnrRepeatWeeklyDay.getSelectedDays();
 			if(CCStringUtil.isEmpty(selectedDays)){
-				builder.append(mContext.getString(R.string.chiase_common_none));
 			}else{
 				repeatModel.repeatData = lnrRepeatWeeklyDay.getRepeatData();
-				builder.append(mContext.getString(R.string.cl_schedule_repeat_weekly_message, selectedDays));
 			}
 		}else if(ClConst.SCHEDULE_REPEAT_TYPE_MONTHLY.equals(repeatType.key)){
-			builder.append(mContext.getString(R.string.cl_schedule_repeat_monthly_message));
 		}else if(ClConst.SCHEDULE_REPEAT_TYPE_YEARLY.equals(repeatType.key)){
-			builder.append(mContext.getString(R.string.cl_schedule_repeat_yearly_message));
 		}
 
 		ChiaseSpinnerModel repeatLimit = (ChiaseSpinnerModel)spnRepeatLimit.getSelectedItem();
@@ -207,19 +200,16 @@ public class ClScheduleRepeatDialog extends ChiaseDialog{
 		if(ClConst.SCHEDULE_REPEAT_LIMIT_FOREVER.equals(repeatLimit.key)){
 		}else if(ClConst.SCHEDULE_REPEAT_LIMIT_UNTIL.equals(repeatLimit.key)){
 			repeatModel.repeatEnd = txtLimitUtil.getText().toString();
-			builder.append(mContext.getString(R.string.cl_schedule_repeat_until_message, txtLimitUtil.getText()));
 		}else{
 			String timesValue = edtLimitTimes.getText().toString();
 			if(CCStringUtil.isEmpty(timesValue)){
 				repeatModel.repeatInterval = "1";
-				builder.append(mContext.getString(R.string.cl_schedule_repeat_for_one_message));
 			}else{
 				repeatModel.repeatInterval = timesValue;
-				builder.append(mContext.getString(R.string.cl_schedule_repeat_for_message, timesValue));
 			}
 		}
 
-		return builder.toString();
+		return ClRepeatUtil.getRepeatDescription(repeatModel, mContext);
 	}
 
 	public void setStartDate(String startDate){

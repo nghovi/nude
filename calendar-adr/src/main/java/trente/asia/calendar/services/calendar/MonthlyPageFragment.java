@@ -28,6 +28,7 @@ import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.dialogs.ClDailySummaryDialog;
+import trente.asia.calendar.commons.utils.ClRepeatUtil;
 import trente.asia.calendar.commons.utils.ClUtil;
 import trente.asia.calendar.services.calendar.listener.DailyScheduleClickListener;
 import trente.asia.calendar.services.calendar.model.HolidayModel;
@@ -159,8 +160,8 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 					}
 				}else{
 					List<MonthlyCalendarDayView> lstActiveCalendarDay = null;
-					if(!CCStringUtil.isEmpty(model.repeatType) && !CCConst.NONE.equals(model.repeatType)){
-						lstActiveCalendarDay = ClUtil.findView4RepeatSchedule(lstCalendarDay, model);
+					if(ClRepeatUtil.isRepeat(model.repeatType)){
+						lstActiveCalendarDay = ClRepeatUtil.findView4RepeatSchedule(lstCalendarDay, model);
 					}else{
 						lstActiveCalendarDay = ClUtil.findView4Day(lstCalendarDay, model.startDate, model.endDate);
 					}

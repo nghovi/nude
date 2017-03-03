@@ -9,6 +9,7 @@ import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCStringUtil;
+import trente.asia.android.view.ChiaseTextView;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.models.ApiObjectModel;
 
@@ -92,5 +93,15 @@ public class WelfareFormatUtil{
     public static String formatColor(String color){
         String formatColor = "#" + color;
         return formatColor;
+    }
+
+    /**
+     * set data, value for chiase textview
+     *
+     * @return
+     */
+    public static void setChiaseTextView(ChiaseTextView textView, String data){
+        textView.setText(data);
+        textView.setValue(data);
     }
 }
