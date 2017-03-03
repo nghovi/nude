@@ -1,6 +1,7 @@
 package trente.asia.calendar.services.calendar;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -16,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import asia.chiase.core.util.CCBooleanUtil;
+import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
@@ -154,7 +156,7 @@ public class AbstractScheduleFragment extends AbstractClFragment {
             txtStartDate.setText(WelfareFormatUtil.formatDate(startDate));
             txtStartTime.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_9, startDate));
             txtEndDate.setText(WelfareFormatUtil.formatDate(endDate));
-            txtEndTime.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_9, endDate));
+			txtEndTime.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_9, endDate));
         } else {
             txtCalendar.setText(calendars.get(0).calendarName);
             txtCalendar.setValue(calendars.get(0).key);
@@ -163,6 +165,20 @@ public class AbstractScheduleFragment extends AbstractClFragment {
             txtCategory.setText(categories.get(0).categoryName);
             txtCategory.setValue(categories.get(0).key);
             txtCategory.setTextColor(Color.parseColor("#" + categories.get(0).categoryColor));
+        }
+    }
+
+    private void setDefaultTime(){
+        Calendar calendar = Calendar.getInstance();
+        Date starDate = null;
+        Date endDate = null;
+
+        if(schedule != null && !CCStringUtil.isEmpty(schedule.key)){
+            starDate = CCDateUtil.makeDateCustom(schedule.startDate, WelfareConst.WL_DATE_TIME_7);
+            endDate = CCDateUtil.makeDateCustom(schedule.endDate, WelfareConst.WL_DATE_TIME_7);
+        }else{
+            starDate = calendar.getTime();
+            endDate = calendar.getTime();
         }
     }
 

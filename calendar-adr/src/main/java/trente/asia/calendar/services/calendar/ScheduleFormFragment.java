@@ -43,6 +43,7 @@ import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
+import trente.asia.welfare.adr.utils.WelfareUtil;
 
 /**
  * ScheduleFormFragment
@@ -123,26 +124,26 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 		Calendar calendar = Calendar.getInstance();
 		Date starDate = new Date();
 		Date endDate = new Date();
-		int startHour = 0, startMinute = 0;
-		int endHour = 0, endMinute = 0;
+		// int startHour = 0, startMinute = 0;
+		// int endHour = 0, endMinute = 0;
 
 		if(schedule != null && !CCStringUtil.isEmpty(schedule.key)){
-			starDate = CCDateUtil.makeDateCustom(schedule.startDate, WelfareConst.WL_DATE_TIME_7);
-			endDate = CCDateUtil.makeDateCustom(schedule.endDate, WelfareConst.WL_DATE_TIME_7);
+			starDate = WelfareUtil.makeDate(schedule.startDate);
+			endDate = WelfareUtil.makeDate(schedule.endDate);
 		}else{
 			starDate = calendar.getTime();
 			endDate = calendar.getTime();
 		}
 
-		txtStartDate.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, starDate));
 		repeatDialog.setStartDate(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, starDate));
-		txtStartTime.setText(CCFormatUtil.formatZero(startHour) + ":" + CCFormatUtil.formatZero(startMinute));
+		txtStartDate.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, starDate));
+		txtStartDate.setValue(WelfareFormatUtil.formatDate(starDate));
+		txtStartTime.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_9, starDate));
 		txtEndDate.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, endDate));
-		txtEndTime.setText(CCFormatUtil.formatZero(startHour) + ":" + CCFormatUtil.formatZero(startMinute));
+        txtEndDate.setValue(WelfareFormatUtil.formatDate(endDate));
+		txtEndTime.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_9, endDate));
 
 		calendar.setTime(starDate);
-		startHour = calendar.get(Calendar.HOUR);
-		startMinute = calendar.get(Calendar.MINUTE);
 		datePickerDialogStart = new DatePickerDialog(activity, new DatePickerDialog.OnDateSetListener() {
 
 			@Override
@@ -153,7 +154,6 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 				repeatDialog.setStartDate(startDateStr);
 			}
 		}, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
-		txtStartDate.setValue(WelfareFormatUtil.formatDate(calendar.getTime()));
 
 		timePickerDialogStart = new TimePickerDialog(activity, new TimePickerDialog.OnTimeSetListener() {
 
@@ -162,12 +162,9 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 				txtStartTime.setText(CCFormatUtil.formatZero(hourOfDay) + ":" + CCFormatUtil.formatZero(minute));
 				txtStartTime.setValue(CCFormatUtil.formatZero(hourOfDay) + ":" + CCFormatUtil.formatZero(minute));
 			}
-		}, startHour, startMinute, true);
-		txtStartTime.setValue(CCFormatUtil.formatZero(startHour) + ":" + CCFormatUtil.formatZero(startMinute));
+		}, calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE), true);
 
 		calendar.setTime(endDate);
-		endHour = calendar.get(Calendar.HOUR);
-		endMinute = calendar.get(Calendar.MINUTE);
 		datePickerDialogEnd = new DatePickerDialog(activity, new DatePickerDialog.OnDateSetListener() {
 
 			@Override
@@ -177,7 +174,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 				txtEndDate.setValue(endDateStr);
 			}
 		}, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
-		txtEndDate.setValue(WelfareFormatUtil.formatDate(calendar.getTime()));
+//		txtEndDate.setValue(WelfareFormatUtil.formatDate(calendar.getTime()));
 
 		timePickerDialogEnd = new TimePickerDialog(activity, new TimePickerDialog.OnTimeSetListener() {
 
@@ -186,8 +183,8 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 				txtEndTime.setText(CCFormatUtil.formatZero(hourOfDay) + ":" + CCFormatUtil.formatZero(minute));
 				txtEndTime.setValue(CCFormatUtil.formatZero(hourOfDay) + ":" + CCFormatUtil.formatZero(minute));
 			}
-		}, endHour, endMinute, true);
-		txtEndTime.setValue(CCFormatUtil.formatZero(endHour) + ":" + CCFormatUtil.formatZero(endMinute));
+		}, calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE), true);
+		// txtEndTime.setValue(CCFormatUtil.formatZero(endHour) + ":" + CCFormatUtil.formatZero(endMinute));
 
 	}
 
