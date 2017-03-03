@@ -30,6 +30,7 @@ import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.fragments.AbstractClFragment;
 import trente.asia.calendar.services.calendar.listener.OnChangeCalendarUserListener;
 import trente.asia.calendar.services.calendar.model.CalendarModel;
+import trente.asia.calendar.services.calendar.model.CategoryModel;
 import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.view.CalendarDayListAdapter;
@@ -37,7 +38,6 @@ import trente.asia.calendar.services.calendar.view.PageSharingHolder;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.define.WfUrlConst;
-import trente.asia.welfare.adr.models.ApiObjectModel;
 import trente.asia.welfare.adr.models.UserModel;
 
 /**
@@ -59,7 +59,7 @@ public abstract class SchedulesPageFragment extends AbstractClFragment implement
 	private OnChangeCalendarUserListener	changeCalendarUserListener;
 	protected List<CalendarModel>			lstCalendar;
 	protected List<UserModel>				lstCalendarUser;
-	protected List<ApiObjectModel>			lstCategories;
+	protected List<CategoryModel>			lstCategories;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState){
@@ -153,7 +153,7 @@ public abstract class SchedulesPageFragment extends AbstractClFragment implement
 		lstSchedule = CCJsonUtil.convertToModelList(response.optString("schedules"), ScheduleModel.class);
 		lstCalendar = CCJsonUtil.convertToModelList(response.optString("calendars"), CalendarModel.class);
 		lstHoliday = CCJsonUtil.convertToModelList(response.optString("holidayList"), HolidayModel.class);
-		lstCategories = CCJsonUtil.convertToModelList(response.optString("categories"), ApiObjectModel.class);
+		lstCategories = CCJsonUtil.convertToModelList(response.optString("categories"), CategoryModel.class);
 
 		lstCalendarUser = CCJsonUtil.convertToModelList(response.optString("calendarUsers"), UserModel.class);
 		// check is my calendar
@@ -164,7 +164,6 @@ public abstract class SchedulesPageFragment extends AbstractClFragment implement
 		if(changeCalendarUserListener != null){
 			changeCalendarUserListener.onChangeCalendarUserListener(lstCalendarUser);
 		}
-		clearOldData();
 	}
 
 	@Override

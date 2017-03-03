@@ -31,7 +31,7 @@ public class ScheduleModel{
 
 	// public String scheduleType;
 	public String			categoryId;
-	public String			categoryName;
+	public CategoryModel	categoryModel;
 	public Boolean			isAllDay;
 	public Boolean			isRepeat;
 	public List<UserModel>	scheduleJoinUsers;
