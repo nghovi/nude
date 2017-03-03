@@ -25,7 +25,6 @@ import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
-import asia.chiase.core.util.CCNumberUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.activity.ChiaseActivity;
 import trente.asia.android.view.ChiaseListDialog;
@@ -76,7 +75,11 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 	@Override
 	protected void initView(){
 		super.initView();
-		initHeader(R.drawable.wf_back_white, getString(R.string.fragment_schedule_form_title), R.drawable.cl_action_save);
+		if(schedule != null && !CCStringUtil.isEmpty(schedule.key)){
+			initHeader(R.drawable.wf_back_white, getString(R.string.fragment_schedule_edit_title), R.drawable.cl_action_save);
+		}else{
+			initHeader(R.drawable.wf_back_white, getString(R.string.fragment_schedule_form_title), R.drawable.cl_action_save);
+		}
 
 		repeatDialog = new ClScheduleRepeatDialog(activity, txtRepeat);
 		editModeDialog = new ClDialog(activity);
@@ -126,11 +129,6 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 		if(schedule != null && !CCStringUtil.isEmpty(schedule.key)){
 			starDate = CCDateUtil.makeDateCustom(schedule.startDate, WelfareConst.WL_DATE_TIME_7);
 			endDate = CCDateUtil.makeDateCustom(schedule.endDate, WelfareConst.WL_DATE_TIME_7);
-			startHour = CCStringUtil.isEmpty(schedule.startTime) ? 0 : CCNumberUtil.toInteger(schedule.startTime.split(":")[0]);
-			startMinute = CCStringUtil.isEmpty(schedule.startTime) ? 0 : CCNumberUtil.toInteger(schedule.startTime.split(":")[1]);
-			endHour = CCStringUtil.isEmpty(schedule.endTime) ? 0 : CCNumberUtil.toInteger(schedule.endTime.split(":")[0]);
-			endMinute = CCStringUtil.isEmpty(schedule.endTime) ? 0 : CCNumberUtil.toInteger(schedule.endTime.split(":")[1]);
-			calendar.setTime(starDate);
 		}else{
 			starDate = calendar.getTime();
 			endDate = calendar.getTime();
@@ -143,6 +141,8 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 		txtEndTime.setText(CCFormatUtil.formatZero(startHour) + ":" + CCFormatUtil.formatZero(startMinute));
 
 		calendar.setTime(starDate);
+		startHour = calendar.get(Calendar.HOUR);
+		startMinute = calendar.get(Calendar.MINUTE);
 		datePickerDialogStart = new DatePickerDialog(activity, new DatePickerDialog.OnDateSetListener() {
 
 			@Override
@@ -166,6 +166,8 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 		txtStartTime.setValue(CCFormatUtil.formatZero(startHour) + ":" + CCFormatUtil.formatZero(startMinute));
 
 		calendar.setTime(endDate);
+		endHour = calendar.get(Calendar.HOUR);
+		endMinute = calendar.get(Calendar.MINUTE);
 		datePickerDialogEnd = new DatePickerDialog(activity, new DatePickerDialog.OnDateSetListener() {
 
 			@Override
@@ -195,10 +197,10 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 
 			@Override
 			public void onClicked(String selectedKey, boolean isSelected){
-                CategoryModel categoryModel = ClUtil.findCategory4Id(categories, selectedKey);
-                if(categoryModel != null && !CCStringUtil.isEmpty(categoryModel.categoryColor)){
-                    txtCategory.setTextColor(Color.parseColor(WelfareFormatUtil.formatColor(categoryModel.categoryColor)));
-                }
+				CategoryModel categoryModel = ClUtil.findCategory4Id(categories, selectedKey);
+				if(categoryModel != null && !CCStringUtil.isEmpty(categoryModel.categoryColor)){
+					txtCategory.setTextColor(Color.parseColor(WelfareFormatUtil.formatColor(categoryModel.categoryColor)));
+				}
 			}
 		});
 
