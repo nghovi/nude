@@ -17,7 +17,7 @@ proguard/
 .idea/libraries/
 .gradle
 app/build/
-
+calendar-adr/build/
 
 .DS_Store
 
