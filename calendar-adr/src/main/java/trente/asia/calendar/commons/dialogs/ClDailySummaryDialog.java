@@ -1,7 +1,5 @@
 package trente.asia.calendar.commons.dialogs;
 
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -17,14 +15,13 @@ import asia.chiase.core.util.CCFormatUtil;
 import trente.asia.android.util.CsDateUtil;
 import trente.asia.android.view.ChiaseDialog;
 import trente.asia.calendar.R;
-import trente.asia.calendar.commons.utils.ClUtil;
 import trente.asia.calendar.services.calendar.ScheduleDetailFragment;
 import trente.asia.calendar.services.calendar.listener.OnScheduleClickListener;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.view.DailySummaryPagerAdapter;
+import trente.asia.calendar.services.calendar.view.MonthlyCalendarDayView;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 
 /**
  * ClDailySummaryDialog
@@ -42,7 +39,6 @@ public class ClDailySummaryDialog extends ChiaseDialog{
 
 	private final int							ACTIVE_PAGE				= Integer.MAX_VALUE / 2;
 	private final Date							TODAY					= CCDateUtil.makeCalendarToday().getTime();
-//	private Date								activeDate;
 
 	private OnScheduleClickListener				scheduleClickListener	= new OnScheduleClickListener() {
 
@@ -55,7 +51,7 @@ public class ClDailySummaryDialog extends ChiaseDialog{
 																			}
 																		};
 
-	public ClDailySummaryDialog(Context context, List<ScheduleModel> lstSchedule, List<Date> lstDate4Month){
+	public ClDailySummaryDialog(Context context, List<MonthlyCalendarDayView> lstDayView){
 		super(context);
 		this.setContentView(R.layout.dialog_common_daily_summary);
 		this.mContext = context;
@@ -63,7 +59,7 @@ public class ClDailySummaryDialog extends ChiaseDialog{
 		txtActiveDate = (TextView)this.findViewById(R.id.txt_id_active_date);
 		viewPagerSchedule = (ViewPager)this.findViewById(R.id.view_pager_id_schedule);
 
-		convertList2Map(lstSchedule, lstDate4Month);
+		convertList2Map(lstDayView);
 
 		pagerAdapter = new DailySummaryPagerAdapter(mContext, mapSchedule, scheduleClickListener);
 		viewPagerSchedule.setAdapter(pagerAdapter);
@@ -84,24 +80,25 @@ public class ClDailySummaryDialog extends ChiaseDialog{
 		});
 	}
 
-	private void convertList2Map(List<ScheduleModel> lstSchedule, List<Date> lstDate4Month){
+	private void convertList2Map(List<MonthlyCalendarDayView> lstDayView){
 		mapSchedule = new HashMap<>();
-		if(!CCCollectionUtil.isEmpty(lstSchedule)){
-			for(Date date : lstDate4Month){
-				for(ScheduleModel scheduleModel : lstSchedule){
-					if(ClUtil.belongPeriod(date, scheduleModel.startDate, scheduleModel.endDate)){
-						String dateFormat = WelfareFormatUtil.formatDate(date);
-						if(mapSchedule.containsKey(dateFormat)){
-							List<ScheduleModel> lstSchedule4Date = mapSchedule.get(dateFormat);
-							lstSchedule4Date.add(scheduleModel);
-							mapSchedule.put(dateFormat, lstSchedule4Date);
-						}else{
-							List<ScheduleModel> lstSchedule4Date = new ArrayList<>();
-							lstSchedule4Date.add(scheduleModel);
-							mapSchedule.put(dateFormat, lstSchedule4Date);
-						}
-					}
-				}
+		if(!CCCollectionUtil.isEmpty(lstDayView)){
+			for(MonthlyCalendarDayView dayView : lstDayView){
+				mapSchedule.put(dayView.day, dayView.lstSchedule);
+				// for(ScheduleModel scheduleModel : lstSchedule){
+				// if(ClUtil.belongPeriod(date, scheduleModel.startDate, scheduleModel.endDate)){
+				// String dateFormat = WelfareFormatUtil.formatDate(date);
+				// if(mapSchedule.containsKey(dateFormat)){
+				// List<ScheduleModel> lstSchedule4Date = mapSchedule.get(dateFormat);
+				// lstSchedule4Date.add(scheduleModel);
+				// mapSchedule.put(dateFormat, lstSchedule4Date);
+				// }else{
+				// List<ScheduleModel> lstSchedule4Date = new ArrayList<>();
+				// lstSchedule4Date.add(scheduleModel);
+				// mapSchedule.put(dateFormat, lstSchedule4Date);
+				// }
+				// }
+				// }
 			}
 		}
 	}
@@ -112,7 +109,6 @@ public class ClDailySummaryDialog extends ChiaseDialog{
 	}
 
 	public void setActiveDate(Date activeDate){
-//		this.activeDate = activeDate;
 		if(activeDate != null){
 			int diff = CsDateUtil.diffDate(activeDate, TODAY);
 			int activePosition = ACTIVE_PAGE + diff;

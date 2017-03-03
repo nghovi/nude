@@ -113,7 +113,7 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 	}
 
 	private void initDialog(){
-		dialogDailySummary = new ClDailySummaryDialog(activity, lstScheduleWithoutHoliday, dates);
+		dialogDailySummary = new ClDailySummaryDialog(activity, lstCalendarDay);
 		ImageView imgAdd = (ImageView)dialogDailySummary.findViewById(R.id.img_id_add);
 		imgAdd.setOnClickListener(this);
 	}

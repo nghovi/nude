@@ -1,5 +1,6 @@
 package trente.asia.calendar.services.calendar.view;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -23,7 +24,6 @@ import trente.asia.calendar.services.calendar.listener.DailyScheduleClickListene
 import trente.asia.calendar.services.calendar.model.CategoryModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 
 /**
  * MonthlyCalendarDayView
@@ -37,11 +37,13 @@ public class MonthlyCalendarDayView extends LinearLayout{
 	private LinearLayout				lnrRowContent;
 	private DailyScheduleClickListener	mListener;
 
+	private int							numberOfPeriod;
+	// private int numberOfSchedule;
+	private boolean						isTheFirst	= true;
+
 	public String						day;
 	public int							dayOfTheWeek;
-	private int							numberOfPeriod;
-	private int							numberOfSchedule;
-	private boolean						isTheFirst	= true;
+	public List<ScheduleModel>			lstSchedule	= new ArrayList<>();
 
 	public MonthlyCalendarDayView(Context context){
 		super(context);
@@ -97,7 +99,7 @@ public class MonthlyCalendarDayView extends LinearLayout{
 	}
 
 	public void addSchedule(ScheduleModel scheduleModel, List<CategoryModel> lstCategory){
-		numberOfSchedule++;
+        lstSchedule.add(scheduleModel);
 		TextView txtSchedule = new TextView(mContext);
 		txtSchedule.setMaxLines(1);
 		if(CCBooleanUtil.checkBoolean(scheduleModel.isHoliday)){
@@ -108,7 +110,7 @@ public class MonthlyCalendarDayView extends LinearLayout{
 		txtSchedule.setLayoutParams(layoutParams);
 		txtSchedule.setGravity(Gravity.CENTER_VERTICAL);
 
-        String scheduleColor = scheduleModel.getScheduleColor(lstCategory);
+		String scheduleColor = scheduleModel.getScheduleColor(lstCategory);
 		if(CCBooleanUtil.checkBoolean(scheduleModel.isAllDay)){
 			// txtSchedule.setPadding(2, 2, 2, 2);
 			txtSchedule.setTextColor(Color.WHITE);
@@ -119,7 +121,7 @@ public class MonthlyCalendarDayView extends LinearLayout{
 			}
 		}else{
 			if(!CCStringUtil.isEmpty(scheduleColor)){
-  				txtSchedule.setTextColor(Color.parseColor(scheduleColor));
+				txtSchedule.setTextColor(Color.parseColor(scheduleColor));
 			}
 		}
 
@@ -142,24 +144,24 @@ public class MonthlyCalendarDayView extends LinearLayout{
 
 	public void removeAllData(){
 		lnrRowContent.removeAllViews();
-        numberOfPeriod = 0;
-        numberOfSchedule = 0;
+		numberOfPeriod = 0;
+		lstSchedule.clear();
 	}
 
 	public void addPeriod(ScheduleModel scheduleModel){
 		numberOfPeriod++;
-		numberOfSchedule++;
+		lstSchedule.add(scheduleModel);
 		if(CCBooleanUtil.checkBoolean(scheduleModel.isHoliday)){
 			setLayoutHoliday();
 		}
 	}
 
 	public int getNumberOfSchedule(){
-		return numberOfSchedule;
+		return lstSchedule.size();
 	}
 
 	private void setLayoutHoliday(){
 		txtContent.setBackgroundResource(R.drawable.shape_background_holiday);
-        txtContent.setTextColor(Color.WHITE);
+		txtContent.setTextColor(Color.WHITE);
 	}
 }

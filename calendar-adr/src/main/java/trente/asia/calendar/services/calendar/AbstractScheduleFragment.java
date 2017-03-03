@@ -135,7 +135,10 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 			if(CCBooleanUtil.checkBoolean(schedule.isAllDay)){
 				txtStartTime.setVisibility(View.INVISIBLE);
 				txtEndTime.setVisibility(View.INVISIBLE);
-			}
+			}else{
+                txtStartTime.setVisibility(View.VISIBLE);
+                txtEndTime.setVisibility(View.VISIBLE);
+            }
 
 			CategoryModel categoryModel = ClUtil.findCategory4Id(categories, schedule.categoryId);
 			if(categoryModel != null){
