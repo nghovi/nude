@@ -91,9 +91,9 @@ public class CalendarDayListAdapter extends ArrayAdapter<CalendarDayModel>{
 
 		TextView txtScheduleName = (TextView)lnrSchedulesContainer.findViewById(R.id.txt_item_schedule_name);
 		if(!CCStringUtil.isEmpty(schedule.categoryId)){
-			String categoryColor = WelfareFormatUtil.formatColor(schedule.scheduleColor);
-			txtScheduleName.setTextColor(Color.parseColor(categoryColor));
-			txtScheduleTime.setTextColor(Color.parseColor(categoryColor));
+			int categoryColor = Color.parseColor(WelfareFormatUtil.formatColor(schedule.categoryModel.categoryColor));
+			txtScheduleName.setTextColor(categoryColor);
+			txtScheduleTime.setTextColor(categoryColor);
 		}
 		txtScheduleName.setText(schedule.scheduleName);
 
@@ -122,7 +122,7 @@ public class CalendarDayListAdapter extends ArrayAdapter<CalendarDayModel>{
 		final UserListLinearLayout userListLinearLayout = (UserListLinearLayout)lnrSchedulesContainer.findViewById(R.id.lnr_id_container_join_user_list);
 		userListLinearLayout.setGravityLeft(true);
 
-        final List<UserModel> joinedUserList = schedule.scheduleJoinUsers;
+		final List<UserModel> joinedUserList = schedule.scheduleJoinUsers;
 		userListLinearLayout.post(new Runnable() {
 
 			@Override

@@ -1,13 +1,10 @@
 package trente.asia.calendar.services.calendar;
 
-import static trente.asia.welfare.adr.utils.WelfareFormatUtil.convertList2Map;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import org.json.JSONObject;
 
@@ -18,11 +15,11 @@ import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import trente.asia.android.define.CsConst;
 import trente.asia.calendar.services.calendar.model.CalendarDayModel;
+import trente.asia.calendar.services.calendar.model.CategoryModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.view.WeeklyCalendarDayView;
 import trente.asia.calendar.services.calendar.view.WeeklyCalendarHeaderRowView;
 import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.models.ApiObjectModel;
 
 /**
  * WeeklyPageFragment
@@ -68,10 +65,7 @@ public abstract class SchedulesPageListViewFragment extends SchedulesPageFragmen
 		separateDateTime(lstSchedule);
 		updateSchedules(lstSchedule, lstCategories);
 		calendarDayModels = buildCalendarDayModels(lstSchedule);
-		// if (!CCCollectionUtil.isEmpty(lstCalendarUser)) {
-		// pageSharingHolder.updateFilter(lstCalendarUser);
-		// }
-		// clearOldData();
+		clearOldData();
 		updateObservableScrollableView();
 	}
 
@@ -85,10 +79,14 @@ public abstract class SchedulesPageListViewFragment extends SchedulesPageFragmen
 
 	abstract protected void updateObservableScrollableView();
 
-	public void updateSchedules(List<ScheduleModel> schedules, List<ApiObjectModel> categories){
-		Map<String, String> categoriesMap = convertList2Map(categories);
+	public void updateSchedules(List<ScheduleModel> schedules, List<CategoryModel> categories){
 		for(ScheduleModel schedule : schedules){
-			schedule.categoryName = categoriesMap.get(schedule.categoryId);
+			for(CategoryModel categoryModel : categories){
+				if(categoryModel.key.equals(schedule.categoryId)){
+					schedule.categoryModel = categoryModel;
+					break;
+				}
+			}
 		}
 	}
 
@@ -131,13 +129,13 @@ public abstract class SchedulesPageListViewFragment extends SchedulesPageFragmen
 	}
 
 	public CalendarDayModel getCalendarDayModel(String day, List<CalendarDayModel> calendarDayModels){
-        if(!CCCollectionUtil.isEmpty(calendarDayModels)){
-            for(CalendarDayModel calendarDayModel : calendarDayModels){
-                if(calendarDayModel.date.equals(day)){
-                    return calendarDayModel;
-                }
-            }
-        }
+		if(!CCCollectionUtil.isEmpty(calendarDayModels)){
+			for(CalendarDayModel calendarDayModel : calendarDayModels){
+				if(calendarDayModel.date.equals(day)){
+					return calendarDayModel;
+				}
+			}
+		}
 
 		return null;
 	}

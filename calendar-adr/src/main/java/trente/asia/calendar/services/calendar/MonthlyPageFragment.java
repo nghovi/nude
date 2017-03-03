@@ -129,6 +129,7 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 	@Override
 	protected void onLoadSchedulesSuccess(JSONObject response){
 		super.onLoadSchedulesSuccess(response);
+		clearOldData();
         lstScheduleWithoutHoliday.clear();
 
         if(lstSchedule == null){
