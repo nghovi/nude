@@ -130,7 +130,6 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 	protected void onLoadSchedulesSuccess(JSONObject response){
 		super.onLoadSchedulesSuccess(response);
 		clearOldData();
-        lstScheduleWithoutHoliday.clear();
 
         if(lstSchedule == null){
             lstSchedule = new ArrayList<>();
@@ -190,6 +189,7 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 		for(MonthlyCalendarRowView rowView : lstCalendarRow){
 			rowView.removeAllData();
 		}
+        lstScheduleWithoutHoliday.clear();
 	}
 
 	@Override

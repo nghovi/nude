@@ -76,6 +76,7 @@ public abstract class PageContainerFragment extends AbstractClFragment{
 																				if(isRefreshFilterUser){
 																					isRefreshFilterUser = false;
 																					if(!CCCollectionUtil.isEmpty(lstCalendarUser)){
+                                                                                        lnrUserList.setVisibility(View.VISIBLE);
 																						String targetUserData = prefAccUtil.get(ClConst.PREF_ACTIVE_USER_LIST);
 //																						lnrUserList.show(ClUtil.getTargetUserList(lstCalendarUser, targetUserData), (int)getResources().getDimension(R.dimen.margin_30dp));
 																						holder.updateFilter(lstCalendarUser, targetUserData);
