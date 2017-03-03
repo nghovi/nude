@@ -88,9 +88,9 @@ public class CalendarListFragment extends AbstractClFragment{
 
 	private void onClickCalendar(CalendarModel calendarModel, boolean isChecked){
 		if(isChecked){
-			lstSelectedCalendar.add(calendarModel);
+            checkAndAddSelectedCalendar(calendarModel);
 		}else{
-			lstSelectedCalendar.remove(calendarModel);
+            removeSelectedCalendar(calendarModel);
 		}
 		saveSelectedCalendarToPref();
 		if(changeCalendarListener != null){
@@ -201,6 +201,15 @@ public class CalendarListFragment extends AbstractClFragment{
 		lstSelectedCalendar.add(calendarModel);
 	}
 
+    private void removeSelectedCalendar(CalendarModel calendarModel){
+        for(CalendarModel calendar : lstSelectedCalendar){
+            if(calendar.key.equals(calendarModel.key)){
+                lstSelectedCalendar.remove(calendar);
+                return;
+            }
+        }
+    }
+
 	@Override
 	public int getFooterItemId(){
 		return 0;
@@ -221,29 +230,25 @@ public class CalendarListFragment extends AbstractClFragment{
 	}
 
 	private void selectAllCalendars(){
-		for(int i = 0; i < lstCalendar.size(); i++){
-			CalendarModel calendarModel = lstCalendar.get(i);
-			lvCalendar.setItemChecked(i, true);
-			int position = calendarAdapter.findPosition4Id(calendarModel.key);
-			lvCalendar.setItemChecked(position, true);
-			checkAndAddSelectedCalendar(calendarModel);
-		}
-		saveSelectedCalendarToPref();
+        if(!CCCollectionUtil.isEmpty(lstCalendarWithoutMyCalendar)){
+            for(int position = 0; position < lstCalendarWithoutMyCalendar.size(); position++){
+                CalendarModel calendarModel = lstCalendarWithoutMyCalendar.get(position);
+                lvCalendar.setItemChecked(position, true);
+                checkAndAddSelectedCalendar(calendarModel);
+            }
+        }
+        lnrMyCalendar.setChecked(true);
 	}
 
 	private void selectMyCalendarOnly(){
-		for(int i = 0; i < lstCalendar.size(); i++){
-			CalendarModel calendarModel = lstCalendar.get(i);
-			int position = calendarAdapter.findPosition4Id(calendarModel.key);
-			if(calendarModel.isMyself){
-				checkAndAddSelectedCalendar(calendarModel);
-				lvCalendar.setItemChecked(position, true);
-			}else{
-				lstSelectedCalendar.remove(calendarModel);
-				lvCalendar.setItemChecked(position, false);
-			}
-		}
-		saveSelectedCalendarToPref();
+        if(!CCCollectionUtil.isEmpty(lstCalendarWithoutMyCalendar)){
+            for(int position = 0; position < lstCalendarWithoutMyCalendar.size(); position++){
+                CalendarModel calendarModel = lstCalendarWithoutMyCalendar.get(position);
+                removeSelectedCalendar(calendarModel);
+                lvCalendar.setItemChecked(position, false);
+            }
+        }
+        lnrMyCalendar.setChecked(true);
 	}
 
 	private void saveSelectedCalendarToPref(){
