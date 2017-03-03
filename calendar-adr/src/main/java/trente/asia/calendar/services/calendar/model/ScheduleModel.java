@@ -2,6 +2,9 @@ package trente.asia.calendar.services.calendar.model;
 
 import java.util.List;
 
+import asia.chiase.core.util.CCBooleanUtil;
+import asia.chiase.core.util.CCStringUtil;
+import trente.asia.calendar.commons.utils.ClUtil;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 import trente.asia.welfare.adr.utils.WelfareUtil;
@@ -17,7 +20,7 @@ public class ScheduleModel{
 	public String			scheduleName;
 	public String			scheduleNote;
 	public String			scheduleUrl;
-	public String			scheduleColor;
+//	public String			scheduleColor;
 	public String			startDate;
 	public String			endDate;
 	public String			startTime;
@@ -56,7 +59,7 @@ public class ScheduleModel{
 		this.endDate = holidayModel.endDate;
 		this.isAllDay = true;
 		// pink color
-		this.scheduleColor = "D22DB6";
+//		this.scheduleColor = "D22DB6";
 		this.isHoliday = true;
 	}
 
@@ -69,4 +72,15 @@ public class ScheduleModel{
 		String endDateFormat = WelfareFormatUtil.formatDate(WelfareUtil.makeDate(endDate));
 		return !startDateFormat.equals(endDateFormat);
 	}
+
+    public String getScheduleColor(List<CategoryModel> lstCategory){
+        if(!CCStringUtil.isEmpty(this.calendarId)){
+            CategoryModel categoryModel = ClUtil.findCategory4Id(lstCategory, this.categoryId);
+            return WelfareFormatUtil.formatColor(categoryModel.categoryColor);
+        }
+        if(CCBooleanUtil.checkBoolean(isHoliday)){
+            return WelfareFormatUtil.formatColor("D22DB6");
+        }
+        return WelfareFormatUtil.formatColor("444444");
+    }
 }

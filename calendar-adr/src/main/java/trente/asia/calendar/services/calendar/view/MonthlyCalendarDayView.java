@@ -2,6 +2,7 @@ package trente.asia.calendar.services.calendar.view;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -19,6 +20,7 @@ import asia.chiase.core.util.CCStringUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.services.calendar.listener.DailyScheduleClickListener;
+import trente.asia.calendar.services.calendar.model.CategoryModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
@@ -94,7 +96,7 @@ public class MonthlyCalendarDayView extends LinearLayout{
 		lnrRowContent = (LinearLayout)this.findViewById(R.id.lnr_id_row_content);
 	}
 
-	public void addSchedule(ScheduleModel scheduleModel){
+	public void addSchedule(ScheduleModel scheduleModel, List<CategoryModel> lstCategory){
 		numberOfSchedule++;
 		TextView txtSchedule = new TextView(mContext);
 		txtSchedule.setMaxLines(1);
@@ -106,17 +108,18 @@ public class MonthlyCalendarDayView extends LinearLayout{
 		txtSchedule.setLayoutParams(layoutParams);
 		txtSchedule.setGravity(Gravity.CENTER_VERTICAL);
 
+        String scheduleColor = scheduleModel.getScheduleColor(lstCategory);
 		if(CCBooleanUtil.checkBoolean(scheduleModel.isAllDay)){
 			// txtSchedule.setPadding(2, 2, 2, 2);
 			txtSchedule.setTextColor(Color.WHITE);
-			if(!CCStringUtil.isEmpty(scheduleModel.scheduleColor)){
-				txtSchedule.setBackgroundColor(Color.parseColor(WelfareFormatUtil.formatColor(scheduleModel.scheduleColor)));
+			if(!CCStringUtil.isEmpty(scheduleColor)){
+				txtSchedule.setBackgroundColor(Color.parseColor(scheduleColor));
 			}else{
 				txtSchedule.setBackgroundColor(Color.RED);
 			}
 		}else{
-			if(!CCStringUtil.isEmpty(scheduleModel.scheduleColor)){
-				txtSchedule.setTextColor(Color.parseColor(WelfareFormatUtil.formatColor(scheduleModel.scheduleColor)));
+			if(!CCStringUtil.isEmpty(scheduleColor)){
+  				txtSchedule.setTextColor(Color.parseColor(scheduleColor));
 			}
 		}
 

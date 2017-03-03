@@ -17,6 +17,7 @@ import asia.chiase.core.util.CCStringUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.utils.ClUtil;
+import trente.asia.calendar.services.calendar.model.CategoryModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 
@@ -55,7 +56,7 @@ public class MonthlyCalendarRowView extends RelativeLayout{
 		this.lstCalendarDay = new ArrayList<>();
 	}
 
-	public void addSchedule(ScheduleModel scheduleModel){
+	public void addSchedule(ScheduleModel scheduleModel, List<CategoryModel> lstCategory){
 		int itemWidth = this.getWidth() / 7;
 		int textSize = 10;
 
@@ -79,8 +80,9 @@ public class MonthlyCalendarRowView extends RelativeLayout{
 		// txtSchedule.setPadding(2, 2, 2, 2);
 		txtSchedule.setGravity(Gravity.CENTER_VERTICAL);
 		txtSchedule.setTextColor(Color.WHITE);
-		if(!CCStringUtil.isEmpty(scheduleModel.scheduleColor)){
-			txtSchedule.setBackgroundColor(Color.parseColor(WelfareFormatUtil.formatColor(scheduleModel.scheduleColor)));
+        String scheduleColor = scheduleModel.getScheduleColor(lstCategory);
+		if(!CCStringUtil.isEmpty(scheduleColor)){
+			txtSchedule.setBackgroundColor(Color.parseColor(scheduleColor));
 		}else{
 			txtSchedule.setBackgroundColor(Color.RED);
 		}

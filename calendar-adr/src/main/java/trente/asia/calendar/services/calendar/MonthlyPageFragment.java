@@ -153,7 +153,7 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 						String minDay = rowView.lstCalendarDay.get(0).day;
 						String maxDay = rowView.lstCalendarDay.get(rowView.lstCalendarDay.size() - 1).day;
 						if(ClUtil.belongPeriod(WelfareUtil.makeDate(model.startDate), minDay, maxDay) || ClUtil.belongPeriod(WelfareUtil.makeDate(model.endDate), minDay, maxDay)){
-							rowView.addSchedule(model);
+							rowView.addSchedule(model, lstCategories);
 						}
 					}
 				}else{
@@ -167,7 +167,7 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 					}
 
 					for(MonthlyCalendarDayView calendarDayView : lstActiveCalendarDay){
-						calendarDayView.addSchedule(model);
+						calendarDayView.addSchedule(model, lstCategories);
 					}
 				}
 			}
