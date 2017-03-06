@@ -67,6 +67,10 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 	private ClDialog				editModeDialog;
 	private Date					selectedDate;
 
+	private final String			SCHEDULE_EDIT_MODE		= "E";
+	private final String			SCHEDULE_DELETE_MODE	= "D";
+	private String					editMode;
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 		if(mRootView == null){
@@ -132,8 +136,6 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 
 		Date starDate = new Date();
 		Date endDate = new Date();
-		// int startHour = 0, startMinute = 0;
-		// int endHour = 0, endMinute = 0;
 
 		if(schedule != null && !CCStringUtil.isEmpty(schedule.key)){
 			starDate = WelfareUtil.makeDate(schedule.startDate);
@@ -258,6 +260,8 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 		switch(v.getId()){
 		case R.id.img_id_header_right_icon:
 			if(schedule != null && !CCStringUtil.isEmpty(schedule.key) && ClRepeatUtil.isRepeat(schedule.repeatType)){
+				editMode = SCHEDULE_EDIT_MODE;
+				editModeDialog.updateScheduleEditModeTitle(getString(R.string.cl_schedule_edit_mode_title));
 				editModeDialog.show();
 			}else{
 				updateSchedule(null);
@@ -295,19 +299,37 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 			filterDialog.show();
 			break;
 		case R.id.lnr_id_only_this:
-			updateSchedule(ClConst.SCHEDULE_MODIFY_TYPE_ONLY_THIS);
+            if(SCHEDULE_EDIT_MODE.equals(editMode)){
+                updateSchedule(ClConst.SCHEDULE_MODIFY_TYPE_ONLY_THIS);
+            }else{
+                deleteSchedule(ClConst.SCHEDULE_MODIFY_TYPE_ONLY_THIS);
+            }
 			break;
 		case R.id.lnr_id_only_future:
-			updateSchedule(ClConst.SCHEDULE_MODIFY_TYPE_ONLY_FUTURE);
+            if(SCHEDULE_EDIT_MODE.equals(editMode)){
+                updateSchedule(ClConst.SCHEDULE_MODIFY_TYPE_ONLY_FUTURE);
+            }else{
+                deleteSchedule(ClConst.SCHEDULE_MODIFY_TYPE_ONLY_FUTURE);
+            }
 			break;
 		case R.id.lnr_id_all:
-			updateSchedule(ClConst.SCHEDULE_MODIFY_TYPE_ALL);
+            if(SCHEDULE_EDIT_MODE.equals(editMode)){
+                updateSchedule(ClConst.SCHEDULE_MODIFY_TYPE_ALL);
+            }else{
+                deleteSchedule(ClConst.SCHEDULE_MODIFY_TYPE_ALL);
+            }
 			break;
 		case R.id.lnr_id_cancel:
 			editModeDialog.dismiss();
 			break;
 		case R.id.btn_id_delete:
-			deleteSchedule();
+			if(schedule != null && !CCStringUtil.isEmpty(schedule.key) && ClRepeatUtil.isRepeat(schedule.repeatType)){
+				editMode = SCHEDULE_DELETE_MODE;
+				editModeDialog.updateScheduleEditModeTitle(getString(R.string.cl_schedule_delete_mode_title));
+				editModeDialog.show();
+			}else{
+				updateSchedule(null);
+			}
 			break;
 		default:
 			break;
@@ -348,11 +370,13 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 		requestUpdate(WfUrlConst.WF_CL_SCHEDULE_UPD, jsonObject, true);
 	}
 
-	private void deleteSchedule(){
+	private void deleteSchedule(String modifyType){
 		JSONObject jsonObject = new JSONObject();
 		try{
 			jsonObject.put("key", schedule.key);
-
+			if(!CCStringUtil.isEmpty(modifyType)){
+				jsonObject.put("modifyType", modifyType);
+			}
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
@@ -365,8 +389,8 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 			schedule = CCJsonUtil.convertToModel(response.optString("schedule"), ScheduleModel.class);
 			onScheduleUpdateSuccess();
 		}else if(WfUrlConst.WF_CL_SCHEDULE_DEL.equals(url)){
-            ((WelfareActivity)activity).dataMap.put(ClConst.ACTION_SCHEDULE_DELETE, CCConst.YES);
-            getFragmentManager().popBackStack();
+			((WelfareActivity)activity).dataMap.put(ClConst.ACTION_SCHEDULE_DELETE, CCConst.YES);
+			getFragmentManager().popBackStack();
 		}else{
 			super.successUpdate(response, url);
 		}

@@ -39,6 +39,7 @@
     <string name="cl_schedule_form_item_schedule_note">Schedule note</string>
 
     <string name="cl_schedule_edit_mode_title">Edit mode</string>
+    <string name="cl_schedule_delete_mode_title">Delete mode</string>
     <string name="cl_schedule_edit_mode_only_this">Change only this</string>
     <string name="cl_schedule_edit_mode_only_future">Change only future</string>
     <string name="cl_schedule_edit_mode_all">Change all</string>

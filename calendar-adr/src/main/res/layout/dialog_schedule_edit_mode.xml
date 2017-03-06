@@ -16,6 +16,7 @@
         android:padding="@dimen/margin_10dp">
 
         <TextView
+            android:id="@+id/txt_id_edit_mode_title"
             style="@style/wl_common_text"
             android:layout_weight="1"
             android:text="@string/cl_schedule_edit_mode_title"
