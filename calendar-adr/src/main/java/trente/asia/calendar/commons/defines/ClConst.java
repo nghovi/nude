@@ -41,4 +41,7 @@ public class ClConst{
 	public static final String	SCHEDULE_TYPE_HOLIDAY				= "H";
 	public static final String	SCHEDULE_TYPE_WORK_OFFER			= "O";
 	public static final String	SCHEDULE_TYPE_BIRTHDAY				= "B";
+
+    public static final String	SCHEDULE_COLOR_NORMAL				= "444444";
+    public static final String	SCHEDULE_COLOR_HOLIDAY				= "D22DB6";
 }

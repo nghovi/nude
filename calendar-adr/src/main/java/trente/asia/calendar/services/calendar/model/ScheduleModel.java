@@ -81,8 +81,8 @@ public class ScheduleModel{
 			return WelfareFormatUtil.formatColor(categoryModel.categoryColor);
 		}
 		if(CCBooleanUtil.checkBoolean(isHoliday)){
-			return WelfareFormatUtil.formatColor("D22DB6");
+			return WelfareFormatUtil.formatColor(ClConst.SCHEDULE_COLOR_HOLIDAY);
 		}
-		return WelfareFormatUtil.formatColor("444444");
+		return WelfareFormatUtil.formatColor(ClConst.SCHEDULE_COLOR_NORMAL);
 	}
 }
