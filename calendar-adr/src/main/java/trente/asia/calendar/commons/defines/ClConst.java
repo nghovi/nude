@@ -12,8 +12,6 @@ public class ClConst{
 
 	public static final String	APP_FOLDER							= "Welfare/Calendar";
 
-	// public static final int CALENDAR_MAX_PAGE = 1000;
-
 	public static final String	SCHEDULE_TYPE_ALL					= "1";
 	public static final String	SCHEDULE_TYPE_PERIOD				= "2";
 
@@ -42,6 +40,8 @@ public class ClConst{
 	public static final String	SCHEDULE_TYPE_WORK_OFFER			= "O";
 	public static final String	SCHEDULE_TYPE_BIRTHDAY				= "B";
 
-    public static final String	SCHEDULE_COLOR_NORMAL				= "444444";
-    public static final String	SCHEDULE_COLOR_HOLIDAY				= "D22DB6";
+	public static final String	SCHEDULE_COLOR_NORMAL				= "444444";
+	public static final String	SCHEDULE_COLOR_HOLIDAY				= "D22DB6";
+
+	public static final String	ACTION_SCHEDULE_DELETE				= "ACTION_SCHEDULE_DELETE";
 }

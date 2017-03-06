@@ -16,10 +16,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
 
+import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
@@ -141,14 +143,14 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 			endDate = calendar.getTime();
 		}
 
-        repeatDialog.setStartDate(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, starDate));
+		repeatDialog.setStartDate(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, starDate));
 		if(ClRepeatUtil.isRepeat(schedule.repeatType)){
 			// set repeat dialog values
 			ScheduleRepeatModel repeatModel = new ScheduleRepeatModel(schedule);
 			repeatDialog.setRepeatModel(repeatModel);
 		}else{
-            repeatDialog.initDefaultValue();
-        }
+			repeatDialog.initDefaultValue();
+		}
 
 		WelfareFormatUtil.setChiaseTextView(txtStartDate, WelfareFormatUtil.formatDate(starDate));
 		WelfareFormatUtil.setChiaseTextView(txtStartTime, CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_9, starDate));
@@ -164,7 +166,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 				txtStartDate.setText(startDateStr);
 				txtStartDate.setValue(startDateStr);
 				repeatDialog.setStartDate(startDateStr);
-                repeatDialog.initDefaultValue();
+				repeatDialog.initDefaultValue();
 			}
 		}, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
 
@@ -238,6 +240,12 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 		filterDialog = new ClFilterUserListDialog(activity, lnrUserList, getString(R.string.cl_join_user_dialog_title));
 		filterDialog.findViewById(R.id.img_id_done).setOnClickListener(this);
 		buildDatePickerDialogs(schedule);
+
+		if(schedule != null && !CCStringUtil.isEmpty(schedule.key)){
+			Button btnDelete = (Button)getView().findViewById(R.id.btn_id_delete);
+			btnDelete.setVisibility(View.VISIBLE);
+			btnDelete.setOnClickListener(this);
+		}
 	}
 
 	@Override
@@ -298,6 +306,9 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 		case R.id.lnr_id_cancel:
 			editModeDialog.dismiss();
 			break;
+		case R.id.btn_id_delete:
+			deleteSchedule();
+			break;
 		default:
 			break;
 		}
@@ -337,11 +348,25 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 		requestUpdate(WfUrlConst.WF_CL_SCHEDULE_UPD, jsonObject, true);
 	}
 
+	private void deleteSchedule(){
+		JSONObject jsonObject = new JSONObject();
+		try{
+			jsonObject.put("key", schedule.key);
+
+		}catch(JSONException e){
+			e.printStackTrace();
+		}
+		requestUpdate(WfUrlConst.WF_CL_SCHEDULE_DEL, jsonObject, true);
+	}
+
 	@Override
 	protected void successUpdate(JSONObject response, String url){
 		if(WfUrlConst.WF_CL_SCHEDULE_UPD.equals(url)){
 			schedule = CCJsonUtil.convertToModel(response.optString("schedule"), ScheduleModel.class);
 			onScheduleUpdateSuccess();
+		}else if(WfUrlConst.WF_CL_SCHEDULE_DEL.equals(url)){
+            ((WelfareActivity)activity).dataMap.put(ClConst.ACTION_SCHEDULE_DELETE, CCConst.YES);
+            getFragmentManager().popBackStack();
 		}else{
 			super.successUpdate(response, url);
 		}

@@ -280,6 +280,15 @@
 
             <View style="@style/cs_common_divider"/>
 
+            <Button
+                android:id="@+id/btn_id_delete"
+                style="@style/cs_common_button_delete"
+                android:layout_marginLeft="@dimen/margin_26dp"
+                android:layout_marginRight="@dimen/margin_26dp"
+                android:layout_marginTop="@dimen/margin_10dp"
+                android:text="@string/chiase_common_delete"
+                android:visibility="gone"/>
+
         </LinearLayout>
 
     </ScrollView>

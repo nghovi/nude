@@ -9,8 +9,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.calendar.R;
+import trente.asia.calendar.commons.defines.ClConst;
+import trente.asia.welfare.adr.activity.WelfareActivity;
 
 /**
  * ScheduleDetailFragment
@@ -27,6 +30,13 @@ public class ScheduleDetailFragment extends AbstractScheduleFragment{
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 		if(mRootView == null){
 			mRootView = inflater.inflate(R.layout.fragment_schedule_detail, container, false);
+		}else{
+			String isDelete = CCStringUtil.toString(((WelfareActivity)activity).dataMap.get(ClConst.ACTION_SCHEDULE_DELETE));
+			if(CCConst.YES.equals(isDelete)){
+				((WelfareActivity)activity).dataMap.clear();
+				((WelfareActivity)activity).isInitData = true;
+				getFragmentManager().popBackStack();
+			}
 		}
 		return mRootView;
 	}
@@ -68,10 +78,10 @@ public class ScheduleDetailFragment extends AbstractScheduleFragment{
 		switch(v.getId()){
 		case R.id.img_id_header_right_icon:
 			gotoScheduleFormFragment();
-            break;
+			break;
 		case R.id.lnr_id_schedule_url:
 			gotoBrowser(schedule.scheduleUrl);
-            break;
+			break;
 		default:
 			break;
 		}
