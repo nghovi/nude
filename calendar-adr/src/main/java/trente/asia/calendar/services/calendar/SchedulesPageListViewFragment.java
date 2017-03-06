@@ -12,11 +12,9 @@ import android.graphics.Color;
 
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
-import asia.chiase.core.util.CCFormatUtil;
 import trente.asia.android.define.CsConst;
 import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.services.calendar.model.CalendarDayModel;
-import trente.asia.calendar.services.calendar.model.CategoryModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.view.CalendarDayView;
 import trente.asia.calendar.services.calendar.view.WeeklyCalendarHeaderRowView;
@@ -32,7 +30,7 @@ public abstract class SchedulesPageListViewFragment extends SchedulesPageFragmen
 	protected List<WeeklyCalendarHeaderRowView>	lstHeaderRow		= new ArrayList<>();
 	protected List<CalendarDayModel>			calendarDayModels;
 
-	protected List<CalendarDayView>		calendarDayViews	= new ArrayList<>();
+	protected List<CalendarDayView>				calendarDayViews	= new ArrayList<>();
 
 	@Override
 	protected int getNormalDayColor(){
@@ -64,8 +62,6 @@ public abstract class SchedulesPageListViewFragment extends SchedulesPageFragmen
 
 	protected void onLoadSchedulesSuccess(JSONObject response){
 		super.onLoadSchedulesSuccess(response);
-		separateDateTime(lstSchedule);
-		updateSchedules(lstSchedule, lstCategories);
 		calendarDayModels = buildCalendarDayModels(lstSchedule);
 		clearOldData();
 		updateObservableScrollableView();
@@ -80,17 +76,6 @@ public abstract class SchedulesPageListViewFragment extends SchedulesPageFragmen
 	}
 
 	abstract protected void updateObservableScrollableView();
-
-	public void updateSchedules(List<ScheduleModel> schedules, List<CategoryModel> categories){
-		for(ScheduleModel schedule : schedules){
-			for(CategoryModel categoryModel : categories){
-				if(categoryModel.key.equals(schedule.categoryId)){
-					schedule.categoryModel = categoryModel;
-					break;
-				}
-			}
-		}
-	}
 
 	public List<CalendarDayModel> buildCalendarDayModels(List<ScheduleModel> schedules){
 		List<CalendarDayModel> calendarDayModels = new ArrayList<>();
@@ -117,17 +102,6 @@ public abstract class SchedulesPageListViewFragment extends SchedulesPageFragmen
 
 		Collections.sort(calendarDayModels, comparator);
 		return calendarDayModels;
-	}
-
-	private void separateDateTime(List<ScheduleModel> scheduleModels){
-		for(ScheduleModel scheduleModel : scheduleModels){
-			Date startDate = CCDateUtil.makeDateCustom(scheduleModel.startDate, WelfareConst.WL_DATE_TIME_1);
-			Date endDate = CCDateUtil.makeDateCustom(scheduleModel.endDate, WelfareConst.WL_DATE_TIME_1);
-			scheduleModel.startDate = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, startDate);
-			scheduleModel.endDate = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, endDate);
-			scheduleModel.startTime = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_9, startDate);
-			scheduleModel.endTime = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_9, endDate);
-		}
 	}
 
 	public CalendarDayModel getCalendarDayModel(String day, List<CalendarDayModel> calendarDayModels){

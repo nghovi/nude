@@ -1,7 +1,8 @@
 *.apk
 *.ap_
 *.dex
-*.class
+*.class	
+build/
 bin/
 gen/
 local.properties

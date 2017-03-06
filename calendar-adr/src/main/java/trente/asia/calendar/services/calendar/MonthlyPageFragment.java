@@ -113,9 +113,7 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 	}
 
 	private void initDialog(){
-		dialogDailySummary = new ClDailySummaryDialog(activity, getLayoutInflater(null), this);
-		ImageView imgAdd = (ImageView)dialogDailySummary.findViewById(R.id.img_id_add);
-		imgAdd.setOnClickListener(this);
+		dialogDailySummary = new ClDailySummaryDialog(activity, getLayoutInflater(null), this, this);
 	}
 
 	@Override
@@ -202,10 +200,6 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 	@Override
 	public void onClick(View v){
 		switch(v.getId()){
-		case R.id.img_id_add:
-			dialogDailySummary.dismiss();
-			((WelfareActivity)activity).addFragment(new ScheduleFormFragment());
-			break;
 		default:
 			break;
 		}

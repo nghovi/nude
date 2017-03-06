@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout style="@style/cs_common_match_wrap"
-              xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_marginBottom="@dimen/margin_50dp"
-              android:layout_marginLeft="@dimen/margin_20dp"
-              android:layout_marginRight="@dimen/margin_20dp"
-              android:layout_marginTop="@dimen/margin_50dp"
-              android:background="@drawable/shape_normal_transparent"
-              android:orientation="vertical"
-              android:paddingBottom="@dimen/margin_2dp">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:layout_marginBottom="@dimen/margin_50dp"
+    android:layout_marginLeft="@dimen/margin_20dp"
+    android:layout_marginRight="@dimen/margin_20dp"
+    android:layout_marginTop="@dimen/margin_50dp"
+    android:background="@drawable/shape_normal_transparent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/margin_2dp">
 
     <LinearLayout
         style="@style/cs_common_match_wrap"
@@ -28,5 +32,9 @@
             android:src="@drawable/cl_action_add"/>
     </LinearLayout>
 
-    <include layout="@layout/view_daily_schedules"/>
+    <ScrollView android:layout_width="match_parent"
+                android:layout_height="match_parent">
+        <include layout="@layout/view_daily_schedules"/>
+    </ScrollView>
+
 </LinearLayout>

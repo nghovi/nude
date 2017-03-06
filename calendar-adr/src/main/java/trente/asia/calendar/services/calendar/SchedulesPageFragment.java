@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCNumberUtil;
@@ -46,7 +47,7 @@ import trente.asia.welfare.adr.models.UserModel;
  *
  * @author TrungND
  */
-public abstract class SchedulesPageFragment extends AbstractClFragment implements CalendarDayListAdapter.OnScheduleItemClickListener,NavigationHeader.OnRightBtnClickedListener{
+public abstract class SchedulesPageFragment extends AbstractClFragment implements CalendarDayListAdapter.OnScheduleItemClickListener,NavigationHeader.OnAddBtnClickedListener{
 
 	protected Date							selectedDate;
 	protected List<Date>					dates;
@@ -166,6 +167,30 @@ public abstract class SchedulesPageFragment extends AbstractClFragment implement
 		if(changeCalendarUserListener != null){
 			changeCalendarUserListener.onChangeCalendarUserListener(lstCalendarUser);
 		}
+		separateDateTime(lstSchedule);
+		updateSchedules(lstSchedule, lstCategories);
+	}
+
+	public void updateSchedules(List<ScheduleModel> schedules, List<CategoryModel> categories){
+		for(ScheduleModel schedule : schedules){
+			for(CategoryModel categoryModel : categories){
+				if(categoryModel.key.equals(schedule.categoryId)){
+					schedule.categoryModel = categoryModel;
+					break;
+				}
+			}
+		}
+	}
+
+	private void separateDateTime(List<ScheduleModel> scheduleModels){
+		for(ScheduleModel scheduleModel : scheduleModels){
+			Date startDate = CCDateUtil.makeDateCustom(scheduleModel.startDate, WelfareConst.WL_DATE_TIME_1);
+			Date endDate = CCDateUtil.makeDateCustom(scheduleModel.endDate, WelfareConst.WL_DATE_TIME_1);
+			scheduleModel.startDate = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, startDate);
+			scheduleModel.endDate = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, endDate);
+			scheduleModel.startTime = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_9, startDate);
+			scheduleModel.endTime = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_9, endDate);
+		}
 	}
 
 	@Override
@@ -214,19 +239,21 @@ public abstract class SchedulesPageFragment extends AbstractClFragment implement
 		return ContextCompat.getColor(activity, R.color.wf_common_color_text);
 	}
 
-	private void gotoScheduleFormFragment(){
+	private void gotoScheduleFormFragment(Date date){
 		ScheduleFormFragment scheduleFormFragment = new ScheduleFormFragment();
-		Date clickedDate = pageSharingHolder.getClickedDate();
-		scheduleFormFragment.setSelectedDate(clickedDate);
+		if(date == null){
+			date = pageSharingHolder.getClickedDate();
+		}
+		scheduleFormFragment.setSelectedDate(date);
 		ChiaseFragment parentFragment = (ChiaseFragment)getParentFragment();
 		parentFragment.gotoFragment(scheduleFormFragment);
 	}
 
 	@Override
-	public void onAddBtnClick(){
+	public void onAddBtnClick(Date date){
 		String selectedCalendarString = prefAccUtil.get(ClConst.SELECTED_CALENDAR_STRING);
 		if(!CCStringUtil.isEmpty(selectedCalendarString)){
-			gotoScheduleFormFragment();
+			gotoScheduleFormFragment(date);
 		}else{
 			alertDialog.setMessage(getString(R.string.cl_common_validate_no_calendar_msg));
 			alertDialog.show();

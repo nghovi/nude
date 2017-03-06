@@ -1,5 +1,7 @@
 package trente.asia.calendar.services.calendar.view;
 
+import java.util.Date;
+
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
@@ -20,7 +22,7 @@ public class NavigationHeader extends LinearLayout{
 	private ImageView			imgNavigation;
 	private ImageView			imgRightBtn;
 
-	public void setOnHeaderActionsListener(final OnRightBtnClickedListener listener){
+	public void setOnHeaderActionsListener(final OnAddBtnClickedListener listener){
 		this.listener = listener;
 		if(imgNavigation == null){
 			imgNavigation = (ImageView)findViewById(R.id.img_navigator_header_left_btn);
@@ -41,16 +43,16 @@ public class NavigationHeader extends LinearLayout{
 
 			@Override
 			public void onClick(View v){
-				listener.onAddBtnClick();
+				listener.onAddBtnClick(null);
 			}
 		});
 	}
 
-	private OnRightBtnClickedListener	listener;
+	private OnAddBtnClickedListener	listener;
 
-	public interface OnRightBtnClickedListener{
+	public interface OnAddBtnClickedListener{
 
-		public void onAddBtnClick();
+		public void onAddBtnClick(Date selectedDate);
 	}
 
 	public NavigationHeader(Context context){
