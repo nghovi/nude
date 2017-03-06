@@ -21,7 +21,6 @@ import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.fragments.AbstractClFragment;
-import trente.asia.calendar.commons.utils.ClUtil;
 import trente.asia.calendar.commons.views.UserListLinearLayout;
 import trente.asia.calendar.services.calendar.listener.OnChangeCalendarListener;
 import trente.asia.calendar.services.calendar.listener.OnChangeCalendarUserListener;
@@ -76,9 +75,11 @@ public abstract class PageContainerFragment extends AbstractClFragment{
 																				if(isRefreshFilterUser){
 																					isRefreshFilterUser = false;
 																					if(!CCCollectionUtil.isEmpty(lstCalendarUser)){
-                                                                                        lnrUserList.setVisibility(View.VISIBLE);
+																						lnrUserList.setVisibility(View.VISIBLE);
 																						String targetUserData = prefAccUtil.get(ClConst.PREF_ACTIVE_USER_LIST);
-//																						lnrUserList.show(ClUtil.getTargetUserList(lstCalendarUser, targetUserData), (int)getResources().getDimension(R.dimen.margin_30dp));
+																						// lnrUserList.show(ClUtil.getTargetUserList(lstCalendarUser,
+																						// targetUserData),
+																						// (int)getResources().getDimension(R.dimen.margin_30dp));
 																						holder.updateFilter(lstCalendarUser, targetUserData);
 																					}else{
 																						lnrUserList.removeAllViews();
@@ -125,9 +126,9 @@ public abstract class PageContainerFragment extends AbstractClFragment{
 			public void onPageSelected(int position){
 				setActiveDate(position);
 				holder.selectedPagePosition = position;
-                // load schedule list
+				// load schedule list
 				SchedulesPageFragment fragment = (SchedulesPageFragment)mPagerAdapter.getItem(position);
-                fragment.loadScheduleList();
+				fragment.loadScheduleList();
 			}
 		});
 
@@ -164,13 +165,13 @@ public abstract class PageContainerFragment extends AbstractClFragment{
 			mSlideMenuLayout.toggleMenu();
 			break;
 		case R.id.img_id_header_right_icon:
-            String selectedCalendarString = prefAccUtil.get(ClConst.SELECTED_CALENDAR_STRING);
-            if(!CCStringUtil.isEmpty(selectedCalendarString)){
-                gotoScheduleFormFragment();
-            }else{
-                alertDialog.setMessage(getString(R.string.cl_common_validate_no_calendar_msg));
-                alertDialog.show();
-            }
+			String selectedCalendarString = prefAccUtil.get(ClConst.SELECTED_CALENDAR_STRING);
+			if(!CCStringUtil.isEmpty(selectedCalendarString)){
+				gotoScheduleFormFragment();
+			}else{
+				alertDialog.setMessage(getString(R.string.cl_common_validate_no_calendar_msg));
+				alertDialog.show();
+			}
 			break;
 		case R.id.img_id_done:
 			SchedulesPageFragment schedulesPageFragment = (SchedulesPageFragment)mPagerAdapter.getItem(holder.selectedPagePosition);
