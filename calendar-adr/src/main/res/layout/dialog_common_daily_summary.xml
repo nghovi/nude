@@ -28,8 +28,5 @@
             android:src="@drawable/cl_action_add"/>
     </LinearLayout>
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/view_pager_id_schedule"
-        style="@style/cs_common_match_wrap"
-        android:layout_weight="1"/>
+    <include layout="@layout/view_daily_schedules"/>
 </LinearLayout>

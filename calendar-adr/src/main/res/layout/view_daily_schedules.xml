@@ -1,0 +1,40 @@
+<trente.asia.calendar.services.calendar.view.DailyScheduleList
+    android:id="@+id/lnr_view_daily_schedules"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/lnr_daily_schedule_list_all_day"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <View style="@style/cs_common_divider"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lnr_daily_schedule_list_morning"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <View style="@style/cs_common_divider"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lnr_daily_schedule_list_afternoon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <View style="@style/cs_common_divider"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lnr_daily_schedules_list_work_offer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <View style="@style/cs_common_divider"/>
+    </LinearLayout>
+
+</trente.asia.calendar.services.calendar.view.DailyScheduleList>

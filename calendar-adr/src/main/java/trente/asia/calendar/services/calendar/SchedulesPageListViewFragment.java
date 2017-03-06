@@ -18,7 +18,7 @@ import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.services.calendar.model.CalendarDayModel;
 import trente.asia.calendar.services.calendar.model.CategoryModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
-import trente.asia.calendar.services.calendar.view.WeeklyCalendarDayView;
+import trente.asia.calendar.services.calendar.view.CalendarDayView;
 import trente.asia.calendar.services.calendar.view.WeeklyCalendarHeaderRowView;
 import trente.asia.welfare.adr.define.WelfareConst;
 
@@ -27,12 +27,12 @@ import trente.asia.welfare.adr.define.WelfareConst;
  *
  * @author TrungND
  */
-public abstract class SchedulesPageListViewFragment extends SchedulesPageFragment implements WeeklyCalendarDayView.OnDayClickListener{
+public abstract class SchedulesPageListViewFragment extends SchedulesPageFragment implements CalendarDayView.OnDayClickListener{
 
 	protected List<WeeklyCalendarHeaderRowView>	lstHeaderRow		= new ArrayList<>();
 	protected List<CalendarDayModel>			calendarDayModels;
 
-	protected List<WeeklyCalendarDayView>		calendarDayViews	= new ArrayList<>();
+	protected List<CalendarDayView>		calendarDayViews	= new ArrayList<>();
 
 	@Override
 	protected int getNormalDayColor(){
@@ -52,7 +52,7 @@ public abstract class SchedulesPageListViewFragment extends SchedulesPageFragmen
 				lstHeaderRow.add(rowView);
 			}
 
-			WeeklyCalendarDayView dayView = new WeeklyCalendarDayView(activity);
+			CalendarDayView dayView = new CalendarDayView(activity);
 			boolean isInOtherMonth = CsDateUtil.isDiffMonth(date, selectedDate);
 			dayView.initLayout(date, isInOtherMonth);
 			rowView.lnrRowContent.addView(dayView);
@@ -73,7 +73,7 @@ public abstract class SchedulesPageListViewFragment extends SchedulesPageFragmen
 
 	@Override
 	protected void clearOldData(){
-		for(WeeklyCalendarDayView dayView : calendarDayViews){
+		for(CalendarDayView dayView : calendarDayViews){
 			CalendarDayModel calendarDayModel = getCalendarDayModel(dayView.dayStr, calendarDayModels);
 			dayView.setData(calendarDayModel, this, lstHoliday);
 		}
@@ -159,7 +159,7 @@ public abstract class SchedulesPageListViewFragment extends SchedulesPageFragmen
 
 	protected void updateDayViews(String dayStr){
 		pageSharingHolder.cancelPreviousClickedDayView();
-		for(WeeklyCalendarDayView view : calendarDayViews){
+		for(CalendarDayView view : calendarDayViews){
 			if(dayStr.equals(view.dayStr)){
 				view.setSelected(true);
 				pageSharingHolder.setClickedDayView(view);

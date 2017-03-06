@@ -25,11 +25,11 @@ public class PageSharingHolder{
 	private Context						mContext;
 	public int							selectedPagePosition;
 
-	public WeeklyCalendarDayView getClickedDayView(){
+	public CalendarDayView getClickedDayView(){
 		return clickedDayView;
 	}
 
-	private WeeklyCalendarDayView	clickedDayView;
+	private CalendarDayView clickedDayView;
 
 	public PageSharingHolder(NavigationHeader navigationHeader, UserListLinearLayout userListLinearLayout, final View.OnClickListener listener){
 		this.mContext = navigationHeader.getContext();
@@ -60,7 +60,7 @@ public class PageSharingHolder{
 		filterDialog.updateUserList(calendarUsers);
 	}
 
-	public void setClickedDayView(WeeklyCalendarDayView clickedDayView){
+	public void setClickedDayView(CalendarDayView clickedDayView){
 		this.clickedDayView = clickedDayView;
 	}
 

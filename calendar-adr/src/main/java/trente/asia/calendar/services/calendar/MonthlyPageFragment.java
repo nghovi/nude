@@ -16,12 +16,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCBooleanUtil;
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
-import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.activity.ChiaseActivity;
 import trente.asia.android.define.CsConst;
 import trente.asia.android.util.CsDateUtil;
@@ -115,7 +113,7 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 	}
 
 	private void initDialog(){
-		dialogDailySummary = new ClDailySummaryDialog(activity, lstCalendarDay);
+		dialogDailySummary = new ClDailySummaryDialog(activity, getLayoutInflater(null), this);
 		ImageView imgAdd = (ImageView)dialogDailySummary.findViewById(R.id.img_id_add);
 		imgAdd.setOnClickListener(this);
 	}
@@ -197,8 +195,8 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 
 	@Override
 	public void onDailyScheduleClickListener(String day){
-		dialogDailySummary.setActiveDate(CCDateUtil.makeDateCustom(day, WelfareConst.WL_DATE_TIME_7));
-		dialogDailySummary.show();
+		Date selectedDate = CCDateUtil.makeDateCustom(day, WelfareConst.WL_DATE_TIME_7);
+		dialogDailySummary.show(selectedDate, lstSchedule);
 	}
 
 	@Override

@@ -35,20 +35,20 @@ public class CalendarDayListAdapter extends ArrayAdapter<CalendarDayModel>{
 	Context									context;
 	int										layoutId;
 	LayoutInflater							layoutInflater;
-	private OnScheduleClickListener			onScheduleClickListener;
+	private OnScheduleItemClickListener onScheduleItemClickListener;
 
-	public interface OnScheduleClickListener{
+	public interface OnScheduleItemClickListener {
 
-		void onClickSchedule(ScheduleModel schedule);
+		void onClickScheduleItem(ScheduleModel schedule);
 	}
 
-	public CalendarDayListAdapter(Context context, int resource, List<CalendarDayModel> objects, OnScheduleClickListener onScheduleClickListener){
+	public CalendarDayListAdapter(Context context, int resource, List<CalendarDayModel> objects, OnScheduleItemClickListener onScheduleItemClickListener){
 		super(context, resource, objects);
 		this.calendarDayModels = objects;
 		this.context = context;
 		this.layoutId = resource;
 		layoutInflater = ((Activity)context).getLayoutInflater();
-		this.onScheduleClickListener = onScheduleClickListener;
+		this.onScheduleItemClickListener = onScheduleItemClickListener;
 	}
 
 	@Override
@@ -73,12 +73,12 @@ public class CalendarDayListAdapter extends ArrayAdapter<CalendarDayModel>{
 	private void buildScheduleList(ViewHolder viewHolder, CalendarDayModel calendarDay){
 		viewHolder.lnrEventList.removeAllViews();
 		for(final ScheduleModel schedule : calendarDay.schedules){
-			View lnrSchedulesContainer = buildScheduleItem(getContext(), layoutInflater, schedule, onScheduleClickListener);
+			View lnrSchedulesContainer = buildScheduleItem(getContext(), layoutInflater, schedule, onScheduleItemClickListener);
 			viewHolder.lnrEventList.addView(lnrSchedulesContainer);
 		}
 	}
 
-	public static View buildScheduleItem(final Context context, LayoutInflater layoutInflater, final ScheduleModel schedule, final OnScheduleClickListener onScheduleClickListener){
+	public static View buildScheduleItem(final Context context, LayoutInflater layoutInflater, final ScheduleModel schedule, final OnScheduleItemClickListener onScheduleItemClickListener){
 		LinearLayout lnrSchedulesContainer = (LinearLayout)layoutInflater.inflate(R.layout.item_schedule, null);
 		TextView txtScheduleTime = (TextView)lnrSchedulesContainer.findViewById(R.id.txt_item_schedule_time);
 		String time;
@@ -136,7 +136,7 @@ public class CalendarDayListAdapter extends ArrayAdapter<CalendarDayModel>{
 
 			@Override
 			public void onClick(View v){
-				onScheduleClickListener.onClickSchedule(schedule);
+				onScheduleItemClickListener.onClickScheduleItem(schedule);
 			}
 		});
 

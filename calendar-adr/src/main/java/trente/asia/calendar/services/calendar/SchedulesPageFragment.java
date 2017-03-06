@@ -46,7 +46,7 @@ import trente.asia.welfare.adr.models.UserModel;
  *
  * @author TrungND
  */
-public abstract class SchedulesPageFragment extends AbstractClFragment implements CalendarDayListAdapter.OnScheduleClickListener,NavigationHeader.OnRightBtnClickedListener{
+public abstract class SchedulesPageFragment extends AbstractClFragment implements CalendarDayListAdapter.OnScheduleItemClickListener,NavigationHeader.OnRightBtnClickedListener{
 
 	protected Date							selectedDate;
 	protected List<Date>					dates;
@@ -169,7 +169,7 @@ public abstract class SchedulesPageFragment extends AbstractClFragment implement
 	}
 
 	@Override
-	public void onClickSchedule(ScheduleModel schedule){
+	public void onClickScheduleItem(ScheduleModel schedule){
 		ScheduleDetailFragment fragment = new ScheduleDetailFragment();
 		fragment.setSchedule(schedule);
 		((WelfareActivity)activity).addFragment(fragment);

@@ -23,7 +23,7 @@ import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.services.calendar.model.CalendarDayModel;
 import trente.asia.calendar.services.calendar.view.CalendarDayListAdapter;
 import trente.asia.calendar.services.calendar.view.CalendarView;
-import trente.asia.calendar.services.calendar.view.WeeklyCalendarDayView;
+import trente.asia.calendar.services.calendar.view.CalendarDayView;
 import trente.asia.calendar.services.calendar.view.WeeklyCalendarHeaderRowView;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 
@@ -32,7 +32,7 @@ import trente.asia.welfare.adr.activity.WelfareActivity;
  *
  * @author TrungND
  */
-public class WeeklyPageFragment extends SchedulesPageListViewFragment implements ObservableScrollViewCallbacks,CalendarView.OnCalendarDaySelectedListener,WeeklyCalendarDayView.OnDayClickListener{
+public class WeeklyPageFragment extends SchedulesPageListViewFragment implements ObservableScrollViewCallbacks,CalendarView.OnCalendarDaySelectedListener, CalendarDayView.OnDayClickListener{
 
 	protected ObservableListView		observableListView;
 	protected CalendarDayListAdapter	adapter;
