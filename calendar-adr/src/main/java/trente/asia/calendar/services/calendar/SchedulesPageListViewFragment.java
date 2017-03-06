@@ -14,6 +14,7 @@ import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import trente.asia.android.define.CsConst;
+import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.services.calendar.model.CalendarDayModel;
 import trente.asia.calendar.services.calendar.model.CategoryModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
@@ -52,7 +53,8 @@ public abstract class SchedulesPageListViewFragment extends SchedulesPageFragmen
 			}
 
 			WeeklyCalendarDayView dayView = new WeeklyCalendarDayView(activity);
-			dayView.initialization(date);
+			boolean isInOtherMonth = CsDateUtil.isDiffMonth(date, selectedDate);
+			dayView.initLayout(date, isInOtherMonth);
 			rowView.lnrRowContent.addView(dayView);
 			calendarDayViews.add(dayView);
 		}

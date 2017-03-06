@@ -39,6 +39,7 @@ import trente.asia.welfare.adr.models.SettingModel;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
 import trente.asia.welfare.adr.pref.PreferencesSystemUtil;
+import trente.asia.welfare.adr.utils.WelfareUtil;
 
 /**
  * WelfareFragment
@@ -48,10 +49,12 @@ import trente.asia.welfare.adr.pref.PreferencesSystemUtil;
 public abstract class WelfareFragment extends ChiaseFragment implements WelfareActivity.OnDeviceBackButtonClickListener{
 
 	protected PreferencesAccountUtil	prefAccUtil;
-	protected boolean					isChangedData		= false;
+	protected boolean					isChangedData			= false;
 	protected UserModel					myself;
-	public boolean						isClickNotification	= false;
+	public boolean						isClickNotification		= false;
 	protected Integer					lnrContentId;
+	public final int					MARGIN_LEFT_RIGHT		= WelfareUtil.dpToPx(16);
+	public final int					MARGIN_TEXT_TOP_BOTTM	= WelfareUtil.dpToPx(4);
 
 	@Override
 	public void onCreate(Bundle savedInstanceState){

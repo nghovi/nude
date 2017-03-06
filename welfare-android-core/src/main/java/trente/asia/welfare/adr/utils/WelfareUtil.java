@@ -27,6 +27,7 @@ import android.net.Uri;
 import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
 
 import asia.chiase.core.define.CCConst;
@@ -324,37 +325,37 @@ public class WelfareUtil{
 		return index;
 	}
 
-    public static boolean containUserInList(List<UserModel> lstUser, UserModel findUser){
-        if(!CCCollectionUtil.isEmpty(lstUser) && findUser != null){
-            for(UserModel userModel : lstUser){
-                if(userModel.key.equals(findUser.key)){
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
+	public static boolean containUserInList(List<UserModel> lstUser, UserModel findUser){
+		if(!CCCollectionUtil.isEmpty(lstUser) && findUser != null){
+			for(UserModel userModel : lstUser){
+				if(userModel.key.equals(findUser.key)){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 
-    public static void addInList(List<UserModel> lstUser, UserModel findUser){
-        if(!CCCollectionUtil.isEmpty(lstUser) && findUser != null){
-            if(!containUserInList(lstUser, findUser)){
-                lstUser.add(findUser);
-            }
-        }
-    }
+	public static void addInList(List<UserModel> lstUser, UserModel findUser){
+		if(!CCCollectionUtil.isEmpty(lstUser) && findUser != null){
+			if(!containUserInList(lstUser, findUser)){
+				lstUser.add(findUser);
+			}
+		}
+	}
 
-    public static void removeInList(List<UserModel> lstUser, UserModel findUser){
-        if(!CCCollectionUtil.isEmpty(lstUser) && findUser != null){
-            if(containUserInList(lstUser, findUser)){
-                for(UserModel userModel : lstUser){
-                    if(userModel.key.equals(findUser.key)){
-                        findUser = userModel;
-                    }
-                }
-                lstUser.remove(findUser);
-            }
-        }
-    }
+	public static void removeInList(List<UserModel> lstUser, UserModel findUser){
+		if(!CCCollectionUtil.isEmpty(lstUser) && findUser != null){
+			if(containUserInList(lstUser, findUser)){
+				for(UserModel userModel : lstUser){
+					if(userModel.key.equals(findUser.key)){
+						findUser = userModel;
+					}
+				}
+				lstUser.remove(findUser);
+			}
+		}
+	}
 
 	public static int findDeptInList(List<DeptModel> lstDept, DeptModel findDept){
 		int index = 0;
@@ -416,7 +417,7 @@ public class WelfareUtil{
 		return null;
 	}
 
-	//// TODO: 12/22/2016 delete this function
+	// // TODO: 12/22/2016 delete this function
 	public static List<String> getServiceName(Context context){
 		List<String> lstService = new ArrayList<>();
 		lstService.add(context.getString(R.string.wf_thanks_card_service_name));
@@ -465,5 +466,9 @@ public class WelfareUtil{
 
 	public static int convertSp2Px(int sp, Context context){
 		return (int)(context.getResources().getDisplayMetrics().scaledDensity * sp);
+	}
+
+	public static int getColor(Context context, int colorResourceId){
+		return ContextCompat.getColor(context, colorResourceId);
 	}
 }

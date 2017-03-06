@@ -15,7 +15,7 @@
                 style="@style/cs_common_wrap">
 
                 <ImageView
-                    android:id="@+id/img_id_header_left_icon"
+                    android:id="@+id/img_navigator_header_left_btn"
                     style="@style/cs_common_wrap"
                     android:layout_margin="@dimen/margin_10dp"
                     android:src="@drawable/wf_menu_white"/>
@@ -76,7 +76,7 @@
             android:padding="@dimen/margin_10dp">
 
             <ImageView
-                android:id="@+id/img_id_header_right_icon"
+                android:id="@+id/img_navigator_header_right_btn"
                 style="@style/cs_common_wrap"
                 android:src="@drawable/cl_action_add"/>
         </LinearLayout>

@@ -1,6 +1,5 @@
 package trente.asia.calendar.services.calendar;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -18,10 +17,11 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCNumberUtil;
+import asia.chiase.core.util.CCStringUtil;
+import trente.asia.android.activity.ChiaseFragment;
 import trente.asia.android.model.DayModel;
 import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.BuildConfig;
@@ -34,6 +34,7 @@ import trente.asia.calendar.services.calendar.model.CategoryModel;
 import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.view.CalendarDayListAdapter;
+import trente.asia.calendar.services.calendar.view.NavigationHeader;
 import trente.asia.calendar.services.calendar.view.PageSharingHolder;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
@@ -45,7 +46,7 @@ import trente.asia.welfare.adr.models.UserModel;
  *
  * @author TrungND
  */
-public abstract class SchedulesPageFragment extends AbstractClFragment implements CalendarDayListAdapter.OnScheduleClickListener{
+public abstract class SchedulesPageFragment extends AbstractClFragment implements CalendarDayListAdapter.OnScheduleClickListener,NavigationHeader.OnRightBtnClickedListener{
 
 	protected Date							selectedDate;
 	protected List<Date>					dates;
@@ -79,6 +80,7 @@ public abstract class SchedulesPageFragment extends AbstractClFragment implement
 	@Override
 	protected void initView(){
 		super.initView();
+		pageSharingHolder.navigationHeader.setOnHeaderActionsListener(this);
 		lnrCalendarContainer = (LinearLayout)getView().findViewById(R.id.lnr_calendar_container);
 		dates = getAllDate();
 		initCalendarView();
@@ -157,10 +159,10 @@ public abstract class SchedulesPageFragment extends AbstractClFragment implement
 
 		lstCalendarUser = CCJsonUtil.convertToModelList(response.optString("calendarUsers"), UserModel.class);
 		// check is my calendar
-//		if(CCCollectionUtil.isEmpty(lstCalendarUser)){
-//			lstCalendarUser = new ArrayList<>();
-//			lstCalendarUser.add(prefAccUtil.getUserPref());
-//		}
+		// if(CCCollectionUtil.isEmpty(lstCalendarUser)){
+		// lstCalendarUser = new ArrayList<>();
+		// lstCalendarUser.add(prefAccUtil.getUserPref());
+		// }
 		if(changeCalendarUserListener != null){
 			changeCalendarUserListener.onChangeCalendarUserListener(lstCalendarUser);
 		}
@@ -210,5 +212,24 @@ public abstract class SchedulesPageFragment extends AbstractClFragment implement
 
 	protected int getNormalDayColor(){
 		return ContextCompat.getColor(activity, R.color.wf_common_color_text);
+	}
+
+	private void gotoScheduleFormFragment(){
+		ScheduleFormFragment scheduleFormFragment = new ScheduleFormFragment();
+		Date clickedDate = pageSharingHolder.getClickedDate();
+		scheduleFormFragment.setSelectedDate(clickedDate);
+		ChiaseFragment parentFragment = (ChiaseFragment)getParentFragment();
+		parentFragment.gotoFragment(scheduleFormFragment);
+	}
+
+	@Override
+	public void onAddBtnClick(){
+		String selectedCalendarString = prefAccUtil.get(ClConst.SELECTED_CALENDAR_STRING);
+		if(!CCStringUtil.isEmpty(selectedCalendarString)){
+			gotoScheduleFormFragment();
+		}else{
+			alertDialog.setMessage(getString(R.string.cl_common_validate_no_calendar_msg));
+			alertDialog.show();
+		}
 	}
 }

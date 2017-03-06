@@ -21,22 +21,19 @@
         android:id="@+id/scr_calendar_day"
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/margin_10dp">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingLeft="@dimen/margin_16dp"
-            android:paddingRight="@dimen/margin_16dp">
+            android:orientation="vertical">
 
             <LinearLayout
                 android:id="@+id/lnr_fragment_daily_page_all_day"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-
+                <View style="@style/cs_common_divider"/>
             </LinearLayout>
 
             <LinearLayout
@@ -44,7 +41,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-
+                <View style="@style/cs_common_divider"/>
             </LinearLayout>
 
             <LinearLayout
@@ -52,7 +49,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-
+                <View style="@style/cs_common_divider"/>
             </LinearLayout>
 
             <LinearLayout
@@ -60,7 +57,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-
+                <View style="@style/cs_common_divider"/>
             </LinearLayout>
 
         </LinearLayout>

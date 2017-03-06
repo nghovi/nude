@@ -2,51 +2,82 @@ package trente.asia.calendar.services.calendar.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.util.Date;
-import java.util.List;
-
-import asia.chiase.core.util.CCDateUtil;
-import asia.chiase.core.util.CCFormatUtil;
-import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.R;
-import trente.asia.welfare.adr.define.WelfareConst;
+import trente.asia.welfare.adr.view.WfSlideMenuLayout;
 
 /**
  * Created by viet on 2/21/2017.
  */
 
-public class NavigationHeader extends LinearLayout {
+public class NavigationHeader extends LinearLayout{
 
+	public WfSlideMenuLayout	slideMenu;
+	private ImageView			imgNavigation;
+	private ImageView			imgRightBtn;
 
-    public NavigationHeader(Context context) {
-        super(context);
-    }
+	public void setOnHeaderActionsListener(final OnRightBtnClickedListener listener){
+		this.listener = listener;
+		if(imgNavigation == null){
+			imgNavigation = (ImageView)findViewById(R.id.img_navigator_header_left_btn);
+			imgRightBtn = (ImageView)findViewById(R.id.img_navigator_header_right_btn);
+		}
 
-    public NavigationHeader(Context context, AttributeSet attrs) {
-        super(context, attrs);
-    }
+		imgNavigation.setOnClickListener(new OnClickListener() {
 
-    public NavigationHeader(Context context, AttributeSet attrs, int
-            defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-    }
+			@Override
+			public void onClick(View v){
+				if(slideMenu != null){
+					slideMenu.toggleMenu();
+				}
+			}
+		});
 
-    private TextView txtHeaderTitle;
-    private TextView txtHeaderSubtitle;
+		imgRightBtn.setOnClickListener(new OnClickListener() {
 
-    public void updateHeaderTitles(String title, String subTitle) {
-        if (txtHeaderTitle == null) {
-            txtHeaderTitle = (TextView) findViewById(R.id.txt_id_header_title);
-        }
+			@Override
+			public void onClick(View v){
+				listener.onAddBtnClick();
+			}
+		});
+	}
 
-        if (txtHeaderSubtitle == null) {
-            txtHeaderSubtitle = (TextView) findViewById(R.id.txt_id_header_title_sub);
-        }
+	private OnRightBtnClickedListener	listener;
 
-        txtHeaderTitle.setText(title);
-        txtHeaderSubtitle.setText(subTitle);
-    }
+	public interface OnRightBtnClickedListener{
+
+		public void onAddBtnClick();
+	}
+
+	public NavigationHeader(Context context){
+		super(context);
+	}
+
+	public NavigationHeader(Context context, AttributeSet attrs){
+		super(context, attrs);
+	}
+
+	public NavigationHeader(Context context, AttributeSet attrs, int defStyleAttr){
+		super(context, attrs, defStyleAttr);
+	}
+
+	private TextView	txtHeaderTitle;
+	private TextView	txtHeaderSubtitle;
+
+	public void updateHeaderTitles(String title, String subTitle){
+		if(txtHeaderTitle == null){
+			txtHeaderTitle = (TextView)findViewById(R.id.txt_id_header_title);
+		}
+
+		if(txtHeaderSubtitle == null){
+			txtHeaderSubtitle = (TextView)findViewById(R.id.txt_id_header_title_sub);
+		}
+
+		txtHeaderTitle.setText(title);
+		txtHeaderSubtitle.setText(subTitle);
+	}
 }

@@ -63,6 +63,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 	private ClFilterUserListDialog	filterDialog;
 	private ClScheduleRepeatDialog	repeatDialog;
 	private ClDialog				editModeDialog;
+	private Date					selectedDate;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -121,6 +122,12 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 		initListDialog();
 
 		Calendar calendar = Calendar.getInstance();
+		if(selectedDate == null){
+			selectedDate = calendar.getTime();
+		}else{
+			calendar.setTime(selectedDate);
+		}
+
 		Date starDate = new Date();
 		Date endDate = new Date();
 		// int startHour = 0, startMinute = 0;
@@ -353,5 +360,9 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 
 	public void setSchedule(ScheduleModel schedule){
 		this.schedule = schedule;
+	}
+
+	public void setSelectedDate(Date selectedDate){
+		this.selectedDate = selectedDate;
 	}
 }

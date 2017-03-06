@@ -1,5 +1,6 @@
 package trente.asia.calendar.services.calendar.view;
 
+import java.util.Date;
 import java.util.List;
 
 import android.content.Context;
@@ -23,7 +24,12 @@ public class PageSharingHolder{
 	public ClFilterUserListDialog		filterDialog;
 	private Context						mContext;
 	public int							selectedPagePosition;
-	private WeeklyCalendarDayView		clickedDayView;
+
+	public WeeklyCalendarDayView getClickedDayView(){
+		return clickedDayView;
+	}
+
+	private WeeklyCalendarDayView	clickedDayView;
 
 	public PageSharingHolder(NavigationHeader navigationHeader, UserListLinearLayout userListLinearLayout, final View.OnClickListener listener){
 		this.mContext = navigationHeader.getContext();
@@ -62,5 +68,12 @@ public class PageSharingHolder{
 		if(this.clickedDayView != null){
 			this.clickedDayView.setSelected(false);
 		}
+	}
+
+	public Date getClickedDate(){
+		if(clickedDayView != null){
+			return clickedDayView.getDate();
+		}
+		return null;
 	}
 }

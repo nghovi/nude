@@ -11,12 +11,10 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCFormatUtil;
-import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
@@ -45,7 +43,6 @@ public abstract class PageContainerFragment extends AbstractClFragment{
 	protected final int						INITIAL_POSITION			= Integer.MAX_VALUE / 2;
 	protected final Date					TODAY						= Calendar.getInstance().getTime();
 
-	protected ImageView						mImgLeftHeader;
 	protected NavigationHeader				navigationHeader;
 	protected UserListLinearLayout			lnrUserList;
 	private PageSharingHolder				holder;
@@ -102,7 +99,8 @@ public abstract class PageContainerFragment extends AbstractClFragment{
 		super.initView();
 		lnrUserList = (UserListLinearLayout)activity.findViewById(R.id.lnr_fragment_pager_container_user_list);
 		navigationHeader = (NavigationHeader)getView().findViewById(R.id.lnr_navigation_header);
-		mImgLeftHeader = (ImageView)getView().findViewById(R.id.img_id_header_left_icon);
+		mSlideMenuLayout = (WfSlideMenuLayout)getView().findViewById(R.id.drawer_layout);
+		navigationHeader.slideMenu = mSlideMenuLayout;
 		mViewPager = (ViewPager)getView().findViewById(R.id.view_id_pager);
 
 		mPagerAdapter = initPagerAdapter();
@@ -132,12 +130,6 @@ public abstract class PageContainerFragment extends AbstractClFragment{
 			}
 		});
 
-		ImageView imgRightIcon = (ImageView)getView().findViewById(R.id.img_id_header_right_icon);
-		imgRightIcon.setVisibility(View.VISIBLE);
-		imgRightIcon.setOnClickListener(this);
-
-		mImgLeftHeader.setOnClickListener(this);
-		mSlideMenuLayout = (WfSlideMenuLayout)getView().findViewById(R.id.drawer_layout);
 		FragmentManager fragmentManager = getFragmentManager();
 		FragmentTransaction transaction = fragmentManager.beginTransaction();
 		CalendarListFragment calendarListFragment = new CalendarListFragment();
@@ -161,30 +153,9 @@ public abstract class PageContainerFragment extends AbstractClFragment{
 	@Override
 	public void onClick(View v){
 		switch(v.getId()){
-		case R.id.img_id_header_left_icon:
-			mSlideMenuLayout.toggleMenu();
-			break;
-		case R.id.img_id_header_right_icon:
-			String selectedCalendarString = prefAccUtil.get(ClConst.SELECTED_CALENDAR_STRING);
-			if(!CCStringUtil.isEmpty(selectedCalendarString)){
-				gotoScheduleFormFragment();
-			}else{
-				alertDialog.setMessage(getString(R.string.cl_common_validate_no_calendar_msg));
-				alertDialog.show();
-			}
-			break;
-		case R.id.img_id_done:
-			SchedulesPageFragment schedulesPageFragment = (SchedulesPageFragment)mPagerAdapter.getItem(holder.selectedPagePosition);
-			schedulesPageFragment.loadScheduleList();
-			break;
 		default:
 			break;
 		}
-	}
-
-	private void gotoScheduleFormFragment(){
-		ScheduleFormFragment fragment = new ScheduleFormFragment();
-		gotoFragment(fragment);
 	}
 
 	@Override
@@ -193,4 +164,5 @@ public abstract class PageContainerFragment extends AbstractClFragment{
 	}
 
 	abstract SchedulesPagerAdapter initPagerAdapter();
+
 }
