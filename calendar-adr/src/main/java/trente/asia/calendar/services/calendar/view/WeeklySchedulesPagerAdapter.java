@@ -2,7 +2,6 @@ package trente.asia.calendar.services.calendar.view;
 
 import java.util.Date;
 
-import android.content.Context;
 import android.support.v4.app.FragmentManager;
 
 import trente.asia.android.util.CsDateUtil;
@@ -18,8 +17,7 @@ import trente.asia.calendar.services.calendar.listener.OnChangeCalendarUserListe
 public class WeeklySchedulesPagerAdapter extends SchedulesPagerAdapter{
 
 	public WeeklySchedulesPagerAdapter(FragmentManager fm, OnChangeCalendarUserListener listener){
-		super(fm);
-        this.listener = listener;
+		super(fm, listener);
 	}
 
 	@Override

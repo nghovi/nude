@@ -31,6 +31,11 @@ public abstract class SchedulesPagerAdapter extends FragmentPagerAdapter{
 		super(fm);
 	}
 
+	public SchedulesPagerAdapter(FragmentManager fm, OnChangeCalendarUserListener listener){
+		super(fm);
+		this.listener = listener;
+	}
+
 	@Override
 	public Fragment getItem(int position){
 		SchedulesPageFragment fragment = pagesMap.get(position);
