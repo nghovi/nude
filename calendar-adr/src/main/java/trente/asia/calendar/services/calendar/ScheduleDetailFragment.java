@@ -62,10 +62,13 @@ public class ScheduleDetailFragment extends AbstractScheduleFragment{
 			getView().findViewById(R.id.lnr_id_schedule_url).setOnClickListener(this);
 		}
 
-		ImageView imgRightIcon = (ImageView)getView().findViewById(R.id.img_id_header_right_icon);
-		imgRightIcon.setImageResource(R.drawable.cl_action_edit);
-		imgRightIcon.setVisibility(View.VISIBLE);
-		imgRightIcon.setOnClickListener(this);
+		// check user is owner
+		if(myself.key.equals(schedule.owner.key)){
+			ImageView imgRightIcon = (ImageView)getView().findViewById(R.id.img_id_header_right_icon);
+			imgRightIcon.setImageResource(R.drawable.cl_action_edit);
+			imgRightIcon.setVisibility(View.VISIBLE);
+			imgRightIcon.setOnClickListener(this);
+		}
 	}
 
 	@Override
