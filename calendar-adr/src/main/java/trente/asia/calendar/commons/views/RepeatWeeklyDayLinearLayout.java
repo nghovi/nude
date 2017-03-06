@@ -1,8 +1,8 @@
 package trente.asia.calendar.commons.views;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import android.content.Context;
@@ -112,22 +112,24 @@ public class RepeatWeeklyDayLinearLayout extends LinearLayout{
 		// set start date value
 		Calendar startCalendar = CCDateUtil.makeCalendar(WelfareFormatUtil.makeDate(this.startDate));
 		repeatData = String.valueOf(startCalendar.get(Calendar.DAY_OF_WEEK));
-        initDefaultValue(this.startDate);
+        initDefaultValue(this.repeatData);
 		return CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_13, WelfareFormatUtil.makeDate(this.startDate));
 	}
 
-	public void initDefaultValue(String startDate){
-		this.startDate = startDate;
-		Date activeDate = WelfareFormatUtil.makeDate(startDate);
-		Calendar activeCalendar = CCDateUtil.makeCalendar(activeDate);
+	public void initDefaultValue(String repeatData){
+		List<String> lstRepeatData = Arrays.asList(repeatData.split(","));
 		for(RepeatDayModel repeatDayModel : lstRepeatDay){
 			Calendar repeatCalendar = CCDateUtil.makeCalendar(repeatDayModel.dayModel.date);
-			if(activeCalendar.get(Calendar.DAY_OF_WEEK) == repeatCalendar.get(Calendar.DAY_OF_WEEK)){
+			if(lstRepeatData.contains(String.valueOf(repeatCalendar.get(Calendar.DAY_OF_WEEK)))){
 				repeatDayModel.txtDay.setChecked(true);
 			}else{
 				repeatDayModel.txtDay.setChecked(false);
 			}
 		}
+	}
+
+	public void setStartDate(String startDate){
+		this.startDate = startDate;
 	}
 
 	public String getRepeatData(){

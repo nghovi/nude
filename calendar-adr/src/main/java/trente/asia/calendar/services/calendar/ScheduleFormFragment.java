@@ -134,11 +134,14 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 			endDate = calendar.getTime();
 		}
 
-		if(CCStringUtil.isEmpty(schedule.key)){
-			repeatDialog.setStartDate(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, starDate));
+        repeatDialog.setStartDate(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, starDate));
+		if(ClRepeatUtil.isRepeat(schedule.repeatType)){
+			// set repeat dialog values
+			ScheduleRepeatModel repeatModel = new ScheduleRepeatModel(schedule);
+			repeatDialog.setRepeatModel(repeatModel);
 		}else{
-
-		}
+            repeatDialog.initDefaultValue();
+        }
 
 		WelfareFormatUtil.setChiaseTextView(txtStartDate, WelfareFormatUtil.formatDate(starDate));
 		WelfareFormatUtil.setChiaseTextView(txtStartTime, CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_9, starDate));
@@ -154,6 +157,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 				txtStartDate.setText(startDateStr);
 				txtStartDate.setValue(startDateStr);
 				repeatDialog.setStartDate(startDateStr);
+                repeatDialog.initDefaultValue();
 			}
 		}, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
 

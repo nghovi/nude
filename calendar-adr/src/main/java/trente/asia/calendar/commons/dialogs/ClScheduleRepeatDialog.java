@@ -2,6 +2,7 @@ package trente.asia.calendar.commons.dialogs;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import android.app.DatePickerDialog;
@@ -15,8 +16,10 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCStringUtil;
+import trente.asia.android.util.CsUtil;
 import trente.asia.android.view.ChiaseDialog;
 import trente.asia.android.view.adapter.ChiaseSpinnerAdapter;
 import trente.asia.android.view.model.ChiaseSpinnerModel;
@@ -26,6 +29,8 @@ import trente.asia.calendar.commons.model.ScheduleRepeatModel;
 import trente.asia.calendar.commons.utils.ClRepeatUtil;
 import trente.asia.calendar.commons.views.RepeatWeeklyDayLinearLayout;
 import trente.asia.welfare.adr.define.WelfareConst;
+import trente.asia.welfare.adr.utils.WelfareFormatUtil;
+import trente.asia.welfare.adr.utils.WelfareUtil;
 
 /**
  * ClScheduleRepeatDialog
@@ -52,6 +57,8 @@ public class ClScheduleRepeatDialog extends ChiaseDialog{
 
 	private ScheduleRepeatModel			repeatModel		= new ScheduleRepeatModel();
 	private String						startDate;
+	private List<ChiaseSpinnerModel>	lstRepeatType;
+	private List<ChiaseSpinnerModel>	lstRepeatLimit;
 
 	public ClScheduleRepeatDialog(Context context, TextView txtRepeat){
 		super(context);
@@ -86,12 +93,12 @@ public class ClScheduleRepeatDialog extends ChiaseDialog{
 			}
 		}, calendarLimit.get(Calendar.YEAR), calendarLimit.get(Calendar.MONTH), calendarLimit.get(Calendar.DAY_OF_MONTH));
 
-		List<ChiaseSpinnerModel> lstRepeatType = new ArrayList<>();
+		lstRepeatType = new ArrayList<>();
 		lstRepeatType.add(new ChiaseSpinnerModel(ClConst.SCHEDULE_REPEAT_TYPE_WEEKLY, mContext.getString(R.string.cl_schedule_repeat_type_weekly)));
 		lstRepeatType.add(new ChiaseSpinnerModel(ClConst.SCHEDULE_REPEAT_TYPE_MONTHLY, mContext.getString(R.string.cl_schedule_repeat_type_monthly)));
 		lstRepeatType.add(new ChiaseSpinnerModel(ClConst.SCHEDULE_REPEAT_TYPE_YEARLY, mContext.getString(R.string.cl_schedule_repeat_type_yearly)));
 
-		List<ChiaseSpinnerModel> lstRepeatLimit = new ArrayList<>();
+		lstRepeatLimit = new ArrayList<>();
 		lstRepeatLimit.add(new ChiaseSpinnerModel(ClConst.SCHEDULE_REPEAT_LIMIT_FOREVER, mContext.getString(R.string.cl_schedule_repeat_limit_forever)));
 		lstRepeatLimit.add(new ChiaseSpinnerModel(ClConst.SCHEDULE_REPEAT_LIMIT_UNTIL, mContext.getString(R.string.cl_schedule_repeat_limit_until)));
 		lstRepeatLimit.add(new ChiaseSpinnerModel(ClConst.SCHEDULE_REPEAT_LIMIT_AFTER, mContext.getString(R.string.cl_schedule_repeat_limit_after)));
@@ -167,12 +174,14 @@ public class ClScheduleRepeatDialog extends ChiaseDialog{
 		}
 	}
 
-	private void initDefaultValue(){
-		if(ClRepeatUtil.isRepeat(repeatModel.repeatType)){
-
+	public void initDefaultValue(){
+		if(ClRepeatUtil.isRepeat(repeatModel.repeatType) && ClConst.SCHEDULE_REPEAT_TYPE_WEEKLY.equals(repeatModel.repeatType)){
+            lnrRepeatWeeklyDay.initDefaultValue(repeatModel.repeatData);
 		}else{
 			if(!CCStringUtil.isEmpty(startDate)){
-				lnrRepeatWeeklyDay.initDefaultValue(startDate);
+                Calendar startCalendar = CCDateUtil.makeCalendar(WelfareFormatUtil.makeDate(startDate));
+                String repeatData = String.valueOf(startCalendar.get(Calendar.DAY_OF_WEEK));
+				lnrRepeatWeeklyDay.initDefaultValue(repeatData);
 			}
 		}
 	}
@@ -214,7 +223,22 @@ public class ClScheduleRepeatDialog extends ChiaseDialog{
 
 	public void setStartDate(String startDate){
 		this.startDate = startDate;
-		this.initDefaultValue();
+//		this.initDefaultValue();
+	}
+
+	public void setRepeatModel(ScheduleRepeatModel repeatModel){
+		this.repeatModel = repeatModel;
+		this.spnRepeatType.setSelection(CsUtil.findPosition4Spinner(lstRepeatType, repeatModel.repeatType));
+        this.initDefaultValue();
+
+		this.spnRepeatLimit.setSelection(CsUtil.findPosition4Spinner(lstRepeatLimit, repeatModel.repeatLimitType));
+        if(ClConst.SCHEDULE_REPEAT_LIMIT_FOREVER.equals(repeatModel.repeatLimitType)){
+        }else if(ClConst.SCHEDULE_REPEAT_LIMIT_UNTIL.equals(repeatModel.repeatLimitType)){
+            Date repeatEndDate = WelfareUtil.makeDate(repeatModel.repeatEnd);
+            txtLimitUtil.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, repeatEndDate));
+        }else{
+            edtLimitTimes.setText(repeatModel.repeatInterval);
+        }
 	}
 
 	public ScheduleRepeatModel getRepeatModel(){
