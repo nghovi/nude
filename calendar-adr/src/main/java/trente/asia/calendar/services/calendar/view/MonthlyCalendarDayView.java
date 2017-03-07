@@ -102,7 +102,7 @@ public class MonthlyCalendarDayView extends LinearLayout{
         lstSchedule.add(scheduleModel);
 		TextView txtSchedule = new TextView(mContext);
 		txtSchedule.setMaxLines(1);
-		if(CCBooleanUtil.checkBoolean(scheduleModel.isHoliday)){
+		if(ClConst.SCHEDULE_TYPE_HOLIDAY.equals(scheduleModel.scheduleType)){
 			setLayoutHoliday();
 		}
 
@@ -151,7 +151,7 @@ public class MonthlyCalendarDayView extends LinearLayout{
 	public void addPeriod(ScheduleModel scheduleModel){
 		numberOfPeriod++;
 		lstSchedule.add(scheduleModel);
-		if(CCBooleanUtil.checkBoolean(scheduleModel.isHoliday)){
+		if(ClConst.SCHEDULE_TYPE_HOLIDAY.equals(scheduleModel.scheduleType)){
 			setLayoutHoliday();
 		}
 	}

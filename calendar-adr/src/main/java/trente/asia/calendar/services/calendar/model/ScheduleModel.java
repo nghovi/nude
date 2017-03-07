@@ -1,11 +1,14 @@
 package trente.asia.calendar.services.calendar.model;
 
+import java.util.Calendar;
 import java.util.List;
 
-import asia.chiase.core.util.CCBooleanUtil;
+import asia.chiase.core.util.CCDateUtil;
+import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.utils.ClUtil;
+import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 import trente.asia.welfare.adr.utils.WelfareUtil;
@@ -39,7 +42,7 @@ public class ScheduleModel{
 	public Boolean			isAllDay;
 	public Boolean			isRepeat;
 	public List<UserModel>	scheduleJoinUsers;
-	public Boolean			isHoliday;
+	// public Boolean isHoliday;
 
 	public String			repeatType;
 	public String			repeatLimitType;
@@ -60,9 +63,20 @@ public class ScheduleModel{
 		this.endDate = holidayModel.endDate;
 		this.isAllDay = true;
 		// pink color
-//		this.scheduleColor = "D22DB6";
-        this.scheduleType = ClConst.SCHEDULE_TYPE_HOLIDAY;
-		this.isHoliday = true;
+		// this.scheduleColor = "D22DB6";
+		this.scheduleType = ClConst.SCHEDULE_TYPE_HOLIDAY;
+		// this.isHoliday = true;
+	}
+
+	public ScheduleModel(UserModel userModel){
+		this.scheduleName = userModel.userName;
+		Calendar calendar = Calendar.getInstance();
+		Calendar birthdayCalendar = CCDateUtil.makeCalendar(WelfareUtil.makeDate(userModel.dateBirth));
+		Calendar scheduleCalendar = CCDateUtil.makeCalendar(calendar.get(Calendar.YEAR), birthdayCalendar.get(Calendar.MONTH) + 1, birthdayCalendar.get(Calendar.DAY_OF_MONTH));
+		this.startDate = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_1, scheduleCalendar.getTime());
+		this.endDate = this.startDate;
+		this.isAllDay = true;
+		this.scheduleType = ClConst.SCHEDULE_TYPE_BIRTHDAY;
 	}
 
 	public boolean isPeriodSchedule(){
@@ -80,9 +94,12 @@ public class ScheduleModel{
 			CategoryModel categoryModel = ClUtil.findCategory4Id(lstCategory, this.categoryId);
 			return WelfareFormatUtil.formatColor(categoryModel.categoryColor);
 		}
-		if(CCBooleanUtil.checkBoolean(isHoliday)){
+		if(ClConst.SCHEDULE_TYPE_HOLIDAY.equals(scheduleType)){
 			return WelfareFormatUtil.formatColor(ClConst.SCHEDULE_COLOR_HOLIDAY);
+		}else if(ClConst.SCHEDULE_TYPE_BIRTHDAY.equals(scheduleType)){
+			return WelfareFormatUtil.formatColor(ClConst.SCHEDULE_COLOR_BIRTHDAY);
 		}
+
 		return WelfareFormatUtil.formatColor(ClConst.SCHEDULE_COLOR_NORMAL);
 	}
 }

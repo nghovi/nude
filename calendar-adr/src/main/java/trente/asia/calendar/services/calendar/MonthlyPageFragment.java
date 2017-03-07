@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import asia.chiase.core.define.CCConst;
+import asia.chiase.core.util.CCBooleanUtil;
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
@@ -34,6 +35,7 @@ import trente.asia.calendar.services.calendar.view.MonthlyCalendarDayView;
 import trente.asia.calendar.services.calendar.view.MonthlyCalendarRowView;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
+import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 import trente.asia.welfare.adr.utils.WelfareUtil;
 
@@ -48,7 +50,7 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 	private List<MonthlyCalendarRowView>	lstCalendarRow				= new ArrayList<>();
 
 	private ClDailySummaryDialog			dialogDailySummary;
-	private List<ScheduleModel>				lstScheduleWithoutHoliday	= new ArrayList<>();
+//	private List<ScheduleModel>				lstScheduleWithoutHoliday	= new ArrayList<>();
 
 	public class ScheduleComparator implements Comparator<ScheduleModel>{
 
@@ -65,6 +67,12 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 
 			if(!diff1 && diff2) return -1;
 			if(diff1 && !diff2) return 1;
+
+			boolean isAll1 = CCBooleanUtil.checkBoolean(schedule1.isAllDay);
+			boolean isAll2 = CCBooleanUtil.checkBoolean(schedule2.isAllDay);
+
+			if(isAll1 && !isAll2) return -1;
+			if(!isAll1 && isAll2) return 1;
 			return 0;
 		}
 	}
@@ -134,15 +142,23 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 		if(lstSchedule == null){
 			lstSchedule = new ArrayList<>();
 		}
-		lstScheduleWithoutHoliday.addAll(lstSchedule);
+//		lstScheduleWithoutHoliday.addAll(lstSchedule);
 
-		// add holiday, // TODO: 3/7/2017 shouldn't create new ScheduleModel object.
+		// add holiday,
 		if(!CCCollectionUtil.isEmpty(lstHoliday)){
 			for(HolidayModel holidayModel : lstHoliday){
 				ScheduleModel scheduleModel = new ScheduleModel(holidayModel);
 				lstSchedule.add(scheduleModel);
 			}
 		}
+
+        // add birthday
+        if(!CCCollectionUtil.isEmpty(lstBirthdayUser)){
+            for(UserModel birthday : lstBirthdayUser){
+                ScheduleModel scheduleModel = new ScheduleModel(birthday);
+                lstSchedule.add(scheduleModel);
+            }
+        }
 
 		if(!CCCollectionUtil.isEmpty(lstSchedule)){
 			Collections.sort(lstSchedule, new ScheduleComparator());
@@ -189,7 +205,7 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 		for(MonthlyCalendarRowView rowView : lstCalendarRow){
 			rowView.removeAllData();
 		}
-		lstScheduleWithoutHoliday.clear();
+//		lstScheduleWithoutHoliday.clear();
 	}
 
 	@Override

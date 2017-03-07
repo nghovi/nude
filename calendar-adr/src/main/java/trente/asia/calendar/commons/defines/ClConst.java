@@ -40,6 +40,8 @@ public class ClConst{
 
 	public static final String	SCHEDULE_COLOR_NORMAL				= "444444";
 	public static final String	SCHEDULE_COLOR_HOLIDAY				= "D22DB6";
+    public static final String	SCHEDULE_COLOR_OFFER				= "359CF3";
+    public static final String	SCHEDULE_COLOR_BIRTHDAY				= "24C772";
 
 	public static final String	ACTION_SCHEDULE_DELETE				= "ACTION_SCHEDULE_DELETE";
 	public static final String	ACTION_SCHEDULE_UPDATE				= "ACTION_SCHEDULE_UPDATE";
