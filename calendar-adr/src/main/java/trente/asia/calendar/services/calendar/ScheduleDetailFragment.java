@@ -33,8 +33,8 @@ public class ScheduleDetailFragment extends AbstractScheduleFragment{
 		}else{
 			String isDelete = CCStringUtil.toString(((WelfareActivity)activity).dataMap.get(ClConst.ACTION_SCHEDULE_DELETE));
 			if(CCConst.YES.equals(isDelete)){
-				((WelfareActivity)activity).dataMap.clear();
-				((WelfareActivity)activity).isInitData = true;
+//				((WelfareActivity)activity).dataMap.clear();
+//				((WelfareActivity)activity).isInitData = true;
 				getFragmentManager().popBackStack();
 			}
 		}

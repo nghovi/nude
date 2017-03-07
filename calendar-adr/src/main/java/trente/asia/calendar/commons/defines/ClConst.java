@@ -34,8 +34,6 @@ public class ClConst{
 
 	public static final int		TEXT_VIEW_HEIGHT					= (int)(Resources.getSystem().getDisplayMetrics().density * 15);
 
-	public static final String	IS_UPDATE_SCHEDULE					= "IS_UPDATE_SCHEDULE";
-
 	public static final String	SCHEDULE_TYPE_HOLIDAY				= "H";
 	public static final String	SCHEDULE_TYPE_WORK_OFFER			= "O";
 	public static final String	SCHEDULE_TYPE_BIRTHDAY				= "B";
@@ -44,4 +42,5 @@ public class ClConst{
 	public static final String	SCHEDULE_COLOR_HOLIDAY				= "D22DB6";
 
 	public static final String	ACTION_SCHEDULE_DELETE				= "ACTION_SCHEDULE_DELETE";
+	public static final String	ACTION_SCHEDULE_UPDATE				= "ACTION_SCHEDULE_UPDATE";
 }

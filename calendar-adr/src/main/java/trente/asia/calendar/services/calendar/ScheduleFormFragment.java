@@ -331,7 +331,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 				editModeDialog.updateScheduleEditModeTitle(getString(R.string.cl_schedule_delete_mode_title));
 				editModeDialog.show();
 			}else{
-				updateSchedule(null);
+				deleteSchedule(null);
 			}
 			break;
 		default:
@@ -401,7 +401,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 
 	private void onScheduleUpdateSuccess(){
 		((ChiaseActivity)activity).isInitData = true;
-		((WelfareActivity)activity).dataMap.put(ClConst.IS_UPDATE_SCHEDULE, true);
+		((WelfareActivity)activity).dataMap.put(ClConst.ACTION_SCHEDULE_UPDATE, CCConst.YES);
 		onClickBackBtn();
 	}
 

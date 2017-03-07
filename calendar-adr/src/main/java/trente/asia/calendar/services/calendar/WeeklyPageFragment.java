@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCBooleanUtil;
 import asia.chiase.core.util.CCDateUtil;
 import trente.asia.android.activity.ChiaseActivity;
@@ -43,10 +44,12 @@ public class WeeklyPageFragment extends SchedulesPageListViewFragment implements
 		if(mRootView == null){
 			mRootView = inflater.inflate(R.layout.fragment_weekly_page, container, false);
 		}else{
-			if(CCBooleanUtil.checkBoolean(((WelfareActivity)activity).dataMap.get(ClConst.IS_UPDATE_SCHEDULE))){
-				((WelfareActivity)activity).dataMap.clear();
-				((ChiaseActivity)activity).isInitData = true;
-			}
+            boolean isUpdate = CCConst.YES.equals(((WelfareActivity)activity).dataMap.get(ClConst.ACTION_SCHEDULE_UPDATE));
+            boolean isDelete = CCConst.YES.equals(((WelfareActivity)activity).dataMap.get(ClConst.ACTION_SCHEDULE_DELETE));
+            if(isUpdate || isDelete){
+                ((WelfareActivity)activity).dataMap.clear();
+                ((ChiaseActivity)activity).isInitData = true;
+            }
 		}
 		return mRootView;
 	}
