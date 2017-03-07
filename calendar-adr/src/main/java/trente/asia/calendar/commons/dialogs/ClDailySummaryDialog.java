@@ -11,7 +11,9 @@ import android.widget.ImageView;
 
 import trente.asia.android.view.ChiaseDialog;
 import trente.asia.calendar.R;
+import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
+import trente.asia.calendar.services.calendar.model.WorkOffer;
 import trente.asia.calendar.services.calendar.view.CalendarDayListAdapter;
 import trente.asia.calendar.services.calendar.view.DailyScheduleList;
 import trente.asia.calendar.services.calendar.view.NavigationHeader;
@@ -54,13 +56,13 @@ public class ClDailySummaryDialog extends ChiaseDialog{
 				listener.onClickScheduleItem(schedule);
 			}
 		});
-		getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
-				WindowManager.LayoutParams.MATCH_PARENT);
+		getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+		this.setCanceledOnTouchOutside(true);
 	}
 
-	public void show(final Date selectedDate, final List<ScheduleModel> scheduleModels, final List<UserModel> birthdayUsers){
+	public void show(final Date selectedDate, final List<ScheduleModel> scheduleModels, final List<UserModel> birthdayUsers, List<HolidayModel> holidayModels, List<WorkOffer> workOffers){
 		this.selectedDate = selectedDate;
-		dailyScheduleListView.updateFor(selectedDate, scheduleModels, null, null, birthdayUsers);
+		dailyScheduleListView.updateFor(selectedDate, scheduleModels, holidayModels, workOffers, birthdayUsers);
 		super.show();
 	}
 }

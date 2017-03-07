@@ -22,5 +22,4 @@ public class WeeklyCalendarDayView extends CalendarDayView{
 	public WeeklyCalendarDayView(Context context, AttributeSet attrs){
 		super(context, attrs);
 	}
-
 }

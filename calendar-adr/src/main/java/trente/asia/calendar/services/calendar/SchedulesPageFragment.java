@@ -34,6 +34,7 @@ import trente.asia.calendar.services.calendar.model.CalendarModel;
 import trente.asia.calendar.services.calendar.model.CategoryModel;
 import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
+import trente.asia.calendar.services.calendar.model.WorkOffer;
 import trente.asia.calendar.services.calendar.view.CalendarDayListAdapter;
 import trente.asia.calendar.services.calendar.view.NavigationHeader;
 import trente.asia.calendar.services.calendar.view.PageSharingHolder;
@@ -61,7 +62,9 @@ public abstract class SchedulesPageFragment extends AbstractClFragment implement
 	private OnChangeCalendarUserListener	changeCalendarUserListener;
 	protected List<CalendarModel>			lstCalendar;
 	protected List<UserModel>				lstCalendarUser;
-	protected List<CategoryModel>			lstCategories;
+	protected List<CategoryModel>			lstCategory;
+	protected List<UserModel>				lstBirthdayUser;
+	protected List<WorkOffer>				lstWorkOffer;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState){
@@ -156,8 +159,9 @@ public abstract class SchedulesPageFragment extends AbstractClFragment implement
 		lstSchedule = CCJsonUtil.convertToModelList(response.optString("schedules"), ScheduleModel.class);
 		lstCalendar = CCJsonUtil.convertToModelList(response.optString("calendars"), CalendarModel.class);
 		lstHoliday = CCJsonUtil.convertToModelList(response.optString("holidayList"), HolidayModel.class);
-		lstCategories = CCJsonUtil.convertToModelList(response.optString("categories"), CategoryModel.class);
-
+		lstCategory = CCJsonUtil.convertToModelList(response.optString("categories"), CategoryModel.class);
+		lstWorkOffer = CCJsonUtil.convertToModelList(response.optString("workOfferList"), WorkOffer.class);
+		lstBirthdayUser = CCJsonUtil.convertToModelList(response.optString("birthdayList"), UserModel.class);
 		lstCalendarUser = CCJsonUtil.convertToModelList(response.optString("calendarUsers"), UserModel.class);
 		// check is my calendar
 		// if(CCCollectionUtil.isEmpty(lstCalendarUser)){
@@ -168,7 +172,7 @@ public abstract class SchedulesPageFragment extends AbstractClFragment implement
 			changeCalendarUserListener.onChangeCalendarUserListener(lstCalendarUser);
 		}
 		separateDateTime(lstSchedule);
-		updateSchedules(lstSchedule, lstCategories);
+		updateSchedules(lstSchedule, lstCategory);
 	}
 
 	public void updateSchedules(List<ScheduleModel> schedules, List<CategoryModel> categories){

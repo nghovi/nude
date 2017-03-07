@@ -50,12 +50,16 @@ public abstract class SchedulesPageListViewFragment extends SchedulesPageFragmen
 				lstHeaderRow.add(rowView);
 			}
 
-			CalendarDayView dayView = new CalendarDayView(activity);
+			CalendarDayView dayView = getCalendayDayView();
 			boolean isInOtherMonth = CsDateUtil.isDiffMonth(date, selectedDate);
 			dayView.initLayout(date, isInOtherMonth);
 			rowView.lnrRowContent.addView(dayView);
 			calendarDayViews.add(dayView);
 		}
+	}
+
+	protected CalendarDayView getCalendayDayView() {
+		return new CalendarDayView(activity);
 	}
 
 	abstract public void updateList(String dayStr);

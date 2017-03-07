@@ -69,5 +69,6 @@
     <string name="daily_page_morning">Morning</string>
     <string name="daily_page_afternoon">Afternoon</string>
     <string name="happy_birthday">Happy Birthday!</string>
+    <string name="birthday_title">Birthdays</string>
 
 </resources>

@@ -94,6 +94,8 @@ public class DailyScheduleList extends LinearLayout{
 		lnrBirthdays.removeAllViews();
 		if(!CCCollectionUtil.isEmpty(userModels)){
 			lnrBirthdays.setVisibility(View.VISIBLE);
+			TextView header = buildTextView(getContext().getString(R.string.birthday_title));
+			lnrBirthdays.addView(header);
 			for(UserModel user : userModels){
 				LinearLayout birthdayItem = buildBirthdayItem(user);
 				lnrBirthdays.addView(birthdayItem);
@@ -125,16 +127,21 @@ public class DailyScheduleList extends LinearLayout{
 
 	private void buildSchedulesList(LinearLayout lnrParent, String title, List<ScheduleModel> scheduleModels){
 		lnrParent.removeAllViews();
-		TextView textView = new TextView(getContext());
-
-		textView.setPadding(MARGIN_LEFT_RIGHT, MARGIN_TEXT_TOP_BOTTM, MARGIN_LEFT_RIGHT, MARGIN_TEXT_TOP_BOTTM);
-		textView.setText(title);
-		textView.setBackgroundColor(WelfareUtil.getColor(getContext(), R.color.cl_title_bg));
+		TextView textView = buildTextView(title);
 		lnrParent.addView(textView);
 
 		for(ScheduleModel scheduleModel : scheduleModels){
 			buildScheduleItem(lnrParent, scheduleModel);
 		}
+	}
+
+	private TextView buildTextView(String title){
+		TextView textView = new TextView(getContext());
+
+		textView.setPadding(MARGIN_LEFT_RIGHT, MARGIN_TEXT_TOP_BOTTM, MARGIN_LEFT_RIGHT, MARGIN_TEXT_TOP_BOTTM);
+		textView.setText(title);
+		textView.setBackgroundColor(WelfareUtil.getColor(getContext(), R.color.cl_title_bg));
+		return textView;
 	}
 
 	private void buildScheduleItem(LinearLayout lnrParent, ScheduleModel scheduleModel){

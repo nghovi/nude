@@ -3,16 +3,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="center_horizontal"
+    android:layout_gravity="center_horizontal|center_vertical"
     android:layout_marginBottom="@dimen/margin_50dp"
     android:layout_marginLeft="@dimen/margin_20dp"
     android:layout_marginRight="@dimen/margin_20dp"
     android:layout_marginTop="@dimen/margin_50dp"
     android:background="@drawable/shape_normal_transparent"
     android:gravity="center_horizontal"
-    android:orientation="vertical"
-    android:windowIsFloating="true"
-    android:windowSoftInputMode="stateUnspecified|adjustPan">
+    android:orientation="vertical">
 
     <LinearLayout
         style="@style/cs_common_match_wrap"

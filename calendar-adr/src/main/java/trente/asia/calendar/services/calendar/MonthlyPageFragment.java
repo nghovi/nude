@@ -27,8 +27,7 @@ import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.dialogs.ClDailySummaryDialog;
 import trente.asia.calendar.commons.utils.ClRepeatUtil;
 import trente.asia.calendar.commons.utils.ClUtil;
-import trente.asia.calendar.services.calendar.listener
-		.DailyScheduleClickListener;
+import trente.asia.calendar.services.calendar.listener.DailyScheduleClickListener;
 import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.view.MonthlyCalendarDayView;
@@ -151,7 +150,7 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 						String minDay = rowView.lstCalendarDay.get(0).day;
 						String maxDay = rowView.lstCalendarDay.get(rowView.lstCalendarDay.size() - 1).day;
 						if(ClUtil.belongPeriod(WelfareUtil.makeDate(model.startDate), minDay, maxDay) || ClUtil.belongPeriod(WelfareUtil.makeDate(model.endDate), minDay, maxDay)){
-							rowView.addSchedule(model, lstCategories);
+							rowView.addSchedule(model, lstCategory);
 						}
 					}
 				}else{
@@ -164,7 +163,7 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 
 					if(!CCCollectionUtil.isEmpty(lstActiveCalendarDay)){
 						for(MonthlyCalendarDayView calendarDayView : lstActiveCalendarDay){
-							calendarDayView.addSchedule(model, lstCategories);
+							calendarDayView.addSchedule(model, lstCategory);
 						}
 					}
 				}
@@ -194,7 +193,7 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 	@Override
 	public void onDailyScheduleClickListener(String day){
 		Date selectedDate = CCDateUtil.makeDateCustom(day, WelfareConst.WL_DATE_TIME_7);
-		dialogDailySummary.show(selectedDate, lstSchedule, null);
+		dialogDailySummary.show(selectedDate, lstSchedule, lstBirthdayUser, lstHoliday, lstWorkOffer);
 	}
 
 	@Override
