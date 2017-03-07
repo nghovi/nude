@@ -52,7 +52,7 @@
                     style="@style/cs_common_wrap"
                     android:layout_marginLeft="@dimen/margin_10dp"
                     android:scaleType="fitXY"
-                    android:src="@drawable/ol_icon_duplicate"
+                    android:src="@drawable/ol_icon_repeat"
                     android:visibility="gone"
                     custom:sriv_oval="true"/>
             </LinearLayout>

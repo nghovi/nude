@@ -45,7 +45,8 @@
 
                 <ImageView
                     style="@style/cs_common_wrap"
-                    android:src="@drawable/ol_icon_duplicate"/>
+                    android:src="@drawable/ol_icon_duplicate"
+                    android:visibility="gone"/>
 
                 <ImageView
                     style="@style/cs_common_wrap"
