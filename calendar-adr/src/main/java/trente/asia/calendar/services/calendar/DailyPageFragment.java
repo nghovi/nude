@@ -66,7 +66,7 @@ public class DailyPageFragment extends SchedulesPageListViewFragment implements 
 
 	@Override
 	protected void updateObservableScrollableView(){
-		dailyScheduleList.updateFor(selectedDate, lstSchedule);
+		dailyScheduleList.updateFor(selectedDate, lstSchedule, null, null, null);
 	}
 
 	@Override

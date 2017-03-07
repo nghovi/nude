@@ -6,6 +6,7 @@ import java.util.List;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 
 import trente.asia.android.view.ChiaseDialog;
@@ -14,6 +15,7 @@ import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.view.CalendarDayListAdapter;
 import trente.asia.calendar.services.calendar.view.DailyScheduleList;
 import trente.asia.calendar.services.calendar.view.NavigationHeader;
+import trente.asia.welfare.adr.models.UserModel;
 
 /**
  * ClDailySummaryDialog
@@ -52,11 +54,13 @@ public class ClDailySummaryDialog extends ChiaseDialog{
 				listener.onClickScheduleItem(schedule);
 			}
 		});
+		getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
+				WindowManager.LayoutParams.MATCH_PARENT);
 	}
 
-	public void show(final Date selectedDate, final List<ScheduleModel> scheduleModels){
+	public void show(final Date selectedDate, final List<ScheduleModel> scheduleModels, final List<UserModel> birthdayUsers){
 		this.selectedDate = selectedDate;
-		dailyScheduleListView.updateFor(selectedDate, scheduleModels);
+		dailyScheduleListView.updateFor(selectedDate, scheduleModels, null, null, birthdayUsers);
 		super.show();
 	}
 }

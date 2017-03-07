@@ -1,0 +1,27 @@
+<LinearLayout style="@style/wf_common_match"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              android:descendantFocusability="blocksDescendants"
+              android:orientation="vertical"
+              android:paddingBottom="@dimen/margin_10dp"
+              android:paddingLeft="@dimen/margin_16dp"
+              android:paddingRight="@dimen/margin_16dp"
+              android:paddingTop="@dimen/margin_10dp">
+
+    <TextView
+        android:id="@+id/txt_item_calendar_day_date"
+        style="@style/wl_common_text"
+        android:layout_marginBottom="@dimen/margin_6dp"/>
+
+    <View
+        style="@style/cs_common_divider"
+        android:layout_marginBottom="@dimen/margin_6dp"/>
+
+    <LinearLayout
+        android:id="@+id/lnr_item_calendar_item_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+    </LinearLayout>
+
+
+</LinearLayout>

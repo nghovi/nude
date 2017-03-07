@@ -1,15 +1,17 @@
 <LinearLayout style="@style/wf_common_match"
               xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:custom="http://schemas.android.com/apk/res-auto"
-              android:orientation="horizontal">
-
-    <LinearLayout
-        style="@style/cs_common_match_wrap"
-        android:orientation="horizontal">
-
+              android:orientation="horizontal"
+              android:weightSum="1">
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginBottom="@dimen/margin_4dp"
+                  android:layout_marginTop="@dimen/margin_4dp">
         <LinearLayout
             style="@style/cs_common_wrap"
-            android:orientation="vertical">
+            android:layout_width="match_parent"
+            android:layout_weight="0.6" android:orientation="vertical"
+            android:layout_height="match_parent">
 
             <LinearLayout
                 style="@style/cs_common_match_wrap"
@@ -33,7 +35,7 @@
 
             <LinearLayout
                 style="@style/cs_common_match_wrap"
-                android:layout_marginTop="@dimen/margin_10dp"
+                android:layout_marginTop="@dimen/margin_2dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -59,8 +61,8 @@
         <LinearLayout
             style="@style/cs_common_match_wrap"
             android:layout_marginLeft="@dimen/margin_15dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:layout_weight="0.4"
+            android:orientation="vertical" android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/txt_item_schedule_name"
@@ -70,7 +72,8 @@
 
             <LinearLayout
                 style="@style/cs_common_match_wrap"
-                android:layout_marginTop="@dimen/margin_10dp"
+                android:layout_marginTop="@dimen/margin_2dp"
+                android:gravity="center"
                 android:orientation="horizontal">
 
                 <trente.asia.welfare.adr.view.SelectableRoundedImageView
@@ -87,4 +90,5 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
+
 </LinearLayout>

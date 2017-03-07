@@ -11,7 +11,8 @@
     android:background="@drawable/shape_normal_transparent"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/margin_2dp">
+    android:windowIsFloating="true"
+    android:windowSoftInputMode="stateUnspecified|adjustPan">
 
     <LinearLayout
         style="@style/cs_common_match_wrap"

@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import asia.chiase.core.util.CCBooleanUtil;
@@ -28,7 +27,8 @@ import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.dialogs.ClDailySummaryDialog;
 import trente.asia.calendar.commons.utils.ClRepeatUtil;
 import trente.asia.calendar.commons.utils.ClUtil;
-import trente.asia.calendar.services.calendar.listener.DailyScheduleClickListener;
+import trente.asia.calendar.services.calendar.listener
+		.DailyScheduleClickListener;
 import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.view.MonthlyCalendarDayView;
@@ -135,7 +135,7 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 		}
 		lstScheduleWithoutHoliday.addAll(lstSchedule);
 
-		// add holiday
+		// add holiday, // TODO: 3/7/2017 shouldn't create new ScheduleModel object.
 		if(!CCCollectionUtil.isEmpty(lstHoliday)){
 			for(HolidayModel holidayModel : lstHoliday){
 				ScheduleModel scheduleModel = new ScheduleModel(holidayModel);
@@ -194,7 +194,7 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 	@Override
 	public void onDailyScheduleClickListener(String day){
 		Date selectedDate = CCDateUtil.makeDateCustom(day, WelfareConst.WL_DATE_TIME_7);
-		dialogDailySummary.show(selectedDate, lstSchedule);
+		dialogDailySummary.show(selectedDate, lstSchedule, null);
 	}
 
 	@Override

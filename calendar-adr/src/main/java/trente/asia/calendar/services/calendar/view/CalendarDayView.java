@@ -77,8 +77,8 @@ public class CalendarDayView extends LinearLayout{
 		this.onDayClickListener = listener;
 		this.holidayModels = holidayModels;
 
-		HolidayModel holidayModel = HolidayModel.getHolidayModel(this.date, this.holidayModels);
-		if(bgResource == 0 && holidayModel != null){
+		List<HolidayModel> holidayModelsByDate = HolidayModel.getHolidayModels(this.date, this.holidayModels);
+		if(bgResource == 0 && !CCCollectionUtil.isEmpty(holidayModelsByDate)){
 			this.bgResource = R.drawable.circle_background_holiday;
 		}
 
