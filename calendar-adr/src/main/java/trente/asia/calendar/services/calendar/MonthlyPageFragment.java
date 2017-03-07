@@ -31,6 +31,7 @@ import trente.asia.calendar.commons.utils.ClUtil;
 import trente.asia.calendar.services.calendar.listener.DailyScheduleClickListener;
 import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
+import trente.asia.calendar.services.calendar.model.WorkOffer;
 import trente.asia.calendar.services.calendar.view.MonthlyCalendarDayView;
 import trente.asia.calendar.services.calendar.view.MonthlyCalendarRowView;
 import trente.asia.welfare.adr.activity.WelfareActivity;
@@ -50,7 +51,6 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 	private List<MonthlyCalendarRowView>	lstCalendarRow				= new ArrayList<>();
 
 	private ClDailySummaryDialog			dialogDailySummary;
-//	private List<ScheduleModel>				lstScheduleWithoutHoliday	= new ArrayList<>();
 
 	public class ScheduleComparator implements Comparator<ScheduleModel>{
 
@@ -156,6 +156,14 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
         if(!CCCollectionUtil.isEmpty(lstBirthdayUser)){
             for(UserModel birthday : lstBirthdayUser){
                 ScheduleModel scheduleModel = new ScheduleModel(birthday);
+                lstSchedule.add(scheduleModel);
+            }
+        }
+
+        // add work offer
+        if(!CCCollectionUtil.isEmpty(lstWorkOffer)){
+            for(WorkOffer workOffer : lstWorkOffer){
+                ScheduleModel scheduleModel = new ScheduleModel(workOffer);
                 lstSchedule.add(scheduleModel);
             }
         }

@@ -62,10 +62,7 @@ public class ScheduleModel{
 		this.startDate = holidayModel.startDate;
 		this.endDate = holidayModel.endDate;
 		this.isAllDay = true;
-		// pink color
-		// this.scheduleColor = "D22DB6";
 		this.scheduleType = ClConst.SCHEDULE_TYPE_HOLIDAY;
-		// this.isHoliday = true;
 	}
 
 	public ScheduleModel(UserModel userModel){
@@ -77,6 +74,20 @@ public class ScheduleModel{
 		this.endDate = this.startDate;
 		this.isAllDay = true;
 		this.scheduleType = ClConst.SCHEDULE_TYPE_BIRTHDAY;
+	}
+
+	public ScheduleModel(WorkOffer workOffer){
+		this.scheduleName = workOffer.offerTypeName;
+		this.startDate = workOffer.startDate;
+		this.endDate = workOffer.endDate;
+		boolean isPaidVacationAll = ClConst.WORKING_OFFER_TYPE_PAID_VACATION_ALL.equals(workOffer.offerType);
+		boolean isSpecialHoliday = ClConst.WORKING_OFFER_TYPE_SPECIAL_HOLIDAY.equals(workOffer.offerType);
+		boolean isCompensatoryHoliday = ClConst.WORKING_OFFER_TYPE_COMPENSATORY_HOLIDAY.equals(workOffer.offerType);
+		boolean isAbsent = ClConst.WORKING_OFFER_TYPE_ABSENT.equals(workOffer.offerType);
+		if(isPaidVacationAll || isSpecialHoliday || isCompensatoryHoliday || isAbsent){
+			this.isAllDay = true;
+		}
+		this.scheduleType = ClConst.SCHEDULE_TYPE_WORK_OFFER;
 	}
 
 	public boolean isPeriodSchedule(){
@@ -98,7 +109,9 @@ public class ScheduleModel{
 			return WelfareFormatUtil.formatColor(ClConst.SCHEDULE_COLOR_HOLIDAY);
 		}else if(ClConst.SCHEDULE_TYPE_BIRTHDAY.equals(scheduleType)){
 			return WelfareFormatUtil.formatColor(ClConst.SCHEDULE_COLOR_BIRTHDAY);
-		}
+		}else if(ClConst.SCHEDULE_TYPE_WORK_OFFER.equals(scheduleType)){
+            return WelfareFormatUtil.formatColor(ClConst.SCHEDULE_COLOR_OFFER);
+        }
 
 		return WelfareFormatUtil.formatColor(ClConst.SCHEDULE_COLOR_NORMAL);
 	}
