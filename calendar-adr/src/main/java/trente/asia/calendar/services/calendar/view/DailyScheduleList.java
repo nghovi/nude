@@ -10,6 +10,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -82,17 +83,73 @@ public class DailyScheduleList extends LinearLayout{
 
 	private void buildHolidays(List<HolidayModel> holidayModels){
 		lnrHolidays.removeAllViews();
-		// // TODO: 2/28/2017
+		List<HolidayModel> holidayModelList = HolidayModel.getHolidayModels(selectedDate, holidayModels);
+		if(!CCCollectionUtil.isEmpty(holidayModelList)){
+			lnrHolidays.setVisibility(View.VISIBLE);
+			TextView header = buildTextView(getContext().getString(R.string.holiday_title));
+			lnrHolidays.addView(header);
+			for(HolidayModel holidayModel : holidayModelList){
+				LinearLayout holidayItem = buildHolidayItem(holidayModel);
+				lnrHolidays.addView(holidayItem);
+			}
+		}else{
+			lnrHolidays.setVisibility(View.GONE);
+		}
+	}
+
+	private LinearLayout buildHolidayItem(HolidayModel holidayModel){
+		LinearLayout itemHoliday = (LinearLayout)inflater.inflate(R.layout.item_holiday, null);
+		TextView txtHolidayName = (TextView)itemHoliday.findViewById(R.id.txt_item_holiday_name);
+		txtHolidayName.setText(holidayModel.holidayName);
+		return itemHoliday;
 	}
 
 	private void buildOffers(List<WorkOffer> offers){
 		lnrOffers.removeAllViews();
-		// // TODO: 2/28/2017
+		List<WorkOffer> workOffers = getWorkOfferToday(offers);
+		if(!CCCollectionUtil.isEmpty(workOffers)){
+			lnrOffers.setVisibility(View.VISIBLE);
+			TextView header = buildTextView(getContext().getString(R.string.offer_title));
+			lnrOffers.addView(header);
+			for(WorkOffer offer : workOffers){
+				LinearLayout birthdayItem = buildOfferItem(offer);
+				lnrOffers.addView(birthdayItem);
+			}
+		}else{
+			lnrOffers.setVisibility(View.GONE);
+		}
+	}
+
+	private List<WorkOffer> getWorkOfferToday(List<WorkOffer> offers){
+		List<WorkOffer> result = new ArrayList<>();
+		for(WorkOffer offer : offers){
+			if(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, selectedDate).equals(offer.startDateString)){
+				result.add(offer);
+			}
+		}
+		return result;
+	}
+
+	private LinearLayout buildOfferItem(WorkOffer offer){
+		LinearLayout offerItemView = (LinearLayout)inflater.inflate(R.layout.item_work_offer, null);
+
+		ImageView imgAvatar = (ImageView)offerItemView.findViewById(R.id.img_item_offer_avatar);
+		TextView txtUsername = (TextView)offerItemView.findViewById(R.id.txt_item_offer_username);
+		TextView txtDate = (TextView)offerItemView.findViewById(R.id.txt_item_offer_date);
+		TextView txtType = (TextView)offerItemView.findViewById(R.id.txt_item_offer_type);
+		TextView txtStatus = (TextView)offerItemView.findViewById(R.id.txt_item_offer_status);
+
+		WfPicassoHelper.loadImageWithDefaultIcon(getContext(), BuildConfig.HOST, imgAvatar, offer.userAvatarPath, R.drawable.wf_profile);
+		txtUsername.setText(offer.userName);
+		txtDate.setText(offer.startDateString);
+		txtType.setText(offer.offerTypeName);
+		txtStatus.setText(offer.offerStatusName);
+		return offerItemView;
 	}
 
 	private void buildBirthdays(List<UserModel> userModels){
 		lnrBirthdays.removeAllViews();
-		List<UserModel> birthdayUsers = getBirthayUsersToday(userModels);
+		List<UserModel> birthdayUsers = getBirthdayUsersToday(userModels);
 		if(!CCCollectionUtil.isEmpty(birthdayUsers)){
 			lnrBirthdays.setVisibility(View.VISIBLE);
 			TextView header = buildTextView(getContext().getString(R.string.birthday_title));
@@ -106,10 +163,10 @@ public class DailyScheduleList extends LinearLayout{
 		}
 	}
 
-	public List<UserModel> getBirthayUsersToday(List<UserModel> userModels){
+	public List<UserModel> getBirthdayUsersToday(List<UserModel> userModels){
 		List<UserModel> result = new ArrayList<>();
 		for(UserModel userModel : userModels){
-			if(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, selectedDate).equals(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, CCDateUtil.makeDateCustom(userModel.dateBirth, WelfareConst.WL_DATE_TIME_1)))){
+			if(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_6, selectedDate).equals(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_6, CCDateUtil.makeDateCustom(userModel.dateBirth, WelfareConst.WL_DATE_TIME_1)))){
 				result.add(userModel);
 			}
 		}

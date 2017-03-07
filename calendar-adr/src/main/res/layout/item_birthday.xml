@@ -12,7 +12,7 @@
     <trente.asia.welfare.adr.view.SelectableRoundedImageView
         android:layout_width="@dimen/margin_24dp"
         android:layout_height="@dimen/margin_24dp"
-        android:paddingRight="@dimen/margin_10dp"
+        android:layout_marginRight="@dimen/margin_10dp"
         android:src="@drawable/ic_action_collection"
         android:scaleType="fitXY"
         custom:sriv_oval="true"/>
