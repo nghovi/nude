@@ -64,14 +64,15 @@ public class ClRepeatUtil{
 						}
 					}
 				}
-			}else if(ClConst.SCHEDULE_REPEAT_LIMIT_AFTER.equals(scheduleModel.repeatLimitType)){
-				List<String> lstActiveDate = ClRepeatUtil.getDateList4RepeatTimes(scheduleModel);
-				for(MonthlyCalendarDayView dayView : lstView){
-					if(lstActiveDate.contains(dayView.day)){
-						lstCalendarDay.add(dayView);
-					}
-				}
 			}
+//            else if(ClConst.SCHEDULE_REPEAT_LIMIT_AFTER.equals(scheduleModel.repeatLimitType)){
+//				List<String> lstActiveDate = ClRepeatUtil.getDateList4RepeatTimes(scheduleModel);
+//				for(MonthlyCalendarDayView dayView : lstView){
+//					if(lstActiveDate.contains(dayView.day)){
+//						lstCalendarDay.add(dayView);
+//					}
+//				}
+//			}
 
 			break;
 		case ClConst.SCHEDULE_REPEAT_TYPE_MONTHLY:
@@ -97,14 +98,15 @@ public class ClRepeatUtil{
 						}
 					}
 				}
-			}else if(ClConst.SCHEDULE_REPEAT_LIMIT_AFTER.equals(scheduleModel.repeatLimitType)){
-				List<String> lstActiveDate = ClRepeatUtil.getDateList4RepeatTimes(scheduleModel);
-				for(MonthlyCalendarDayView dayView : lstView){
-					if(lstActiveDate.contains(dayView.day)){
-						lstCalendarDay.add(dayView);
-					}
-				}
 			}
+//            else if(ClConst.SCHEDULE_REPEAT_LIMIT_AFTER.equals(scheduleModel.repeatLimitType)){
+//				List<String> lstActiveDate = ClRepeatUtil.getDateList4RepeatTimes(scheduleModel);
+//				for(MonthlyCalendarDayView dayView : lstView){
+//					if(lstActiveDate.contains(dayView.day)){
+//						lstCalendarDay.add(dayView);
+//					}
+//				}
+//			}
 			break;
 		case ClConst.SCHEDULE_REPEAT_TYPE_YEARLY:
 			if(ClConst.SCHEDULE_REPEAT_LIMIT_FOREVER.equals(scheduleModel.repeatLimitType)){
@@ -129,14 +131,15 @@ public class ClRepeatUtil{
 						}
 					}
 				}
-			}else if(ClConst.SCHEDULE_REPEAT_LIMIT_AFTER.equals(scheduleModel.repeatLimitType)){
-				List<String> lstActiveDate = ClRepeatUtil.getDateList4RepeatTimes(scheduleModel);
-				for(MonthlyCalendarDayView dayView : lstView){
-					if(lstActiveDate.contains(dayView.day)){
-						lstCalendarDay.add(dayView);
-					}
-				}
 			}
+//            else if(ClConst.SCHEDULE_REPEAT_LIMIT_AFTER.equals(scheduleModel.repeatLimitType)){
+//				List<String> lstActiveDate = ClRepeatUtil.getDateList4RepeatTimes(scheduleModel);
+//				for(MonthlyCalendarDayView dayView : lstView){
+//					if(lstActiveDate.contains(dayView.day)){
+//						lstCalendarDay.add(dayView);
+//					}
+//				}
+//			}
 
 			break;
 		default:

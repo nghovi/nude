@@ -358,9 +358,10 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 				jsonObject.put("repeatLimitType", scheduleRepeatModel.repeatLimitType);
 				if(ClConst.SCHEDULE_REPEAT_LIMIT_UNTIL.equals(scheduleRepeatModel.repeatLimitType)){
 					jsonObject.put("repeatEnd", scheduleRepeatModel.repeatEnd);
-				}else if(ClConst.SCHEDULE_REPEAT_LIMIT_AFTER.equals(scheduleRepeatModel.repeatLimitType)){
-					jsonObject.put("repeatInterval", scheduleRepeatModel.repeatInterval);
 				}
+//                else if(ClConst.SCHEDULE_REPEAT_LIMIT_AFTER.equals(scheduleRepeatModel.repeatLimitType)){
+//					jsonObject.put("repeatInterval", scheduleRepeatModel.repeatInterval);
+//				}
 
 			}
 

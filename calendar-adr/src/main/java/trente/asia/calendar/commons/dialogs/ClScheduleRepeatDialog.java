@@ -101,7 +101,7 @@ public class ClScheduleRepeatDialog extends ChiaseDialog{
 		lstRepeatLimit = new ArrayList<>();
 		lstRepeatLimit.add(new ChiaseSpinnerModel(ClConst.SCHEDULE_REPEAT_LIMIT_FOREVER, mContext.getString(R.string.cl_schedule_repeat_limit_forever)));
 		lstRepeatLimit.add(new ChiaseSpinnerModel(ClConst.SCHEDULE_REPEAT_LIMIT_UNTIL, mContext.getString(R.string.cl_schedule_repeat_limit_until)));
-		lstRepeatLimit.add(new ChiaseSpinnerModel(ClConst.SCHEDULE_REPEAT_LIMIT_AFTER, mContext.getString(R.string.cl_schedule_repeat_limit_after)));
+//		lstRepeatLimit.add(new ChiaseSpinnerModel(ClConst.SCHEDULE_REPEAT_LIMIT_AFTER, mContext.getString(R.string.cl_schedule_repeat_limit_after)));
 
 		ChiaseSpinnerAdapter adapterRepeatType = new ChiaseSpinnerAdapter(mContext, lstRepeatType);
 		spnRepeatType.setAdapter(adapterRepeatType);

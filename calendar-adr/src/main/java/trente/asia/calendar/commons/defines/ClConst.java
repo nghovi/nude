@@ -26,7 +26,7 @@ public class ClConst{
 
 	public static final String	SCHEDULE_REPEAT_LIMIT_FOREVER				= "F";
 	public static final String	SCHEDULE_REPEAT_LIMIT_UNTIL					= "U";
-	public static final String	SCHEDULE_REPEAT_LIMIT_AFTER					= "A";
+//	public static final String	SCHEDULE_REPEAT_LIMIT_AFTER					= "A";
 
 	public static final String	SCHEDULE_MODIFY_TYPE_ALL					= "AL";
 	public static final String	SCHEDULE_MODIFY_TYPE_ONLY_THIS				= "OT";
