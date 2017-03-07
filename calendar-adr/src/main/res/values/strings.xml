@@ -71,5 +71,6 @@
     <string name="happy_birthday">Happy Birthday!</string>
     <string name="birthday_title">Birthdays</string>
     <string name="holiday_title">Holiday</string>
+    <string name="offer_title">Work offers</string>
 
 </resources>

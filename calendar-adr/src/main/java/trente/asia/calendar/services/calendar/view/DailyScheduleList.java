@@ -10,6 +10,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -105,7 +106,45 @@ public class DailyScheduleList extends LinearLayout{
 
 	private void buildOffers(List<WorkOffer> offers){
 		lnrOffers.removeAllViews();
-		// // TODO: 2/28/2017
+		List<WorkOffer> workOffers = getWorkOfferToday(offers);
+		if(!CCCollectionUtil.isEmpty(workOffers)){
+			lnrOffers.setVisibility(View.VISIBLE);
+			TextView header = buildTextView(getContext().getString(R.string.offer_title));
+			lnrOffers.addView(header);
+			for(WorkOffer offer : workOffers){
+				LinearLayout birthdayItem = buildOfferItem(offer);
+				lnrOffers.addView(birthdayItem);
+			}
+		}else{
+			lnrOffers.setVisibility(View.GONE);
+		}
+	}
+
+	private List<WorkOffer> getWorkOfferToday(List<WorkOffer> offers){
+		List<WorkOffer> result = new ArrayList<>();
+		for(WorkOffer offer : offers){
+			if(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, selectedDate).equals(offer.startDateString)){
+				result.add(offer);
+			}
+		}
+		return result;
+	}
+
+	private LinearLayout buildOfferItem(WorkOffer offer){
+		LinearLayout offerItemView = (LinearLayout)inflater.inflate(R.layout.item_work_offer, null);
+
+		ImageView imgAvatar = (ImageView)offerItemView.findViewById(R.id.img_item_offer_avatar);
+		TextView txtUsername = (TextView)offerItemView.findViewById(R.id.txt_item_offer_username);
+		TextView txtDate = (TextView)offerItemView.findViewById(R.id.txt_item_offer_date);
+		TextView txtType = (TextView)offerItemView.findViewById(R.id.txt_item_offer_type);
+		TextView txtStatus = (TextView)offerItemView.findViewById(R.id.txt_item_offer_status);
+
+		WfPicassoHelper.loadImageWithDefaultIcon(getContext(), BuildConfig.HOST, imgAvatar, offer.userAvatarPath, R.drawable.wf_profile);
+		txtUsername.setText(offer.userName);
+		txtDate.setText(offer.startDateString);
+		txtType.setText(offer.offerTypeName);
+		txtStatus.setText(offer.offerStatusName);
+		return offerItemView;
 	}
 
 	private void buildBirthdays(List<UserModel> userModels){
