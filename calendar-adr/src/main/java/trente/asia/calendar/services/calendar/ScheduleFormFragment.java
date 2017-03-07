@@ -299,6 +299,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 			filterDialog.show();
 			break;
 		case R.id.lnr_id_only_this:
+            editModeDialog.dismiss();
             if(SCHEDULE_EDIT_MODE.equals(editMode)){
                 updateSchedule(ClConst.SCHEDULE_MODIFY_TYPE_ONLY_THIS);
             }else{
@@ -306,6 +307,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
             }
 			break;
 		case R.id.lnr_id_only_future:
+            editModeDialog.dismiss();
             if(SCHEDULE_EDIT_MODE.equals(editMode)){
                 updateSchedule(ClConst.SCHEDULE_MODIFY_TYPE_ONLY_FUTURE);
             }else{
@@ -313,6 +315,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
             }
 			break;
 		case R.id.lnr_id_all:
+            editModeDialog.dismiss();
             if(SCHEDULE_EDIT_MODE.equals(editMode)){
                 updateSchedule(ClConst.SCHEDULE_MODIFY_TYPE_ALL);
             }else{
