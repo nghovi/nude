@@ -30,6 +30,7 @@ public class UserModel extends BitmapModel implements Serializable{
 	public String		token;
 	public String		language	= "en";
 	public String		timezone	= "Asia/Ho_Chi_Minh";
+	public String		dateBirth;
 
 	public UserModel(){
 
@@ -140,7 +141,7 @@ public class UserModel extends BitmapModel implements Serializable{
 		this.userNameKana = userNameKana;
 	}
 
-	public static String KEY_ALL = "-1";
+	public static String	KEY_ALL	= "-1";
 
 	public static UserModel getUserModel(String key, List<UserModel> userModels){
 		for(UserModel userModel : userModels){

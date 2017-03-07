@@ -92,18 +92,28 @@ public class DailyScheduleList extends LinearLayout{
 
 	private void buildBirthdays(List<UserModel> userModels){
 		lnrBirthdays.removeAllViews();
-		if(!CCCollectionUtil.isEmpty(userModels)){
+		List<UserModel> birthdayUsers = getBirthayUsersToday(userModels);
+		if(!CCCollectionUtil.isEmpty(birthdayUsers)){
 			lnrBirthdays.setVisibility(View.VISIBLE);
 			TextView header = buildTextView(getContext().getString(R.string.birthday_title));
 			lnrBirthdays.addView(header);
-			for(UserModel user : userModels){
+			for(UserModel user : birthdayUsers){
 				LinearLayout birthdayItem = buildBirthdayItem(user);
 				lnrBirthdays.addView(birthdayItem);
 			}
 		}else{
 			lnrBirthdays.setVisibility(View.GONE);
 		}
-		// // TODO: 2/28/2017
+	}
+
+	public List<UserModel> getBirthayUsersToday(List<UserModel> userModels){
+		List<UserModel> result = new ArrayList<>();
+		for(UserModel userModel : userModels){
+			if(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, selectedDate).equals(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, CCDateUtil.makeDateCustom(userModel.dateBirth, WelfareConst.WL_DATE_TIME_1)))){
+				result.add(userModel);
+			}
+		}
+		return result;
 	}
 
 	private LinearLayout buildBirthdayItem(UserModel userModel){
