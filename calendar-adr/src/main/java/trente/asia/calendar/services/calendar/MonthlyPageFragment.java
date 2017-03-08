@@ -180,12 +180,12 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 						}
 					}
 				}else{
-					List<MonthlyCalendarDayView> lstActiveCalendarDay = null;
-					if(ClRepeatUtil.isRepeat(model.repeatType)){
-						lstActiveCalendarDay = ClRepeatUtil.findView4RepeatSchedule(lstCalendarDay, model);
-					}else{
-						lstActiveCalendarDay = ClUtil.findView4Day(lstCalendarDay, model.startDate, model.endDate);
-					}
+					List<MonthlyCalendarDayView> lstActiveCalendarDay = ClUtil.findView4Day(lstCalendarDay, model.startDate, model.endDate);;
+//					if(ClRepeatUtil.isRepeat(model.repeatType)){
+//						lstActiveCalendarDay = ClRepeatUtil.findView4RepeatSchedule(lstCalendarDay, model);
+//					}else{
+//						lstActiveCalendarDay = ClUtil.findView4Day(lstCalendarDay, model.startDate, model.endDate);
+//					}
 
 					if(!CCCollectionUtil.isEmpty(lstActiveCalendarDay)){
 						for(MonthlyCalendarDayView calendarDayView : lstActiveCalendarDay){
