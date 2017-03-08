@@ -142,10 +142,10 @@ public class WorknoticeListFragment extends AbstractSwFragment{
 	private void makeDeptFilter(List<DeptModel> lstDept){
 		isMakeDeptFilter = false;
 		Map<String, String> deptMap = WelfareUtil.convertDept2Map(lstDept, activity);
-		dlgOfferDept = new ChiaseListDialog(activity, getString(R.string.sw_work_notice_item_offer_dept), deptMap, txtOfferDept, new AdapterView.OnItemClickListener() {
+		dlgOfferDept = new ChiaseListDialog(activity, getString(R.string.sw_work_notice_item_offer_dept), deptMap, txtOfferDept, new ChiaseListDialog.OnItemClicked() {
 
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id){
+			public void onClicked(String selectedKey, boolean isSelected){
 				loadNoticeList(true);
 			}
 		});

@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.LinearLayout;
 
 import trente.asia.android.activity.ChiaseActivity;
@@ -21,13 +20,13 @@ public class WorkOfferFilterFragment extends AbstractSwFragment{
 	public static final String	STATUS	= "STATUS";
 	public static final String	DEPT	= "DEPT";
 
-    private LinearLayout lnrType;
-    private LinearLayout lnrStatus;
-    private LinearLayout lnrDept;
+	private LinearLayout		lnrType;
+	private LinearLayout		lnrStatus;
+	private LinearLayout		lnrDept;
 
-	private ChiaseListDialog dlgType;
-	private ChiaseListDialog dlgStatus;
-	private ChiaseListDialog dlgDept;
+	private ChiaseListDialog	dlgType;
+	private ChiaseListDialog	dlgStatus;
+	private ChiaseListDialog	dlgDept;
 	private ChiaseTextView		txtType;
 	private ChiaseTextView		txtStatus;
 	private ChiaseTextView		txtDept;
@@ -49,7 +48,7 @@ public class WorkOfferFilterFragment extends AbstractSwFragment{
 		depts = offerDepts;
 	}
 
-	private Map<String, Integer> filters;
+	private Map<String, Integer>	filters;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -72,9 +71,9 @@ public class WorkOfferFilterFragment extends AbstractSwFragment{
 		txtStatus = (ChiaseTextView)getView().findViewById(R.id.txt_fragment_offer_filter_status);
 		txtDept = (ChiaseTextView)getView().findViewById(R.id.txt_fragment_offer_filter_dept);
 
-        lnrType = (LinearLayout) getView().findViewById(R.id.lnr_id_offer_type);
-        lnrStatus = (LinearLayout) getView().findViewById(R.id.lnr_id_offer_status);
-        lnrDept = (LinearLayout) getView().findViewById(R.id.lnr_id_offer_dept);
+		lnrType = (LinearLayout)getView().findViewById(R.id.lnr_id_offer_type);
+		lnrStatus = (LinearLayout)getView().findViewById(R.id.lnr_id_offer_status);
+		lnrDept = (LinearLayout)getView().findViewById(R.id.lnr_id_offer_dept);
 		lnrType.setOnClickListener(this);
 		lnrStatus.setOnClickListener(this);
 		lnrDept.setOnClickListener(this);
@@ -93,12 +92,11 @@ public class WorkOfferFilterFragment extends AbstractSwFragment{
 		String offerTypeCode = (String)offerTypesMaster.keySet().toArray()[selectedType];
 		txtType.setText(offerTypesMaster.get(offerTypeCode));
 		txtType.setValue(offerTypeCode);
-		dlgType = new ChiaseListDialog(activity, getString(R.string.fragment_work_offer_edit_offer_type), offerTypesMaster, txtType, new AdapterView.OnItemClickListener() {
+		dlgType = new ChiaseListDialog(activity, getString(R.string.fragment_work_offer_edit_offer_type), offerTypesMaster, txtType, new ChiaseListDialog.OnItemClicked() {
 
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id){
-				selectedType = position;
-
+			public void onClicked(String selectedKey, boolean isSelected){
+				selectedType = Integer.parseInt(selectedKey);
 			}
 		});
 
@@ -109,12 +107,11 @@ public class WorkOfferFilterFragment extends AbstractSwFragment{
 		String offerStatusCode = (String)offerStatusMaster.keySet().toArray()[selectedStatus];
 		txtStatus.setText(offerStatusMaster.get(offerStatusCode));
 		txtStatus.setValue(offerStatusCode);
-		dlgStatus = new ChiaseListDialog(activity, getString(R.string.fragment_work_offer_edit_offer_status), offerStatusMaster, txtStatus, new AdapterView.OnItemClickListener() {
+		dlgStatus = new ChiaseListDialog(activity, getString(R.string.fragment_work_offer_edit_offer_status), offerStatusMaster, txtStatus, new ChiaseListDialog.OnItemClicked() {
 
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id){
-				selectedStatus = position;
-
+			public void onClicked(String selectedKey, boolean isSelected){
+				selectedStatus = Integer.parseInt(selectedKey);
 			}
 		});
 
@@ -125,12 +122,11 @@ public class WorkOfferFilterFragment extends AbstractSwFragment{
 		String offerDeptCode = (String)depts.keySet().toArray()[selectedDept];
 		txtDept.setText(depts.get(offerDeptCode));
 		txtDept.setValue(offerDeptCode);
-		dlgDept = new ChiaseListDialog(activity, getString(R.string.fragment_work_offer_edit_offer_dept), depts, txtDept, new AdapterView.OnItemClickListener() {
+		dlgDept = new ChiaseListDialog(activity, getString(R.string.fragment_work_offer_edit_offer_dept), depts, txtDept, new ChiaseListDialog.OnItemClicked() {
 
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id){
-				selectedDept = position;
-
+			public void onClicked(String selectedKey, boolean isSelected){
+				selectedDept = Integer.parseInt(selectedKey);
 			}
 		});
 	}

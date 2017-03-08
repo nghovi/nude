@@ -136,10 +136,11 @@ public class WorkOfferEditFragment extends AbstractSwFragment{
 			txtOfferType.setValue(holder.offerTypeList.get(0).key);
 		}
 
-		spnType = new ChiaseListDialog(activity, getString(R.string.fragment_work_offer_edit_offer_type), WelfareFormatUtil.convertList2Map(holder.offerTypeList), txtOfferType, new AdapterView.OnItemClickListener() {
+		spnType = new ChiaseListDialog(activity, getString(R.string.fragment_work_offer_edit_offer_type), WelfareFormatUtil.convertList2Map(holder.offerTypeList), txtOfferType, new ChiaseListDialog.OnItemClicked() {
+
 
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id){
+			public void onClicked(String selectedKey, boolean isSelected) {
 				OnOfferTypeChangedUpdateLayout();
 			}
 		});
