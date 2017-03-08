@@ -8,9 +8,9 @@
               android:paddingTop="@dimen/margin_4dp"
               android:weightSum="1">
 
-    <LinearLayout android:layout_width="wrap_content"
+    <LinearLayout android:layout_width="match_parent"
                   android:layout_height="wrap_content"
-                  android:layout_weight="0.4"
+                  android:layout_weight="0.6"
                   android:gravity="center_vertical">
 
         <trente.asia.welfare.adr.view.SelectableRoundedImageView
@@ -29,14 +29,15 @@
     </LinearLayout>
 
 
-    <LinearLayout android:layout_width="wrap_content"
+    <LinearLayout android:layout_width="match_parent"
                   android:layout_height="wrap_content"
-                  android:layout_weight="0.6"
+                  android:layout_weight="0.4"
+                  android:layout_marginLeft="@dimen/margin_15dp"
                   android:gravity="center_vertical">
         <TextView
             android:id="@+id/txt_item_holiday_name"
             style="@style/wl_common_text"
-            android:gravity="center_vertical"
+            android:gravity="left|center_vertical"
             android:textColor="@color/cl_circle_bg_holiday"/>
     </LinearLayout>
 
