@@ -1,5 +1,6 @@
 package trente.asia.calendar.services.calendar.view;
 
+import java.util.Date;
 import java.util.List;
 
 import android.app.Activity;
@@ -39,7 +40,7 @@ public class CalendarDayListAdapter extends ArrayAdapter<CalendarDayModel>{
 
 	public interface OnScheduleItemClickListener {
 
-		void onClickScheduleItem(ScheduleModel schedule);
+		void onClickScheduleItem(ScheduleModel schedule, Date selectedDate);
 	}
 
 	public CalendarDayListAdapter(Context context, int resource, List<CalendarDayModel> objects, OnScheduleItemClickListener onScheduleItemClickListener){
@@ -66,19 +67,20 @@ public class CalendarDayListAdapter extends ArrayAdapter<CalendarDayModel>{
 		}
 		CalendarDayModel calendarDay = getItem(position);
 		viewHolder.txtDay.setText(calendarDay.date);
-		buildScheduleList(viewHolder, calendarDay);
+		buildScheduleList(viewHolder, calendarDay, position);
 		return convertView;
 	}
 
-	private void buildScheduleList(ViewHolder viewHolder, CalendarDayModel calendarDay){
+	private void buildScheduleList(ViewHolder viewHolder, CalendarDayModel calendarDay, int position){
+        CalendarDayModel dayModel = getItem(position);
 		viewHolder.lnrEventList.removeAllViews();
 		for(final ScheduleModel schedule : calendarDay.schedules){
-			View lnrSchedulesContainer = buildScheduleItem(getContext(), layoutInflater, schedule, onScheduleItemClickListener);
+			View lnrSchedulesContainer = buildScheduleItem(getContext(), layoutInflater, schedule, onScheduleItemClickListener, dayModel.date);
 			viewHolder.lnrEventList.addView(lnrSchedulesContainer);
 		}
 	}
 
-	public static View buildScheduleItem(final Context context, LayoutInflater layoutInflater, final ScheduleModel schedule, final OnScheduleItemClickListener onScheduleItemClickListener){
+	public static View buildScheduleItem(final Context context, LayoutInflater layoutInflater, final ScheduleModel schedule, final OnScheduleItemClickListener onScheduleItemClickListener, final String selectedDate){
 		LinearLayout lnrSchedulesContainer = (LinearLayout)layoutInflater.inflate(R.layout.item_schedule, null);
 		TextView txtScheduleTime = (TextView)lnrSchedulesContainer.findViewById(R.id.txt_item_schedule_time);
 		String time;
@@ -136,7 +138,8 @@ public class CalendarDayListAdapter extends ArrayAdapter<CalendarDayModel>{
 
 			@Override
 			public void onClick(View v){
-				onScheduleItemClickListener.onClickScheduleItem(schedule);
+
+				onScheduleItemClickListener.onClickScheduleItem(schedule, WelfareFormatUtil.makeDate(selectedDate));
 			}
 		});
 

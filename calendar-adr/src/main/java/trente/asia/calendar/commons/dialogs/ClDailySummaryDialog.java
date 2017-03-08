@@ -51,9 +51,9 @@ public class ClDailySummaryDialog extends ChiaseDialog{
 		dailyScheduleListView.init(inflater, new CalendarDayListAdapter.OnScheduleItemClickListener() {
 
 			@Override
-			public void onClickScheduleItem(ScheduleModel schedule){
+			public void onClickScheduleItem(ScheduleModel schedule, Date selectedDate){
 				dismiss();
-				listener.onClickScheduleItem(schedule);
+				listener.onClickScheduleItem(schedule, selectedDate);
 			}
 		});
 		getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);

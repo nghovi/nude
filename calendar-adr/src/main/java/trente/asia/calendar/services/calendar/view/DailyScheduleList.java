@@ -25,6 +25,7 @@ import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.model.WorkOffer;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.models.UserModel;
+import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 import trente.asia.welfare.adr.utils.WelfareUtil;
 import trente.asia.welfare.adr.utils.WfPicassoHelper;
 import trente.asia.welfare.adr.view.SelectableRoundedImageView;
@@ -212,7 +213,7 @@ public class DailyScheduleList extends LinearLayout{
 	}
 
 	private void buildScheduleItem(LinearLayout lnrParent, ScheduleModel scheduleModel){
-		LinearLayout item = (LinearLayout)CalendarDayListAdapter.buildScheduleItem(getContext(), this.inflater, scheduleModel, onScheduleItemClickListener);
+		LinearLayout item = (LinearLayout)CalendarDayListAdapter.buildScheduleItem(getContext(), this.inflater, scheduleModel, onScheduleItemClickListener, WelfareFormatUtil.formatDate(selectedDate));
 		item.setPadding(MARGIN_LEFT_RIGHT, 0, MARGIN_LEFT_RIGHT, 0);
 		lnrParent.addView(item);
 	}

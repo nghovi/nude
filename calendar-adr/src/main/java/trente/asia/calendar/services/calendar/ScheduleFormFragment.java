@@ -299,28 +299,28 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 			filterDialog.show();
 			break;
 		case R.id.lnr_id_only_this:
-            editModeDialog.dismiss();
-            if(SCHEDULE_EDIT_MODE.equals(editMode)){
-                updateSchedule(ClConst.SCHEDULE_MODIFY_TYPE_ONLY_THIS);
-            }else{
-                deleteSchedule(ClConst.SCHEDULE_MODIFY_TYPE_ONLY_THIS);
-            }
+			editModeDialog.dismiss();
+			if(SCHEDULE_EDIT_MODE.equals(editMode)){
+				updateSchedule(ClConst.SCHEDULE_MODIFY_TYPE_ONLY_THIS);
+			}else{
+				deleteSchedule(ClConst.SCHEDULE_MODIFY_TYPE_ONLY_THIS);
+			}
 			break;
 		case R.id.lnr_id_only_future:
-            editModeDialog.dismiss();
-            if(SCHEDULE_EDIT_MODE.equals(editMode)){
-                updateSchedule(ClConst.SCHEDULE_MODIFY_TYPE_ONLY_FUTURE);
-            }else{
-                deleteSchedule(ClConst.SCHEDULE_MODIFY_TYPE_ONLY_FUTURE);
-            }
+			editModeDialog.dismiss();
+			if(SCHEDULE_EDIT_MODE.equals(editMode)){
+				updateSchedule(ClConst.SCHEDULE_MODIFY_TYPE_ONLY_FUTURE);
+			}else{
+				deleteSchedule(ClConst.SCHEDULE_MODIFY_TYPE_ONLY_FUTURE);
+			}
 			break;
 		case R.id.lnr_id_all:
-            editModeDialog.dismiss();
-            if(SCHEDULE_EDIT_MODE.equals(editMode)){
-                updateSchedule(ClConst.SCHEDULE_MODIFY_TYPE_ALL);
-            }else{
-                deleteSchedule(ClConst.SCHEDULE_MODIFY_TYPE_ALL);
-            }
+			editModeDialog.dismiss();
+			if(SCHEDULE_EDIT_MODE.equals(editMode)){
+				updateSchedule(ClConst.SCHEDULE_MODIFY_TYPE_ALL);
+			}else{
+				deleteSchedule(ClConst.SCHEDULE_MODIFY_TYPE_ALL);
+			}
 			break;
 		case R.id.lnr_id_cancel:
 			editModeDialog.dismiss();
@@ -359,14 +359,15 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 				if(ClConst.SCHEDULE_REPEAT_LIMIT_UNTIL.equals(scheduleRepeatModel.repeatLimitType)){
 					jsonObject.put("repeatEnd", scheduleRepeatModel.repeatEnd);
 				}
-//                else if(ClConst.SCHEDULE_REPEAT_LIMIT_AFTER.equals(scheduleRepeatModel.repeatLimitType)){
-//					jsonObject.put("repeatInterval", scheduleRepeatModel.repeatInterval);
-//				}
+				// else if(ClConst.SCHEDULE_REPEAT_LIMIT_AFTER.equals(scheduleRepeatModel.repeatLimitType)){
+				// jsonObject.put("repeatInterval", scheduleRepeatModel.repeatInterval);
+				// }
 
 			}
 
 			if(!CCStringUtil.isEmpty(modifyType)){
 				jsonObject.put("modifyType", modifyType);
+				jsonObject.put("targetDate", WelfareFormatUtil.formatDate(selectedDate));
 			}
 		}catch(JSONException e){
 			e.printStackTrace();

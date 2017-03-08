@@ -198,9 +198,10 @@ public abstract class SchedulesPageFragment extends AbstractClFragment implement
 	}
 
 	@Override
-	public void onClickScheduleItem(ScheduleModel schedule){
+	public void onClickScheduleItem(ScheduleModel schedule, Date selectedDate){
 		ScheduleDetailFragment fragment = new ScheduleDetailFragment();
 		fragment.setSchedule(schedule);
+        fragment.setSelectedDate(selectedDate);
 		((WelfareActivity)activity).addFragment(fragment);
 	}
 
@@ -220,10 +221,6 @@ public abstract class SchedulesPageFragment extends AbstractClFragment implement
 
 	public void setPageSharingHolder(PageSharingHolder pageSharingHolder){
 		this.pageSharingHolder = pageSharingHolder;
-	}
-
-	protected String getUpperTitle(){
-		return CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_12, dates.get(0));
 	}
 
 	public void setPagePosition(int pagePosition){

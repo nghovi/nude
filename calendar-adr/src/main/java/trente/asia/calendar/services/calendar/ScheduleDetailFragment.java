@@ -1,5 +1,7 @@
 package trente.asia.calendar.services.calendar;
 
+import java.util.Date;
+
 import org.json.JSONObject;
 
 import android.os.Bundle;
@@ -26,6 +28,8 @@ public class ScheduleDetailFragment extends AbstractScheduleFragment{
 	private TextView	txtScheduleUrl;
 	private TextView	txtScheduleNote;
 
+	private Date		selectedDate;
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 		if(mRootView == null){
@@ -33,8 +37,8 @@ public class ScheduleDetailFragment extends AbstractScheduleFragment{
 		}else{
 			String isDelete = CCStringUtil.toString(((WelfareActivity)activity).dataMap.get(ClConst.ACTION_SCHEDULE_DELETE));
 			if(CCConst.YES.equals(isDelete)){
-//				((WelfareActivity)activity).dataMap.clear();
-//				((WelfareActivity)activity).isInitData = true;
+				// ((WelfareActivity)activity).dataMap.clear();
+				// ((WelfareActivity)activity).isInitData = true;
 				getFragmentManager().popBackStack();
 			}
 		}
@@ -93,6 +97,7 @@ public class ScheduleDetailFragment extends AbstractScheduleFragment{
 	private void gotoScheduleFormFragment(){
 		ScheduleFormFragment fragment = new ScheduleFormFragment();
 		fragment.setSchedule(schedule);
+        fragment.setSelectedDate(selectedDate);
 		gotoFragment(fragment);
 	}
 
@@ -101,4 +106,8 @@ public class ScheduleDetailFragment extends AbstractScheduleFragment{
 		super.onDestroy();
 		lnrUserList = null;
 	}
+
+    public void setSelectedDate(Date selectedDate) {
+        this.selectedDate = selectedDate;
+    }
 }
