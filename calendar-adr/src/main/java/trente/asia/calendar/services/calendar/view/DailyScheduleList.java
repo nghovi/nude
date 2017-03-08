@@ -23,6 +23,7 @@ import trente.asia.calendar.R;
 import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.model.WorkOffer;
+import trente.asia.welfare.adr.activity.WelfareFragment;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
@@ -41,7 +42,9 @@ public class DailyScheduleList extends LinearLayout{
 	private static final Integer								SCHEDULES_MORNING		= 2;
 	private static final Integer								SCHEDULES_AFTERNOON		= 3;
 	private static final int									MARGIN_LEFT_RIGHT		= WelfareUtil.dpToPx(16);
-	private static final int									MARGIN_TEXT_TOP_BOTTM	= WelfareUtil.dpToPx(4);
+	private static final int									MARGIN_TEXT_TOP_BOTTOM	= WelfareUtil.dpToPx(4);
+	private static final int									MARGIN_TOP_BOTTOM		= WelfareUtil.dpToPx(4);
+
 	private LinearLayout										lnrOffers;
 
 	private Map<Integer, List<ScheduleModel>>					schedulesMap;
@@ -90,7 +93,7 @@ public class DailyScheduleList extends LinearLayout{
 			TextView header = buildTextView(getContext().getString(R.string.holiday_title));
 			lnrHolidays.addView(header);
 			for(HolidayModel holidayModel : holidayModelList){
-				LinearLayout holidayItem = buildHolidayItem(inflater, holidayModel);
+				LinearLayout holidayItem = buildHolidayItem(inflater, holidayModel, WelfareFragment.MARGIN_LEFT_RIGHT);
 				lnrHolidays.addView(holidayItem);
 			}
 		}else{
@@ -98,8 +101,9 @@ public class DailyScheduleList extends LinearLayout{
 		}
 	}
 
-	public static LinearLayout buildHolidayItem(LayoutInflater inflater, HolidayModel holidayModel){
+	public static LinearLayout buildHolidayItem(LayoutInflater inflater, HolidayModel holidayModel, int paddingLeftRightPx){
 		LinearLayout itemHoliday = (LinearLayout)inflater.inflate(R.layout.item_holiday, null);
+		itemHoliday.setPadding(paddingLeftRightPx, MARGIN_TOP_BOTTOM, paddingLeftRightPx, MARGIN_TOP_BOTTOM);
 		TextView txtHolidayName = (TextView)itemHoliday.findViewById(R.id.txt_item_holiday_name);
 		txtHolidayName.setText(holidayModel.holidayName);
 		return itemHoliday;
@@ -133,7 +137,6 @@ public class DailyScheduleList extends LinearLayout{
 
 	private LinearLayout buildOfferItem(WorkOffer offer){
 		LinearLayout offerItemView = (LinearLayout)inflater.inflate(R.layout.item_work_offer, null);
-
 		ImageView imgAvatar = (ImageView)offerItemView.findViewById(R.id.img_item_offer_avatar);
 		TextView txtUsername = (TextView)offerItemView.findViewById(R.id.txt_item_offer_username);
 		TextView txtDate = (TextView)offerItemView.findViewById(R.id.txt_item_offer_date);
@@ -206,7 +209,7 @@ public class DailyScheduleList extends LinearLayout{
 	private TextView buildTextView(String title){
 		TextView textView = new TextView(getContext());
 
-		textView.setPadding(MARGIN_LEFT_RIGHT, MARGIN_TEXT_TOP_BOTTM, MARGIN_LEFT_RIGHT, MARGIN_TEXT_TOP_BOTTM);
+		textView.setPadding(MARGIN_LEFT_RIGHT, MARGIN_TEXT_TOP_BOTTOM, MARGIN_LEFT_RIGHT, MARGIN_TEXT_TOP_BOTTOM);
 		textView.setText(title);
 		textView.setBackgroundColor(WelfareUtil.getColor(getContext(), R.color.cl_title_bg));
 		return textView;

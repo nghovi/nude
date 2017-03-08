@@ -53,8 +53,8 @@ public abstract class WelfareFragment extends ChiaseFragment implements WelfareA
 	protected UserModel					myself;
 	public boolean						isClickNotification		= false;
 	protected Integer					lnrContentId;
-	public final int					MARGIN_LEFT_RIGHT		= WelfareUtil.dpToPx(16);
-	public final int					MARGIN_TEXT_TOP_BOTTM	= WelfareUtil.dpToPx(4);
+	public static final int				MARGIN_LEFT_RIGHT		= WelfareUtil.dpToPx(16);
+	public static final int				MARGIN_TEXT_TOP_BOTTOM	= WelfareUtil.dpToPx(4);
 
 	@Override
 	public void onCreate(Bundle savedInstanceState){

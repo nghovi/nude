@@ -96,7 +96,7 @@ public class CalendarDayView extends LinearLayout{
 	}
 
 	public void setSelected(boolean selected){
-		if(selected && this.bgResource == 0){
+		if(selected && this.bgResource != R.drawable.circle_background_today){
 			rowItemView.setBackgroundResource(R.drawable.circle_background_selected);
 		}else{
 			rowItemView.setBackgroundResource(this.bgResource);

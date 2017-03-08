@@ -15,6 +15,7 @@ import asia.chiase.core.util.CCDateUtil;
 import trente.asia.android.define.CsConst;
 import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.services.calendar.model.CalendarDayModel;
+import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.view.CalendarDayView;
 import trente.asia.calendar.services.calendar.view.WeeklyCalendarHeaderRowView;
@@ -58,7 +59,7 @@ public abstract class SchedulesPageListViewFragment extends SchedulesPageFragmen
 		}
 	}
 
-	protected CalendarDayView getCalendayDayView() {
+	protected CalendarDayView getCalendayDayView(){
 		return new CalendarDayView(activity);
 	}
 
@@ -93,6 +94,20 @@ public abstract class SchedulesPageListViewFragment extends SchedulesPageFragmen
 				calendarDayModels.add(calendarDayModel);
 			}else{
 				calendarDayModel.schedules.add(scheduleModel);
+			}
+		}
+
+		for(HolidayModel holidayModel : lstHoliday){
+			CalendarDayModel calendarDayModel = getCalendarDayModel(holidayModel.startDate, calendarDayModels);
+			if(calendarDayModel == null){
+				calendarDayModel = new CalendarDayModel();
+				calendarDayModel.date = holidayModel.startDate;
+				calendarDayModel.schedules = new ArrayList<>();
+				calendarDayModel.holidayModels = new ArrayList<>();
+				calendarDayModel.holidayModels.add(holidayModel);
+				calendarDayModels.add(calendarDayModel);
+			}else{
+				calendarDayModel.holidayModels.add(holidayModel);
 			}
 		}
 

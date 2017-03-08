@@ -16,7 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import asia.chiase.core.util.CCBooleanUtil;
-import asia.chiase.core.util.CCDateUtil;
+import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.calendar.BuildConfig;
 import trente.asia.calendar.R;
@@ -25,7 +25,6 @@ import trente.asia.calendar.commons.views.UserListLinearLayout;
 import trente.asia.calendar.services.calendar.model.CalendarDayModel;
 import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
-import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 import trente.asia.welfare.adr.utils.WfPicassoHelper;
@@ -73,24 +72,25 @@ public class CalendarDayListAdapter extends ArrayAdapter<CalendarDayModel>{
 		}
 		CalendarDayModel calendarDay = getItem(position);
 		viewHolder.txtDay.setText(calendarDay.date);
-		buildScheduleList(viewHolder, calendarDay, position);
+		buildScheduleList(viewHolder, calendarDay);
 		buildHolidays(viewHolder, calendarDay);
 		return convertView;
 	}
 
 	private void buildHolidays(ViewHolder viewHolder, CalendarDayModel calendarDay){
-		List<HolidayModel> holidayModels = HolidayModel.getHolidayModels(CCDateUtil.makeDateCustom(calendarDay.date, WelfareConst.WL_DATE_TIME_7), this.holidayModels);
-		for(HolidayModel holidayModel : holidayModels){
-			LinearLayout holidayItem = DailyScheduleList.buildHolidayItem(layoutInflater, holidayModel);
-			viewHolder.lnrEventList.addView(holidayItem);
+		List<HolidayModel> holidayModels = calendarDay.holidayModels;
+		if(!CCCollectionUtil.isEmpty(holidayModels)){
+			for(HolidayModel holidayModel : holidayModels){
+				LinearLayout holidayItem = DailyScheduleList.buildHolidayItem(layoutInflater, holidayModel, 0);
+				viewHolder.lnrEventList.addView(holidayItem);
+			}
 		}
 	}
 
-	private void buildScheduleList(ViewHolder viewHolder, CalendarDayModel calendarDay, int position){
-		CalendarDayModel dayModel = getItem(position);
+	private void buildScheduleList(ViewHolder viewHolder, CalendarDayModel calendarDay){
 		viewHolder.lnrEventList.removeAllViews();
 		for(final ScheduleModel schedule : calendarDay.schedules){
-			View lnrSchedulesContainer = buildScheduleItem(getContext(), layoutInflater, schedule, onScheduleItemClickListener, dayModel.date);
+			View lnrSchedulesContainer = buildScheduleItem(getContext(), layoutInflater, schedule, onScheduleItemClickListener, calendarDay.date);
 			viewHolder.lnrEventList.addView(lnrSchedulesContainer);
 		}
 	}

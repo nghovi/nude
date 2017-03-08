@@ -38,8 +38,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingLeft="@dimen/margin_16dp"
-        android:paddingRight="@dimen/margin_16dp"
     >
         <View style="@style/cs_common_divider"/>
     </LinearLayout>

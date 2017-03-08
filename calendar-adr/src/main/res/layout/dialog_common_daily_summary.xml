@@ -27,6 +27,7 @@
             android:id="@+id/txt_dialog_common_daily_summary"
             style="@style/wl_common_text"
             android:layout_weight="1"
+            android:gravity="center"
             android:textColor="@color/chiase_white"/>
 
         <ImageView
