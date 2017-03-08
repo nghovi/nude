@@ -90,7 +90,7 @@ public class DailyScheduleList extends LinearLayout{
 			TextView header = buildTextView(getContext().getString(R.string.holiday_title));
 			lnrHolidays.addView(header);
 			for(HolidayModel holidayModel : holidayModelList){
-				LinearLayout holidayItem = buildHolidayItem(holidayModel);
+				LinearLayout holidayItem = buildHolidayItem(inflater, holidayModel);
 				lnrHolidays.addView(holidayItem);
 			}
 		}else{
@@ -98,7 +98,7 @@ public class DailyScheduleList extends LinearLayout{
 		}
 	}
 
-	private LinearLayout buildHolidayItem(HolidayModel holidayModel){
+	public static LinearLayout buildHolidayItem(LayoutInflater inflater, HolidayModel holidayModel){
 		LinearLayout itemHoliday = (LinearLayout)inflater.inflate(R.layout.item_holiday, null);
 		TextView txtHolidayName = (TextView)itemHoliday.findViewById(R.id.txt_item_holiday_name);
 		txtHolidayName.setText(holidayModel.holidayName);

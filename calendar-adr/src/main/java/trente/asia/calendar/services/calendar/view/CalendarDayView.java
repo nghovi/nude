@@ -84,11 +84,15 @@ public class CalendarDayView extends LinearLayout{
 
 		rowItemView.setBackgroundResource(this.bgResource);
 
-		if(calendarDayModel != null && !CCCollectionUtil.isEmpty(calendarDayModel.schedules)){
+		if(hasMark(calendarDayModel)){
 			txtScheduleMark.setVisibility(View.VISIBLE);
 		}else{
 			txtScheduleMark.setVisibility(View.INVISIBLE);
 		}
+	}
+
+	private boolean hasMark(CalendarDayModel calendarDayModel){
+		return calendarDayModel != null && !CCCollectionUtil.isEmpty(calendarDayModel.schedules);
 	}
 
 	public void setSelected(boolean selected){

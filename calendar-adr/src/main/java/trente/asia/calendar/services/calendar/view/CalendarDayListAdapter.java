@@ -1,5 +1,6 @@
 package trente.asia.calendar.services.calendar.view;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -15,13 +16,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import asia.chiase.core.util.CCBooleanUtil;
+import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.calendar.BuildConfig;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.views.UserListLinearLayout;
 import trente.asia.calendar.services.calendar.model.CalendarDayModel;
+import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
+import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 import trente.asia.welfare.adr.utils.WfPicassoHelper;
@@ -32,20 +36,22 @@ import trente.asia.welfare.adr.view.SelectableRoundedImageView;
  */
 public class CalendarDayListAdapter extends ArrayAdapter<CalendarDayModel>{
 
-	private final List<CalendarDayModel>	calendarDayModels;
-	Context									context;
-	int										layoutId;
-	LayoutInflater							layoutInflater;
-	private OnScheduleItemClickListener onScheduleItemClickListener;
+	private List<CalendarDayModel>		calendarDayModels;
+	private List<HolidayModel>			holidayModels	= new ArrayList<>();
+	Context								context;
+	int									layoutId;
+	LayoutInflater						layoutInflater;
+	private OnScheduleItemClickListener	onScheduleItemClickListener;
 
-	public interface OnScheduleItemClickListener {
+	public interface OnScheduleItemClickListener{
 
 		void onClickScheduleItem(ScheduleModel schedule, Date selectedDate);
 	}
 
-	public CalendarDayListAdapter(Context context, int resource, List<CalendarDayModel> objects, OnScheduleItemClickListener onScheduleItemClickListener){
+	public CalendarDayListAdapter(Context context, int resource, List<CalendarDayModel> objects, List<HolidayModel> holidayModels, OnScheduleItemClickListener onScheduleItemClickListener){
 		super(context, resource, objects);
 		this.calendarDayModels = objects;
+		this.holidayModels = holidayModels;
 		this.context = context;
 		this.layoutId = resource;
 		layoutInflater = ((Activity)context).getLayoutInflater();
@@ -68,11 +74,20 @@ public class CalendarDayListAdapter extends ArrayAdapter<CalendarDayModel>{
 		CalendarDayModel calendarDay = getItem(position);
 		viewHolder.txtDay.setText(calendarDay.date);
 		buildScheduleList(viewHolder, calendarDay, position);
+		buildHolidays(viewHolder, calendarDay);
 		return convertView;
 	}
 
+	private void buildHolidays(ViewHolder viewHolder, CalendarDayModel calendarDay){
+		List<HolidayModel> holidayModels = HolidayModel.getHolidayModels(CCDateUtil.makeDateCustom(calendarDay.date, WelfareConst.WL_DATE_TIME_7), this.holidayModels);
+		for(HolidayModel holidayModel : holidayModels){
+			LinearLayout holidayItem = DailyScheduleList.buildHolidayItem(layoutInflater, holidayModel);
+			viewHolder.lnrEventList.addView(holidayItem);
+		}
+	}
+
 	private void buildScheduleList(ViewHolder viewHolder, CalendarDayModel calendarDay, int position){
-        CalendarDayModel dayModel = getItem(position);
+		CalendarDayModel dayModel = getItem(position);
 		viewHolder.lnrEventList.removeAllViews();
 		for(final ScheduleModel schedule : calendarDay.schedules){
 			View lnrSchedulesContainer = buildScheduleItem(getContext(), layoutInflater, schedule, onScheduleItemClickListener, dayModel.date);

@@ -103,15 +103,17 @@ public class ScheduleModel{
 	public String getScheduleColor(List<CategoryModel> lstCategory){
 		if(!CCStringUtil.isEmpty(this.calendarId)){
 			CategoryModel categoryModel = ClUtil.findCategory4Id(lstCategory, this.categoryId);
-			return WelfareFormatUtil.formatColor(categoryModel.categoryColor);
+			if(categoryModel != null){
+				return WelfareFormatUtil.formatColor(categoryModel.categoryColor);
+			}
 		}
 		if(ClConst.SCHEDULE_TYPE_HOLIDAY.equals(scheduleType)){
 			return WelfareFormatUtil.formatColor(ClConst.SCHEDULE_COLOR_HOLIDAY);
 		}else if(ClConst.SCHEDULE_TYPE_BIRTHDAY.equals(scheduleType)){
 			return WelfareFormatUtil.formatColor(ClConst.SCHEDULE_COLOR_BIRTHDAY);
 		}else if(ClConst.SCHEDULE_TYPE_WORK_OFFER.equals(scheduleType)){
-            return WelfareFormatUtil.formatColor(ClConst.SCHEDULE_COLOR_OFFER);
-        }
+			return WelfareFormatUtil.formatColor(ClConst.SCHEDULE_COLOR_OFFER);
+		}
 
 		return WelfareFormatUtil.formatColor(ClConst.SCHEDULE_COLOR_NORMAL);
 	}

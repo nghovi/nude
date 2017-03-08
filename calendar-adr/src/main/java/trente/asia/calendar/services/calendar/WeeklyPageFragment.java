@@ -68,7 +68,7 @@ public class WeeklyPageFragment extends SchedulesPageListViewFragment implements
 
 	protected void updateObservableScrollableView(){
 		List<CalendarDayModel> displayedModels = getDisplayedDayForList();
-		adapter = new CalendarDayListAdapter(activity, R.layout.item_calendar_day, displayedModels, this);
+		adapter = new CalendarDayListAdapter(activity, R.layout.item_calendar_day, displayedModels, lstHoliday, this);
 		observableListView.setAdapter(adapter);
 	}
 
