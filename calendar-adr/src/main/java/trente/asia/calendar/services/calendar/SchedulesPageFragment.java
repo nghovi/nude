@@ -98,7 +98,11 @@ public abstract class SchedulesPageFragment extends AbstractClFragment implement
 		LayoutInflater mInflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View titleView = mInflater.inflate(R.layout.monthly_calendar_title, null);
 		LinearLayout lnrRowTitle = (LinearLayout)titleView.findViewById(R.id.lnr_id_row_title);
-		List<DayModel> dayModels = CsDateUtil.getAllDay4Week(CCNumberUtil.toInteger(prefAccUtil.getSetting().CL_START_DAY_IN_WEEK));
+        int firstDay = Calendar.SUNDAY;
+        if(!CCStringUtil.isEmpty(prefAccUtil.getSetting().CL_START_DAY_IN_WEEK)){
+            firstDay = Integer.parseInt(prefAccUtil.getSetting().CL_START_DAY_IN_WEEK);
+        }
+		List<DayModel> dayModels = CsDateUtil.getAllDay4Week(firstDay);
 		for(DayModel dayModel : dayModels){
 			View titleItem = mInflater.inflate(R.layout.monthly_calendar_title_item, null);
 			LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
