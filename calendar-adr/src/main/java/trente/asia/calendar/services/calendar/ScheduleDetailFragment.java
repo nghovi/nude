@@ -101,6 +101,16 @@ public class ScheduleDetailFragment extends AbstractScheduleFragment{
 		gotoFragment(fragment);
 	}
 
+    @Override
+    protected void onClickBackBtn(){
+        if(isClickNotification){
+            emptyBackStack();
+            gotoFragment(new MonthlyFragment());
+        }else{
+            super.onClickBackBtn();
+        }
+    }
+
 	@Override
 	public void onDestroy(){
 		super.onDestroy();

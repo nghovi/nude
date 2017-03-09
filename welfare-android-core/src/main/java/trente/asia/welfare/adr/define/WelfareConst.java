@@ -77,7 +77,7 @@ public class WelfareConst{
 		IMG_EXT_SET.add(IMG_EXT_GIF.toUpperCase());
 	}
 
-	public static final Set<String>	MOVIE_EXT_SET					= new HashSet<String>();
+	public static final Set<String> MOVIE_EXT_SET = new HashSet<String>();
 
 	static{
 		MOVIE_EXT_SET.add("mp4");
@@ -88,9 +88,9 @@ public class WelfareConst{
 		MOVIE_EXT_SET.add("avi".toUpperCase());
 	}
 
-	public static final String		BOARD_TYPE_DEPT					= "D";
-	public static final String		BOARD_TYPE_USER					= "U";
-	public static final String		BOARD_TYPE_GROUP				= "G";
+	public static final String	BOARD_TYPE_DEPT		= "D";
+	public static final String	BOARD_TYPE_USER		= "U";
+	public static final String	BOARD_TYPE_GROUP	= "G";
 
 	public static final class Extras{
 
@@ -166,6 +166,8 @@ public class WelfareConst{
 		public static final String	SW_NOTI_CHECK_IN		= "SW_NOTI_CHECK_IN";
 		public static final String	SW_NOTI_OVER_TIME		= "SW_NOTI_OVER_TIME";
 		public static final String	SW_NOTI_OFFER			= "SW_NOTI_OFFER";
+
+		public static final String	CL_NOTI_NEW_SCHEDULE	= "CL_NOTI_NEW_NOTICE";
 	}
 
 	public static final class NotificationReceived{
