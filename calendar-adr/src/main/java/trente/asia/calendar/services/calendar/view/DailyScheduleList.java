@@ -18,6 +18,7 @@ import asia.chiase.core.util.CCBooleanUtil;
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
+import asia.chiase.core.util.CCStringUtil;
 import trente.asia.calendar.BuildConfig;
 import trente.asia.calendar.R;
 import trente.asia.calendar.services.calendar.model.HolidayModel;
@@ -231,7 +232,7 @@ public class DailyScheduleList extends LinearLayout{
 		result.put(SCHEDULES_MORNING, new ArrayList<ScheduleModel>());
 		result.put(SCHEDULES_AFTERNOON, new ArrayList<ScheduleModel>());
 		for(ScheduleModel scheduleModel : lstSchedule){
-			if(isScheduleOf(scheduleModel, selectedDate)){
+			if(!CCStringUtil.isEmpty(scheduleModel.key) && isScheduleOf(scheduleModel, selectedDate)){
 				if(CCBooleanUtil.checkBoolean(scheduleModel.isAllDay)){
 					result.get(SCHEDULES_ALL_DAY).add(scheduleModel);
 				}else if(isBeforeNoon(scheduleModel.startTime)){

@@ -95,8 +95,8 @@ public class ScheduleModel{
 			return false;
 		}
 
-//		String startDateFormat = WelfareFormatUtil.formatDate(WelfareUtil.makeDate(startDate));
-//		String endDateFormat = WelfareFormatUtil.formatDate(WelfareUtil.makeDate(endDate));
+		// String startDateFormat = WelfareFormatUtil.formatDate(WelfareUtil.makeDate(startDate));
+		// String endDateFormat = WelfareFormatUtil.formatDate(WelfareUtil.makeDate(endDate));
 		return !startDate.equals(endDate);
 	}
 
@@ -116,5 +116,36 @@ public class ScheduleModel{
 		}
 
 		return WelfareFormatUtil.formatColor(ClConst.SCHEDULE_COLOR_NORMAL);
+	}
+
+	public ScheduleModel cloneCommonData(){
+		ScheduleModel clonedModel = new ScheduleModel();
+		clonedModel.scheduleName = this.scheduleName;
+		clonedModel.scheduleNote = this.scheduleNote;
+		clonedModel.scheduleUrl = this.scheduleUrl;
+		clonedModel.startDate = this.startDate;
+		clonedModel.endDate = this.endDate;
+		clonedModel.startTime = this.startTime;
+		clonedModel.endTime = this.endTime;
+		clonedModel.key = this.key;
+		clonedModel.calendarId = this.calendarId;
+		clonedModel.roomId = this.roomId;
+		clonedModel.joinUsers = this.joinUsers;
+		clonedModel.calendar = this.calendar;
+		clonedModel.scheduleType = this.scheduleType;
+		clonedModel.categoryId = this.categoryId;
+		clonedModel.categoryModel = this.categoryModel;
+		clonedModel.isAllDay = this.isAllDay;
+		clonedModel.isRepeat = this.isRepeat;
+		clonedModel.scheduleJoinUsers = this.scheduleJoinUsers;
+		clonedModel.repeatType = this.repeatType;
+		clonedModel.repeatLimitType = this.repeatLimitType;
+		clonedModel.repeatData = this.repeatData;
+		clonedModel.repeatEnd = this.repeatEnd;
+		clonedModel.repeatInterval = this.repeatInterval;
+		clonedModel.isWarning = this.isWarning;
+		clonedModel.ownerId = this.ownerId;
+		clonedModel.owner = this.owner;
+		return clonedModel;
 	}
 }
