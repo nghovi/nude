@@ -9,6 +9,7 @@
         style="@style/cs_common_match_wrap"
         android:background="@drawable/cl_state_common_selectable_row"
         android:orientation="horizontal"
+        android:layout_marginBottom="@dimen/margin_1dp"
         android:padding="@dimen/margin_10dp">
 
         <RelativeLayout

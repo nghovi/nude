@@ -16,6 +16,7 @@ import asia.chiase.core.util.CCStringUtil;
 import trente.asia.calendar.BuildConfig;
 import trente.asia.calendar.R;
 import trente.asia.welfare.adr.models.UserModel;
+import trente.asia.welfare.adr.utils.WelfareUtil;
 import trente.asia.welfare.adr.utils.WfPicassoHelper;
 
 /**
@@ -27,10 +28,12 @@ import trente.asia.welfare.adr.utils.WfPicassoHelper;
 public class UserListLinearLayout extends LinearLayout{
 
 	private static final int	OWNER_USER_DISTANCE_DP	= 10;
+	private static final int	AVATAR_IMG_MARGIN_PX	= WelfareUtil.dpToPx(2);
 	private Context				mContext;
 	private boolean				isGravityLeft			= false;
 
 	private List<UserModel>		lstUser;
+
 	// private UserModel ownerUser;
 
 	public void setGravityLeft(boolean gravityLeft){
@@ -111,6 +114,7 @@ public class UserListLinearLayout extends LinearLayout{
 		if(!CCStringUtil.isEmpty(userModel.avatarPath)){
 			ImageView imgAvatar = (ImageView)userItemView.findViewById(R.id.img_id_avatar);
 			LayoutParams layoutParams = new LayoutParams(imageSize, imageSize);
+			layoutParams.setMargins(0, 0, AVATAR_IMG_MARGIN_PX, 0);
 			imgAvatar.setLayoutParams(layoutParams);
 			WfPicassoHelper.loadImage(mContext, BuildConfig.HOST + userModel.avatarPath, imgAvatar, null);
 		}
