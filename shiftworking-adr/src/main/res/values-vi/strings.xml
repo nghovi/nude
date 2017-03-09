@@ -67,6 +67,16 @@
     <string name="sw_msg_no_project">Dự án chưa được thiết lập</string>
 
     <!--Notifications-->
+    <string name="FM_SW_001">Đã nhận được thông báo mới</string>
+    <string name="FM_SW_002">Bạn vẫn chưa checkin</string>
+    <string name="FM_SW_003">Bạn vẫn chưa checkout</string>
+    <string name="FM_SW_0041">%1$s:đã vượt quá thời gian làm thêm</string>
+    <string name="FM_SW_0042">Người dùng %1$s đã vượt quá thời gian làm thêm</string>
+    <string name="FM_SW_005">Dự định làm việc đã được cập nhập</string>
+    <string name="FM_SW_006">Đăng ký đã bị hủy</string>
+    <string name="FM_SW_007">Có đăng ký mới</string>
+    <string name="FM_SW_008">Đăng ký đã được phê duyệt</string>
+    <string name="FM_SW_009">Phê duyệt đã bị hủy</string>
 
     <!--Work transit service-->
     <string name="sw_work_transit_entry_title">Nhập thông tin đi lại</string>

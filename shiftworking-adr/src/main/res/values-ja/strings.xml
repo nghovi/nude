@@ -67,6 +67,16 @@
     <string name="sw_msg_no_project">プロジェクトが設定されていません</string>
 
     <!--Notifications-->
+    <string name="FM_SW_001">新しい勤怠お知らせを受け取りました</string>
+    <string name="FM_SW_002">まだチェックインしていません</string>
+    <string name="FM_SW_003">まだチェックアウトしていません</string>
+    <string name="FM_SW_0041">%1$s:残業時間を超えました</string>
+    <string name="FM_SW_0042">%1$sユーザーが残業時間を超えました</string>
+    <string name="FM_SW_005">勤怠予定が更新されました</string>
+    <string name="FM_SW_006">申請が却下されました</string>
+    <string name="FM_SW_007">新しい申請があります</string>
+    <string name="FM_SW_008">申請が承認されました</string>
+    <string name="FM_SW_009">承認が却下されました</string>
 
     <!--Work transit service-->
     <string name="sw_work_transit_entry_title">勤務交通エントリー</string>

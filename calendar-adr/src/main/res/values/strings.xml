@@ -74,4 +74,9 @@
     <string name="offer_title">Work offers</string>
     <string name="no_schedule">No schedule</string>
 
+    <!--Notifications-->
+    <string name="FM_CL_001">You have new schedule</string>
+    <string name="FM_CL_002">You have update schedule</string>
+    <string name="FM_CL_003">You have some schedules today.</string>
+
 </resources>

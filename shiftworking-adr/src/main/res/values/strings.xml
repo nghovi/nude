@@ -64,6 +64,16 @@
     <string name="sw_msg_no_project">You don’t have project.</string>
 
     <!--Notifications-->
+    <string name="FM_SW_001">You have new work notice</string>
+    <string name="FM_SW_002">You haven\'t check in yet</string>
+    <string name="FM_SW_003">You haven\'t check out yet</string>
+    <string name="FM_SW_0041">%1$s: limit overtime</string>
+    <string name="FM_SW_0042">%1$s users: limit overtime</string>
+    <string name="FM_SW_005">Your shift work is updated</string>
+    <string name="FM_SW_006">Your offer is rejected</string>
+    <string name="FM_SW_007">You have new offer</string>
+    <string name="FM_SW_008">Your offer is approved</string>
+    <string name="FM_SW_009">Your approve is rejected</string>
 
     <string name="sw_work_offer_history">My offer history</string>
 
