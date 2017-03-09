@@ -170,7 +170,7 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 					for(MonthlyCalendarRowView rowView : lstCalendarRow){
 						String minDay = rowView.lstCalendarDay.get(0).day;
 						String maxDay = rowView.lstCalendarDay.get(rowView.lstCalendarDay.size() - 1).day;
-						if(ClUtil.belongPeriod(WelfareUtil.makeDate(model.startDate), minDay, maxDay) || ClUtil.belongPeriod(WelfareUtil.makeDate(model.endDate), minDay, maxDay)){
+						if(ClUtil.belongPeriod(WelfareFormatUtil.makeDate(model.startDate), minDay, maxDay) || ClUtil.belongPeriod(WelfareFormatUtil.makeDate(model.endDate), minDay, maxDay)){
 							rowView.addSchedule(model, lstCategory);
 						}
 					}
