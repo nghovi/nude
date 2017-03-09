@@ -1,6 +1,7 @@
 package trente.asia.calendar.services.calendar;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -19,6 +20,7 @@ import asia.chiase.core.util.CCBooleanUtil;
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
+import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.define.CsConst;
 import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.R;
@@ -83,7 +85,10 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 	}
 
 	protected List<Date> getAllDate(){
-		int firstDay = Integer.parseInt(prefAccUtil.getSetting().CL_START_DAY_IN_WEEK);
+        int firstDay = Calendar.SUNDAY;
+        if(!CCStringUtil.isEmpty(prefAccUtil.getSetting().CL_START_DAY_IN_WEEK)){
+            firstDay = Integer.parseInt(prefAccUtil.getSetting().CL_START_DAY_IN_WEEK);
+        }
 		return CsDateUtil.getAllDate4Month(CCDateUtil.makeCalendar(selectedDate), firstDay);
 	}
 

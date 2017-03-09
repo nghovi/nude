@@ -1,5 +1,6 @@
 package trente.asia.calendar.services.calendar;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -16,6 +17,7 @@ import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCNumberUtil;
+import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.activity.ChiaseActivity;
 import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.R;
@@ -70,8 +72,12 @@ public class DailyPageFragment extends SchedulesPageListViewFragment implements 
 
 	@Override
 	protected List<Date> getAllDate(){
+        int firstDay = Calendar.SUNDAY;
+        if(!CCStringUtil.isEmpty(prefAccUtil.getSetting().CL_START_DAY_IN_WEEK)){
+            firstDay = Integer.parseInt(prefAccUtil.getSetting().CL_START_DAY_IN_WEEK);
+        }
 		Date firstDateOfMonth = CCDateUtil.makeDateWithFirstday(selectedDate);
-		List<Date> dates = CsDateUtil.getAllDate4Month(CCDateUtil.makeCalendar(firstDateOfMonth), CCNumberUtil.toInteger(prefAccUtil.getSetting().CL_START_DAY_IN_WEEK));
+		List<Date> dates = CsDateUtil.getAllDate4Month(CCDateUtil.makeCalendar(firstDateOfMonth), firstDay);
 		return dates;
 	}
 
