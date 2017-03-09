@@ -13,8 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCFormatUtil;
+import trente.asia.android.activity.ChiaseActivity;
 import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
@@ -25,6 +27,7 @@ import trente.asia.calendar.services.calendar.listener.OnChangeCalendarUserListe
 import trente.asia.calendar.services.calendar.view.NavigationHeader;
 import trente.asia.calendar.services.calendar.view.PageSharingHolder;
 import trente.asia.calendar.services.calendar.view.SchedulesPagerAdapter;
+import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.view.WfSlideMenuLayout;
@@ -136,6 +139,21 @@ public abstract class PageContainerFragment extends AbstractClFragment{
 		calendarListFragment.setOnChangeCalendarListener(onChangeCalendarListener);
 		transaction.replace(R.id.slice_menu_board, calendarListFragment).commit();
 	}
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        boolean isUpdate = CCConst.YES.equals(((WelfareActivity)activity).dataMap.get(ClConst.ACTION_SCHEDULE_UPDATE));
+        boolean isDelete = CCConst.YES.equals(((WelfareActivity)activity).dataMap.get(ClConst.ACTION_SCHEDULE_DELETE));
+        if(isUpdate || isDelete){
+            ((WelfareActivity)activity).dataMap.clear();
+            if(holder.selectedPagePosition != INITIAL_POSITION){
+                // load schedule list
+                SchedulesPageFragment fragment = (SchedulesPageFragment)mPagerAdapter.getItem(holder.selectedPagePosition);
+                fragment.loadScheduleList();
+            }
+        }
+    }
 
 	protected void setActiveDate(int position){
 		Date activeDate = CsDateUtil.addWeek(TODAY, position - INITIAL_POSITION);

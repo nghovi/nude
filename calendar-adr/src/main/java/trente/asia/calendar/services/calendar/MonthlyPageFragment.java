@@ -82,12 +82,7 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 		if(mRootView == null){
 			mRootView = inflater.inflate(R.layout.fragment_monthly_page, container, false);
 		}else{
-			boolean isUpdate = CCConst.YES.equals(((WelfareActivity)activity).dataMap.get(ClConst.ACTION_SCHEDULE_UPDATE));
-			boolean isDelete = CCConst.YES.equals(((WelfareActivity)activity).dataMap.get(ClConst.ACTION_SCHEDULE_DELETE));
-			if(isUpdate || isDelete){
-				((WelfareActivity)activity).dataMap.clear();
-				((ChiaseActivity)activity).isInitData = true;
-			}
+
 		}
 		return mRootView;
 	}
