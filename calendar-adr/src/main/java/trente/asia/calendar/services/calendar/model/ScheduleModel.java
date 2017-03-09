@@ -95,9 +95,9 @@ public class ScheduleModel{
 			return false;
 		}
 
-		String startDateFormat = WelfareFormatUtil.formatDate(WelfareUtil.makeDate(startDate));
-		String endDateFormat = WelfareFormatUtil.formatDate(WelfareUtil.makeDate(endDate));
-		return !startDateFormat.equals(endDateFormat);
+//		String startDateFormat = WelfareFormatUtil.formatDate(WelfareUtil.makeDate(startDate));
+//		String endDateFormat = WelfareFormatUtil.formatDate(WelfareUtil.makeDate(endDate));
+		return !startDate.equals(endDate);
 	}
 
 	public String getScheduleColor(List<CategoryModel> lstCategory){

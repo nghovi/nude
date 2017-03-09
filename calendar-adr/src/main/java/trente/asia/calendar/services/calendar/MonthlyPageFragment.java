@@ -56,14 +56,14 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 
 		@Override
 		public int compare(ScheduleModel schedule1, ScheduleModel schedule2){
-			Date startDate1 = WelfareUtil.makeDate(schedule1.startDate);
-			Date endDate1 = WelfareUtil.makeDate(schedule1.endDate);
+//			Date startDate1 = WelfareUtil.makeDate(schedule1.startDate);
+//			Date endDate1 = WelfareUtil.makeDate(schedule1.endDate);
+//
+//			Date startDate2 = WelfareUtil.makeDate(schedule2.startDate);
+//			Date endDate2 = WelfareUtil.makeDate(schedule2.endDate);
 
-			Date startDate2 = WelfareUtil.makeDate(schedule2.startDate);
-			Date endDate2 = WelfareUtil.makeDate(schedule2.endDate);
-
-			boolean diff1 = WelfareFormatUtil.formatDate(startDate1).equals(WelfareFormatUtil.formatDate(endDate1));
-			boolean diff2 = WelfareFormatUtil.formatDate(startDate2).equals(WelfareFormatUtil.formatDate(endDate2));
+			boolean diff1 = schedule1.startDate.equals(schedule1.endDate);
+			boolean diff2 = schedule2.startDate.equals(schedule2.endDate);
 
 			if(!diff1 && diff2) return -1;
 			if(diff1 && !diff2) return 1;
