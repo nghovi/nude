@@ -16,7 +16,6 @@ import android.widget.TextView;
 import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCFormatUtil;
-import trente.asia.android.activity.ChiaseActivity;
 import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
@@ -140,20 +139,20 @@ public abstract class PageContainerFragment extends AbstractClFragment{
 		transaction.replace(R.id.slice_menu_board, calendarListFragment).commit();
 	}
 
-    @Override
-    public void onResume(){
-        super.onResume();
-        boolean isUpdate = CCConst.YES.equals(((WelfareActivity)activity).dataMap.get(ClConst.ACTION_SCHEDULE_UPDATE));
-        boolean isDelete = CCConst.YES.equals(((WelfareActivity)activity).dataMap.get(ClConst.ACTION_SCHEDULE_DELETE));
-        if(isUpdate || isDelete){
-            ((WelfareActivity)activity).dataMap.clear();
-            if(holder.selectedPagePosition != INITIAL_POSITION){
-                // load schedule list
-                SchedulesPageFragment fragment = (SchedulesPageFragment)mPagerAdapter.getItem(holder.selectedPagePosition);
-                fragment.loadScheduleList();
-            }
-        }
-    }
+	@Override
+	public void onResume(){
+		super.onResume();
+		boolean isUpdate = CCConst.YES.equals(((WelfareActivity)activity).dataMap.get(ClConst.ACTION_SCHEDULE_UPDATE));
+		boolean isDelete = CCConst.YES.equals(((WelfareActivity)activity).dataMap.get(ClConst.ACTION_SCHEDULE_DELETE));
+		if(isUpdate || isDelete){
+			((WelfareActivity)activity).dataMap.clear();
+			// if(holder.selectedPagePosition != INITIAL_POSITION){
+			// load schedule list
+			SchedulesPageFragment fragment = (SchedulesPageFragment)mPagerAdapter.getItem(holder.selectedPagePosition);
+			fragment.loadScheduleList();
+			// }
+		}
+	}
 
 	protected void setActiveDate(int position){
 		Date activeDate = CsDateUtil.addWeek(TODAY, position - INITIAL_POSITION);
