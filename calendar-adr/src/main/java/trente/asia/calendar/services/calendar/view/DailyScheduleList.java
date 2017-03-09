@@ -37,24 +37,25 @@ import trente.asia.welfare.adr.view.SelectableRoundedImageView;
 
 public class DailyScheduleList extends LinearLayout{
 
-	private static final String									TIME_NOON				= "12:00";
-	private static final Integer								SCHEDULES_ALL_DAY		= 1;
-	private static final Integer								SCHEDULES_MORNING		= 2;
-	private static final Integer								SCHEDULES_AFTERNOON		= 3;
-	private static final int									MARGIN_LEFT_RIGHT		= WelfareUtil.dpToPx(16);
-	private static final int									MARGIN_TEXT_TOP_BOTTOM	= WelfareUtil.dpToPx(4);
-	private static final int									MARGIN_TOP_BOTTOM		= WelfareUtil.dpToPx(4);
+	private static final String										TIME_NOON				= "12:00";
+	private static final Integer									SCHEDULES_ALL_DAY		= 1;
+	private static final Integer									SCHEDULES_MORNING		= 2;
+	private static final Integer									SCHEDULES_AFTERNOON		= 3;
+	private static final int										MARGIN_LEFT_RIGHT		= WelfareUtil.dpToPx(16);
+	private static final int										MARGIN_TEXT_TOP_BOTTOM	= WelfareUtil.dpToPx(4);
+	private static final int										MARGIN_TOP_BOTTOM		= WelfareUtil.dpToPx(4);
 
-	private LinearLayout										lnrOffers;
+	private LinearLayout											lnrOffers;
 
-	private Map<Integer, List<ScheduleModel>>					schedulesMap;
-	private LayoutInflater										inflater;
-	private List<ScheduleModel>									lstSchedule;
-	private Date												selectedDate;
-	private CalendarDayListAdapter.OnScheduleItemClickListener	onScheduleItemClickListener;
+	private Map<Integer, List<ScheduleModel>>						schedulesMap;
+	private LayoutInflater											inflater;
+	private List<ScheduleModel>										lstSchedule;
+	private Date													selectedDate;
+	private WeeklyScheduleListAdapter.OnScheduleItemClickListener	onScheduleItemClickListener;
 
-	private LinearLayout										lnrHolidays;
-	private LinearLayout										lnrBirthdays;
+	private LinearLayout											lnrHolidays;
+	private LinearLayout											lnrBirthdays;
+	public boolean													hasDisplayedItem		= false;
 
 	public DailyScheduleList(Context context){
 		super(context);
@@ -64,7 +65,7 @@ public class DailyScheduleList extends LinearLayout{
 		super(context, attrs);
 	}
 
-	public void init(LayoutInflater inflater, CalendarDayListAdapter.OnScheduleItemClickListener onScheduleItemClickListener){
+	public void init(LayoutInflater inflater, WeeklyScheduleListAdapter.OnScheduleItemClickListener onScheduleItemClickListener){
 		this.inflater = inflater;
 		this.onScheduleItemClickListener = onScheduleItemClickListener;
 		lnrHolidays = (LinearLayout)findViewById(R.id.lnr_daily_schedules_list_holiday);
@@ -95,6 +96,7 @@ public class DailyScheduleList extends LinearLayout{
 			for(HolidayModel holidayModel : holidayModelList){
 				LinearLayout holidayItem = buildHolidayItem(inflater, holidayModel, WelfareFragment.MARGIN_LEFT_RIGHT);
 				lnrHolidays.addView(holidayItem);
+				hasDisplayedItem = true;
 			}
 		}else{
 			lnrHolidays.setVisibility(View.GONE);
@@ -119,6 +121,7 @@ public class DailyScheduleList extends LinearLayout{
 			for(WorkOffer offer : workOffers){
 				LinearLayout birthdayItem = buildOfferItem(offer);
 				lnrOffers.addView(birthdayItem);
+				hasDisplayedItem = true;
 			}
 		}else{
 			lnrOffers.setVisibility(View.GONE);
@@ -161,6 +164,7 @@ public class DailyScheduleList extends LinearLayout{
 			for(UserModel user : birthdayUsers){
 				LinearLayout birthdayItem = buildBirthdayItem(user);
 				lnrBirthdays.addView(birthdayItem);
+				hasDisplayedItem = true;
 			}
 		}else{
 			lnrBirthdays.setVisibility(View.GONE);
@@ -216,9 +220,10 @@ public class DailyScheduleList extends LinearLayout{
 	}
 
 	private void buildScheduleItem(LinearLayout lnrParent, ScheduleModel scheduleModel){
-		LinearLayout item = (LinearLayout)CalendarDayListAdapter.buildScheduleItem(getContext(), this.inflater, scheduleModel, onScheduleItemClickListener, WelfareFormatUtil.formatDate(selectedDate));
+		LinearLayout item = (LinearLayout)WeeklyScheduleListAdapter.buildScheduleItem(getContext(), this.inflater, scheduleModel, onScheduleItemClickListener, WelfareFormatUtil.formatDate(selectedDate));
 		item.setPadding(MARGIN_LEFT_RIGHT, 0, MARGIN_LEFT_RIGHT, 0);
 		lnrParent.addView(item);
+		hasDisplayedItem = true;
 	}
 
 	private Map<Integer, List<ScheduleModel>> getDisplayedSchedulesMaps(){

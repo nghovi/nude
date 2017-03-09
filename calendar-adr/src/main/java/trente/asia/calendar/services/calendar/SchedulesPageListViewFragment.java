@@ -12,6 +12,7 @@ import android.graphics.Color;
 
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
+import asia.chiase.core.util.CCFormatUtil;
 import trente.asia.android.define.CsConst;
 import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.services.calendar.model.CalendarDayModel;
@@ -90,6 +91,7 @@ public abstract class SchedulesPageListViewFragment extends SchedulesPageFragmen
 				calendarDayModel = new CalendarDayModel();
 				calendarDayModel.date = scheduleModel.startDate;
 				calendarDayModel.schedules = new ArrayList<>();
+				calendarDayModel.holidayModels = new ArrayList<>();
 				calendarDayModel.schedules.add(scheduleModel);
 				calendarDayModels.add(calendarDayModel);
 			}else{
@@ -98,10 +100,11 @@ public abstract class SchedulesPageListViewFragment extends SchedulesPageFragmen
 		}
 
 		for(HolidayModel holidayModel : lstHoliday){
-			CalendarDayModel calendarDayModel = getCalendarDayModel(holidayModel.startDate, calendarDayModels);
+			String date = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, CCDateUtil.makeDateCustom(holidayModel.startDate, WelfareConst.WL_DATE_TIME_1));
+			CalendarDayModel calendarDayModel = getCalendarDayModel(date, calendarDayModels);
 			if(calendarDayModel == null){
 				calendarDayModel = new CalendarDayModel();
-				calendarDayModel.date = holidayModel.startDate;
+				calendarDayModel.date = date;
 				calendarDayModel.schedules = new ArrayList<>();
 				calendarDayModel.holidayModels = new ArrayList<>();
 				calendarDayModel.holidayModels.add(holidayModel);

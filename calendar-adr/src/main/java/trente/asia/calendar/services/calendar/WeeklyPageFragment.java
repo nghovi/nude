@@ -15,14 +15,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import asia.chiase.core.define.CCConst;
-import asia.chiase.core.util.CCBooleanUtil;
 import asia.chiase.core.util.CCDateUtil;
 import trente.asia.android.activity.ChiaseActivity;
 import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.services.calendar.model.CalendarDayModel;
-import trente.asia.calendar.services.calendar.view.CalendarDayListAdapter;
+import trente.asia.calendar.services.calendar.view.WeeklyScheduleListAdapter;
 import trente.asia.calendar.services.calendar.view.CalendarDayView;
 import trente.asia.calendar.services.calendar.view.CalendarView;
 import trente.asia.calendar.services.calendar.view.WeeklyCalendarDayView;
@@ -37,7 +36,7 @@ import trente.asia.welfare.adr.activity.WelfareActivity;
 public class WeeklyPageFragment extends SchedulesPageListViewFragment implements ObservableScrollViewCallbacks,CalendarView.OnCalendarDaySelectedListener,CalendarDayView.OnDayClickListener{
 
 	protected ObservableListView		observableListView;
-	protected CalendarDayListAdapter	adapter;
+	protected WeeklyScheduleListAdapter adapter;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -68,7 +67,7 @@ public class WeeklyPageFragment extends SchedulesPageListViewFragment implements
 
 	protected void updateObservableScrollableView(){
 		List<CalendarDayModel> displayedModels = getDisplayedDayForList();
-		adapter = new CalendarDayListAdapter(activity, R.layout.item_calendar_day, displayedModels, lstHoliday, this);
+		adapter = new WeeklyScheduleListAdapter(activity, R.layout.item_calendar_day, displayedModels, lstHoliday, this);
 		observableListView.setAdapter(adapter);
 	}
 

@@ -37,9 +37,25 @@
             android:src="@drawable/cl_action_add"/>
     </LinearLayout>
 
+
     <ScrollView android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-        <include layout="@layout/view_daily_schedules"/>
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="match_parent"
+                      android:gravity="center_vertical"
+                      android:orientation="vertical">
+
+            <TextView android:id="@+id/txt_dialog_common_daily_summary_no_schedule"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:gravity="center"
+                      android:textSize="18sp"
+                      android:paddingBottom="@dimen/margin_100dp"
+                      android:paddingTop="@dimen/margin_100dp"
+                      android:text="@string/no_schedule"/>
+
+            <include layout="@layout/view_daily_schedules"/>
+        </LinearLayout>
     </ScrollView>
 
 </LinearLayout>

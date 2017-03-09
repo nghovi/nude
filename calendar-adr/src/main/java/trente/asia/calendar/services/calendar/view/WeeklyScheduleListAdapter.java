@@ -33,7 +33,7 @@ import trente.asia.welfare.adr.view.SelectableRoundedImageView;
 /**
  * Created by viet on 5/13/2016.
  */
-public class CalendarDayListAdapter extends ArrayAdapter<CalendarDayModel>{
+public class WeeklyScheduleListAdapter extends ArrayAdapter<CalendarDayModel>{
 
 	private List<CalendarDayModel>		calendarDayModels;
 	private List<HolidayModel>			holidayModels	= new ArrayList<>();
@@ -47,7 +47,7 @@ public class CalendarDayListAdapter extends ArrayAdapter<CalendarDayModel>{
 		void onClickScheduleItem(ScheduleModel schedule, Date selectedDate);
 	}
 
-	public CalendarDayListAdapter(Context context, int resource, List<CalendarDayModel> objects, List<HolidayModel> holidayModels, OnScheduleItemClickListener onScheduleItemClickListener){
+	public WeeklyScheduleListAdapter(Context context, int resource, List<CalendarDayModel> objects, List<HolidayModel> holidayModels, OnScheduleItemClickListener onScheduleItemClickListener){
 		super(context, resource, objects);
 		this.calendarDayModels = objects;
 		this.holidayModels = holidayModels;

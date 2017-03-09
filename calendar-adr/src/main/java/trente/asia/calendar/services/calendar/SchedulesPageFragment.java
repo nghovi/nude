@@ -35,7 +35,7 @@ import trente.asia.calendar.services.calendar.model.CategoryModel;
 import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.model.WorkOffer;
-import trente.asia.calendar.services.calendar.view.CalendarDayListAdapter;
+import trente.asia.calendar.services.calendar.view.WeeklyScheduleListAdapter;
 import trente.asia.calendar.services.calendar.view.NavigationHeader;
 import trente.asia.calendar.services.calendar.view.PageSharingHolder;
 import trente.asia.welfare.adr.activity.WelfareActivity;
@@ -48,7 +48,7 @@ import trente.asia.welfare.adr.models.UserModel;
  *
  * @author TrungND
  */
-public abstract class SchedulesPageFragment extends AbstractClFragment implements CalendarDayListAdapter.OnScheduleItemClickListener,NavigationHeader.OnAddBtnClickedListener{
+public abstract class SchedulesPageFragment extends AbstractClFragment implements WeeklyScheduleListAdapter.OnScheduleItemClickListener,NavigationHeader.OnAddBtnClickedListener{
 
 	protected Date							selectedDate;
 	protected List<Date>					dates;

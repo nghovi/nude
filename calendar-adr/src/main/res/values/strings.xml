@@ -72,5 +72,6 @@
     <string name="birthday_title">Birthdays</string>
     <string name="holiday_title">Holiday</string>
     <string name="offer_title">Work offers</string>
+    <string name="no_schedule">No schedule</string>
 
 </resources>
