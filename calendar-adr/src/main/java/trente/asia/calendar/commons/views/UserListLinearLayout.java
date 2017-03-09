@@ -54,7 +54,7 @@ public class UserListLinearLayout extends LinearLayout{
 		this.setOrientation(HORIZONTAL);
 	}
 
-	public void show(List<UserModel> lstUser, int imageSize){
+	public void show(List<UserModel> lstUser, int imageSizePx){
 		// lstUser = sortByOwner(lstUser);
 		if(isGravityLeft){
 			this.setGravity(Gravity.LEFT);
@@ -66,22 +66,22 @@ public class UserListLinearLayout extends LinearLayout{
 			// this.setLayoutParams(params);
 
 			// image size 20 x 20:
-			int maxUserNumber = (int)(this.getWidth() / imageSize);
+			int maxUserNumber = (int)(this.getWidth() / (imageSizePx + AVATAR_IMG_MARGIN_PX));
 			if(lstUser.size() <= maxUserNumber){
 				for(UserModel userModel : lstUser){
-					addUserView(userModel, imageSize);
+					addUserView(userModel, imageSizePx);
 				}
 			}else{
 				for(int index = 0; index < maxUserNumber - 1; index++){
 					UserModel userModel = lstUser.get(index);
-					addUserView(userModel, imageSize);
+					addUserView(userModel, imageSizePx);
 				}
 
 				// add text
 				TextView txtSchedule = new TextView(mContext);
 				// int textDimension = (int)mContext.getResources()
 				// .getDimension(R.dimen.margin_40dp);
-				LayoutParams textLayout = new LayoutParams(imageSize, imageSize);
+				LayoutParams textLayout = new LayoutParams(imageSizePx, imageSizePx);
 				txtSchedule.setLayoutParams(textLayout);
 				int textSize = (int)(getResources().getDimension(R.dimen.margin_20dp) / getResources().getDisplayMetrics().density);
 				txtSchedule.setTextSize(textSize);
@@ -108,12 +108,12 @@ public class UserListLinearLayout extends LinearLayout{
 	// return result;
 	// }
 
-	private void addUserView(UserModel userModel, int imageSize){
+	private void addUserView(UserModel userModel, int imageSizePx){
 		LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View userItemView = inflater.inflate(R.layout.view_user_item, null);
 		if(!CCStringUtil.isEmpty(userModel.avatarPath)){
 			ImageView imgAvatar = (ImageView)userItemView.findViewById(R.id.img_id_avatar);
-			LayoutParams layoutParams = new LayoutParams(imageSize, imageSize);
+			LayoutParams layoutParams = new LayoutParams(imageSizePx, imageSizePx);
 			layoutParams.setMargins(0, 0, AVATAR_IMG_MARGIN_PX, 0);
 			imgAvatar.setLayoutParams(layoutParams);
 			WfPicassoHelper.loadImage(mContext, BuildConfig.HOST + userModel.avatarPath, imgAvatar, null);
