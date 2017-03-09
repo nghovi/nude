@@ -14,7 +14,7 @@
         android:layout_height="@dimen/margin_24dp"
         android:layout_marginRight="@dimen/margin_10dp"
         android:scaleType="fitXY"
-        android:src="@drawable/cl_icon_holiday"/>
+        android:src="@drawable/cl_icon_birthday"/>
 
     <trente.asia.welfare.adr.view.SelectableRoundedImageView
         android:id="@+id/img_item_birthday_user"

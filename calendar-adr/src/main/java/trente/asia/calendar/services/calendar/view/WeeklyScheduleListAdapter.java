@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import asia.chiase.core.util.CCBooleanUtil;
 import asia.chiase.core.util.CCCollectionUtil;
+import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.calendar.BuildConfig;
 import trente.asia.calendar.R;
@@ -25,6 +26,7 @@ import trente.asia.calendar.commons.views.UserListLinearLayout;
 import trente.asia.calendar.services.calendar.model.CalendarDayModel;
 import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
+import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 import trente.asia.welfare.adr.utils.WfPicassoHelper;
@@ -71,7 +73,7 @@ public class WeeklyScheduleListAdapter extends ArrayAdapter<CalendarDayModel>{
 			viewHolder = (ViewHolder)convertView.getTag();
 		}
 		CalendarDayModel calendarDay = getItem(position);
-		viewHolder.txtDay.setText(calendarDay.date);
+		viewHolder.txtDay.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, calendarDay.date));
 		buildScheduleList(viewHolder, calendarDay);
 		buildHolidays(viewHolder, calendarDay);
 		return convertView;
@@ -95,7 +97,7 @@ public class WeeklyScheduleListAdapter extends ArrayAdapter<CalendarDayModel>{
 		}
 	}
 
-	public static View buildScheduleItem(final Context context, LayoutInflater layoutInflater, final ScheduleModel schedule, final OnScheduleItemClickListener onScheduleItemClickListener, final String selectedDate){
+	public static View buildScheduleItem(final Context context, LayoutInflater layoutInflater, final ScheduleModel schedule, final OnScheduleItemClickListener onScheduleItemClickListener, final Date selectedDate){
 		LinearLayout lnrSchedulesContainer = (LinearLayout)layoutInflater.inflate(R.layout.item_schedule, null);
 		TextView txtScheduleTime = (TextView)lnrSchedulesContainer.findViewById(R.id.txt_item_schedule_time);
 		String time;
@@ -154,7 +156,7 @@ public class WeeklyScheduleListAdapter extends ArrayAdapter<CalendarDayModel>{
 			@Override
 			public void onClick(View v){
 
-				onScheduleItemClickListener.onClickScheduleItem(schedule, WelfareFormatUtil.makeDate(selectedDate));
+				onScheduleItemClickListener.onClickScheduleItem(schedule, selectedDate);
 			}
 		});
 

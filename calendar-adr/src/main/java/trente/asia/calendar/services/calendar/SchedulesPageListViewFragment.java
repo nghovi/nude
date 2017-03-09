@@ -11,7 +11,6 @@ import org.json.JSONObject;
 import android.graphics.Color;
 
 import asia.chiase.core.util.CCCollectionUtil;
-import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import trente.asia.android.define.CsConst;
 import trente.asia.android.util.CsDateUtil;
@@ -21,6 +20,7 @@ import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.view.CalendarDayView;
 import trente.asia.calendar.services.calendar.view.WeeklyCalendarHeaderRowView;
 import trente.asia.welfare.adr.define.WelfareConst;
+import trente.asia.welfare.adr.utils.WelfareUtil;
 
 /**
  * WeeklyPageFragment
@@ -76,7 +76,7 @@ public abstract class SchedulesPageListViewFragment extends SchedulesPageFragmen
 	@Override
 	protected void clearOldData(){
 		for(CalendarDayView dayView : calendarDayViews){
-			CalendarDayModel calendarDayModel = getCalendarDayModel(dayView.dayStr, calendarDayModels);
+			CalendarDayModel calendarDayModel = getCalendarDayModel(dayView.getDate(), calendarDayModels);
 			dayView.setData(calendarDayModel, this, lstHoliday);
 		}
 	}
@@ -86,10 +86,11 @@ public abstract class SchedulesPageListViewFragment extends SchedulesPageFragmen
 	public List<CalendarDayModel> buildCalendarDayModels(List<ScheduleModel> schedules){
 		List<CalendarDayModel> calendarDayModels = new ArrayList<>();
 		for(ScheduleModel scheduleModel : schedules){
-			CalendarDayModel calendarDayModel = getCalendarDayModel(scheduleModel.startDate, calendarDayModels);
+			Date date = WelfareUtil.makeDate(scheduleModel.startDate);
+			CalendarDayModel calendarDayModel = getCalendarDayModel(date, calendarDayModels);
 			if(calendarDayModel == null){
 				calendarDayModel = new CalendarDayModel();
-				calendarDayModel.date = scheduleModel.startDate;
+				calendarDayModel.date = date;
 				calendarDayModel.schedules = new ArrayList<>();
 				calendarDayModel.holidayModels = new ArrayList<>();
 				calendarDayModel.schedules.add(scheduleModel);
@@ -100,7 +101,7 @@ public abstract class SchedulesPageListViewFragment extends SchedulesPageFragmen
 		}
 
 		for(HolidayModel holidayModel : lstHoliday){
-			String date = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, CCDateUtil.makeDateCustom(holidayModel.startDate, WelfareConst.WL_DATE_TIME_1));
+			Date date = WelfareUtil.makeDate(holidayModel.startDate);
 			CalendarDayModel calendarDayModel = getCalendarDayModel(date, calendarDayModels);
 			if(calendarDayModel == null){
 				calendarDayModel = new CalendarDayModel();
@@ -118,7 +119,7 @@ public abstract class SchedulesPageListViewFragment extends SchedulesPageFragmen
 
 			@Override
 			public int compare(CalendarDayModel left, CalendarDayModel right){
-				return CCDateUtil.makeDateCustom(left.date, WelfareConst.WL_DATE_TIME_7).compareTo(CCDateUtil.makeDateCustom(right.date, WelfareConst.WL_DATE_TIME_7));
+				return left.date.compareTo(right.date);
 			}
 		};
 
@@ -126,10 +127,10 @@ public abstract class SchedulesPageListViewFragment extends SchedulesPageFragmen
 		return calendarDayModels;
 	}
 
-	public CalendarDayModel getCalendarDayModel(String day, List<CalendarDayModel> calendarDayModels){
+	public CalendarDayModel getCalendarDayModel(Date date, List<CalendarDayModel> calendarDayModels){
 		if(!CCCollectionUtil.isEmpty(calendarDayModels)){
 			for(CalendarDayModel calendarDayModel : calendarDayModels){
-				if(calendarDayModel.date.equals(day)){
+				if(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, calendarDayModel.date).equals(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, date))){
 					return calendarDayModel;
 				}
 			}

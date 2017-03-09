@@ -1,5 +1,6 @@
 package trente.asia.calendar.services.calendar.model;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -8,7 +9,7 @@ import java.util.List;
 
 public class CalendarDayModel{
 
-	public String				date;
+	public Date					date;
 	public List<ScheduleModel>	schedules;
 	public List<HolidayModel>	holidayModels;
 }

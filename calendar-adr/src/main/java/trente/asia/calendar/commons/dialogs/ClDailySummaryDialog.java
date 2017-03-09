@@ -70,6 +70,7 @@ public class ClDailySummaryDialog extends ChiaseDialog{
 	public void show(final Date selectedDate, final List<ScheduleModel> scheduleModels, final List<UserModel> birthdayUsers, List<HolidayModel> holidayModels, List<WorkOffer> workOffers){
 		this.selectedDate = selectedDate;
 		txtHeader.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_CL_FULL, this.selectedDate));
+		dailyScheduleListView.hasDisplayedItem = false;
 		dailyScheduleListView.updateFor(selectedDate, scheduleModels, holidayModels, workOffers, birthdayUsers);
 		if(!dailyScheduleListView.hasDisplayedItem){
 			dailyScheduleListView.setVisibility(View.GONE);

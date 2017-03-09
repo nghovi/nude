@@ -1,7 +1,6 @@
 package trente.asia.calendar.services.calendar;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -17,7 +16,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import asia.chiase.core.util.CCBooleanUtil;
-import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
@@ -92,6 +90,7 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 		try{
 			if(schedule != null){
 				jsonObject.put("key", schedule.key);
+				jsonObject.put("searchDateString", CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, WelfareUtil.makeDate(schedule.startDate)));
 			}
 			jsonObject.put("calendars", prefAccUtil.get(ClConst.SELECTED_CALENDAR_STRING));
 		}catch(JSONException e){
@@ -138,9 +137,9 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 				txtStartTime.setVisibility(View.INVISIBLE);
 				txtEndTime.setVisibility(View.INVISIBLE);
 			}else{
-                txtStartTime.setVisibility(View.VISIBLE);
-                txtEndTime.setVisibility(View.VISIBLE);
-            }
+				txtStartTime.setVisibility(View.VISIBLE);
+				txtEndTime.setVisibility(View.VISIBLE);
+			}
 
 			CategoryModel categoryModel = ClUtil.findCategory4Id(categories, schedule.categoryId);
 			if(categoryModel != null){
@@ -161,11 +160,11 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 			txtEndDate.setText(WelfareFormatUtil.formatDate(endDate));
 			txtEndTime.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_9, endDate));
 
-//            show repeat data
-            if(ClRepeatUtil.isRepeat(schedule.repeatType)){
-                ScheduleRepeatModel repeatModel = new ScheduleRepeatModel(schedule);
-                txtRepeat.setText(ClRepeatUtil.getRepeatDescription(repeatModel, activity));
-            }
+			// show repeat data
+			if(ClRepeatUtil.isRepeat(schedule.repeatType)){
+				ScheduleRepeatModel repeatModel = new ScheduleRepeatModel(schedule);
+				txtRepeat.setText(ClRepeatUtil.getRepeatDescription(repeatModel, activity));
+			}
 		}else{
 			txtCalendar.setText(calendars.get(0).calendarName);
 			txtCalendar.setValue(calendars.get(0).key);

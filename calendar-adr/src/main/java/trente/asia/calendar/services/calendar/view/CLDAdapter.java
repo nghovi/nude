@@ -22,7 +22,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.services.calendar.model.CalendarDayModel;
@@ -31,30 +30,30 @@ import trente.asia.welfare.adr.models.UserModel;
 
 public class CLDAdapter extends BaseAdapter{
 
-	private Context				mContext;
+	private Context					mContext;
 
-	private Calendar			month;
-	public GregorianCalendar	pmonth;						// view_dr_calendar instance for
+	private Calendar				month;
+	public GregorianCalendar		pmonth;						// view_dr_calendar instance for
 	// previous gregorianCalendar
 	/**
 	 * view_dr_calendar instance for previous gregorianCalendar for getting
 	 * complete view
 	 */
-	public GregorianCalendar	pmonthmaxset;
-	private GregorianCalendar	selectedDate;
-	int							firstDay;
-	int							maxWeeknumber;
-	int							maxP;
-	int							calMaxP;
-	int							mnthlength;
-	public List<Calendar>		dayString;
+	public GregorianCalendar		pmonthmaxset;
+	private GregorianCalendar		selectedDate;
+	int								firstDay;
+	int								maxWeeknumber;
+	int								maxP;
+	int								calMaxP;
+	int								mnthlength;
+	public List<Calendar>			dayString;
 	private List<CalendarDayModel>	calendarDays;
-	private List<Cell>			cells	= new ArrayList<>();
+	private List<Cell>				cells	= new ArrayList<>();
 
 	private class Cell{
 
-		public View			view;
-		public CalendarDayModel calendarDay;
+		public View				view;
+		public CalendarDayModel	calendarDay;
 
 		public Cell(View v, CalendarDayModel calendarDay){
 			this.view = v;
@@ -70,7 +69,7 @@ public class CLDAdapter extends BaseAdapter{
 		selectedDate = (GregorianCalendar)monthCalendar.clone();
 		mContext = c;
 		month.set(GregorianCalendar.DAY_OF_MONTH, 1);
-//		month.setFirstDayOfWeek(Calendar.WEDNESDAY);
+		// month.setFirstDayOfWeek(Calendar.WEDNESDAY);
 		refreshDays();
 	}
 
@@ -103,7 +102,7 @@ public class CLDAdapter extends BaseAdapter{
 		int dayColor = Color.BLACK;
 		RelativeLayout rltBackground = (RelativeLayout)v.findViewById(R.id.item_calendar_background);
 		Calendar c = Calendar.getInstance();
-		c.setTime(CCDateUtil.makeDateCustom(calendarDay.date, WelfareConst.WL_DATE_TIME_7));
+		c.setTime(calendarDay.date);
 		// if not current month
 		if(c.get(Calendar.MONTH) != month.get(Calendar.MONTH)){
 			dayColor = ContextCompat.getColor(mContext, R.color.ripple_material_dark);
@@ -172,7 +171,7 @@ public class CLDAdapter extends BaseAdapter{
 
 	public static CalendarDayModel getCalendarDay(Calendar calendar, List<CalendarDayModel> calendarDays){
 		for(CalendarDayModel calendarDay : calendarDays){
-			String day = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, CCDateUtil.makeDateCustom(calendarDay.date, WelfareConst.WL_DATE_TIME_7));
+			String day = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, calendarDay.date);
 			if(day.equals(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, calendar.getTime()))){
 				return calendarDay;
 			}
@@ -182,7 +181,7 @@ public class CLDAdapter extends BaseAdapter{
 
 	public static CalendarDayModel createEmptyCalendarDay(Calendar c, UserModel reportUser){
 		CalendarDayModel calendarDay = new CalendarDayModel();
-		calendarDay.date = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, c.getTime());
+		calendarDay.date = c.getTime();
 		return calendarDay;
 	}
 
@@ -191,10 +190,10 @@ public class CLDAdapter extends BaseAdapter{
 		int rowId = getRowId(date);
 		if(visible){
 			for(int i = 0; i < cells.size(); i++){
-				c.setTime(CCDateUtil.makeDateCustom(cells.get(i).calendarDay.date, WelfareConst.WL_DATE_TIME_7));
+				c.setTime(cells.get(i).calendarDay.date);
 				int cellRowId = i / 7;
 				if(cellRowId != rowId){
-					removeCell(cells.get(i).calendarDay.date);
+					removeCell(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, cells.get(i).calendarDay.date));
 				}
 			}
 		}else{
@@ -226,7 +225,7 @@ public class CLDAdapter extends BaseAdapter{
 
 	private int getRowId(String date){
 		for(int i = 0; i < cells.size(); i++){
-			if(date.equals(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, CCDateUtil.makeDateCustom(cells.get(i).calendarDay.date, WelfareConst.WL_DATE_TIME_7)))){
+			if(date.equals(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, cells.get(i).calendarDay.date))){
 				return i / 7;
 			}
 		}
