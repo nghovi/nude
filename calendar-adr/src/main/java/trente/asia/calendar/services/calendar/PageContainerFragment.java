@@ -142,6 +142,11 @@ public abstract class PageContainerFragment extends AbstractClFragment{
 	@Override
 	public void onResume(){
 		super.onResume();
+
+        if(mSlideMenuLayout.isMenuShown()){
+            mSlideMenuLayout.toggleMenu();
+        }
+
 		boolean isUpdate = CCConst.YES.equals(((WelfareActivity)activity).dataMap.get(ClConst.ACTION_SCHEDULE_UPDATE));
 		boolean isDelete = CCConst.YES.equals(((WelfareActivity)activity).dataMap.get(ClConst.ACTION_SCHEDULE_DELETE));
 		if(isUpdate || isDelete){
