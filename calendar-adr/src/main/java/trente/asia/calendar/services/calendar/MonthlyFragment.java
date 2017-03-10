@@ -41,7 +41,7 @@ public class MonthlyFragment extends PageContainerFragment{
 	protected void initView(){
 		super.initView();
 	}
-
+	
 	@Override
 	protected void setActiveDate(int position){
 		Date activeDate = CsDateUtil.addMonth(TODAY, position - INITIAL_POSITION);

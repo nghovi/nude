@@ -70,16 +70,16 @@ public class NavigationHeader extends LinearLayout{
 	private TextView	txtHeaderTitle;
 	private TextView	txtHeaderSubtitle;
 
-	public void updateHeaderTitles(String title, String subTitle){
+	public void updateMainHeaderTitle(String title){
 		if(txtHeaderTitle == null){
 			txtHeaderTitle = (TextView)findViewById(R.id.txt_id_header_title);
 		}
 
-		if(txtHeaderSubtitle == null){
-			txtHeaderSubtitle = (TextView)findViewById(R.id.txt_id_header_title_sub);
-		}
+		// if(txtHeaderSubtitle == null){
+		// txtHeaderSubtitle = (TextView)findViewById(R.id.txt_id_header_title_sub);
+		// }
 
 		txtHeaderTitle.setText(title);
-		txtHeaderSubtitle.setText(subTitle);
+		// txtHeaderSubtitle.setText(subTitle);
 	}
 }

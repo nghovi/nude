@@ -15,8 +15,6 @@ import android.widget.TextView;
 
 import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCCollectionUtil;
-import asia.chiase.core.util.CCFormatUtil;
-import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.fragments.AbstractClFragment;
@@ -27,7 +25,6 @@ import trente.asia.calendar.services.calendar.view.NavigationHeader;
 import trente.asia.calendar.services.calendar.view.PageSharingHolder;
 import trente.asia.calendar.services.calendar.view.SchedulesPagerAdapter;
 import trente.asia.welfare.adr.activity.WelfareActivity;
-import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.view.WfSlideMenuLayout;
 
@@ -143,9 +140,9 @@ public abstract class PageContainerFragment extends AbstractClFragment{
 	public void onResume(){
 		super.onResume();
 
-        if(mSlideMenuLayout.isMenuShown()){
-            mSlideMenuLayout.toggleMenu();
-        }
+		if(mSlideMenuLayout.isMenuShown()){
+			mSlideMenuLayout.toggleMenu();
+		}
 
 		boolean isUpdate = CCConst.YES.equals(((WelfareActivity)activity).dataMap.get(ClConst.ACTION_SCHEDULE_UPDATE));
 		boolean isDelete = CCConst.YES.equals(((WelfareActivity)activity).dataMap.get(ClConst.ACTION_SCHEDULE_DELETE));
@@ -160,11 +157,12 @@ public abstract class PageContainerFragment extends AbstractClFragment{
 	}
 
 	protected void setActiveDate(int position){
-		Date activeDate = CsDateUtil.addWeek(TODAY, position - INITIAL_POSITION);
-		prefAccUtil.saveActiveDate(activeDate);
-		String title = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_12, activeDate);
-		TextView txtHeaderTitle = (TextView)getView().findViewById(R.id.txt_id_header_title);
-		txtHeaderTitle.setText(title);
+		// Date activeDate = CsDateUtil.addMonth(TODAY, position - INITIAL_POSITION);
+		// prefAccUtil.set(ClConst.PREF_ACTIVE_DATE, CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, activeDate));
+		//
+		// String title = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_12, activeDate);
+		// TextView txtHeaderTitle = (TextView)getView().findViewById(R.id.txt_id_header_title);
+		// txtHeaderTitle.setText(title);
 	}
 
 	@Override

@@ -1,7 +1,6 @@
 package trente.asia.calendar.services.calendar;
 
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -18,10 +17,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
-import asia.chiase.core.util.CCNumberUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.activity.ChiaseFragment;
 import trente.asia.android.model.DayModel;
@@ -30,15 +27,12 @@ import trente.asia.calendar.BuildConfig;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.fragments.AbstractClFragment;
-import trente.asia.calendar.commons.utils.ClUtil;
 import trente.asia.calendar.services.calendar.listener.OnChangeCalendarUserListener;
 import trente.asia.calendar.services.calendar.model.CalendarModel;
 import trente.asia.calendar.services.calendar.model.CategoryModel;
 import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.model.WorkOffer;
-import trente.asia.calendar.services.calendar.view.MonthlyCalendarDayView;
-import trente.asia.calendar.services.calendar.view.MonthlyCalendarRowView;
 import trente.asia.calendar.services.calendar.view.NavigationHeader;
 import trente.asia.calendar.services.calendar.view.PageSharingHolder;
 import trente.asia.calendar.services.calendar.view.WeeklyScheduleListAdapter;
@@ -46,7 +40,6 @@ import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.models.UserModel;
-import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 
 /**
  * WeeklyPageFragment
@@ -104,10 +97,10 @@ public abstract class SchedulesPageFragment extends AbstractClFragment implement
 		LayoutInflater mInflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View titleView = mInflater.inflate(R.layout.monthly_calendar_title, null);
 		LinearLayout lnrRowTitle = (LinearLayout)titleView.findViewById(R.id.lnr_id_row_title);
-        int firstDay = Calendar.SUNDAY;
-        if(!CCStringUtil.isEmpty(prefAccUtil.getSetting().CL_START_DAY_IN_WEEK)){
-            firstDay = Integer.parseInt(prefAccUtil.getSetting().CL_START_DAY_IN_WEEK);
-        }
+		int firstDay = Calendar.SUNDAY;
+		if(!CCStringUtil.isEmpty(prefAccUtil.getSetting().CL_START_DAY_IN_WEEK)){
+			firstDay = Integer.parseInt(prefAccUtil.getSetting().CL_START_DAY_IN_WEEK);
+		}
 		List<DayModel> dayModels = CsDateUtil.getAllDay4Week(firstDay);
 		for(DayModel dayModel : dayModels){
 			View titleItem = mInflater.inflate(R.layout.monthly_calendar_title_item, null);
@@ -257,6 +250,10 @@ public abstract class SchedulesPageFragment extends AbstractClFragment implement
 		scheduleFormFragment.setSelectedDate(date);
 		ChiaseFragment parentFragment = (ChiaseFragment)getParentFragment();
 		parentFragment.gotoFragment(scheduleFormFragment);
+	}
+
+	protected String getUpperTitle(){
+		return CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_12, dates.get(0));
 	}
 
 	@Override
