@@ -236,6 +236,7 @@ public class ClScheduleRepeatDialog extends ChiaseDialog{
         }else if(ClConst.SCHEDULE_REPEAT_LIMIT_UNTIL.equals(repeatModel.repeatLimitType)){
             Date repeatEndDate = WelfareUtil.makeDate(repeatModel.repeatEnd);
             calendarLimit = CCDateUtil.makeCalendar(repeatEndDate);
+            datePickerDialogLimit.getDatePicker().updateDate(calendarLimit.get(Calendar.YEAR), calendarLimit.get(Calendar.MONTH), calendarLimit.get(Calendar.DAY_OF_MONTH));
 //            txtLimitUtil.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, repeatEndDate));
         }else{
             edtLimitTimes.setText(repeatModel.repeatInterval);
