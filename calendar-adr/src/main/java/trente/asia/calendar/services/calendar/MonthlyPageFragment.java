@@ -85,10 +85,10 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 	}
 
 	protected List<Date> getAllDate(){
-        int firstDay = Calendar.SUNDAY;
-        if(!CCStringUtil.isEmpty(prefAccUtil.getSetting().CL_START_DAY_IN_WEEK)){
-            firstDay = Integer.parseInt(prefAccUtil.getSetting().CL_START_DAY_IN_WEEK);
-        }
+		int firstDay = Calendar.SUNDAY;
+		if(!CCStringUtil.isEmpty(prefAccUtil.getSetting().CL_START_DAY_IN_WEEK)){
+			firstDay = Integer.parseInt(prefAccUtil.getSetting().CL_START_DAY_IN_WEEK);
+		}
 		return CsDateUtil.getAllDate4Month(CCDateUtil.makeCalendar(selectedDate), firstDay);
 	}
 
