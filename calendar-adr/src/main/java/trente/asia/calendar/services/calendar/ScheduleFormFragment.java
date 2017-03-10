@@ -381,6 +381,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 			jsonObject.put("key", schedule.key);
 			if(!CCStringUtil.isEmpty(modifyType)){
 				jsonObject.put("modifyType", modifyType);
+                jsonObject.put("targetDate", WelfareFormatUtil.formatDate(selectedDate));
 			}
 		}catch(JSONException e){
 			e.printStackTrace();
