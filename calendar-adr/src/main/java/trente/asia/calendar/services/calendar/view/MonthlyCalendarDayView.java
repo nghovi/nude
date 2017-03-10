@@ -107,12 +107,13 @@ public class MonthlyCalendarDayView extends LinearLayout{
 		}
 
 		LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ClConst.TEXT_VIEW_HEIGHT);
+        layoutParams.setMargins(1, 0, 1, 0);
 		txtSchedule.setLayoutParams(layoutParams);
 		txtSchedule.setGravity(Gravity.CENTER_VERTICAL);
+        txtSchedule.setPadding(1, 0, 1, 0);
 
 		String scheduleColor = scheduleModel.getScheduleColor(lstCategory);
 		if(CCBooleanUtil.checkBoolean(scheduleModel.isAllDay)){
-			// txtSchedule.setPadding(2, 2, 2, 2);
 			txtSchedule.setTextColor(Color.WHITE);
 			if(!CCStringUtil.isEmpty(scheduleColor)){
 				txtSchedule.setBackgroundColor(Color.parseColor(scheduleColor));

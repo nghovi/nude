@@ -57,7 +57,7 @@ public class MonthlyCalendarRowView extends RelativeLayout{
 	}
 
 	public void addSchedule(ScheduleModel scheduleModel, List<CategoryModel> lstCategory){
-		int itemWidth = this.getWidth() / 7;
+		double itemWidth = this.getWidth() / 7.0;
 		int textSize = 10;
 
 		List<MonthlyCalendarDayView> lstActiveCalendarDay = ClUtil.findView4Day(lstCalendarDay, scheduleModel.startDate, scheduleModel.endDate);
@@ -67,14 +67,15 @@ public class MonthlyCalendarRowView extends RelativeLayout{
 		MonthlyCalendarDayView theFirstCalendarDay = lstActiveCalendarDay.get(0);
 		MonthlyCalendarDayView theLastCalendarDay = lstActiveCalendarDay.get(lstActiveCalendarDay.size() - 1);
 
-        int textViewHeight = (int)getResources().getDimension(R.dimen.margin_15dp);
+//        int textViewHeight = (int)getResources().getDimension(R.dimen.margin_15dp);
 		int marginTop = (int)getResources().getDimension(R.dimen.margin_30dp) + (ClUtil.getMaxInList(lstActiveCalendarDay) - 1) * ClConst.TEXT_VIEW_HEIGHT;
-		LayoutParams layoutParams = new LayoutParams(itemWidth * (theLastCalendarDay.dayOfTheWeek - theFirstCalendarDay.dayOfTheWeek + 1), ClConst.TEXT_VIEW_HEIGHT);
-		layoutParams.setMargins(itemWidth * theFirstCalendarDay.dayOfTheWeek, marginTop, 0, 0);
+		LayoutParams layoutParams = new LayoutParams((int)(itemWidth * (theLastCalendarDay.dayOfTheWeek - theFirstCalendarDay.dayOfTheWeek + 1)) - 2, ClConst.TEXT_VIEW_HEIGHT);
+		layoutParams.setMargins((int)(itemWidth * theFirstCalendarDay.dayOfTheWeek) + 1, marginTop, 1, 0);
 
 		TextView txtSchedule = new TextView(mContext);
 		txtSchedule.setMaxLines(1);
 		txtSchedule.setLayoutParams(layoutParams);
+        txtSchedule.setPadding(1, 0, 1, 0);
 
 		// set data
 		// txtSchedule.setPadding(2, 2, 2, 2);
