@@ -252,7 +252,9 @@ public class DailyScheduleList extends LinearLayout{
 	}
 
 	private boolean isScheduleOf(ScheduleModel scheduleModel, Date date){
-		return CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, WelfareUtil.makeDate(scheduleModel.startDate)).equals(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, date));
+		Date startDate = WelfareUtil.makeDate(scheduleModel.startDate);
+		Date endDate = WelfareUtil.makeDate(scheduleModel.endDate);
+		return CCDateUtil.compareDate(startDate, date, false) <= 0 && CCDateUtil.compareDate(date, endDate, false) <= 0;
 	}
 
 }

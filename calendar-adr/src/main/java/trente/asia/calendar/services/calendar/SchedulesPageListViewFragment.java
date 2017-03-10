@@ -1,6 +1,7 @@
 package trente.asia.calendar.services.calendar;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -11,6 +12,7 @@ import org.json.JSONObject;
 import android.graphics.Color;
 
 import asia.chiase.core.util.CCCollectionUtil;
+import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import trente.asia.android.define.CsConst;
 import trente.asia.android.util.CsDateUtil;
@@ -85,18 +87,21 @@ public abstract class SchedulesPageListViewFragment extends SchedulesPageFragmen
 
 	public List<CalendarDayModel> buildCalendarDayModels(List<ScheduleModel> schedules){
 		List<CalendarDayModel> calendarDayModels = new ArrayList<>();
+		Calendar c = Calendar.getInstance();
 		for(ScheduleModel scheduleModel : schedules){
-			Date date = WelfareUtil.makeDate(scheduleModel.startDate);
-			CalendarDayModel calendarDayModel = getCalendarDayModel(date, calendarDayModels);
-			if(calendarDayModel == null){
-				calendarDayModel = new CalendarDayModel();
-				calendarDayModel.date = date;
-				calendarDayModel.schedules = new ArrayList<>();
-				calendarDayModel.holidayModels = new ArrayList<>();
-				calendarDayModel.schedules.add(scheduleModel);
-				calendarDayModels.add(calendarDayModel);
+			Date startDate = WelfareUtil.makeDate(scheduleModel.startDate);
+			if(scheduleModel.isPeriodSchedule()){
+				Date endDate = WelfareUtil.makeDate(scheduleModel.endDate);
+				Date endDisplayed = dates.get(dates.size() - 1);
+				Date limit = endDate.compareTo(endDisplayed) <= 0 ? endDate : endDisplayed;
+				while(CCDateUtil.compareDate(startDate, limit, false) <= 0){
+					addCalendarDayModel(startDate, scheduleModel, calendarDayModels);
+					c.setTime(startDate);
+					c.add(Calendar.DATE, 1);
+					startDate = c.getTime();
+				}
 			}else{
-				calendarDayModel.schedules.add(scheduleModel);
+				addCalendarDayModel(startDate, scheduleModel, calendarDayModels);
 			}
 		}
 
@@ -125,6 +130,20 @@ public abstract class SchedulesPageListViewFragment extends SchedulesPageFragmen
 
 		Collections.sort(calendarDayModels, comparator);
 		return calendarDayModels;
+	}
+
+	public void addCalendarDayModel(Date date, ScheduleModel scheduleModel, List<CalendarDayModel> calendarDayModels){
+		CalendarDayModel calendarDayModel = getCalendarDayModel(date, calendarDayModels);
+		if(calendarDayModel == null){
+			calendarDayModel = new CalendarDayModel();
+			calendarDayModel.date = date;
+			calendarDayModel.schedules = new ArrayList<>();
+			calendarDayModel.holidayModels = new ArrayList<>();
+			calendarDayModel.schedules.add(scheduleModel);
+			calendarDayModels.add(calendarDayModel);
+		}else{
+			calendarDayModel.schedules.add(scheduleModel);
+		}
 	}
 
 	public CalendarDayModel getCalendarDayModel(Date date, List<CalendarDayModel> calendarDayModels){
