@@ -36,6 +36,7 @@ import trente.asia.calendar.services.calendar.view.MonthlyCalendarRowView;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
+import trente.asia.welfare.adr.utils.WfDateUtil;
 
 /**
  * MonthlyPageFragment
@@ -171,7 +172,10 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 					for(MonthlyCalendarRowView rowView : lstCalendarRow){
 						String minDay = rowView.lstCalendarDay.get(0).day;
 						String maxDay = rowView.lstCalendarDay.get(rowView.lstCalendarDay.size() - 1).day;
-						if(ClUtil.belongPeriod(WelfareFormatUtil.makeDate(model.startDate), minDay, maxDay) || ClUtil.belongPeriod(WelfareFormatUtil.makeDate(model.endDate), minDay, maxDay)){
+                        boolean isStartBelongPeriod = ClUtil.belongPeriod(WelfareFormatUtil.makeDate(model.startDate), minDay, maxDay);
+                        boolean isEndBelongPeriod = ClUtil.belongPeriod(WelfareFormatUtil.makeDate(model.endDate), minDay, maxDay);
+                        boolean isOverPeriod = WfDateUtil.compareDate(model.startDate, minDay) < 0 && WfDateUtil.compareDate(model.endDate, maxDay) > 0;
+						if(isStartBelongPeriod || isEndBelongPeriod || isOverPeriod){
 							rowView.addSchedule(model, lstCategory);
 						}
 					}
