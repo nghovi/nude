@@ -156,9 +156,9 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 			Date startDate = WelfareUtil.makeDate(schedule.startDate);
 			Date endDate = WelfareUtil.makeDate(schedule.endDate);
 			txtStartDate.setText(WelfareFormatUtil.formatDate(startDate));
-			txtStartTime.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_9, startDate));
+			txtStartTime.setText(schedule.startTime);
 			txtEndDate.setText(WelfareFormatUtil.formatDate(endDate));
-			txtEndTime.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_9, endDate));
+			txtEndTime.setText(schedule.endTime);
 
 			// show repeat data
 			if(ClRepeatUtil.isRepeat(schedule.repeatType)){

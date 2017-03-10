@@ -23,6 +23,7 @@ import android.widget.TimePicker;
 
 import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCCollectionUtil;
+import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
@@ -136,13 +137,21 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 
 		Date starDate = new Date();
 		Date endDate = new Date();
+		String startTimeStr;
+		String endTimeStr;
 
 		if(schedule != null && !CCStringUtil.isEmpty(schedule.key)){
 			starDate = WelfareUtil.makeDate(schedule.startDate);
+			starDate = CCDateUtil.makeDateTime(starDate, schedule.startTime);
 			endDate = WelfareUtil.makeDate(schedule.endDate);
+			endDate = CCDateUtil.makeDateTime(endDate, schedule.endTime);
+			startTimeStr = schedule.startTime;
+			endTimeStr = schedule.endTime;
 		}else{
 			starDate = calendar.getTime();
 			endDate = calendar.getTime();
+			startTimeStr = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_9, starDate);
+			endTimeStr = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_9, endDate);
 		}
 
 		repeatDialog.setStartDate(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, starDate));
@@ -155,9 +164,9 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 		}
 
 		WelfareFormatUtil.setChiaseTextView(txtStartDate, WelfareFormatUtil.formatDate(starDate));
-		WelfareFormatUtil.setChiaseTextView(txtStartTime, CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_9, starDate));
+		WelfareFormatUtil.setChiaseTextView(txtStartTime, startTimeStr);
 		WelfareFormatUtil.setChiaseTextView(txtEndDate, WelfareFormatUtil.formatDate(endDate));
-		WelfareFormatUtil.setChiaseTextView(txtEndTime, CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_9, endDate));
+		WelfareFormatUtil.setChiaseTextView(txtEndTime, endTimeStr);
 
 		calendar.setTime(starDate);
 		datePickerDialogStart = new DatePickerDialog(activity, new DatePickerDialog.OnDateSetListener() {
@@ -381,7 +390,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 			jsonObject.put("key", schedule.key);
 			if(!CCStringUtil.isEmpty(modifyType)){
 				jsonObject.put("modifyType", modifyType);
-                jsonObject.put("targetDate", WelfareFormatUtil.formatDate(selectedDate));
+				jsonObject.put("targetDate", WelfareFormatUtil.formatDate(selectedDate));
 			}
 		}catch(JSONException e){
 			e.printStackTrace();
