@@ -21,7 +21,7 @@
     <string name="chiase_common_save">保存</string>
     <string name="chiase_common_modify">修正</string>
     <string name="chiase_common_add">追加</string>
-    <string name="chiase_common_request">削除</string>
+    <string name="chiase_common_request">修正依頼</string>
 
     <string name="chiase_common_send">送信</string>
     <string name="chiase_common_prev">前へ</string>

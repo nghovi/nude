@@ -92,10 +92,10 @@
     <string name="fragment_transit_confirm_delete_msg">この交通費申請を削除しますか。</string>
 
     <string name="fragment_offer_filter_offer_type">申請タイプ</string>
-    <string name="fragment_offer_filter_other_history_filter">絞り込め: %1$s</string>
+    <string name="fragment_offer_filter_other_history_filter">絞り込み: %1$s</string>
     <string name="fragment_offer_filter_offer_status">申請ステータス</string>
     <string name="fragment_offer_filter_offer_dept">申請部門</string>
-    <string name="fragment_offer_filter_title">絞り込め</string>
+    <string name="fragment_offer_filter_title">絞り込み</string>
     <string name="fragment_offer_filter_clear">クリア</string>
     <string name="fragment_offer_filter_update">更新</string>
     <string name="fragment_offer_detail_header">勤務申請詳細</string>
@@ -115,5 +115,5 @@
 
     <string name="sw_work_offer_action_approve">承認</string>
     <string name="sw_work_offer_action_reject">却下</string>
-    <string name="sw_work_offer_list_filter">絞り込め: %1$s</string>
+    <string name="sw_work_offer_list_filter">絞り込み: %1$s</string>
 </resources>
