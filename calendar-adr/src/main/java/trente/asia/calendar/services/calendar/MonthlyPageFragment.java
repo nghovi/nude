@@ -25,7 +25,7 @@ import trente.asia.android.define.CsConst;
 import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
-import trente.asia.calendar.commons.dialogs.ClDailySummaryDialog;
+import trente.asia.calendar.commons.dialogs.DailySummaryDialog;
 import trente.asia.calendar.commons.utils.ClUtil;
 import trente.asia.calendar.services.calendar.listener.DailyScheduleClickListener;
 import trente.asia.calendar.services.calendar.model.HolidayModel;
@@ -49,7 +49,7 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 	private List<MonthlyCalendarDayView>	lstCalendarDay	= new ArrayList<>();
 	private List<MonthlyCalendarRowView>	lstCalendarRow	= new ArrayList<>();
 
-	private ClDailySummaryDialog			dialogDailySummary;
+	private DailySummaryDialog				dialogDailySummary;
 
 	public class ScheduleComparator implements Comparator<ScheduleModel>{
 
@@ -118,8 +118,9 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 		}
 	}
 
-	private void initDialog(){
-		dialogDailySummary = new ClDailySummaryDialog(activity, getLayoutInflater(null), this, this);
+	private void makeSummaryDialog(){
+		dialogDailySummary = new DailySummaryDialog(activity, this, this, dates);
+		dialogDailySummary.setData(lstSchedule, lstBirthdayUser, lstHoliday, lstWorkOffer);
 	}
 
 	@Override
@@ -178,6 +179,7 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 						boolean isStartBelongPeriod = ClUtil.belongPeriod(startDate, minDay, maxDay);
 						boolean isEndBelongPeriod = ClUtil.belongPeriod(endDate, minDay, maxDay);
 						boolean isOverPeriod = WfDateUtil.compareDate(WelfareFormatUtil.formatDate(startDate), minDay) < 0 && WfDateUtil.compareDate(WelfareFormatUtil.formatDate(endDate), maxDay) > 0;
+
 						if(isStartBelongPeriod || isEndBelongPeriod || isOverPeriod){
 							rowView.addSchedule(model, lstCategory);
 						}
@@ -204,7 +206,7 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 		}
 
 		// make daily summary dialog
-		initDialog();
+		makeSummaryDialog();
 	}
 
 	@Override
@@ -222,7 +224,7 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 	@Override
 	public void onDailyScheduleClickListener(String day){
 		Date selectedDate = CCDateUtil.makeDateCustom(day, WelfareConst.WL_DATE_TIME_7);
-		dialogDailySummary.show(selectedDate, lstSchedule, lstBirthdayUser, lstHoliday, lstWorkOffer);
+		dialogDailySummary.show(selectedDate);
 	}
 
 	@Override
