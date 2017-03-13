@@ -149,7 +149,13 @@ public class DailyScheduleList extends LinearLayout{
 
 		WfPicassoHelper.loadImageWithDefaultIcon(getContext(), BuildConfig.HOST, imgAvatar, offer.userAvatarPath, R.drawable.wf_profile);
 		txtUsername.setText(offer.userName);
-		txtDate.setText(offer.startDateString);
+
+		if(WorkOffer.OFFER_TYPE_HOLIDAY_WORKING.equals(offer.offerType) || WorkOffer.OFFER_TYPE_OVERTIME.equals(offer.offerType) || WorkOffer.OFFER_TYPE_SHORT_TIME.equals(offer.offerType)){
+			txtDate.setText(offer.startTimeString + " - " + offer.endTimeString);
+		}else{
+			txtDate.setVisibility(View.GONE);
+		}
+
 		txtType.setText(offer.offerTypeName);
 		txtStatus.setText(offer.offerStatusName);
 		txtNote.setText(offer.note);

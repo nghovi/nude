@@ -8,6 +8,10 @@ package trente.asia.calendar.services.calendar.model;
 
 public class WorkOffer{
 
+	public static final String	OFFER_TYPE_OVERTIME			= "OTW";
+	public static final String	OFFER_TYPE_HOLIDAY_WORKING	= "HDW";
+	public static final String	OFFER_TYPE_SHORT_TIME		= "STO";
+
 	public WorkOffer(){
 	}
 

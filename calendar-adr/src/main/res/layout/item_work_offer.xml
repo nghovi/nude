@@ -37,7 +37,7 @@
 
             <TextView
                 android:id="@+id/txt_item_offer_date"
-                style="@style/wl_common_text"
+                style="@style/wl_common_text_single_line"
                 android:layout_weight="1"
                 android:textStyle="bold"/>
             <TextView
@@ -56,13 +56,10 @@
 
 
         <LinearLayout
-            style="@style/cs_common_match_wrap"
-            android:orientation="horizontal">
-
+            style="@style/cs_common_match_wrap">
             <TextView
                 android:id="@+id/txt_item_offer_note"
-                style="@style/wl_common_text_single_line"/>
-
+                style="@style/wl_common_text"/>
         </LinearLayout>
 
 
