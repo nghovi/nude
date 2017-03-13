@@ -145,12 +145,14 @@ public class DailyScheduleList extends LinearLayout{
 		TextView txtDate = (TextView)offerItemView.findViewById(R.id.txt_item_offer_date);
 		TextView txtType = (TextView)offerItemView.findViewById(R.id.txt_item_offer_type);
 		TextView txtStatus = (TextView)offerItemView.findViewById(R.id.txt_item_offer_status);
+		TextView txtNote = (TextView)offerItemView.findViewById(R.id.txt_item_offer_note);
 
 		WfPicassoHelper.loadImageWithDefaultIcon(getContext(), BuildConfig.HOST, imgAvatar, offer.userAvatarPath, R.drawable.wf_profile);
 		txtUsername.setText(offer.userName);
 		txtDate.setText(offer.startDateString);
 		txtType.setText(offer.offerTypeName);
 		txtStatus.setText(offer.offerStatusName);
+		txtNote.setText(offer.note);
 		return offerItemView;
 	}
 
