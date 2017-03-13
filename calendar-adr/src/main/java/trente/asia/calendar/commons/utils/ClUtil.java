@@ -120,12 +120,12 @@ public class ClUtil{
 	 * getTargetUserList
 	 */
 	public static List<UserModel> getTargetUserList(List<UserModel> lstUser, String targetUserData){
-		if(CCStringUtil.isEmpty(targetUserData)){
-			return lstUser;
+        List<UserModel> lstTargetUser = new ArrayList<>();
+		if(CCStringUtil.isEmpty(targetUserData) || CCCollectionUtil.isEmpty(lstUser)){
+			return lstTargetUser;
 		}
 
 		List<String> targetUserListId = Arrays.asList(targetUserData.split(","));
-		List<UserModel> lstTargetUser = new ArrayList<>();
 		for(UserModel userModel : lstUser){
 			if(targetUserListId.contains(userModel.key)){
 				lstTargetUser.add(userModel);

@@ -16,8 +16,9 @@
         <trente.asia.calendar.commons.views.UserListLinearLayout
             android:id="@+id/lnr_fragment_pager_container_user_list"
             style="@style/cs_common_match_wrap"
-            android:background="@drawable/state_common_selectable_row2"
-            android:layout_marginTop="@dimen/margin_10dp"/>
+            android:layout_height="@dimen/margin_30dp"
+            android:layout_marginTop="@dimen/margin_10dp"
+            android:background="@drawable/state_common_selectable_row2"/>
 
         <android.support.v4.view.ViewPager
             android:id="@+id/view_id_pager"

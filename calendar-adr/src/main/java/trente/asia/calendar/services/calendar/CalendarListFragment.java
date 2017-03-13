@@ -22,11 +22,14 @@ import trente.asia.android.listener.CsOnCheckedChangeListener;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.fragments.AbstractClFragment;
+import trente.asia.calendar.commons.utils.ClUtil;
 import trente.asia.calendar.commons.views.MyCalendarLinearLayout;
 import trente.asia.calendar.services.calendar.listener.OnChangeCalendarListener;
 import trente.asia.calendar.services.calendar.model.CalendarModel;
 import trente.asia.calendar.services.calendar.view.CalendarAdapter;
 import trente.asia.welfare.adr.define.WfUrlConst;
+import trente.asia.welfare.adr.models.UserModel;
+import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
 
 /**
  * CalendarListFragment
@@ -88,9 +91,9 @@ public class CalendarListFragment extends AbstractClFragment{
 
 	private void onClickCalendar(CalendarModel calendarModel, boolean isChecked){
 		if(isChecked){
-            checkAndAddSelectedCalendar(calendarModel);
+			checkAndAddSelectedCalendar(calendarModel);
 		}else{
-            removeSelectedCalendar(calendarModel);
+			removeSelectedCalendar(calendarModel);
 		}
 		saveSelectedCalendarToPref();
 		if(changeCalendarListener != null){
@@ -98,14 +101,14 @@ public class CalendarListFragment extends AbstractClFragment{
 		}
 	}
 
-    private String getCalendarName(){
-        StringBuilder builder = new StringBuilder();
-        if(!CCCollectionUtil.isEmpty(lstSelectedCalendar)){
-            String multiCalendarName = getString(R.string.cl_common_calendar_sub_title, String.valueOf(lstSelectedCalendar.size()));
-            builder.append(lstSelectedCalendar.size() == 1 ? lstSelectedCalendar.get(0).calendarName : multiCalendarName);
-        }
-        return builder.toString();
-    }
+	private String getCalendarName(){
+		StringBuilder builder = new StringBuilder();
+		if(!CCCollectionUtil.isEmpty(lstSelectedCalendar)){
+			String multiCalendarName = getString(R.string.cl_common_calendar_sub_title, String.valueOf(lstSelectedCalendar.size()));
+			builder.append(lstSelectedCalendar.size() == 1 ? lstSelectedCalendar.get(0).calendarName : multiCalendarName);
+		}
+		return builder.toString();
+	}
 
 	private boolean getCheckedStatus(int position){
 		CalendarModel calendarModel = lstCalendarWithoutMyCalendar.get(position);
@@ -163,25 +166,25 @@ public class CalendarListFragment extends AbstractClFragment{
 					lvCalendar.setItemChecked(position, true);
 				}
 			}
-            setMyCalendarValue();
-            if(changeCalendarListener != null){
-                changeCalendarListener.onChangeCalendarListener(getCalendarName(), false);
-            }
+			setMyCalendarValue();
+			if(changeCalendarListener != null){
+				changeCalendarListener.onChangeCalendarListener(getCalendarName(), false);
+			}
 		}
 	}
 
-    private void setMyCalendarValue(){
-        if(lstSelectedCalendar.contains(lstCalendar.get(0))){
-            lnrMyCalendar.setChecked(true);
-        }
-        lnrMyCalendar.setOnCheckedChangeListener(new CsOnCheckedChangeListener() {
+	private void setMyCalendarValue(){
+		if(lstSelectedCalendar.contains(lstCalendar.get(0))){
+			lnrMyCalendar.setChecked(true);
+		}
+		lnrMyCalendar.setOnCheckedChangeListener(new CsOnCheckedChangeListener() {
 
-            @Override
-            public void onCheckedChanged(Checkable view, boolean isChecked){
-                onClickCalendar(lstCalendar.get(0), isChecked);
-            }
-        });
-    }
+			@Override
+			public void onCheckedChanged(Checkable view, boolean isChecked){
+				onClickCalendar(lstCalendar.get(0), isChecked);
+			}
+		});
+	}
 
 	private void buildSelectedCalendars(){
 		List<String> selectedCalendarIds = Arrays.asList(prefAccUtil.get(ClConst.SELECTED_CALENDAR_STRING).split(","));
@@ -201,14 +204,14 @@ public class CalendarListFragment extends AbstractClFragment{
 		lstSelectedCalendar.add(calendarModel);
 	}
 
-    private void removeSelectedCalendar(CalendarModel calendarModel){
-        for(CalendarModel calendar : lstSelectedCalendar){
-            if(calendar.key.equals(calendarModel.key)){
-                lstSelectedCalendar.remove(calendar);
-                return;
-            }
-        }
-    }
+	private void removeSelectedCalendar(CalendarModel calendarModel){
+		for(CalendarModel calendar : lstSelectedCalendar){
+			if(calendar.key.equals(calendarModel.key)){
+				lstSelectedCalendar.remove(calendar);
+				return;
+			}
+		}
+	}
 
 	@Override
 	public int getFooterItemId(){
@@ -230,30 +233,40 @@ public class CalendarListFragment extends AbstractClFragment{
 	}
 
 	private void selectAllCalendars(){
-        if(!CCCollectionUtil.isEmpty(lstCalendarWithoutMyCalendar)){
-            for(int position = 0; position < lstCalendarWithoutMyCalendar.size(); position++){
-                CalendarModel calendarModel = lstCalendarWithoutMyCalendar.get(position);
-                lvCalendar.setItemChecked(position, true);
-                checkAndAddSelectedCalendar(calendarModel);
-            }
-        }
-        lnrMyCalendar.setChecked(true);
+		if(!CCCollectionUtil.isEmpty(lstCalendarWithoutMyCalendar)){
+			for(int position = 0; position < lstCalendarWithoutMyCalendar.size(); position++){
+				CalendarModel calendarModel = lstCalendarWithoutMyCalendar.get(position);
+				lvCalendar.setItemChecked(position, true);
+				checkAndAddSelectedCalendar(calendarModel);
+			}
+		}
+		lnrMyCalendar.setChecked(true);
 	}
 
 	private void selectMyCalendarOnly(){
-        if(!CCCollectionUtil.isEmpty(lstCalendarWithoutMyCalendar)){
-            for(int position = 0; position < lstCalendarWithoutMyCalendar.size(); position++){
-                CalendarModel calendarModel = lstCalendarWithoutMyCalendar.get(position);
-                removeSelectedCalendar(calendarModel);
-                lvCalendar.setItemChecked(position, false);
-            }
-        }
-        lnrMyCalendar.setChecked(true);
+		if(!CCCollectionUtil.isEmpty(lstCalendarWithoutMyCalendar)){
+			for(int position = 0; position < lstCalendarWithoutMyCalendar.size(); position++){
+				CalendarModel calendarModel = lstCalendarWithoutMyCalendar.get(position);
+				removeSelectedCalendar(calendarModel);
+				lvCalendar.setItemChecked(position, false);
+			}
+		}
+		lnrMyCalendar.setChecked(true);
 	}
 
 	private void saveSelectedCalendarToPref(){
 		String selectedCalendarIds = getSelectedCalendarIds();
 		prefAccUtil.set(ClConst.SELECTED_CALENDAR_STRING, selectedCalendarIds);
+
+		List<UserModel> lstSelectedUser = new ArrayList<>();
+		for(CalendarModel calendarModel : lstSelectedCalendar){
+			for(UserModel userModel : calendarModel.calendarUsers){
+				if(!lstSelectedUser.contains(userModel)){
+					lstSelectedUser.add(userModel);
+				}
+			}
+		}
+		prefAccUtil.set(ClConst.PREF_ACTIVE_USER_LIST, ClUtil.convertUserList2String(lstSelectedUser));
 	}
 
 	private String getSelectedCalendarIds(){

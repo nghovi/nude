@@ -55,7 +55,7 @@ public abstract class PageContainerFragment extends AbstractClFragment{
 																				txtHeaderSubtitle.setText(subTitle);
 
 																				if(isRefresh){
-																					prefAccUtil.set(ClConst.PREF_ACTIVE_USER_LIST, "");
+//																					prefAccUtil.set(ClConst.PREF_ACTIVE_USER_LIST, "");
 																					isRefreshFilterUser = true;
 																					// load schedule list
 																					SchedulesPageFragment fragment = (SchedulesPageFragment)mPagerAdapter.getItem(holder.selectedPagePosition);
