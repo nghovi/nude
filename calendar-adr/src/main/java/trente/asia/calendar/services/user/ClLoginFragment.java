@@ -43,8 +43,9 @@ public class ClLoginFragment extends LoginFragment{
 
 		if(WfUrlConst.WF_ACC_0003.equals(url)){
 			prefAccUtil.set(ClConst.SELECTED_CALENDAR_STRING, response.optString("myCalendar"));
-            SettingModel settingModel = CCJsonUtil.convertToModel(response.optString("setting"), SettingModel.class);
-            prefAccUtil.saveSetting(settingModel);
+			prefAccUtil.set(ClConst.PREF_ACTIVE_USER_LIST, myself.key);
+			SettingModel settingModel = CCJsonUtil.convertToModel(response.optString("setting"), SettingModel.class);
+			prefAccUtil.saveSetting(settingModel);
 			emptyBackStack();
 			gotoFragment(new MonthlyFragment());
 		}

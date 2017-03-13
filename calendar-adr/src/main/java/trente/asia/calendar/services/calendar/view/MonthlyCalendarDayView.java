@@ -99,7 +99,7 @@ public class MonthlyCalendarDayView extends LinearLayout{
 	}
 
 	public void addSchedule(ScheduleModel scheduleModel, List<CategoryModel> lstCategory){
-        lstSchedule.add(scheduleModel);
+		lstSchedule.add(scheduleModel);
 		TextView txtSchedule = new TextView(mContext);
 		txtSchedule.setMaxLines(1);
 		if(ClConst.SCHEDULE_TYPE_HOLIDAY.equals(scheduleModel.scheduleType)){
@@ -107,10 +107,10 @@ public class MonthlyCalendarDayView extends LinearLayout{
 		}
 
 		LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ClConst.TEXT_VIEW_HEIGHT);
-        layoutParams.setMargins(1, 0, 1, 0);
+		layoutParams.setMargins(1, 0, 1, 0);
 		txtSchedule.setLayoutParams(layoutParams);
 		txtSchedule.setGravity(Gravity.CENTER_VERTICAL);
-        txtSchedule.setPadding(1, 0, 1, 0);
+		txtSchedule.setPadding(1, 0, 1, 0);
 
 		String scheduleColor = scheduleModel.getScheduleColor(lstCategory);
 		if(CCBooleanUtil.checkBoolean(scheduleModel.isAllDay)){
@@ -147,6 +147,7 @@ public class MonthlyCalendarDayView extends LinearLayout{
 		lnrRowContent.removeAllViews();
 		numberOfPeriod = 0;
 		lstSchedule.clear();
+		isTheFirst = true;
 	}
 
 	public void addPeriod(ScheduleModel scheduleModel){
