@@ -126,7 +126,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 	}
 
 	private void buildDatePickerDialogs(ScheduleModel schedule){
-		initListDialog();
+		initListDialog(schedule);
 
 		Calendar calendar = Calendar.getInstance();
 		if(selectedDate == null){
@@ -214,7 +214,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 
 	}
 
-	private void initListDialog(){
+	private void initListDialog(ScheduleModel scheduleModel){
 		dlgChooseRoom = new ChiaseListDialog(activity, getString(R.string.cl_schedule_form_item_meeting_room), convertList2Map(rooms), txtRoom, null);
 		dlgChooseCategory = new ChiaseListDialog(activity, getString(R.string.cl_schedule_form_item_category), ClUtil.convertCategoryList2Map(categories), txtCategory, new ChiaseListDialog.OnItemClicked() {
 
@@ -227,7 +227,13 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 			}
 		});
 
-		onChangeCalendar(calendars.get(0).key);
+        if(!CCStringUtil.isEmpty(scheduleModel.key)){
+            if(!CCCollectionUtil.isEmpty(scheduleModel.calendar.calendarUsers)){
+                filterDialog.updateUserList(scheduleModel.calendar.calendarUsers);
+            }
+        }else{
+            onChangeCalendar(calendars.get(0).key);
+        }
 		dlgChooseCalendar = new ChiaseListDialog(getContext(), getString(R.string.cl_schedule_form_item_calendar), WelfareFormatUtil.convertList2Map(calendarHolders), txtCalendar, new ChiaseListDialog.OnItemClicked() {
 
 			@Override
