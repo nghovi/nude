@@ -173,6 +173,11 @@ public abstract class PageContainerFragment extends AbstractClFragment{
 	@Override
 	public void onClick(View v){
 		switch(v.getId()){
+		case R.id.img_id_done:
+			// load schedule list
+			SchedulesPageFragment schedulesPageFragment = (SchedulesPageFragment)mPagerAdapter.getItem(holder.selectedPagePosition);
+            schedulesPageFragment.loadScheduleList();
+			break;
 		default:
 			break;
 		}
