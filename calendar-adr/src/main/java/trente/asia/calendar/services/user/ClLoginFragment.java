@@ -15,6 +15,7 @@ import trente.asia.calendar.services.calendar.MonthlyFragment;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.models.SettingModel;
+import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.services.user.LoginFragment;
 
 /**
@@ -43,6 +44,7 @@ public class ClLoginFragment extends LoginFragment{
 
 		if(WfUrlConst.WF_ACC_0003.equals(url)){
 			prefAccUtil.set(ClConst.SELECTED_CALENDAR_STRING, response.optString("myCalendar"));
+			myself = CCJsonUtil.convertToModel(response.optString("myself"), UserModel.class);
 			prefAccUtil.set(ClConst.PREF_ACTIVE_USER_LIST, myself.key);
 			SettingModel settingModel = CCJsonUtil.convertToModel(response.optString("setting"), SettingModel.class);
 			prefAccUtil.saveSetting(settingModel);
