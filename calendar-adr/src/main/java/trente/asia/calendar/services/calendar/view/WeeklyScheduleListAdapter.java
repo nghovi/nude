@@ -26,6 +26,7 @@ import trente.asia.calendar.commons.views.UserListLinearLayout;
 import trente.asia.calendar.services.calendar.model.CalendarDayModel;
 import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
+import trente.asia.calendar.services.calendar.model.WorkOffer;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
@@ -76,7 +77,30 @@ public class WeeklyScheduleListAdapter extends ArrayAdapter<CalendarDayModel>{
 		viewHolder.txtDay.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, calendarDay.date));
 		buildScheduleList(viewHolder, calendarDay);
 		buildHolidays(viewHolder, calendarDay);
+		buildBirthdays(viewHolder, calendarDay);
+		buildWorkOffers(viewHolder, calendarDay);
+
 		return convertView;
+	}
+
+	private void buildWorkOffers(ViewHolder viewHolder, CalendarDayModel calendarDay){
+		List<WorkOffer> workOffers = calendarDay.workOffers;
+		if(!CCCollectionUtil.isEmpty(workOffers)){
+			for(WorkOffer workOffer : workOffers){
+				LinearLayout holidayItem = DailyScheduleList.buildOfferItem(context, layoutInflater, workOffer, R.layout.item_work_offer2);
+				viewHolder.lnrEventList.addView(holidayItem);
+			}
+		}
+	}
+
+	private void buildBirthdays(ViewHolder viewHolder, CalendarDayModel calendarDay){
+		List<UserModel> birthdayUsers = calendarDay.birthdayUsers;
+		if(!CCCollectionUtil.isEmpty(birthdayUsers)){
+			for(UserModel user : birthdayUsers){
+				LinearLayout holidayItem = DailyScheduleList.buildBirthdayItem(context, layoutInflater, user);
+				viewHolder.lnrEventList.addView(holidayItem);
+			}
+		}
 	}
 
 	private void buildHolidays(ViewHolder viewHolder, CalendarDayModel calendarDay){

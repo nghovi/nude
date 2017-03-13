@@ -119,7 +119,7 @@ public class DailyScheduleList extends LinearLayout{
 			TextView header = buildTextView(getContext().getString(R.string.offer_title));
 			lnrOffers.addView(header);
 			for(WorkOffer offer : workOffers){
-				LinearLayout birthdayItem = buildOfferItem(offer);
+				LinearLayout birthdayItem = buildOfferItem(getContext(), inflater, offer, R.layout.item_work_offer);
 				lnrOffers.addView(birthdayItem);
 				hasDisplayedItem = true;
 			}
@@ -138,8 +138,8 @@ public class DailyScheduleList extends LinearLayout{
 		return result;
 	}
 
-	private LinearLayout buildOfferItem(WorkOffer offer){
-		LinearLayout offerItemView = (LinearLayout)inflater.inflate(R.layout.item_work_offer, null);
+	public static LinearLayout buildOfferItem(Context context, LayoutInflater inflater, WorkOffer offer, int layoutId){
+		LinearLayout offerItemView = (LinearLayout)inflater.inflate(layoutId, null);
 		ImageView imgAvatar = (ImageView)offerItemView.findViewById(R.id.img_item_offer_avatar);
 		TextView txtUsername = (TextView)offerItemView.findViewById(R.id.txt_item_offer_username);
 		TextView txtDate = (TextView)offerItemView.findViewById(R.id.txt_item_offer_date);
@@ -147,7 +147,7 @@ public class DailyScheduleList extends LinearLayout{
 		TextView txtStatus = (TextView)offerItemView.findViewById(R.id.txt_item_offer_status);
 		TextView txtNote = (TextView)offerItemView.findViewById(R.id.txt_item_offer_note);
 
-		WfPicassoHelper.loadImageWithDefaultIcon(getContext(), BuildConfig.HOST, imgAvatar, offer.userAvatarPath, R.drawable.wf_profile);
+		WfPicassoHelper.loadImageWithDefaultIcon(context, BuildConfig.HOST, imgAvatar, offer.userAvatarPath, R.drawable.wf_profile);
 		txtUsername.setText(offer.userName);
 
 		if(WorkOffer.OFFER_TYPE_HOLIDAY_WORKING.equals(offer.offerType) || WorkOffer.OFFER_TYPE_OVERTIME.equals(offer.offerType) || WorkOffer.OFFER_TYPE_SHORT_TIME.equals(offer.offerType)){
@@ -170,7 +170,7 @@ public class DailyScheduleList extends LinearLayout{
 			TextView header = buildTextView(getContext().getString(R.string.birthday_title));
 			lnrBirthdays.addView(header);
 			for(UserModel user : birthdayUsers){
-				LinearLayout birthdayItem = buildBirthdayItem(user);
+				LinearLayout birthdayItem = buildBirthdayItem(getContext(), inflater, user);
 				lnrBirthdays.addView(birthdayItem);
 				hasDisplayedItem = true;
 			}
@@ -189,10 +189,10 @@ public class DailyScheduleList extends LinearLayout{
 		return result;
 	}
 
-	private LinearLayout buildBirthdayItem(UserModel userModel){
+	public static LinearLayout buildBirthdayItem(Context context, LayoutInflater inflater, UserModel userModel){
 		LinearLayout birthdayItem = (LinearLayout)inflater.inflate(R.layout.item_birthday, null);
 		SelectableRoundedImageView imgUser = (SelectableRoundedImageView)birthdayItem.findViewById(R.id.img_item_birthday_user);
-		WfPicassoHelper.loadImage(getContext(), BuildConfig.HOST + userModel.avatarPath, imgUser, null);
+		WfPicassoHelper.loadImage(context, BuildConfig.HOST + userModel.avatarPath, imgUser, null);
 		return birthdayItem;
 	}
 
