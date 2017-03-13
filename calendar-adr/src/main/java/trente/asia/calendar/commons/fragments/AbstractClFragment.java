@@ -16,6 +16,7 @@ import trente.asia.calendar.services.calendar.DailyFragment;
 import trente.asia.calendar.services.calendar.MonthlyFragment;
 import trente.asia.calendar.services.calendar.WeeklyFragment;
 import trente.asia.calendar.services.setting.ClSettingFragment;
+import trente.asia.calendar.services.summary.SummaryFragment;
 import trente.asia.calendar.services.user.ClLoginFragment;
 import trente.asia.welfare.adr.activity.WelfareFragment;
 import trente.asia.welfare.adr.define.WelfareConst;
@@ -134,7 +135,7 @@ public abstract class AbstractClFragment extends WelfareFragment implements View
 
 	public void onClickFooterItemSummary(){
 		emptyBackStack();
-		gotoFragment(new MonthlyFragment());
+		gotoFragment(new SummaryFragment());
 	}
 
 	public void onClickFooterItemSetting(){

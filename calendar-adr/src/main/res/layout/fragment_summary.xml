@@ -1,0 +1,21 @@
+<LinearLayout style="@style/wf_common_match"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+>
+
+    <include layout="@layout/view_common_header"/>
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:layout_weight="1"
+                  android:background="@color/wf_login_background_color"
+                  android:gravity="center">
+        <TextView android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:gravity="center"
+                  android:text="@string/coming_soon"
+                  android:textSize="18sp"/>
+
+    </LinearLayout>
+    <include layout="@layout/view_common_footer"/>
+
+
+</LinearLayout>
