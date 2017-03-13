@@ -36,6 +36,7 @@ import trente.asia.calendar.services.calendar.view.MonthlyCalendarRowView;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
+import trente.asia.welfare.adr.utils.WelfareUtil;
 import trente.asia.welfare.adr.utils.WfDateUtil;
 
 /**
@@ -54,14 +55,14 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 
 		@Override
 		public int compare(ScheduleModel schedule1, ScheduleModel schedule2){
-			// Date startDate1 = WelfareUtil.makeDate(schedule1.startDate);
-			// Date endDate1 = WelfareUtil.makeDate(schedule1.endDate);
-			//
-			// Date startDate2 = WelfareUtil.makeDate(schedule2.startDate);
-			// Date endDate2 = WelfareUtil.makeDate(schedule2.endDate);
+			Date startDate1 = WelfareUtil.makeDate(schedule1.startDate);
+			Date endDate1 = WelfareUtil.makeDate(schedule1.endDate);
 
-			boolean diff1 = schedule1.startDate.equals(schedule1.endDate);
-			boolean diff2 = schedule2.startDate.equals(schedule2.endDate);
+			Date startDate2 = WelfareUtil.makeDate(schedule2.startDate);
+			Date endDate2 = WelfareUtil.makeDate(schedule2.endDate);
+
+			boolean diff1 = WelfareFormatUtil.formatDate(startDate1).equals(WelfareFormatUtil.formatDate(endDate1));
+			boolean diff2 = WelfareFormatUtil.formatDate(startDate2).equals(WelfareFormatUtil.formatDate(endDate2));
 
 			if(!diff1 && diff2) return -1;
 			if(diff1 && !diff2) return 1;
@@ -172,9 +173,11 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 					for(MonthlyCalendarRowView rowView : lstCalendarRow){
 						String minDay = rowView.lstCalendarDay.get(0).day;
 						String maxDay = rowView.lstCalendarDay.get(rowView.lstCalendarDay.size() - 1).day;
-                        boolean isStartBelongPeriod = ClUtil.belongPeriod(WelfareFormatUtil.makeDate(model.startDate), minDay, maxDay);
-                        boolean isEndBelongPeriod = ClUtil.belongPeriod(WelfareFormatUtil.makeDate(model.endDate), minDay, maxDay);
-                        boolean isOverPeriod = WfDateUtil.compareDate(model.startDate, minDay) < 0 && WfDateUtil.compareDate(model.endDate, maxDay) > 0;
+						Date startDate = WelfareUtil.makeDate(model.startDate);
+						Date endDate = WelfareUtil.makeDate(model.endDate);
+						boolean isStartBelongPeriod = ClUtil.belongPeriod(startDate, minDay, maxDay);
+						boolean isEndBelongPeriod = ClUtil.belongPeriod(endDate, minDay, maxDay);
+						boolean isOverPeriod = WfDateUtil.compareDate(WelfareFormatUtil.formatDate(startDate), minDay) < 0 && WfDateUtil.compareDate(WelfareFormatUtil.formatDate(endDate), maxDay) > 0;
 						if(isStartBelongPeriod || isEndBelongPeriod || isOverPeriod){
 							rowView.addSchedule(model, lstCategory);
 						}
