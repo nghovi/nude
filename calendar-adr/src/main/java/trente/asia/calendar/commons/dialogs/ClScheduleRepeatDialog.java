@@ -83,7 +83,7 @@ public class ClScheduleRepeatDialog extends ChiaseDialog{
 		lnrRepeatWeeklyDay = (RepeatWeeklyDayLinearLayout)this.findViewById(R.id.lnr_id_repeat_weekly_day);
 		lnrRepeatWeeklyDay.initialization();
 
-		calendarLimit.add(Calendar.MONTH, 1);
+		// calendarLimit.add(Calendar.MONTH, 1);
 		datePickerDialogLimit = new DatePickerDialog(mContext, new DatePickerDialog.OnDateSetListener() {
 
 			@Override
@@ -101,7 +101,8 @@ public class ClScheduleRepeatDialog extends ChiaseDialog{
 		lstRepeatLimit = new ArrayList<>();
 		lstRepeatLimit.add(new ChiaseSpinnerModel(ClConst.SCHEDULE_REPEAT_LIMIT_FOREVER, mContext.getString(R.string.cl_schedule_repeat_limit_forever)));
 		lstRepeatLimit.add(new ChiaseSpinnerModel(ClConst.SCHEDULE_REPEAT_LIMIT_UNTIL, mContext.getString(R.string.cl_schedule_repeat_limit_until)));
-//		lstRepeatLimit.add(new ChiaseSpinnerModel(ClConst.SCHEDULE_REPEAT_LIMIT_AFTER, mContext.getString(R.string.cl_schedule_repeat_limit_after)));
+		// lstRepeatLimit.add(new ChiaseSpinnerModel(ClConst.SCHEDULE_REPEAT_LIMIT_AFTER,
+		// mContext.getString(R.string.cl_schedule_repeat_limit_after)));
 
 		ChiaseSpinnerAdapter adapterRepeatType = new ChiaseSpinnerAdapter(mContext, lstRepeatType);
 		spnRepeatType.setAdapter(adapterRepeatType);
@@ -167,6 +168,7 @@ public class ClScheduleRepeatDialog extends ChiaseDialog{
 		}else if(ClConst.SCHEDULE_REPEAT_LIMIT_UNTIL.equals(model.key)){
 			lnrLimitUtil.setVisibility(View.VISIBLE);
 			lnrLimitAfter.setVisibility(View.GONE);
+			// calendarLimit = Calendar.getInstance();
 			txtLimitUtil.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, calendarLimit.getTime()));
 		}else{
 			lnrLimitUtil.setVisibility(View.GONE);
@@ -176,11 +178,11 @@ public class ClScheduleRepeatDialog extends ChiaseDialog{
 
 	public void initDefaultValue(){
 		if(ClRepeatUtil.isRepeat(repeatModel.repeatType) && ClConst.SCHEDULE_REPEAT_TYPE_WEEKLY.equals(repeatModel.repeatType)){
-            lnrRepeatWeeklyDay.initDefaultValue(repeatModel.repeatData);
+			lnrRepeatWeeklyDay.initDefaultValue(repeatModel.repeatData);
 		}else{
 			if(!CCStringUtil.isEmpty(startDate)){
-                Calendar startCalendar = CCDateUtil.makeCalendar(WelfareFormatUtil.makeDate(startDate));
-                String repeatData = String.valueOf(startCalendar.get(Calendar.DAY_OF_WEEK));
+				Calendar startCalendar = CCDateUtil.makeCalendar(WelfareFormatUtil.makeDate(startDate));
+				String repeatData = String.valueOf(startCalendar.get(Calendar.DAY_OF_WEEK));
 				lnrRepeatWeeklyDay.initDefaultValue(repeatData);
 			}
 		}
@@ -223,24 +225,24 @@ public class ClScheduleRepeatDialog extends ChiaseDialog{
 
 	public void setStartDate(String startDate){
 		this.startDate = startDate;
-//		this.initDefaultValue();
+		// this.initDefaultValue();
 	}
 
 	public void setRepeatModel(ScheduleRepeatModel repeatModel){
 		this.repeatModel = repeatModel;
 		this.spnRepeatType.setSelection(CsUtil.findPosition4Spinner(lstRepeatType, repeatModel.repeatType));
-        this.initDefaultValue();
+		this.initDefaultValue();
 
 		this.spnRepeatLimit.setSelection(CsUtil.findPosition4Spinner(lstRepeatLimit, repeatModel.repeatLimitType));
-        if(ClConst.SCHEDULE_REPEAT_LIMIT_FOREVER.equals(repeatModel.repeatLimitType)){
-        }else if(ClConst.SCHEDULE_REPEAT_LIMIT_UNTIL.equals(repeatModel.repeatLimitType)){
-            Date repeatEndDate = WelfareUtil.makeDate(repeatModel.repeatEnd);
-            calendarLimit = CCDateUtil.makeCalendar(repeatEndDate);
-            datePickerDialogLimit.getDatePicker().updateDate(calendarLimit.get(Calendar.YEAR), calendarLimit.get(Calendar.MONTH), calendarLimit.get(Calendar.DAY_OF_MONTH));
-//            txtLimitUtil.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, repeatEndDate));
-        }else{
-            edtLimitTimes.setText(repeatModel.repeatInterval);
-        }
+		if(ClConst.SCHEDULE_REPEAT_LIMIT_FOREVER.equals(repeatModel.repeatLimitType)){
+		}else if(ClConst.SCHEDULE_REPEAT_LIMIT_UNTIL.equals(repeatModel.repeatLimitType)){
+			Date repeatEndDate = WelfareUtil.makeDate(repeatModel.repeatEnd);
+			calendarLimit = CCDateUtil.makeCalendar(repeatEndDate);
+			datePickerDialogLimit.getDatePicker().updateDate(calendarLimit.get(Calendar.YEAR), calendarLimit.get(Calendar.MONTH), calendarLimit.get(Calendar.DAY_OF_MONTH));
+			// txtLimitUtil.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, repeatEndDate));
+		}else{
+			edtLimitTimes.setText(repeatModel.repeatInterval);
+		}
 	}
 
 	public ScheduleRepeatModel getRepeatModel(){
