@@ -41,7 +41,7 @@ public class ScheduleDetailFragment extends AbstractScheduleFragment{
 				getFragmentManager().popBackStack();
 			}else if(CCConst.YES.equals(isUpdate)){
                 schedule.key = CCStringUtil.toString(((WelfareActivity)activity).dataMap.get(ClConst.ACTION_SCHEDULE_UPDATE_NEW_KEY));
-                ((WelfareActivity)activity).dataMap.clear();
+                ((WelfareActivity)activity).dataMap.remove(ClConst.ACTION_SCHEDULE_UPDATE_NEW_KEY);
 			}
 		}
 		return mRootView;
