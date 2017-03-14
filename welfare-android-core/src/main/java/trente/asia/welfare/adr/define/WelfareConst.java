@@ -167,7 +167,7 @@ public class WelfareConst{
 		public static final String	SW_NOTI_OVER_TIME		= "SW_NOTI_OVER_TIME";
 		public static final String	SW_NOTI_OFFER			= "SW_NOTI_OFFER";
 
-		public static final String	CL_NOTI_NEW_SCHEDULE	= "CL_NOTI_NEW_NOTICE";
+		public static final String	CL_NOTI_NEW_SCHEDULE	= "CL_NOTI_NEW_SCHEDULE";
 	}
 
 	public static final class NotificationReceived{
