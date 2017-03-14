@@ -141,12 +141,11 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 			lstSchedule = new ArrayList<>();
 		}
 
-		// lstScheduleWithoutHoliday.addAll(lstSchedule);
-
 		// add holiday,
 		if(!CCCollectionUtil.isEmpty(lstHoliday)){
 			for(HolidayModel holidayModel : lstHoliday){
 				ScheduleModel scheduleModel = new ScheduleModel(holidayModel);
+				scheduleModel.scheduleName = getString(R.string.cl_schedule_holiday_name, scheduleModel.scheduleName);
 				lstSchedule.add(scheduleModel);
 			}
 		}
@@ -155,6 +154,7 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 		if(!CCCollectionUtil.isEmpty(lstBirthdayUser)){
 			for(UserModel birthday : lstBirthdayUser){
 				ScheduleModel scheduleModel = new ScheduleModel(birthday);
+				scheduleModel.scheduleName = getString(R.string.cl_schedule_birth_day_name, scheduleModel.scheduleName);
 				lstSchedule.add(scheduleModel);
 			}
 		}
@@ -163,6 +163,7 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 		if(!CCCollectionUtil.isEmpty(lstWorkOffer)){
 			for(WorkOffer workOffer : lstWorkOffer){
 				ScheduleModel scheduleModel = new ScheduleModel(workOffer);
+				scheduleModel.scheduleName = getString(R.string.cl_schedule_offer_name, scheduleModel.scheduleName);
 				lstSchedule.add(scheduleModel);
 			}
 		}

@@ -81,4 +81,7 @@
     <string name="fragment_summary_title">Summary</string>
     <string name="coming_soon">Coming soon</string>
 
+    <string name="cl_schedule_holiday_name">[H]%1$s</string>
+    <string name="cl_schedule_birth_day_name">[B]%1$s</string>
+    <string name="cl_schedule_offer_name">[O]%1$s</string>
 </resources>
