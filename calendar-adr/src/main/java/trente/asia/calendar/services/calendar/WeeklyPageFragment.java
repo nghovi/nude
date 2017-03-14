@@ -15,20 +15,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.android.activity.ChiaseActivity;
 import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.R;
-import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.services.calendar.model.CalendarDayModel;
-import trente.asia.calendar.services.calendar.view.WeeklyScheduleListAdapter;
 import trente.asia.calendar.services.calendar.view.CalendarDayView;
 import trente.asia.calendar.services.calendar.view.CalendarView;
 import trente.asia.calendar.services.calendar.view.WeeklyCalendarDayView;
 import trente.asia.calendar.services.calendar.view.WeeklyCalendarHeaderRowView;
-import trente.asia.welfare.adr.activity.WelfareActivity;
+import trente.asia.calendar.services.calendar.view.WeeklyScheduleListAdapter;
 
 /**
  * WeeklyPageFragment
@@ -38,19 +34,12 @@ import trente.asia.welfare.adr.activity.WelfareActivity;
 public class WeeklyPageFragment extends SchedulesPageListViewFragment implements ObservableScrollViewCallbacks,CalendarView.OnCalendarDaySelectedListener,CalendarDayView.OnDayClickListener{
 
 	protected ObservableListView		observableListView;
-	protected WeeklyScheduleListAdapter adapter;
+	protected WeeklyScheduleListAdapter	adapter;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 		if(mRootView == null){
 			mRootView = inflater.inflate(R.layout.fragment_weekly_page, container, false);
-		}else{
-            boolean isUpdate = CCConst.YES.equals(((WelfareActivity)activity).dataMap.get(ClConst.ACTION_SCHEDULE_UPDATE));
-            boolean isDelete = CCConst.YES.equals(((WelfareActivity)activity).dataMap.get(ClConst.ACTION_SCHEDULE_DELETE));
-            if(isUpdate || isDelete){
-                ((WelfareActivity)activity).dataMap.clear();
-                ((ChiaseActivity)activity).isInitData = true;
-            }
 		}
 		return mRootView;
 	}
@@ -81,10 +70,10 @@ public class WeeklyPageFragment extends SchedulesPageListViewFragment implements
 
 	@Override
 	protected List<Date> getAllDate(){
-        int firstDay = Calendar.SUNDAY;
-        if(!CCStringUtil.isEmpty(prefAccUtil.getSetting().CL_START_DAY_IN_WEEK)){
-            firstDay = Integer.parseInt(prefAccUtil.getSetting().CL_START_DAY_IN_WEEK);
-        }
+		int firstDay = Calendar.SUNDAY;
+		if(!CCStringUtil.isEmpty(prefAccUtil.getSetting().CL_START_DAY_IN_WEEK)){
+			firstDay = Integer.parseInt(prefAccUtil.getSetting().CL_START_DAY_IN_WEEK);
+		}
 		List<Date> dates = CsDateUtil.getAllDate4Week(CCDateUtil.makeCalendar(selectedDate), firstDay);
 		return dates;
 	}
