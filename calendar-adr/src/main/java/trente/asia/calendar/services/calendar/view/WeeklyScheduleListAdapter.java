@@ -87,7 +87,7 @@ public class WeeklyScheduleListAdapter extends ArrayAdapter<CalendarDayModel>{
 		List<WorkOffer> workOffers = calendarDay.workOffers;
 		if(!CCCollectionUtil.isEmpty(workOffers)){
 			for(WorkOffer workOffer : workOffers){
-				LinearLayout holidayItem = DailyScheduleList.buildOfferItem(context, layoutInflater, workOffer, R.layout.item_work_offer2);
+				LinearLayout holidayItem = DailyScheduleList.buildOfferItem(context, layoutInflater, workOffer, R.layout.item_work_offer_weekly);
 				viewHolder.lnrEventList.addView(holidayItem);
 			}
 		}
@@ -97,7 +97,7 @@ public class WeeklyScheduleListAdapter extends ArrayAdapter<CalendarDayModel>{
 		List<UserModel> birthdayUsers = calendarDay.birthdayUsers;
 		if(!CCCollectionUtil.isEmpty(birthdayUsers)){
 			for(UserModel user : birthdayUsers){
-				LinearLayout holidayItem = DailyScheduleList.buildBirthdayItem(context, layoutInflater, user);
+				LinearLayout holidayItem = DailyScheduleList.buildBirthdayItem(context, layoutInflater, user, R.layout.item_birthday_weekly);
 				viewHolder.lnrEventList.addView(holidayItem);
 			}
 		}
@@ -107,7 +107,7 @@ public class WeeklyScheduleListAdapter extends ArrayAdapter<CalendarDayModel>{
 		List<HolidayModel> holidayModels = calendarDay.holidayModels;
 		if(!CCCollectionUtil.isEmpty(holidayModels)){
 			for(HolidayModel holidayModel : holidayModels){
-				LinearLayout holidayItem = DailyScheduleList.buildHolidayItem(layoutInflater, holidayModel, 0);
+				LinearLayout holidayItem = DailyScheduleList.buildHolidayItem(layoutInflater, holidayModel, 0, R.layout.item_holiday_weekly);
 				viewHolder.lnrEventList.addView(holidayItem);
 			}
 		}

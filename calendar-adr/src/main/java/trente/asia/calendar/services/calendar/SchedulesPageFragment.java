@@ -209,7 +209,9 @@ public abstract class SchedulesPageFragment extends AbstractClFragment implement
 
 	@Override
 	protected void initData(){
-		loadScheduleList();
+		if(pageSharingHolder.selectedPagePosition == pagePosition){
+			loadScheduleList();
+		}
 	}
 
 	@Override

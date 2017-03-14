@@ -94,7 +94,7 @@ public class DailyScheduleList extends LinearLayout{
 			TextView header = buildTextView(getContext().getString(R.string.holiday_title));
 			lnrHolidays.addView(header);
 			for(HolidayModel holidayModel : holidayModelList){
-				LinearLayout holidayItem = buildHolidayItem(inflater, holidayModel, WelfareFragment.MARGIN_LEFT_RIGHT);
+				LinearLayout holidayItem = buildHolidayItem(inflater, holidayModel, WelfareFragment.MARGIN_LEFT_RIGHT, R.layout.item_holiday);
 				lnrHolidays.addView(holidayItem);
 				hasDisplayedItem = true;
 			}
@@ -103,8 +103,8 @@ public class DailyScheduleList extends LinearLayout{
 		}
 	}
 
-	public static LinearLayout buildHolidayItem(LayoutInflater inflater, HolidayModel holidayModel, int paddingLeftRightPx){
-		LinearLayout itemHoliday = (LinearLayout)inflater.inflate(R.layout.item_holiday, null);
+	public static LinearLayout buildHolidayItem(LayoutInflater inflater, HolidayModel holidayModel, int paddingLeftRightPx, int layoutId){
+		LinearLayout itemHoliday = (LinearLayout)inflater.inflate(layoutId, null);
 		itemHoliday.setPadding(paddingLeftRightPx, MARGIN_TOP_BOTTOM, paddingLeftRightPx, MARGIN_TOP_BOTTOM);
 		TextView txtHolidayName = (TextView)itemHoliday.findViewById(R.id.txt_item_holiday_name);
 		txtHolidayName.setText(holidayModel.holidayName);
@@ -170,7 +170,7 @@ public class DailyScheduleList extends LinearLayout{
 			TextView header = buildTextView(getContext().getString(R.string.birthday_title));
 			lnrBirthdays.addView(header);
 			for(UserModel user : birthdayUsers){
-				LinearLayout birthdayItem = buildBirthdayItem(getContext(), inflater, user);
+				LinearLayout birthdayItem = buildBirthdayItem(getContext(), inflater, user, R.layout.item_birthday);
 				lnrBirthdays.addView(birthdayItem);
 				hasDisplayedItem = true;
 			}
@@ -189,8 +189,8 @@ public class DailyScheduleList extends LinearLayout{
 		return result;
 	}
 
-	public static LinearLayout buildBirthdayItem(Context context, LayoutInflater inflater, UserModel userModel){
-		LinearLayout birthdayItem = (LinearLayout)inflater.inflate(R.layout.item_birthday, null);
+	public static LinearLayout buildBirthdayItem(Context context, LayoutInflater inflater, UserModel userModel, int layoutId){
+		LinearLayout birthdayItem = (LinearLayout)inflater.inflate(layoutId, null);
 		SelectableRoundedImageView imgUser = (SelectableRoundedImageView)birthdayItem.findViewById(R.id.img_item_birthday_user);
 		WfPicassoHelper.loadImage(context, BuildConfig.HOST + userModel.avatarPath, imgUser, null);
 		return birthdayItem;
