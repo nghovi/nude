@@ -137,11 +137,11 @@ public abstract class SchedulesPageListViewFragment extends SchedulesPageFragmen
 
 		// birthdays
 		Calendar currentTime = Calendar.getInstance();
-		int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+		int selectedYear = CCDateUtil.makeCalendar(selectedDate).get(Calendar.YEAR);
 		for(UserModel userModel : lstBirthdayUser){
 			Date birthday = WelfareUtil.makeDate(userModel.dateBirth);
 			currentTime.setTime(birthday);
-			currentTime.set(Calendar.YEAR, currentYear);
+			currentTime.set(Calendar.YEAR, selectedYear);
 			Date date = currentTime.getTime();
 			CalendarDayModel calendarDayModel = getCalendarDayModel(date, calendarDayModels);
 			if(calendarDayModel == null){

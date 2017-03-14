@@ -9,7 +9,6 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.android.view.ChiaseDialog;
 import trente.asia.android.view.layout.CheckableLinearLayout;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
@@ -24,7 +23,7 @@ import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
  *
  * @author TrungND
  */
-public class ClFilterUserListDialog extends ChiaseDialog{
+public class ClFilterUserListDialog extends CLOutboundDismissDialog{
 
 	private Context					mContext;
 	private FilterUserLinearLayout	mLnrFilterUser;
@@ -40,10 +39,10 @@ public class ClFilterUserListDialog extends ChiaseDialog{
 		this.mContext = context;
 		this.mLnrUserList = lnrUserList;
 
-        txtTitle = (TextView) this.findViewById(R.id.txt_id_title);
-        if(!CCStringUtil.isEmpty(title)){
-            txtTitle.setText(title);
-        }
+		txtTitle = (TextView)this.findViewById(R.id.txt_id_title);
+		if(!CCStringUtil.isEmpty(title)){
+			txtTitle.setText(title);
+		}
 
 		mCbxAll = (CheckBox)this.findViewById(R.id.cbx_id_all);
 		mLnrFilterUser = (FilterUserLinearLayout)this.findViewById(R.id.lnr_id_user);
