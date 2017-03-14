@@ -408,7 +408,8 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 	protected void successUpdate(JSONObject response, String url){
 		if(WfUrlConst.WF_CL_SCHEDULE_UPD.equals(url)){
 			schedule = CCJsonUtil.convertToModel(response.optString("schedule"), ScheduleModel.class);
-			onScheduleUpdateSuccess();
+            String newKey = response.optString("returnValue");
+			onScheduleUpdateSuccess(newKey);
 		}else if(WfUrlConst.WF_CL_SCHEDULE_DEL.equals(url)){
 			((WelfareActivity)activity).dataMap.put(ClConst.ACTION_SCHEDULE_DELETE, CCConst.YES);
 			getFragmentManager().popBackStack();
@@ -417,9 +418,10 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 		}
 	}
 
-	private void onScheduleUpdateSuccess(){
+	private void onScheduleUpdateSuccess(String newKey){
 		((ChiaseActivity)activity).isInitData = true;
 		((WelfareActivity)activity).dataMap.put(ClConst.ACTION_SCHEDULE_UPDATE, CCConst.YES);
+        ((WelfareActivity)activity).dataMap.put(ClConst.ACTION_SCHEDULE_UPDATE_NEW_KEY, newKey);
 		onClickBackBtn();
 	}
 

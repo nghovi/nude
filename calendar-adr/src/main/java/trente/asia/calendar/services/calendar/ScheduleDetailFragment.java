@@ -36,10 +36,12 @@ public class ScheduleDetailFragment extends AbstractScheduleFragment{
 			mRootView = inflater.inflate(R.layout.fragment_schedule_detail, container, false);
 		}else{
 			String isDelete = CCStringUtil.toString(((WelfareActivity)activity).dataMap.get(ClConst.ACTION_SCHEDULE_DELETE));
+			String isUpdate = CCStringUtil.toString(((WelfareActivity)activity).dataMap.get(ClConst.ACTION_SCHEDULE_UPDATE));
 			if(CCConst.YES.equals(isDelete)){
-				// ((WelfareActivity)activity).dataMap.clear();
-				// ((WelfareActivity)activity).isInitData = true;
 				getFragmentManager().popBackStack();
+			}else if(CCConst.YES.equals(isUpdate)){
+                schedule.key = CCStringUtil.toString(((WelfareActivity)activity).dataMap.get(ClConst.ACTION_SCHEDULE_UPDATE_NEW_KEY));
+                ((WelfareActivity)activity).dataMap.clear();
 			}
 		}
 		return mRootView;
@@ -97,19 +99,19 @@ public class ScheduleDetailFragment extends AbstractScheduleFragment{
 	private void gotoScheduleFormFragment(){
 		ScheduleFormFragment fragment = new ScheduleFormFragment();
 		fragment.setSchedule(schedule);
-        fragment.setSelectedDate(selectedDate);
+		fragment.setSelectedDate(selectedDate);
 		gotoFragment(fragment);
 	}
 
-    @Override
-    protected void onClickBackBtn(){
-        if(isClickNotification){
-            emptyBackStack();
-            gotoFragment(new MonthlyFragment());
-        }else{
-            super.onClickBackBtn();
-        }
-    }
+	@Override
+	protected void onClickBackBtn(){
+		if(isClickNotification){
+			emptyBackStack();
+			gotoFragment(new MonthlyFragment());
+		}else{
+			super.onClickBackBtn();
+		}
+	}
 
 	@Override
 	public void onDestroy(){
@@ -117,7 +119,7 @@ public class ScheduleDetailFragment extends AbstractScheduleFragment{
 		lnrUserList = null;
 	}
 
-    public void setSelectedDate(Date selectedDate) {
-        this.selectedDate = selectedDate;
-    }
+	public void setSelectedDate(Date selectedDate){
+		this.selectedDate = selectedDate;
+	}
 }

@@ -26,7 +26,7 @@ public class ClConst{
 
 	public static final String	SCHEDULE_REPEAT_LIMIT_FOREVER				= "F";
 	public static final String	SCHEDULE_REPEAT_LIMIT_UNTIL					= "U";
-//	public static final String	SCHEDULE_REPEAT_LIMIT_AFTER					= "A";
+	// public static final String SCHEDULE_REPEAT_LIMIT_AFTER = "A";
 
 	public static final String	SCHEDULE_MODIFY_TYPE_ALL					= "AL";
 	public static final String	SCHEDULE_MODIFY_TYPE_ONLY_THIS				= "OT";
@@ -45,6 +45,7 @@ public class ClConst{
 
 	public static final String	ACTION_SCHEDULE_DELETE						= "ACTION_SCHEDULE_DELETE";
 	public static final String	ACTION_SCHEDULE_UPDATE						= "ACTION_SCHEDULE_UPDATE";
+	public static final String	ACTION_SCHEDULE_UPDATE_NEW_KEY				= "ACTION_SCHEDULE_UPDATE_NEW_KEY";
 
 	public static final String	WORKING_OFFER_TYPE_PAID_VACATION_ALL		= "PVAL";
 	public static final String	WORKING_OFFER_TYPE_PAID_VACATION_MORNING	= "PVMO";
