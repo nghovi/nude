@@ -20,7 +20,7 @@
             android:background="@color/wf_app_color_base">
         </trente.asia.calendar.commons.views.UserListLinearLayout>
 
-        <trente.asia.calendar.services.calendar.view.MyViewPager
+        <android.support.v4.view.ViewPager
             android:id="@+id/view_id_pager"
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
