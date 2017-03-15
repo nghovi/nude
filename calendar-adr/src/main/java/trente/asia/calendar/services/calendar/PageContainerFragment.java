@@ -79,7 +79,7 @@ public abstract class PageContainerFragment extends AbstractClFragment{
 																						holder.updateFilter(lstCalendarUser, targetUserData);
 																					}else{
 																						lnrUserList.removeAllViews();
-																						lnrUserList.setVisibility(View.GONE);
+//																						lnrUserList.setVisibility(View.GONE);
 																					}
 																				}
 																			}

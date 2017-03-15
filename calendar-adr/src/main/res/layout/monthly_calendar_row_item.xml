@@ -15,7 +15,8 @@
         android:layout_height="@dimen/margin_18dp"
         android:layout_gravity="center"
         android:gravity="center"
-        android:textSize="@dimen/margin_10dp"/>
+        android:textSize="@dimen/margin_10dp"
+        android:layout_marginBottom="@dimen/margin_2dp"/>
 
     <LinearLayout
         android:id="@+id/lnr_id_row_content"
