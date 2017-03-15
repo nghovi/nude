@@ -183,6 +183,7 @@ public class ClScheduleRepeatDialog extends ChiaseDialog{
 			if(!CCStringUtil.isEmpty(startDate)){
 				Calendar startCalendar = CCDateUtil.makeCalendar(WelfareFormatUtil.makeDate(startDate));
 				String repeatData = String.valueOf(startCalendar.get(Calendar.DAY_OF_WEEK));
+                lnrRepeatWeeklyDay.setStartDate(startDate);
 				lnrRepeatWeeklyDay.initDefaultValue(repeatData);
 			}
 		}
