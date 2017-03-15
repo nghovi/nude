@@ -7,7 +7,6 @@ import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.calendar.commons.defines.ClConst;
-import trente.asia.calendar.commons.utils.ClUtil;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
@@ -95,14 +94,16 @@ public class ScheduleModel{
 			return false;
 		}
 
-		 String startDateFormat = WelfareFormatUtil.formatDate(WelfareUtil.makeDate(startDate));
-		 String endDateFormat = WelfareFormatUtil.formatDate(WelfareUtil.makeDate(endDate));
+		// String startDateFormat = WelfareFormatUtil.formatDate(WelfareUtil.makeDate(startDate));
+		// String endDateFormat = WelfareFormatUtil.formatDate(WelfareUtil.makeDate(endDate));
+		String startDateFormat = WelfareFormatUtil.removeTime4Date(startDate);
+		String endDateFormat = WelfareFormatUtil.removeTime4Date(endDate);
 		return !startDateFormat.equals(endDateFormat);
 	}
 
-	public String getScheduleColor(List<CategoryModel> lstCategory){
+	public String getScheduleColor(){
 		if(!CCStringUtil.isEmpty(this.calendarId)){
-			CategoryModel categoryModel = ClUtil.findCategory4Id(lstCategory, this.categoryId);
+			// CategoryModel categoryModel = ClUtil.findCategory4Id(lstCategory, this.categoryId);
 			if(categoryModel != null){
 				return WelfareFormatUtil.formatColor(categoryModel.categoryColor);
 			}
@@ -131,7 +132,7 @@ public class ScheduleModel{
 		clonedModel.calendarId = this.calendarId;
 		clonedModel.roomId = this.roomId;
 		clonedModel.joinUsers = this.joinUsers;
-		clonedModel.calendar = this.calendar;
+		// clonedModel.calendar = this.calendar;
 		clonedModel.scheduleType = this.scheduleType;
 		clonedModel.categoryId = this.categoryId;
 		clonedModel.categoryModel = this.categoryModel;

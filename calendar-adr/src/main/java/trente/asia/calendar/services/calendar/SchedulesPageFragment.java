@@ -3,6 +3,7 @@ package trente.asia.calendar.services.calendar;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,6 +28,7 @@ import trente.asia.calendar.BuildConfig;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.fragments.AbstractClFragment;
+import trente.asia.calendar.commons.utils.ClUtil;
 import trente.asia.calendar.services.calendar.listener.OnChangeCalendarUserListener;
 import trente.asia.calendar.services.calendar.model.CalendarModel;
 import trente.asia.calendar.services.calendar.model.CategoryModel;
@@ -178,13 +180,15 @@ public abstract class SchedulesPageFragment extends AbstractClFragment implement
 	}
 
 	public void updateSchedules(List<ScheduleModel> schedules, List<CategoryModel> categories){
+        Map<String, CategoryModel> categoryMap = ClUtil.convertCategory2Map(categories);
 		for(ScheduleModel schedule : schedules){
-			for(CategoryModel categoryModel : categories){
-				if(categoryModel.key.equals(schedule.categoryId)){
-					schedule.categoryModel = categoryModel;
-					break;
-				}
-			}
+            schedule.categoryModel = categoryMap.get(schedule.categoryId);
+//			for(CategoryModel categoryModel : categories){
+//				if(categoryModel.key.equals(schedule.categoryId)){
+//					schedule.categoryModel = categoryModel;
+//					break;
+//				}
+//			}
 		}
 	}
 

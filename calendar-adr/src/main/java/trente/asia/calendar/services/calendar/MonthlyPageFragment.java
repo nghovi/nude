@@ -36,8 +36,6 @@ import trente.asia.calendar.services.calendar.view.MonthlyCalendarRowView;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
-import trente.asia.welfare.adr.utils.WelfareUtil;
-import trente.asia.welfare.adr.utils.WfDateUtil;
 
 /**
  * MonthlyPageFragment
@@ -55,14 +53,20 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 
 		@Override
 		public int compare(ScheduleModel schedule1, ScheduleModel schedule2){
-			Date startDate1 = WelfareUtil.makeDate(schedule1.startDate);
-			Date endDate1 = WelfareUtil.makeDate(schedule1.endDate);
+			// Date startDate1 = WelfareUtil.makeDate(schedule1.startDate);
+			// Date endDate1 = WelfareUtil.makeDate(schedule1.endDate);
+			//
+			// Date startDate2 = WelfareUtil.makeDate(schedule2.startDate);
+			// Date endDate2 = WelfareUtil.makeDate(schedule2.endDate);
 
-			Date startDate2 = WelfareUtil.makeDate(schedule2.startDate);
-			Date endDate2 = WelfareUtil.makeDate(schedule2.endDate);
+			String startDate1 = WelfareFormatUtil.removeTime4Date(schedule1.startDate);
+			String endDate1 = WelfareFormatUtil.removeTime4Date(schedule1.endDate);
 
-			boolean diff1 = WelfareFormatUtil.formatDate(startDate1).equals(WelfareFormatUtil.formatDate(endDate1));
-			boolean diff2 = WelfareFormatUtil.formatDate(startDate2).equals(WelfareFormatUtil.formatDate(endDate2));
+			String startDate2 = WelfareFormatUtil.removeTime4Date(schedule2.startDate);
+			String endDate2 = WelfareFormatUtil.removeTime4Date(schedule2.endDate);
+
+			boolean diff1 = startDate1.equals(endDate1);
+			boolean diff2 = startDate2.equals(endDate2);
 
 			if(!diff1 && diff2) return -1;
 			if(diff1 && !diff2) return 1;
@@ -171,33 +175,29 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 		if(!CCCollectionUtil.isEmpty(lstSchedule)){
 			Collections.sort(lstSchedule, new ScheduleComparator());
 			for(ScheduleModel model : lstSchedule){
+                Date startDate = WelfareFormatUtil.makeDate(WelfareFormatUtil.removeTime4Date(model.startDate));
+                Date endDate = WelfareFormatUtil.makeDate(WelfareFormatUtil.removeTime4Date(model.endDate));
 				if(model.isPeriodSchedule()){
 					for(MonthlyCalendarRowView rowView : lstCalendarRow){
-						String minDay = rowView.lstCalendarDay.get(0).day;
-						String maxDay = rowView.lstCalendarDay.get(rowView.lstCalendarDay.size() - 1).day;
-						Date startDate = WelfareUtil.makeDate(model.startDate);
-						Date endDate = WelfareUtil.makeDate(model.endDate);
-						boolean isStartBelongPeriod = ClUtil.belongPeriod(startDate, minDay, maxDay);
-						boolean isEndBelongPeriod = ClUtil.belongPeriod(endDate, minDay, maxDay);
-						boolean isOverPeriod = WfDateUtil.compareDate(WelfareFormatUtil.formatDate(startDate), minDay) < 0 && WfDateUtil.compareDate(WelfareFormatUtil.formatDate(endDate), maxDay) > 0;
+						Date minDate = WelfareFormatUtil.makeDate(rowView.lstCalendarDay.get(0).day);
+						Date maxDate = WelfareFormatUtil.makeDate(rowView.lstCalendarDay.get(rowView.lstCalendarDay.size() - 1).day);
+						boolean isStartBelongPeriod = ClUtil.belongPeriod(startDate, minDate, maxDate);
+						boolean isEndBelongPeriod = ClUtil.belongPeriod(endDate, minDate, maxDate);
+						boolean isOverPeriod = startDate.compareTo(minDate) < 0 && endDate.compareTo(maxDate) > 0;
 
 						if(isStartBelongPeriod || isEndBelongPeriod || isOverPeriod){
-							rowView.addSchedule(model, lstCategory);
+							rowView.addSchedule(model);
 						}
 					}
 				}else{
-					List<MonthlyCalendarDayView> lstActiveCalendarDay = ClUtil.findView4Day(lstCalendarDay, model.startDate, model.endDate);
-					// if(ClRepeatUtil.isRepeat(model.repeatType)){
-					// lstActiveCalendarDay = ClRepeatUtil.findView4RepeatSchedule(lstCalendarDay, model);
-					// }else{
-					// lstActiveCalendarDay = ClUtil.findView4Day(lstCalendarDay, model.startDate, model.endDate);
-					// }
+					MonthlyCalendarDayView activeCalendarDay = ClUtil.findView4Day(lstCalendarDay, startDate, endDate);
+                    activeCalendarDay.addSchedule(model);
 
-					if(!CCCollectionUtil.isEmpty(lstActiveCalendarDay)){
-						for(MonthlyCalendarDayView calendarDayView : lstActiveCalendarDay){
-							calendarDayView.addSchedule(model, lstCategory);
-						}
-					}
+//					if(!CCCollectionUtil.isEmpty(lstActiveCalendarDay)){
+//						for(MonthlyCalendarDayView calendarDayView : lstActiveCalendarDay){
+//							calendarDayView.addSchedule(model, lstCategory);
+//						}
+//					}
 				}
 			}
 		}

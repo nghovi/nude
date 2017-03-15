@@ -104,4 +104,11 @@ public class WelfareFormatUtil{
         textView.setText(data);
         textView.setValue(data);
     }
+
+    public static String removeTime4Date(String date){
+        if(CCStringUtil.isEmpty(date)){
+            return "";
+        }
+        return date.substring(0, 10);
+    }
 }

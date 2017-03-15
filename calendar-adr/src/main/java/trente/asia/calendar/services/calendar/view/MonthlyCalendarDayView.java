@@ -98,7 +98,7 @@ public class MonthlyCalendarDayView extends LinearLayout{
 		lnrRowContent = (LinearLayout)this.findViewById(R.id.lnr_id_row_content);
 	}
 
-	public void addSchedule(ScheduleModel scheduleModel, List<CategoryModel> lstCategory){
+	public void addSchedule(ScheduleModel scheduleModel){
 		lstSchedule.add(scheduleModel);
 		TextView txtSchedule = new TextView(mContext);
 		txtSchedule.setMaxLines(1);
@@ -112,7 +112,7 @@ public class MonthlyCalendarDayView extends LinearLayout{
 		txtSchedule.setGravity(Gravity.CENTER_VERTICAL);
 		txtSchedule.setPadding(1, 0, 1, 0);
 
-		String scheduleColor = scheduleModel.getScheduleColor(lstCategory);
+		String scheduleColor = scheduleModel.getScheduleColor();
 		if(CCBooleanUtil.checkBoolean(scheduleModel.isAllDay)){
 			txtSchedule.setTextColor(Color.WHITE);
 			if(!CCStringUtil.isEmpty(scheduleColor)){

@@ -1,13 +1,13 @@
 package trente.asia.calendar.services.calendar.view;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.Gravity;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -17,7 +17,6 @@ import asia.chiase.core.util.CCStringUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.utils.ClUtil;
-import trente.asia.calendar.services.calendar.model.CategoryModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 
@@ -56,18 +55,19 @@ public class MonthlyCalendarRowView extends RelativeLayout{
 		this.lstCalendarDay = new ArrayList<>();
 	}
 
-	public void addSchedule(ScheduleModel scheduleModel, List<CategoryModel> lstCategory){
+	public void addSchedule(ScheduleModel scheduleModel){
 		double itemWidth = this.getWidth() / 7.0;
 		int textSize = 10;
 
-		List<MonthlyCalendarDayView> lstActiveCalendarDay = ClUtil.findView4Day(lstCalendarDay, scheduleModel.startDate, scheduleModel.endDate);
+		Date startDate = WelfareFormatUtil.makeDate(WelfareFormatUtil.removeTime4Date(scheduleModel.startDate));
+		Date endDate = WelfareFormatUtil.makeDate(WelfareFormatUtil.removeTime4Date(scheduleModel.endDate));
+		List<MonthlyCalendarDayView> lstActiveCalendarDay = ClUtil.findListView4Day(lstCalendarDay, startDate, endDate);
 		for(MonthlyCalendarDayView dayView : lstActiveCalendarDay){
 			dayView.addPeriod(scheduleModel);
 		}
 		MonthlyCalendarDayView theFirstCalendarDay = lstActiveCalendarDay.get(0);
 		MonthlyCalendarDayView theLastCalendarDay = lstActiveCalendarDay.get(lstActiveCalendarDay.size() - 1);
 
-//        int textViewHeight = (int)getResources().getDimension(R.dimen.margin_15dp);
 		int marginTop = (int)getResources().getDimension(R.dimen.margin_30dp) + (ClUtil.getMaxInList(lstActiveCalendarDay) - 1) * ClConst.TEXT_VIEW_HEIGHT;
 		LayoutParams layoutParams = new LayoutParams((int)(itemWidth * (theLastCalendarDay.dayOfTheWeek - theFirstCalendarDay.dayOfTheWeek + 1)) - 2, ClConst.TEXT_VIEW_HEIGHT);
 		layoutParams.setMargins((int)(itemWidth * theFirstCalendarDay.dayOfTheWeek) + 1, marginTop, 1, 0);
@@ -75,13 +75,13 @@ public class MonthlyCalendarRowView extends RelativeLayout{
 		TextView txtSchedule = new TextView(mContext);
 		txtSchedule.setMaxLines(1);
 		txtSchedule.setLayoutParams(layoutParams);
-        txtSchedule.setPadding(1, 0, 1, 0);
+		txtSchedule.setPadding(1, 0, 1, 0);
 
 		// set data
 		// txtSchedule.setPadding(2, 2, 2, 2);
 		txtSchedule.setGravity(Gravity.CENTER_VERTICAL);
 		txtSchedule.setTextColor(Color.WHITE);
-        String scheduleColor = scheduleModel.getScheduleColor(lstCategory);
+		String scheduleColor = scheduleModel.getScheduleColor();
 		if(!CCStringUtil.isEmpty(scheduleColor)){
 			txtSchedule.setBackgroundColor(Color.parseColor(scheduleColor));
 		}else{
@@ -114,13 +114,13 @@ public class MonthlyCalendarRowView extends RelativeLayout{
 				this.removeView(textView);
 			}
 		}
-        this.lstTextPeriod.clear();
-//        this.lstCalendarDay.clear();
+		this.lstTextPeriod.clear();
+		// this.lstCalendarDay.clear();
 
-//        for(MonthlyCalendarDayView dayView : lstCalendarDay){
-//            LinearLayout.LayoutParams layoutParamsDay = new LinearLayout.LayoutParams(0, (int)getResources().getDimension(R.dimen.margin_40dp), 1);
-////            LinearLayout.LayoutParams layoutParamsDay = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
-//            dayView.setLayoutParams(layoutParamsDay);
-//        }
+		// for(MonthlyCalendarDayView dayView : lstCalendarDay){
+		// LinearLayout.LayoutParams layoutParamsDay = new LinearLayout.LayoutParams(0, (int)getResources().getDimension(R.dimen.margin_40dp), 1);
+		//// LinearLayout.LayoutParams layoutParamsDay = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
+		// dayView.setLayoutParams(layoutParamsDay);
+		// }
 	}
 }
