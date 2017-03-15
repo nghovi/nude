@@ -7,6 +7,15 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/lnr_daily_schedules_list_holiday"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+    >
+        <View style="@style/cs_common_divider"/>
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/lnr_daily_schedule_list_all_day"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -33,14 +42,6 @@
         <View style="@style/cs_common_divider"/>
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/lnr_daily_schedules_list_holiday"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-    >
-        <View style="@style/cs_common_divider"/>
-    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/lnr_daily_schedules_list_work_offer"

@@ -31,11 +31,11 @@
 
     <ScrollView android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/wf_login_background_color"
+                android:paddingBottom="@dimen/margin_5dp"
+                android:background="@drawable/wf_background_bottom_round_corner"
                 android:fillViewport="true">
         <LinearLayout android:layout_width="match_parent"
                       android:layout_height="wrap_content"
-                      android:background="@drawable/wf_background_bottom_round_corner"
                       android:orientation="vertical">
 
             <TextView
