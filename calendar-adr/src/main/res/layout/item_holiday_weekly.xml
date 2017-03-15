@@ -13,14 +13,13 @@
                   android:gravity="center_vertical"
                   android:layout_weight="0.6">
 
-        <trente.asia.welfare.adr.view.SelectableRoundedImageView
+        <ImageView
             android:id="@+id/img_item_birthday_user"
             android:layout_width="@dimen/margin_24dp"
             android:layout_height="@dimen/margin_24dp"
             android:layout_marginRight="@dimen/margin_10dp"
             android:src="@drawable/cl_icon_holiday"
-            android:scaleType="fitXY"
-            custom:sriv_oval="true"/>
+            android:scaleType="fitXY"/>
 
         <TextView
             style="@style/wl_common_text"

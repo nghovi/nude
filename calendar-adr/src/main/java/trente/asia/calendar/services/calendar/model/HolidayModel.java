@@ -28,7 +28,7 @@ public class HolidayModel{
 		for(HolidayModel holidayModel : holidayModels){
 			Date startDate = CCDateUtil.makeDateCustom(holidayModel.startDate, WelfareConst.WL_DATE_TIME_7);
 			Date endDate = CCDateUtil.makeDateCustom(holidayModel.endDate, WelfareConst.WL_DATE_TIME_7);
-			if(startDate.getTime() <= date.getTime() && date.getTime() <= endDate.getTime()){
+			if(CCDateUtil.compareDate(startDate, date, false) <= 0 && CCDateUtil.compareDate(date, endDate, false) <= 0){
 				results.add(holidayModel);
 			}
 		}
