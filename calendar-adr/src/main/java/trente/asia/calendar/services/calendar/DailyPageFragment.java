@@ -34,6 +34,7 @@ public class DailyPageFragment extends SchedulesPageListViewFragment implements 
 	private ObservableScrollView	observableScrollView;
 
 	private DailyScheduleList		dailyScheduleList;
+	private boolean					canScroll	= false;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -71,6 +72,7 @@ public class DailyPageFragment extends SchedulesPageListViewFragment implements 
 
 	@Override
 	protected void updateObservableScrollableView(){
+        canScroll = false;
 		dailyScheduleList.updateFor(selectedDate, lstSchedule, lstHoliday, lstWorkOffer, lstBirthdayUser);
 	}
 
@@ -87,7 +89,9 @@ public class DailyPageFragment extends SchedulesPageListViewFragment implements 
 
 	@Override
 	public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging){
-
+        if(firstScroll){
+            canScroll = true;
+        }
 	}
 
 	@Override
@@ -97,10 +101,12 @@ public class DailyPageFragment extends SchedulesPageListViewFragment implements 
 
 	@Override
 	public void onUpOrCancelMotionEvent(ScrollState scrollState){
-		if(scrollState == ScrollState.UP){
-			lnrCalendarContainer.setVisibility(View.GONE);
-		}else if(scrollState == ScrollState.DOWN){
-			lnrCalendarContainer.setVisibility(View.VISIBLE);
+		if(canScroll){
+			if(scrollState == ScrollState.UP){
+				lnrCalendarContainer.setVisibility(View.GONE);
+			}else if(scrollState == ScrollState.DOWN){
+				lnrCalendarContainer.setVisibility(View.VISIBLE);
+			}
 		}
 	}
 
