@@ -75,8 +75,9 @@ public class WeeklyScheduleListAdapter extends ArrayAdapter<CalendarDayModel>{
 		}
 		CalendarDayModel calendarDay = getItem(position);
 		viewHolder.txtDay.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, calendarDay.date));
-		buildScheduleList(viewHolder, calendarDay);
+		viewHolder.lnrEventList.removeAllViews();
 		buildHolidays(viewHolder, calendarDay);
+		buildScheduleList(viewHolder, calendarDay);
 		buildBirthdays(viewHolder, calendarDay);
 		buildWorkOffers(viewHolder, calendarDay);
 
@@ -114,7 +115,6 @@ public class WeeklyScheduleListAdapter extends ArrayAdapter<CalendarDayModel>{
 	}
 
 	private void buildScheduleList(ViewHolder viewHolder, CalendarDayModel calendarDay){
-		viewHolder.lnrEventList.removeAllViews();
 		for(final ScheduleModel schedule : calendarDay.schedules){
 			View lnrSchedulesContainer = buildScheduleItem(getContext(), layoutInflater, schedule, onScheduleItemClickListener, calendarDay.date);
 			viewHolder.lnrEventList.addView(lnrSchedulesContainer);
