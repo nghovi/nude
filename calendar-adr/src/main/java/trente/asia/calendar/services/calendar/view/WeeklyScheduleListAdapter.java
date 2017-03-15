@@ -197,7 +197,7 @@ public class WeeklyScheduleListAdapter extends ArrayAdapter<CalendarDayModel>{
 		int position = -1;
 		for(int i = 0; i < this.calendarDayModels.size(); i++){
 			CalendarDayModel calendarDayModel = calendarDayModels.get(i);
-			if(calendarDayModel.date.equals(date)){
+			if(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, calendarDayModel.date).equals(date)){
 				position = i;
 				break;
 			}
