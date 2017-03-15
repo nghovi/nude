@@ -27,8 +27,7 @@
                 android:textStyle="bold"/>
             <TextView
                 android:id="@+id/txt_item_offer_date"
-                style="@style/wl_common_text_single_line"
-                android:textStyle="bold"/>
+                style="@style/wl_common_text_single_line"/>
 
         </LinearLayout>
 
@@ -58,9 +57,9 @@
         style="@style/cs_common_match"
         android:layout_weight="0.4">
         <TextView
-            android:layout_marginLeft="@dimen/margin_10dp"
             android:id="@+id/txt_item_offer_note"
-            style="@style/wl_common_text"/>
+            style="@style/wl_common_text"
+            android:layout_marginLeft="@dimen/margin_10dp"/>
     </LinearLayout>
 
 
