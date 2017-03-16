@@ -128,6 +128,9 @@ public abstract class WelfareFragment extends ChiaseFragment implements WelfareA
 	 */
 	@Override
 	protected void onSuccessLoad(JSONObject response, boolean isAlert, String url){
+		if(response == null){
+			response = createSystemErrorResponse();
+		}
 		String status = response.optString(CsConst.STATUS);
 		String returnCd = response.optString(WelfareConst.RETURN_CODE_PARAM);
 		if(CsConst.STATUS_OK.equals(status) && (CCStringUtil.isEmpty(returnCd) || CCConst.NONE.equals(returnCd))){
@@ -155,6 +158,18 @@ public abstract class WelfareFragment extends ChiaseFragment implements WelfareA
 			dismissLoad();
 			commonNotSuccess(response);
 		}
+	}
+
+	private JSONObject createSystemErrorResponse(){
+		JSONObject resule = new JSONObject();
+		try{
+			resule.put(CsConst.STATUS, CsConst.STATUS_NG);
+			resule.put(WelfareConst.RETURN_CODE_PARAM, WfErrorConst.ERR_CODE_SERVER_SYSTEM_EROR);
+			resule.put(CsConst.MESSAGES, getString(R.string.system_error_msg));
+		}catch(JSONException e){
+
+		}
+		return resule;
 	}
 
 	protected void commonNotSuccess(JSONObject response){

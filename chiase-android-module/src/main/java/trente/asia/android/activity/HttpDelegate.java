@@ -1,18 +1,15 @@
 package trente.asia.android.activity;
 
-import android.os.AsyncTask;
-import android.util.Log;
+import java.io.File;
+import java.util.Iterator;
+import java.util.Map;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import android.os.AsyncTask;
 
-import okhttp3.FormBody;
+import asia.chiase.core.util.CCStringUtil;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
@@ -21,160 +18,155 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import trente.asia.android.util.CARequestUtil;
 
-import static android.content.ContentValues.TAG;
-
 /**
  * Created by takyas on 11/27/16.
  */
 
-public class HttpDelegate {
+public class HttpDelegate{
 
-    OkHttpClient client = new OkHttpClient();
+	OkHttpClient		client	= new OkHttpClient();
 
-    protected String host;
+	protected String	host;
 
-    public HttpDelegate(String host) {
-        this.host = host;
-    }
+	public HttpDelegate(String host){
+		this.host = host;
+	}
 
-    public void get(final HttpCallback callback, final String url, JSONObject param, final boolean isAlert) {
+	public void get(final HttpCallback callback, final String url, JSONObject param, final boolean isAlert){
 
-        final OkHttpClient client = new OkHttpClient();
+		final OkHttpClient client = new OkHttpClient();
 
-        String fullUrl = CARequestUtil.getGetUrl(host + url, param);
+		String fullUrl = CARequestUtil.getGetUrl(host + url, param);
 
-        final Request request = new Request.Builder().url(fullUrl).build();
+		final Request request = new Request.Builder().url(fullUrl).build();
 
-        AsyncTask<Void, Void, String> asyncTask = new AsyncTask<Void, Void, String>() {
-            @Override
-            protected String doInBackground(Void... params) {
-                try {
-                    Response response = client.newCall(request).execute();
-                    if (!response.isSuccessful()) {
-                        return null;
-                    }
-                    return response.body().string();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    return null;
-                }
-            }
+		AsyncTask<Void, Void, String> asyncTask = new AsyncTask<Void, Void, String>() {
 
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-                try {
-                    JSONObject resJson = new JSONObject(s);
-                    callback.callbackLoad(HttpCallback.SUCCESS, url, resJson, isAlert);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
+			@Override
+			protected String doInBackground(Void...params){
+				try{
+					Response response = client.newCall(request).execute();
+					if(!response.isSuccessful()){
+						return null;
+					}
+					return response.body().string();
+				}catch(Exception e){
+					e.printStackTrace();
+					return null;
+				}
+			}
 
-        asyncTask.execute();
+			@Override
+			protected void onPostExecute(String s){
+				super.onPostExecute(s);
+				try{
+					JSONObject resJson = null;
+					if(!CCStringUtil.isEmpty(s)){
+						resJson = new JSONObject(s);
+					}
+					callback.callbackLoad(HttpCallback.SUCCESS, url, resJson, isAlert);
+				}catch(JSONException e){
+					e.printStackTrace();
+				}
+			}
+		};
 
-    }
+		asyncTask.execute();
 
+	}
 
-    public void post(final HttpCallback callback, final String url, final JSONObject param, final boolean isAlert) {
+	public void post(final HttpCallback callback, final String url, final JSONObject param, final boolean isAlert){
 
-        final OkHttpClient client = new OkHttpClient();
+		final OkHttpClient client = new OkHttpClient();
 
-        AsyncTask<Void, Void, String> asyncTask = new AsyncTask<Void, Void, String>() {
-            @Override
-            protected String doInBackground(Void... params) {
-                try {
+		AsyncTask<Void, Void, String> asyncTask = new AsyncTask<Void, Void, String>() {
 
-                    MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-                    RequestBody formBody = RequestBody.create(JSON, param.toString());
+			@Override
+			protected String doInBackground(Void...params){
+				try{
 
-                    Request request = new Request.Builder()
-                            .url(host + url)
-                            .post(formBody)
-                            .build();
+					MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+					RequestBody formBody = RequestBody.create(JSON, param.toString());
 
-                    Response response = client.newCall(request).execute();
-                    if (!response.isSuccessful()) {
-                        return null;
-                    }
-                    return response.body().string();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    return null;
-                }
-            }
+					Request request = new Request.Builder().url(host + url).post(formBody).build();
 
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-                try {
-                    JSONObject resJson = new JSONObject(s);
-                    callback.callbackUpdate(HttpCallback.SUCCESS, url, resJson, isAlert);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
+					Response response = client.newCall(request).execute();
+					if(!response.isSuccessful()){
+						return null;
+					}
+					return response.body().string();
+				}catch(Exception e){
+					e.printStackTrace();
+					return null;
+				}
+			}
 
-        asyncTask.execute();
+			@Override
+			protected void onPostExecute(String s){
+				super.onPostExecute(s);
+				try{
+					JSONObject resJson = new JSONObject(s);
+					callback.callbackUpdate(HttpCallback.SUCCESS, url, resJson, isAlert);
+				}catch(JSONException e){
+					e.printStackTrace();
+				}
+			}
+		};
 
-    }
+		asyncTask.execute();
 
+	}
 
-    public void upload(final HttpCallback callback, final String url, final JSONObject param, final Map<String, File> files, final boolean isAlert) {
+	public void upload(final HttpCallback callback, final String url, final JSONObject param, final Map<String, File> files, final boolean isAlert){
 
-        final OkHttpClient client = new OkHttpClient();
+		final OkHttpClient client = new OkHttpClient();
 
-        AsyncTask<Void, Void, String> asyncTask = new AsyncTask<Void, Void, String>() {
-            @Override
-            protected String doInBackground(Void... params) {
-                try {
+		AsyncTask<Void, Void, String> asyncTask = new AsyncTask<Void, Void, String>() {
 
-                    MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
+			@Override
+			protected String doInBackground(Void...params){
+				try{
 
-                    Iterator<String> nameItr = param.keys();
-                    while (nameItr.hasNext()) {
-                        String name = nameItr.next();
-                        body.addFormDataPart(name, param.getString(name));
-                    }
+					MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
 
-                    for (Map.Entry<String, File> e : files.entrySet()) {
-                        File file = e.getValue();
-                        body.addFormDataPart(e.getKey(), file.getName(), RequestBody.create(MediaType.parse("image/png"), file));
-                    }
+					Iterator<String> nameItr = param.keys();
+					while(nameItr.hasNext()){
+						String name = nameItr.next();
+						body.addFormDataPart(name, param.getString(name));
+					}
 
-                    Request request = new Request.Builder()
-                            .url(host + url)
-                            .post(body.build())
-                            .build();
+					for(Map.Entry<String, File> e : files.entrySet()){
+						File file = e.getValue();
+						body.addFormDataPart(e.getKey(), file.getName(), RequestBody.create(MediaType.parse("image/png"), file));
+					}
 
-                    Response response = client.newCall(request).execute();
-                    if (!response.isSuccessful()) {
-                        return null;
-                    }
-                    return response.body().string();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    return null;
-                }
-            }
+					Request request = new Request.Builder().url(host + url).post(body.build()).build();
 
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-                try {
-                    JSONObject resJson = new JSONObject(s);
-                    callback.callbackUpload(HttpCallback.SUCCESS, url, resJson, isAlert);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
+					Response response = client.newCall(request).execute();
+					if(!response.isSuccessful()){
+						return null;
+					}
+					return response.body().string();
+				}catch(Exception e){
+					e.printStackTrace();
+					return null;
+				}
+			}
 
-        asyncTask.execute();
+			@Override
+			protected void onPostExecute(String s){
+				super.onPostExecute(s);
+				try{
+					JSONObject resJson = new JSONObject(s);
+					callback.callbackUpload(HttpCallback.SUCCESS, url, resJson, isAlert);
+				}catch(JSONException e){
+					e.printStackTrace();
+				}
+			}
+		};
 
-    }
+		asyncTask.execute();
 
+	}
 
 }
