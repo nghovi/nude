@@ -77,7 +77,8 @@
     <!--Notifications-->
     <string name="FM_CL_001">[%1$s] %2$s has entered a schedule : %3$s</string>
     <string name="FM_CL_002">[%1$s] %2$s edited a schedule : %3$s</string>
-    <string name="FM_CL_003">You have some schedules today.</string>
+    <string name="FM_CL_003">You have %1$s schedules today.</string>
+    <string name="FM_CL_004">You have a schedule today.</string>
     <string name="fragment_summary_title">Summary</string>
     <string name="coming_soon">Coming soon</string>
 
