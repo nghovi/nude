@@ -81,8 +81,8 @@ public class WeeklyScheduleListAdapter extends ArrayAdapter<CalendarDayModel>{
 		viewHolder.lnrEventList.removeAllViews();
 		buildHolidays(viewHolder, calendarDay);
 		buildScheduleList(viewHolder, calendarDay);
-		buildBirthdays(viewHolder, calendarDay);
 		buildWorkOffers(viewHolder, calendarDay);
+		buildBirthdays(viewHolder, calendarDay);
 
 		return convertView;
 	}
@@ -144,7 +144,7 @@ public class WeeklyScheduleListAdapter extends ArrayAdapter<CalendarDayModel>{
 	}
 
 	private int getScheduleOrderByType(ScheduleModel scheduleModel){
-		if(scheduleModel.isPeriodSchedule()){
+		if(scheduleModel.isPeriodSchedule() && scheduleModel.isAllDay){
 			return 1;
 		}else if(scheduleModel.isAllDay){
 			return 2;

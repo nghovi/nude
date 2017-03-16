@@ -8,7 +8,7 @@
 
 
     <LinearLayout
-        style="@style/cs_common_match"
+        style="@style/cs_common_match_wrap"
         android:layout_weight="0.6"
         android:orientation="horizontal">
 
@@ -19,7 +19,7 @@
             android:layout_marginRight="@dimen/margin_10dp"
             android:scaleType="fitXY" custom:sriv_oval="true"/>
         <LinearLayout android:layout_width="match_parent"
-                      android:layout_height="match_parent"
+                      android:layout_height="wrap_content"
                       android:orientation="vertical">
             <TextView
                 android:id="@+id/txt_item_offer_type"
@@ -53,7 +53,7 @@
 
 
     <LinearLayout
-        style="@style/cs_common_match"
+        style="@style/cs_common_match_wrap"
         android:layout_weight="0.4">
         <TextView
             android:id="@+id/txt_item_offer_note"
