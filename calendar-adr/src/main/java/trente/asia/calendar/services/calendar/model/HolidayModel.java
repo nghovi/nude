@@ -1,6 +1,8 @@
 package trente.asia.calendar.services.calendar.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -32,6 +34,17 @@ public class HolidayModel{
 				results.add(holidayModel);
 			}
 		}
+		sortHolidayModels(results);
 		return results;
+	}
+
+	public static void sortHolidayModels(List<HolidayModel> results){
+		Collections.sort(results, new Comparator<HolidayModel>() {
+
+			@Override
+			public int compare(HolidayModel o1, HolidayModel o2){
+				return o1.holidayName.compareTo(o2.holidayName);
+			}
+		});
 	}
 }

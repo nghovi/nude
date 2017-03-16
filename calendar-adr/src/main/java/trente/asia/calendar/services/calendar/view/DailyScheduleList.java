@@ -1,6 +1,8 @@
 package trente.asia.calendar.services.calendar.view;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -135,7 +137,30 @@ public class DailyScheduleList extends LinearLayout{
 				result.add(offer);
 			}
 		}
+		sortOffersByType(result);
 		return result;
+	}
+
+	public static void sortOffersByType(List<WorkOffer> offers){
+		final Map<String, Integer> offer_type_order = new HashMap<>();
+		offer_type_order.put(WorkOffer.OFFER_TYPE_PAID_VACATION_ALL, 1);
+		offer_type_order.put(WorkOffer.OFFER_TYPE_PAID_VACATION_MORNING, 2);
+		offer_type_order.put(WorkOffer.OFFER_TYPE_PAID_VACATION_AFTERNOON, 3);
+		offer_type_order.put(WorkOffer.OFFER_TYPE_SPECIAL_HOLIDAY, 4);
+		offer_type_order.put(WorkOffer.OFFER_TYPE_COMPENSATORY_HOLIDAY, 5);
+		offer_type_order.put(WorkOffer.OFFER_TYPE_ABSENT, 6);
+		offer_type_order.put(WorkOffer.OFFER_TYPE_OVERTIME_WORKING, 7);
+		offer_type_order.put(WorkOffer.OFFER_TYPE_OVERTIME, 8);
+		offer_type_order.put(WorkOffer.OFFER_TYPE_HOLIDAY_WORKING, 9);
+		offer_type_order.put(WorkOffer.OFFER_TYPE_SHORT_TIME, 10);
+
+		Collections.sort(offers, new Comparator<WorkOffer>() {
+
+			@Override
+			public int compare(WorkOffer o1, WorkOffer o2){
+				return offer_type_order.get(o1.offerType).compareTo(offer_type_order.get(o2.offerType));
+			}
+		});
 	}
 
 	public static LinearLayout buildOfferItem(Context context, LayoutInflater inflater, WorkOffer offer, int layoutId){
@@ -179,6 +204,16 @@ public class DailyScheduleList extends LinearLayout{
 		}
 	}
 
+	public static void sortBirthdays(List<UserModel> userModels){
+		Collections.sort(userModels, new Comparator<UserModel>() {
+
+			@Override
+			public int compare(UserModel o1, UserModel o2){
+				return o1.userName.compareTo(o2.userName);
+			}
+		});
+	}
+
 	public List<UserModel> getBirthdayUsersToday(List<UserModel> userModels){
 		List<UserModel> result = new ArrayList<>();
 		for(UserModel userModel : userModels){
@@ -186,6 +221,7 @@ public class DailyScheduleList extends LinearLayout{
 				result.add(userModel);
 			}
 		}
+		sortBirthdays(result);
 		return result;
 	}
 
@@ -250,7 +286,20 @@ public class DailyScheduleList extends LinearLayout{
 				}
 			}
 		}
+		sortByTime(result.get(SCHEDULES_ALL_DAY));
+		sortByTime(result.get(SCHEDULES_MORNING));
+		sortByTime(result.get(SCHEDULES_AFTERNOON));
 		return result;
+	}
+
+	public static void sortByTime(List<ScheduleModel> scheduleModels){
+		Collections.sort(scheduleModels, new Comparator<ScheduleModel>() {
+
+			@Override
+			public int compare(ScheduleModel o1, ScheduleModel o2){
+				return CCDateUtil.compareDate(CCDateUtil.makeDateCustom(o1.startDate, WelfareConst.WL_DATE_TIME_1), CCDateUtil.makeDateCustom(o2.startDate, WelfareConst.WL_DATE_TIME_1), true);
+			}
+		});
 	}
 
 	private boolean isBeforeNoon(String startTime){

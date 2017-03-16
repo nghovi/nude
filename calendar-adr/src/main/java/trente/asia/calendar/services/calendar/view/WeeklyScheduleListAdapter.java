@@ -1,6 +1,8 @@
 package trente.asia.calendar.services.calendar.view;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -17,6 +19,7 @@ import android.widget.TextView;
 
 import asia.chiase.core.util.CCBooleanUtil;
 import asia.chiase.core.util.CCCollectionUtil;
+import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.calendar.BuildConfig;
@@ -87,6 +90,7 @@ public class WeeklyScheduleListAdapter extends ArrayAdapter<CalendarDayModel>{
 	private void buildWorkOffers(ViewHolder viewHolder, CalendarDayModel calendarDay){
 		List<WorkOffer> workOffers = calendarDay.workOffers;
 		if(!CCCollectionUtil.isEmpty(workOffers)){
+			DailyScheduleList.sortOffersByType(workOffers);
 			for(WorkOffer workOffer : workOffers){
 				LinearLayout holidayItem = DailyScheduleList.buildOfferItem(context, layoutInflater, workOffer, R.layout.item_work_offer_weekly);
 				viewHolder.lnrEventList.addView(holidayItem);
@@ -97,6 +101,7 @@ public class WeeklyScheduleListAdapter extends ArrayAdapter<CalendarDayModel>{
 	private void buildBirthdays(ViewHolder viewHolder, CalendarDayModel calendarDay){
 		List<UserModel> birthdayUsers = calendarDay.birthdayUsers;
 		if(!CCCollectionUtil.isEmpty(birthdayUsers)){
+			DailyScheduleList.sortBirthdays(birthdayUsers);
 			for(UserModel user : birthdayUsers){
 				LinearLayout holidayItem = DailyScheduleList.buildBirthdayItem(context, layoutInflater, user, R.layout.item_birthday_weekly);
 				viewHolder.lnrEventList.addView(holidayItem);
@@ -107,6 +112,7 @@ public class WeeklyScheduleListAdapter extends ArrayAdapter<CalendarDayModel>{
 	private void buildHolidays(ViewHolder viewHolder, CalendarDayModel calendarDay){
 		List<HolidayModel> holidayModels = calendarDay.holidayModels;
 		if(!CCCollectionUtil.isEmpty(holidayModels)){
+			HolidayModel.sortHolidayModels(holidayModels);
 			for(HolidayModel holidayModel : holidayModels){
 				LinearLayout holidayItem = DailyScheduleList.buildHolidayItem(layoutInflater, holidayModel, 0, R.layout.item_holiday_weekly);
 				viewHolder.lnrEventList.addView(holidayItem);
@@ -115,10 +121,35 @@ public class WeeklyScheduleListAdapter extends ArrayAdapter<CalendarDayModel>{
 	}
 
 	private void buildScheduleList(ViewHolder viewHolder, CalendarDayModel calendarDay){
+		sortSchedulesByType(calendarDay.schedules);
 		for(final ScheduleModel schedule : calendarDay.schedules){
 			View lnrSchedulesContainer = buildScheduleItem(getContext(), layoutInflater, schedule, onScheduleItemClickListener, calendarDay.date);
 			viewHolder.lnrEventList.addView(lnrSchedulesContainer);
 		}
+	}
+
+	private void sortSchedulesByType(List<ScheduleModel> schedules){
+		Collections.sort(schedules, new Comparator<ScheduleModel>() {
+
+			@Override
+			public int compare(ScheduleModel o1, ScheduleModel o2){
+				Integer o1TypeOrder = getScheduleOrderByType(o1);
+				Integer o2TypeOrder = getScheduleOrderByType(o2);
+				if(o1TypeOrder != o2TypeOrder){
+					return o1TypeOrder.compareTo(o2TypeOrder);
+				}
+				return CCDateUtil.compareDate(CCDateUtil.makeDateCustom(o1.startDate, WelfareConst.WL_DATE_TIME_1), CCDateUtil.makeDateCustom(o2.startDate, WelfareConst.WL_DATE_TIME_1), true);
+			}
+		});
+	}
+
+	private int getScheduleOrderByType(ScheduleModel scheduleModel){
+		if(scheduleModel.isPeriodSchedule()){
+			return 1;
+		}else if(scheduleModel.isAllDay){
+			return 2;
+		}
+		return 3;
 	}
 
 	public static View buildScheduleItem(final Context context, LayoutInflater layoutInflater, final ScheduleModel schedule, final OnScheduleItemClickListener onScheduleItemClickListener, final Date selectedDate){
