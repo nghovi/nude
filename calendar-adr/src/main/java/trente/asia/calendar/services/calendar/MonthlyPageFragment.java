@@ -175,8 +175,8 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 		if(!CCCollectionUtil.isEmpty(lstSchedule)){
 			Collections.sort(lstSchedule, new ScheduleComparator());
 			for(ScheduleModel model : lstSchedule){
-                Date startDate = WelfareFormatUtil.makeDate(WelfareFormatUtil.removeTime4Date(model.startDate));
-                Date endDate = WelfareFormatUtil.makeDate(WelfareFormatUtil.removeTime4Date(model.endDate));
+				Date startDate = WelfareFormatUtil.makeDate(WelfareFormatUtil.removeTime4Date(model.startDate));
+				Date endDate = WelfareFormatUtil.makeDate(WelfareFormatUtil.removeTime4Date(model.endDate));
 				if(model.isPeriodSchedule()){
 					for(MonthlyCalendarRowView rowView : lstCalendarRow){
 						Date minDate = WelfareFormatUtil.makeDate(rowView.lstCalendarDay.get(0).day);
@@ -191,13 +191,14 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 					}
 				}else{
 					MonthlyCalendarDayView activeCalendarDay = ClUtil.findView4Day(lstCalendarDay, startDate, endDate);
-                    activeCalendarDay.addSchedule(model);
-
-//					if(!CCCollectionUtil.isEmpty(lstActiveCalendarDay)){
-//						for(MonthlyCalendarDayView calendarDayView : lstActiveCalendarDay){
-//							calendarDayView.addSchedule(model, lstCategory);
-//						}
-//					}
+					if(activeCalendarDay != null){
+						activeCalendarDay.addSchedule(model);
+					}
+					// if(!CCCollectionUtil.isEmpty(lstActiveCalendarDay)){
+					// for(MonthlyCalendarDayView calendarDayView : lstActiveCalendarDay){
+					// calendarDayView.addSchedule(model, lstCategory);
+					// }
+					// }
 				}
 			}
 		}

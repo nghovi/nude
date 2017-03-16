@@ -150,8 +150,8 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 		}else{
 			starDate = calendar.getTime();
 			endDate = calendar.getTime();
-			startTimeStr = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_9, starDate);
-			endTimeStr = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_9, endDate);
+			startTimeStr = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_9, Calendar.getInstance().getTime());
+			endTimeStr = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_9, Calendar.getInstance().getTime());
 		}
 
 		repeatDialog.setStartDate(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, starDate));
@@ -227,13 +227,13 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 			}
 		});
 
-        if(!CCStringUtil.isEmpty(scheduleModel.key)){
-            if(!CCCollectionUtil.isEmpty(scheduleModel.calendar.calendarUsers)){
-                filterDialog.updateUserList(scheduleModel.calendar.calendarUsers);
-            }
-        }else{
-            onChangeCalendar(calendars.get(0).key);
-        }
+		if(!CCStringUtil.isEmpty(scheduleModel.key)){
+			if(!CCCollectionUtil.isEmpty(scheduleModel.calendar.calendarUsers)){
+				filterDialog.updateUserList(scheduleModel.calendar.calendarUsers);
+			}
+		}else{
+			onChangeCalendar(calendars.get(0).key);
+		}
 		dlgChooseCalendar = new ChiaseListDialog(getContext(), getString(R.string.cl_schedule_form_item_calendar), WelfareFormatUtil.convertList2Map(calendarHolders), txtCalendar, new ChiaseListDialog.OnItemClicked() {
 
 			@Override
@@ -408,7 +408,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 	protected void successUpdate(JSONObject response, String url){
 		if(WfUrlConst.WF_CL_SCHEDULE_UPD.equals(url)){
 			schedule = CCJsonUtil.convertToModel(response.optString("schedule"), ScheduleModel.class);
-            String newKey = response.optString("returnValue");
+			String newKey = response.optString("returnValue");
 			onScheduleUpdateSuccess(newKey);
 		}else if(WfUrlConst.WF_CL_SCHEDULE_DEL.equals(url)){
 			((WelfareActivity)activity).dataMap.put(ClConst.ACTION_SCHEDULE_DELETE, CCConst.YES);
@@ -421,7 +421,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 	private void onScheduleUpdateSuccess(String newKey){
 		((ChiaseActivity)activity).isInitData = true;
 		((WelfareActivity)activity).dataMap.put(ClConst.ACTION_SCHEDULE_UPDATE, CCConst.YES);
-        ((WelfareActivity)activity).dataMap.put(ClConst.ACTION_SCHEDULE_UPDATE_NEW_KEY, newKey);
+		((WelfareActivity)activity).dataMap.put(ClConst.ACTION_SCHEDULE_UPDATE_NEW_KEY, newKey);
 		onClickBackBtn();
 	}
 
