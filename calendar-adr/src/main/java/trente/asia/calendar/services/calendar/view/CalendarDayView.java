@@ -80,6 +80,7 @@ public class CalendarDayView extends LinearLayout{
 		List<HolidayModel> holidayModelsByDate = HolidayModel.getHolidayModels(this.date, this.holidayModels);
 		if(bgResource == 0 && !CCCollectionUtil.isEmpty(holidayModelsByDate)){
 			this.bgResource = R.drawable.circle_background_holiday;
+			txtContent.setTextColor(Color.WHITE);
 		}
 
 		rowItemView.setBackgroundResource(this.bgResource);

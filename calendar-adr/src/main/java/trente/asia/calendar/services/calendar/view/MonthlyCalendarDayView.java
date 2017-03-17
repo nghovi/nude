@@ -44,6 +44,7 @@ public class MonthlyCalendarDayView extends LinearLayout{
 	public List<ScheduleModel>			lstSchedule	= new ArrayList<>();
 	private int							periodNum;
 	private int							lastPeriodNum;
+	private boolean						isToday		= false;
 
 	public MonthlyCalendarDayView(Context context){
 		super(context);
@@ -84,6 +85,7 @@ public class MonthlyCalendarDayView extends LinearLayout{
 			txtContent.setTextColor(Color.GRAY);
 		}else{
 			if(CCDateUtil.isToday(itemDate)){
+				isToday = true;
 				txtContent.setBackgroundResource(R.drawable.shape_background_today);
 				txtContent.setTextColor(Color.WHITE);
 			}else{
@@ -166,8 +168,10 @@ public class MonthlyCalendarDayView extends LinearLayout{
 	}
 
 	private void setLayoutHoliday(){
-		txtContent.setBackgroundResource(R.drawable.shape_background_holiday);
-		txtContent.setTextColor(Color.WHITE);
+		if(!isToday){
+			txtContent.setBackgroundResource(R.drawable.shape_background_holiday);
+			txtContent.setTextColor(Color.WHITE);
+		}
 	}
 
 	public void addPassivePeriod(ScheduleModel scheduleModel){
