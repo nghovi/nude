@@ -21,7 +21,6 @@ import asia.chiase.core.util.CCStringUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.services.calendar.listener.DailyScheduleClickListener;
-import trente.asia.calendar.services.calendar.model.CategoryModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.welfare.adr.define.WelfareConst;
 
@@ -37,13 +36,14 @@ public class MonthlyCalendarDayView extends LinearLayout{
 	private LinearLayout				lnrRowContent;
 	private DailyScheduleClickListener	mListener;
 
-	private int							numberOfPeriod;
 	// private int numberOfSchedule;
 	private boolean						isTheFirst	= true;
 
 	public String						day;
 	public int							dayOfTheWeek;
 	public List<ScheduleModel>			lstSchedule	= new ArrayList<>();
+	private int							periodNum;
+	private int							lastPeriodNum;
 
 	public MonthlyCalendarDayView(Context context){
 		super(context);
@@ -139,19 +139,22 @@ public class MonthlyCalendarDayView extends LinearLayout{
 
 	private void setMarginTop(){
 		LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-		layoutParams.setMargins(0, numberOfPeriod * ClConst.TEXT_VIEW_HEIGHT, 0, 0);
+
+		layoutParams.setMargins(0, lastPeriodNum * ClConst.TEXT_VIEW_HEIGHT, 0, 0);
 		lnrRowContent.setLayoutParams(layoutParams);
 	}
 
 	public void removeAllData(){
 		lnrRowContent.removeAllViews();
-		numberOfPeriod = 0;
+		periodNum = 0;
+		lastPeriodNum = 0;
 		lstSchedule.clear();
 		isTheFirst = true;
 	}
 
 	public void addPeriod(ScheduleModel scheduleModel){
-		numberOfPeriod++;
+		periodNum++;
+		lastPeriodNum = periodNum;
 		lstSchedule.add(scheduleModel);
 		if(ClConst.SCHEDULE_TYPE_HOLIDAY.equals(scheduleModel.scheduleType)){
 			setLayoutHoliday();
@@ -165,5 +168,9 @@ public class MonthlyCalendarDayView extends LinearLayout{
 	private void setLayoutHoliday(){
 		txtContent.setBackgroundResource(R.drawable.shape_background_holiday);
 		txtContent.setTextColor(Color.WHITE);
+	}
+
+	public void addPassivePeriod(ScheduleModel scheduleModel){
+		periodNum++;
 	}
 }

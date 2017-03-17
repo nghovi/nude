@@ -31,6 +31,7 @@ public class MonthlyCalendarRowView extends RelativeLayout{
 	public List<MonthlyCalendarDayView>	lstCalendarDay;
 
 	public List<TextView>				lstTextPeriod	= new ArrayList<>();
+
 	// private int indexOfSchedule = 0;
 
 	public MonthlyCalendarRowView(Context context){
@@ -62,8 +63,14 @@ public class MonthlyCalendarRowView extends RelativeLayout{
 		Date startDate = WelfareFormatUtil.makeDate(WelfareFormatUtil.removeTime4Date(scheduleModel.startDate));
 		Date endDate = WelfareFormatUtil.makeDate(WelfareFormatUtil.removeTime4Date(scheduleModel.endDate));
 		List<MonthlyCalendarDayView> lstActiveCalendarDay = ClUtil.findListView4Day(lstCalendarDay, startDate, endDate);
+		List<MonthlyCalendarDayView> lstPassiveCalendarDay = getPassiveCalendarDays(lstCalendarDay, lstActiveCalendarDay);
+
 		for(MonthlyCalendarDayView dayView : lstActiveCalendarDay){
 			dayView.addPeriod(scheduleModel);
+		}
+
+		for(MonthlyCalendarDayView dayView : lstPassiveCalendarDay){
+			dayView.addPassivePeriod(scheduleModel);
 		}
 		MonthlyCalendarDayView theFirstCalendarDay = lstActiveCalendarDay.get(0);
 		MonthlyCalendarDayView theLastCalendarDay = lstActiveCalendarDay.get(lstActiveCalendarDay.size() - 1);
@@ -94,6 +101,18 @@ public class MonthlyCalendarRowView extends RelativeLayout{
 		this.addView(txtSchedule);
 	}
 
+	private List<MonthlyCalendarDayView> getPassiveCalendarDays(List<MonthlyCalendarDayView>
+
+	lstCalendarDay, List<MonthlyCalendarDayView> lstActiveCalendarDay){
+		List<MonthlyCalendarDayView> result = new ArrayList<>();
+		for(MonthlyCalendarDayView dayView : lstCalendarDay){
+			if(!lstActiveCalendarDay.contains(dayView)){
+				result.add(dayView);
+			}
+		}
+		return result;
+	}
+
 	public void refreshLayout(){
 		int maxSchedule = 0;
 		for(MonthlyCalendarDayView dayView : lstCalendarDay){
@@ -119,7 +138,7 @@ public class MonthlyCalendarRowView extends RelativeLayout{
 
 		// for(MonthlyCalendarDayView dayView : lstCalendarDay){
 		// LinearLayout.LayoutParams layoutParamsDay = new LinearLayout.LayoutParams(0, (int)getResources().getDimension(R.dimen.margin_40dp), 1);
-		//// LinearLayout.LayoutParams layoutParamsDay = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
+		// // LinearLayout.LayoutParams layoutParamsDay = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
 		// dayView.setLayoutParams(layoutParamsDay);
 		// }
 	}
