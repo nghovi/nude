@@ -11,19 +11,9 @@
     <string name="cl_footer_setting">設定</string>
 
 
-    <string name="dlr_saturday">土</string>
-    <string name="dlr_sunday">日</string>
-    <string name="dlr_monday">月</string>
-    <string name="dlr_tue">火</string>
-    <string name="dlr_wed">水</string>
-    <string name="dlr_thu">木</string>
-    <string name="dlr_fri">金</string>
-
     <string name="cl_common_calendar_sub_title">%1$s カレンダー</string>
     <string name="cl_common_validate_no_calendar_msg">カレンダーを選んでください</string>
 
-    <string name="fragment_schedule_detail_day_period">日期間</string>
-    <string name="fragment_schedule_detail_repeat">繰り返し</string>
     <string name="fragment_schedule_form_title">新しいスケジュール</string>
     <string name="fragment_schedule_edit_title">スケジュール編集</string>
     <string name="fragment_schedule_detail_title">スケジュール詳細</string>
@@ -62,9 +52,7 @@
 
     <string name="cl_schedule_repeat_limit_forever">永遠</string>
     <string name="cl_schedule_repeat_limit_until">まで</string>
-    <string name="cl_schedule_repeat_limit_after">あと</string>
 
-    <string name="cl_dialog_daily_summary_not_data">スケジュールがありません</string>
     <string name="daily_page_all_day">一日中</string>
     <string name="daily_page_morning">午前</string>
     <string name="daily_page_afternoon">午後</string>
@@ -75,11 +63,6 @@
     <string name="no_schedule">スケジュールがありません</string>
 
     <!--Notifications-->
-    <string name="FM_CL_001">[%1$s] %2$s が　%3$s　スケジュールを作りました</string>
-    <string name="FM_CL_002">[%1$s] %2$s が　%3$s　スケジュールを編集しました</string>
-    <string name="FM_CL_003">今日、スケジュールが1つあります。</string>
-	<string name="FM_CL_004">今日、スケジュールが10あります。</string>
-    <string name="FM_CL_005">今日、スケジュールが1つあります。</string>
     <string name="fragment_summary_title">要約</string>
     <string name="coming_soon">近日公開</string>
 

@@ -11,19 +11,9 @@
     <string name="cl_footer_setting">Setting</string>
 
 
-    <string name="dlr_saturday">SAT</string>
-    <string name="dlr_sunday">SUN</string>
-    <string name="dlr_monday">MON</string>
-    <string name="dlr_tue">TUE</string>
-    <string name="dlr_wed">WED</string>
-    <string name="dlr_thu">THU</string>
-    <string name="dlr_fri">FRI</string>
-
     <string name="cl_common_calendar_sub_title">%1$s Calendars</string>
     <string name="cl_common_validate_no_calendar_msg">Please choose calendar</string>
 
-    <string name="fragment_schedule_detail_day_period">Day period</string>
-    <string name="fragment_schedule_detail_repeat">Repeat</string>
     <string name="fragment_schedule_form_title">New schedule</string>
     <string name="fragment_schedule_edit_title">Edit schedule</string>
     <string name="fragment_schedule_detail_title">Schedule detail</string>
@@ -62,9 +52,7 @@
 
     <string name="cl_schedule_repeat_limit_forever">Forever</string>
     <string name="cl_schedule_repeat_limit_until">Until</string>
-    <string name="cl_schedule_repeat_limit_after">After</string>
 
-    <string name="cl_dialog_daily_summary_not_data">No schedule</string>
     <string name="daily_page_all_day">All day</string>
     <string name="daily_page_morning">Morning</string>
     <string name="daily_page_afternoon">Afternoon</string>
@@ -75,10 +63,6 @@
     <string name="no_schedule">No schedule</string>
 
     <!--Notifications-->
-    <string name="FM_CL_001">[%1$s] %2$s has entered a schedule : %3$s</string>
-    <string name="FM_CL_002">[%1$s] %2$s edited a schedule : %3$s</string>
-    <string name="FM_CL_003">You have %1$s schedules today.</string>
-    <string name="FM_CL_004">You have a schedule today.</string>
     <string name="fragment_summary_title">Summary</string>
     <string name="coming_soon">Coming soon</string>
 

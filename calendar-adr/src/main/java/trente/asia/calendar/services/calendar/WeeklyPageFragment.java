@@ -21,7 +21,6 @@ import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.services.calendar.model.CalendarDayModel;
 import trente.asia.calendar.services.calendar.view.CalendarDayView;
-import trente.asia.calendar.services.calendar.view.CalendarView;
 import trente.asia.calendar.services.calendar.view.WeeklyCalendarDayView;
 import trente.asia.calendar.services.calendar.view.WeeklyCalendarHeaderRowView;
 import trente.asia.calendar.services.calendar.view.WeeklyScheduleListAdapter;
@@ -31,7 +30,7 @@ import trente.asia.calendar.services.calendar.view.WeeklyScheduleListAdapter;
  *
  * @author TrungND
  */
-public class WeeklyPageFragment extends SchedulesPageListViewFragment implements ObservableScrollViewCallbacks,CalendarView.OnCalendarDaySelectedListener,CalendarDayView.OnDayClickListener{
+public class WeeklyPageFragment extends SchedulesPageListViewFragment implements ObservableScrollViewCallbacks,CalendarDayView.OnDayClickListener{
 
 	protected ObservableListView		observableListView;
 	protected WeeklyScheduleListAdapter	adapter;
@@ -106,11 +105,6 @@ public class WeeklyPageFragment extends SchedulesPageListViewFragment implements
 	@Override
 	protected CalendarDayView getCalendayDayView(){
 		return new WeeklyCalendarDayView(getContext());
-	}
-
-	@Override
-	public void onCalendarDaySelected(CalendarDayModel reportModel){
-
 	}
 
 	@Override
