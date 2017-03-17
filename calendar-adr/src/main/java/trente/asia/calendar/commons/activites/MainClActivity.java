@@ -2,6 +2,8 @@ package trente.asia.calendar.commons.activites;
 
 import android.os.Bundle;
 
+import asia.chiase.core.util.CCDateUtil;
+import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.services.calendar.MonthlyFragment;
@@ -39,8 +41,11 @@ public class MainClActivity extends WelfareActivity{
 		String serviceCode = mExtras.getString(WelfareConst.NotificationReceived.USER_INFO_NOTI_TYPE);
 		if(WelfareConst.NotificationType.CL_NOTI_NEW_SCHEDULE.equals(serviceCode)){
 			String key = mExtras.getString(WelfareConst.NotificationReceived.USER_INFO_NOTI_KEY);
+			String dateStr = mExtras.getString(WelfareConst.NotificationReceived.USER_INFO_NOTI_PARENT_KEY);
 			ScheduleDetailFragment scheduleDetailFragment = new ScheduleDetailFragment();
 			ScheduleModel scheduleModel = new ScheduleModel();
+			scheduleModel.startDate = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_1, CCDateUtil.makeDateCustom(dateStr, WelfareConst.WL_DATE_TIME_7));
+			scheduleModel.endDate = scheduleModel.startDate;
 			scheduleModel.key = key;
 			scheduleDetailFragment.setSchedule(scheduleModel);
 			scheduleDetailFragment.isClickNotification = true;

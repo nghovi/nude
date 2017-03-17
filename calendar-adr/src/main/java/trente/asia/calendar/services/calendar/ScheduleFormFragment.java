@@ -289,7 +289,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 			dlgChooseCategory.show();
 			break;
 		case R.id.lnr_id_calendar:
-			dlgChooseCalendar.show();
+			showCalendarChooseDialog();
 			break;
 		case R.id.txt_id_start_date:
 			datePickerDialogStart.show();
@@ -351,6 +351,12 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 			break;
 		default:
 			break;
+		}
+	}
+
+	private void showCalendarChooseDialog(){
+		if(schedule != null && schedule.key == null){
+			dlgChooseCalendar.show();
 		}
 	}
 
