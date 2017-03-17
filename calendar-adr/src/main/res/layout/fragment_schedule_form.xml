@@ -134,8 +134,9 @@
 
                 <ImageView
                     style="@style/cs_common_wrap"
+                    android:id="@+id/img_arrow_right_calendar"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="@dimen/margin_6dp"
+                    android:paddingLeft="@dimen/margin_6dp"
                     android:src="@drawable/wf_row_arrow_right"/>
             </LinearLayout>
 

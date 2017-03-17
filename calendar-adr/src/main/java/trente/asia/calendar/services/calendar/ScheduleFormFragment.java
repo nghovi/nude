@@ -256,12 +256,21 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 		super.onLoadScheduleDetailSuccess(response);
 		filterDialog = new ClFilterUserListDialog(activity, lnrUserList, getString(R.string.cl_join_user_dialog_title));
 		filterDialog.findViewById(R.id.img_id_done).setOnClickListener(this);
+
+		buildCalendarChooseDialog();
 		buildDatePickerDialogs(schedule);
 
 		if(schedule != null && !CCStringUtil.isEmpty(schedule.key)){
 			Button btnDelete = (Button)getView().findViewById(R.id.btn_id_delete);
 			btnDelete.setVisibility(View.VISIBLE);
 			btnDelete.setOnClickListener(this);
+		}
+	}
+
+	private void buildCalendarChooseDialog(){
+		if(schedule != null && schedule.key != null){
+			getView().findViewById(R.id.img_arrow_right_calendar).setVisibility(View.GONE);
+			getView().findViewById(R.id.lnr_id_calendar).setClickable(false);
 		}
 	}
 
