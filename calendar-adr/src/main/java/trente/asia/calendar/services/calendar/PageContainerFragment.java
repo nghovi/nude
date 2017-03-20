@@ -55,7 +55,7 @@ public abstract class PageContainerFragment extends AbstractClFragment{
 																				txtHeaderSubtitle.setText(subTitle);
 
 																				if(isRefresh){
-//																					prefAccUtil.set(ClConst.PREF_ACTIVE_USER_LIST, "");
+																					// prefAccUtil.set(ClConst.PREF_ACTIVE_USER_LIST, "");
 																					isRefreshFilterUser = true;
 																					// load schedule list
 																					SchedulesPageFragment fragment = (SchedulesPageFragment)mPagerAdapter.getItem(holder.selectedPagePosition);
@@ -70,17 +70,18 @@ public abstract class PageContainerFragment extends AbstractClFragment{
 																			public void onChangeCalendarUserListener(List<UserModel> lstCalendarUser){
 																				if(isRefreshFilterUser){
 																					isRefreshFilterUser = false;
+																					String targetUserData = prefAccUtil.get(ClConst.PREF_ACTIVE_USER_LIST);
 																					if(!CCCollectionUtil.isEmpty(lstCalendarUser)){
 																						lnrUserList.setVisibility(View.VISIBLE);
-																						String targetUserData = prefAccUtil.get(ClConst.PREF_ACTIVE_USER_LIST);
 																						// lnrUserList.show(ClUtil.getTargetUserList(lstCalendarUser,
 																						// targetUserData),
 																						// (int)getResources().getDimension(R.dimen.margin_30dp));
 																						holder.updateFilter(lstCalendarUser, targetUserData);
 																					}else{
 																						lnrUserList.removeAllViews();
-//																						lnrUserList.setVisibility(View.GONE);
+																						// lnrUserList.setVisibility(View.GONE);
 																					}
+																					holder.updateFilter(lstCalendarUser, targetUserData);
 																				}
 																			}
 																		};
@@ -176,7 +177,7 @@ public abstract class PageContainerFragment extends AbstractClFragment{
 		case R.id.img_id_done:
 			// load schedule list
 			SchedulesPageFragment schedulesPageFragment = (SchedulesPageFragment)mPagerAdapter.getItem(holder.selectedPagePosition);
-            schedulesPageFragment.loadScheduleList();
+			schedulesPageFragment.loadScheduleList();
 			break;
 		default:
 			break;
