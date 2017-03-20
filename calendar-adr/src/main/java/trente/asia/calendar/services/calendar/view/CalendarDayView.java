@@ -83,7 +83,7 @@ public class CalendarDayView extends LinearLayout{
 			txtContent.setTextColor(Color.WHITE);
 		}
 
-		rowItemView.setBackgroundResource(this.bgResource);
+		txtContent.setBackgroundResource(this.bgResource);
 
 		if(hasMark(calendarDayModel)){
 			txtScheduleMark.setVisibility(View.VISIBLE);
@@ -98,9 +98,9 @@ public class CalendarDayView extends LinearLayout{
 
 	public void setSelected(boolean selected){
 		if(selected && this.bgResource != R.drawable.circle_background_today){
-			rowItemView.setBackgroundResource(R.drawable.circle_background_selected);
+			txtContent.setBackgroundResource(R.drawable.circle_background_selected);
 		}else{
-			rowItemView.setBackgroundResource(this.bgResource);
+			txtContent.setBackgroundResource(this.bgResource);
 		}
 	}
 

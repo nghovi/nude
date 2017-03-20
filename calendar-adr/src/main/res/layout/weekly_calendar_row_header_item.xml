@@ -35,7 +35,7 @@
             android:layout_alignParentTop="true"
             android:layout_alignRight="@+id/txt_id_row_content"
             android:layout_alignStart="@+id/txt_id_row_content"
-            android:paddingTop="@dimen/margin_8dp"
+            android:paddingTop="@dimen/margin_11dp"
             android:text="&#8226;"
             android:textAlignment="center"
             android:textStyle="normal|bold|italic"
