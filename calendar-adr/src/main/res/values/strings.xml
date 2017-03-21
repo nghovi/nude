@@ -12,14 +12,16 @@
 
 
     <string name="cl_common_calendar_sub_title">%1$s Calendars</string>
-    <string name="cl_common_validate_no_calendar_msg">Please choose calendar</string>
+    <string name="cl_common_validate_no_calendar_msg">Please choose calendar
+    </string>
 
     <string name="fragment_schedule_form_title">New schedule</string>
     <string name="fragment_schedule_edit_title">Edit schedule</string>
     <string name="fragment_schedule_detail_title">Schedule detail</string>
     <string name="cl_schedule_form_all_day">All day</string>
     <string name="cl_schedule_form_repeat">Repeat</string>
-    <string name="cl_schedule_form_schedule_info_title">Schedule information</string>
+    <string name="cl_schedule_form_schedule_info_title">Schedule information
+    </string>
     <string name="cl_schedule_form_item_calendar">Calendar</string>
     <string name="cl_schedule_form_item_name">Name</string>
     <string name="cl_schedule_form_item_meeting_room">Room</string>
@@ -43,7 +45,8 @@
     <string name="cl_schedule_repeat_type_monthly">Monthly</string>
     <string name="cl_schedule_repeat_type_yearly">Yearly</string>
 
-    <string name="cl_schedule_repeat_weekly_message">Repeats weekly on %1$s</string>
+    <string name="cl_schedule_repeat_weekly_message">Repeats weekly on %1$s
+    </string>
     <string name="cl_schedule_repeat_monthly_message">Repeats monthly</string>
     <string name="cl_schedule_repeat_yearly_message">Repeats yearly</string>
     <string name="cl_schedule_repeat_until_message">, until %1$s.</string>
@@ -65,6 +68,10 @@
     <!--Notifications-->
     <string name="fragment_summary_title">Summary</string>
     <string name="coming_soon">Coming soon</string>
+    <string name="FM_CL_001">[%1$s] %2$s has entered a schedule : %3$s</string>
+    <string name="FM_CL_002">[%1$s] %2$s edited a schedule : %3$s</string>
+    <string name="FM_CL_003">You have %1$s schedules today.</string>
+    <string name="FM_CL_004">You have a schedule today.</string>
 
     <string name="cl_schedule_holiday_name">[H]%1$s</string>
     <string name="cl_schedule_birth_day_name">[B]%1$s</string>

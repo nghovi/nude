@@ -135,26 +135,29 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 			calendar.setTime(selectedDate);
 		}
 
-		Date starDate = new Date();
+		Date startDate = new Date();
 		Date endDate = new Date();
 		String startTimeStr;
 		String endTimeStr;
 
 		if(schedule != null && !CCStringUtil.isEmpty(schedule.key)){
-			starDate = WelfareUtil.makeDate(schedule.startDate);
-			starDate = CCDateUtil.makeDateTime(starDate, schedule.startTime);
+			startDate = WelfareUtil.makeDate(schedule.startDate);
+			startDate = CCDateUtil.makeDateTime(startDate, schedule.startTime);
 			endDate = WelfareUtil.makeDate(schedule.endDate);
 			endDate = CCDateUtil.makeDateTime(endDate, schedule.endTime);
 			startTimeStr = schedule.startTime;
-			endTimeStr = schedule.endTime;
+			// endTimeStr = schedule.endTime;
 		}else{
-			starDate = calendar.getTime();
+			startDate = calendar.getTime();
 			endDate = calendar.getTime();
 			startTimeStr = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_9, Calendar.getInstance().getTime());
-			endTimeStr = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_9, Calendar.getInstance().getTime());
+			// endTimeStr = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_9, Calendar.getInstance().getTime());
 		}
 
-		repeatDialog.setStartDate(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, starDate));
+		startTimeStr = getRoundedTime(startTimeStr);
+		endTimeStr = addAnHour(startTimeStr);
+
+		repeatDialog.setStartDate(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, startDate));
 		if(ClRepeatUtil.isRepeat(schedule.repeatType)){
 			// set repeat dialog values
 			ScheduleRepeatModel repeatModel = new ScheduleRepeatModel(schedule);
@@ -163,12 +166,12 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 			repeatDialog.initDefaultValue();
 		}
 
-		WelfareFormatUtil.setChiaseTextView(txtStartDate, WelfareFormatUtil.formatDate(starDate));
+		WelfareFormatUtil.setChiaseTextView(txtStartDate, WelfareFormatUtil.formatDate(startDate));
 		WelfareFormatUtil.setChiaseTextView(txtStartTime, startTimeStr);
 		WelfareFormatUtil.setChiaseTextView(txtEndDate, WelfareFormatUtil.formatDate(endDate));
 		WelfareFormatUtil.setChiaseTextView(txtEndTime, endTimeStr);
 
-		calendar.setTime(starDate);
+		calendar.setTime(startDate);
 		datePickerDialogStart = new DatePickerDialog(activity, new DatePickerDialog.OnDateSetListener() {
 
 			@Override
@@ -178,6 +181,14 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 				txtStartDate.setValue(startDateStr);
 				repeatDialog.setStartDate(startDateStr);
 				repeatDialog.initDefaultValue();
+				Date endDate = CCDateUtil.makeDateCustom(txtEndDate.getText().toString(), WelfareConst.WL_DATE_TIME_7);
+				Date startDate = CCDateUtil.makeDateCustom(startDateStr, WelfareConst.WL_DATE_TIME_7);
+				if(CCDateUtil.compareDate(startDate, endDate, false) > 0){
+					datePickerDialogEnd.getDatePicker().setMinDate(startDate.getTime());
+					datePickerDialogEnd.updateDate(year, month, dayOfMonth);
+					onEndDateSet(year, month, dayOfMonth);
+				}
+
 			}
 		}, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
 
@@ -188,18 +199,17 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 				txtStartTime.setText(CCFormatUtil.formatZero(hourOfDay) + ":" + CCFormatUtil.formatZero(minute));
 				txtStartTime.setValue(CCFormatUtil.formatZero(hourOfDay) + ":" + CCFormatUtil.formatZero(minute));
 			}
-		}, calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE), true);
+		}, CCDateUtil.getHourFromTimeString(startTimeStr), CCDateUtil.getMinuteFromTimeString(startTimeStr), true);
 
 		calendar.setTime(endDate);
 		datePickerDialogEnd = new DatePickerDialog(activity, new DatePickerDialog.OnDateSetListener() {
 
 			@Override
 			public void onDateSet(DatePicker view, int year, int month, int dayOfMonth){
-				String endDateStr = year + "/" + CCFormatUtil.formatZero(month + 1) + "/" + CCFormatUtil.formatZero(dayOfMonth);
-				txtEndDate.setText(endDateStr);
-				txtEndDate.setValue(endDateStr);
+				onEndDateSet(year, month, dayOfMonth);
 			}
 		}, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+		datePickerDialogEnd.getDatePicker().setMinDate(startDate.getTime());
 		// txtEndDate.setValue(WelfareFormatUtil.formatDate(calendar.getTime()));
 
 		timePickerDialogEnd = new TimePickerDialog(activity, new TimePickerDialog.OnTimeSetListener() {
@@ -209,9 +219,42 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 				txtEndTime.setText(CCFormatUtil.formatZero(hourOfDay) + ":" + CCFormatUtil.formatZero(minute));
 				txtEndTime.setValue(CCFormatUtil.formatZero(hourOfDay) + ":" + CCFormatUtil.formatZero(minute));
 			}
-		}, calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE), true);
+		}, CCDateUtil.getHourFromTimeString(endTimeStr), CCDateUtil.getMinuteFromTimeString(endTimeStr), true);
 		// txtEndTime.setValue(CCFormatUtil.formatZero(endHour) + ":" + CCFormatUtil.formatZero(endMinute));
 
+	}
+
+	private void onEndDateSet(int year, int month, int dayOfMonth){
+		String endDateStr = year + "/" + CCFormatUtil.formatZero(month + 1) + "/" + CCFormatUtil.formatZero(dayOfMonth);
+		txtEndDate.setText(endDateStr);
+		txtEndDate.setValue(endDateStr);
+	}
+
+	private String addAnHour(String startTimeStr){
+		int hour = CCDateUtil.getHourFromTimeString(startTimeStr);
+		int minute = CCDateUtil.getMinuteFromTimeString(startTimeStr);
+		if(hour == 23){
+			hour = 0;
+		}else{
+			hour = hour + 1;
+		}
+		return String.format("%02d", hour) + ":" + String.format("%02d", minute);
+	}
+
+	public static String getRoundedTime(String startTimeStr){
+		int hour = CCDateUtil.getHourFromTimeString(startTimeStr);
+		int minute = CCDateUtil.getMinuteFromTimeString(startTimeStr);
+		if(minute < 30){
+			minute = 30;
+		}else{
+			minute = 0;
+			if(hour == 23){
+				hour = 0;
+			}else{
+				hour = hour + 1;
+			}
+		}
+		return String.format("%02d", hour) + ":" + String.format("%02d", minute);
 	}
 
 	private void initListDialog(ScheduleModel scheduleModel){
