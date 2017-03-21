@@ -183,6 +183,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 				repeatDialog.initDefaultValue();
 				Date endDate = CCDateUtil.makeDateCustom(txtEndDate.getText().toString(), WelfareConst.WL_DATE_TIME_7);
 				Date startDate = CCDateUtil.makeDateCustom(startDateStr, WelfareConst.WL_DATE_TIME_7);
+				datePickerDialogEnd.getDatePicker().setMinDate(startDate.getTime());
 				if(CCDateUtil.compareDate(startDate, endDate, false) > 0){
 					datePickerDialogEnd.getDatePicker().setMinDate(startDate.getTime());
 					datePickerDialogEnd.updateDate(year, month, dayOfMonth);
