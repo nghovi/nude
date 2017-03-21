@@ -146,16 +146,14 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 			endDate = WelfareUtil.makeDate(schedule.endDate);
 			endDate = CCDateUtil.makeDateTime(endDate, schedule.endTime);
 			startTimeStr = schedule.startTime;
-			// endTimeStr = schedule.endTime;
+			endTimeStr = schedule.endTime;
 		}else{
 			startDate = calendar.getTime();
 			endDate = calendar.getTime();
 			startTimeStr = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_9, Calendar.getInstance().getTime());
-			// endTimeStr = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_9, Calendar.getInstance().getTime());
+			startTimeStr = getRoundedTime(startTimeStr);
+			endTimeStr = addAnHour(startTimeStr);
 		}
-
-		startTimeStr = getRoundedTime(startTimeStr);
-		endTimeStr = addAnHour(startTimeStr);
 
 		repeatDialog.setStartDate(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, startDate));
 		if(ClRepeatUtil.isRepeat(schedule.repeatType)){
@@ -181,13 +179,13 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 				txtStartDate.setValue(startDateStr);
 				repeatDialog.setStartDate(startDateStr);
 				repeatDialog.initDefaultValue();
-				Date endDate = CCDateUtil.makeDateCustom(txtEndDate.getText().toString(), WelfareConst.WL_DATE_TIME_7);
 				Date startDate = CCDateUtil.makeDateCustom(startDateStr, WelfareConst.WL_DATE_TIME_7);
+				Date endDate = CCDateUtil.makeDateCustom(txtEndDate.getText().toString(), WelfareConst.WL_DATE_TIME_7);
 				datePickerDialogEnd.getDatePicker().setMinDate(startDate.getTime());
 				if(CCDateUtil.compareDate(startDate, endDate, false) > 0){
-					datePickerDialogEnd.getDatePicker().setMinDate(startDate.getTime());
-					datePickerDialogEnd.updateDate(year, month, dayOfMonth);
-					onEndDateSet(year, month, dayOfMonth);
+					Calendar cal = Calendar.getInstance();
+					cal.setTime(startDate);
+					initDatePickerDialogEnd(cal, startDate);
 				}
 
 			}
@@ -203,15 +201,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 		}, CCDateUtil.getHourFromTimeString(startTimeStr), CCDateUtil.getMinuteFromTimeString(startTimeStr), true);
 
 		calendar.setTime(endDate);
-		datePickerDialogEnd = new DatePickerDialog(activity, new DatePickerDialog.OnDateSetListener() {
-
-			@Override
-			public void onDateSet(DatePicker view, int year, int month, int dayOfMonth){
-				onEndDateSet(year, month, dayOfMonth);
-			}
-		}, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
-		datePickerDialogEnd.getDatePicker().setMinDate(startDate.getTime());
-		// txtEndDate.setValue(WelfareFormatUtil.formatDate(calendar.getTime()));
+		initDatePickerDialogEnd(calendar, startDate);
 
 		timePickerDialogEnd = new TimePickerDialog(activity, new TimePickerDialog.OnTimeSetListener() {
 
@@ -223,6 +213,18 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 		}, CCDateUtil.getHourFromTimeString(endTimeStr), CCDateUtil.getMinuteFromTimeString(endTimeStr), true);
 		// txtEndTime.setValue(CCFormatUtil.formatZero(endHour) + ":" + CCFormatUtil.formatZero(endMinute));
 
+	}
+
+	private void initDatePickerDialogEnd(Calendar calendar, Date startDate){
+		datePickerDialogEnd = new DatePickerDialog(activity, new DatePickerDialog.OnDateSetListener() {
+
+			@Override
+			public void onDateSet(DatePicker view, int year, int month, int dayOfMonth){
+				onEndDateSet(year, month, dayOfMonth);
+			}
+		}, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+		datePickerDialogEnd.getDatePicker().setMinDate(startDate.getTime());
+		onEndDateSet(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
 	}
 
 	private void onEndDateSet(int year, int month, int dayOfMonth){
