@@ -1,5 +1,7 @@
 package trente.asia.calendar.services.summary;
 
+import java.util.ArrayList;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -11,6 +13,9 @@ import android.view.ViewGroup;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.fragments.AbstractClFragment;
+import trente.asia.calendar.services.calendar.model.CategoryModel;
+import trente.asia.calendar.services.calendar.model.SummaryModel;
+import trente.asia.calendar.services.calendar.view.GraphColumn;
 import trente.asia.welfare.adr.define.WfUrlConst;
 
 /**
@@ -32,6 +37,14 @@ public class SummaryFragment extends AbstractClFragment{
 	protected void initView(){
 		super.initView();
 		initHeader(null, getString(R.string.fragment_summary_title), null);
+		GraphColumn graphColumn = (GraphColumn)getView().findViewById(R.id.view_graph_column);
+		SummaryModel model = new SummaryModel();
+		model.categoryModelList = new ArrayList<>();
+		model.categoryModelList.add(new CategoryModel("ff0000"));
+		model.categoryModelList.add(new CategoryModel("00ff00"));
+		model.categoryModelList.add(new CategoryModel("0000ff"));
+		model.categoryModelList.add(new CategoryModel("ffcd00"));
+		graphColumn.initLayout(model);
 	}
 
 	@Override

@@ -6,7 +6,7 @@ package trente.asia.calendar.services.calendar.model;
 
 public class CategoryModel{
 
-    public String	key;
+	public String	key;
 
 	public String	categoryName;
 
@@ -15,4 +15,11 @@ public class CategoryModel{
 	public String	categoryNote;
 
 	public int		userId;
+
+	public CategoryModel(String colorCode){
+		this.categoryColor = colorCode;
+	}
+
+	public CategoryModel(){
+	}
 }

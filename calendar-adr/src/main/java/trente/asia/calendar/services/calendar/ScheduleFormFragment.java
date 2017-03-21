@@ -183,11 +183,13 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 				Date endDate = CCDateUtil.makeDateCustom(txtEndDate.getText().toString(), WelfareConst.WL_DATE_TIME_7);
 				datePickerDialogEnd.getDatePicker().setMinDate(startDate.getTime());
 				// // TODO: 3/21/2017 it's not good initDataPickerDialogEnd everytime
-				// if(CCDateUtil.compareDate(startDate, endDate, false) > 0){
 				Calendar cal = Calendar.getInstance();
-				cal.setTime(startDate);
+				if(CCDateUtil.compareDate(startDate, endDate, false) > 0){
+					cal.setTime(startDate);
+				}else{
+					cal.setTime(endDate);
+				}
 				initDatePickerDialogEnd(cal, startDate);
-				// }else
 
 			}
 		}, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
