@@ -62,6 +62,7 @@ public class SummaryPageFragment extends ClPageFragment{
 		model.categoryModelList.add(new CategoryModel("0000ff"));
 		model.categoryModelList.add(new CategoryModel("ffcd00"));
 		graphColumn.initLayout(model);
+		updateHeaderTitles();
 	}
 
 	protected String getUpperTitle(){

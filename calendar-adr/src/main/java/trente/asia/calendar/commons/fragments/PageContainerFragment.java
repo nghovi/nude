@@ -10,14 +10,16 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.views.ClFragmentPagerAdapter;
-import trente.asia.calendar.commons.views.UserListLinearLayout;
-import trente.asia.calendar.services.calendar.CalendarListFragment;
-import trente.asia.calendar.services.calendar.listener.OnChangeCalendarListener;
 import trente.asia.calendar.commons.views.NavigationHeader;
 import trente.asia.calendar.commons.views.PageSharingHolder;
+import trente.asia.calendar.commons.views.UserListLinearLayout;
+import trente.asia.calendar.services.calendar.CalendarListFragment;
+import trente.asia.calendar.services.calendar.SchedulesPageFragment;
+import trente.asia.calendar.services.calendar.listener.OnChangeCalendarListener;
 import trente.asia.welfare.adr.view.WfSlideMenuLayout;
 
 /**
@@ -33,11 +35,24 @@ public abstract class PageContainerFragment extends AbstractClFragment{
 	protected WfSlideMenuLayout			mSlideMenuLayout;
 	protected ClFragmentPagerAdapter	mPagerAdapter;
 
-	protected final int					INITIAL_POSITION	= Integer.MAX_VALUE / 2;
-	protected final Date				TODAY				= Calendar.getInstance().getTime();
+	protected final int					INITIAL_POSITION			= Integer.MAX_VALUE / 2;
+	protected final Date				TODAY						= Calendar.getInstance().getTime();
 
 	protected NavigationHeader			navigationHeader;
-	protected OnChangeCalendarListener	onChangeCalendarListener;
+	protected OnChangeCalendarListener	onChangeCalendarListener	= new OnChangeCalendarListener() {
+
+																		@Override
+																		public void onChangeCalendarListener(String subTitle, boolean isRefresh){
+																			TextView txtHeaderSubtitle = (TextView)PageContainerFragment.this.getView().findViewById(R.id.txt_id_header_title_sub);
+																			txtHeaderSubtitle.setText(subTitle);
+
+																			if(isRefresh){
+																				holder.isRefreshUserList = true;
+																				ClPageFragment fragment = (SchedulesPageFragment)mPagerAdapter.getItem(holder.selectedPagePosition);
+																				fragment.loadData();
+																			}
+																		}
+																	};
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){

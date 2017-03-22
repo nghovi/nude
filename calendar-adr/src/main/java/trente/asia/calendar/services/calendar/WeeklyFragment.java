@@ -18,6 +18,6 @@ public class WeeklyFragment extends SchedulesPageContainerFragment {
 
 	@Override
 	protected SchedulesPagerAdapter initPagerAdapter(){
-		return new WeeklySchedulesPagerAdapter(getChildFragmentManager(), changeCalendarUserListener);
+		return new WeeklySchedulesPagerAdapter(getChildFragmentManager());
 	}
 }

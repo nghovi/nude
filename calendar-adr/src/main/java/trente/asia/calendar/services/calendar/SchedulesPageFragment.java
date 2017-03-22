@@ -26,7 +26,6 @@ import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.fragments.ClPageFragment;
 import trente.asia.calendar.commons.utils.ClUtil;
-import trente.asia.calendar.services.calendar.listener.OnChangeCalendarUserListener;
 import trente.asia.calendar.services.calendar.model.CalendarModel;
 import trente.asia.calendar.services.calendar.model.CategoryModel;
 import trente.asia.calendar.services.calendar.model.HolidayModel;
@@ -45,18 +44,17 @@ import trente.asia.welfare.adr.models.UserModel;
  */
 public abstract class SchedulesPageFragment extends ClPageFragment implements WeeklyScheduleListAdapter.OnScheduleItemClickListener{
 
-	protected List<Date>					dates;
+	protected List<Date>			dates;
 
-	protected LinearLayout					lnrCalendarContainer;
-	protected List<ScheduleModel>			lstSchedule;
-	protected List<HolidayModel>			lstHoliday;
+	protected LinearLayout			lnrCalendarContainer;
+	protected List<ScheduleModel>	lstSchedule;
+	protected List<HolidayModel>	lstHoliday;
 
-	private OnChangeCalendarUserListener	changeCalendarUserListener;
-	protected List<CalendarModel>			lstCalendar;
-	protected List<UserModel>				lstCalendarUser;
-	protected List<CategoryModel>			lstCategory;
-	protected List<UserModel>				lstBirthdayUser;
-	protected List<WorkOffer>				lstWorkOffer;
+	protected List<CalendarModel>	lstCalendar;
+	protected List<UserModel>		lstCalendarUser;
+	protected List<CategoryModel>	lstCategory;
+	protected List<UserModel>		lstBirthdayUser;
+	protected List<WorkOffer>		lstWorkOffer;
 
 	abstract protected List<Date> getAllDate();
 
@@ -168,10 +166,6 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 	@Override
 	protected void loadData(){
 		loadScheduleList();
-	}
-
-	public void setChangeCalendarUserListener(OnChangeCalendarUserListener changeCalendarUserListener){
-		this.changeCalendarUserListener = changeCalendarUserListener;
 	}
 
 	protected int getNormalDayColor(){

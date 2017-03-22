@@ -78,18 +78,6 @@ public abstract class SchedulesPageListViewFragment extends SchedulesPageFragmen
 		updateHeaderTitles();
 	}
 
-	public void updateHeaderTitles(){
-		if(pagePosition == pageSharingHolder.selectedPagePosition){
-			String title = getUpperTitle();
-			// List<String> selectedCalendarIds = Arrays.asList(prefAccUtil
-			// .get(ClConst.SELECTED_CALENDAR_STRING).split(","));
-			// int selectedCalendarSize = selectedCalendarIds.size();
-			// String subtitle = selectedCalendarSize > 1 ?
-			// selectedCalendarSize + " calendars" : "";
-			pageSharingHolder.navigationHeader.updateMainHeaderTitle(title);
-		}
-	}
-
 	@Override
 	protected void clearOldData(){
 		for(CalendarDayView dayView : calendarDayViews){

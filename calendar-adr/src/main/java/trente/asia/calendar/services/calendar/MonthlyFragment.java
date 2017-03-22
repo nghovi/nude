@@ -48,6 +48,6 @@ public class MonthlyFragment extends SchedulesPageContainerFragment{
 
 	@Override
 	protected ClFragmentPagerAdapter initPagerAdapter(){
-		return new MonthlyCalendarPagerAdapter(getChildFragmentManager(), changeCalendarUserListener);
+		return new MonthlyCalendarPagerAdapter(getChildFragmentManager());
 	}
 }

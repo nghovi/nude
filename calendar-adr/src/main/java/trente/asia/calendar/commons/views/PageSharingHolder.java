@@ -24,8 +24,9 @@ public class PageSharingHolder{
 	public ClFilterUserListDialog		filterDialog;
 	private Context						mContext;
 	public int							selectedPagePosition;
+	public boolean isRefreshUserList;
 
-	public CalendarDayView getClickedDayView(){
+    public CalendarDayView getClickedDayView(){
 		return clickedDayView;
 	}
 

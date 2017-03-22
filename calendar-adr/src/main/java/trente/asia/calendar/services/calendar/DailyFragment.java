@@ -18,7 +18,7 @@ public class DailyFragment extends SchedulesPageContainerFragment{
 
 	@Override
 	protected ClFragmentPagerAdapter initPagerAdapter(){
-		return new DailySchedulesPagerAdapter(getChildFragmentManager(), changeCalendarUserListener);
+		return new DailySchedulesPagerAdapter(getChildFragmentManager());
 	}
 
 }

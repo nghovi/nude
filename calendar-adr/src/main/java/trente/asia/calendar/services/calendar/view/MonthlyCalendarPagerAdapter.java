@@ -18,9 +18,8 @@ import trente.asia.calendar.services.calendar.listener.OnChangeCalendarUserListe
  */
 public class MonthlyCalendarPagerAdapter extends SchedulesPagerAdapter{
 
-	public MonthlyCalendarPagerAdapter(FragmentManager fm, OnChangeCalendarUserListener listener){
+	public MonthlyCalendarPagerAdapter(FragmentManager fm){
 		super(fm);
-		this.listener = listener;
 	}
 
 	@Override

@@ -1,17 +1,22 @@
 package trente.asia.calendar.commons.fragments;
 
 import java.util.Date;
+import java.util.List;
 
 import android.os.Bundle;
+import android.view.View;
 
+import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.activity.ChiaseFragment;
 import trente.asia.calendar.BuildConfig;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
-import trente.asia.calendar.services.calendar.ScheduleFormFragment;
 import trente.asia.calendar.commons.views.NavigationHeader;
 import trente.asia.calendar.commons.views.PageSharingHolder;
+import trente.asia.calendar.services.calendar.ScheduleFormFragment;
+import trente.asia.calendar.services.calendar.listener.OnChangeCalendarUserListener;
+import trente.asia.welfare.adr.models.UserModel;
 
 /**
  * ClPageFragment
@@ -20,9 +25,26 @@ import trente.asia.calendar.commons.views.PageSharingHolder;
  */
 public abstract class ClPageFragment extends AbstractClFragment implements NavigationHeader.OnAddBtnClickedListener{
 
-	protected Date				selectedDate;
-	protected int				pagePosition;
-	protected PageSharingHolder	pageSharingHolder;
+	protected Date							selectedDate;
+	protected int							pagePosition;
+	protected PageSharingHolder				pageSharingHolder;
+	protected OnChangeCalendarUserListener	changeCalendarUserListener	= new OnChangeCalendarUserListener() {
+
+																			@Override
+																			public void onChangeCalendarUserListener(List<UserModel> lstCalendarUser){
+																				if(pageSharingHolder.isRefreshUserList){
+																					pageSharingHolder.isRefreshUserList = false;
+																					String targetUserData = prefAccUtil.get(ClConst.PREF_ACTIVE_USER_LIST);
+																					if(!CCCollectionUtil.isEmpty(lstCalendarUser)){
+																						pageSharingHolder.userListLinearLayout.setVisibility(View.VISIBLE);
+																						pageSharingHolder.updateFilter(lstCalendarUser, targetUserData);
+																					}else{
+																						pageSharingHolder.userListLinearLayout.removeAllViews();
+																					}
+																					pageSharingHolder.updateFilter(lstCalendarUser, targetUserData);
+																				}
+																			}
+																		};
 
 	@Override
 	public void onCreate(Bundle savedInstanceState){
@@ -85,6 +107,13 @@ public abstract class ClPageFragment extends AbstractClFragment implements Navig
 
 	protected String getUpperTitle(){
 		return "";
+	}
+
+	protected void updateHeaderTitles(){
+		if(pagePosition == pageSharingHolder.selectedPagePosition){
+			String title = getUpperTitle();
+			pageSharingHolder.navigationHeader.updateMainHeaderTitle(title);
+		}
 	}
 
 }

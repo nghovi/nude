@@ -1,20 +1,15 @@
 package trente.asia.calendar.services.calendar;
 
-import java.util.List;
-
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import asia.chiase.core.define.CCConst;
-import asia.chiase.core.util.CCCollectionUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.fragments.PageContainerFragment;
-import trente.asia.calendar.services.calendar.listener.OnChangeCalendarUserListener;
 import trente.asia.welfare.adr.activity.WelfareActivity;
-import trente.asia.welfare.adr.models.UserModel;
 
 /**
  * SchedulesPageContainerFragment
@@ -22,25 +17,6 @@ import trente.asia.welfare.adr.models.UserModel;
  * @author TrungND
  */
 public abstract class SchedulesPageContainerFragment extends PageContainerFragment{
-
-	private boolean							isRefreshFilterUser			= true;
-	protected OnChangeCalendarUserListener	changeCalendarUserListener	= new OnChangeCalendarUserListener() {
-
-																			@Override
-																			public void onChangeCalendarUserListener(List<UserModel> lstCalendarUser){
-																				if(isRefreshFilterUser){
-																					isRefreshFilterUser = false;
-																					String targetUserData = prefAccUtil.get(ClConst.PREF_ACTIVE_USER_LIST);
-																					if(!CCCollectionUtil.isEmpty(lstCalendarUser)){
-																						lnrUserList.setVisibility(View.VISIBLE);
-																						holder.updateFilter(lstCalendarUser, targetUserData);
-																					}else{
-																						lnrUserList.removeAllViews();
-																					}
-																					holder.updateFilter(lstCalendarUser, targetUserData);
-																				}
-																			}
-																		};
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
