@@ -471,9 +471,10 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 	@Override
 	protected void successUpdate(JSONObject response, String url){
 		if(WfUrlConst.WF_CL_SCHEDULE_UPD.equals(url)){
+			String oldKey = schedule.key;
 			schedule = CCJsonUtil.convertToModel(response.optString("schedule"), ScheduleModel.class);
 			String newKey = response.optString("returnValue");
-			onScheduleUpdateSuccess(newKey);
+			onScheduleUpdateSuccess(CCStringUtil.isEmpty(newKey) ? oldKey : newKey);
 		}else if(WfUrlConst.WF_CL_SCHEDULE_DEL.equals(url)){
 			((WelfareActivity)activity).dataMap.put(ClConst.ACTION_SCHEDULE_DELETE, CCConst.YES);
 			getFragmentManager().popBackStack();

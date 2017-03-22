@@ -40,8 +40,8 @@ public class ScheduleDetailFragment extends AbstractScheduleFragment{
 			if(CCConst.YES.equals(isDelete)){
 				getFragmentManager().popBackStack();
 			}else if(CCConst.YES.equals(isUpdate)){
-                schedule.key = CCStringUtil.toString(((WelfareActivity)activity).dataMap.get(ClConst.ACTION_SCHEDULE_UPDATE_NEW_KEY));
-                ((WelfareActivity)activity).dataMap.remove(ClConst.ACTION_SCHEDULE_UPDATE_NEW_KEY);
+				schedule.key = CCStringUtil.toString(((WelfareActivity)activity).dataMap.get(ClConst.ACTION_SCHEDULE_UPDATE_NEW_KEY));
+				((WelfareActivity)activity).dataMap.remove(ClConst.ACTION_SCHEDULE_UPDATE_NEW_KEY);
 			}
 		}
 		return mRootView;
@@ -69,7 +69,7 @@ public class ScheduleDetailFragment extends AbstractScheduleFragment{
 		}
 
 		// check user is owner
-		if(myself.key.equals(schedule.owner.key)){
+		if(myself != null && myself.key.equals(schedule.owner.key)){
 			ImageView imgRightIcon = (ImageView)getView().findViewById(R.id.img_id_header_right_icon);
 			imgRightIcon.setImageResource(R.drawable.cl_action_edit);
 			imgRightIcon.setVisibility(View.VISIBLE);

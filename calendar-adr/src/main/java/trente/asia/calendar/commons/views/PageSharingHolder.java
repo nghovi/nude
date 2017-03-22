@@ -19,18 +19,18 @@ import trente.asia.welfare.adr.models.UserModel;
 
 public class PageSharingHolder{
 
-	public NavigationHeader navigationHeader;
+	public NavigationHeader				navigationHeader;
 	public final UserListLinearLayout	userListLinearLayout;
 	public ClFilterUserListDialog		filterDialog;
 	private Context						mContext;
 	public int							selectedPagePosition;
-	public boolean isRefreshUserList;
+	public boolean						isRefreshUserList	= true;
 
-    public CalendarDayView getClickedDayView(){
+	public CalendarDayView getClickedDayView(){
 		return clickedDayView;
 	}
 
-	private CalendarDayView clickedDayView;
+	private CalendarDayView	clickedDayView;
 
 	public PageSharingHolder(NavigationHeader navigationHeader, UserListLinearLayout userListLinearLayout, final View.OnClickListener listener){
 		this.mContext = navigationHeader.getContext();
