@@ -5,8 +5,8 @@ import java.util.Date;
 import android.support.v4.app.FragmentManager;
 
 import trente.asia.android.util.CsDateUtil;
+import trente.asia.calendar.commons.fragments.ClPageFragment;
 import trente.asia.calendar.services.calendar.DailyPageFragment;
-import trente.asia.calendar.services.calendar.SchedulesPageFragment;
 import trente.asia.calendar.services.calendar.listener.OnChangeCalendarUserListener;
 
 /**
@@ -26,7 +26,7 @@ public class DailySchedulesPagerAdapter extends SchedulesPagerAdapter{
 	}
 
 	@Override
-	protected SchedulesPageFragment getFragment(){
+	protected ClPageFragment getFragment(){
 		return new DailyPageFragment();
 	}
 

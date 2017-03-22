@@ -1,4 +1,4 @@
-package trente.asia.calendar.services.calendar.view;
+package trente.asia.calendar.commons.views;
 
 import java.util.Date;
 import java.util.List;
@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.dialogs.ClFilterUserListDialog;
 import trente.asia.calendar.commons.utils.ClUtil;
-import trente.asia.calendar.commons.views.UserListLinearLayout;
+import trente.asia.calendar.services.calendar.view.CalendarDayView;
 import trente.asia.welfare.adr.models.UserModel;
 
 /**
@@ -19,7 +19,7 @@ import trente.asia.welfare.adr.models.UserModel;
 
 public class PageSharingHolder{
 
-	public NavigationHeader				navigationHeader;
+	public NavigationHeader navigationHeader;
 	public final UserListLinearLayout	userListLinearLayout;
 	public ClFilterUserListDialog		filterDialog;
 	private Context						mContext;

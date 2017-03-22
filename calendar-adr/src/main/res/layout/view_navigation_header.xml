@@ -1,6 +1,6 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <trente.asia.calendar.services.calendar.view.NavigationHeader
+    <trente.asia.calendar.commons.views.NavigationHeader
         android:id="@+id/lnr_navigation_header"
         style="@style/cs_common_match_wrap"
         android:background="@color/wf_app_color_base"
@@ -80,6 +80,6 @@
                 style="@style/cs_common_wrap"
                 android:src="@drawable/cl_action_add"/>
         </LinearLayout>
-    </trente.asia.calendar.services.calendar.view.NavigationHeader>
+    </trente.asia.calendar.commons.views.NavigationHeader>
 
 </merge>

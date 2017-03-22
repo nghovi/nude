@@ -1,15 +1,15 @@
 package trente.asia.calendar.services.calendar;
 
 import trente.asia.calendar.R;
+import trente.asia.calendar.commons.views.ClFragmentPagerAdapter;
 import trente.asia.calendar.services.calendar.view.DailySchedulesPagerAdapter;
-import trente.asia.calendar.services.calendar.view.SchedulesPagerAdapter;
 
 /**
  * DailyFragment
  *
  * @author VietNH
  */
-public class DailyFragment extends PageContainerFragment{
+public class DailyFragment extends SchedulesPageContainerFragment{
 
 	@Override
 	public int getFooterItemId(){
@@ -17,7 +17,7 @@ public class DailyFragment extends PageContainerFragment{
 	}
 
 	@Override
-	protected SchedulesPagerAdapter initPagerAdapter(){
+	protected ClFragmentPagerAdapter initPagerAdapter(){
 		return new DailySchedulesPagerAdapter(getChildFragmentManager(), changeCalendarUserListener);
 	}
 

@@ -1,4 +1,4 @@
-<trente.asia.calendar.services.calendar.view.GraphColumn
+<trente.asia.calendar.services.summary.GraphColumn
     android:id="@+id/view_graph_column"
     style="@style/wf_common_match"
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -15,4 +15,4 @@
     </LinearLayout>
 
     <View style="@style/cs_common_divider"/>
-</trente.asia.calendar.services.calendar.view.GraphColumn>
+</trente.asia.calendar.services.summary.GraphColumn>

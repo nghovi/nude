@@ -1,4 +1,4 @@
-package trente.asia.calendar.services.calendar.view;
+package trente.asia.calendar.services.summary;
 
 import android.content.Context;
 import android.graphics.Color;

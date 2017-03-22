@@ -1,4 +1,4 @@
-package trente.asia.calendar.services.calendar.view;
+package trente.asia.calendar.commons.views;
 
 import java.util.Date;
 

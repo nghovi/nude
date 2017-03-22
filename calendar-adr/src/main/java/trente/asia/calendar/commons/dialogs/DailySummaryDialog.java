@@ -13,7 +13,7 @@ import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.model.WorkOffer;
 import trente.asia.calendar.services.calendar.view.DailySummaryDialogPagerAdapter;
-import trente.asia.calendar.services.calendar.view.NavigationHeader;
+import trente.asia.calendar.commons.views.NavigationHeader;
 import trente.asia.calendar.services.calendar.view.WeeklyScheduleListAdapter;
 import trente.asia.welfare.adr.models.UserModel;
 

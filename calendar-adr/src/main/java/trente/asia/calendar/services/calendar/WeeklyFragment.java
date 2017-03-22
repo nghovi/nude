@@ -9,7 +9,7 @@ import trente.asia.calendar.services.calendar.view.WeeklySchedulesPagerAdapter;
  *
  * @author TrungND
  */
-public class WeeklyFragment extends PageContainerFragment{
+public class WeeklyFragment extends SchedulesPageContainerFragment {
 
 	@Override
 	public int getFooterItemId(){
