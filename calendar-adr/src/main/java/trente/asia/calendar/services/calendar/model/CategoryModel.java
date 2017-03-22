@@ -15,6 +15,7 @@ public class CategoryModel{
 	public String	categoryNote;
 
 	public int		userId;
+	public String	hoursOfSchedule;
 
 	public CategoryModel(String colorCode){
 		this.categoryColor = colorCode;

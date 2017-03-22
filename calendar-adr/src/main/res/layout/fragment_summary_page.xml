@@ -6,11 +6,23 @@
                   android:layout_height="match_parent"
                   android:layout_weight="1"
                   android:background="@color/wf_login_background_color"
-                  android:gravity="center">
+                  android:gravity="center" android:orientation="vertical">
+        <LinearLayout android:id="@+id/lnr_graph_explain"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="vertical">
 
+        </LinearLayout>
 
-        <include layout="@layout/graph_column"/>
+        <LinearLayout
+            android:id="@+id/lnr_graph_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="bottom"
+            android:orientation="horizontal">
 
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>
