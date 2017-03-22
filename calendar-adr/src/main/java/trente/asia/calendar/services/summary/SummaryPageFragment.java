@@ -1,6 +1,9 @@
 package trente.asia.calendar.services.summary;
 
+import static trente.asia.calendar.services.summary.SummaryPagerAdapter.GRAPH_COLUMN_NUM;
+
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import org.json.JSONException;
@@ -14,11 +17,14 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import asia.chiase.core.util.CCDateUtil;
+import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.fragments.ClPageFragment;
 import trente.asia.calendar.services.calendar.model.CategoryModel;
+import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 import trente.asia.welfare.adr.utils.WelfareUtil;
@@ -67,11 +73,25 @@ public class SummaryPageFragment extends ClPageFragment{
 	}
 
 	private void buildGraphColumns(){
-		for(SummaryModel summaryModel : summaryModels){
+
+		for(final SummaryModel summaryModel : summaryModels){
 			GraphColumn graphColumn = (GraphColumn)inflater.inflate(R.layout.graph_column, null);
 			graphColumn.initLayout(summaryModel);
+			graphColumn.setOnClickListener(new View.OnClickListener() {
+
+				@Override
+				public void onClick(View v){
+					gotoSummaryDetail(summaryModel);
+				}
+			});
 			lnrGraphContainer.addView(graphColumn);
 		}
+	}
+
+	private void gotoSummaryDetail(SummaryModel summaryModel){
+		SummaryDetailFragment fragment = new SummaryDetailFragment();
+		fragment.setSummaryModel(summaryModel);
+		((WelfareActivity)activity).addFragment(fragment);
 	}
 
 	private void buildGraphExplain(){
@@ -96,12 +116,16 @@ public class SummaryPageFragment extends ClPageFragment{
 
 	private void loadSummaryInfo(){
 		String targetUserList = prefAccUtil.get(ClConst.PREF_ACTIVE_USER_LIST);
+		Calendar c = CCDateUtil.makeCalendar(selectedDate);
+		String startMonthStr = CCFormatUtil.formatMonth(selectedDate);
+		c.add(Calendar.MONTH, GRAPH_COLUMN_NUM - 1);
+		String endMonthStr = CCFormatUtil.formatMonth(c.getTime());
 		JSONObject jsonObject = new JSONObject();
 		try{
 			jsonObject.put("targetUserList", targetUserList);
 			jsonObject.put("calendars", prefAccUtil.get(ClConst.SELECTED_CALENDAR_STRING));
-			jsonObject.put("startMonthString", "2017/01");
-			jsonObject.put("endMonthString", "2017/12");
+			jsonObject.put("startMonthString", startMonthStr);
+			jsonObject.put("endMonthString", endMonthStr);
 		}catch(JSONException e){
 			e.printStackTrace();
 		}

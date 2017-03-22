@@ -7,34 +7,28 @@ import android.support.v4.app.FragmentManager;
 import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.commons.fragments.ClPageFragment;
 import trente.asia.calendar.commons.views.ClFragmentPagerAdapter;
-import trente.asia.calendar.commons.views.NavigationHeader;
-import trente.asia.calendar.commons.views.PageSharingHolder;
 
 /**
  * SchedulesPagerAdapter
  *
  * @author Vietnh
  */
-public class SummaryPagerAdapter extends ClFragmentPagerAdapter {
+public class SummaryPagerAdapter extends ClFragmentPagerAdapter{
 
-    protected NavigationHeader navigationHeader;
-    protected PageSharingHolder pageSharingHolder;
-    protected int initialPosition;
+	public static final int	GRAPH_COLUMN_NUM	= 4;
 
+	public SummaryPagerAdapter(FragmentManager fm){
+		super(fm);
+	}
 
-    public SummaryPagerAdapter(FragmentManager fm) {
-        super(fm);
-    }
+	@Override
+	protected ClPageFragment getFragment(){
+		return new SummaryPageFragment();
+	}
 
-    @Override
-    protected ClPageFragment getFragment() {
-        return new SummaryPageFragment();
-    }
-
-    @Override
-    protected Date choseSelectedDate(int position) {
-        //// TODO: 3/22/2017  
-        return CsDateUtil.addMonth(TODAY, position - initialPosition);
-    }
+	@Override
+	protected Date choseSelectedDate(int position){
+		return CsDateUtil.addMonth(TODAY, GRAPH_COLUMN_NUM * (position - initialPosition));
+	}
 
 }
