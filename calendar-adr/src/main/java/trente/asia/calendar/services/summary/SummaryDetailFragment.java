@@ -98,6 +98,7 @@ public class SummaryDetailFragment extends AbstractClFragment implements WeeklyS
 		SchedulesPageFragment.updateSchedules(schedules, categories);
 		calendarDayModels = SchedulesPageListViewFragment.buildCalendarDayModelsFromSchedules(schedules, dates);
 		adapter = new WeeklyScheduleListAdapter(activity, R.layout.item_calendar_day, calendarDayModels, lstHoliday, this);
+		adapter.setScheduleItemLayoutId(R.layout.item_schedule_summary);
 		listView.setAdapter(adapter);
 	}
 

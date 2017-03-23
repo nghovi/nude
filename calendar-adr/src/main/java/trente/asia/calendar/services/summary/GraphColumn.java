@@ -70,7 +70,7 @@ public class GraphColumn extends LinearLayout{
 	}
 
 	public static int getHeightPx(CategoryModel categoryModel){
-		int result = (int)(1.5 * Integer.parseInt(categoryModel.hoursOfSchedule) + MIN_HEIGHT_DP);
+		int result = (int)(1.5 * Double.parseDouble(categoryModel.hoursOfSchedule) + MIN_HEIGHT_DP);
 		result = result < MAX_HEIGHT_DP ? result : (int)MAX_HEIGHT_DP;
 		return WelfareUtil.dpToPx(result);
 	}

@@ -48,6 +48,12 @@ public class WeeklyScheduleListAdapter extends ArrayAdapter<CalendarDayModel>{
 	LayoutInflater						layoutInflater;
 	private OnScheduleItemClickListener	onScheduleItemClickListener;
 
+	public void setScheduleItemLayoutId(int scheduleItemLayoutId){
+		this.scheduleItemLayoutId = scheduleItemLayoutId;
+	}
+
+	private int	scheduleItemLayoutId	= R.layout.item_schedule;
+
 	public interface OnScheduleItemClickListener{
 
 		void onClickScheduleItem(ScheduleModel schedule, Date selectedDate);
@@ -123,9 +129,16 @@ public class WeeklyScheduleListAdapter extends ArrayAdapter<CalendarDayModel>{
 	private void buildScheduleList(ViewHolder viewHolder, CalendarDayModel calendarDay){
 		sortSchedulesByType(calendarDay.schedules);
 		for(final ScheduleModel schedule : calendarDay.schedules){
-			View lnrSchedulesContainer = buildScheduleItem(getContext(), layoutInflater, schedule, onScheduleItemClickListener, calendarDay.date);
+			View lnrSchedulesContainer = buildWeeklyScheduleItem(getContext(), layoutInflater, schedule, onScheduleItemClickListener, calendarDay.date);
 			viewHolder.lnrEventList.addView(lnrSchedulesContainer);
 		}
+	}
+
+	private View buildWeeklyScheduleItem(final Context context, LayoutInflater layoutInflater, final ScheduleModel schedule, final OnScheduleItemClickListener onScheduleItemClickListener, final Date selectedDate){
+		if(scheduleItemLayoutId == R.layout.item_schedule){
+			return buildScheduleItem(context, layoutInflater, schedule, onScheduleItemClickListener, selectedDate);
+		}
+		return buildScheduleItemSummary(context, layoutInflater, schedule, onScheduleItemClickListener, selectedDate);
 	}
 
 	private void sortSchedulesByType(List<ScheduleModel> schedules){
@@ -152,8 +165,13 @@ public class WeeklyScheduleListAdapter extends ArrayAdapter<CalendarDayModel>{
 		return 3;
 	}
 
-	public static View buildScheduleItem(final Context context, LayoutInflater layoutInflater, final ScheduleModel schedule, final OnScheduleItemClickListener onScheduleItemClickListener, final Date selectedDate){
-		LinearLayout lnrSchedulesContainer = (LinearLayout)layoutInflater.inflate(R.layout.item_schedule, null);
+	public View buildScheduleItemSummary(final Context context, LayoutInflater layoutInflater, final ScheduleModel schedule, OnScheduleItemClickListener onScheduleItemClickListener, Date selectedDate){
+		LinearLayout lnrSchedulesContainer = (LinearLayout)layoutInflater.inflate(R.layout.item_schedule_summary, null);
+		buildScheduleItemCommon(context, lnrSchedulesContainer, schedule, onScheduleItemClickListener, selectedDate);
+		return lnrSchedulesContainer;
+	}
+
+	public static void buildScheduleItemCommon(Context context, LinearLayout lnrSchedulesContainer, final ScheduleModel schedule, final OnScheduleItemClickListener onScheduleItemClickListener, final Date selectedDate){
 		TextView txtScheduleTime = (TextView)lnrSchedulesContainer.findViewById(R.id.txt_item_schedule_time);
 		String time;
 		if(CCBooleanUtil.checkBoolean(schedule.isAllDay)){
@@ -173,7 +191,19 @@ public class WeeklyScheduleListAdapter extends ArrayAdapter<CalendarDayModel>{
 
 		SelectableRoundedImageView imgCalendar = (SelectableRoundedImageView)lnrSchedulesContainer.findViewById(R.id.img_item_schedule_calendar);
 		WfPicassoHelper.loadImage(context, BuildConfig.HOST + schedule.calendar.imagePath, imgCalendar, null);
+		lnrSchedulesContainer.setOnClickListener(new View.OnClickListener() {
 
+			@Override
+			public void onClick(View v){
+
+				onScheduleItemClickListener.onClickScheduleItem(schedule, selectedDate);
+			}
+		});
+	}
+
+	public static View buildScheduleItem(final Context context, LayoutInflater layoutInflater, final ScheduleModel schedule, final OnScheduleItemClickListener onScheduleItemClickListener, final Date selectedDate){
+		LinearLayout lnrSchedulesContainer = (LinearLayout)layoutInflater.inflate(R.layout.item_schedule, null);
+		buildScheduleItemCommon(context, lnrSchedulesContainer, schedule, onScheduleItemClickListener, selectedDate);
 		ImageView imgDup = (ImageView)lnrSchedulesContainer.findViewById(R.id.img_item_schedule_dup);
 		if(CCBooleanUtil.checkBoolean(schedule.isWarning)){
 			imgDup.setVisibility(View.VISIBLE);
@@ -206,15 +236,6 @@ public class WeeklyScheduleListAdapter extends ArrayAdapter<CalendarDayModel>{
 		});
 
 		lnrSchedulesContainer.setFocusable(true);
-		lnrSchedulesContainer.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v){
-
-				onScheduleItemClickListener.onClickScheduleItem(schedule, selectedDate);
-			}
-		});
-
 		return lnrSchedulesContainer;
 	}
 

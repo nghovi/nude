@@ -10,6 +10,8 @@
         <LinearLayout android:id="@+id/lnr_graph_explain"
                       android:layout_width="match_parent"
                       android:layout_height="wrap_content"
+                      android:paddingTop="@dimen/margin_16dp"
+                      android:paddingLeft="@dimen/margin_16dp"
                       android:orientation="vertical">
 
         </LinearLayout>

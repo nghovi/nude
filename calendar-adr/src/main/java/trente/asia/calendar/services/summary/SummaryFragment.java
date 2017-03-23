@@ -22,6 +22,19 @@ public class SummaryFragment extends PageContainerFragment{
 	}
 
 	@Override
+	protected boolean isSwipeRightToLeftOnly(){
+		return true;
+	}
+
+	@Override
+	protected void setWizardProgress(int progress){
+		if(progress > ((SummaryPagerAdapter)mPagerAdapter).getMProgress()){
+			((SummaryPagerAdapter)mPagerAdapter).setMProgress(progress);
+			mPagerAdapter.notifyDataSetChanged();
+		}
+	}
+
+	@Override
 	public int getFooterItemId(){
 		return R.id.lnr_view_footer_summary;
 	}

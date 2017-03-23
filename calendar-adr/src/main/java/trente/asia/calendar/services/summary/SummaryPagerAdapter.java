@@ -16,9 +16,15 @@ import trente.asia.calendar.commons.views.ClFragmentPagerAdapter;
 public class SummaryPagerAdapter extends ClFragmentPagerAdapter{
 
 	public static final int	GRAPH_COLUMN_NUM	= 4;
+	private int				mProgress;
 
 	public SummaryPagerAdapter(FragmentManager fm){
 		super(fm);
+	}
+
+	@Override
+	public int getCount(){
+		return mProgress;
 	}
 
 	@Override
@@ -31,4 +37,11 @@ public class SummaryPagerAdapter extends ClFragmentPagerAdapter{
 		return CsDateUtil.addMonth(TODAY, GRAPH_COLUMN_NUM * (position - initialPosition));
 	}
 
+	public int getMProgress(){
+		return mProgress;
+	}
+
+	public void setMProgress(int mProgress){
+		this.mProgress = mProgress;
+	}
 }

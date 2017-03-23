@@ -11,6 +11,7 @@ import org.json.JSONObject;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
+import asia.chiase.core.util.CCStringUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.fragments.ClPageFragment;
@@ -68,7 +70,7 @@ public class SummaryPageFragment extends ClPageFragment{
 	private void onLoadSummarySuccess(JSONObject response){
 		summaryModels = CCJsonUtil.convertToModelList(response.optString("months"), SummaryModel.class);
 		categories = CCJsonUtil.convertToModelList(response.optString("categories"), CategoryModel.class);
-		// buildGraphExplain();
+		buildGraphExplain();
 		buildGraphColumns();
 	}
 
@@ -95,22 +97,28 @@ public class SummaryPageFragment extends ClPageFragment{
 	}
 
 	private void buildGraphExplain(){
+		lnrGraphExplain.removeAllViews();
 		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(SQUARE_SIZE_PX, SQUARE_SIZE_PX);
-		params.setMargins(0, MARGIN_LEFT_RIGHT_PX, 0, 0);
-		for(CategoryModel categoryModel : categories){
-			LinearLayout square = new LinearLayout(getContext());
-			square.setLayoutParams(params);
-			square.setBackgroundColor(Color.parseColor(WelfareFormatUtil.formatColor(categoryModel.categoryColor)));
+		params.setMargins(0, 0, MARGIN_LEFT_RIGHT_PX, 0);
+		if(!CCStringUtil.isEmpty(categories)){
+			for(CategoryModel categoryModel : categories){
+				LinearLayout square = new LinearLayout(getContext());
+				square.setLayoutParams(params);
+				square.setBackgroundColor(Color.parseColor(WelfareFormatUtil.formatColor(categoryModel.categoryColor)));
 
-			TextView txtCategoryName = new TextView(activity);
-			txtCategoryName.setText(categoryModel.categoryName);
-			txtCategoryName.setTextColor(Color.parseColor(WelfareFormatUtil.formatColor(categoryModel.categoryColor)));
+				TextView txtCategoryName = new TextView(activity);
+				txtCategoryName.setText(categoryModel.categoryName);
+				txtCategoryName.setTextColor(Color.parseColor(WelfareFormatUtil.formatColor(categoryModel.categoryColor)));
 
-			LinearLayout row = new LinearLayout(getContext());
-			row.addView(square);
-			row.addView(txtCategoryName);
+				LinearLayout row = new LinearLayout(getContext());
+				row.setGravity(Gravity.CENTER_VERTICAL);
+				row.setOrientation(LinearLayout.HORIZONTAL);
+				row.addView(square);
+				row.addView(txtCategoryName);
+				row.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
-			lnrGraphExplain.addView(row);
+				lnrGraphExplain.addView(row);
+			}
 		}
 	}
 

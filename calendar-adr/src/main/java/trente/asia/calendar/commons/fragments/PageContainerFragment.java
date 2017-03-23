@@ -53,6 +53,7 @@ public abstract class PageContainerFragment extends AbstractClFragment{
 																			}
 																		}
 																	};
+	private int							mProgress;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -84,8 +85,8 @@ public abstract class PageContainerFragment extends AbstractClFragment{
 
 		prefAccUtil.saveActiveDate(TODAY);
 		setActiveDate(INITIAL_POSITION);
+		setWizardProgress(INITIAL_POSITION + 1);
 		mViewPager.setCurrentItem(INITIAL_POSITION);
-
 		mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
 			public void onPageScrollStateChanged(int state){
@@ -95,6 +96,9 @@ public abstract class PageContainerFragment extends AbstractClFragment{
 			}
 
 			public void onPageSelected(int position){
+				if(isSwipeRightToLeftOnly()){
+					setWizardProgress(position);
+				}
 				setActiveDate(position);
 				holder.selectedPagePosition = position;
 				ClPageFragment fragment = (ClPageFragment)mPagerAdapter.getItem(position);
@@ -107,6 +111,13 @@ public abstract class PageContainerFragment extends AbstractClFragment{
 		CalendarListFragment calendarListFragment = new CalendarListFragment();
 		calendarListFragment.setOnChangeCalendarListener(onChangeCalendarListener);
 		transaction.replace(R.id.slice_menu_board, calendarListFragment).commit();
+	}
+
+	protected void setWizardProgress(int progress){
+	}
+
+	protected boolean isSwipeRightToLeftOnly(){
+		return false;
 	}
 
 	protected void setActiveDate(int position){
