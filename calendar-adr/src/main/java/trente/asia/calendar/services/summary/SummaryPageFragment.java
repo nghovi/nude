@@ -75,7 +75,7 @@ public class SummaryPageFragment extends ClPageFragment{
 	}
 
 	private void buildGraphColumns(){
-
+		lnrGraphContainer.removeAllViews();
 		for(final SummaryModel summaryModel : summaryModels){
 			GraphColumn graphColumn = (GraphColumn)inflater.inflate(R.layout.graph_column, null);
 			graphColumn.initLayout(summaryModel);

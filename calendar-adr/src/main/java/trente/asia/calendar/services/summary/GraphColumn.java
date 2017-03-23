@@ -38,6 +38,7 @@ public class GraphColumn extends LinearLayout{
 	}
 
 	public void initLayout(SummaryModel summaryModel){
+		setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
 		lnrBlockContainer = (LinearLayout)findViewById(R.id.lnr_block_container);
 		addBlocks(getContext(), summaryModel, lnrBlockContainer, true);
 		TextView txtMonth = (TextView)findViewById(R.id.txt_graph_column_month);
