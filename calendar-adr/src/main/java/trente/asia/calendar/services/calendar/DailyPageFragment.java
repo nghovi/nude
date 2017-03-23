@@ -1,6 +1,5 @@
 package trente.asia.calendar.services.calendar;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -15,8 +14,6 @@ import android.view.ViewGroup;
 
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
-import asia.chiase.core.util.CCStringUtil;
-import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.dialogs.ClDialog;
 import trente.asia.calendar.services.calendar.listener.DailyScheduleClickListener;
@@ -61,18 +58,12 @@ public class DailyPageFragment extends SchedulesPageListViewFragment implements 
 
 	@Override
 	protected List<Date> getAllDate(){
-		int firstDay = Calendar.SUNDAY;
-		if(!CCStringUtil.isEmpty(prefAccUtil.getSetting().CL_START_DAY_IN_WEEK)){
-			firstDay = Integer.parseInt(prefAccUtil.getSetting().CL_START_DAY_IN_WEEK);
-		}
-		Date firstDateOfMonth = CCDateUtil.makeDateWithFirstday(selectedDate);
-		List<Date> dates = CsDateUtil.getAllDate4Month(CCDateUtil.makeCalendar(firstDateOfMonth), firstDay);
-		return dates;
+		return getAllDateForMonth(prefAccUtil, selectedDate);
 	}
 
 	@Override
 	protected void updateObservableScrollableView(){
-        canScroll = false;
+		canScroll = false;
 		dailyScheduleList.updateFor(selectedDate, lstSchedule, lstHoliday, lstWorkOffer, lstBirthdayUser);
 	}
 
@@ -89,9 +80,9 @@ public class DailyPageFragment extends SchedulesPageListViewFragment implements 
 
 	@Override
 	public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging){
-        if(firstScroll){
-            canScroll = true;
-        }
+		if(firstScroll){
+			canScroll = true;
+		}
 	}
 
 	@Override

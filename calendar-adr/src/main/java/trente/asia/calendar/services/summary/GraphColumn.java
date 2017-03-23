@@ -51,13 +51,14 @@ public class GraphColumn extends LinearLayout{
 			LayoutParams param;
 			if(isCalculateSize){
 				param = new LinearLayout.LayoutParams(BLOCK_WIDTH_PX, heightPx);
+				lnrBlock.setGravity(Gravity.CENTER_HORIZONTAL);
 			}else{
-				param = new LinearLayout.LayoutParams(BLOCK_WIDTH_PX, ViewGroup.LayoutParams.MATCH_PARENT);
+				param = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 1);
 				lnrBlock.setWeightSum(1);
+				lnrBlock.setGravity(Gravity.CENTER);
 			}
 
 			lnrBlock.setLayoutParams(param);
-			lnrBlock.setGravity(Gravity.CENTER_HORIZONTAL);
 			lnrBlock.setBackgroundColor(Color.parseColor(WelfareFormatUtil.formatColor(categoryModel.categoryColor)));
 
 			TextView txtHour = new TextView(context);

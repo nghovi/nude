@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
@@ -36,6 +37,7 @@ import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.models.UserModel;
+import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
 
 /**
  * SchedulesPageFragment
@@ -100,7 +102,8 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 		lnrCalendarContainer.addView(titleView);
 	}
 
-	abstract void initDayViews();
+	protected void initDayViews(){
+	}
 
 	protected void loadScheduleList(){
 		JSONObject jsonObject = prepareJsonObject();
@@ -108,19 +111,22 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 	}
 
 	protected JSONObject prepareJsonObject(){
+		return buildJsonObjForScheduleListRequest(prefAccUtil, dates.get(0), dates.get(dates.size() - 1));
+	}
+
+	public static JSONObject buildJsonObjForScheduleListRequest(PreferencesAccountUtil prefAccUtil, Date startDate, Date endDate){
 		String targetUserList = prefAccUtil.get(ClConst.PREF_ACTIVE_USER_LIST);
 		JSONObject jsonObject = new JSONObject();
 		try{
 			jsonObject.put("targetUserList", targetUserList);
 			jsonObject.put("calendars", prefAccUtil.get(ClConst.SELECTED_CALENDAR_STRING));
 
-			jsonObject.put("startDateString", CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, dates.get(0)));
-			jsonObject.put("endDateString", CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, dates.get(dates.size() - 1)));
+			jsonObject.put("startDateString", CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, startDate));
+			jsonObject.put("endDateString", CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, endDate));
 
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
-
 		return jsonObject;
 	}
 
@@ -131,6 +137,18 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 		}else{
 			super.successLoad(response, url);
 		}
+	}
+
+	public static List<Date> getAllDateForMonth(PreferencesAccountUtil prefAccUtil, Date selectedDate){
+		int firstDay = Calendar.SUNDAY;
+		if(!CCStringUtil.isEmpty(prefAccUtil.getSetting().CL_START_DAY_IN_WEEK)){
+
+			firstDay = Integer.parseInt(prefAccUtil.getSetting().CL_START_DAY_IN_WEEK);
+
+		}
+		Date firstDateOfMonth = CCDateUtil.makeDateWithFirstday(selectedDate);
+		List<Date> dates = CsDateUtil.getAllDate4Month(CCDateUtil.makeCalendar(firstDateOfMonth), firstDay);
+		return dates;
 	}
 
 	protected void onLoadSchedulesSuccess(JSONObject response){
@@ -148,7 +166,7 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 		updateSchedules(lstSchedule, lstCategory);
 	}
 
-	public void updateSchedules(List<ScheduleModel> schedules, List<CategoryModel> categories){
+	public static void updateSchedules(List<ScheduleModel> schedules, List<CategoryModel> categories){
 		Map<String, CategoryModel> categoryMap = ClUtil.convertCategory2Map(categories);
 		for(ScheduleModel schedule : schedules){
 			schedule.categoryModel = categoryMap.get(schedule.categoryId);
@@ -157,10 +175,14 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 
 	@Override
 	public void onClickScheduleItem(ScheduleModel schedule, Date selectedDate){
+		gotoScheduleDetail((WelfareActivity)activity, schedule, selectedDate);
+	}
+
+	public static void gotoScheduleDetail(WelfareActivity activity, ScheduleModel schedule, Date selectedDate){
 		ScheduleDetailFragment fragment = new ScheduleDetailFragment();
 		fragment.setSchedule(schedule);
 		fragment.setSelectedDate(selectedDate);
-		((WelfareActivity)activity).addFragment(fragment);
+		activity.addFragment(fragment);
 	}
 
 	@Override

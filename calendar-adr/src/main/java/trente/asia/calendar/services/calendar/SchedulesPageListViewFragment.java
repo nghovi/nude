@@ -70,6 +70,7 @@ public abstract class SchedulesPageListViewFragment extends SchedulesPageFragmen
 
 	abstract public void updateList(String dayStr);
 
+	@Override
 	protected void onLoadSchedulesSuccess(JSONObject response){
 		super.onLoadSchedulesSuccess(response);
 		calendarDayModels = buildCalendarDayModels(lstSchedule);
@@ -88,10 +89,9 @@ public abstract class SchedulesPageListViewFragment extends SchedulesPageFragmen
 
 	abstract protected void updateObservableScrollableView();
 
-	// // TODO: 3/13/2017 Refactor this function!!!
-	public List<CalendarDayModel> buildCalendarDayModels(List<ScheduleModel> schedules){
+	public static List<CalendarDayModel> buildCalendarDayModelsFromSchedules(List<ScheduleModel> schedules, List<Date> dates){
 		List<CalendarDayModel> calendarDayModels = new ArrayList<>();
-		Calendar c = Calendar.getInstance();
+		Calendar calendar = Calendar.getInstance();
 
 		for(ScheduleModel scheduleModel : schedules){
 			Date startDate = WelfareUtil.makeDate(scheduleModel.startDate);
@@ -101,14 +101,22 @@ public abstract class SchedulesPageListViewFragment extends SchedulesPageFragmen
 				Date limit = endDate.compareTo(endDisplayed) <= 0 ? endDate : endDisplayed;
 				while(CCDateUtil.compareDate(startDate, limit, false) <= 0){
 					addCalendarDayModel(startDate, scheduleModel, calendarDayModels);
-					c.setTime(startDate);
-					c.add(Calendar.DATE, 1);
-					startDate = c.getTime();
+					calendar.setTime(startDate);
+					calendar.add(Calendar.DATE, 1);
+					startDate = calendar.getTime();
 				}
 			}else{
 				addCalendarDayModel(startDate, scheduleModel, calendarDayModels);
 			}
 		}
+		return calendarDayModels;
+	}
+
+	// // TODO: 3/13/2017 Refactor this function!!!
+	public List<CalendarDayModel> buildCalendarDayModels(List<ScheduleModel> schedules){
+
+		// build from schedules
+		List<CalendarDayModel> calendarDayModels = buildCalendarDayModelsFromSchedules(schedules, dates);
 
 		for(HolidayModel holidayModel : lstHoliday){
 			Date date = WelfareUtil.makeDate(holidayModel.startDate);
@@ -168,7 +176,7 @@ public abstract class SchedulesPageListViewFragment extends SchedulesPageFragmen
 		return calendarDayModels;
 	}
 
-	public void addCalendarDayModel(Date date, ScheduleModel scheduleModel, List<CalendarDayModel> calendarDayModels){
+	public static void addCalendarDayModel(Date date, ScheduleModel scheduleModel, List<CalendarDayModel> calendarDayModels){
 		CalendarDayModel calendarDayModel = getCalendarDayModel(date, calendarDayModels);
 		if(calendarDayModel == null){
 			calendarDayModel = new CalendarDayModel();
@@ -182,7 +190,7 @@ public abstract class SchedulesPageListViewFragment extends SchedulesPageFragmen
 		}
 	}
 
-	public CalendarDayModel getCalendarDayModel(Date date, List<CalendarDayModel> calendarDayModels){
+	public static CalendarDayModel getCalendarDayModel(Date date, List<CalendarDayModel> calendarDayModels){
 		if(!CCCollectionUtil.isEmpty(calendarDayModels)){
 			for(CalendarDayModel calendarDayModel : calendarDayModels){
 				if(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, calendarDayModel.date).equals(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, date))){
