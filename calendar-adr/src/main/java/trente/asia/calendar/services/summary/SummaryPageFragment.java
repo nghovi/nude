@@ -44,6 +44,7 @@ public class SummaryPageFragment extends ClPageFragment{
 	private LinearLayout		lnrGraphExplain;
 	private List<SummaryModel>	summaryModels	= new ArrayList<>();
 	private List<CategoryModel>	categories		= new ArrayList<>();
+	private LinearLayout		lnrGraphFooter;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -76,6 +77,7 @@ public class SummaryPageFragment extends ClPageFragment{
 
 	private void buildGraphColumns(){
 		lnrGraphContainer.removeAllViews();
+		lnrGraphFooter.removeAllViews();
 		for(final SummaryModel summaryModel : summaryModels){
 			GraphColumn graphColumn = (GraphColumn)inflater.inflate(R.layout.graph_column, null);
 			graphColumn.initLayout(summaryModel);
@@ -87,7 +89,24 @@ public class SummaryPageFragment extends ClPageFragment{
 				}
 			});
 			lnrGraphContainer.addView(graphColumn);
+			LinearLayout lnrMonth = buildTxtMonth(summaryModel);
+			lnrGraphFooter.addView(lnrMonth);
 		}
+	}
+
+	private LinearLayout buildTxtMonth(SummaryModel summaryModel){
+
+		LinearLayout lnrText = new LinearLayout(getContext());
+		LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 1);
+		;
+		lnrText.setGravity(Gravity.CENTER);
+
+		lnrText.setLayoutParams(param);
+
+		TextView txtMonth = new TextView(getContext());
+		txtMonth.setText(summaryModel.month);
+		lnrText.addView(txtMonth);
+		return lnrText;
 	}
 
 	private void gotoSummaryDetail(SummaryModel summaryModel){
@@ -125,9 +144,9 @@ public class SummaryPageFragment extends ClPageFragment{
 	private void loadSummaryInfo(){
 		String targetUserList = prefAccUtil.get(ClConst.PREF_ACTIVE_USER_LIST);
 		Calendar c = CCDateUtil.makeCalendar(selectedDate);
-		String startMonthStr = CCFormatUtil.formatMonth(selectedDate);
-		c.add(Calendar.MONTH, GRAPH_COLUMN_NUM - 1);
-		String endMonthStr = CCFormatUtil.formatMonth(c.getTime());
+		String endMonthStr = CCFormatUtil.formatMonth(selectedDate);
+		c.add(Calendar.MONTH, 1 - GRAPH_COLUMN_NUM);
+		String startMonthStr = CCFormatUtil.formatMonth(c.getTime());
 		JSONObject jsonObject = new JSONObject();
 		try{
 			jsonObject.put("targetUserList", targetUserList);
@@ -148,6 +167,7 @@ public class SummaryPageFragment extends ClPageFragment{
 		updateHeaderTitles();
 		lnrGraphContainer = (LinearLayout)getView().findViewById(R.id.lnr_graph_container);
 		lnrGraphExplain = (LinearLayout)getView().findViewById(R.id.lnr_graph_explain);
+		lnrGraphFooter = (LinearLayout)getView().findViewById(R.id.lnr_graph_footer_container);
 	}
 
 	protected String getUpperTitle(){

@@ -24,6 +24,7 @@ public class GraphColumn extends LinearLayout{
 	private LinearLayout		lnrBlockContainer;
 	private static double		MIN_HEIGHT_DP	= 20;
 	private static double		MAX_HEIGHT_DP	= 150;
+	private static int			MAX_WIDTH_PX	= WelfareUtil.dpToPx(60);
 
 	public GraphColumn(Context context){
 		super(context);
@@ -41,8 +42,8 @@ public class GraphColumn extends LinearLayout{
 		setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
 		lnrBlockContainer = (LinearLayout)findViewById(R.id.lnr_block_container);
 		addBlocks(getContext(), summaryModel, lnrBlockContainer, true);
-		TextView txtMonth = (TextView)findViewById(R.id.txt_graph_column_month);
-		txtMonth.setText(summaryModel.month);
+		// TextView txtMonth = (TextView)findViewById(R.id.txt_graph_column_month);
+		// txtMonth.setText(summaryModel.month);
 	}
 
 	public static void addBlocks(Context context, SummaryModel summaryModel, LinearLayout lnrBlockContainer, boolean isCalculateSize){
@@ -54,7 +55,11 @@ public class GraphColumn extends LinearLayout{
 				param = new LinearLayout.LayoutParams(BLOCK_WIDTH_PX, heightPx);
 				lnrBlock.setGravity(Gravity.CENTER_HORIZONTAL);
 			}else{
+				// if(summaryModel.categories.size() < 8){
 				param = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 1);
+				// }else{
+				// param = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT, 1);
+				// }
 				lnrBlock.setWeightSum(1);
 				lnrBlock.setGravity(Gravity.CENTER);
 			}
