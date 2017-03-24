@@ -37,19 +37,17 @@ public class WelfareConst{
 	public static final int			RECORDING_ANIMATION_DURATION	= 1000;
 
 	// Welfare date time format
-	public static final String		WL_DATE_TIME_1					= "yyyy/MM/dd HH:mm:ss";
-	public static final String		WL_DATE_TIME_2					= "yyyy/MM/dd HH:mm";
-	public static final String		WL_DATE_TIME_3					= "yyyyMMddHHmmssSSS";
-	public static final String		WL_DATE_TIME_4					= "yyyy-MM-dd";
-	public static final String		WL_DATE_TIME_5					= "yyyy/MM";
-	public static final String		WL_DATE_TIME_6					= "MM/dd";
-	public static final String		WL_DATE_TIME_7					= "yyyy/MM/dd";
-	public static final String		WL_DATE_TIME_8					= "yyyy-MM";
-	public static final String		WL_DATE_TIME_9					= "HH:mm";
-	public static final String		WL_DATE_TIME_10					= "yyyy/MM/dd (EEE)";
-	public static final String		WL_DATE_TIME_11					= "dd";
-	public static final String		WL_DATE_TIME_12					= "MMMM, yyyy";
-	public static final String		WL_DATE_TIME_13					= "EEEE";
+	public static final String		WF_DATE_TIME					= "yyyy/MM/dd HH:mm:ss";
+	public static final String		WF_DATE_TIME_DATE_HH_MM			= "yyyy/MM/dd HH:mm";
+	public static final String		WF_DATE_TIME_YYYY_MM			= "yyyy/MM";
+	public static final String		WF_DATE_TIME_MM_DD				= "MM/dd";
+	public static final String		WF_DATE_TIME_DATE				= "yyyy/MM/dd";
+	public static final String		WF_DATE_TIME_YYYY_HYPHEN_MM		= "yyyy-MM";
+	public static final String		WF_DATE_TIME_HH_MM				= "HH:mm";
+	public static final String		WF_DATE_TIME_DATE_WEEKDAY		= "yyyy/MM/dd (EEE)";
+	public static final String		WF_DATE_TIME_DD					= "dd";
+	public static final String		WF_DATE_TIME_MMMM_YY			= "MMMM, yyyy";
+	public static final String		WF_DATE_TIME_WEEK_DAY			= "EEEE";
 	public static final String		WF_DATE_TIME_CL_FULL			= "EEEE, MMM dd, yyyy";
 
 	public static final String		WF_CONTACT_PROBLEM				= "B";
@@ -61,7 +59,6 @@ public class WelfareConst{
 	public static final String		IMG_EXT_GIF						= "gif";
 
 	public static final String		NONE							= "0";
-	// public static final int WF_MAX_FILE_SIZE = 52428800;
 	public static final String		WF_FILE_SIZE_NG					= "WF_FILE_SIZE_NG";
 
 	public static final Set<String>	IMG_EXT_SET						= new HashSet<String>();
@@ -77,7 +74,7 @@ public class WelfareConst{
 		IMG_EXT_SET.add(IMG_EXT_GIF.toUpperCase());
 	}
 
-	public static final Set<String> MOVIE_EXT_SET = new HashSet<String>();
+	public static final Set<String>	MOVIE_EXT_SET					= new HashSet<String>();
 
 	static{
 		MOVIE_EXT_SET.add("mp4");
@@ -88,9 +85,9 @@ public class WelfareConst{
 		MOVIE_EXT_SET.add("avi".toUpperCase());
 	}
 
-	public static final String	BOARD_TYPE_DEPT		= "D";
-	public static final String	BOARD_TYPE_USER		= "U";
-	public static final String	BOARD_TYPE_GROUP	= "G";
+	public static final String		BOARD_TYPE_DEPT					= "D";
+	public static final String		BOARD_TYPE_USER					= "U";
+	public static final String		BOARD_TYPE_GROUP				= "G";
 
 	public static final class Extras{
 

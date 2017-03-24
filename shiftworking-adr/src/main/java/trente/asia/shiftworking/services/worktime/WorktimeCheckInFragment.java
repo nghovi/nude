@@ -133,8 +133,8 @@ public class WorktimeCheckInFragment extends AbstractLocationFragment{
 
 	private void setCheckInTime(){
 		Date date = new Date();
-		txtCheckInDate.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_10, date));
-		txtCheckInTime.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_9, date));
+		txtCheckInDate.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE_WEEKDAY, date));
+		txtCheckInTime.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_HH_MM, date));
 	}
 
 	@Override
@@ -146,7 +146,7 @@ public class WorktimeCheckInFragment extends AbstractLocationFragment{
 		JSONObject jsonObject = new JSONObject();
 		try{
 			Date date = new Date();
-			jsonObject.put("searchDateString", CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, date));
+			jsonObject.put("searchDateString", CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, date));
 			jsonObject.put("userId", prefAccUtil.getUserPref().key);
 		}catch(JSONException e){
 			e.printStackTrace();
@@ -158,7 +158,7 @@ public class WorktimeCheckInFragment extends AbstractLocationFragment{
 		JSONObject jsonObject = new JSONObject();
 		try{
 			Date date = new Date();
-			jsonObject.put("workDate", CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, date));
+			jsonObject.put("workDate", CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, date));
 			jsonObject.put("projectId", activeProject.key);
 			jsonObject.put("userId", prefAccUtil.getUserPref().key);
 		}catch(JSONException e){

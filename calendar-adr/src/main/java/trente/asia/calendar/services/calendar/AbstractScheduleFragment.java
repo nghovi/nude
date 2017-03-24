@@ -90,7 +90,7 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 		try{
 			if(schedule != null){
 				jsonObject.put("key", schedule.key);
-				jsonObject.put("searchDateString", CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, WelfareUtil.makeDate(schedule.startDate)));
+				jsonObject.put("searchDateString", CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, WelfareUtil.makeDate(schedule.startDate)));
 			}
 			jsonObject.put("calendars", prefAccUtil.get(ClConst.SELECTED_CALENDAR_STRING));
 		}catch(JSONException e){

@@ -108,7 +108,7 @@ public class CalendarDayView extends LinearLayout{
 		LayoutParams params = new LayoutParams(0, LayoutParams.WRAP_CONTENT, 1);
 		this.setLayoutParams(params);
 		this.date = CCDateUtil.makeDate(itemDate);
-		this.dayStr = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, this.date);
+		this.dayStr = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, this.date);
 		this.isInOtherMonth = isInOtherMonth;
 
 		LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -128,7 +128,7 @@ public class CalendarDayView extends LinearLayout{
 			}
 		});
 
-		txtContent.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_11, itemDate));
+		txtContent.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DD, itemDate));
 		Calendar c = Calendar.getInstance();
 		if(CCDateUtil.compareDate(c.getTime(), this.date, false) == 0){
 			this.bgResource = R.drawable.circle_background_today;

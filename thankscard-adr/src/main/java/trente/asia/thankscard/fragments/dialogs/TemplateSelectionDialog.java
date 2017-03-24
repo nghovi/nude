@@ -55,7 +55,7 @@ public class TemplateSelectionDialog extends TCDialog{
 	}
 
 	private void addTemplates(View rootView){
-		HistoryModel sampleCard = new HistoryModel(getString(R.string.fragment_post_template_sample_message), "user_idxxx", "user_namexxx", CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_1, Calendar.getInstance().getTime()));
+		HistoryModel sampleCard = new HistoryModel(getString(R.string.fragment_post_template_sample_message), "user_idxxx", "user_namexxx", CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME, Calendar.getInstance().getTime()));
 		TableLayout lnrTable = (TableLayout)rootView.findViewById(R.id.lnr_fragment_post_template_table_container);
 		if(templates != null){
 			TableRow tableRow = new TableRow(getActivity());

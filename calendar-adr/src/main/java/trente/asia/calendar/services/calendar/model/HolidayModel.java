@@ -28,8 +28,8 @@ public class HolidayModel{
 	public static List<HolidayModel> getHolidayModels(Date date, List<HolidayModel> holidayModels){
 		List<HolidayModel> results = new ArrayList<>();
 		for(HolidayModel holidayModel : holidayModels){
-			Date startDate = CCDateUtil.makeDateCustom(holidayModel.startDate, WelfareConst.WL_DATE_TIME_7);
-			Date endDate = CCDateUtil.makeDateCustom(holidayModel.endDate, WelfareConst.WL_DATE_TIME_7);
+			Date startDate = CCDateUtil.makeDateCustom(holidayModel.startDate, WelfareConst.WF_DATE_TIME_DATE);
+			Date endDate = CCDateUtil.makeDateCustom(holidayModel.endDate, WelfareConst.WF_DATE_TIME_DATE);
 			if(CCDateUtil.compareDate(startDate, date, false) <= 0 && CCDateUtil.compareDate(date, endDate, false) <= 0){
 				results.add(holidayModel);
 			}

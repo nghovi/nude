@@ -52,13 +52,13 @@ public class NoticeListAdapter extends ArrayAdapter<NoticeModel>{
 		}
 		NoticeModel notice = getItem(position);
 		viewHolder.txtStatus.setVisibility(isNewNotice(notice) ? View.VISIBLE : View.INVISIBLE);
-		viewHolder.txtNoticeDate.setText(TCUtil.getDateString(notice.noticeDate, WelfareConst.WL_DATE_TIME_1, WelfareConst.WL_DATE_TIME_7));
+		viewHolder.txtNoticeDate.setText(TCUtil.getDateString(notice.noticeDate, WelfareConst.WF_DATE_TIME, WelfareConst.WF_DATE_TIME_DATE));
 		viewHolder.txtNoticeMessage.setText(notice.noticeMessage);
 		return convertView;
 	}
 
 	private boolean isNewNotice(NoticeModel notice){
-		Date noticeDate = CCDateUtil.makeDateCustom(notice.noticeDate, WelfareConst.WL_DATE_TIME_1);
+		Date noticeDate = CCDateUtil.makeDateCustom(notice.noticeDate, WelfareConst.WF_DATE_TIME);
 		long diff = System.currentTimeMillis() - noticeDate.getTime();
 		if(diff > 5 * 24 * 60 * 60 * 1000){ // notice is older than 5 days
 			return false;

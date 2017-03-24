@@ -169,7 +169,7 @@ public class ClScheduleRepeatDialog extends ChiaseDialog{
 			lnrLimitUtil.setVisibility(View.VISIBLE);
 			lnrLimitAfter.setVisibility(View.GONE);
 			// calendarLimit = Calendar.getInstance();
-			txtLimitUtil.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, calendarLimit.getTime()));
+			txtLimitUtil.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, calendarLimit.getTime()));
 		}else{
 			lnrLimitUtil.setVisibility(View.GONE);
 			lnrLimitAfter.setVisibility(View.VISIBLE);
@@ -240,7 +240,7 @@ public class ClScheduleRepeatDialog extends ChiaseDialog{
 			Date repeatEndDate = WelfareUtil.makeDate(repeatModel.repeatEnd);
 			calendarLimit = CCDateUtil.makeCalendar(repeatEndDate);
 			datePickerDialogLimit.getDatePicker().updateDate(calendarLimit.get(Calendar.YEAR), calendarLimit.get(Calendar.MONTH), calendarLimit.get(Calendar.DAY_OF_MONTH));
-			// txtLimitUtil.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, repeatEndDate));
+			// txtLimitUtil.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, repeatEndDate));
 		}else{
 			edtLimitTimes.setText(repeatModel.repeatInterval);
 		}

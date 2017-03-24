@@ -99,7 +99,7 @@ public class RepeatWeeklyDayLinearLayout extends LinearLayout{
 		StringBuilder idBuilder = new StringBuilder();
 		for(RepeatDayModel repeatDayModel : lstRepeatDay){
 			if(repeatDayModel.txtDay.isChecked()){
-				textBuilder.append(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_13, repeatDayModel.dayModel.date) + ", ");
+				textBuilder.append(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_WEEK_DAY, repeatDayModel.dayModel.date) + ", ");
 				idBuilder.append(CCDateUtil.makeCalendar(repeatDayModel.dayModel.date).get(Calendar.DAY_OF_WEEK) + ",");
 			}
 		}
@@ -113,7 +113,7 @@ public class RepeatWeeklyDayLinearLayout extends LinearLayout{
 		Calendar startCalendar = CCDateUtil.makeCalendar(WelfareFormatUtil.makeDate(this.startDate));
 		repeatData = String.valueOf(startCalendar.get(Calendar.DAY_OF_WEEK));
         initDefaultValue(this.repeatData);
-		return CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_13, WelfareFormatUtil.makeDate(this.startDate));
+		return CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_WEEK_DAY, WelfareFormatUtil.makeDate(this.startDate));
 	}
 
 	public void initDefaultValue(String repeatData){

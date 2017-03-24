@@ -1,7 +1,6 @@
 package trente.asia.shiftworking.services.worktime;
 
 import java.util.Date;
-import java.util.List;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,7 +27,6 @@ import trente.asia.shiftworking.common.models.SwApiHolder;
 import trente.asia.shiftworking.common.models.SwUserModel;
 import trente.asia.shiftworking.common.utils.SwUtil;
 import trente.asia.shiftworking.services.worktime.model.NoticeModel;
-import trente.asia.shiftworking.services.worktime.model.ProjectModel;
 import trente.asia.android.util.AndroidUtil;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
@@ -102,8 +100,8 @@ public class WorknoticeFormFragment extends AbstractSwFragment{
 
 		JSONObject jsonObject = new JSONObject();
 		try{
-			Date noticeDate = CCDateUtil.makeDateCustom(noticeModel.noticeDate, WelfareConst.WL_DATE_TIME_1);
-			jsonObject.put("searchDateString", CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, noticeDate));
+			Date noticeDate = CCDateUtil.makeDateCustom(noticeModel.noticeDate, WelfareConst.WF_DATE_TIME);
+			jsonObject.put("searchDateString", CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, noticeDate));
 			jsonObject.put("userId", prefAccUtil.getUserPref().key);
 			jsonObject.put("key", noticeModel.key);
 		}catch(JSONException e){
@@ -127,7 +125,7 @@ public class WorknoticeFormFragment extends AbstractSwFragment{
 	private void loadNoticeInfo(NoticeModel notice){
 		canCheck(notice);
 		txtNoticeUser.setText(notice.userName);
-		txtNoticeDate.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_2, WelfareUtil.makeDate(notice.noticeDate)));
+		txtNoticeDate.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE_HH_MM, WelfareUtil.makeDate(notice.noticeDate)));
 
 		txtNoticeType.setText(SwUtil.getNoticeTypeName(holder.noticeTypes, notice.noticeType));
 		txtTargetDept.setText(notice.deptName);
@@ -181,7 +179,7 @@ public class WorknoticeFormFragment extends AbstractSwFragment{
 				}
 				txtUserName.setText(model.userName);
 				Date checkDate = WelfareUtil.makeDate(model.checkDate);
-				txtCheckTime.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_2, checkDate));
+				txtCheckTime.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE_HH_MM, checkDate));
 				lnrCheckUser.addView(checkerView);
 			}
 		}

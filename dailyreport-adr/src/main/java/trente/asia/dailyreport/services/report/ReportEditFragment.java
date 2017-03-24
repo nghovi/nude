@@ -139,8 +139,8 @@ public class ReportEditFragment extends AbstractDRFragment implements WfSpinner.
 		JSONObject jsonObject = new JSONObject();
 		try{
 			jsonObject.put("targetReportId", reportModel.key);
-			Date reportDate = CCDateUtil.makeDateCustom(reportModel.reportDate, WelfareConst.WL_DATE_TIME_1);
-			jsonObject.put("searchDateString", CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, reportDate));
+			Date reportDate = CCDateUtil.makeDateCustom(reportModel.reportDate, WelfareConst.WF_DATE_TIME);
+			jsonObject.put("searchDateString", CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, reportDate));
 		}catch(JSONException ex){
 			ex.printStackTrace();
 		}
@@ -190,8 +190,8 @@ public class ReportEditFragment extends AbstractDRFragment implements WfSpinner.
 			jsonObject.put("reportCustomTitle", reportModel.reportCustomTitle);
 			jsonObject.put("key", reportModel.key);
 			jsonObject.put("userId", reportUserKey);
-			Date reportDate = CCDateUtil.makeDateCustom(reportModel.reportDate, WelfareConst.WL_DATE_TIME_1);
-			jsonObject.put("reportDate", CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, reportDate));
+			Date reportDate = CCDateUtil.makeDateCustom(reportModel.reportDate, WelfareConst.WF_DATE_TIME);
+			jsonObject.put("reportDate", CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, reportDate));
 			jsonObject.put("reportContent", reportContent);
 			jsonObject.put("reportUserKey", reportUserKey);
 			jsonObject.put("reportStatus", reportStatus);

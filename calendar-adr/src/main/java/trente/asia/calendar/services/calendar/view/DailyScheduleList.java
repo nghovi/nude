@@ -133,7 +133,7 @@ public class DailyScheduleList extends LinearLayout{
 	private List<WorkOffer> getWorkOfferToday(List<WorkOffer> offers){
 		List<WorkOffer> result = new ArrayList<>();
 		for(WorkOffer offer : offers){
-			if(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, selectedDate).equals(offer.startDateString)){
+			if(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, selectedDate).equals(offer.startDateString)){
 				result.add(offer);
 			}
 		}
@@ -217,7 +217,7 @@ public class DailyScheduleList extends LinearLayout{
 	public List<UserModel> getBirthdayUsersToday(List<UserModel> userModels){
 		List<UserModel> result = new ArrayList<>();
 		for(UserModel userModel : userModels){
-			if(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_6, selectedDate).equals(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_6, CCDateUtil.makeDateCustom(userModel.dateBirth, WelfareConst.WL_DATE_TIME_1)))){
+			if(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_MM_DD, selectedDate).equals(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_MM_DD, CCDateUtil.makeDateCustom(userModel.dateBirth, WelfareConst.WF_DATE_TIME)))){
 				result.add(userModel);
 			}
 		}
@@ -297,7 +297,7 @@ public class DailyScheduleList extends LinearLayout{
 
 			@Override
 			public int compare(ScheduleModel o1, ScheduleModel o2){
-				return CCDateUtil.compareDate(CCDateUtil.makeDateCustom(o1.startDate, WelfareConst.WL_DATE_TIME_1), CCDateUtil.makeDateCustom(o2.startDate, WelfareConst.WL_DATE_TIME_1), true);
+				return CCDateUtil.compareDate(CCDateUtil.makeDateCustom(o1.startDate, WelfareConst.WF_DATE_TIME), CCDateUtil.makeDateCustom(o2.startDate, WelfareConst.WF_DATE_TIME), true);
 			}
 		});
 	}

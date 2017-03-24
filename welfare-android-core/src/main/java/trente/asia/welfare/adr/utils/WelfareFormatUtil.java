@@ -69,7 +69,7 @@ public class WelfareFormatUtil{
      * @return
      */
     public static Date makeDate(String data){
-        Date date = CCDateUtil.makeDateCustom(data, WelfareConst.WL_DATE_TIME_7);
+        Date date = CCDateUtil.makeDateCustom(data, WelfareConst.WF_DATE_TIME_DATE);
         return date;
     }
 
@@ -80,7 +80,7 @@ public class WelfareFormatUtil{
      * @return
      */
     public static String formatDate(Date date){
-        String data = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, date);
+        String data = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, date);
         return data;
     }
 

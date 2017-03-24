@@ -65,7 +65,7 @@ public class MonthlyCalendarDayView extends LinearLayout{
 	public void initialization(Date itemDate, DailyScheduleClickListener listener, boolean isWithoutMonth){
 		LayoutParams params = new LayoutParams(0, LayoutParams.MATCH_PARENT, 1);
 		this.setLayoutParams(params);
-		this.day = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, itemDate);
+		this.day = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, itemDate);
 		this.mListener = listener;
 
 		this.setOnClickListener(new OnClickListener() {
@@ -79,7 +79,7 @@ public class MonthlyCalendarDayView extends LinearLayout{
 		});
 
 		txtContent = (TextView)this.findViewById(R.id.txt_id_row_content);
-		txtContent.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_11, itemDate));
+		txtContent.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DD, itemDate));
 		Calendar itemCalendar = CCDateUtil.makeCalendar(itemDate);
 		if(isWithoutMonth){
 			txtContent.setTextColor(Color.GRAY);

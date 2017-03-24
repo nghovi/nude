@@ -52,14 +52,14 @@ public class ActivityListAdapter extends ArrayAdapter<ActivityModel>{
 		}
 		ActivityModel activityModel = getItem(position);
 
-		Date activityDate = CCDateUtil.makeDateCustom(activityModel.activityDate, WelfareConst.WL_DATE_TIME_1);
-		String messageDateFormat = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_2, activityDate);
+		Date activityDate = CCDateUtil.makeDateCustom(activityModel.activityDate, WelfareConst.WF_DATE_TIME);
+		String messageDateFormat = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE_HH_MM, activityDate);
 		viewHolder.txtUsername.setText(activityModel.activityUserName);
 		viewHolder.txtDate.setText(messageDateFormat);
 		viewHolder.txtContent.setText(activityModel.activityMessage);
 
-		Date reportDate = CCDateUtil.makeDateCustom(activityModel.report.reportDate, WelfareConst.WL_DATE_TIME_1);
-		String reportDateFormat = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_6, reportDate);
+		Date reportDate = CCDateUtil.makeDateCustom(activityModel.report.reportDate, WelfareConst.WF_DATE_TIME);
+		String reportDateFormat = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_MM_DD, reportDate);
 		viewHolder.txtDescription.setText(context.getString(R.string.dr_activity_item_desc, reportDateFormat, activityModel.report.reportUser.userName));
 		viewHolder.imgAvatar.setImageResource(R.drawable.wf_profile);
 		if(!CCStringUtil.isEmpty(activityModel.activityUserAvatarPath)){

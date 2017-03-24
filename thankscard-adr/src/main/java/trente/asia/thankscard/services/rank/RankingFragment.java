@@ -121,9 +121,9 @@ public class RankingFragment extends AbstractTCFragment implements DatePickerDia
 	}
 
 	private void loadRankingInfo(){
-		String formatSearchMonth = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_5, searchMonth);
+		String formatSearchMonth = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_YYYY_MM, searchMonth);
 		Calendar searchMonthCalendar = CCDateUtil.makeCalendar(searchMonth);
-		txtDateValue.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_8, searchMonthCalendar.getTime()));
+		txtDateValue.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_YYYY_HYPHEN_MM, searchMonthCalendar.getTime()));
 		JSONObject jsonObject = new JSONObject();
 		try{
 			jsonObject.put("targetMonth", formatSearchMonth);

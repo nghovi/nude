@@ -66,7 +66,7 @@ public class TransitAdapter extends ArrayAdapter<TransitModel>{
 
 		holder.txtLeave.setText(model.transLeave);
 		Date transDate = WelfareUtil.makeDate(model.transDate);
-		holder.txtDate.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, transDate));
+		holder.txtDate.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, transDate));
 		holder.txtArrive.setText(model.transArrive);
 		holder.txtFee.setText(CCFormatUtil.formatAmount(model.fee));
 

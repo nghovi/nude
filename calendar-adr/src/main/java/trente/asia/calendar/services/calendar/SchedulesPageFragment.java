@@ -107,7 +107,7 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 
 	protected void loadScheduleList(){
 		JSONObject jsonObject = prepareJsonObject();
-		requestLoad(WfUrlConst.WF_CL_WEEK_SCHEDULE, jsonObject, true);
+		requestLoad(WfUrlConst.API_CL_SCHEDULE_LIST, jsonObject, true);
 	}
 
 	protected JSONObject prepareJsonObject(){
@@ -121,8 +121,8 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 			jsonObject.put("targetUserList", targetUserList);
 			jsonObject.put("calendars", prefAccUtil.get(ClConst.SELECTED_CALENDAR_STRING));
 
-			jsonObject.put("startDateString", CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, startDate));
-			jsonObject.put("endDateString", CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, endDate));
+			jsonObject.put("startDateString", CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, startDate));
+			jsonObject.put("endDateString", CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, endDate));
 
 		}catch(JSONException e){
 			e.printStackTrace();
@@ -132,7 +132,7 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 
 	@Override
 	protected void successLoad(JSONObject response, String url){
-		if(WfUrlConst.WF_CL_WEEK_SCHEDULE.equals(url)){
+		if(WfUrlConst.API_CL_SCHEDULE_LIST.equals(url)){
 			onLoadSchedulesSuccess(response);
 		}else{
 			super.successLoad(response, url);
@@ -195,6 +195,6 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 	}
 
 	protected String getUpperTitle(){
-		return CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_12, dates.get(0));
+		return CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_MMMM_YY, dates.get(0));
 	}
 }

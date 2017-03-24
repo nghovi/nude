@@ -82,8 +82,8 @@ public class MyPagerAdapter2 extends PagerAdapter{
 		HistoryViewHolder viewHolder = new HistoryViewHolder(view);
 		HistoryModel model = lstHistory.get(position);
 
-		Date postDate = CCDateUtil.makeDateCustom(model.postDate, WelfareConst.WL_DATE_TIME_1);
-		String postDateFormat = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, postDate);
+		Date postDate = CCDateUtil.makeDateCustom(model.postDate, WelfareConst.WF_DATE_TIME);
+		String postDateFormat = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, postDate);
 		viewHolder.txtDate.setText(mContext.getResources().getString(R.string.fragment_tc_detail_date, postDateFormat));
 		viewHolder.txtTo.setText(mContext.getResources().getString(R.string.fragment_tc_detail_to, model.receiverName));
 		viewHolder.txtFrom.setText(mContext.getResources().getString(R.string.fragment_tc_detail_from, model.posterName));

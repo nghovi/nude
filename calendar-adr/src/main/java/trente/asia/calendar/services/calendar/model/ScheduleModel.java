@@ -69,7 +69,7 @@ public class ScheduleModel{
 		Calendar calendar = Calendar.getInstance();
 		Calendar birthdayCalendar = CCDateUtil.makeCalendar(WelfareUtil.makeDate(userModel.dateBirth));
 		Calendar scheduleCalendar = CCDateUtil.makeCalendar(calendar.get(Calendar.YEAR), birthdayCalendar.get(Calendar.MONTH) + 1, birthdayCalendar.get(Calendar.DAY_OF_MONTH));
-		this.startDate = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_1, scheduleCalendar.getTime());
+		this.startDate = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME, scheduleCalendar.getTime());
 		this.endDate = this.startDate;
 		this.isAllDay = true;
 		this.scheduleType = ClConst.SCHEDULE_TYPE_BIRTHDAY;

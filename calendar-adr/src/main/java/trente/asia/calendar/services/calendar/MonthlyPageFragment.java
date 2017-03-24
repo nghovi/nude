@@ -129,9 +129,9 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 
 	@Override
 	protected void initData(){
-		String activeMonth = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_5, selectedDate);
+		String activeMonth = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_YYYY_MM, selectedDate);
 		Date activeDate = WelfareFormatUtil.makeDate(prefAccUtil.get(ClConst.PREF_ACTIVE_DATE));
-		if(activeMonth.equals(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_5, activeDate))){
+		if(activeMonth.equals(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_YYYY_MM, activeDate))){
 			loadScheduleList();
 		}
 	}
@@ -225,7 +225,7 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 
 	@Override
 	public void onDailyScheduleClickListener(String day){
-		Date selectedDate = CCDateUtil.makeDateCustom(day, WelfareConst.WL_DATE_TIME_7);
+		Date selectedDate = CCDateUtil.makeDateCustom(day, WelfareConst.WF_DATE_TIME_DATE);
 		dialogDailySummary.show(selectedDate);
 	}
 

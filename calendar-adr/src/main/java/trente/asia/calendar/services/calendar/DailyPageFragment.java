@@ -69,7 +69,7 @@ public class DailyPageFragment extends SchedulesPageListViewFragment implements 
 
 	@Override
 	public void updateList(String dayStr){
-		selectedDate = CCDateUtil.makeDateCustom(dayStr, WelfareConst.WL_DATE_TIME_7);
+		selectedDate = CCDateUtil.makeDateCustom(dayStr, WelfareConst.WF_DATE_TIME_DATE);
 		updateObservableScrollableView();
 	}
 
@@ -102,7 +102,7 @@ public class DailyPageFragment extends SchedulesPageListViewFragment implements 
 	}
 
 	protected String getUpperTitle(){
-		return CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_12, selectedDate);
+		return CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_MMMM_YY, selectedDate);
 	}
 
 	@Override

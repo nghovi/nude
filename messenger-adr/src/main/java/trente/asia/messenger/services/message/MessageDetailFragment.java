@@ -227,8 +227,8 @@ public class MessageDetailFragment extends AbstractMsgFragment implements View.O
 				}
 			});
 
-			Date messageDate = CCDateUtil.makeDateCustom(messageModel.messageDate, WelfareConst.WL_DATE_TIME_1);
-			String messageDateFormat = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_2, messageDate);
+			Date messageDate = CCDateUtil.makeDateCustom(messageModel.messageDate, WelfareConst.WF_DATE_TIME);
+			String messageDateFormat = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE_HH_MM, messageDate);
 			mTxtUserDetail.setText(messageModel.messageSender.userName);
 			mTxtDetailDate.setText(messageDateFormat);
 			if(!CCStringUtil.isEmpty(messageModel.messageSender.avatarPath)){
@@ -350,8 +350,8 @@ public class MessageDetailFragment extends AbstractMsgFragment implements View.O
 			TextView txtContentCmt = (TextView)commentView.findViewById(R.id.txt_contentCmt);
 			ImageView imgEmotion = (ImageView)commentView.findViewById(R.id.img_id_emotion);
 
-			Date commentDate = CCDateUtil.makeDateCustom(commentModel.commentDate, WelfareConst.WL_DATE_TIME_1);
-			String commentDateFormat = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_2, commentDate);
+			Date commentDate = CCDateUtil.makeDateCustom(commentModel.commentDate, WelfareConst.WF_DATE_TIME);
+			String commentDateFormat = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE_HH_MM, commentDate);
 			txtUserNameCmt.setText(commentModel.commentUser.userName);
 			txtDateCmt.setText(commentDateFormat);
 			if(!CCStringUtil.isEmpty(commentModel.commentUser.avatarPath)){

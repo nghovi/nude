@@ -72,7 +72,7 @@ public class ShiftWorkingAdapter extends ArrayAdapter<WorkHistoryModel>{
 			convertView = mInflater.inflate(R.layout.item_shiftworking_shift_list, null);
 			holder = new BoardViewHolder(convertView, model.itemType);
 
-			holder.txtWorkDate.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_10, CCDateUtil.makeDateCustom(model.workDate, WelfareConst.WL_DATE_TIME_1)));
+			holder.txtWorkDate.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE_WEEKDAY, CCDateUtil.makeDateCustom(model.workDate, WelfareConst.WF_DATE_TIME)));
 			if(model.project != null){
                 holder.txtLocation.setVisibility(View.VISIBLE);
                 holder.txtLocation.setText(model.project.projectLocation);

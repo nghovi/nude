@@ -150,12 +150,12 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 		}else{
 			startDate = calendar.getTime();
 			endDate = calendar.getTime();
-			startTimeStr = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_9, Calendar.getInstance().getTime());
+			startTimeStr = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_HH_MM, Calendar.getInstance().getTime());
 			startTimeStr = getRoundedTime(startTimeStr);
 			endTimeStr = addAnHour(startTimeStr);
 		}
 
-		repeatDialog.setStartDate(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, startDate));
+		repeatDialog.setStartDate(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, startDate));
 		if(ClRepeatUtil.isRepeat(schedule.repeatType)){
 			// set repeat dialog values
 			ScheduleRepeatModel repeatModel = new ScheduleRepeatModel(schedule);
@@ -179,8 +179,8 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 				txtStartDate.setValue(startDateStr);
 				repeatDialog.setStartDate(startDateStr);
 				repeatDialog.initDefaultValue();
-				Date startDate = CCDateUtil.makeDateCustom(startDateStr, WelfareConst.WL_DATE_TIME_7);
-				Date endDate = CCDateUtil.makeDateCustom(txtEndDate.getText().toString(), WelfareConst.WL_DATE_TIME_7);
+				Date startDate = CCDateUtil.makeDateCustom(startDateStr, WelfareConst.WF_DATE_TIME_DATE);
+				Date endDate = CCDateUtil.makeDateCustom(txtEndDate.getText().toString(), WelfareConst.WF_DATE_TIME_DATE);
 				datePickerDialogEnd.getDatePicker().setMinDate(startDate.getTime());
 				// // TODO: 3/21/2017 it's not good initDataPickerDialogEnd everytime
 				Calendar cal = Calendar.getInstance();

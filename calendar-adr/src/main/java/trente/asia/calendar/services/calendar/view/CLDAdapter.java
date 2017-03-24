@@ -171,8 +171,8 @@ public class CLDAdapter extends BaseAdapter{
 
 	public static CalendarDayModel getCalendarDay(Calendar calendar, List<CalendarDayModel> calendarDays){
 		for(CalendarDayModel calendarDay : calendarDays){
-			String day = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, calendarDay.date);
-			if(day.equals(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, calendar.getTime()))){
+			String day = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, calendarDay.date);
+			if(day.equals(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, calendar.getTime()))){
 				return calendarDay;
 			}
 		}
@@ -193,7 +193,7 @@ public class CLDAdapter extends BaseAdapter{
 				c.setTime(cells.get(i).calendarDay.date);
 				int cellRowId = i / 7;
 				if(cellRowId != rowId){
-					removeCell(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, cells.get(i).calendarDay.date));
+					removeCell(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, cells.get(i).calendarDay.date));
 				}
 			}
 		}else{
@@ -205,7 +205,7 @@ public class CLDAdapter extends BaseAdapter{
 	private void removeCell(String date){
 		Iterator<Calendar> it = dayString.iterator();
 		while(it.hasNext()){
-			if(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, it.next().getTime()).equals(date)){
+			if(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, it.next().getTime()).equals(date)){
 				it.remove();
 				break;
 			}
@@ -225,7 +225,7 @@ public class CLDAdapter extends BaseAdapter{
 
 	private int getRowId(String date){
 		for(int i = 0; i < cells.size(); i++){
-			if(date.equals(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, cells.get(i).calendarDay.date))){
+			if(date.equals(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, cells.get(i).calendarDay.date))){
 				return i / 7;
 			}
 		}

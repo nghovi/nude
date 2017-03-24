@@ -107,11 +107,11 @@ public class WorknoticeListFragment extends AbstractSwFragment{
 	}
 
 	private void loadNoticeList(boolean isLoading){
-		monthView.txtMonth.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_10, monthView.workMonth));
+		monthView.txtMonth.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE_WEEKDAY, monthView.workMonth));
 		JSONObject jsonObject = new JSONObject();
 		try{
 			jsonObject.put("userId", prefAccUtil.getUserPref().key);
-			jsonObject.put("searchDateString", CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, monthView.workMonth));
+			jsonObject.put("searchDateString", CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, monthView.workMonth));
 			String deptId = txtOfferDept.getValue();
 			if(!CCStringUtil.isEmpty(deptId) && !CCConst.NONE.equals(deptId)){
 				jsonObject.put("targetDeptId", deptId);

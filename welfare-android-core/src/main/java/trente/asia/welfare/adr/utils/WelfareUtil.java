@@ -176,7 +176,7 @@ public class WelfareUtil{
 	 * @return
 	 */
 	public static Date makeDate(String data){
-		Date date = CCDateUtil.makeDateCustom(data, WelfareConst.WL_DATE_TIME_1);
+		Date date = CCDateUtil.makeDateCustom(data, WelfareConst.WF_DATE_TIME);
 		return date;
 	}
 

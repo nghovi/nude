@@ -193,7 +193,7 @@ public abstract class SchedulesPageListViewFragment extends SchedulesPageFragmen
 	public static CalendarDayModel getCalendarDayModel(Date date, List<CalendarDayModel> calendarDayModels){
 		if(!CCCollectionUtil.isEmpty(calendarDayModels)){
 			for(CalendarDayModel calendarDayModel : calendarDayModels){
-				if(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, calendarDayModel.date).equals(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, date))){
+				if(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, calendarDayModel.date).equals(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, date))){
 					return calendarDayModel;
 				}
 			}

@@ -166,7 +166,7 @@ public class MypageFragment extends AbstractTCFragment{
 	private void requestMypageInfo(){
 		JSONObject param = new JSONObject();
 		try{
-			param.put("targetMonth", CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_5, new Date()));
+			param.put("targetMonth", CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_YYYY_MM, new Date()));
 		}catch(JSONException e){
 			e.printStackTrace();
 		}

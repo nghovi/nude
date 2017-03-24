@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
-import asia.chiase.core.util.CCStringUtil;
 import trente.asia.shiftworking.BuildConfig;
 import trente.asia.shiftworking.R;
 import trente.asia.shiftworking.services.offer.model.ApproveHistory;
@@ -52,7 +51,7 @@ public class ApproveHistoryAdapter extends ArrayAdapter<ApproveHistory>{
 		ApproveHistory history = getItem(position);
 		WfPicassoHelper.loadImageWithDefaultIcon(mContext, BuildConfig.HOST, viewHolder.imgAvatar, history.userAvatarPath, R.drawable.wf_profile);
 		viewHolder.txtUsername.setText(history.userName);
-		viewHolder.txtTime.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, CCDateUtil.makeDate(history.historyDate)));
+		viewHolder.txtTime.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, CCDateUtil.makeDate(history.historyDate)));
 		viewHolder.txtResult.setText(history.historyStatus);
 		viewHolder.txtComment.setText(history.historyComment);
 		return convertView;

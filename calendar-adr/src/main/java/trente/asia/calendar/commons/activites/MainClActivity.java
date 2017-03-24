@@ -44,7 +44,7 @@ public class MainClActivity extends WelfareActivity{
 			String dateStr = mExtras.getString(WelfareConst.NotificationReceived.USER_INFO_NOTI_PARENT_KEY);
 			ScheduleDetailFragment scheduleDetailFragment = new ScheduleDetailFragment();
 			ScheduleModel scheduleModel = new ScheduleModel();
-			scheduleModel.startDate = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_1, CCDateUtil.makeDateCustom(dateStr, WelfareConst.WL_DATE_TIME_7));
+			scheduleModel.startDate = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME, CCDateUtil.makeDateCustom(dateStr, WelfareConst.WF_DATE_TIME_DATE));
 			scheduleModel.endDate = scheduleModel.startDate;
 			scheduleModel.key = key;
 			scheduleDetailFragment.setSchedule(scheduleModel);

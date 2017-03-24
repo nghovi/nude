@@ -131,7 +131,7 @@ public class WorkOfferListFragment extends AbstractSwFragment{
 	}
 
 	private void requestOfferList(){
-		monthView.txtMonth.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_5, monthView.workMonth));
+		monthView.txtMonth.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_YYYY_MM, monthView.workMonth));
 		JSONObject jsonObject = new JSONObject();
 		try{
 			jsonObject.put("targetUserId", prefAccUtil.getUserPref().key);
@@ -146,7 +146,7 @@ public class WorkOfferListFragment extends AbstractSwFragment{
 					jsonObject.put("offerType", new ArrayList<String>(offerTypesMaster.keySet()).get(filters.get(WorkOfferFilterFragment.TYPE)));
 				}
 			}
-			jsonObject.put("searchDateString", CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_5, monthView.workMonth));
+			jsonObject.put("searchDateString", CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_YYYY_MM, monthView.workMonth));
 		}catch(JSONException e){
 			e.printStackTrace();
 		}

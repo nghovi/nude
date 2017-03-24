@@ -36,7 +36,6 @@ import trente.asia.android.view.ChiaseTextView;
 import trente.asia.shiftworking.R;
 import trente.asia.shiftworking.common.activities.CameraPhotoPreviewAccountActivity;
 import trente.asia.shiftworking.common.fragments.AbstractLocationFragment;
-import trente.asia.shiftworking.services.worktime.model.ProjectModel;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.menu.OnMenuButtonsListener;
@@ -179,7 +178,7 @@ public class WorknoticeOfferFragment extends AbstractLocationFragment{
 		JSONObject jsonObject = new JSONObject();
 		try{
 			Date date = new Date();
-			jsonObject.put("searchDateString", CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, date));
+			jsonObject.put("searchDateString", CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, date));
 			jsonObject.put("userId", myself.key);
 		}catch(JSONException e){
 			e.printStackTrace();

@@ -54,7 +54,7 @@ public class TmMemberViewFragment extends AbstractTmFragment {
         JSONObject jsonObject = new JSONObject();
         try {
             Date date = new Date();
-            jsonObject.put("targetDate", CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, date));
+            jsonObject.put("targetDate", CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, date));
         } catch (JSONException e) {
             e.printStackTrace();
         }

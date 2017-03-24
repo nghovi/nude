@@ -60,7 +60,7 @@ public class CommentListAdapter extends ArrayAdapter<ReportComment>{
 			viewHolder = (ViewHolder)convertView.getTag();
 		}
 		CommentModel commentModel = getItem(position);
-		Date activityDate = CCDateUtil.makeDateCustom(commentModel.commentDate, WelfareConst.WL_DATE_TIME_1);
+		Date activityDate = CCDateUtil.makeDateCustom(commentModel.commentDate, WelfareConst.WF_DATE_TIME);
 		String commentDateFormat = CCFormatUtil.formatDateCustom(DRConst.DATE_FORMAT_YYYY_MM_DD_HH_MM, activityDate);
 		viewHolder.txtUsername.setText(commentModel.commentUser.userName);
 		viewHolder.txtDate.setText(context.getString(R.string.dr_at_time, commentDateFormat));

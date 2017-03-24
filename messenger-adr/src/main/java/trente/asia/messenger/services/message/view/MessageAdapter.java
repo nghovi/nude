@@ -192,8 +192,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 			}else{
 				viewHolder.txtContent.setText(contentModel.messageContent);
 			}
-			Date messageDate = CCDateUtil.makeDateCustom(contentModel.messageDate, WelfareConst.WL_DATE_TIME_1);
-			String messageDateFormat = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_2, messageDate);
+			Date messageDate = CCDateUtil.makeDateCustom(contentModel.messageDate, WelfareConst.WF_DATE_TIME);
+			String messageDateFormat = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE_HH_MM, messageDate);
 			viewHolder.txtUserName.setText(contentModel.messageSender.userName);
 			viewHolder.txtMessageDate.setText(messageDateFormat);
 			if(!CCStringUtil.isEmpty(contentModel.messageSender.avatarPath)){
@@ -324,7 +324,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 	private List<MessageContentModel> appendMessageWithDateLabel(MessageContentModel messageModel){
 		List<MessageContentModel> lstMessage = new ArrayList<>();
 		if(!lstKey.contains(messageModel.key)){
-			Date messageDate = CCDateUtil.makeDateCustom(messageModel.messageDate, WelfareConst.WL_DATE_TIME_1);
+			Date messageDate = CCDateUtil.makeDateCustom(messageModel.messageDate, WelfareConst.WF_DATE_TIME);
 			if(CCCollectionUtil.isEmpty(this.lstDate) || !this.lstDate.contains(CCFormatUtil.formatDateCustom(CCFormatUtil.SDF_DATE_SLS, messageDate))){
 				this.lstDate.add(CCFormatUtil.formatDateCustom(CCFormatUtil.SDF_DATE_SLS, messageDate));
 				MessageContentModel dateModel = new MessageContentModel(CCFormatUtil.formatDateCustom(CCFormatUtil.SDF_DATE_SLS, messageDate));

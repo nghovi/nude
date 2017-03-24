@@ -68,12 +68,12 @@ public class SummaryDetailFragment extends AbstractClFragment implements WeeklyS
 		Date endDate = calendar.getTime();
 
 		JSONObject jsonObject = SchedulesPageFragment.buildJsonObjForScheduleListRequest(prefAccUtil, startDate, endDate);
-		requestLoad(WfUrlConst.WF_CL_WEEK_SCHEDULE, jsonObject, true);
+		requestLoad(WfUrlConst.API_CL_SCHEDULE_LIST, jsonObject, true);
 	}
 
 	@Override
 	protected void successLoad(JSONObject response, String url){
-		if(WfUrlConst.WF_CL_WEEK_SCHEDULE.equals(url)){
+		if(WfUrlConst.API_CL_SCHEDULE_LIST.equals(url)){
 			onLoadSchedulesSuccess(response);
 		}else{
 			super.successLoad(response, url);
@@ -83,7 +83,7 @@ public class SummaryDetailFragment extends AbstractClFragment implements WeeklyS
 	@Override
 	protected void initView(){
 		super.initView();
-		initHeader(R.drawable.wf_back_white, CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_12, CCDateUtil.makeDateCustom(summaryModel.month, WelfareConst.WL_DATE_TIME_5)), null);
+		initHeader(R.drawable.wf_back_white, CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_MMMM_YY, CCDateUtil.makeDateCustom(summaryModel.month, WelfareConst.WF_DATE_TIME_YYYY_MM)), null);
 		lnrBlockContainer = (LinearLayout)getView().findViewById(R.id.lnr_block_container);
 		listView = (ListView)getView().findViewById(R.id.lst_fragment_summary_detail);
 		listView.setDivider(null);
@@ -114,7 +114,7 @@ public class SummaryDetailFragment extends AbstractClFragment implements WeeklyS
 
 	public void setSummaryModel(SummaryModel summaryModel){
 		this.summaryModel = summaryModel;
-		Date month = CCDateUtil.makeDateCustom(summaryModel.month, WelfareConst.WL_DATE_TIME_5);
+		Date month = CCDateUtil.makeDateCustom(summaryModel.month, WelfareConst.WF_DATE_TIME_YYYY_MM);
 		Calendar c = CCDateUtil.makeCalendar(month);
 		c.set(Calendar.DAY_OF_MONTH, 1);
 		this.selectedDate = c.getTime();

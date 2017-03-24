@@ -104,7 +104,7 @@ public class TCDetailFragment extends AbstractPagerFragment{
 		JSONObject jsonObject = new JSONObject();
 		try{
 			jsonObject.put("categoryId", currentHistory.categoryId);
-			jsonObject.put("targetMonth", CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_5, Calendar.getInstance().getTime()));
+			jsonObject.put("targetMonth", CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_YYYY_MM, Calendar.getInstance().getTime()));
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
@@ -235,8 +235,8 @@ public class TCDetailFragment extends AbstractPagerFragment{
 	}
 
 	public static void buildTCFrame(Context context, View lnrFrame, final HistoryModel historyModel, boolean isShowContent){
-		Date postDate = CCDateUtil.makeDateCustom(historyModel.postDate, WelfareConst.WL_DATE_TIME_1);
-		String postDateFormat = CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, postDate);
+		Date postDate = CCDateUtil.makeDateCustom(historyModel.postDate, WelfareConst.WF_DATE_TIME);
+		String postDateFormat = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, postDate);
 		String to = historyModel.receiverName;
 		String from = historyModel.posterName;
 		TextView txtDate = (TextView)lnrFrame.findViewById(R.id.txt_tc_detail_date);

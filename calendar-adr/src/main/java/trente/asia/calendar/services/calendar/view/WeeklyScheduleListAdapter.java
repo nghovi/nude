@@ -83,7 +83,7 @@ public class WeeklyScheduleListAdapter extends ArrayAdapter<CalendarDayModel>{
 			viewHolder = (ViewHolder)convertView.getTag();
 		}
 		CalendarDayModel calendarDay = getItem(position);
-		viewHolder.txtDay.setText(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, calendarDay.date));
+		viewHolder.txtDay.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, calendarDay.date));
 		viewHolder.lnrEventList.removeAllViews();
 		buildHolidays(viewHolder, calendarDay);
 		buildScheduleList(viewHolder, calendarDay);
@@ -151,7 +151,7 @@ public class WeeklyScheduleListAdapter extends ArrayAdapter<CalendarDayModel>{
 				if(o1TypeOrder != o2TypeOrder){
 					return o1TypeOrder.compareTo(o2TypeOrder);
 				}
-				return CCDateUtil.compareDate(CCDateUtil.makeDateCustom(o1.startDate, WelfareConst.WL_DATE_TIME_1), CCDateUtil.makeDateCustom(o2.startDate, WelfareConst.WL_DATE_TIME_1), true);
+				return CCDateUtil.compareDate(CCDateUtil.makeDateCustom(o1.startDate, WelfareConst.WF_DATE_TIME), CCDateUtil.makeDateCustom(o2.startDate, WelfareConst.WF_DATE_TIME), true);
 			}
 		});
 	}
@@ -249,7 +249,7 @@ public class WeeklyScheduleListAdapter extends ArrayAdapter<CalendarDayModel>{
 		int position = -1;
 		for(int i = 0; i < this.calendarDayModels.size(); i++){
 			CalendarDayModel calendarDayModel = calendarDayModels.get(i);
-			if(CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, calendarDayModel.date).equals(date)){
+			if(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, calendarDayModel.date).equals(date)){
 				position = i;
 				break;
 			}

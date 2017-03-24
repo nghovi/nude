@@ -289,7 +289,7 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 		try{
 			jsonObject.put("key", activeTransitId);
 			jsonObject.put("userId", myself.key);
-			jsonObject.put("transDate", CCFormatUtil.formatDateCustom(WelfareConst.WL_DATE_TIME_7, new Date()));
+			jsonObject.put("transDate", CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, new Date()));
 			jsonObject.put("attachKeys", attachKeys.toString());
 		}catch(JSONException e){
 			e.printStackTrace();
