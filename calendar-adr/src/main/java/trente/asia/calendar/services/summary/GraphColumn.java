@@ -60,7 +60,7 @@ public class GraphColumn extends LinearLayout{
 				// }else{
 				// param = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT, 1);
 				// }
-				lnrBlock.setWeightSum(1);
+				// lnrBlock.setWeightSum(1);
 				lnrBlock.setGravity(Gravity.CENTER);
 			}
 

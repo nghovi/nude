@@ -18,7 +18,6 @@ import trente.asia.calendar.commons.views.NavigationHeader;
 import trente.asia.calendar.commons.views.PageSharingHolder;
 import trente.asia.calendar.commons.views.UserListLinearLayout;
 import trente.asia.calendar.services.calendar.CalendarListFragment;
-import trente.asia.calendar.services.calendar.SchedulesPageFragment;
 import trente.asia.calendar.services.calendar.listener.OnChangeCalendarListener;
 import trente.asia.welfare.adr.view.WfSlideMenuLayout;
 
@@ -48,7 +47,7 @@ public abstract class PageContainerFragment extends AbstractClFragment{
 
 																			if(isRefresh){
 																				holder.isRefreshUserList = true;
-																				ClPageFragment fragment = (SchedulesPageFragment)mPagerAdapter.getItem(holder.selectedPagePosition);
+																				ClPageFragment fragment = (ClPageFragment)mPagerAdapter.getItem(holder.selectedPagePosition);
 																				fragment.loadData();
 																			}
 																		}
