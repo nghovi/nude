@@ -7,31 +7,7 @@
                   android:layout_weight="1"
                   android:background="@color/wf_login_background_color"
                   android:gravity="center" android:orientation="vertical">
-        <LinearLayout android:id="@+id/lnr_graph_explain"
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:orientation="horizontal"
-                      android:paddingBottom="@dimen/margin_16dp"
-                      android:paddingLeft="@dimen/margin_16dp"
-                      android:paddingRight="@dimen/margin_16dp"
-                      android:paddingTop="@dimen/margin_16dp">
-            <LinearLayout
-                android:id="@+id/lnr_graph_explain_left"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:paddingRight="@dimen/margin_8dp">
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/lnr_graph_explain_right"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:paddingLeft="@dimen/margin_8dp">
-            </LinearLayout>
-        </LinearLayout>
+
 
         <LinearLayout android:layout_width="match_parent"
                       android:layout_height="match_parent"
@@ -43,10 +19,36 @@
                 android:fillViewport="true"
                 android:gravity="bottom"
             >
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
-                    android:layout_marginTop="15px">
+                    android:orientation="vertical">
+
+                    <LinearLayout android:id="@+id/lnr_graph_explain"
+                                  android:layout_width="match_parent"
+                                  android:layout_height="wrap_content"
+                                  android:orientation="horizontal"
+                                  android:paddingBottom="@dimen/margin_16dp"
+                                  android:paddingLeft="@dimen/margin_16dp"
+                                  android:paddingRight="@dimen/margin_16dp"
+                                  android:paddingTop="@dimen/margin_16dp">
+                        <LinearLayout
+                            android:id="@+id/lnr_graph_explain_left"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:paddingRight="@dimen/margin_8dp">
+                        </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/lnr_graph_explain_right"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:paddingLeft="@dimen/margin_8dp">
+                        </LinearLayout>
+                    </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/lnr_graph_container"
@@ -58,7 +60,7 @@
                         android:orientation="horizontal">
                     </LinearLayout>
 
-                </RelativeLayout>
+                </LinearLayout>
 
 
             </ScrollView>

@@ -22,7 +22,7 @@ public class GraphColumn extends LinearLayout{
 
 	private static final int	BLOCK_WIDTH_PX	= WelfareUtil.dpToPx(60);
 	private LinearLayout		lnrBlockContainer;
-	private static double		MIN_HEIGHT_DP	= 20;
+	private static double		MIN_HEIGHT_DP	= 24;
 	private static double		MAX_HEIGHT_DP	= 150;
 	private static int			MAX_WIDTH_PX	= WelfareUtil.dpToPx(60);
 
