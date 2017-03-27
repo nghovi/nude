@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import asia.chiase.core.util.CCStringUtil;
 import trente.asia.calendar.R;
 import trente.asia.welfare.adr.view.WfSlideMenuLayout;
 
@@ -48,6 +49,10 @@ public class NavigationHeader extends LinearLayout{
 		});
 	}
 
+	public void hideRightBtn(){
+		findViewById(R.id.img_navigator_header_right_btn).setVisibility(View.GONE);
+	}
+
 	private OnAddBtnClickedListener	listener;
 
 	public interface OnAddBtnClickedListener{
@@ -78,8 +83,13 @@ public class NavigationHeader extends LinearLayout{
 		// if(txtHeaderSubtitle == null){
 		// txtHeaderSubtitle = (TextView)findViewById(R.id.txt_id_header_title_sub);
 		// }
-
-		txtHeaderTitle.setText(title);
+		if(!CCStringUtil.isEmpty(title)){
+			txtHeaderTitle.setText(title);
+		}else{
+			txtHeaderSubtitle = (TextView)findViewById(R.id.txt_id_header_title_sub);
+			txtHeaderSubtitle.setTextSize(14);
+			txtHeaderTitle.setVisibility(View.GONE);
+		}
 		// txtHeaderSubtitle.setText(subTitle);
 	}
 }

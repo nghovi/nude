@@ -77,4 +77,8 @@ public class PageSharingHolder{
 		}
 		return null;
 	}
+
+	public void hideNavigationRightBtn(){
+		navigationHeader.hideRightBtn();
+	}
 }

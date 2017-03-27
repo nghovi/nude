@@ -41,10 +41,11 @@ public class SummaryPageFragment extends ClPageFragment{
 	private static final int	SQUARE_SIZE_PX	= WelfareUtil.dpToPx(10);
 	private LinearLayout		lnrGraphContainer;
 	private LayoutInflater		inflater;
-	private LinearLayout		lnrGraphExplain;
+	private LinearLayout		lnrGraphExplainLeft;
 	private List<SummaryModel>	summaryModels	= new ArrayList<>();
 	private List<CategoryModel>	categories		= new ArrayList<>();
 	private LinearLayout		lnrGraphFooter;
+	private LinearLayout		lnrGraphExplainRight;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -52,6 +53,18 @@ public class SummaryPageFragment extends ClPageFragment{
 			mRootView = inflater.inflate(R.layout.fragment_summary_page, container, false);
 		}
 		return mRootView;
+	}
+
+	@Override
+	protected void initView(){
+		super.initView();
+		inflater = getLayoutInflater(null);
+		pageSharingHolder.hideNavigationRightBtn();
+		updateHeaderTitles();
+		lnrGraphContainer = (LinearLayout)getView().findViewById(R.id.lnr_graph_container);
+		lnrGraphExplainLeft = (LinearLayout)getView().findViewById(R.id.lnr_graph_explain_left);
+		lnrGraphExplainRight = (LinearLayout)getView().findViewById(R.id.lnr_graph_explain_right);
+		lnrGraphFooter = (LinearLayout)getView().findViewById(R.id.lnr_graph_footer_container);
 	}
 
 	@Override
@@ -81,13 +94,13 @@ public class SummaryPageFragment extends ClPageFragment{
 		for(final SummaryModel summaryModel : summaryModels){
 			GraphColumn graphColumn = (GraphColumn)inflater.inflate(R.layout.graph_column, null);
 			graphColumn.initLayout(summaryModel);
-			graphColumn.setOnClickListener(new View.OnClickListener() {
-
-				@Override
-				public void onClick(View v){
-					gotoSummaryDetail(summaryModel);
-				}
-			});
+			// graphColumn.setOnClickListener(new View.OnClickListener() {
+			//
+			// @Override
+			// public void onClick(View v){
+			// gotoSummaryDetail(summaryModel);
+			// }
+			// });
 			lnrGraphContainer.addView(graphColumn);
 			LinearLayout lnrMonth = buildTxtMonth(summaryModel);
 			lnrGraphFooter.addView(lnrMonth);
@@ -116,11 +129,13 @@ public class SummaryPageFragment extends ClPageFragment{
 	}
 
 	private void buildGraphExplain(){
-		lnrGraphExplain.removeAllViews();
+		lnrGraphExplainLeft.removeAllViews();
+		lnrGraphExplainRight.removeAllViews();
 		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(SQUARE_SIZE_PX, SQUARE_SIZE_PX);
 		params.setMargins(0, 0, MARGIN_LEFT_RIGHT_PX, 0);
 		if(!CCStringUtil.isEmpty(categories)){
-			for(CategoryModel categoryModel : categories){
+			for(int i = 0; i < categories.size(); i++){
+				CategoryModel categoryModel = categories.get(i);
 				LinearLayout square = new LinearLayout(getContext());
 				square.setLayoutParams(params);
 				square.setBackgroundColor(Color.parseColor(WelfareFormatUtil.formatColor(categoryModel.categoryColor)));
@@ -135,8 +150,11 @@ public class SummaryPageFragment extends ClPageFragment{
 				row.addView(square);
 				row.addView(txtCategoryName);
 				row.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-
-				lnrGraphExplain.addView(row);
+				if(i % 2 == 0){
+					lnrGraphExplainLeft.addView(row);
+				}else{
+					lnrGraphExplainRight.addView(row);
+				}
 			}
 		}
 	}
@@ -160,18 +178,9 @@ public class SummaryPageFragment extends ClPageFragment{
 		requestLoad(WfUrlConst.WF_CL_SUMMARY, jsonObject, true);
 	}
 
-	@Override
-	protected void initView(){
-		super.initView();
-		inflater = getLayoutInflater(null);
-		updateHeaderTitles();
-		lnrGraphContainer = (LinearLayout)getView().findViewById(R.id.lnr_graph_container);
-		lnrGraphExplain = (LinearLayout)getView().findViewById(R.id.lnr_graph_explain);
-		lnrGraphFooter = (LinearLayout)getView().findViewById(R.id.lnr_graph_footer_container);
-	}
-
 	protected String getUpperTitle(){
-		return getString(R.string.fragment_summary_title);
+		return "";
+		// return getString(R.string.fragment_summary_title);
 	}
 
 	@Override

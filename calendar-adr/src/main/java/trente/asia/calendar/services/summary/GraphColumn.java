@@ -20,7 +20,7 @@ import trente.asia.welfare.adr.utils.WelfareUtil;
 
 public class GraphColumn extends LinearLayout{
 
-	private static final int	BLOCK_WIDTH_PX	= WelfareUtil.dpToPx(40);
+	private static final int	BLOCK_WIDTH_PX	= WelfareUtil.dpToPx(60);
 	private LinearLayout		lnrBlockContainer;
 	private static double		MIN_HEIGHT_DP	= 20;
 	private static double		MAX_HEIGHT_DP	= 150;
