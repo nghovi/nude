@@ -484,7 +484,6 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 	}
 
 	private void onScheduleUpdateSuccess(String newKey){
-		((ChiaseActivity)activity).isInitData = true;
 		((WelfareActivity)activity).dataMap.put(ClConst.ACTION_SCHEDULE_UPDATE, CCConst.YES);
 		((WelfareActivity)activity).dataMap.put(ClConst.ACTION_SCHEDULE_UPDATE_NEW_KEY, newKey);
 		onClickBackBtn();
@@ -502,4 +501,11 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 	public void setSelectedDate(Date selectedDate){
 		this.selectedDate = selectedDate;
 	}
+
+	@Override
+	protected void onClickBackBtn(){
+		((ChiaseActivity)activity).isInitData = true;
+		super.onClickBackBtn();
+	}
+
 }

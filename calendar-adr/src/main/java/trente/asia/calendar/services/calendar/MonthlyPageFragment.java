@@ -209,6 +209,10 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 
 		// make daily summary dialog
 		makeSummaryDialog();
+		if(refreshWithoutShowingLoading){
+			refreshWithoutShowingLoading = false;
+			dialogDailySummary.show();
+		}
 	}
 
 	@Override
@@ -226,7 +230,8 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 	@Override
 	public void onDailyScheduleClickListener(String day){
 		Date selectedDate = CCDateUtil.makeDateCustom(day, WelfareConst.WF_DATE_TIME_DATE);
-		dialogDailySummary.show(selectedDate);
+		refreshWithoutShowingLoading = true;
+		loadScheduleList();
 	}
 
 	@Override

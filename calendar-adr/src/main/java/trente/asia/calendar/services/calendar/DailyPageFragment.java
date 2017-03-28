@@ -32,6 +32,7 @@ public class DailyPageFragment extends SchedulesPageListViewFragment implements 
 
 	private DailyScheduleList		dailyScheduleList;
 	private boolean					canScroll	= false;
+	private String					dayStr;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -39,6 +40,13 @@ public class DailyPageFragment extends SchedulesPageListViewFragment implements 
 			mRootView = inflater.inflate(R.layout.fragment_daily_page, container, false);
 		}
 		return mRootView;
+	}
+
+	@Override
+	public void onDayClick(String dayStr){
+		this.dayStr = dayStr;
+		refreshWithoutShowingLoading = true;
+		loadScheduleList();
 	}
 
 	@Override
@@ -64,13 +72,17 @@ public class DailyPageFragment extends SchedulesPageListViewFragment implements 
 	@Override
 	protected void updateObservableScrollableView(){
 		canScroll = false;
+		if(refreshWithoutShowingLoading){
+			updateDayViews(dayStr);
+			updateList(dayStr);
+			refreshWithoutShowingLoading = false;
+		}
 		dailyScheduleList.updateFor(selectedDate, lstSchedule, lstHoliday, lstWorkOffer, lstBirthdayUser);
 	}
 
 	@Override
 	public void updateList(String dayStr){
 		selectedDate = CCDateUtil.makeDateCustom(dayStr, WelfareConst.WF_DATE_TIME_DATE);
-		updateObservableScrollableView();
 	}
 
 	@Override

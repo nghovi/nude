@@ -57,6 +57,7 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 	protected List<CategoryModel>	lstCategory;
 	protected List<UserModel>		lstBirthdayUser;
 	protected List<WorkOffer>		lstWorkOffer;
+	protected boolean				refreshWithoutShowingLoading	= false;
 
 	abstract protected List<Date> getAllDate();
 
@@ -107,7 +108,7 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 
 	protected void loadScheduleList(){
 		JSONObject jsonObject = prepareJsonObject();
-		requestLoad(WfUrlConst.API_CL_SCHEDULE_LIST, jsonObject, true);
+		requestLoad(WfUrlConst.API_CL_SCHEDULE_LIST, jsonObject, !refreshWithoutShowingLoading);
 	}
 
 	protected JSONObject prepareJsonObject(){
