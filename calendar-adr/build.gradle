@@ -4,6 +4,12 @@ android {
     compileSdkVersion 24
     buildToolsVersion "25.0.2"
 
+    sourceSets {
+        main {
+            assets.srcDirs = ['assets']
+        }
+    }
+
     defaultConfig {
         applicationId "trente.asia.calendar"
         minSdkVersion 14
