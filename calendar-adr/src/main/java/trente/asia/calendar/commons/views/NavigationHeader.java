@@ -50,7 +50,7 @@ public class NavigationHeader extends LinearLayout{
 	}
 
 	public void hideRightBtn(){
-		findViewById(R.id.img_navigator_header_right_btn).setVisibility(View.GONE);
+		findViewById(R.id.img_navigator_header_right_btn).setVisibility(View.INVISIBLE);
 	}
 
 	private OnAddBtnClickedListener	listener;

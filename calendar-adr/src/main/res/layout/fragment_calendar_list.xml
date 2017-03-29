@@ -7,9 +7,9 @@
     <trente.asia.calendar.commons.views.MyCalendarLinearLayout
         android:id="@+id/lnr_id_my_calendar"
         style="@style/cs_common_match_wrap"
+        android:layout_marginBottom="@dimen/margin_1dp"
         android:background="@drawable/cl_state_common_selectable_row"
         android:orientation="horizontal"
-        android:layout_marginBottom="@dimen/margin_1dp"
         android:padding="@dimen/margin_10dp">
 
         <RelativeLayout
@@ -49,6 +49,8 @@
 
         </LinearLayout>
     </trente.asia.calendar.commons.views.MyCalendarLinearLayout>
+
+    <View style="@style/cs_common_divider"/>
 
     <ListView
         android:id="@+id/lsv_id_calendar"

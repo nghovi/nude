@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.Gravity;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -47,6 +48,7 @@ public class GraphColumn extends LinearLayout{
 	}
 
 	public static void addBlocks(Context context, SummaryModel summaryModel, LinearLayout lnrBlockContainer, boolean isCalculateSize){
+		int lastBlockColor = 0;
 		for(CategoryModel categoryModel : summaryModel.categories){
 			LinearLayout lnrBlock = new LinearLayout(context);
 			int heightPx = getHeightPx(categoryModel);
@@ -65,7 +67,15 @@ public class GraphColumn extends LinearLayout{
 			}
 
 			lnrBlock.setLayoutParams(param);
-			lnrBlock.setBackgroundColor(Color.parseColor(WelfareFormatUtil.formatColor(categoryModel.categoryColor)));
+			int blockColor = Color.parseColor(WelfareFormatUtil.formatColor(categoryModel.categoryColor));
+			lnrBlock.setBackgroundColor(blockColor);
+
+			if(blockColor == lastBlockColor){
+				View divider = new View(context, null, R.style.cs_common_divider);
+				divider.setLayoutParams(new ViewGroup.LayoutParams(BLOCK_WIDTH_PX, 1));
+				lnrBlockContainer.addView(divider);
+			}
+			lastBlockColor = blockColor;
 
 			TextView txtHour = new TextView(context);
 			txtHour.setText(categoryModel.hoursOfSchedule);

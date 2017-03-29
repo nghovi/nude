@@ -33,7 +33,7 @@ public class CsDateUtil{
 
 	public static Date addMonth(Date date, int add){
 		Calendar calendar = CCDateUtil.makeCalendar(date);
-		calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH) + add);
+		calendar.add(Calendar.MONTH, add);
 		return calendar.getTime();
 	}
 
@@ -170,17 +170,17 @@ public class CsDateUtil{
 		}
 	}
 
-    public static int diffDate(Date date1, Date date2) {
-        int dayDiff = (int)((date1.getTime() - date2.getTime()) / 86400000L);
-        return dayDiff;
-    }
+	public static int diffDate(Date date1, Date date2){
+		int dayDiff = (int)((date1.getTime() - date2.getTime()) / 86400000L);
+		return dayDiff;
+	}
 
-    public static boolean isDiffMonth(Date date1, Date date2) {
-        if(date1 == null || date2 == null){
-            return false;
-        }
-        Calendar calendar1 = CCDateUtil.makeCalendar(date1);
-        Calendar calendar2 = CCDateUtil.makeCalendar(date2);
-        return !(calendar1.get(Calendar.MONTH) == calendar2.get(Calendar.MONTH));
-    }
+	public static boolean isDiffMonth(Date date1, Date date2){
+		if(date1 == null || date2 == null){
+			return false;
+		}
+		Calendar calendar1 = CCDateUtil.makeCalendar(date1);
+		Calendar calendar2 = CCDateUtil.makeCalendar(date2);
+		return !(calendar1.get(Calendar.MONTH) == calendar2.get(Calendar.MONTH));
+	}
 }
