@@ -60,6 +60,7 @@ public class WeeklyPageFragment extends SchedulesPageListViewFragment implements
 		List<CalendarDayModel> displayedModels = getDisplayedDayForList();
 		adapter = new WeeklyScheduleListAdapter(activity, R.layout.item_calendar_day, displayedModels, lstHoliday, this);
 		observableListView.setAdapter(adapter);
+		updateDayViews(dayStr);
 	}
 
 	@Override

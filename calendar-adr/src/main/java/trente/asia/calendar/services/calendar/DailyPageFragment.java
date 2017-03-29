@@ -72,10 +72,10 @@ public class DailyPageFragment extends SchedulesPageListViewFragment implements 
 	protected void updateObservableScrollableView(){
 		canScroll = false;
 		if(refreshWithoutShowingLoading){
-			updateDayViews(dayStr);
 			updateList(dayStr);
 			refreshWithoutShowingLoading = false;
 		}
+		updateDayViews(dayStr);
 		dailyScheduleList.updateFor(selectedDate, lstSchedule, lstHoliday, lstWorkOffer, lstBirthdayUser);
 	}
 

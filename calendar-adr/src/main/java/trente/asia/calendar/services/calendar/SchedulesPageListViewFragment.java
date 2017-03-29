@@ -212,15 +212,16 @@ public abstract class SchedulesPageListViewFragment extends SchedulesPageFragmen
 	}
 
 	@Override
-	public void onDayClick(String dayStr){
-		updateDayViews(dayStr);
-		updateList(dayStr);
+	public void onDayClick(String dayString){
+		dayStr = dayString;
+		updateDayViews(dayString);
+		updateList(dayString);
 	}
 
-	protected void updateDayViews(String dayStr){
+	protected void updateDayViews(String dayString){
 		pageSharingHolder.cancelPreviousClickedDayView();
 		for(CalendarDayView view : calendarDayViews){
-			if(dayStr.equals(view.dayStr)){
+			if(view.dayStr.equals(dayString)){
 				view.setSelected(true);
 				pageSharingHolder.setClickedDayView(view);
 				return;

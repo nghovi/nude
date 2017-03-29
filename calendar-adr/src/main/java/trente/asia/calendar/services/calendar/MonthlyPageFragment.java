@@ -230,9 +230,11 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 
 	@Override
 	public void onDailyScheduleClickListener(String day){
-		dayStr = day;
-		refreshWithoutShowingLoading = true;
-		loadScheduleList();
+		if(!dialogDailySummary.isShowing()){
+			dayStr = day;
+			refreshWithoutShowingLoading = true;
+			loadScheduleList();
+		}
 	}
 
 	@Override
