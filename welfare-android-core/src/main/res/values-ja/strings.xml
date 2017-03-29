@@ -79,4 +79,5 @@
     <string name="wf_contact_us_service_title">サービス名</string>
     <string name="wf_contact_us_detail_content_title">お問い合わせ内容詳細</string>
     <string name="wf_contact_us_select_item">選択する</string>
+    <string name="system_error_msg">システムエラー。</string>
 </resources>

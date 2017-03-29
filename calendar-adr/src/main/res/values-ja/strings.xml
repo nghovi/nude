@@ -69,7 +69,6 @@
     <string name="FM_CL_002">[%1$s] %2$s が　%3$s　スケジュールを編集しました</string>
     <string name="FM_CL_003">今日、スケジュールが1つあります。</string>
     <string name="FM_CL_004">今日、スケジュールが10あります。</string>
-    <string name="FM_CL_005">今日、スケジュールが1つあります。</string>
 
     <string name="cl_schedule_holiday_name">[H]%1$s</string>
     <string name="cl_schedule_birth_day_name">[B]%1$s</string>
