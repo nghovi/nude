@@ -32,7 +32,6 @@ public class DailyPageFragment extends SchedulesPageListViewFragment implements 
 
 	private DailyScheduleList		dailyScheduleList;
 	private boolean					canScroll	= false;
-	private String					dayStr;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){

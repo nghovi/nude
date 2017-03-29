@@ -58,6 +58,7 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 	protected List<UserModel>		lstBirthdayUser;
 	protected List<WorkOffer>		lstWorkOffer;
 	protected boolean				refreshWithoutShowingLoading	= false;
+	protected String				dayStr;
 
 	abstract protected List<Date> getAllDate();
 
