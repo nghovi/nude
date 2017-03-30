@@ -2,12 +2,17 @@
     <string name="app_name">Welfare-androi-core</string>
     <string name="main_activity_back_btn_guide">Click lại lần nữa đề thoát</string>
 
+    <!--Date time format-->
+    <string name="wf_date_time_format1">yyyy.MM.dd HH:mm</string>
+
     <string name="wf_common_board_type_dept">Phòng ban(%1$s)</string>
     <string name="wf_common_board_type_group">Nhóm(%1$s)</string>
     <string name="wf_common_board_type_private">Riêng tư</string>
 
     <string name="wf_common_invalid_permission">Bạn chưa có quyền đăng nhập</string>
 
+    <string name="wlf_account_name">Account</string>
+    <string name="wlf_pass_word">Password</string>
     <string name="wlf_sign_in">Đăng nhập</string>
     <string name="wlf_sign_out">Đăng xuất</string>
     <string name="wlf_update_info">Cập nhật</string>
@@ -32,6 +37,8 @@
     <string name="wf_new_password">Mật khẩu mới</string>
     <string name="wf_confirm_password">Xác nhận mật khẩu</string>
 
+    <string name="wf_email">Email</string>
+    <string name="wf_name">Name</string>
     <string name="wf_select_attach_file">Chọn và đính kèm tệp</string>
     <string name="wf_file">Tệp tin</string>
     <string name="wf_camera">Máy ảnh</string>
@@ -65,8 +72,11 @@
     <string name="wf_shift_working_service_name">ShiftWorking</string>
     <string name="wf_fukuri_service_name">FUKURI</string>
 
+    <string name="wf_contact_us_problem_item">Bug</string>
+    <string name="wf_contact_us_improve_item">Improve</string>
     <string name="wf_contact_us_content_title">Nội dung</string>
     <string name="wf_contact_us_service_title">Tên dịch vụ</string>
     <string name="wf_contact_us_detail_content_title">Nội dung chi tiết</string>
     <string name="wf_contact_us_select_item">Chọn</string>
+    <string name="system_error_msg">System error. Please inform to us</string>
 </resources>
