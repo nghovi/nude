@@ -15,23 +15,24 @@ import android.widget.Scroller;
 public class WfSlideMenuLayout extends LinearLayout{
 
 	// Duration of sliding animation, in miliseconds
-	private static final int	SLIDING_DURATION	= 500;
+	private static final int				SLIDING_DURATION	= 500;
 
 	// Query Scroller every 16 miliseconds
-	private static final int	QUERY_INTERVAL		= 16;
+	private static final int				QUERY_INTERVAL		= 16;
 
 	// MainLayout width
-	private int					mMainLayoutWidth;
+	private int								mMainLayoutWidth;
 
 	// Sliding mMenu
-	private View				mMenu;
+	private View							mMenu;
 
 	// Main mContent
-	private View				mContent;
+	private View							mContent;
 
 	// mMenu does not occupy some right space
 	// This should be updated correctly later in onMeasure
-	private static int			menuRightMargin		= 150;
+	private static int						menuRightMargin		= 150;
+	private LinearLayoutOnInterceptTouch	outsideLayout;
 
 	// The state of mMenu
 	private enum MenuState{
@@ -73,6 +74,10 @@ public class WfSlideMenuLayout extends LinearLayout{
 
 	public WfSlideMenuLayout(Context context, AttributeSet attrs){
 		super(context, attrs);
+	}
+
+	public void setOutsideLayout(LinearLayoutOnInterceptTouch v){
+		this.outsideLayout = v;
 	}
 
 	public WfSlideMenuLayout(Context context){
@@ -158,10 +163,21 @@ public class WfSlideMenuLayout extends LinearLayout{
 			currentMenuState = MenuState.SHOWING;
 			mMenu.setVisibility(View.VISIBLE);
 			menuScroller.startScroll(0, 0, mMenu.getLayoutParams().width, 0, SLIDING_DURATION);
+			outsideLayout.isIntercept = true;
+			outsideLayout.setOnTouchListener(new OnTouchListener() {
+
+				@Override
+				public boolean onTouch(View v, MotionEvent event){
+					toggleMenu();
+					return true;
+				}
+			});
 			break;
 		case SHOWN:
 			currentMenuState = MenuState.HIDING;
 			menuScroller.startScroll(contentXOffset, 0, -contentXOffset, 0, SLIDING_DURATION);
+			outsideLayout.setOnTouchListener(null);
+			outsideLayout.isIntercept = false;
 			break;
 		default:
 			break;

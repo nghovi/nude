@@ -23,7 +23,7 @@
                 style="@style/cs_common_wrap"
                 android:layout_marginTop="@dimen/margin_5dp"
                 android:alpha="0.5"
-                android:src="@drawable/ol_footer_monthly"/>
+                android:src="@drawable/cl_footer_monthly"/>
 
             <trente.asia.android.view.ChiaseTextView
                 style="@style/cl_text_footer_item"
@@ -47,7 +47,7 @@
                 style="@style/cs_common_wrap"
                 android:layout_marginTop="@dimen/margin_5dp"
                 android:alpha="0.5"
-                android:src="@drawable/ol_footer_weekly"/>
+                android:src="@drawable/cl_footer_weekly"/>
 
             <trente.asia.android.view.ChiaseTextView
                 style="@style/cl_text_footer_item"
@@ -71,7 +71,7 @@
                 style="@style/cs_common_wrap"
                 android:layout_marginTop="@dimen/margin_5dp"
                 android:alpha="0.5"
-                android:src="@drawable/ol_footer_daily"/>
+                android:src="@drawable/cl_footer_daily"/>
 
             <trente.asia.android.view.ChiaseTextView
                 style="@style/cl_text_footer_item"
@@ -95,7 +95,7 @@
                 style="@style/cs_common_wrap"
                 android:layout_marginTop="@dimen/margin_5dp"
                 android:alpha="0.5"
-                android:src="@drawable/ol_footer_summary"/>
+                android:src="@drawable/cl_footer_summary"/>
 
             <trente.asia.android.view.ChiaseTextView
                 style="@style/cl_text_footer_item"
@@ -119,7 +119,7 @@
                 style="@style/cs_common_wrap"
                 android:layout_marginTop="@dimen/margin_5dp"
                 android:alpha="0.5"
-                android:src="@drawable/ol_footer_setting"/>
+                android:src="@drawable/cl_footer_setting"/>
 
             <trente.asia.android.view.ChiaseTextView
                 style="@style/cl_text_footer_item"

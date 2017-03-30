@@ -19,6 +19,7 @@ import trente.asia.calendar.commons.views.PageSharingHolder;
 import trente.asia.calendar.commons.views.UserListLinearLayout;
 import trente.asia.calendar.services.calendar.CalendarListFragment;
 import trente.asia.calendar.services.calendar.listener.OnChangeCalendarListener;
+import trente.asia.welfare.adr.view.LinearLayoutOnInterceptTouch;
 import trente.asia.welfare.adr.view.WfSlideMenuLayout;
 
 /**
@@ -71,6 +72,7 @@ public abstract class PageContainerFragment extends AbstractClFragment{
 			lnrUserList.setVisibility(View.GONE);
 		}
 		mSlideMenuLayout = (WfSlideMenuLayout)getView().findViewById(R.id.drawer_layout);
+		mSlideMenuLayout.setOutsideLayout((LinearLayoutOnInterceptTouch) getView().findViewById(R.id.main_layout));
 		navigationHeader.slideMenu = mSlideMenuLayout;
 
 		holder = new PageSharingHolder(navigationHeader, lnrUserList, this);

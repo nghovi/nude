@@ -45,13 +45,13 @@
 
                 <ImageView
                     style="@style/cs_common_wrap"
-                    android:src="@drawable/ol_icon_duplicate"
+                    android:src="@drawable/cl_icon_duplicate"
                     android:visibility="gone"/>
 
                 <ImageView
                     style="@style/cs_common_wrap"
                     android:layout_marginLeft="@dimen/margin_10dp"
-                    android:src="@drawable/ol_icon_repeat"/>
+                    android:src="@drawable/cl_icon_repeat"/>
 
             </LinearLayout>
         </LinearLayout>

@@ -276,7 +276,7 @@ public abstract class AccountInfoFragment extends WelfareFragment{
 	protected void successUpload(JSONObject response, String url){
 		if(WfUrlConst.WF_ACC_INFO_UPDATE_AVATAR.equals(url)){
 			// super.onBackListener();
-			Toast.makeText(activity, "Change Avatar Successful !", Toast.LENGTH_LONG).show();
+			Toast.makeText(activity, getString(R.string.change_avatar_success), Toast.LENGTH_LONG).show();
 		}else{
 			super.successUpload(response, url);
 		}
@@ -286,10 +286,10 @@ public abstract class AccountInfoFragment extends WelfareFragment{
 	protected void successUpdate(JSONObject response, String url){
 		if(WfUrlConst.WF_ACC_INFO_UPDATEINFO.equals(url)){
 			// super.onBackListener();
-			Toast.makeText(activity, "Change Password Successful !", Toast.LENGTH_LONG).show();
+			Toast.makeText(activity, getString(R.string.wf_password_change_success), Toast.LENGTH_LONG).show();
 		}else if(WfUrlConst.WF_ACC_INFO_SETTING.equals(url)){
 			// super.onBackListener();
-			Toast.makeText(activity, "Change Push Notification Successful !", Toast.LENGTH_LONG).show();
+			Toast.makeText(activity, getString(R.string.wf_change_notice_success), Toast.LENGTH_LONG).show();
 		}else{
 			super.successUpload(response, url);
 		}
@@ -319,7 +319,7 @@ public abstract class AccountInfoFragment extends WelfareFragment{
 		case WelfareConst.RequestCode.PHOTO_CROP:
 			try{
 				File imageFile = new File(mImageUri.getPath());
-                SettingModel settingModel = prefAccUtil.getSetting();
+				SettingModel settingModel = prefAccUtil.getSetting();
 				if(CCNumberUtil.toLong(settingModel.WF_MAX_FILE_SIZE).compareTo(imageFile.length()) < 0){
 					alertDialog.setMessage(getString(R.string.wf_invalid_photo_over));
 					alertDialog.show();

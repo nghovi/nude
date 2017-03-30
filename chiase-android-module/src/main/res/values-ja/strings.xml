@@ -30,7 +30,7 @@
 
     <string name="chiase_common_none">なし</string>
     <string name="chiase_common_all">すべて</string>
-    <string name="chiase_common_please_entry">ご入力ください</string>
+    <string name="chiase_common_please_entry">入力してください</string>
     <string name="chiase_common_please_select">ご選択ください</string>
 
     <string name="chiase_common_today">今日</string>

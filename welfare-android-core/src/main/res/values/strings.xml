@@ -9,7 +9,8 @@
     <string name="wf_common_board_type_group">Group (%1$s)</string>
     <string name="wf_common_board_type_private">Private</string>
 
-    <string name="wf_common_invalid_permission">You don\'t have permission</string>
+    <string name="wf_common_invalid_permission">You don\'t have permission
+    </string>
 
     <string name="wlf_account_name">Account Name</string>
     <string name="wlf_pass_word">Password</string>
@@ -51,8 +52,12 @@
     <string name="wf_setting_contact_us">Contact us</string>
     <string name="wf_pricacy_policy">Privacy Policy</string>
     <string name="wf_term_service">Term of Service</string>
-    <string name="wf_pricacy_policy2"><u>Privacy Policy</u></string>
-    <string name="wf_term_service2"><u>Term of Service</u></string>
+    <string name="wf_pricacy_policy2">
+        <u>Privacy Policy</u>
+    </string>
+    <string name="wf_term_service2">
+        <u>Term of Service</u>
+    </string>
     <string name="wf_select">Select</string>
     <string name="wf_about_version">Version %1$s</string>
 
@@ -62,7 +67,9 @@
     <string name="wf_upgrade_version_msg">Are you open store?</string>
 
     <string name="wf_detail_photo_title">Photo detail</string>
-    <string name="wf_invalid_photo_over">File size is too big. Max size is 50Mb</string>
+    <string name="wf_invalid_photo_over">File size is too big. Max size is
+        50Mb
+    </string>
     <string name="wf_invalid_photo_over2">File size is too big</string>
 
     <string name="wf_setting_contact_us_title">Contact us</string>
@@ -79,4 +86,10 @@
     <string name="wf_contact_us_detail_content_title">Detail content</string>
     <string name="wf_contact_us_select_item">Select</string>
     <string name="system_error_msg">System error. Please inform to us</string>
+    <string name="wf_change_notice_success">Change Push Notification
+        Successful!
+    </string>
+    <string name="change_avatar_success">Change Avatar Successful !</string>
+    <string name="wf_password_change_success">Change Password Successful !
+    </string>
 </resources>

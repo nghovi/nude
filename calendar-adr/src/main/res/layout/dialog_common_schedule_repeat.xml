@@ -108,7 +108,7 @@
             android:id="@+id/txt_id_done"
             style="@style/wl_common_text"
             android:gravity="center"
-            android:text="Done"/>
+            android:text="@string/wf_done"/>
     </LinearLayout>
 
 </LinearLayout>

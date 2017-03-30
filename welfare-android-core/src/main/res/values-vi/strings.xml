@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Welfare-androi-core</string>
-    <string name="main_activity_back_btn_guide">Click lại lần nữa đề thoát</string>
+    <string name="main_activity_back_btn_guide">Click lại lần nữa đề thoát
+    </string>
 
     <!--Date time format-->
     <string name="wf_date_time_format1">yyyy.MM.dd HH:mm</string>
@@ -9,7 +10,8 @@
     <string name="wf_common_board_type_group">Nhóm(%1$s)</string>
     <string name="wf_common_board_type_private">Riêng tư</string>
 
-    <string name="wf_common_invalid_permission">Bạn chưa có quyền đăng nhập</string>
+    <string name="wf_common_invalid_permission">Bạn chưa có quyền đăng nhập
+    </string>
 
     <string name="wlf_account_name">Account</string>
     <string name="wlf_pass_word">Password</string>
@@ -51,8 +53,12 @@
     <string name="wf_setting_contact_us">Liên hệ</string>
     <string name="wf_pricacy_policy">Chính sách riêng tư</string>
     <string name="wf_term_service">Quy ước sử dụng</string>
-    <string name="wf_pricacy_policy2"><u>Chính sách riêng tư</u></string>
-    <string name="wf_term_service2"><u>Quy ước sử dụng</u></string>
+    <string name="wf_pricacy_policy2">
+        <u>Chính sách riêng tư</u>
+    </string>
+    <string name="wf_term_service2">
+        <u>Quy ước sử dụng</u>
+    </string>
     <string name="wf_select">Lựa chọn</string>
     <string name="wf_about_version">Phiên bản %1$s</string>
 
@@ -62,7 +68,9 @@
     <string name="wf_upgrade_version_msg">Bạn muốn mở Store?</string>
 
     <string name="wf_detail_photo_title">Chi tiết ảnh</string>
-    <string name="wf_invalid_photo_over">Kích cỡ tệp quá lớn. Kích cỡ tối đa là 50Mb</string>
+    <string name="wf_invalid_photo_over">Kích cỡ tệp quá lớn. Kích cỡ tối đa là
+        50Mb
+    </string>
     <string name="wf_invalid_photo_over2">Kích cỡ tệp quá lớn</string>
 
     <string name="wf_setting_contact_us_title">Liên hệ</string>
@@ -79,4 +87,9 @@
     <string name="wf_contact_us_detail_content_title">Nội dung chi tiết</string>
     <string name="wf_contact_us_select_item">Chọn</string>
     <string name="system_error_msg">System error. Please inform to us</string>
+    <string name="wf_change_notice_success">Cập nhật cài đặt thông báo thành
+        công
+    </string>
+    <string name="change_avatar_success">Cập nhật avatar thành công</string>
+    <string name="wf_password_change_success">Cập nhật password thành công</string>
 </resources>

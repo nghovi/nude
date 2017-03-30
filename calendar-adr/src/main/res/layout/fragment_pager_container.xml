@@ -8,7 +8,8 @@
         style="@style/cs_common_match"
         android:orientation="vertical"/>
 
-    <LinearLayout
+    <trente.asia.welfare.adr.view.LinearLayoutOnInterceptTouch
+        android:id="@+id/main_layout"
         style="@style/wf_common_match">
 
         <include layout="@layout/view_navigation_header"/>
@@ -28,6 +29,6 @@
             android:layout_weight="1"/>
 
         <include layout="@layout/view_common_footer"/>
-    </LinearLayout>
+    </trente.asia.welfare.adr.view.LinearLayoutOnInterceptTouch>
 
 </trente.asia.welfare.adr.view.WfSlideMenuLayout>
