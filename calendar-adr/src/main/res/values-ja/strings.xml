@@ -4,22 +4,22 @@
     <string name="cl_setting_title">設定</string>
     <string name="cl_about_app_version">バージョン %1$s</string>
 
-    <string name="cl_footer_monthly">月間</string>
-    <string name="cl_footer_weekly">週間</string>
+    <string name="cl_footer_monthly">毎月</string>
+    <string name="cl_footer_weekly">毎週</string>
     <string name="cl_footer_daily">日間</string>
     <string name="cl_footer_summary">サマリー</string>
     <string name="cl_footer_setting">設定</string>
 
-
+    スケジュール情報 -> スケジュール詳細
     <string name="cl_common_calendar_sub_title">%1$s カレンダー</string>
     <string name="cl_common_validate_no_calendar_msg">カレンダーを選んでください</string>
 
-    <string name="fragment_schedule_form_title">新しいスケジュール</string>
+    <string name="fragment_schedule_form_title">新規スケジュール</string>
     <string name="fragment_schedule_edit_title">スケジュール編集</string>
     <string name="fragment_schedule_detail_title">スケジュール詳細</string>
     <string name="cl_schedule_form_all_day">一日中</string>
     <string name="cl_schedule_form_repeat">繰り返し</string>
-    <string name="cl_schedule_form_schedule_info_title">スケジュール情報</string>
+    <string name="cl_schedule_form_schedule_info_title">スケジュール詳細</string>
     <string name="cl_schedule_form_item_calendar">カレンダー</string>
     <string name="cl_schedule_form_item_name">スケジュール名</string>
     <string name="cl_schedule_form_item_meeting_room">会議室</string>
@@ -30,28 +30,29 @@
 
     <string name="cl_schedule_edit_mode_title">編集モード</string>
     <string name="cl_schedule_delete_mode_title">削除モード</string>
-    <string name="cl_schedule_edit_mode_only_this">この日だけ</string>
-    <string name="cl_schedule_edit_mode_only_future">これから</string>
+    <string name="cl_schedule_edit_mode_only_this">今回のみ</string>
+    <string name="cl_schedule_edit_mode_only_future">今回以降</string>
     <string name="cl_schedule_edit_mode_all">全部</string>
 
     <string name="cl_filter_user_dialog_title">ユーザーフィルター</string>
     <string name="cl_join_user_dialog_title">参加ユーザー</string>
-    <string name="cl_schedule_repeat_dialog_title">繰り返すスケジュール</string>
+    <string name="cl_schedule_repeat_dialog_title">繰り返しスケジュール</string>
     <string name="cl_schedule_repeat_dialog_times">回</string>
 
-    <string name="cl_schedule_repeat_type_weekly">週間</string>
-    <string name="cl_schedule_repeat_type_monthly">月間</string>
-    <string name="cl_schedule_repeat_type_yearly">年間</string>
 
-    <string name="cl_schedule_repeat_weekly_message">週間的に繰り返す %1$s</string>
-    <string name="cl_schedule_repeat_monthly_message">月間的に繰り返す</string>
-    <string name="cl_schedule_repeat_yearly_message">年間的に繰り返す</string>
+    <string name="cl_schedule_repeat_type_weekly">毎週</string>
+    <string name="cl_schedule_repeat_type_monthly">毎月</string>
+    <string name="cl_schedule_repeat_type_yearly">毎年</string>
+
+    <string name="cl_schedule_repeat_weekly_message">毎週的に繰り返し%1$s</string>
+    <string name="cl_schedule_repeat_monthly_message">毎月的に繰り返し</string>
+    <string name="cl_schedule_repeat_yearly_message">毎年的に繰り返し</string>
     <string name="cl_schedule_repeat_until_message">, まで %1$s.</string>
     <string name="cl_schedule_repeat_for_message">, あと %1$s 回。</string>
     <string name="cl_schedule_repeat_for_one_message">, あと 1 回。.</string>
 
-    <string name="cl_schedule_repeat_limit_forever">永遠</string>
-    <string name="cl_schedule_repeat_limit_until">まで</string>
+    <string name="cl_schedule_repeat_limit_forever">終了日を設定しない</string>
+    <string name="cl_schedule_repeat_limit_until">終了日</string>
 
     <string name="daily_page_all_day">一日中</string>
     <string name="daily_page_morning">午前</string>
@@ -65,10 +66,10 @@
     <!--Notifications-->
     <string name="fragment_summary_title">要約</string>
     <string name="coming_soon">近日公開</string>
-    <string name="FM_CL_001">[%1$s] %2$s が　%3$s　スケジュールを作りました</string>
-    <string name="FM_CL_002">[%1$s] %2$s が　%3$s　スケジュールを編集しました</string>
-    <string name="FM_CL_003">今日、スケジュールが1つあります。</string>
-    <string name="FM_CL_004">今日、スケジュールが10あります。</string>
+    <string name="FM_CL_001">%1$s %2$s さんが %3$sスケジュールを作成しました</string>
+    <string name="FM_CL_002">%1$s %2$s さんが %3$sスケジュールを編集しました</string>
+    <string name="FM_CL_003">今日の予定は%1$s件です</string>
+    <string name="FM_CL_004">今日の予定は1件です</string>
     <string name="FM_CL_005">今日、スケジュールが1つあります。</string>
 
     <string name="cl_schedule_holiday_name">[H]%1$s</string>

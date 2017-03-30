@@ -212,7 +212,7 @@ public class WeeklyScheduleListAdapter extends ArrayAdapter<CalendarDayModel>{
 		}
 
 		ImageView imgRepeat = (ImageView)lnrSchedulesContainer.findViewById(R.id.img_item_schedule_repeat);
-		if(!CCStringUtil.isEmpty(schedule.repeatType) && !ClConst.SCHEDULE_REPEAT_TYPE_NONE.equals(schedule.repeatType)){
+		if(ScheduleModel.isRepeat(schedule)){
 			imgRepeat.setVisibility(View.VISIBLE);
 		}else{
 			imgRepeat.setVisibility(View.GONE);

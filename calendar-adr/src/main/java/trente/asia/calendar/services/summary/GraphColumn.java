@@ -24,7 +24,7 @@ public class GraphColumn extends LinearLayout{
 	private static final int	BLOCK_WIDTH_PX	= WelfareUtil.dpToPx(60);
 	private LinearLayout		lnrBlockContainer;
 	private static double		MIN_HEIGHT_DP	= 24;
-	private static double		MAX_HEIGHT_DP	= 150;
+	private static double		MAX_HEIGHT_DP	= 300;
 	private static int			MAX_WIDTH_PX	= WelfareUtil.dpToPx(60);
 
 	public GraphColumn(Context context){
@@ -78,7 +78,7 @@ public class GraphColumn extends LinearLayout{
 			lastBlockColor = blockColor;
 
 			TextView txtHour = new TextView(context);
-			txtHour.setText(categoryModel.hoursOfSchedule);
+			txtHour.setText(categoryModel.hoursOfSchedule + "h");
 			txtHour.setTextColor(Color.WHITE);
 			lnrBlock.addView(txtHour);
 			lnrBlockContainer.addView(lnrBlock);

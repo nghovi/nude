@@ -194,11 +194,6 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 					if(activeCalendarDay != null){
 						activeCalendarDay.addSchedule(model);
 					}
-					// if(!CCCollectionUtil.isEmpty(lstActiveCalendarDay)){
-					// for(MonthlyCalendarDayView calendarDayView : lstActiveCalendarDay){
-					// calendarDayView.addSchedule(model, lstCategory);
-					// }
-					// }
 				}
 			}
 		}

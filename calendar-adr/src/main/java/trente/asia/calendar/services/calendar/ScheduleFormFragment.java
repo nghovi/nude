@@ -105,8 +105,6 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 		getView().findViewById(R.id.lnr_id_repeat).setOnClickListener(this);
 		getView().findViewById(R.id.lnr_id_join_user_list).setOnClickListener(this);
 
-		txtStartDate.setOnClickListener(this);
-		txtEndDate.setOnClickListener(this);
 		txtStartTime.setOnClickListener(this);
 		txtEndTime.setOnClickListener(this);
 
@@ -313,6 +311,11 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 			Button btnDelete = (Button)getView().findViewById(R.id.btn_id_delete);
 			btnDelete.setVisibility(View.VISIBLE);
 			btnDelete.setOnClickListener(this);
+		}
+
+		if(!ScheduleModel.isRepeat(schedule)){
+			txtStartDate.setOnClickListener(this);
+			txtEndDate.setOnClickListener(this);
 		}
 	}
 
