@@ -69,7 +69,7 @@ public class ScheduleDetailFragment extends AbstractScheduleFragment{
 		}
 
 		// check user is owner
-		if(myself != null && myself.key.equals(schedule.owner.key)){
+		if(myself != null && schedule.owner != null && myself.key.equals(schedule.owner.key)){
 			ImageView imgRightIcon = (ImageView)getView().findViewById(R.id.img_id_header_right_icon);
 			imgRightIcon.setImageResource(R.drawable.cl_action_edit);
 			imgRightIcon.setVisibility(View.VISIBLE);

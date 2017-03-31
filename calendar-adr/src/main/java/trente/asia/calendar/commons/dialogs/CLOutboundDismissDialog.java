@@ -23,6 +23,7 @@ public class CLOutboundDismissDialog extends ClDialog{
 		this.setCanceledOnTouchOutside(true);
 	}
 
+	@Override
 	public boolean onTouchEvent(MotionEvent event){
 		if(event.getAction() == MotionEvent.ACTION_DOWN && isOutOfBounds(event)){
 			dismiss();

@@ -32,6 +32,7 @@ import trente.asia.android.view.ChiaseListDialog;
 import trente.asia.android.view.util.CAObjectSerializeUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
+import trente.asia.calendar.commons.dialogs.CLOutboundDismissListDialog;
 import trente.asia.calendar.commons.dialogs.ClDialog;
 import trente.asia.calendar.commons.dialogs.ClFilterUserListDialog;
 import trente.asia.calendar.commons.dialogs.ClScheduleRepeatDialog;
@@ -54,23 +55,23 @@ import trente.asia.welfare.adr.utils.WelfareUtil;
  */
 public class ScheduleFormFragment extends AbstractScheduleFragment{
 
-	private ChiaseListDialog		dlgChooseRoom;
-	private ChiaseListDialog		dlgChooseCalendar;
-	private ChiaseListDialog		dlgChooseCategory;
+	private CLOutboundDismissListDialog	dlgChooseRoom;
+	private CLOutboundDismissListDialog	dlgChooseCalendar;
+	private CLOutboundDismissListDialog	dlgChooseCategory;
 
-	private DatePickerDialog		datePickerDialogStart;
-	private DatePickerDialog		datePickerDialogEnd;
-	private TimePickerDialog		timePickerDialogStart;
-	private TimePickerDialog		timePickerDialogEnd;
+	private DatePickerDialog			datePickerDialogStart;
+	private DatePickerDialog			datePickerDialogEnd;
+	private TimePickerDialog			timePickerDialogStart;
+	private TimePickerDialog			timePickerDialogEnd;
 
-	private ClFilterUserListDialog	filterDialog;
-	private ClScheduleRepeatDialog	repeatDialog;
-	private ClDialog				editModeDialog;
-	private Date					selectedDate;
+	private ClFilterUserListDialog		filterDialog;
+	private ClScheduleRepeatDialog		repeatDialog;
+	private ClDialog					editModeDialog;
+	private Date						selectedDate;
 
-	private final String			SCHEDULE_EDIT_MODE		= "E";
-	private final String			SCHEDULE_DELETE_MODE	= "D";
-	private String					editMode;
+	private final String				SCHEDULE_EDIT_MODE		= "E";
+	private final String				SCHEDULE_DELETE_MODE	= "D";
+	private String						editMode;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -138,7 +139,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 		String startTimeStr;
 		String endTimeStr;
 
-		if(schedule != null && !CCStringUtil.isEmpty(schedule.key)){
+		if(schedule != null && !CCStringUtil.isEmpty(schedule.key) && !schedule.isAllDay){
 			startDate = WelfareUtil.makeDate(schedule.startDate);
 			startDate = CCDateUtil.makeDateTime(startDate, schedule.startTime);
 			endDate = WelfareUtil.makeDate(schedule.endDate);
@@ -262,8 +263,8 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 	}
 
 	private void initListDialog(ScheduleModel scheduleModel){
-		dlgChooseRoom = new ChiaseListDialog(activity, getString(R.string.cl_schedule_form_item_meeting_room), convertList2Map(rooms), txtRoom, null);
-		dlgChooseCategory = new ChiaseListDialog(activity, getString(R.string.cl_schedule_form_item_category), ClUtil.convertCategoryList2Map(categories), txtCategory, new ChiaseListDialog.OnItemClicked() {
+		dlgChooseRoom = new CLOutboundDismissListDialog(activity, getString(R.string.cl_schedule_form_item_meeting_room), convertList2Map(rooms), txtRoom, null);
+		dlgChooseCategory = new CLOutboundDismissListDialog(activity, getString(R.string.cl_schedule_form_item_category), ClUtil.convertCategoryList2Map(categories), txtCategory, new ChiaseListDialog.OnItemClicked() {
 
 			@Override
 			public void onClicked(String selectedKey, boolean isSelected){
@@ -281,7 +282,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 		}else{
 			onChangeCalendar(calendars.get(0).key);
 		}
-		dlgChooseCalendar = new ChiaseListDialog(getContext(), getString(R.string.cl_schedule_form_item_calendar), WelfareFormatUtil.convertList2Map(calendarHolders), txtCalendar, new ChiaseListDialog.OnItemClicked() {
+		dlgChooseCalendar = new CLOutboundDismissListDialog(getContext(), getString(R.string.cl_schedule_form_item_calendar), WelfareFormatUtil.convertList2Map(calendarHolders), txtCalendar, new ChiaseListDialog.OnItemClicked() {
 
 			@Override
 			public void onClicked(String selectedKey, boolean isSelected){

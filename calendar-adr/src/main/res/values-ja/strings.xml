@@ -4,9 +4,9 @@
     <string name="cl_setting_title">設定</string>
     <string name="cl_about_app_version">バージョン %1$s</string>
 
-    <string name="cl_footer_monthly">毎月</string>
-    <string name="cl_footer_weekly">毎週</string>
-    <string name="cl_footer_daily">日間</string>
+    <string name="cl_footer_monthly">月間</string>
+    <string name="cl_footer_weekly"></string>
+    <string name="cl_footer_daily">日別</string>
     <string name="cl_footer_summary">サマリー</string>
     <string name="cl_footer_setting">設定</string>
 
