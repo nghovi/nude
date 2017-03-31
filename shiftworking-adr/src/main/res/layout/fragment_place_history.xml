@@ -14,7 +14,7 @@
             android:id="@+id/edt_id_place"
             style="@style/wl_common_edit_text"
             android:background="@color/chiase_white"
-            android:hint="Please entry"/>
+            android:hint="@string/chiase_common_please_input"/>
 
         <ListView
             android:id="@+id/lsv_id_place"

@@ -30,7 +30,7 @@
 
     <string name="chiase_common_none">None</string>
     <string name="chiase_common_all">All</string>
-    <string name="chiase_common_please_entry">Please entry</string>
+    <string name="chiase_common_please_input">Please input</string>
     <string name="chiase_common_please_select">Please select</string>
 
     <string name="chiase_common_today">Today</string>

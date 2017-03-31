@@ -123,7 +123,7 @@
     <string name="FM_TC_003">You received thanks card from %1$s</string>
 
     <string name="tc_dialog_profile_title">User detail</string>
-    <string name="tc_contact_us_problem_item">Bug</string>
+    <string name="tc_contact_us_problem_item">Bug Report</string>
     <string name="tc_contact_us_improve_item">Improve</string>
     <string name="tc_contact_us_content_title">Content</string>
     <string name="tc_contact_us_service_title">Service name</string>

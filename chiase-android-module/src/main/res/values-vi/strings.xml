@@ -30,7 +30,7 @@
 
     <string name="chiase_common_none">Không có</string>
     <string name="chiase_common_all">Tất cả</string>
-    <string name="chiase_common_please_entry">Hãy nhập dữ liệu</string>
+    <string name="chiase_common_please_input">Hãy nhập dữ liệu</string>
     <string name="chiase_common_please_select">Hãy lựa chọn</string>
 
     <string name="chiase_common_today">Hôm nay</string>

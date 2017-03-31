@@ -154,7 +154,7 @@
                     android:id="@+id/txt_id_name"
                     style="@style/wl_common_edit_text2"
                     android:layout_marginLeft="@dimen/margin_10dp"
-                    android:hint="@string/chiase_common_please_entry"
+                    android:hint="@string/chiase_common_please_input"
                     custom:mName="scheduleName"/>
             </LinearLayout>
 
@@ -199,7 +199,7 @@
                     android:id="@+id/txt_id_url"
                     style="@style/wl_common_edit_text2"
                     android:layout_marginLeft="@dimen/margin_10dp"
-                    android:hint="@string/chiase_common_please_entry"
+                    android:hint="@string/chiase_common_please_input"
                     custom:mName="scheduleUrl"/>
             </LinearLayout>
 

@@ -74,7 +74,7 @@
             android:layout_marginLeft="@dimen/margin_0dp"
             android:layout_marginRight="@dimen/margin_5dp"
             android:layout_weight="1"
-            android:text="My calendar"/>
+            android:text="@string/my_calendar"/>
 
         <Button
             android:id="@+id/btn_id_all"
@@ -82,7 +82,7 @@
             android:layout_marginLeft="@dimen/margin_0dp"
             android:layout_marginRight="@dimen/margin_5dp"
             android:layout_weight="1"
-            android:text="Check all"/>
+            android:text="@string/check_all"/>
     </LinearLayout>
 
 </LinearLayout>

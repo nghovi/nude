@@ -41,7 +41,7 @@
                         android:id="@+id/edt_id_leave"
                         style="@style/wl_common_edit_text2"
                         android:layout_marginLeft="@dimen/margin_10dp"
-                        android:hint="@string/chiase_common_please_entry"
+                        android:hint="@string/chiase_common_please_input"
                         custom:mName="transLeave"/>
                 </LinearLayout>
 
@@ -65,7 +65,7 @@
                         android:id="@+id/edt_id_arrive"
                         style="@style/wl_common_edit_text2"
                         android:layout_marginLeft="@dimen/margin_10dp"
-                        android:hint="@string/chiase_common_please_entry"
+                        android:hint="@string/chiase_common_please_input"
                         custom:mName="transArrive"/>
                 </LinearLayout>
 
