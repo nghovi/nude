@@ -5,7 +5,7 @@
     <string name="cl_about_app_version">バージョン %1$s</string>
 
     <string name="cl_footer_monthly">月間</string>
-    <string name="cl_footer_weekly"></string>
+    <string name="cl_footer_weekly">週間</string>
     <string name="cl_footer_daily">日別</string>
     <string name="cl_footer_summary">サマリー</string>
     <string name="cl_footer_setting">設定</string>
@@ -16,7 +16,7 @@
     <string name="fragment_schedule_form_title">新規スケジュール</string>
     <string name="fragment_schedule_edit_title">スケジュール編集</string>
     <string name="fragment_schedule_detail_title">スケジュール詳細</string>
-    <string name="cl_schedule_form_all_day">一日中</string>
+    <string name="cl_schedule_form_all_day">終日</string>
     <string name="cl_schedule_form_repeat">繰り返し</string>
     <string name="cl_schedule_form_schedule_info_title">スケジュール詳細</string>
     <string name="cl_schedule_form_item_calendar">カレンダー</string>
