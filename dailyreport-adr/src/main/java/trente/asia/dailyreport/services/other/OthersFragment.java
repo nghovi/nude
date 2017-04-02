@@ -42,6 +42,7 @@ import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.dialog.WfProfileDialog;
 import trente.asia.welfare.adr.models.DeptModel;
 import trente.asia.welfare.adr.models.UserModel;
+import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
 import trente.asia.welfare.adr.utils.WelfareUtil;
 import trente.asia.welfare.adr.utils.WfPicassoHelper;
 import trente.asia.welfare.adr.view.SelectableRoundedImageView;
@@ -98,7 +99,11 @@ public class OthersFragment extends AbstractDRFragment{
 	public void initData(){
 		deptSpinnerInited = false;
 		changedFragment = false;
-		selectedDept = null;
+
+		// 2017.04.02 Tak set default dept
+		UserModel userModel = prefAccUtil.getUserPref();
+		selectedDept = new DRDeptModel(userModel.getDept().getKey(), userModel.getDept().getDeptName());
+
 		requestDailyReportAllUser(calendarHeader.getSelectedYearMonthStr());
 	}
 
