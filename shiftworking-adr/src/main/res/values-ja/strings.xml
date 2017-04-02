@@ -19,7 +19,7 @@
     <string name="sw_footer_work_time">勤務時間</string>
     <string name="sw_footer_work_shift">勤務シフト</string>
     <string name="sw_footer_setting">設定</string>
-    <string name="sw_footer_work_status">勤務ステータス</string>
+    <string name="sw_footer_work_status">勤務状況</string>
     <string name="sw_footer_work_offer">勤務申請</string>
 
     <!--Check in service-->
