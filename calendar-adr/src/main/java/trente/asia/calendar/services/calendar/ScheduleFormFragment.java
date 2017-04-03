@@ -116,9 +116,11 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 				if(isChecked){
 					txtStartTime.setVisibility(View.INVISIBLE);
 					txtEndTime.setVisibility(View.INVISIBLE);
+					txtEndDate.setVisibility(View.VISIBLE);
 				}else{
 					txtStartTime.setVisibility(View.VISIBLE);
 					txtEndTime.setVisibility(View.VISIBLE);
+					txtEndDate.setVisibility(View.INVISIBLE);
 				}
 			}
 		});
