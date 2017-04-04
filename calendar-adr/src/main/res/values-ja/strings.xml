@@ -31,7 +31,7 @@
     <string name="cl_schedule_delete_mode_title">削除モード</string>
     <string name="cl_schedule_edit_mode_only_this">今回のみ</string>
     <string name="cl_schedule_edit_mode_only_future">今回以降</string>
-    <string name="cl_schedule_edit_mode_all">全部</string>
+    <string name="cl_schedule_edit_mode_all">この予定すべて</string>
 
     <string name="cl_filter_user_dialog_title">ユーザーフィルター</string>
     <string name="cl_join_user_dialog_title">参加ユーザー</string>
