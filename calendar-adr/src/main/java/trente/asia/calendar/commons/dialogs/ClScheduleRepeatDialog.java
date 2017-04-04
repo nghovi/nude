@@ -37,7 +37,7 @@ import trente.asia.welfare.adr.utils.WelfareUtil;
  *
  * @author TrungND
  */
-public class ClScheduleRepeatDialog extends ChiaseDialog{
+public class ClScheduleRepeatDialog extends CLOutboundDismissDialog{
 
 	private Context						mContext;
 	private TextView					txtRepeat;

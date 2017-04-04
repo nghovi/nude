@@ -133,13 +133,6 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 			txtCalendar.setText(schedule.calendar.calendarName);
 			txtCalendar.setValue(schedule.calendar.key);
 			swtAllDay.setChecked(CCBooleanUtil.checkBoolean(schedule.isAllDay));
-			if(CCBooleanUtil.checkBoolean(schedule.isAllDay)){
-				txtStartTime.setVisibility(View.INVISIBLE);
-				txtEndTime.setVisibility(View.INVISIBLE);
-			}else{
-				txtStartTime.setVisibility(View.VISIBLE);
-				txtEndTime.setVisibility(View.VISIBLE);
-			}
 
 			CategoryModel categoryModel = ClUtil.findCategory4Id(categories, schedule.categoryId);
 			if(categoryModel != null){
@@ -173,6 +166,16 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 			txtCategory.setText(categories.get(0).categoryName);
 			txtCategory.setValue(categories.get(0).key);
 			txtCategory.setTextColor(Color.parseColor(WelfareFormatUtil.formatColor(categories.get(0).categoryColor)));
+		}
+
+		if(swtAllDay.isChecked()){
+			txtStartTime.setVisibility(View.INVISIBLE);
+			txtEndTime.setVisibility(View.INVISIBLE);
+			txtEndDate.setVisibility(View.VISIBLE);
+		}else{
+			txtStartTime.setVisibility(View.VISIBLE);
+			txtEndTime.setVisibility(View.VISIBLE);
+			txtEndDate.setVisibility(View.INVISIBLE);
 		}
 	}
 
