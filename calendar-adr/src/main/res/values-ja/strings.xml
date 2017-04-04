@@ -53,7 +53,7 @@
     <string name="cl_schedule_repeat_limit_forever">終了日を設定しない</string>
     <string name="cl_schedule_repeat_limit_until">終了日</string>
 
-    <string name="daily_page_all_day">一日中</string>
+    <string name="daily_page_all_day">終日</string>
     <string name="daily_page_morning">午前</string>
     <string name="daily_page_afternoon">午後</string>
     <string name="happy_birthday">お誕生日おめでとう</string>
