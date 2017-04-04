@@ -259,7 +259,7 @@ public class TCAccountInfoFragment extends AbstractTCFragment implements AvatarS
 	@Override
 	protected void successUpload(JSONObject response, String url){
 		if(WfUrlConst.WF_ACC_INFO_UPDATE_AVATAR.equals(url)){
-			Toast.makeText(activity, "Change Avatar Successful !", Toast.LENGTH_LONG).show();
+			Toast.makeText(activity, getString(R.string.chiase_common_success_change_avatar), Toast.LENGTH_LONG).show();
 			File appFolder = new File(TCUtil.getFilesFolderPath());
 			deleteAppFolder(appFolder);
 		}else{
@@ -333,11 +333,11 @@ public class TCAccountInfoFragment extends AbstractTCFragment implements AvatarS
 
 		switch(CCStringUtil.checkNull(url)){
 		case WfUrlConst.WF_ACC_INFO_UPDATEINFO:
-			Toast.makeText(getContext(), "Success update password", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getContext(), getString(R.string.chiase_common_success_change_password), Toast.LENGTH_SHORT).show();
 			swtPass.setChecked(false);
 			break;
 		case WfUrlConst.WF_ACC_INFO_SETTING:
-			Toast.makeText(getContext(), "Success update push setting", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getContext(), getString(R.string.chiase_common_success_change_push_setting), Toast.LENGTH_SHORT).show();
 			break;
 		default:
 			super.successUpdate(response, url);

@@ -277,7 +277,7 @@ public class DrAccountInfoFragment extends AbstractDRFragment{
 	protected void successUpload(JSONObject response, String url){
 		if(WfUrlConst.WF_ACC_INFO_UPDATE_AVATAR.equals(url)){
 			// super.onBackListener();
-			Toast.makeText(activity, "Change Avatar Successful !", Toast.LENGTH_LONG).show();
+			Toast.makeText(activity, getString(R.string.chiase_common_success_change_avatar), Toast.LENGTH_LONG).show();
 			File appFolder = new File(DRUtil.getFilesFolderPath());
 			deleteAppFolder(appFolder);
 		}else{
@@ -289,10 +289,10 @@ public class DrAccountInfoFragment extends AbstractDRFragment{
 	protected void successUpdate(JSONObject response, String url){
 		if(WfUrlConst.WF_ACC_INFO_UPDATEINFO.equals(url)){
 			// super.onBackListener();
-			Toast.makeText(activity, "Change Password Successful !", Toast.LENGTH_LONG).show();
+			Toast.makeText(activity, getString(R.string.chiase_common_success_change_password), Toast.LENGTH_LONG).show();
 		}else if(WfUrlConst.WF_ACC_INFO_SETTING.equals(url)){
 			// super.onBackListener();
-			Toast.makeText(activity, "Change Push Notification Successful !", Toast.LENGTH_LONG).show();
+			Toast.makeText(activity, getString(R.string.chiase_common_success_change_push_setting), Toast.LENGTH_LONG).show();
 		}else{
 			super.successUpload(response, url);
 		}

@@ -41,4 +41,9 @@
 
     <string name="chiase_common_disabled_function">now you can\'t use this function.</string>
     <string name="chiase_common_not_working_gps">Can\'t get location, please check network again.</string>
+
+    <string name="chiase_common_success_change_push_setting">Push Notification setting has been changed.</string>
+    <string name="chiase_common_success_change_avatar">Your avatar has been changed successfully!</string>
+    <string name="chiase_common_success_change_password"> Your password has been changed successfully!</string>
+
 </resources>

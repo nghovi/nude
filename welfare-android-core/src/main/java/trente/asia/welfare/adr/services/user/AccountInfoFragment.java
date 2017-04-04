@@ -276,7 +276,7 @@ public abstract class AccountInfoFragment extends WelfareFragment{
 	protected void successUpload(JSONObject response, String url){
 		if(WfUrlConst.WF_ACC_INFO_UPDATE_AVATAR.equals(url)){
 			// super.onBackListener();
-			Toast.makeText(activity, getString(R.string.change_avatar_success), Toast.LENGTH_LONG).show();
+			Toast.makeText(activity, getString(R.string.chiase_common_success_change_avatar), Toast.LENGTH_LONG).show();
 		}else{
 			super.successUpload(response, url);
 		}
@@ -286,10 +286,10 @@ public abstract class AccountInfoFragment extends WelfareFragment{
 	protected void successUpdate(JSONObject response, String url){
 		if(WfUrlConst.WF_ACC_INFO_UPDATEINFO.equals(url)){
 			// super.onBackListener();
-			Toast.makeText(activity, getString(R.string.wf_password_change_success), Toast.LENGTH_LONG).show();
+			Toast.makeText(activity, getString(R.string.chiase_common_success_change_password), Toast.LENGTH_LONG).show();
 		}else if(WfUrlConst.WF_ACC_INFO_SETTING.equals(url)){
 			// super.onBackListener();
-			Toast.makeText(activity, getString(R.string.wf_change_notice_success), Toast.LENGTH_LONG).show();
+			Toast.makeText(activity, getString(R.string.chiase_common_success_change_push_setting), Toast.LENGTH_LONG).show();
 		}else{
 			super.successUpload(response, url);
 		}

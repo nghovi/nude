@@ -41,4 +41,9 @@
 
     <string name="chiase_common_disabled_function">現在、この機能を使用できません。</string>
     <string name="chiase_common_not_working_gps">Can\'t get location, please check network again.</string>
+
+    <string name="chiase_common_success_change_push_setting">PUSH通知設定が変更されました。</string>
+    <string name="chiase_common_success_change_avatar">アバターの変更が完了しました。</string>
+    <string name="chiase_common_success_change_password">パスワードの変更が完了しました。</string>
+
 </resources>
