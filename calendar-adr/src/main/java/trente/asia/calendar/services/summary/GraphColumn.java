@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.Collections;
+
 import trente.asia.calendar.R;
 import trente.asia.calendar.services.calendar.model.CategoryModel;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
@@ -49,6 +51,9 @@ public class GraphColumn extends LinearLayout{
 
 	public static void addBlocks(Context context, SummaryModel summaryModel, LinearLayout lnrBlockContainer, boolean isCalculateSize){
 		int lastBlockColor = 0;
+
+		Collections.reverse(summaryModel.categories);
+
 		for(CategoryModel categoryModel : summaryModel.categories){
 			LinearLayout lnrBlock = new LinearLayout(context);
 			int heightPx = getHeightPx(categoryModel);
