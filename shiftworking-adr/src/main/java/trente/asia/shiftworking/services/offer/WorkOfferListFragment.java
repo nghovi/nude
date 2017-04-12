@@ -38,7 +38,7 @@ public class WorkOfferListFragment extends AbstractSwFragment{
 	private List<WorkOfferModel>	offers;
 	private ListView				mLstOffer;
 	private CommonMonthView			monthView;
-	private Map<String, Integer>	filters;
+	private Map<String, String>	filters;
 	private TextView				txtFilterDesc;
 	private Map<String, String>		offerTypesMaster;
 	private Map<String, String>		offerStatusMaster;
@@ -71,15 +71,15 @@ public class WorkOfferListFragment extends AbstractSwFragment{
 		if(filters != null){
             String filterType = getString(R.string.chiase_common_all);
             if(filters.containsKey(WorkOfferFilterFragment.TYPE)){
-                filterType = new ArrayList<String>(offerTypesMaster.values()).get(filters.get(WorkOfferFilterFragment.TYPE));
+                filterType = offerTypesMaster.get(filters.get(WorkOfferFilterFragment.TYPE));
             }
 			String filterStatus = getString(R.string.chiase_common_all);
             if(filters.containsKey(WorkOfferFilterFragment.STATUS)){
-                filterStatus = new ArrayList<String>(offerStatusMaster.values()).get(filters.get(WorkOfferFilterFragment.STATUS));
+                filterStatus = offerStatusMaster.get(filters.get(WorkOfferFilterFragment.STATUS));
             }
 			String filterDept = getString(R.string.chiase_common_all);
             if(filters.containsKey(WorkOfferFilterFragment.DEPT)){
-                filterDept = new ArrayList<String>(offerDepts.values()).get(filters.get(WorkOfferFilterFragment.DEPT));
+                filterDept = offerDepts.get(filters.get(WorkOfferFilterFragment.DEPT));
             }
 			String filtersDesc = filterType + " - " + filterStatus + " - " + filterDept;
 			txtFilterDesc.setText(getString(R.string.sw_work_offer_list_filter, filtersDesc));
@@ -137,13 +137,13 @@ public class WorkOfferListFragment extends AbstractSwFragment{
 			jsonObject.put("targetUserId", prefAccUtil.getUserPref().key);
 			if(filters != null){
 				if(filters.containsKey(WorkOfferFilterFragment.DEPT)){
-					jsonObject.put("offerDept", new ArrayList<String>(offerDepts.keySet()).get(filters.get(WorkOfferFilterFragment.DEPT)));
+					jsonObject.put("offerDept", filters.get(WorkOfferFilterFragment.DEPT));
 				}
 				if(filters.containsKey(WorkOfferFilterFragment.STATUS)){
-					jsonObject.put("offerStatus", new ArrayList<String>(offerStatusMaster.keySet()).get(filters.get(WorkOfferFilterFragment.STATUS)));
+					jsonObject.put("offerStatus", filters.get(WorkOfferFilterFragment.STATUS));
 				}
 				if(filters.containsKey(WorkOfferFilterFragment.TYPE)){
-					jsonObject.put("offerType", new ArrayList<String>(offerTypesMaster.keySet()).get(filters.get(WorkOfferFilterFragment.TYPE)));
+					jsonObject.put("offerType", filters.get(WorkOfferFilterFragment.TYPE));
 				}
 			}
 			jsonObject.put("searchDateString", CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_YYYY_MM, monthView.workMonth));

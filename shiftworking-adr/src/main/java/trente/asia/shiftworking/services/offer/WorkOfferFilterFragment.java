@@ -31,9 +31,9 @@ public class WorkOfferFilterFragment extends AbstractSwFragment{
 	private ChiaseTextView		txtStatus;
 	private ChiaseTextView		txtDept;
 
-	private int					selectedType;
-	private int					selectedStatus;
-	private int					selectedDept;
+	private String					selectedType;
+	private String					selectedStatus;
+	private String					selectedDept;
 	private Map<String, String>	depts;
 	private Map<String, String>	offerTypesMaster;
 	private Map<String, String>	offerStatusMaster;
@@ -43,12 +43,12 @@ public class WorkOfferFilterFragment extends AbstractSwFragment{
 		this.offerStatusMaster = offerStatusMaster;
 	}
 
-	public void setFiltersAndDepts(Map<String, Integer> filters, Map<String, String> offerDepts){
+	public void setFiltersAndDepts(Map<String, String> filters, Map<String, String> offerDepts){
 		this.filters = filters;
 		depts = offerDepts;
 	}
 
-	private Map<String, Integer>	filters;
+	private Map<String, String>	filters;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -85,48 +85,48 @@ public class WorkOfferFilterFragment extends AbstractSwFragment{
 
 	private void buildDialog(){
 
-		selectedType = 0;
+		selectedType = "0";
 		if(filters.containsKey(TYPE)){
 			selectedType = filters.get(TYPE);
 		}
-		String offerTypeCode = (String)offerTypesMaster.keySet().toArray()[selectedType];
+		String offerTypeCode = selectedType;
 		txtType.setText(offerTypesMaster.get(offerTypeCode));
 		txtType.setValue(offerTypeCode);
 		dlgType = new ChiaseListDialog(activity, getString(R.string.fragment_work_offer_edit_offer_type), offerTypesMaster, txtType, new ChiaseListDialog.OnItemClicked() {
 
 			@Override
 			public void onClicked(String selectedKey, boolean isSelected){
-				selectedType = Integer.parseInt(selectedKey);
+				selectedType = selectedKey;
 			}
 		});
 
-		selectedStatus = 0;
+		selectedStatus = "0";
 		if(filters.containsKey(STATUS)){
 			selectedStatus = filters.get(STATUS);
 		}
-		String offerStatusCode = (String)offerStatusMaster.keySet().toArray()[selectedStatus];
+		String offerStatusCode = selectedStatus;
 		txtStatus.setText(offerStatusMaster.get(offerStatusCode));
 		txtStatus.setValue(offerStatusCode);
 		dlgStatus = new ChiaseListDialog(activity, getString(R.string.fragment_work_offer_edit_offer_status), offerStatusMaster, txtStatus, new ChiaseListDialog.OnItemClicked() {
 
 			@Override
 			public void onClicked(String selectedKey, boolean isSelected){
-				selectedStatus = Integer.parseInt(selectedKey);
+				selectedStatus = selectedKey;
 			}
 		});
 
-		selectedDept = 0;
+		selectedDept = "0";
 		if(filters.containsKey(DEPT)){
 			selectedDept = filters.get(DEPT);
 		}
-		String offerDeptCode = (String)depts.keySet().toArray()[selectedDept];
+		String offerDeptCode = selectedDept;
 		txtDept.setText(depts.get(offerDeptCode));
 		txtDept.setValue(offerDeptCode);
 		dlgDept = new ChiaseListDialog(activity, getString(R.string.fragment_work_offer_edit_offer_dept), depts, txtDept, new ChiaseListDialog.OnItemClicked() {
 
 			@Override
 			public void onClicked(String selectedKey, boolean isSelected){
-				selectedDept = Integer.parseInt(selectedKey);
+				selectedDept = selectedKey;
 			}
 		});
 	}
