@@ -160,6 +160,8 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 			if(ClRepeatUtil.isRepeat(schedule.repeatType)){
 				ScheduleRepeatModel repeatModel = new ScheduleRepeatModel(schedule);
 				txtRepeat.setText(ClRepeatUtil.getRepeatDescription(repeatModel, activity));
+			} else {
+				txtRepeat.setText(getString(R.string.chiase_common_none));
 			}
 		}else{
 			txtCalendar.setText(calendars.get(0).calendarName);
@@ -171,6 +173,7 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 			txtCategory.setTextColor(Color.parseColor(WelfareFormatUtil.formatColor(categories.get(0).categoryColor)));
 		}
 
+		lnrEndDate.setVisibility(View.VISIBLE);
 		if(swtAllDay.isChecked()){
 			txtStartTime.setVisibility(View.INVISIBLE);
 			txtEndTime.setVisibility(View.INVISIBLE);
