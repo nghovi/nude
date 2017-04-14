@@ -134,11 +134,13 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 					txtEndTime.setVisibility(View.INVISIBLE);
 					if(ClConst.SCHEDULE_REPEAT_TYPE_NONE.equals(repeatDialog.getRepeatModel().repeatType)){
 						lnrEndDate.setVisibility(View.VISIBLE);
+						lnrEndDate.setVisibility(View.VISIBLE);
 						txtEndDate.setVisibility(View.VISIBLE);
 					}else{
 						lnrEndDate.setVisibility(View.GONE);
 					}
 				}else{
+					lnrEndDate.setVisibility(View.VISIBLE);
 					txtStartTime.setVisibility(View.VISIBLE);
 					txtEndTime.setVisibility(View.VISIBLE);
 					txtEndDate.setVisibility(View.INVISIBLE);
