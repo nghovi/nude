@@ -98,7 +98,7 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 			}else{
 				txtTitleItem.setTextColor(getNormalDayColor());
 			}
-			txtTitleItem.setText(dayModel.day);
+			txtTitleItem.setText(CCStringUtil.toUpperCase(dayModel.day));
 			lnrRowTitle.addView(titleItem);
 		}
 		lnrCalendarContainer.addView(titleView);

@@ -20,7 +20,6 @@ import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.util.CsUtil;
-import trente.asia.android.view.ChiaseDialog;
 import trente.asia.android.view.adapter.ChiaseSpinnerAdapter;
 import trente.asia.android.view.model.ChiaseSpinnerModel;
 import trente.asia.calendar.R;
@@ -59,6 +58,17 @@ public class ClScheduleRepeatDialog extends CLOutboundDismissDialog{
 	private String						startDate;
 	private List<ChiaseSpinnerModel>	lstRepeatType;
 	private List<ChiaseSpinnerModel>	lstRepeatLimit;
+
+	public interface OnChangeRepeatTypeListener{
+
+		public void onChange(boolean isRepeated);
+	}
+
+	public void setOnChangeRepeatTypeListener(OnChangeRepeatTypeListener onChangeRepeatTypeListener){
+		this.onChangeRepeatTypeListener = onChangeRepeatTypeListener;
+	}
+
+	OnChangeRepeatTypeListener	onChangeRepeatTypeListener;
 
 	public ClScheduleRepeatDialog(Context context, TextView txtRepeat){
 		super(context);
@@ -147,6 +157,10 @@ public class ClScheduleRepeatDialog extends CLOutboundDismissDialog{
 
 			@Override
 			public void onClick(View v){
+
+				if(onChangeRepeatTypeListener != null){
+					onChangeRepeatTypeListener.onChange(swtRepeat.isChecked());
+				}
 				ClScheduleRepeatDialog.this.dismiss();
 				txtRepeat.setText(getRepeatValue());
 			}
@@ -183,7 +197,7 @@ public class ClScheduleRepeatDialog extends CLOutboundDismissDialog{
 			if(!CCStringUtil.isEmpty(startDate)){
 				Calendar startCalendar = CCDateUtil.makeCalendar(WelfareFormatUtil.makeDate(startDate));
 				String repeatData = String.valueOf(startCalendar.get(Calendar.DAY_OF_WEEK));
-                lnrRepeatWeeklyDay.setStartDate(startDate);
+				lnrRepeatWeeklyDay.setStartDate(startDate);
 				lnrRepeatWeeklyDay.initDefaultValue(repeatData);
 			}
 		}

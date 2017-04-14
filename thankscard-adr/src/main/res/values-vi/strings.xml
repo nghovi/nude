@@ -5,7 +5,7 @@
     <string name="common_server_api_error">Lỗi máy chủ</string>
 
     <string name="fragment_signin_login_button">Đăng nhập</string>
-    <string name="fragment_signin_user_id">ID người dùng</string>
+    <string name="fragment_signin_user_id">Tên tài khoản</string>
     <string name="fragment_signin_password">Mật khẩu</string>
     <string name="fragment_signin_title">Đăng nhập</string>
     <string name="fragment_signin_login_error_title">Lỗi</string>

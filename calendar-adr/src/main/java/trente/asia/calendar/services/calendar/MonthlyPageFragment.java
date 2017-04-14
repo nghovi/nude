@@ -129,6 +129,7 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 
 	@Override
 	protected void initData(){
+		super.initData();
 		String activeMonth = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_YYYY_MM, selectedDate);
 		Date activeDate = WelfareFormatUtil.makeDate(prefAccUtil.get(ClConst.PREF_ACTIVE_DATE));
 		if(activeMonth.equals(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_YYYY_MM, activeDate))){

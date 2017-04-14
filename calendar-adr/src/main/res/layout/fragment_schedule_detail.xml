@@ -55,6 +55,7 @@
             <View style="@style/cs_common_divider"/>
 
             <LinearLayout
+                android:id="@+id/lnr_id_end_date"
                 style="@style/wf_common_item_linear2">
 
                 <trente.asia.android.view.ChiaseTextView

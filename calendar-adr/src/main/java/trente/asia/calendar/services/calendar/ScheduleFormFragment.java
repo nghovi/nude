@@ -91,6 +91,22 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 		}
 
 		repeatDialog = new ClScheduleRepeatDialog(activity, txtRepeat);
+		repeatDialog.setOnChangeRepeatTypeListener(new ClScheduleRepeatDialog.OnChangeRepeatTypeListener() {
+
+			@Override
+			public void onChange(boolean isRepeated){
+				if(isRepeated){
+					if(swtAllDay.isChecked()){
+						lnrEndDate.setVisibility(View.GONE);
+					}else{
+						txtEndDate.setVisibility(View.INVISIBLE);
+					}
+				}else if(swtAllDay.isChecked()){
+					lnrEndDate.setVisibility(View.VISIBLE);
+					txtEndDate.setVisibility(View.VISIBLE);
+				}
+			}
+		});
 		editModeDialog = new ClDialog(activity);
 		editModeDialog.setDialogScheduleEditMode();
 		if(schedule != null && !CCStringUtil.isEmpty(schedule.key)){
@@ -116,7 +132,12 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 				if(isChecked){
 					txtStartTime.setVisibility(View.INVISIBLE);
 					txtEndTime.setVisibility(View.INVISIBLE);
-					txtEndDate.setVisibility(View.VISIBLE);
+					if(ClConst.SCHEDULE_REPEAT_TYPE_NONE.equals(repeatDialog.getRepeatModel().repeatType)){
+						lnrEndDate.setVisibility(View.VISIBLE);
+						txtEndDate.setVisibility(View.VISIBLE);
+					}else{
+						lnrEndDate.setVisibility(View.GONE);
+					}
 				}else{
 					txtStartTime.setVisibility(View.VISIBLE);
 					txtEndTime.setVisibility(View.VISIBLE);
@@ -284,6 +305,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 		}else{
 			onChangeCalendar(calendars.get(0).key);
 		}
+
 		dlgChooseCalendar = new CLOutboundDismissListDialog(getContext(), getString(R.string.cl_schedule_form_item_calendar), WelfareFormatUtil.convertList2Map(calendarHolders), txtCalendar, new ChiaseListDialog.OnItemClicked() {
 
 			@Override
