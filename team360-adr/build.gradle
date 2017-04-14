@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "asia.trente.team360"
-        minSdkVersion 19
+        minSdkVersion 22
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"
