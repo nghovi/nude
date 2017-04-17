@@ -43,7 +43,7 @@ public class MonthlyFragment extends SchedulesPageContainerFragment{
 
 		String title = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_MMMM_YY, activeDate);
 		TextView txtHeaderTitle = (TextView)getView().findViewById(R.id.txt_id_header_title);
-		txtHeaderTitle.setText(title);
+		txtHeaderTitle.setText(title.substring(0, 1).toUpperCase() + title.substring(1));
 	}
 
 	@Override
