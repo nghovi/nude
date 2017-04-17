@@ -142,8 +142,7 @@ public class OthersFragment extends AbstractDRFragment{
 		for(Date date : lstDate){
 			View dateView = LayoutInflater.from(activity).inflate(R.layout.item_calendar_other_header, null);
 			buildCalendarCellHeader(date, dateView, c);
-			dateView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup
-					.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
+			dateView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
 			mLnrReportHeader.addView(dateView);
 		}
 		mLnrReportHeader.setBackgroundColor(ContextCompat.getColor(activity, R.color.core_gray));
@@ -281,6 +280,7 @@ public class OthersFragment extends AbstractDRFragment{
 				}else{
 					cell = inflater.inflate(R.layout.item_calendar_other_empty, null);
 				}
+				cell.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
 				buildCalendarCellImage(date, reportModel, cell, cToday);
 
 				reportRow.addView(cell);
