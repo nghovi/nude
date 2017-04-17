@@ -95,4 +95,5 @@
     <string name="FM_DR_001">%1$sさんが新しい日報を作成しました</string>
     <string name="FM_DR_002">%1$s新しいいいね！があります</string>
     <string name="FM_DR_003">%1$s新しいコメントがあります</string>
+    <string name="header_calendar_this_week">今週</string>
 </resources>

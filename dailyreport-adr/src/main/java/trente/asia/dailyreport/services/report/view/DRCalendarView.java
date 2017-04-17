@@ -22,11 +22,12 @@ import trente.asia.dailyreport.services.report.model.ReportModel;
  */
 public class DRCalendarView extends RelativeLayout{
 
-	private Activity			activity;
-	public GregorianCalendar	gregorianCalendar, gregorianCalendarCloned;	// view_dr_calendar
+	private Activity	activity;
+	public GregorianCalendar	gregorianCalendar, gregorianCalendarCloned; // view_dr_calendar
 																			// instances.
 
 	public CalendarAdapter		adapter;									// adapter instance
+
 	// marker.
 
 	public DRCalendarView(Context context){
@@ -54,7 +55,7 @@ public class DRCalendarView extends RelativeLayout{
 		this.onReportModelSelectedListener = onReportModelSelectedListener;
 	}
 
-	private OnReportModelSelectedListener onReportModelSelectedListener;
+	private OnReportModelSelectedListener	onReportModelSelectedListener;
 
 	public void updateLayout(Activity activity, int year, int month, final List<ReportModel> reportModelList){
 		this.activity = activity;
@@ -62,7 +63,7 @@ public class DRCalendarView extends RelativeLayout{
 
 		gregorianCalendar = (GregorianCalendar)GregorianCalendar.getInstance();
 		gregorianCalendar.set(GregorianCalendar.YEAR, year);
-		gregorianCalendar.set(GregorianCalendar.MONTH, month - 1);
+		gregorianCalendar.set(GregorianCalendar.MONTH, month);
 		gregorianCalendarCloned = (GregorianCalendar)gregorianCalendar.clone();
 
 		adapter = new CalendarAdapter(this.activity, gregorianCalendar, reportModelList);

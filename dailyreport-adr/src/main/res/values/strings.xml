@@ -96,4 +96,5 @@
     <string name="FM_DR_001">%1$s made new daily report</string>
     <string name="FM_DR_002">%1$s like your report</string>
     <string name="FM_DR_003">%1$s comment on your report</string>
+    <string name="header_calendar_this_week">This week</string>
 </resources>
