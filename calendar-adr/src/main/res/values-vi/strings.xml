@@ -24,7 +24,7 @@
     </string>
     <string name="cl_schedule_form_item_calendar">Lịch</string>
     <string name="cl_schedule_form_item_name">Tên</string>
-    <string name="cl_schedule_form_item_meeting_room">Địa điểm</string>
+    <string name="cl_schedule_form_item_meeting_room">Phòng</string>
     <string name="cl_schedule_form_item_url">Url</string>
     <string name="cl_schedule_form_item_category">Mục</string>
     <string name="cl_schedule_form_item_join_user">Người tham gia</string>
@@ -38,7 +38,7 @@
     </string>
     <string name="cl_schedule_edit_mode_all">Thay đổi tất cả</string>
 
-    <string name="cl_filter_user_dialog_title">Lọc thành viên</string>
+    <string name="cl_filter_user_dialog_title">Lọc người dùng</string>
     <string name="cl_join_user_dialog_title">Người tham gia</string>
     <string name="cl_schedule_repeat_dialog_title">Schedule repeat</string>
     <string name="cl_schedule_repeat_dialog_times">lần</string>
@@ -64,7 +64,7 @@
     <string name="happy_birthday">Chúc mừng sinh nhật!</string>
     <string name="birthday_title">Sinh nhật</string>
     <string name="holiday_title">Nghỉ lễ</string>
-    <string name="offer_title">Work record</string>
+    <string name="offer_title">Chấm công</string>
     <string name="no_schedule">Không có lịch trình</string>
 
     <!--Notifications-->

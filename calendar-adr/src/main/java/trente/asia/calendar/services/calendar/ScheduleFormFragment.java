@@ -3,8 +3,11 @@ package trente.asia.calendar.services.calendar;
 import static trente.asia.welfare.adr.utils.WelfareFormatUtil.convertList2Map;
 
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -44,6 +47,7 @@ import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.define.WfUrlConst;
+import trente.asia.welfare.adr.models.ApiObjectModel;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 import trente.asia.welfare.adr.utils.WelfareUtil;
@@ -308,7 +312,15 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 			onChangeCalendar(calendars.get(0).key);
 		}
 
-		dlgChooseCalendar = new CLOutboundDismissListDialog(getContext(), getString(R.string.cl_schedule_form_item_calendar), WelfareFormatUtil.convertList2Map(calendarHolders), txtCalendar, new ChiaseListDialog.OnItemClicked() {
+
+		Collections.sort(calendarHolders, new Comparator<ApiObjectModel>() {
+			@Override
+			public int compare(ApiObjectModel o1, ApiObjectModel o2) {
+				return o1.value.compareTo(o2.value);
+			}
+		});
+		Map<String, String> calendarMap = WelfareFormatUtil.convertList2Map(calendarHolders);
+		dlgChooseCalendar = new CLOutboundDismissListDialog(getContext(), getString(R.string.cl_schedule_form_item_calendar), calendarMap, txtCalendar, new ChiaseListDialog.OnItemClicked() {
 
 			@Override
 			public void onClicked(String selectedKey, boolean isSelected){

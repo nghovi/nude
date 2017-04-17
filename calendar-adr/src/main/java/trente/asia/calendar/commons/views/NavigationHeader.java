@@ -84,7 +84,7 @@ public class NavigationHeader extends LinearLayout{
 		// txtHeaderSubtitle = (TextView)findViewById(R.id.txt_id_header_title_sub);
 		// }
 		if(!CCStringUtil.isEmpty(title)){
-			txtHeaderTitle.setText(title);
+			txtHeaderTitle.setText(CCStringUtil.toUpperCase(title));
 		}else{
 			txtHeaderSubtitle = (TextView)findViewById(R.id.txt_id_header_title_sub);
 			txtHeaderSubtitle.setTextSize(14);
