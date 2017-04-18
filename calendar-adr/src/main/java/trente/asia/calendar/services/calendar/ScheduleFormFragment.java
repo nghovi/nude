@@ -168,7 +168,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 		String startTimeStr;
 		String endTimeStr;
 
-		if(schedule != null && !CCStringUtil.isEmpty(schedule.key) && !schedule.isAllDay){
+		if(schedule != null && !CCStringUtil.isEmpty(schedule.key) && (!schedule.isAllDay || schedule.isPeriodSchedule())){
 			startDate = WelfareUtil.makeDate(schedule.startDate);
 			startDate = CCDateUtil.makeDateTime(startDate, schedule.startTime);
 			endDate = WelfareUtil.makeDate(schedule.endDate);
@@ -316,7 +316,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 		Collections.sort(calendarHolders, new Comparator<ApiObjectModel>() {
 			@Override
 			public int compare(ApiObjectModel o1, ApiObjectModel o2) {
-				return o1.value.compareTo(o2.value);
+				return o1.value.compareToIgnoreCase(o2.value);
 			}
 		});
 		Map<String, String> calendarMap = WelfareFormatUtil.convertList2Map(calendarHolders);

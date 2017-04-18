@@ -114,7 +114,7 @@ public class CalendarDayView extends LinearLayout{
 		LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		LinearLayout itemView = (LinearLayout)inflater.inflate(R.layout.weekly_calendar_row_header_item, null);
 		rowItemView = itemView.findViewById(R.id.rlt_day_view);
-		txtContent = (TextView)rowItemView.findViewById(R.id.txt_id_row_content);
+		txtContent = (TextView)rowItemView.findViewById(R.id.monthly_calendar_title_day_label);
 		LayoutParams layoutParams = new LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
 		itemView.setLayoutParams(layoutParams);
 

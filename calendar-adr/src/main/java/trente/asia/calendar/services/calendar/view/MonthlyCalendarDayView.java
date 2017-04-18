@@ -11,6 +11,7 @@ import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -32,7 +33,7 @@ import trente.asia.welfare.adr.define.WelfareConst;
 public class MonthlyCalendarDayView extends LinearLayout{
 
 	private Context						mContext;
-	private TextView					txtContent;
+	private TextView					txtDayLabel;
 	private LinearLayout				lnrRowContent;
 	private DailyScheduleClickListener	mListener;
 
@@ -45,6 +46,7 @@ public class MonthlyCalendarDayView extends LinearLayout{
 	private int							periodNum;
 	private int							lastPeriodNum;
 	private boolean						isToday		= false;
+	private TextView					txtHoliday;
 
 	public MonthlyCalendarDayView(Context context){
 		super(context);
@@ -78,21 +80,23 @@ public class MonthlyCalendarDayView extends LinearLayout{
 			}
 		});
 
-		txtContent = (TextView)this.findViewById(R.id.txt_id_row_content);
-		txtContent.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DD, itemDate));
+		txtHoliday = (TextView)this.findViewById(R.id.txt_id_row_holiday);
+
+		txtDayLabel = (TextView)this.findViewById(R.id.txt_id_day_label);
+		txtDayLabel.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DD, itemDate));
 		Calendar itemCalendar = CCDateUtil.makeCalendar(itemDate);
 		if(isWithoutMonth){
-			txtContent.setTextColor(Color.GRAY);
+			txtDayLabel.setTextColor(Color.GRAY);
 		}else{
 			if(CCDateUtil.isToday(itemDate)){
 				isToday = true;
-				txtContent.setBackgroundResource(R.drawable.shape_background_today);
-				txtContent.setTextColor(Color.WHITE);
+				txtDayLabel.setBackgroundResource(R.drawable.shape_background_today);
+				txtDayLabel.setTextColor(Color.WHITE);
 			}else{
 				if(Calendar.SUNDAY == itemCalendar.get(Calendar.DAY_OF_WEEK)){
-					txtContent.setTextColor(Color.RED);
+					txtDayLabel.setTextColor(Color.RED);
 				}else if(Calendar.SATURDAY == itemCalendar.get(Calendar.DAY_OF_WEEK)){
-					txtContent.setTextColor(Color.BLUE);
+					txtDayLabel.setTextColor(Color.BLUE);
 				}
 			}
 		}
@@ -101,42 +105,46 @@ public class MonthlyCalendarDayView extends LinearLayout{
 	}
 
 	public void addSchedule(ScheduleModel scheduleModel){
-		lstSchedule.add(scheduleModel);
-		TextView txtSchedule = new TextView(mContext);
-		txtSchedule.setMaxLines(1);
 		if(ClConst.SCHEDULE_TYPE_HOLIDAY.equals(scheduleModel.scheduleType)){
-			setLayoutHoliday();
-		}
-
-		LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ClConst.TEXT_VIEW_HEIGHT);
-		layoutParams.setMargins(1, 0, 1, 0);
-		txtSchedule.setLayoutParams(layoutParams);
-		txtSchedule.setGravity(Gravity.CENTER_VERTICAL);
-		txtSchedule.setPadding(1, 0, 1, 0);
-
-		String scheduleColor = scheduleModel.getScheduleColor();
-		if(CCBooleanUtil.checkBoolean(scheduleModel.isAllDay)){
-			txtSchedule.setTextColor(Color.WHITE);
-			if(!CCStringUtil.isEmpty(scheduleColor)){
-				txtSchedule.setBackgroundColor(Color.parseColor(scheduleColor));
-			}else{
-				txtSchedule.setBackgroundColor(Color.RED);
-			}
+			setLayoutHoliday(scheduleModel);
+		}else if(ClConst.SCHEDULE_TYPE_BIRTHDAY.equals(scheduleModel.scheduleType)){
+			setLayoutBirthday(scheduleModel);
 		}else{
-			if(!CCStringUtil.isEmpty(scheduleColor)){
-				txtSchedule.setTextColor(Color.parseColor(scheduleColor));
+			lstSchedule.add(scheduleModel);
+			TextView txtSchedule = new TextView(mContext);
+			txtSchedule.setMaxLines(1);
+
+			LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ClConst.TEXT_VIEW_HEIGHT);
+
+			layoutParams.setMargins(1, 0, 1, 0);
+			txtSchedule.setLayoutParams(layoutParams);
+			txtSchedule.setGravity(Gravity.CENTER_VERTICAL);
+			txtSchedule.setPadding(1, 0, 1, 0);
+
+			String scheduleColor = scheduleModel.getScheduleColor();
+			if(CCBooleanUtil.checkBoolean(scheduleModel.isAllDay)){
+				txtSchedule.setTextColor(Color.WHITE);
+				if(!CCStringUtil.isEmpty(scheduleColor)){
+					txtSchedule.setBackgroundColor(Color.parseColor(scheduleColor));
+				}else{
+					txtSchedule.setBackgroundColor(Color.RED);
+				}
+			}else{
+				if(!CCStringUtil.isEmpty(scheduleColor)){
+					txtSchedule.setTextColor(Color.parseColor(scheduleColor));
+				}
 			}
-		}
 
-		int textSize = 10;
-		txtSchedule.setTextSize(textSize);
+			int textSize = 10;
+			txtSchedule.setTextSize(textSize);
 
-		txtSchedule.setText(scheduleModel.scheduleName);
-		if(isTheFirst){
-			isTheFirst = false;
-			setMarginTop();
+			txtSchedule.setText(scheduleModel.scheduleName);
+			if(isTheFirst){
+				isTheFirst = false;
+				setMarginTop();
+			}
+			lnrRowContent.addView(txtSchedule);
 		}
-		lnrRowContent.addView(txtSchedule);
 	}
 
 	private void setMarginTop(){
@@ -159,7 +167,7 @@ public class MonthlyCalendarDayView extends LinearLayout{
 		lastPeriodNum = periodNum;
 		lstSchedule.add(scheduleModel);
 		if(ClConst.SCHEDULE_TYPE_HOLIDAY.equals(scheduleModel.scheduleType)){
-			setLayoutHoliday();
+			setLayoutHoliday(scheduleModel);
 		}
 	}
 
@@ -167,14 +175,24 @@ public class MonthlyCalendarDayView extends LinearLayout{
 		return lstSchedule.size();
 	}
 
-	private void setLayoutHoliday(){
+	private void setLayoutHoliday(ScheduleModel scheduleModel){
+		txtHoliday.setVisibility(View.VISIBLE);
+		txtHoliday.setTextColor(Color.RED);
+		txtHoliday.setText(scheduleModel.scheduleName);
 		if(!isToday){
-			txtContent.setBackgroundResource(R.drawable.shape_background_holiday);
-			txtContent.setTextColor(Color.WHITE);
+			// txtDayLabel.setBackgroundResource(R.drawable.shape_background_holiday);
+			txtDayLabel.setTextColor(Color.RED);
+		}else{
+			txtDayLabel.setTextColor(Color.WHITE);
 		}
 	}
 
 	public void addPassivePeriod(ScheduleModel scheduleModel){
 		periodNum++;
+	}
+
+	public void setLayoutBirthday(ScheduleModel scheduleModel){
+		ImageView imgBirthday = (ImageView)findViewById(R.id.img_birthday);
+		imgBirthday.setVisibility(View.VISIBLE);
 	}
 }

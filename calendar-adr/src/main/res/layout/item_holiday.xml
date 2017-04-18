@@ -22,7 +22,7 @@
         <TextView
             style="@style/wl_common_text"
             android:gravity="center_vertical"
-            android:text="@string/holiday_title"
+            android:text="@string/daily_schedules_event_title"
             android:textColor="@color/cl_circle_bg_holiday"/>
     </LinearLayout>
 
