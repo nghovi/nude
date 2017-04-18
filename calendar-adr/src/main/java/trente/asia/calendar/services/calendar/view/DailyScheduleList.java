@@ -47,7 +47,7 @@ public class DailyScheduleList extends LinearLayout{
 	private static final int										MARGIN_TEXT_TOP_BOTTOM	= WelfareUtil.dpToPx(4);
 	private static final int										MARGIN_TOP_BOTTOM		= WelfareUtil.dpToPx(4);
 
-	private LinearLayout											lnrOffers;
+	// private LinearLayout lnrOffers;
 
 	private Map<Integer, List<ScheduleModel>>						schedulesMap;
 	private LayoutInflater											inflater;
@@ -55,8 +55,8 @@ public class DailyScheduleList extends LinearLayout{
 	private Date													selectedDate;
 	private WeeklyScheduleListAdapter.OnScheduleItemClickListener	onScheduleItemClickListener;
 
-	private LinearLayout											lnrHolidays;
-	private LinearLayout											lnrBirthdays;
+	private LinearLayout											lnrEvents;
+	// private LinearLayout lnrBirthdays;
 	public boolean													hasDisplayedItem		= false;
 
 	public DailyScheduleList(Context context){
@@ -70,9 +70,9 @@ public class DailyScheduleList extends LinearLayout{
 	public void init(LayoutInflater inflater, WeeklyScheduleListAdapter.OnScheduleItemClickListener onScheduleItemClickListener){
 		this.inflater = inflater;
 		this.onScheduleItemClickListener = onScheduleItemClickListener;
-		lnrHolidays = (LinearLayout)findViewById(R.id.lnr_daily_schedules_list_holiday);
-		lnrOffers = (LinearLayout)findViewById(R.id.lnr_daily_schedules_list_work_offer);
-		lnrBirthdays = (LinearLayout)findViewById(R.id.lnr_daily_schedules_list_birthday);
+		lnrEvents = (LinearLayout)findViewById(R.id.lnr_daily_schedules_list_event);
+		// lnrOffers = (LinearLayout)findViewById(R.id.lnr_daily_schedules_list_work_offer);
+		// lnrBirthdays = (LinearLayout)findViewById(R.id.lnr_daily_schedules_list_birthday);
 
 	}
 
@@ -83,25 +83,38 @@ public class DailyScheduleList extends LinearLayout{
 		buildTimelySchedules(R.id.lnr_daily_schedule_list_all_day, R.string.daily_page_all_day, schedulesMap.get(SCHEDULES_ALL_DAY));
 		buildTimelySchedules(R.id.lnr_daily_schedule_list_morning, R.string.daily_page_morning, schedulesMap.get(SCHEDULES_MORNING));
 		buildTimelySchedules(R.id.lnr_daily_schedule_list_afternoon, R.string.daily_page_afternoon, schedulesMap.get(SCHEDULES_AFTERNOON));
-		buildHolidays(holidayModels);
-		buildOffers(offers);
-		buildBirthdays(userModels);
+		buildEvents(holidayModels, offers, userModels);
 	}
 
-	private void buildHolidays(List<HolidayModel> holidayModels){
-		lnrHolidays.removeAllViews();
+	private void buildEvents(List<HolidayModel> holidayModels, List<WorkOffer> offers, List<UserModel> userModels){
+		lnrEvents.removeAllViews();
+		List<UserModel> birthdayUsers = getBirthdayUsersToday(userModels);
+		List<WorkOffer> workOffers = getWorkOfferToday(offers);
 		List<HolidayModel> holidayModelList = HolidayModel.getHolidayModels(selectedDate, holidayModels);
-		if(!CCCollectionUtil.isEmpty(holidayModelList)){
-			lnrHolidays.setVisibility(View.VISIBLE);
-			TextView header = buildTextView(getContext().getString(R.string.holiday_title));
-			lnrHolidays.addView(header);
+		if(!CCCollectionUtil.isEmpty(holidayModelList) || !CCCollectionUtil.isEmpty(workOffers) || !CCCollectionUtil.isEmpty(birthdayUsers)){
+			lnrEvents.setVisibility(View.VISIBLE);
+			TextView header = buildTextView(getContext().getString(R.string.daily_schedules_event_title));
+			lnrEvents.addView(header);
 			for(HolidayModel holidayModel : holidayModelList){
 				LinearLayout holidayItem = buildHolidayItem(inflater, holidayModel, WelfareFragment.MARGIN_LEFT_RIGHT_PX, R.layout.item_holiday);
-				lnrHolidays.addView(holidayItem);
+				lnrEvents.addView(holidayItem);
 				hasDisplayedItem = true;
 			}
+
+			for(UserModel user : birthdayUsers){
+				LinearLayout birthdayItem = buildBirthdayItem(getContext(), inflater, user, R.layout.item_birthday);
+				lnrEvents.addView(birthdayItem);
+				hasDisplayedItem = true;
+			}
+
+			for(WorkOffer offer : workOffers){
+				LinearLayout birthdayItem = buildOfferItem(getContext(), inflater, offer, R.layout.item_work_offer);
+				lnrEvents.addView(birthdayItem);
+				hasDisplayedItem = true;
+			}
+
 		}else{
-			lnrHolidays.setVisibility(View.GONE);
+			lnrEvents.setVisibility(View.GONE);
 		}
 	}
 
@@ -110,24 +123,13 @@ public class DailyScheduleList extends LinearLayout{
 		itemHoliday.setPadding(paddingLeftRightPx, MARGIN_TOP_BOTTOM, paddingLeftRightPx, MARGIN_TOP_BOTTOM);
 		TextView txtHolidayName = (TextView)itemHoliday.findViewById(R.id.txt_item_holiday_name);
 		txtHolidayName.setText(holidayModel.holidayName);
+//		ImageView imgHoliday = (ImageView)itemHoliday.findViewById(R.id.img_item_holiday_image);
+//		WfPicassoHelper.loadImage(itemHoliday.getContext(), holidayModel.imgPath, imgHoliday, null);
 		return itemHoliday;
 	}
 
 	private void buildOffers(List<WorkOffer> offers){
-		lnrOffers.removeAllViews();
-		List<WorkOffer> workOffers = getWorkOfferToday(offers);
-		if(!CCCollectionUtil.isEmpty(workOffers)){
-			lnrOffers.setVisibility(View.VISIBLE);
-			TextView header = buildTextView(getContext().getString(R.string.offer_title));
-			lnrOffers.addView(header);
-			for(WorkOffer offer : workOffers){
-				LinearLayout birthdayItem = buildOfferItem(getContext(), inflater, offer, R.layout.item_work_offer);
-				lnrOffers.addView(birthdayItem);
-				hasDisplayedItem = true;
-			}
-		}else{
-			lnrOffers.setVisibility(View.GONE);
-		}
+
 	}
 
 	private List<WorkOffer> getWorkOfferToday(List<WorkOffer> offers){
@@ -183,25 +185,12 @@ public class DailyScheduleList extends LinearLayout{
 
 		txtType.setText(offer.offerTypeName);
 		txtStatus.setText(offer.offerStatusName);
-		txtNote.setText(offer.note);
+//		txtNote.setText(offer.note);
 		return offerItemView;
 	}
 
 	private void buildBirthdays(List<UserModel> userModels){
-		lnrBirthdays.removeAllViews();
-		List<UserModel> birthdayUsers = getBirthdayUsersToday(userModels);
-		if(!CCCollectionUtil.isEmpty(birthdayUsers)){
-			lnrBirthdays.setVisibility(View.VISIBLE);
-			TextView header = buildTextView(getContext().getString(R.string.birthday_title));
-			lnrBirthdays.addView(header);
-			for(UserModel user : birthdayUsers){
-				LinearLayout birthdayItem = buildBirthdayItem(getContext(), inflater, user, R.layout.item_birthday);
-				lnrBirthdays.addView(birthdayItem);
-				hasDisplayedItem = true;
-			}
-		}else{
-			lnrBirthdays.setVisibility(View.GONE);
-		}
+
 	}
 
 	public static void sortBirthdays(List<UserModel> userModels){

@@ -10,12 +10,14 @@ import java.util.List;
 import org.json.JSONObject;
 
 import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import trente.asia.android.define.CsConst;
 import trente.asia.android.util.CsDateUtil;
+import trente.asia.calendar.R;
 import trente.asia.calendar.services.calendar.model.CalendarDayModel;
 import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
@@ -62,6 +64,11 @@ public abstract class SchedulesPageListViewFragment extends SchedulesPageFragmen
 			rowView.lnrRowContent.addView(dayView);
 			calendarDayViews.add(dayView);
 		}
+	}
+
+	@Override
+	protected int getHeaderBgColor() {
+		return ContextCompat.getColor(activity, R.color.wf_app_color_base);
 	}
 
 	protected CalendarDayView getCalendayDayView(){

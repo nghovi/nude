@@ -19,10 +19,18 @@
             android:scaleType="fitXY"
             android:src="@drawable/cl_icon_holiday"/>
 
+        <!--<ImageView-->
+            <!--android:id="@+id/img_item_holiday_image"-->
+            <!--android:layout_width="@dimen/margin_24dp"-->
+            <!--android:layout_height="@dimen/margin_24dp"-->
+            <!--android:layout_marginRight="@dimen/margin_10dp"-->
+            <!--android:scaleType="fitXY"-->
+            <!--android:src="@drawable/cl_icon_holiday"/>-->
+
         <TextView
+            android:id="@+id/txt_item_holiday_name"
             style="@style/wl_common_text"
-            android:gravity="center_vertical"
-            android:text="@string/holiday_title"
+            android:gravity="left|center_vertical"
             android:textColor="@color/cl_circle_bg_holiday"/>
     </LinearLayout>
 
@@ -32,11 +40,7 @@
                   android:layout_marginLeft="@dimen/margin_15dp"
                   android:layout_weight="0.4"
                   android:gravity="center_vertical">
-        <TextView
-            android:id="@+id/txt_item_holiday_name"
-            style="@style/wl_common_text"
-            android:gravity="left|center_vertical"
-            android:textColor="@color/cl_circle_bg_holiday"/>
+
     </LinearLayout>
 
 

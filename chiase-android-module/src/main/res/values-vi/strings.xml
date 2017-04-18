@@ -11,7 +11,7 @@
     <string name="chiase_title_movie_choose">Chọn video</string>
     <string name="chiase_title_movie_take">Quay video</string>
 
-    <string name="chiase_common_ok">Có</string>
+    <string name="chiase_common_ok">OK</string>
     <string name="chiase_common_cancel">Không</string>
     <string name="chiase_common_cancel1">Hủy</string>
     <string name="chiase_common_edit">Chỉnh sửa</string>
@@ -42,8 +42,9 @@
     <string name="chiase_common_disabled_function">Hiện tại không thể sử dụng chức năng này</string>
     <string name="chiase_common_not_working_gps">Không thể xác định vị trí. Hãy kiểm tra lại kết nối mạng.</string>
 
-    <string name="chiase_common_success_change_push_setting">Push Notification setting has been changed.(en)</string>
-    <string name="chiase_common_success_change_avatar">Your avatar has been changed successfully!(en)</string>
-    <string name="chiase_common_success_change_password"> Your password has been changed successfully!(en)</string>
+    <string name="chiase_common_success_change_push_setting">Cài đặt thông báo của bạn đã được thay đổi</string>
+    <string name="chiase_common_success_change_avatar">Ảnh đại diện của bạn đã được thay đổi</string>
+    <string name="chiase_common_success_change_password">Mật khẩu của bạn đã được thay đổi</string>
+    <string name="chiase_common_success_signout">Đăng xuất thành công</string>
 
 </resources>

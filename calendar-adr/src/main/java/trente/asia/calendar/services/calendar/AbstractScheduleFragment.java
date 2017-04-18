@@ -14,6 +14,7 @@ import android.support.v7.widget.SwitchCompat;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import asia.chiase.core.util.CCBooleanUtil;
 import asia.chiase.core.util.CCFormatUtil;
@@ -62,6 +63,7 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 	protected List<CategoryModel>	categories;
 	protected ChiaseTextView		txtCategory;
 	protected SwitchCompat			swtAllDay;
+	protected LinearLayout			lnrEndDate;
 
 	@Override
 	protected void initView(){
@@ -80,6 +82,7 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 
 		txtStartDate = (ChiaseTextView)getView().findViewById(R.id.txt_id_start_date);
 		txtEndDate = (ChiaseTextView)getView().findViewById(R.id.txt_id_end_date);
+		lnrEndDate = (LinearLayout)getView().findViewById(R.id.lnr_id_end_date);
 		txtStartTime = (ChiaseTextView)getView().findViewById(R.id.txt_id_start_time);
 		txtEndTime = (ChiaseTextView)getView().findViewById(R.id.txt_id_end_time);
 	}
@@ -157,6 +160,8 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 			if(ClRepeatUtil.isRepeat(schedule.repeatType)){
 				ScheduleRepeatModel repeatModel = new ScheduleRepeatModel(schedule);
 				txtRepeat.setText(ClRepeatUtil.getRepeatDescription(repeatModel, activity));
+			} else {
+				txtRepeat.setText(getString(R.string.chiase_common_none));
 			}
 		}else{
 			txtCalendar.setText(calendars.get(0).calendarName);
@@ -168,10 +173,15 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 			txtCategory.setTextColor(Color.parseColor(WelfareFormatUtil.formatColor(categories.get(0).categoryColor)));
 		}
 
+		lnrEndDate.setVisibility(View.VISIBLE);
 		if(swtAllDay.isChecked()){
 			txtStartTime.setVisibility(View.INVISIBLE);
 			txtEndTime.setVisibility(View.INVISIBLE);
-			txtEndDate.setVisibility(View.VISIBLE);
+			if(!CCStringUtil.isEmpty(schedule.key) && !schedule.isRepeat(schedule)){
+				txtEndDate.setVisibility(View.VISIBLE);
+			}else{
+				lnrEndDate.setVisibility(View.GONE);
+			}
 		}else{
 			txtStartTime.setVisibility(View.VISIBLE);
 			txtEndTime.setVisibility(View.VISIBLE);

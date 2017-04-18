@@ -106,7 +106,7 @@ public class ClSettingFragment extends AbstractClFragment{
 	@Override
 	protected void successUpdate(JSONObject response, String url){
 		if(WfUrlConst.WF_ACC_0004.equals(url)){
-			Toast.makeText(activity, "Signed out successfully", Toast.LENGTH_LONG).show();
+			Toast.makeText(activity, getString(R.string.chiase_common_success_signout), Toast.LENGTH_LONG).show();
 			emptyLocalData();
 			gotoSignIn();
 		}else{

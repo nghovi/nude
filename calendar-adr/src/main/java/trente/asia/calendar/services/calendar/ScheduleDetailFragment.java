@@ -75,6 +75,7 @@ public class ScheduleDetailFragment extends AbstractScheduleFragment{
 			imgRightIcon.setVisibility(View.VISIBLE);
 			imgRightIcon.setOnClickListener(this);
 		}
+
 	}
 
 	@Override

@@ -19,8 +19,8 @@
     <string name="wlf_sign_out">Đăng xuất</string>
     <string name="wlf_update_info">Cập nhật</string>
     <string name="wf_account_info_title">Thông tin tài khoản</string>
-    <string name="wf_sign_in_remember">Lưu ID người dùng</string>
-    <string name="wf_common_signin_user_id">ID người dùng</string>
+    <string name="wf_sign_in_remember">Lưu tài khoản</string>
+    <string name="wf_common_signin_user_id">Tên tài khoản</string>
     <string name="wf_common_signin_password">Mật khẩu</string>
 
     <string name="wf_signout_confirm">Bạn muốn đăng xuất?</string>
@@ -51,10 +51,10 @@
     <string name="wf_done">Hoàn thành</string>
     <string name="wf_about_app">Giới thiệu về ứng dụng</string>
     <string name="wf_setting_contact_us">Liên hệ</string>
-    <string name="wf_pricacy_policy">Chính sách riêng tư</string>
-    <string name="wf_term_service">Quy ước sử dụng</string>
+    <string name="wf_pricacy_policy">Chính sách bảo mật</string>
+    <string name="wf_term_service">Điều khoản sử dụng</string>
     <string name="wf_pricacy_policy2">
-        <u>Chính sách riêng tư</u>
+        <u>Chính sách bảo mật</u>
     </string>
     <string name="wf_term_service2">
         <u>Quy ước sử dụng</u>

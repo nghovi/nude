@@ -2,6 +2,7 @@ package trente.asia.dailyreport.services.report;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.json.JSONException;
@@ -17,6 +18,7 @@ import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
@@ -32,6 +34,7 @@ import trente.asia.dailyreport.services.report.view.MyReportListAdapter;
 import trente.asia.dailyreport.utils.DRUtil;
 import trente.asia.dailyreport.view.DRCalendarHeader;
 import trente.asia.welfare.adr.activity.WelfareActivity;
+import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WelfareUtil;
@@ -68,7 +71,7 @@ public class MyReportFragment extends AbstractDRFragment implements DRCalendarVi
 
 	@Override
 	public void initData(){
-		requestDailyReportSingle(calendarHeader.getSelectedYear(), calendarHeader.getSelectedYearMonthStr());
+		requestDailyReportSingle(calendarHeader.getSelectedDate());
 	}
 
 	@Override
@@ -80,7 +83,8 @@ public class MyReportFragment extends AbstractDRFragment implements DRCalendarVi
 		calendarHeader = (DRCalendarHeader)getView().findViewById(R.id.lnr_calendar_header);
 		Calendar c = Calendar.getInstance();
 		txtDate = (TextView)getView().findViewById(R.id.fragment_txt_calendar_header_date);
-		calendarHeader.buildLayout(this, 1970, 1, c.get(Calendar.YEAR) + 1, 12, c.get(Calendar.YEAR), c.get(Calendar.MONTH) + 1, new DRCalendarHeader.OnViewChangeListener() {
+		calendarHeader.setStepType(DRCalendarHeader.STEP_TYPE_MONTH);
+		calendarHeader.buildLayout(1970, 1, c.get(Calendar.YEAR) + 1, 12, Calendar.getInstance().getTime(), new DRCalendarHeader.OnViewChangeListener() {
 
 			@Override
 			public void viewAsList(){
@@ -94,13 +98,14 @@ public class MyReportFragment extends AbstractDRFragment implements DRCalendarVi
 		}, new DRCalendarHeader.OnTimeChangeListener() {
 
 			@Override
-			public void onTimeChange(int newYear, int newMonth){
-				String monthYear = WelfareUtil.getYearMonthStr(newYear, newMonth);
-				txtDate.setText(monthYear);
-				requestDailyReportSingle(newYear, monthYear);
+			public void onTimeChange(Date newSelectedDate){
+				String selectedYearMonthStr = calendarHeader.getSelectedYearMonthStr();
+				txtDate.setText(selectedYearMonthStr);
+				requestDailyReportSingle(newSelectedDate);
 			}
-		});
-		txtDate.setText(calendarHeader.getSelectedYearMonthStr());
+		}, getString(R.string.header_calendar_this_month));
+		String selectedYearMonthStr = calendarHeader.getSelectedYearMonthStr();
+		txtDate.setText(selectedYearMonthStr);
 		lstReports = (ListView)getView().findViewById(R.id.lst_my_report_fragment);
 
 		mScrCalendarView = (ScrollView)getView().findViewById(R.id.src_id_calendar_view);
@@ -129,7 +134,8 @@ public class MyReportFragment extends AbstractDRFragment implements DRCalendarVi
 		}
 	}
 
-	private void requestDailyReportSingle(int searchYear, String monthStr){
+	private void requestDailyReportSingle(Date date){
+		String monthStr = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_YYYY_MM, date);
 		UserModel userMe = prefAccUtil.getUserPref();
 		JSONObject jsonObject = new JSONObject();
 		try{
@@ -200,7 +206,7 @@ public class MyReportFragment extends AbstractDRFragment implements DRCalendarVi
 	private List<ReportModel> appendReports(List<ReportModel> reports){
 		Calendar c = Calendar.getInstance();
 		c.set(Calendar.YEAR, calendarHeader.getSelectedYear());
-		c.set(Calendar.MONTH, calendarHeader.getSelectedMonth() - 1);
+		c.set(Calendar.MONTH, calendarHeader.getSelectedMonth());
 		List<ReportModel> results = new ArrayList<>();
 		for(int i = c.getActualMinimum(Calendar.DAY_OF_MONTH); i <= c.getActualMaximum(Calendar.DAY_OF_MONTH); i++){
 			c.set(Calendar.DAY_OF_MONTH, i);

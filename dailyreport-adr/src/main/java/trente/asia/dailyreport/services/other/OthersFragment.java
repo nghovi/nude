@@ -12,10 +12,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
-import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.HorizontalScrollView;
@@ -24,8 +24,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import asia.chiase.core.util.CCDateUtil;
+import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
+import trente.asia.android.util.CsDateUtil;
 import trente.asia.dailyreport.BuildConfig;
 import trente.asia.dailyreport.DRConst;
 import trente.asia.dailyreport.R;
@@ -38,12 +40,11 @@ import trente.asia.dailyreport.services.report.model.Holiday;
 import trente.asia.dailyreport.services.report.model.ReportModel;
 import trente.asia.dailyreport.utils.DRUtil;
 import trente.asia.dailyreport.view.DRCalendarHeader;
+import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.dialog.WfProfileDialog;
 import trente.asia.welfare.adr.models.DeptModel;
 import trente.asia.welfare.adr.models.UserModel;
-import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
-import trente.asia.welfare.adr.utils.WelfareUtil;
 import trente.asia.welfare.adr.utils.WfPicassoHelper;
 import trente.asia.welfare.adr.view.SelectableRoundedImageView;
 import trente.asia.welfare.adr.view.WfSpinner;
@@ -57,6 +58,7 @@ public class OthersFragment extends AbstractDRFragment{
 	private LinearLayout						lnrReports;
 	private DRCalendarHeader					calendarHeader;
 	private List<ReportModel>					filteredReports;
+	final private static int					FIRST_DAY			= Calendar.MONDAY;
 
 	private List<DRUserModel>					lstUser				= new ArrayList<>();	// user list for
 	// calendar view
@@ -65,7 +67,7 @@ public class OthersFragment extends AbstractDRFragment{
 	// private LinearLayout mLnrReport;
 	private LinearLayout						mLnrReportHeader;
 	private LinearLayout						mLnrReportContent;
-	HorizontalScrollView						horizontalScrollViewHeader;
+	// HorizontalScrollView horizontalScrollViewHeader;
 	HorizontalScrollView						horizontalScrollViewContent;
 	ViewTreeObserver.OnScrollChangedListener	listenerForHeader;
 	ViewTreeObserver.OnScrollChangedListener	listenerForContent;
@@ -84,6 +86,7 @@ public class OthersFragment extends AbstractDRFragment{
 	private boolean								deptSpinnerInited	= false;
 	private TextView							txtDate;
 	private WfProfileDialog						mDlgProfile;
+	private Date								selectedDate;
 
 	@Override
 	public int getFragmentLayoutId(){
@@ -104,7 +107,7 @@ public class OthersFragment extends AbstractDRFragment{
 		UserModel userModel = prefAccUtil.getUserPref();
 		selectedDept = new DRDeptModel(userModel.getDept().getKey(), userModel.getDept().getDeptName());
 
-		requestDailyReportAllUser(calendarHeader.getSelectedYearMonthStr());
+		requestDailyReportAllUser();
 	}
 
 	private void initDynamicData(){
@@ -131,14 +134,15 @@ public class OthersFragment extends AbstractDRFragment{
 		Calendar c = Calendar.getInstance();
 		mLnrReportHeader.removeAllViews();
 
-		Date currentDate = calendarHeader.getSelectedTime();
-		Date date01 = CCDateUtil.makeDateWithFirstday(currentDate);
-		Date date31 = CCDateUtil.makeDateWithLastday(currentDate);
-		lstDate = CCDateUtil.makeDateList(date01, date31);
+		Date selectedDate = calendarHeader.getSelectedDate();
+		List<Date> dates = CsDateUtil.getAllDate4Week(CCDateUtil.makeCalendar(selectedDate), FIRST_DAY);
+
+		lstDate = CCDateUtil.makeDateList(dates.get(0), dates.get(dates.size() - 1));
 
 		for(Date date : lstDate){
 			View dateView = LayoutInflater.from(activity).inflate(R.layout.item_calendar_other_header, null);
 			buildCalendarCellHeader(date, dateView, c);
+			dateView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
 			mLnrReportHeader.addView(dateView);
 		}
 		mLnrReportHeader.setBackgroundColor(ContextCompat.getColor(activity, R.color.core_gray));
@@ -276,29 +280,31 @@ public class OthersFragment extends AbstractDRFragment{
 				}else{
 					cell = inflater.inflate(R.layout.item_calendar_other_empty, null);
 				}
+				cell.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
 				buildCalendarCellImage(date, reportModel, cell, cToday);
 
 				reportRow.addView(cell);
 			}
 			mLnrReportContent.addView(reportRow);
 		}
-		scrollToToday();
+		// scrollToToday();
 	}
 
-	private void scrollToToday(){
-		final Calendar c = Calendar.getInstance();
-		if(calendarHeader.getSelectedMonth() == c.get(Calendar.MONTH) + 1){
-			horizontalScrollViewHeader.postDelayed(new Runnable() {
-
-				public void run(){
-					final int todayPosition = (c.get(Calendar.DAY_OF_MONTH) - 2) * horizontalScrollViewHeader.getChildAt(0).getRight() / c.getActualMaximum(Calendar.DAY_OF_MONTH);
-					horizontalScrollViewHeader.smoothScrollTo(todayPosition, 0);
-				}
-			}, 200);
-		}else{
-			horizontalScrollViewHeader.smoothScrollTo(0, 0);
-		}
-	}
+	// private void scrollToToday(){
+	// final Calendar c = Calendar.getInstance();
+	// if(calendarHeader.getSelectedMonth() == c.get(Calendar.MONTH) + 1){
+	// horizontalScrollViewHeader.postDelayed(new Runnable() {
+	//
+	// public void run(){
+	// final int todayPosition = (c.get(Calendar.DAY_OF_MONTH) - 2) * horizontalScrollViewHeader.getChildAt(0).getRight() /
+	// c.getActualMaximum(Calendar.DAY_OF_MONTH);
+	// horizontalScrollViewHeader.smoothScrollTo(todayPosition, 0);
+	// }
+	// }, 200);
+	// }else{
+	// horizontalScrollViewHeader.smoothScrollTo(0, 0);
+	// }
+	// }
 
 	// aaaa
 	@Override
@@ -309,7 +315,8 @@ public class OthersFragment extends AbstractDRFragment{
 		calendarHeader = (DRCalendarHeader)getView().findViewById(R.id.lnr_calendar_header);
 		Calendar c = Calendar.getInstance();
 		txtDate = (TextView)getView().findViewById(R.id.fragment_txt_calendar_header_date);
-		calendarHeader.buildLayout(this, 1970, 1, c.get(Calendar.YEAR) + 1, 12, c.get(Calendar.YEAR), c.get(Calendar.MONTH) + 1, new DRCalendarHeader.OnViewChangeListener() {
+		calendarHeader.setStepType(DRCalendarHeader.STEP_TYPE_WEEK);
+		calendarHeader.buildLayout(1970, 1, c.get(Calendar.YEAR) + 1, 12, Calendar.getInstance().getTime(), new DRCalendarHeader.OnViewChangeListener() {
 
 			@Override
 			public void viewAsList(){
@@ -323,12 +330,12 @@ public class OthersFragment extends AbstractDRFragment{
 		}, new DRCalendarHeader.OnTimeChangeListener() {
 
 			@Override
-			public void onTimeChange(int newYear, int newMonth){
-				String monthYear = WelfareUtil.getYearMonthStr(newYear, newMonth);
-				txtDate.setText(monthYear);
-				requestDailyReportAllUser(monthYear);
+			public void onTimeChange(Date newSelectedDate){
+				selectedDate = newSelectedDate;
+				txtDate.setText(calendarHeader.getSelectedYearMonthStr());
+				requestDailyReportAllUser();
 			}
-		});
+		}, getString(R.string.header_calendar_this_week));
 		txtDate.setText(calendarHeader.getSelectedYearMonthStr());
 		lstReports = (ListView)getView().findViewById(R.id.fragment_other_report_list);
 		lnrReports = (LinearLayout)getView().findViewById(R.id.fragment_other_report_calandar_view);
@@ -339,53 +346,53 @@ public class OthersFragment extends AbstractDRFragment{
 		mLnrReportHeader = (LinearLayout)getView().findViewById(R.id.fragment_others_report_header);
 		mLnrReportContent = (LinearLayout)getView().findViewById(R.id.fragment_others_report_content);
 
-		horizontalScrollViewHeader = (HorizontalScrollView)getView().findViewById(R.id.horizontalScrollViewHeader);
-		horizontalScrollViewContent = (HorizontalScrollView)getView().findViewById(R.id.horizontalScrollViewContent);
-
-		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-			horizontalScrollViewHeader.setOnScrollChangeListener(new View.OnScrollChangeListener() {
-
-				@Override
-				public void onScrollChange(View view, int i, int i1, int i2, int i3){
-					horizontalScrollViewContent.scrollTo(i, i1);
-				}
-			});
-
-			horizontalScrollViewContent.setOnScrollChangeListener(new View.OnScrollChangeListener() {
-
-				@Override
-				public void onScrollChange(View view, int i, int i1, int i2, int i3){
-					horizontalScrollViewHeader.scrollTo(i, i1);
-				}
-			});
-
-		}else{
-			listenerForHeader = new ViewTreeObserver.OnScrollChangedListener() {
-
-				@Override
-				public void onScrollChanged(){
-					int scrollX = horizontalScrollViewHeader.getScrollX();
-					horizontalScrollViewContent.getViewTreeObserver().removeOnScrollChangedListener(listenerForContent);
-					horizontalScrollViewContent.scrollTo(scrollX, 0);
-					horizontalScrollViewContent.getViewTreeObserver().addOnScrollChangedListener(listenerForContent);
-				}
-			};
-
-			listenerForContent = new ViewTreeObserver.OnScrollChangedListener() {
-
-				@Override
-				public void onScrollChanged(){
-					int scrollX = horizontalScrollViewContent.getScrollX();
-					horizontalScrollViewHeader.getViewTreeObserver().removeOnScrollChangedListener(listenerForHeader);
-					horizontalScrollViewHeader.scrollTo(scrollX, 0);
-					horizontalScrollViewHeader.getViewTreeObserver().addOnScrollChangedListener(listenerForHeader);
-				}
-			};
-
-			horizontalScrollViewHeader.getViewTreeObserver().addOnScrollChangedListener(listenerForHeader);
-
-			horizontalScrollViewContent.getViewTreeObserver().addOnScrollChangedListener(listenerForContent);
-		}
+		// horizontalScrollViewHeader = (HorizontalScrollView)getView().findViewById(R.id.horizontalScrollViewHeader);
+		// horizontalScrollViewContent = (HorizontalScrollView)getView().findViewById(R.id.horizontalScrollViewContent);
+		//
+		// if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+		// horizontalScrollViewHeader.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+		//
+		// @Override
+		// public void onScrollChange(View view, int i, int i1, int i2, int i3){
+		// horizontalScrollViewContent.scrollTo(i, i1);
+		// }
+		// });
+		//
+		// horizontalScrollViewContent.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+		//
+		// @Override
+		// public void onScrollChange(View view, int i, int i1, int i2, int i3){
+		// horizontalScrollViewHeader.scrollTo(i, i1);
+		// }
+		// });
+		//
+		// }else{
+		// listenerForHeader = new ViewTreeObserver.OnScrollChangedListener() {
+		//
+		// @Override
+		// public void onScrollChanged(){
+		// int scrollX = horizontalScrollViewHeader.getScrollX();
+		// horizontalScrollViewContent.getViewTreeObserver().removeOnScrollChangedListener(listenerForContent);
+		// horizontalScrollViewContent.scrollTo(scrollX, 0);
+		// horizontalScrollViewContent.getViewTreeObserver().addOnScrollChangedListener(listenerForContent);
+		// }
+		// };
+		//
+		// listenerForContent = new ViewTreeObserver.OnScrollChangedListener() {
+		//
+		// @Override
+		// public void onScrollChanged(){
+		// int scrollX = horizontalScrollViewContent.getScrollX();
+		// horizontalScrollViewHeader.getViewTreeObserver().removeOnScrollChangedListener(listenerForHeader);
+		// horizontalScrollViewHeader.scrollTo(scrollX, 0);
+		// horizontalScrollViewHeader.getViewTreeObserver().addOnScrollChangedListener(listenerForHeader);
+		// }
+		// };
+		//
+		// horizontalScrollViewHeader.getViewTreeObserver().addOnScrollChangedListener(listenerForHeader);
+		//
+		// horizontalScrollViewContent.getViewTreeObserver().addOnScrollChangedListener(listenerForContent);
+		// }
 
 		wfSpinnerDept = (WfSpinner)getView().findViewById(R.id.fragment_other_report_spn_dept);
 		wfSpinnerUser = (WfSpinner)getView().findViewById(R.id.fragment_other_report_spn_user);
@@ -403,11 +410,21 @@ public class OthersFragment extends AbstractDRFragment{
 		}
 	}
 
-	private void requestDailyReportAllUser(String monthStr){
+	private void requestDailyReportAllUser(){
+
+		if(selectedDate == null){
+			Calendar c = Calendar.getInstance();
+			selectedDate = c.getTime();
+		}
+		List<Date> dates = CsDateUtil.getAllDate4Week(CCDateUtil.makeCalendar(selectedDate), FIRST_DAY);
+
 		JSONObject jsonObject = new JSONObject();
 		try{
 			jsonObject.put("targetDeptId", selectedDept == null || DRDeptModel.KEY_ALL.equals(selectedDept.key) ? null : selectedDept.key);
-			jsonObject.put("targetMonth", monthStr);
+			// jsonObject.put("targetMonth", monthStr);
+			jsonObject.put("searchStart", CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, dates.get(0)));
+			jsonObject.put("searchEnd", CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, dates.get(dates.size() - 1)));
+
 		}catch(JSONException ex){
 			ex.printStackTrace();
 		}
@@ -545,7 +562,7 @@ public class OthersFragment extends AbstractDRFragment{
 			updateUserSpinner();
 		}else{
 			selectedDept = newSelectedDept;
-			requestDailyReportAllUser(calendarHeader.getSelectedYearMonthStr());
+			requestDailyReportAllUser();
 		}
 	}
 

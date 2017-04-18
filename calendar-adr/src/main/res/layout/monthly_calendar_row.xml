@@ -1,6 +1,9 @@
 <trente.asia.calendar.services.calendar.view.MonthlyCalendarRowView
     android:id="@+id/rlt_id_weekly_header_row"
+    android:background="@color/cs_common_divider"
     style="@style/cs_common_match_wrap"
+    android:paddingBottom="@dimen/margin_1dp"
+    android:paddingTop="@dimen/margin_1dp"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
@@ -8,10 +11,5 @@
         style="@style/cs_common_match"
         android:orientation="horizontal"
         android:weightSum="7"/>
-
-    <View
-        android:id="@+id/view_id_divider"
-        style="@style/cs_common_divider"
-        android:layout_below="@+id/lnr_id_row_content"/>
 
 </trente.asia.calendar.services.calendar.view.MonthlyCalendarRowView>

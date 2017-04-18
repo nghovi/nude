@@ -36,6 +36,7 @@ import trente.asia.calendar.services.calendar.view.MonthlyCalendarRowView;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
+import trente.asia.welfare.adr.utils.WelfareUtil;
 
 /**
  * MonthlyPageFragment
@@ -53,12 +54,6 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 
 		@Override
 		public int compare(ScheduleModel schedule1, ScheduleModel schedule2){
-			// Date startDate1 = WelfareUtil.makeDate(schedule1.startDate);
-			// Date endDate1 = WelfareUtil.makeDate(schedule1.endDate);
-			//
-			// Date startDate2 = WelfareUtil.makeDate(schedule2.startDate);
-			// Date endDate2 = WelfareUtil.makeDate(schedule2.endDate);
-
 			String startDate1 = WelfareFormatUtil.removeTime4Date(schedule1.startDate);
 			String endDate1 = WelfareFormatUtil.removeTime4Date(schedule1.endDate);
 
@@ -76,6 +71,11 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 
 			if(isAll1 && !isAll2) return -1;
 			if(!isAll1 && isAll2) return 1;
+//			if(schedule1.isPeriodSchedule() && schedule2.isPeriodSchedule()){
+//				long period1 = WelfareUtil.makeDate(schedule1.endDate).getTime() - WelfareUtil.makeDate(schedule1.startDate).getTime();
+//				long period2 = WelfareUtil.makeDate(schedule2.endDate).getTime() - WelfareUtil.makeDate(schedule2.startDate).getTime();
+//				return Long.compare(period2, period1);
+//			}
 			return 0;
 		}
 	}
@@ -129,6 +129,7 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 
 	@Override
 	protected void initData(){
+		super.initData();
 		String activeMonth = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_YYYY_MM, selectedDate);
 		Date activeDate = WelfareFormatUtil.makeDate(prefAccUtil.get(ClConst.PREF_ACTIVE_DATE));
 		if(activeMonth.equals(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_YYYY_MM, activeDate))){
@@ -149,7 +150,7 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 		if(!CCCollectionUtil.isEmpty(lstHoliday)){
 			for(HolidayModel holidayModel : lstHoliday){
 				ScheduleModel scheduleModel = new ScheduleModel(holidayModel);
-				scheduleModel.scheduleName = getString(R.string.cl_schedule_holiday_name, scheduleModel.scheduleName);
+				// scheduleModel.scheduleName = getString(R.string.cl_schedule_holiday_name, scheduleModel.scheduleName);
 				lstSchedule.add(scheduleModel);
 			}
 		}
@@ -158,7 +159,7 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 		if(!CCCollectionUtil.isEmpty(lstBirthdayUser)){
 			for(UserModel birthday : lstBirthdayUser){
 				ScheduleModel scheduleModel = new ScheduleModel(birthday);
-				scheduleModel.scheduleName = getString(R.string.cl_schedule_birth_day_name, scheduleModel.scheduleName);
+				// scheduleModel.scheduleName = getString(R.string.cl_schedule_birth_day_name, scheduleModel.scheduleName);
 				lstSchedule.add(scheduleModel);
 			}
 		}
