@@ -1,16 +1,18 @@
 <LinearLayout style="@style/cs_common_match_wrap"
               xmlns:android="http://schemas.android.com/apk/res/android"
-              android:background="@color/cs_common_divider"
               android:orientation="vertical"
-              android:paddingBottom="@dimen/margin_1dp"
               android:paddingRight="@dimen/margin_1dp"
-              android:paddingTop="@dimen/margin_1dp">
+              android:paddingTop="@dimen/margin_10dp"
+>
 
 
     <LinearLayout
         android:id="@+id/lnr_id_row_title"
         style="@style/cs_common_match_wrap"
+        android:background="@color/cs_common_divider"
         android:orientation="horizontal"
+        android:paddingBottom="@dimen/margin_1dp"
+        android:paddingTop="@dimen/margin_1dp"
         android:weightSum="7">
 
     </LinearLayout>

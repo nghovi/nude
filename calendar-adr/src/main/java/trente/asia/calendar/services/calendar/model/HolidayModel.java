@@ -20,6 +20,7 @@ public class HolidayModel{
 	public String	holidayName;
 	public String	startDate;
 	public String	endDate;
+	public String	imgPath;
 
 	public HolidayModel(){
 

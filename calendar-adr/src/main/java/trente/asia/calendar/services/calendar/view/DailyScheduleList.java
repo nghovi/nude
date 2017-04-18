@@ -123,6 +123,8 @@ public class DailyScheduleList extends LinearLayout{
 		itemHoliday.setPadding(paddingLeftRightPx, MARGIN_TOP_BOTTOM, paddingLeftRightPx, MARGIN_TOP_BOTTOM);
 		TextView txtHolidayName = (TextView)itemHoliday.findViewById(R.id.txt_item_holiday_name);
 		txtHolidayName.setText(holidayModel.holidayName);
+//		ImageView imgHoliday = (ImageView)itemHoliday.findViewById(R.id.img_item_holiday_image);
+//		WfPicassoHelper.loadImage(itemHoliday.getContext(), holidayModel.imgPath, imgHoliday, null);
 		return itemHoliday;
 	}
 
@@ -183,7 +185,7 @@ public class DailyScheduleList extends LinearLayout{
 
 		txtType.setText(offer.offerTypeName);
 		txtStatus.setText(offer.offerStatusName);
-		txtNote.setText(offer.note);
+//		txtNote.setText(offer.note);
 		return offerItemView;
 	}
 

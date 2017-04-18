@@ -71,11 +71,11 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 
 			if(isAll1 && !isAll2) return -1;
 			if(!isAll1 && isAll2) return 1;
-			if(schedule1.isPeriodSchedule() && schedule2.isPeriodSchedule()){
-				long period1 = WelfareUtil.makeDate(schedule1.endDate).getTime() - WelfareUtil.makeDate(schedule1.startDate).getTime();
-				long period2 = WelfareUtil.makeDate(schedule2.endDate).getTime() - WelfareUtil.makeDate(schedule2.startDate).getTime();
-				return Long.compare(period2, period1);
-			}
+//			if(schedule1.isPeriodSchedule() && schedule2.isPeriodSchedule()){
+//				long period1 = WelfareUtil.makeDate(schedule1.endDate).getTime() - WelfareUtil.makeDate(schedule1.startDate).getTime();
+//				long period2 = WelfareUtil.makeDate(schedule2.endDate).getTime() - WelfareUtil.makeDate(schedule2.startDate).getTime();
+//				return Long.compare(period2, period1);
+//			}
 			return 0;
 		}
 	}
