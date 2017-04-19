@@ -107,6 +107,7 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 			Date itemDate = dates.get(index);
 			if(index % CsConst.DAY_NUMBER_A_WEEK == 0){
 				rowView = (MonthlyCalendarRowView)mInflater.inflate(R.layout.monthly_calendar_row, null);
+				rowView.setStartDate(itemDate);
 				lnrRowContent = (LinearLayout)rowView.findViewById(R.id.lnr_id_row_content);
 				lnrCalendarContainer.addView(rowView);
 				lstCalendarRow.add(rowView);
@@ -130,11 +131,11 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 	@Override
 	protected void initData(){
 		super.initData();
-		String activeMonth = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_YYYY_MM, selectedDate);
-		Date activeDate = WelfareFormatUtil.makeDate(prefAccUtil.get(ClConst.PREF_ACTIVE_DATE));
-		if(activeMonth.equals(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_YYYY_MM, activeDate))){
-			loadScheduleList();
-		}
+//		String activeMonth = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_YYYY_MM, selectedDate);
+//		Date activeDate = WelfareFormatUtil.makeDate(prefAccUtil.get(ClConst.PREF_ACTIVE_DATE));
+//		if(activeMonth.equals(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_YYYY_MM, activeDate))){
+//			loadScheduleList();
+//		}
 	}
 
 	@Override
