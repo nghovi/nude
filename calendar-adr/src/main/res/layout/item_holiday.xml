@@ -4,12 +4,10 @@
               android:gravity="center_vertical"
               android:orientation="horizontal"
               android:paddingBottom="@dimen/margin_4dp"
-              android:paddingTop="@dimen/margin_4dp"
-              android:weightSum="1">
+              android:paddingTop="@dimen/margin_4dp">
 
     <LinearLayout android:layout_width="match_parent"
                   android:layout_height="wrap_content"
-                  android:layout_weight="0.6"
                   android:gravity="center_vertical">
 
         <ImageView
@@ -38,7 +36,6 @@
     <LinearLayout android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:layout_marginLeft="@dimen/margin_15dp"
-                  android:layout_weight="0.4"
                   android:gravity="center_vertical">
 
     </LinearLayout>

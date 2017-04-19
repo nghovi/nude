@@ -74,12 +74,12 @@ public class OthersFragment extends AbstractDRFragment{
 	LayoutInflater								inflater;
 
 	private WfSpinner							wfSpinnerDept;
-	private WfSpinner							wfSpinnerUser;
+	// private WfSpinner wfSpinnerUser;
 	private List<DRDeptModel>					drDeptModels;								// dept list for spinner
 	private List<DeptModel>						deptModels;								// dept list for spinner
 
 	private DRDeptModel							selectedDept;
-	private DRUserModel							selectedUser;
+	// private DRUserModel selectedUser;
 	private boolean								changedFragment		= false;				// todo don't know why deptSpinner
 	private List<Holiday>						holidays;
 	private List<DRUserModel>					drUserModels;
@@ -112,15 +112,16 @@ public class OthersFragment extends AbstractDRFragment{
 
 	private void initDynamicData(){
 		lstUser = new ArrayList<>();
-		if(selectedUser != null){
-			if(!selectedUser.key.equals(DRUserModel.KEY_ALL)){
-				lstUser.add(selectedUser);
-			}else{ // select all user
-				if(selectedDept != null){
-					lstUser.addAll(selectedDept.users);
-				}
-			}
-		}
+		// if(selectedUser != null){
+		// if(!selectedUser.key.equals(DRUserModel.KEY_ALL)){
+		// lstUser.add(selectedUser);
+		// }else{ // select all user
+		// if(selectedDept != null){
+		// lstUser.addAll(selectedDept.users);
+		// }
+		// }
+		// }
+		lstUser.addAll(selectedDept.users);
 		// Delete special user: All_USER
 		Iterator<DRUserModel> drUserModelIterator = lstUser.iterator();
 		while(drUserModelIterator.hasNext()){
@@ -395,7 +396,7 @@ public class OthersFragment extends AbstractDRFragment{
 		// }
 
 		wfSpinnerDept = (WfSpinner)getView().findViewById(R.id.fragment_other_report_spn_dept);
-		wfSpinnerUser = (WfSpinner)getView().findViewById(R.id.fragment_other_report_spn_user);
+		// wfSpinnerUser = (WfSpinner)getView().findViewById(R.id.fragment_other_report_spn_user);
 		mDlgProfile = new WfProfileDialog(activity);
 		mDlgProfile.setDialogProfileDetail(50, 50);
 	}
@@ -441,10 +442,9 @@ public class OthersFragment extends AbstractDRFragment{
 			if(deptSpinnerInited == false){
 				deptSpinnerInited = true;
 				buildDeptSpinner();
-			}else{
-				updateUserSpinner();
 			}
 			buildCalendarViewHeader();
+			updateLayout();
 		}
 	}
 
@@ -462,7 +462,7 @@ public class OthersFragment extends AbstractDRFragment{
 					onDeptSelected(selectedPosition);
 				}
 			}
-		}, true);
+		}, false);
 	}
 
 	private int getSelectedDeptPosition(){
@@ -559,59 +559,58 @@ public class OthersFragment extends AbstractDRFragment{
 		DRDeptModel newSelectedDept = drDeptModels.get(selectedPosition);
 		if(selectedDept == null){
 			selectedDept = newSelectedDept;
-			updateUserSpinner();
+			// updateUserSpinner();
+			updateLayout();
 		}else{
 			selectedDept = newSelectedDept;
 			requestDailyReportAllUser();
 		}
 	}
 
-	private void updateUserSpinner(){
-		selectedUser = getSelectedUser(selectedDept.users, selectedUser);
-		wfSpinnerUser.setupLayout(getString(R.string.spinner_name_user), getUserDisplayedValue(selectedDept.users), getSelectedUserPosition(), new WfSpinner.OnDRSpinnerItemSelectedListener() {
+	// private void updateUserSpinner(){
+	// selectedUser = getSelectedUser(selectedDept.users, selectedUser);
+	// wfSpinnerUser.setupLayout(getString(R.string.spinner_name_user), getUserDisplayedValue(selectedDept.users), getSelectedUserPosition(), new
+	// WfSpinner.OnDRSpinnerItemSelectedListener() {
+	//
+	// @Override
+	// public void onItemSelected(int selectedPosition){
+	// selectedUser = selectedDept.users.get(selectedPosition);
+	// updateLayout();
+	// }
+	// }, true);
+	// if(selectedDept.users == null || selectedDept.users.size() == 0){
+	// selectedUser = null;
+	// updateLayout();
+	// }
+	// }
 
-			@Override
-			public void onItemSelected(int selectedPosition){
-				selectedUser = selectedDept.users.get(selectedPosition);
-				updateLayout();
-			}
-		}, true);
-		if(selectedDept.users == null || selectedDept.users.size() == 0){
-			selectedUser = null;
-			updateLayout();
-		}
-	}
-
-	private int getSelectedUserPosition(){
-		if(drUserModels == null || drUserModels.size() == 0 || selectedUser == null){
-			return 0;
-		}
-		for(int i = 0; i < drUserModels.size(); i++){
-			if(drUserModels.get(i).key.equals(selectedUser.key)){
-				return i;
-			}
-		}
-		return 0;
-	}
+	// private int getSelectedUserPosition(){
+	// if(drUserModels == null || drUserModels.size() == 0 || selectedUser == null){
+	// return 0;
+	// }
+	// for(int i = 0; i < drUserModels.size(); i++){
+	// if(drUserModels.get(i).key.equals(selectedUser.key)){
+	// return i;
+	// }
+	// }
+	// return 0;
+	// }
 
 	private void updateLayout(){
-		filteredReportsByDeptAndUser();
+		filteredReportsByDept();
 		buildCalendarView(filteredReports);
 		buildListView(filteredReports);
 	}
 
-	private void filteredReportsByDeptAndUser(){
+	private void filteredReportsByDept(){
 		filteredReports = new ArrayList<>();
-		if(selectedDept != null && selectedUser != null){
+		if(selectedDept != null){
 			for(DRDeptModel deptModel : drDeptModels){
 				for(DRUserModel userModel : deptModel.users){
 					if(userModel.reports != null){
 						for(ReportModel reportModel : userModel.reports){
 							if(ReportModel.REPORT_STATUS_DONE.equals(reportModel.reportStatus)){
-								// if 4 cases (dept, user) = (00, 01, 11, 10)
-								if((DRDeptModel.KEY_ALL.equals(selectedDept.key) && DRUserModel.KEY_ALL.equals(selectedUser.key)) || (DRDeptModel.KEY_ALL.equals(selectedDept.key) && !UserModel.KEY_ALL.equals(selectedUser.key) && reportModel.reportUser.key.equals(selectedUser.key)) || (!DRDeptModel.KEY_ALL.equals(selectedDept.key) && !UserModel.KEY_ALL.equals(selectedUser.key) && reportModel.reportUser.key.equals(selectedUser.key) && reportModel.reportUser.dept.key.equals(selectedDept.key)) || (!DRDeptModel.KEY_ALL.equals(selectedDept.key)
-
-								&& DRUserModel.KEY_ALL.equals(selectedUser.key) && reportModel.reportUser.dept.key.equals(selectedDept.key))){
+								if(DRDeptModel.KEY_ALL.equals(selectedDept.key) || (!DRDeptModel.KEY_ALL.equals(selectedDept.key) && reportModel.reportUser.dept.key.equals(selectedDept.key))){
 									addReportToListIfNotExist(filteredReports, reportModel);
 								}
 							}
@@ -645,17 +644,17 @@ public class OthersFragment extends AbstractDRFragment{
 		});
 	}
 
-	private DRUserModel getSelectedUser(List<DRUserModel> users, DRUserModel previous){
-		if(previous == null || users == null || users.size() <= 0){
-			return null;
-		}
-		for(DRUserModel userModel : users){
-			if(userModel.key.equals(previous.key)){
-				return userModel;
-			}
-		}
-		return null;
-	}
+	// private DRUserModel getSelectedUser(List<DRUserModel> users, DRUserModel previous){
+	// if(previous == null || users == null || users.size() <= 0){
+	// return null;
+	// }
+	// for(DRUserModel userModel : users){
+	// if(userModel.key.equals(previous.key)){
+	// return userModel;
+	// }
+	// }
+	// return null;
+	// }
 
 	private List<String> getDepartmentDisplayedValue(List<DRDeptModel> drDeptModels){
 		List<String> values = new ArrayList<>();
@@ -735,12 +734,12 @@ public class OthersFragment extends AbstractDRFragment{
 		mLnrReportContent = null;
 
 		wfSpinnerDept = null;
-		wfSpinnerUser = null;
+		// wfSpinnerUser = null;
 		drDeptModels = null;
 		deptModels = null;
 
 		selectedDept = null;
-		selectedUser = null;
+		// selectedUser = null;
 		holidays = null;
 		drUserModels = null;
 		txtDate = null;
