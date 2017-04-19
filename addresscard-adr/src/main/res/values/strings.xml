@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Address Card</string>
+    <string name="btn_camera_text">Start camera</string>
+    <string name="default_title_card">User name</string>
+    <string name="menu_card_title">Card</string>
+    <string name="menu_company_title">Company</string>
+    <string name="menu_history_title">History</string>
+    <string name="menu_setting_title">Setting</string>
+</resources>

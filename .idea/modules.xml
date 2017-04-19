@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/addresscard-adr/addresscard-adr.iml" filepath="$PROJECT_DIR$/addresscard-adr/addresscard-adr.iml" />
       <module fileurl="file://$PROJECT_DIR$/calendar-adr/calendar-adr.iml" filepath="$PROJECT_DIR$/calendar-adr/calendar-adr.iml" />
       <module fileurl="file://$PROJECT_DIR$/chiase-android-module/chiase-android-module.iml" filepath="$PROJECT_DIR$/chiase-android-module/chiase-android-module.iml" />
       <module fileurl="file://$PROJECT_DIR$/dailyreport-adr/dailyreport-adr.iml" filepath="$PROJECT_DIR$/dailyreport-adr/dailyreport-adr.iml" />

@@ -114,6 +114,4 @@ public class WelfareActivity extends ChiaseActivity{
 			onActivityResultListener.onActivityResult(requestCode, resultCode, data);
 		}
 	}
-
-
 }
