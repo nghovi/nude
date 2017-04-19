@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import asia.chiase.core.util.CCBooleanUtil;
+import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCStringUtil;
@@ -38,15 +39,17 @@ public class MonthlyCalendarDayView extends LinearLayout{
 	private DailyScheduleClickListener	mListener;
 
 	// private int numberOfSchedule;
-	private boolean						isTheFirst	= true;
+	private boolean						isTheFirst		= true;
 
 	public String						day;
 	public int							dayOfTheWeek;
-	public List<ScheduleModel>			lstSchedule	= new ArrayList<>();
+	public List<ScheduleModel>			lstSchedule		= new ArrayList<>();
 	private int							periodNum;
 	private int							lastPeriodNum;
-	private boolean						isToday		= false;
+	private boolean						isToday			= false;
 	private TextView					txtHoliday;
+	private List<ScheduleModel>			schedules		= new ArrayList<>();
+	private List<Integer>				availableSlots	= new ArrayList<>();
 
 	public MonthlyCalendarDayView(Context context){
 		super(context);
@@ -105,6 +108,23 @@ public class MonthlyCalendarDayView extends LinearLayout{
 	}
 
 	public void addSchedule(ScheduleModel scheduleModel){
+		schedules.add(scheduleModel);
+	}
+
+	private void setMarginTop(){
+		LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+		layoutParams.setMargins(0, lastPeriodNum * ClConst.TEXT_VIEW_HEIGHT, 0, 0);
+		lnrRowContent.setLayoutParams(layoutParams);
+	}
+
+	public void showSchedules(){
+		for(ScheduleModel scheduleModel : schedules){
+			showSchedule(scheduleModel);
+		}
+	}
+
+	private void showSchedule(ScheduleModel scheduleModel){
 		if(ClConst.SCHEDULE_TYPE_HOLIDAY.equals(scheduleModel.scheduleType)){
 			setLayoutHoliday(scheduleModel);
 		}else if(ClConst.SCHEDULE_TYPE_BIRTHDAY.equals(scheduleModel.scheduleType)){
@@ -116,7 +136,7 @@ public class MonthlyCalendarDayView extends LinearLayout{
 
 			LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ClConst.TEXT_VIEW_HEIGHT);
 
-			layoutParams.setMargins(1, 0, 0, 0);
+			// layoutParams.setMargins(1, 0, 0, 0);
 			txtSchedule.setLayoutParams(layoutParams);
 			txtSchedule.setGravity(Gravity.CENTER_VERTICAL);
 			txtSchedule.setPadding(1, 0, 0, 0);
@@ -139,19 +159,20 @@ public class MonthlyCalendarDayView extends LinearLayout{
 			txtSchedule.setTextSize(textSize);
 
 			txtSchedule.setText(scheduleModel.scheduleName);
-			if(isTheFirst){
-				isTheFirst = false;
-				setMarginTop();
+			int marginTop = 0;
+			if(!CCCollectionUtil.isEmpty(availableSlots)){
+				marginTop = availableSlots.remove(0);
+			}else{
+				if(isTheFirst){
+					marginTop = lastPeriodNum * ClConst.TEXT_VIEW_HEIGHT;
+				}
 			}
+			// LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+			layoutParams.setMargins(0, marginTop, 0, 0);
+			txtSchedule.setLayoutParams(layoutParams);
 			lnrRowContent.addView(txtSchedule);
+			isTheFirst = false;
 		}
-	}
-
-	private void setMarginTop(){
-		LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-
-		layoutParams.setMargins(0, lastPeriodNum * ClConst.TEXT_VIEW_HEIGHT, 0, 0);
-		lnrRowContent.setLayoutParams(layoutParams);
 	}
 
 	public void removeAllData(){
@@ -159,7 +180,10 @@ public class MonthlyCalendarDayView extends LinearLayout{
 		periodNum = 0;
 		lastPeriodNum = 0;
 		lstSchedule.clear();
+		availableSlots.clear();
+		schedules.clear();
 		isTheFirst = true;
+
 	}
 
 	public void addPeriod(ScheduleModel scheduleModel){
@@ -188,6 +212,7 @@ public class MonthlyCalendarDayView extends LinearLayout{
 	}
 
 	public void addPassivePeriod(ScheduleModel scheduleModel){
+		availableSlots.add(periodNum * ClConst.TEXT_VIEW_HEIGHT);
 		periodNum++;
 	}
 

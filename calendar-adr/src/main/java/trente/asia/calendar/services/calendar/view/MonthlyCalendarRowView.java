@@ -135,10 +135,10 @@ public class MonthlyCalendarRowView extends RelativeLayout{
 			}
 		}
 		// refresh layout
-		for(MonthlyCalendarDayView dayView : lstCalendarDay){
-			LinearLayout.LayoutParams layoutParamsDay = new LinearLayout.LayoutParams(0, (int)getResources().getDimension(R.dimen.margin_40dp) + maxSchedule * ClConst.TEXT_VIEW_HEIGHT, 1);
-			dayView.setLayoutParams(layoutParamsDay);
-		}
+//		for(MonthlyCalendarDayView dayView : lstCalendarDay){
+//			LinearLayout.LayoutParams layoutParamsDay = new LinearLayout.LayoutParams(0, (int)getResources().getDimension(R.dimen.margin_40dp) + maxSchedule * ClConst.TEXT_VIEW_HEIGHT, 1);
+//			dayView.setLayoutParams(layoutParamsDay);
+//		}
 	}
 
 	private void showSchedule(ScheduleModel scheduleModel){

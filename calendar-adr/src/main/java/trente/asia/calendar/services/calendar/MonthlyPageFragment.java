@@ -204,6 +204,10 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 			rowView.refreshLayout();
 		}
 
+		for (MonthlyCalendarDayView dayView: lstCalendarDay) {
+			dayView.showSchedules();
+		}
+
 		// make daily summary dialog
 		makeSummaryDialog();
 		if(refreshWithoutShowingLoading){

@@ -50,7 +50,6 @@
         <LinearLayout
             android:id="@+id/lnr_id_row_content"
             style="@style/cs_common_match_wrap"
-            android:layout_weight="1"
             android:orientation="vertical"/>
 
     </LinearLayout>
