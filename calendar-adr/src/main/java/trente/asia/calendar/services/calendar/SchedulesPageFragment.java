@@ -80,7 +80,7 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 
 	private void initCalendarHeader() {
 		LayoutInflater mInflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		View titleView = mInflater.inflate(R.layout.monthly_calendar_title, null);
+		View titleView = mInflater.inflate(getCalendarHeaderItem(), null);
 		LinearLayout lnrRowTitle = (LinearLayout) titleView.findViewById(R.id.lnr_id_row_title);
 		int firstDay = Calendar.SUNDAY;
 		if (!CCStringUtil.isEmpty(prefAccUtil.getSetting().CL_START_DAY_IN_WEEK)) {
@@ -205,4 +205,8 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 	protected int getHeaderBgColor() {
 		return ContextCompat.getColor(activity, R.color.wf_login_background_color);
 	}
+
+	abstract int getCalendarHeaderItem();
+
+
 }

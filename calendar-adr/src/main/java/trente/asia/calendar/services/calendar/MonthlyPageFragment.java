@@ -51,6 +51,11 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 
 	private DailySummaryDialog				dialogDailySummary;
 
+	@Override
+	public int getCalendarHeaderItem() {
+		return R.layout.monthly_calendar_title;
+	}
+
 	public class ScheduleComparator implements Comparator<ScheduleModel>{
 
 		@Override

@@ -46,6 +46,11 @@ public abstract class SchedulesPageListViewFragment extends SchedulesPageFragmen
 	}
 
 	@Override
+	public int getCalendarHeaderItem() {
+		return R.layout.weekly_calendar_title;
+	}
+
+	@Override
 	protected void initDayViews(){
 		dates = getAllDate();
 		WeeklyCalendarHeaderRowView rowView = null;
