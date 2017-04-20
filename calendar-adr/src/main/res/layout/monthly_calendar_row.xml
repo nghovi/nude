@@ -1,15 +1,22 @@
 <trente.asia.calendar.services.calendar.view.MonthlyCalendarRowView
     android:id="@+id/rlt_id_weekly_header_row"
-    android:background="@color/cs_common_divider"
     style="@style/cs_common_match_wrap"
-    android:paddingBottom="@dimen/margin_1dp"
-    android:paddingTop="@dimen/margin_1dp"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/cs_common_divider"
+    android:paddingBottom="@dimen/margin_1dp">
 
-    <LinearLayout
-        android:id="@+id/lnr_id_row_content"
-        style="@style/cs_common_match"
-        android:orientation="horizontal"
-        android:weightSum="7"/>
+    <RelativeLayout android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                    android:id="@+id/rlt_row_content"
+                    android:background="@color/wf_login_background_color">
+
+        <LinearLayout
+            android:id="@+id/lnr_id_row_content"
+            style="@style/cs_common_match_wrap"
+            android:background="@color/wf_login_background_color"
+            android:orientation="horizontal"
+            android:weightSum="7"/>
+    </RelativeLayout>
+
 
 </trente.asia.calendar.services.calendar.view.MonthlyCalendarRowView>

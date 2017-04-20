@@ -11,7 +11,6 @@ import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.Gravity;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -37,12 +36,14 @@ public class MonthlyCalendarRowView extends RelativeLayout{
 
 	public List<TextView>				lstTextPeriod	= new ArrayList<>();
 	private List<ScheduleModel>			schedules		= new ArrayList<>();
+	private RelativeLayout				rltPeriod;
 
 	public void setStartDate(Date startDate){
 		this.startDate = startDate;
 		Calendar cEnd = CCDateUtil.makeCalendar(startDate);
-		cEnd.add(Calendar.DATE, 7);
+		cEnd.add(Calendar.DATE, 6);
 		this.endDate = cEnd.getTime();
+		this.rltPeriod = (RelativeLayout)findViewById(R.id.rlt_row_content);
 	}
 
 	private Date	startDate;
@@ -88,11 +89,11 @@ public class MonthlyCalendarRowView extends RelativeLayout{
 					Date endDate1 = WelfareUtil.makeDate(schedule1.endDate);
 					Date endDate2 = WelfareUtil.makeDate(schedule2.endDate);
 
-					startDate1 = CCDateUtil.compareDate(startDate1, startDate, false) < 0 ? startDate : startDate1;
-					startDate2 = CCDateUtil.compareDate(startDate2, startDate, false) < 0 ? startDate : startDate2;
+					startDate1 = CCDateUtil.compareDate(startDate1, startDate, false) <= 0 ? startDate : startDate1;
+					startDate2 = CCDateUtil.compareDate(startDate2, startDate, false) <= 0 ? startDate : startDate2;
 
-					endDate1 = CCDateUtil.compareDate(endDate1, endDate, false) > 0 ? endDate : endDate1;
-					endDate2 = CCDateUtil.compareDate(endDate2, endDate, false) > 0 ? endDate : endDate2;
+					endDate1 = CCDateUtil.compareDate(endDate1, endDate, false) >= 0 ? endDate : endDate1;
+					endDate2 = CCDateUtil.compareDate(endDate2, endDate, false) >= 0 ? endDate : endDate2;
 
 					long startDate1Long = CCDateUtil.makeDate(startDate1).getTime();
 					long startDate2Long = CCDateUtil.makeDate(startDate2).getTime();
@@ -100,11 +101,16 @@ public class MonthlyCalendarRowView extends RelativeLayout{
 					long period1 = CCDateUtil.makeDate(endDate1).getTime() - startDate1Long;
 					long period2 = CCDateUtil.makeDate(endDate2).getTime() - startDate2Long;
 
-					int lengthCompareResult = Long.compare(period2, period1);
-					if(lengthCompareResult == 0){
-						return Long.compare(startDate1Long, startDate2Long);
+					int startCompareResult = Long.compare(startDate1Long, startDate2Long);
+
+					if(startCompareResult == 0){
+						int lengthCompareResult = Long.compare(period2, period1);
+						if(lengthCompareResult == 0){
+							return schedule1.scheduleName.compareTo(schedule2.scheduleName);
+						}
+						return lengthCompareResult;
 					}
-					return lengthCompareResult;
+					return startCompareResult;
 				}
 			});
 		}
@@ -124,8 +130,9 @@ public class MonthlyCalendarRowView extends RelativeLayout{
 
 	public void refreshLayout(){
 		sortSchedules();
-		for(ScheduleModel scheduleModel : schedules){
-			showSchedule(scheduleModel);
+		for(int i = 0; i < schedules.size(); i++){
+			ScheduleModel scheduleModel = schedules.get(i);
+			showSchedule(scheduleModel, i);
 		}
 
 		int maxSchedule = 0;
@@ -135,13 +142,14 @@ public class MonthlyCalendarRowView extends RelativeLayout{
 			}
 		}
 		// refresh layout
-//		for(MonthlyCalendarDayView dayView : lstCalendarDay){
-//			LinearLayout.LayoutParams layoutParamsDay = new LinearLayout.LayoutParams(0, (int)getResources().getDimension(R.dimen.margin_40dp) + maxSchedule * ClConst.TEXT_VIEW_HEIGHT, 1);
-//			dayView.setLayoutParams(layoutParamsDay);
-//		}
+		// for(MonthlyCalendarDayView dayView : lstCalendarDay){
+		// LinearLayout.LayoutParams layoutParamsDay = new LinearLayout.LayoutParams(0, (int)getResources().getDimension(R.dimen.margin_40dp) +
+		// maxSchedule * ClConst.TEXT_VIEW_HEIGHT, 1);
+		// dayView.setLayoutParams(layoutParamsDay);
+		// }
 	}
 
-	private void showSchedule(ScheduleModel scheduleModel){
+	private void showSchedule(ScheduleModel scheduleModel, int i){
 		double itemWidth = this.getWidth() / 7.0;
 		int textSize = 10;
 
@@ -149,18 +157,18 @@ public class MonthlyCalendarRowView extends RelativeLayout{
 		Date endDate = WelfareFormatUtil.makeDate(WelfareFormatUtil.removeTime4Date(scheduleModel.endDate));
 		List<MonthlyCalendarDayView> lstActiveCalendarDay = ClUtil.findListView4Day(lstCalendarDay, startDate, endDate);
 		List<MonthlyCalendarDayView> lstPassiveCalendarDay = getPassiveCalendarDays(lstCalendarDay, lstActiveCalendarDay);
+		int marginTop = (int)getResources().getDimension(R.dimen.margin_35dp) + (ClUtil.getMaxInList(lstActiveCalendarDay) - 1) * ClConst.TEXT_VIEW_HEIGHT;
 
 		for(MonthlyCalendarDayView dayView : lstActiveCalendarDay){
-			dayView.addPeriod(scheduleModel);
+			dayView.addPeriod(scheduleModel, marginTop);
 		}
 
 		for(MonthlyCalendarDayView dayView : lstPassiveCalendarDay){
-			dayView.addPassivePeriod(scheduleModel);
+			dayView.addPassivePeriod(scheduleModel, marginTop * schedules.size());
 		}
 		MonthlyCalendarDayView theFirstCalendarDay = lstActiveCalendarDay.get(0);
 		MonthlyCalendarDayView theLastCalendarDay = lstActiveCalendarDay.get(lstActiveCalendarDay.size() - 1);
 
-		int marginTop = (int)getResources().getDimension(R.dimen.margin_20dp) + (ClUtil.getMaxInList(lstActiveCalendarDay) - 1) * ClConst.TEXT_VIEW_HEIGHT;
 		LayoutParams layoutParams = new LayoutParams((int)(itemWidth * (theLastCalendarDay.dayOfTheWeek - theFirstCalendarDay.dayOfTheWeek + 1)) - 2, ClConst.TEXT_VIEW_HEIGHT);
 		layoutParams.setMargins((int)(itemWidth * theFirstCalendarDay.dayOfTheWeek) + 1, marginTop, 1, 0);
 
@@ -183,13 +191,13 @@ public class MonthlyCalendarRowView extends RelativeLayout{
 		txtSchedule.setTextSize(textSize);
 		txtSchedule.setText(scheduleModel.scheduleName);
 		this.lstTextPeriod.add(txtSchedule);
-		this.addView(txtSchedule);
+		this.rltPeriod.addView(txtSchedule);
 	}
 
 	public void removeAllData(){
 		if(!CCCollectionUtil.isEmpty(this.lstTextPeriod)){
 			for(TextView textView : this.lstTextPeriod){
-				this.removeView(textView);
+				this.rltPeriod.removeView(textView);
 			}
 		}
 		this.lstTextPeriod.clear();

@@ -2,6 +2,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/cs_common_divider"
     android:layout_weight="1"
     android:orientation="vertical">
 
@@ -47,7 +48,7 @@
         </LinearLayout>
 
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/lnr_id_row_content"
             style="@style/cs_common_match_wrap"
             android:orientation="vertical"/>

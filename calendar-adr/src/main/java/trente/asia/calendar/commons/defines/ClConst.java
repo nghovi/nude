@@ -1,6 +1,6 @@
 package trente.asia.calendar.commons.defines;
 
-import android.content.res.Resources;
+import trente.asia.welfare.adr.utils.WelfareUtil;
 
 /**
  * SwConst
@@ -32,7 +32,7 @@ public class ClConst{
 	public static final String	SCHEDULE_MODIFY_TYPE_ONLY_THIS				= "OT";
 	public static final String	SCHEDULE_MODIFY_TYPE_ONLY_FUTURE			= "OF";
 
-	public static final int		TEXT_VIEW_HEIGHT							= (int)(Resources.getSystem().getDisplayMetrics().density * 15);
+	public static final int		TEXT_VIEW_HEIGHT							= WelfareUtil.dpToPx(15);
 
 	public static final String	SCHEDULE_TYPE_HOLIDAY						= "H";
 	public static final String	SCHEDULE_TYPE_WORK_OFFER					= "O";

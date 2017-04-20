@@ -13,10 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import asia.chiase.core.util.CCBooleanUtil;
-import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCStringUtil;
@@ -25,6 +25,7 @@ import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.services.calendar.listener.DailyScheduleClickListener;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.welfare.adr.define.WelfareConst;
+import trente.asia.welfare.adr.utils.WelfareUtil;
 
 /**
  * MonthlyCalendarDayView
@@ -35,11 +36,8 @@ public class MonthlyCalendarDayView extends LinearLayout{
 
 	private Context						mContext;
 	private TextView					txtDayLabel;
-	private LinearLayout				lnrRowContent;
+	private RelativeLayout				lnrRowContent;
 	private DailyScheduleClickListener	mListener;
-
-	// private int numberOfSchedule;
-	private boolean						isTheFirst		= true;
 
 	public String						day;
 	public int							dayOfTheWeek;
@@ -49,7 +47,8 @@ public class MonthlyCalendarDayView extends LinearLayout{
 	private boolean						isToday			= false;
 	private TextView					txtHoliday;
 	private List<ScheduleModel>			schedules		= new ArrayList<>();
-	private List<Integer>				availableSlots	= new ArrayList<>();
+	private List<TextView>				txtSchedules	= new ArrayList<>();
+	private int latestMarginTop = 0;
 
 	public MonthlyCalendarDayView(Context context){
 		super(context);
@@ -104,18 +103,11 @@ public class MonthlyCalendarDayView extends LinearLayout{
 			}
 		}
 
-		lnrRowContent = (LinearLayout)this.findViewById(R.id.lnr_id_row_content);
+		lnrRowContent = (RelativeLayout)this.findViewById(R.id.lnr_id_row_content);
 	}
 
 	public void addSchedule(ScheduleModel scheduleModel){
 		schedules.add(scheduleModel);
-	}
-
-	private void setMarginTop(){
-		LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-
-		layoutParams.setMargins(0, lastPeriodNum * ClConst.TEXT_VIEW_HEIGHT, 0, 0);
-		lnrRowContent.setLayoutParams(layoutParams);
 	}
 
 	public void showSchedules(){
@@ -136,7 +128,6 @@ public class MonthlyCalendarDayView extends LinearLayout{
 
 			LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ClConst.TEXT_VIEW_HEIGHT);
 
-			// layoutParams.setMargins(1, 0, 0, 0);
 			txtSchedule.setLayoutParams(layoutParams);
 			txtSchedule.setGravity(Gravity.CENTER_VERTICAL);
 			txtSchedule.setPadding(1, 0, 0, 0);
@@ -159,19 +150,12 @@ public class MonthlyCalendarDayView extends LinearLayout{
 			txtSchedule.setTextSize(textSize);
 
 			txtSchedule.setText(scheduleModel.scheduleName);
-			int marginTop = 0;
-			if(!CCCollectionUtil.isEmpty(availableSlots)){
-				marginTop = availableSlots.remove(0);
-			}else{
-				if(isTheFirst){
-					marginTop = lastPeriodNum * ClConst.TEXT_VIEW_HEIGHT;
-				}
-			}
-			// LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+			int marginTop = latestMarginTop +  txtSchedules.size() * ClConst.TEXT_VIEW_HEIGHT;
 			layoutParams.setMargins(0, marginTop, 0, 0);
 			txtSchedule.setLayoutParams(layoutParams);
 			lnrRowContent.addView(txtSchedule);
-			isTheFirst = false;
+			txtSchedules.add(txtSchedule);
 		}
 	}
 
@@ -180,19 +164,22 @@ public class MonthlyCalendarDayView extends LinearLayout{
 		periodNum = 0;
 		lastPeriodNum = 0;
 		lstSchedule.clear();
-		availableSlots.clear();
 		schedules.clear();
-		isTheFirst = true;
-
+		txtSchedules.clear();
 	}
 
-	public void addPeriod(ScheduleModel scheduleModel){
+	public void addPeriod(ScheduleModel scheduleModel, int marginTop){
 		periodNum++;
 		lastPeriodNum = periodNum;
+		latestMarginTop = marginTop - WelfareUtil.dpToPx(5);
 		lstSchedule.add(scheduleModel);
 		if(ClConst.SCHEDULE_TYPE_HOLIDAY.equals(scheduleModel.scheduleType)){
 			setLayoutHoliday(scheduleModel);
 		}
+	}
+
+	public void addPassivePeriod(ScheduleModel scheduleModel, int marginTop){
+		periodNum++;
 	}
 
 	public int getNumberOfSchedule(){
@@ -204,16 +191,10 @@ public class MonthlyCalendarDayView extends LinearLayout{
 		txtHoliday.setTextColor(Color.RED);
 		txtHoliday.setText(scheduleModel.scheduleName);
 		if(!isToday){
-			// txtDayLabel.setBackgroundResource(R.drawable.shape_background_holiday);
 			txtDayLabel.setTextColor(Color.RED);
 		}else{
 			txtDayLabel.setTextColor(Color.WHITE);
 		}
-	}
-
-	public void addPassivePeriod(ScheduleModel scheduleModel){
-		availableSlots.add(periodNum * ClConst.TEXT_VIEW_HEIGHT);
-		periodNum++;
 	}
 
 	public void setLayoutBirthday(ScheduleModel scheduleModel){
