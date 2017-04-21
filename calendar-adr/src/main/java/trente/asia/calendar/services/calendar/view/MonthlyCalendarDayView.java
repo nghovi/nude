@@ -8,18 +8,14 @@ import java.util.List;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
-import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import asia.chiase.core.util.CCBooleanUtil;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
-import asia.chiase.core.util.CCStringUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.services.calendar.listener.DailyScheduleClickListener;
@@ -43,12 +39,12 @@ public class MonthlyCalendarDayView extends LinearLayout{
 	public int							dayOfTheWeek;
 	public List<ScheduleModel>			lstSchedule		= new ArrayList<>();
 	private int							periodNum;
-	private int							lastPeriodNum;
 	private boolean						isToday			= false;
 	private TextView					txtHoliday;
 	private List<ScheduleModel>			schedules		= new ArrayList<>();
 	private List<TextView>				txtSchedules	= new ArrayList<>();
-	private int latestMarginTop = 0;
+	private int							maxMarginTop	= 0;
+	private List<Integer>				usedMargins		= new ArrayList<>();
 
 	public MonthlyCalendarDayView(Context context){
 		super(context);
@@ -123,37 +119,15 @@ public class MonthlyCalendarDayView extends LinearLayout{
 			setLayoutBirthday(scheduleModel);
 		}else{
 			lstSchedule.add(scheduleModel);
-			TextView txtSchedule = new TextView(mContext);
-			txtSchedule.setMaxLines(1);
-
-			LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ClConst.TEXT_VIEW_HEIGHT);
-
-			txtSchedule.setLayoutParams(layoutParams);
-			txtSchedule.setGravity(Gravity.CENTER_VERTICAL);
-			txtSchedule.setPadding(1, 0, 0, 0);
-
-			String scheduleColor = scheduleModel.getScheduleColor();
-			if(CCBooleanUtil.checkBoolean(scheduleModel.isAllDay)){
-				txtSchedule.setTextColor(Color.WHITE);
-				if(!CCStringUtil.isEmpty(scheduleColor)){
-					txtSchedule.setBackgroundColor(Color.parseColor(scheduleColor));
-				}else{
-					txtSchedule.setBackgroundColor(Color.RED);
-				}
-			}else{
-				if(!CCStringUtil.isEmpty(scheduleColor)){
-					txtSchedule.setTextColor(Color.parseColor(scheduleColor));
-				}
+			int marginTop = maxMarginTop;
+			while(usedMargins.contains(marginTop)){
+				marginTop = marginTop + ClConst.TEXT_VIEW_HEIGHT;
 			}
+			maxMarginTop = marginTop;
+			usedMargins.add(marginTop);
 
-			int textSize = 10;
-			txtSchedule.setTextSize(textSize);
-
-			txtSchedule.setText(scheduleModel.scheduleName);
-
-			int marginTop = latestMarginTop +  txtSchedules.size() * ClConst.TEXT_VIEW_HEIGHT;
-			layoutParams.setMargins(0, marginTop, 0, 0);
-			txtSchedule.setLayoutParams(layoutParams);
+			int width = getWidth();
+			TextView txtSchedule = MonthlyCalendarRowView.createTextView(getContext(), width, 0, scheduleModel, marginTop - ClConst.TEXT_VIEW_HEIGHT + WelfareUtil.dpToPx(2));
 			lnrRowContent.addView(txtSchedule);
 			txtSchedules.add(txtSchedule);
 		}
@@ -162,16 +136,20 @@ public class MonthlyCalendarDayView extends LinearLayout{
 	public void removeAllData(){
 		lnrRowContent.removeAllViews();
 		periodNum = 0;
-		lastPeriodNum = 0;
+		maxMarginTop = 0;
 		lstSchedule.clear();
+		usedMargins.clear();
+		usedMargins.add(0);
 		schedules.clear();
 		txtSchedules.clear();
 	}
 
 	public void addPeriod(ScheduleModel scheduleModel, int marginTop){
+		if(maxMarginTop < marginTop && marginTop - maxMarginTop == ClConst.TEXT_VIEW_HEIGHT){
+			maxMarginTop = marginTop;
+		}
 		periodNum++;
-		lastPeriodNum = periodNum;
-		latestMarginTop = marginTop - WelfareUtil.dpToPx(5);
+		usedMargins.add(marginTop);
 		lstSchedule.add(scheduleModel);
 		if(ClConst.SCHEDULE_TYPE_HOLIDAY.equals(scheduleModel.scheduleType)){
 			setLayoutHoliday(scheduleModel);
@@ -182,8 +160,8 @@ public class MonthlyCalendarDayView extends LinearLayout{
 		periodNum++;
 	}
 
-	public int getNumberOfSchedule(){
-		return lstSchedule.size();
+	public int getActivePeriodNum(){
+		return maxMarginTop;
 	}
 
 	private void setLayoutHoliday(ScheduleModel scheduleModel){
