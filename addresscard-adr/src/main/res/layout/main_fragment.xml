@@ -31,7 +31,7 @@
             android:gravity="center"
             android:text="@string/menu_card_title"
             android:textColor="@android:color/white"
-            android:drawableTop="@drawable/active_tab_card"/>
+            android:drawableTop="@drawable/ac_footer_card"/>
         <TextView
             android:id="@+id/tab_company"
             android:layout_width="0dp"

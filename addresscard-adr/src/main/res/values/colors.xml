@@ -5,4 +5,7 @@
     <color name="colorAccent">#FF4081</color>
     <color name="deactive_tab_text_color">#BDBDBD</color>
     <color name="btn_camera_background">#808080</color>
+
+    <color name="wf_login_button_color_off">#80b5ac84</color>
+    <color name="wf_login_button_color_on">#b5ac84</color>
 </resources>

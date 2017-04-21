@@ -98,19 +98,19 @@ public class ACMainFragment extends Fragment implements View.OnClickListener{
         switch (newActiveViewId) {
             case R.id.tab_card:
                 tabCard.setTextColor(activeColor);
-                tabCard.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.active_tab_card, 0, 0);
+                tabCard.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ac_footer_card, 0, 0);
                 break;
             case R.id.tab_company:
                 tabCompany.setTextColor(activeColor);
-                tabCompany.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.active_tab_company, 0, 0);
+                tabCompany.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ac_footer_group, 0, 0);
                 break;
             case R.id.tab_history:
                 tabHistory.setTextColor(activeColor);
-                tabHistory.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.active_tab_history, 0, 0);
+                tabHistory.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ac_footer_history, 0, 0);
                 break;
             case R.id.tab_setting:
                 tabSetting.setTextColor(activeColor);
-                tabSetting.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.active_tab_setting, 0, 0);
+                tabSetting.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ac_footer_setting, 0, 0);
                 break;
         }
 
