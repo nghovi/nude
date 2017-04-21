@@ -139,8 +139,8 @@ public class ClUtil{
 	public static int getMaxInList(List<MonthlyCalendarDayView> lstDay){
 		int maxSchedule = 0;
 		for(MonthlyCalendarDayView dayView : lstDay){
-			if(maxSchedule < dayView.getNumberOfSchedule()){
-				maxSchedule = dayView.getNumberOfSchedule();
+			if(maxSchedule < dayView.getActivePeriodNum()){
+				maxSchedule = dayView.getActivePeriodNum();
 			}
 		}
 		return maxSchedule;

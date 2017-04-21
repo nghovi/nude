@@ -10,6 +10,8 @@ buildscript {
 
 apply plugin: 'com.android.application'
 
+def APP_NAME = "Daily report"
+
 android {
     compileSdkVersion 24
     buildToolsVersion '25.0.0'
@@ -21,7 +23,6 @@ android {
     }
 
     defaultConfig {
-        applicationId "trente.asia.dailyreport"
         minSdkVersion 22
         targetSdkVersion 24
         versionCode 1
@@ -35,10 +36,14 @@ android {
 
     productFlavors {
         develop {
+            applicationId "trente.asia.dailyreport"
+            manifestPlaceholders = [appName:"${APP_NAME} DEV"]
             buildConfigField "Boolean", "DEVELOP", "true"
             buildConfigField "String", "HOST", "\"http://192.168.1.124:9000\""
         }
         production {
+            applicationId "trente.fukuri.dailyreport"
+            manifestPlaceholders = [appName:"${APP_NAME}"]
             buildConfigField "Boolean", "DEVELOP", "false"
             buildConfigField "String", "HOST", "\"https://tr-fukuri.jp\""
         }

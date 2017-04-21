@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import asia.chiase.core.util.CCBooleanUtil;
 import asia.chiase.core.util.CCCollectionUtil;
@@ -50,6 +51,11 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 
 	private DailySummaryDialog				dialogDailySummary;
 
+	@Override
+	public int getCalendarHeaderItem() {
+		return R.layout.monthly_calendar_title;
+	}
+
 	public class ScheduleComparator implements Comparator<ScheduleModel>{
 
 		@Override
@@ -71,11 +77,6 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 
 			if(isAll1 && !isAll2) return -1;
 			if(!isAll1 && isAll2) return 1;
-//			if(schedule1.isPeriodSchedule() && schedule2.isPeriodSchedule()){
-//				long period1 = WelfareUtil.makeDate(schedule1.endDate).getTime() - WelfareUtil.makeDate(schedule1.startDate).getTime();
-//				long period2 = WelfareUtil.makeDate(schedule2.endDate).getTime() - WelfareUtil.makeDate(schedule2.startDate).getTime();
-//				return Long.compare(period2, period1);
-//			}
 			return 0;
 		}
 	}
@@ -107,7 +108,8 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 			Date itemDate = dates.get(index);
 			if(index % CsConst.DAY_NUMBER_A_WEEK == 0){
 				rowView = (MonthlyCalendarRowView)mInflater.inflate(R.layout.monthly_calendar_row, null);
-				lnrRowContent = (LinearLayout)rowView.findViewById(R.id.lnr_id_row_content);
+				rowView.setStartDate(itemDate);
+				lnrRowContent = (LinearLayout) rowView.findViewById(R.id.lnr_id_row_content);
 				lnrCalendarContainer.addView(rowView);
 				lstCalendarRow.add(rowView);
 			}
@@ -130,11 +132,11 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 	@Override
 	protected void initData(){
 		super.initData();
-		String activeMonth = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_YYYY_MM, selectedDate);
-		Date activeDate = WelfareFormatUtil.makeDate(prefAccUtil.get(ClConst.PREF_ACTIVE_DATE));
-		if(activeMonth.equals(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_YYYY_MM, activeDate))){
-			loadScheduleList();
-		}
+//		String activeMonth = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_YYYY_MM, selectedDate);
+//		Date activeDate = WelfareFormatUtil.makeDate(prefAccUtil.get(ClConst.PREF_ACTIVE_DATE));
+//		if(activeMonth.equals(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_YYYY_MM, activeDate))){
+//			loadScheduleList();
+//		}
 	}
 
 	@Override
@@ -201,6 +203,10 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 
 		for(MonthlyCalendarRowView rowView : lstCalendarRow){
 			rowView.refreshLayout();
+		}
+
+		for (MonthlyCalendarDayView dayView: lstCalendarDay) {
+			dayView.showSchedules();
 		}
 
 		// make daily summary dialog

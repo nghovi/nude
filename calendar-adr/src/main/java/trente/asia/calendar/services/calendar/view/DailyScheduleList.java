@@ -178,7 +178,7 @@ public class DailyScheduleList extends LinearLayout{
 		txtUsername.setText(offer.userName);
 
 		if(WorkOffer.OFFER_TYPE_HOLIDAY_WORKING.equals(offer.offerType) || WorkOffer.OFFER_TYPE_OVERTIME.equals(offer.offerType) || WorkOffer.OFFER_TYPE_SHORT_TIME.equals(offer.offerType)){
-			txtDate.setText(offer.startTimeString + " - " + offer.endTimeString);
+			txtDate.setText(" - " + offer.startTimeString + " - " + offer.endTimeString);
 		}else{
 			txtDate.setVisibility(View.GONE);
 		}

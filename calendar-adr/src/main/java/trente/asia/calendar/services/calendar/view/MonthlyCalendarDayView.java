@@ -8,22 +8,20 @@ import java.util.List;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
-import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import asia.chiase.core.util.CCBooleanUtil;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
-import asia.chiase.core.util.CCStringUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.services.calendar.listener.DailyScheduleClickListener;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.welfare.adr.define.WelfareConst;
+import trente.asia.welfare.adr.utils.WelfareUtil;
 
 /**
  * MonthlyCalendarDayView
@@ -34,19 +32,19 @@ public class MonthlyCalendarDayView extends LinearLayout{
 
 	private Context						mContext;
 	private TextView					txtDayLabel;
-	private LinearLayout				lnrRowContent;
+	private RelativeLayout				lnrRowContent;
 	private DailyScheduleClickListener	mListener;
-
-	// private int numberOfSchedule;
-	private boolean						isTheFirst	= true;
 
 	public String						day;
 	public int							dayOfTheWeek;
-	public List<ScheduleModel>			lstSchedule	= new ArrayList<>();
+	public List<ScheduleModel>			lstSchedule		= new ArrayList<>();
 	private int							periodNum;
-	private int							lastPeriodNum;
-	private boolean						isToday		= false;
+	private boolean						isToday			= false;
 	private TextView					txtHoliday;
+	private List<ScheduleModel>			schedules		= new ArrayList<>();
+	private List<TextView>				txtSchedules	= new ArrayList<>();
+	private int							maxMarginTop	= 0;
+	private List<Integer>				usedMargins		= new ArrayList<>();
 
 	public MonthlyCalendarDayView(Context context){
 		super(context);
@@ -101,78 +99,69 @@ public class MonthlyCalendarDayView extends LinearLayout{
 			}
 		}
 
-		lnrRowContent = (LinearLayout)this.findViewById(R.id.lnr_id_row_content);
+		lnrRowContent = (RelativeLayout)this.findViewById(R.id.lnr_id_row_content);
 	}
 
 	public void addSchedule(ScheduleModel scheduleModel){
+		schedules.add(scheduleModel);
+	}
+
+	public void showSchedules(){
+		for(ScheduleModel scheduleModel : schedules){
+			showSchedule(scheduleModel);
+		}
+	}
+
+	private void showSchedule(ScheduleModel scheduleModel){
 		if(ClConst.SCHEDULE_TYPE_HOLIDAY.equals(scheduleModel.scheduleType)){
 			setLayoutHoliday(scheduleModel);
 		}else if(ClConst.SCHEDULE_TYPE_BIRTHDAY.equals(scheduleModel.scheduleType)){
 			setLayoutBirthday(scheduleModel);
 		}else{
 			lstSchedule.add(scheduleModel);
-			TextView txtSchedule = new TextView(mContext);
-			txtSchedule.setMaxLines(1);
-
-			LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ClConst.TEXT_VIEW_HEIGHT);
-
-			layoutParams.setMargins(1, 0, 1, 0);
-			txtSchedule.setLayoutParams(layoutParams);
-			txtSchedule.setGravity(Gravity.CENTER_VERTICAL);
-			txtSchedule.setPadding(1, 0, 1, 0);
-
-			String scheduleColor = scheduleModel.getScheduleColor();
-			if(CCBooleanUtil.checkBoolean(scheduleModel.isAllDay)){
-				txtSchedule.setTextColor(Color.WHITE);
-				if(!CCStringUtil.isEmpty(scheduleColor)){
-					txtSchedule.setBackgroundColor(Color.parseColor(scheduleColor));
-				}else{
-					txtSchedule.setBackgroundColor(Color.RED);
-				}
-			}else{
-				if(!CCStringUtil.isEmpty(scheduleColor)){
-					txtSchedule.setTextColor(Color.parseColor(scheduleColor));
-				}
+			int marginTop = maxMarginTop;
+			while(usedMargins.contains(marginTop)){
+				marginTop = marginTop + ClConst.TEXT_VIEW_HEIGHT;
 			}
+			maxMarginTop = marginTop;
+			usedMargins.add(marginTop);
 
-			int textSize = 10;
-			txtSchedule.setTextSize(textSize);
-
-			txtSchedule.setText(scheduleModel.scheduleName);
-			if(isTheFirst){
-				isTheFirst = false;
-				setMarginTop();
-			}
+			int width = getWidth();
+			TextView txtSchedule = MonthlyCalendarRowView.createTextView(getContext(), width, 0, scheduleModel, marginTop - ClConst.TEXT_VIEW_HEIGHT + WelfareUtil.dpToPx(2));
 			lnrRowContent.addView(txtSchedule);
+			txtSchedules.add(txtSchedule);
 		}
-	}
-
-	private void setMarginTop(){
-		LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-
-		layoutParams.setMargins(0, lastPeriodNum * ClConst.TEXT_VIEW_HEIGHT, 0, 0);
-		lnrRowContent.setLayoutParams(layoutParams);
 	}
 
 	public void removeAllData(){
 		lnrRowContent.removeAllViews();
 		periodNum = 0;
-		lastPeriodNum = 0;
+		maxMarginTop = 0;
 		lstSchedule.clear();
-		isTheFirst = true;
+		usedMargins.clear();
+		usedMargins.add(0);
+		schedules.clear();
+		txtSchedules.clear();
 	}
 
-	public void addPeriod(ScheduleModel scheduleModel){
+	public void addPeriod(ScheduleModel scheduleModel, int marginTop){
+		if(maxMarginTop < marginTop && marginTop - maxMarginTop == ClConst.TEXT_VIEW_HEIGHT){
+			maxMarginTop = marginTop;
+		}
 		periodNum++;
-		lastPeriodNum = periodNum;
+		usedMargins.add(marginTop);
 		lstSchedule.add(scheduleModel);
 		if(ClConst.SCHEDULE_TYPE_HOLIDAY.equals(scheduleModel.scheduleType)){
 			setLayoutHoliday(scheduleModel);
 		}
 	}
 
-	public int getNumberOfSchedule(){
-		return lstSchedule.size();
+	public void addPassivePeriod(ScheduleModel scheduleModel, int marginTop){
+		periodNum++;
+	}
+
+	public int getActivePeriodNum(){
+		return maxMarginTop;
 	}
 
 	private void setLayoutHoliday(ScheduleModel scheduleModel){
@@ -180,15 +169,10 @@ public class MonthlyCalendarDayView extends LinearLayout{
 		txtHoliday.setTextColor(Color.RED);
 		txtHoliday.setText(scheduleModel.scheduleName);
 		if(!isToday){
-			// txtDayLabel.setBackgroundResource(R.drawable.shape_background_holiday);
 			txtDayLabel.setTextColor(Color.RED);
 		}else{
 			txtDayLabel.setTextColor(Color.WHITE);
 		}
-	}
-
-	public void addPassivePeriod(ScheduleModel scheduleModel){
-		periodNum++;
 	}
 
 	public void setLayoutBirthday(ScheduleModel scheduleModel){

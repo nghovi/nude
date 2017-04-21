@@ -99,8 +99,10 @@ public class CalendarDayView extends LinearLayout{
 	public void setSelected(boolean selected){
 		if(selected && this.bgResource != R.drawable.circle_background_today){
 			txtContent.setBackgroundResource(R.drawable.circle_background_selected);
+			txtContent.setTextColor(Color.WHITE);
 		}else{
 			txtContent.setBackgroundResource(this.bgResource);
+			updateTextColor(date);
 		}
 	}
 
@@ -138,6 +140,11 @@ public class CalendarDayView extends LinearLayout{
 
 		txtScheduleMark = (TextView)itemView.findViewById(R.id.txt_id_row_schedule_mark);
 
+		updateTextColor(date);
+		this.addView(itemView);
+	}
+
+	private void updateTextColor(Date itemDate){
 		Calendar itemCalendar = CCDateUtil.makeCalendar(itemDate);
 		if(!isDayEnabled()){
 			txtContent.setTextColor(Color.GRAY);
@@ -148,7 +155,6 @@ public class CalendarDayView extends LinearLayout{
 				txtContent.setTextColor(Color.BLUE);
 			}
 		}
-		this.addView(itemView);
 	}
 
 	protected boolean isDayEnabled(){
