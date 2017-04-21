@@ -14,6 +14,7 @@ import android.view.Gravity;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import asia.chiase.core.util.CCBooleanUtil;
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCStringUtil;
@@ -29,217 +30,205 @@ import trente.asia.welfare.adr.utils.WelfareUtil;
  *
  * @author TrungND
  */
-public class MonthlyCalendarRowView extends RelativeLayout {
+public class MonthlyCalendarRowView extends RelativeLayout{
 
-    public static final int TEXT_SIZE = 10;
-    private Context mContext;
-    public List<MonthlyCalendarDayView> lstCalendarDay;
+	public static final int				TEXT_SIZE		= 10;
+	private Context						mContext;
+	public List<MonthlyCalendarDayView>	lstCalendarDay;
 
-    public List<TextView> lstTextPeriod = new ArrayList<>();
-    private List<ScheduleModel> schedules = new ArrayList<>();
-    private RelativeLayout rltPeriod;
+	public List<TextView>				lstTextPeriod	= new ArrayList<>();
+	private List<ScheduleModel>			schedules		= new ArrayList<>();
+	private RelativeLayout				rltPeriod;
 
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-        Calendar cEnd = CCDateUtil.makeCalendar(startDate);
-        cEnd.add(Calendar.DATE, 6);
-        this.endDate = cEnd.getTime();
-        this.rltPeriod = (RelativeLayout) findViewById(R.id.rlt_row_content);
-    }
+	public void setStartDate(Date startDate){
+		this.startDate = startDate;
+		Calendar cEnd = CCDateUtil.makeCalendar(startDate);
+		cEnd.add(Calendar.DATE, 6);
+		this.endDate = cEnd.getTime();
+		this.rltPeriod = (RelativeLayout)findViewById(R.id.rlt_row_content);
+	}
 
-    private Date startDate;
-    private Date endDate;
+	private Date	startDate;
+	private Date	endDate;
 
-    // private int indexOfSchedule = 0;
+	// private int indexOfSchedule = 0;
 
-    public MonthlyCalendarRowView(Context context) {
-        super(context);
-        this.mContext = context;
-        initialization();
-    }
+	public MonthlyCalendarRowView(Context context){
+		super(context);
+		this.mContext = context;
+		initialization();
+	}
 
-    public MonthlyCalendarRowView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        this.mContext = context;
-        initialization();
-    }
+	public MonthlyCalendarRowView(Context context, AttributeSet attrs){
+		super(context, attrs);
+		this.mContext = context;
+		initialization();
+	}
 
-    public MonthlyCalendarRowView(Context context, AttributeSet attrs, int
-            defStyle) {
-        super(context, attrs, defStyle);
-        this.mContext = context;
-        initialization();
-    }
+	public MonthlyCalendarRowView(Context context, AttributeSet attrs, int defStyle){
+		super(context, attrs, defStyle);
+		this.mContext = context;
+		initialization();
+	}
 
-    public void initialization() {
-        this.lstCalendarDay = new ArrayList<>();
-    }
+	public void initialization(){
+		this.lstCalendarDay = new ArrayList<>();
+	}
 
-    public void addSchedule(ScheduleModel scheduleModel) {
-        schedules.add(scheduleModel);
-    }
+	public void addSchedule(ScheduleModel scheduleModel){
+		schedules.add(scheduleModel);
+	}
 
-    private void sortSchedules() {
-        if (!CCCollectionUtil.isEmpty(schedules)) {
-            Collections.sort(schedules, new Comparator<ScheduleModel>() {
+	private void sortSchedules(){
+		if(!CCCollectionUtil.isEmpty(schedules)){
+			Collections.sort(schedules, new Comparator<ScheduleModel>() {
 
-                @Override
-                public int compare(ScheduleModel schedule1, ScheduleModel
-                        schedule2) {
-                    Date startDate1 = WelfareUtil.makeDate(schedule1.startDate);
-                    Date startDate2 = WelfareUtil.makeDate(schedule2.startDate);
+				@Override
+				public int compare(ScheduleModel schedule1, ScheduleModel schedule2){
+					Date startDate1 = WelfareUtil.makeDate(schedule1.startDate);
+					Date startDate2 = WelfareUtil.makeDate(schedule2.startDate);
 
-                    Date endDate1 = WelfareUtil.makeDate(schedule1.endDate);
-                    Date endDate2 = WelfareUtil.makeDate(schedule2.endDate);
+					Date endDate1 = WelfareUtil.makeDate(schedule1.endDate);
+					Date endDate2 = WelfareUtil.makeDate(schedule2.endDate);
 
-                    startDate1 = CCDateUtil.compareDate(startDate1,
-                            startDate, false) <= 0 ? startDate : startDate1;
-                    startDate2 = CCDateUtil.compareDate(startDate2,
-                            startDate, false) <= 0 ? startDate : startDate2;
+					startDate1 = CCDateUtil.compareDate(startDate1, startDate, false) <= 0 ? startDate : startDate1;
+					startDate2 = CCDateUtil.compareDate(startDate2, startDate, false) <= 0 ? startDate : startDate2;
 
-                    endDate1 = CCDateUtil.compareDate(endDate1, endDate,
-                            false) >= 0 ? endDate : endDate1;
-                    endDate2 = CCDateUtil.compareDate(endDate2, endDate,
-                            false) >= 0 ? endDate : endDate2;
+					endDate1 = CCDateUtil.compareDate(endDate1, endDate, false) >= 0 ? endDate : endDate1;
+					endDate2 = CCDateUtil.compareDate(endDate2, endDate, false) >= 0 ? endDate : endDate2;
 
-                    long startDate1Long = CCDateUtil.makeDate(startDate1)
-                            .getTime();
-                    long startDate2Long = CCDateUtil.makeDate(startDate2)
-                            .getTime();
+					long startDate1Long = CCDateUtil.makeDate(startDate1).getTime();
+					long startDate2Long = CCDateUtil.makeDate(startDate2).getTime();
 
-                    long period1 = CCDateUtil.makeDate(endDate1).getTime() -
-                            startDate1Long;
-                    long period2 = CCDateUtil.makeDate(endDate2).getTime() -
-                            startDate2Long;
+					long period1 = CCDateUtil.makeDate(endDate1).getTime() - startDate1Long;
+					long period2 = CCDateUtil.makeDate(endDate2).getTime() - startDate2Long;
 
-                    int startCompareResult = Long.compare(startDate1Long,
-                            startDate2Long);
+					int startCompareResult = Long.compare(startDate1Long, startDate2Long);
 
-                    if (startCompareResult == 0) {
-                        int lengthCompareResult = Long.compare(period2,
-                                period1);
-                        if (lengthCompareResult == 0) {
-                            return schedule1.scheduleName.compareTo
-                                    (schedule2.scheduleName);
-                        }
-                        return lengthCompareResult;
-                    }
-                    return startCompareResult;
-                }
-            });
-        }
-    }
+					if(startCompareResult == 0){
+						int lengthCompareResult = Long.compare(period2, period1);
+						if(lengthCompareResult == 0){
+							return schedule1.scheduleName.compareTo(schedule2.scheduleName);
+						}
+						return lengthCompareResult;
+					}
+					return startCompareResult;
+				}
+			});
+		}
+	}
 
-    private List<MonthlyCalendarDayView> getPassiveCalendarDays
-            (List<MonthlyCalendarDayView>
+	private List<MonthlyCalendarDayView> getPassiveCalendarDays(List<MonthlyCalendarDayView>
 
-                     lstCalendarDay, List<MonthlyCalendarDayView>
-                    lstActiveCalendarDay) {
-        List<MonthlyCalendarDayView> result = new ArrayList<>();
-        for (MonthlyCalendarDayView dayView : lstCalendarDay) {
-            if (!lstActiveCalendarDay.contains(dayView)) {
-                result.add(dayView);
-            }
-        }
-        return result;
-    }
+	lstCalendarDay, List<MonthlyCalendarDayView> lstActiveCalendarDay){
+		List<MonthlyCalendarDayView> result = new ArrayList<>();
+		for(MonthlyCalendarDayView dayView : lstCalendarDay){
+			if(!lstActiveCalendarDay.contains(dayView)){
+				result.add(dayView);
+			}
+		}
+		return result;
+	}
 
-    public void refreshLayout() {
-        sortSchedules();
-        for (int i = 0; i < schedules.size(); i++) {
-            ScheduleModel scheduleModel = schedules.get(i);
-            showSchedule(scheduleModel, i);
-        }
+	public void refreshLayout(){
+		sortSchedules();
+		for(int i = 0; i < schedules.size(); i++){
+			ScheduleModel scheduleModel = schedules.get(i);
+			showSchedule(scheduleModel, i);
+		}
 
-//		int maxSchedule = 0;
-//		for(MonthlyCalendarDayView dayView : lstCalendarDay){
-//			if(dayView.getActivePeriodNum() > maxSchedule){
-//				maxSchedule = dayView.getActivePeriodNum();
-//			}
-//		}
-        // refresh layout
-        // for(MonthlyCalendarDayView dayView : lstCalendarDay){
-        // LinearLayout.LayoutParams layoutParamsDay = new LinearLayout
-        // .LayoutParams(0, (int)getResources().getDimension(R.dimen
-        // .margin_40dp) +
-        // maxSchedule * ClConst.TEXT_VIEW_HEIGHT, 1);
-        // dayView.setLayoutParams(layoutParamsDay);
-        // }
-    }
+		// int maxSchedule = 0;
+		// for(MonthlyCalendarDayView dayView : lstCalendarDay){
+		// if(dayView.getActivePeriodNum() > maxSchedule){
+		// maxSchedule = dayView.getActivePeriodNum();
+		// }
+		// }
+		// refresh layout
+		// for(MonthlyCalendarDayView dayView : lstCalendarDay){
+		// LinearLayout.LayoutParams layoutParamsDay = new LinearLayout
+		// .LayoutParams(0, (int)getResources().getDimension(R.dimen
+		// .margin_40dp) +
+		// maxSchedule * ClConst.TEXT_VIEW_HEIGHT, 1);
+		// dayView.setLayoutParams(layoutParamsDay);
+		// }
+	}
 
-    private void showSchedule(ScheduleModel scheduleModel, int i) {
-        double itemWidth = this.getWidth() / 7.0;
+	private void showSchedule(ScheduleModel scheduleModel, int i){
+		double itemWidth = this.getWidth() / 7.0;
 
-        Date startDate = WelfareFormatUtil.makeDate(WelfareFormatUtil
-                .removeTime4Date(scheduleModel.startDate));
-        Date endDate = WelfareFormatUtil.makeDate(WelfareFormatUtil
-                .removeTime4Date(scheduleModel.endDate));
-        List<MonthlyCalendarDayView> lstActiveCalendarDay = ClUtil
-                .findListView4Day(lstCalendarDay, startDate, endDate);
-        List<MonthlyCalendarDayView> lstPassiveCalendarDay =
-                getPassiveCalendarDays(lstCalendarDay, lstActiveCalendarDay);
-        int marginTop = ClUtil.getMaxInList(lstActiveCalendarDay) + ClConst
-                .TEXT_VIEW_HEIGHT;
+		Date startDate = WelfareFormatUtil.makeDate(WelfareFormatUtil.removeTime4Date(scheduleModel.startDate));
+		Date endDate = WelfareFormatUtil.makeDate(WelfareFormatUtil.removeTime4Date(scheduleModel.endDate));
+		List<MonthlyCalendarDayView> lstActiveCalendarDay = ClUtil.findListView4Day(lstCalendarDay, startDate, endDate);
+		List<MonthlyCalendarDayView> lstPassiveCalendarDay = getPassiveCalendarDays(lstCalendarDay, lstActiveCalendarDay);
+		int marginTop = ClUtil.getMaxInList(lstActiveCalendarDay) + ClConst.TEXT_VIEW_HEIGHT;
 
-        for (MonthlyCalendarDayView dayView : lstActiveCalendarDay) {
-            dayView.addPeriod(scheduleModel, marginTop);
-        }
+		for(MonthlyCalendarDayView dayView : lstActiveCalendarDay){
+			dayView.addPeriod(scheduleModel, marginTop);
+		}
 
-        for (MonthlyCalendarDayView dayView : lstPassiveCalendarDay) {
-            dayView.addPassivePeriod(scheduleModel, marginTop * schedules
-                    .size());
-        }
-        MonthlyCalendarDayView theFirstCalendarDay = lstActiveCalendarDay.get
-                (0);
-        MonthlyCalendarDayView theLastCalendarDay = lstActiveCalendarDay.get
-                (lstActiveCalendarDay.size() - 1);
+		for(MonthlyCalendarDayView dayView : lstPassiveCalendarDay){
+			dayView.addPassivePeriod(scheduleModel, marginTop * schedules.size());
+		}
+		MonthlyCalendarDayView theFirstCalendarDay = lstActiveCalendarDay.get(0);
+		MonthlyCalendarDayView theLastCalendarDay = lstActiveCalendarDay.get(lstActiveCalendarDay.size() - 1);
 
-        int numCol = (theLastCalendarDay.dayOfTheWeek -
-                theFirstCalendarDay.dayOfTheWeek + 1);
-        int width = (int) (itemWidth * (numCol >= 7 ? 7 : numCol));
-//        width = numCol >= 7 ? width - WelfareUtil.dpToPx(1) : width;
-        width = width - WelfareUtil.dpToPx(1);
-        int marginLeft = (int) (itemWidth * theFirstCalendarDay.dayOfTheWeek)
-                + 1;
-        int marginTopAfter = marginTop + WelfareUtil.dpToPx(5);
+		int numCol = (theLastCalendarDay.dayOfTheWeek - theFirstCalendarDay.dayOfTheWeek + 1);
+		int width = (int)(itemWidth * (numCol >= 7 ? 7 : numCol));
+		// width = numCol >= 7 ? width - WelfareUtil.dpToPx(1) : width;
+		width = width - WelfareUtil.dpToPx(1);
+		int marginLeft = (int)(itemWidth * theFirstCalendarDay.dayOfTheWeek) + 1;
+		int marginTopAfter = marginTop + WelfareUtil.dpToPx(5);
 
-        TextView txtSchedule = createTextView(getContext(), width,
-                marginLeft, scheduleModel, marginTopAfter);
+		TextView txtSchedule = createTextView(getContext(), width, marginLeft, scheduleModel, marginTopAfter);
 
-        this.lstTextPeriod.add(txtSchedule);
-        this.rltPeriod.addView(txtSchedule);
-    }
+		this.lstTextPeriod.add(txtSchedule);
+		this.rltPeriod.addView(txtSchedule);
+	}
 
-    public static TextView createTextView(Context context, int width, int
-            marginLeft, ScheduleModel scheduleModel, int marginTop) {
-        LayoutParams layoutParams = new LayoutParams(width, ClConst
-                .TEXT_VIEW_HEIGHT);
-        layoutParams.setMargins(marginLeft - WelfareUtil.dpToPx(1),
-                marginTop, 0, 0);
-        TextView txtSchedule = new TextView(context);
-        txtSchedule.setMaxLines(1);
-        txtSchedule.setLayoutParams(layoutParams);
-        txtSchedule.setPadding(WelfareUtil.dpToPx(1), 0, 0, 0);
-        txtSchedule.setGravity(Gravity.CENTER_VERTICAL);
-        txtSchedule.setTextColor(Color.WHITE);
-        String scheduleColor = scheduleModel.getScheduleColor();
-        if (!CCStringUtil.isEmpty(scheduleColor)) {
-            txtSchedule.setBackgroundColor(Color.parseColor(scheduleColor));
-        } else {
-            txtSchedule.setBackgroundColor(Color.RED);
-        }
-        txtSchedule.setTextSize(TEXT_SIZE);
-        txtSchedule.setText(scheduleModel.scheduleName);
-        return txtSchedule;
-    }
+	public static TextView createTextView(Context context, int width, int marginLeft, ScheduleModel scheduleModel, int marginTop){
+		LayoutParams layoutParams = new LayoutParams(width, ClConst.TEXT_VIEW_HEIGHT);
+		layoutParams.setMargins(marginLeft - WelfareUtil.dpToPx(1), marginTop, 0, 0);
+		TextView txtSchedule = new TextView(context);
+		txtSchedule.setMaxLines(1);
+		txtSchedule.setLayoutParams(layoutParams);
+		txtSchedule.setPadding(WelfareUtil.dpToPx(1), 0, 0, 0);
+		txtSchedule.setGravity(Gravity.CENTER_VERTICAL);
+		txtSchedule.setTextColor(Color.WHITE);
 
-    public void removeAllData() {
-        if (!CCCollectionUtil.isEmpty(this.lstTextPeriod)) {
-            for (TextView textView : this.lstTextPeriod) {
-                this.rltPeriod.removeView(textView);
-            }
-        }
-        this.lstTextPeriod.clear();
-        this.schedules.clear();
-    }
+		String scheduleColor = scheduleModel.getScheduleColor();
+		if(scheduleModel.isPeriodSchedule()){
+			if(!CCStringUtil.isEmpty(scheduleColor)){
+				txtSchedule.setBackgroundColor(Color.parseColor(scheduleColor));
+			}else{
+				txtSchedule.setBackgroundColor(Color.RED);
+			}
+		}else{
+			if(CCBooleanUtil.checkBoolean(scheduleModel.isAllDay)){
+				txtSchedule.setTextColor(Color.WHITE);
+				if(!CCStringUtil.isEmpty(scheduleColor)){
+					txtSchedule.setBackgroundColor(Color.parseColor(scheduleColor));
+				}else{
+					txtSchedule.setBackgroundColor(Color.RED);
+				}
+			}else{
+				if(!CCStringUtil.isEmpty(scheduleColor)){
+					txtSchedule.setTextColor(Color.parseColor(scheduleColor));
+				}
+			}
+		}
+
+		txtSchedule.setTextSize(TEXT_SIZE);
+		txtSchedule.setText(scheduleModel.scheduleName);
+		return txtSchedule;
+	}
+
+	public void removeAllData(){
+		if(!CCCollectionUtil.isEmpty(this.lstTextPeriod)){
+			for(TextView textView : this.lstTextPeriod){
+				this.rltPeriod.removeView(textView);
+			}
+		}
+		this.lstTextPeriod.clear();
+		this.schedules.clear();
+	}
 }
