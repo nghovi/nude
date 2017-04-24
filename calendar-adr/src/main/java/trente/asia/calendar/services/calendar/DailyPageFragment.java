@@ -44,7 +44,7 @@ public class DailyPageFragment extends SchedulesPageListViewFragment implements 
 	@Override
 	public void onDayClick(String dayStr){
 		this.dayStr = dayStr;
-		refreshWithoutShowingLoading = true;
+		refreshWhenLoadingSummaryDialog = true;
 		loadScheduleList();
 	}
 
@@ -71,9 +71,9 @@ public class DailyPageFragment extends SchedulesPageListViewFragment implements 
 	@Override
 	protected void updateObservableScrollableView(){
 		canScroll = false;
-		if(refreshWithoutShowingLoading){
+		if(refreshWhenLoadingSummaryDialog){
 			updateList(dayStr);
-			refreshWithoutShowingLoading = false;
+			refreshWhenLoadingSummaryDialog = false;
 		}
 		updateDayViews(dayStr);
 		dailyScheduleList.updateFor(selectedDate, lstSchedule, lstHoliday, lstWorkOffer, lstBirthdayUser);

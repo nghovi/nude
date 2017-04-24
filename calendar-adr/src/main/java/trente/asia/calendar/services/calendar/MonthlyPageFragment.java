@@ -15,17 +15,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import asia.chiase.core.util.CCBooleanUtil;
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
-import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.define.CsConst;
 import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.R;
-import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.dialogs.DailySummaryDialog;
 import trente.asia.calendar.commons.utils.ClUtil;
 import trente.asia.calendar.services.calendar.listener.DailyScheduleClickListener;
@@ -37,7 +34,6 @@ import trente.asia.calendar.services.calendar.view.MonthlyCalendarRowView;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
-import trente.asia.welfare.adr.utils.WelfareUtil;
 
 /**
  * MonthlyPageFragment
@@ -211,8 +207,8 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 
 		// make daily summary dialog
 		makeSummaryDialog();
-		if(refreshWithoutShowingLoading){
-			refreshWithoutShowingLoading = false;
+		if(refreshWhenLoadingSummaryDialog){
+			refreshWhenLoadingSummaryDialog = false;
 			Date selectedDate = CCDateUtil.makeDateCustom(dayStr, WelfareConst.WF_DATE_TIME_DATE);
 			dialogDailySummary.show(selectedDate);
 		}
@@ -234,7 +230,7 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 	public void onDailyScheduleClickListener(String day){
 		if(!dialogDailySummary.isShowing()){
 			dayStr = day;
-			refreshWithoutShowingLoading = true;
+			refreshWhenLoadingSummaryDialog = true;
 			loadScheduleList();
 		}
 	}
