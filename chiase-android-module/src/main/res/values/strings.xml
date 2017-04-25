@@ -46,5 +46,8 @@
     <string name="chiase_common_success_change_avatar">Your avatar has been changed successfully!</string>
     <string name="chiase_common_success_change_password"> Your password has been changed successfully!</string>
     <string name="chiase_common_success_signout">Signed out successfully!</string>
+    <string name="chiase_about_app_version">Version %1$s</string>
+    <string name="chiase_setting_title">Setting</string>
+
 
 </resources>

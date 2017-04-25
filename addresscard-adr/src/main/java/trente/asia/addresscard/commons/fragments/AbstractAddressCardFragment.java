@@ -1,4 +1,4 @@
-package trente.asia.calendar.commons.fragments;
+package trente.asia.addresscard.commons.fragments;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -7,24 +7,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import trente.asia.addresscard.BuildConfig;
+import trente.asia.addresscard.R;
+import trente.asia.addresscard.services.company.CompanyFragment;
+import trente.asia.addresscard.services.history.HistoryFragment;
+import trente.asia.addresscard.services.user.ACLoginFragment;
+import trente.asia.addresscard.setting.SettingFragment;
 import trente.asia.android.view.ChiaseImageView;
 import trente.asia.android.view.ChiaseTextView;
-import trente.asia.calendar.BuildConfig;
-import trente.asia.calendar.R;
-import trente.asia.calendar.commons.utils.ClUtil;
-import trente.asia.calendar.services.calendar.DailyFragment;
-import trente.asia.calendar.services.calendar.MonthlyFragment;
-import trente.asia.calendar.services.calendar.WeeklyFragment;
-import trente.asia.calendar.services.setting.ClSettingFragment;
-import trente.asia.calendar.services.summary.SummaryFragment;
-import trente.asia.calendar.services.user.ClLoginFragment;
 import trente.asia.welfare.adr.activity.WelfareFragment;
 import trente.asia.welfare.adr.define.WelfareConst;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public abstract class AbstractClFragment extends WelfareFragment implements View.OnClickListener{
+public abstract class AbstractAddressCardFragment extends WelfareFragment implements View.OnClickListener{
 
 	// test
 	@Override
@@ -42,7 +39,6 @@ public abstract class AbstractClFragment extends WelfareFragment implements View
 	@Override
 	protected void initView(){
 		super.initView();
-        lnrContentId = R.id.lnr_id_content;
 	}
 
 	/**
@@ -60,17 +56,14 @@ public abstract class AbstractClFragment extends WelfareFragment implements View
 				@Override
 				public void onClick(View view){
 					switch(view.getId()){
-					case R.id.lnr_view_footer_monthly:
-						onClickFooterItemMonthly();
+					case R.id.lnr_view_footer_card:
+						onClickFooterItemCard();
 						break;
-					case R.id.lnr_view_footer_weekly:
-						onClickFooterItemWeekly();
+					case R.id.lnr_view_footer_company:
+						onClickFooterItemCompany();
 						break;
-					case R.id.lnr_view_footer_daily:
-						onClickFooterItemDaily();
-						break;
-					case R.id.lnr_view_footer_summary:
-						onClickFooterItemSummary();
+					case R.id.lnr_view_footer_history:
+						onClickFooterItemHistory();
 						break;
 					case R.id.lnr_view_footer_setting:
 						onClickFooterItemSetting();
@@ -81,10 +74,9 @@ public abstract class AbstractClFragment extends WelfareFragment implements View
 				}
 			}; // end listener
 
-			getView().findViewById(R.id.lnr_view_footer_monthly).setOnClickListener(listener);
-			getView().findViewById(R.id.lnr_view_footer_weekly).setOnClickListener(listener);
-			getView().findViewById(R.id.lnr_view_footer_daily).setOnClickListener(listener);
-			getView().findViewById(R.id.lnr_view_footer_summary).setOnClickListener(listener);
+			getView().findViewById(R.id.lnr_view_footer_card).setOnClickListener(listener);
+			getView().findViewById(R.id.lnr_view_footer_company).setOnClickListener(listener);
+			getView().findViewById(R.id.lnr_view_footer_history).setOnClickListener(listener);
 			getView().findViewById(R.id.lnr_view_footer_setting).setOnClickListener(listener);
 			LinearLayout lnrFooter = (LinearLayout)getView().findViewById(footerItemId);
 			setSelectedFooterItem(lnrFooter);
@@ -105,29 +97,24 @@ public abstract class AbstractClFragment extends WelfareFragment implements View
 		}
 	}
 
-	public void onClickFooterItemMonthly(){
+	public void onClickFooterItemCard(){
 		emptyBackStack();
-		gotoFragment(new MonthlyFragment());
+		gotoFragment(new ACMainFragment());
 	}
 
-	public void onClickFooterItemWeekly(){
+	public void onClickFooterItemCompany(){
 		emptyBackStack();
-		gotoFragment(new WeeklyFragment());
+		gotoFragment(new CompanyFragment());
 	}
 
-	public void onClickFooterItemDaily(){
+	public void onClickFooterItemHistory(){
 		emptyBackStack();
-		gotoFragment(new DailyFragment());
-	}
-
-	public void onClickFooterItemSummary(){
-		emptyBackStack();
-		gotoFragment(new SummaryFragment());
+		gotoFragment(new HistoryFragment());
 	}
 
 	public void onClickFooterItemSetting(){
 		emptyBackStack();
-		gotoFragment(new ClSettingFragment());
+		gotoFragment(new SettingFragment());
 	}
 
 	@Override
@@ -138,18 +125,7 @@ public abstract class AbstractClFragment extends WelfareFragment implements View
 	@Override
 	protected void gotoSignIn(){
 		super.gotoSignIn();
-		gotoFragment(new ClLoginFragment());
+		gotoFragment(new ACLoginFragment());
 	}
 
-	protected String makeAppFile(String fileName){
-		String filePath = ClUtil.getFilesFolderPath() + "/" + fileName;
-		return filePath;
-	}
-
-    /**
-     * emptyLocalData
-     * remove local data when user sign out
-     */
-    protected void emptyLocalData(){
-    }
 }

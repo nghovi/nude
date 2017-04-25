@@ -1,4 +1,4 @@
-package trente.asia.calendar.services.setting;
+package trente.asia.addresscard.setting;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,19 +8,19 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.TextView;
 
+import trente.asia.addresscard.R;
+import trente.asia.addresscard.commons.fragments.AbstractAddressCardFragment;
 import trente.asia.android.util.AndroidUtil;
-import trente.asia.calendar.R;
-import trente.asia.calendar.commons.fragments.AbstractClFragment;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ClAboutAppFragment extends AbstractClFragment{
+public class AboutAppFragment extends AbstractAddressCardFragment{
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 		if(mRootView == null){
-			mRootView = inflater.inflate(R.layout.fragment_clabout_app, container, false);
+			mRootView = inflater.inflate(R.layout.fragment_about_app, container, false);
 		}
 		return mRootView;
 	}

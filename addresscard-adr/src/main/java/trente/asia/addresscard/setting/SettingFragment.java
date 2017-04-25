@@ -1,4 +1,4 @@
-package trente.asia.calendar.services.setting;
+package trente.asia.addresscard.setting;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -10,20 +10,20 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import trente.asia.calendar.R;
-import trente.asia.calendar.commons.fragments.AbstractClFragment;
+import trente.asia.addresscard.R;
+import trente.asia.addresscard.commons.fragments.AbstractAddressCardFragment;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.dialog.WfDialog;
 import trente.asia.welfare.adr.pref.PreferencesSystemUtil;
 
-public class ClSettingFragment extends AbstractClFragment{
+public class SettingFragment extends AbstractAddressCardFragment{
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 		if(mRootView == null){
-			mRootView = inflater.inflate(R.layout.fragment_clsetting, container, false);
+			mRootView = inflater.inflate(R.layout.fragment_setting, container, false);
 		}
 		return mRootView;
 	}
@@ -36,7 +36,7 @@ public class ClSettingFragment extends AbstractClFragment{
 	@Override
 	public void initView(){
 		super.initView();
-		super.initHeader(null, getString(R.string.chiase_setting_title), null);
+		super.initHeader(null, getString(R.string.menu_setting_title), null);
 
 		LinearLayout lnrAccInfo = (LinearLayout)getView().findViewById(R.id.lnr_account_info);
 		LinearLayout lnrAboutApp = (LinearLayout)getView().findViewById(R.id.lnr_about_app);
@@ -57,10 +57,10 @@ public class ClSettingFragment extends AbstractClFragment{
 	public void onClick(View v){
 		switch(v.getId()){
 		case R.id.lnr_account_info:
-			gotoFragment(new ClAccInforFragment());
+			gotoFragment(new AccountInfoFragment());
 			break;
 		case R.id.lnr_about_app:
-			ClAboutAppFragment aboutAppFragment = new ClAboutAppFragment();
+			AboutAppFragment aboutAppFragment = new AboutAppFragment();
 			((WelfareActivity)activity).addFragment(aboutAppFragment);
 			break;
 		case R.id.lnr_term:
@@ -73,7 +73,7 @@ public class ClSettingFragment extends AbstractClFragment{
 			showSignOutConfirmDialog();
 			break;
 		case R.id.lnr_contact_us:
-			gotoFragment(new ClContactUsFragment());
+			gotoFragment(new ContactUsFragment());
 			break;
 		default:
 			break;
@@ -107,7 +107,6 @@ public class ClSettingFragment extends AbstractClFragment{
 	protected void successUpdate(JSONObject response, String url){
 		if(WfUrlConst.WF_ACC_0004.equals(url)){
 			Toast.makeText(activity, getString(R.string.chiase_common_success_signout), Toast.LENGTH_LONG).show();
-			emptyLocalData();
 			gotoSignIn();
 		}else{
 			super.successUpdate(response, url);

@@ -1,9 +1,19 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="History"/>
+<LinearLayout style="@style/cs_common_match"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              android:background="@color/wf_login_background_color"
+              android:orientation="vertical">
+
+
+    <include layout="@layout/view_common_header"/>
+
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_weight="1">
+        <TextView android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="Hello Tien"/>
+    </LinearLayout>
+
+    <include layout="@layout/view_common_footer"/>
+
 </LinearLayout>

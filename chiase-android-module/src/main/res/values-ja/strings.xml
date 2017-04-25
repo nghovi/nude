@@ -49,6 +49,8 @@
     <string name="chiase_common_success_change_avatar">アバターを変更しました。</string>
     <string name="chiase_common_success_change_password">パスワードを変更しました。</string>
     <string name="chiase_common_success_signout">ログアウトしました</string>
+    <string name="chiase_about_app_version">バージョン %1$s</string>
+    <string name="chiase_setting_title">設定</string>
 
 
 </resources>

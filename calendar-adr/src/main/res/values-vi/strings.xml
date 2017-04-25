@@ -1,9 +1,5 @@
 <resources>
     <string name="app_name">Lịch</string>
-
-    <string name="cl_setting_title">Cài đặt</string>
-    <string name="cl_about_app_version">Phiên bản %1$s</string>
-
     <string name="cl_footer_monthly">Tháng</string>
     <string name="cl_footer_weekly">Tuần</string>
     <string name="cl_footer_daily">Ngày</string>

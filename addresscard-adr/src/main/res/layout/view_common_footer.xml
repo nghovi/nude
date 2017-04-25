@@ -9,10 +9,10 @@
         android:baselineAligned="false"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:weightSum="5">
+        android:weightSum="4">
 
         <LinearLayout
-            android:id="@+id/lnr_view_footer_monthly"
+            android:id="@+id/lnr_view_footer_card"
             style="@style/cs_common_wrap"
             android:layout_width="@dimen/margin_0dp"
             android:layout_weight="1"
@@ -23,7 +23,7 @@
                 style="@style/cs_common_wrap"
                 android:layout_marginTop="@dimen/margin_5dp"
                 android:alpha="0.5"
-                android:src="@drawable/cl_footer_monthly"/>
+                android:src="@drawable/active_tab_card"/>
 
             <trente.asia.android.view.ChiaseTextView
                 style="@style/cs_text_footer_item"
@@ -31,12 +31,12 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:paddingTop="@dimen/margin_5dp"
-                android:text="@string/cl_footer_monthly"
+                android:text="@string/menu_card_title"
                 android:textColor="@color/core_gray"/>
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/lnr_view_footer_weekly"
+            android:id="@+id/lnr_view_footer_company"
             style="@style/cs_common_wrap"
             android:layout_width="@dimen/margin_0dp"
             android:layout_weight="1"
@@ -47,7 +47,7 @@
                 style="@style/cs_common_wrap"
                 android:layout_marginTop="@dimen/margin_5dp"
                 android:alpha="0.5"
-                android:src="@drawable/cl_footer_weekly"/>
+                android:src="@drawable/active_tab_company"/>
 
             <trente.asia.android.view.ChiaseTextView
                 style="@style/cs_text_footer_item"
@@ -55,12 +55,12 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:paddingTop="@dimen/margin_5dp"
-                android:text="@string/cl_footer_weekly"
+                android:text="@string/menu_company_title"
                 android:textColor="@color/core_gray"/>
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/lnr_view_footer_daily"
+            android:id="@+id/lnr_view_footer_history"
             style="@style/cs_common_wrap"
             android:layout_width="@dimen/margin_0dp"
             android:layout_weight="1"
@@ -71,7 +71,7 @@
                 style="@style/cs_common_wrap"
                 android:layout_marginTop="@dimen/margin_5dp"
                 android:alpha="0.5"
-                android:src="@drawable/cl_footer_daily"/>
+                android:src="@drawable/active_tab_history"/>
 
             <trente.asia.android.view.ChiaseTextView
                 style="@style/cs_text_footer_item"
@@ -79,31 +79,7 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:paddingTop="@dimen/margin_5dp"
-                android:text="@string/cl_footer_daily"
-                android:textColor="@color/core_gray"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/lnr_view_footer_summary"
-            style="@style/cs_common_wrap"
-            android:layout_width="@dimen/margin_0dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <trente.asia.android.view.ChiaseImageView
-                style="@style/cs_common_wrap"
-                android:layout_marginTop="@dimen/margin_5dp"
-                android:alpha="0.5"
-                android:src="@drawable/cl_footer_summary"/>
-
-            <trente.asia.android.view.ChiaseTextView
-                style="@style/cs_text_footer_item"
-                android:layout_marginBottom="@dimen/margin_5dp"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:paddingTop="@dimen/margin_5dp"
-                android:text="@string/cl_footer_summary"
+                android:text="@string/menu_history_title"
                 android:textColor="@color/core_gray"/>
         </LinearLayout>
 
@@ -119,7 +95,7 @@
                 style="@style/cs_common_wrap"
                 android:layout_marginTop="@dimen/margin_5dp"
                 android:alpha="0.5"
-                android:src="@drawable/cl_footer_setting"/>
+                android:src="@drawable/active_tab_setting"/>
 
             <trente.asia.android.view.ChiaseTextView
                 style="@style/cs_text_footer_item"
@@ -127,9 +103,10 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:paddingTop="@dimen/margin_5dp"
-                android:text="@string/cl_footer_setting"
+                android:text="@string/menu_setting_title"
                 android:textColor="@color/core_gray"/>
         </LinearLayout>
+
 
     </LinearLayout>
 

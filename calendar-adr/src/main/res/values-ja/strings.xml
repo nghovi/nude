@@ -1,9 +1,6 @@
 <resources>
     <string name="app_name">カレンダー</string>
 
-    <string name="cl_setting_title">設定</string>
-    <string name="cl_about_app_version">バージョン %1$s</string>
-
     <string name="cl_footer_monthly">月間</string>
     <string name="cl_footer_weekly">週間</string>
     <string name="cl_footer_daily">日別</string>
