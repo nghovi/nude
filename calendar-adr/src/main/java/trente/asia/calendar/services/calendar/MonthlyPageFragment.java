@@ -100,23 +100,25 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 		LayoutInflater mInflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		MonthlyCalendarRowView rowView = null;
 		LinearLayout lnrRowContent = null;
-		for(int index = 0; index < dates.size(); index++){
-			Date itemDate = dates.get(index);
-			if(index % CsConst.DAY_NUMBER_A_WEEK == 0){
-				rowView = (MonthlyCalendarRowView)mInflater.inflate(R.layout.monthly_calendar_row, null);
-				rowView.setStartDate(itemDate);
-				lnrRowContent = (LinearLayout) rowView.findViewById(R.id.lnr_id_row_content);
-				lnrCalendarContainer.addView(rowView);
-				lstCalendarRow.add(rowView);
+		if (!CCCollectionUtil.isEmpty(dates)) {
+			for (int index = 0; index < dates.size(); index++) {
+				Date itemDate = dates.get(index);
+				if (index % CsConst.DAY_NUMBER_A_WEEK == 0) {
+					rowView = (MonthlyCalendarRowView) mInflater.inflate(R.layout.monthly_calendar_row, null);
+					rowView.setStartDate(itemDate);
+					lnrRowContent = (LinearLayout) rowView.findViewById(R.id.lnr_id_row_content);
+					lnrCalendarContainer.addView(rowView);
+					lstCalendarRow.add(rowView);
+				}
+
+				MonthlyCalendarDayView dayView = (MonthlyCalendarDayView) mInflater.inflate(R.layout.monthly_calendar_row_item, null);
+				dayView.initialization(itemDate, this, CsDateUtil.isDiffMonth(itemDate, selectedDate));
+				dayView.dayOfTheWeek = index % CsConst.DAY_NUMBER_A_WEEK;
+				lstCalendarDay.add(dayView);
+				rowView.lstCalendarDay.add(dayView);
+
+				lnrRowContent.addView(dayView);
 			}
-
-			MonthlyCalendarDayView dayView = (MonthlyCalendarDayView)mInflater.inflate(R.layout.monthly_calendar_row_item, null);
-			dayView.initialization(itemDate, this, CsDateUtil.isDiffMonth(itemDate, selectedDate));
-			dayView.dayOfTheWeek = index % CsConst.DAY_NUMBER_A_WEEK;
-			lstCalendarDay.add(dayView);
-			rowView.lstCalendarDay.add(dayView);
-
-			lnrRowContent.addView(dayView);
 		}
 	}
 
