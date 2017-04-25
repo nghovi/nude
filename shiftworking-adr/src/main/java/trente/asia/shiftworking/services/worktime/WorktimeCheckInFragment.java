@@ -218,6 +218,7 @@ public class WorktimeCheckInFragment extends AbstractLocationFragment {
             jsonObject.put("gpsLongtitude", longitude);
             jsonObject.put("gpsLatitude", latitude);
             jsonObject.put("userId", prefAccUtil.getUserPref().key);
+            jsonObject.put("workDate", CCFormatUtil.formatDate(new Date()));
         } catch (JSONException e) {
             e.printStackTrace();
         }
