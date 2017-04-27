@@ -2,15 +2,16 @@ package trente.asia.calendar.services.calendar;
 
 import static trente.asia.welfare.adr.utils.WelfareFormatUtil.convertList2Map;
 
+import java.io.IOException;
 import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import com.bluelinelabs.logansquare.LoganSquare;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -28,7 +29,6 @@ import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
-import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.activity.ChiaseActivity;
 import trente.asia.android.view.ChiaseListDialog;
@@ -47,7 +47,6 @@ import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.define.WfUrlConst;
-import trente.asia.welfare.adr.models.ApiObjectModel;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 import trente.asia.welfare.adr.utils.WelfareUtil;
@@ -312,13 +311,12 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 			onChangeCalendar(calendars.get(0).key);
 		}
 
-
-//		Collections.sort(calendarHolders, new Comparator<ApiObjectModel>() {
-//			@Override
-//			public int compare(ApiObjectModel o1, ApiObjectModel o2) {
-//				return o1.value.compareToIgnoreCase(o2.value);
-//			}
-//		});
+		// Collections.sort(calendarHolders, new Comparator<ApiObjectModel>() {
+		// @Override
+		// public int compare(ApiObjectModel o1, ApiObjectModel o2) {
+		// return o1.value.compareToIgnoreCase(o2.value);
+		// }
+		// });
 		Map<String, String> calendarMap = WelfareFormatUtil.convertList2Map(calendarHolders);
 		dlgChooseCalendar = new CLOutboundDismissListDialog(getContext(), getString(R.string.cl_schedule_form_item_calendar), calendarMap, txtCalendar, new ChiaseListDialog.OnItemClicked() {
 
@@ -514,9 +512,13 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 	protected void successUpdate(JSONObject response, String url){
 		if(WfUrlConst.WF_CL_SCHEDULE_UPD.equals(url)){
 			String oldKey = schedule.key;
-			schedule = CCJsonUtil.convertToModel(response.optString("schedule"), ScheduleModel.class);
-			String newKey = response.optString("returnValue");
-			onScheduleUpdateSuccess(CCStringUtil.isEmpty(newKey) ? oldKey : newKey);
+			try{
+				schedule = LoganSquare.parse(response.optString("schedule"), ScheduleModel.class);
+				String newKey = response.optString("returnValue");
+				onScheduleUpdateSuccess(CCStringUtil.isEmpty(newKey) ? oldKey : newKey);
+			}catch(IOException e){
+				e.printStackTrace();
+			}
 		}else if(WfUrlConst.WF_CL_SCHEDULE_DEL.equals(url)){
 			((WelfareActivity)activity).dataMap.put(ClConst.ACTION_SCHEDULE_DELETE, CCConst.YES);
 			getFragmentManager().popBackStack();

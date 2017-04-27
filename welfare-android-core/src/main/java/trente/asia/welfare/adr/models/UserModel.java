@@ -11,6 +11,8 @@ import asia.chiase.core.util.CCCollectionUtil;
  *
  * @author TrungND
  */
+
+@com.bluelinelabs.logansquare.annotation.JsonObject(fieldDetectionPolicy = com.bluelinelabs.logansquare.annotation.JsonObject.FieldDetectionPolicy.NONPRIVATE_FIELDS)
 public class UserModel extends BitmapModel implements Serializable{
 
 	public String		key;

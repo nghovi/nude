@@ -1,5 +1,6 @@
 package trente.asia.calendar.services.calendar;
 
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -7,6 +8,8 @@ import java.util.Map;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import com.bluelinelabs.logansquare.LoganSquare;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -19,7 +22,6 @@ import android.widget.TextView;
 
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
-import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.model.DayModel;
 import trente.asia.android.util.CsDateUtil;
@@ -59,7 +61,8 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 	protected List<WorkOffer>		lstWorkOffer;
 	protected boolean				refreshWhenLoadingSummaryDialog	= false;
 	protected String				dayStr;
-	private int						headerBgColor;
+	private String					scheduleStrings;
+	protected boolean				isChangedData					= false;
 
 	abstract protected List<Date> getAllDate();
 
@@ -156,13 +159,26 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 	}
 
 	protected void onLoadSchedulesSuccess(JSONObject response){
-		lstSchedule = CCJsonUtil.convertToModelList(response.optString("schedules"), ScheduleModel.class);
-		lstCalendar = CCJsonUtil.convertToModelList(response.optString("calendars"), CalendarModel.class);
-		lstHoliday = CCJsonUtil.convertToModelList(response.optString("holidayList"), HolidayModel.class);
-		lstCategory = CCJsonUtil.convertToModelList(response.optString("categories"), CategoryModel.class);
-		lstWorkOffer = CCJsonUtil.convertToModelList(response.optString("workOfferList"), WorkOffer.class);
-		lstBirthdayUser = CCJsonUtil.convertToModelList(response.optString("birthdayList"), UserModel.class);
-		lstCalendarUser = CCJsonUtil.convertToModelList(response.optString("calendarUsers"), UserModel.class);
+		// long startMLS = System.currentTimeMillis();
+		try{
+			String newScheduleStrings = response.optString("schedules");
+			lstSchedule = LoganSquare.parseList(newScheduleStrings, ScheduleModel.class);
+			lstCalendar = LoganSquare.parseList(response.optString("calendars"), CalendarModel.class);
+			lstHoliday = LoganSquare.parseList(response.optString("holidayList"), HolidayModel.class);
+			lstCategory = LoganSquare.parseList(response.optString("categories"), CategoryModel.class);
+			lstWorkOffer = LoganSquare.parseList(response.optString("workOfferList"), WorkOffer.class);
+			lstBirthdayUser = LoganSquare.parseList(response.optString("birthdayList"), UserModel.class);
+			lstCalendarUser = LoganSquare.parseList(response.optString("calendarUsers"), UserModel.class);
+			if(refreshWhenLoadingSummaryDialog && !newScheduleStrings.equals(scheduleStrings)){
+				isChangedData = true;
+			}
+			scheduleStrings = newScheduleStrings;
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+
+		// long endMLS = System.currentTimeMillis();
+		// Log.e("BENCHMARKING", "PARSING TIME: " + (endMLS - startMLS));
 
 		if(changeCalendarUserListener != null){
 			changeCalendarUserListener.onChangeCalendarUserListener(lstCalendarUser);

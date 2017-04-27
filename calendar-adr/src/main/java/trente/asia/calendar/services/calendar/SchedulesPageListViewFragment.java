@@ -39,6 +39,7 @@ public abstract class SchedulesPageListViewFragment extends SchedulesPageFragmen
 	protected List<CalendarDayModel>			calendarDayModels;
 
 	protected List<CalendarDayView>				calendarDayViews	= new ArrayList<>();
+	protected boolean							isChangedData		= true;
 
 	@Override
 	protected int getNormalDayColor(){
@@ -46,7 +47,7 @@ public abstract class SchedulesPageListViewFragment extends SchedulesPageFragmen
 	}
 
 	@Override
-	public int getCalendarHeaderItem() {
+	public int getCalendarHeaderItem(){
 		return R.layout.weekly_calendar_title;
 	}
 
@@ -72,7 +73,7 @@ public abstract class SchedulesPageListViewFragment extends SchedulesPageFragmen
 	}
 
 	@Override
-	protected int getHeaderBgColor() {
+	protected int getHeaderBgColor(){
 		return ContextCompat.getColor(activity, R.color.wf_app_color_base);
 	}
 
@@ -85,10 +86,12 @@ public abstract class SchedulesPageListViewFragment extends SchedulesPageFragmen
 	@Override
 	protected void onLoadSchedulesSuccess(JSONObject response){
 		super.onLoadSchedulesSuccess(response);
-		calendarDayModels = buildCalendarDayModels(lstSchedule);
-		clearOldData();
-		updateObservableScrollableView();
-		updateHeaderTitles();
+		if(isChangedData){
+			calendarDayModels = buildCalendarDayModels(lstSchedule);
+			clearOldData();
+			updateObservableScrollableView();
+			updateHeaderTitles();
+		}
 	}
 
 	@Override

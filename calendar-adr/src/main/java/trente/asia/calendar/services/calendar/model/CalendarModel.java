@@ -1,5 +1,7 @@
 package trente.asia.calendar.services.calendar.model;
 
+import com.bluelinelabs.logansquare.annotation.JsonObject;
+
 import java.util.List;
 
 import trente.asia.welfare.adr.models.BitmapModel;
@@ -9,6 +11,7 @@ import trente.asia.welfare.adr.models.UserModel;
  * Created by viet on 11/25/2016.
  */
 
+@JsonObject(fieldDetectionPolicy = JsonObject.FieldDetectionPolicy.NONPRIVATE_FIELDS)
 public class CalendarModel extends BitmapModel{
 
 	public String			calendarName;

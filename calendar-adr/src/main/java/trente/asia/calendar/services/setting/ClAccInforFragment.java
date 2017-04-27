@@ -24,6 +24,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bluelinelabs.logansquare.LoganSquare;
+
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCNumberUtil;
 import asia.chiase.core.util.CCStringUtil;
@@ -223,7 +225,12 @@ public class ClAccInforFragment extends AbstractClFragment{
 				WfPicassoHelper.loadImage(activity, host + myself.avatarPath, imgAvatar, null);
 			}
 
-			SettingModel settingModel = CCJsonUtil.convertToModel(response.optString("setting"), SettingModel.class);
+			SettingModel settingModel = null;
+			try {
+				settingModel = LoganSquare.parse(response.optString("setting"), SettingModel.class);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			if(IS_CHECKED.equals(settingModel.WF_PUSH_SETTING)){
 				swtNotification.setChecked(true);
 			}else{

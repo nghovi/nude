@@ -1,5 +1,6 @@
 package trente.asia.calendar.services.calendar;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.bluelinelabs.logansquare.LoganSquare;
 import com.google.gson.Gson;
 
 import android.graphics.Color;
@@ -18,7 +20,6 @@ import android.widget.LinearLayout;
 
 import asia.chiase.core.util.CCBooleanUtil;
 import asia.chiase.core.util.CCFormatUtil;
-import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.view.ChiaseTextView;
 import trente.asia.android.view.util.CAObjectSerializeUtil;
@@ -112,13 +113,16 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 	}
 
 	protected void onLoadScheduleDetailSuccess(JSONObject response){
-		schedule = CCJsonUtil.convertToModel(response.optString("schedule"), ScheduleModel.class);
-		rooms = CCJsonUtil.convertToModelList(response.optString("rooms"), ApiObjectModel.class);
-		calendars = CCJsonUtil.convertToModelList(response.optString("calendars"), CalendarModel.class);
-		calendarHolders = getCalendarHolders(calendars);
-		categories = CCJsonUtil.convertToModelList(response.optString("categories"), CategoryModel.class);
-
-		inflateWithData(txtRoom, txtCalendar, txtCategory, rooms, calendars, categories, schedule);
+		try{
+			schedule = LoganSquare.parse(response.optString("schedule"), ScheduleModel.class);
+			rooms = LoganSquare.parseList(response.optString("rooms"), ApiObjectModel.class);
+			calendars = LoganSquare.parseList(response.optString("calendars"), CalendarModel.class);
+			calendarHolders = getCalendarHolders(calendars);
+			categories = LoganSquare.parseList(response.optString("categories"), CategoryModel.class);
+			inflateWithData(txtRoom, txtCalendar, txtCategory, rooms, calendars, categories, schedule);
+		}catch(IOException e){
+			e.printStackTrace();
+		}
 	}
 
 	protected void inflateWithData(ChiaseTextView txtRoom, ChiaseTextView txtCalendar, ChiaseTextView txtCategory, List<ApiObjectModel> rooms, List<CalendarModel> calendars, List<CategoryModel> categories, ScheduleModel schedule){
@@ -160,7 +164,7 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 			if(ClRepeatUtil.isRepeat(schedule.repeatType)){
 				ScheduleRepeatModel repeatModel = new ScheduleRepeatModel(schedule);
 				txtRepeat.setText(ClRepeatUtil.getRepeatDescription(repeatModel, activity));
-			} else {
+			}else{
 				txtRepeat.setText(getString(R.string.chiase_common_none));
 			}
 		}else{

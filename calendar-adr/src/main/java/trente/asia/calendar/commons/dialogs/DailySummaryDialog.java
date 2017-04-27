@@ -9,11 +9,11 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import trente.asia.calendar.R;
+import trente.asia.calendar.commons.views.NavigationHeader;
 import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.model.WorkOffer;
 import trente.asia.calendar.services.calendar.view.DailySummaryDialogPagerAdapter;
-import trente.asia.calendar.commons.views.NavigationHeader;
 import trente.asia.calendar.services.calendar.view.WeeklyScheduleListAdapter;
 import trente.asia.welfare.adr.models.UserModel;
 
@@ -66,5 +66,13 @@ public class DailySummaryDialog extends CLOutboundDismissDialog{
 		int currentItemPosition = mPagerAdapter.getPositionByDate(selectedDate);
 		mViewPager.setCurrentItem(currentItemPosition);
 		super.show();
+	}
+
+	public void notifyDataUpdated(List<ScheduleModel> lstSchedule, List<UserModel> lstBirthdayUser, List<HolidayModel> lstHoliday, List<WorkOffer> lstWorkOffer){
+		this.lstSchedule = lstSchedule;
+		this.lstBirthdayUser = lstBirthdayUser;
+		this.lstHoliday = lstHoliday;
+		this.lstWorkOffer = lstWorkOffer;
+		mPagerAdapter.notifyDataSetChanged();
 	}
 }

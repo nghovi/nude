@@ -1,5 +1,7 @@
 package trente.asia.calendar.services.calendar.model;
 
+import com.bluelinelabs.logansquare.annotation.JsonObject;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -15,6 +17,7 @@ import trente.asia.welfare.adr.define.WelfareConst;
  * @author TrungND
  */
 
+@JsonObject(fieldDetectionPolicy = JsonObject.FieldDetectionPolicy.NONPRIVATE_FIELDS)
 public class HolidayModel{
 
 	public String	holidayName;

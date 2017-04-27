@@ -1,13 +1,16 @@
 package trente.asia.calendar.services.user;
 
+import java.io.IOException;
+
 import org.json.JSONObject;
+
+import com.bluelinelabs.logansquare.LoganSquare;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 
-import asia.chiase.core.util.CCJsonUtil;
 import trente.asia.calendar.BuildConfig;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
@@ -43,13 +46,17 @@ public class ClLoginFragment extends LoginFragment{
 		super.successUpdate(response, url);
 
 		if(WfUrlConst.WF_ACC_0003.equals(url)){
-			prefAccUtil.set(ClConst.SELECTED_CALENDAR_STRING, response.optString("myCalendar"));
-			myself = CCJsonUtil.convertToModel(response.optString("myself"), UserModel.class);
-			prefAccUtil.set(ClConst.PREF_ACTIVE_USER_LIST, myself.key);
-			SettingModel settingModel = CCJsonUtil.convertToModel(response.optString("setting"), SettingModel.class);
-			prefAccUtil.saveSetting(settingModel);
-			emptyBackStack();
-			gotoFragment(new MonthlyFragment());
+			try{
+				prefAccUtil.set(ClConst.SELECTED_CALENDAR_STRING, response.optString("myCalendar"));
+				myself = LoganSquare.parse(response.optString("myself"), UserModel.class);
+				prefAccUtil.set(ClConst.PREF_ACTIVE_USER_LIST, myself.key);
+				SettingModel settingModel = LoganSquare.parse(response.optString("setting"), SettingModel.class);
+				prefAccUtil.saveSetting(settingModel);
+				emptyBackStack();
+				gotoFragment(new MonthlyFragment());
+			}catch(IOException e){
+				e.printStackTrace();
+			}
 		}
 	}
 
