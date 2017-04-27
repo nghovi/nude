@@ -404,7 +404,7 @@ public class WelfareUtil{
 					if(lastKnownLocation == null){
 						continue;
 					}
-					if(bestLocation == null || lastKnownLocation.getAccuracy() < bestLocation.getAccuracy()){
+					if(bestLocation == null || lastKnownLocation.getAccuracy() > bestLocation.getAccuracy()){
 						// Found best last known location: %s", l);
 						bestLocation = lastKnownLocation;
 					}
