@@ -55,13 +55,14 @@ public abstract class ClPageFragment extends AbstractClFragment implements Navig
     @Override
     protected void initView() {
         super.initView();
-        if (pageSharingHolder != null)
+        if (pageSharingHolder != null) {
             pageSharingHolder.navigationHeader.setOnHeaderActionsListener(this);
+        }
     }
 
     @Override
     protected void initData() {
-        if (pageSharingHolder != null && pageSharingHolder.selectedPagePosition == pagePosition) {
+        if (pageSharingHolder != null) {
             loadData();
         }
     }

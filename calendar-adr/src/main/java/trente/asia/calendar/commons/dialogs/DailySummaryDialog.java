@@ -64,7 +64,7 @@ public class DailySummaryDialog extends CLOutboundDismissDialog{
 
 	public void show(Date selectedDate){
 		int currentItemPosition = mPagerAdapter.getPositionByDate(selectedDate);
-		mViewPager.setCurrentItem(currentItemPosition);
+		mViewPager.setCurrentItem(currentItemPosition, false);
 		super.show();
 	}
 
