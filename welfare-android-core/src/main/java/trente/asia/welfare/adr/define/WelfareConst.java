@@ -21,7 +21,6 @@ public class WelfareConst{
 	public static final String		MYSELF_PARAM					= "myself";
 	public static final String		REGISTRATION_ID_PARAM			= "deviceRegistrationId";
 	public static final String		ANDROID_DEVICE_CODE				= "A";
-	public static final String		RETURN_CODE_PARAM				= "returnCode";
 
 	public static final String		ITEM_TEXT_TYPE_TEXT				= "TEXT";
 	public static final String		ITEM_TEXT_TYPE_LOC				= "LOC";

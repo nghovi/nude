@@ -127,11 +127,12 @@ public abstract class WelfareFragment extends ChiaseFragment implements WelfareA
 	 */
 	@Override
 	protected void onSuccessLoad(JSONObject response, boolean isAlert, String url){
+		//// TODO: 4/28/2017 this logic duplicated in onUpdateLoad: need to be refactored
 		if(response == null){
-			response = createSystemErrorResponse();
+			response = createSystemErrorResponse(activity);
 		}
 		String status = response.optString(CsConst.STATUS);
-		String returnCd = response.optString(WelfareConst.RETURN_CODE_PARAM);
+		String returnCd = response.optString(CsConst.RETURN_CODE_PARAM);
 		if(CsConst.STATUS_OK.equals(status) && (CCStringUtil.isEmpty(returnCd) || CCConst.NONE.equals(returnCd))){
 			UserModel userModel = CCJsonUtil.convertToModel(response.optString("myself"), UserModel.class);
 			if(userModel != null && !CCStringUtil.isEmpty(userModel.key)){
@@ -159,20 +160,10 @@ public abstract class WelfareFragment extends ChiaseFragment implements WelfareA
 		}
 	}
 
-	private JSONObject createSystemErrorResponse(){
-		JSONObject resule = new JSONObject();
-		try{
-			resule.put(CsConst.STATUS, CsConst.STATUS_NG);
-			resule.put(WelfareConst.RETURN_CODE_PARAM, WfErrorConst.ERR_CODE_SERVER_SYSTEM_EROR);
-			resule.put(CsConst.MESSAGES, getString(R.string.system_error_msg));
-		}catch(JSONException e){
 
-		}
-		return resule;
-	}
 
 	protected void commonNotSuccess(JSONObject response){
-		String returnCd = response.optString(WelfareConst.RETURN_CODE_PARAM);
+		String returnCd = response.optString(CsConst.RETURN_CODE_PARAM);
 		if(WfErrorConst.ERR_CODE_INVALID_ACCOUNT.equals(returnCd)){
 			gotoSignIn();
 		}else if(WfErrorConst.ERR_CODE_INVALID_VERSION_AND_UPDATE.equals(returnCd)){
@@ -216,6 +207,9 @@ public abstract class WelfareFragment extends ChiaseFragment implements WelfareA
 	 */
 	@Override
 	protected void onSuccessUpdate(JSONObject response, boolean isAlert, String url){
+		if(response == null){
+			response = createSystemErrorResponse(activity);
+		}
 		String status = response.optString(CsConst.STATUS);
 		if(CsConst.STATUS_OK.equals(status)){
 			dismissLoad();
@@ -242,6 +236,9 @@ public abstract class WelfareFragment extends ChiaseFragment implements WelfareA
 	 */
 	@Override
 	protected void onSuccessUpLoad(JSONObject response, boolean isAlert, String url){
+		if(response == null){
+			response = createSystemErrorResponse(activity);
+		}
 		String status = response.optString(CsConst.STATUS);
 		if(CsConst.STATUS_OK.equals(status)){
 			dismissLoad();

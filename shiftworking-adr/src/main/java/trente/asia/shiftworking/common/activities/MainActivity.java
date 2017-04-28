@@ -153,7 +153,7 @@ public class MainActivity extends WelfareActivity{
 	@Override
 	protected void onSuccessBackground(JSONObject response, boolean isAlert, String url){
 		String status = response.optString(CsConst.STATUS);
-		String returnCd = response.optString(WelfareConst.RETURN_CODE_PARAM);
+		String returnCd = response.optString(CsConst.RETURN_CODE_PARAM);
 		if(CsConst.STATUS_OK.equals(status) && (CCStringUtil.isEmpty(returnCd) || CCConst.NONE.equals(returnCd))){
 			if(WfUrlConst.WF_NOTICE_0005.equals(url)){
 				final TextView txtUnread = (TextView)activity.findViewById(R.id.txt_id_unread_message);

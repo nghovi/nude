@@ -79,7 +79,6 @@
     <string name="wf_contact_us_service_title">サービス名</string>
     <string name="wf_contact_us_detail_content_title">お問い合わせ内容詳細</string>
     <string name="wf_contact_us_select_item">選択する</string>
-    <string name="system_error_msg"> 接続エラー。</string>
     <string name="wf_change_notice_success">プッシュ通知設定を変更しました</string>
     <string name="change_avatar_success">アバターを変更しました</string>
     <string name="wf_password_change_success">パスワードを変更しました</string>

@@ -7,6 +7,9 @@ import android.Manifest;
  */
 public class CsConst{
 
+	public static final String		RETURN_CODE_PARAM			= "returnCode";
+	public static final String		ERR_CODE_SERVER_SYSTEM_EROR	= "WF004";
+
 	public static String			ROOT						= "CA-ROOT";
 
 	public static final String		ACCOUNT_PROPERTY			= "asia.chiase.account";

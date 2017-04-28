@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
+import asia.chiase.core.util.CCStringUtil;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -114,7 +115,12 @@ public class ChiaseActivity extends FragmentActivity{
                 protected void onPostExecute(String s){
                     super.onPostExecute(s);
                     try{
-                        JSONObject resJson = new JSONObject(s);
+						JSONObject resJson;
+						if (CCStringUtil.isEmpty(s)) {
+							resJson = ChiaseFragment.createSystemErrorResponse(ChiaseActivity.this);
+						} else {
+							 resJson = new JSONObject(s);
+						}
                         onSuccessBackground(resJson, isAlert, url);
                     }catch(JSONException e){
                         e.printStackTrace();

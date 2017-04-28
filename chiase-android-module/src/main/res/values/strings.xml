@@ -48,6 +48,8 @@
     <string name="chiase_common_success_signout">Signed out successfully!</string>
     <string name="chiase_about_app_version">Version %1$s</string>
     <string name="chiase_setting_title">Setting</string>
+    <string name="system_error_msg">Connection error</string>
+
 
 
 </resources>
