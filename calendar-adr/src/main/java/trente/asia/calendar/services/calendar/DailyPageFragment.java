@@ -46,7 +46,7 @@ public class DailyPageFragment extends SchedulesPageListViewFragment implements 
 	@Override
 	public void onDayClick(String dayStr){
 		this.dayStr = dayStr;
-		refreshWhenLoadingSummaryDialog = true;
+		refreshDialogData = true;
 		updateDayViews(dayStr);
 		selectedDate = CCDateUtil.makeDateCustom(dayStr, WelfareConst.WF_DATE_TIME_DATE);
 		// Log.e("BENCHMARKING", "Update TIME: " + (System.currentTimeMillis() - lastMLS));
@@ -81,8 +81,8 @@ public class DailyPageFragment extends SchedulesPageListViewFragment implements 
 	@Override
 	protected void updateObservableScrollableView(){
 		canScroll = false;
-		if(refreshWhenLoadingSummaryDialog){
-			refreshWhenLoadingSummaryDialog = false;
+		if(refreshDialogData){
+			refreshDialogData = false;
 			// // TODO: 4/26/2017 refresh dailyScheduleList only if data
 			// changed
 		}else{

@@ -240,7 +240,7 @@ public abstract class SchedulesPageListViewFragment extends SchedulesPageFragmen
 	protected void updateDayViews(String dayString){
 		pageSharingHolder.cancelPreviousClickedDayView();
 		CalendarDayView view = dateStrCalendarDayViewMap.get(dayString);
-		view.setSelected(true);
+		if(view != null) view.setSelected(true);
 		pageSharingHolder.setClickedDayView(view);
 	}
 }

@@ -119,7 +119,7 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 			calendars = LoganSquare.parseList(response.optString("calendars"), CalendarModel.class);
 			calendarHolders = getCalendarHolders(calendars);
 			categories = LoganSquare.parseList(response.optString("categories"), CategoryModel.class);
-			inflateWithData(txtRoom, txtCalendar, txtCategory, rooms, calendars, categories, schedule);
+			if(getView() != null) inflateWithData(txtRoom, txtCalendar, txtCategory, rooms, calendars, categories, schedule);
 		}catch(IOException e){
 			e.printStackTrace();
 		}

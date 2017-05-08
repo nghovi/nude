@@ -198,7 +198,7 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 			dialogDailySummary.setData(lstSchedule, lstBirthdayUser, lstHoliday, lstWorkOffer);
 		}
 
-		if(refreshWhenLoadingSummaryDialog && isChangedData){
+		if(refreshDialogData && isChangedData){
 			//// TODO: 4/27/2017 more check change data
 			dialogDailySummary.setData(lstSchedule, lstBirthdayUser, lstHoliday, lstWorkOffer);
 			isChangedData = false;
@@ -222,7 +222,7 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 		if(!dialogDailySummary.isShowing()){
 			dayStr = day;
 			dialogDailySummary.show(CCDateUtil.makeDateCustom(dayStr, WelfareConst.WF_DATE_TIME_DATE));
-			refreshWhenLoadingSummaryDialog = true;
+			refreshDialogData = true;
 			loadScheduleList();
 		}
 	}

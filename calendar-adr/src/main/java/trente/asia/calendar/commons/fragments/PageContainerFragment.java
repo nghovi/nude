@@ -49,7 +49,7 @@ public abstract class PageContainerFragment extends AbstractClFragment{
 																			if(isRefresh){
 																				holder.isRefreshUserList = true;
 																				ClPageFragment fragment = (ClPageFragment)mPagerAdapter.getItem(holder.selectedPagePosition);
-																				fragment.loadData();
+																				fragment.calendarChangedLoadData();
 																			}
 																		}
 																	};

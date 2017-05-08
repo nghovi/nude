@@ -59,7 +59,7 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 	protected List<CategoryModel>	lstCategory;
 	protected List<UserModel>		lstBirthdayUser;
 	protected List<WorkOffer>		lstWorkOffer;
-	protected boolean				refreshWhenLoadingSummaryDialog	= false;
+	protected boolean refreshDialogData = false;
 	protected String				dayStr;
 	private String					scheduleStrings;
 	protected boolean				isChangedData					= false;
@@ -169,7 +169,7 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 			lstWorkOffer = LoganSquare.parseList(response.optString("workOfferList"), WorkOffer.class);
 			lstBirthdayUser = LoganSquare.parseList(response.optString("birthdayList"), UserModel.class);
 			lstCalendarUser = LoganSquare.parseList(response.optString("calendarUsers"), UserModel.class);
-			if(refreshWhenLoadingSummaryDialog && !newScheduleStrings.equals(scheduleStrings)){
+			if(refreshDialogData && !newScheduleStrings.equals(scheduleStrings)){
 				isChangedData = true;
 			}
 			scheduleStrings = newScheduleStrings;
@@ -209,6 +209,12 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 	protected void loadData(){
 		loadScheduleList();
 	}
+
+	@Override
+	protected void calendarChangedLoadData(){
+		refreshDialogData = true;
+		loadData();
+	};
 
 	protected int getNormalDayColor(){
 		return ContextCompat.getColor(activity, R.color.wf_common_color_text);
