@@ -5,7 +5,9 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONObject;
 
@@ -35,11 +37,12 @@ import trente.asia.welfare.adr.utils.WelfareUtil;
  */
 public abstract class SchedulesPageListViewFragment extends SchedulesPageFragment implements CalendarDayView.OnDayClickListener{
 
-	protected List<WeeklyCalendarHeaderRowView>	lstHeaderRow		= new ArrayList<>();
+	protected List<WeeklyCalendarHeaderRowView>	lstHeaderRow				= new ArrayList<>();
 	protected List<CalendarDayModel>			calendarDayModels;
 
-	protected List<CalendarDayView>				calendarDayViews	= new ArrayList<>();
-	protected boolean							isChangedData		= true;
+	protected List<CalendarDayView>				calendarDayViews			= new ArrayList<>();
+	protected Map<String, CalendarDayView>		dateStrCalendarDayViewMap	= new HashMap<>();
+	protected boolean							isChangedData				= true;
 
 	@Override
 	protected int getNormalDayColor(){
@@ -69,6 +72,7 @@ public abstract class SchedulesPageListViewFragment extends SchedulesPageFragmen
 			dayView.initLayout(date, isInOtherMonth);
 			rowView.lnrRowContent.addView(dayView);
 			calendarDayViews.add(dayView);
+			dateStrCalendarDayViewMap.put(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, date), dayView);
 		}
 	}
 
@@ -235,12 +239,8 @@ public abstract class SchedulesPageListViewFragment extends SchedulesPageFragmen
 
 	protected void updateDayViews(String dayString){
 		pageSharingHolder.cancelPreviousClickedDayView();
-		for(CalendarDayView view : calendarDayViews){
-			if(view.dayStr.equals(dayString)){
-				view.setSelected(true);
-				pageSharingHolder.setClickedDayView(view);
-				return;
-			}
-		}
+		CalendarDayView view = dateStrCalendarDayViewMap.get(dayString);
+		view.setSelected(true);
+		pageSharingHolder.setClickedDayView(view);
 	}
 }

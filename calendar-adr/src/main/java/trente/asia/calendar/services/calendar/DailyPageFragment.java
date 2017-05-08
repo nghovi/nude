@@ -27,11 +27,13 @@ import trente.asia.welfare.adr.define.WelfareConst;
  */
 public class DailyPageFragment extends SchedulesPageListViewFragment implements DailyScheduleClickListener,ObservableScrollViewCallbacks{
 
+	private static final long		REFRESH_API_TIME_MS	= 2000;
 	private ClDialog				dialogScheduleList;
 	private ObservableScrollView	observableScrollView;
 
 	private DailyScheduleList		dailyScheduleList;
-	private boolean					canScroll	= false;
+	private boolean					canScroll			= false;
+	private long					lastMLS				= 0;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -44,11 +46,16 @@ public class DailyPageFragment extends SchedulesPageListViewFragment implements 
 	@Override
 	public void onDayClick(String dayStr){
 		this.dayStr = dayStr;
-		selectedDate = CCDateUtil.makeDateCustom(dayStr, WelfareConst.WF_DATE_TIME_DATE);
 		refreshWhenLoadingSummaryDialog = true;
 		updateDayViews(dayStr);
+		selectedDate = CCDateUtil.makeDateCustom(dayStr, WelfareConst.WF_DATE_TIME_DATE);
+		// Log.e("BENCHMARKING", "Update TIME: " + (System.currentTimeMillis() - lastMLS));
 		dailyScheduleList.showFor(selectedDate);
-		loadScheduleList();
+		long nowMLS = System.currentTimeMillis();
+		if(nowMLS - lastMLS > REFRESH_API_TIME_MS){
+			loadScheduleList();
+		}
+		lastMLS = nowMLS;
 	}
 
 	@Override
