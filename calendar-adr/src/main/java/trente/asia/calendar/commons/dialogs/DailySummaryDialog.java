@@ -37,6 +37,9 @@ public class DailySummaryDialog extends CLOutboundDismissDialog{
 	private List<HolidayModel>											lstHoliday;
 	private List<WorkOffer>												lstWorkOffer;
 
+
+	private Date selectedDate;
+
 	public DailySummaryDialog(Context context, final WeeklyScheduleListAdapter.OnScheduleItemClickListener listener, final NavigationHeader.OnAddBtnClickedListener onAddBtnClickedListener, List<Date> dates){
 		super(context);
 
@@ -60,9 +63,14 @@ public class DailySummaryDialog extends CLOutboundDismissDialog{
 		mPagerAdapter = new DailySummaryDialogPagerAdapter(this, mContext, dates);
 		mPagerAdapter.setData(this.lstSchedule, this.lstBirthdayUser, this.lstHoliday, this.lstWorkOffer, this.onAddBtnClickedListener, this.listener, this);
 		mViewPager.setAdapter(mPagerAdapter);
+		if (selectedDate != null) {
+			int currentItemPosition = mPagerAdapter.getPositionByDate(selectedDate);
+			mViewPager.setCurrentItem(currentItemPosition, false);
+		}
 	}
 
 	public void show(Date selectedDate){
+		this.selectedDate = selectedDate;
 		int currentItemPosition = mPagerAdapter.getPositionByDate(selectedDate);
 		mViewPager.setCurrentItem(currentItemPosition, false);
 		super.show();
