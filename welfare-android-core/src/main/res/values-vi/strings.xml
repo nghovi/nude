@@ -86,7 +86,6 @@
     <string name="wf_contact_us_service_title">Tên dịch vụ</string>
     <string name="wf_contact_us_detail_content_title">Nội dung chi tiết</string>
     <string name="wf_contact_us_select_item">Chọn</string>
-    <string name="system_error_msg">System error. Please inform to us</string>
     <string name="wf_change_notice_success">Cập nhật cài đặt thông báo thành
         công
     </string>

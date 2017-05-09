@@ -55,17 +55,23 @@ public abstract class ClPageFragment extends AbstractClFragment implements Navig
 	@Override
 	protected void initView(){
 		super.initView();
-		pageSharingHolder.navigationHeader.setOnHeaderActionsListener(this);
+		if(pageSharingHolder != null){
+			pageSharingHolder.navigationHeader.setOnHeaderActionsListener(this);
+		}
 	}
 
 	@Override
 	protected void initData(){
-		if(pageSharingHolder.selectedPagePosition == pagePosition){
+		if(pageSharingHolder != null){
 			loadData();
 		}
 	}
 
 	protected abstract void loadData();
+
+	protected void calendarChangedLoadData(){
+		loadData();
+	};
 
 	public void setSelectedDate(Date selectedDate){
 		this.selectedDate = selectedDate;

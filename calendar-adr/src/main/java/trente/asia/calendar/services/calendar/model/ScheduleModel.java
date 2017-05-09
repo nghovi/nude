@@ -3,6 +3,8 @@ package trente.asia.calendar.services.calendar.model;
 import java.util.Calendar;
 import java.util.List;
 
+import com.bluelinelabs.logansquare.annotation.JsonObject;
+
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCStringUtil;
@@ -18,6 +20,7 @@ import trente.asia.welfare.adr.utils.WelfareUtil;
  * @author TrungND
  */
 
+@JsonObject(fieldDetectionPolicy = JsonObject.FieldDetectionPolicy.NONPRIVATE_FIELDS)
 public class ScheduleModel{
 
 	public String			scheduleName;

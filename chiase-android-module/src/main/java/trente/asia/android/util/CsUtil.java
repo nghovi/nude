@@ -1,6 +1,9 @@
 package trente.asia.android.util;
 
+import java.io.File;
 import java.util.List;
+
+import android.os.Environment;
 
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCStringUtil;
@@ -37,6 +40,24 @@ public class CsUtil{
 			}
 		}
 		return 0;
+	}
+
+	/**
+	 * get root file of application
+	 *
+	 * @return string
+	 */
+	public static String getFilesFolderPath(String appFolder){
+		File folder = new File(Environment.getExternalStorageDirectory(), appFolder);
+		if(!folder.exists()){
+			folder.mkdirs();
+		}
+		return folder.getAbsolutePath();
+	}
+
+	public static String makeAppFile(String appFolder, String fileName){
+		String filePath = getFilesFolderPath(appFolder) + "/" + fileName;
+		return filePath;
 	}
 
 }

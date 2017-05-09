@@ -105,7 +105,8 @@ public class HttpDelegate{
 			protected void onPostExecute(String s){
 				super.onPostExecute(s);
 				try{
-					JSONObject resJson = new JSONObject(s);
+					JSONObject resJson = null;
+					if(!CCStringUtil.isEmpty(s)) resJson = new JSONObject(s);
 					callback.callbackUpdate(HttpCallback.SUCCESS, url, resJson, isAlert);
 				}catch(JSONException e){
 					e.printStackTrace();
@@ -157,7 +158,8 @@ public class HttpDelegate{
 			protected void onPostExecute(String s){
 				super.onPostExecute(s);
 				try{
-					JSONObject resJson = new JSONObject(s);
+					JSONObject resJson = null;
+					if(!CCStringUtil.isEmpty(s)) resJson = new JSONObject(s);
 					callback.callbackUpload(HttpCallback.SUCCESS, url, resJson, isAlert);
 				}catch(JSONException e){
 					e.printStackTrace();

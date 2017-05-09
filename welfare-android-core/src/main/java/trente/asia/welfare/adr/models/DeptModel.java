@@ -1,5 +1,8 @@
 package trente.asia.welfare.adr.models;
 
+import com.bluelinelabs.logansquare.annotation.JsonField;
+import com.bluelinelabs.logansquare.annotation.JsonObject;
+
 import java.util.List;
 
 /**
@@ -7,11 +10,17 @@ import java.util.List;
  *
  * @author TrungND
  */
+
+@JsonObject
 public class DeptModel{
 
+	@JsonField
 	public String			key;
+	@JsonField
 	public String			deptName;
+	@JsonField
 	public List<UserModel>	managers;
+	@JsonField
 	public List<UserModel>	members;
 
 	public String getKey(){
@@ -43,5 +52,9 @@ public class DeptModel{
 	public DeptModel(String key, String deptName){
 		this.key = key;
 		this.deptName = deptName;
+	}
+
+	public DeptModel(){
+
 	}
 }

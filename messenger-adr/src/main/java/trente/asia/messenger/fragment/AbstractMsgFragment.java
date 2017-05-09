@@ -4,6 +4,7 @@ import org.json.JSONObject;
 
 import android.os.Bundle;
 
+import trente.asia.android.define.CsConst;
 import trente.asia.messenger.BuildConfig;
 import trente.asia.messenger.services.message.MessageFragment;
 import trente.asia.messenger.services.user.MsgLoginFragment;
@@ -33,7 +34,7 @@ public class AbstractMsgFragment extends WelfareFragment{
 
 	@Override
 	protected void commonNotSuccess(JSONObject response){
-		String returnCd = response.optString(WelfareConst.RETURN_CODE_PARAM);
+		String returnCd = response.optString(CsConst.RETURN_CODE_PARAM);
 		if(WfErrorConst.MS_ERR_CODE_DEPT_CHANGED.equals(returnCd) || WfErrorConst.MS_ERR_CODE_CONTENT_DELETED.equals(returnCd)){
 			emptyBackStack();
 			gotoFragment(new MessageFragment());

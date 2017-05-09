@@ -2,12 +2,15 @@ package trente.asia.calendar.services.summary;
 
 import static trente.asia.calendar.services.summary.SummaryPagerAdapter.GRAPH_COLUMN_NUM;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import com.bluelinelabs.logansquare.LoganSquare;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -20,7 +23,6 @@ import android.widget.TextView;
 
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
-import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
@@ -82,10 +84,14 @@ public class SummaryPageFragment extends ClPageFragment{
 	}
 
 	private void onLoadSummarySuccess(JSONObject response){
-		summaryModels = CCJsonUtil.convertToModelList(response.optString("months"), SummaryModel.class);
-		categories = CCJsonUtil.convertToModelList(response.optString("categories"), CategoryModel.class);
-		buildGraphExplain();
-		buildGraphColumns();
+		try{
+			summaryModels = LoganSquare.parseList(response.optString("months"), SummaryModel.class);
+			categories = LoganSquare.parseList(response.optString("categories"), CategoryModel.class);
+			buildGraphExplain();
+			buildGraphColumns();
+		}catch(IOException e){
+			e.printStackTrace();
+		}
 	}
 
 	private void buildGraphColumns(){

@@ -1,5 +1,6 @@
 package trente.asia.calendar.services.calendar;
 
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -7,6 +8,8 @@ import java.util.Map;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import com.bluelinelabs.logansquare.LoganSquare;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -19,7 +22,6 @@ import android.widget.TextView;
 
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
-import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.model.DayModel;
 import trente.asia.android.util.CsDateUtil;
@@ -57,9 +59,10 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 	protected List<CategoryModel>	lstCategory;
 	protected List<UserModel>		lstBirthdayUser;
 	protected List<WorkOffer>		lstWorkOffer;
-	protected boolean				refreshWithoutShowingLoading	= false;
+	protected boolean refreshDialogData = false;
 	protected String				dayStr;
-	private int headerBgColor;
+	private String					scheduleStrings;
+	protected boolean				isChangedData					= false;
 
 	abstract protected List<Date> getAllDate();
 
@@ -78,26 +81,26 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 		initDayViews();
 	}
 
-	private void initCalendarHeader() {
-		LayoutInflater mInflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	private void initCalendarHeader(){
+		LayoutInflater mInflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View titleView = mInflater.inflate(getCalendarHeaderItem(), null);
-		LinearLayout lnrRowTitle = (LinearLayout) titleView.findViewById(R.id.lnr_id_row_title);
+		LinearLayout lnrRowTitle = (LinearLayout)titleView.findViewById(R.id.lnr_id_row_title);
 		int firstDay = Calendar.SUNDAY;
-		if (!CCStringUtil.isEmpty(prefAccUtil.getSetting().CL_START_DAY_IN_WEEK)) {
+		if(!CCStringUtil.isEmpty(prefAccUtil.getSetting().CL_START_DAY_IN_WEEK)){
 			firstDay = Integer.parseInt(prefAccUtil.getSetting().CL_START_DAY_IN_WEEK);
 		}
 		List<DayModel> dayModels = CsDateUtil.getAllDay4Week(firstDay);
-		for (DayModel dayModel : dayModels) {
+		for(DayModel dayModel : dayModels){
 			View titleItem = mInflater.inflate(R.layout.monthly_calendar_title_item, null);
 			LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
 			titleItem.setLayoutParams(layoutParams);
-			TextView txtTitleItem = (TextView) titleItem.findViewById(R.id.monthly_calendar_title_day_label);
+			TextView txtTitleItem = (TextView)titleItem.findViewById(R.id.monthly_calendar_title_day_label);
 			titleItem.findViewById(R.id.lnr_title_background).setBackgroundColor(getHeaderBgColor());
-			if (Calendar.SUNDAY == dayModel.dayOfWeek) {
+			if(Calendar.SUNDAY == dayModel.dayOfWeek){
 				txtTitleItem.setTextColor(Color.RED);
-			} else if (Calendar.SATURDAY == dayModel.dayOfWeek) {
+			}else if(Calendar.SATURDAY == dayModel.dayOfWeek){
 				txtTitleItem.setTextColor(Color.BLUE);
-			} else {
+			}else{
 				txtTitleItem.setTextColor(getNormalDayColor());
 			}
 			txtTitleItem.setText(CCStringUtil.toUpperCase(dayModel.day));
@@ -111,7 +114,7 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 
 	protected void loadScheduleList(){
 		JSONObject jsonObject = prepareJsonObject();
-		requestLoad(WfUrlConst.API_CL_SCHEDULE_LIST, jsonObject, !refreshWithoutShowingLoading);
+		requestLoad(WfUrlConst.API_CL_SCHEDULE_LIST, jsonObject, false);
 	}
 
 	protected JSONObject prepareJsonObject(){
@@ -156,13 +159,26 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 	}
 
 	protected void onLoadSchedulesSuccess(JSONObject response){
-		lstSchedule = CCJsonUtil.convertToModelList(response.optString("schedules"), ScheduleModel.class);
-		lstCalendar = CCJsonUtil.convertToModelList(response.optString("calendars"), CalendarModel.class);
-		lstHoliday = CCJsonUtil.convertToModelList(response.optString("holidayList"), HolidayModel.class);
-		lstCategory = CCJsonUtil.convertToModelList(response.optString("categories"), CategoryModel.class);
-		lstWorkOffer = CCJsonUtil.convertToModelList(response.optString("workOfferList"), WorkOffer.class);
-		lstBirthdayUser = CCJsonUtil.convertToModelList(response.optString("birthdayList"), UserModel.class);
-		lstCalendarUser = CCJsonUtil.convertToModelList(response.optString("calendarUsers"), UserModel.class);
+		// long startMLS = System.currentTimeMillis();
+		try{
+			String newScheduleStrings = response.optString("schedules");
+			lstSchedule = LoganSquare.parseList(newScheduleStrings, ScheduleModel.class);
+			lstCalendar = LoganSquare.parseList(response.optString("calendars"), CalendarModel.class);
+			lstHoliday = LoganSquare.parseList(response.optString("holidayList"), HolidayModel.class);
+			lstCategory = LoganSquare.parseList(response.optString("categories"), CategoryModel.class);
+			lstWorkOffer = LoganSquare.parseList(response.optString("workOfferList"), WorkOffer.class);
+			lstBirthdayUser = LoganSquare.parseList(response.optString("birthdayList"), UserModel.class);
+			lstCalendarUser = LoganSquare.parseList(response.optString("calendarUsers"), UserModel.class);
+			if(refreshDialogData && !newScheduleStrings.equals(scheduleStrings)){
+				isChangedData = true;
+			}
+			scheduleStrings = newScheduleStrings;
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+
+		// long endMLS = System.currentTimeMillis();
+		// Log.e("BENCHMARKING", "PARSING TIME: " + (endMLS - startMLS));
 
 		if(changeCalendarUserListener != null){
 			changeCalendarUserListener.onChangeCalendarUserListener(lstCalendarUser);
@@ -194,6 +210,12 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 		loadScheduleList();
 	}
 
+	@Override
+	protected void calendarChangedLoadData(){
+		refreshDialogData = true;
+		loadData();
+	};
+
 	protected int getNormalDayColor(){
 		return ContextCompat.getColor(activity, R.color.wf_common_color_text);
 	}
@@ -202,11 +224,10 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 		return CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_MMMM_YY, dates.get(0));
 	}
 
-	protected int getHeaderBgColor() {
+	protected int getHeaderBgColor(){
 		return ContextCompat.getColor(activity, R.color.wf_login_background_color);
 	}
 
 	abstract int getCalendarHeaderItem();
-
 
 }

@@ -46,5 +46,10 @@
     <string name="chiase_common_success_change_avatar">Ảnh đại diện của bạn đã được thay đổi</string>
     <string name="chiase_common_success_change_password">Mật khẩu của bạn đã được thay đổi</string>
     <string name="chiase_common_success_signout">Đăng xuất thành công</string>
+    <string name="chiase_about_app_version">Phiên bản %1$s</string>
+    <string name="chiase_setting_title">Cài đặt</string>
+    <string name="system_error_msg">Lỗi kết nối</string>
+
+
 
 </resources>

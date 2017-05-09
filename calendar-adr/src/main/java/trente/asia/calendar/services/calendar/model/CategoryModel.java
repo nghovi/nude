@@ -1,9 +1,12 @@
 package trente.asia.calendar.services.calendar.model;
 
+import com.bluelinelabs.logansquare.annotation.JsonObject;
+
 /**
  * Created by trungnd on 3/2/17.
  */
 
+@JsonObject(fieldDetectionPolicy = JsonObject.FieldDetectionPolicy.NONPRIVATE_FIELDS)
 public class CategoryModel{
 
 	public String	key;

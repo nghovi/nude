@@ -6,4 +6,5 @@
     <string name="menu_company_title">Company</string>
     <string name="menu_history_title">History</string>
     <string name="menu_setting_title">Setting</string>
+    <string name="ac_about_app_version">1.0</string>
 </resources>

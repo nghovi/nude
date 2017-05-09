@@ -1,5 +1,8 @@
 package trente.asia.welfare.adr.models;
 
+import com.bluelinelabs.logansquare.annotation.JsonObject;
+
+@JsonObject(fieldDetectionPolicy = JsonObject.FieldDetectionPolicy.NONPRIVATE_FIELDS)
 public class FcmNotificationModel{
 
 	public String	title;

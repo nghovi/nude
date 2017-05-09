@@ -3,6 +3,7 @@ package trente.asia.calendar.services.calendar.view;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
@@ -44,10 +45,11 @@ public class DailySummaryDialogPagerAdapter extends PagerAdapter{
 	private List<WorkOffer>											lstWorkOffer;
 	private NavigationHeader.OnAddBtnClickedListener				onAddBtnClickedListener;
 	private WeeklyScheduleListAdapter.OnScheduleItemClickListener	listener;
+	Map<Date, Map<Integer, List<ScheduleModel>>>					daySchedulesMap;
+	Map<Date, List<WorkOffer>>										dayOfferMap;
+	Map<Date, List<UserModel>>										dayBirthdayUsersMap;
 
 	private DailySummaryDialog										dialog;
-
-	// protected OnChangeCalendarUserListener listener;
 
 	public DailySummaryDialogPagerAdapter(DailySummaryDialog dialog, Context context, List<Date> dates){
 		mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -96,7 +98,8 @@ public class DailySummaryDialogPagerAdapter extends PagerAdapter{
 
 		txtHeader.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_CL_FULL, selectedDate));
 		dailyScheduleListView.hasDisplayedItem = false;
-		dailyScheduleListView.updateFor(selectedDate, lstSchedule, lstHoliday, lstWorkOffer, lstBirthdayUser);
+		dailyScheduleListView.initDataWithMap(this.dayBirthdayUsersMap, this.dayOfferMap, this.daySchedulesMap, lstSchedule, lstHoliday, lstWorkOffer, lstBirthdayUser);
+		dailyScheduleListView.showFor(selectedDate);
 		if(!dailyScheduleListView.hasDisplayedItem){
 			dailyScheduleListView.setVisibility(View.GONE);
 			txtNoSchedule.setVisibility(View.VISIBLE);
@@ -138,6 +141,9 @@ public class DailySummaryDialogPagerAdapter extends PagerAdapter{
 		this.onAddBtnClickedListener = onAddBtnClickedListener;
 		this.listener = listener;
 		this.dialog = dialog;
+		this.daySchedulesMap = DailyScheduleList.buildDaySchedulesMap(dates, this.lstSchedule);
+		this.dayOfferMap = DailyScheduleList.buildDayOfferMap(dates, lstWorkOffer);
+		this.dayBirthdayUsersMap = DailyScheduleList.buildDayBirthdayUserMap(dates, lstBirthdayUser);
 	}
 
 	public int getPositionByDate(Date selectedDate){

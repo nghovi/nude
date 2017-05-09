@@ -36,7 +36,7 @@ public class ClAboutAppFragment extends AbstractClFragment{
 		super.initHeader(R.drawable.wf_back_white, getString(R.string.wf_about_app), null);
 
 		TextView version = (TextView)getView().findViewById(R.id.txt_fragment_about_version);
-		version.setText(getString(R.string.cl_about_app_version, AndroidUtil.getVersionName(activity)));
+		version.setText(getString(R.string.chiase_about_app_version, AndroidUtil.getVersionName(activity)));
 
 		WebView webView = (WebView)getView().findViewById(R.id.webview_fragment_about);
 		webView.loadUrl("file:///android_asset/license_info.html");

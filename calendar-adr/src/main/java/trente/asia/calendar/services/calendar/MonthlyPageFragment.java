@@ -15,17 +15,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import asia.chiase.core.util.CCBooleanUtil;
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
-import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.define.CsConst;
 import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.R;
-import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.dialogs.DailySummaryDialog;
 import trente.asia.calendar.commons.utils.ClUtil;
 import trente.asia.calendar.services.calendar.listener.DailyScheduleClickListener;
@@ -37,7 +34,6 @@ import trente.asia.calendar.services.calendar.view.MonthlyCalendarRowView;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
-import trente.asia.welfare.adr.utils.WelfareUtil;
 
 /**
  * MonthlyPageFragment
@@ -52,7 +48,7 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 	private DailySummaryDialog				dialogDailySummary;
 
 	@Override
-	public int getCalendarHeaderItem() {
+	public int getCalendarHeaderItem(){
 		return R.layout.monthly_calendar_title;
 	}
 
@@ -104,39 +100,26 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 		LayoutInflater mInflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		MonthlyCalendarRowView rowView = null;
 		LinearLayout lnrRowContent = null;
-		for(int index = 0; index < dates.size(); index++){
-			Date itemDate = dates.get(index);
-			if(index % CsConst.DAY_NUMBER_A_WEEK == 0){
-				rowView = (MonthlyCalendarRowView)mInflater.inflate(R.layout.monthly_calendar_row, null);
-				rowView.setStartDate(itemDate);
-				lnrRowContent = (LinearLayout) rowView.findViewById(R.id.lnr_id_row_content);
-				lnrCalendarContainer.addView(rowView);
-				lstCalendarRow.add(rowView);
+		if(!CCCollectionUtil.isEmpty(dates)){
+			for(int index = 0; index < dates.size(); index++){
+				Date itemDate = dates.get(index);
+				if(index % CsConst.DAY_NUMBER_A_WEEK == 0){
+					rowView = (MonthlyCalendarRowView)mInflater.inflate(R.layout.monthly_calendar_row, null);
+					rowView.setStartDate(itemDate);
+					lnrRowContent = (LinearLayout)rowView.findViewById(R.id.lnr_id_row_content);
+					lnrCalendarContainer.addView(rowView);
+					lstCalendarRow.add(rowView);
+				}
+
+				MonthlyCalendarDayView dayView = (MonthlyCalendarDayView)mInflater.inflate(R.layout.monthly_calendar_row_item, null);
+				dayView.initialization(itemDate, this, CsDateUtil.isDiffMonth(itemDate, selectedDate));
+				dayView.dayOfTheWeek = index % CsConst.DAY_NUMBER_A_WEEK;
+				lstCalendarDay.add(dayView);
+				rowView.lstCalendarDay.add(dayView);
+
+				lnrRowContent.addView(dayView);
 			}
-
-			MonthlyCalendarDayView dayView = (MonthlyCalendarDayView)mInflater.inflate(R.layout.monthly_calendar_row_item, null);
-			dayView.initialization(itemDate, this, CsDateUtil.isDiffMonth(itemDate, selectedDate));
-			dayView.dayOfTheWeek = index % CsConst.DAY_NUMBER_A_WEEK;
-			lstCalendarDay.add(dayView);
-			rowView.lstCalendarDay.add(dayView);
-
-			lnrRowContent.addView(dayView);
 		}
-	}
-
-	private void makeSummaryDialog(){
-		dialogDailySummary = new DailySummaryDialog(activity, this, this, dates);
-		dialogDailySummary.setData(lstSchedule, lstBirthdayUser, lstHoliday, lstWorkOffer);
-	}
-
-	@Override
-	protected void initData(){
-		super.initData();
-//		String activeMonth = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_YYYY_MM, selectedDate);
-//		Date activeDate = WelfareFormatUtil.makeDate(prefAccUtil.get(ClConst.PREF_ACTIVE_DATE));
-//		if(activeMonth.equals(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_YYYY_MM, activeDate))){
-//			loadScheduleList();
-//		}
 	}
 
 	@Override
@@ -205,16 +188,20 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 			rowView.refreshLayout();
 		}
 
-		for (MonthlyCalendarDayView dayView: lstCalendarDay) {
+		for(MonthlyCalendarDayView dayView : lstCalendarDay){
 			dayView.showSchedules();
 		}
 
 		// make daily summary dialog
-		makeSummaryDialog();
-		if(refreshWithoutShowingLoading){
-			refreshWithoutShowingLoading = false;
-			Date selectedDate = CCDateUtil.makeDateCustom(dayStr, WelfareConst.WF_DATE_TIME_DATE);
-			dialogDailySummary.show(selectedDate);
+		if(dialogDailySummary == null){
+			dialogDailySummary = new DailySummaryDialog(activity, this, this, dates);
+			dialogDailySummary.setData(lstSchedule, lstBirthdayUser, lstHoliday, lstWorkOffer);
+		}
+
+		if(refreshDialogData && isChangedData){
+			//// TODO: 4/27/2017 more check change data
+			dialogDailySummary.setData(lstSchedule, lstBirthdayUser, lstHoliday, lstWorkOffer);
+			isChangedData = false;
 		}
 	}
 
@@ -234,7 +221,8 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 	public void onDailyScheduleClickListener(String day){
 		if(!dialogDailySummary.isShowing()){
 			dayStr = day;
-			refreshWithoutShowingLoading = true;
+			dialogDailySummary.show(CCDateUtil.makeDateCustom(dayStr, WelfareConst.WF_DATE_TIME_DATE));
+			refreshDialogData = true;
 			loadScheduleList();
 		}
 	}

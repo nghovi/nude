@@ -1,11 +1,14 @@
 package trente.asia.calendar.services.calendar.model;
 
+import com.bluelinelabs.logansquare.annotation.JsonObject;
+
 /**
  * HolidayModel
  *
  * @author VietNH
  */
 
+@JsonObject(fieldDetectionPolicy = JsonObject.FieldDetectionPolicy.NONPRIVATE_FIELDS)
 public class WorkOffer{
 
 	public static final String	OFFER_TYPE_OVERTIME					= "OTW";

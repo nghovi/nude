@@ -11,9 +11,9 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import trente.asia.android.define.CsConst;
 import trente.asia.dailyreport.BuildConfig;
 import trente.asia.dailyreport.R;
-import trente.asia.dailyreport.dialogs.MonthYearPickerDialog;
 import trente.asia.dailyreport.services.activities.ActivityFragment;
 import trente.asia.dailyreport.services.kpigraph.KPIMonthlyGoalGraphFragment;
 import trente.asia.dailyreport.services.other.OthersFragment;
@@ -102,7 +102,7 @@ public abstract class AbstractDRFragment extends WelfareFragment{
 
 	@Override
 	protected void commonNotSuccess(JSONObject response){
-		String returnCd = response.optString(WelfareConst.RETURN_CODE_PARAM);
+		String returnCd = response.optString(CsConst.RETURN_CODE_PARAM);
 		if(WfErrorConst.DR_ERR_CODE_DEPT_CHANGED.equals(returnCd)){
 			emptyBackStack();
 			gotoFragment(new MyReportFragment());

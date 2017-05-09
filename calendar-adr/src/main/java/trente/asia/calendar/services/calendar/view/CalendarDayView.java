@@ -40,6 +40,7 @@ public class CalendarDayView extends LinearLayout{
 	private TextView			txtScheduleMark;
 	View						rowItemView;
 	private boolean				isInOtherMonth			= false;
+	private boolean				isBeingSelected			= false;
 
 	public void setDate(Date date){
 		this.date = date;
@@ -83,7 +84,7 @@ public class CalendarDayView extends LinearLayout{
 			txtContent.setTextColor(Color.WHITE);
 		}
 
-		txtContent.setBackgroundResource(this.bgResource);
+		if(!isBeingSelected) txtContent.setBackgroundResource(this.bgResource);
 
 		if(hasMark(calendarDayModel)){
 			txtScheduleMark.setVisibility(View.VISIBLE);
@@ -97,6 +98,7 @@ public class CalendarDayView extends LinearLayout{
 	}
 
 	public void setSelected(boolean selected){
+		isBeingSelected = selected;
 		if(selected && this.bgResource != R.drawable.circle_background_today){
 			txtContent.setBackgroundResource(R.drawable.circle_background_selected);
 			txtContent.setTextColor(Color.WHITE);

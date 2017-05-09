@@ -17,15 +17,15 @@ public class AddressCardActivity extends WelfareActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_address_card);
-//        PreferencesAccountUtil prefAccUtil = new PreferencesAccountUtil(this);
-//        UserModel userModel = prefAccUtil.getUserPref();
-//
-//        if(!CCStringUtil.isEmpty(userModel.key)){
-//            addFragment(new ACMainFragment());
-//        }else{
-//            addFragment(new ACLoginFragment());
-//        }
+        PreferencesAccountUtil prefAccUtil = new PreferencesAccountUtil(this);
+        UserModel userModel = prefAccUtil.getUserPref();
 
-        addFragment(new ACLoginFragment());
+        if(!CCStringUtil.isEmpty(userModel.key)){
+            addFragment(new ACMainFragment());
+        }else{
+            addFragment(new ACLoginFragment());
+        }
+
+//        addFragment(new ACLoginFragment());
     }
 }

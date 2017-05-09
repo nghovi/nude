@@ -61,7 +61,7 @@ public class DRSettingFragment extends AbstractDRFragment implements View.OnClic
 			((WelfareActivity)activity).addFragment(aboutAppFragment);
 			break;
 		case R.id.lnr_term:
-			gotoBrowser(WelfareConst.ACCOUNT_TERM_URL);
+			gotoBrowserWithLang(WelfareConst.ACCOUNT_TERM_URL);
 			break;
 		case R.id.lnr_policy:
 			gotoBrowser(WelfareConst.ACCOUNT_POLICY_URL);

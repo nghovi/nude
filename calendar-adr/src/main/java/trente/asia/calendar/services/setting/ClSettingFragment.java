@@ -36,7 +36,7 @@ public class ClSettingFragment extends AbstractClFragment{
 	@Override
 	public void initView(){
 		super.initView();
-		super.initHeader(null, getString(R.string.cl_setting_title), null);
+		super.initHeader(null, getString(R.string.chiase_setting_title), null);
 
 		LinearLayout lnrAccInfo = (LinearLayout)getView().findViewById(R.id.lnr_account_info);
 		LinearLayout lnrAboutApp = (LinearLayout)getView().findViewById(R.id.lnr_about_app);
@@ -64,7 +64,7 @@ public class ClSettingFragment extends AbstractClFragment{
 			((WelfareActivity)activity).addFragment(aboutAppFragment);
 			break;
 		case R.id.lnr_term:
-			gotoBrowser(WelfareConst.ACCOUNT_TERM_URL);
+			gotoBrowserWithLang(WelfareConst.ACCOUNT_TERM_URL);
 			break;
 		case R.id.lnr_policy:
 			gotoBrowser(WelfareConst.ACCOUNT_POLICY_URL);

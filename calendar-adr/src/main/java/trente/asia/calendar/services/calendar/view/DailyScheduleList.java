@@ -47,17 +47,21 @@ public class DailyScheduleList extends LinearLayout{
 	private static final int										MARGIN_TEXT_TOP_BOTTOM	= WelfareUtil.dpToPx(4);
 	private static final int										MARGIN_TOP_BOTTOM		= WelfareUtil.dpToPx(4);
 
-	// private LinearLayout lnrOffers;
-
 	private Map<Integer, List<ScheduleModel>>						schedulesMap;
+	Map<Date, Map<Integer, List<ScheduleModel>>>					daySchedulesMap;
+	Map<Date, List<WorkOffer>>										dayOfferMap;
+	Map<Date, List<UserModel>>										dayBirthdayUsersMap;
 	private LayoutInflater											inflater;
 	private List<ScheduleModel>										lstSchedule;
 	private Date													selectedDate;
 	private WeeklyScheduleListAdapter.OnScheduleItemClickListener	onScheduleItemClickListener;
 
 	private LinearLayout											lnrEvents;
-	// private LinearLayout lnrBirthdays;
 	public boolean													hasDisplayedItem		= false;
+
+	private List<HolidayModel>										holidayModels;
+	private List<WorkOffer>											offers;
+	private List<UserModel>											userModels;
 
 	public DailyScheduleList(Context context){
 		super(context);
@@ -71,26 +75,73 @@ public class DailyScheduleList extends LinearLayout{
 		this.inflater = inflater;
 		this.onScheduleItemClickListener = onScheduleItemClickListener;
 		lnrEvents = (LinearLayout)findViewById(R.id.lnr_daily_schedules_list_event);
-		// lnrOffers = (LinearLayout)findViewById(R.id.lnr_daily_schedules_list_work_offer);
-		// lnrBirthdays = (LinearLayout)findViewById(R.id.lnr_daily_schedules_list_birthday);
-
 	}
 
-	public void updateFor(Date selectedDate, List<ScheduleModel> lstSchedule, List<HolidayModel> holidayModels, List<WorkOffer> offers, List<UserModel> userModels){
-		this.lstSchedule = lstSchedule;
-		this.selectedDate = selectedDate;
-		schedulesMap = getDisplayedSchedulesMaps();
+	public void showFor(Date selectedDate){
+		this.selectedDate = CCDateUtil.makeDate(selectedDate);
+		schedulesMap = daySchedulesMap.get(this.selectedDate);
 		buildTimelySchedules(R.id.lnr_daily_schedule_list_all_day, R.string.daily_page_all_day, schedulesMap.get(SCHEDULES_ALL_DAY));
 		buildTimelySchedules(R.id.lnr_daily_schedule_list_morning, R.string.daily_page_morning, schedulesMap.get(SCHEDULES_MORNING));
 		buildTimelySchedules(R.id.lnr_daily_schedule_list_afternoon, R.string.daily_page_afternoon, schedulesMap.get(SCHEDULES_AFTERNOON));
 		buildEvents(holidayModels, offers, userModels);
 	}
 
+	public void initData(List<Date> dates, List<ScheduleModel> lstSchedule, List<HolidayModel> holidayModels, List<WorkOffer> offers, List<UserModel> userModels){
+		this.lstSchedule = lstSchedule;
+		this.holidayModels = holidayModels;
+		this.offers = offers;
+		this.userModels = userModels;
+		dayOfferMap = buildDayOfferMap(dates, this.offers);
+		dayBirthdayUsersMap = buildDayBirthdayUserMap(dates, this.userModels);
+		daySchedulesMap = buildDaySchedulesMap(dates, this.lstSchedule);
+	}
+
+	public void initDataWithMap(Map<Date, List<UserModel>> dayBirthdayUsersMap, Map<Date, List<WorkOffer>> dayOfferMap, Map<Date, Map<Integer, List<ScheduleModel>>> daySchedulesMap, List<ScheduleModel> lstSchedule, List<HolidayModel> holidayModels, List<WorkOffer> offers, List<UserModel> userModels){
+		this.lstSchedule = lstSchedule;
+		this.holidayModels = holidayModels;
+		this.offers = offers;
+		this.userModels = userModels;
+		this.daySchedulesMap = daySchedulesMap;
+		this.dayBirthdayUsersMap = dayBirthdayUsersMap;
+		this.dayOfferMap = dayOfferMap;
+	}
+
+	public static Map<Date, List<WorkOffer>> buildDayOfferMap(List<Date> dates, List<WorkOffer> workOffers){
+		Map<Date, List<WorkOffer>> result = new HashMap<>();
+		for(Date date : dates){
+			Date dateOnly = CCDateUtil.makeDate(date);
+			List<WorkOffer> dayWorkOffers = getSortedWorkOffersByDate(workOffers, date);
+			result.put(dateOnly, dayWorkOffers);
+		}
+		return result;
+	}
+
+	public static Map<Date, List<UserModel>> buildDayBirthdayUserMap(List<Date> dates, List<UserModel> userModels){
+		Map<Date, List<UserModel>> result = new HashMap<>();
+		for(Date date : dates){
+			Date dateOnly = CCDateUtil.makeDate(date);
+			List<UserModel> dayBirthdayUsers = getSortedBirthdayUsersByDate(userModels, date);
+			result.put(dateOnly, dayBirthdayUsers);
+		}
+		return result;
+
+	}
+
+	public static Map<Date, Map<Integer, List<ScheduleModel>>> buildDaySchedulesMap(List<Date> dates, List<ScheduleModel> lstSchedule){
+		Map<Date, Map<Integer, List<ScheduleModel>>> result = new HashMap<>();
+		for(Date date : dates){
+			Date dateOnly = CCDateUtil.makeDate(date);
+			Map<Integer, List<ScheduleModel>> dayMap = getDisplayedSchedulesMaps(dateOnly, lstSchedule);
+			result.put(dateOnly, dayMap);
+		}
+		return result;
+	}
+
 	private void buildEvents(List<HolidayModel> holidayModels, List<WorkOffer> offers, List<UserModel> userModels){
 		lnrEvents.removeAllViews();
-		List<UserModel> birthdayUsers = getBirthdayUsersToday(userModels);
-		List<WorkOffer> workOffers = getWorkOfferToday(offers);
-		List<HolidayModel> holidayModelList = HolidayModel.getHolidayModels(selectedDate, holidayModels);
+		List<UserModel> birthdayUsers = dayBirthdayUsersMap.get(this.selectedDate);
+		List<WorkOffer> workOffers = dayOfferMap.get(this.selectedDate);
+		List<HolidayModel> holidayModelList = HolidayModel.getHolidayModels(this.selectedDate, holidayModels);
 		if(!CCCollectionUtil.isEmpty(holidayModelList) || !CCCollectionUtil.isEmpty(workOffers) || !CCCollectionUtil.isEmpty(birthdayUsers)){
 			lnrEvents.setVisibility(View.VISIBLE);
 			TextView header = buildTextView(getContext().getString(R.string.daily_schedules_event_title));
@@ -123,8 +174,6 @@ public class DailyScheduleList extends LinearLayout{
 		itemHoliday.setPadding(paddingLeftRightPx, MARGIN_TOP_BOTTOM, paddingLeftRightPx, MARGIN_TOP_BOTTOM);
 		TextView txtHolidayName = (TextView)itemHoliday.findViewById(R.id.txt_item_holiday_name);
 		txtHolidayName.setText(holidayModel.holidayName);
-//		ImageView imgHoliday = (ImageView)itemHoliday.findViewById(R.id.img_item_holiday_image);
-//		WfPicassoHelper.loadImage(itemHoliday.getContext(), holidayModel.imgPath, imgHoliday, null);
 		return itemHoliday;
 	}
 
@@ -132,10 +181,10 @@ public class DailyScheduleList extends LinearLayout{
 
 	}
 
-	private List<WorkOffer> getWorkOfferToday(List<WorkOffer> offers){
+	public static List<WorkOffer> getSortedWorkOffersByDate(List<WorkOffer> offers, Date date){
 		List<WorkOffer> result = new ArrayList<>();
 		for(WorkOffer offer : offers){
-			if(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, selectedDate).equals(offer.startDateString)){
+			if(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, date).equals(offer.startDateString)){
 				result.add(offer);
 			}
 		}
@@ -185,12 +234,7 @@ public class DailyScheduleList extends LinearLayout{
 
 		txtType.setText(offer.offerTypeName);
 		txtStatus.setText(offer.offerStatusName);
-//		txtNote.setText(offer.note);
 		return offerItemView;
-	}
-
-	private void buildBirthdays(List<UserModel> userModels){
-
 	}
 
 	public static void sortBirthdays(List<UserModel> userModels){
@@ -203,10 +247,10 @@ public class DailyScheduleList extends LinearLayout{
 		});
 	}
 
-	public List<UserModel> getBirthdayUsersToday(List<UserModel> userModels){
+	public static List<UserModel> getSortedBirthdayUsersByDate(List<UserModel> userModels, Date date){
 		List<UserModel> result = new ArrayList<>();
 		for(UserModel userModel : userModels){
-			if(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_MM_DD, selectedDate).equals(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_MM_DD, CCDateUtil.makeDateCustom(userModel.dateBirth, WelfareConst.WF_DATE_TIME)))){
+			if(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_MM_DD, date).equals(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_MM_DD, CCDateUtil.makeDateCustom(userModel.dateBirth, WelfareConst.WF_DATE_TIME)))){
 				result.add(userModel);
 			}
 		}
@@ -259,13 +303,13 @@ public class DailyScheduleList extends LinearLayout{
 		hasDisplayedItem = true;
 	}
 
-	private Map<Integer, List<ScheduleModel>> getDisplayedSchedulesMaps(){
+	public static Map<Integer, List<ScheduleModel>> getDisplayedSchedulesMaps(Date date, List<ScheduleModel> lstSchedule){
 		Map<Integer, List<ScheduleModel>> result = new HashMap<>();
 		result.put(SCHEDULES_ALL_DAY, new ArrayList<ScheduleModel>());
 		result.put(SCHEDULES_MORNING, new ArrayList<ScheduleModel>());
 		result.put(SCHEDULES_AFTERNOON, new ArrayList<ScheduleModel>());
 		for(ScheduleModel scheduleModel : lstSchedule){
-			if(!CCStringUtil.isEmpty(scheduleModel.key) && isScheduleOf(scheduleModel, selectedDate)){
+			if(!CCStringUtil.isEmpty(scheduleModel.key) && isScheduleOf(scheduleModel, date)){
 				if(CCBooleanUtil.checkBoolean(scheduleModel.isAllDay)){
 					result.get(SCHEDULES_ALL_DAY).add(scheduleModel);
 				}else if(isBeforeNoon(scheduleModel.startTime)){
@@ -291,16 +335,15 @@ public class DailyScheduleList extends LinearLayout{
 		});
 	}
 
-	private boolean isBeforeNoon(String startTime){
+	public static boolean isBeforeNoon(String startTime){
 		int startMinute = CCDateUtil.convertTime2Min(startTime);
 		int noonMinute = CCDateUtil.convertTime2Min(TIME_NOON);
 		return startMinute < noonMinute;
 	}
 
-	private boolean isScheduleOf(ScheduleModel scheduleModel, Date date){
+	public static boolean isScheduleOf(ScheduleModel scheduleModel, Date date){
 		Date startDate = WelfareUtil.makeDate(scheduleModel.startDate);
 		Date endDate = WelfareUtil.makeDate(scheduleModel.endDate);
 		return CCDateUtil.compareDate(startDate, date, false) <= 0 && CCDateUtil.compareDate(date, endDate, false) <= 0;
 	}
-
 }

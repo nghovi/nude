@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -21,6 +22,7 @@ import java.util.Map;
 
 import asia.chiase.core.define.CCConst;
 import trente.asia.android.R;
+import trente.asia.android.define.CsConst;
 import trente.asia.android.util.AndroidUtil;
 import trente.asia.android.view.ChiaseAlertDialog;
 import trente.asia.android.view.ChiaseLoadingDialog;
@@ -177,6 +179,18 @@ public class ChiaseFragment extends Fragment implements HttpCallback {
 
         onSuccessLoad(response, isAlert, url);
 
+    }
+
+    public static JSONObject createSystemErrorResponse(Context context){
+        JSONObject resule = new JSONObject();
+        try{
+            resule.put(CsConst.STATUS, CsConst.STATUS_NG);
+            resule.put(CsConst.RETURN_CODE_PARAM, CsConst.ERR_CODE_SERVER_SYSTEM_EROR);
+            resule.put(CsConst.MESSAGES, context.getString(R.string.system_error_msg));
+        }catch(JSONException e){
+
+        }
+        return resule;
     }
 
 

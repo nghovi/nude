@@ -27,11 +27,13 @@ import trente.asia.welfare.adr.define.WelfareConst;
  */
 public class DailyPageFragment extends SchedulesPageListViewFragment implements DailyScheduleClickListener,ObservableScrollViewCallbacks{
 
+	private static final long		REFRESH_API_TIME_MS	= 2000;
 	private ClDialog				dialogScheduleList;
 	private ObservableScrollView	observableScrollView;
 
 	private DailyScheduleList		dailyScheduleList;
-	private boolean					canScroll	= false;
+	private boolean					canScroll			= false;
+	private long					lastMLS				= 0;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -44,8 +46,16 @@ public class DailyPageFragment extends SchedulesPageListViewFragment implements 
 	@Override
 	public void onDayClick(String dayStr){
 		this.dayStr = dayStr;
-		refreshWithoutShowingLoading = true;
-		loadScheduleList();
+		refreshDialogData = true;
+		updateDayViews(dayStr);
+		selectedDate = CCDateUtil.makeDateCustom(dayStr, WelfareConst.WF_DATE_TIME_DATE);
+		// Log.e("BENCHMARKING", "Update TIME: " + (System.currentTimeMillis() - lastMLS));
+		dailyScheduleList.showFor(selectedDate);
+		long nowMLS = System.currentTimeMillis();
+		if(nowMLS - lastMLS > REFRESH_API_TIME_MS){
+			loadScheduleList();
+		}
+		lastMLS = nowMLS;
 	}
 
 	@Override
@@ -71,17 +81,19 @@ public class DailyPageFragment extends SchedulesPageListViewFragment implements 
 	@Override
 	protected void updateObservableScrollableView(){
 		canScroll = false;
-		if(refreshWithoutShowingLoading){
-			updateList(dayStr);
-			refreshWithoutShowingLoading = false;
+		if(refreshDialogData){
+			refreshDialogData = false;
+			// // TODO: 4/26/2017 refresh dailyScheduleList only if data
+			// changed
+		}else{
+			dailyScheduleList.initData(dates, lstSchedule, lstHoliday, lstWorkOffer, lstBirthdayUser);
+			dailyScheduleList.showFor(selectedDate);
 		}
-		updateDayViews(dayStr);
-		dailyScheduleList.updateFor(selectedDate, lstSchedule, lstHoliday, lstWorkOffer, lstBirthdayUser);
+
 	}
 
 	@Override
 	public void updateList(String dayStr){
-		selectedDate = CCDateUtil.makeDateCustom(dayStr, WelfareConst.WF_DATE_TIME_DATE);
 	}
 
 	@Override

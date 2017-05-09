@@ -3,6 +3,7 @@
 buildscript {
     repositories {
         jcenter()
+        mavenCentral()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.1'
@@ -15,9 +16,17 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        mavenCentral()
+        maven{
+            url 'https://gitlab.com/chiase/chiase-core2/raw/master/maven/'
+        }
+    }
+    dependencies {
+
     }
 }
 
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
