@@ -12,7 +12,7 @@ import trente.asia.addresscard.R;
 import org.json.JSONObject;
 
 import trente.asia.addresscard.commons.defines.ACConst;
-import trente.asia.addresscard.commons.fragments.ACMainFragment;
+import trente.asia.addresscard.services.card.BusinessCardMainFragment;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.models.SettingModel;
@@ -47,7 +47,7 @@ public class ACLoginFragment extends LoginFragment {
             SettingModel settingModel = CCJsonUtil.convertToModel(response.optString("setting"), SettingModel.class);
             prefAccUtil.saveSetting(settingModel);
             emptyBackStack();
-            gotoFragment(new ACMainFragment());
+            gotoFragment(new BusinessCardMainFragment());
         }
     }
 

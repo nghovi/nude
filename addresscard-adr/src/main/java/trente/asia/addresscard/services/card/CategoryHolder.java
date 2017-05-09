@@ -6,12 +6,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 /**
- * Created by Windows 10 Gamer on 07/05/2017.
+ * Created by tien on 5/8/2017.
  */
 
-public class CardHolder extends RecyclerView.ViewHolder {
-    private ViewDataBinding binding;
-    public CardHolder(View itemView) {
+public class CategoryHolder extends RecyclerView.ViewHolder {
+    ViewDataBinding binding;
+    public CategoryHolder(View itemView) {
         super(itemView);
         binding = DataBindingUtil.bind(itemView);
     }

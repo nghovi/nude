@@ -9,7 +9,7 @@
         android:baselineAligned="false"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:weightSum="4">
+        android:weightSum="3">
 
         <LinearLayout
             android:id="@+id/lnr_view_footer_card"
@@ -60,30 +60,6 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/lnr_view_footer_history"
-            style="@style/cs_common_wrap"
-            android:layout_width="@dimen/margin_0dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <trente.asia.android.view.ChiaseImageView
-                style="@style/cs_common_wrap"
-                android:layout_marginTop="@dimen/margin_5dp"
-                android:alpha="0.5"
-                android:src="@drawable/active_tab_history"/>
-
-            <trente.asia.android.view.ChiaseTextView
-                style="@style/cs_text_footer_item"
-                android:layout_marginBottom="@dimen/margin_5dp"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:paddingTop="@dimen/margin_5dp"
-                android:text="@string/menu_history_title"
-                android:textColor="@color/core_gray"/>
-        </LinearLayout>
-
-        <LinearLayout
             android:id="@+id/lnr_view_footer_setting"
             style="@style/cs_common_wrap"
             android:layout_width="@dimen/margin_0dp"
@@ -106,8 +82,6 @@
                 android:text="@string/menu_setting_title"
                 android:textColor="@color/core_gray"/>
         </LinearLayout>
-
-
     </LinearLayout>
 
 </merge>

@@ -9,8 +9,8 @@ import android.widget.LinearLayout;
 
 import trente.asia.addresscard.BuildConfig;
 import trente.asia.addresscard.R;
-import trente.asia.addresscard.services.company.CompanyFragment;
-import trente.asia.addresscard.services.history.HistoryFragment;
+import trente.asia.addresscard.services.card.BusinessCardMainFragment;
+import trente.asia.addresscard.services.card.CategoryListFragment;
 import trente.asia.addresscard.services.user.ACLoginFragment;
 import trente.asia.addresscard.setting.SettingFragment;
 import trente.asia.android.view.ChiaseImageView;
@@ -62,9 +62,6 @@ public abstract class AbstractAddressCardFragment extends WelfareFragment implem
 					case R.id.lnr_view_footer_company:
 						onClickFooterItemCompany();
 						break;
-					case R.id.lnr_view_footer_history:
-						onClickFooterItemHistory();
-						break;
 					case R.id.lnr_view_footer_setting:
 						onClickFooterItemSetting();
 						break;
@@ -76,7 +73,6 @@ public abstract class AbstractAddressCardFragment extends WelfareFragment implem
 
 			getView().findViewById(R.id.lnr_view_footer_card).setOnClickListener(listener);
 			getView().findViewById(R.id.lnr_view_footer_company).setOnClickListener(listener);
-			getView().findViewById(R.id.lnr_view_footer_history).setOnClickListener(listener);
 			getView().findViewById(R.id.lnr_view_footer_setting).setOnClickListener(listener);
 			LinearLayout lnrFooter = (LinearLayout)getView().findViewById(footerItemId);
 			setSelectedFooterItem(lnrFooter);
@@ -99,17 +95,12 @@ public abstract class AbstractAddressCardFragment extends WelfareFragment implem
 
 	public void onClickFooterItemCard(){
 		emptyBackStack();
-		gotoFragment(new ACMainFragment());
+		gotoFragment(new BusinessCardMainFragment());
 	}
 
 	public void onClickFooterItemCompany(){
 		emptyBackStack();
-		gotoFragment(new CompanyFragment());
-	}
-
-	public void onClickFooterItemHistory(){
-		emptyBackStack();
-		gotoFragment(new HistoryFragment());
+		gotoFragment(new CategoryListFragment());
 	}
 
 	public void onClickFooterItemSetting(){

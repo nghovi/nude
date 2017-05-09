@@ -15,12 +15,18 @@ android {
 
         jackOptions {
             enabled true
+            additionalParameters('jack.incremental': 'true')
         }
     }
 
     compileOptions {
+        incremental true
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    dexOptions {
+        javaMaxHeapSize '4096m'
     }
 
     productFlavors {
@@ -41,6 +47,9 @@ android {
         }
     }
 
+    dataBinding {
+        enabled = true
+    }
 }
 
 dependencies {
@@ -51,5 +60,4 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
     compile project(path: ':welfare-android-core')
-
 }

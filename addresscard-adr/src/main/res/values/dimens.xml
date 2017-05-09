@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="category_height">50dp</dimen>
+    <dimen name="general_margin">16dp</dimen>
+    <dimen name="text_size">18sp</dimen>
+    <dimen name="category_padding">5dp</dimen>
+    <dimen name="title_padding">16dp</dimen>
+    <dimen name="right_arrow_dimension">40dp</dimen>
+</resources>
