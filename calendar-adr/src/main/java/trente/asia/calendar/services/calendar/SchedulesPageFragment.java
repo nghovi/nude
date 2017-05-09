@@ -62,7 +62,7 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 	protected boolean refreshDialogData = false;
 	protected String				dayStr;
 	private String					scheduleStrings;
-	protected boolean				isChangedData					= false;
+	protected boolean				isChangedData					= true;
 
 	abstract protected List<Date> getAllDate();
 

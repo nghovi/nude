@@ -81,11 +81,7 @@ public class DailyPageFragment extends SchedulesPageListViewFragment implements 
 	@Override
 	protected void updateObservableScrollableView(){
 		canScroll = false;
-		if(refreshDialogData){
-			refreshDialogData = false;
-			// // TODO: 4/26/2017 refresh dailyScheduleList only if data
-			// changed
-		}else{
+		if(isChangedData){
 			dailyScheduleList.initData(dates, lstSchedule, lstHoliday, lstWorkOffer, lstBirthdayUser);
 			dailyScheduleList.showFor(selectedDate);
 		}

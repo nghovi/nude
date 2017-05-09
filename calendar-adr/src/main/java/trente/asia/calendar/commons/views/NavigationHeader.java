@@ -3,6 +3,7 @@ package trente.asia.calendar.commons.views;
 import java.util.Date;
 
 import android.content.Context;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
@@ -19,6 +20,7 @@ import trente.asia.welfare.adr.view.WfSlideMenuLayout;
 
 public class NavigationHeader extends LinearLayout{
 
+	private static final long	ENABLED_BTN_TIME_MS	= 500;
 	public WfSlideMenuLayout	slideMenu;
 	private ImageView			imgNavigation;
 	private ImageView			imgRightBtn;
@@ -44,7 +46,15 @@ public class NavigationHeader extends LinearLayout{
 
 			@Override
 			public void onClick(View v){
+				imgRightBtn.setEnabled(false);
 				listener.onAddBtnClick(null);
+				new Handler().postDelayed(new Runnable() {
+
+					@Override
+					public void run(){
+						imgRightBtn.setEnabled(true);
+					}
+				}, ENABLED_BTN_TIME_MS);
 			}
 		});
 	}
