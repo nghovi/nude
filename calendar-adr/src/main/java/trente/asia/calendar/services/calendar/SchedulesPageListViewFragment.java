@@ -42,6 +42,8 @@ public abstract class SchedulesPageListViewFragment extends SchedulesPageFragmen
 
 	protected List<CalendarDayView>				calendarDayViews			= new ArrayList<>();
 	protected Map<String, CalendarDayView>		dateStrCalendarDayViewMap	= new HashMap<>();
+	protected long								lastMLS						= 0;
+	protected static final long					REFRESH_API_TIME_MS			= 2000;
 
 	@Override
 	protected int getNormalDayColor(){
@@ -228,13 +230,6 @@ public abstract class SchedulesPageListViewFragment extends SchedulesPageFragmen
 
 	protected List<CalendarDayModel> getDisplayedDayForList(){
 		return calendarDayModels;
-	}
-
-	@Override
-	public void onDayClick(String dayString){
-		dayStr = dayString;
-		updateDayViews(dayString);
-		updateList(dayString);
 	}
 
 	protected void updateDayViews(String dayString){

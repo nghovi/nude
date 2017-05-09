@@ -5,8 +5,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import org.json.JSONObject;
-
 import com.github.ksoichiro.android.observablescrollview.ObservableListView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
@@ -52,10 +50,6 @@ public class WeeklyPageFragment extends SchedulesPageListViewFragment implements
 		observableListView.setDivider(null);
 	}
 
-	protected void onLoadSchedulesSuccess(JSONObject response){
-		super.onLoadSchedulesSuccess(response);
-	}
-
 	protected void updateObservableScrollableView(){
 		List<CalendarDayModel> displayedModels = getDisplayedDayForList();
 		adapter = new WeeklyScheduleListAdapter(activity, R.layout.item_calendar_day, displayedModels, lstHoliday, this);
@@ -90,6 +84,19 @@ public class WeeklyPageFragment extends SchedulesPageListViewFragment implements
 		}
 		List<Date> dates = CsDateUtil.getAllDate4Week(CCDateUtil.makeCalendar(selectedDate), firstDay);
 		return dates;
+	}
+
+	@Override
+	public void onDayClick(String dayString){
+		this.dayStr = dayString;
+		refreshDialogData = true;
+		updateDayViews(dayString);
+		updateList(dayString);
+		long nowMLS = System.currentTimeMillis();
+		if(nowMLS - lastMLS > REFRESH_API_TIME_MS){
+			loadScheduleList();
+		}
+		lastMLS = nowMLS;
 	}
 
 	@Override
