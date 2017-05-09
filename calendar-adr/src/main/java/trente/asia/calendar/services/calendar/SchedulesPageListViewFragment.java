@@ -42,7 +42,6 @@ public abstract class SchedulesPageListViewFragment extends SchedulesPageFragmen
 
 	protected List<CalendarDayView>				calendarDayViews			= new ArrayList<>();
 	protected Map<String, CalendarDayView>		dateStrCalendarDayViewMap	= new HashMap<>();
-	protected boolean							isChangedData				= true;
 
 	@Override
 	protected int getNormalDayColor(){
@@ -95,6 +94,7 @@ public abstract class SchedulesPageListViewFragment extends SchedulesPageFragmen
 			clearOldData();
 			updateObservableScrollableView();
 			updateHeaderTitles();
+			isChangedData = false;
 		}
 	}
 
