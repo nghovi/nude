@@ -4,12 +4,10 @@
     android:layout_height="wrap_content"
     android:background="@color/cs_common_divider"
     android:layout_weight="1"
-    android:paddingBottom="@dimen/margin_1dp"
     android:orientation="vertical">
 
     <LinearLayout android:layout_width="match_parent"
                   android:layout_height="match_parent"
-                  android:layout_marginRight="@dimen/margin_1dp"
                   android:background="@color/wf_login_background_color"
                   android:orientation="vertical">
 
