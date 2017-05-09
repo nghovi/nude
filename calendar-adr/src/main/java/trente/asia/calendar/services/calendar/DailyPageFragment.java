@@ -27,13 +27,11 @@ import trente.asia.welfare.adr.define.WelfareConst;
  */
 public class DailyPageFragment extends SchedulesPageListViewFragment implements DailyScheduleClickListener,ObservableScrollViewCallbacks{
 
-	private static final long		REFRESH_API_TIME_MS	= 2000;
 	private ClDialog				dialogScheduleList;
 	private ObservableScrollView	observableScrollView;
 
 	private DailyScheduleList		dailyScheduleList;
-	private boolean					canScroll			= false;
-	private long					lastMLS				= 0;
+	private boolean					canScroll	= false;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
