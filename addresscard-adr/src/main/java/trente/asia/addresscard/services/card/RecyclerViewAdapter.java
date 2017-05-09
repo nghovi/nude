@@ -28,9 +28,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<CardHolder> {
     @Override
     public void onBindViewHolder(CardHolder holder, int position) {
         CardModel cardModel = list.get(position);
-        holder.dateItemText.setText(cardModel.date);
-        holder.updateByText.setText(cardModel.updateBy);
-        holder.cardImage.setImageResource(cardModel.imageId);
+//        holder.dateItemText.setText(cardModel.date);
+//        holder.updateByText.setText(cardModel.updateBy);
+//        holder.cardImage.setImageResource(cardModel.imageId);
     }
 
     @Override

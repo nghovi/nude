@@ -5,8 +5,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import trente.asia.addresscard.R;
 
 /**
@@ -15,13 +13,13 @@ import trente.asia.addresscard.R;
 
 public class CardHolder extends RecyclerView.ViewHolder {
     View view;
-    @BindView(R.id.date_item) TextView dateItemText;
-    @BindView(R.id.card_image) ImageView cardImage;
-    @BindView(R.id.update_by) TextView updateByText;
+//    @BindView(R.id.date_item) TextView dateItemText;
+//    @BindView(R.id.card_image) ImageView cardImage;
+//    @BindView(R.id.update_by) TextView updateByText;
 
     public CardHolder(View itemView) {
         super(itemView);
         view = itemView;
-        ButterKnife.bind(this, itemView);
+//        ButterKnife.bind(this, itemView);
     }
 }

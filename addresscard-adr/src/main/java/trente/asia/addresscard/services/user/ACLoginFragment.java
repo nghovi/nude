@@ -5,13 +5,18 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 
+import asia.chiase.core.util.CCJsonUtil;
 import trente.asia.addresscard.BuildConfig;
 import trente.asia.addresscard.R;
 
 import org.json.JSONObject;
 
+import trente.asia.addresscard.commons.defines.ACConst;
+import trente.asia.addresscard.commons.fragments.ACMainFragment;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.define.WfUrlConst;
+import trente.asia.welfare.adr.models.SettingModel;
+import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.services.user.LoginFragment;
 
 /**
@@ -28,17 +33,27 @@ public class ACLoginFragment extends LoginFragment {
     @Override
     protected void initView(){
         super.initView();
-        mImgLogo.setImageResource(R.drawable.dr_logo);
+        mImgLogo.setImageResource(R.drawable.ac_logo);
     }
 
     @Override
     protected void successUpdate(JSONObject response, String url){
         super.successUpdate(response, url);
+
+        if(WfUrlConst.WF_ACC_0003.equals(url)){
+            prefAccUtil.set(ACConst.SELECTED_CALENDAR_STRING, response.optString("myCalendar"));
+            myself = CCJsonUtil.convertToModel(response.optString("myself"), UserModel.class);
+            prefAccUtil.set(ACConst.PREF_ACTIVE_USER_LIST, myself.key);
+            SettingModel settingModel = CCJsonUtil.convertToModel(response.optString("setting"), SettingModel.class);
+            prefAccUtil.saveSetting(settingModel);
+            emptyBackStack();
+            gotoFragment(new ACMainFragment());
+        }
     }
 
     @Override
     protected String getServiceCd(){
-        return WelfareConst.SERVICE_CD_DR;
+        return WelfareConst.SERVICE_CD_CL;
     }
 
     @Override
