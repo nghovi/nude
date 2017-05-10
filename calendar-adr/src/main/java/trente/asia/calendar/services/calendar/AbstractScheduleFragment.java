@@ -25,6 +25,7 @@ import trente.asia.android.view.ChiaseTextView;
 import trente.asia.android.view.util.CAObjectSerializeUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
+import trente.asia.calendar.commons.dialogs.ClFilterUserListDialog;
 import trente.asia.calendar.commons.fragments.AbstractClFragment;
 import trente.asia.calendar.commons.model.ScheduleRepeatModel;
 import trente.asia.calendar.commons.utils.ClRepeatUtil;
@@ -47,24 +48,25 @@ import trente.asia.welfare.adr.utils.WelfareUtil;
  */
 public class AbstractScheduleFragment extends AbstractClFragment{
 
-	protected ScheduleModel			schedule;
-	protected List<CalendarModel>	calendars;
-	protected List<ApiObjectModel>	calendarHolders;
-	protected UserListLinearLayout	lnrUserList;
+	protected ScheduleModel				schedule;
+	protected List<CalendarModel>		calendars;
+	protected List<ApiObjectModel>		calendarHolders;
+	protected UserListLinearLayout		lnrUserList;
 
-	protected List<ApiObjectModel>	rooms;
-	protected ChiaseTextView		txtRoom;
-	protected ChiaseTextView		txtStartTime;
-	protected ChiaseTextView		txtEndTime;
-	protected ChiaseTextView		txtStartDate;
-	protected ChiaseTextView		txtEndDate;
-	protected ChiaseTextView		txtCalendar;
-	protected ChiaseTextView		txtRepeat;
+	protected List<ApiObjectModel>		rooms;
+	protected ChiaseTextView			txtRoom;
+	protected ChiaseTextView			txtStartTime;
+	protected ChiaseTextView			txtEndTime;
+	protected ChiaseTextView			txtStartDate;
+	protected ChiaseTextView			txtEndDate;
+	protected ChiaseTextView			txtCalendar;
+	protected ChiaseTextView			txtRepeat;
 
-	protected List<CategoryModel>	categories;
-	protected ChiaseTextView		txtCategory;
-	protected SwitchCompat			swtAllDay;
-	protected LinearLayout			lnrEndDate;
+	protected List<CategoryModel>		categories;
+	protected ChiaseTextView			txtCategory;
+	protected SwitchCompat				swtAllDay;
+	protected LinearLayout				lnrEndDate;
+	protected ClFilterUserListDialog	filterDialog;
 
 	@Override
 	protected void initView(){
@@ -148,9 +150,7 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 				txtCategory.setTextColor(Color.parseColor(WelfareFormatUtil.formatColor(categoryModel.categoryColor)));
 			}
 
-			if(lnrUserList != null){
-				lnrUserList.show(schedule.scheduleJoinUsers, (int)getResources().getDimension(R.dimen.margin_30dp));
-			}
+			showJoinUserList();
 
 			// set time
 			Date startDate = WelfareUtil.makeDate(schedule.startDate);
@@ -193,7 +193,13 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 		}
 	}
 
-	protected List<ApiObjectModel> getCalendarHolders(List<CalendarModel> calendars){
+    protected void showJoinUserList() {
+        if(lnrUserList != null){
+            lnrUserList.show(schedule.scheduleJoinUsers, (int)getResources().getDimension(R.dimen.margin_30dp));
+        }
+    }
+
+    protected List<ApiObjectModel> getCalendarHolders(List<CalendarModel> calendars){
 		List<ApiObjectModel> apiObjectModels = new ArrayList<>();
 		for(CalendarModel calendarModel : calendars){
 			ApiObjectModel apiObjectModel = new ApiObjectModel(calendarModel.key, calendarModel.calendarName);

@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import asia.chiase.core.define.CCConst;
+import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
@@ -59,6 +60,13 @@ public class ScheduleDetailFragment extends AbstractScheduleFragment{
 	}
 
 	@Override
+	protected void showJoinUserList() {
+		if(lnrUserList != null){
+			lnrUserList.showAll(schedule.scheduleJoinUsers, (int)getResources().getDimension(R.dimen.margin_30dp));
+		}
+	}
+
+	@Override
 	protected void onLoadScheduleDetailSuccess(JSONObject response){
 		super.onLoadScheduleDetailSuccess(response);
 
@@ -77,6 +85,12 @@ public class ScheduleDetailFragment extends AbstractScheduleFragment{
 			imgRightIcon.setOnClickListener(this);
 		}
 
+//		if(!CCStringUtil.isEmpty(schedule.key)){
+//			if(!CCCollectionUtil.isEmpty(schedule.calendar.calendarUsers)){
+//				filterDialog.updateUserList(schedule.calendar.calendarUsers);
+//			}
+//		}
+
 	}
 
 	@Override
@@ -93,6 +107,9 @@ public class ScheduleDetailFragment extends AbstractScheduleFragment{
 		case R.id.lnr_id_schedule_url:
 			gotoBrowser(schedule.scheduleUrl);
 			break;
+//		case R.id.lnr_id_join_user_list:
+//			filterDialog.show();
+//			break;
 		default:
 			break;
 		}

@@ -330,7 +330,7 @@ public class DailyScheduleList extends LinearLayout{
 
 			@Override
 			public int compare(ScheduleModel o1, ScheduleModel o2){
-				return CCDateUtil.compareDate(CCDateUtil.makeDateCustom(o1.startDate, WelfareConst.WF_DATE_TIME), CCDateUtil.makeDateCustom(o2.startDate, WelfareConst.WF_DATE_TIME), true);
+				return CCDateUtil.convertHour2Min(o1.startTime).compareTo(CCDateUtil.convertHour2Min(o2.startTime));
 			}
 		});
 	}

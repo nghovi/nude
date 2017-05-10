@@ -28,8 +28,8 @@
                 <android.support.v7.widget.SwitchCompat
                     android:id="@+id/swt_id_all_day"
                     style="@style/cs_common_wrap"
-                    android:theme="@style/wf_common_switch"
-                    android:clickable="false"/>
+                    android:clickable="false"
+                    android:theme="@style/wf_common_switch"/>
             </LinearLayout>
 
             <View style="@style/cs_common_divider"/>
@@ -76,7 +76,8 @@
             <View style="@style/cs_common_divider"/>
 
             <LinearLayout
-                style="@style/wf_common_item_linear2">
+                style="@style/wf_common_item_linear"
+                android:background="@color/chiase_white">
 
                 <TextView
                     style="@style/wl_common_text"
@@ -85,8 +86,7 @@
 
                 <trente.asia.android.view.ChiaseTextView
                     android:id="@+id/txt_id_repeat"
-                    style="@style/wl_common_edit_text2"
-                    android:layout_marginLeft="@dimen/margin_10dp"
+                    style="@style/wl_common_text"
                     android:layout_weight="1"
                     android:text="@string/chiase_common_none"/>
             </LinearLayout>
@@ -134,8 +134,8 @@
                     android:id="@+id/txt_id_schedule_name"
                     style="@style/wl_common_edit_text2"
                     android:layout_marginLeft="@dimen/margin_10dp"
-                    custom:mName="scheduleName"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    custom:mName="scheduleName"/>
             </LinearLayout>
 
             <View style="@style/cs_common_divider"/>
@@ -171,8 +171,8 @@
                     android:id="@+id/txt_id_schedule_url"
                     style="@style/wl_common_edit_text2"
                     android:layout_marginLeft="@dimen/margin_10dp"
-                    custom:mName="scheduleUrl"
-                    android:textColor="@android:color/holo_blue_dark"/>
+                    android:textColor="@android:color/holo_blue_dark"
+                    custom:mName="scheduleUrl"/>
             </LinearLayout>
 
             <View style="@style/cs_common_divider"/>
@@ -206,14 +206,26 @@
 
             <View style="@style/cs_common_divider"/>
 
-            <LinearLayout
-                style="@style/wf_common_item_linear2">
+            <LinearLayout android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:gravity="center_horizontal"
+                          android:background="@color/chiase_white">
+                <HorizontalScrollView
+                    android:id="@+id/lnr_id_join_user_list"
+                    style="@style/wf_common_item_linear2"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/state_common_selectable_row"
+                    android:minHeight="@dimen/margin_30dp">
 
-                <trente.asia.calendar.commons.views.UserListLinearLayout
-                    android:id="@+id/lnr_id_container_join_user_list"
-                    style="@style/cs_common_match_wrap"
-                    android:background="@drawable/state_common_selectable_row"/>
+                    <trente.asia.calendar.commons.views.UserListLinearLayout
+                        android:id="@+id/lnr_id_container_join_user_list"
+                        style="@style/cs_common_match_wrap"/>
+
+                </HorizontalScrollView>
+
             </LinearLayout>
+
 
             <View style="@style/cs_common_divider"/>
 

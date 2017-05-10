@@ -55,10 +55,10 @@ public class WeeklyPageFragment extends SchedulesPageListViewFragment implements
 		adapter = new WeeklyScheduleListAdapter(activity, R.layout.item_calendar_day, displayedModels, lstHoliday, this);
 		observableListView.setAdapter(adapter);
 		updateDayViews(dayStr);
+		scrollTo(dayStr);
 	}
 
-	@Override
-	public void updateList(String dayStr){
+	public void scrollTo(String dayStr){
 		int selectedPosition = adapter.findPosition4Code(dayStr);
 		observableListView.setSelection(selectedPosition);
 	}
@@ -91,7 +91,7 @@ public class WeeklyPageFragment extends SchedulesPageListViewFragment implements
 		this.dayStr = dayString;
 		refreshDialogData = true;
 		updateDayViews(dayString);
-		updateList(dayString);
+		scrollTo(dayString);
 		long nowMLS = System.currentTimeMillis();
 		if(nowMLS - lastMLS > REFRESH_API_TIME_MS){
 			loadScheduleList();

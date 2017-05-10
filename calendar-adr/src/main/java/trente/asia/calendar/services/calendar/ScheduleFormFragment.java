@@ -67,7 +67,6 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 	private TimePickerDialog			timePickerDialogStart;
 	private TimePickerDialog			timePickerDialogEnd;
 
-	private ClFilterUserListDialog		filterDialog;
 	private ClScheduleRepeatDialog		repeatDialog;
 	private ClDialog					editModeDialog;
 	private Date						selectedDate;

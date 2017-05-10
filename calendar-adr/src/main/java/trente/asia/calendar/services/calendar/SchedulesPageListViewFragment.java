@@ -86,8 +86,6 @@ public abstract class SchedulesPageListViewFragment extends SchedulesPageFragmen
 		return new CalendarDayView(activity);
 	}
 
-	abstract public void updateList(String dayStr);
-
 	@Override
 	protected void onLoadSchedulesSuccess(JSONObject response){
 		super.onLoadSchedulesSuccess(response);
@@ -95,9 +93,9 @@ public abstract class SchedulesPageListViewFragment extends SchedulesPageFragmen
 			calendarDayModels = buildCalendarDayModels(lstSchedule);
 			clearOldData();
 			updateObservableScrollableView();
-			updateHeaderTitles();
 			isChangedData = false;
 		}
+		updateHeaderTitles();
 	}
 
 	@Override

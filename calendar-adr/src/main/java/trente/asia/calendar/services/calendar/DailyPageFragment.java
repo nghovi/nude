@@ -83,11 +83,6 @@ public class DailyPageFragment extends SchedulesPageListViewFragment implements 
 			dailyScheduleList.initData(dates, lstSchedule, lstHoliday, lstWorkOffer, lstBirthdayUser);
 			dailyScheduleList.showFor(selectedDate);
 		}
-
-	}
-
-	@Override
-	public void updateList(String dayStr){
 	}
 
 	@Override

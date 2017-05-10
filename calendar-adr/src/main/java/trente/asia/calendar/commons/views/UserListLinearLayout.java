@@ -66,7 +66,7 @@ public class UserListLinearLayout extends LinearLayout{
 			// this.setLayoutParams(params);
 
 			// image size 20 x 20:
-			int maxUserNumber = (int)(this.getWidth() / (imageSizePx + AVATAR_IMG_MARGIN_PX));
+			int maxUserNumber = (int)((this.getWidth() - 16) / (imageSizePx + AVATAR_IMG_MARGIN_PX));
 			if(lstUser.size() <= maxUserNumber){
 				for(UserModel userModel : lstUser){
 					addUserView(userModel, imageSizePx);
@@ -78,19 +78,31 @@ public class UserListLinearLayout extends LinearLayout{
 				}
 
 				// add text
-				TextView txtSchedule = new TextView(mContext);
+				TextView txtRemainingUserCount = new TextView(mContext);
 				// int textDimension = (int)mContext.getResources()
 				// .getDimension(R.dimen.margin_40dp);
-				LayoutParams textLayout = new LayoutParams(imageSizePx, imageSizePx);
-				txtSchedule.setLayoutParams(textLayout);
+				LayoutParams textLayout = new LayoutParams(imageSizePx * 2, imageSizePx);
+				txtRemainingUserCount.setLayoutParams(textLayout);
 				int textSize = (int)(getResources().getDimension(R.dimen.margin_20dp) / getResources().getDisplayMetrics().density);
-				txtSchedule.setTextSize(textSize);
-				txtSchedule.setText("+" + (lstUser.size() - maxUserNumber + 1));
-				txtSchedule.setGravity(Gravity.CENTER);
-				this.addView(txtSchedule);
+				txtRemainingUserCount.setTextSize(textSize);
+				txtRemainingUserCount.setText("+" + (lstUser.size() - maxUserNumber + 1));
+				txtRemainingUserCount.setGravity(Gravity.CENTER);
+				this.addView(txtRemainingUserCount);
 			}
 		}
 
+	}
+
+	public void showAll(List<UserModel> lstUser, int imageSizePx){
+		this.setGravity(Gravity.CENTER_HORIZONTAL);
+		this.setOrientation(HORIZONTAL);
+		this.removeAllViews();
+		this.lstUser = lstUser;
+		if(!CCCollectionUtil.isEmpty(lstUser)){
+			for(UserModel userModel : lstUser){
+				addUserView(userModel, imageSizePx);
+			}
+		}
 	}
 
 	// private List<UserModel> sortByOwner(List<UserModel> lstUser){
