@@ -9,12 +9,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
+import com.bluelinelabs.logansquare.LoganSquare;
+
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.List;
 
 import trente.asia.addresscard.R;
 import trente.asia.addresscard.commons.fragments.AbstractAddressCardFragment;
 import trente.asia.addresscard.databinding.FragmentBusinessCardMainBinding;
+import trente.asia.addresscard.services.card.model.CardModel;
+import trente.asia.welfare.adr.define.WfUrlConst;
 
 /**
  * Created by tien on 4/18/2017.
@@ -36,33 +42,41 @@ public class BusinessCardMainFragment extends AbstractAddressCardFragment implem
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_business_card_main, container, false);
-        List<Card> list = new ArrayList<>();
-        list.add(new Card("Name001", R.drawable.card, "By Bkmsx"));
-        list.add(new Card("Name001", R.drawable.card, "By Bkmsx"));
-        list.add(new Card("Name001", R.drawable.card, "By Bkmsx"));
-        list.add(new Card("Name001", R.drawable.card, "By Bkmsx"));
-        list.add(new Card("Name001", R.drawable.card, "By Bkmsx"));
-        list.add(new Card("Name001", R.drawable.card, "By Bkmsx"));
-        list.add(new Card("Name001", R.drawable.card, "By Bkmsx"));
-        list.add(new Card("Name001", R.drawable.card, "By Bkmsx"));
-        list.add(new Card("Name001", R.drawable.card, "By Bkmsx"));
-        list.add(new Card("Name001", R.drawable.card, "By Bkmsx"));
-        list.add(new Card("Name001", R.drawable.card, "By Bkmsx"));
-        list.add(new Card("Name001", R.drawable.card, "By Bkmsx"));
-        list.add(new Card("Name001", R.drawable.card, "By Bkmsx"));
-        list.add(new Card("Name001", R.drawable.card, "By Bkmsx"));
-        list.add(new Card("Name001", R.drawable.card, "By Bkmsx"));
-        adapter = new CardAdapter(list, this);
-        binding.recyclerview.setLayoutManager(new GridLayoutManager(getContext(), 3));
-        binding.recyclerview.setAdapter(adapter);
+        binding.listCards.setLayoutManager(new GridLayoutManager(getContext(), 3));
         binding.btnDelete.setOnClickListener(this);
         binding.btnCapture.setOnClickListener(this);
+        binding.rowCategory.setOnClickListener(this);
+        binding.rowCustomer.setOnClickListener(this);
         return binding.getRoot();
     }
 
     @Override
     public void initView() {
         super.initView();
+        super.initHeader(R.drawable.ac_back_white, getString(R.string.ac_main_card_title), R.drawable.ac_action_edit);
+    }
+
+    @Override
+    protected void initData() {
+        super.initData();
+        JSONObject jsonObject = new JSONObject();
+        requestLoad(WfUrlConst.AC_BUSINESS_CARD_LIST, jsonObject, true);
+    }
+
+    @Override
+    protected void successLoad(JSONObject response, String url) {
+        log(url);
+        log(response.toString());
+        List<CardModel> cards;
+        try {
+            cards = LoganSquare.parseList(response.optString("cards"), CardModel.class);
+            log("CardName: " + cards.get(0).cardName);
+            log("Image url: " + cards.get(0).attachment.fileUrl);
+            adapter = new CardAdapter(cards, this);
+            binding.listCards.setAdapter(adapter);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -72,6 +86,13 @@ public class BusinessCardMainFragment extends AbstractAddressCardFragment implem
                 onBtnDeleteClick();
                 break;
             case R.id.btn_capture:
+                gotoFragment(new UploadAddressCardFragment());
+                break;
+            case R.id.row_category:
+                gotoFragment(new CategoryListFragment());
+                break;
+            case R.id.row_customer:
+
                 break;
             default:
                 break;

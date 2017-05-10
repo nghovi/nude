@@ -23,7 +23,7 @@
                 style="@style/cs_common_wrap"
                 android:layout_marginTop="@dimen/margin_5dp"
                 android:alpha="0.5"
-                android:src="@drawable/active_tab_card"/>
+                android:src="@drawable/ac_footer_business"/>
 
             <trente.asia.android.view.ChiaseTextView
                 style="@style/cs_text_footer_item"
@@ -47,7 +47,7 @@
                 style="@style/cs_common_wrap"
                 android:layout_marginTop="@dimen/margin_5dp"
                 android:alpha="0.5"
-                android:src="@drawable/active_tab_company"/>
+                android:src="@drawable/ac_footer_shop"/>
 
             <trente.asia.android.view.ChiaseTextView
                 style="@style/cs_text_footer_item"
@@ -71,7 +71,7 @@
                 style="@style/cs_common_wrap"
                 android:layout_marginTop="@dimen/margin_5dp"
                 android:alpha="0.5"
-                android:src="@drawable/active_tab_setting"/>
+                android:src="@drawable/ac_footer_setting"/>
 
             <trente.asia.android.view.ChiaseTextView
                 style="@style/cs_text_footer_item"

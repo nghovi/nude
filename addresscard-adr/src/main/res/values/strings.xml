@@ -3,8 +3,18 @@
     <string name="btn_camera_text">Start camera</string>
     <string name="default_title_card">User name</string>
     <string name="menu_card_title">Card</string>
-    <string name="menu_company_title">Company</string>
+    <string name="menu_company_title">Shop</string>
     <string name="menu_history_title">History</string>
     <string name="menu_setting_title">Setting</string>
     <string name="ac_about_app_version">1.0</string>
+    <string name="ac_upload_card_modify_data">Please modify data</string>
+    <string name="ac_upload_card_address">Address</string>
+    <string name="ac_upload_card_company_tel">Company tel</string>
+    <string name="ac_upload_card_url">URL</string>
+    <string name="ac_upload_card_name">Name</string>
+    <string name="ac_upload_card_tel">Tel</string>
+    <string name="ac_upload_card_email">Email</string>
+    <string name="ac_upload_card_note">Note</string>
+    <string name="ac_upload_card_customer">Customer name</string>
+    <string name="ac_main_card_title">Business card main</string>
 </resources>

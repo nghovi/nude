@@ -28,14 +28,14 @@ public class CategoryListFragment extends AbstractAddressCardFragment {
         setListCategory();
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_category_list, container, false);
         adapter = new CategoryAdapter(categories);
-        binding.recyclerview.setAdapter(adapter);
-        binding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.listCategories.setAdapter(adapter);
+        binding.listCategories.setLayoutManager(new LinearLayoutManager(getContext()));
         return binding.getRoot();
     }
 
     @Override
     public int getFooterItemId() {
-        return R.id.lnr_view_footer_company;
+        return R.id.lnr_view_footer_card;
     }
 
     @Override

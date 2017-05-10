@@ -5,12 +5,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 
+import org.json.JSONObject;
+
 import asia.chiase.core.util.CCJsonUtil;
 import trente.asia.addresscard.BuildConfig;
 import trente.asia.addresscard.R;
-
-import org.json.JSONObject;
-
 import trente.asia.addresscard.commons.defines.ACConst;
 import trente.asia.addresscard.services.card.BusinessCardMainFragment;
 import trente.asia.welfare.adr.define.WelfareConst;
@@ -41,7 +40,6 @@ public class ACLoginFragment extends LoginFragment {
         super.successUpdate(response, url);
 
         if(WfUrlConst.WF_ACC_0003.equals(url)){
-            prefAccUtil.set(ACConst.SELECTED_CALENDAR_STRING, response.optString("myCalendar"));
             myself = CCJsonUtil.convertToModel(response.optString("myself"), UserModel.class);
             prefAccUtil.set(ACConst.PREF_ACTIVE_USER_LIST, myself.key);
             SettingModel settingModel = CCJsonUtil.convertToModel(response.optString("setting"), SettingModel.class);

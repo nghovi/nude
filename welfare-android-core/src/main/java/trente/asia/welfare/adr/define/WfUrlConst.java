@@ -120,4 +120,8 @@ public class WfUrlConst{
 	public static final String	WF_CL_SCHEDULE_DEL									= "/api/cl/schedule/del";
 	public static final String	API_CL_SCHEDULE_LIST								= "/api/cl/schedule/list";
 
+	/**
+	 * Address Card API
+	 */
+	public static final String AC_BUSINESS_CARD_LIST								= "/api/ac/business/card/list";
 }

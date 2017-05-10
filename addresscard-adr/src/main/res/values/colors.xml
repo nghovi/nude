@@ -23,4 +23,6 @@
     <color name="category_background">#cfcece</color>
     <color name="title_background">#c2c2c2</color>
     <color name="transparent">#00000000</color>
+
+    <color name="ac_button_pressed_color">#ca8b8a8a</color>
 </resources>
