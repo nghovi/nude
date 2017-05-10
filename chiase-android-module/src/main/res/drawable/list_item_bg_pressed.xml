@@ -1,7 +1,0 @@
-<shape xmlns:android="http://schemas.android.com/apk/res/android"
-       android:shape="rectangle">
-    <gradient
-        android:startColor="@color/chiase_filechooser_list_bg_pressed"
-        android:endColor="@color/chiase_filechooser_list_bg_pressed"
-        android:angle="90"/>
-</shape>

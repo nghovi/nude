@@ -1,0 +1,6 @@
+[submodule "welfare-android-core"]
+	path = welfare-android-core
+	url = https://nhviet@gitlab.com/nhviet/welfare-android-core.git
+[submodule "chiase-android-module"]
+	path = chiase-android-module
+	url = https://nhviet@gitlab.com/nhviet/chiase-android-module.git

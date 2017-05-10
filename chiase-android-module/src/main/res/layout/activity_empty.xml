@@ -1,6 +1,0 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:id="@+id/ipt_id_body"
-              style="@style/cs_common_match"
-              android:orientation="horizontal">
-
-</LinearLayout>
