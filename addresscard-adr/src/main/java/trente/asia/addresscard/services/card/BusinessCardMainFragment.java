@@ -16,11 +16,11 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.List;
 
+import trente.asia.addresscard.ACConst;
 import trente.asia.addresscard.R;
 import trente.asia.addresscard.commons.fragments.AbstractAddressCardFragment;
 import trente.asia.addresscard.databinding.FragmentBusinessCardMainBinding;
 import trente.asia.addresscard.services.card.model.CardModel;
-import trente.asia.welfare.adr.define.WfUrlConst;
 
 /**
  * Created by tien on 4/18/2017.
@@ -60,7 +60,7 @@ public class BusinessCardMainFragment extends AbstractAddressCardFragment implem
     protected void initData() {
         super.initData();
         JSONObject jsonObject = new JSONObject();
-        requestLoad(WfUrlConst.AC_BUSINESS_CARD_LIST, jsonObject, true);
+        requestLoad(ACConst.AC_BUSINESS_CARD_LIST, jsonObject, true);
     }
 
     @Override

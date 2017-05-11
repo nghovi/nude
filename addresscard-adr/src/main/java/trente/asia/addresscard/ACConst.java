@@ -56,4 +56,9 @@ public class ACConst {
 	public static final String	WORKING_OFFER_TYPE_OVERTIME_WORKING			= "OTW";
 	public static final String	WORKING_OFFER_TYPE_HOLIDAY_WORKING			= "HDW";
 	public static final String	WORKING_OFFER_TYPE_SHORT_TIME				= "STO";
+
+	/**
+	 * API URL
+	 */
+	public static final String AC_BUSINESS_CARD_LIST 						= "/api/ac/business/card/list";
 }

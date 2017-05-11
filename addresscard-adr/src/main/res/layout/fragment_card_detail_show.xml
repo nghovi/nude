@@ -46,8 +46,8 @@
                 <ImageView
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="@dimen/ac_common_field_icon_dimen"
+                    android:layout_height="@dimen/ac_common_field_icon_dimen"
                     android:src="@drawable/ac_action_right"/>
             </RelativeLayout>
             <View style="@style/cs_common_divider"/>
@@ -72,6 +72,59 @@
                     android:text="Takano Yasuhiro"/>
             </RelativeLayout>
             <View style="@style/cs_common_divider"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ac_upload_card_edt_height"
+                android:padding="@dimen/ac_common_field_padding">
+                <TextView
+                    android:id="@+id/tel_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/ac_common_text_color_title"
+                    android:textSize="@dimen/ac_common_text_size_title"
+                    android:text="@string/ac_card_detail_name"/>
+                <TextView
+                    android:layout_below="@+id/tel_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/ac_common_text_color_body"
+                    android:textSize="@dimen/ac_common_text_size_body"
+                    android:text="Takano Yasuhiro"/>
+                <ImageView
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_width="@dimen/ac_common_field_icon_dimen"
+                    android:layout_height="@dimen/ac_common_field_icon_dimen"
+                    android:src="@drawable/ac_icon_phone"/>
+            </RelativeLayout>
+            <View style="@style/cs_common_divider"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ac_upload_card_edt_height"
+                android:padding="@dimen/ac_common_field_padding">
+                <TextView
+                    android:id="@+id/email_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/ac_common_text_color_title"
+                    android:textSize="@dimen/ac_common_text_size_title"
+                    android:text="@string/ac_card_detail_name"/>
+                <TextView
+                    android:layout_below="@+id/email_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/ac_common_text_color_body"
+                    android:textSize="@dimen/ac_common_text_size_body"
+                    android:text="Takano Yasuhiro"/>
+                <ImageView
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_width="@dimen/ac_common_field_icon_dimen"
+                    android:layout_height="@dimen/ac_common_field_icon_dimen"
+                    android:src="@drawable/ac_icon_phone"/>
+            </RelativeLayout>
 
         </LinearLayout>
         <include layout="@layout/view_common_footer"/>

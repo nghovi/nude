@@ -10,4 +10,5 @@
     <dimen name="ac_common_text_size_title">16sp</dimen>
     <dimen name="ac_common_text_size_body">18sp</dimen>
     <dimen name="ac_common_field_padding">10dp</dimen>
+    <dimen name="ac_common_field_icon_dimen">30dp</dimen>
 </resources>
