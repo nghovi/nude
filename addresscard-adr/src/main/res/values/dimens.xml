@@ -6,4 +6,5 @@
     <dimen name="category_padding">5dp</dimen>
     <dimen name="title_padding">16dp</dimen>
     <dimen name="right_arrow_dimension">40dp</dimen>
+    <dimen name="ac_upload_card_edt_height">70dp</dimen>
 </resources>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+
+    </data>
+    <LinearLayout
+        style="@style/wf_common_match"
+        android:orientation="vertical"
+        android:background="@color/wf_login_background_color">
+
+        <include layout="@layout/view_common_header"/>
+
+        <LinearLayout
+            android:id="@+id/lnr_upload_card"
+            style="@style/wf_common_match">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/card"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/ac_upload_card_modify_data"/>
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/ac_upload_card_edt_height">
+                        <ImageView
+                            android:id="@+id/customer_logo"
+                            android:layout_width="@dimen/ac_upload_card_edt_height"
+                            android:layout_height="@dimen/ac_upload_card_edt_height"
+                            android:src="@drawable/logo"/>
+                        <TextView
+                            android:id="@+id/customer_title"
+                            android:layout_toEndOf="@+id/customer_logo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/ac_upload_card_customer"/>
+                        <trente.asia.android.view.ChiaseEditText
+                            android:layout_toEndOf="@+id/customer_logo"
+                            android:layout_alignParentBottom="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Trente Vietnam"/>
+                    </RelativeLayout>
+                    <View style="@style/cs_common_divider"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/ac_upload_card_address"/>
+                    <trente.asia.android.view.ChiaseEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Duy Tan, Cau Giay, Ha Noi"/>
+                    <View style="@style/cs_common_divider"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/ac_upload_card_company_tel"/>
+                    <trente.asia.android.view.ChiaseEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="012345678"/>
+                    <View style="@style/cs_common_divider"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/ac_upload_card_url"/>
+                    <trente.asia.android.view.ChiaseEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="http://www.trente.asia"/>
+                    <View style="@style/cs_common_divider"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/ac_upload_card_name"/>
+                    <trente.asia.android.view.ChiaseEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Tanaka Takayuki"/>
+                    <View style="@style/cs_common_divider"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/ac_upload_card_tel"/>
+                    <trente.asia.android.view.ChiaseEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="09876543"/>
+                    <View style="@style/cs_common_divider"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/ac_upload_card_email"/>
+                    <trente.asia.android.view.ChiaseEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="tanaka-takayuki@trente.asia"/>
+                    <View style="@style/cs_common_divider"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/ac_upload_card_note"/>
+                    <trente.asia.android.view.ChiaseEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="OCR preset is nothing, just input"/>
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
+
+        <include layout="@layout/view_common_footer"/>
+    </LinearLayout>
+
+</layout>

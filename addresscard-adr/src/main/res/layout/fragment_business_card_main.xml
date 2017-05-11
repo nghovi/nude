@@ -15,13 +15,14 @@
             android:id="@+id/main_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:orientation="vertical">
 
             <RelativeLayout
-                android:id="@+id/category_layout"
+                android:id="@+id/row_category"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/category_height"
-                android:background="@drawable/category_background">
+                android:background="@drawable/row_pressed_selector">
 
                 <TextView
                     android:id="@+id/text_category"
@@ -54,12 +55,17 @@
                     android:src="@drawable/wf_row_arrow_right" />
             </RelativeLayout>
 
+            <View
+                style="@style/cs_common_divider"
+                android:id="@+id/divider"
+                android:layout_below="@+id/row_category"/>
+
             <RelativeLayout
-                android:id="@+id/group_layout"
-                android:layout_below="@+id/category_layout"
+                android:id="@+id/row_customer"
+                android:layout_below="@+id/divider"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/category_height"
-                android:background="@drawable/category_background">
+                android:background="@drawable/row_pressed_selector">
 
                 <TextView
                     android:id="@+id/text_group"
@@ -93,8 +99,8 @@
             </RelativeLayout>
 
             <TextView
-                android:id="@+id/recyclerview_title"
-                android:layout_below="@+id/group_layout"
+                android:id="@+id/list_card_title"
+                android:layout_below="@+id/row_customer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/title_background"
@@ -104,8 +110,8 @@
                 android:textColor="@android:color/black"/>
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerview"
-                android:layout_below="@+id/recyclerview_title"
+                android:id="@+id/list_cards"
+                android:layout_below="@+id/list_card_title"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
             <ImageView

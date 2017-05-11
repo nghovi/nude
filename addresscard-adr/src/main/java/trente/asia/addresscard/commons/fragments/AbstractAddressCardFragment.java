@@ -10,7 +10,7 @@ import android.widget.LinearLayout;
 import trente.asia.addresscard.BuildConfig;
 import trente.asia.addresscard.R;
 import trente.asia.addresscard.services.card.BusinessCardMainFragment;
-import trente.asia.addresscard.services.card.CategoryListFragment;
+import trente.asia.addresscard.services.others.CompanyFragment;
 import trente.asia.addresscard.services.user.ACLoginFragment;
 import trente.asia.addresscard.setting.SettingFragment;
 import trente.asia.android.view.ChiaseImageView;
@@ -100,7 +100,7 @@ public abstract class AbstractAddressCardFragment extends WelfareFragment implem
 
 	public void onClickFooterItemCompany(){
 		emptyBackStack();
-		gotoFragment(new CategoryListFragment());
+		gotoFragment(new CompanyFragment());
 	}
 
 	public void onClickFooterItemSetting(){
@@ -110,7 +110,7 @@ public abstract class AbstractAddressCardFragment extends WelfareFragment implem
 
 	@Override
 	protected String getServiceCd(){
-		return WelfareConst.SERVICE_CD_CL;
+		return WelfareConst.SERVICE_CD_AC;
 	}
 
 	@Override
