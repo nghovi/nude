@@ -25,4 +25,6 @@
     <color name="transparent">#00000000</color>
 
     <color name="ac_button_pressed_color">#ca8b8a8a</color>
+    <color name="ac_common_text_color_title">#818181</color>
+    <color name="ac_common_text_color_body">#000000</color>
 </resources>

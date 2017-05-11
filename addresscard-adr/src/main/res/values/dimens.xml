@@ -7,4 +7,7 @@
     <dimen name="title_padding">16dp</dimen>
     <dimen name="right_arrow_dimension">40dp</dimen>
     <dimen name="ac_upload_card_edt_height">70dp</dimen>
+    <dimen name="ac_common_text_size_title">16sp</dimen>
+    <dimen name="ac_common_text_size_body">18sp</dimen>
+    <dimen name="ac_common_field_padding">10dp</dimen>
 </resources>

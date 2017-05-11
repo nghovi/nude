@@ -4,8 +4,7 @@ import android.os.Bundle;
 
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.addresscard.R;
-import trente.asia.addresscard.services.card.BusinessCardMainFragment;
-
+import trente.asia.addresscard.services.card.CardDetailShowFragment;
 import trente.asia.addresscard.services.user.ACLoginFragment;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.models.UserModel;
@@ -21,7 +20,7 @@ public class AddressCardActivity extends WelfareActivity {
         UserModel userModel = prefAccUtil.getUserPref();
 
         if(!CCStringUtil.isEmpty(userModel.key)){
-            addFragment(new BusinessCardMainFragment());
+            addFragment(new CardDetailShowFragment());
         }else{
             addFragment(new ACLoginFragment());
         }

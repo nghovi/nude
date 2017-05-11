@@ -17,4 +17,10 @@
     <string name="ac_upload_card_note">Note</string>
     <string name="ac_upload_card_customer">Customer name</string>
     <string name="ac_main_card_title">Business card main</string>
+    <string name="ac_card_detail_title">Business card detail</string>
+    <string name="ac_card_detail_customer_name">Customer name</string>
+    <string name="ac_card_detail_name">Name</string>
+    <string name="ac_card_detail_tel">Tel</string>
+    <string name="ac_card_detail_email">Email</string>
+    <string name="ac_card_detail_note">Note</string>
 </resources>
