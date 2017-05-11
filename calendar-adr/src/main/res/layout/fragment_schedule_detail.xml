@@ -201,6 +201,7 @@
 
                 <TextView
                     style="@style/wl_common_text"
+                    android:id="@+id/txt_join_user"
                     android:text="@string/cl_schedule_form_item_join_user"/>
             </LinearLayout>
 

@@ -25,3 +25,6 @@ calendar-adr/build/
 build/intermediates/
 shiftworking-adr/src/androidTest/
 shiftworking-adr/src/test/
+
+welfare-android-core/welfare-android-core.iml
+chiase-android-module/chiase-android-module.iml
