@@ -17,7 +17,7 @@ import trente.asia.addresscard.services.card.model.CardModel;
  * Created by Windows 10 Gamer on 07/05/2017.
  */
 
-public class CardAdapter extends RecyclerView.Adapter<CardHolder> {
+public class CardAdapter extends RecyclerView.Adapter<ViewHolder> {
     private List<CardModel> list;
     private List<CardModel> listSelected;
     private OnItemListener callback;
@@ -27,14 +27,14 @@ public class CardAdapter extends RecyclerView.Adapter<CardHolder> {
         this.callback = listener;
     }
     @Override
-    public CardHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.card_item, parent, false);
-        return new CardHolder(view);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final CardHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         final CardModel card = list.get(position);
         holder.getBinding().setVariable(BR.card, card);
         holder.getBinding().executePendingBindings();
@@ -42,7 +42,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardHolder> {
         view.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-//                card.setBackground(true);
+                card.setBackground(true);
                 listSelected.add(card);
                 callback.onItemLongClickListener();
                 return true;
@@ -55,16 +55,16 @@ public class CardAdapter extends RecyclerView.Adapter<CardHolder> {
                     return;
                 }
 
-//                if (card.background) {
-//                    card.setBackground(false);
-//                    listSelected.remove(card);
-//                    if (listSelected.isEmpty()) {
-//                        callback.onUnselectAllItems();
-//                    }
-//                } else {
-////                    card.setBackground(true);
-//                    listSelected.add(card);
-//                }
+                if (card.background) {
+                    card.setBackground(false);
+                    listSelected.remove(card);
+                    if (listSelected.isEmpty()) {
+                        callback.onUnselectAllItems();
+                    }
+                } else {
+                    card.setBackground(true);
+                    listSelected.add(card);
+                }
             }
         });
     }
@@ -79,7 +79,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardHolder> {
 
     void unselectAllCards() {
         for (CardModel card : listSelected) {
-//            card.setBackground(false);
+            card.setBackground(false);
         }
         listSelected.clear();
     }

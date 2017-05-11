@@ -9,9 +9,9 @@ import android.view.View;
  * Created by Windows 10 Gamer on 07/05/2017.
  */
 
-public class CardHolder extends RecyclerView.ViewHolder {
+public class ViewHolder extends RecyclerView.ViewHolder {
     private ViewDataBinding binding;
-    public CardHolder(View itemView) {
+    public ViewHolder(View itemView) {
         super(itemView);
         binding = DataBindingUtil.bind(itemView);
     }

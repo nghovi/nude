@@ -23,4 +23,12 @@
     <string name="ac_card_detail_tel">Tel</string>
     <string name="ac_card_detail_email">Email</string>
     <string name="ac_card_detail_note">Note</string>
+    <string name="ac_set_customer_title">Set Customer</string>
+    <string name="ac_choose_customer_title">Choose customer</string>
+    <string name="ac_new_customer_title">New customer</string>
+    <string name="ac_category_title">Category</string>
+    <string name="ac_category_name">Category name</string>
+    <string name="ac_category_detail">Category detail</string>
+    <string name="ac_category_list">Category list</string>
+
 </resources>
