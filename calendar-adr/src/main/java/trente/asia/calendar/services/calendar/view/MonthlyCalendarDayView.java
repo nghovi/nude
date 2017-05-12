@@ -2,6 +2,7 @@ package trente.asia.calendar.services.calendar.view;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -107,6 +108,7 @@ public class MonthlyCalendarDayView extends LinearLayout{
 	}
 
 	public void showSchedules(){
+		Collections.sort(usedMargins);
 		for(ScheduleModel scheduleModel : schedules){
 			showSchedule(scheduleModel);
 		}
@@ -148,6 +150,7 @@ public class MonthlyCalendarDayView extends LinearLayout{
 		if(maxMarginTop < marginTop && marginTop - maxMarginTop == ClConst.TEXT_VIEW_HEIGHT){
 			maxMarginTop = marginTop;
 		}
+
 		periodNum++;
 		usedMargins.add(marginTop);
 		lstSchedule.add(scheduleModel);
@@ -161,6 +164,9 @@ public class MonthlyCalendarDayView extends LinearLayout{
 	}
 
 	public int getActivePeriodNum(){
+		while(usedMargins.contains(maxMarginTop +  ClConst.TEXT_VIEW_HEIGHT)) {
+			maxMarginTop += ClConst.TEXT_VIEW_HEIGHT;
+		}
 		return maxMarginTop;
 	}
 
