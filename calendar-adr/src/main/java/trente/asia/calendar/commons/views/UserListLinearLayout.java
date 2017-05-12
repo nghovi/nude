@@ -66,7 +66,7 @@ public class UserListLinearLayout extends LinearLayout{
 			// this.setLayoutParams(params);
 
 			// image size 20 x 20:
-			int maxUserNumber = (int)((this.getWidth() - 16) / (imageSizePx + AVATAR_IMG_MARGIN_PX));
+			int maxUserNumber = (int)((this.getWidth() - imageSizePx) / (imageSizePx + AVATAR_IMG_MARGIN_PX));
 			if(lstUser.size() <= maxUserNumber){
 				for(UserModel userModel : lstUser){
 					addUserView(userModel, imageSizePx);

@@ -151,7 +151,7 @@ public class WeeklyScheduleListAdapter extends ArrayAdapter<CalendarDayModel>{
 				if(o1TypeOrder != o2TypeOrder){
 					return o1TypeOrder.compareTo(o2TypeOrder);
 				}
-				return CCDateUtil.compareDate(CCDateUtil.makeDateCustom(o1.startDate, WelfareConst.WF_DATE_TIME), CCDateUtil.makeDateCustom(o2.startDate, WelfareConst.WF_DATE_TIME), true);
+				return CCDateUtil.convertHour2Min(o1.startTime).compareTo(CCDateUtil.convertHour2Min(o2.startTime));
 			}
 		});
 	}

@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import asia.chiase.core.define.CCConst;
-import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
@@ -30,6 +29,7 @@ public class ScheduleDetailFragment extends AbstractScheduleFragment{
 	private TextView	txtScheduleNote;
 
 	private Date		selectedDate;
+	private TextView	txtJoinUser;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -57,12 +57,14 @@ public class ScheduleDetailFragment extends AbstractScheduleFragment{
 		txtScheduleName = (TextView)getView().findViewById(R.id.txt_id_schedule_name);
 		txtScheduleUrl = (TextView)getView().findViewById(R.id.txt_id_schedule_url);
 		txtScheduleNote = (TextView)getView().findViewById(R.id.txt_id_schedule_note);
+		txtJoinUser = (TextView)getView().findViewById(R.id.txt_join_user);
 	}
 
 	@Override
-	protected void showJoinUserList() {
+	protected void showJoinUserList(){
 		if(lnrUserList != null){
 			lnrUserList.showAll(schedule.scheduleJoinUsers, (int)getResources().getDimension(R.dimen.margin_30dp));
+			txtJoinUser.setText(getString(R.string.cl_schedule_form_item_join_user) + " (" + schedule.scheduleJoinUsers.size() + ")");
 		}
 	}
 
@@ -84,13 +86,6 @@ public class ScheduleDetailFragment extends AbstractScheduleFragment{
 			imgRightIcon.setVisibility(View.VISIBLE);
 			imgRightIcon.setOnClickListener(this);
 		}
-
-//		if(!CCStringUtil.isEmpty(schedule.key)){
-//			if(!CCCollectionUtil.isEmpty(schedule.calendar.calendarUsers)){
-//				filterDialog.updateUserList(schedule.calendar.calendarUsers);
-//			}
-//		}
-
 	}
 
 	@Override
@@ -107,9 +102,9 @@ public class ScheduleDetailFragment extends AbstractScheduleFragment{
 		case R.id.lnr_id_schedule_url:
 			gotoBrowser(schedule.scheduleUrl);
 			break;
-//		case R.id.lnr_id_join_user_list:
-//			filterDialog.show();
-//			break;
+		// case R.id.lnr_id_join_user_list:
+		// filterDialog.show();
+		// break;
 		default:
 			break;
 		}
