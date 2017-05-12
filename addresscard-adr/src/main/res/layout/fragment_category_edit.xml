@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        
+    </data>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <include layout="@layout/view_common_header"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/ac_category_detail"
+                android:textColor="@color/ac_common_text_color_body"
+                android:textSize="@dimen/ac_common_text_size_body"
+                android:padding="@dimen/ac_common_field_padding"
+                android:background="@color/ac_category_title_background"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/ac_common_field_padding"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ac_category_name"
+                    android:textColor="@color/ac_common_text_color_title"
+                    android:textSize="@dimen/ac_common_text_size_title"
+                    android:padding="@dimen/ac_category_padding"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="AirLine"
+                    android:textSize="@dimen/ac_common_text_size_body"
+                    android:textColor="@color/ac_common_text_color_body"
+                    android:padding="@dimen/ac_category_padding"/>
+            </LinearLayout>
+            <View style="@style/cs_common_divider"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/ac_common_field_padding"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ac_category_detail"
+                    android:padding="@dimen/ac_category_padding"
+                    android:textColor="@color/ac_common_text_color_title"
+                    android:textSize="@dimen/ac_common_text_size_title"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="AirLinejhjafkjhfashkfhakhfksfkhaskfhkasfahsiufhsduifhaiusfiuhasifhasihfasiufawuifihsdaiuf"
+                    android:padding="@dimen/ac_category_padding"
+                    android:textSize="@dimen/ac_common_text_size_body"
+                    android:textColor="@color/ac_common_text_color_body"/>
+            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/ac_common_field_padding"
+                android:background="@color/ac_category_title_background"
+                android:text="@string/ac_category_list"
+                android:textColor="@color/ac_common_text_color_body"
+                android:textSize="@dimen/ac_common_text_size_body"/>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/list_customers"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
+        <include layout="@layout/view_common_footer"/>
+    </LinearLayout>
+
+</layout>

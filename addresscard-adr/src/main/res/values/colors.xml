@@ -5,6 +5,7 @@
     <color name="colorAccent">#FF4081</color>
     <color name="deactive_tab_text_color">#BDBDBD</color>
     <color name="btn_camera_background">#808080</color>
+    <color name="ac_common_background">#cccccc</color>
 
     <color name="wf_app_color_base">#b5ac84</color>
     <color name="wf_app_color_base_50">#80b5ac84</color>

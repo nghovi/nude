@@ -56,7 +56,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/ac_upload_card_address"/>
+                        android:text="@string/ac_address"/>
                     <trente.asia.android.view.ChiaseEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -65,7 +65,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/ac_upload_card_company_tel"/>
+                        android:text="@string/ac_company_tel"/>
                     <trente.asia.android.view.ChiaseEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -74,7 +74,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/ac_upload_card_url"/>
+                        android:text="@string/ac_url"/>
                     <trente.asia.android.view.ChiaseEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -83,7 +83,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/ac_upload_card_name"/>
+                        android:text="@string/ac_name"/>
                     <trente.asia.android.view.ChiaseEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -92,7 +92,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/ac_upload_card_tel"/>
+                        android:text="@string/ac_tel"/>
                     <trente.asia.android.view.ChiaseEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -101,7 +101,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/ac_upload_card_email"/>
+                        android:text="@string/ac_email"/>
                     <trente.asia.android.view.ChiaseEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -110,7 +110,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/ac_upload_card_note"/>
+                        android:text="@string/ac_note"/>
                     <trente.asia.android.view.ChiaseEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

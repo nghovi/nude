@@ -8,27 +8,31 @@
     <string name="menu_setting_title">Setting</string>
     <string name="ac_about_app_version">1.0</string>
     <string name="ac_upload_card_modify_data">Please modify data</string>
-    <string name="ac_upload_card_address">Address</string>
-    <string name="ac_upload_card_company_tel">Company tel</string>
-    <string name="ac_upload_card_url">URL</string>
-    <string name="ac_upload_card_name">Name</string>
-    <string name="ac_upload_card_tel">Tel</string>
-    <string name="ac_upload_card_email">Email</string>
-    <string name="ac_upload_card_note">Note</string>
+    <string name="ac_company_tel">Company tel</string>
+
+    <string name="ac_url">URL</string>
+    <string name="ac_name">Name</string>
+    <string name="ac_tel">Tel</string>
+    <string name="ac_address">Address</string>
+    <string name="ac_email">Email</string>
+    <string name="ac_note">Note</string>
+    <string name="ac_user">User</string>
+
     <string name="ac_upload_card_customer">Customer name</string>
     <string name="ac_main_card_title">Business card main</string>
     <string name="ac_card_detail_title">Business card detail</string>
     <string name="ac_card_detail_customer_name">Customer name</string>
-    <string name="ac_card_detail_name">Name</string>
-    <string name="ac_card_detail_tel">Tel</string>
-    <string name="ac_card_detail_email">Email</string>
-    <string name="ac_card_detail_note">Note</string>
+
     <string name="ac_set_customer_title">Set Customer</string>
     <string name="ac_choose_customer_title">Choose customer</string>
     <string name="ac_new_customer_title">New customer</string>
-    <string name="ac_category_title">Category</string>
+    <string name="ac_category">Category</string>
     <string name="ac_category_name">Category name</string>
     <string name="ac_category_detail">Category detail</string>
     <string name="ac_category_list">Category list</string>
+    <string name="ac_customer_title">Company information</string>
+    <string name="ac_customer_last_comment">Last Comment</string>
+
+    <string name="ac_btn_add_comment">Add Comment</string>
 
 </resources>

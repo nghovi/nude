@@ -72,7 +72,7 @@
                             android:layout_height="wrap_content"
                             android:textColor="@color/ac_common_text_color_title"
                             android:textSize="@dimen/ac_common_text_size_title"
-                            android:text="@string/ac_card_detail_name"/>
+                            android:text="@string/ac_name"/>
                         <trente.asia.android.view.ChiaseEditText
                             android:layout_below="@+id/name_title"
                             android:layout_width="match_parent"
@@ -93,7 +93,7 @@
                             android:layout_height="wrap_content"
                             android:textColor="@color/ac_common_text_color_title"
                             android:textSize="@dimen/ac_common_text_size_title"
-                            android:text="@string/ac_card_detail_name"/>
+                            android:text="@string/ac_name"/>
                         <trente.asia.android.view.ChiaseEditText
                             android:layout_below="@+id/tel_title"
                             android:layout_width="match_parent"
@@ -114,7 +114,7 @@
                             android:layout_height="wrap_content"
                             android:textColor="@color/ac_common_text_color_title"
                             android:textSize="@dimen/ac_common_text_size_title"
-                            android:text="@string/ac_card_detail_email"/>
+                            android:text="@string/ac_email"/>
                         <trente.asia.android.view.ChiaseEditText
                             android:layout_below="@+id/email_title"
                             android:layout_width="match_parent"
@@ -135,7 +135,7 @@
                             android:layout_height="wrap_content"
                             android:textColor="@color/ac_common_text_color_title"
                             android:textSize="@dimen/ac_common_text_size_title"
-                            android:text="@string/ac_card_detail_note"/>
+                            android:text="@string/ac_note"/>
                         <trente.asia.android.view.ChiaseEditText
                             android:layout_below="@+id/note_title"
                             android:layout_width="match_parent"

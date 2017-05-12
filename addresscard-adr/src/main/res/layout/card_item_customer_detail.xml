@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/card_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ac_icon_card"
+            android:text="User_001"
+            style="@style/ac_btn_delete_customer_edit"
+            android:drawablePadding="@dimen/ac_text_padding"/>
+
+        <ImageView
+            android:id="@+id/card"
+            android:layout_below="@+id/card_name"
+            android:layout_width="@dimen/ac_card_width"
+            android:layout_height="@dimen/ac_card_height"
+            android:background="@android:color/white"
+            android:padding="@dimen/ac_image_padding"
+            android:src="@drawable/card" />
+
+        <View
+            android:id="@+id/divider1"
+            android:layout_width="1dp"
+            android:layout_height="@dimen/ac_card_height"
+            android:layout_toEndOf="@+id/card"
+            android:background="@color/ac_common_background" />
+
+        <TextView
+            android:id="@+id/mail"
+            android:layout_below="@+id/card_name"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ac_card_half_height"
+            android:layout_toEndOf="@id/divider1"
+            android:background="@android:color/white"
+            android:drawableEnd="@drawable/ac_icon_mail"
+            android:gravity="center_vertical"
+            android:padding="@dimen/ac_text_padding"
+            android:text="takano@gmail.com" />
+
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/mail"
+            android:layout_toEndOf="@+id/divider1"
+            android:background="@color/ac_common_background" />
+
+        <TextView
+            android:id="@+id/phone"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ac_card_half_height"
+            android:layout_below="@+id/divider2"
+            android:layout_toEndOf="@+id/divider1"
+            android:background="@android:color/white"
+            android:drawableEnd="@drawable/ac_icon_phone"
+            android:gravity="center_vertical"
+            android:padding="@dimen/ac_text_padding"
+            android:text="1234567" />
+
+        <View
+            android:id="@+id/divider3"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/card"
+            android:background="@color/ac_common_background" />
+
+        <TextView
+            android:id="@+id/note"
+            style="@style/ac_body_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/divider3"
+            android:background="@android:color/white"
+            android:maxLines="3"
+            android:padding="@dimen/ac_text_padding"
+            android:text="This is note \n abasdfkjafldafd" />
+
+
+    </RelativeLayout>
+
+</layout>

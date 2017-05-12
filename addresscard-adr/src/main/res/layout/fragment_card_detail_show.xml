@@ -85,7 +85,7 @@
                             android:id="@+id/name_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/ac_card_detail_name"
+                            android:text="@string/ac_name"
                             android:textColor="@color/ac_common_text_color_title"
                             android:textSize="@dimen/ac_common_text_size_title" />
 
@@ -110,7 +110,7 @@
                             android:id="@+id/tel_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/ac_card_detail_name"
+                            android:text="@string/ac_name"
                             android:textColor="@color/ac_common_text_color_title"
                             android:textSize="@dimen/ac_common_text_size_title" />
 
@@ -142,7 +142,7 @@
                             android:id="@+id/email_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/ac_card_detail_email"
+                            android:text="@string/ac_email"
                             android:textColor="@color/ac_common_text_color_title"
                             android:textSize="@dimen/ac_common_text_size_title" />
 
@@ -174,7 +174,7 @@
                             android:id="@+id/note_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/ac_card_detail_note"
+                            android:text="@string/ac_note"
                             android:textColor="@color/ac_common_text_color_title"
                             android:textSize="@dimen/ac_common_text_size_title" />
 
