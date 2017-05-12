@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+
+    </data>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:minHeight="300dp"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#c9bf64"
+            android:padding="@dimen/ac_common_field_padding"
+            android:text="@string/ac_set_customer_title"
+            android:gravity="center_horizontal"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/ac_common_field_padding"
+            android:text="@string/ac_new_customer_title"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <trente.asia.android.view.ChiaseEditText
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:layout_height="50dp" />
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:padding="7dp"
+                android:src="@drawable/ac_action_add"/>
+        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/ac_common_field_padding"
+            android:text="@string/ac_choose_customer_title"/>
+        <View style="@style/cs_common_divider"/>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/list_customers"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+</layout>
