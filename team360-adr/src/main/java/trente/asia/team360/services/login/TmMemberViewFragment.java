@@ -1,10 +1,14 @@
 package trente.asia.team360.services.login;
 
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
 
 import org.json.JSONException;
@@ -15,22 +19,39 @@ import java.util.List;
 
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
+import trente.asia.team360.BR;
 import trente.asia.team360.R;
 import trente.asia.team360.common.fragments.AbstractTmFragment;
+import trente.asia.team360.databinding.FragmentMemberViewBinding;
+import trente.asia.team360.services.model.TestHandlers;
+import trente.asia.team360.services.model.TestModel;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.models.UserModel;
+
+import static android.R.attr.data;
 
 public class TmMemberViewFragment extends AbstractTmFragment {
 
     private GridView gridView;
 
+    private FragmentMemberViewBinding binding;
+
+    private TestModel mTestModel = new TestModel();
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (mRootView == null) {
-            mRootView = inflater.inflate(R.layout.fragment_member_view, container, false);
-        }
+        mRootView = inflater.inflate(R.layout.fragment_member_view, container, false);
         return mRootView;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        binding = FragmentMemberViewBinding.bind(view);
+        binding.setTest(mTestModel);
+        binding.setHandlers(new TestHandlers(mTestModel));
     }
 
 
@@ -42,6 +63,7 @@ public class TmMemberViewFragment extends AbstractTmFragment {
         super.initHeader(null, userModel.getUserName(), R.drawable.wf_setting_white);
 
         gridView = (GridView) getView().findViewById(R.id.gridview);
+
     }
 
 

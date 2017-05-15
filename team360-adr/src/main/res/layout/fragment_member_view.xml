@@ -1,22 +1,70 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/wf_common_match">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <include layout="@layout/view_common_header" />
+    <data>
 
+        <variable
+            name="test"
+            type="trente.asia.team360.services.model.TestModel" />
+
+        <variable
+            name="handlers"
+            type="trente.asia.team360.services.model.TestHandlers" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/wf_common_match">
+
+
+        <include layout="@layout/view_common_header" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@{test.testText}" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="26dp"
+                android:layout_weight="0.99"
+                android:src="@drawable/wf_camera"
+                />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="@{handlers.onClickEvent}"
+                android:text="Change text" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="@{handlers.onClickImage}"
+                android:text="Change image" />
+
+        </LinearLayout>
 
         <GridView
             android:id="@+id/gridview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:columnWidth="100dp"
+            android:gravity="center"
+            android:horizontalSpacing="8dp"
             android:minHeight="100dp"
             android:numColumns="auto_fit"
-            android:verticalSpacing="8dp"
-            android:horizontalSpacing="8dp"
-            android:stretchMode="columnWidth"
-            android:gravity="center"
             android:paddingTop="@dimen/margin_20dp"
-            />
+            android:stretchMode="columnWidth"
+            android:verticalSpacing="8dp" />
 
 
-</LinearLayout>
+    </LinearLayout>
+</layout>
