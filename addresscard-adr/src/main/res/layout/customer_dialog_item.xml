@@ -3,7 +3,7 @@
     <data>
         <variable
             name="customer"
-            type="trente.asia.addresscard.services.card.model.CustomerModel"/>
+            type="trente.asia.addresscard.services.business.model.CustomerModel"/>
     </data>
     <RelativeLayout
         android:layout_width="match_parent"

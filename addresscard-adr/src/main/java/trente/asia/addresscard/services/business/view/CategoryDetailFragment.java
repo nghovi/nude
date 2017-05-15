@@ -1,4 +1,4 @@
-package trente.asia.addresscard.services.card;
+package trente.asia.addresscard.services.business.view;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -14,7 +14,8 @@ import java.util.List;
 import trente.asia.addresscard.R;
 import trente.asia.addresscard.commons.fragments.AbstractAddressCardFragment;
 import trente.asia.addresscard.databinding.FragmentCategoryDetailBinding;
-import trente.asia.addresscard.services.card.model.CustomerModel;
+import trente.asia.addresscard.services.business.model.CustomerModel;
+import trente.asia.addresscard.services.business.presenter.CustomerCategoryAdapter;
 
 /**
  * Created by tien on 5/11/2017.
@@ -37,8 +38,15 @@ public class CategoryDetailFragment extends AbstractAddressCardFragment {
             CustomerCategoryAdapter adapter = new CustomerCategoryAdapter(customers);
             binding.listCustomers.setAdapter(adapter);
             binding.listCustomers.setLayoutManager(new LinearLayoutManager(getContext()));
+            mRootView.findViewById(R.id.img_id_header_right_icon).setOnClickListener(this);
         }
         return mRootView;
+    }
+
+    @Override
+    protected void initView() {
+        super.initView();
+        super.initHeader(R.drawable.ac_back_white, "Airline", R.drawable.ac_action_edit);
     }
 
     @Override
@@ -48,6 +56,12 @@ public class CategoryDetailFragment extends AbstractAddressCardFragment {
 
     @Override
     public void onClick(View view) {
-
+        switch (view.getId()) {
+            case R.id.img_id_header_right_icon:
+                gotoFragment(new CategoryEditFragment());
+                break;
+            default:
+                break;
+        }
     }
 }

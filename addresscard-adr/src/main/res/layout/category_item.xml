@@ -2,14 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
-        <variable
-            name="category"
-            type="trente.asia.addresscard.services.card.Category"/>
+
     </data>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_margin="10dp">
+        android:layout_margin="10dp"
+        android:background="@drawable/row_pressed_selector">
         <TextView
             android:id="@+id/category_name"
             android:layout_width="100dp"
@@ -20,7 +19,7 @@
             android:paddingEnd="10dp"
             android:textSize="16sp"
             android:textColor="@android:color/black"
-            android:text="@{category.name}"/>
+            android:text="AirlLine"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -36,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:padding="5dp"
-                app:imageId="@{category.getImageId(0)}"/>
+                android:src="@drawable/test_thai_airline"/>
 
             <ImageView
                 android:id="@+id/customer_2"
@@ -44,21 +43,21 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:padding="5dp"
-                app:imageId="@{category.getImageId(1)}"/>
+                android:src="@drawable/test_thai_airline"/>
             <ImageView
                 android:id="@+id/customer_3"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:padding="5dp"
-                app:imageId="@{category.getImageId(2)}"/>
+                android:src="@drawable/test_thai_airline"/>
             <ImageView
                 android:id="@+id/customer_4"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:padding="5dp"
-                app:imageId="@{category.getImageId(3)}"/>
+                android:src="@drawable/test_thai_airline"/>
         </LinearLayout>
 
         <TextView
@@ -67,7 +66,7 @@
             android:layout_height="wrap_content"
             android:layout_toStartOf="@+id/arrow"
             android:textColor="@android:color/black"
-            android:text="@{category.size}"
+            android:text="5"
             android:layout_centerVertical="true"
             android:drawablePadding="8dp"
             android:textSize="20sp"
@@ -75,9 +74,10 @@
 
         <ImageView
             android:id="@+id/arrow"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/wf_row_arrow_right"
-            android:layout_alignParentEnd="true"/>
+            style="@style/ac_icon_right"
+            android:src="@drawable/ac_action_right"/>
+        <View
+            style="@style/cs_common_divider"
+            android:layout_alignParentBottom="true"/>
     </RelativeLayout>
 </layout>

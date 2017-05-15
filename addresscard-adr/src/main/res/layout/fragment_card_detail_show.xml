@@ -10,7 +10,9 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <include layout="@layout/view_common_header" />
+        <include
+            android:id="@+id/header"
+            layout="@layout/view_common_header" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -19,6 +21,7 @@
             android:orientation="vertical">
 
             <ImageView
+                android:id="@+id/card_image"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#c7c5c5"

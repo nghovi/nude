@@ -1,4 +1,4 @@
-package trente.asia.addresscard.services.card.model;
+package trente.asia.addresscard.services.business.model;
 
 import android.databinding.BaseObservable;
 import android.databinding.BindingAdapter;

@@ -61,4 +61,5 @@ public class ACConst {
 	 * API URL
 	 */
 	public static final String AC_BUSINESS_CARD_LIST 						= "/api/ac/business/card/list";
+	public static final String AC_BUSINESS_CARD_DETAIL 						= "/api/ac/business/card/detail";
 }

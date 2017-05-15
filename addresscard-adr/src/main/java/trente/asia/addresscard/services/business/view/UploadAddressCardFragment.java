@@ -1,4 +1,4 @@
-package trente.asia.addresscard.services.card;
+package trente.asia.addresscard.services.business.view;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -20,14 +20,19 @@ public class UploadAddressCardFragment extends AbstractAddressCardFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater,
-                R.layout.fragment_upload_address_card, container, false);
-        return binding.getRoot();
+        if (mRootView == null) {
+            binding = DataBindingUtil.inflate(inflater,
+                    R.layout.fragment_upload_address_card, container, false);
+            mRootView = binding.getRoot();
+            mRootView.findViewById(R.id.img_id_header_right_icon).setOnClickListener(this);
+        }
+        return mRootView;
     }
 
     @Override
     protected void initView() {
         super.initView();
+        super.initHeader(R.drawable.ac_back_white, "Upload address card", R.drawable.ac_action_done);
     }
 
     @Override
@@ -37,6 +42,16 @@ public class UploadAddressCardFragment extends AbstractAddressCardFragment {
 
     @Override
     public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.img_id_header_right_icon:
+                uploadAddressCard();
+                break;
+            default:
+                break;
+        }
+    }
 
+    private void uploadAddressCard() {
+        onClickBackBtn();
     }
 }

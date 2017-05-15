@@ -1,181 +1,200 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <data>
-        
+
     </data>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
         <include layout="@layout/view_common_header" />
-        <RelativeLayout
+
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/ac_common_background">
-            <ScrollView
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <LinearLayout
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/ac_body_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:padding="@dimen/title_padding"
+                    android:text="@string/ac_customer_title" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/white"
+                    android:padding="@dimen/ac_common_field_padding">
+
+                    <ImageView
+                        android:id="@+id/customer_logo"
+                        style="@style/ac_icon_left"
+                        android:src="@drawable/logo" />
+
                     <TextView
+                        android:id="@+id/name_title"
+                        style="@style/ac_title_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/general_margin"
+                        android:layout_toEndOf="@+id/customer_logo"
+                        android:text="@string/ac_name" />
+
+                    <TextView
+                        style="@style/ac_body_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/ac_customer_title"
-                        android:padding="@dimen/title_padding"
-                        style="@style/ac_body_text"/>
-                    <RelativeLayout
+                        android:layout_below="@+id/name_title"
+                        android:layout_marginStart="@dimen/general_margin"
+                        android:layout_toEndOf="@id/customer_logo"
+                        android:text="Trente Vietnam" />
+                </RelativeLayout>
+
+                <View style="@style/cs_common_divider" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/white"
+                    android:padding="@dimen/ac_common_field_padding">
+
+                    <TextView
+                        android:id="@+id/tel_title"
+                        style="@style/ac_title_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/ac_tel" />
+
+                    <TextView
+                        style="@style/ac_body_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@android:color/white"
-                        android:padding="@dimen/ac_common_field_padding">
-                        <ImageView
-                            android:id="@+id/customer_logo"
-                            android:src="@drawable/logo"
-                            style="@style/ac_icon_left" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/ac_name"
-                            android:layout_toEndOf="@+id/customer_logo"
-                            android:layout_marginStart="@dimen/general_margin"
-                            style="@style/ac_title_text"
-                            android:id="@+id/name_title"/>
-                        <TextView
-                            android:layout_below="@+id/name_title"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_toEndOf="@id/customer_logo"
-                            android:layout_marginStart="@dimen/general_margin"
-                            android:text="Trente Vietnam"
-                            style="@style/ac_body_text"/>
-                    </RelativeLayout>
-                    <View style="@style/cs_common_divider"/>
-                    <RelativeLayout
+                        android:layout_below="@+id/tel_title"
+                        android:text="01234456789" />
+                </RelativeLayout>
+
+                <View style="@style/cs_common_divider" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/white"
+                    android:padding="@dimen/ac_common_field_padding">
+
+                    <TextView
+                        android:id="@+id/address_title"
+                        style="@style/ac_title_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/ac_address" />
+
+                    <TextView
+                        style="@style/ac_body_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@android:color/white"
-                        android:padding="@dimen/ac_common_field_padding">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/ac_tel"
-                            style="@style/ac_title_text"
-                            android:id="@+id/tel_title"/>
-                        <TextView
-                            android:layout_below="@+id/tel_title"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="01234456789"
-                            style="@style/ac_body_text"/>
-                    </RelativeLayout>
-                    <View style="@style/cs_common_divider"/>
-                    <RelativeLayout
+                        android:layout_below="@+id/address_title"
+                        android:text="Duy Tan, Cau giay, Ha noi" />
+                </RelativeLayout>
+
+                <View style="@style/cs_common_divider" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/white"
+                    android:padding="@dimen/ac_common_field_padding">
+
+                    <TextView
+                        android:id="@+id/url_title"
+                        style="@style/ac_title_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/ac_url" />
+
+                    <TextView
+                        style="@style/ac_body_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@android:color/white"
-                        android:padding="@dimen/ac_common_field_padding">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/ac_address"
-                            style="@style/ac_title_text"
-                            android:id="@+id/address_title"/>
-                        <TextView
-                            android:layout_below="@+id/address_title"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Duy Tan, Cau giay, Ha noi"
-                            style="@style/ac_body_text"/>
-                    </RelativeLayout>
-                    <View style="@style/cs_common_divider"/>
-                    <RelativeLayout
+                        android:layout_below="@+id/url_title"
+                        android:text="http://www.trente.asia" />
+                </RelativeLayout>
+
+                <View style="@style/cs_common_divider" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/white"
+                    android:padding="@dimen/ac_common_field_padding">
+
+                    <TextView
+                        android:id="@+id/category_title"
+                        style="@style/ac_title_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/ac_category" />
+
+                    <TextView
+                        style="@style/ac_body_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@android:color/white"
-                        android:padding="@dimen/ac_common_field_padding">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/ac_url"
-                            style="@style/ac_title_text"
-                            android:id="@+id/url_title"/>
-                        <TextView
-                            android:layout_below="@+id/url_title"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="http://www.trente.asia"
-                            style="@style/ac_body_text"/>
-                    </RelativeLayout>
-                    <View style="@style/cs_common_divider"/>
-                    <RelativeLayout
+                        android:layout_below="@+id/category_title"
+                        android:layout_marginTop="@dimen/ac_text_margin"
+                        android:text="IT Company" />
+
+                    <ImageView
+                        style="@style/ac_icon_right"
+                        android:src="@drawable/ac_action_right" />
+                </RelativeLayout>
+
+                <View style="@style/cs_common_divider" />
+
+                <RelativeLayout
+                    android:id="@+id/row_last_comments"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/row_pressed_selector"
+                    android:padding="@dimen/ac_common_field_padding">
+
+                    <TextView
+                        android:id="@+id/last_common_title"
+                        style="@style/ac_title_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/ac_customer_last_comment" />
+
+                    <TextView
+                        style="@style/ac_body_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@android:color/white"
-                        android:padding="@dimen/ac_common_field_padding">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/ac_category"
-                            style="@style/ac_title_text"
-                            android:id="@+id/category_title"/>
-                        <TextView
-                            android:layout_below="@+id/category_title"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="IT Company"
-                            android:layout_marginTop="@dimen/ac_text_margin"
-                            style="@style/ac_body_text"/>
-                        <ImageView
-                            style="@style/ac_icon_right"
-                            android:src="@drawable/ac_action_right"/>
-                    </RelativeLayout>
-                    <View style="@style/cs_common_divider"/>
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@android:color/white"
-                        android:padding="@dimen/ac_common_field_padding">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/ac_customer_last_comment"
-                            style="@style/ac_title_text"
-                            android:id="@+id/last_common_title"/>
-                        <TextView
-                            android:layout_below="@+id/last_common_title"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="2017/04/24 18:30"
-                            android:layout_marginTop="@dimen/ac_text_margin"
-                            style="@style/ac_body_text"/>
-                        <ImageView
-                            style="@style/ac_icon_right"
-                            android:src="@drawable/ac_action_right"/>
-                    </RelativeLayout>
-                    <View style="@style/cs_common_divider"/>
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/list_cards"
-                        android:layout_width="match_parent"
-                        android:layout_height="1000dp"/>
-                </LinearLayout>
-            </ScrollView>
-            <TextView
-                android:id="@+id/btn_delete"
-                android:layout_width="300dp"
-                android:layout_height="60dp"
-                android:background="@drawable/btn_delete_background"
-                android:text="Delete"
-                android:textSize="20sp"
-                android:textColor="@android:color/white"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:gravity="center"
-                android:layout_marginBottom="20dp"
-                android:clickable="true" />
-        </RelativeLayout>
-        <include layout="@layout/view_common_footer"/>
+                        android:layout_below="@+id/last_common_title"
+                        android:layout_marginTop="@dimen/ac_text_margin"
+                        android:text="2017/04/24 18:30" />
+
+                    <ImageView
+                        style="@style/ac_icon_right"
+                        android:src="@drawable/ac_action_right" />
+                </RelativeLayout>
+
+                <View style="@style/cs_common_divider" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/list_cards"
+                    android:layout_width="match_parent"
+                    android:layout_height="1000dp" />
+            </LinearLayout>
+        </ScrollView>
+
+        <include layout="@layout/view_common_footer" />
     </LinearLayout>
 </layout>

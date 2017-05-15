@@ -34,5 +34,7 @@
     <string name="ac_customer_last_comment">Last Comment</string>
 
     <string name="ac_btn_add_comment">Add Comment</string>
+    <string name="ac_customer_list_title">Customer list</string>
 
+    <string name="ac_update_by">Update by %d</string>
 </resources>

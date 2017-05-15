@@ -14,7 +14,7 @@
         <RelativeLayout
             android:id="@+id/main_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="vertical">
 
@@ -46,13 +46,10 @@
 
                 <ImageView
                     android:id="@+id/arrow_category"
-                    android:layout_width="@dimen/right_arrow_dimension"
-                    android:layout_height="@dimen/right_arrow_dimension"
-                    android:layout_alignParentEnd="true"
                     android:layout_marginEnd="@dimen/general_margin"
                     android:layout_marginStart="@dimen/general_margin"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/wf_row_arrow_right" />
+                    android:src="@drawable/ac_action_right"
+                    style="@style/ac_icon_right" />
             </RelativeLayout>
 
             <View
@@ -89,13 +86,10 @@
 
                 <ImageView
                     android:id="@+id/arrow_group"
-                    android:layout_width="@dimen/right_arrow_dimension"
-                    android:layout_height="@dimen/right_arrow_dimension"
-                    android:layout_alignParentEnd="true"
                     android:layout_marginEnd="@dimen/general_margin"
                     android:layout_marginStart="@dimen/general_margin"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/wf_row_arrow_right" />
+                    android:src="@drawable/ac_action_right"
+                    style="@style/ac_icon_right"/>
             </RelativeLayout>
 
             <TextView

@@ -1,4 +1,4 @@
-package trente.asia.addresscard.services.card;
+package trente.asia.addresscard.services.business.presenter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,7 +11,7 @@ import java.util.List;
 
 import trente.asia.addresscard.R;
 import trente.asia.addresscard.databinding.CustomerCategoryItemBinding;
-import trente.asia.addresscard.services.card.model.CustomerModel;
+import trente.asia.addresscard.services.business.model.CustomerModel;
 
 /**
  * Created by tien on 5/11/2017.

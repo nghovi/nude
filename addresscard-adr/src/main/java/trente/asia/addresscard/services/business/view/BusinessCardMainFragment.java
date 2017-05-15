@@ -1,4 +1,4 @@
-package trente.asia.addresscard.services.card;
+package trente.asia.addresscard.services.business.view;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -14,13 +14,15 @@ import com.bluelinelabs.logansquare.LoganSquare;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import trente.asia.addresscard.ACConst;
 import trente.asia.addresscard.R;
 import trente.asia.addresscard.commons.fragments.AbstractAddressCardFragment;
 import trente.asia.addresscard.databinding.FragmentBusinessCardMainBinding;
-import trente.asia.addresscard.services.card.model.CardModel;
+import trente.asia.addresscard.services.business.model.CardModel;
+import trente.asia.addresscard.services.business.presenter.CardAdapter;
 
 /**
  * Created by tien on 4/18/2017.
@@ -41,19 +43,25 @@ public class BusinessCardMainFragment extends AbstractAddressCardFragment implem
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_business_card_main, container, false);
-        binding.listCards.setLayoutManager(new GridLayoutManager(getContext(), 3));
-        binding.btnDelete.setOnClickListener(this);
-        binding.btnCapture.setOnClickListener(this);
-        binding.rowCategory.setOnClickListener(this);
-        binding.rowCustomer.setOnClickListener(this);
-        return binding.getRoot();
+        if (mRootView == null) {
+            binding = DataBindingUtil.inflate(inflater, R.layout.fragment_business_card_main, container, false);
+            binding.listCards.setLayoutManager(new GridLayoutManager(getContext(), 3));
+            binding.btnDelete.setOnClickListener(this);
+            binding.btnCapture.setOnClickListener(this);
+            binding.rowCategory.setOnClickListener(this);
+            binding.rowCustomer.setOnClickListener(this);
+            List<CardModel> cards = new ArrayList<>();
+            adapter = new CardAdapter(cards, this);
+            binding.listCards.setAdapter(adapter);
+            mRootView = binding.getRoot();
+        }
+        return mRootView;
     }
 
     @Override
     public void initView() {
         super.initView();
-        super.initHeader(R.drawable.ac_back_white, getString(R.string.ac_main_card_title), R.drawable.ac_action_edit);
+        super.initHeader(null, getString(R.string.ac_main_card_title), null);
     }
 
     @Override
@@ -65,13 +73,11 @@ public class BusinessCardMainFragment extends AbstractAddressCardFragment implem
 
     @Override
     protected void successLoad(JSONObject response, String url) {
-        log(url);
-        log(response.toString());
         List<CardModel> cards;
         try {
             cards = LoganSquare.parseList(response.optString("cards"), CardModel.class);
-            log("CardName: " + cards.get(0).cardName);
-            log("Image url: " + cards.get(0).attachment.fileUrl);
+            log(response.toString());
+            log(cards.get(0).attachment.fileUrl);
             adapter = new CardAdapter(cards, this);
             binding.listCards.setAdapter(adapter);
         } catch (IOException e) {
@@ -92,11 +98,16 @@ public class BusinessCardMainFragment extends AbstractAddressCardFragment implem
                 gotoFragment(new CategoryListFragment());
                 break;
             case R.id.row_customer:
-
+                gotoFragment(new CustomerListFragment());
                 break;
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onItemClick(CardModel card) {
+        gotoFragment(CardDetailFragment.newInstance(card.key));
     }
 
     @Override
@@ -122,6 +133,15 @@ public class BusinessCardMainFragment extends AbstractAddressCardFragment implem
     public void onBtnDeleteClick() {
         adapter.deleteSelectedCards();
         showBtnCapture();
+    }
+
+    @Override
+    protected void onClickBackBtn() {
+        showBtnCapture();
+        if (adapter.unselectAllCards()) {
+            return;
+        }
+        super.onClickBackBtn();
     }
 
     private void log(String msg) {

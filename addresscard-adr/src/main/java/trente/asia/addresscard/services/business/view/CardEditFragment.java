@@ -1,4 +1,4 @@
-package trente.asia.addresscard.services.card;
+package trente.asia.addresscard.services.business.view;
 
 import android.app.AlertDialog;
 import android.databinding.DataBindingUtil;
@@ -16,13 +16,14 @@ import trente.asia.addresscard.R;
 import trente.asia.addresscard.commons.fragments.AbstractAddressCardFragment;
 import trente.asia.addresscard.databinding.DialogFragmentChooseCustomerBinding;
 import trente.asia.addresscard.databinding.FragmentCardDetailEditBinding;
-import trente.asia.addresscard.services.card.model.CustomerModel;
+import trente.asia.addresscard.services.business.model.CustomerModel;
+import trente.asia.addresscard.services.business.presenter.CustomerDialogAdapter;
 
 /**
  * Created by tien on 5/11/2017.
  */
 
-public class CardDetailEditFragment extends AbstractAddressCardFragment {
+public class CardEditFragment extends AbstractAddressCardFragment {
     FragmentCardDetailEditBinding binding;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -30,8 +31,15 @@ public class CardDetailEditFragment extends AbstractAddressCardFragment {
             binding = DataBindingUtil.inflate(inflater, R.layout.fragment_card_detail_edit, container, false);
             mRootView = binding.getRoot();
             binding.rltSetCustomer.setOnClickListener(this);
+            mRootView.findViewById(R.id.img_id_header_right_icon).setOnClickListener(this);
         }
         return mRootView;
+    }
+
+    @Override
+    protected void initView() {
+        super.initView();
+        super.initHeader(R.drawable.ac_back_white, "Takano Yasuhiro", R.drawable.ac_action_done);
     }
 
     @Override
@@ -44,6 +52,9 @@ public class CardDetailEditFragment extends AbstractAddressCardFragment {
         switch (view.getId()) {
             case R.id.rlt_set_customer:
                 showSetCustomerDialog();
+                break;
+            case R.id.img_id_header_right_icon:
+                finishEditCard();
                 break;
             default:
                 break;
@@ -64,5 +75,9 @@ public class CardDetailEditFragment extends AbstractAddressCardFragment {
         viewBinding.listCustomers.setAdapter(adapter);
         viewBinding.listCustomers.setLayoutManager(new LinearLayoutManager(getContext()));
         builder.create().show();
+    }
+
+    private void finishEditCard() {
+        onClickBackBtn();
     }
 }

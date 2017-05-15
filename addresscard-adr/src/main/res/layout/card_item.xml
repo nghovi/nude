@@ -4,7 +4,7 @@
     <data>
         <variable
             name="card"
-            type="trente.asia.addresscard.services.card.model.CardModel"/>
+            type="trente.asia.addresscard.services.business.model.CardModel"/>
     </data>
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,15 +18,16 @@
             android:textColor="@android:color/black"
             android:text="@{card.cardName}"/>
         <ImageView
+            android:id="@+id/card_image"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
-            app:image="@{card.attachment}"/>
+            android:src="@drawable/card"/>
         <TextView
+            android:id="@+id/last_update_user"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="@{card.cardEmail}"/>
+            android:gravity="center_horizontal"/>
     </LinearLayout>
 </layout>

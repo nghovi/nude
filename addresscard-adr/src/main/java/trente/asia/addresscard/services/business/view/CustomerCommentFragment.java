@@ -1,4 +1,4 @@
-package trente.asia.addresscard.services.card;
+package trente.asia.addresscard.services.business.view;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import trente.asia.addresscard.R;
 import trente.asia.addresscard.commons.fragments.AbstractAddressCardFragment;
 import trente.asia.addresscard.databinding.FragmentCustomerCommentBinding;
+import trente.asia.addresscard.services.business.presenter.CustomerCommentAdapter;
 
 /**
  * Created by tien on 5/12/2017.
@@ -19,7 +20,6 @@ import trente.asia.addresscard.databinding.FragmentCustomerCommentBinding;
 public class CustomerCommentFragment extends AbstractAddressCardFragment {
     FragmentCustomerCommentBinding binding;
 
-    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (mRootView == null) {
@@ -30,6 +30,12 @@ public class CustomerCommentFragment extends AbstractAddressCardFragment {
             binding.listComments.setAdapter(new CustomerCommentAdapter());
         }
         return mRootView;
+    }
+
+    @Override
+    protected void initView() {
+        super.initView();
+        super.initHeader(R.drawable.ac_back_white, "Trente Viewtnam", null);
     }
 
     @Override

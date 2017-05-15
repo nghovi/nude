@@ -1,8 +1,8 @@
-package trente.asia.addresscard.services.card;
+package trente.asia.addresscard.services.business.presenter;
 
-import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import trente.asia.addresscard.R;
@@ -18,14 +18,14 @@ public class CustomerEditCardAdapter extends RecyclerView.Adapter<ViewHolder>{
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),
+        View view = LayoutInflater.from(parent.getContext()).inflate(
                 R.layout.card_item_customer_edit, parent, false);
-        return new ViewHolder(binding.getRoot());
+        return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-
+        binding = (CardItemCustomerEditBinding) holder.getBinding();
     }
 
     @Override

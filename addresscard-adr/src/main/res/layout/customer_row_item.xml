@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+
+    </data>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/row_height"
+        android:background="@android:color/white">
+        <ImageView
+            android:id="@+id/left_icon"
+            style="@style/ac_icon_left"
+            android:src="@drawable/test_vn_airline"/>
+
+        <TextView
+            android:id="@+id/customer_name"
+            android:layout_toEndOf="@+id/left_icon"
+            android:layout_width="80dp"
+            android:layout_marginStart="@dimen/ac_text_margin"
+            android:layout_height="@dimen/row_body_height"
+            android:layout_centerVertical="true"
+            android:maxLines="2"
+            android:ellipsize="end"
+            style="@style/ac_body_text"
+            android:text="Vietname Airline"/>
+
+        <LinearLayout
+            android:id="@+id/images"
+            android:layout_toEndOf="@+id/customer_name"
+            android:layout_toStartOf="@+id/card"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/row_body_height"
+            android:orientation="horizontal"
+            android:layout_centerVertical="true">
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:src="@drawable/card"
+                android:padding="@dimen/ac_image_padding"/>
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:src="@drawable/card"
+                android:padding="@dimen/ac_image_padding"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/card"
+            android:layout_toStartOf="@+id/comment"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/row_body_height"
+            style="@style/ac_body_text"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical"
+            android:drawablePadding="5dp"
+            android:text="2"
+            android:layout_marginEnd="@dimen/ac_text_margin"
+            android:drawableStart="@drawable/ac_icon_card"/>
+
+        <TextView
+            android:id="@+id/comment"
+            android:layout_toStartOf="@+id/right_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/row_body_height"
+            style="@style/ac_body_text"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical"
+            android:drawablePadding="5dp"
+            android:text="0"
+            android:drawableStart="@drawable/ac_icon_comment"/>
+
+        <ImageView
+            android:id="@+id/right_icon"
+            style="@style/ac_icon_right"
+            android:src="@drawable/ac_action_right"/>
+
+        <View style="@style/cs_common_divider"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
+</layout>

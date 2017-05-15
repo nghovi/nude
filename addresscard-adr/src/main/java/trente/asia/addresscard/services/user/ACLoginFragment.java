@@ -11,7 +11,7 @@ import asia.chiase.core.util.CCJsonUtil;
 import trente.asia.addresscard.BuildConfig;
 import trente.asia.addresscard.R;
 import trente.asia.addresscard.commons.defines.ACConst;
-import trente.asia.addresscard.services.card.BusinessCardMainFragment;
+import trente.asia.addresscard.services.business.view.BusinessCardMainFragment;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.models.SettingModel;
