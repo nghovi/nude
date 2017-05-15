@@ -9,15 +9,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import trente.asia.addresscard.ACConst;
 import trente.asia.addresscard.R;
 import trente.asia.addresscard.commons.fragments.AbstractAddressCardFragment;
 import trente.asia.addresscard.databinding.DialogFragmentChooseCustomerBinding;
 import trente.asia.addresscard.databinding.FragmentCardDetailEditBinding;
 import trente.asia.addresscard.services.business.model.CustomerModel;
 import trente.asia.addresscard.services.business.presenter.CustomerDialogAdapter;
+import trente.asia.android.view.util.CAObjectSerializeUtil;
 
 /**
  * Created by tien on 5/11/2017.
@@ -79,5 +84,21 @@ public class CardEditFragment extends AbstractAddressCardFragment {
 
     private void finishEditCard() {
         onClickBackBtn();
+    }
+
+    private void updateAddressCard() {
+        JSONObject jsonObject = CAObjectSerializeUtil.serializeObject(binding.lnrContent, null);
+        try {
+            jsonObject.put("key", 51);
+            jsonObject.put("card", null);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        requestUpdate(ACConst.AC_BUSINESS_CARD_UPDATE, jsonObject, true);
+    }
+
+    @Override
+    protected void successUpload(JSONObject response, String url) {
+        super.successUpload(response, url);
     }
 }

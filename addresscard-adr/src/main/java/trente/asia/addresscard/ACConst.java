@@ -62,4 +62,5 @@ public class ACConst {
 	 */
 	public static final String AC_BUSINESS_CARD_LIST 						= "/api/ac/business/card/list";
 	public static final String AC_BUSINESS_CARD_DETAIL 						= "/api/ac/business/card/detail";
+	public static final String AC_BUSINESS_CARD_UPDATE 						= "/api/ac/business/card/update";
 }

@@ -9,14 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.bluelinelabs.logansquare.LoganSquare;
-
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import asia.chiase.core.util.CCJsonUtil;
 import trente.asia.addresscard.ACConst;
 import trente.asia.addresscard.R;
 import trente.asia.addresscard.commons.fragments.AbstractAddressCardFragment;
@@ -28,9 +26,10 @@ import trente.asia.addresscard.services.business.presenter.CardAdapter;
  * Created by tien on 4/18/2017.
  */
 
-public class BusinessCardMainFragment extends AbstractAddressCardFragment implements CardAdapter.OnItemListener{
+public class BusinessCardMainFragment extends AbstractAddressCardFragment implements CardAdapter.OnItemListener {
     FragmentBusinessCardMainBinding binding;
     CardAdapter adapter;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +41,7 @@ public class BusinessCardMainFragment extends AbstractAddressCardFragment implem
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (mRootView == null) {
             binding = DataBindingUtil.inflate(inflater, R.layout.fragment_business_card_main, container, false);
             binding.listCards.setLayoutManager(new GridLayoutManager(getContext(), 3));
@@ -74,15 +73,10 @@ public class BusinessCardMainFragment extends AbstractAddressCardFragment implem
     @Override
     protected void successLoad(JSONObject response, String url) {
         List<CardModel> cards;
-        try {
-            cards = LoganSquare.parseList(response.optString("cards"), CardModel.class);
-            log(response.toString());
-            log(cards.get(0).attachment.fileUrl);
-            adapter = new CardAdapter(cards, this);
-            binding.listCards.setAdapter(adapter);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        cards = CCJsonUtil.convertToModelList(response.optString("cards"), CardModel.class);
+        log(cards.get(0).attachment.fileUrl);
+        adapter = new CardAdapter(cards, this);
+        binding.listCards.setAdapter(adapter);
     }
 
     @Override

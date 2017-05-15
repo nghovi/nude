@@ -8,14 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.bluelinelabs.logansquare.LoganSquare;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-
+import asia.chiase.core.util.CCJsonUtil;
 import trente.asia.addresscard.ACConst;
 import trente.asia.addresscard.BuildConfig;
 import trente.asia.addresscard.R;
@@ -30,6 +28,7 @@ import trente.asia.addresscard.services.business.model.CardModel;
 public class CardDetailFragment extends AbstractAddressCardFragment {
     private FragmentCardDetailShowBinding binding;
     private int key;
+
     public static CardDetailFragment newInstance(int cardKey) {
         CardDetailFragment fragment = new CardDetailFragment();
         fragment.key = cardKey;
@@ -50,7 +49,7 @@ public class CardDetailFragment extends AbstractAddressCardFragment {
     @Override
     protected void initView() {
         super.initView();
-        super.initHeader(R.drawable.ac_back_white, "Takano Yasuhiro", R.drawable.ac_action_edit);
+
     }
 
     @Override
@@ -69,15 +68,13 @@ public class CardDetailFragment extends AbstractAddressCardFragment {
     protected void successLoad(JSONObject response, String url) {
         super.successLoad(response, url);
         CardModel card;
-        try {
-            card = LoganSquare.parse(response.optString("card"), CardModel.class);
-            log("key = " + key);
-            log(response.toString());
-            log(BuildConfig.HOST + card.attachment.fileUrl);
-            Picasso.with(getContext()).load(BuildConfig.HOST + card.attachment.fileUrl).into(binding.cardImage);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        card = CCJsonUtil.convertToModel(response.optString("card"), CardModel.class);
+        Picasso.with(getContext()).load(BuildConfig.HOST + card.attachment.fileUrl).into(binding.cardImage);
+        binding.customerName.setText(card.customerName);
+        binding.cardName.setText(card.cardName);
+        binding.cardTel.setText(card.cardTel);
+        binding.cardEmail.setText(card.cardEmail);
+        super.initHeader(R.drawable.ac_back_white, card.cardName, R.drawable.ac_action_edit);
     }
 
     @Override

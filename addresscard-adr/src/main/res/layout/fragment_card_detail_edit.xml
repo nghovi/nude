@@ -9,6 +9,7 @@
         android:orientation="vertical">
         <include layout="@layout/view_common_header"/>
         <LinearLayout
+            android:id="@+id/lnr_content"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
