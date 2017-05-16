@@ -40,6 +40,10 @@
 
     <string name="sw_work_time_modify_request_title">Modify request</string>
     <string name="sw_work_time_modify_request">Modify request for %1$s check in</string>
+    <string name="sw_work_time_modify_request_start">Modify request for %1$s Start time</string>
+    <string name="sw_work_time_modify_request_undefined">Modify request for %1$s Undefined</string>
+    <string name="sw_work_time_modify_request_end">Modify request for %1$s End time</string>
+
     <string name="sw_work_time_modify_request_success">Success request</string>
 
     <string name="sw_shift_work_this_month">This month</string>

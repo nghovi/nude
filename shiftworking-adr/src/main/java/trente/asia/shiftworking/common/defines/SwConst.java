@@ -39,4 +39,8 @@ public class SwConst{
 
 	public static final String	SW_TRANSIT_WAY_TYPE_ONE_WAY		= "1W";
 	public static final String	SW_TRANSIT_WAY_TYPE_TWO_WAY		= "2W";
+
+	public static final String	SW_WORK_TIME_TYPE_START_TIME	= "ST";
+	public static final String	SW_WORK_TIME_TYPE_END_TIME		= "ET";
+	public static final String	SW_WORK_TIME_TYPE_UNDEFINED		= "UN";
 }
