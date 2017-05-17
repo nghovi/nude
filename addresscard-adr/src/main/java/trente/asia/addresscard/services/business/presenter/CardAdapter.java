@@ -76,6 +76,10 @@ public class CardAdapter extends RecyclerView.Adapter<ViewHolder> {
         });
     }
 
+    public List<CardModel> getListSelected() {
+        return listSelected;
+    }
+
     public void deleteSelectedCards() {
         for (CardModel card : listSelected) {
             list.remove(card);

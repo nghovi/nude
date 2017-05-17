@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto">
     <data>
-
+        <variable
+            name="card"
+            type="trente.asia.addresscard.services.business.model.CardModel"/>
     </data>
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,11 +18,13 @@
             android:layout_weight="1"
             android:orientation="vertical">
             <ImageView
+                android:id="@+id/card_image"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="200dp"
                 android:src="@drawable/card"
                 android:background="#c7c5c5"/>
             <TextView
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/ac_card_detail_title"
@@ -48,13 +53,14 @@
                             android:textSize="@dimen/ac_common_text_size_title"
                             android:text="@string/ac_card_detail_customer_name"/>
                         <TextView
+                            android:id="@+id/customer_name"
                             android:layout_below="@+id/customer_name_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:textColor="@color/ac_common_text_color_body"
                             android:textSize="@dimen/ac_common_text_size_body"
-                            android:text="Trente Vietnam"/>
+                            android:text="@{card.customerName}"/>
                         <ImageView
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
@@ -81,7 +87,8 @@
                             android:layout_centerVertical="true"
                             android:textColor="@color/ac_common_text_color_body"
                             android:textSize="@dimen/ac_common_text_size_body"
-                            android:text="Takano Yasuhiro"/>
+                            android:text="@{card.cardName}"
+                            custom:mName="cardName"/>
                     </RelativeLayout>
                     <View style="@style/cs_common_divider"/>
                     <RelativeLayout
@@ -94,7 +101,7 @@
                             android:layout_height="wrap_content"
                             android:textColor="@color/ac_common_text_color_title"
                             android:textSize="@dimen/ac_common_text_size_title"
-                            android:text="@string/ac_name"/>
+                            android:text="@string/ac_tel"/>
                         <trente.asia.android.view.ChiaseEditText
                             android:layout_below="@+id/tel_title"
                             android:layout_width="match_parent"
@@ -102,7 +109,8 @@
                             android:layout_centerVertical="true"
                             android:textColor="@color/ac_common_text_color_body"
                             android:textSize="@dimen/ac_common_text_size_body"
-                            android:text="Takano Yasuhiro"/>
+                            android:text="@{card.cardTel}"
+                            custom:mName="cardTel"/>
                     </RelativeLayout>
                     <View style="@style/cs_common_divider"/>
                     <RelativeLayout
@@ -123,7 +131,8 @@
                             android:layout_centerVertical="true"
                             android:textColor="@color/ac_common_text_color_body"
                             android:textSize="@dimen/ac_common_text_size_body"
-                            android:text="takano-yasuhiro@trente.asia"/>
+                            android:text="@{card.cardEmail}"
+                            custom:mName="cardEmail"/>
                     </RelativeLayout>
                     <View style="@style/cs_common_divider"/>
                     <RelativeLayout
@@ -144,7 +153,8 @@
                             android:layout_centerVertical="true"
                             android:textColor="@color/ac_common_text_color_body"
                             android:textSize="@dimen/ac_common_text_size_body"
-                            android:text="*Some note is here*"/>
+                            android:text="@{card.cardNote}"
+                            custom:mName="cardNote"/>
                     </RelativeLayout>
                 </LinearLayout>
             </ScrollView>

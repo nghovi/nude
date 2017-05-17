@@ -2,7 +2,9 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-
+        <variable
+            name="card"
+            type="trente.asia.addresscard.services.business.model.CardModel"/>
     </data>
 
     <RelativeLayout
@@ -13,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ac_icon_card"
-            android:text="User_001"
+            android:text="@{card.cardName}"
             style="@style/ac_btn_delete_customer_edit"
             android:drawablePadding="@dimen/ac_text_padding"/>
 
@@ -43,7 +45,7 @@
             android:drawableEnd="@drawable/ac_icon_mail"
             android:gravity="center_vertical"
             android:padding="@dimen/ac_text_padding"
-            android:text="takano@gmail.com" />
+            android:text="@{card.cardEmail}" />
 
         <View
             android:id="@+id/divider2"
@@ -63,7 +65,7 @@
             android:drawableEnd="@drawable/ac_icon_phone"
             android:gravity="center_vertical"
             android:padding="@dimen/ac_text_padding"
-            android:text="1234567" />
+            android:text="@{card.cardTel}" />
 
         <View
             android:id="@+id/divider3"
@@ -81,7 +83,7 @@
             android:background="@android:color/white"
             android:maxLines="3"
             android:padding="@dimen/ac_text_padding"
-            android:text="This is note \n abasdfkjafldafd" />
+            android:text="@{card.cardNote}" />
 
 
     </RelativeLayout>

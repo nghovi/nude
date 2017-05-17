@@ -3,6 +3,8 @@ package trente.asia.addresscard.commons.fragments;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -28,6 +30,14 @@ public abstract class AbstractAddressCardFragment extends WelfareFragment implem
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		host = BuildConfig.HOST;
+	}
+
+	public void gotoFragment(Fragment fragment, String tag) {
+		FragmentManager fragmentManager = getFragmentManager();
+		FragmentTransaction transaction = fragmentManager.beginTransaction();
+		transaction.replace(R.id.ipt_id_body, fragment);
+		transaction.addToBackStack(tag);
+		transaction.commit();
 	}
 
 	@Override

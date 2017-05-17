@@ -1,13 +1,18 @@
 package trente.asia.addresscard.services.business.model;
 
+import java.util.List;
+
 /**
  * Created by tien on 5/8/2017.
  */
 
 public class CategoryModel {
-    public String name;
+    public      String                      categoryName;
+    public      String                      categoryNote;
+    public      List<CustomerModel>         customers;
+    public      int                         key;
 
-    CategoryModel(String name) {
-        this.name = name;
+    public String getCustomerCount() {
+        return customers.size() + "";
     }
 }

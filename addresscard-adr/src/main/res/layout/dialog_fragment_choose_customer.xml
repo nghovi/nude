@@ -21,13 +21,16 @@
             android:padding="@dimen/ac_common_field_padding"
             android:text="@string/ac_new_customer_title"/>
         <LinearLayout
+            android:id="@+id/lnr_new_customer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <trente.asia.android.view.ChiaseEditText
+                android:id="@+id/edt_new_customer"
                 android:layout_width="0dp"
                 android:layout_weight="3"
                 android:layout_height="50dp" />
             <ImageView
+                android:id="@+id/btn_new_customer"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:padding="7dp"

@@ -35,6 +35,8 @@ public class CardModel extends BaseObservable{
     public              String                  lastUpdateDate;
     @JsonField
     public              int                     key;
+    @JsonField
+    public              String                  cardNote;
 
     public              boolean                 background;
 

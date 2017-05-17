@@ -37,4 +37,6 @@
     <string name="ac_customer_list_title">Customer list</string>
 
     <string name="ac_update_by">Update by %d</string>
+    <string name="ac_ungroup">Ungroup</string>
+    <string name="ac_delete">Delete</string>
 </resources>

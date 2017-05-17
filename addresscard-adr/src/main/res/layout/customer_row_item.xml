@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
-
+        <variable
+            name="customer"
+            type="trente.asia.addresscard.services.business.model.CustomerModel"/>
     </data>
     <RelativeLayout
         android:layout_width="match_parent"
@@ -10,7 +12,8 @@
         <ImageView
             android:id="@+id/left_icon"
             style="@style/ac_icon_left"
-            android:src="@drawable/test_vn_airline"/>
+            android:src="@drawable/test_vn_airline"
+            android:padding="@dimen/ac_image_padding"/>
 
         <TextView
             android:id="@+id/customer_name"
@@ -19,10 +22,11 @@
             android:layout_marginStart="@dimen/ac_text_margin"
             android:layout_height="@dimen/row_body_height"
             android:layout_centerVertical="true"
+            android:gravity="center_vertical"
             android:maxLines="2"
             android:ellipsize="end"
             style="@style/ac_body_text"
-            android:text="Vietname Airline"/>
+            android:text="@{customer.customerName}"/>
 
         <LinearLayout
             android:id="@+id/images"
@@ -33,16 +37,16 @@
             android:orientation="horizontal"
             android:layout_centerVertical="true">
             <ImageView
+                android:id="@+id/card_1"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
-                android:src="@drawable/card"
                 android:padding="@dimen/ac_image_padding"/>
             <ImageView
+                android:id="@+id/card_2"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
-                android:src="@drawable/card"
                 android:padding="@dimen/ac_image_padding"/>
         </LinearLayout>
 
@@ -55,7 +59,7 @@
             android:layout_centerVertical="true"
             android:gravity="center_vertical"
             android:drawablePadding="5dp"
-            android:text="2"
+            android:text="@{customer.cardNumber}"
             android:layout_marginEnd="@dimen/ac_text_margin"
             android:drawableStart="@drawable/ac_icon_card"/>
 

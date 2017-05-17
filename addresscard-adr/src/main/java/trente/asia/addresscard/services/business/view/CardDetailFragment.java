@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.android.databinding.library.baseAdapters.BR;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -28,7 +29,7 @@ import trente.asia.addresscard.services.business.model.CardModel;
 public class CardDetailFragment extends AbstractAddressCardFragment {
     private FragmentCardDetailShowBinding binding;
     private int key;
-
+    private CardModel card;
     public static CardDetailFragment newInstance(int cardKey) {
         CardDetailFragment fragment = new CardDetailFragment();
         fragment.key = cardKey;
@@ -67,13 +68,11 @@ public class CardDetailFragment extends AbstractAddressCardFragment {
     @Override
     protected void successLoad(JSONObject response, String url) {
         super.successLoad(response, url);
-        CardModel card;
+
         card = CCJsonUtil.convertToModel(response.optString("card"), CardModel.class);
         Picasso.with(getContext()).load(BuildConfig.HOST + card.attachment.fileUrl).into(binding.cardImage);
-        binding.customerName.setText(card.customerName);
-        binding.cardName.setText(card.cardName);
-        binding.cardTel.setText(card.cardTel);
-        binding.cardEmail.setText(card.cardEmail);
+        binding.setVariable(BR.card, card);
+        binding.executePendingBindings();
         super.initHeader(R.drawable.ac_back_white, card.cardName, R.drawable.ac_action_edit);
     }
 
@@ -86,7 +85,7 @@ public class CardDetailFragment extends AbstractAddressCardFragment {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.img_id_header_right_icon:
-                gotoFragment(new CardEditFragment());
+                gotoFragment(CardEditFragment.newInstance(card));
                 break;
             default:
                 break;

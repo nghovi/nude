@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto">
     <data>
 
     </data>
@@ -28,6 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <LinearLayout
+                    android:id="@+id/lnr_content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
@@ -50,7 +52,8 @@
                             android:layout_alignParentBottom="true"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Trente Vietnam"/>
+                            android:text="Trente Vietnam"
+                            custom:mName="customer.customerName"/>
                     </RelativeLayout>
                     <View style="@style/cs_common_divider"/>
                     <TextView
@@ -60,7 +63,8 @@
                     <trente.asia.android.view.ChiaseEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Duy Tan, Cau Giay, Ha Noi"/>
+                        android:text="Duy Tan, Cau Giay, Ha Noi"
+                        custom:mName="customer.customerAddress"/>
                     <View style="@style/cs_common_divider"/>
                     <TextView
                         android:layout_width="match_parent"
@@ -69,7 +73,8 @@
                     <trente.asia.android.view.ChiaseEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="012345678"/>
+                        android:text="012345678"
+                        custom:mName="customer.customerTel"/>
                     <View style="@style/cs_common_divider"/>
                     <TextView
                         android:layout_width="match_parent"
@@ -78,7 +83,8 @@
                     <trente.asia.android.view.ChiaseEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="http://www.trente.asia"/>
+                        android:text="http://www.trente.asia"
+                        custom:mName="customer.customerUrl"/>
                     <View style="@style/cs_common_divider"/>
                     <TextView
                         android:layout_width="match_parent"
@@ -87,7 +93,8 @@
                     <trente.asia.android.view.ChiaseEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Tanaka Takayuki"/>
+                        android:text="Tanaka Takayuki"
+                        custom:mName="cardName"/>
                     <View style="@style/cs_common_divider"/>
                     <TextView
                         android:layout_width="match_parent"
@@ -96,7 +103,8 @@
                     <trente.asia.android.view.ChiaseEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="09876543"/>
+                        android:text="09876543"
+                        custom:mName="cardTel"/>
                     <View style="@style/cs_common_divider"/>
                     <TextView
                         android:layout_width="match_parent"
@@ -105,7 +113,8 @@
                     <trente.asia.android.view.ChiaseEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="tanaka-takayuki@trente.asia"/>
+                        android:text="tanaka-takayuki@trente.asia"
+                        custom:mName="cardEmail"/>
                     <View style="@style/cs_common_divider"/>
                     <TextView
                         android:layout_width="match_parent"
@@ -114,6 +123,7 @@
                     <trente.asia.android.view.ChiaseEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        custom:mName="cardNote"
                         android:text="OCR preset is nothing, just input"/>
                 </LinearLayout>
             </ScrollView>

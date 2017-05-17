@@ -2,14 +2,24 @@ package trente.asia.addresscard.services.business.view;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.json.JSONObject;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+
+import trente.asia.addresscard.ACConst;
 import trente.asia.addresscard.R;
 import trente.asia.addresscard.commons.fragments.AbstractAddressCardFragment;
 import trente.asia.addresscard.databinding.FragmentUploadAddressCardBinding;
+import trente.asia.android.view.util.CAObjectSerializeUtil;
 
 /**
  * Created by tien on 5/10/2017.
@@ -52,6 +62,21 @@ public class UploadAddressCardFragment extends AbstractAddressCardFragment {
     }
 
     private void uploadAddressCard() {
+        JSONObject jsonObject = CAObjectSerializeUtil.serializeObject(binding.lnrContent, null);
+        Map<String, File> fileMap = new HashMap<>();
+        String cardImagePath = Environment.getExternalStorageDirectory() + "/card.jpg";
+        String logoPath = Environment.getExternalStorageDirectory() + "/logo.jpg";
+        File cardImage = new File(cardImagePath);
+        File logo = new File(logoPath);
+        fileMap.put("card", cardImage);
+        fileMap.put("logo", logo);
+        Log.e("Upload Address Card", jsonObject.toString());
+        requestUpload(ACConst.AC_BUSINESS_CARD_NEW, jsonObject, fileMap, true);
+    }
+
+    @Override
+    protected void successUpload(JSONObject response, String url) {
+        super.successUpload(response, url);
         onClickBackBtn();
     }
 }

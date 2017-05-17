@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <variable
+            name="customer"
+            type="trente.asia.addresscard.services.business.model.CustomerModel"/>
     </data>
 
     <LinearLayout
@@ -39,7 +41,7 @@
                     <ImageView
                         android:id="@+id/customer_logo"
                         style="@style/ac_icon_left"
-                        android:src="@drawable/logo" />
+                        android:src="@drawable/default_logo" />
 
                     <TextView
                         android:id="@+id/name_title"
@@ -57,7 +59,7 @@
                         android:layout_below="@+id/name_title"
                         android:layout_marginStart="@dimen/general_margin"
                         android:layout_toEndOf="@id/customer_logo"
-                        android:text="Trente Vietnam" />
+                        android:text="@{customer.customerName}" />
                 </RelativeLayout>
 
                 <View style="@style/cs_common_divider" />
@@ -80,7 +82,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/tel_title"
-                        android:text="01234456789" />
+                        android:text="@{customer.customerTel}" />
                 </RelativeLayout>
 
                 <View style="@style/cs_common_divider" />
@@ -103,7 +105,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/address_title"
-                        android:text="Duy Tan, Cau giay, Ha noi" />
+                        android:text="@{customer.customerAddress}" />
                 </RelativeLayout>
 
                 <View style="@style/cs_common_divider" />
@@ -126,7 +128,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/url_title"
-                        android:text="http://www.trente.asia" />
+                        android:text="@{customer.customerUrl}" />
                 </RelativeLayout>
 
                 <View style="@style/cs_common_divider" />
@@ -150,11 +152,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/category_title"
                         android:layout_marginTop="@dimen/ac_text_margin"
-                        android:text="IT Company" />
-
-                    <ImageView
-                        style="@style/ac_icon_right"
-                        android:src="@drawable/ac_action_right" />
+                        android:text="@{customer.categoryName}" />
                 </RelativeLayout>
 
                 <View style="@style/cs_common_divider" />

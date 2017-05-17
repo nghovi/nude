@@ -8,9 +8,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.json.JSONObject;
+
+import java.util.List;
+
+import asia.chiase.core.util.CCJsonUtil;
+import trente.asia.addresscard.ACConst;
 import trente.asia.addresscard.R;
 import trente.asia.addresscard.commons.fragments.AbstractAddressCardFragment;
 import trente.asia.addresscard.databinding.FragmentCategoryListBinding;
+import trente.asia.addresscard.services.business.model.CategoryModel;
 import trente.asia.addresscard.services.business.presenter.CategoryAdapter;
 
 /**
@@ -34,9 +41,24 @@ public class CategoryListFragment extends AbstractAddressCardFragment
     }
 
     @Override
+    protected void initData() {
+        super.initData();
+        JSONObject jsonObject = new JSONObject();
+        requestLoad(ACConst.AC_BUSINESS_CATEGORY_LIST, jsonObject, true);
+    }
+
+    @Override
+    protected void successLoad(JSONObject response, String url) {
+        super.successLoad(response, url);
+        List<CategoryModel> categories = CCJsonUtil.convertToModelList(
+                response.optString("categories"), CategoryModel.class);
+        adapter.setCategories(categories);
+    }
+
+    @Override
     protected void initView() {
         super.initView();
-        super.initHeader(R.drawable.ac_back_white, "Category list", null);
+        super.initHeader(R.drawable.ac_back_white, getString(R.string.ac_category_list), null);
     }
 
     @Override
@@ -50,8 +72,8 @@ public class CategoryListFragment extends AbstractAddressCardFragment
     }
 
     @Override
-    public void onItemClick() {
-        gotoFragment(new CategoryDetailFragment());
+    public void onItemClick(int categoryId) {
+        gotoFragment(CategoryDetailFragment.newInstance(categoryId));
     }
 
 }

@@ -8,9 +8,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.json.JSONObject;
+
+import java.util.List;
+
+import asia.chiase.core.util.CCJsonUtil;
+import trente.asia.addresscard.ACConst;
 import trente.asia.addresscard.R;
 import trente.asia.addresscard.commons.fragments.AbstractAddressCardFragment;
 import trente.asia.addresscard.databinding.FragmentCustomerListBinding;
+import trente.asia.addresscard.services.business.model.CustomerModel;
 import trente.asia.addresscard.services.business.presenter.CustomerAdapter;
 
 /**
@@ -19,7 +26,9 @@ import trente.asia.addresscard.services.business.presenter.CustomerAdapter;
 
 public class CustomerListFragment extends AbstractAddressCardFragment
     implements CustomerAdapter.OnCustomerAdapterListener {
-    FragmentCustomerListBinding binding;
+
+    private     FragmentCustomerListBinding             binding;
+    private     CustomerAdapter                         adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -27,8 +36,9 @@ public class CustomerListFragment extends AbstractAddressCardFragment
             binding = DataBindingUtil.inflate(inflater, R.layout.fragment_customer_list,
                     container, false);
             mRootView = binding.getRoot();
+            adapter = new CustomerAdapter(this);
             binding.listCustomers.setLayoutManager(new LinearLayoutManager(getContext()));
-            binding.listCustomers.setAdapter(new CustomerAdapter(this));
+            binding.listCustomers.setAdapter(adapter);
         }
         return mRootView;
     }
@@ -37,6 +47,21 @@ public class CustomerListFragment extends AbstractAddressCardFragment
     protected void initView() {
         super.initView();
         super.initHeader(R.drawable.ac_back_white, "Customer list", null);
+    }
+
+    @Override
+    protected void initData() {
+        super.initData();
+        JSONObject jsonObject = new JSONObject();
+        requestLoad(ACConst.AC_BUSINESS_CUSTOMER_LIST, jsonObject, true);
+    }
+
+    @Override
+    protected void successLoad(JSONObject response, String url) {
+        super.successLoad(response, url);
+        List<CustomerModel> customers = CCJsonUtil.convertToModelList(
+                response.optString("customers"), CustomerModel.class);
+        adapter.updateList(customers);
     }
 
     @Override
@@ -50,7 +75,7 @@ public class CustomerListFragment extends AbstractAddressCardFragment
     }
 
     @Override
-    public void onItemClick() {
-        gotoFragment(new CustomerDetailFragment());
+    public void onItemClick(int customerId) {
+        gotoFragment(CustomerDetailFragment.newInstance(customerId));
     }
 }

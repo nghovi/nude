@@ -17,11 +17,13 @@ import trente.asia.addresscard.services.business.model.CustomerModel;
  */
 
 public class CustomerDialogAdapter extends RecyclerView.Adapter<ViewHolder>{
-    List<CustomerModel> list;
-    CustomerDialogItemBinding binding;
+    private List<CustomerModel>                 list;
+    private CustomerDialogItemBinding           binding;
+    private OnCustomerDialogListener            callback;
 
-    public CustomerDialogAdapter(List<CustomerModel> list) {
+    public CustomerDialogAdapter(List<CustomerModel> list, OnCustomerDialogListener listener) {
         this.list = list;
+        this.callback = listener;
     }
 
     @Override
@@ -36,10 +38,17 @@ public class CustomerDialogAdapter extends RecyclerView.Adapter<ViewHolder>{
         binding = (CustomerDialogItemBinding) holder.getBinding();
         binding.setVariable(BR.customer, customer);
         binding.executePendingBindings();
+        binding.getRoot().setOnClickListener((View v) -> {
+            callback.onSelectCustomer(customer);
+        });
     }
 
     @Override
     public int getItemCount() {
         return list.size();
+    }
+
+    public interface OnCustomerDialogListener {
+        public void onSelectCustomer(CustomerModel customer);
     }
 }

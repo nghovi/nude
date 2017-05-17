@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
-
+        <variable
+            name="card"
+            type="trente.asia.addresscard.services.business.model.CardModel"/>
     </data>
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,24 +18,26 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ac_icon_card"
-                android:text="User_001"
+                android:text="@{card.cardName}"
                 style="@style/ac_btn_delete_customer_edit"
                 android:drawablePadding="@dimen/ac_text_padding"/>
             <TextView
+                android:id="@+id/btn_ungroup"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ac_action_ungroup"
-                android:text="Ungroup"
+                android:text="@string/ac_ungroup"
                 style="@style/ac_btn_delete_customer_edit"
                 android:drawablePadding="@dimen/ac_text_padding"/>
             <TextView
+                android:id="@+id/btn_delete_card"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ac_action_trash"
                 style="@style/ac_btn_delete_customer_edit"
-                android:text="Delete"
+                android:text="@string/ac_delete"
                 android:drawablePadding="@dimen/ac_text_padding"/>
         </LinearLayout>
         <RelativeLayout
@@ -61,7 +65,7 @@
                 android:background="@android:color/white"
                 android:gravity="center_vertical"
                 android:padding="@dimen/ac_text_padding"
-                android:text="takano@gmail.com"/>
+                android:text="@{card.cardEmail}"/>
             <View
                 android:id="@+id/divider2"
                 android:layout_toEndOf="@+id/divider1"
@@ -79,7 +83,7 @@
                 android:drawableEnd="@drawable/ac_icon_phone"
                 android:gravity="center_vertical"
                 android:padding="@dimen/ac_text_padding"
-                android:text="1234567"/>
+                android:text="@{card.cardTel}"/>
             <View
                 android:id="@+id/divider3"
                 android:layout_width="match_parent"
@@ -95,7 +99,7 @@
                 android:maxLines="3"
                 style="@style/ac_body_text"
                 android:background="@android:color/white"
-                android:text="This is note \n abasdfkjafldafd"/>
+                android:text="@{card.cardNote}"/>
             <View
                 android:layout_below="@+id/note"
                 android:layout_width="match_parent"

@@ -8,13 +8,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import asia.chiase.core.util.CCJsonUtil;
+import trente.asia.addresscard.ACConst;
+import trente.asia.addresscard.BR;
 import trente.asia.addresscard.R;
 import trente.asia.addresscard.commons.fragments.AbstractAddressCardFragment;
 import trente.asia.addresscard.databinding.FragmentCategoryDetailBinding;
-import trente.asia.addresscard.services.business.model.CustomerModel;
+import trente.asia.addresscard.services.business.model.CategoryModel;
 import trente.asia.addresscard.services.business.presenter.CustomerCategoryAdapter;
 
 /**
@@ -22,25 +25,53 @@ import trente.asia.addresscard.services.business.presenter.CustomerCategoryAdapt
  */
 
 public class CategoryDetailFragment extends AbstractAddressCardFragment {
-    FragmentCategoryDetailBinding binding;
+    private     FragmentCategoryDetailBinding           binding;
+    private     int                                     categoryId;
+    private     CustomerCategoryAdapter                 adapter;
+    private     CategoryModel                           category;
+
+    public static CategoryDetailFragment newInstance(int categoryId) {
+        CategoryDetailFragment fragment = new CategoryDetailFragment();
+        fragment.categoryId = categoryId;
+        return fragment;
+    }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         if (mRootView == null) {
             binding = DataBindingUtil.inflate(inflater, R.layout.fragment_category_detail, container, false);
             mRootView = binding.getRoot();
-            List<CustomerModel> customers = new ArrayList<>();
-            customers.add(new CustomerModel("Trente", "https://cdn2.iconfinder.com/data/icons/business-flatcircle/512/travel-512.png"));
-            customers.add(new CustomerModel("Thai airline", "http://www.hotelvergelijk.com/images/flight-icon.png"));
-            customers.add(new CustomerModel("Vietnam airline",
-                    "http://www.ic.edu/Customized/Uploads/ByDate/2016/August_2016/August_21" +
-                            "st_2016/stock-vector-school-bus-icon-circle-icon-43110542851108.png"));
-            CustomerCategoryAdapter adapter = new CustomerCategoryAdapter(customers);
+            adapter = new CustomerCategoryAdapter();
             binding.listCustomers.setAdapter(adapter);
             binding.listCustomers.setLayoutManager(new LinearLayoutManager(getContext()));
             mRootView.findViewById(R.id.img_id_header_right_icon).setOnClickListener(this);
         }
         return mRootView;
+    }
+
+    @Override
+    protected void initData() {
+        super.initData();
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("key", categoryId);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        requestLoad(ACConst.AC_BUSINESS_CATEGORY_DETAIL, jsonObject, true);
+    }
+
+    @Override
+    protected void successLoad(JSONObject response, String url) {
+        super.successLoad(response, url);
+        if (ACConst.AC_BUSINESS_CATEGORY_DETAIL.equals(url)) {
+            category = CCJsonUtil.convertToModel(
+                    response.optString("category"), CategoryModel.class);
+            binding.setVariable(BR.category, category);
+            binding.executePendingBindings();
+            adapter.setCustomers(category.customers);
+        }
     }
 
     @Override
@@ -58,7 +89,7 @@ public class CategoryDetailFragment extends AbstractAddressCardFragment {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.img_id_header_right_icon:
-                gotoFragment(new CategoryEditFragment());
+                gotoFragment(CategoryEditFragment.newInstance(category));
                 break;
             default:
                 break;

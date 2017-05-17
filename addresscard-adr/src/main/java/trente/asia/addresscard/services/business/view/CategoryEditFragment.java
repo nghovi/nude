@@ -8,12 +8,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
+import com.android.databinding.library.baseAdapters.BR;
+
+import org.json.JSONObject;
+
 import java.util.List;
 
+import asia.chiase.core.util.CCJsonUtil;
+import trente.asia.addresscard.ACConst;
 import trente.asia.addresscard.R;
 import trente.asia.addresscard.commons.fragments.AbstractAddressCardFragment;
 import trente.asia.addresscard.databinding.FragmentCategoryEditBinding;
+import trente.asia.addresscard.services.business.model.CategoryModel;
 import trente.asia.addresscard.services.business.model.CustomerModel;
 import trente.asia.addresscard.services.business.presenter.CustomerCategoryEditAdapter;
 
@@ -22,21 +28,22 @@ import trente.asia.addresscard.services.business.presenter.CustomerCategoryEditA
  */
 
 public class CategoryEditFragment extends AbstractAddressCardFragment {
-    FragmentCategoryEditBinding binding;
+    private FragmentCategoryEditBinding binding;
+    private CategoryModel category;
+
+    public static CategoryEditFragment newInstance(CategoryModel category) {
+        CategoryEditFragment fragment = new CategoryEditFragment();
+        fragment.category = category;
+        return fragment;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (mRootView == null) {
             binding = DataBindingUtil.inflate(inflater, R.layout.fragment_category_edit, container, false);
             mRootView = binding.getRoot();
-            List<CustomerModel> customers = new ArrayList<>();
-            customers.add(new CustomerModel("Trente", "https://cdn2.iconfinder.com/data/icons/business-flatcircle/512/travel-512.png"));
-            customers.add(new CustomerModel("Thai airline", "http://www.hotelvergelijk.com/images/flight-icon.png"));
-            customers.add(new CustomerModel("Vietnam airline",
-                    "http://www.ic.edu/Customized/Uploads/ByDate/2016/August_2016/August_21" +
-                            "st_2016/stock-vector-school-bus-icon-circle-icon-43110542851108.png"));
-            CustomerCategoryEditAdapter adapter = new CustomerCategoryEditAdapter(customers);
-            binding.listCustomers.setAdapter(adapter);
+            binding.setVariable(BR.category, category);
+
             binding.listCustomers.setLayoutManager(new LinearLayoutManager(getContext()));
             mRootView.findViewById(R.id.img_id_header_right_icon).setOnClickListener(this);
         }
@@ -44,9 +51,28 @@ public class CategoryEditFragment extends AbstractAddressCardFragment {
     }
 
     @Override
+    protected void initData() {
+        super.initData();
+        JSONObject jsonObject = new JSONObject();
+        requestLoad(ACConst.AC_BUSINESS_CUSTOMER_LIST, jsonObject, true);
+    }
+
+    @Override
+    protected void successLoad(JSONObject response, String url) {
+        super.successLoad(response, url);
+        if (ACConst.AC_BUSINESS_CUSTOMER_LIST.equals(url)) {
+            List<CustomerModel> allCustomers = CCJsonUtil.convertToModelList(
+                    response.optString("customers"), CustomerModel.class);
+            CustomerCategoryEditAdapter adapter =
+                    new CustomerCategoryEditAdapter(category.customers, allCustomers);
+            binding.listCustomers.setAdapter(adapter);
+        }
+    }
+
+    @Override
     protected void initView() {
         super.initView();
-        super.initHeader(R.drawable.ac_back_white, "Airline", R.drawable.ac_action_done);
+        super.initHeader(R.drawable.ac_back_white, category.categoryName, R.drawable.ac_action_done);
     }
 
     @Override

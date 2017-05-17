@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -72,9 +73,8 @@ public class BusinessCardMainFragment extends AbstractAddressCardFragment implem
 
     @Override
     protected void successLoad(JSONObject response, String url) {
-        List<CardModel> cards;
-        cards = CCJsonUtil.convertToModelList(response.optString("cards"), CardModel.class);
-        log(cards.get(0).attachment.fileUrl);
+        List<CardModel> cards = CCJsonUtil.convertToModelList(
+                response.optString("cards"), CardModel.class);
         adapter = new CardAdapter(cards, this);
         binding.listCards.setAdapter(adapter);
     }
@@ -92,7 +92,7 @@ public class BusinessCardMainFragment extends AbstractAddressCardFragment implem
                 gotoFragment(new CategoryListFragment());
                 break;
             case R.id.row_customer:
-                gotoFragment(new CustomerListFragment());
+                gotoFragment(new CustomerListFragment(), "customer_list");
                 break;
             default:
                 break;
@@ -125,6 +125,17 @@ public class BusinessCardMainFragment extends AbstractAddressCardFragment implem
     }
 
     public void onBtnDeleteClick() {
+        String cardIds = "";
+        for (CardModel card : adapter.getListSelected()) {
+            cardIds += card.key + ",";
+        }
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("cardIds", cardIds);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        requestUpdate(ACConst.AC_BUSINESS_CARD_DELETE, jsonObject, true);
         adapter.deleteSelectedCards();
         showBtnCapture();
     }

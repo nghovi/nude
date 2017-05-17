@@ -60,7 +60,22 @@ public class ACConst {
 	/**
 	 * API URL
 	 */
+	public static final String AC_BUSINESS_CATEGORY_LIST					= "/api/ac/business/category/list";
+	public static final String AC_BUSINESS_CATEGORY_DETAIL					= "/api/ac/business/category/detail";
+	public static final String AC_BUSINESS_CATEGORY_UPDATE					= "/api/ac/business/category/update";
+
+	public static final String AC_BUSINESS_CUSTOMER_LIST					= "/api/ac/business/customer/list";
+	public static final String AC_BUSINESS_CUSTOMER_DETAIL					= "/api/ac/business/customer/detail";
+	public static final String AC_BUSINESS_CUSTOMER_UPDATE					= "/api/ac/business/customer/update";
+	public static final String AC_BUSINESS_CUSTOMER_DELETE					= "/api/ac/business/customer/delete";
+	public static final String AC_BUSINESS_CUSTOMER_CREATE					= "/api/ac/business/customer/create";
+
 	public static final String AC_BUSINESS_CARD_LIST 						= "/api/ac/business/card/list";
 	public static final String AC_BUSINESS_CARD_DETAIL 						= "/api/ac/business/card/detail";
+	public static final String AC_BUSINESS_CARD_NEW 						= "/api/ac/business/card/new";
 	public static final String AC_BUSINESS_CARD_UPDATE 						= "/api/ac/business/card/update";
+	public static final String AC_BUSINESS_CARD_DELETE 						= "/api/ac/business/card/delete";
+	public static final String AC_BUSINESS_CARD_UNGROUP 					= "/api/ac/business/card/ungroup";
+
+
 }
