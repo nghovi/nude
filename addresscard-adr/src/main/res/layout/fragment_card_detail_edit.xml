@@ -21,7 +21,6 @@
                 android:id="@+id/card_image"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:src="@drawable/card"
                 android:background="#c7c5c5"/>
             <TextView
 

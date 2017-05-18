@@ -32,7 +32,7 @@
                 android:maxLines="1"
                 android:paddingTop="@dimen/margin_5dp"
                 android:text="@string/menu_card_title"
-                android:textColor="@color/core_gray"/>
+                android:textColor="@color/ac_footer_color"/>
         </LinearLayout>
 
         <LinearLayout
@@ -56,7 +56,7 @@
                 android:maxLines="1"
                 android:paddingTop="@dimen/margin_5dp"
                 android:text="@string/menu_company_title"
-                android:textColor="@color/core_gray"/>
+                android:textColor="@color/ac_footer_color"/>
         </LinearLayout>
 
         <LinearLayout
@@ -80,7 +80,7 @@
                 android:maxLines="1"
                 android:paddingTop="@dimen/margin_5dp"
                 android:text="@string/menu_setting_title"
-                android:textColor="@color/core_gray"/>
+                android:textColor="@color/ac_footer_color"/>
         </LinearLayout>
     </LinearLayout>
 

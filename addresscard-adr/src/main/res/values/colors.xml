@@ -7,8 +7,8 @@
     <color name="btn_camera_background">#808080</color>
     <color name="ac_common_background">#cccccc</color>
 
-    <color name="wf_app_color_base">#b5ac84</color>
-    <color name="wf_app_color_base_50">#80b5ac84</color>
+    <color name="wf_app_color_base">#808080</color>
+    <color name="wf_app_color_base_50">#80808080</color>
 
     <color name="wf_login_background_color">#fbf8f1</color>
     <color name="wf_app_button_color_off">#808c8464</color>
@@ -30,4 +30,5 @@
     <color name="ac_common_text_color_body">#000000</color>
 
     <color name="ac_category_title_background">#8b8989</color>
+    <color name="ac_footer_color">#80ffffff</color>
 </resources>
