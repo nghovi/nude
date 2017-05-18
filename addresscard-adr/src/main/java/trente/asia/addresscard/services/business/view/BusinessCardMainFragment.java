@@ -1,7 +1,14 @@
 package trente.asia.addresscard.services.business.view;
 
+import android.app.Activity;
+import android.content.ContentValues;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.util.Log;
@@ -12,6 +19,7 @@ import android.view.ViewGroup;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,8 +36,9 @@ import trente.asia.addresscard.services.business.presenter.CardAdapter;
  */
 
 public class BusinessCardMainFragment extends AbstractAddressCardFragment implements CardAdapter.OnItemListener {
-    FragmentBusinessCardMainBinding binding;
-    CardAdapter adapter;
+    private FragmentBusinessCardMainBinding binding;
+    private CardAdapter adapter;
+    private Uri photoUri;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -86,7 +95,7 @@ public class BusinessCardMainFragment extends AbstractAddressCardFragment implem
                 onBtnDeleteClick();
                 break;
             case R.id.btn_capture:
-                gotoFragment(new UploadAddressCardFragment());
+                takeCapture();
                 break;
             case R.id.row_category:
                 gotoFragment(new CategoryListFragment());
@@ -122,6 +131,32 @@ public class BusinessCardMainFragment extends AbstractAddressCardFragment implem
     public void showBtnCapture() {
         binding.btnDelete.setVisibility(View.GONE);
         binding.btnCapture.setVisibility(View.VISIBLE);
+    }
+
+    private void takeCapture() {
+        ContentValues values = new ContentValues();
+        photoUri = getActivity().getContentResolver().insert(
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+        startActivityForResult(intent, ACConst.AC_REQUEST_CODE_TAKE_CAPTURE);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == ACConst.AC_REQUEST_CODE_TAKE_CAPTURE &&
+                resultCode == Activity.RESULT_OK) {
+            Bitmap cardBitmap = null;
+            try {
+                cardBitmap = MediaStore.Images.Media.getBitmap(
+                        getActivity().getContentResolver(), photoUri);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Bitmap logoBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.logo);
+            gotoFragment(UploadAddressCardFragment.newInstance(cardBitmap, logoBitmap));
+        }
     }
 
     public void onBtnDeleteClick() {

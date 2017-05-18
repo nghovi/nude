@@ -77,5 +77,12 @@ public class ACConst {
 	public static final String AC_BUSINESS_CARD_DELETE 						= "/api/ac/business/card/delete";
 	public static final String AC_BUSINESS_CARD_UNGROUP 					= "/api/ac/business/card/ungroup";
 
+	public static final String AC_BUSINESS_COMMENT_LIST 					= "/api/ac/business/comment/list";
+	public static final String AC_BUSINESS_COMMENT_UPDATE 					= "/api/ac/business/comment/update";
+	public static final String AC_BUSINESS_COMMENT_DELETE 					= "/api/ac/business/comment/delete";
 
+	/**
+	 * AC Constants
+	 */
+	public static final int AC_REQUEST_CODE_TAKE_CAPTURE 					= 1;
 }

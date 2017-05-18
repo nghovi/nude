@@ -4,12 +4,14 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.databinding.library.baseAdapters.BR;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
@@ -21,15 +23,16 @@ import trente.asia.addresscard.commons.fragments.AbstractAddressCardFragment;
 import trente.asia.addresscard.databinding.FragmentCategoryEditBinding;
 import trente.asia.addresscard.services.business.model.CategoryModel;
 import trente.asia.addresscard.services.business.model.CustomerModel;
-import trente.asia.addresscard.services.business.presenter.CustomerCategoryEditAdapter;
+import trente.asia.addresscard.services.business.presenter.CategoryEditCustomerAdapter;
 
 /**
  * Created by tien on 5/11/2017.
  */
 
 public class CategoryEditFragment extends AbstractAddressCardFragment {
-    private FragmentCategoryEditBinding binding;
-    private CategoryModel category;
+    private FragmentCategoryEditBinding             binding;
+    private CategoryModel                           category;
+    private CategoryEditCustomerAdapter             adapter;
 
     public static CategoryEditFragment newInstance(CategoryModel category) {
         CategoryEditFragment fragment = new CategoryEditFragment();
@@ -63,9 +66,9 @@ public class CategoryEditFragment extends AbstractAddressCardFragment {
         if (ACConst.AC_BUSINESS_CUSTOMER_LIST.equals(url)) {
             List<CustomerModel> allCustomers = CCJsonUtil.convertToModelList(
                     response.optString("customers"), CustomerModel.class);
-            CustomerCategoryEditAdapter adapter =
-                    new CustomerCategoryEditAdapter(category.customers, allCustomers);
+            adapter = new CategoryEditCustomerAdapter(category.customers, allCustomers);
             binding.listCustomers.setAdapter(adapter);
+            log("Customer number: " + allCustomers.size());
         }
     }
 
@@ -92,6 +95,27 @@ public class CategoryEditFragment extends AbstractAddressCardFragment {
     }
 
     private void finishEditCategory() {
-        onClickBackBtn();
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("customerIds", adapter.getCustomerIds());
+            jsonObject.put("key", category.key);
+            jsonObject.put("categoryName", category.categoryName);
+            jsonObject.put("categoryNote", category.categoryNote);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        requestUpdate(ACConst.AC_BUSINESS_CATEGORY_UPDATE, jsonObject, true);
+    }
+
+    @Override
+    protected void successUpdate(JSONObject response, String url) {
+        super.successUpdate(response, url);
+        if (ACConst.AC_BUSINESS_CATEGORY_UPDATE.equals(url)) {
+            onClickBackBtn();
+        }
+    }
+
+    private void log(String msg) {
+        Log.e("CategoryEditFragment", msg);
     }
 }

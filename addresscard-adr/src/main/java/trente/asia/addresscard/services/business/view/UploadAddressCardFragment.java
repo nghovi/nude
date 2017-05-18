@@ -1,13 +1,16 @@
 package trente.asia.addresscard.services.business.view;
 
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
 
@@ -18,6 +21,7 @@ import java.util.Map;
 import trente.asia.addresscard.ACConst;
 import trente.asia.addresscard.R;
 import trente.asia.addresscard.commons.fragments.AbstractAddressCardFragment;
+import trente.asia.addresscard.commons.utils.Utils;
 import trente.asia.addresscard.databinding.FragmentUploadAddressCardBinding;
 import trente.asia.android.view.util.CAObjectSerializeUtil;
 
@@ -26,7 +30,19 @@ import trente.asia.android.view.util.CAObjectSerializeUtil;
  */
 
 public class UploadAddressCardFragment extends AbstractAddressCardFragment {
-    FragmentUploadAddressCardBinding binding;
+    private FragmentUploadAddressCardBinding    binding;
+    private Bitmap                              cardBitmap;
+    private Bitmap                              logoBitmap;
+    private String                              cardPath;
+    private String                              logoPath;
+
+    public static UploadAddressCardFragment newInstance(Bitmap cardBitmap, Bitmap logoBitmap) {
+        UploadAddressCardFragment fragment = new UploadAddressCardFragment();
+        fragment.cardBitmap = cardBitmap;
+        fragment.logoBitmap = logoBitmap;
+        return fragment;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -35,8 +51,32 @@ public class UploadAddressCardFragment extends AbstractAddressCardFragment {
                     R.layout.fragment_upload_address_card, container, false);
             mRootView = binding.getRoot();
             mRootView.findViewById(R.id.img_id_header_right_icon).setOnClickListener(this);
+
         }
         return mRootView;
+    }
+
+    @Override
+    protected void initData() {
+        super.initData();
+        new LoadImageTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    }
+
+    private class LoadImageTask extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... voids) {
+            String folderCamera = Utils.createFolder("Camera");
+            cardPath = Utils.copyImageToStorage(folderCamera, System.currentTimeMillis() + ".png", cardBitmap, 5);
+            logoPath = Utils.copyImageToStorage(folderCamera, "logo" + System.currentTimeMillis() + ".png", logoBitmap, 1);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            Picasso.with(getContext()).load(new File(cardPath)).into(binding.cardImage);
+            Picasso.with(getContext()).load(new File(logoPath)).into(binding.customerLogo);
+        }
     }
 
     @Override
@@ -64,9 +104,7 @@ public class UploadAddressCardFragment extends AbstractAddressCardFragment {
     private void uploadAddressCard() {
         JSONObject jsonObject = CAObjectSerializeUtil.serializeObject(binding.lnrContent, null);
         Map<String, File> fileMap = new HashMap<>();
-        String cardImagePath = Environment.getExternalStorageDirectory() + "/card.jpg";
-        String logoPath = Environment.getExternalStorageDirectory() + "/logo.jpg";
-        File cardImage = new File(cardImagePath);
+        File cardImage = new File(cardPath);
         File logo = new File(logoPath);
         fileMap.put("card", cardImage);
         fileMap.put("logo", logo);
@@ -78,5 +116,9 @@ public class UploadAddressCardFragment extends AbstractAddressCardFragment {
     protected void successUpload(JSONObject response, String url) {
         super.successUpload(response, url);
         onClickBackBtn();
+    }
+
+    private void log(String msg) {
+        Log.e("UploadAddressCard", msg);
     }
 }

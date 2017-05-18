@@ -5,15 +5,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import trente.asia.addresscard.BR;
 import trente.asia.addresscard.R;
 import trente.asia.addresscard.databinding.CommentItemCustomerDetailBinding;
+import trente.asia.addresscard.services.business.model.CommentModel;
 
 /**
  * Created by tien on 5/12/2017.
  */
 
 public class CustomerCommentAdapter extends RecyclerView.Adapter<ViewHolder> {
-    CommentItemCustomerDetailBinding binding;
+    private List<CommentModel>                      comments = new ArrayList<>();
+    private OnCustomerCommentAdapterListener        callback;
+
+    public CustomerCommentAdapter(OnCustomerCommentAdapterListener listener) {
+        this.callback = listener;
+    }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -24,11 +34,29 @@ public class CustomerCommentAdapter extends RecyclerView.Adapter<ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        binding = (CommentItemCustomerDetailBinding) holder.getBinding();
+        CommentItemCustomerDetailBinding binding =
+                (CommentItemCustomerDetailBinding) holder.getBinding();
+        CommentModel comment = comments.get(position);
+        binding.setVariable(BR.comment, comment);
+        binding.executePendingBindings();
+        binding.btnDeleteComment.setOnClickListener((View v) -> {
+            callback.deleteComment(comment.key);
+            comments.remove(comment);
+            notifyDataSetChanged();
+        });
     }
 
     @Override
     public int getItemCount() {
-        return 3;
+        return comments.size();
+    }
+
+    public void setComments(List<CommentModel> comments) {
+        this.comments = comments;
+        notifyDataSetChanged();
+    }
+
+    public interface OnCustomerCommentAdapterListener {
+        void deleteComment(int commentId);
     }
 }

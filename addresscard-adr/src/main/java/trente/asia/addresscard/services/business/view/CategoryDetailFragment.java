@@ -18,7 +18,7 @@ import trente.asia.addresscard.R;
 import trente.asia.addresscard.commons.fragments.AbstractAddressCardFragment;
 import trente.asia.addresscard.databinding.FragmentCategoryDetailBinding;
 import trente.asia.addresscard.services.business.model.CategoryModel;
-import trente.asia.addresscard.services.business.presenter.CustomerCategoryAdapter;
+import trente.asia.addresscard.services.business.presenter.CategoryCustomerAdapter;
 
 /**
  * Created by tien on 5/11/2017.
@@ -27,7 +27,7 @@ import trente.asia.addresscard.services.business.presenter.CustomerCategoryAdapt
 public class CategoryDetailFragment extends AbstractAddressCardFragment {
     private     FragmentCategoryDetailBinding           binding;
     private     int                                     categoryId;
-    private     CustomerCategoryAdapter                 adapter;
+    private CategoryCustomerAdapter adapter;
     private     CategoryModel                           category;
 
     public static CategoryDetailFragment newInstance(int categoryId) {
@@ -42,7 +42,7 @@ public class CategoryDetailFragment extends AbstractAddressCardFragment {
         if (mRootView == null) {
             binding = DataBindingUtil.inflate(inflater, R.layout.fragment_category_detail, container, false);
             mRootView = binding.getRoot();
-            adapter = new CustomerCategoryAdapter();
+            adapter = new CategoryCustomerAdapter();
             binding.listCustomers.setAdapter(adapter);
             binding.listCustomers.setLayoutManager(new LinearLayoutManager(getContext()));
             mRootView.findViewById(R.id.img_id_header_right_icon).setOnClickListener(this);

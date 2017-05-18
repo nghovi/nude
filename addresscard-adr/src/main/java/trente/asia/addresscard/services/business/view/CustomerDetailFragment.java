@@ -106,6 +106,6 @@ public class CustomerDetailFragment extends AbstractAddressCardFragment {
     }
 
     private void showCommentFragment() {
-        gotoFragment(new CustomerCommentFragment());
+        gotoFragment(CustomerCommentFragment.newInstance(customer));
     }
 }

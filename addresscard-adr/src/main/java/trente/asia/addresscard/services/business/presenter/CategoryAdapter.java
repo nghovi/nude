@@ -26,7 +26,6 @@ import trente.asia.welfare.adr.utils.WfPicassoHelper;
 
 public class CategoryAdapter extends RecyclerView.Adapter<ViewHolder> {
     private OnCategoryAdapterListener               callback;
-    private CategoryItemBinding                     binding;
     private List<CategoryModel>                     categories;
     private Context                                 context;
 
@@ -45,7 +44,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         CategoryModel category = categories.get(position);
-        binding = (CategoryItemBinding) holder.getBinding();
+        CategoryItemBinding binding = (CategoryItemBinding) holder.getBinding();
         binding.setVariable(BR.category, category);
         binding.executePendingBindings();
         loadImage(binding.customer0, 0, category.customers);

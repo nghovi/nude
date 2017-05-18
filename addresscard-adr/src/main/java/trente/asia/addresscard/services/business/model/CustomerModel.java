@@ -21,4 +21,8 @@ public class CustomerModel {
     public String getCardNumber() {
         return cards.size() + "";
     }
+
+    public int getKey() {
+        return key;
+    }
 }

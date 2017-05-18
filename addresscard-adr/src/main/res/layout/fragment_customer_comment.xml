@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto">
     <data>
 
     </data>
@@ -15,17 +16,21 @@
             android:orientation="vertical"
             android:background="@color/ac_common_background">
             <LinearLayout
+                android:id="@+id/lnr_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/general_margin"
                 android:orientation="vertical"
                 android:background="@android:color/white">
                 <trente.asia.android.view.ChiaseEditText
+                    android:id="@+id/edt_message"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:layout_margin="@dimen/general_margin"
-                    android:background="@drawable/round_edt_frame"/>
+                    android:background="@drawable/round_edt_frame"
+                    custom:mName="commentMessage"/>
                 <Button
+                    android:id="@+id/btn_add_comment"
                     android:layout_width="270dp"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/ac_button_padding"

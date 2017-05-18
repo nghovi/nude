@@ -21,12 +21,12 @@ import trente.asia.welfare.adr.utils.WfPicassoHelper;
  * Created by tien on 5/11/2017.
  */
 
-public class CustomerCategoryAdapter extends RecyclerView.Adapter<ViewHolder> {
+public class CategoryCustomerAdapter extends RecyclerView.Adapter<ViewHolder> {
     private List<CustomerModel> customers;
     private CustomerCategoryItemBinding binding;
     private Context context;
 
-    public CustomerCategoryAdapter() {
+    public CategoryCustomerAdapter() {
         this.customers = new ArrayList<>();
     }
 

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
-
+        <variable
+            name="comment"
+            type="trente.asia.addresscard.services.business.model.CommentModel"/>
     </data>
     <RelativeLayout
         android:layout_width="match_parent"
@@ -10,8 +12,19 @@
             android:id="@+id/time_created"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="2017/04/21 10:25"
+            android:text="@{comment.date}"
             style="@style/ac_btn_delete_customer_edit"/>
+        <TextView
+            android:id="@+id/btn_delete_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/ac_btn_delete_customer_edit"
+            android:drawableStart="@drawable/ac_action_trash"
+            android:text="@string/ac_delete"
+            android:layout_alignParentEnd="true"
+            android:drawablePadding="@dimen/ac_text_padding"
+            android:textColor="@android:color/holo_red_dark"
+            android:layout_marginEnd="@dimen/ac_text_margin"/>
         <TextView
             android:id="@+id/user_title"
             android:layout_below="@+id/time_created"
@@ -31,7 +44,7 @@
             android:background="@android:color/white"
             android:padding="@dimen/ac_text_padding"
             android:gravity="end"
-            android:text="User01"/>
+            android:text="@{comment.commentUserName}"/>
         <View
             android:id="@+id/divider_0"
             android:layout_below="@+id/user_title"
@@ -44,6 +57,6 @@
             android:padding="@dimen/ac_text_padding"
             style="@style/ac_body_text"
             android:background="@android:color/white"
-            android:text="asdfasjfalsf\najsflkasjfas\njasfjsdalkjf"/>
+            android:text="@{comment.commentMessage}"/>
     </RelativeLayout>
 </layout>

@@ -5,30 +5,32 @@
             name="customer"
             type="trente.asia.addresscard.services.business.model.CustomerModel"/>
     </data>
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_height="@dimen/row_height"
         android:padding="@dimen/ac_common_field_padding">
         <ImageView
             android:id="@+id/customer_logo"
-            android:layout_width="@dimen/ac_common_field_icon_dimen"
-            android:layout_height="@dimen/ac_common_field_icon_dimen"
+            style="@style/ac_icon_left"
             android:padding="@dimen/ac_common_field_padding"
             android:src="@drawable/test_thai_airline"/>
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="4"
-            android:textSize="@dimen/ac_common_text_size_body"
+            android:id="@+id/customer_name"
+            android:layout_toEndOf="@id/customer_logo"
+            android:layout_height="@dimen/row_body_height"
+            android:layout_width="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_centerVertical="true"
+            style="@style/ac_body_text"
             android:layout_marginStart="15dp"
-            android:textColor="@color/ac_common_text_color_body"
             android:text="@{customer.customerName}"/>
         <ImageView
             android:id="@+id/image_checkbox"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ac_action_check"/>
-    </LinearLayout>
+            style="@style/ac_icon_right"
+            android:src="@drawable/ac_action_check"
+            android:visibility="invisible"/>
+        <View
+            style="@style/cs_common_divider"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
 </layout>
