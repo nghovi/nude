@@ -15,7 +15,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="trente.asia.addresscard.commons.activities.AddressCardActivity"/>
+            android:name="trente.asia.addresscard.commons.activities.AddressCardActivity"
+            android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".commons.activities.CameraPhotoPreviewAccountActivity"/>
     </application>
 

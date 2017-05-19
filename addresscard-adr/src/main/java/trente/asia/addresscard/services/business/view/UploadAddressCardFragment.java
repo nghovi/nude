@@ -51,7 +51,6 @@ public class UploadAddressCardFragment extends AbstractAddressCardFragment {
                     R.layout.fragment_upload_address_card, container, false);
             mRootView = binding.getRoot();
             mRootView.findViewById(R.id.img_id_header_right_icon).setOnClickListener(this);
-
         }
         return mRootView;
     }

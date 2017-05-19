@@ -49,7 +49,7 @@ public class CardAdapter extends RecyclerView.Adapter<ViewHolder> {
         Picasso.with(context)
                 .load(BuildConfig.HOST + card.attachment.fileUrl).into(binding.cardImage);
         binding.lastUpdateUser.setText(
-                String.format(context.getString(R.string.ac_update_by), card.lastUpdateUser));
+                String.format(context.getString(R.string.ac_update_by), card.lastUpdateUserName));
         View view = binding.getRoot();
         view.setOnLongClickListener((View v) -> {
                 card.setBackground(true);

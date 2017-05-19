@@ -30,7 +30,7 @@ public class CardModel extends BaseObservable{
     @JsonField
     public              int                     ownerId;
     @JsonField
-    public              int                     lastUpdateUser;
+    public              String                  lastUpdateUserName;
     @JsonField
     public              String                  lastUpdateDate;
     @JsonField
