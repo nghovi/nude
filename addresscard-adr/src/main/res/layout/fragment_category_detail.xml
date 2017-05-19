@@ -38,7 +38,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@{category.categoryName}"
+                    android:text="@{category.categoryName, default=`vnexporess`}"
                     android:textSize="@dimen/ac_common_text_size_body"
                     android:textColor="@color/ac_common_text_color_body"
                     android:padding="@dimen/ac_category_padding"/>
@@ -50,6 +50,7 @@
                 android:padding="@dimen/ac_common_field_padding"
                 android:orientation="vertical">
                 <TextView
+                    android:id="@+id/test_nhv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/ac_category_detail"
