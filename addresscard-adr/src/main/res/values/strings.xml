@@ -39,4 +39,5 @@
     <string name="ac_update_by">Update by %s</string>
     <string name="ac_ungroup">Ungroup</string>
     <string name="ac_delete">Delete</string>
+    <string name="shop_cards_title">Shop cards</string>
 </resources>

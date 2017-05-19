@@ -8,7 +8,7 @@ import trente.asia.welfare.adr.utils.WelfareUtil;
  * @author TrungND
  */
 
-public class ACConst {
+public class ACConst{
 
 	public static final String	APP_FOLDER									= "Welfare/AddressCard";
 
@@ -60,29 +60,35 @@ public class ACConst {
 	/**
 	 * API URL
 	 */
-	public static final String AC_BUSINESS_CATEGORY_LIST					= "/api/ac/business/category/list";
-	public static final String AC_BUSINESS_CATEGORY_DETAIL					= "/api/ac/business/category/detail";
-	public static final String AC_BUSINESS_CATEGORY_UPDATE					= "/api/ac/business/category/update";
+	public static final String	AC_BUSINESS_CATEGORY_LIST					= "/api/ac/business/category/list";
+	public static final String	AC_BUSINESS_CATEGORY_DETAIL					= "/api/ac/business/category/detail";
+	public static final String	AC_BUSINESS_CATEGORY_UPDATE					= "/api/ac/business/category/update";
 
-	public static final String AC_BUSINESS_CUSTOMER_LIST					= "/api/ac/business/customer/list";
-	public static final String AC_BUSINESS_CUSTOMER_DETAIL					= "/api/ac/business/customer/detail";
-	public static final String AC_BUSINESS_CUSTOMER_UPDATE					= "/api/ac/business/customer/update";
-	public static final String AC_BUSINESS_CUSTOMER_DELETE					= "/api/ac/business/customer/delete";
-	public static final String AC_BUSINESS_CUSTOMER_CREATE					= "/api/ac/business/customer/create";
+	public static final String	AC_BUSINESS_CUSTOMER_LIST					= "/api/ac/business/customer/list";
+	public static final String	AC_BUSINESS_CUSTOMER_DETAIL					= "/api/ac/business/customer/detail";
+	public static final String	AC_BUSINESS_CUSTOMER_UPDATE					= "/api/ac/business/customer/update";
+	public static final String	AC_BUSINESS_CUSTOMER_DELETE					= "/api/ac/business/customer/delete";
+	public static final String	AC_BUSINESS_CUSTOMER_CREATE					= "/api/ac/business/customer/create";
 
-	public static final String AC_BUSINESS_CARD_LIST 						= "/api/ac/business/card/list";
-	public static final String AC_BUSINESS_CARD_DETAIL 						= "/api/ac/business/card/detail";
-	public static final String AC_BUSINESS_CARD_NEW 						= "/api/ac/business/card/new";
-	public static final String AC_BUSINESS_CARD_UPDATE 						= "/api/ac/business/card/update";
-	public static final String AC_BUSINESS_CARD_DELETE 						= "/api/ac/business/card/delete";
-	public static final String AC_BUSINESS_CARD_UNGROUP 					= "/api/ac/business/card/ungroup";
+	public static final String	AC_BUSINESS_CARD_LIST						= "/api/ac/business/card/list";
+	public static final String	AC_BUSINESS_CARD_DETAIL						= "/api/ac/business/card/detail";
+	public static final String	AC_BUSINESS_CARD_NEW						= "/api/ac/business/card/new";
+	public static final String	AC_BUSINESS_CARD_UPDATE						= "/api/ac/business/card/update";
+	public static final String	AC_BUSINESS_CARD_DELETE						= "/api/ac/business/card/delete";
+	public static final String	AC_BUSINESS_CARD_UNGROUP					= "/api/ac/business/card/ungroup";
 
-	public static final String AC_BUSINESS_COMMENT_LIST 					= "/api/ac/business/comment/list";
-	public static final String AC_BUSINESS_COMMENT_UPDATE 					= "/api/ac/business/comment/update";
-	public static final String AC_BUSINESS_COMMENT_DELETE 					= "/api/ac/business/comment/delete";
+	public static final String	AC_BUSINESS_COMMENT_LIST					= "/api/ac/business/comment/list";
+	public static final String	AC_BUSINESS_COMMENT_UPDATE					= "/api/ac/business/comment/update";
+	public static final String	AC_BUSINESS_COMMENT_DELETE					= "/api/ac/business/comment/delete";
+
+	public static final String	API_SHOP_CARD_LIST							= "/api/ac/shop/card/list";
+	public static final String	API_SHOP_CARD_DETAIL						= "/api/ac/shop/card/detail";
+	public static final String	API_SHOP_CARD_UPDATE						= "/api/ac/shop/card/update";
+	public static final String	API_SHOP_CARD_DELETE						= "/api/ac/shop/card/delete";
+	public static final String	API_SHOP_TAG_LIST							= "/api/ac/shop/tag/list";
 
 	/**
 	 * AC Constants
 	 */
-	public static final int AC_REQUEST_CODE_TAKE_CAPTURE 					= 1;
+	public static final int		AC_REQUEST_CODE_TAKE_CAPTURE				= 1;
 }

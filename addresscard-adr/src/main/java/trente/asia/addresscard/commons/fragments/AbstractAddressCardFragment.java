@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
 import trente.asia.addresscard.BuildConfig;
 import trente.asia.addresscard.R;
 import trente.asia.addresscard.services.business.view.BusinessCardMainFragment;
-import trente.asia.addresscard.services.others.CompanyFragment;
+import trente.asia.addresscard.services.shop.view.ShopCardsFragment;
 import trente.asia.addresscard.services.user.ACLoginFragment;
 import trente.asia.addresscard.setting.SettingFragment;
 import trente.asia.android.view.ChiaseImageView;
@@ -32,7 +32,7 @@ public abstract class AbstractAddressCardFragment extends WelfareFragment implem
 		host = BuildConfig.HOST;
 	}
 
-	public void gotoFragment(Fragment fragment, String tag) {
+	public void gotoFragment(Fragment fragment, String tag){
 		FragmentManager fragmentManager = getFragmentManager();
 		FragmentTransaction transaction = fragmentManager.beginTransaction();
 		transaction.replace(R.id.ipt_id_body, fragment);
@@ -69,8 +69,8 @@ public abstract class AbstractAddressCardFragment extends WelfareFragment implem
 					case R.id.lnr_view_footer_card:
 						onClickFooterItemCard();
 						break;
-					case R.id.lnr_view_footer_company:
-						onClickFooterItemCompany();
+					case R.id.lnr_view_footer_shop:
+						onClickFooterItemShop();
 						break;
 					case R.id.lnr_view_footer_setting:
 						onClickFooterItemSetting();
@@ -82,7 +82,7 @@ public abstract class AbstractAddressCardFragment extends WelfareFragment implem
 			}; // end listener
 
 			getView().findViewById(R.id.lnr_view_footer_card).setOnClickListener(listener);
-			getView().findViewById(R.id.lnr_view_footer_company).setOnClickListener(listener);
+			getView().findViewById(R.id.lnr_view_footer_shop).setOnClickListener(listener);
 			getView().findViewById(R.id.lnr_view_footer_setting).setOnClickListener(listener);
 			LinearLayout lnrFooter = (LinearLayout)getView().findViewById(footerItemId);
 			setSelectedFooterItem(lnrFooter);
@@ -108,9 +108,9 @@ public abstract class AbstractAddressCardFragment extends WelfareFragment implem
 		gotoFragment(new BusinessCardMainFragment());
 	}
 
-	public void onClickFooterItemCompany(){
+	public void onClickFooterItemShop(){
 		emptyBackStack();
-		gotoFragment(new CompanyFragment());
+		gotoFragment(new ShopCardsFragment());
 	}
 
 	public void onClickFooterItemSetting(){
