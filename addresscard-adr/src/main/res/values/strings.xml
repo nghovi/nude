@@ -40,4 +40,6 @@
     <string name="ac_ungroup">Ungroup</string>
     <string name="ac_delete">Delete</string>
     <string name="shop_cards_title">Shop cards</string>
+
+    <string name="test_string">0abcdefghm1abcdefghm2abcdefghm3abcdefghm4abcdefghm5abcdefghm6abcdefghm7abcdefghm8abcdefghm9abcdefghm</string>
 </resources>

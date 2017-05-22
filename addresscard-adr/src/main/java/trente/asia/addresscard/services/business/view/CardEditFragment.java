@@ -71,7 +71,7 @@ public class CardEditFragment extends AbstractAddressCardFragment
     @Override
     protected void initView() {
         super.initView();
-        super.initHeader(R.drawable.ac_back_white, "Takano Yasuhiro", R.drawable.ac_action_done);
+        super.initHeader(R.drawable.ac_back_white, card.cardName, R.drawable.ac_action_done);
     }
 
     @Override

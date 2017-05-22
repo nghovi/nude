@@ -21,7 +21,8 @@
                 android:id="@+id/card_image"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:background="#c7c5c5"/>
+                android:background="#c7c5c5"
+                android:padding="@dimen/ac_image_padding"/>
             <TextView
 
                 android:layout_width="match_parent"
