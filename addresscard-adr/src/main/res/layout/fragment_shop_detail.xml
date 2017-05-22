@@ -26,8 +26,7 @@
                 android:id="@+id/card_image"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:background="#c7c5c5"
-                android:padding="@dimen/ac_image_padding"/>
+                android:background="#c7c5c5" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -177,8 +176,7 @@
 
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:minHeight="@dimen/ac_upload_card_edt_height"
+                        android:layout_height="@dimen/ac_upload_card_edt_height"
                         android:padding="@dimen/ac_common_field_padding">
 
                         <TextView

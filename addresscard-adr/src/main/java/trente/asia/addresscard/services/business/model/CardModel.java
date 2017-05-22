@@ -11,7 +11,7 @@ import trente.asia.addresscard.BR;
 /**
  * Created by tien on 5/10/2017.
  */
-@JsonObject(fieldDetectionPolicy = JsonObject.FieldDetectionPolicy.NONPRIVATE_FIELDS)
+@JsonObject
 public class CardModel extends BaseObservable{
     @JsonField
     public              int                     customerId;

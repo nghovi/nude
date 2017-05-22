@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <include layout="@layout/view_common_header"/>
+        <include layout="@layout/ac_header"/>
         <LinearLayout
             android:id="@+id/lnr_content"
             android:layout_width="match_parent"

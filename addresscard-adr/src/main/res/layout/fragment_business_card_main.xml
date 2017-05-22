@@ -9,7 +9,7 @@
         android:orientation="vertical">
 
 
-        <include layout="@layout/view_common_header" />
+        <include layout="@layout/ac_header" />
 
         <RelativeLayout
             android:id="@+id/main_layout"

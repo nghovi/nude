@@ -23,6 +23,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bluelinelabs.logansquare.LoganSquare;
+
 import asia.chiase.core.util.CCJsonUtil;
 import trente.asia.addresscard.ACConst;
 import trente.asia.addresscard.R;
@@ -62,7 +64,7 @@ public class ShopCardsFragment extends AbstractAddressCardFragment implements Ca
 			binding.listCards.setLayoutManager(new GridLayoutManager(getContext(), 3));
 			binding.btnDelete.setOnClickListener(this);
 			binding.btnCapture.setOnClickListener(this);
-			binding.rowCategory.setOnClickListener(this);
+			binding.rltTags.setOnClickListener(this);
 //			binding.rowCustomer.setOnClickListener(this);
 			List<CardModel> cards = new ArrayList<>();
 			adapter = new CardAdapter(cards, this);
@@ -87,9 +89,15 @@ public class ShopCardsFragment extends AbstractAddressCardFragment implements Ca
 
 	@Override
 	protected void successLoad(JSONObject response, String url){
-		List<CardModel> cards = CCJsonUtil.convertToModelList(response.optString("cards"), CardModel.class);
-		adapter = new CardAdapter(cards, this);
-		binding.listCards.setAdapter(adapter);
+		List<CardModel> cards = null;
+		try {
+			cards = LoganSquare.parseList(response.optString("cards"), CardModel.class);
+			adapter = new CardAdapter(cards, this);
+			binding.setShopTags("Food, Vietnamee, Expensive");
+			binding.listCards.setAdapter(adapter);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -101,18 +109,21 @@ public class ShopCardsFragment extends AbstractAddressCardFragment implements Ca
 		case R.id.btn_capture:
 			takeCapture();
 			break;
-		case R.id.row_category:
-			gotoFragment(new CategoryListFragment());
-			break;
-		case R.id.row_customer:
-			gotoFragment(new CustomerListFragment(), "customer_list");
+		case R.id.rlt_tags:
+			gotoTagsFragment();
 			break;
 		default:
 			break;
 		}
 	}
 
-	@Override
+	//// TODO: 5/22/2017 shouldn't create each Tags Fragment?
+    private void gotoTagsFragment() {
+        TagsFragment tagsFragment = new TagsFragment();
+        gotoFragment(tagsFragment);
+    }
+
+    @Override
 	public void onItemClick(CardModel card){
 		gotoFragment(CardDetailFragment.newInstance(card.key));
 	}
