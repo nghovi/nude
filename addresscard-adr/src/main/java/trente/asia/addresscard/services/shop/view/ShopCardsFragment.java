@@ -7,6 +7,8 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.bluelinelabs.logansquare.LoganSquare;
+
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -23,9 +25,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.bluelinelabs.logansquare.LoganSquare;
-
-import asia.chiase.core.util.CCJsonUtil;
 import trente.asia.addresscard.ACConst;
 import trente.asia.addresscard.R;
 import trente.asia.addresscard.commons.fragments.AbstractAddressCardFragment;
@@ -33,8 +32,6 @@ import trente.asia.addresscard.databinding.FragmentShopCardsBinding;
 import trente.asia.addresscard.services.business.model.CardModel;
 import trente.asia.addresscard.services.business.presenter.CardAdapter;
 import trente.asia.addresscard.services.business.view.CardDetailFragment;
-import trente.asia.addresscard.services.business.view.CategoryListFragment;
-import trente.asia.addresscard.services.business.view.CustomerListFragment;
 import trente.asia.addresscard.services.business.view.UploadAddressCardFragment;
 
 /**
@@ -65,7 +62,8 @@ public class ShopCardsFragment extends AbstractAddressCardFragment implements Ca
 			binding.btnDelete.setOnClickListener(this);
 			binding.btnCapture.setOnClickListener(this);
 			binding.rltTags.setOnClickListener(this);
-//			binding.rowCustomer.setOnClickListener(this);
+			binding.setShopTags(getString(R.string.chiase_common_all));
+			// binding.rowCustomer.setOnClickListener(this);
 			List<CardModel> cards = new ArrayList<>();
 			adapter = new CardAdapter(cards, this);
 			binding.listCards.setAdapter(adapter);
@@ -90,12 +88,11 @@ public class ShopCardsFragment extends AbstractAddressCardFragment implements Ca
 	@Override
 	protected void successLoad(JSONObject response, String url){
 		List<CardModel> cards = null;
-		try {
+		try{
 			cards = LoganSquare.parseList(response.optString("cards"), CardModel.class);
 			adapter = new CardAdapter(cards, this);
-			binding.setShopTags("Food, Vietnamee, Expensive");
 			binding.listCards.setAdapter(adapter);
-		} catch (IOException e) {
+		}catch(IOException e){
 			e.printStackTrace();
 		}
 	}
@@ -117,13 +114,14 @@ public class ShopCardsFragment extends AbstractAddressCardFragment implements Ca
 		}
 	}
 
-	//// TODO: 5/22/2017 shouldn't create each Tags Fragment?
-    private void gotoTagsFragment() {
-        TagsFragment tagsFragment = new TagsFragment();
-        gotoFragment(tagsFragment);
-    }
+	// // TODO: 5/22/2017 shouldn't create each Tags Fragment?
+	private void gotoTagsFragment(){
+		TagsFragment tagsFragment = new TagsFragment();
+		tagsFragment.setShopCardBinding(binding);
+		gotoFragment(tagsFragment);
+	}
 
-    @Override
+	@Override
 	public void onItemClick(CardModel card){
 		gotoFragment(CardDetailFragment.newInstance(card.key));
 	}

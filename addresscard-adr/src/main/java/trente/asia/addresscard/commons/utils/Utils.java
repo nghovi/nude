@@ -2,15 +2,22 @@ package trente.asia.addresscard.commons.utils;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.databinding.Bindable;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 
+import org.apache.commons.collections.CollectionUtils;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
+
+import trente.asia.addresscard.services.business.model.CardModel;
+import trente.asia.addresscard.services.shop.model.TagModel;
 
 /**
  * Created by tien on 5/18/2017.
@@ -52,5 +59,9 @@ public class Utils {
         String storage = Environment.getExternalStorageDirectory().toString();
         new File(storage + "/" + folderName).mkdir();
         return storage + "/" +folderName;
+    }
+
+    public static String getSize(List<CardModel> list) {
+        return String.valueOf(list.size());
     }
 }

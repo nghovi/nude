@@ -43,4 +43,5 @@
 
     <string name="test_string">0abcdefghm1abcdefghm2abcdefghm3abcdefghm4abcdefghm5abcdefghm6abcdefghm7abcdefghm8abcdefghm9abcdefghm</string>
     <string name="fragment_shop_cards_tags">Tags</string>
+    <string name="tag_title">Tag title</string>
 </resources>

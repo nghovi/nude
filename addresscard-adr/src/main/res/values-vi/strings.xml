@@ -3,4 +3,5 @@
     <string name="ac_about_app_version">1.0</string>
     <string name="shop_cards_title">Shop cards</string>
     <string name="fragment_shop_cards_tags">Tags</string>
+    <string name="tag_title">Tag title</string>
 </resources>
