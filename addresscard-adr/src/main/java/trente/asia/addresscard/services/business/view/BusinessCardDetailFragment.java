@@ -48,6 +48,6 @@ public class BusinessCardDetailFragment extends AddressCardDetailFragment {
 
     @Override
     protected void gotoCardEditFragment() {
-        gotoFragment(BusinessCardEditFragment.newInstance(card));
+        gotoFragment(BusinessCardEditFragment.newInstance(card.key));
     }
 }

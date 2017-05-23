@@ -92,5 +92,4 @@ public class BusinessCardListFragment extends AddressCardListFragment {
     protected String getApiDeleteString() {
         return ACConst.AC_BUSINESS_CARD_DELETE;
     }
-
 }

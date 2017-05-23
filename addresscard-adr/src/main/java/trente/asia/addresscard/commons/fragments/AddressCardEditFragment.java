@@ -31,22 +31,26 @@ import trente.asia.addresscard.databinding.FragmentCardDetailEditBinding;
 import trente.asia.addresscard.services.business.model.BusinessCardModel;
 import trente.asia.addresscard.services.business.model.CustomerModel;
 import trente.asia.addresscard.services.business.presenter.CustomerDialogAdapter;
+import trente.asia.addresscard.services.business.view.BusinessCardEditFragment;
 import trente.asia.android.view.util.CAObjectSerializeUtil;
 
 /**
  * Created by tien on 5/23/2017.
  */
 
-public class AddressCardEditFragment extends AbstractAddressCardFragment
+public abstract class AddressCardEditFragment extends AbstractAddressCardFragment
         implements CustomerDialogAdapter.OnCustomerDialogListener {
 
     private     FragmentCardDetailEditBinding           binding;
-    protected   BusinessCardModel                       card;
-    private     int                                     customerId;
+    protected   int                                     key;
     private     Dialog                                  dialog;
     private     DialogFragmentChooseCustomerBinding     viewBinding;
 
-
+    public static AddressCardEditFragment newInstance(int cardId) {
+        AddressCardEditFragment fragment = new AddressCardEditFragment();
+        fragment.key = cardId;
+        return fragment;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -64,9 +68,14 @@ public class AddressCardEditFragment extends AbstractAddressCardFragment
     }
 
     @Override
-    protected void initView() {
-        super.initView();
+    protected void initData() {
+        super.initData();
         super.initHeader(R.drawable.ac_back_white, card.cardName, R.drawable.ac_action_done);
+    }
+
+    @Override
+    protected void successLoad(JSONObject response, String url) {
+        super.successLoad(response, url);
     }
 
     @Override
@@ -98,70 +107,12 @@ public class AddressCardEditFragment extends AbstractAddressCardFragment
         binding.customerName.setText(customer.customerName);
     }
 
-    private void showSetCustomerDialog() {
-        JSONObject jsonObject = new JSONObject();
-        requestLoad(ACConst.AC_BUSINESS_CUSTOMER_LIST, jsonObject, true);
-    }
-
-    @Override
-    protected void successLoad(JSONObject response, String url) {
-        super.successLoad(response, url);
-        List<CustomerModel> customers = CCJsonUtil.convertToModelList(response.optString("customers"), CustomerModel.class);
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        viewBinding = DataBindingUtil.inflate(LayoutInflater.from(getContext()),
-                R.layout.dialog_fragment_choose_customer, null, false);
-        builder.setView(viewBinding.getRoot());
-        CustomerDialogAdapter adapter = new CustomerDialogAdapter(customers, this);
-        viewBinding.listCustomers.setAdapter(adapter);
-        viewBinding.listCustomers.setLayoutManager(new LinearLayoutManager(getContext()));
-        viewBinding.btnNewCustomer.setOnClickListener(this);
-        dialog = builder.create();
-        dialog.show();
-    }
-
-    private void createNewCustomer() {
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("customerName", viewBinding.edtNewCustomer.getText());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        requestUpdate(ACConst.AC_BUSINESS_CUSTOMER_CREATE, jsonObject, true);
-    }
-
-    @Override
-    protected void successUpdate(JSONObject response, String url) {
-        super.successUpdate(response, url);
-        log(response.toString());
-
-        try {
-            customerId = response.getInt("customerId");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        binding.customerName.setText(viewBinding.edtNewCustomer.getText());
-        dialog.dismiss();
-    }
-
     private void finishEditCard() {
         updateAddressCard();
         onClickBackBtn();
     }
 
-    private void updateAddressCard() {
-        JSONObject jsonObject = CAObjectSerializeUtil.serializeObject(binding.lnrContent, null);
-        try {
-            jsonObject.put("key", card.key);
-            jsonObject.put("customerId", customerId);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        Map<String, File> fileMap = new HashMap<>();
-        log(jsonObject.toString());
-        requestUpload(ACConst.AC_BUSINESS_CARD_UPDATE, jsonObject, fileMap, true);
-    }
+    protected abstract void updateAddressCard();
 
     @Override
     protected void successUpload(JSONObject response, String url) {
