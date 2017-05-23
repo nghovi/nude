@@ -1,5 +1,9 @@
 package trente.asia.addresscard.services.shop.model;
 
+import android.databinding.BaseObservable;
+import android.databinding.Bindable;
+
+import com.android.databinding.library.baseAdapters.BR;
 import com.bluelinelabs.logansquare.annotation.JsonField;
 import com.bluelinelabs.logansquare.annotation.JsonObject;
 
@@ -12,7 +16,7 @@ import trente.asia.addresscard.services.business.model.AddressCardModel;
  */
 
 @JsonObject
-public class TagModel{
+public class TagModel extends BaseObservable{
 
 	@JsonField
 	public String			key;
@@ -25,6 +29,16 @@ public class TagModel{
 
 	@JsonField
 	public List<AddressCardModel>	cards;
+
+	@Bindable
+	public Boolean getSelected() {
+		return selected;
+	}
+
+	public void setSelected(Boolean selected) {
+		this.selected = selected;
+		notifyPropertyChanged(BR.selected);
+	}
 
 	@JsonField
 	public Boolean			selected	= true;
