@@ -1,16 +1,14 @@
-package trente.asia.addresscard.services.business.view;
+package trente.asia.addresscard.commons.fragments;
 
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
-import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.GridLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,52 +18,40 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import asia.chiase.core.util.CCJsonUtil;
 import trente.asia.addresscard.ACConst;
 import trente.asia.addresscard.R;
-import trente.asia.addresscard.commons.fragments.AbstractAddressCardFragment;
-import trente.asia.addresscard.databinding.FragmentBusinessCardMainBinding;
 import trente.asia.addresscard.services.business.model.CardModel;
 import trente.asia.addresscard.services.business.presenter.CardAdapter;
+import trente.asia.addresscard.services.business.view.CardDetailFragment;
+import trente.asia.addresscard.services.business.view.CategoryListFragment;
+import trente.asia.addresscard.services.business.view.CustomerListFragment;
+import trente.asia.addresscard.services.business.view.UploadAddressCardFragment;
 
 /**
  * Created by tien on 4/18/2017.
  */
 
-public class BusinessCardMainFragment extends AbstractAddressCardFragment implements CardAdapter.OnItemListener {
-    private FragmentBusinessCardMainBinding binding;
-    private CardAdapter adapter;
-    private Uri photoUri;
+public abstract class AddressCardListFragment extends AbstractAddressCardFragment implements CardAdapter.OnItemListener {
+//    protected FragmentBusinessCardMainBinding binding;
+    protected CardAdapter adapter;
+    protected Uri photoUri;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
+    protected abstract void initViewBinding(LayoutInflater inflater, ViewGroup container);
+
     @Override
     public int getFooterItemId() {
         return R.id.lnr_view_footer_card;
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (mRootView == null) {
-            binding = DataBindingUtil.inflate(inflater, R.layout.fragment_business_card_main, container, false);
-            binding.listCards.setLayoutManager(new GridLayoutManager(getContext(), 3));
-            binding.btnDelete.setOnClickListener(this);
-            binding.btnCapture.setOnClickListener(this);
-            binding.rowCategory.setOnClickListener(this);
-            binding.rowCustomer.setOnClickListener(this);
-            List<CardModel> cards = new ArrayList<>();
-            adapter = new CardAdapter(cards, this);
-            binding.listCards.setAdapter(adapter);
-            mRootView = binding.getRoot();
-        }
-        return mRootView;
-    }
+
 
     @Override
     public void initView() {
@@ -85,7 +71,17 @@ public class BusinessCardMainFragment extends AbstractAddressCardFragment implem
         List<CardModel> cards = CCJsonUtil.convertToModelList(
                 response.optString("cards"), CardModel.class);
         adapter = new CardAdapter(cards, this);
-        binding.listCards.setAdapter(adapter);
+//        binding.listCards.setAdapter(adapter);
+    }
+
+    public void showBtnDelete() {
+//        binding.btnDelete.setVisibility(View.VISIBLE);
+//        binding.btnCapture.setVisibility(View.GONE);
+    }
+
+    public void showBtnCapture() {
+//        binding.btnDelete.setVisibility(View.GONE);
+//        binding.btnCapture.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -113,25 +109,13 @@ public class BusinessCardMainFragment extends AbstractAddressCardFragment implem
         gotoFragment(CardDetailFragment.newInstance(card.key));
     }
 
-    @Override
     public void onItemLongClickListener() {
-        showBtnDelete();
     }
 
-    @Override
     public void onUnselectAllItems() {
-        showBtnCapture();
     }
 
-    public void showBtnDelete() {
-        binding.btnDelete.setVisibility(View.VISIBLE);
-        binding.btnCapture.setVisibility(View.GONE);
-    }
 
-    public void showBtnCapture() {
-        binding.btnDelete.setVisibility(View.GONE);
-        binding.btnCapture.setVisibility(View.VISIBLE);
-    }
 
     private void takeCapture() {
         ContentValues values = new ContentValues();
@@ -155,9 +139,12 @@ public class BusinessCardMainFragment extends AbstractAddressCardFragment implem
                 e.printStackTrace();
             }
             Bitmap logoBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.logo);
-            gotoFragment(UploadAddressCardFragment.newInstance(cardBitmap, logoBitmap));
+            String apiString = getApiString();
+            gotoFragment(UploadAddressCardFragment.newInstance(cardBitmap, logoBitmap, apiString));
         }
     }
+
+    protected abstract String getApiString();
 
     public void onBtnDeleteClick() {
         String cardIds = "";
