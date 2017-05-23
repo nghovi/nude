@@ -22,7 +22,7 @@ import trente.asia.addresscard.BuildConfig;
 import trente.asia.addresscard.R;
 import trente.asia.addresscard.commons.fragments.AbstractAddressCardFragment;
 import trente.asia.addresscard.databinding.FragmentCustomerEditBinding;
-import trente.asia.addresscard.services.business.model.CardModel;
+import trente.asia.addresscard.services.business.model.BusinessCardModel;
 import trente.asia.addresscard.services.business.model.CustomerModel;
 import trente.asia.addresscard.services.business.presenter.CustomerEditCardAdapter;
 import trente.asia.android.activity.ChiaseActivity;
@@ -33,15 +33,15 @@ import trente.asia.welfare.adr.utils.WfPicassoHelper;
  * Created by tien on 5/12/2017.
  */
 
-public class CustomerEditFragment extends AbstractAddressCardFragment
+public class BusinessCustomerEditFragment extends AbstractAddressCardFragment
     implements CustomerEditCardAdapter.OnCardAdapterListener {
 
     private         FragmentCustomerEditBinding         binding;
     private         CustomerModel                       customer;
     private         CustomerEditCardAdapter             adapter;
 
-    public static CustomerEditFragment newInstance(CustomerModel customer) {
-        CustomerEditFragment fragment = new CustomerEditFragment();
+    public static BusinessCustomerEditFragment newInstance(CustomerModel customer) {
+        BusinessCustomerEditFragment fragment = new BusinessCustomerEditFragment();
         fragment.customer = customer;
         return fragment;
     }
@@ -128,7 +128,7 @@ public class CustomerEditFragment extends AbstractAddressCardFragment
     }
 
     @Override
-    public void ungroupCard(CardModel card) {
+    public void ungroupCard(BusinessCardModel card) {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("key", card.key);
@@ -140,7 +140,7 @@ public class CustomerEditFragment extends AbstractAddressCardFragment
     }
 
     @Override
-    public void deleteCard(CardModel card) {
+    public void deleteCard(BusinessCardModel card) {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("cardIds", card.key);

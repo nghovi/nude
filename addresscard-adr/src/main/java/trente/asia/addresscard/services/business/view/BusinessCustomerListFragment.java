@@ -24,7 +24,7 @@ import trente.asia.addresscard.services.business.presenter.CustomerAdapter;
  * Created by Windows 10 Gamer on 13/05/2017.
  */
 
-public class CustomerListFragment extends AbstractAddressCardFragment
+public class BusinessCustomerListFragment extends AbstractAddressCardFragment
     implements CustomerAdapter.OnCustomerAdapterListener {
 
     private     FragmentCustomerListBinding             binding;
@@ -76,6 +76,6 @@ public class CustomerListFragment extends AbstractAddressCardFragment
 
     @Override
     public void onItemClick(int customerId) {
-        gotoFragment(CustomerDetailFragment.newInstance(customerId));
+        gotoFragment(BusinessCustomerDetailFragment.newInstance(customerId));
     }
 }

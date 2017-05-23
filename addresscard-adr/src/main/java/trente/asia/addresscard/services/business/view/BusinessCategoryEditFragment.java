@@ -29,13 +29,13 @@ import trente.asia.addresscard.services.business.presenter.CategoryEditCustomerA
  * Created by tien on 5/11/2017.
  */
 
-public class CategoryEditFragment extends AbstractAddressCardFragment {
+public class BusinessCategoryEditFragment extends AbstractAddressCardFragment {
     private FragmentCategoryEditBinding             binding;
     private CategoryModel                           category;
     private CategoryEditCustomerAdapter             adapter;
 
-    public static CategoryEditFragment newInstance(CategoryModel category) {
-        CategoryEditFragment fragment = new CategoryEditFragment();
+    public static BusinessCategoryEditFragment newInstance(CategoryModel category) {
+        BusinessCategoryEditFragment fragment = new BusinessCategoryEditFragment();
         fragment.category = category;
         return fragment;
     }
@@ -116,6 +116,6 @@ public class CategoryEditFragment extends AbstractAddressCardFragment {
     }
 
     private void log(String msg) {
-        Log.e("CategoryEditFragment", msg);
+        Log.e("BusinessCategoryEditFragment", msg);
     }
 }

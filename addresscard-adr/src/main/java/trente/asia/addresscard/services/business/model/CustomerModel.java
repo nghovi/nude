@@ -16,7 +16,7 @@ public class CustomerModel {
     public      String              customerDomain;
     public      int                 key;
     public      AttachmentModel     attachment;
-    public      List<CardModel>     cards;
+    public      List<BusinessCardModel>     cards;
 
     public String getCardNumber() {
         return cards.size() + "";

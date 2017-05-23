@@ -27,13 +27,13 @@ import trente.asia.welfare.adr.utils.WfPicassoHelper;
  * Created by tien on 5/12/2017.
  */
 
-public class CustomerDetailFragment extends AbstractAddressCardFragment {
+public class BusinessCustomerDetailFragment extends AbstractAddressCardFragment {
     private     FragmentCustomerDetailBinding               binding;
     private     CustomerModel                               customer;
     private     int                                         customerId;
 
-    public static CustomerDetailFragment newInstance(int customerId) {
-        CustomerDetailFragment fragment = new CustomerDetailFragment();
+    public static BusinessCustomerDetailFragment newInstance(int customerId) {
+        BusinessCustomerDetailFragment fragment = new BusinessCustomerDetailFragment();
         fragment.customerId = customerId;
         return fragment;
     }
@@ -102,10 +102,10 @@ public class CustomerDetailFragment extends AbstractAddressCardFragment {
     }
 
     private void onBtnEditClick() {
-        gotoFragment(CustomerEditFragment.newInstance(customer));
+        gotoFragment(BusinessCustomerEditFragment.newInstance(customer));
     }
 
     private void showCommentFragment() {
-        gotoFragment(CustomerCommentFragment.newInstance(customer));
+        gotoFragment(BusinessCustomerCommentFragment.newInstance(customer));
     }
 }

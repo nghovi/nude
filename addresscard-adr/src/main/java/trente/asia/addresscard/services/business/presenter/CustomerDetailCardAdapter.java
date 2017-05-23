@@ -13,7 +13,7 @@ import java.util.List;
 import trente.asia.addresscard.BuildConfig;
 import trente.asia.addresscard.R;
 import trente.asia.addresscard.databinding.CardItemCustomerDetailBinding;
-import trente.asia.addresscard.services.business.model.CardModel;
+import trente.asia.addresscard.services.business.model.BusinessCardModel;
 import trente.asia.welfare.adr.utils.WfPicassoHelper;
 
 /**
@@ -23,10 +23,10 @@ import trente.asia.welfare.adr.utils.WfPicassoHelper;
 public class CustomerDetailCardAdapter extends RecyclerView.Adapter<ViewHolder>{
 
     private     CardItemCustomerDetailBinding           binding;
-    private     List<CardModel>                         cards;
+    private     List<BusinessCardModel>                         cards;
     private     Context                                 context;
 
-    public CustomerDetailCardAdapter(List<CardModel> cards) {
+    public CustomerDetailCardAdapter(List<BusinessCardModel> cards) {
         this.cards = cards;
     }
 
@@ -40,7 +40,7 @@ public class CustomerDetailCardAdapter extends RecyclerView.Adapter<ViewHolder>{
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        CardModel card = cards.get(position);
+        BusinessCardModel card = cards.get(position);
         binding = (CardItemCustomerDetailBinding) holder.getBinding();
         binding.setVariable(BR.card, card);
         binding.executePendingBindings();

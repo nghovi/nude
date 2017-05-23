@@ -24,15 +24,15 @@ import trente.asia.addresscard.services.business.presenter.CategoryCustomerAdapt
  * Created by tien on 5/11/2017.
  */
 
-public class CategoryDetailFragment extends AbstractAddressCardFragment{
+public class BusinessCategoryDetailFragment extends AbstractAddressCardFragment{
 
 	private FragmentCategoryDetailBinding	binding;
 	private int								categoryId;
 	private CategoryCustomerAdapter			adapter;
 	private CategoryModel					category;
 
-	public static CategoryDetailFragment newInstance(int categoryId){
-		CategoryDetailFragment fragment = new CategoryDetailFragment();
+	public static BusinessCategoryDetailFragment newInstance(int categoryId){
+		BusinessCategoryDetailFragment fragment = new BusinessCategoryDetailFragment();
 		fragment.categoryId = categoryId;
 		return fragment;
 	}
@@ -90,7 +90,7 @@ public class CategoryDetailFragment extends AbstractAddressCardFragment{
 	public void onClick(View view){
 		switch(view.getId()){
 		case R.id.img_id_header_right_icon:
-			gotoFragment(CategoryEditFragment.newInstance(category));
+			gotoFragment(BusinessCategoryEditFragment.newInstance(category));
 			break;
 		default:
 			break;

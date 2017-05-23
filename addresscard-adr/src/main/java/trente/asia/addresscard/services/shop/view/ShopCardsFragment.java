@@ -28,12 +28,12 @@ import trente.asia.addresscard.ACConst;
 import trente.asia.addresscard.R;
 import trente.asia.addresscard.commons.fragments.AbstractAddressCardFragment;
 import trente.asia.addresscard.databinding.FragmentShopCardsBinding;
-import trente.asia.addresscard.services.business.model.CardModel;
+import trente.asia.addresscard.services.business.model.BusinessCardModel;
 import trente.asia.addresscard.services.business.presenter.CardAdapter;
-import trente.asia.addresscard.services.business.view.CardDetailFragment;
-import trente.asia.addresscard.services.business.view.CategoryListFragment;
-import trente.asia.addresscard.services.business.view.CustomerListFragment;
-import trente.asia.addresscard.services.business.view.UploadAddressCardFragment;
+import trente.asia.addresscard.services.business.view.BusinessCardDetailFragment;
+import trente.asia.addresscard.services.business.view.BusinessCategoryListFragment;
+import trente.asia.addresscard.services.business.view.BusinessCustomerListFragment;
+import trente.asia.addresscard.services.business.view.CardCameraPreviewFragment;
 
 /**
  * Created by tien on 4/18/2017.
@@ -64,7 +64,7 @@ public class ShopCardsFragment extends AbstractAddressCardFragment implements Ca
 			binding.btnCapture.setOnClickListener(this);
 			binding.rowCategory.setOnClickListener(this);
 //			binding.rowCustomer.setOnClickListener(this);
-			List<CardModel> cards = new ArrayList<>();
+			List<BusinessCardModel> cards = new ArrayList<>();
 			adapter = new CardAdapter(cards, this);
 			binding.listCards.setAdapter(adapter);
 			mRootView = binding.getRoot();
@@ -87,7 +87,7 @@ public class ShopCardsFragment extends AbstractAddressCardFragment implements Ca
 
 	@Override
 	protected void successLoad(JSONObject response, String url){
-		List<CardModel> cards = CCJsonUtil.convertToModelList(response.optString("cards"), CardModel.class);
+		List<BusinessCardModel> cards = CCJsonUtil.convertToModelList(response.optString("cards"), BusinessCardModel.class);
 		adapter = new CardAdapter(cards, this);
 		binding.listCards.setAdapter(adapter);
 	}
@@ -102,10 +102,10 @@ public class ShopCardsFragment extends AbstractAddressCardFragment implements Ca
 			takeCapture();
 			break;
 		case R.id.row_category:
-			gotoFragment(new CategoryListFragment());
+			gotoFragment(new BusinessCategoryListFragment());
 			break;
 		case R.id.row_customer:
-			gotoFragment(new CustomerListFragment(), "customer_list");
+			gotoFragment(new BusinessCustomerListFragment(), "customer_list");
 			break;
 		default:
 			break;
@@ -113,8 +113,8 @@ public class ShopCardsFragment extends AbstractAddressCardFragment implements Ca
 	}
 
 	@Override
-	public void onItemClick(CardModel card){
-		gotoFragment(CardDetailFragment.newInstance(card.key));
+	public void onItemClick(BusinessCardModel card){
+		gotoFragment(BusinessCardDetailFragment.newInstance(card.key));
 	}
 
 	@Override
@@ -156,13 +156,13 @@ public class ShopCardsFragment extends AbstractAddressCardFragment implements Ca
 				e.printStackTrace();
 			}
 			Bitmap logoBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.logo);
-			gotoFragment(UploadAddressCardFragment.newInstance(cardBitmap, logoBitmap));
+			gotoFragment(CardCameraPreviewFragment.newInstance(cardBitmap, logoBitmap));
 		}
 	}
 
 	public void onBtnDeleteClick(){
 		String cardIds = "";
-		for(CardModel card : adapter.getListSelected()){
+		for(BusinessCardModel card : adapter.getListSelected()){
 			cardIds += card.key + ",";
 		}
 		JSONObject jsonObject = new JSONObject();

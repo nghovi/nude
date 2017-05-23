@@ -29,15 +29,15 @@ import trente.asia.android.view.util.CAObjectSerializeUtil;
  * Created by tien on 5/10/2017.
  */
 
-public class UploadAddressCardFragment extends AbstractAddressCardFragment {
+public class CardCameraPreviewFragment extends AbstractAddressCardFragment {
     private FragmentUploadAddressCardBinding    binding;
     private Bitmap                              cardBitmap;
     private Bitmap                              logoBitmap;
     private String                              cardPath;
     private String                              logoPath;
 
-    public static UploadAddressCardFragment newInstance(Bitmap cardBitmap, Bitmap logoBitmap) {
-        UploadAddressCardFragment fragment = new UploadAddressCardFragment();
+    public static CardCameraPreviewFragment newInstance(Bitmap cardBitmap, Bitmap logoBitmap) {
+        CardCameraPreviewFragment fragment = new CardCameraPreviewFragment();
         fragment.cardBitmap = cardBitmap;
         fragment.logoBitmap = logoBitmap;
         return fragment;

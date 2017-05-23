@@ -24,7 +24,7 @@ import trente.asia.addresscard.services.business.presenter.CategoryAdapter;
  * Created by tien on 5/9/2017.
  */
 
-public class CategoryListFragment extends AbstractAddressCardFragment
+public class BusinessCategoryListFragment extends AbstractAddressCardFragment
     implements CategoryAdapter.OnCategoryAdapterListener {
     FragmentCategoryListBinding binding;
     CategoryAdapter adapter;
@@ -73,7 +73,7 @@ public class CategoryListFragment extends AbstractAddressCardFragment
 
     @Override
     public void onItemClick(int categoryId) {
-        gotoFragment(CategoryDetailFragment.newInstance(categoryId));
+        gotoFragment(BusinessCategoryDetailFragment.newInstance(categoryId));
     }
 
 }

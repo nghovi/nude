@@ -13,7 +13,7 @@ import java.util.List;
 import trente.asia.addresscard.BuildConfig;
 import trente.asia.addresscard.R;
 import trente.asia.addresscard.databinding.CardItemCustomerEditBinding;
-import trente.asia.addresscard.services.business.model.CardModel;
+import trente.asia.addresscard.services.business.model.BusinessCardModel;
 import trente.asia.welfare.adr.utils.WfPicassoHelper;
 
 /**
@@ -23,11 +23,11 @@ import trente.asia.welfare.adr.utils.WfPicassoHelper;
 public class CustomerEditCardAdapter extends RecyclerView.Adapter<ViewHolder>{
 
     private     CardItemCustomerEditBinding             binding;
-    private     List<CardModel>                         cards;
+    private     List<BusinessCardModel>                         cards;
     private     Context                                 context;
     private     OnCardAdapterListener                   callback;
 
-    public CustomerEditCardAdapter(List<CardModel> cards, OnCardAdapterListener listener) {
+    public CustomerEditCardAdapter(List<BusinessCardModel> cards, OnCardAdapterListener listener) {
         this.cards = cards;
         this.callback = listener;
     }
@@ -42,7 +42,7 @@ public class CustomerEditCardAdapter extends RecyclerView.Adapter<ViewHolder>{
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        CardModel card = cards.get(position);
+        BusinessCardModel card = cards.get(position);
         binding = (CardItemCustomerEditBinding) holder.getBinding();
         binding.setVariable(BR.card, card);
         binding.executePendingBindings();
@@ -58,7 +58,7 @@ public class CustomerEditCardAdapter extends RecyclerView.Adapter<ViewHolder>{
         });
     }
 
-    private void removeCard(CardModel card) {
+    private void removeCard(BusinessCardModel card) {
         cards.remove(card);
         notifyDataSetChanged();
     }
@@ -69,7 +69,7 @@ public class CustomerEditCardAdapter extends RecyclerView.Adapter<ViewHolder>{
     }
 
     public interface OnCardAdapterListener {
-        public void ungroupCard(CardModel card);
-        public void deleteCard(CardModel card);
+        public void ungroupCard(BusinessCardModel card);
+        public void deleteCard(BusinessCardModel card);
     }
 }

@@ -28,14 +28,14 @@ import trente.asia.addresscard.ACConst;
 import trente.asia.addresscard.R;
 import trente.asia.addresscard.commons.fragments.AbstractAddressCardFragment;
 import trente.asia.addresscard.databinding.FragmentBusinessCardMainBinding;
-import trente.asia.addresscard.services.business.model.CardModel;
+import trente.asia.addresscard.services.business.model.BusinessCardModel;
 import trente.asia.addresscard.services.business.presenter.CardAdapter;
 
 /**
  * Created by tien on 4/18/2017.
  */
 
-public class BusinessCardMainFragment extends AbstractAddressCardFragment implements CardAdapter.OnItemListener {
+public class BusinessCardListFragment extends AbstractAddressCardFragment implements CardAdapter.OnItemListener {
     private FragmentBusinessCardMainBinding binding;
     private CardAdapter adapter;
     private Uri photoUri;
@@ -59,7 +59,7 @@ public class BusinessCardMainFragment extends AbstractAddressCardFragment implem
             binding.btnCapture.setOnClickListener(this);
             binding.rowCategory.setOnClickListener(this);
             binding.rowCustomer.setOnClickListener(this);
-            List<CardModel> cards = new ArrayList<>();
+            List<BusinessCardModel> cards = new ArrayList<>();
             adapter = new CardAdapter(cards, this);
             binding.listCards.setAdapter(adapter);
             mRootView = binding.getRoot();
@@ -82,8 +82,8 @@ public class BusinessCardMainFragment extends AbstractAddressCardFragment implem
 
     @Override
     protected void successLoad(JSONObject response, String url) {
-        List<CardModel> cards = CCJsonUtil.convertToModelList(
-                response.optString("cards"), CardModel.class);
+        List<BusinessCardModel> cards = CCJsonUtil.convertToModelList(
+                response.optString("cards"), BusinessCardModel.class);
         adapter = new CardAdapter(cards, this);
         binding.listCards.setAdapter(adapter);
     }
@@ -98,10 +98,10 @@ public class BusinessCardMainFragment extends AbstractAddressCardFragment implem
                 takeCapture();
                 break;
             case R.id.row_category:
-                gotoFragment(new CategoryListFragment());
+                gotoFragment(new BusinessCategoryListFragment());
                 break;
             case R.id.row_customer:
-                gotoFragment(new CustomerListFragment(), "customer_list");
+                gotoFragment(new BusinessCustomerListFragment(), "customer_list");
                 break;
             default:
                 break;
@@ -109,8 +109,8 @@ public class BusinessCardMainFragment extends AbstractAddressCardFragment implem
     }
 
     @Override
-    public void onItemClick(CardModel card) {
-        gotoFragment(CardDetailFragment.newInstance(card.key));
+    public void onItemClick(BusinessCardModel card) {
+        gotoFragment(BusinessCardDetailFragment.newInstance(card.key));
     }
 
     @Override
@@ -155,14 +155,20 @@ public class BusinessCardMainFragment extends AbstractAddressCardFragment implem
                 e.printStackTrace();
             }
             Bitmap logoBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.logo);
-            gotoFragment(UploadAddressCardFragment.newInstance(cardBitmap, logoBitmap));
+            gotoFragment(CardCameraPreviewFragment.newInstance(cardBitmap, logoBitmap));
         }
     }
 
     public void onBtnDeleteClick() {
         String cardIds = "";
-        for (CardModel card : adapter.getListSelected()) {
-            cardIds += card.key + ",";
+        List<BusinessCardModel> selectedCards = adapter.getListSelected();
+        for (int i = 0; i < selectedCards.size(); i++) {
+            BusinessCardModel card = selectedCards.get(i);
+            if (i < selectedCards.size() - 1) {
+                cardIds += card.key + ",";
+            } else {
+                cardIds += card.key;
+            }
         }
         JSONObject jsonObject = new JSONObject();
         try {

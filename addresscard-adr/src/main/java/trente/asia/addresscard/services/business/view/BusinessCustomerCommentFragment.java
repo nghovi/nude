@@ -27,15 +27,15 @@ import trente.asia.android.view.util.CAObjectSerializeUtil;
  * Created by tien on 5/12/2017.
  */
 
-public class CustomerCommentFragment extends AbstractAddressCardFragment
+public class BusinessCustomerCommentFragment extends AbstractAddressCardFragment
     implements CustomerCommentAdapter.OnCustomerCommentAdapterListener {
 
     private FragmentCustomerCommentBinding binding;
     private CustomerModel customer;
     private CustomerCommentAdapter adapter;
 
-    public static CustomerCommentFragment newInstance(CustomerModel customer) {
-        CustomerCommentFragment fragment = new CustomerCommentFragment();
+    public static BusinessCustomerCommentFragment newInstance(CustomerModel customer) {
+        BusinessCustomerCommentFragment fragment = new BusinessCustomerCommentFragment();
         fragment.customer = customer;
         return fragment;
     }

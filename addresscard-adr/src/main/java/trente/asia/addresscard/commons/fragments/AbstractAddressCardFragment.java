@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 
 import trente.asia.addresscard.BuildConfig;
 import trente.asia.addresscard.R;
-import trente.asia.addresscard.services.business.view.BusinessCardMainFragment;
+import trente.asia.addresscard.services.business.view.BusinessCardListFragment;
 import trente.asia.addresscard.services.shop.view.ShopCardsFragment;
 import trente.asia.addresscard.services.user.ACLoginFragment;
 import trente.asia.addresscard.setting.SettingFragment;
@@ -105,7 +105,7 @@ public abstract class AbstractAddressCardFragment extends WelfareFragment implem
 
 	public void onClickFooterItemCard(){
 		emptyBackStack();
-		gotoFragment(new BusinessCardMainFragment());
+		gotoFragment(new BusinessCardListFragment());
 	}
 
 	public void onClickFooterItemShop(){

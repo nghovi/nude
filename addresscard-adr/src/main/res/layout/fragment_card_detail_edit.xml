@@ -4,7 +4,7 @@
     <data>
         <variable
             name="card"
-            type="trente.asia.addresscard.services.business.model.CardModel"/>
+            type="trente.asia.addresscard.services.business.model.BusinessCardModel"/>
     </data>
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,7 +24,6 @@
                 android:background="#c7c5c5"
                 android:padding="@dimen/ac_image_padding"/>
             <TextView
-
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/ac_card_detail_title"
@@ -88,7 +87,10 @@
                             android:textColor="@color/ac_common_text_color_body"
                             android:textSize="@dimen/ac_common_text_size_body"
                             android:text="@{card.cardName}"
-                            custom:mName="cardName"/>
+                            style="@style/ac_edt_no_underbar_no_enter"
+                            custom:mName="cardName">
+                            <requestFocus/>
+                        </trente.asia.android.view.ChiaseEditText>
                     </RelativeLayout>
                     <View style="@style/cs_common_divider"/>
                     <RelativeLayout
@@ -109,6 +111,7 @@
                             android:layout_centerVertical="true"
                             android:textColor="@color/ac_common_text_color_body"
                             android:textSize="@dimen/ac_common_text_size_body"
+                            style="@style/ac_edt_no_underbar_no_enter"
                             android:text="@{card.cardTel}"
                             custom:mName="cardTel"/>
                     </RelativeLayout>
@@ -131,6 +134,7 @@
                             android:layout_centerVertical="true"
                             android:textColor="@color/ac_common_text_color_body"
                             android:textSize="@dimen/ac_common_text_size_body"
+                            style="@style/ac_edt_no_underbar_no_enter"
                             android:text="@{card.cardEmail}"
                             custom:mName="cardEmail"/>
                     </RelativeLayout>
@@ -153,6 +157,7 @@
                             android:layout_centerVertical="true"
                             android:textColor="@color/ac_common_text_color_body"
                             android:textSize="@dimen/ac_common_text_size_body"
+                            android:background="@android:color/transparent"
                             android:text="@{card.cardNote}"
                             custom:mName="cardNote"/>
                     </RelativeLayout>

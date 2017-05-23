@@ -6,8 +6,7 @@
     </data>
     <LinearLayout
         style="@style/wf_common_match"
-        android:orientation="vertical"
-        android:background="@color/wf_login_background_color">
+        android:orientation="vertical">
 
         <include layout="@layout/view_common_header"/>
 
@@ -20,11 +19,14 @@
             <ImageView
                 android:id="@+id/card_image"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"/>
+                android:layout_height="200dp"
+                android:padding="@dimen/ac_image_padding"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/ac_upload_card_modify_data"/>
+                android:text="@string/ac_upload_card_modify_data"
+                style="@style/ac_title_text"
+                android:padding="@dimen/title_padding"/>
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -32,6 +34,7 @@
                     android:id="@+id/lnr_content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@android:color/white"
                     android:orientation="vertical">
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -39,12 +42,14 @@
                         <ImageView
                             android:id="@+id/customer_logo"
                             android:layout_width="@dimen/ac_upload_card_edt_height"
-                            android:layout_height="@dimen/ac_upload_card_edt_height"/>
+                            android:layout_height="@dimen/ac_upload_card_edt_height"
+                            android:padding="@dimen/ac_image_padding"/>
                         <TextView
                             android:id="@+id/customer_title"
                             android:layout_toEndOf="@+id/customer_logo"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            style="@style/ac_body_text"
                             android:text="@string/ac_upload_card_customer"/>
                         <trente.asia.android.view.ChiaseEditText
                             android:layout_toEndOf="@+id/customer_logo"
@@ -52,7 +57,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Trente Vietnam"
-                            custom:mName="customer.customerName"/>
+                            style="@style/ac_edt_no_underbar_no_enter_body_text"
+                            custom:mName="customer.customerName">
+                            <requestFocus/>
+                        </trente.asia.android.view.ChiaseEditText>
                     </RelativeLayout>
                     <View style="@style/cs_common_divider"/>
                     <TextView
@@ -63,6 +71,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Duy Tan, Cau Giay, Ha Noi"
+                        android:background="@android:color/transparent"
                         custom:mName="customer.customerAddress"/>
                     <View style="@style/cs_common_divider"/>
                     <TextView
@@ -73,6 +82,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="012345678"
+                        style="@style/ac_edt_no_underbar_no_enter_body_text"
                         custom:mName="customer.customerTel"/>
                     <View style="@style/cs_common_divider"/>
                     <TextView
@@ -83,6 +93,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="http://www.trente.asia"
+                        style="@style/ac_edt_no_underbar_no_enter_body_text"
                         custom:mName="customer.customerUrl"/>
                     <View style="@style/cs_common_divider"/>
                     <TextView
@@ -93,6 +104,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Tanaka Takayuki"
+                        style="@style/ac_edt_no_underbar_no_enter_body_text"
                         custom:mName="cardName"/>
                     <View style="@style/cs_common_divider"/>
                     <TextView
@@ -103,6 +115,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="09876543"
+                        style="@style/ac_edt_no_underbar_no_enter_body_text"
                         custom:mName="cardTel"/>
                     <View style="@style/cs_common_divider"/>
                     <TextView
@@ -113,6 +126,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="tanaka-takayuki@trente.asia"
+                        style="@style/ac_edt_no_underbar_no_enter_body_text"
                         custom:mName="cardEmail"/>
                     <View style="@style/cs_common_divider"/>
                     <TextView
@@ -123,6 +137,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         custom:mName="cardNote"
+                        android:background="@android:color/transparent"
+                        style="@style/ac_body_text"
                         android:text="OCR preset is nothing, just input"/>
                 </LinearLayout>
             </ScrollView>

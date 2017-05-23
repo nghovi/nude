@@ -16,7 +16,7 @@ import trente.asia.addresscard.BR;
 import trente.asia.addresscard.BuildConfig;
 import trente.asia.addresscard.R;
 import trente.asia.addresscard.databinding.CustomerRowItemBinding;
-import trente.asia.addresscard.services.business.model.CardModel;
+import trente.asia.addresscard.services.business.model.BusinessCardModel;
 import trente.asia.addresscard.services.business.model.CustomerModel;
 import trente.asia.welfare.adr.utils.WfPicassoHelper;
 
@@ -61,9 +61,9 @@ public class CustomerAdapter extends RecyclerView.Adapter<ViewHolder> {
         });
     }
 
-    private void loadCardImage(ImageView imageView, int position, List<CardModel> cards) {
+    private void loadCardImage(ImageView imageView, int position, List<BusinessCardModel> cards) {
         if (position < cards.size()) {
-            CardModel card = cards.get(position);
+            BusinessCardModel card = cards.get(position);
             WfPicassoHelper.loadImage(context, BuildConfig.HOST + card.attachment.fileUrl, imageView, null);
         } else {
             Picasso.with(context).load("url").into(imageView);

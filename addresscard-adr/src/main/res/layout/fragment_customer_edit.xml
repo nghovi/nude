@@ -53,8 +53,10 @@
                             android:layout_toEndOf="@id/customer_logo"
                             android:layout_marginStart="@dimen/general_margin"
                             android:text="@{customer.customerName}"
-                            style="@style/ac_body_text"
-                            custom:mName="customerName"/>
+                            style="@style/ac_edt_no_underbar_no_enter_body_text"
+                            custom:mName="customerName">
+                            <requestFocus/>
+                        </trente.asia.android.view.ChiaseEditText>
                     </RelativeLayout>
                     <View style="@style/cs_common_divider"/>
                     <RelativeLayout
@@ -73,7 +75,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@{customer.customerTel}"
-                            style="@style/ac_body_text"
+                            style="@style/ac_edt_no_underbar_no_enter_body_text"
                             custom:mName="customerTel"/>
                     </RelativeLayout>
                     <View style="@style/cs_common_divider"/>
@@ -93,6 +95,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@{customer.customerAddress}"
+                            android:background="@android:color/transparent"
                             style="@style/ac_body_text"
                             custom:mName="customerAddress"/>
                     </RelativeLayout>
@@ -113,7 +116,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@{customer.customerUrl}"
-                            style="@style/ac_body_text"
+                            style="@style/ac_edt_no_underbar_no_enter_body_text"
                             custom:mName="customerUrl"/>
                     </RelativeLayout>
                     <View style="@style/cs_common_divider"/>

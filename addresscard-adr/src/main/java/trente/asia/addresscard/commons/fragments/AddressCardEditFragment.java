@@ -1,17 +1,16 @@
-package trente.asia.addresscard.services.business.view;
+package trente.asia.addresscard.commons.fragments;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.android.databinding.library.baseAdapters.BR;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -24,34 +23,30 @@ import java.util.Map;
 
 import asia.chiase.core.util.CCJsonUtil;
 import trente.asia.addresscard.ACConst;
+import trente.asia.addresscard.BR;
 import trente.asia.addresscard.BuildConfig;
 import trente.asia.addresscard.R;
-import trente.asia.addresscard.commons.fragments.AbstractAddressCardFragment;
 import trente.asia.addresscard.databinding.DialogFragmentChooseCustomerBinding;
 import trente.asia.addresscard.databinding.FragmentCardDetailEditBinding;
-import trente.asia.addresscard.services.business.model.CardModel;
+import trente.asia.addresscard.services.business.model.BusinessCardModel;
 import trente.asia.addresscard.services.business.model.CustomerModel;
 import trente.asia.addresscard.services.business.presenter.CustomerDialogAdapter;
 import trente.asia.android.view.util.CAObjectSerializeUtil;
 
 /**
- * Created by tien on 5/11/2017.
+ * Created by tien on 5/23/2017.
  */
 
-public class CardEditFragment extends AbstractAddressCardFragment
-    implements CustomerDialogAdapter.OnCustomerDialogListener {
+public class AddressCardEditFragment extends AbstractAddressCardFragment
+        implements CustomerDialogAdapter.OnCustomerDialogListener {
 
     private     FragmentCardDetailEditBinding           binding;
-    private     CardModel                               card;
+    protected   BusinessCardModel                       card;
     private     int                                     customerId;
     private     Dialog                                  dialog;
     private     DialogFragmentChooseCustomerBinding     viewBinding;
 
-    public static CardEditFragment newInstance(CardModel card) {
-        CardEditFragment fragment = new CardEditFragment();
-        fragment.card = card;
-        return fragment;
-    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

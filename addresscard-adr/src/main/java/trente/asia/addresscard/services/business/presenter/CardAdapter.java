@@ -16,7 +16,7 @@ import trente.asia.addresscard.BR;
 import trente.asia.addresscard.BuildConfig;
 import trente.asia.addresscard.R;
 import trente.asia.addresscard.databinding.CardItemBinding;
-import trente.asia.addresscard.services.business.model.CardModel;
+import trente.asia.addresscard.services.business.model.BusinessCardModel;
 
 /**
  * Created by Windows 10 Gamer on 07/05/2017.
@@ -24,10 +24,10 @@ import trente.asia.addresscard.services.business.model.CardModel;
 
 public class CardAdapter extends RecyclerView.Adapter<ViewHolder> {
     private Context context;
-    private List<CardModel> list;
-    private List<CardModel> listSelected;
+    private List<BusinessCardModel> list;
+    private List<BusinessCardModel> listSelected;
     private OnItemListener callback;
-    public CardAdapter(List<CardModel> list, OnItemListener listener) {
+    public CardAdapter(List<BusinessCardModel> list, OnItemListener listener) {
         this.list = list;
         this.listSelected = new ArrayList<>();
         this.callback = listener;
@@ -42,7 +42,7 @@ public class CardAdapter extends RecyclerView.Adapter<ViewHolder> {
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        final CardModel card = list.get(position);
+        final BusinessCardModel card = list.get(position);
         CardItemBinding binding = (CardItemBinding) holder.getBinding();
         binding.setVariable(BR.card, card);
         binding.executePendingBindings();
@@ -76,12 +76,12 @@ public class CardAdapter extends RecyclerView.Adapter<ViewHolder> {
         });
     }
 
-    public List<CardModel> getListSelected() {
+    public List<BusinessCardModel> getListSelected() {
         return listSelected;
     }
 
     public void deleteSelectedCards() {
-        for (CardModel card : listSelected) {
+        for (BusinessCardModel card : listSelected) {
             list.remove(card);
         }
         listSelected.clear();
@@ -92,7 +92,7 @@ public class CardAdapter extends RecyclerView.Adapter<ViewHolder> {
         if (listSelected.size() == 0) {
             return false;
         }
-        for (CardModel card : listSelected) {
+        for (BusinessCardModel card : listSelected) {
             card.setBackground(false);
         }
         listSelected.clear();
@@ -109,7 +109,7 @@ public class CardAdapter extends RecyclerView.Adapter<ViewHolder> {
     }
 
     public interface OnItemListener {
-        void onItemClick(CardModel card);
+        void onItemClick(BusinessCardModel card);
         void onItemLongClickListener();
         void onUnselectAllItems();
     }
