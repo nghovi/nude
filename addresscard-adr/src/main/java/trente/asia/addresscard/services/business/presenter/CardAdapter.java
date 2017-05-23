@@ -16,7 +16,7 @@ import trente.asia.addresscard.BR;
 import trente.asia.addresscard.BuildConfig;
 import trente.asia.addresscard.R;
 import trente.asia.addresscard.databinding.CardItemBinding;
-import trente.asia.addresscard.services.business.model.BusinessCardModel;
+import trente.asia.addresscard.services.business.model.AddressCardModel;
 
 /**
  * Created by Windows 10 Gamer on 07/05/2017.
@@ -24,14 +24,16 @@ import trente.asia.addresscard.services.business.model.BusinessCardModel;
 
 public class CardAdapter extends RecyclerView.Adapter<ViewHolder> {
     private Context context;
-    private List<BusinessCardModel> list;
-    private List<BusinessCardModel> listSelected;
+    private List<AddressCardModel> cards;
+    private List<AddressCardModel> selectedCards;
     private OnItemListener callback;
-    public CardAdapter(List<BusinessCardModel> list, OnItemListener listener) {
-        this.list = list;
-        this.listSelected = new ArrayList<>();
+
+    public CardAdapter(OnItemListener listener) {
+        this.cards = new ArrayList<>();
+        this.selectedCards = new ArrayList<>();
         this.callback = listener;
     }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         context = parent.getContext();
@@ -42,7 +44,7 @@ public class CardAdapter extends RecyclerView.Adapter<ViewHolder> {
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        final BusinessCardModel card = list.get(position);
+        final AddressCardModel card = cards.get(position);
         CardItemBinding binding = (CardItemBinding) holder.getBinding();
         binding.setVariable(BR.card, card);
         binding.executePendingBindings();
@@ -53,55 +55,60 @@ public class CardAdapter extends RecyclerView.Adapter<ViewHolder> {
         View view = binding.getRoot();
         view.setOnLongClickListener((View v) -> {
                 card.setBackground(true);
-                listSelected.add(card);
+                selectedCards.add(card);
                 callback.onItemLongClickListener();
                 return true;
         });
         view.setOnClickListener((View v) -> {
-                if (listSelected.isEmpty()) {
+                if (selectedCards.isEmpty()) {
                     callback.onItemClick(card);
                     return;
                 }
 
                 if (card.background) {
                     card.setBackground(false);
-                    listSelected.remove(card);
-                    if (listSelected.isEmpty()) {
+                    selectedCards.remove(card);
+                    if (selectedCards.isEmpty()) {
                         callback.onUnselectAllItems();
                     }
                 } else {
                     card.setBackground(true);
-                    listSelected.add(card);
+                    selectedCards.add(card);
                 }
         });
     }
 
-    public List<BusinessCardModel> getListSelected() {
-        return listSelected;
+    public List<AddressCardModel> getSelectedCards() {
+        return selectedCards;
     }
 
     public void deleteSelectedCards() {
-        for (BusinessCardModel card : listSelected) {
-            list.remove(card);
+        for (AddressCardModel card : selectedCards) {
+            cards.remove(card);
         }
-        listSelected.clear();
+        selectedCards.clear();
         notifyDataSetChanged();
     }
 
     public boolean unselectAllCards() {
-        if (listSelected.size() == 0) {
+        if (selectedCards.size() == 0) {
             return false;
         }
-        for (BusinessCardModel card : listSelected) {
+        for (AddressCardModel card : selectedCards) {
             card.setBackground(false);
         }
-        listSelected.clear();
+        selectedCards.clear();
         return true;
+    }
+
+    public void setCards(List<AddressCardModel> cards) {
+        this.cards = cards;
+        notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return cards.size();
     }
 
     private void log(String msg) {
@@ -109,7 +116,7 @@ public class CardAdapter extends RecyclerView.Adapter<ViewHolder> {
     }
 
     public interface OnItemListener {
-        void onItemClick(BusinessCardModel card);
+        void onItemClick(AddressCardModel card);
         void onItemLongClickListener();
         void onUnselectAllItems();
     }

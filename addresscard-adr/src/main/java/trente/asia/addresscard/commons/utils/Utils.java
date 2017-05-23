@@ -11,6 +11,9 @@ import android.support.annotation.NonNull;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
+
+import trente.asia.addresscard.services.business.model.AddressCardModel;
 
 /**
  * Created by tien on 5/18/2017.
@@ -52,5 +55,9 @@ public class Utils {
         String storage = Environment.getExternalStorageDirectory().toString();
         new File(storage + "/" + folderName).mkdir();
         return storage + "/" +folderName;
+    }
+
+    public static String getSize(List<AddressCardModel> list) {
+        return String.valueOf(list.size());
     }
 }

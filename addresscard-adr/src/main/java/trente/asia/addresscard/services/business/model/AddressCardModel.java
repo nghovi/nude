@@ -4,13 +4,14 @@ import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 
 import com.bluelinelabs.logansquare.annotation.JsonField;
+import com.bluelinelabs.logansquare.annotation.JsonObject;
 
 import trente.asia.addresscard.BR;
 
 /**
  * Created by tien on 5/23/2017.
  */
-
+@JsonObject
 public class AddressCardModel extends BaseObservable {
 
     @JsonField

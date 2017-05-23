@@ -35,11 +35,14 @@ public class CardCameraPreviewFragment extends AbstractAddressCardFragment {
     private Bitmap                              logoBitmap;
     private String                              cardPath;
     private String                              logoPath;
+    private String                              apiString;
 
-    public static CardCameraPreviewFragment newInstance(Bitmap cardBitmap, Bitmap logoBitmap) {
+
+    public static CardCameraPreviewFragment newInstance(Bitmap cardBitmap, Bitmap logoBitmap, String apiString) {
         CardCameraPreviewFragment fragment = new CardCameraPreviewFragment();
         fragment.cardBitmap = cardBitmap;
         fragment.logoBitmap = logoBitmap;
+        fragment.apiString = apiString;
         return fragment;
     }
 
@@ -100,6 +103,10 @@ public class CardCameraPreviewFragment extends AbstractAddressCardFragment {
         }
     }
 
+    public void setApiString(String apiString) {
+        this.apiString = apiString;
+    }
+
     private void uploadAddressCard() {
         JSONObject jsonObject = CAObjectSerializeUtil.serializeObject(binding.lnrContent, null);
         Map<String, File> fileMap = new HashMap<>();
@@ -108,7 +115,7 @@ public class CardCameraPreviewFragment extends AbstractAddressCardFragment {
         fileMap.put("card", cardImage);
         fileMap.put("logo", logo);
         Log.e("Upload Address Card", jsonObject.toString());
-        requestUpload(ACConst.AC_BUSINESS_CARD_NEW, jsonObject, fileMap, true);
+        requestUpload(this.apiString, jsonObject, fileMap, true);
     }
 
     @Override

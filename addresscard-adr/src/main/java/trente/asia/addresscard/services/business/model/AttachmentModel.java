@@ -6,7 +6,7 @@ import com.bluelinelabs.logansquare.annotation.JsonObject;
 /**
  * Created by tien on 5/10/2017.
  */
-@JsonObject
+@JsonObject(fieldDetectionPolicy = JsonObject.FieldDetectionPolicy.NONPRIVATE_FIELDS)
 public class AttachmentModel {
     public String service;
     @JsonField

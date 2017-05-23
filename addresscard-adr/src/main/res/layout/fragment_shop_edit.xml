@@ -4,7 +4,7 @@
     <data>
         <variable
             name="card"
-            type="trente.asia.addresscard.services.business.model.BusinessCardModel"/>
+            type="trente.asia.addresscard.services.business.model.AddressCardModel"/>
     </data>
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,9 +21,9 @@
                 android:id="@+id/card_image"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:background="#c7c5c5"
-                android:padding="@dimen/ac_image_padding"/>
+                android:background="#c7c5c5"/>
             <TextView
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/ac_card_detail_title"
@@ -39,35 +39,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
-                    <RelativeLayout
-                        android:id="@+id/rlt_set_customer"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/ac_upload_card_edt_height"
-                        android:padding="@dimen/ac_common_field_padding">
-                        <TextView
-                            android:id="@+id/customer_name_title"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/ac_common_text_color_title"
-                            android:textSize="@dimen/ac_common_text_size_title"
-                            android:text="@string/ac_card_detail_customer_name"/>
-                        <TextView
-                            android:id="@+id/customer_name"
-                            android:layout_below="@+id/customer_name_title"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:textColor="@color/ac_common_text_color_body"
-                            android:textSize="@dimen/ac_common_text_size_body"
-                            android:text="@{card.customerName}"/>
-                        <ImageView
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:layout_width="@dimen/ac_common_field_icon_dimen"
-                            android:layout_height="@dimen/ac_common_field_icon_dimen"
-                            android:src="@drawable/ac_action_right"/>
-                    </RelativeLayout>
-                    <View style="@style/cs_common_divider"/>
+
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -87,10 +59,7 @@
                             android:textColor="@color/ac_common_text_color_body"
                             android:textSize="@dimen/ac_common_text_size_body"
                             android:text="@{card.cardName}"
-                            style="@style/ac_edt_no_underbar_no_enter"
-                            custom:mName="cardName">
-                            <requestFocus/>
-                        </trente.asia.android.view.ChiaseEditText>
+                            custom:mName="cardName"/>
                     </RelativeLayout>
                     <View style="@style/cs_common_divider"/>
                     <RelativeLayout
@@ -111,7 +80,6 @@
                             android:layout_centerVertical="true"
                             android:textColor="@color/ac_common_text_color_body"
                             android:textSize="@dimen/ac_common_text_size_body"
-                            style="@style/ac_edt_no_underbar_no_enter"
                             android:text="@{card.cardTel}"
                             custom:mName="cardTel"/>
                     </RelativeLayout>
@@ -134,7 +102,6 @@
                             android:layout_centerVertical="true"
                             android:textColor="@color/ac_common_text_color_body"
                             android:textSize="@dimen/ac_common_text_size_body"
-                            style="@style/ac_edt_no_underbar_no_enter"
                             android:text="@{card.cardEmail}"
                             custom:mName="cardEmail"/>
                     </RelativeLayout>
@@ -157,7 +124,6 @@
                             android:layout_centerVertical="true"
                             android:textColor="@color/ac_common_text_color_body"
                             android:textSize="@dimen/ac_common_text_size_body"
-                            android:background="@android:color/transparent"
                             android:text="@{card.cardNote}"
                             custom:mName="cardNote"/>
                     </RelativeLayout>
