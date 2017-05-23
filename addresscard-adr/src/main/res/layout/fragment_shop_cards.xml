@@ -2,10 +2,10 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-
-        <variable
-            name="shopTags"
-            type="String" />
+        <import type="java.util.List"/>
+        <import type="trente.asia.addresscard.services.shop.model.TagModel"/>
+        <variable name="shopTags" type="String"/>
+        <variable name="tags" type="List&lt;TagModel&gt;"/>
     </data>
 
     <LinearLayout

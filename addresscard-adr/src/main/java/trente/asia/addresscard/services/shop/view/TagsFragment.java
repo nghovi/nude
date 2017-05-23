@@ -7,6 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
 
 import android.databinding.DataBindingUtil;
+import android.databinding.Observable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import trente.asia.addresscard.ACConst;
 import trente.asia.addresscard.R;
@@ -28,12 +30,18 @@ import trente.asia.addresstag.services.shop.presenter.TagAdapter;
  * Created by viet on 5/22/2017.
  */
 
-public class TagsFragment extends AbstractAddressCardFragment{
+public class TagsFragment extends AbstractAddressCardFragment implements TagAdapter.OnItemClickListener {
 
 	private FragmentTagsBinding			binding;
 	private TagAdapter					adapter;
 	private Uri							photoUri;
 	private FragmentShopCardsBinding	shopCardBinding;
+
+	public void setTags(List<TagModel> tags) {
+		this.tags = tags;
+	}
+
+	private List<TagModel> tags = new ArrayList<>();
 
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState){
@@ -67,33 +75,44 @@ public class TagsFragment extends AbstractAddressCardFragment{
 	@Override
 	protected void initData(){
 		super.initData();
-		JSONObject jsonObject = new JSONObject();
-		requestLoad(ACConst.API_SHOP_TAG_LIST, jsonObject, true);
+		if (CCCollectionUtil.isEmpty(tags)) {
+			JSONObject jsonObject = new JSONObject();
+			requestLoad(ACConst.API_SHOP_TAG_LIST, jsonObject, true);
+		} else {
+			buildLayout();
+		}
 	}
 
 	@Override
 	protected void successLoad(JSONObject response, String url){
-		List<TagModel> tags = null;
 		tags = CCJsonUtil.convertToModelList(response.optString("tags"), TagModel.class);
-		adapter = new TagAdapter(tags);
-		binding.lstTag.setAdapter(adapter);
-		String tagsString = getTagsString(tags);
-		this.shopCardBinding.setShopTags(tagsString);
-		shopCardBinding.executePendingBindings();
+		buildLayout();
+	}
 
+	private void buildLayout() {
+		adapter = new TagAdapter(tags, this);
+		binding.lstTag.setAdapter(adapter);
 	}
 
 	private String getTagsString(List<TagModel> tagModels){
 		List<String> tagNames = new ArrayList<>();
 		for(TagModel tagModel : tagModels){
-			tagNames.add(tagModel.tagName);
+			if (tagModel.selected) {
+				tagNames.add(tagModel.tagName);
+			}
+		}
+		if (CCCollectionUtil.isEmpty(tagNames)) {
+			return getString(R.string.chiase_common_none);
 		}
 		return StringUtils.join(tagNames, ", ");
 	}
 
 	@Override
 	protected void onClickBackBtn(){
-
+		String tagsString = getTagsString(tags);
+		this.shopCardBinding.setShopTags(tagsString);
+		this.shopCardBinding.setTags(tags);
+		shopCardBinding.executePendingBindings();
 		super.onClickBackBtn();
 	}
 
@@ -104,5 +123,10 @@ public class TagsFragment extends AbstractAddressCardFragment{
 
 	public void setShopCardBinding(FragmentShopCardsBinding shopCardBinding){
 		this.shopCardBinding = shopCardBinding;
+	}
+
+	@Override
+	public void onItemClick(TagModel tag) {
+
 	}
 }
