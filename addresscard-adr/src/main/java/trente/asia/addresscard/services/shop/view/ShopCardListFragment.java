@@ -1,13 +1,19 @@
 package trente.asia.addresscard.services.shop.view;
 
 import android.databinding.DataBindingUtil;
+import android.databinding.Observable;
+import android.databinding.OnRebindCallback;
+import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import org.json.JSONObject;
+
+import java.util.List;
 
 import trente.asia.addresscard.ACConst;
 import trente.asia.addresscard.R;
@@ -15,6 +21,7 @@ import trente.asia.addresscard.commons.fragments.AddressCardListFragment;
 import trente.asia.addresscard.databinding.FragmentShopCardsBinding;
 import trente.asia.addresscard.services.business.model.AddressCardModel;
 import trente.asia.addresscard.services.business.presenter.CardAdapter;
+import trente.asia.addresscard.services.shop.model.TagModel;
 
 /**
  * Created by tien on 4/18/2017.
@@ -49,10 +56,16 @@ public class ShopCardListFragment extends AddressCardListFragment {
 			binding.btnDelete.setOnClickListener(this);
 			binding.btnCapture.setOnClickListener(this);
 			binding.rltTags.setOnClickListener(this);
-			binding.setShopTags(getString(R.string.chiase_common_all));
-			// binding.rowCustomer.setOnClickListener(this);
 			adapter = new CardAdapter(this);
-			binding.listCards.setAdapter(adapter);
+			binding.setShopTags(getString(R.string.chiase_common_all));
+			binding.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
+				@Override
+				public void onPropertyChanged(Observable observable, int i) {
+					//// TODO: 5/23/17 Filter shop cards after back from TagFragments
+					Log.e("ShopCardListFragment", "Filter");
+				}
+			});
+			// binding.rowCustomer.setOnClickListener(this);
 			mRootView = binding.getRoot();
 		}
 		return mRootView;
@@ -67,7 +80,7 @@ public class ShopCardListFragment extends AddressCardListFragment {
 	@Override
 	protected void successLoad(JSONObject response, String url){
 		super.successLoad(response,url);
-			binding.listCards.setAdapter(adapter);
+		binding.listCards.setAdapter(adapter);
 	}
 
 	@Override
@@ -105,6 +118,8 @@ public class ShopCardListFragment extends AddressCardListFragment {
 	// // TODO: 5/22/2017 shouldn't create each Tags Fragment?
 	private void gotoTagsFragment(){
 		TagsFragment tagsFragment = new TagsFragment();
+		List<TagModel> tagModels = binding.getTags();
+		tagsFragment.setTags(tagModels);
 		tagsFragment.setShopCardBinding((FragmentShopCardsBinding)binding);
 		gotoFragment(tagsFragment);
 	}

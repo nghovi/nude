@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,9 +25,14 @@ public class TagAdapter extends RecyclerView.Adapter<ViewHolder>{
 	private List<TagModel>	list;
 	private List<TagModel>	listSelected;
 
-	// private OnItemListener callback;
-	public TagAdapter(List<TagModel> list){
+	public interface  OnItemClickListener {
+		public void onItemClick(TagModel tag);
+	}
+
+	private OnItemClickListener listener;
+	public TagAdapter(List<TagModel> list, OnItemClickListener listener){
 		this.list = list;
+		this.listener = listener;
 		// this.listSelected = new ArrayList<>();
 		// this.callback = listener;
 	}
@@ -49,29 +55,11 @@ public class TagAdapter extends RecyclerView.Adapter<ViewHolder>{
 		// binding.lastUpdateUser.setText(
 		// String.format(context.getString(R.string.ac_update_by), tag.lastUpdateUserName));
 		View view = binding.getRoot();
-		// view.setOnLongClickListener((View v) -> {
-		// tag.setBackground(true);
-		// listSelected.add(tag);
-		// callback.onItemLongClickListener();
-		// return true;
-		// });
-		// view.setOnClickListener((View v) -> {
-		// if (listSelected.isEmpty()) {
-		// callback.onItemClick(tag);
-		// return;
-		// }
-		//
-		// if (tag.background) {
-		// tag.setBackground(false);
-		// listSelected.remove(tag);
-		// if (listSelected.isEmpty()) {
-		// callback.onUnselectAllItems();
-		// }
-		// } else {
-		// tag.setBackground(true);
-		// listSelected.add(tag);
-		// }
-		// });
+		 view.setOnClickListener((View v) -> {
+			 listener.onItemClick(tag);
+			 tag.setSelected(!tag.selected);
+		 });
+
 	}
 
 	// public List<TagModel> getListSelected() {
