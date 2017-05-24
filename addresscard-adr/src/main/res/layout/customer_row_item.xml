@@ -7,7 +7,7 @@
     </data>
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/row_height"
+        android:layout_height="@dimen/ac_row_height"
         android:background="@android:color/white">
         <ImageView
             android:id="@+id/left_icon"
@@ -20,7 +20,7 @@
             android:layout_toEndOf="@+id/left_icon"
             android:layout_width="80dp"
             android:layout_marginStart="@dimen/ac_text_margin"
-            android:layout_height="@dimen/row_body_height"
+            android:layout_height="@dimen/ac_row_body_height"
             android:layout_centerVertical="true"
             android:gravity="center_vertical"
             android:maxLines="2"
@@ -33,7 +33,7 @@
             android:layout_toEndOf="@+id/customer_name"
             android:layout_toStartOf="@+id/card"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/row_body_height"
+            android:layout_height="@dimen/ac_row_body_height"
             android:orientation="horizontal"
             android:layout_centerVertical="true">
             <ImageView
@@ -54,7 +54,7 @@
             android:id="@+id/card"
             android:layout_toStartOf="@+id/comment"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/row_body_height"
+            android:layout_height="@dimen/ac_row_body_height"
             style="@style/ac_body_text"
             android:layout_centerVertical="true"
             android:gravity="center_vertical"
@@ -67,7 +67,7 @@
             android:id="@+id/comment"
             android:layout_toStartOf="@+id/right_icon"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/row_body_height"
+            android:layout_height="@dimen/ac_row_body_height"
             style="@style/ac_body_text"
             android:layout_centerVertical="true"
             android:gravity="center_vertical"

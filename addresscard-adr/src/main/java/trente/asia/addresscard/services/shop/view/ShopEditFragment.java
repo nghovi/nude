@@ -1,16 +1,5 @@
 package trente.asia.addresscard.services.shop.view;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import com.android.databinding.library.baseAdapters.BR;
-import com.squareup.picasso.Picasso;
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.databinding.DataBindingUtil;
@@ -22,6 +11,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.android.databinding.library.baseAdapters.BR;
+import com.squareup.picasso.Picasso;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import asia.chiase.core.util.CCJsonUtil;
 import trente.asia.addresscard.ACConst;
 import trente.asia.addresscard.BuildConfig;
@@ -31,8 +31,7 @@ import trente.asia.addresscard.databinding.DialogFragmentChooseCustomerBinding;
 import trente.asia.addresscard.databinding.FragmentShopEditBinding;
 import trente.asia.addresscard.services.business.model.AddressCardModel;
 import trente.asia.addresscard.services.business.model.CustomerModel;
-import trente.asia.addresscard.services.business.presenter
-        .CustomerDialogAdapter;
+import trente.asia.addresscard.services.business.presenter.CustomerDialogAdapter;
 import trente.asia.android.view.util.CAObjectSerializeUtil;
 
 /**
@@ -114,7 +113,7 @@ public class ShopEditFragment extends AbstractAddressCardFragment
         viewBinding = DataBindingUtil.inflate(LayoutInflater.from(getContext()),
                 R.layout.dialog_fragment_choose_customer, null, false);
         builder.setView(viewBinding.getRoot());
-        CustomerDialogAdapter adapter = new CustomerDialogAdapter(customers, this);
+        CustomerDialogAdapter adapter = new CustomerDialogAdapter(customers, customerId, this);
         viewBinding.listCustomers.setAdapter(adapter);
         viewBinding.listCustomers.setLayoutManager(new LinearLayoutManager(getContext()));
         viewBinding.btnNewCustomer.setOnClickListener(this);
