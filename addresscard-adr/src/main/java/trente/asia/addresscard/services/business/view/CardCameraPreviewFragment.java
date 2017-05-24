@@ -103,10 +103,6 @@ public class CardCameraPreviewFragment extends AbstractAddressCardFragment {
         }
     }
 
-    public void setApiString(String apiString) {
-        this.apiString = apiString;
-    }
-
     private void uploadAddressCard() {
         JSONObject jsonObject = CAObjectSerializeUtil.serializeObject(binding.lnrContent, null);
         Map<String, File> fileMap = new HashMap<>();

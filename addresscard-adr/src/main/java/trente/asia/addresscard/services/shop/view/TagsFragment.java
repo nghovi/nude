@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import asia.chiase.core.util.CCCollectionUtil;
+import asia.chiase.core.util.CCJsonUtil;
 import trente.asia.addresscard.ACConst;
 import trente.asia.addresscard.R;
 import trente.asia.addresscard.commons.fragments.AbstractAddressCardFragment;
@@ -86,12 +87,12 @@ public class TagsFragment extends AbstractAddressCardFragment implements TagAdap
 
 	@Override
 	protected void successLoad(JSONObject response, String url){
-		try {
-			tags = LoganSquare.parseList(response.optString("tags"), TagModel.class);
+//		try {
+			tags = CCJsonUtil.convertToModelList(response.optString("tags"), TagModel.class);
 			buildLayout();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 	}
 
 	private void buildLayout(){
