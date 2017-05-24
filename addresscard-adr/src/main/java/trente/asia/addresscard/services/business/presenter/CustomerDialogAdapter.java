@@ -17,38 +17,43 @@ import trente.asia.addresscard.services.business.model.CustomerModel;
  */
 
 public class CustomerDialogAdapter extends RecyclerView.Adapter<ViewHolder>{
-    private List<CustomerModel>                 list;
-    private CustomerDialogItemBinding           binding;
-    private OnCustomerDialogListener            callback;
 
-    public CustomerDialogAdapter(List<CustomerModel> list, OnCustomerDialogListener listener) {
-        this.list = list;
-        this.callback = listener;
-    }
+	private List<CustomerModel>			list;
+	private OnCustomerDialogListener	callback;
+	private int							selectedCustomerId;
 
-    @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.customer_dialog_item, parent, false);
-        return new ViewHolder(view);
-    }
+	public CustomerDialogAdapter(List<CustomerModel> list, int selectedCustomerId, OnCustomerDialogListener listener){
+		this.list = list;
+		this.callback = listener;
+        this.selectedCustomerId = selectedCustomerId;
+	}
 
-    @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        CustomerModel customer = list.get(position);
-        binding = (CustomerDialogItemBinding) holder.getBinding();
-        binding.setVariable(BR.customer, customer);
-        binding.executePendingBindings();
-        binding.getRoot().setOnClickListener((View v) -> {
-            callback.onSelectCustomer(customer);
-        });
-    }
+	@Override
+	public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
+		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.customer_dialog_item, parent, false);
+		return new ViewHolder(view);
+	}
 
-    @Override
-    public int getItemCount() {
-        return list.size();
-    }
+	@Override
+	public void onBindViewHolder(ViewHolder holder, int position){
+		CustomerModel customer = list.get(position);
+		CustomerDialogItemBinding binding = (CustomerDialogItemBinding)holder.getBinding();
+		binding.setVariable(BR.customer, customer);
+		binding.executePendingBindings();
+		binding.getRoot().setOnClickListener((View v) -> {
+			callback.onSelectCustomer(customer);
+		});
+        binding.iconRight.setVisibility(
+                customer.key == selectedCustomerId ? View.VISIBLE : View.INVISIBLE);
+	}
 
-    public interface OnCustomerDialogListener {
-        public void onSelectCustomer(CustomerModel customer);
-    }
+	@Override
+	public int getItemCount(){
+		return list.size();
+	}
+
+	public interface OnCustomerDialogListener{
+
+		void onSelectCustomer(CustomerModel customer);
+	}
 }

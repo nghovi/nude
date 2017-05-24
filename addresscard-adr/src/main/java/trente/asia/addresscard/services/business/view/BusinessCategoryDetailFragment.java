@@ -1,8 +1,5 @@
 package trente.asia.addresscard.services.business.view;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,6 +7,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import asia.chiase.core.util.CCJsonUtil;
 import trente.asia.addresscard.ACConst;
@@ -41,11 +41,9 @@ public class BusinessCategoryDetailFragment extends AbstractAddressCardFragment{
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
 		if(mRootView == null){
 			binding = DataBindingUtil.inflate(inflater, R.layout.fragment_category_detail, container, false);
-			// binding.
 			mRootView = binding.getRoot();
 			adapter = new CategoryCustomerAdapter();
 			binding.listCustomers.setAdapter(adapter);
-//            binding.
 			binding.listCustomers.setLayoutManager(new LinearLayoutManager(getContext()));
 			mRootView.findViewById(R.id.img_id_header_right_icon).setOnClickListener(this);
 		}
@@ -72,13 +70,8 @@ public class BusinessCategoryDetailFragment extends AbstractAddressCardFragment{
 			binding.setVariable(BR.category, category);
 			binding.executePendingBindings();
 			adapter.setCustomers(category.customers);
+			super.initHeader(R.drawable.ac_back_white, category.categoryName, R.drawable.ac_action_edit);
 		}
-	}
-
-	@Override
-	protected void initView(){
-		super.initView();
-		super.initHeader(R.drawable.ac_back_white, "Airline", R.drawable.ac_action_edit);
 	}
 
 	@Override

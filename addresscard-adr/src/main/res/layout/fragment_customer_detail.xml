@@ -65,9 +65,10 @@
                 <View style="@style/cs_common_divider" />
 
                 <RelativeLayout
+                    android:id="@+id/row_tel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@android:color/white"
+                    android:background="@drawable/row_pressed_selector"
                     android:padding="@dimen/ac_common_field_padding">
 
                     <TextView
@@ -76,18 +77,24 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/ac_tel" />
-
                     <TextView
                         style="@style/ac_body_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/tel_title"
-                        android:text="@{customer.customerTel}" />
+                        android:text="@{customer.customerTel}"
+                        android:layout_toStartOf="@+id/icon_phone"
+                        android:layout_marginEnd="10dp"/>
+                    <ImageView
+                        android:id="@+id/icon_phone"
+                        style="@style/ac_icon_right"
+                        android:src="@drawable/ac_icon_phone"/>
                 </RelativeLayout>
 
                 <View style="@style/cs_common_divider" />
 
                 <RelativeLayout
+                    android:id="@+id/row_address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:color/white"
@@ -105,12 +112,20 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/address_title"
-                        android:text="@{customer.customerAddress}" />
+                        android:text="@{customer.customerAddress}"
+                        android:layout_toStartOf="@+id/icon_map"
+                        android:layout_marginEnd="10dp"/>
+
+                    <ImageView
+                        android:id="@+id/icon_map"
+                        style="@style/ac_icon_right"
+                        android:src="@drawable/ac_icon_map"/>
                 </RelativeLayout>
 
                 <View style="@style/cs_common_divider" />
 
                 <RelativeLayout
+                    android:id="@+id/row_browser"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:color/white"
@@ -128,7 +143,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/url_title"
-                        android:text="@{customer.customerUrl}" />
+                        android:text="@{customer.customerUrl}"
+                        android:layout_toStartOf="@+id/icon_browser"
+                        android:layout_marginEnd="10dp"/>
+
+                    <ImageView
+                        android:id="@+id/icon_browser"
+                        style="@style/ac_icon_right"
+                        android:src="@drawable/ac_icon_browser"/>
                 </RelativeLayout>
 
                 <View style="@style/cs_common_divider" />

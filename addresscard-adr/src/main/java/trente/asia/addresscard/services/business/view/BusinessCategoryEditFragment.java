@@ -46,7 +46,6 @@ public class BusinessCategoryEditFragment extends AbstractAddressCardFragment {
             binding = DataBindingUtil.inflate(inflater, R.layout.fragment_category_edit, container, false);
             mRootView = binding.getRoot();
             binding.setVariable(BR.category, category);
-
             binding.listCustomers.setLayoutManager(new LinearLayoutManager(getContext()));
             mRootView.findViewById(R.id.img_id_header_right_icon).setOnClickListener(this);
         }
@@ -116,6 +115,6 @@ public class BusinessCategoryEditFragment extends AbstractAddressCardFragment {
     }
 
     private void log(String msg) {
-        Log.e("BusinessCategoryEditFragment", msg);
+        Log.e("BusinessCategoryEdit", msg);
     }
 }

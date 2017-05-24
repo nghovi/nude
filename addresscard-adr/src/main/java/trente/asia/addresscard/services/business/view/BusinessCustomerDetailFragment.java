@@ -18,6 +18,7 @@ import trente.asia.addresscard.ACConst;
 import trente.asia.addresscard.BuildConfig;
 import trente.asia.addresscard.R;
 import trente.asia.addresscard.commons.fragments.AbstractAddressCardFragment;
+import trente.asia.addresscard.commons.utils.Utils;
 import trente.asia.addresscard.databinding.FragmentCustomerDetailBinding;
 import trente.asia.addresscard.services.business.model.CustomerModel;
 import trente.asia.addresscard.services.business.presenter.CustomerDetailCardAdapter;
@@ -47,6 +48,9 @@ public class BusinessCustomerDetailFragment extends AbstractAddressCardFragment 
 
             binding.listCards.setNestedScrollingEnabled(false);
             binding.rowLastComments.setOnClickListener(this);
+            binding.rowAddress.setOnClickListener(this);
+            binding.rowBrowser.setOnClickListener(this);
+            binding.rowTel.setOnClickListener(this);
 
             mRootView.findViewById(R.id.img_id_header_right_icon).setOnClickListener(this);
         }
@@ -96,6 +100,15 @@ public class BusinessCustomerDetailFragment extends AbstractAddressCardFragment 
             case R.id.row_last_comments:
                 showCommentFragment();
                 break;
+            case R.id.row_tel:
+                startPhoneCall();
+                break;
+            case R.id.row_address:
+                openMap();
+                break;
+            case R.id.row_browser:
+                openBrowser();
+                break;
             default:
                 break;
         }
@@ -107,5 +120,17 @@ public class BusinessCustomerDetailFragment extends AbstractAddressCardFragment 
 
     private void showCommentFragment() {
         gotoFragment(BusinessCustomerCommentFragment.newInstance(customer));
+    }
+
+    private void startPhoneCall() {
+        Utils.startPhoneCall(getContext(), customer.customerTel);
+    }
+
+    private void openMap() {
+
+    }
+
+    private void openBrowser() {
+
     }
 }

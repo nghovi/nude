@@ -5,9 +5,7 @@
     </data>
     <LinearLayout
         style="@style/cs_common_match"
-        android:background="@color/wf_login_background_color"
         android:orientation="vertical">
-
 
         <include layout="@layout/ac_header" />
 
@@ -31,7 +29,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/general_margin"
-                    android:text="Category"
+                    android:text="@string/ac_category"
                     android:textSize="@dimen/text_size"
                     android:textColor="@android:color/black"/>
 
@@ -40,7 +38,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_toStartOf="@+id/arrow_category"
-                    android:text="All"
+                    android:text="@string/ac_all"
                     android:textSize="@dimen/text_size"
                     android:textColor="@android:color/black"/>
 
@@ -71,7 +69,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/general_margin"
-                    android:text="Customer"
+                    android:text="@string/ac_customer"
                     android:textSize="@dimen/text_size"
                     android:textColor="@android:color/black"/>
 
@@ -80,7 +78,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_toStartOf="@+id/arrow_group"
-                    android:text="All"
+                    android:text="@string/ac_all"
                     android:textSize="@dimen/text_size"
                     android:textColor="@android:color/black"/>
 
@@ -99,7 +97,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/title_background"
                 android:padding="@dimen/title_padding"
-                android:text="Latest card list"
+                android:text="@string/ac_lastest_card_list"
                 android:textSize="@dimen/text_size"
                 android:textColor="@android:color/black"/>
 
@@ -107,7 +105,8 @@
                 android:id="@+id/list_cards"
                 android:layout_below="@+id/list_card_title"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:background="@android:color/white"/>
             <ImageView
                 android:id="@+id/btn_capture"
                 android:layout_width="70dp"
@@ -124,7 +123,7 @@
                 android:layout_width="300dp"
                 android:layout_height="60dp"
                 android:background="@drawable/btn_delete_background"
-                android:text="Delete"
+                android:text="@string/ac_delete"
                 android:textSize="20sp"
                 android:textColor="@android:color/white"
                 android:layout_alignParentBottom="true"

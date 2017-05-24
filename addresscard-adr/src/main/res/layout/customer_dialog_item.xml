@@ -13,10 +13,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:padding="@dimen/ac_common_field_padding"
+            android:padding="@dimen/title_padding"
             android:textSize="@dimen/ac_common_text_size_body"
             android:textColor="@color/ac_common_text_color_body"
+            android:layout_toStartOf="@+id/icon_right"
             android:text="@{customer.customerName}"/>
+        <ImageView
+            style="@style/ac_icon_right"
+            android:id="@+id/icon_right"
+            android:src="@drawable/ac_action_check"
+            android:padding="@dimen/ac_icon_padding"
+            android:layout_marginEnd="@dimen/general_margin"
+            android:visibility="invisible"/>
         <View style="@style/cs_common_divider"
             android:layout_below="@+id/text_view"/>
     </RelativeLayout>

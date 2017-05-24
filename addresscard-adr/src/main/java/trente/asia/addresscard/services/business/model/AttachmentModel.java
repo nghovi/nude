@@ -6,22 +6,31 @@ import com.bluelinelabs.logansquare.annotation.JsonObject;
 /**
  * Created by tien on 5/10/2017.
  */
-@JsonObject(fieldDetectionPolicy = JsonObject.FieldDetectionPolicy.NONPRIVATE_FIELDS)
-public class AttachmentModel {
-    public String service;
-    @JsonField
-    public int key;
+@JsonObject
+public class AttachmentModel{
 
-    public String fileType;
+	@JsonField
+	public String	service;
 
-    public String fileName;
+	@JsonField
+	public int		key;
 
-    public String fileUrl;
+	@JsonField
+	public String	fileType;
 
-    public int fileSize;
+	@JsonField
+	public String	fileName;
 
-    public String attachedType;
+	@JsonField
+	public String	fileUrl;
 
-    public Boolean isOrginal;
+	@JsonField
+	public int		fileSize;
+
+	@JsonField
+	public String	attachedType;
+
+	@JsonField
+	public Boolean	isOrginal;
 
 }

@@ -11,9 +11,11 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#c9bf64"
-            android:padding="@dimen/ac_common_field_padding"
+            android:background="@color/wf_app_color_base"
+            android:padding="@dimen/title_padding"
             android:text="@string/ac_set_customer_title"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/ac_common_text_size_body"
             android:gravity="center_horizontal"/>
         <TextView
             android:layout_width="match_parent"
@@ -28,7 +30,11 @@
                 android:id="@+id/edt_new_customer"
                 android:layout_width="0dp"
                 android:layout_weight="3"
-                android:layout_height="50dp" />
+                android:layout_height="50dp"
+                android:padding="5dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="5dp"
+                android:background="@drawable/round_edt_frame"/>
             <ImageView
                 android:id="@+id/btn_new_customer"
                 android:layout_width="50dp"

@@ -1,6 +1,7 @@
 package trente.asia.addresscard.commons.utils;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -59,5 +60,24 @@ public class Utils {
 
     public static String getSize(List<AddressCardModel> list) {
         return String.valueOf(list.size());
+    }
+
+    public static void startPhoneCall(Context context, String phoneNumber) {
+        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phoneNumber));
+        context.startActivity(intent);
+    }
+
+    public static void sendEmail(Context context, String mail) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.putExtra(Intent.EXTRA_EMAIL, mail);
+        context.startActivity(intent);
+    }
+
+    public static void openMap(Context context, String address) {
+
+    }
+
+    public static void openBrowser(Context context, String url) {
+
     }
 }

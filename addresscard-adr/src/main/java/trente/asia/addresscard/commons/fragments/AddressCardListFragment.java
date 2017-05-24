@@ -82,11 +82,6 @@ public abstract class AddressCardListFragment extends AbstractAddressCardFragmen
         showBtnCapture();
     }
 
-    @Override
-    public void onItemClick(AddressCardModel card) {
-        gotoFragment(BusinessCardDetailFragment.newInstance(card.key));
-    }
-
     private void takeCapture() {
         ContentValues values = new ContentValues();
         photoUri = getActivity().getContentResolver().insert(
@@ -109,10 +104,12 @@ public abstract class AddressCardListFragment extends AbstractAddressCardFragmen
                 e.printStackTrace();
             }
             Bitmap logoBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.logo);
-            String apiString = getApiLoadString();
-            gotoFragment(CardCameraPreviewFragment.newInstance(cardBitmap, logoBitmap, apiString));
+            String uploadApi = getUploadApi();
+            gotoFragment(CardCameraPreviewFragment.newInstance(cardBitmap, logoBitmap, uploadApi));
         }
     }
+
+    protected abstract String getUploadApi();
 
     public void onBtnDeleteClick() {
         String cardIds = "";

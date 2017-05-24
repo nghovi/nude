@@ -21,25 +21,26 @@ import trente.asia.addresscard.commons.fragments.AddressCardListFragment;
 import trente.asia.addresscard.databinding.FragmentShopCardsBinding;
 import trente.asia.addresscard.services.business.model.AddressCardModel;
 import trente.asia.addresscard.services.business.presenter.CardAdapter;
+import trente.asia.addresscard.services.business.view.BusinessCardDetailFragment;
 import trente.asia.addresscard.services.shop.model.TagModel;
 
 /**
  * Created by tien on 4/18/2017.
  */
 
-public class ShopCardListFragment extends AddressCardListFragment {
+public class ShopCardListFragment extends AddressCardListFragment{
 
-	private FragmentShopCardsBinding	binding;
-//	private CardAdapter					adapterr;
-//	private Uri							photoUri;
+	private FragmentShopCardsBinding binding;
+	// private CardAdapter adapterr;
+	// private Uri photoUri;
 
-//	@photoUriOverride
-//	public void onCreate(@Nullable Bundle savedInstanceState){
-//		super.onCreate(savedInstanceState);
-//	}
+	// @photoUriOverride
+	// public void onCreate(@Nullable Bundle savedInstanceState){
+	// super.onCreate(savedInstanceState);
+	// }
 
 	@Override
-	protected void initViewBinding(LayoutInflater inflater, ViewGroup container) {
+	protected void initViewBinding(LayoutInflater inflater, ViewGroup container){
 		binding = DataBindingUtil.inflate(inflater, R.layout.fragment_shop_cards, container, false);
 	}
 
@@ -57,10 +58,12 @@ public class ShopCardListFragment extends AddressCardListFragment {
 			binding.btnCapture.setOnClickListener(this);
 			binding.rltTags.setOnClickListener(this);
 			adapter = new CardAdapter(this);
+			binding.listCards.setAdapter(adapter);
 			binding.setShopTags(getString(R.string.chiase_common_all));
 			binding.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
+
 				@Override
-				public void onPropertyChanged(Observable observable, int i) {
+				public void onPropertyChanged(Observable observable, int i){
 					//// TODO: 5/23/17 Filter shop cards after back from TagFragments
 					Log.e("ShopCardListFragment", "Filter");
 				}
@@ -72,16 +75,21 @@ public class ShopCardListFragment extends AddressCardListFragment {
 	}
 
 	@Override
+	public void onItemClick(AddressCardModel card){
+		gotoFragment(ShopCardDetailFragment.newInstance(card.key));
+	}
+
+	@Override
 	public void initView(){
 		super.initView();
 		super.initHeader(null, getString(R.string.shop_cards_title), null);
 	}
 
-	@Override
-	protected void successLoad(JSONObject response, String url){
-		super.successLoad(response,url);
-		binding.listCards.setAdapter(adapter);
-	}
+	// @Override
+	// protected void successLoad(JSONObject response, String url){
+	// super.successLoad(response,url);
+	//// binding.listCards.setAdapter(adapter);
+	// }
 
 	@Override
 	public void onClick(View view){
@@ -95,23 +103,28 @@ public class ShopCardListFragment extends AddressCardListFragment {
 		}
 	}
 
-	public void showBtnDelete() {
+	@Override
+	protected String getUploadApi() {
+		return ACConst.API_SHOP_CARD_UPDATE;
+	}
+
+	public void showBtnDelete(){
 		binding.btnDelete.setVisibility(View.VISIBLE);
 		binding.btnCapture.setVisibility(View.GONE);
 	}
 
-	public void showBtnCapture() {
+	public void showBtnCapture(){
 		binding.btnDelete.setVisibility(View.GONE);
 		binding.btnCapture.setVisibility(View.VISIBLE);
 	}
 
 	@Override
-	protected String getApiLoadString() {
+	protected String getApiLoadString(){
 		return ACConst.API_SHOP_CARD_LIST;
 	}
 
 	@Override
-	protected String getApiDeleteString() {
+	protected String getApiDeleteString(){
 		return null;
 	}
 
@@ -122,11 +135,5 @@ public class ShopCardListFragment extends AddressCardListFragment {
 		tagsFragment.setTags(tagModels);
 		tagsFragment.setShopCardBinding((FragmentShopCardsBinding)binding);
 		gotoFragment(tagsFragment);
-	}
-
-
-	@Override
-	public void onItemClick(AddressCardModel card) {
-
 	}
 }
