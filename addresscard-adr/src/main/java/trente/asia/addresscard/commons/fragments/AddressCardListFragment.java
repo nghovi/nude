@@ -82,11 +82,6 @@ public abstract class AddressCardListFragment extends AbstractAddressCardFragmen
         showBtnCapture();
     }
 
-    @Override
-    public void onItemClick(AddressCardModel card) {
-        gotoFragment(BusinessCardDetailFragment.newInstance(card.key));
-    }
-
     private void takeCapture() {
         ContentValues values = new ContentValues();
         photoUri = getActivity().getContentResolver().insert(

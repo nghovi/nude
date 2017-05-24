@@ -11,44 +11,46 @@ import trente.asia.addresscard.R;
  * Created by tien on 5/23/2017.
  */
 
-public abstract class AddressCardEditFragment extends AbstractAddressCardFragment {
-    protected   int                                     key;
+public abstract class AddressCardEditFragment extends AbstractAddressCardFragment{
 
-    @Override
-    protected void initData() {
-        super.initData();
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("key", key);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        requestLoad(getApiLoadData(), jsonObject, true);
+	protected int key;
 
-    }
+	@Override
+	protected void initData(){
+		super.initData();
+		JSONObject jsonObject = new JSONObject();
+		try{
+			jsonObject.put("key", key);
+		}catch(JSONException e){
+			e.printStackTrace();
+		}
+		requestLoad(getApiLoadData(), jsonObject, true);
 
-    @Override
-    public int getFooterItemId() {
-        return R.id.lnr_view_footer_card;
-    }
+	}
 
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.img_id_header_right_icon:
-                finishEditCard();
-                break;
-            default:
-                break;
-        }
-    }
+	@Override
+	public int getFooterItemId(){
+		return R.id.lnr_view_footer_card;
+	}
 
-    private void finishEditCard() {
-        updateAddressCard();
-        onClickBackBtn();
-    }
+	@Override
+	public void onClick(View view){
+		switch(view.getId()){
+		case R.id.img_id_header_right_icon:
+			finishEditCard();
+			break;
+		default:
+			break;
+		}
+	}
 
-    protected abstract void updateAddressCard();
-    protected abstract String getApiLoadData();
+	private void finishEditCard(){
+		updateAddressCard();
+		onClickBackBtn();
+	}
+
+	protected abstract void updateAddressCard();
+
+	protected abstract String getApiLoadData();
 
 }

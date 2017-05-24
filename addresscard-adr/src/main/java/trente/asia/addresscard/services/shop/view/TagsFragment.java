@@ -1,13 +1,15 @@
 package trente.asia.addresscard.services.shop.view;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
 
+import com.bluelinelabs.logansquare.LoganSquare;
+
 import android.databinding.DataBindingUtil;
-import android.databinding.Observable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,7 +19,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import asia.chiase.core.util.CCCollectionUtil;
-import asia.chiase.core.util.CCJsonUtil;
 import trente.asia.addresscard.ACConst;
 import trente.asia.addresscard.R;
 import trente.asia.addresscard.commons.fragments.AbstractAddressCardFragment;
@@ -30,14 +31,14 @@ import trente.asia.addresstag.services.shop.presenter.TagAdapter;
  * Created by viet on 5/22/2017.
  */
 
-public class TagsFragment extends AbstractAddressCardFragment implements TagAdapter.OnItemClickListener {
+public class TagsFragment extends AbstractAddressCardFragment implements TagAdapter.OnItemClickListener{
 
 	private FragmentTagsBinding			binding;
 	private TagAdapter					adapter;
 	private Uri							photoUri;
 	private FragmentShopCardsBinding	shopCardBinding;
 
-	public void setTags(List<TagModel> tags) {
+	public void setTags(List<TagModel> tags){
 		this.tags = tags;
 	}
 
@@ -75,21 +76,25 @@ public class TagsFragment extends AbstractAddressCardFragment implements TagAdap
 	@Override
 	protected void initData(){
 		super.initData();
-		if (CCCollectionUtil.isEmpty(tags)) {
+		if(CCCollectionUtil.isEmpty(tags)){
 			JSONObject jsonObject = new JSONObject();
 			requestLoad(ACConst.API_SHOP_TAG_LIST, jsonObject, true);
-		} else {
+		}else{
 			buildLayout();
 		}
 	}
 
 	@Override
 	protected void successLoad(JSONObject response, String url){
-		tags = CCJsonUtil.convertToModelList(response.optString("tags"), TagModel.class);
-		buildLayout();
+		try {
+			tags = LoganSquare.parseList(response.optString("tags"), TagModel.class);
+			buildLayout();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
-	private void buildLayout() {
+	private void buildLayout(){
 		adapter = new TagAdapter(tags, this);
 		binding.lstTag.setAdapter(adapter);
 	}
@@ -97,11 +102,11 @@ public class TagsFragment extends AbstractAddressCardFragment implements TagAdap
 	private String getTagsString(List<TagModel> tagModels){
 		List<String> tagNames = new ArrayList<>();
 		for(TagModel tagModel : tagModels){
-			if (tagModel.selected) {
+			if(tagModel.selected){
 				tagNames.add(tagModel.tagName);
 			}
 		}
-		if (CCCollectionUtil.isEmpty(tagNames)) {
+		if(CCCollectionUtil.isEmpty(tagNames)){
 			return getString(R.string.chiase_common_none);
 		}
 		return StringUtils.join(tagNames, ", ");
@@ -126,7 +131,7 @@ public class TagsFragment extends AbstractAddressCardFragment implements TagAdap
 	}
 
 	@Override
-	public void onItemClick(TagModel tag) {
+	public void onItemClick(TagModel tag){
 
 	}
 }

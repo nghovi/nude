@@ -40,6 +40,11 @@ public class BusinessCardListFragment extends AddressCardListFragment {
     }
 
     @Override
+    public void onItemClick(AddressCardModel card) {
+        gotoFragment(BusinessCardDetailFragment.newInstance(card.key));
+    }
+
+    @Override
     protected void initViewBinding(LayoutInflater inflater, ViewGroup container) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_business_card_main, container, false);
     }
