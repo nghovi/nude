@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import asia.chiase.core.util.CCJsonUtil;
 import trente.asia.addresscard.ACConst;
 import trente.asia.addresscard.BR;
 import trente.asia.addresscard.BuildConfig;
@@ -66,15 +67,15 @@ public class ShopCardEditFragment extends AddressCardEditFragment{
 	@Override
 	protected void successLoad(JSONObject response, String url){
 		if(ACConst.API_SHOP_CARD_DETAIL.equals(url)){
-			try{
-				card = LoganSquare.parse(response.optString("card"), ShopCardModel.class);
+//			try{
+				card = CCJsonUtil.convertToModel(response.optString("card"), ShopCardModel.class);
 				binding.setVariable(BR.card, card);
 				binding.executePendingBindings();
 				Picasso.with(getContext()).load(BuildConfig.HOST + card.attachment.fileUrl).into(binding.cardImage);
 				updateHeader(card.cardName);
-			}catch(IOException e){
-				e.printStackTrace();
-			}
+//			}catch(IOException e){
+//				e.printStackTrace();
+//			}
 		}
 	}
 

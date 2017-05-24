@@ -12,6 +12,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+import asia.chiase.core.util.CCStringUtil;
 import trente.asia.addresscard.BR;
 import trente.asia.addresscard.BuildConfig;
 import trente.asia.addresscard.R;
@@ -50,8 +51,12 @@ public class CardAdapter extends RecyclerView.Adapter<ViewHolder> {
         binding.executePendingBindings();
         Picasso.with(context)
                 .load(BuildConfig.HOST + card.attachment.fileUrl).into(binding.cardImage);
-        binding.lastUpdateUser.setText(
-                String.format(context.getString(R.string.ac_update_by), card.lastUpdateUserName));
+        if (!CCStringUtil.isEmpty(card.lastUpdateUserName)) {
+            binding.lastUpdateUser.setText(
+                    String.format(context.getString(R.string.ac_update_by), card.lastUpdateUserName));
+        } else {
+            binding.lastUpdateUser.setVisibility(View.GONE);
+        }
         View view = binding.getRoot();
         view.setOnLongClickListener((View v) -> {
                 card.setBackground(true);

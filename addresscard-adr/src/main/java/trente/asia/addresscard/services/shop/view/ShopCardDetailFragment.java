@@ -53,15 +53,15 @@ public class ShopCardDetailFragment extends AddressCardDetailFragment{
 
 	@Override
 	protected void loadLayout(JSONObject response){
-		try{
-			card = LoganSquare.parse(response.optString("card"), ShopCardModel.class);
+//		try{
+			card = CCJsonUtil.convertToModel(response.optString("card"), ShopCardModel.class);
 			Picasso.with(getContext()).load(BuildConfig.HOST + card.attachment.fileUrl).into(getImageView());
 			binding.setVariable(BR.card, card);
 			binding.executePendingBindings();
 			super.initHeader(R.drawable.ac_back_white, card.cardName, R.drawable.ac_action_edit);
-		}catch(IOException e){
-			e.printStackTrace();
-		}
+//		}catch(IOException e){
+//			e.printStackTrace();
+//		}
 	}
 
 	@Override

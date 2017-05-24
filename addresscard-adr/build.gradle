@@ -14,7 +14,7 @@ android {
 
         jackOptions {
             enabled true
-//            additionalParameters('jack.incremental': 'true')
+            additionalParameters('jack.incremental': 'true')
         }
     }
 
