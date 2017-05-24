@@ -22,6 +22,12 @@ import trente.asia.addresscard.services.business.model.BusinessCardModel;
 public class BusinessCardDetailFragment extends AddressCardDetailFragment {
     private BusinessCardModel card;
 
+    public static BusinessCardDetailFragment newInstance(int cardKey) {
+        BusinessCardDetailFragment fragment = new BusinessCardDetailFragment();
+        fragment.key = cardKey;
+        return fragment;
+    }
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_card_detail_show;

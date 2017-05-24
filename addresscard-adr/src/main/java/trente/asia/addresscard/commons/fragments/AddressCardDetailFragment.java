@@ -14,7 +14,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import trente.asia.addresscard.R;
-import trente.asia.addresscard.services.business.view.BusinessCardDetailFragment;
 
 /**
  * Created by tien on 5/23/2017.
@@ -24,11 +23,7 @@ public abstract class AddressCardDetailFragment extends AbstractAddressCardFragm
     protected   int                                 key;
     protected   ViewDataBinding                     binding;
 
-    public static BusinessCardDetailFragment newInstance(int cardKey) {
-        BusinessCardDetailFragment fragment = new BusinessCardDetailFragment();
-        fragment.key = cardKey;
-        return fragment;
-    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

@@ -26,7 +26,10 @@
                 android:textColor="@color/chiase_white"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:gravity="center_vertical|center_horizontal"/>
+                android:gravity="center_vertical|center_horizontal"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:padding="@dimen/title_padding"/>
         </LinearLayout>
 
         <ImageView
