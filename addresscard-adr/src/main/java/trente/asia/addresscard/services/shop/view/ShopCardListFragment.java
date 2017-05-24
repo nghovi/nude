@@ -103,6 +103,11 @@ public class ShopCardListFragment extends AddressCardListFragment{
 		}
 	}
 
+	@Override
+	protected String getUploadApi() {
+		return ACConst.API_SHOP_CARD_UPDATE;
+	}
+
 	public void showBtnDelete(){
 		binding.btnDelete.setVisibility(View.VISIBLE);
 		binding.btnCapture.setVisibility(View.GONE);

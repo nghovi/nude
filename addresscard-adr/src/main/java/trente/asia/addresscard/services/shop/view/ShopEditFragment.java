@@ -160,7 +160,7 @@ public class ShopEditFragment extends AbstractAddressCardFragment
         }
         Map<String, File> fileMap = new HashMap<>();
         log(jsonObject.toString());
-        requestUpload(ACConst.AC_BUSINESS_CARD_UPDATE, jsonObject, fileMap, true);
+        requestUpload(ACConst.API_SHOP_CARD_UPDATE, jsonObject, fileMap, true);
     }
 
     @Override

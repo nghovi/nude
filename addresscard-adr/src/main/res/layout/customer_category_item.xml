@@ -13,7 +13,7 @@
             android:id="@+id/customer_logo"
             style="@style/ac_icon_left"
             android:padding="@dimen/ac_common_field_padding"
-            android:src="@drawable/test_thai_airline"/>
+            android:src="@drawable/thumbnail_failure"/>
         <TextView
             android:id="@+id/customer_name"
             android:layout_toEndOf="@id/customer_logo"

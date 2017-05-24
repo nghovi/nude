@@ -37,6 +37,9 @@ public class AddressCardModel extends BaseObservable{
 	public String			cardNote;
 
 	@JsonField
+	public String			cardAddress;
+
+	@JsonField
 	public boolean			background;
 
 	public void setBackground(boolean background){

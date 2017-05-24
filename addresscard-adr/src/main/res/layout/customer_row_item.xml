@@ -12,7 +12,7 @@
         <ImageView
             android:id="@+id/left_icon"
             style="@style/ac_icon_left"
-            android:src="@drawable/test_vn_airline"
+            android:src="@drawable/thumbnail_failure"
             android:padding="@dimen/ac_image_padding"/>
 
         <TextView

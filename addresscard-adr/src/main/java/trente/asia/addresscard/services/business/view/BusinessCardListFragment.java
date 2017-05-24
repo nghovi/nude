@@ -89,6 +89,11 @@ public class BusinessCardListFragment extends AddressCardListFragment {
     }
 
     @Override
+    protected String getUploadApi() {
+        return ACConst.AC_BUSINESS_CARD_NEW;
+    }
+
+    @Override
     protected String getApiLoadString() {
         return ACConst.AC_BUSINESS_CARD_LIST;
     }

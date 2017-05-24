@@ -144,6 +144,39 @@
 
                     <RelativeLayout
                         android:layout_width="match_parent"
+                        android:layout_height="@dimen/ac_upload_card_edt_height"
+                        android:padding="@dimen/ac_common_field_padding">
+
+                        <TextView
+                            android:id="@+id/address_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/shop_card_detail_address"
+                            android:textColor="@color/ac_common_text_color_title"
+                            android:textSize="@dimen/ac_common_text_size_title" />
+
+                        <TextView
+                            android:id="@+id/card_address"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/address_title"
+                            android:layout_centerVertical="true"
+                            android:text="@{card.cardAddress}"
+                            android:textColor="@color/ac_common_text_color_body"
+                            android:textSize="@dimen/ac_common_text_size_body" />
+
+                        <ImageView
+                            android:layout_width="@dimen/ac_common_field_icon_dimen"
+                            android:layout_height="@dimen/ac_common_field_icon_dimen"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/ac_icon_map" />
+                    </RelativeLayout>
+
+                    <View style="@style/cs_common_divider" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:minHeight="@dimen/ac_upload_card_edt_height"
                         android:padding="@dimen/ac_common_field_padding">

@@ -1,140 +1,194 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:custom="http://schemas.android.com/apk/res-auto">
+
     <data>
+
         <variable
             name="card"
-            type="trente.asia.addresscard.services.shop.model.ShopCardModel"/>
+            type="trente.asia.addresscard.services.shop.model.ShopCardModel" />
     </data>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <include layout="@layout/ac_header"/>
+
+        <include layout="@layout/ac_header" />
+
         <LinearLayout
             android:id="@+id/lnr_content"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="vertical">
+
             <ImageView
                 android:id="@+id/card_image"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:background="#c7c5c5"
-                android:padding="@dimen/ac_image_padding"/>
+                android:padding="@dimen/ac_image_padding" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/shop_card_detail_title"
                 android:background="#c7c5c5"
-                android:textSize="@dimen/ac_common_text_size_body"
+                android:padding="@dimen/ac_common_field_padding"
+                android:text="@string/shop_card_detail_title"
                 android:textColor="@color/ac_common_text_color_body"
-                android:padding="@dimen/ac_common_field_padding"/>
-            <View style="@style/cs_common_divider"/>
+                android:textSize="@dimen/ac_common_text_size_body" />
+
+            <View style="@style/cs_common_divider" />
+
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
+
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/ac_common_field_padding">
+
                         <TextView
                             android:id="@+id/name_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:text="@string/ac_name"
                             android:textColor="@color/ac_common_text_color_title"
-                            android:textSize="@dimen/ac_common_text_size_title"
-                            android:text="@string/ac_name"/>
+                            android:textSize="@dimen/ac_common_text_size_title" />
+
                         <trente.asia.android.view.ChiaseEditText
-                            android:layout_below="@+id/name_title"
+                            style="@style/ac_edt_no_underbar_no_enter"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_below="@+id/name_title"
                             android:layout_centerVertical="true"
+                            android:text="@{card.cardName}"
                             android:textColor="@color/ac_common_text_color_body"
                             android:textSize="@dimen/ac_common_text_size_body"
-                            android:text="@{card.cardName}"
-                            style="@style/ac_edt_no_underbar_no_enter"
                             custom:mName="cardName">
-                            <requestFocus/>
+
+                            <requestFocus />
                         </trente.asia.android.view.ChiaseEditText>
                     </RelativeLayout>
-                    <View style="@style/cs_common_divider"/>
+
+                    <View style="@style/cs_common_divider" />
+
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/ac_common_field_padding">
+
                         <TextView
                             android:id="@+id/tel_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:text="@string/ac_tel"
                             android:textColor="@color/ac_common_text_color_title"
-                            android:textSize="@dimen/ac_common_text_size_title"
-                            android:text="@string/ac_tel"/>
+                            android:textSize="@dimen/ac_common_text_size_title" />
+
                         <trente.asia.android.view.ChiaseEditText
-                            android:layout_below="@+id/tel_title"
+                            style="@style/ac_edt_no_underbar_no_enter"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_below="@+id/tel_title"
                             android:layout_centerVertical="true"
+                            android:text="@{card.cardTel}"
                             android:textColor="@color/ac_common_text_color_body"
                             android:textSize="@dimen/ac_common_text_size_body"
-                            style="@style/ac_edt_no_underbar_no_enter"
-                            android:text="@{card.cardTel}"
-                            custom:mName="cardTel"/>
+                            custom:mName="cardTel" />
                     </RelativeLayout>
-                    <View style="@style/cs_common_divider"/>
+
+                    <View style="@style/cs_common_divider" />
+
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/ac_common_field_padding">
+
                         <TextView
                             android:id="@+id/email_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:text="@string/ac_email"
                             android:textColor="@color/ac_common_text_color_title"
-                            android:textSize="@dimen/ac_common_text_size_title"
-                            android:text="@string/ac_email"/>
+                            android:textSize="@dimen/ac_common_text_size_title" />
+
                         <trente.asia.android.view.ChiaseEditText
-                            android:layout_below="@+id/email_title"
+                            style="@style/ac_edt_no_underbar_no_enter"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_below="@+id/email_title"
                             android:layout_centerVertical="true"
+                            android:text="@{card.cardEmail}"
                             android:textColor="@color/ac_common_text_color_body"
                             android:textSize="@dimen/ac_common_text_size_body"
-                            style="@style/ac_edt_no_underbar_no_enter"
-                            android:text="@{card.cardEmail}"
-                            custom:mName="cardEmail"/>
+                            custom:mName="cardEmail" />
                     </RelativeLayout>
-                    <View style="@style/cs_common_divider"/>
+
+                    <View style="@style/cs_common_divider" />
+
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/ac_common_field_padding">
+
+                        <TextView
+                            android:id="@+id/address_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/shop_card_detail_address"
+                            android:textColor="@color/ac_common_text_color_title"
+                            android:textSize="@dimen/ac_common_text_size_title" />
+
+                        <trente.asia.android.view.ChiaseEditText
+                            style="@style/ac_edt_no_underbar_no_enter"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/address_title"
+                            android:layout_centerVertical="true"
+                            android:text="@{card.cardAddress}"
+                            android:textColor="@color/ac_common_text_color_body"
+                            android:textSize="@dimen/ac_common_text_size_body"
+                            custom:mName="cardAddress" />
+                    </RelativeLayout>
+
+                    <View style="@style/cs_common_divider" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/ac_common_field_padding">
+
                         <TextView
                             android:id="@+id/note_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:text="@string/ac_note"
                             android:textColor="@color/ac_common_text_color_title"
-                            android:textSize="@dimen/ac_common_text_size_title"
-                            android:text="@string/ac_note"/>
+                            android:textSize="@dimen/ac_common_text_size_title" />
+
                         <trente.asia.android.view.ChiaseEditText
-                            android:layout_below="@+id/note_title"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_below="@+id/note_title"
                             android:layout_centerVertical="true"
-                            android:textColor="@color/ac_common_text_color_body"
-                            android:textSize="@dimen/ac_common_text_size_body"
                             android:background="@android:color/transparent"
                             android:text="@{card.cardNote}"
-                            custom:mName="cardNote"/>
+                            android:textColor="@color/ac_common_text_color_body"
+                            android:textSize="@dimen/ac_common_text_size_body"
+                            custom:mName="cardNote" />
                     </RelativeLayout>
                 </LinearLayout>
             </ScrollView>
         </LinearLayout>
-        <include layout="@layout/view_common_footer"/>
+
+        <include layout="@layout/view_common_footer" />
     </LinearLayout>
 </layout>
