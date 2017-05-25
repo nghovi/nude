@@ -15,10 +15,12 @@
             android:orientation="horizontal">
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ac_icon_card"
                 android:text="@{card.cardName}"
+                android:maxLines="1"
+                android:ellipsize="end"
                 style="@style/ac_btn_delete_customer_edit"
                 android:drawablePadding="@dimen/ac_text_padding"/>
             <TextView
@@ -29,6 +31,7 @@
                 android:drawableStart="@drawable/ac_action_ungroup"
                 android:text="@string/ac_ungroup"
                 style="@style/ac_btn_delete_customer_edit"
+                android:textColor="@android:color/holo_red_dark"
                 android:drawablePadding="@dimen/ac_text_padding"/>
             <TextView
                 android:id="@+id/btn_delete_card"
@@ -37,6 +40,7 @@
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ac_action_trash"
                 style="@style/ac_btn_delete_customer_edit"
+                android:textColor="@android:color/holo_red_dark"
                 android:text="@string/ac_delete"
                 android:drawablePadding="@dimen/ac_text_padding"/>
         </LinearLayout>

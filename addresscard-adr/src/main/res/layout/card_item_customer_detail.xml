@@ -17,6 +17,8 @@
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ac_icon_card"
             android:text="@{card.cardName}"
+            android:maxLines="1"
+            android:ellipsize="end"
             style="@style/ac_btn_delete_customer_edit"
             android:drawablePadding="@dimen/ac_text_padding"/>
 

@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -63,11 +64,17 @@ public class Utils {
     }
 
     public static void startPhoneCall(Context context, String phoneNumber) {
+        if (TextUtils.isEmpty(phoneNumber)) {
+            return;
+        }
         Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phoneNumber));
         context.startActivity(intent);
     }
 
     public static void sendEmail(Context context, String mail) {
+        if (TextUtils.isEmpty(mail)) {
+            return;
+        }
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.setType("message/rfc822");
@@ -76,11 +83,17 @@ public class Utils {
     }
 
     public static void openMap(Context context, String address) {
+        if (TextUtils.isEmpty(address)) {
+            return;
+        }
         Intent searchAddress = new  Intent(Intent.ACTION_VIEW,Uri.parse("geo:0,0?q="+address));
         context.startActivity(searchAddress);
     }
 
     public static void openBrowser(Context context, String url) {
+        if (TextUtils.isEmpty(url)) {
+            return;
+        }
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(url));
         context.startActivity(intent);
