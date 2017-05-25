@@ -9,6 +9,7 @@ import org.json.JSONObject;
 
 import com.bluelinelabs.logansquare.LoganSquare;
 
+import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
@@ -21,12 +22,16 @@ import android.view.ViewGroup;
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import trente.asia.addresscard.ACConst;
+import trente.asia.addresscard.BR;
 import trente.asia.addresscard.R;
 import trente.asia.addresscard.commons.fragments.AbstractAddressCardFragment;
+import trente.asia.addresscard.databinding.FragmentShopCardEditBinding;
 import trente.asia.addresscard.databinding.FragmentShopCardsBinding;
 import trente.asia.addresscard.databinding.FragmentTagsBinding;
 import trente.asia.addresscard.services.shop.model.TagModel;
 import trente.asia.addresstag.services.shop.presenter.TagAdapter;
+import trente.asia.android.activity.ChiaseActivity;
+import trente.asia.welfare.adr.activity.WelfareActivity;
 
 /**
  * Created by viet on 5/22/2017.
@@ -38,12 +43,9 @@ public class TagsFragment extends AbstractAddressCardFragment implements TagAdap
 	private TagAdapter					adapter;
 	private Uri							photoUri;
 	private FragmentShopCardsBinding	shopCardBinding;
-
-	public void setTags(List<TagModel> tags){
-		this.tags = tags;
-	}
-
-	private List<TagModel> tags = new ArrayList<>();
+	private FragmentShopCardEditBinding	editBinding;
+	private List<TagModel>				tagModels;					// master all
+	private List<TagModel>				tags	= new ArrayList<>();
 
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState){
@@ -77,49 +79,46 @@ public class TagsFragment extends AbstractAddressCardFragment implements TagAdap
 	@Override
 	protected void initData(){
 		super.initData();
-		if(CCCollectionUtil.isEmpty(tags)){
-			JSONObject jsonObject = new JSONObject();
-			requestLoad(ACConst.API_SHOP_TAG_LIST, jsonObject, true);
-		}else{
-			buildLayout();
-		}
+		JSONObject jsonObject = new JSONObject();
+		requestLoad(ACConst.API_SHOP_TAG_LIST, jsonObject, true);
 	}
 
 	@Override
 	protected void successLoad(JSONObject response, String url){
-//		try {
-			tags = CCJsonUtil.convertToModelList(response.optString("tags"), TagModel.class);
-			buildLayout();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
+		tagModels = CCJsonUtil.convertToModelList(response.optString("tags"), TagModel.class);
+		buildLayout();
 	}
 
 	private void buildLayout(){
-		adapter = new TagAdapter(tags, this);
+		for(TagModel tagModel : tagModels){
+			for(TagModel tag : tags){
+				if(tag.key.equals(tagModel.key)){
+					tagModel.selected = tag.selected;
+					break;
+				}
+			}
+		}
+
+		adapter = new TagAdapter(tagModels, this);
 		binding.lstTag.setAdapter(adapter);
 	}
 
-	private String getTagsString(List<TagModel> tagModels){
-		List<String> tagNames = new ArrayList<>();
-		for(TagModel tagModel : tagModels){
-			if(tagModel.selected){
-				tagNames.add(tagModel.tagName);
-			}
-		}
-		if(CCCollectionUtil.isEmpty(tagNames)){
-			return getString(R.string.chiase_common_none);
-		}
-		return StringUtils.join(tagNames, ", ");
-	}
-
-	@Override
+	//// TODO: 5/25/17 when
 	protected void onClickBackBtn(){
-		String tagsString = getTagsString(tags);
-		this.shopCardBinding.setShopTags(tagsString);
-		this.shopCardBinding.setTags(tags);
-		shopCardBinding.executePendingBindings();
-		super.onClickBackBtn();
+		if(shopCardBinding != null){
+			shopCardBinding.setTags(tagModels);
+			shopCardBinding.executePendingBindings();
+		}
+		if(editBinding != null){
+			editBinding.setTags(tagModels);
+			editBinding.executePendingBindings();
+		}
+
+		if(getFragmentManager().getBackStackEntryCount() <= 1){
+			((WelfareActivity)activity).setDoubleBackPressedToFinish();
+		}else{
+			getFragmentManager().popBackStack();
+		}
 	}
 
 	@Override
@@ -129,10 +128,16 @@ public class TagsFragment extends AbstractAddressCardFragment implements TagAdap
 
 	public void setShopCardBinding(FragmentShopCardsBinding shopCardBinding){
 		this.shopCardBinding = shopCardBinding;
+		this.tags = shopCardBinding.getTags();
 	}
 
 	@Override
 	public void onItemClick(TagModel tag){
 
+	}
+
+	public void setEditBinding(FragmentShopCardEditBinding editBinding){
+		this.editBinding = editBinding;
+		this.tags = editBinding.getTags();
 	}
 }

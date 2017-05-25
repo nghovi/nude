@@ -54,6 +54,7 @@ public class ShopCardDetailFragment extends AddressCardDetailFragment{
 	protected void loadLayout(JSONObject response){
 		// try{
 		card = CCJsonUtil.convertToModel(response.optString("card"), ShopCardModel.class);
+		card.setTagSelected(true);
 		Picasso.with(getContext()).load(BuildConfig.HOST + card.attachment.fileUrl).into(binding.cardImage);
 		binding.setVariable(BR.card, card);
 		binding.executePendingBindings();

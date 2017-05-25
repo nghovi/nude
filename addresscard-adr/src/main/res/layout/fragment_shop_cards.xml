@@ -4,7 +4,6 @@
     <data>
         <import type="java.util.List"/>
         <import type="trente.asia.addresscard.services.shop.model.TagModel"/>
-        <variable name="shopTags" type="String"/>
         <variable name="tags" type="List&lt;TagModel&gt;"/>
     </data>
 
@@ -77,7 +76,7 @@
                         style="@style/cs_text_common"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{shopTags, default=@string/chiase_common_all}"
+                        android:text="@{TagModel.getSelectedTagsString(context, tags)}"
                         android:textSize="@dimen/text_size" />
 
                 </LinearLayout>

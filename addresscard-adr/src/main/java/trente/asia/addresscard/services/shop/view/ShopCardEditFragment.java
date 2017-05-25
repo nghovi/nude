@@ -1,14 +1,12 @@
 package trente.asia.addresscard.services.shop.view;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.bluelinelabs.logansquare.LoganSquare;
 import com.squareup.picasso.Picasso;
 
 import android.databinding.DataBindingUtil;
@@ -26,6 +24,7 @@ import trente.asia.addresscard.R;
 import trente.asia.addresscard.commons.fragments.AddressCardEditFragment;
 import trente.asia.addresscard.databinding.FragmentShopCardEditBinding;
 import trente.asia.addresscard.services.shop.model.ShopCardModel;
+import trente.asia.addresscard.services.shop.model.TagModel;
 import trente.asia.android.view.util.CAObjectSerializeUtil;
 
 /**
@@ -47,6 +46,7 @@ public class ShopCardEditFragment extends AddressCardEditFragment{
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
 		if(mRootView == null){
 			binding = DataBindingUtil.inflate(inflater, R.layout.fragment_shop_card_edit, container, false);
+			binding.rltCardTag.setOnClickListener(this);
 			mRootView = binding.getRoot();
 			mRootView.findViewById(R.id.img_id_header_right_icon).setOnClickListener(this);
 		}
@@ -67,15 +67,17 @@ public class ShopCardEditFragment extends AddressCardEditFragment{
 	@Override
 	protected void successLoad(JSONObject response, String url){
 		if(ACConst.API_SHOP_CARD_DETAIL.equals(url)){
-//			try{
-				card = CCJsonUtil.convertToModel(response.optString("card"), ShopCardModel.class);
-				binding.setVariable(BR.card, card);
-				binding.executePendingBindings();
-				Picasso.with(getContext()).load(BuildConfig.HOST + card.attachment.fileUrl).into(binding.cardImage);
-				updateHeader(card.cardName);
-//			}catch(IOException e){
-//				e.printStackTrace();
-//			}
+			// try{
+			card = CCJsonUtil.convertToModel(response.optString("card"), ShopCardModel.class);
+			card.setTagSelected(true);
+			binding.setTags(card.tags);
+			binding.setVariable(BR.card, card);
+			binding.executePendingBindings();
+			Picasso.with(getContext()).load(BuildConfig.HOST + card.attachment.fileUrl).into(binding.cardImage);
+			updateHeader(card.cardName);
+			// }catch(IOException e){
+			// e.printStackTrace();
+			// }
 		}
 	}
 
@@ -84,6 +86,8 @@ public class ShopCardEditFragment extends AddressCardEditFragment{
 		JSONObject jsonObject = CAObjectSerializeUtil.serializeObject(binding.lnrContent, null);
 		try{
 			jsonObject.put("key", card.key);
+			String tagKeys = TagModel.getSelectedTagKeys(binding.getTags());
+			jsonObject.put("strTagIds", tagKeys);
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
@@ -100,9 +104,18 @@ public class ShopCardEditFragment extends AddressCardEditFragment{
 	public void onClick(View view){
 		super.onClick(view);
 		switch(view.getId()){
+		case R.id.rlt_card_tag:
+			gotoTagsFragment();
+			break;
 		default:
 			break;
 		}
+	}
+
+	private void gotoTagsFragment(){
+		TagsFragment tagsFragment = new TagsFragment();
+		tagsFragment.setEditBinding(binding);
+		gotoFragment(tagsFragment);
 	}
 
 }

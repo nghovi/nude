@@ -177,6 +177,32 @@
 
                     <RelativeLayout
                         android:layout_width="match_parent"
+                        android:layout_height="@dimen/ac_upload_card_edt_height"
+                        android:padding="@dimen/ac_common_field_padding">
+
+                        <TextView
+                            android:id="@+id/tag_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/fragment_shop_cards_tags"
+                            android:textColor="@color/ac_common_text_color_title"
+                            android:textSize="@dimen/ac_common_text_size_title" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tag_title"
+                            android:layout_centerVertical="true"
+                            android:text="@{card.getTagsString(context)}"
+                            android:textColor="@color/ac_common_text_color_body"
+                            android:textSize="@dimen/ac_common_text_size_body" />
+
+                    </RelativeLayout>
+
+                    <View style="@style/cs_common_divider" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:minHeight="@dimen/ac_upload_card_edt_height"
                         android:padding="@dimen/ac_common_field_padding">

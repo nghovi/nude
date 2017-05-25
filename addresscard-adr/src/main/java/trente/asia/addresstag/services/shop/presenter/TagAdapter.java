@@ -25,11 +25,13 @@ public class TagAdapter extends RecyclerView.Adapter<ViewHolder>{
 	private List<TagModel>	list;
 	private List<TagModel>	listSelected;
 
-	public interface  OnItemClickListener {
+	public interface OnItemClickListener{
+
 		public void onItemClick(TagModel tag);
 	}
 
 	private OnItemClickListener listener;
+
 	public TagAdapter(List<TagModel> list, OnItemClickListener listener){
 		this.list = list;
 		this.listener = listener;
@@ -55,10 +57,14 @@ public class TagAdapter extends RecyclerView.Adapter<ViewHolder>{
 		// binding.lastUpdateUser.setText(
 		// String.format(context.getString(R.string.ac_update_by), tag.lastUpdateUserName));
 		View view = binding.getRoot();
-		 view.setOnClickListener((View v) -> {
-			 listener.onItemClick(tag);
-			 tag.setSelected(!tag.selected);
-		 });
+		view.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v){
+				listener.onItemClick(tag);
+				tag.setSelected(!tag.selected);
+			}
+		});
 
 	}
 
