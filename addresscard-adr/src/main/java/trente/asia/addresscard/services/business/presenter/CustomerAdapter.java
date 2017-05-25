@@ -64,7 +64,8 @@ public class CustomerAdapter extends RecyclerView.Adapter<ViewHolder> {
     private void loadCardImage(ImageView imageView, int position, List<BusinessCardModel> cards) {
         if (position < cards.size()) {
             BusinessCardModel card = cards.get(position);
-            WfPicassoHelper.loadImage(context, BuildConfig.HOST + card.attachment.fileUrl, imageView, null);
+            Picasso.with(context).load(BuildConfig.HOST + card.attachment.fileUrl)
+                    .fit().into(imageView);
         } else {
             Picasso.with(context).load("url").into(imageView);
         }

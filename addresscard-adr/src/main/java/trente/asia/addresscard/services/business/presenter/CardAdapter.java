@@ -50,7 +50,7 @@ public class CardAdapter extends RecyclerView.Adapter<ViewHolder> {
         binding.setVariable(BR.card, card);
         binding.executePendingBindings();
         Picasso.with(context)
-                .load(BuildConfig.HOST + card.attachment.fileUrl).into(binding.cardImage);
+                .load(BuildConfig.HOST + card.attachment.fileUrl).fit().into(binding.cardImage);
         if (!CCStringUtil.isEmpty(card.lastUpdateUserName)) {
             binding.lastUpdateUser.setText(
                     String.format(context.getString(R.string.ac_update_by), card.lastUpdateUserName));
