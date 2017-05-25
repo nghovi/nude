@@ -1,14 +1,7 @@
 package trente.asia.addresscard.commons.fragments;
 
-import android.databinding.DataBindingUtil;
-import android.databinding.ViewDataBinding;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -21,21 +14,6 @@ import trente.asia.addresscard.R;
 
 public abstract class AddressCardDetailFragment extends AbstractAddressCardFragment {
     protected   int                                 key;
-    protected   ViewDataBinding                     binding;
-
-
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if (mRootView == null) {
-            binding = DataBindingUtil.inflate(inflater, getLayoutId(), container, false);
-            mRootView = binding.getRoot();
-            mRootView.findViewById(R.id.img_id_header_right_icon).setOnClickListener(this);
-        }
-        return mRootView;
-    }
-
-    protected abstract int getLayoutId();
 
     @Override
     protected void initData() {
@@ -59,8 +37,6 @@ public abstract class AddressCardDetailFragment extends AbstractAddressCardFragm
     }
 
     protected abstract void loadLayout(JSONObject response);
-
-    protected abstract ImageView getImageView();
 
     @Override
     public int getFooterItemId() {

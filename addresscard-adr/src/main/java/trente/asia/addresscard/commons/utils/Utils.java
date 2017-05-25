@@ -69,7 +69,9 @@ public class Utils {
 
     public static void sendEmail(Context context, String mail) {
         Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.putExtra(Intent.EXTRA_EMAIL, mail);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setType("message/rfc822");
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{mail});
         context.startActivity(intent);
     }
 

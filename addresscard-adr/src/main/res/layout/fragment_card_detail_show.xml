@@ -104,9 +104,11 @@
                     <View style="@style/cs_common_divider" />
 
                     <RelativeLayout
+                        android:id="@+id/rlt_phone"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/ac_upload_card_edt_height"
-                        android:padding="@dimen/ac_common_field_padding">
+                        android:padding="@dimen/ac_common_field_padding"
+                        android:background="@drawable/row_pressed_selector">
 
                         <TextView
                             android:id="@+id/tel_title"
@@ -137,9 +139,11 @@
                     <View style="@style/cs_common_divider" />
 
                     <RelativeLayout
+                        android:id="@+id/rlt_email"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/ac_upload_card_edt_height"
-                        android:padding="@dimen/ac_common_field_padding">
+                        android:padding="@dimen/ac_common_field_padding"
+                        android:background="@drawable/row_pressed_selector">
 
                         <TextView
                             android:id="@+id/email_title"

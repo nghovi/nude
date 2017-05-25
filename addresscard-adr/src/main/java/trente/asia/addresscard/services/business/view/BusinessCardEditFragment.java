@@ -73,7 +73,8 @@ public class BusinessCardEditFragment extends AddressCardEditFragment implements
 		if(ACConst.AC_BUSINESS_CUSTOMER_LIST.equals(url)){
 			List<CustomerModel> customers = CCJsonUtil.convertToModelList(response.optString("customers"), CustomerModel.class);
 			AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-			viewBinding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.dialog_fragment_choose_customer, null, false);
+			viewBinding = DataBindingUtil.inflate(LayoutInflater.from(getContext()),
+					R.layout.dialog_fragment_choose_customer, null, false);
 			builder.setView(viewBinding.getRoot());
 			CustomerDialogAdapter adapter = new CustomerDialogAdapter(customers, customerId, this);
 			viewBinding.listCustomers.setAdapter(adapter);
