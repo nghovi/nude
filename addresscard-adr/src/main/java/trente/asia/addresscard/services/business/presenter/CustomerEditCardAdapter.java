@@ -56,6 +56,9 @@ public class CustomerEditCardAdapter extends RecyclerView.Adapter<ViewHolder>{
             callback.deleteCard(card);
             removeCard(card);
         });
+        binding.getRoot().setOnClickListener((View v) -> {
+            callback.onCardItemClick(card.key);
+        });
     }
 
     private void removeCard(BusinessCardModel card) {
@@ -69,7 +72,8 @@ public class CustomerEditCardAdapter extends RecyclerView.Adapter<ViewHolder>{
     }
 
     public interface OnCardAdapterListener {
-        public void ungroupCard(BusinessCardModel card);
-        public void deleteCard(BusinessCardModel card);
+        void ungroupCard(BusinessCardModel card);
+        void deleteCard(BusinessCardModel card);
+        void onCardItemClick(int cardId);
     }
 }

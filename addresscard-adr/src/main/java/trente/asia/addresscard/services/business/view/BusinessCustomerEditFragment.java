@@ -78,6 +78,11 @@ public class BusinessCustomerEditFragment extends AbstractAddressCardFragment
     }
 
     @Override
+    public void onCardItemClick(int cardId) {
+        gotoFragment(BusinessCardDetailFragment.newInstance(cardId));
+    }
+
+    @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.img_id_header_right_icon:

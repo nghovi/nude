@@ -199,7 +199,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/last_common_title"
                         android:layout_marginTop="@dimen/ac_text_margin"
-                        android:text="2017/04/24 18:30" />
+                        android:text="@{customer.lastCommentDate}" />
 
                     <ImageView
                         style="@style/ac_icon_right"

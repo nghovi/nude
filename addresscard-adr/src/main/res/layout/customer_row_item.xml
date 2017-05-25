@@ -72,7 +72,7 @@
             android:layout_centerVertical="true"
             android:gravity="center_vertical"
             android:drawablePadding="5dp"
-            android:text="0"
+            android:text="@{customer.commentNumber}"
             android:drawableStart="@drawable/ac_icon_comment"/>
 
         <ImageView

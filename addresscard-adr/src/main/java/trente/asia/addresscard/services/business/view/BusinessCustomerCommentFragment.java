@@ -45,7 +45,7 @@ public class BusinessCustomerCommentFragment extends AbstractAddressCardFragment
         super.initData();
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("key", customer.key);
+            jsonObject.put("customerId", customer.key);
         } catch (JSONException e) {
             e.printStackTrace();
         }
