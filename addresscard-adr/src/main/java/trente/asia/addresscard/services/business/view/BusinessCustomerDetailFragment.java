@@ -28,7 +28,9 @@ import trente.asia.welfare.adr.utils.WfPicassoHelper;
  * Created by tien on 5/12/2017.
  */
 
-public class BusinessCustomerDetailFragment extends AbstractAddressCardFragment {
+public class BusinessCustomerDetailFragment extends AbstractAddressCardFragment
+    implements CustomerDetailCardAdapter.OnCustomerDetailCardAdapterListener{
+
     private     FragmentCustomerDetailBinding               binding;
     private     CustomerModel                               customer;
     private     int                                         customerId;
@@ -78,7 +80,7 @@ public class BusinessCustomerDetailFragment extends AbstractAddressCardFragment 
     protected void successLoad(JSONObject response, String url) {
         super.successLoad(response, url);
         customer = CCJsonUtil.convertToModel(response.optString("customer"), CustomerModel.class);
-        binding.listCards.setAdapter(new CustomerDetailCardAdapter(customer.cards));
+        binding.listCards.setAdapter(new CustomerDetailCardAdapter(customer.cards, this));
         binding.setVariable(BR.customer, customer);
         binding.executePendingBindings();
         WfPicassoHelper.loadImageWithDefaultIcon(getContext(), BuildConfig.HOST,
@@ -89,6 +91,11 @@ public class BusinessCustomerDetailFragment extends AbstractAddressCardFragment 
     @Override
     public int getFooterItemId() {
         return R.id.lnr_view_footer_card;
+    }
+
+    @Override
+    public void onCardClick(int cardId) {
+        gotoFragment(BusinessCardDetailFragment.newInstance(cardId));
     }
 
     @Override
@@ -127,10 +134,10 @@ public class BusinessCustomerDetailFragment extends AbstractAddressCardFragment 
     }
 
     private void openMap() {
-
+        Utils.openMap(getContext(), customer.customerAddress);
     }
 
     private void openBrowser() {
-
+        Utils.openBrowser(getContext(), customer.customerUrl);
     }
 }

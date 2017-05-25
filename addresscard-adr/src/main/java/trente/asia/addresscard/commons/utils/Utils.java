@@ -74,10 +74,13 @@ public class Utils {
     }
 
     public static void openMap(Context context, String address) {
-
+        Intent searchAddress = new  Intent(Intent.ACTION_VIEW,Uri.parse("geo:0,0?q="+address));
+        context.startActivity(searchAddress);
     }
 
     public static void openBrowser(Context context, String url) {
-
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(url));
+        context.startActivity(intent);
     }
 }

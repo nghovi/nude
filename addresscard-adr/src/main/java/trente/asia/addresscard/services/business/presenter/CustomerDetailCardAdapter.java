@@ -22,33 +22,41 @@ import trente.asia.welfare.adr.utils.WfPicassoHelper;
 
 public class CustomerDetailCardAdapter extends RecyclerView.Adapter<ViewHolder>{
 
-    private     CardItemCustomerDetailBinding           binding;
-    private     List<BusinessCardModel>                         cards;
-    private     Context                                 context;
+	private CardItemCustomerDetailBinding		binding;
+	private List<BusinessCardModel>				cards;
+	private Context								context;
+	private OnCustomerDetailCardAdapterListener	callback;
 
-    public CustomerDetailCardAdapter(List<BusinessCardModel> cards) {
-        this.cards = cards;
-    }
+	public CustomerDetailCardAdapter(List<BusinessCardModel> cards, OnCustomerDetailCardAdapterListener listener){
+		this.cards = cards;
+		this.callback = listener;
+	}
 
-    @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        context = parent.getContext();
-        View view = LayoutInflater.from(context).inflate(
-                R.layout.card_item_customer_detail, parent, false);
-        return new ViewHolder(view);
-    }
+	@Override
+	public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
+		context = parent.getContext();
+		View view = LayoutInflater.from(context).inflate(R.layout.card_item_customer_detail, parent, false);
+		return new ViewHolder(view);
+	}
 
-    @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        BusinessCardModel card = cards.get(position);
-        binding = (CardItemCustomerDetailBinding) holder.getBinding();
-        binding.setVariable(BR.card, card);
-        binding.executePendingBindings();
-        WfPicassoHelper.loadImage(context, BuildConfig.HOST + card.attachment.fileUrl, binding.card, null);
-    }
+	@Override
+	public void onBindViewHolder(ViewHolder holder, int position){
+		BusinessCardModel card = cards.get(position);
+		binding = (CardItemCustomerDetailBinding)holder.getBinding();
+		binding.setVariable(BR.card, card);
+		binding.executePendingBindings();
+		binding.rltCard.setOnClickListener((View) -> {
+            callback.onCardClick(card.key);
+		});
+		WfPicassoHelper.loadImage(context, BuildConfig.HOST + card.attachment.fileUrl, binding.card, null);
+	}
 
-    @Override
-    public int getItemCount() {
-        return cards.size();
-    }
+	@Override
+	public int getItemCount(){
+		return cards.size();
+	}
+
+	public interface OnCustomerDetailCardAdapterListener{
+		void onCardClick(int cardId);
+	}
 }
