@@ -4,6 +4,12 @@
 
     <data>
 
+        <import type="java.util.List" />
+
+        <import type="trente.asia.addresscard.services.shop.model.TagModel" />
+
+        <variable
+            name="tags" type="List&lt;TagModel&gt;" />
         <variable
             name="card"
             type="trente.asia.addresscard.services.shop.model.ShopCardModel" />
@@ -157,6 +163,40 @@
                             android:textColor="@color/ac_common_text_color_body"
                             android:textSize="@dimen/ac_common_text_size_body"
                             custom:mName="cardAddress" />
+                    </RelativeLayout>
+
+                    <View style="@style/cs_common_divider" />
+
+                    <RelativeLayout
+                        android:id="@+id/rlt_card_tag"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/ac_common_field_padding">
+
+                        <TextView
+                            android:id="@+id/txt_card_tag_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/fragment_shop_cards_tags"
+                            android:textColor="@color/ac_common_text_color_title"
+                            android:textSize="@dimen/ac_common_text_size_title" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/txt_card_tag_title"
+                            android:layout_centerVertical="true"
+                            android:layout_marginTop="@dimen/margin_16dp"
+                            android:text="@{TagModel.getSelectedTagsString(context, tags)}"
+                            android:textColor="@color/ac_common_text_color_body"
+                            android:textSize="@dimen/ac_common_text_size_body" />
+
+                        <ImageView
+                            android:layout_width="@dimen/ac_common_field_icon_dimen"
+                            android:layout_height="@dimen/ac_common_field_icon_dimen"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/ac_action_right" />
                     </RelativeLayout>
 
                     <View style="@style/cs_common_divider" />

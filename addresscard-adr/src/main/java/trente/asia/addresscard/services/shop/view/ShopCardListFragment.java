@@ -13,8 +13,10 @@ import android.view.ViewGroup;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import asia.chiase.core.util.CCJsonUtil;
 import trente.asia.addresscard.ACConst;
 import trente.asia.addresscard.R;
 import trente.asia.addresscard.commons.fragments.AddressCardListFragment;
@@ -23,6 +25,7 @@ import trente.asia.addresscard.services.business.model.AddressCardModel;
 import trente.asia.addresscard.services.business.presenter.CardAdapter;
 import trente.asia.addresscard.services.business.view.BusinessCardDetailFragment;
 import trente.asia.addresscard.services.shop.model.TagModel;
+import trente.asia.welfare.adr.models.ApiObjectModel;
 
 /**
  * Created by tien on 4/18/2017.
@@ -59,7 +62,7 @@ public class ShopCardListFragment extends AddressCardListFragment{
 			binding.rltTags.setOnClickListener(this);
 			adapter = new CardAdapter(this);
 			binding.listCards.setAdapter(adapter);
-			binding.setShopTags(getString(R.string.chiase_common_all));
+			// binding.setShopTags(getString(R.string.chiase_common_all));
 			binding.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
 
 				@Override
@@ -85,11 +88,25 @@ public class ShopCardListFragment extends AddressCardListFragment{
 		super.initHeader(null, getString(R.string.shop_cards_title), null);
 	}
 
-	// @Override
-	// protected void successLoad(JSONObject response, String url){
-	// super.successLoad(response,url);
-	//// binding.listCards.setAdapter(adapter);
-	// }
+	@Override
+	protected void successLoad(JSONObject response, String url){
+		super.successLoad(response, url);
+		List<ApiObjectModel> mapTags = CCJsonUtil.convertToModelList(response.optString("mapTags"), ApiObjectModel.class);
+		List<TagModel> tags = getTags(mapTags);
+		binding.setTags(tags);
+	}
+
+	private List<TagModel> getTags(List<ApiObjectModel> mapTags){
+		List<TagModel> tagModels = new ArrayList<>();
+		for(ApiObjectModel apiObjectModel : mapTags){
+			TagModel tagModel = new TagModel();
+			tagModel.key = apiObjectModel.key;
+			tagModel.tagName = apiObjectModel.value;
+			tagModel.selected = true;
+			tagModels.add(tagModel);
+		}
+		return tagModels;
+	}
 
 	@Override
 	public void onClick(View view){
@@ -104,7 +121,7 @@ public class ShopCardListFragment extends AddressCardListFragment{
 	}
 
 	@Override
-	protected String getUploadApi() {
+	protected String getUploadApi(){
 		return ACConst.API_SHOP_CARD_UPDATE;
 	}
 
@@ -131,8 +148,6 @@ public class ShopCardListFragment extends AddressCardListFragment{
 	// // TODO: 5/22/2017 shouldn't create each Tags Fragment?
 	private void gotoTagsFragment(){
 		TagsFragment tagsFragment = new TagsFragment();
-		List<TagModel> tagModels = binding.getTags();
-		tagsFragment.setTags(tagModels);
 		tagsFragment.setShopCardBinding((FragmentShopCardsBinding)binding);
 		gotoFragment(tagsFragment);
 	}
