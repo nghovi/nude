@@ -40,7 +40,6 @@
                 android:padding="5dp"
                 android:src="@drawable/thumbnail_failure"/>
 
-
             <ImageView
                 android:id="@+id/customer_1"
                 android:layout_width="0dp"
