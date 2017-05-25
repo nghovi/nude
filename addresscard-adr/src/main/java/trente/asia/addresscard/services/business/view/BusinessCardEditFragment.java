@@ -106,6 +106,11 @@ public class BusinessCardEditFragment extends AddressCardEditFragment implements
 	}
 
 	@Override
+	protected void successUpload(JSONObject response, String url) {
+		super.successUpload(response, url);
+	}
+
+	@Override
 	protected void successUpdate(JSONObject response, String url){
 		super.successUpdate(response, url);
 		if(ACConst.AC_BUSINESS_CUSTOMER_CREATE.equals(url)){

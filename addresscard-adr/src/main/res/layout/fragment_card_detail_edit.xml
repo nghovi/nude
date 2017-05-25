@@ -55,6 +55,8 @@
                         <TextView
                             android:id="@+id/customer_name"
                             android:layout_below="@+id/customer_name_title"
+                            android:layout_toStartOf="@+id/icon_right"
+                            android:layout_marginEnd="@dimen/margin_5dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
@@ -62,6 +64,7 @@
                             android:textSize="@dimen/ac_common_text_size_body"
                             android:text="@{card.customerName}"/>
                         <ImageView
+                            android:id="@+id/icon_right"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
                             android:layout_width="@dimen/ac_common_field_icon_dimen"
