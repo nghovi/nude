@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -106,8 +107,10 @@ public class BusinessCardEditFragment extends AddressCardEditFragment implements
 	}
 
 	@Override
-	protected void successUpload(JSONObject response, String url) {
-		super.successUpload(response, url);
+	protected void onSuccessUpLoad(JSONObject response, boolean isAlert, String url) {
+		Log.e("CardEdit", "response: " + response.toString());
+		super.onSuccessUpLoad(response, isAlert, url);
+
 	}
 
 	@Override
