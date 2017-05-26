@@ -51,6 +51,11 @@ public abstract class AddressCardEditFragment extends AbstractAddressCardFragmen
 	@Override
 	protected void onSuccessUpLoad(JSONObject response, boolean isAlert, String url) {
 		super.onSuccessUpLoad(response, isAlert, url);
+	}
+
+	@Override
+	protected void successUpload(JSONObject response, String url) {
+		super.successUpload(response, url);
 		onClickBackBtn();
 	}
 
