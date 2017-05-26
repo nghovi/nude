@@ -20,6 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:background="@color/chiase_white"
             android:orientation="vertical">
 
             <LinearLayout
@@ -77,6 +78,8 @@
                         style="@style/cs_text_common"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:maxLines="3"
+                        android:ellipsize="end"
                         android:text="@{TagModel.getSelectedTagsString(context, tags)}"
                         android:textSize="@dimen/text_size" />
 

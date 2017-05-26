@@ -48,15 +48,8 @@ public class ShopCardEditFragment extends AddressCardEditFragment{
 			binding = DataBindingUtil.inflate(inflater, R.layout.fragment_shop_card_edit, container, false);
 			binding.rltCardTag.setOnClickListener(this);
 			mRootView = binding.getRoot();
-			mRootView.findViewById(R.id.img_id_header_right_icon).setOnClickListener(this);
 		}
 		return mRootView;
-	}
-
-	@Override
-	public void initView(){
-		super.initView();
-		super.initHeader(R.drawable.ac_back_white, "", R.drawable.ac_action_done);
 	}
 
 	@Override

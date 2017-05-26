@@ -2,7 +2,9 @@ package trente.asia.addresscard.services.shop.view;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
@@ -48,6 +50,7 @@ public class TagsFragment extends AbstractAddressCardFragment implements TagAdap
 	private FragmentShopCardEditBinding	editBinding;
 	private List<TagModel>				tagModels;									// master all
 	private List<TagModel>				tags				= new ArrayList<>();
+	private Map<String, Boolean>		originTagStatus		= new HashMap<>();
 
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState){
@@ -75,7 +78,8 @@ public class TagsFragment extends AbstractAddressCardFragment implements TagAdap
 	@Override
 	public void initView(){
 		super.initView();
-		super.initHeader(R.drawable.ac_back_white, getString(R.string.tag_title), null);
+		super.initHeader(R.drawable.ac_back_white, getString(R.string.tag_title), R.drawable.ac_action_done);
+		getView().findViewById(R.id.img_id_header_right_icon).setOnClickListener(this);
 	}
 
 	@Override
@@ -92,6 +96,7 @@ public class TagsFragment extends AbstractAddressCardFragment implements TagAdap
 	}
 
 	private void buildLayout(){
+		originTagStatus = new HashMap<>();
 		for(TagModel tagModel : tagModels){
 			for(TagModel tag : tags){
 				if(tag.key.equals(tagModel.key)){
@@ -99,6 +104,7 @@ public class TagsFragment extends AbstractAddressCardFragment implements TagAdap
 					break;
 				}
 			}
+			originTagStatus.put(tagModel.key, tagModel.selected);
 		}
 
 		adapter = new TagAdapter(tagModels, this);
@@ -107,6 +113,35 @@ public class TagsFragment extends AbstractAddressCardFragment implements TagAdap
 
 	//// TODO: 5/25/17 when
 	protected void onClickBackBtn(){
+		// Restore origin tag selected status
+		for(TagModel tagModel : tagModels){
+			tagModel.selected = originTagStatus.get(tagModel.key);
+		}
+
+		backToPreviousFragment();
+	}
+
+	private void backToPreviousFragment(){
+		if(getFragmentManager().getBackStackEntryCount() <= 1){
+			((WelfareActivity)activity).setDoubleBackPressedToFinish();
+		}else{
+			// No init data (call api at shop card list screen
+			getFragmentManager().popBackStack();
+		}
+	}
+
+	@Override
+	public void onClick(View v){
+		switch(v.getId()){
+		case R.id.img_id_header_right_icon:
+			onChooseTagDone();
+			break;
+		default:
+			break;
+		}
+	}
+
+	private void onChooseTagDone(){
 		if(shopCardBinding != null){
 			String savedTagIds = TagModel.getSelectedTagKeys(tagModels);
 			PreferencesSystemUtil prefSysUtil = new PreferencesSystemUtil(activity);
@@ -118,18 +153,7 @@ public class TagsFragment extends AbstractAddressCardFragment implements TagAdap
 			editBinding.setTags(tagModels);
 			editBinding.executePendingBindings();
 		}
-
-		if(getFragmentManager().getBackStackEntryCount() <= 1){
-			((WelfareActivity)activity).setDoubleBackPressedToFinish();
-		}else{
-			// No init data (call api at shop card list screen
-			getFragmentManager().popBackStack();
-		}
-	}
-
-	@Override
-	public void onClick(View v){
-
+		backToPreviousFragment();
 	}
 
 	public void setShopCardBinding(FragmentShopCardsBinding shopCardBinding){

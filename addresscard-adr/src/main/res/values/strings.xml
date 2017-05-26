@@ -40,7 +40,7 @@
     <string name="ac_update_by">Update by %s</string>
     <string name="ac_ungroup">Ungroup</string>
     <string name="ac_delete">Delete</string>
-    <string name="shop_cards_title">Shop cards</string>
+    <string name="shop_cards_title">Shop card main</string>
     <string name="test_string">0abcdefghm1abcdefghm2abcdefghm3abcdefghm4abcdefghm5abcdefghm6abcdefghm7abcdefghm8abcdefghm9abcdefghm</string>
     <string name="fragment_shop_cards_tags">Tags</string>
     <string name="tag_title">Shop tag list</string>

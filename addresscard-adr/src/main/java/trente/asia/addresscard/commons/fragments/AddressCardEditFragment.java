@@ -29,6 +29,13 @@ public abstract class AddressCardEditFragment extends AbstractAddressCardFragmen
 	}
 
 	@Override
+	public void initView(){
+		super.initHeader(R.drawable.ac_back_white, "", R.drawable.ac_action_done);
+		getView().findViewById(R.id.img_id_header_right_icon).setOnClickListener(this);
+	}
+
+
+	@Override
 	public int getFooterItemId(){
 		return R.id.lnr_view_footer_card;
 	}
@@ -49,12 +56,12 @@ public abstract class AddressCardEditFragment extends AbstractAddressCardFragmen
 	}
 
 	@Override
-	protected void onSuccessUpLoad(JSONObject response, boolean isAlert, String url) {
+	protected void onSuccessUpLoad(JSONObject response, boolean isAlert, String url){
 		super.onSuccessUpLoad(response, isAlert, url);
 	}
 
 	@Override
-	protected void successUpload(JSONObject response, String url) {
+	protected void successUpload(JSONObject response, String url){
 		super.successUpload(response, url);
 		onClickBackBtn();
 	}

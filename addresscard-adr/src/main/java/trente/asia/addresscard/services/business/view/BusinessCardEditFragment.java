@@ -57,7 +57,6 @@ public class BusinessCardEditFragment extends AddressCardEditFragment implements
 		if(mRootView == null){
 			binding = DataBindingUtil.inflate(inflater, R.layout.fragment_card_detail_edit, container, false);
 			mRootView = binding.getRoot();
-			mRootView.findViewById(R.id.img_id_header_right_icon).setOnClickListener(this);
 			binding.rltSetCustomer.setOnClickListener(this);
 		}
 		return mRootView;
@@ -74,8 +73,7 @@ public class BusinessCardEditFragment extends AddressCardEditFragment implements
 		if(ACConst.AC_BUSINESS_CUSTOMER_LIST.equals(url)){
 			List<CustomerModel> customers = CCJsonUtil.convertToModelList(response.optString("customers"), CustomerModel.class);
 			AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-			viewBinding = DataBindingUtil.inflate(LayoutInflater.from(getContext()),
-					R.layout.dialog_fragment_choose_customer, null, false);
+			viewBinding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.dialog_fragment_choose_customer, null, false);
 			builder.setView(viewBinding.getRoot());
 			CustomerDialogAdapter adapter = new CustomerDialogAdapter(customers, customerId, this);
 			viewBinding.listCustomers.setAdapter(adapter);
@@ -107,7 +105,7 @@ public class BusinessCardEditFragment extends AddressCardEditFragment implements
 	}
 
 	@Override
-	protected void onSuccessUpLoad(JSONObject response, boolean isAlert, String url) {
+	protected void onSuccessUpLoad(JSONObject response, boolean isAlert, String url){
 		Log.e("CardEdit", "response: " + response.toString());
 		super.onSuccessUpLoad(response, isAlert, url);
 
