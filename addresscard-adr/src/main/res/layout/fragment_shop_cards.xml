@@ -50,6 +50,7 @@
                         android:layout_centerVertical="true"
                         android:layout_toStartOf="@+id/arrow_category"
                         android:text="All"
+                        android:visibility="invisible"
                         android:textColor="@android:color/black"
                         android:textSize="@dimen/text_size" />
 

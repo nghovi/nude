@@ -6,4 +6,5 @@
     <string name="tag_title">Tag title</string>
     <string name="shop_card_detail_title">Shop card detail</string>
     <string name="shop_card_detail_address">Address</string>
+    <string name="shop_cards_no_tag">No tag</string>
 </resources>

@@ -2,11 +2,8 @@ package trente.asia.addresscard.services.shop.view;
 
 import android.databinding.DataBindingUtil;
 import android.databinding.Observable;
-import android.databinding.OnRebindCallback;
-import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,18 +11,22 @@ import android.view.ViewGroup;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCJsonUtil;
+import asia.chiase.core.util.CCStringUtil;
 import trente.asia.addresscard.ACConst;
 import trente.asia.addresscard.R;
 import trente.asia.addresscard.commons.fragments.AddressCardListFragment;
 import trente.asia.addresscard.databinding.FragmentShopCardsBinding;
 import trente.asia.addresscard.services.business.model.AddressCardModel;
 import trente.asia.addresscard.services.business.presenter.CardAdapter;
-import trente.asia.addresscard.services.business.view.BusinessCardDetailFragment;
+import trente.asia.addresscard.services.shop.model.ShopCardModel;
 import trente.asia.addresscard.services.shop.model.TagModel;
 import trente.asia.welfare.adr.models.ApiObjectModel;
+import trente.asia.welfare.adr.pref.PreferencesSystemUtil;
 
 /**
  * Created by tien on 4/18/2017.
@@ -33,7 +34,10 @@ import trente.asia.welfare.adr.models.ApiObjectModel;
 
 public class ShopCardListFragment extends AddressCardListFragment{
 
-	private FragmentShopCardsBinding binding;
+	private FragmentShopCardsBinding	binding;
+	private List<ShopCardModel>			cards			= new ArrayList<>();
+	private List<AddressCardModel>		filteredCards	= new ArrayList<>();
+	private List<String>				savedTagIds		= new ArrayList<>();
 	// private CardAdapter adapterr;
 	// private Uri photoUri;
 
@@ -67,14 +71,29 @@ public class ShopCardListFragment extends AddressCardListFragment{
 
 				@Override
 				public void onPropertyChanged(Observable observable, int i){
-					//// TODO: 5/23/17 Filter shop cards after back from TagFragments
-					Log.e("ShopCardListFragment", "Filter");
+					retrieveSavedTags();
+					filterCards();
+					// adapter.setCards(filteredCards);
+					adapter.notifyDataSetChanged();
 				}
 			});
-			// binding.rowCustomer.setOnClickListener(this);
+
+			retrieveSavedTags();
+
 			mRootView = binding.getRoot();
 		}
 		return mRootView;
+	}
+
+	private void retrieveSavedTags(){
+		// Get saved tag
+		PreferencesSystemUtil prefSysUtil = new PreferencesSystemUtil(activity);
+		String savedTags = prefSysUtil.get(TagsFragment.PREF_SAVED_TAG_IDS);
+		if(!CCStringUtil.isEmpty(savedTags)){
+			savedTagIds = new ArrayList<String>(Arrays.asList(savedTags.split(",")));
+		}else{
+			savedTagIds = new ArrayList<>();
+		}
 	}
 
 	@Override
@@ -90,10 +109,29 @@ public class ShopCardListFragment extends AddressCardListFragment{
 
 	@Override
 	protected void successLoad(JSONObject response, String url){
-		super.successLoad(response, url);
+		cards = CCJsonUtil.convertToModelList(response.optString("cards"), ShopCardModel.class);
+
 		List<ApiObjectModel> mapTags = CCJsonUtil.convertToModelList(response.optString("mapTags"), ApiObjectModel.class);
 		List<TagModel> tags = getTags(mapTags);
 		binding.setTags(tags);
+		filterCards();
+		adapter.setCards(filteredCards);
+	}
+
+	private void filterCards(){
+		filteredCards.clear();
+		for(ShopCardModel shopCardModel : cards){
+			if(CCCollectionUtil.isEmpty(savedTagIds) && CCCollectionUtil.isEmpty(shopCardModel.tags)){
+				filteredCards.add(shopCardModel);
+			}else{
+				for(TagModel tagModel : shopCardModel.tags){
+					if(savedTagIds.contains(tagModel.key)){
+						filteredCards.add(shopCardModel);
+						break;
+					}
+				}
+			}
+		}
 	}
 
 	private List<TagModel> getTags(List<ApiObjectModel> mapTags){
@@ -102,7 +140,9 @@ public class ShopCardListFragment extends AddressCardListFragment{
 			TagModel tagModel = new TagModel();
 			tagModel.key = apiObjectModel.key;
 			tagModel.tagName = apiObjectModel.value;
-			tagModel.selected = true;
+			if(savedTagIds.contains(tagModel.key)){
+				tagModel.selected = true;
+			}
 			tagModels.add(tagModel);
 		}
 		return tagModels;

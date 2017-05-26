@@ -32,6 +32,7 @@ import trente.asia.addresscard.services.shop.model.TagModel;
 import trente.asia.addresstag.services.shop.presenter.TagAdapter;
 import trente.asia.android.activity.ChiaseActivity;
 import trente.asia.welfare.adr.activity.WelfareActivity;
+import trente.asia.welfare.adr.pref.PreferencesSystemUtil;
 
 /**
  * Created by viet on 5/22/2017.
@@ -39,13 +40,14 @@ import trente.asia.welfare.adr.activity.WelfareActivity;
 
 public class TagsFragment extends AbstractAddressCardFragment implements TagAdapter.OnItemClickListener{
 
+	public static final String			PREF_SAVED_TAG_IDS	= "PREF_SAVED_TAG_IDS";
 	private FragmentTagsBinding			binding;
 	private TagAdapter					adapter;
 	private Uri							photoUri;
 	private FragmentShopCardsBinding	shopCardBinding;
 	private FragmentShopCardEditBinding	editBinding;
-	private List<TagModel>				tagModels;					// master all
-	private List<TagModel>				tags	= new ArrayList<>();
+	private List<TagModel>				tagModels;									// master all
+	private List<TagModel>				tags				= new ArrayList<>();
 
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState){
@@ -106,6 +108,9 @@ public class TagsFragment extends AbstractAddressCardFragment implements TagAdap
 	//// TODO: 5/25/17 when
 	protected void onClickBackBtn(){
 		if(shopCardBinding != null){
+			String savedTagIds = TagModel.getSelectedTagKeys(tagModels);
+			PreferencesSystemUtil prefSysUtil = new PreferencesSystemUtil(activity);
+			prefSysUtil.set(PREF_SAVED_TAG_IDS, savedTagIds);
 			shopCardBinding.setTags(tagModels);
 			shopCardBinding.executePendingBindings();
 		}
@@ -117,6 +122,7 @@ public class TagsFragment extends AbstractAddressCardFragment implements TagAdap
 		if(getFragmentManager().getBackStackEntryCount() <= 1){
 			((WelfareActivity)activity).setDoubleBackPressedToFinish();
 		}else{
+			// No init data (call api at shop card list screen
 			getFragmentManager().popBackStack();
 		}
 	}

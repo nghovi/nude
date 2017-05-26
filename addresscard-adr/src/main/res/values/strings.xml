@@ -43,10 +43,11 @@
     <string name="shop_cards_title">Shop cards</string>
     <string name="test_string">0abcdefghm1abcdefghm2abcdefghm3abcdefghm4abcdefghm5abcdefghm6abcdefghm7abcdefghm8abcdefghm9abcdefghm</string>
     <string name="fragment_shop_cards_tags">Tags</string>
-    <string name="tag_title">Tag title</string>
+    <string name="tag_title">Shop tag list</string>
     <string name="ac_lastest_card_list">Latest card list</string>
     <string name="ac_all">All</string>
     <string name="ac_customer">Customer</string>
     <string name="shop_card_detail_title">Shop card detail</string>
     <string name="shop_card_detail_address">Address</string>
+    <string name="shop_cards_no_tag">No tag</string>
 </resources>

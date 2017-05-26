@@ -63,7 +63,7 @@ public class TagModel extends BaseObservable{
 			}
 		}
 		if(CCCollectionUtil.isEmpty(tagNames)){
-			return context.getResources().getString(R.string.chiase_common_none);
+			return context.getResources().getString(R.string.shop_cards_no_tag);
 		}
 		return StringUtils.join(tagNames, ", ");
 	}
