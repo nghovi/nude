@@ -163,6 +163,7 @@
                             android:layout_centerVertical="true"
                             android:text="@{card.cardAddress}"
                             android:textColor="@color/ac_common_text_color_body"
+                            android:paddingRight="@dimen/margin_32dp"
                             android:textSize="@dimen/ac_common_text_size_body" />
 
                         <ImageView

@@ -25,11 +25,11 @@ public abstract class AddressCardEditFragment extends AbstractAddressCardFragmen
 			e.printStackTrace();
 		}
 		requestLoad(getApiLoadData(), jsonObject, true);
-
 	}
 
 	@Override
 	public void initView(){
+		super.initView();
 		super.initHeader(R.drawable.ac_back_white, "", R.drawable.ac_action_done);
 		getView().findViewById(R.id.img_id_header_right_icon).setOnClickListener(this);
 	}
