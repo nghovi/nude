@@ -27,8 +27,7 @@ import trente.asia.addresscard.services.business.model.BusinessCardModel;
 
 public class BusinessCardDetailFragment extends AddressCardDetailFragment{
 
-	private BusinessCardModel				card;
-	protected FragmentCardDetailShowBinding	binding;
+	protected FragmentCardDetailShowBinding binding;
 
 	public static BusinessCardDetailFragment newInstance(int cardKey){
 		BusinessCardDetailFragment fragment = new BusinessCardDetailFragment();
@@ -67,18 +66,4 @@ public class BusinessCardDetailFragment extends AddressCardDetailFragment{
 		gotoFragment(BusinessCardEditFragment.newInstance(card.key));
 	}
 
-	@Override
-	public void onClick(View view){
-		super.onClick(view);
-		switch(view.getId()){
-		case R.id.rlt_phone:
-			Utils.startPhoneCall(getContext(), card.cardTel);
-			break;
-		case R.id.rlt_email:
-			Utils.sendEmail(getContext(), card.cardEmail);
-			break;
-		default:
-			break;
-		}
-	}
 }

@@ -26,7 +26,6 @@ import trente.asia.addresscard.services.shop.model.ShopCardModel;
 
 public class ShopCardDetailFragment extends AddressCardDetailFragment{
 
-	private ShopCardModel					card;
 	private FragmentShopCardDetailBinding	binding;
 
 	public static ShopCardDetailFragment newInstance(int cardKey){
@@ -36,9 +35,17 @@ public class ShopCardDetailFragment extends AddressCardDetailFragment{
 	}
 
 	@Override
+	public int getFooterItemId(){
+		return R.id.lnr_view_footer_shop;
+	}
+
+	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
 		if(mRootView == null){
 			binding = DataBindingUtil.inflate(inflater, R.layout.fragment_shop_card_detail, container, false);
+			binding.rltPhone.setOnClickListener(this);
+			binding.rltEmail.setOnClickListener(this);
+			binding.rltAddress.setOnClickListener(this);
 			mRootView = binding.getRoot();
 			mRootView.findViewById(R.id.img_id_header_right_icon).setOnClickListener(this);
 		}
@@ -54,7 +61,7 @@ public class ShopCardDetailFragment extends AddressCardDetailFragment{
 	protected void loadLayout(JSONObject response){
 		// try{
 		card = CCJsonUtil.convertToModel(response.optString("card"), ShopCardModel.class);
-		card.setTagSelected(true);
+		((ShopCardModel)card).setTagSelected(true);
 		Picasso.with(getContext()).load(BuildConfig.HOST + card.attachment.fileUrl).into(binding.cardImage);
 		binding.setVariable(BR.card, card);
 		binding.executePendingBindings();

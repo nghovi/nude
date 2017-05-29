@@ -69,6 +69,8 @@ public class TagsFragment extends AbstractAddressCardFragment implements TagAdap
 			// List<TagModel> tagModels = new ArrayList<>();
 			// adapter = new TagAdapter(tagModels);
 			// binding.lstTag.setAdapter(adapter);
+			binding.btnCheckAll.setOnClickListener(this);
+			binding.btnUncheckAll.setOnClickListener(this);
 			binding.lstTag.setLayoutManager(new LinearLayoutManager(getContext()));
 			mRootView = binding.getRoot();
 		}
@@ -136,9 +138,23 @@ public class TagsFragment extends AbstractAddressCardFragment implements TagAdap
 		case R.id.img_id_header_right_icon:
 			onChooseTagDone();
 			break;
+		case R.id.btn_check_all:
+			checkAllTags();
+			break;
+		case R.id.btn_uncheck_all:
+			uncheckAllTags();
+			break;
 		default:
 			break;
 		}
+	}
+
+	private void uncheckAllTags(){
+		setCheckAllTags(false);
+	}
+
+	private void checkAllTags(){
+		setCheckAllTags(true);
 	}
 
 	private void onChooseTagDone(){
@@ -169,5 +185,12 @@ public class TagsFragment extends AbstractAddressCardFragment implements TagAdap
 	public void setEditBinding(FragmentShopCardEditBinding editBinding){
 		this.editBinding = editBinding;
 		this.tags = editBinding.getTags();
+	}
+
+	public void setCheckAllTags(boolean check){
+		for(TagModel tag : tagModels){
+			tag.selected = check;
+		}
+		adapter.notifyDataSetChanged();
 	}
 }

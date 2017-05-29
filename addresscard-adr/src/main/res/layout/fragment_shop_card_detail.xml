@@ -77,7 +77,9 @@
                     <View style="@style/cs_common_divider" />
 
                     <RelativeLayout
+                        android:id="@+id/rlt_phone"
                         android:layout_width="match_parent"
+                        android:background="@drawable/row_pressed_selector"
                         android:layout_height="@dimen/ac_upload_card_edt_height"
                         android:padding="@dimen/ac_common_field_padding">
 
@@ -110,8 +112,10 @@
                     <View style="@style/cs_common_divider" />
 
                     <RelativeLayout
+                        android:id="@+id/rlt_email"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/ac_upload_card_edt_height"
+                        android:background="@drawable/row_pressed_selector"
                         android:padding="@dimen/ac_common_field_padding">
 
                         <TextView
@@ -130,6 +134,7 @@
                             android:layout_centerVertical="true"
                             android:text="@{card.cardEmail}"
                             android:textColor="@color/ac_common_text_color_body"
+                            android:paddingRight="@dimen/margin_32dp"
                             android:textSize="@dimen/ac_common_text_size_body" />
 
                         <ImageView
@@ -143,8 +148,10 @@
                     <View style="@style/cs_common_divider" />
 
                     <RelativeLayout
+                        android:id="@+id/rlt_address"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/ac_upload_card_edt_height"
+                        android:background="@drawable/row_pressed_selector"
                         android:padding="@dimen/ac_common_field_padding">
 
                         <TextView
@@ -179,6 +186,7 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/row_pressed_selector"
                         android:padding="@dimen/ac_common_field_padding">
 
                         <TextView

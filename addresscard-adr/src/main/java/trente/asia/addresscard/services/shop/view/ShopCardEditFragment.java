@@ -42,6 +42,11 @@ public class ShopCardEditFragment extends AddressCardEditFragment{
 		return fragment;
 	}
 
+    @Override
+    public int getFooterItemId(){
+        return R.id.lnr_view_footer_shop;
+    }
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
 		if(mRootView == null){
