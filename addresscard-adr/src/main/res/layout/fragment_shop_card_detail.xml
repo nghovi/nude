@@ -213,6 +213,7 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/row_pressed_selector"
                         android:minHeight="@dimen/ac_upload_card_edt_height"
                         android:padding="@dimen/ac_common_field_padding">
 

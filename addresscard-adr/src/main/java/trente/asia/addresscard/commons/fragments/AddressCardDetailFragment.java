@@ -61,7 +61,7 @@ public abstract class AddressCardDetailFragment extends AbstractAddressCardFragm
 			Utils.sendEmail(getContext(), card.cardEmail);
 			break;
 		case R.id.rlt_address:
-			Utils.openMap(getContext(), card.cardEmail);
+			Utils.openMap(getContext(), card.cardAddress);
 			break;
 		default:
 			break;
