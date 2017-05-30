@@ -9,4 +9,5 @@
     <string name="shop_cards_no_tag">No tag</string>
     <string name="fragment_tags_uncheck_all">Uncheck all</string>
     <string name="fragment_tags_check_all">Check all</string>
+    <string name="ac_delete_card">Delete card</string>
 </resources>

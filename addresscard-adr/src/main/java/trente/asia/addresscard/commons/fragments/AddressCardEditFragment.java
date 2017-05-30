@@ -6,6 +6,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import trente.asia.addresscard.R;
+import trente.asia.addresscard.services.business.model.AddressCardModel;
+import trente.asia.addresscard.services.shop.model.ShopCardModel;
 
 /**
  * Created by tien on 5/23/2017.
@@ -13,7 +15,8 @@ import trente.asia.addresscard.R;
 
 public abstract class AddressCardEditFragment extends AbstractAddressCardFragment{
 
-	protected int key;
+	protected int				key;
+	protected AddressCardModel	card;
 
 	@Override
 	protected void initData(){
@@ -28,12 +31,12 @@ public abstract class AddressCardEditFragment extends AbstractAddressCardFragmen
 	}
 
 	@Override
+
 	public void initView(){
 		super.initView();
 		super.initHeader(R.drawable.ac_back_white, "", R.drawable.ac_action_done);
 		getView().findViewById(R.id.img_id_header_right_icon).setOnClickListener(this);
 	}
-
 
 	@Override
 	public int getFooterItemId(){
@@ -46,10 +49,32 @@ public abstract class AddressCardEditFragment extends AbstractAddressCardFragmen
 		case R.id.img_id_header_right_icon:
 			finishEditCard();
 			break;
+		case R.id.btn_delete:
+			deleteCard();
 		default:
 			break;
 		}
 	}
+
+	private void deleteCard(){
+		//// TODO: 5/30/17
+		JSONObject jsonObject = new JSONObject();
+		try{
+			jsonObject.put("cardIds", card.key);
+		}catch(JSONException e){
+			e.printStackTrace();
+		}
+		requestUpdate(getApiDeleteString(), jsonObject, true);
+	}
+
+	@Override
+	protected void successUpdate(JSONObject response, String url){
+		gotoCardListFragment();
+	}
+
+	protected abstract void gotoCardListFragment();
+
+	protected abstract String getApiDeleteString();
 
 	private void finishEditCard(){
 		updateAddressCard();

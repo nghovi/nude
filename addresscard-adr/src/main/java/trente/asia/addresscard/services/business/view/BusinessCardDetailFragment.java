@@ -17,8 +17,7 @@ import trente.asia.addresscard.ACConst;
 import trente.asia.addresscard.BuildConfig;
 import trente.asia.addresscard.R;
 import trente.asia.addresscard.commons.fragments.AddressCardDetailFragment;
-import trente.asia.addresscard.commons.utils.Utils;
-import trente.asia.addresscard.databinding.FragmentCardDetailShowBinding;
+import trente.asia.addresscard.databinding.FragmentBusinessCardDetailBinding;
 import trente.asia.addresscard.services.business.model.BusinessCardModel;
 
 /**
@@ -27,7 +26,7 @@ import trente.asia.addresscard.services.business.model.BusinessCardModel;
 
 public class BusinessCardDetailFragment extends AddressCardDetailFragment{
 
-	protected FragmentCardDetailShowBinding binding;
+	protected FragmentBusinessCardDetailBinding binding;
 
 	public static BusinessCardDetailFragment newInstance(int cardKey){
 		BusinessCardDetailFragment fragment = new BusinessCardDetailFragment();
@@ -38,7 +37,7 @@ public class BusinessCardDetailFragment extends AddressCardDetailFragment{
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
 		if(mRootView == null){
-			binding = DataBindingUtil.inflate(inflater, R.layout.fragment_card_detail_show, container, false);
+			binding = DataBindingUtil.inflate(inflater, R.layout.fragment_business_card_detail, container, false);
 			mRootView = binding.getRoot();
 			binding.rltPhone.setOnClickListener(this);
 			binding.rltEmail.setOnClickListener(this);

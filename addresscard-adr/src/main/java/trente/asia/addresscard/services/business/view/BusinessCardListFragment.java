@@ -7,12 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.json.JSONObject;
-
 import trente.asia.addresscard.ACConst;
 import trente.asia.addresscard.R;
 import trente.asia.addresscard.commons.fragments.AddressCardListFragment;
-import trente.asia.addresscard.databinding.FragmentBusinessCardMainBinding;
+import trente.asia.addresscard.databinding.FragmentBusinessCardsBinding;
 import trente.asia.addresscard.services.business.model.AddressCardModel;
 import trente.asia.addresscard.services.business.presenter.CardAdapter;
 
@@ -21,7 +19,7 @@ import trente.asia.addresscard.services.business.presenter.CardAdapter;
  */
 
 public class BusinessCardListFragment extends AddressCardListFragment {
-    private FragmentBusinessCardMainBinding binding;
+    private FragmentBusinessCardsBinding binding;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -46,7 +44,7 @@ public class BusinessCardListFragment extends AddressCardListFragment {
 
     @Override
     protected void initViewBinding(LayoutInflater inflater, ViewGroup container) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_business_card_main, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_business_cards, container, false);
     }
 
     @Override

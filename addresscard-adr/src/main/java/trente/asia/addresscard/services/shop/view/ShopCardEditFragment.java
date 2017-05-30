@@ -33,8 +33,7 @@ import trente.asia.android.view.util.CAObjectSerializeUtil;
 
 public class ShopCardEditFragment extends AddressCardEditFragment{
 
-	private ShopCardModel				card;
-	private FragmentShopCardEditBinding	binding;
+	private FragmentShopCardEditBinding binding;
 
 	public static ShopCardEditFragment newInstance(int cardId){
 		ShopCardEditFragment fragment = new ShopCardEditFragment();
@@ -42,16 +41,17 @@ public class ShopCardEditFragment extends AddressCardEditFragment{
 		return fragment;
 	}
 
-    @Override
-    public int getFooterItemId(){
-        return R.id.lnr_view_footer_shop;
-    }
+	@Override
+	public int getFooterItemId(){
+		return R.id.lnr_view_footer_shop;
+	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
 		if(mRootView == null){
 			binding = DataBindingUtil.inflate(inflater, R.layout.fragment_shop_card_edit, container, false);
 			binding.rltCardTag.setOnClickListener(this);
+			binding.btnDelete.setOnClickListener(this);
 			mRootView = binding.getRoot();
 		}
 		return mRootView;
@@ -66,12 +66,12 @@ public class ShopCardEditFragment extends AddressCardEditFragment{
 	protected void successLoad(JSONObject response, String url){
 		if(ACConst.API_SHOP_CARD_DETAIL.equals(url)){
 			// try{
-			card = CCJsonUtil.convertToModel(response.optString("card"), ShopCardModel.class);
-			card.setTagSelected(true);
-			binding.setTags(card.tags);
+			card = (CCJsonUtil.convertToModel(response.optString("card"), ShopCardModel.class));
+			((ShopCardModel)card).setTagSelected(true);
+			binding.setTags(((ShopCardModel)card).tags);
 			binding.setVariable(BR.card, card);
 			binding.executePendingBindings();
-			Picasso.with(getContext()).load(BuildConfig.HOST + card.attachment.fileUrl).into(binding.cardImage);
+			Picasso.with(getContext()).load(BuildConfig.HOST + card.attachment.fileUrl).fit().into(binding.cardImage);
 			updateHeader(card.cardName);
 			// }catch(IOException e){
 			// e.printStackTrace();
@@ -94,20 +94,25 @@ public class ShopCardEditFragment extends AddressCardEditFragment{
 	}
 
 	@Override
-	protected void successUpdate(JSONObject response, String url){
-		super.successUpdate(response, url);
-	}
-
-	@Override
 	public void onClick(View view){
-		super.onClick(view);
 		switch(view.getId()){
 		case R.id.rlt_card_tag:
 			gotoTagsFragment();
 			break;
 		default:
+			super.onClick(view);
 			break;
 		}
+	}
+
+	@Override
+	protected void gotoCardListFragment(){
+		onClickFooterItemShop();
+	}
+
+	@Override
+	protected String getApiDeleteString(){
+		return ACConst.API_SHOP_CARD_DELETE;
 	}
 
 	private void gotoTagsFragment(){

@@ -22,23 +22,7 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/card_image"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:background="#c7c5c5"
-                android:padding="@dimen/ac_image_padding"/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#c7c5c5"
-                android:padding="@dimen/ac_common_field_padding"
-                android:text="@string/shop_card_detail_title"
-                android:textColor="@color/ac_common_text_color_body"
-                android:textSize="@dimen/ac_common_text_size_body" />
-
-            <View style="@style/cs_common_divider" />
 
             <ScrollView
                 android:layout_width="match_parent"
@@ -49,9 +33,28 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
+                    <ImageView
+                        android:id="@+id/card_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:background="@color/core_white"
+                        android:padding="@dimen/ac_image_padding"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#c7c5c5"
+                        android:padding="@dimen/ac_common_field_padding"
+                        android:text="@string/shop_card_detail_title"
+                        android:textColor="@color/ac_common_text_color_body"
+                        android:textSize="@dimen/ac_common_text_size_body" />
+
+                    <View style="@style/cs_common_divider" />
+
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/row_pressed_selector"
                         android:minHeight="@dimen/ac_upload_card_edt_height"
                         android:padding="@dimen/ac_common_field_padding">
 

@@ -28,7 +28,7 @@ import trente.asia.addresscard.BuildConfig;
 import trente.asia.addresscard.R;
 import trente.asia.addresscard.commons.fragments.AddressCardEditFragment;
 import trente.asia.addresscard.databinding.DialogFragmentChooseCustomerBinding;
-import trente.asia.addresscard.databinding.FragmentCardDetailEditBinding;
+import trente.asia.addresscard.databinding.FragmentBusinessCardEditBinding;
 import trente.asia.addresscard.services.business.model.BusinessCardModel;
 import trente.asia.addresscard.services.business.model.CustomerModel;
 import trente.asia.addresscard.services.business.presenter.CustomerDialogAdapter;
@@ -41,8 +41,7 @@ import trente.asia.android.view.util.CAObjectSerializeUtil;
 public class BusinessCardEditFragment extends AddressCardEditFragment implements CustomerDialogAdapter.OnCustomerDialogListener{
 
 	private int									customerId;
-	private BusinessCardModel					card;
-	private FragmentCardDetailEditBinding		binding;
+	private FragmentBusinessCardEditBinding		binding;
 	private Dialog								dialog;
 	private DialogFragmentChooseCustomerBinding	viewBinding;
 
@@ -55,9 +54,10 @@ public class BusinessCardEditFragment extends AddressCardEditFragment implements
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
 		if(mRootView == null){
-			binding = DataBindingUtil.inflate(inflater, R.layout.fragment_card_detail_edit, container, false);
+			binding = DataBindingUtil.inflate(inflater, R.layout.fragment_business_card_edit, container, false);
 			mRootView = binding.getRoot();
 			binding.rltSetCustomer.setOnClickListener(this);
+			binding.btnDelete.setOnClickListener(this);
 		}
 		return mRootView;
 	}
@@ -85,8 +85,8 @@ public class BusinessCardEditFragment extends AddressCardEditFragment implements
 			card = CCJsonUtil.convertToModel(response.optString("card"), BusinessCardModel.class);
 			binding.setVariable(BR.card, card);
 			binding.executePendingBindings();
-			Picasso.with(getContext()).load(BuildConfig.HOST + card.attachment.fileUrl).into(binding.cardImage);
-			customerId = card.customerId;
+			Picasso.with(getContext()).load(BuildConfig.HOST + card.attachment.fileUrl).fit().into(binding.cardImage);
+			customerId = ((BusinessCardModel)card).customerId;
 			super.initHeader(R.drawable.ac_back_white, card.cardName, R.drawable.ac_action_done);
 		}
 	}
@@ -124,6 +124,16 @@ public class BusinessCardEditFragment extends AddressCardEditFragment implements
 			binding.customerName.setText(viewBinding.edtNewCustomer.getText());
 			dialog.dismiss();
 		}
+	}
+
+	@Override
+	protected void gotoCardListFragment(){
+		onClickFooterItemCard();
+	}
+
+	@Override
+	protected String getApiDeleteString(){
+		return ACConst.AC_BUSINESS_CARD_DELETE;
 	}
 
 	@Override

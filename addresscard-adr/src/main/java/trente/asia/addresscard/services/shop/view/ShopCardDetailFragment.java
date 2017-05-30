@@ -62,7 +62,7 @@ public class ShopCardDetailFragment extends AddressCardDetailFragment{
 		// try{
 		card = CCJsonUtil.convertToModel(response.optString("card"), ShopCardModel.class);
 		((ShopCardModel)card).setTagSelected(true);
-		Picasso.with(getContext()).load(BuildConfig.HOST + card.attachment.fileUrl).into(binding.cardImage);
+		Picasso.with(getContext()).load(BuildConfig.HOST + card.attachment.fileUrl).fit().into(binding.cardImage);
 		binding.setVariable(BR.card, card);
 		binding.executePendingBindings();
 		super.initHeader(R.drawable.ac_back_white, card.cardName, R.drawable.ac_action_edit);
