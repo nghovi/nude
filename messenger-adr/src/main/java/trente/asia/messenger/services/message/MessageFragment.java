@@ -78,6 +78,7 @@ import trente.asia.welfare.adr.menu.OnMenuButtonsListener;
 import trente.asia.welfare.adr.menu.OnMenuManageListener;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WelfareUtil;
+import trente.asia.welfare.adr.view.LinearLayoutOnInterceptTouch;
 import trente.asia.welfare.adr.view.MsgMultiAutoCompleteTextView;
 import trente.asia.welfare.adr.view.WfSlideMenuLayout;
 
@@ -335,6 +336,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 		initViewPager();
 
 		mSlideMenuLayout = (WfSlideMenuLayout)getView().findViewById(R.id.drawer_layout);
+		mSlideMenuLayout.setOutsideLayout((LinearLayoutOnInterceptTouch) getView().findViewById(R.id.main_layout));
 		mViewForMenuBehind = getView().findViewById(R.id.viewForMenuBehind);
 		FragmentManager fragmentManager = getFragmentManager();
 		FragmentTransaction transaction = fragmentManager.beginTransaction();
