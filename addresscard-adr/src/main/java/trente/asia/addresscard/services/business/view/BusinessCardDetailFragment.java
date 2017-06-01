@@ -3,6 +3,7 @@ package trente.asia.addresscard.services.business.view;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,7 +55,12 @@ public class BusinessCardDetailFragment extends AddressCardDetailFragment{
 	@Override
 	protected void loadLayout(JSONObject response){
 		card = CCJsonUtil.convertToModel(response.optString("card"), BusinessCardModel.class);
-		Picasso.with(getContext()).load(BuildConfig.HOST + card.attachment.fileUrl).fit().into(binding.cardImage);
+		DisplayMetrics metrics = new DisplayMetrics();
+		getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
+		Picasso.with(getContext()).load(BuildConfig.HOST + card.attachment.fileUrl)
+				.placeholder(R.drawable.loading)
+				.resize(metrics.widthPixels, 0)
+				.into(binding.cardImage);
 		binding.setVariable(BR.card, card);
 		binding.executePendingBindings();
 		super.initHeader(R.drawable.ac_back_white, card.cardName, R.drawable.ac_action_edit);
