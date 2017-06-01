@@ -36,13 +36,13 @@ android {
     productFlavors {
         develop {
             applicationId "trente.asia.dailyreport"
-            manifestPlaceholders = [appName:"${APP_NAME} DEV"]
+            manifestPlaceholders = [appName: "${APP_NAME} DEV"]
             buildConfigField "Boolean", "DEVELOP", "true"
             buildConfigField "String", "HOST", "\"http://192.168.1.124:9000\""
         }
         production {
             applicationId "trente.fukuri.dailyreport"
-            manifestPlaceholders = [appName:"${APP_NAME}"]
+            manifestPlaceholders = [appName: "${APP_NAME}"]
             buildConfigField "Boolean", "DEVELOP", "false"
             buildConfigField "String", "HOST", "\"https://tr-fukuri.jp\""
         }
@@ -84,7 +84,6 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':welfare-android-core')
-    compile 'com.android.support:multidex:1.0.0'
-    compile 'com.google.firebase:firebase-messaging:9.2.1'
+    compile 'com.google.firebase:firebase-messaging:10.2.6'
 }
 apply plugin: 'com.google.gms.google-services'
