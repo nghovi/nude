@@ -93,7 +93,7 @@ public class KPIMonthlyGoalGraphFragment extends AbstractDRFragment implements V
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
-		requestLoad(WfUrlConst.WF_REPORT_KPI_GRAPH, jsonObject, true);
+		requestLoad(DRConst.API_REPORT_GRAPH_RATE, jsonObject, true);
 	}
 
 	@Override
@@ -107,7 +107,7 @@ public class KPIMonthlyGoalGraphFragment extends AbstractDRFragment implements V
 				selectedActionGoals = goalModels.size() > 0 ? goalModels.get(0) : null;
 				buildSpinner();
 			}
-		}else if(WfUrlConst.WF_REPORT_KPI_GRAPH.equals(url)){
+		}else if(DRConst.API_REPORT_GRAPH_RATE.equals(url)){
 			goalHolderModels = CCJsonUtil.convertToModelList(response.optString("results"), ReportMonthyGraphHolderModel.class);
 			if(!CCCollectionUtil.isEmpty(goalHolderModels)){
 				if(DRConst.BY_USER.equals(graphTitle)){

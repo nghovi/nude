@@ -38,7 +38,6 @@ import trente.asia.dailyreport.services.report.model.ReportTemplate;
 import trente.asia.dailyreport.utils.DRUtil;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.utils.WelfareUtil;
 import trente.asia.welfare.adr.view.WfSpinner;
 
@@ -144,7 +143,7 @@ public class ReportEditFragment extends AbstractDRFragment implements WfSpinner.
 		}catch(JSONException ex){
 			ex.printStackTrace();
 		}
-		requestLoad(WfUrlConst.WF_REPORT_DETAIL, jsonObject, true);
+		requestLoad(DRConst.API_REPORT_DETAIL, jsonObject, true);
 	}
 
 	private List<String> getSpinnerValuesTemplate(List<ReportTemplate> reportTemplates){
@@ -201,7 +200,7 @@ public class ReportEditFragment extends AbstractDRFragment implements WfSpinner.
 		}catch(JSONException ex){
 			ex.printStackTrace();
 		}
-		requestUpdate(WfUrlConst.WF_REPORT_UPDATE, jsonObject, true);
+		requestUpdate(DRConst.API_REPORT_UPDATE, jsonObject, true);
 	}
 
 	// }
@@ -214,7 +213,7 @@ public class ReportEditFragment extends AbstractDRFragment implements WfSpinner.
 
 	@Override
 	protected void successLoad(JSONObject response, String url){
-		if(WfUrlConst.WF_REPORT_DETAIL.equals(url)){
+		if(DRConst.API_REPORT_DETAIL.equals(url)){
 			ReportModel report = CCJsonUtil.convertToModel(response.optString("detail"), ReportModel.class);
 			if(CCStringUtil.isEmpty(report.key)){
 				report.reportDate = reportModel.reportDate;

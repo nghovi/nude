@@ -15,6 +15,7 @@ import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.util.AndroidUtil;
 import trente.asia.android.view.ChiaseEditText;
+import trente.asia.dailyreport.DRConst;
 import trente.asia.dailyreport.R;
 import trente.asia.dailyreport.activities.CameraPhotoPreviewActivity;
 import trente.asia.dailyreport.activities.FilePreviewActivity;
@@ -25,7 +26,6 @@ import trente.asia.dailyreport.services.report.model.ReportModel;
 import trente.asia.dailyreport.utils.DRUtil;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.menu.OnMenuButtonsListener;
 import trente.asia.welfare.adr.menu.OnMenuManageListener;
 
@@ -177,12 +177,12 @@ public class ReportCommentFragment extends AbstractDRFragment implements View.On
 		}catch(JSONException ex){
 			ex.printStackTrace();
 		}
-		requestUpdate(WfUrlConst.WF_REPORT_COMMENT, jsonObject, true);
+		requestUpdate(DRConst.API_REPORT_COMMENT, jsonObject, true);
 	}
 
 	@Override
 	protected void successUpdate(JSONObject response, String url){
-		if(WfUrlConst.WF_REPORT_COMMENT.equals(url)){
+		if(DRConst.API_REPORT_COMMENT.equals(url)){
 			Toast.makeText(activity, "You've commented on this report", Toast.LENGTH_LONG).show();
 			((WelfareActivity)activity).isInitData = true;
 			onClickBackBtn();

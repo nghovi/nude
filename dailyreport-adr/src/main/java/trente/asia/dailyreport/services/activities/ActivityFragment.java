@@ -12,12 +12,12 @@ import android.widget.ListView;
 
 import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCJsonUtil;
+import trente.asia.dailyreport.DRConst;
 import trente.asia.dailyreport.R;
 import trente.asia.dailyreport.fragments.AbstractDRFragment;
 import trente.asia.dailyreport.services.activities.model.ActivityModel;
 import trente.asia.dailyreport.services.activities.view.ActivityListAdapter;
 import trente.asia.dailyreport.services.report.MyReportFragment;
-import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WelfareUtil;
 import trente.asia.welfare.adr.view.WfSpinner;
@@ -88,7 +88,7 @@ public class ActivityFragment extends AbstractDRFragment{
 		}catch(JSONException ex){
 			ex.printStackTrace();
 		}
-		requestLoad(WfUrlConst.WF_REPORT_ACTIVITY, jsonObject, true);
+		requestLoad(DRConst.API_REPORT_ACTIVITY, jsonObject, true);
 	}
 
 	protected void successLoad(JSONObject response, String url){

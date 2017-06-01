@@ -54,7 +54,6 @@ import trente.asia.dailyreport.services.report.view.CommentListAdapter;
 import trente.asia.dailyreport.utils.DRUtil;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.dialog.WfDialog;
 import trente.asia.welfare.adr.menu.OnMenuButtonsListener;
 import trente.asia.welfare.adr.menu.OnMenuManageListener;
@@ -206,12 +205,12 @@ public class ReportDetailFragment extends AbstractDRFragment implements View.OnC
 		}catch(JSONException ex){
 			ex.printStackTrace();
 		}
-		requestLoad(WfUrlConst.WF_REPORT_DETAIL, jsonObject, true);
+		requestLoad(DRConst.API_REPORT_DETAIL, jsonObject, true);
 	}
 
 	@Override
 	protected void successLoad(JSONObject response, String url){
-		if(WfUrlConst.WF_REPORT_DETAIL.equals(url)){
+		if(DRConst.API_REPORT_DETAIL.equals(url)){
 			oldReportModel = reportModel;
 			reportModel = CCJsonUtil.convertToModel(response.optString("detail"), ReportModel.class);
 			if(WelfareUtil.size(oldReportModel.checks) != WelfareUtil.size(reportModel.checks)){
@@ -540,16 +539,16 @@ public class ReportDetailFragment extends AbstractDRFragment implements View.OnC
 		}catch(JSONException ex){
 			ex.printStackTrace();
 		}
-		requestUpdate(WfUrlConst.WF_REPORT_LIKE, jsonObject, true);
+		requestUpdate(DRConst.API_REPORT_LIKE, jsonObject, true);
 	}
 
 	@Override
 	protected void successUpdate(JSONObject response, String url){
-		if(WfUrlConst.WF_REPORT_LIKE.equals(url)){
+		if(DRConst.API_REPORT_LIKE.equals(url)){
 			// Toast.makeText(activity, "You liked the report!", Toast.LENGTH_LONG).show();
 			((WelfareActivity)activity).isInitData = true;
 			callReportDetailApi();
-		}else if(WfUrlConst.WF_REPORT_COMMENT.equals(url)){
+		}else if(DRConst.API_REPORT_COMMENT.equals(url)){
 			((WelfareActivity)activity).isInitData = true;
 			onCommentSuccess();
 		}else{
@@ -762,7 +761,7 @@ public class ReportDetailFragment extends AbstractDRFragment implements View.OnC
 		}catch(JSONException ex){
 			ex.printStackTrace();
 		}
-		requestUpdate(WfUrlConst.WF_REPORT_COMMENT, jsonObject, true);
+		requestUpdate(DRConst.API_REPORT_COMMENT, jsonObject, true);
 	}
 
 	@Override

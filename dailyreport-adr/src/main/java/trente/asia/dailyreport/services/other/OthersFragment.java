@@ -41,7 +41,6 @@ import trente.asia.dailyreport.services.report.model.ReportModel;
 import trente.asia.dailyreport.utils.DRUtil;
 import trente.asia.dailyreport.view.DRCalendarHeader;
 import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.dialog.WfProfileDialog;
 import trente.asia.welfare.adr.models.DeptModel;
 import trente.asia.welfare.adr.models.UserModel;
@@ -429,7 +428,7 @@ public class OthersFragment extends AbstractDRFragment{
 		}catch(JSONException ex){
 			ex.printStackTrace();
 		}
-		super.requestLoad(WfUrlConst.WF_REPORT_LIST_OTHERS, jsonObject, true);
+		super.requestLoad(DRConst.API_REPORT_LIST_OTHERS, jsonObject, true);
 	}
 
 	@Override
