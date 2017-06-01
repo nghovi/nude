@@ -33,7 +33,6 @@ import trente.asia.thankscard.services.mypage.view.NoticeListAdapter;
 import trente.asia.thankscard.services.posted.ThanksCardEditFragment;
 import trente.asia.thankscard.services.rank.model.RankStage;
 import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.models.DeptModel;
 import trente.asia.welfare.adr.utils.WelfareUtil;
 import trente.asia.welfare.adr.utils.WfPicassoHelper;
@@ -170,12 +169,12 @@ public class MypageFragment extends AbstractTCFragment{
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
-		requestLoad(WfUrlConst.API_THANKSCARD_GET_MYPAGE_INFO, param, true);
+		requestLoad(TcConst.API_GET_MYPAGE_INFO, param, true);
 	}
 
 	@Override
 	protected void successLoad(JSONObject response, String url){
-		if(WfUrlConst.API_THANKSCARD_GET_MYPAGE_INFO.equals(url)){
+		if(TcConst.API_GET_MYPAGE_INFO.equals(url)){
 			requestMypageInfoSuccess(response);
 
 			// control post button
@@ -183,7 +182,7 @@ public class MypageFragment extends AbstractTCFragment{
 			if(WelfareUtil.size(lstDept) == 1 && WelfareUtil.size(lstDept.get(0).members) == 1){
 				btnPost.setEnabled(false);
 			}
-		}else if(WfUrlConst.API_THANKSCARD_GET_RANK_STAGE_INFO.equals(url)){
+		}else if(TcConst.API_GET_RANK_STAGE_INFO.equals(url)){
 			rankStages = CCJsonUtil.convertToModelList(response.optString("rankingStageList"), RankStage.class);
 			if(!CCCollectionUtil.isEmpty(rankStages)){
 				Collections.reverse(rankStages);
@@ -195,7 +194,7 @@ public class MypageFragment extends AbstractTCFragment{
 	}
 
 	private void requestRankStageInfo(){
-		requestLoad(WfUrlConst.API_THANKSCARD_GET_RANK_STAGE_INFO, new JSONObject(), false);
+		requestLoad(TcConst.API_GET_RANK_STAGE_INFO, new JSONObject(), false);
 	}
 
 	private void requestMypageInfoSuccess(JSONObject response){

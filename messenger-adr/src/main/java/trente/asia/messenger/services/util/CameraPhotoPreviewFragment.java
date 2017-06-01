@@ -22,6 +22,7 @@ import android.widget.TextView;
 import trente.asia.android.util.AndroidUtil;
 import trente.asia.messenger.BuildConfig;
 import trente.asia.messenger.R;
+import trente.asia.messenger.commons.defines.MsConst;
 import trente.asia.messenger.commons.utils.MsUtils;
 import trente.asia.messenger.services.user.MsgLoginFragment;
 import trente.asia.welfare.adr.define.WelfareConst;
@@ -123,12 +124,12 @@ public class CameraPhotoPreviewFragment extends AbstractCameraPhotoPreviewFragme
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
-		requestUpload(WfUrlConst.WF_MSG_0004, jsonObject, fileMap, true);
+		requestUpload(MsConst.API_MESSAGE_UPDATE, jsonObject, fileMap, true);
 	}
 
 	@Override
 	protected void successUpload(JSONObject response, String url){
-		if(WfUrlConst.WF_MSG_0004.equals(url)){
+		if(MsConst.API_MESSAGE_UPDATE.equals(url)){
 			File appFolder = new File(MsUtils.getFilesFolderPath());
 			deleteAppFolder(appFolder);
 

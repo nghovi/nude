@@ -1,32 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
         <variable
             name="card"
-            type="trente.asia.addresscard.services.card.model.CardModel"/>
+            type="trente.asia.addresscard.services.business.model.AddressCardModel"/>
     </data>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_margin="5dp"
-        android:background="@{card.background ? @drawable/card_background : @drawable/card_transparent_background}">
+        android:layout_margin="10dp"
+        android:background="@{card.background ? @drawable/card_background : @drawable/row_pressed_selector}">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@android:color/black"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:text="@{card.cardName}"/>
         <ImageView
+            android:id="@+id/card_image"
             android:layout_width="match_parent"
             android:layout_height="80dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            app:image="@{card.attachment}"/>
+            android:paddingTop="@dimen/ac_image_padding"
+            android:paddingBottom="@dimen/ac_image_padding"
+            android:scaleType="fitXY"
+            android:src="@drawable/card"/>
         <TextView
+            android:id="@+id/last_update_user"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="@{card.cardEmail}"/>
+            android:maxLines="1"
+            android:ellipsize="end"/>
     </LinearLayout>
 </layout>

@@ -5,9 +5,10 @@
     <color name="colorAccent">#FF4081</color>
     <color name="deactive_tab_text_color">#BDBDBD</color>
     <color name="btn_camera_background">#808080</color>
+    <color name="ac_common_background">#cccccc</color>
 
-    <color name="wf_app_color_base">#b5ac84</color>
-    <color name="wf_app_color_base_50">#80b5ac84</color>
+    <color name="wf_app_color_base">#808080</color>
+    <color name="wf_app_color_base_50">#80808080</color>
 
     <color name="wf_login_background_color">#fbf8f1</color>
     <color name="wf_app_button_color_off">#808c8464</color>
@@ -24,9 +25,10 @@
     <color name="title_background">#c2c2c2</color>
     <color name="transparent">#00000000</color>
 
-    <color name="ac_button_pressed_color">#ca8b8a8a</color>
+    <color name="ac_button_pressed_color">#e6f988dc</color>
     <color name="ac_common_text_color_title">#818181</color>
     <color name="ac_common_text_color_body">#000000</color>
 
     <color name="ac_category_title_background">#8b8989</color>
+    <color name="ac_footer_color">#80ffffff</color>
 </resources>
