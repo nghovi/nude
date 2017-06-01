@@ -12,7 +12,7 @@
             android:id="@+id/time_created"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{comment.date}"
+            android:text="@{comment.commentDate}"
             style="@style/ac_btn_delete_customer_edit"/>
         <TextView
             android:id="@+id/btn_delete_comment"
