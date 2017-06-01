@@ -336,7 +336,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 		initViewPager();
 
 		mSlideMenuLayout = (WfSlideMenuLayout)getView().findViewById(R.id.drawer_layout);
-		mSlideMenuLayout.setOutsideLayout((LinearLayoutOnInterceptTouch) getView().findViewById(R.id.main_layout));
+		mSlideMenuLayout.setOutsideLayout((LinearLayoutOnInterceptTouch)getView().findViewById(R.id.main_layout));
 		mViewForMenuBehind = getView().findViewById(R.id.viewForMenuBehind);
 		FragmentManager fragmentManager = getFragmentManager();
 		FragmentTransaction transaction = fragmentManager.beginTransaction();
@@ -352,7 +352,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 		menuManager.setMenuLayout(activity, R.id.menuMain, onMenuManagerListener, onMenuButtonsListener);
 
 		mImgLeftHeader.setOnClickListener(this);
-		messageView.lnrSend.setOnClickListener(this);
+		messageView.imgSend.setOnClickListener(this);
 		mViewForMenuBehind.setOnClickListener(this);
 		messageView.lnrLike.setOnClickListener(this);
 		lnrRightHeader.setOnClickListener(this);
@@ -703,7 +703,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 		case R.id.img_id_header_left_icon:
 			mSlideMenuLayout.toggleMenu();
 			break;
-		case R.id.lnr_id_send:
+		case R.id.btn_id_send:
 			if(messageView.buttonType == MessageView.ButtonType.MENU){
 				onButtonMenuClicked();
 			}else{
