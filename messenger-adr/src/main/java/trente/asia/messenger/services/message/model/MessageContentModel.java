@@ -14,6 +14,7 @@ import trente.asia.welfare.adr.models.UserModel;
 /**
  * Created by Huy-nq on 7/12/2016.
  */
+@com.bluelinelabs.logansquare.annotation.JsonObject(fieldDetectionPolicy = com.bluelinelabs.logansquare.annotation.JsonObject.FieldDetectionPolicy.NONPRIVATE_FIELDS)
 public class MessageContentModel extends BitmapModel{
 
 	public String				key;

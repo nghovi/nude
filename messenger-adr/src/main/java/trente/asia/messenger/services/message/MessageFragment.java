@@ -1,5 +1,6 @@
 package trente.asia.messenger.services.message;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.TimerTask;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.bluelinelabs.logansquare.LoganSquare;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -40,7 +42,6 @@ import android.widget.Toast;
 
 import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCCollectionUtil;
-import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCNumberUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.view.model.ChiaseListItemModel;
@@ -72,12 +73,12 @@ import trente.asia.messenger.services.user.UserListActivity;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.EmotionConst;
 import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.dialog.WfProfileDialog;
 import trente.asia.welfare.adr.menu.OnMenuButtonsListener;
 import trente.asia.welfare.adr.menu.OnMenuManageListener;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WelfareUtil;
+import trente.asia.welfare.adr.view.LinearLayoutOnInterceptTouch;
 import trente.asia.welfare.adr.view.MsgMultiAutoCompleteTextView;
 import trente.asia.welfare.adr.view.WfSlideMenuLayout;
 
@@ -103,8 +104,8 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 
 	private BoardListFragment							boardListFragment;
 	private MessageMenuManager							menuManager;
-	private final int									TIME_RELOAD					= 10000;				// 10
-																											// seconds
+	private final int									TIME_RELOAD					= 10000;																																																				// 10
+																																																																											// seconds
 	private Timer										mTimer;
 	private boolean										isFirstScroll2Top			= true;
 	private String										latestMessageId				= "0";
@@ -222,36 +223,36 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 																							PendingResult<LocationSettingsResult> result = LocationServices.SettingsApi.checkLocationSettings(mGoogleApiClient, builder.build());
 																							result.setResultCallback(new ResultCallback<LocationSettingsResult>() {
 
-																								@Override
-																								public void onResult(LocationSettingsResult result){
-																									final Status status = result.getStatus();
-																									// final
-																									// LocationSettingsStates
-																									// =
-																									// result.getLocationSettingsStates();
-																									switch(status.getStatusCode()){
-																									case LocationSettingsStatusCodes.SUCCESS:
-																										// All-location-settings-are-satisfied.
-																										sendLocation();
-																										break;
-																									case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
-																										// Location-settings-are-not-satisfied.
-																										// But-could-be-fixed-by-showing-the-user-a-dialog.
-																										try{
-																											// Show-the-dialog-by-calling-startResolutionForResult(),
-																											// and-check-the-result-in-onActivityResult().
-																											status.startResolutionForResult(activity, REQUEST_CHECK_SETTINGS);
-																										}catch(IntentSender.SendIntentException e){
-																											// Ignore-the-error.
-																										}
-																										break;
-																									case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
-																										// Location-settings-are-not-satisfied.However,we-have-no-way
-																										// to-fix-the-settings-so-we-won't-show-the-dialog.
-																										break;
-																									}
-																								}
-																							});
+																																												@Override
+																																												public void onResult(LocationSettingsResult result){
+																																													final Status status = result.getStatus();
+																																													// final
+																																													// LocationSettingsStates
+																																													// =
+																																													// result.getLocationSettingsStates();
+																																													switch(status.getStatusCode()){
+																																													case LocationSettingsStatusCodes.SUCCESS:
+																																														// All-location-settings-are-satisfied.
+																																														sendLocation();
+																																														break;
+																																													case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
+																																														// Location-settings-are-not-satisfied.
+																																														// But-could-be-fixed-by-showing-the-user-a-dialog.
+																																														try{
+																																															// Show-the-dialog-by-calling-startResolutionForResult(),
+																																															// and-check-the-result-in-onActivityResult().
+																																															status.startResolutionForResult(activity, REQUEST_CHECK_SETTINGS);
+																																														}catch(IntentSender.SendIntentException e){
+																																															// Ignore-the-error.
+																																														}
+																																														break;
+																																													case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
+																																														// Location-settings-are-not-satisfied.However,we-have-no-way
+																																														// to-fix-the-settings-so-we-won't-show-the-dialog.
+																																														break;
+																																													}
+																																												}
+																																											});
 
 																							//
 																							onButtonMenuOpenedClicked();
@@ -335,6 +336,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 		initViewPager();
 
 		mSlideMenuLayout = (WfSlideMenuLayout)getView().findViewById(R.id.drawer_layout);
+		mSlideMenuLayout.setOutsideLayout((LinearLayoutOnInterceptTouch) getView().findViewById(R.id.main_layout));
 		mViewForMenuBehind = getView().findViewById(R.id.viewForMenuBehind);
 		FragmentManager fragmentManager = getFragmentManager();
 		FragmentTransaction transaction = fragmentManager.beginTransaction();
@@ -459,7 +461,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
-		requestLoad(WfUrlConst.WF_MSG_0002, jsonObject, true);
+		requestLoad(MsConst.API_MESSAGE_BOARD, jsonObject, true);
 	}
 
 	private void loadMessageLatest(){
@@ -471,7 +473,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
-		requestLoad(WfUrlConst.WF_MSG_0007, jsonObject, false);
+		requestLoad(MsConst.API_MESSAGE_LATEST, jsonObject, false);
 	}
 
 	private void loadNoteDetail(){
@@ -481,59 +483,63 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
-		requestLoad(WfUrlConst.WF_NOT_0003, jsonObject, true);
+		requestLoad(MsConst.API_MESSAGE_NOTE_DETAIL, jsonObject, true);
 	}
 
 	@Override
 	protected void successLoad(JSONObject response, String url){
-		if(WfUrlConst.WF_MSG_0002.equals(url)){
-			List<MessageContentModel> lstMessage = CCJsonUtil.convertToModelList(response.optString("contents"), MessageContentModel.class);
-			if(!CCCollectionUtil.isEmpty(lstMessage)){
-				if(CCStringUtil.isEmpty(autoroadCd)){
+		try{
+			if(MsConst.API_MESSAGE_BOARD.equals(url)){
+				List<MessageContentModel> lstMessage = LoganSquare.parseList(response.optString("contents"), MessageContentModel.class);
+				if(!CCCollectionUtil.isEmpty(lstMessage)){
+					if(CCStringUtil.isEmpty(autoroadCd)){
+						mMsgAdapter.addMessages(lstMessage);
+						messageView.revMessage.setLastVisibleItem(mMsgAdapter.getItemCount() - 1);
+						messageView.revMessage.scrollRecyclerToBottom();
+						startMessageId = lstMessage.get(0).key;
+						latestMessageId = lstMessage.get(lstMessage.size() - 1).key;
+					}else{
+						// append to top
+						Collections.reverse(lstMessage);
+						mMsgAdapter.addMessage2Top(lstMessage);
+						startMessageId = lstMessage.get(0).key;
+					}
+				}
+
+				autoroadCd = response.optString("autoroadCd");
+				isSuccessLoad = true;
+			}else if(MsConst.API_MESSAGE_LATEST.equals(url)){
+				// get latest message
+				List<MessageContentModel> lstMessage = LoganSquare.parseList(response.optString("contents"), MessageContentModel.class);
+				// lastUpdateTime = response.optString("lastUpdateTime");
+				if(!CCCollectionUtil.isEmpty(lstMessage)){
+					messageView.revMessage.isScrollToBottom();
 					mMsgAdapter.addMessages(lstMessage);
-					messageView.revMessage.setLastVisibleItem(mMsgAdapter.getItemCount() - 1);
 					messageView.revMessage.scrollRecyclerToBottom();
-					startMessageId = lstMessage.get(0).key;
-					latestMessageId = lstMessage.get(lstMessage.size() - 1).key;
-				}else{
-					// append to top
-					Collections.reverse(lstMessage);
-					mMsgAdapter.addMessage2Top(lstMessage);
-					startMessageId = lstMessage.get(0).key;
+					String lastKey = lstMessage.get(lstMessage.size() - 1).key;
+					if(CCNumberUtil.toInteger(latestMessageId).compareTo(CCNumberUtil.toInteger(lastKey)) < 0){
+						latestMessageId = lastKey;
+					}
 				}
-			}
 
-			autoroadCd = response.optString("autoroadCd");
-			isSuccessLoad = true;
-		}else if(WfUrlConst.WF_MSG_0007.equals(url)){
-			// get latest message
-			List<MessageContentModel> lstMessage = CCJsonUtil.convertToModelList(response.optString("contents"), MessageContentModel.class);
-			// lastUpdateTime = response.optString("lastUpdateTime");
-			if(!CCCollectionUtil.isEmpty(lstMessage)){
-				messageView.revMessage.isScrollToBottom();
-				mMsgAdapter.addMessages(lstMessage);
-				messageView.revMessage.scrollRecyclerToBottom();
-				String lastKey = lstMessage.get(lstMessage.size() - 1).key;
-				if(CCNumberUtil.toInteger(latestMessageId).compareTo(CCNumberUtil.toInteger(lastKey)) < 0){
-					latestMessageId = lastKey;
+				// update board list
+				List<BoardModel> lstBoard = LoganSquare.parseList(response.optString("boards"), BoardModel.class);
+				if(onRefreshBoardListListener != null) onRefreshBoardListListener.onRefreshBoardListListener(lstBoard);
+
+				// update action list
+				List<MessageContentModel> lstAction = LoganSquare.parseList(response.optString("actions"), MessageContentModel.class);
+				if(!CCCollectionUtil.isEmpty(lstAction)){
+					this.updateMessage(lstAction);
 				}
+			}else if(MsConst.API_MESSAGE_NOTE_DETAIL.equals(url)){
+				BoardModel boardModel = LoganSquare.parse(response.optString("board"), BoardModel.class);
+				activeBoard = boardModel;
+				updateNoteData();
+			}else{
+				super.successLoad(response, url);
 			}
-
-			// update board list
-			List<BoardModel> lstBoard = CCJsonUtil.convertToModelList(response.optString("boards"), BoardModel.class);
-			if(onRefreshBoardListListener != null) onRefreshBoardListListener.onRefreshBoardListListener(lstBoard);
-
-			// update action list
-			List<MessageContentModel> lstAction = CCJsonUtil.convertToModelList(response.optString("actions"), MessageContentModel.class);
-			if(!CCCollectionUtil.isEmpty(lstAction)){
-				this.updateMessage(lstAction);
-			}
-		}else if(WfUrlConst.WF_NOT_0003.equals(url)){
-			BoardModel boardModel = CCJsonUtil.convertToModel(response.optString("board"), BoardModel.class);
-			activeBoard = boardModel;
-			updateNoteData();
-		}else{
-			super.successLoad(response, url);
+		}catch(IOException e){
+			e.printStackTrace();
 		}
 	}
 
@@ -611,7 +617,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
-		requestUpdate(WfUrlConst.WF_MSG_0004, jsonObject, false);
+		requestUpdate(MsConst.API_MESSAGE_UPDATE, jsonObject, false);
 	}
 
 	private void deleteMessage(MessageContentModel message){
@@ -622,7 +628,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
-		requestUpdate(WfUrlConst.WF_MSG_0008, jsonObject, false);
+		requestUpdate(MsConst.API_MESSAGE_DELETE, jsonObject, false);
 	}
 
 	private void editMessage(MessageContentModel message){
@@ -639,7 +645,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 		}catch(JSONException ex){
 			ex.printStackTrace();
 		}
-		requestUpdate(WfUrlConst.WF_NOT_0002, jsonObject, false);
+		requestUpdate(MsConst.API_MESSAGE_NOTE_COPY, jsonObject, false);
 	}
 
 	private void updateNote(){
@@ -650,28 +656,33 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 		}catch(JSONException ex){
 			ex.printStackTrace();
 		}
-		requestUpdate(WfUrlConst.WF_NOT_0001, jsonObject, false);
+		requestUpdate(MsConst.API_MESSAGE_NOTE_UPDATE, jsonObject, false);
 	}
 
 	@Override
 	protected void successUpdate(JSONObject response, String url){
-		if(WfUrlConst.WF_MSG_0004.equals(url)){
+		if(MsConst.API_MESSAGE_UPDATE.equals(url)){
 			messageView.imgSend.setEnabled(true);
-			MessageContentModel contentModel = CCJsonUtil.convertToModel(response.optString("detail"), MessageContentModel.class);
-			if(messageView.likeButtonType == MessageView.LikeButtonType.EDIT){
-				List<MessageContentModel> lstUpdate = new ArrayList<>();
-				lstUpdate.add(contentModel);
-				mMsgAdapter.updateMessage(lstUpdate);
-			}else{
-				appendMessage(contentModel);
-				// latestMessageId = contentModel.key;
+			MessageContentModel contentModel = null;
+			try{
+				contentModel = LoganSquare.parse(response.optString("detail"), MessageContentModel.class);
+				if(messageView.likeButtonType == MessageView.LikeButtonType.EDIT){
+					List<MessageContentModel> lstUpdate = new ArrayList<>();
+					lstUpdate.add(contentModel);
+					mMsgAdapter.updateMessage(lstUpdate);
+				}else{
+					appendMessage(contentModel);
+					// latestMessageId = contentModel.key;
+				}
+				messageView.edtMessage.setText("");
+			}catch(IOException e){
+				e.printStackTrace();
 			}
-			messageView.edtMessage.setText("");
-		}else if(WfUrlConst.WF_MSG_0005.equals(url)){
+		}else if(MsConst.API_MESSAGE_LIKE.equals(url)){
 
-		}else if(WfUrlConst.WF_MSG_0008.equals(url)){
+		}else if(MsConst.API_MESSAGE_DELETE.equals(url)){
 			mMsgAdapter.deleteMessage(response.optString("key"));
-		}else if(WfUrlConst.WF_NOT_0001.equals(url)){
+		}else if(MsConst.API_MESSAGE_NOTE_UPDATE.equals(url)){
 			noteView.changeMode(false);
 			loadMessageLatest();
 			// mPagerBoard.setCurrentItem(0, true);
@@ -853,9 +864,14 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 
 		case MsConst.REQUEST_CODE_ADD_CONTACT:
 			String detailBoard = returnedIntent.getExtras().getString("detail");
-			BoardModel boardModel = CCJsonUtil.convertToModel(detailBoard, BoardModel.class);
-			if(boardListFragment != null) boardListFragment.onAddedContactListener(boardModel);
-			break;
+			BoardModel boardModel = null;
+			try{
+				boardModel = LoganSquare.parse(detailBoard, BoardModel.class);
+				if(boardListFragment != null) boardListFragment.onAddedContactListener(boardModel);
+				break;
+			}catch(IOException e){
+				e.printStackTrace();
+			}
 
 		default:
 			break;
@@ -868,8 +884,13 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 			alertDialog.setMessage(getString(R.string.wf_invalid_photo_over));
 			alertDialog.show();
 		}else{
-			MessageContentModel photoModel = CCJsonUtil.convertToModel(CCStringUtil.toString(detailMessage), MessageContentModel.class);
-			appendMessage(photoModel);
+			MessageContentModel photoModel = null;
+			try{
+				photoModel = LoganSquare.parse(CCStringUtil.toString(detailMessage), MessageContentModel.class);
+				appendMessage(photoModel);
+			}catch(IOException e){
+				e.printStackTrace();
+			}
 		}
 	}
 

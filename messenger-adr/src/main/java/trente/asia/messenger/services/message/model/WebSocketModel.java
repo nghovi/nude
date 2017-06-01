@@ -5,6 +5,7 @@ package trente.asia.messenger.services.message.model;
  *
  * @author TrungND
  */
+@com.bluelinelabs.logansquare.annotation.JsonObject(fieldDetectionPolicy = com.bluelinelabs.logansquare.annotation.JsonObject.FieldDetectionPolicy.NONPRIVATE_FIELDS)
 public class WebSocketModel{
 
 	public SocketModel model;

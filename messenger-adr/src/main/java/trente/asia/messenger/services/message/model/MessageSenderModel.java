@@ -3,6 +3,7 @@ package trente.asia.messenger.services.message.model;
 /**
  * Created by Huy-nq on 7/12/2016.
  */
+@com.bluelinelabs.logansquare.annotation.JsonObject(fieldDetectionPolicy = com.bluelinelabs.logansquare.annotation.JsonObject.FieldDetectionPolicy.NONPRIVATE_FIELDS)
 public class MessageSenderModel{
 
 	public String	key;

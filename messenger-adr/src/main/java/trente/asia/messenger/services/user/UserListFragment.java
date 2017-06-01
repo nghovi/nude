@@ -1,10 +1,13 @@
 package trente.asia.messenger.services.user;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import com.bluelinelabs.logansquare.LoganSquare;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -18,13 +21,12 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import asia.chiase.core.util.CCCollectionUtil;
-import asia.chiase.core.util.CCJsonUtil;
 import trente.asia.messenger.BuildConfig;
 import trente.asia.messenger.R;
+import trente.asia.messenger.commons.defines.MsConst;
 import trente.asia.messenger.fragment.AbstractMsgFragment;
 import trente.asia.messenger.services.user.listener.OnAddUserListener;
 import trente.asia.messenger.services.user.view.UserListAdapter;
-import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.dialog.WfProfileDialog;
 import trente.asia.welfare.adr.models.UserModel;
 
@@ -84,26 +86,31 @@ public class UserListFragment extends AbstractMsgFragment implements OnAddUserLi
 
 	private void loadUserList(){
 		JSONObject jsonObject = new JSONObject();
-		requestLoad(WfUrlConst.WF_MSG_CTA_0001, jsonObject, true);
+		requestLoad(MsConst.API_MESSAGE_CONTACT_LIST, jsonObject, true);
 	}
 
 	@Override
 	protected void successLoad(JSONObject response, String url){
-		if(WfUrlConst.WF_MSG_CTA_0001.equals(url)){
-			List<UserModel> lstUser = CCJsonUtil.convertToModelList(response.optString("userList"), UserModel.class);
-			OnAvatarClickListener listener = new OnAvatarClickListener() {
+		if(MsConst.API_MESSAGE_CONTACT_LIST.equals(url)){
+			List<UserModel> lstUser = null;
+			try{
+				lstUser = LoganSquare.parseList(response.optString("userList"), UserModel.class);
+				OnAvatarClickListener listener = new OnAvatarClickListener() {
 
-				@Override
-				public void OnAvatarClick(String userName, String avatarPath){
-					mDlgProfile.show(BuildConfig.HOST, userName, avatarPath);
+					@Override
+					public void OnAvatarClick(String userName, String avatarPath){
+						mDlgProfile.show(BuildConfig.HOST, userName, avatarPath);
+					}
+				};
+				if(!CCCollectionUtil.isEmpty(lstUser)){
+					mAdapter = new UserListAdapter(activity, lstUser, UserListFragment.this, listener);
+					mLsvUser.setAdapter(mAdapter);
+				}else{
+					mAdapter = new UserListAdapter(activity, new ArrayList<UserModel>(), UserListFragment.this, listener);
+					mLsvUser.setAdapter(mAdapter);
 				}
-			};
-			if(!CCCollectionUtil.isEmpty(lstUser)){
-				mAdapter = new UserListAdapter(activity, lstUser, UserListFragment.this, listener);
-				mLsvUser.setAdapter(mAdapter);
-			}else{
-				mAdapter = new UserListAdapter(activity, new ArrayList<UserModel>(), UserListFragment.this, listener);
-				mLsvUser.setAdapter(mAdapter);
+			}catch(IOException e){
+				e.printStackTrace();
 			}
 		}else{
 			super.successLoad(response, url);
@@ -121,12 +128,12 @@ public class UserListFragment extends AbstractMsgFragment implements OnAddUserLi
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
-		requestUpdate(WfUrlConst.WF_MSG_CTA_0002, jsonObject, true);
+		requestUpdate(MsConst.API_MESSAGE_CONTACT_UPDATE, jsonObject, true);
 	}
 
 	@Override
 	protected void successUpdate(JSONObject response, String url){
-		if(WfUrlConst.WF_MSG_CTA_0002.equals(url)){
+		if(MsConst.API_MESSAGE_CONTACT_UPDATE.equals(url)){
 
 			Intent intent = activity.getIntent();
 			intent.putExtra("detail", response.optString("detail"));
