@@ -1,5 +1,11 @@
 package trente.asia.addresscard.services.shop.view;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import org.json.JSONObject;
+
 import android.databinding.DataBindingUtil;
 import android.databinding.Observable;
 import android.os.Bundle;
@@ -7,12 +13,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCJsonUtil;
@@ -72,8 +72,6 @@ public class ShopCardListFragment extends AddressCardListFragment{
 				@Override
 				public void onPropertyChanged(Observable observable, int i){
 					retrieveSavedTags();
-					adapter.unselectAllCards();
-					showBtnCapture();
 					filterCards();
 					// adapter.setCards(filteredCards);
 					adapter.notifyDataSetChanged();
@@ -189,6 +187,8 @@ public class ShopCardListFragment extends AddressCardListFragment{
 
 	// // TODO: 5/22/2017 shouldn't create each Tags Fragment?
 	private void gotoTagsFragment(){
+		adapter.unselectAllCards();
+		showBtnCapture();
 		TagsFragment tagsFragment = new TagsFragment();
 		tagsFragment.setShopCardBinding((FragmentShopCardsBinding)binding);
 		gotoFragment(tagsFragment);
