@@ -9,7 +9,6 @@ import trente.asia.thankscard.R;
 import trente.asia.thankscard.commons.defines.TcConst;
 import trente.asia.thankscard.fragments.AbstractTCListFragment;
 import trente.asia.thankscard.services.common.model.HistoryModel;
-import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.models.DeptModel;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WelfareUtil;
@@ -31,7 +30,7 @@ public class PostTCListFragment extends AbstractTCListFragment{
 
 	@Override
 	protected String getConstApi(){
-		return WfUrlConst.API_THANKSCARD_GET_POST_CARD_HISTORY;
+		return TcConst.API_GET_POST_CARD_HISTORY;
 	}
 
 	@Override

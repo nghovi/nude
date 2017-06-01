@@ -374,9 +374,9 @@ public class ThanksCardEditFragment extends AbstractTCFragment {
 
     @Override
     protected void successUpdate(JSONObject response, String url) {
-        if (WfUrlConst.API_THANKSCARD_POST_GET_RECEIVER_DEPARTMENT_INFO.equals(url)) {
+        if (TcConst.API_POST_GET_RECEIVER_DEPARTMENT_INFO.equals(url)) {
             // requestReceiverDeptModelInfoSuccess(response);
-        } else if (WfUrlConst.API_THANKSCARD_POST_NEW_CARD.equals(url)) {
+        } else if (TcConst.API_POST_NEW_CARD.equals(url)) {
             requestPostNewCardSuccess(response);
         } else {
             super.successUpdate(response, url);
@@ -385,12 +385,12 @@ public class ThanksCardEditFragment extends AbstractTCFragment {
 
     private void requestTemplate() {
         JSONObject param = new JSONObject();
-        requestLoad(WfUrlConst.API_THANKSCARD_GET_TEMPLATE, param, true);
+        requestLoad(TcConst.API_GET_TEMPLATE, param, true);
     }
 
     @Override
     protected void successLoad(JSONObject response, String url) {
-        if (WfUrlConst.API_THANKSCARD_GET_TEMPLATE.equals(url)) {
+        if (TcConst.API_GET_TEMPLATE.equals(url)) {
             requestTemplateSuccess(response);
         } else if (WfUrlConst.WF_ACC_INFO_DETAIL.equals(url)) {
             departments = CCJsonUtil.convertToModelList(response.optString("depts"), DeptModel.class);
@@ -461,7 +461,7 @@ public class ThanksCardEditFragment extends AbstractTCFragment {
         } catch (JSONException ex) {
             ex.printStackTrace();
         }
-        requestUpdate(WfUrlConst.API_THANKSCARD_POST_NEW_CARD, jsonObject, true);
+        requestUpdate(TcConst.API_POST_NEW_CARD, jsonObject, true);
         // }
     }
 

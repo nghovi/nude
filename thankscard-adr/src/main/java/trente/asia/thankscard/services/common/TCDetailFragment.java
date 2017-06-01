@@ -31,7 +31,6 @@ import trente.asia.thankscard.services.received.ReceiveTCListFragment;
 import trente.asia.thankscard.utils.TCUtil;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.models.DeptModel;
 import trente.asia.welfare.adr.models.LikeModel;
 import trente.asia.welfare.adr.models.UserModel;
@@ -108,12 +107,12 @@ public class TCDetailFragment extends AbstractPagerFragment{
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
-		requestLoad(WfUrlConst.API_THANKSCARD_GET_POST_CARD_HISTORY, jsonObject, true);
+		requestLoad(TcConst.API_GET_POST_CARD_HISTORY, jsonObject, true);
 	}
 
 	@Override
 	protected void successLoad(JSONObject response, String url){
-		if(WfUrlConst.API_THANKSCARD_GET_POST_CARD_HISTORY.equals(url)){
+		if(TcConst.API_GET_POST_CARD_HISTORY.equals(url)){
 			lstHistory = CCJsonUtil.convertToModelList(response.optString("histories"), HistoryModel.class);
 			depts = CCJsonUtil.convertToModelList(response.optString("depts"), DeptModel.class);
 			defaultPos = TCUtil.findHistory4Key(lstHistory, currentHistory.key);
@@ -222,7 +221,7 @@ public class TCDetailFragment extends AbstractPagerFragment{
 		}catch(JSONException ex){
 			ex.printStackTrace();
 		}
-		requestUpdate(WfUrlConst.API_THANKSCARD_POST_LIKE, jsonObject, true);
+		requestUpdate(TcConst.API_POST_LIKE, jsonObject, true);
 	}
 
 	@Override
