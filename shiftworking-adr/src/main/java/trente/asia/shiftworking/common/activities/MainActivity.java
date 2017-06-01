@@ -19,6 +19,7 @@ import trente.asia.android.exception.CAException;
 import trente.asia.android.util.AndroidUtil;
 import trente.asia.shiftworking.BuildConfig;
 import trente.asia.shiftworking.R;
+import trente.asia.shiftworking.common.defines.SwConst;
 import trente.asia.shiftworking.services.login.SwLoginFragment;
 import trente.asia.shiftworking.services.offer.WorkOfferDetailFragment;
 import trente.asia.shiftworking.services.worktime.WorkerFragment;
@@ -27,7 +28,6 @@ import trente.asia.shiftworking.services.worktime.WorktimeCheckInFragment;
 import trente.asia.shiftworking.services.worktime.model.NoticeModel;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
 
@@ -120,7 +120,7 @@ public class MainActivity extends WelfareActivity{
     }
 
 	private void loadUncheckNotice(){
-		requestBackground(WfUrlConst.WF_NOTICE_0005, new JSONObject(), false);
+		requestBackground(SwConst.API_CHECK, new JSONObject(), false);
 	}
 
 	@Override
@@ -155,7 +155,7 @@ public class MainActivity extends WelfareActivity{
 		String status = response.optString(CsConst.STATUS);
 		String returnCd = response.optString(CsConst.RETURN_CODE_PARAM);
 		if(CsConst.STATUS_OK.equals(status) && (CCStringUtil.isEmpty(returnCd) || CCConst.NONE.equals(returnCd))){
-			if(WfUrlConst.WF_NOTICE_0005.equals(url)){
+			if(SwConst.API_CHECK.equals(url)){
 				final TextView txtUnread = (TextView)activity.findViewById(R.id.txt_id_unread_message);
 				if(txtUnread != null){
 					uncheckedCount = response.optString("uncheckedCount");

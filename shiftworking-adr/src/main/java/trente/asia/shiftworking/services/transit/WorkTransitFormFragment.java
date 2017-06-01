@@ -48,7 +48,6 @@ import trente.asia.shiftworking.services.transit.model.TransitModelHolder;
 import trente.asia.shiftworking.services.transit.view.PlaceHistoryAdapter;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.dialog.WfDialog;
 import trente.asia.welfare.adr.models.ImageAttachmentModel;
 import trente.asia.welfare.adr.models.SettingModel;
@@ -221,12 +220,12 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
-		requestLoad(WfUrlConst.WF_TRANS_0002, jsonObject, true);
+		requestLoad(SwConst.API_TRANSIT_DETAIL, jsonObject, true);
 	}
 
 	@Override
 	protected void successLoad(JSONObject response, String url){
-		if(WfUrlConst.WF_TRANS_0002.equals(url)){
+		if(SwConst.API_TRANSIT_DETAIL.equals(url)){
 			mHolder = CCJsonUtil.convertToModel(CCStringUtil.toString(response), TransitModelHolder.class);
 			initDialog(mHolder);
 			if(!CCStringUtil.isEmpty(activeTransitId)){
@@ -294,12 +293,12 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
-		requestUpload(WfUrlConst.WF_TRANS_0003, jsonObject, photoMap, true);
+		requestUpload(SwConst.API_TRANSIT_UPDATE, jsonObject, photoMap, true);
 	}
 
 	@Override
 	protected void successUpload(JSONObject response, String url){
-		if(WfUrlConst.WF_TRANS_0003.equals(url)){
+		if(SwConst.API_TRANSIT_UPDATE.equals(url)){
 			((WelfareActivity)activity).isInitData = true;
 			((WelfareActivity)activity).dataMap.put(SwConst.ACTION_TRANSIT_UPDATE, CCConst.YES);
 			getFragmentManager().popBackStack();
@@ -315,12 +314,12 @@ public class WorkTransitFormFragment extends AbstractPhotoFragment{
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
-		requestUpdate(WfUrlConst.WF_TRANS_0004, jsonObject, true);
+		requestUpdate(SwConst.API_TRANSIT_DELETE, jsonObject, true);
 	}
 
 	@Override
 	protected void successUpdate(JSONObject response, String url){
-		if(WfUrlConst.WF_TRANS_0004.equals(url)){
+		if(SwConst.API_TRANSIT_DELETE.equals(url)){
 			getFragmentManager().popBackStack();
 			((WelfareActivity)activity).dataMap.put(SwConst.ACTION_TRANSIT_DELETE, CCConst.YES);
 		}else{

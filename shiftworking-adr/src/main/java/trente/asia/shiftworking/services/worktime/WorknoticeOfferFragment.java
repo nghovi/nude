@@ -35,10 +35,10 @@ import trente.asia.android.view.ChiaseListDialog;
 import trente.asia.android.view.ChiaseTextView;
 import trente.asia.shiftworking.R;
 import trente.asia.shiftworking.common.activities.CameraPhotoPreviewAccountActivity;
+import trente.asia.shiftworking.common.defines.SwConst;
 import trente.asia.shiftworking.common.fragments.AbstractLocationFragment;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.menu.OnMenuButtonsListener;
 import trente.asia.welfare.adr.menu.OnMenuManageListener;
 import trente.asia.welfare.adr.models.DeptModel;
@@ -190,13 +190,13 @@ public class WorknoticeOfferFragment extends AbstractLocationFragment{
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
-		requestLoad(WfUrlConst.WF_NOTICE_0003, jsonObject, true);
+		requestLoad(SwConst.API_NOTICE_FORM, jsonObject, true);
 
 	}
 
 	@Override
 	protected void successLoad(JSONObject response, String url){
-		if(WfUrlConst.WF_NOTICE_0003.equals(url)){
+		if(SwConst.API_NOTICE_FORM.equals(url)){
 
 			// notice type
 			List<KeyValueModel> pairs = CCJsonUtil.convertToModelList(response.optString("noticeTypes"), KeyValueModel.class);
@@ -242,12 +242,12 @@ public class WorknoticeOfferFragment extends AbstractLocationFragment{
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
-		requestUpload(WfUrlConst.WF_NOTICE_0002, jsonObject, photoMap, true);
+		requestUpload(SwConst.API_NOTICE_UPDATE, jsonObject, photoMap, true);
 	}
 
 	@Override
 	protected void successUpload(JSONObject response, String url){
-		if(WfUrlConst.WF_NOTICE_0002.equals(url)){
+		if(SwConst.API_NOTICE_UPDATE.equals(url)){
 			getFragmentManager().popBackStack();
 		}else{
 			super.successUpload(response, url);

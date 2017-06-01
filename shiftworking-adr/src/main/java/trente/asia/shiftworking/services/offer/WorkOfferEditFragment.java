@@ -14,7 +14,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
@@ -36,7 +35,6 @@ import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
 import trente.asia.shiftworking.services.offer.model.WorkOfferModel;
 import trente.asia.shiftworking.services.offer.model.WorkOfferModelHolder;
 import trente.asia.welfare.adr.activity.WelfareActivity;
-import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.dialog.WfDialog;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 
@@ -105,12 +103,12 @@ public class WorkOfferEditFragment extends AbstractSwFragment{
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
-		requestLoad(WfUrlConst.WF_SW_OFFER_DETAIL, jsonObject, true);
+		requestLoad(SwConst.API_OFFER_DETAIL, jsonObject, true);
 	}
 
 	@Override
 	protected void successLoad(JSONObject response, String url){
-		if(WfUrlConst.WF_SW_OFFER_DETAIL.equals(url)){
+		if(SwConst.API_OFFER_DETAIL.equals(url)){
 			WorkOfferModelHolder holder = CCJsonUtil.convertToModel(CCStringUtil.toString(response), WorkOfferModelHolder.class);
 			buildDatePickerDialogs(holder.offer);
 			if(!CCStringUtil.isEmpty(activeOfferId)){
@@ -262,16 +260,16 @@ public class WorkOfferEditFragment extends AbstractSwFragment{
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
-		requestUpdate(WfUrlConst.WF_SW_OFFER_UPDATE, jsonObject, true);
+		requestUpdate(SwConst.API_OFFER_UPDATE, jsonObject, true);
 	}
 
 	@Override
 	protected void successUpdate(JSONObject response, String url){
-		if(WfUrlConst.WF_SW_OFFER_UPDATE.equals(url)){
+		if(SwConst.API_OFFER_UPDATE.equals(url)){
 			((ChiaseActivity)activity).isInitData = true;
 			((WelfareActivity)activity).dataMap.put(SwConst.ACTION_OFFER_UPDATE, CCConst.YES);
 			getFragmentManager().popBackStack();
-		}else if(WfUrlConst.WF_SW_OFFER_DELETE.equals(url)){
+		}else if(SwConst.API_OFFER_DELETE.equals(url)){
 			getFragmentManager().popBackStack();
 			((WelfareActivity)activity).dataMap.put(SwConst.ACTION_OFFER_DELETE, CCConst.YES);
 		}else{
@@ -298,7 +296,7 @@ public class WorkOfferEditFragment extends AbstractSwFragment{
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
-		requestUpdate(WfUrlConst.WF_SW_OFFER_DELETE, jsonObject, true);
+		requestUpdate(SwConst.API_OFFER_DELETE, jsonObject, true);
 	}
 
 	@Override

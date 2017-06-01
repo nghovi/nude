@@ -17,12 +17,12 @@ import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import trente.asia.shiftworking.R;
+import trente.asia.shiftworking.common.defines.SwConst;
 import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
 import trente.asia.shiftworking.services.shiftworking.view.CommonMonthView;
 import trente.asia.shiftworking.services.worktime.model.WorkingTimeDailyModel;
 import trente.asia.shiftworking.services.worktime.view.WorkerAdapter;
 import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.utils.WelfareUtil;
 
 public class WorkerFragment extends AbstractSwFragment{
@@ -84,12 +84,12 @@ public class WorkerFragment extends AbstractSwFragment{
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
-		requestLoad(WfUrlConst.WF_API_WOKER_LIST, jsonObject, true);
+		requestLoad(SwConst.API_WORK_USERS, jsonObject, true);
 	}
 
 	@Override
 	protected void successLoad(JSONObject response, String url){
-		if(WfUrlConst.WF_API_WOKER_LIST.equals(url)){
+		if(SwConst.API_WORK_USERS.equals(url)){
 			List<WorkingTimeDailyModel> lstWorker = CCJsonUtil.convertToModelList(response.optString("workHistory"), WorkingTimeDailyModel.class);
             mAdapter.clearAll();
 			if(!CCCollectionUtil.isEmpty(lstWorker)){

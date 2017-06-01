@@ -43,4 +43,27 @@ public class SwConst{
 	public static final String	SW_WORK_TIME_TYPE_START_TIME	= "ST";
 	public static final String	SW_WORK_TIME_TYPE_END_TIME		= "ET";
 	public static final String	SW_WORK_TIME_TYPE_UNDEFINED		= "UN";
+	/**
+	 * shift working API
+	 */
+	public static final String API_PROJECT_LIST = "/api/sw/project/list";
+	public static final String API_CHECKIN = "/api/sw/checkin";
+	public static final String API_CHECKIN_LIST = "/api/sw/checkin/list";
+	public static final String API_CHECKIN_DEL = "/api/sw/checkin/delete";
+	public static final String API_NOTICE_LIST = "/api/sw/notice/list";
+	public static final String API_NOTICE_UPDATE = "/api/sw/notice/update";
+	public static final String API_NOTICE_FORM = "/api/sw/notice/form";
+	public static final String API_NOTICE_CHECK = "/api/sw/notice/check";
+	public static final String API_CHECK = "/api/sw/check";
+	public static final String API_TRANSIT_LIST = "/api/sw/transit/list";
+	public static final String API_TRANSIT_DETAIL = "/api/sw/transit/detail";
+	public static final String API_TRANSIT_UPDATE = "/api/sw/transit/update";
+	public static final String API_TRANSIT_DELETE = "/api/sw/transit/delete";
+	public static final String API_WORK_USERS = "/api/sw/work/users";
+	public static final String API_WORK_HISTORY = "/api/sw/work/history";
+	public static final String API_OFFER_LIST = "/api/sw/offer/list";
+	public static final String API_OFFER_DETAIL = "/api/sw/offer/detail";
+	public static final String API_OFFER_UPDATE = "/api/sw/offer/update";
+	public static final String API_OFFER_APPROVE = "/api/sw/offer/approve";
+	public static final String API_OFFER_DELETE = "/api/sw/offer/delete";
 }

@@ -23,13 +23,13 @@ import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.util.AndroidUtil;
 import trente.asia.shiftworking.BuildConfig;
 import trente.asia.shiftworking.R;
+import trente.asia.shiftworking.common.defines.SwConst;
 import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
 import trente.asia.shiftworking.common.models.SwApiHolder;
 import trente.asia.shiftworking.common.models.SwUserModel;
 import trente.asia.shiftworking.common.utils.SwUtil;
 import trente.asia.shiftworking.services.worktime.model.NoticeModel;
 import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.utils.WelfareUtil;
 import trente.asia.welfare.adr.utils.WfPicassoHelper;
 
@@ -106,12 +106,12 @@ public class WorknoticeFormFragment extends AbstractSwFragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        requestLoad(WfUrlConst.WF_NOTICE_0003, jsonObject, true);
+        requestLoad(SwConst.API_NOTICE_FORM, jsonObject, true);
     }
 
     @Override
     protected void successLoad(JSONObject response, String url) {
-        if (WfUrlConst.WF_NOTICE_0003.equals(url)) {
+        if (SwConst.API_NOTICE_FORM.equals(url)) {
             holder = new SwApiHolder(response);
             noticeModel = CCJsonUtil.convertToModel(response.optString("notice"), NoticeModel.class);
             loadNoticeInfo(noticeModel);
@@ -192,12 +192,12 @@ public class WorknoticeFormFragment extends AbstractSwFragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        requestUpdate(WfUrlConst.WF_NOTICE_0004, jsonObject, true);
+        requestUpdate(SwConst.API_NOTICE_CHECK, jsonObject, true);
     }
 
     @Override
     protected void successUpdate(JSONObject response, String url) {
-        if (WfUrlConst.WF_NOTICE_0004.equals(url)) {
+        if (SwConst.API_NOTICE_CHECK.equals(url)) {
             onClickBackBtn();
         } else {
             super.successUpdate(response, url);

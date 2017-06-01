@@ -23,7 +23,6 @@ import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
 import trente.asia.shiftworking.services.transit.model.TransitModel;
 import trente.asia.shiftworking.services.transit.view.TransitAdapter;
 import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.define.WfUrlConst;
 
 public class WorkTransitListFragment extends AbstractSwFragment{
 
@@ -76,12 +75,12 @@ public class WorkTransitListFragment extends AbstractSwFragment{
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
-		requestLoad(WfUrlConst.WF_TRANS_0001, jsonObject, true);
+		requestLoad(SwConst.API_TRANSIT_LIST, jsonObject, true);
 	}
 
 	@Override
 	protected void successLoad(JSONObject response, String url){
-		if(WfUrlConst.WF_TRANS_0001.equals(url)){
+		if(SwConst.API_TRANSIT_LIST.equals(url)){
 			List<TransitModel> lstTransit = CCJsonUtil.convertToModelList(response.optString("transits"), TransitModel.class);
 			if(!CCCollectionUtil.isEmpty(lstTransit)){
 				mAdapter = new TransitAdapter(activity, lstTransit);

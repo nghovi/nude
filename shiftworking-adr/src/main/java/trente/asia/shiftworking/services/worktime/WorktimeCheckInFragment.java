@@ -36,7 +36,6 @@ import trente.asia.shiftworking.services.worktime.model.WorkingTimeModel;
 import trente.asia.shiftworking.services.worktime.view.WorkTimeAdapter;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.utils.WelfareUtil;
 
 public class WorktimeCheckInFragment extends AbstractLocationFragment{
@@ -152,7 +151,7 @@ public class WorktimeCheckInFragment extends AbstractLocationFragment{
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
-		requestLoad(WfUrlConst.WF_PRO_0001, jsonObject, true);
+		requestLoad(SwConst.API_PROJECT_LIST, jsonObject, true);
 	}
 
 	private void loadCheckInList(){
@@ -165,13 +164,13 @@ public class WorktimeCheckInFragment extends AbstractLocationFragment{
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
-		requestLoad(WfUrlConst.WF_CKI_0002, jsonObject, false);
+		requestLoad(SwConst.API_CHECKIN_LIST, jsonObject, false);
 	}
 
 	@Override
 	protected void successLoad(JSONObject response, String url){
 		if(getView() != null){
-			if(WfUrlConst.WF_PRO_0001.equals(url)){
+			if(SwConst.API_PROJECT_LIST.equals(url)){
 				List<ProjectModel> lstProject = CCJsonUtil.convertToModelList(response.optString("projects"), ProjectModel.class);
 				if(!CCCollectionUtil.isEmpty(lstProject)){
 					lnrProjectInfo.setVisibility(View.VISIBLE);
@@ -187,7 +186,7 @@ public class WorktimeCheckInFragment extends AbstractLocationFragment{
 					btnCheckIn.setEnabled(false);
 				}
 			}
-			if(WfUrlConst.WF_CKI_0002.equals(url)){
+			if(SwConst.API_CHECKIN_LIST.equals(url)){
 				List<WorkingTimeModel> lstWorkingTime = CCJsonUtil.convertToModelList(response.optString("checkins"), WorkingTimeModel.class);
 				WorkTimeAdapter adapter = new WorkTimeAdapter(activity, lstWorkingTime, itemWorkTimeClickListener);
 				lsvWorkTime.setAdapter(adapter);
@@ -223,16 +222,16 @@ public class WorktimeCheckInFragment extends AbstractLocationFragment{
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
-		requestUpdate(WfUrlConst.WF_CKI_0001, jsonObject, true);
+		requestUpdate(SwConst.API_CHECKIN, jsonObject, true);
 	}
 
 	@Override
 	protected void successUpdate(JSONObject response, String url){
-		if(WfUrlConst.WF_CKI_0001.equals(url)){
+		if(SwConst.API_CHECKIN.equals(url)){
 			loadCheckInList();
-		}else if(WfUrlConst.WF_CKI_0003.equals(url)){
+		}else if(SwConst.API_CHECKIN_DEL.equals(url)){
 			loadCheckInList();
-		}else if(WfUrlConst.WF_NOTICE_0002.equals(url)){
+		}else if(SwConst.API_NOTICE_UPDATE.equals(url)){
 			Toast.makeText(activity, getString(R.string.sw_work_time_modify_request_success), Toast.LENGTH_LONG).show();
 		}else{
 			super.successUpdate(response, url);
@@ -246,7 +245,7 @@ public class WorktimeCheckInFragment extends AbstractLocationFragment{
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
-		requestUpdate(WfUrlConst.WF_CKI_0003, jsonObject, true);
+		requestUpdate(SwConst.API_CHECKIN_DEL, jsonObject, true);
 	}
 
 	private void modifyWorkTime(WorkingTimeModel item){
@@ -274,7 +273,7 @@ public class WorktimeCheckInFragment extends AbstractLocationFragment{
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
-		requestUpdate(WfUrlConst.WF_NOTICE_0002, jsonObject, true);
+		requestUpdate(SwConst.API_NOTICE_UPDATE, jsonObject, true);
 	}
 
 	@Override
