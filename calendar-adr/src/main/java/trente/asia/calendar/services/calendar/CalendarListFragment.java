@@ -27,9 +27,7 @@ import trente.asia.calendar.commons.views.MyCalendarLinearLayout;
 import trente.asia.calendar.services.calendar.listener.OnChangeCalendarListener;
 import trente.asia.calendar.services.calendar.model.CalendarModel;
 import trente.asia.calendar.services.calendar.view.CalendarAdapter;
-import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.models.UserModel;
-import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
 
 /**
  * CalendarListFragment
@@ -132,12 +130,12 @@ public class CalendarListFragment extends AbstractClFragment{
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
-		requestLoad(WfUrlConst.WF_CL_CAL_0001, jsonObject, false);
+		requestLoad(ClConst.API_CALENDAR_LIST, jsonObject, false);
 	}
 
 	@Override
 	protected void successLoad(JSONObject response, String url){
-		if(WfUrlConst.WF_CL_CAL_0001.equals(url)){
+		if(ClConst.API_CALENDAR_LIST.equals(url)){
 			onLoadCalendarsSuccess(response);
 		}else{
 			super.successLoad(response, url);

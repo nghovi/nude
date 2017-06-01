@@ -29,7 +29,6 @@ import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.fragments.ClPageFragment;
 import trente.asia.calendar.services.calendar.model.CategoryModel;
 import trente.asia.welfare.adr.activity.WelfareActivity;
-import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 import trente.asia.welfare.adr.utils.WelfareUtil;
 
@@ -76,7 +75,7 @@ public class SummaryPageFragment extends ClPageFragment{
 
 	@Override
 	protected void successLoad(JSONObject response, String url){
-		if(WfUrlConst.WF_CL_SUMMARY.equals(url)){
+		if(ClConst.API_SUMMARY.equals(url)){
 			onLoadSummarySuccess(response);
 		}else{
 			super.successLoad(response, url);
@@ -181,7 +180,7 @@ public class SummaryPageFragment extends ClPageFragment{
 			e.printStackTrace();
 		}
 
-		requestLoad(WfUrlConst.WF_CL_SUMMARY, jsonObject, true);
+		requestLoad(ClConst.API_SUMMARY, jsonObject, true);
 	}
 
 	protected String getUpperTitle(){

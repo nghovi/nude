@@ -35,7 +35,6 @@ import trente.asia.calendar.services.calendar.model.CalendarModel;
 import trente.asia.calendar.services.calendar.model.CategoryModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.models.ApiObjectModel;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
@@ -102,12 +101,12 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
-		requestLoad(WfUrlConst.WF_CL_SCHEDULE_DETAIL, jsonObject, true);
+		requestLoad(ClConst.API_SCHEDULE_DETAIL, jsonObject, true);
 	}
 
 	@Override
 	protected void successLoad(JSONObject response, String url){
-		if(WfUrlConst.WF_CL_SCHEDULE_DETAIL.equals(url)){
+		if(ClConst.API_SCHEDULE_DETAIL.equals(url)){
 			onLoadScheduleDetailSuccess(response);
 		}else{
 			super.successLoad(response, url);
