@@ -2,8 +2,10 @@ package trente.asia.addresscard.commons.activities;
 
 import android.os.Bundle;
 
+import asia.chiase.core.util.CCStringUtil;
 import trente.asia.addresscard.R;
-import trente.asia.addresscard.services.card.CategoryDetailFragment;
+import trente.asia.addresscard.services.business.view.BusinessCardListFragment;
+import trente.asia.addresscard.services.user.ACLoginFragment;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
@@ -17,12 +19,12 @@ public class AddressCardActivity extends WelfareActivity {
         PreferencesAccountUtil prefAccUtil = new PreferencesAccountUtil(this);
         UserModel userModel = prefAccUtil.getUserPref();
 
-//        if(!CCStringUtil.isEmpty(userModel.key)){
-//            addFragment(new BusinessCardMainFragment());
-//        }else{
-//            addFragment(new ACLoginFragment());
-//        }
+        if(!CCStringUtil.isEmpty(userModel.key)){
+            addFragment(new BusinessCardListFragment());
+        }else{
+            addFragment(new ACLoginFragment());
+        }
 
-        addFragment(new CategoryDetailFragment());
+//        addFragment(new BusinessCardListFragment());
     }
 }
