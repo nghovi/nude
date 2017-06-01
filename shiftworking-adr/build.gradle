@@ -84,8 +84,7 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(path: ':welfare-android-core')
-    compile 'com.android.support:support-v4:24.0.0'
-    compile 'com.google.android.gms:play-services:9.2.1'
+    compile 'com.google.android.gms:play-services:10.2.6'
 //    compile 'com.google.maps.android:android-maps-utils:0.3.4'
     compile "com.daimajia.swipelayout:library:1.2.0@aar"
 }

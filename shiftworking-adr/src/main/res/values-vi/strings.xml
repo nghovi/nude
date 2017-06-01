@@ -42,6 +42,10 @@
 
     <string name="sw_work_time_modify_request_title">Yêu cầu chỉnh sửa</string>
     <string name="sw_work_time_modify_request">Yêu cầu chỉnh sửa %1$s checkin</string>
+    <string name="sw_work_time_modify_request_undefined">Yêu cầu chỉnh sửa %1$s Chưa xác định</string>
+    <string name="sw_work_time_modify_request_start">Yêu cầu chỉnh sửa %1$s Bắt đầu làm việc</string>
+    <string name="sw_work_time_modify_request_end">Yêu cầu chỉnh sửa %1$s Kết thúc làm việc</string>
+
     <string name="sw_work_time_modify_request_success">Yêu cầu thành công</string>
 
     <string name="sw_shift_work_this_month">Tháng này</string>

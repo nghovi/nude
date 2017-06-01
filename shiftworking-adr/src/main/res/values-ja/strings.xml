@@ -42,6 +42,10 @@
 
     <string name="sw_work_time_modify_request_title">修正依頼する</string>
     <string name="sw_work_time_modify_request">%1$sチェックインを修正依頼する</string>
+    <string name="sw_work_time_modify_request_start">%1$s勤務開始について修正依頼する</string>
+    <string name="sw_work_time_modify_request_undefined">%1$s 未定義について修正依頼する</string>
+    <string name="sw_work_time_modify_request_end">%1$s勤務終了について修正依頼する</string>
+
     <string name="sw_work_time_modify_request_success">成功のリクエスト</string>
 
     <string name="sw_shift_work_this_month">今月</string>

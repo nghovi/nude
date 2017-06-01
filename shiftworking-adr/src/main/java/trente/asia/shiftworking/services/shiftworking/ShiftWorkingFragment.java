@@ -25,7 +25,6 @@ import trente.asia.shiftworking.services.shiftworking.view.CommonMonthView;
 import trente.asia.shiftworking.services.shiftworking.view.ShiftWorkingAdapter;
 import trente.asia.shiftworking.services.worktime.model.WorkingTimeSummaryModel;
 import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.utils.WelfareUtil;
 
 public class ShiftWorkingFragment extends AbstractSwFragment{
@@ -80,12 +79,12 @@ public class ShiftWorkingFragment extends AbstractSwFragment{
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
-		requestLoad(WfUrlConst.WF_API_WORK_HISTORY, jsonObject, true);
+		requestLoad(SwConst.API_WORK_HISTORY, jsonObject, true);
 	}
 
 	@Override
 	protected void successLoad(JSONObject response, String url){
-		if(WfUrlConst.WF_API_WORK_HISTORY.equals(url)){
+		if(SwConst.API_WORK_HISTORY.equals(url)){
 			shiftWorkingModel = CCJsonUtil.convertToModel(CCStringUtil.toString(response), ShiftWorkingModel.class);
 			mAdapter.clearAll();
 

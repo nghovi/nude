@@ -33,7 +33,6 @@ import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
 import trente.asia.shiftworking.services.offer.model.WorkOfferModel;
 import trente.asia.shiftworking.services.offer.view.ApproveHistoryAdapter;
 import trente.asia.welfare.adr.activity.WelfareActivity;
-import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.models.ApiObjectModel;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 
@@ -89,12 +88,12 @@ public class WorkOfferDetailFragment extends AbstractSwFragment{
 			e.printStackTrace();
 		}
 
-		requestLoad(WfUrlConst.WF_SW_OFFER_DETAIL, jsonObject, true);
+		requestLoad(SwConst.API_OFFER_DETAIL, jsonObject, true);
 	}
 
 	@Override
 	protected void successLoad(JSONObject response, String url){
-		if(WfUrlConst.WF_SW_OFFER_DETAIL.equals(url)){
+		if(SwConst.API_OFFER_DETAIL.equals(url)){
 			offer = CCJsonUtil.convertToModel(response.optString("offer"), WorkOfferModel.class);
 			setWorkOffer(offer);
 
@@ -260,7 +259,7 @@ public class WorkOfferDetailFragment extends AbstractSwFragment{
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
-		requestUpdate(WfUrlConst.WF_SW_OFFER_APPROVE, jsonObject, true);
+		requestUpdate(SwConst.API_OFFER_APPROVE, jsonObject, true);
 	}
 
 	private void onClickBtnReject(){

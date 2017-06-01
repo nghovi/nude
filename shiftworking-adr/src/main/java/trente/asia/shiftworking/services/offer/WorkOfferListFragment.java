@@ -1,6 +1,5 @@
 package trente.asia.shiftworking.services.offer;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -22,12 +21,12 @@ import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import trente.asia.shiftworking.R;
+import trente.asia.shiftworking.common.defines.SwConst;
 import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
 import trente.asia.shiftworking.services.offer.model.WorkOfferModel;
 import trente.asia.shiftworking.services.offer.view.WorkOfferAdapter;
 import trente.asia.shiftworking.services.shiftworking.view.CommonMonthView;
 import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.models.ApiObjectModel;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 import trente.asia.welfare.adr.utils.WelfareUtil;
@@ -150,12 +149,12 @@ public class WorkOfferListFragment extends AbstractSwFragment{
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
-		requestLoad(WfUrlConst.WF_SW_OFFER_LIST, jsonObject, true);
+		requestLoad(SwConst.API_OFFER_LIST, jsonObject, true);
 	}
 
 	@Override
 	protected void successLoad(JSONObject response, String url){
-        if(WfUrlConst.WF_SW_OFFER_LIST.equals(url)){
+        if(SwConst.API_OFFER_LIST.equals(url)){
             offers = CCJsonUtil.convertToModelList(response.optString("myOffers"), WorkOfferModel.class);
             otherOffers = CCJsonUtil.convertToModelList(response.optString("otherOffers"), WorkOfferModel.class);
             offerTypesMaster = buildOfferTypeMaster(activity, response);

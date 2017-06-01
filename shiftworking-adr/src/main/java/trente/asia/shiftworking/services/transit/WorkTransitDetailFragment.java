@@ -25,7 +25,6 @@ import trente.asia.shiftworking.common.defines.SwConst;
 import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
 import trente.asia.shiftworking.services.transit.model.TransitModelHolder;
 import trente.asia.welfare.adr.activity.WelfareActivity;
-import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.models.ImageAttachmentModel;
 import trente.asia.welfare.adr.utils.WfPicassoHelper;
 
@@ -88,12 +87,12 @@ public class WorkTransitDetailFragment extends AbstractSwFragment{
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
-		requestLoad(WfUrlConst.WF_TRANS_0002, jsonObject, true);
+		requestLoad(SwConst.API_TRANSIT_DETAIL, jsonObject, true);
 	}
 
 	@Override
 	protected void successLoad(JSONObject response, String url){
-		if(WfUrlConst.WF_TRANS_0002.equals(url)){
+		if(SwConst.API_TRANSIT_DETAIL.equals(url)){
 
 			String summaryStatus = response.optString("summaryStatus");
 			if(!SwConst.SW_TRANSIT_STATUS_DONE.equals(summaryStatus)){
