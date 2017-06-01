@@ -72,6 +72,8 @@ public class ShopCardListFragment extends AddressCardListFragment{
 				@Override
 				public void onPropertyChanged(Observable observable, int i){
 					retrieveSavedTags();
+					adapter.unselectAllCards();
+					showBtnCapture();
 					filterCards();
 					// adapter.setCards(filteredCards);
 					adapter.notifyDataSetChanged();
@@ -182,7 +184,7 @@ public class ShopCardListFragment extends AddressCardListFragment{
 
 	@Override
 	protected String getApiDeleteString(){
-		return null;
+		return ACConst.API_SHOP_CARD_DELETE;
 	}
 
 	// // TODO: 5/22/2017 shouldn't create each Tags Fragment?

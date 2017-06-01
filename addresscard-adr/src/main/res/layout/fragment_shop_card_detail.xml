@@ -22,23 +22,7 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/card_image"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:background="#c7c5c5"
-                android:padding="@dimen/ac_image_padding"/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#c7c5c5"
-                android:padding="@dimen/ac_common_field_padding"
-                android:text="@string/shop_card_detail_title"
-                android:textColor="@color/ac_common_text_color_body"
-                android:textSize="@dimen/ac_common_text_size_body" />
-
-            <View style="@style/cs_common_divider" />
 
             <ScrollView
                 android:layout_width="match_parent"
@@ -49,9 +33,28 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
+                    <ImageView
+                        android:id="@+id/card_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:background="@color/core_white"
+                        android:padding="@dimen/ac_image_padding"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#c7c5c5"
+                        android:padding="@dimen/ac_common_field_padding"
+                        android:text="@string/shop_card_detail_title"
+                        android:textColor="@color/ac_common_text_color_body"
+                        android:textSize="@dimen/ac_common_text_size_body" />
+
+                    <View style="@style/cs_common_divider" />
+
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/row_pressed_selector"
                         android:minHeight="@dimen/ac_upload_card_edt_height"
                         android:padding="@dimen/ac_common_field_padding">
 
@@ -77,7 +80,9 @@
                     <View style="@style/cs_common_divider" />
 
                     <RelativeLayout
+                        android:id="@+id/rlt_phone"
                         android:layout_width="match_parent"
+                        android:background="@drawable/row_pressed_selector"
                         android:layout_height="@dimen/ac_upload_card_edt_height"
                         android:padding="@dimen/ac_common_field_padding">
 
@@ -110,8 +115,10 @@
                     <View style="@style/cs_common_divider" />
 
                     <RelativeLayout
+                        android:id="@+id/rlt_email"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/ac_upload_card_edt_height"
+                        android:background="@drawable/row_pressed_selector"
                         android:padding="@dimen/ac_common_field_padding">
 
                         <TextView
@@ -130,6 +137,7 @@
                             android:layout_centerVertical="true"
                             android:text="@{card.cardEmail}"
                             android:textColor="@color/ac_common_text_color_body"
+                            android:paddingRight="@dimen/margin_32dp"
                             android:textSize="@dimen/ac_common_text_size_body" />
 
                         <ImageView
@@ -143,8 +151,10 @@
                     <View style="@style/cs_common_divider" />
 
                     <RelativeLayout
+                        android:id="@+id/rlt_address"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/ac_upload_card_edt_height"
+                        android:background="@drawable/row_pressed_selector"
                         android:padding="@dimen/ac_common_field_padding">
 
                         <TextView
@@ -163,6 +173,7 @@
                             android:layout_centerVertical="true"
                             android:text="@{card.cardAddress}"
                             android:textColor="@color/ac_common_text_color_body"
+                            android:paddingRight="@dimen/margin_32dp"
                             android:textSize="@dimen/ac_common_text_size_body" />
 
                         <ImageView
@@ -177,7 +188,8 @@
 
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/ac_upload_card_edt_height"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/row_pressed_selector"
                         android:padding="@dimen/ac_common_field_padding">
 
                         <TextView
@@ -204,6 +216,7 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/row_pressed_selector"
                         android:minHeight="@dimen/ac_upload_card_edt_height"
                         android:padding="@dimen/ac_common_field_padding">
 

@@ -41,4 +41,19 @@
         <item name="android:textColor">@color/ac_common_text_color_body</item>
         <item name="android:textSize">@dimen/ac_common_text_size_body</item>
     </style>
+
+    <style name="ac_delete_button" parent="@style/cs_common_match_wrap">
+        <item name="android:layout_height">@dimen/margin_40dp</item>
+        <item name="android:layout_marginLeft">@dimen/margin_60dp</item>
+        <item name="android:layout_marginRight">@dimen/margin_60dp</item>
+        <item name="android:background">@drawable/btn_delete_background</item>
+        <item name="android:textColor">@color/chiase_white</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:clickable">true</item>
+        <item name="android:stateListAnimator">@null</item>
+    </style>
+
+
 </resources>

@@ -105,20 +105,7 @@
                     android:paddingLeft="@dimen/margin_16dp"
                     android:paddingRight="@dimen/margin_16dp" />
 
-                <TextView
-                    android:id="@+id/btn_delete"
-                    android:layout_width="300dp"
-                    android:layout_height="60dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="20dp"
-                    android:background="@drawable/btn_delete_background"
-                    android:clickable="true"
-                    android:gravity="center"
-                    android:text="Delete"
-                    android:textColor="@android:color/white"
-                    android:textSize="20sp"
-                    android:visibility="gone" />
+
 
 
             </LinearLayout>
@@ -135,6 +122,16 @@
                 android:background="@drawable/fab_backgorund"
                 android:padding="10dp"
                 android:src="@drawable/btn_camera" />
+
+            <Button
+                style="@style/ac_delete_button"
+                android:id="@+id/btn_delete"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="Delete"
+                android:visibility="gone" />
 
 
         </RelativeLayout>
