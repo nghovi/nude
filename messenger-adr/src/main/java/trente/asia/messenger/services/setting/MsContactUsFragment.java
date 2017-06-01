@@ -1,10 +1,13 @@
 package trente.asia.messenger.services.setting;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import com.bluelinelabs.logansquare.LoganSquare;
 
 import android.os.Bundle;
 import android.text.Editable;
@@ -16,7 +19,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.messenger.R;
 import trente.asia.messenger.fragment.AbstractMsgFragment;
@@ -84,23 +86,23 @@ public class MsContactUsFragment extends AbstractMsgFragment implements View.OnC
 	private void initSpinner(List<String> lstType, List<String> lstServiceName){
 		spnType.setupLayout(getString(R.string.wf_contact_us_content_title), lstType, 0,
 
-		new WfSpinner.OnDRSpinnerItemSelectedListener() {
+						new WfSpinner.OnDRSpinnerItemSelectedListener() {
 
-			@Override
-			public void onItemSelected(int selectedPosition){
-				requestType = WelfareUtil.getContactTypeCd().get(selectedPosition);
-			}
-		}, true);
+							@Override
+							public void onItemSelected(int selectedPosition){
+								requestType = WelfareUtil.getContactTypeCd().get(selectedPosition);
+							}
+						}, true);
 
 		spnServiceName.setupLayout(getString(R.string.wf_contact_us_service_title), lstServiceName, 0,
 
-		new WfSpinner.OnDRSpinnerItemSelectedListener() {
+						new WfSpinner.OnDRSpinnerItemSelectedListener() {
 
-			@Override
-			public void onItemSelected(int selectedPosition){
-				serviceType = WelfareUtil.getServiceCd().get(selectedPosition);
-			}
-		}, true);
+							@Override
+							public void onItemSelected(int selectedPosition){
+								serviceType = WelfareUtil.getServiceCd().get(selectedPosition);
+							}
+						}, true);
 	}
 
 	@Override
@@ -123,21 +125,26 @@ public class MsContactUsFragment extends AbstractMsgFragment implements View.OnC
 	}
 
 	private void onRequestAccountInfoFormSuccess(JSONObject response){
-		List<ApiObjectModel> requestTypes = CCJsonUtil.convertToModelList(response.optString("requestTypes"), ApiObjectModel.class);
-		List<ApiObjectModel> services = CCJsonUtil.convertToModelList(response.optString("serviceTypes"), ApiObjectModel.class);
-		List<String> lstType = new ArrayList<>();
-		lstType.add(getString(R.string.wf_contact_us_select_item));
-		for(ApiObjectModel requestType : requestTypes){
-			if(!CCStringUtil.isEmpty(requestType.value)) lstType.add(requestType.value);
+		List<ApiObjectModel> requestTypes = null;
+		try{
+			requestTypes = LoganSquare.parseList(response.optString("requestTypes"), ApiObjectModel.class);
+			List<ApiObjectModel> services = LoganSquare.parseList(response.optString("serviceTypes"), ApiObjectModel.class);
+			List<String> lstType = new ArrayList<>();
+			lstType.add(getString(R.string.wf_contact_us_select_item));
+			for(ApiObjectModel requestType : requestTypes){
+				if(!CCStringUtil.isEmpty(requestType.value)) lstType.add(requestType.value);
+			}
+
+			List<String> lstServiceName = new ArrayList<>();
+			lstServiceName.add(getString(R.string.wf_contact_us_select_item));
+			for(ApiObjectModel service : services){
+				if(!CCStringUtil.isEmpty(service.value)) lstServiceName.add(service.value);
+			}
+			initSpinner(lstType, lstServiceName);
+		}catch(IOException e){
+			e.printStackTrace();
 		}
 
-		List<String> lstServiceName = new ArrayList<>();
-		lstServiceName.add(getString(R.string.wf_contact_us_select_item));
-		for(ApiObjectModel service : services){
-			if(!CCStringUtil.isEmpty(service.value)) lstServiceName.add(service.value);
-		}
-
-		initSpinner(lstType, lstServiceName);
 	}
 
 	private void contactAdmin(){

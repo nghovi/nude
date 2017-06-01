@@ -1,27 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:bind="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
         <variable
             name="customer"
-            type="trente.asia.addresscard.services.card.model.CustomerModel"/>
+            type="trente.asia.addresscard.services.business.model.CustomerModel"/>
     </data>
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:padding="@dimen/ac_common_field_padding">
+        android:layout_height="@dimen/ac_row_height"
+        android:padding="@dimen/ac_common_field_padding"
+        android:background="@drawable/row_pressed_selector">
         <ImageView
-            android:layout_width="@dimen/ac_common_field_icon_dimen"
-            android:layout_height="@dimen/ac_common_field_icon_dimen"
+            android:id="@+id/customer_logo"
+            style="@style/ac_icon_left"
             android:padding="@dimen/ac_common_field_padding"
-            app:imageUrl="@{customer.customerUrl}"/>
+            android:src="@drawable/thumbnail_failure"/>
         <TextView
+            android:id="@+id/customer_name"
+            android:layout_toEndOf="@+id/customer_logo"
+            android:layout_toStartOf="@+id/image_checkbox"
+            android:layout_height="@dimen/ac_row_body_height"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/ac_common_text_size_body"
-            android:textColor="@color/ac_common_text_color_body"
+            android:gravity="center_vertical"
+            android:layout_centerVertical="true"
+            android:maxLines="2"
+            android:ellipsize="end"
+            style="@style/ac_body_text"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
             android:text="@{customer.customerName}"/>
-    </LinearLayout>
+        <ImageView
+            android:id="@+id/image_checkbox"
+            style="@style/ac_icon_right"
+            android:src="@drawable/ac_action_check"
+            android:visibility="invisible"/>
+        <View
+            style="@style/cs_common_divider"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
 </layout>

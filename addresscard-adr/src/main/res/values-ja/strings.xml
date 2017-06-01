@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="ac_about_app_version">1.0</string>
+    <string name="shop_cards_title">Shop cards</string>
+    <string name="fragment_shop_cards_tags">Tags</string>
+    <string name="tag_title">Tag title</string>
+    <string name="shop_card_detail_title">Shop card detail</string>
+    <string name="shop_card_detail_address">Address</string>
+    <string name="shop_cards_no_tag">No tag</string>
+    <string name="fragment_tags_uncheck_all">Uncheck all</string>
+    <string name="fragment_tags_check_all">Check all</string>
+    <string name="ac_delete_card">Delete card</string>
 </resources>

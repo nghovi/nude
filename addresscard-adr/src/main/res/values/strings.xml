@@ -2,33 +2,55 @@
     <string name="app_name">Address Card</string>
     <string name="btn_camera_text">Start camera</string>
     <string name="default_title_card">User name</string>
-    <string name="menu_card_title">Card</string>
+    <string name="menu_card_title">Business</string>
     <string name="menu_company_title">Shop</string>
     <string name="menu_history_title">History</string>
     <string name="menu_setting_title">Setting</string>
     <string name="ac_about_app_version">1.0</string>
     <string name="ac_upload_card_modify_data">Please modify data</string>
-    <string name="ac_upload_card_address">Address</string>
-    <string name="ac_upload_card_company_tel">Company tel</string>
-    <string name="ac_upload_card_url">URL</string>
-    <string name="ac_upload_card_name">Name</string>
-    <string name="ac_upload_card_tel">Tel</string>
-    <string name="ac_upload_card_email">Email</string>
-    <string name="ac_upload_card_note">Note</string>
+    <string name="ac_company_tel">Company tel</string>
+
+    <string name="ac_url">URL</string>
+    <string name="ac_name">Name</string>
+    <string name="ac_tel">Tel</string>
+    <string name="ac_address">Address</string>
+    <string name="ac_email">Email</string>
+    <string name="ac_note">Note</string>
+    <string name="ac_user">User</string>
+
     <string name="ac_upload_card_customer">Customer name</string>
     <string name="ac_main_card_title">Business card main</string>
     <string name="ac_card_detail_title">Business card detail</string>
     <string name="ac_card_detail_customer_name">Customer name</string>
-    <string name="ac_card_detail_name">Name</string>
-    <string name="ac_card_detail_tel">Tel</string>
-    <string name="ac_card_detail_email">Email</string>
-    <string name="ac_card_detail_note">Note</string>
-    <string name="ac_set_customer_title">Set Customer</string>
+
+    <string name="ac_set_customer_title">Set customer</string>
     <string name="ac_choose_customer_title">Choose customer</string>
     <string name="ac_new_customer_title">New customer</string>
-    <string name="ac_category_title">Category</string>
+    <string name="ac_category">Category</string>
     <string name="ac_category_name">Category name</string>
-    <string name="ac_category_detail">Category detail</string>
+    <string name="ac_category_note">Category Note</string>
     <string name="ac_category_list">Category list</string>
+    <string name="ac_customer_list">Customer list</string>
+    <string name="ac_customer_title">Company information</string>
+    <string name="ac_customer_last_comment">Last Comment</string>
 
+    <string name="ac_btn_add_comment">Add Comment</string>
+    <string name="ac_customer_list_title">Customer list</string>
+
+    <string name="ac_update_by">Update by %s</string>
+    <string name="ac_ungroup">Ungroup</string>
+    <string name="ac_delete">Delete</string>
+    <string name="shop_cards_title">Shop card main</string>
+    <string name="test_string">0abcdefghm1abcdefghm2abcdefghm3abcdefghm4abcdefghm5abcdefghm6abcdefghm7abcdefghm8abcdefghm9abcdefghm</string>
+    <string name="fragment_shop_cards_tags">Tags</string>
+    <string name="tag_title">Shop tag list</string>
+    <string name="ac_lastest_card_list">Latest card list</string>
+    <string name="ac_all">All</string>
+    <string name="ac_customer">Customer</string>
+    <string name="shop_card_detail_title">Shop card detail</string>
+    <string name="shop_card_detail_address">Address</string>
+    <string name="shop_cards_no_tag">No tag</string>
+    <string name="fragment_tags_uncheck_all">Uncheck all</string>
+    <string name="fragment_tags_check_all">Check all</string>
+    <string name="ac_delete_card">Delete card</string>
 </resources>

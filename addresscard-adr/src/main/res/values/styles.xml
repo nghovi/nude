@@ -7,4 +7,53 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+
+    <style name="ac_body_text">
+        <item name="android:textColor">@color/ac_common_text_color_body</item>
+        <item name="android:textSize">@dimen/ac_common_text_size_body</item>
+    </style>
+    <style name="ac_title_text">
+        <item name="android:textColor">@color/ac_common_text_color_title</item>
+        <item name="android:textSize">@dimen/ac_common_text_size_title</item>
+    </style>
+    <style name="ac_icon_right">
+        <item name="android:layout_width">@dimen/ac_common_field_icon_dimen</item>
+        <item name="android:layout_height">@dimen/ac_common_field_icon_dimen</item>
+        <item name="android:layout_alignParentEnd">true</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+    <style name="ac_icon_left">
+        <item name="android:layout_width">@dimen/ac_left_icon_dimen</item>
+        <item name="android:layout_height">@dimen/ac_left_icon_dimen</item>
+        <item name="android:layout_alignParentStart">true</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+    <style name="ac_btn_delete_customer_edit" parent="ac_body_text">
+        <item name="android:paddingStart">10dp</item>
+        <item name="android:paddingTop">20dp</item>
+    </style>
+    <style name="ac_edt_no_underbar_no_enter">
+        <item name="android:inputType">text</item>
+        <item name="android:imeOptions">actionNext</item>
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+    <style name="ac_edt_no_underbar_no_enter_body_text" parent="ac_edt_no_underbar_no_enter">
+        <item name="android:textColor">@color/ac_common_text_color_body</item>
+        <item name="android:textSize">@dimen/ac_common_text_size_body</item>
+    </style>
+
+    <style name="ac_delete_button" parent="@style/cs_common_match_wrap">
+        <item name="android:layout_height">@dimen/margin_40dp</item>
+        <item name="android:layout_marginLeft">@dimen/margin_60dp</item>
+        <item name="android:layout_marginRight">@dimen/margin_60dp</item>
+        <item name="android:background">@drawable/btn_delete_background</item>
+        <item name="android:textColor">@color/chiase_white</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:clickable">true</item>
+        <item name="android:stateListAnimator">@null</item>
+    </style>
+
+
 </resources>

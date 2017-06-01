@@ -1,8 +1,11 @@
 package trente.asia.messenger.services.message;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.json.JSONObject;
+
+import com.bluelinelabs.logansquare.LoganSquare;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,12 +17,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import asia.chiase.core.util.CCCollectionUtil;
-import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCNumberUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.view.ChiaseCheckableImageView;
 import trente.asia.messenger.BuildConfig;
 import trente.asia.messenger.R;
+import trente.asia.messenger.commons.defines.MsConst;
 import trente.asia.messenger.fragment.AbstractMsgFragment;
 import trente.asia.messenger.services.message.listener.OnChangedBoardListener;
 import trente.asia.messenger.services.message.listener.OnRefreshBoardListListener;
@@ -114,13 +117,13 @@ public class BoardListFragment extends AbstractMsgFragment implements View.OnCli
 
 	private void loadBoardList(){
 		JSONObject jsonObject = new JSONObject();
-		requestLoad(WfUrlConst.WF_MSG_0001, jsonObject, false);
+		requestLoad(MsConst.API_MESSAGE_LIST, jsonObject, false);
 	}
 
 	@Override
 	protected void successLoad(JSONObject response, String url){
-//		System.out.println("===========================================");
-//		System.out.println(isDestroy);
+		// System.out.println("===========================================");
+		// System.out.println(isDestroy);
 
 		txtUserName.setText(myself.userName);
 		txtUserMail.setText(myself.userMail);
@@ -136,35 +139,40 @@ public class BoardListFragment extends AbstractMsgFragment implements View.OnCli
 			}
 		});
 
-		List<BoardModel> boardList = CCJsonUtil.convertToModelList(response.optString("boards"), BoardModel.class);
-		if(!CCCollectionUtil.isEmpty(boardList)){
-			mAdapter = new BoardAdapter(activity, boardList, new OnAvatarClickListener() {
+		List<BoardModel> boardList = null;
+		try{
+			boardList = LoganSquare.parseList(response.optString("boards"), BoardModel.class);
+			if(!CCCollectionUtil.isEmpty(boardList)){
+				mAdapter = new BoardAdapter(activity, boardList, new OnAvatarClickListener() {
 
-				@Override
-				public void OnAvatarClick(String userName, String avatarPath){
-					mDlgProfile.show(BuildConfig.HOST, userName, avatarPath);
-				}
-			});
-			lsvBoard.setAdapter(mAdapter);
-
-			// set active board
-			if(activeBoard != null && !CCStringUtil.isEmpty(activeBoard.key)){
-				for(int i = 0; i < boardList.size(); i++){
-					BoardModel boardModel = boardList.get(i);
-					if(activeBoard.key.equals(boardModel.key)){
-						activeBoard = boardModel;
-						lsvBoard.setItemChecked(i, true);
-						if(onChangedBoardListener != null) onChangedBoardListener.onChangedBoard(activeBoard);
-						break;
+					@Override
+					public void OnAvatarClick(String userName, String avatarPath){
+						mDlgProfile.show(BuildConfig.HOST, userName, avatarPath);
 					}
-				}
-			}else{
-				lsvBoard.setItemChecked(0, true);
-				activeBoard = boardList.get(0);
-				if(onChangedBoardListener != null) onChangedBoardListener.onChangedBoard(boardList.get(0));
-			}
+				});
+				lsvBoard.setAdapter(mAdapter);
 
-			checkUnreadMessage(boardList);
+				// set active board
+				if(activeBoard != null && !CCStringUtil.isEmpty(activeBoard.key)){
+					for(int i = 0; i < boardList.size(); i++){
+						BoardModel boardModel = boardList.get(i);
+						if(activeBoard.key.equals(boardModel.key)){
+							activeBoard = boardModel;
+							lsvBoard.setItemChecked(i, true);
+							if(onChangedBoardListener != null) onChangedBoardListener.onChangedBoard(activeBoard);
+							break;
+						}
+					}
+				}else{
+					lsvBoard.setItemChecked(0, true);
+					activeBoard = boardList.get(0);
+					if(onChangedBoardListener != null) onChangedBoardListener.onChangedBoard(boardList.get(0));
+				}
+
+				checkUnreadMessage(boardList);
+			}
+		}catch(IOException e){
+			e.printStackTrace();
 		}
 	}
 

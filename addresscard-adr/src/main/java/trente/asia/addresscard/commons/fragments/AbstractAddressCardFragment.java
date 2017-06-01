@@ -3,13 +3,16 @@ package trente.asia.addresscard.commons.fragments;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import trente.asia.addresscard.BuildConfig;
 import trente.asia.addresscard.R;
-import trente.asia.addresscard.services.others.CompanyFragment;
+import trente.asia.addresscard.services.business.view.BusinessCardListFragment;
+import trente.asia.addresscard.services.shop.view.ShopCardListFragment;
 import trente.asia.addresscard.services.user.ACLoginFragment;
 import trente.asia.addresscard.setting.SettingFragment;
 import trente.asia.android.view.ChiaseImageView;
@@ -27,6 +30,14 @@ public abstract class AbstractAddressCardFragment extends WelfareFragment implem
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		host = BuildConfig.HOST;
+	}
+
+	public void gotoFragment(Fragment fragment, String tag){
+		FragmentManager fragmentManager = getFragmentManager();
+		FragmentTransaction transaction = fragmentManager.beginTransaction();
+		transaction.replace(R.id.ipt_id_body, fragment);
+		transaction.addToBackStack(tag);
+		transaction.commit();
 	}
 
 	@Override
@@ -58,8 +69,8 @@ public abstract class AbstractAddressCardFragment extends WelfareFragment implem
 					case R.id.lnr_view_footer_card:
 						onClickFooterItemCard();
 						break;
-					case R.id.lnr_view_footer_company:
-						onClickFooterItemCompany();
+					case R.id.lnr_view_footer_shop:
+						onClickFooterItemShop();
 						break;
 					case R.id.lnr_view_footer_setting:
 						onClickFooterItemSetting();
@@ -71,7 +82,7 @@ public abstract class AbstractAddressCardFragment extends WelfareFragment implem
 			}; // end listener
 
 			getView().findViewById(R.id.lnr_view_footer_card).setOnClickListener(listener);
-			getView().findViewById(R.id.lnr_view_footer_company).setOnClickListener(listener);
+			getView().findViewById(R.id.lnr_view_footer_shop).setOnClickListener(listener);
 			getView().findViewById(R.id.lnr_view_footer_setting).setOnClickListener(listener);
 			LinearLayout lnrFooter = (LinearLayout)getView().findViewById(footerItemId);
 			setSelectedFooterItem(lnrFooter);
@@ -94,12 +105,12 @@ public abstract class AbstractAddressCardFragment extends WelfareFragment implem
 
 	public void onClickFooterItemCard(){
 		emptyBackStack();
-//		gotoFragment(new BusinessCardMainFragment());
+		gotoFragment(new BusinessCardListFragment());
 	}
 
-	public void onClickFooterItemCompany(){
+	public void onClickFooterItemShop(){
 		emptyBackStack();
-		gotoFragment(new CompanyFragment());
+		gotoFragment(new ShopCardListFragment());
 	}
 
 	public void onClickFooterItemSetting(){

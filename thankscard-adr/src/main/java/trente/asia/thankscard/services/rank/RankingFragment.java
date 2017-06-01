@@ -22,12 +22,12 @@ import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import trente.asia.thankscard.BuildConfig;
 import trente.asia.thankscard.R;
+import trente.asia.thankscard.commons.defines.TcConst;
 import trente.asia.thankscard.fragments.AbstractTCFragment;
 import trente.asia.welfare.adr.dialog.WfProfileDialog;
 import trente.asia.thankscard.services.rank.model.RankModel;
 import trente.asia.thankscard.services.rank.view.RankingListAdapter;
 import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.utils.WelfareUtil;
 
 /**
@@ -130,12 +130,12 @@ public class RankingFragment extends AbstractTCFragment implements DatePickerDia
 		}catch(JSONException ex){
 			ex.printStackTrace();
 		}
-		requestLoad(WfUrlConst.API_THANKSCARD_GET_RANKING, jsonObject, true);
+		requestLoad(TcConst.API_GET_RANKING, jsonObject, true);
 	}
 
 	@Override
 	protected void successLoad(JSONObject response, String url){
-		if(WfUrlConst.API_THANKSCARD_GET_RANKING.equals(url)){
+		if(TcConst.API_GET_RANKING.equals(url)){
 			List<RankModel> lstPost = CCJsonUtil.convertToModelList(response.optString("postRankings"), RankModel.class);
 			List<RankModel> lstReceive = CCJsonUtil.convertToModelList(response.optString("recvRankings"), RankModel.class);
 			lstRanking.clear();
