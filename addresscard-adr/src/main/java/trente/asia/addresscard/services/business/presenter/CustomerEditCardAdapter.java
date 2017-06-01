@@ -56,7 +56,7 @@ public class CustomerEditCardAdapter extends RecyclerView.Adapter<ViewHolder>{
             callback.deleteCard(card);
             removeCard(card);
         });
-        binding.getRoot().setOnClickListener((View v) -> {
+        binding.rltCard.setOnClickListener((View v) -> {
             callback.onCardItemClick(card.key);
         });
     }

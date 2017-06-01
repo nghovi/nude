@@ -32,7 +32,7 @@
     <string name="ac_category_list">Category list</string>
     <string name="ac_customer_list">Customer list</string>
     <string name="ac_customer_title">Company information</string>
-    <string name="ac_customer_last_comment">Last Comment</string>
+    <string name="ac_customer_last_comment">Last comment</string>
 
     <string name="ac_btn_add_comment">Add Comment</string>
     <string name="ac_customer_list_title">Customer list</string>
@@ -53,4 +53,5 @@
     <string name="fragment_tags_uncheck_all">Uncheck all</string>
     <string name="fragment_tags_check_all">Check all</string>
     <string name="ac_delete_card">Delete card</string>
+    <string name="ac_delete_company">Delete company</string>
 </resources>

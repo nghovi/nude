@@ -45,7 +45,7 @@ public class CustomerDetailCardAdapter extends RecyclerView.Adapter<ViewHolder>{
 		binding = (CardItemCustomerDetailBinding)holder.getBinding();
 		binding.setVariable(BR.card, card);
 		binding.executePendingBindings();
-		binding.rltCard.setOnClickListener((View) -> {
+		binding.getRoot().setOnClickListener((View v) -> {
             callback.onCardClick(card.key);
 		});
 		WfPicassoHelper.loadImage(context, BuildConfig.HOST + card.attachment.fileUrl, binding.card, null);
