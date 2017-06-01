@@ -25,11 +25,11 @@ import android.widget.TextView;
 
 import trente.asia.android.define.CsConst;
 import trente.asia.dailyreport.BuildConfig;
+import trente.asia.dailyreport.DRConst;
 import trente.asia.dailyreport.R;
 import trente.asia.dailyreport.services.user.DrLoginFragment;
 import trente.asia.dailyreport.utils.DRUtil;
 import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.fragment.AbstractFilePreviewFragment;
 import trente.asia.welfare.adr.utils.WelfareUtil;
 
@@ -135,12 +135,12 @@ public class FilePreviewFragment extends AbstractFilePreviewFragment implements 
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
-		requestUpload(WfUrlConst.WF_REPORT_COMMENT, jsonObject, fileMap, true);
+		requestUpload(DRConst.API_REPORT_COMMENT, jsonObject, fileMap, true);
 	}
 
 	@Override
 	protected void successUpload(JSONObject response, String url){
-		if(WfUrlConst.WF_REPORT_COMMENT.equals(url)){
+		if(DRConst.API_REPORT_COMMENT.equals(url)){
 			File appFolder = new File(DRUtil.getFilesFolderPath());
 			deleteAppFolder(appFolder);
 
