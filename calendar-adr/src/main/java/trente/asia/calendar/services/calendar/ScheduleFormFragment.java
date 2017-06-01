@@ -46,7 +46,6 @@ import trente.asia.calendar.services.calendar.model.CategoryModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 import trente.asia.welfare.adr.utils.WelfareUtil;
@@ -490,7 +489,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
-		requestUpdate(WfUrlConst.WF_CL_SCHEDULE_UPD, jsonObject, true);
+		requestUpdate(ClConst.API_SCHEDULE_UPDATE, jsonObject, true);
 	}
 
 	private void deleteSchedule(String modifyType){
@@ -504,12 +503,12 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
-		requestUpdate(WfUrlConst.WF_CL_SCHEDULE_DEL, jsonObject, true);
+		requestUpdate(ClConst.API_SCHEDULE_DEL, jsonObject, true);
 	}
 
 	@Override
 	protected void successUpdate(JSONObject response, String url){
-		if(WfUrlConst.WF_CL_SCHEDULE_UPD.equals(url)){
+		if(ClConst.API_SCHEDULE_UPDATE.equals(url)){
 			String oldKey = schedule.key;
 			try{
 				schedule = LoganSquare.parse(response.optString("schedule"), ScheduleModel.class);
@@ -518,7 +517,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 			}catch(IOException e){
 				e.printStackTrace();
 			}
-		}else if(WfUrlConst.WF_CL_SCHEDULE_DEL.equals(url)){
+		}else if(ClConst.API_SCHEDULE_DEL.equals(url)){
 			((WelfareActivity)activity).dataMap.put(ClConst.ACTION_SCHEDULE_DELETE, CCConst.YES);
 			getFragmentManager().popBackStack();
 		}else{

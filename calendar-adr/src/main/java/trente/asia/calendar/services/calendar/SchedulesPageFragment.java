@@ -37,7 +37,6 @@ import trente.asia.calendar.services.calendar.model.WorkOffer;
 import trente.asia.calendar.services.calendar.view.WeeklyScheduleListAdapter;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
 
@@ -114,7 +113,7 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 
 	protected void loadScheduleList(){
 		JSONObject jsonObject = prepareJsonObject();
-		requestLoad(WfUrlConst.API_CL_SCHEDULE_LIST, jsonObject, false);
+		requestLoad(ClConst.API_SCHEDULE_LIST, jsonObject, false);
 	}
 
 	protected JSONObject prepareJsonObject(){
@@ -139,7 +138,7 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 
 	@Override
 	protected void successLoad(JSONObject response, String url){
-		if(WfUrlConst.API_CL_SCHEDULE_LIST.equals(url)){
+		if(ClConst.API_SCHEDULE_LIST.equals(url)){
 			onLoadSchedulesSuccess(response);
 		}else{
 			super.successLoad(response, url);

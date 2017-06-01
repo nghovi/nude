@@ -17,6 +17,7 @@ import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import trente.asia.calendar.R;
+import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.fragments.AbstractClFragment;
 import trente.asia.calendar.services.calendar.SchedulesPageFragment;
 import trente.asia.calendar.services.calendar.SchedulesPageListViewFragment;
@@ -27,7 +28,6 @@ import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.view.WeeklyScheduleListAdapter;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.define.WfUrlConst;
 
 /**
  * SummaryPageFragment
@@ -68,12 +68,12 @@ public class SummaryDetailFragment extends AbstractClFragment implements WeeklyS
 		Date endDate = calendar.getTime();
 
 		JSONObject jsonObject = SchedulesPageFragment.buildJsonObjForScheduleListRequest(prefAccUtil, startDate, endDate);
-		requestLoad(WfUrlConst.API_CL_SCHEDULE_LIST, jsonObject, true);
+		requestLoad(ClConst.API_SCHEDULE_LIST, jsonObject, true);
 	}
 
 	@Override
 	protected void successLoad(JSONObject response, String url){
-		if(WfUrlConst.API_CL_SCHEDULE_LIST.equals(url)){
+		if(ClConst.API_SCHEDULE_LIST.equals(url)){
 			onLoadSchedulesSuccess(response);
 		}else{
 			super.successLoad(response, url);
