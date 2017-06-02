@@ -42,14 +42,13 @@
                 android:id="@+id/card_1"
                 android:layout_width="@dimen/ac_row_body_height"
                 android:layout_height="@dimen/ac_row_body_height"
-                android:padding="@dimen/ac_icon_padding"
-                android:layout_marginEnd="@dimen/ac_icon_padding"/>
+                android:padding="@dimen/ac_image_padding"/>
             <ImageView
                 android:id="@+id/card_2"
                 android:layout_width="@dimen/ac_row_body_height"
                 android:layout_height="@dimen/ac_row_body_height"
-                android:padding="@dimen/ac_icon_padding"
-                android:layout_marginStart="@dimen/ac_icon_padding"/>
+                android:padding="@dimen/ac_image_padding"
+                android:layout_marginEnd="@dimen/margin_5dp"/>
         </LinearLayout>
 
         <TextView
@@ -58,12 +57,11 @@
             android:layout_width="@dimen/ac_row_body_height"
             android:layout_height="@dimen/ac_row_body_height"
             style="@style/ac_body_text"
-            android:textSize="@dimen/ac_common_text_size_title"
+            android:textSize="12sp"
             android:layout_centerVertical="true"
             android:gravity="center_vertical"
             android:drawablePadding="5dp"
             android:text="@{customer.cardNumber}"
-            android:layout_marginEnd="@dimen/ac_text_margin"
             android:drawableStart="@drawable/ac_icon_card"/>
 
         <TextView
@@ -72,7 +70,7 @@
             android:layout_width="@dimen/ac_row_body_height"
             android:layout_height="@dimen/ac_row_body_height"
             style="@style/ac_body_text"
-            android:textSize="@dimen/ac_common_text_size_title"
+            android:textSize="12sp"
             android:layout_centerVertical="true"
             android:gravity="center_vertical"
             android:drawablePadding="5dp"
