@@ -20,6 +20,7 @@ android {
         multiDexEnabled true
         jackOptions {
             enabled true
+            additionalParameters('jack.incremental': 'true')
         }
     }
 

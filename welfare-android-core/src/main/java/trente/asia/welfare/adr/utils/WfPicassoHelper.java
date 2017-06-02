@@ -54,6 +54,32 @@ public class WfPicassoHelper{
 		});
 	}
 
+
+	public static void loadImageNoFit(Context context, String imageUrl, final ImageView imageView, final ProgressBar pgrLoading){
+
+		if(context == null || CCStringUtil.isEmpty(imageUrl) || imageView == null){
+			return;
+		}
+
+		// fix bug load wrong image into ImageView inside listview items
+		WfPicassoHelper.cancelLoadImage(context, imageView);
+
+		if(pgrLoading != null) pgrLoading.setVisibility(View.VISIBLE);
+
+		Picasso.with(context).load(imageUrl).into(imageView, new Callback.EmptyCallback() {
+
+			@Override
+			public void onSuccess(){
+				if(pgrLoading != null) pgrLoading.setVisibility(View.GONE);
+			}
+
+			@Override
+			public void onError(){
+				if(pgrLoading != null) pgrLoading.setVisibility(View.GONE);
+			}
+		});
+	}
+
 	/**
 	 * Load image from url with progressBar
 	 *
