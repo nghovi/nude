@@ -27,7 +27,6 @@
             android:id="@+id/rlt_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clickable="true"
             android:background="@drawable/row_pressed_selector">
             <ImageView
                 android:id="@+id/card"
@@ -99,6 +98,4 @@
                 android:text="@{card.cardNote}" />
         </RelativeLayout>
     </LinearLayout>
-
-
 </layout>
