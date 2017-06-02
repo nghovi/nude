@@ -2,16 +2,15 @@ package trente.asia.messenger.services.message.view;
 
 import android.app.Activity;
 import android.content.Context;
-import android.text.InputType;
 import android.text.method.KeyListener;
 import android.util.AttributeSet;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import asia.chiase.core.util.CCStringUtil;
+import trente.asia.android.activity.ChiaseFragment;
 import trente.asia.messenger.R;
 
 /**
@@ -86,13 +85,7 @@ public class NoteView extends LinearLayout{
 			btnEdit.setText(mContext.getString(R.string.chiase_common_cancel1));
 		}else{
 			noteContent = "";
-			// edtNote.setEnabled(false);
-			edtNote.setKeyListener(null);
-            InputMethodManager imm = (InputMethodManager)mContext.getSystemService(Activity.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(edtNote.getWindowToken(), 0);
-//            imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
-
-			// edtNote.setFocusable(false);
+			ChiaseFragment.hideKeyBoard((Activity)getContext());
 			btnSave.setEnabled(false);
 			btnEdit.setText(mContext.getString(R.string.chiase_common_edit));
 		}

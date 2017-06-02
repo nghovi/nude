@@ -701,6 +701,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 	public void onClick(View v){
 		switch(v.getId()){
 		case R.id.img_id_header_left_icon:
+			hideKeyBoard(activity);
 			mSlideMenuLayout.toggleMenu();
 			break;
 		case R.id.btn_id_send:
