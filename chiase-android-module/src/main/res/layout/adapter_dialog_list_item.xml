@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<trente.asia.android.view.layout.CheckableLinearLayout style="@style/cs_common_match_wrap"
+                                                       xmlns:android="http://schemas.android.com/apk/res/android"
+                                                       android:background="@drawable/state_common_selectable_row2"
+                                                       android:gravity="center_vertical"
+                                                       android:orientation="horizontal"
+                                                       android:paddingBottom="@dimen/margin_10dp"
+                                                       android:paddingLeft="@dimen/margin_16dp"
+                                                       android:paddingRight="@dimen/margin_16dp"
+                                                       android:paddingTop="@dimen/margin_10dp">
+
+    <TextView
+        android:id="@+id/txt_item_value"
+        android:layout_width="@dimen/margin_0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:focusable="false"
+        android:textSize="@dimen/margin_12dp"/>
+
+    <trente.asia.android.view.ChiaseSingleCheckBox
+        android:id="@+id/cbx_item_selected"
+        style="@style/cs_custom_checkbox"
+        android:layout_marginLeft="@dimen/margin_6dp"
+        android:focusable="false"
+        android:padding="@dimen/margin_0dp"/>
+</trente.asia.android.view.layout.CheckableLinearLayout>

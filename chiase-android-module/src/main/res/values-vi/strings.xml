@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="chiase_date_time_view_set_button">Cài đặt</string>
+    <string name="chiase_date_time_view_cancel_button">Hủy</string>
+
+    <string name="chiase_photo_actions">Ảnh</string>
+    <string name="chiase_movie_actions">Video</string>
+    <string name="chiase_title_photo_choose">Chọn ảnh</string>
+    <string name="chiase_title_photo_take">Chụp ảnh</string>
+    <string name="chiase_title_movie_choose">Chọn video</string>
+    <string name="chiase_title_movie_take">Quay video</string>
+
+    <string name="chiase_common_ok">OK</string>
+    <string name="chiase_common_cancel">Không</string>
+    <string name="chiase_common_cancel1">Hủy</string>
+    <string name="chiase_common_edit">Chỉnh sửa</string>
+    <string name="chiase_common_delete">Xóa</string>
+    <string name="chiase_common_copy">Ghi chú</string>
+    <string name="chiase_common_update">Cập nhật</string>
+    <string name="chiase_common_save">Lưu</string>
+    <string name="chiase_common_modify">Chỉnh sửa</string>
+    <string name="chiase_common_add">Thêm</string>
+    <string name="chiase_common_request">Yêu cầu</string>
+
+    <string name="chiase_common_send">Gửi</string>
+    <string name="chiase_common_prev">Trước</string>
+    <string name="chiase_common_next">Sau</string>
+    <string name="chiase_common_check">Kiểm tra</string>
+
+    <string name="chiase_common_none">Không có</string>
+    <string name="chiase_common_all">Tất cả</string>
+    <string name="chiase_common_please_input">Hãy nhập dữ liệu</string>
+    <string name="chiase_common_please_select">Hãy lựa chọn</string>
+
+    <string name="chiase_common_today">Hôm nay</string>
+
+    <string name="chiase_common_action_downloading">Đang tải...</string>
+    <string name="chiase_action_downloaded">Tải tệp hoàn thành</string>
+    <string name="chiase_action_open_file_confirm">Bạn muốn mở tệp?</string>
+
+    <string name="chiase_common_disabled_function">Hiện tại không thể sử dụng chức năng này</string>
+    <string name="chiase_common_not_working_gps">Không thể xác định vị trí. Hãy kiểm tra lại kết nối mạng.</string>
+
+    <string name="chiase_common_success_change_push_setting">Cài đặt thông báo của bạn đã được thay đổi</string>
+    <string name="chiase_common_success_change_avatar">Ảnh đại diện của bạn đã được thay đổi</string>
+    <string name="chiase_common_success_change_password">Mật khẩu của bạn đã được thay đổi</string>
+    <string name="chiase_common_success_signout">Đăng xuất thành công</string>
+    <string name="chiase_about_app_version">Phiên bản %1$s</string>
+    <string name="chiase_setting_title">Cài đặt</string>
+    <string name="system_error_msg">Lỗi kết nối</string>
+
+
+
+</resources>

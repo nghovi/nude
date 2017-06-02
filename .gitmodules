@@ -1,6 +1,0 @@
-[submodule "welfare-android-core"]
-	path = welfare-android-core
-	url = https://trente-service:trente-vietnam@gitlab.com/trente/welfare-android-core.git
-[submodule "chiase-android-module"]
-	path = chiase-android-module
-	url = https://trente-service:trente-vietnam@gitlab.com/trente/chiase-android-module.git

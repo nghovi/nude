@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--chiase common color-->
+    <color name="chiase_white">#FFFFFF</color>
+    <color name="chiase_black">#000000</color>
+    <color name="chiase_red">#FF0000</color>
+    <color name="chiase_green">#00FF00</color>
+    <color name="chiase_blue">#0000FF</color>
+    <color name="chiase_gray">#808080</color>
+    <color name="chiase_green2">#6EBDC1</color>
+
+    <!--chiase file draw throung-->
+    <color name="chiase_footer_text">#333333</color>
+
+    <!--chiase file chooser-->
+    <color name="chiase_filechooser_list_bg">#303030</color>
+    <color name="chiase_filechooser_list_bg_pressed">#992416</color>
+    <color name="chiase_filechooser_counter_txt_bg">#626262</color>
+    <color name="chiase_filechooser_txt_normal">#c5c4c4</color>
+    <color name="chiase_filechooser_txt_actived">#1CA6EB</color>
+    <color name="chiase_txt_gray">#A4A4A4</color>
+    <color name="chiase_message_bg_button">#AAAAAA</color>
+    <color name="chiase_message_text">#CCCCCC</color>
+    <color name="chiase_message_text_enable">#5C677A</color>
+    <color name="chiase_message_border_input">#ADADAD</color>
+    <color name="chiase_message_bg_input">#F7F7F7</color>
+    <color name="chiase_warning">#C9283B</color>
+
+    <color name="chiase_red_button">#C6414F</color>
+    <color name="chiase_red_button_50">#80C6414F</color>
+    <color name="orange_button">#F28E41</color>
+    <color name="qk_common_password_divider">#5D6578</color>
+
+    <color name="cs_common_color_base">#6EBDC1</color>
+    <color name="cs_common_selectable_color">#D8D8D8</color>
+
+    <color name="cs_download_dialog_text">#569D9E</color>
+    <color name="cs_common_divider">#cccccc</color>
+</resources>

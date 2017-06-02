@@ -1,0 +1,16 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:id="@+id/lnr_id_footer"
+        style="@style/cs_common_match_wrap"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/qk_common_footer"
+            style="@style/cs_common_match_wrap"
+            android:orientation="vertical">
+
+        </LinearLayout>
+    </LinearLayout>
+
+</merge>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <corners android:radius="@dimen/margin_2dp"/>
+            <solid android:color="@color/wf_login_button_color_off"/>
+        </shape>
+    </item>
+    <item android:state_enabled="true">
+        <shape android:shape="rectangle">
+            <corners android:radius="@dimen/margin_2dp"/>
+            <solid android:color="@color/wf_login_button_color_on"/>
+        </shape>
+    </item>
+    <item android:state_enabled="false">
+        <shape android:shape="rectangle">
+            <corners android:radius="@dimen/margin_2dp"/>
+            <solid android:color="@color/wf_login_button_color_off"/>
+        </shape>
+    </item>
+</selector>
