@@ -26,6 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <trente.asia.android.view.ChiaseEditText
+                style="@style/ac_edt_no_underbar_no_enter"
                 android:id="@+id/edt_new_customer"
                 android:layout_width="0dp"
                 android:layout_weight="3"

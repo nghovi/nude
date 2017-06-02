@@ -7,10 +7,10 @@
             type="trente.asia.addresscard.services.business.model.BusinessCardModel"/>
     </data>
 
-    <RelativeLayout
-        android:id="@+id/rlt_card"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
         <TextView
             android:id="@+id/card_name"
             android:layout_width="match_parent"
@@ -19,75 +19,83 @@
             android:text="@{card.cardName}"
             android:maxLines="1"
             android:ellipsize="end"
-            style="@style/ac_btn_delete_customer_edit"
-            android:drawablePadding="@dimen/ac_text_padding"/>
-
-        <ImageView
-            android:id="@+id/card"
-            android:layout_below="@+id/card_name"
-            android:layout_width="@dimen/ac_card_width"
-            android:layout_height="@dimen/ac_card_height"
-            android:background="@android:color/white"
-            android:padding="15dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/card" />
-
-        <View
-            android:id="@+id/divider1"
-            android:layout_width="1dp"
-            android:layout_height="@dimen/ac_card_height"
-            android:layout_toEndOf="@+id/card"
-            android:background="@color/ac_common_background" />
-
-        <TextView
-            android:id="@+id/mail"
-            android:layout_below="@+id/card_name"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/ac_card_half_height"
-            android:layout_toEndOf="@id/divider1"
-            android:background="@android:color/white"
-            android:drawableEnd="@drawable/ac_icon_mail"
             android:gravity="center_vertical"
-            android:padding="@dimen/ac_text_padding"
-            android:text="@{card.cardEmail}" />
-
-        <View
-            android:id="@+id/divider2"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_below="@+id/mail"
-            android:layout_toEndOf="@+id/divider1"
-            android:background="@color/ac_common_background" />
-
-        <TextView
-            android:id="@+id/phone"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/ac_card_half_height"
-            android:layout_below="@+id/divider2"
-            android:layout_toEndOf="@+id/divider1"
-            android:background="@android:color/white"
-            android:drawableEnd="@drawable/ac_icon_phone"
-            android:gravity="center_vertical"
-            android:padding="@dimen/ac_text_padding"
-            android:text="@{card.cardTel}" />
-
-        <View
-            android:id="@+id/divider3"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_below="@id/card"
-            android:background="@color/ac_common_background" />
-
-        <TextView
-            android:id="@+id/note"
             style="@style/ac_body_text"
+            android:padding="@dimen/title_padding"
+            android:drawablePadding="@dimen/ac_text_padding"/>
+        <RelativeLayout
+            android:id="@+id/rlt_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/divider3"
-            android:background="@android:color/white"
-            android:maxLines="3"
-            android:padding="@dimen/ac_text_padding"
-            android:text="@{card.cardNote}" />
-    </RelativeLayout>
+            android:background="@drawable/row_pressed_selector">
+            <ImageView
+                android:id="@+id/card"
+                android:layout_width="@dimen/ac_card_width"
+                android:layout_height="@dimen/ac_card_height"
+                android:background="@android:color/white"
+                android:padding="15dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/card" />
 
+            <View
+                android:id="@+id/divider1"
+                android:layout_width="1dp"
+                android:layout_height="@dimen/ac_card_height"
+                android:layout_toEndOf="@+id/card"
+                android:background="@color/ac_common_background" />
+
+            <TextView
+                android:id="@+id/mail"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ac_card_half_height"
+                android:layout_toEndOf="@id/divider1"
+                android:background="@android:color/white"
+                android:drawableEnd="@drawable/ac_icon_mail"
+                android:gravity="center_vertical"
+                android:padding="@dimen/ac_text_padding"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:text="@{card.cardEmail}" />
+
+            <View
+                android:id="@+id/divider2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/mail"
+                android:layout_toEndOf="@+id/divider1"
+                android:background="@color/ac_common_background" />
+
+            <TextView
+                android:id="@+id/phone"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ac_card_half_height"
+                android:layout_below="@+id/divider2"
+                android:layout_toEndOf="@+id/divider1"
+                android:background="@android:color/white"
+                android:drawableEnd="@drawable/ac_icon_phone"
+                android:gravity="center_vertical"
+                android:padding="@dimen/ac_text_padding"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:text="@{card.cardTel}" />
+
+            <View
+                android:id="@+id/divider3"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/card"
+                android:background="@color/ac_common_background" />
+
+            <TextView
+                android:id="@+id/note"
+                style="@style/ac_body_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/divider3"
+                android:background="@android:color/white"
+                android:maxLines="3"
+                android:padding="@dimen/ac_text_padding"
+                android:text="@{card.cardNote}" />
+        </RelativeLayout>
+    </LinearLayout>
 </layout>

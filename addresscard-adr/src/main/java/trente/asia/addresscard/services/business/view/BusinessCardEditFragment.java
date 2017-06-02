@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -85,7 +86,12 @@ public class BusinessCardEditFragment extends AddressCardEditFragment implements
 			card = CCJsonUtil.convertToModel(response.optString("card"), BusinessCardModel.class);
 			binding.setVariable(BR.card, card);
 			binding.executePendingBindings();
-			Picasso.with(getContext()).load(BuildConfig.HOST + card.attachment.fileUrl).fit().into(binding.cardImage);
+			DisplayMetrics metrics = new DisplayMetrics();
+			getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
+			Picasso.with(getContext()).load(BuildConfig.HOST + card.attachment.fileUrl)
+					.placeholder(R.drawable.loading)
+					.resize(metrics.widthPixels, 0)
+					.into(binding.cardImage);
 			customerId = ((BusinessCardModel)card).customerId;
 			super.initHeader(R.drawable.ac_back_white, card.cardName, R.drawable.ac_action_done);
 		}
@@ -113,7 +119,6 @@ public class BusinessCardEditFragment extends AddressCardEditFragment implements
 
 	@Override
 	protected void successUpdate(JSONObject response, String url){
-		super.successUpdate(response, url);
 		if(ACConst.AC_BUSINESS_CUSTOMER_CREATE.equals(url)){
 			try{
 				customerId = response.getInt("customerId");
@@ -123,6 +128,8 @@ public class BusinessCardEditFragment extends AddressCardEditFragment implements
 
 			binding.customerName.setText(viewBinding.edtNewCustomer.getText());
 			dialog.dismiss();
+		} else {
+			super.successUpdate(response, url);
 		}
 	}
 

@@ -151,7 +151,7 @@
                 android:layout_width="300dp"
                 android:layout_height="60dp"
                 android:background="@drawable/btn_delete_background"
-                android:text="@string/ac_delete"
+                android:text="@string/ac_delete_company"
                 android:textSize="20sp"
                 android:textColor="@android:color/white"
                 android:layout_alignParentBottom="true"
