@@ -28,7 +28,7 @@
     <string name="ac_new_customer_title">New customer</string>
     <string name="ac_category">Category</string>
     <string name="ac_category_name">Category name</string>
-    <string name="ac_category_note">Category Note</string>
+    <string name="ac_category_note">Category note</string>
     <string name="ac_category_list">Category list</string>
     <string name="ac_customer_list">Customer list</string>
     <string name="ac_customer_title">Company information</string>

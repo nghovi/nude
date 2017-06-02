@@ -62,6 +62,7 @@ public class BusinessCustomerDetailFragment extends AbstractAddressCardFragment
     @Override
     protected void initView() {
         super.initView();
+        super.initHeader(R.drawable.ac_back_white, "", null);
     }
 
     @Override
