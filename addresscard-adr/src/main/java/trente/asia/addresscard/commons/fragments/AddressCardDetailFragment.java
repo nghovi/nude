@@ -9,7 +9,6 @@ import org.json.JSONObject;
 import trente.asia.addresscard.R;
 import trente.asia.addresscard.commons.utils.Utils;
 import trente.asia.addresscard.services.business.model.AddressCardModel;
-import trente.asia.addresscard.services.business.model.BusinessCardModel;
 
 /**
  * Created by tien on 5/23/2017.
@@ -31,6 +30,12 @@ public abstract class AddressCardDetailFragment extends AbstractAddressCardFragm
 		}
 		String api = getApi();
 		requestLoad(api, jsonObject, true);
+	}
+
+	@Override
+	protected void initView() {
+		super.initView();
+		super.initHeader(R.drawable.ac_back_white, "", null);
 	}
 
 	protected abstract String getApi();

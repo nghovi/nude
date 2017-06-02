@@ -47,6 +47,7 @@ public class BusinessCategoryEditFragment extends AbstractAddressCardFragment {
             mRootView = binding.getRoot();
             binding.setVariable(BR.category, category);
             binding.listCustomers.setLayoutManager(new LinearLayoutManager(getContext()));
+            binding.listCustomers.setNestedScrollingEnabled(false);
             mRootView.findViewById(R.id.img_id_header_right_icon).setOnClickListener(this);
         }
         return mRootView;

@@ -45,9 +45,16 @@ public class BusinessCategoryDetailFragment extends AbstractAddressCardFragment{
 			adapter = new CategoryCustomerAdapter();
 			binding.listCustomers.setAdapter(adapter);
 			binding.listCustomers.setLayoutManager(new LinearLayoutManager(getContext()));
+			binding.listCustomers.setNestedScrollingEnabled(false);
 			mRootView.findViewById(R.id.img_id_header_right_icon).setOnClickListener(this);
 		}
 		return mRootView;
+	}
+
+	@Override
+	protected void initView() {
+		super.initView();
+		super.initHeader(R.drawable.ac_back_white, "", null);
 	}
 
 	@Override

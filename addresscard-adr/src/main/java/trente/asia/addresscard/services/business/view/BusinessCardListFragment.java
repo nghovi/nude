@@ -75,9 +75,11 @@ public class BusinessCardListFragment extends AddressCardListFragment {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.row_category:
+                showBtnCapture();
                 gotoFragment(new BusinessCategoryListFragment());
                 break;
             case R.id.row_customer:
+                showBtnCapture();
                 gotoFragment(new BusinessCustomerListFragment(), "customer_list");
                 break;
             default:

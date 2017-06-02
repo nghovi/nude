@@ -19,7 +19,7 @@
             android:ellipsize="end"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
-            android:textSize="16sp"
+            android:textSize="@dimen/ac_common_text_size_title"
             android:textColor="@android:color/black"
             android:text="@{category.categoryName}"/>
 
@@ -36,7 +36,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:padding="5dp"
+                android:padding="@dimen/ac_image_padding"
                 android:src="@drawable/thumbnail_failure"/>
 
             <ImageView
@@ -44,30 +44,31 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:padding="5dp"
+                android:padding="@dimen/ac_image_padding"
                 android:src="@drawable/thumbnail_failure"/>
             <ImageView
                 android:id="@+id/customer_2"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:padding="5dp"
+                android:padding="@dimen/ac_image_padding"
                 android:src="@drawable/thumbnail_failure"/>
             <ImageView
                 android:id="@+id/customer_3"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:padding="5dp"
+                android:padding="@dimen/ac_image_padding"
                 android:src="@drawable/thumbnail_failure"/>
         </LinearLayout>
 
         <TextView
             android:id="@+id/customer_number"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/ac_row_body_height"
             android:layout_height="wrap_content"
             android:layout_toStartOf="@+id/arrow"
             android:text="@{category.customerCount}"
+            android:textSize="@dimen/ac_common_text_size_title"
             android:layout_centerVertical="true"
             android:drawablePadding="8dp"
             style="@style/ac_body_text"
