@@ -672,15 +672,17 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 			MessageContentModel contentModel = null;
 			try{
 				contentModel = LoganSquare.parse(response.optString("detail"), MessageContentModel.class);
-				if(messageView.likeButtonType == MessageView.LikeButtonType.EDIT){
-					List<MessageContentModel> lstUpdate = new ArrayList<>();
-					lstUpdate.add(contentModel);
-					mMsgAdapter.updateMessage(lstUpdate);
-				}else{
-					appendMessage(contentModel);
-					// latestMessageId = contentModel.key;
+				if(!CCStringUtil.isEmpty(activeBoardId) && activeBoardId.equals(contentModel.boardId)) {
+					if (messageView.likeButtonType == MessageView.LikeButtonType.EDIT) {
+						List<MessageContentModel> lstUpdate = new ArrayList<>();
+						lstUpdate.add(contentModel);
+						mMsgAdapter.updateMessage(lstUpdate);
+					} else {
+						appendMessage(contentModel);
+						// latestMessageId = contentModel.key;
+					}
+					messageView.edtMessage.setText("");
 				}
-				messageView.edtMessage.setText("");
 			}catch(IOException e){
 				e.printStackTrace();
 			}
