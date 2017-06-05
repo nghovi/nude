@@ -516,12 +516,15 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 				List<MessageContentModel> lstMessage = LoganSquare.parseList(response.optString("contents"), MessageContentModel.class);
 				// lastUpdateTime = response.optString("lastUpdateTime");
 				if(!CCCollectionUtil.isEmpty(lstMessage)){
-					messageView.revMessage.isScrollToBottom();
-					mMsgAdapter.addMessages(lstMessage);
-					messageView.revMessage.scrollRecyclerToBottom();
-					String lastKey = lstMessage.get(lstMessage.size() - 1).key;
-					if(CCNumberUtil.toInteger(latestMessageId).compareTo(CCNumberUtil.toInteger(lastKey)) < 0){
-						latestMessageId = lastKey;
+					MessageContentModel firstMessage = lstMessage.get(0);
+					if(!CCStringUtil.isEmpty(activeBoardId) && activeBoardId.equals(firstMessage.boardId)){
+						messageView.revMessage.isScrollToBottom();
+						mMsgAdapter.addMessages(lstMessage);
+						messageView.revMessage.scrollRecyclerToBottom();
+						String lastKey = lstMessage.get(lstMessage.size() - 1).key;
+						if(CCNumberUtil.toInteger(latestMessageId).compareTo(CCNumberUtil.toInteger(lastKey)) < 0){
+							latestMessageId = lastKey;
+						}
 					}
 				}
 
