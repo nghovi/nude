@@ -302,7 +302,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 																					};
 
 	private WfProfileDialog								mDlgProfile;
-	private String										latestBoardId;
+//	private String										latestBoardId;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState){
@@ -462,7 +462,6 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
-		latestBoardId = activeBoard.key;
 		requestLoad(MsConst.API_MESSAGE_BOARD, jsonObject, true);
 	}
 
@@ -492,10 +491,11 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 	protected void successLoad(JSONObject response, String url){
 		try{
 			if(MsConst.API_MESSAGE_BOARD.equals(url)){
-				if(activeBoardId != null && activeBoardId.equals(latestBoardId)){
 
-					List<MessageContentModel> lstMessage = LoganSquare.parseList(response.optString("contents"), MessageContentModel.class);
-					if(!CCCollectionUtil.isEmpty(lstMessage)){
+				List<MessageContentModel> lstMessage = LoganSquare.parseList(response.optString("contents"), MessageContentModel.class);
+				if(!CCCollectionUtil.isEmpty(lstMessage)){
+					MessageContentModel firstMessage = lstMessage.get(0);
+					if(!CCStringUtil.isEmpty(activeBoardId) && activeBoardId.equals(firstMessage.boardId)){
 						if(CCStringUtil.isEmpty(autoroadCd)){
 							mMsgAdapter.addMessages(lstMessage);
 							messageView.revMessage.setLastVisibleItem(mMsgAdapter.getItemCount() - 1);
@@ -509,7 +509,6 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 							startMessageId = lstMessage.get(0).key;
 						}
 					}
-
 					autoroadCd = response.optString("autoroadCd");
 					isSuccessLoad = true;
 				}
