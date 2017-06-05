@@ -12,7 +12,7 @@ android {
 
     defaultConfig {
         applicationId "trente.asia.calendar"
-        minSdkVersion 22
+        minSdkVersion 21
         targetSdkVersion 24
         versionCode 4
         versionName "1.3"
@@ -36,7 +36,7 @@ android {
     productFlavors {
         develop {
             buildConfigField "Boolean", "DEVELOP", "true"
-            buildConfigField "String", "HOST", "\"http://192.168.1.124:9000\""
+            buildConfigField "String", "HOST", "\"http://dev.trente.asia:9000\""
         }
         production {
             buildConfigField "Boolean", "DEVELOP", "false"

@@ -13,7 +13,7 @@ android {
     }
 
     defaultConfig {
-        minSdkVersion 22
+        minSdkVersion 21
         targetSdkVersion 24
         versionCode 1
         versionName "2.0"
@@ -39,7 +39,7 @@ android {
             applicationId "trente.asia.dailyreport"
             manifestPlaceholders = [appName: "${APP_NAME} DEV"]
             buildConfigField "Boolean", "DEVELOP", "true"
-            buildConfigField "String", "HOST", "\"http://192.168.1.124:9000\""
+            buildConfigField "String", "HOST", "\"http://dev.trente.asia:9000\""
         }
         production {
             applicationId "trente.fukuri.dailyreport"

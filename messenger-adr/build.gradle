@@ -12,10 +12,10 @@ android {
 
     defaultConfig {
         applicationId "trente.asia.messenger"
-        minSdkVersion 22
+        minSdkVersion 21
         targetSdkVersion 24
-        versionCode 1
-        versionName "1.0"
+        versionCode 5
+        versionName "1.4"
         multiDexEnabled true
         jackOptions {
             enabled true
@@ -37,7 +37,7 @@ android {
     productFlavors {
         develop {
             buildConfigField "Boolean", "DEVELOP", "true"
-            buildConfigField "String", "HOST", "\"http://192.168.1.124:9000\""
+            buildConfigField "String", "HOST", "\"http://dev.trente.asia:9000\""
         }
         production {
             buildConfigField "Boolean", "DEVELOP", "false"
