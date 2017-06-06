@@ -2,7 +2,9 @@ package trente.asia.shiftworking.services.worktime;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -26,11 +28,14 @@ import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
+import trente.asia.android.view.ChiaseListDialog;
+import trente.asia.android.view.ChiaseTextView;
 import trente.asia.shiftworking.R;
 import trente.asia.shiftworking.common.defines.SwConst;
 import trente.asia.shiftworking.common.fragments.AbstractLocationFragment;
 import trente.asia.shiftworking.services.transit.WorkTransitListFragment;
 import trente.asia.shiftworking.services.worktime.listener.ItemWorkTimeClickListener;
+import trente.asia.shiftworking.services.worktime.model.CheckinTypeModel;
 import trente.asia.shiftworking.services.worktime.model.ProjectModel;
 import trente.asia.shiftworking.services.worktime.model.WorkingTimeModel;
 import trente.asia.shiftworking.services.worktime.view.WorkTimeAdapter;
@@ -55,6 +60,8 @@ public class WorktimeCheckInFragment extends AbstractLocationFragment{
 	private LinearLayout				lnrProjectInfo;
 	private LinearLayout				lnrNoProject;
 	private WorkingTimeModel			activeWorkingTime;
+	private ChiaseListDialog			dlgCheckinTypes;
+	private Map<String, String>			checkinTypeMap;
 
 	private ItemWorkTimeClickListener	itemWorkTimeClickListener	= new ItemWorkTimeClickListener() {
 
@@ -69,7 +76,35 @@ public class WorktimeCheckInFragment extends AbstractLocationFragment{
 																			activeWorkingTime = item;
 																			deleteWorkTime();
 																		}
+
+																		@Override
+																		public boolean onItemLongClicked(WorkingTimeModel model, ChiaseTextView txtWorkingType){
+																			return showCheckinTypesDialog(model, txtWorkingType);
+																		}
 																	};
+
+	private boolean showCheckinTypesDialog(WorkingTimeModel model, ChiaseTextView displayedText){
+		dlgCheckinTypes = new ChiaseListDialog(activity, getString(R.string.dlg_checkin_types_title), checkinTypeMap, displayedText, new ChiaseListDialog.OnItemClicked() {
+
+			@Override
+			public void onClicked(String selectedKey, boolean isSelected){
+				updateCheckinType(model, selectedKey);
+			}
+		});
+		dlgCheckinTypes.show();
+		return true;
+	}
+
+	private void updateCheckinType(WorkingTimeModel model, String selectedCheckinTypeKey){
+		JSONObject jsonObject = new JSONObject();
+		try{
+			jsonObject.put("id", model.key);
+			jsonObject.put("checkinType", selectedCheckinTypeKey);
+		}catch(JSONException e){
+			e.printStackTrace();
+		}
+		requestUpdate(SwConst.API_UPDATE_CHECKIN_TYPE, jsonObject, true);
+	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -188,6 +223,8 @@ public class WorktimeCheckInFragment extends AbstractLocationFragment{
 			}
 			if(SwConst.API_CHECKIN_LIST.equals(url)){
 				List<WorkingTimeModel> lstWorkingTime = CCJsonUtil.convertToModelList(response.optString("checkins"), WorkingTimeModel.class);
+				List<CheckinTypeModel> checkinTypeModels = CCJsonUtil.convertToModelList(response.optString("types"), CheckinTypeModel.class);
+				checkinTypeMap = buildCheckinTypeMap(checkinTypeModels);
 				WorkTimeAdapter adapter = new WorkTimeAdapter(activity, lstWorkingTime, itemWorkTimeClickListener);
 				lsvWorkTime.setAdapter(adapter);
 
@@ -208,6 +245,14 @@ public class WorktimeCheckInFragment extends AbstractLocationFragment{
 				super.successLoad(response, url);
 			}
 		}
+	}
+
+	private Map<String, String> buildCheckinTypeMap(List<CheckinTypeModel> checkinTypeModels){
+		Map<String, String> result = new HashMap<>();
+		for(CheckinTypeModel checkinTypeModel : checkinTypeModels){
+			result.put(checkinTypeModel.typeKey, checkinTypeModel.typeName);
+		}
+		return result;
 	}
 
 	private void checkIn(String location, String longitude, String latitude){
@@ -233,6 +278,8 @@ public class WorktimeCheckInFragment extends AbstractLocationFragment{
 			loadCheckInList();
 		}else if(SwConst.API_NOTICE_UPDATE.equals(url)){
 			Toast.makeText(activity, getString(R.string.sw_work_time_modify_request_success), Toast.LENGTH_LONG).show();
+		}else if(SwConst.API_UPDATE_CHECKIN_TYPE.equals(url)){
+			//// TODO: 2017/06/06 show dialog here ?
 		}else{
 			super.successUpdate(response, url);
 		}
@@ -289,7 +336,7 @@ public class WorktimeCheckInFragment extends AbstractLocationFragment{
 			gotoFragment(transitFragment);
 			break;
 		case R.id.btn_id_check_in:
-			getLocation();
+			doCheckin();
 			break;
 		default:
 			break;

@@ -263,7 +263,7 @@ public class WorknoticeOfferFragment extends AbstractLocationFragment{
 			break;
 
 		case R.id.lnr_id_location:
-			getLocation();
+			doCheckin();
 			break;
 
 		case R.id.lnr_id_notice_type:
