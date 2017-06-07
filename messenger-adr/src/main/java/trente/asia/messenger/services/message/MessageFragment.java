@@ -319,7 +319,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 																					};
 
 	private WfProfileDialog								mDlgProfile;
-	private String										latestBoardId;
+//	private String										latestBoardId;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState){
@@ -499,7 +499,6 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
-		latestBoardId = activeBoard.key;
 		requestLoad(MsConst.API_MESSAGE_BOARD, jsonObject, true);
 	}
 
@@ -529,10 +528,11 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 	protected void successLoad(JSONObject response, String url){
 		try{
 			if(MsConst.API_MESSAGE_BOARD.equals(url)){
-				if(activeBoardId != null && activeBoardId.equals(latestBoardId)){
 
-					List<MessageContentModel> lstMessage = LoganSquare.parseList(response.optString("contents"), MessageContentModel.class);
-					if(!CCCollectionUtil.isEmpty(lstMessage)){
+				List<MessageContentModel> lstMessage = LoganSquare.parseList(response.optString("contents"), MessageContentModel.class);
+				if(!CCCollectionUtil.isEmpty(lstMessage)){
+					MessageContentModel firstMessage = lstMessage.get(0);
+					if(!CCStringUtil.isEmpty(activeBoardId) && activeBoardId.equals(firstMessage.boardId)){
 						if(CCStringUtil.isEmpty(autoroadCd)){
 							mMsgAdapter.addMessages(lstMessage);
 							messageView.revMessage.setLastVisibleItem(mMsgAdapter.getItemCount() - 1);
@@ -546,7 +546,6 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 							startMessageId = lstMessage.get(0).key;
 						}
 					}
-
 					autoroadCd = response.optString("autoroadCd");
 					isSuccessLoad = true;
 				}
@@ -554,12 +553,15 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 				List<MessageContentModel> lstMessage = LoganSquare.parseList(response.optString("contents"), MessageContentModel.class);
 				// lastUpdateTime = response.optString("lastUpdateTime");
 				if(!CCCollectionUtil.isEmpty(lstMessage)){
-					messageView.revMessage.isScrollToBottom();
-					mMsgAdapter.addMessages(lstMessage);
-					messageView.revMessage.scrollRecyclerToBottom();
-					String lastKey = lstMessage.get(lstMessage.size() - 1).key;
-					if(CCNumberUtil.toInteger(latestMessageId).compareTo(CCNumberUtil.toInteger(lastKey)) < 0){
-						latestMessageId = lastKey;
+					MessageContentModel firstMessage = lstMessage.get(0);
+					if(!CCStringUtil.isEmpty(activeBoardId) && activeBoardId.equals(firstMessage.boardId)){
+						messageView.revMessage.isScrollToBottom();
+						mMsgAdapter.addMessages(lstMessage);
+						messageView.revMessage.scrollRecyclerToBottom();
+						String lastKey = lstMessage.get(lstMessage.size() - 1).key;
+						if(CCNumberUtil.toInteger(latestMessageId).compareTo(CCNumberUtil.toInteger(lastKey)) < 0){
+							latestMessageId = lastKey;
+						}
 					}
 				}
 
@@ -752,15 +754,17 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 			MessageContentModel contentModel = null;
 			try{
 				contentModel = LoganSquare.parse(response.optString("detail"), MessageContentModel.class);
-				if(messageView.likeButtonType == MessageView.LikeButtonType.EDIT){
-					List<MessageContentModel> lstUpdate = new ArrayList<>();
-					lstUpdate.add(contentModel);
-					mMsgAdapter.updateMessage(lstUpdate);
-				}else{
-					appendMessage(contentModel);
-					// latestMessageId = contentModel.key;
+				if(!CCStringUtil.isEmpty(activeBoardId) && activeBoardId.equals(contentModel.boardId)) {
+					if (messageView.likeButtonType == MessageView.LikeButtonType.EDIT) {
+						List<MessageContentModel> lstUpdate = new ArrayList<>();
+						lstUpdate.add(contentModel);
+						mMsgAdapter.updateMessage(lstUpdate);
+					} else {
+						appendMessage(contentModel);
+						// latestMessageId = contentModel.key;
+					}
+					messageView.edtMessage.setText("");
 				}
-				messageView.edtMessage.setText("");
 			}catch(IOException e){
 				e.printStackTrace();
 			}

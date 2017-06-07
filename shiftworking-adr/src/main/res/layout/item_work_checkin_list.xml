@@ -54,7 +54,7 @@
             style="@style/wl_common_text"
             android:layout_width="wrap_content"/>
 
-        <TextView
+        <trente.asia.android.view.ChiaseTextView
             android:id="@+id/txt_id_working_type"
             style="@style/wl_common_text"
             android:layout_marginLeft="@dimen/margin_10dp"

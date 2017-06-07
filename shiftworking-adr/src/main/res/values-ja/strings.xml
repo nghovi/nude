@@ -120,4 +120,5 @@
     <string name="sw_work_offer_action_approve">承認</string>
     <string name="sw_work_offer_action_reject">却下</string>
     <string name="sw_work_offer_list_filter">絞り込み: %1$s</string>
+    <string name="dlg_checkin_types_title">Change work type</string>
 </resources>

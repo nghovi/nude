@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import trente.asia.android.view.ChiaseTextView;
 import trente.asia.shiftworking.R;
 import trente.asia.shiftworking.services.worktime.listener.ItemWorkTimeClickListener;
 import trente.asia.shiftworking.services.worktime.model.WorkingTimeModel;
@@ -30,14 +31,14 @@ public class WorkTimeAdapter extends BaseSwipeAdapter{
 
 	public class BoardViewHolder{
 
-		public TextView		txtWorkingType;
-		public TextView		txtWorkTime;
-		public Button		btnModify;
-		public Button		btnDelete;
-		public SwipeLayout	swipeLayout;
+		public ChiaseTextView	txtWorkingType;
+		public TextView			txtWorkTime;
+		public Button			btnModify;
+		public Button			btnDelete;
+		public SwipeLayout		swipeLayout;
 
 		public BoardViewHolder(View view){
-			txtWorkingType = (TextView)view.findViewById(R.id.txt_id_working_type);
+			txtWorkingType = (ChiaseTextView)view.findViewById(R.id.txt_id_working_type);
 			txtWorkTime = (TextView)view.findViewById(R.id.txt_id_work_time);
 			btnModify = (Button)view.findViewById(R.id.btn_id_modify);
 			btnDelete = (Button)view.findViewById(R.id.btn_id_delete);
@@ -66,33 +67,41 @@ public class WorkTimeAdapter extends BaseSwipeAdapter{
 
 	@Override
 	public void fillValues(int position, View convertView){
-        final WorkingTimeModel model = this.lstWorkingTime.get(position);
-        final BoardViewHolder holder = new BoardViewHolder(convertView);
+		final WorkingTimeModel model = this.lstWorkingTime.get(position);
+		final BoardViewHolder holder = new BoardViewHolder(convertView);
 
-        holder.txtWorkTime.setText(model.timeLog);
-        holder.txtWorkingType.setText(model.workingTypeName);
-        holder.txtWorkTime.setText(model.timeLog);
-        holder.txtWorkingType.setText(model.workingTypeName);
-        holder.btnModify.setOnClickListener(new View.OnClickListener() {
+		holder.txtWorkTime.setText(model.timeLog);
+		holder.txtWorkingType.setText(model.workingTypeName);
+		holder.txtWorkTime.setText(model.timeLog);
+		holder.txtWorkingType.setText(model.workingTypeName);
+		holder.btnModify.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v){
-                if(listener != null){
-                    holder.swipeLayout.close(true);
-                    listener.onItemModifyListener(model);
-                }
-            }
-        });
+			@Override
+			public void onClick(View v){
+				if(listener != null){
+					holder.swipeLayout.close(true);
+					listener.onItemModifyListener(model);
+				}
+			}
+		});
 
-        holder.btnDelete.setOnClickListener(new View.OnClickListener() {
+		holder.btnDelete.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v){
-                if(listener != null){
-                    listener.onItemDeleteListener(model);
-                }
-            }
-        });
+			@Override
+			public void onClick(View v){
+				if(listener != null){
+					listener.onItemDeleteListener(model);
+				}
+			}
+		});
+
+		convertView.setOnLongClickListener(new View.OnLongClickListener() {
+
+			@Override
+			public boolean onLongClick(View v){
+				return listener.onItemLongClicked(model, holder.txtWorkingType);
+			}
+		});
 	}
 
 	@Override

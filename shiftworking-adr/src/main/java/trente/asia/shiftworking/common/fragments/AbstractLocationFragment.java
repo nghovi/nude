@@ -38,7 +38,7 @@ public abstract class AbstractLocationFragment extends AbstractSwFragment implem
 		}
 	}
 
-	protected void getLocation(){
+	protected void doCheckin(){
         if(AndroidUtil.verifyLocationPermissions(activity)){
             // check location setting
             GoogleApiClient mGoogleApiClient = new GoogleApiClient.Builder(activity).addApi(LocationServices.API).addConnectionCallbacks(AbstractLocationFragment.this).addOnConnectionFailedListener(AbstractLocationFragment.this).build();
