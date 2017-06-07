@@ -369,7 +369,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 
 		Realm.init(getContext());
 		realm = Realm.getDefaultInstance();
-		loadStamps();
+//		loadStamps();
 
 		menuManager = new MessageMenuManager();
 		menuManager.setMenuLayout(activity, R.id.menuMain, onMenuManagerListener, onMenuButtonsListener);
