@@ -1,47 +1,59 @@
-<trente.asia.welfare.adr.view.WfSlideMenuLayout android:id="@+id/drawer_layout"
-                                                style="@style/cs_common_match"
-                                                xmlns:android="http://schemas.android.com/apk/res/android">
+<layout>
 
-    <!-- Slide Menu  -->
-    <LinearLayout
-        android:id="@+id/slice_menu_board"
-        style="@style/cs_common_match"
-        android:orientation="vertical"/>
 
-    <!-- Body  -->
-    <RelativeLayout
-        style="@style/cs_common_match"
-        android:background="@color/chiase_white">
+    <trente.asia.welfare.adr.view.WfSlideMenuLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/drawer_layout"
+        style="@style/cs_common_match">
 
-        <trente.asia.welfare.adr.view.LinearLayoutOnInterceptTouch
-            android:id="@+id/main_layout"
+        <!-- Slide Menu  -->
+        <LinearLayout
+            android:id="@+id/slice_menu_board"
             style="@style/cs_common_match"
-            android:orientation="vertical">
+            android:orientation="vertical" />
 
-            <include layout="@layout/view_message_header"/>
+        <!-- Body  -->
+        <RelativeLayout
+            style="@style/cs_common_match"
+            android:background="@color/chiase_white">
 
-            <android.support.v4.view.ViewPager
-                android:id="@+id/view_pager_id_board"
+            <trente.asia.welfare.adr.view.LinearLayoutOnInterceptTouch
+                android:id="@+id/main_layout"
                 style="@style/cs_common_match"
-                android:layout_weight="1"/>
-        </trente.asia.welfare.adr.view.LinearLayoutOnInterceptTouch>
+                android:orientation="vertical">
 
-        <!-- include menu layout -->
-        <View
-            android:id="@+id/viewForMenuBehind"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentBottom="true"
-            android:background="@color/wf_common_black_transparent"
-            android:visibility="gone"/>
+                <include layout="@layout/view_message_header" />
 
-        <!--action menu: camera, photo, recorder-->
-        <include
-            layout="@layout/layout_menu_attach"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_margin="@dimen/margin_8dp"/>
-    </RelativeLayout>
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/view_pager_id_board"
+                    style="@style/cs_common_match"
+                    android:layout_weight="1" />
+            </trente.asia.welfare.adr.view.LinearLayoutOnInterceptTouch>
 
-</trente.asia.welfare.adr.view.WfSlideMenuLayout>
+            <!-- include menu layout -->
+            <View
+                android:id="@+id/viewForMenuBehind"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:background="@color/wf_common_black_transparent"
+                android:visibility="gone" />
+
+            <!--action menu: camera, photo, recorder-->
+            <include
+                layout="@layout/layout_menu_attach"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="@dimen/margin_8dp" />
+
+            <include
+                android:id="@+id/layout_stamp"
+                layout="@layout/layout_menu_stamp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_alignParentBottom="true" />
+        </RelativeLayout>
+
+    </trente.asia.welfare.adr.view.WfSlideMenuLayout>
+</layout>

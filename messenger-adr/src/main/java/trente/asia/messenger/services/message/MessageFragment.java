@@ -1,14 +1,28 @@
 package trente.asia.messenger.services.message;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import android.app.Activity;
+import android.content.Intent;
+import android.content.IntentSender;
+import android.content.SharedPreferences;
+import android.databinding.DataBindingUtil;
+import android.location.Location;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bluelinelabs.logansquare.LoganSquare;
 import com.google.android.gms.common.ConnectionResult;
@@ -22,28 +36,22 @@ import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.content.IntentSender;
-import android.location.Location;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCCollectionUtil;
+import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCNumberUtil;
 import asia.chiase.core.util.CCStringUtil;
+import io.realm.Realm;
 import trente.asia.android.view.model.ChiaseListItemModel;
 import trente.asia.messenger.BuildConfig;
 import trente.asia.messenger.R;
@@ -54,6 +62,7 @@ import trente.asia.messenger.commons.defines.MsConst;
 import trente.asia.messenger.commons.dialog.MsChiaseDialog;
 import trente.asia.messenger.commons.menu.MessageMenuManager;
 import trente.asia.messenger.commons.utils.MsUtils;
+import trente.asia.messenger.databinding.FragmentMessageBinding;
 import trente.asia.messenger.fragment.AbstractMsgFragment;
 import trente.asia.messenger.services.message.listener.ItemMsgClickListener;
 import trente.asia.messenger.services.message.listener.OnActionClickListener;
@@ -63,12 +72,17 @@ import trente.asia.messenger.services.message.listener.OnRefreshBoardListListene
 import trente.asia.messenger.services.message.listener.OnScrollToTopListener;
 import trente.asia.messenger.services.message.model.BoardModel;
 import trente.asia.messenger.services.message.model.MessageContentModel;
+import trente.asia.messenger.services.message.model.SSStampCategoryModel;
+import trente.asia.messenger.services.message.model.SSStampModel;
+import trente.asia.messenger.services.message.model.WFMStampCategoryModel;
+import trente.asia.messenger.services.message.model.WFMStampModel;
 import trente.asia.messenger.services.message.view.BoardPagerAdapter;
 import trente.asia.messenger.services.message.view.MemberListView;
 import trente.asia.messenger.services.message.view.MembersAdapter;
 import trente.asia.messenger.services.message.view.MessageAdapter;
 import trente.asia.messenger.services.message.view.MessageView;
 import trente.asia.messenger.services.message.view.NoteView;
+import trente.asia.messenger.services.message.view.StampAdapter;
 import trente.asia.messenger.services.user.UserListActivity;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.EmotionConst;
@@ -119,9 +133,12 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 	private MessageView									messageView;
 	private NoteView									noteView;
 	private MemberListView								memberView;
+	private FragmentMessageBinding						binding;
+	private StampAdapter								stampAdapter;
 
 	private final int									REQUEST_CHECK_SETTINGS		= 31;
 	private OnRefreshBoardListListener					onRefreshBoardListListener;
+	private Realm										realm;
 
 	private OnChangedBoardListener						onChangedBoardListener		= new OnChangedBoardListener() {
 
@@ -312,7 +329,17 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 		if(mRootView == null){
-			mRootView = inflater.inflate(R.layout.fragment_message, container, false);
+			binding = DataBindingUtil.inflate(inflater, R.layout.fragment_message, container, false);
+			mRootView = binding.getRoot();
+
+			binding.layoutStamp.recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2, LinearLayoutManager.HORIZONTAL, false));
+			stampAdapter = new StampAdapter();
+			binding.layoutStamp.recyclerView.setAdapter(stampAdapter);
+
+			binding.layoutStamp.btnCancel.setOnClickListener(this);
+			binding.layoutStamp.categorySmile.setOnClickListener(this);
+			binding.layoutStamp.categoryFukuri.setOnClickListener(this);
+			binding.layoutStamp.categorySport.setOnClickListener(this);
 		}
 		return mRootView;
 	}
@@ -339,19 +366,15 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 		mSlideMenuLayout = (WfSlideMenuLayout)getView().findViewById(R.id.drawer_layout);
 		mSlideMenuLayout.setOutsideLayout((LinearLayoutOnInterceptTouch)getView().findViewById(R.id.main_layout));
 		mViewForMenuBehind = getView().findViewById(R.id.viewForMenuBehind);
-		FragmentManager fragmentManager = getFragmentManager();
-		FragmentTransaction transaction = fragmentManager.beginTransaction();
-		boardListFragment = new BoardListFragment();
-		boardListFragment.setOnChangedBoardListener(onChangedBoardListener);
-		if(activeBoard != null && !CCStringUtil.isEmpty(activeBoard.key)){
-			boardListFragment.setActiveBoard(activeBoard);
-		}
-		this.onRefreshBoardListListener = boardListFragment.getOnRefreshBoardListListener();
-		transaction.replace(R.id.slice_menu_board, boardListFragment).commit();
+
+		Realm.init(getContext());
+		realm = Realm.getDefaultInstance();
+		loadStamps();
 
 		menuManager = new MessageMenuManager();
 		menuManager.setMenuLayout(activity, R.id.menuMain, onMenuManagerListener, onMenuButtonsListener);
 
+		messageView.imgStamp.setOnClickListener(this);
 		mImgLeftHeader.setOnClickListener(this);
 		messageView.imgSend.setOnClickListener(this);
 		mViewForMenuBehind.setOnClickListener(this);
@@ -371,6 +394,20 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 		messageView.revMessage.setAdapter(mMsgAdapter);
 
 		initDialog();
+	}
+
+	private void loadStamps(){
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+		String lastUpdateDate = preferences.getString(MsConst.MESSAGE_STAMP_LAST_UPDATE_DATE, null);
+		JSONObject jsonObject = new JSONObject();
+//		if(lastUpdateDate != null){
+//			try{
+//				jsonObject.put("lastUpdateDate", lastUpdateDate);
+//			}catch(JSONException e){
+//				e.printStackTrace();
+//			}
+//		}
+		requestLoad(MsConst.API_MESSAGE_STAMP_CATEGORY_LIST, jsonObject, true);
 	}
 
 	private void initViewPager(){
@@ -535,6 +572,9 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 				if(!CCCollectionUtil.isEmpty(lstAction)){
 					this.updateMessage(lstAction);
 				}
+			}else if(MsConst.API_MESSAGE_STAMP_CATEGORY_LIST.equals(url)){
+				saveStamps(response);
+				loadBoards();
 			}else if(MsConst.API_MESSAGE_NOTE_DETAIL.equals(url)){
 				BoardModel boardModel = LoganSquare.parse(response.optString("board"), BoardModel.class);
 				activeBoard = boardModel;
@@ -545,6 +585,48 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 		}catch(IOException e){
 			e.printStackTrace();
 		}
+	}
+
+	private void saveStamps(JSONObject response){
+		List<SSStampCategoryModel> stampCategories = CCJsonUtil.convertToModelList(response.optString("stampCategories"),
+				SSStampCategoryModel.class);
+		String lastUpdateDate = response.optString("lastUpdateDate");
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+		preferences.edit().putString(MsConst.MESSAGE_STAMP_LAST_UPDATE_DATE, lastUpdateDate).apply();
+
+		log("categories size: " + stampCategories.size());
+		for(SSStampCategoryModel category : stampCategories){
+			realm.beginTransaction();
+			WFMStampCategoryModel dbCategory = realm.createObject(WFMStampCategoryModel.class);
+			dbCategory.setValues(category);
+			realm.commitTransaction();
+			log("stamps size: " + category.stamps.size());
+			for (SSStampModel stamp : category.stamps) {
+				realm.beginTransaction();
+				WFMStampModel dbStamp = realm.createObject(WFMStampModel.class);
+				dbStamp.setValues(stamp);
+				realm.commitTransaction();
+			}
+		}
+
+		List<WFMStampCategoryModel> stamps = realm.where(WFMStampCategoryModel.class).findAll();
+		Log.e("MessageFragment", "Stamp name: " + stamps.size());
+	}
+
+	private void log(String msg) {
+		Log.e("MessageFragment", msg);
+	}
+
+	private void loadBoards(){
+		FragmentManager fragmentManager = getFragmentManager();
+		FragmentTransaction transaction = fragmentManager.beginTransaction();
+		boardListFragment = new BoardListFragment();
+		boardListFragment.setOnChangedBoardListener(onChangedBoardListener);
+		if(activeBoard != null && !CCStringUtil.isEmpty(activeBoard.key)){
+			boardListFragment.setActiveBoard(activeBoard);
+		}
+		this.onRefreshBoardListListener = boardListFragment.getOnRefreshBoardListListener();
+		transaction.replace(R.id.slice_menu_board, boardListFragment).commit();
 	}
 
 	private void updateMessage(List<MessageContentModel> lstAction){
@@ -693,6 +775,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 		}else{
 			super.successUpdate(response, url);
 		}
+
 	}
 
 	private void appendMessage(MessageContentModel messageModel){
@@ -742,10 +825,34 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 		case R.id.btn_id_save:
 			updateNote();
 			break;
+		case R.id.btn_cancel:
+			binding.layoutStamp.getRoot().setVisibility(View.GONE);
+			break;
+		case R.id.btn_stamp:
+			binding.layoutStamp.getRoot().setVisibility(View.VISIBLE);
 
+			break;
+		case R.id.category_smile:
+			stampAdapter.setImageId(R.drawable.test_thai_airline);
+			highlightCategory(binding.layoutStamp.categorySmile);
+			break;
+		case R.id.category_fukuri:
+			stampAdapter.setImageId(R.drawable.test_vietjet_airline);
+			highlightCategory(binding.layoutStamp.categoryFukuri);
+			break;
+		case R.id.category_sport:
+			stampAdapter.setImageId(R.drawable.test_s7_airline);
+			highlightCategory(binding.layoutStamp.categorySport);
+			break;
 		default:
 			break;
 		}
+	}
+
+	private void highlightCategory(TextView category){
+		binding.layoutStamp.categorySmile.setBackground(getResources().getDrawable(category.equals(binding.layoutStamp.categorySmile) ? R.drawable.select_stamp_category_background : R.drawable.normal_stamp_category_background, null));
+		binding.layoutStamp.categoryFukuri.setBackground(getResources().getDrawable(category.equals(binding.layoutStamp.categoryFukuri) ? R.drawable.select_stamp_category_background : R.drawable.normal_stamp_category_background, null));
+		binding.layoutStamp.categorySport.setBackground(getResources().getDrawable(category.equals(binding.layoutStamp.categorySport) ? R.drawable.select_stamp_category_background : R.drawable.normal_stamp_category_background, null));
 	}
 
 	@Override
@@ -952,6 +1059,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 
 		boardListFragment = null;
 		menuManager = null;
+		realm.close();
 	}
 
 	@Override

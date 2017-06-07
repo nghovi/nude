@@ -34,6 +34,10 @@ android {
         javaMaxHeapSize "4g"
     }
 
+    dataBinding {
+        enabled = true
+    }
+
     productFlavors {
         develop {
             buildConfigField "Boolean", "DEVELOP", "true"
@@ -86,5 +90,6 @@ dependencies {
     compile 'com.google.android.gms:play-services:10.2.6'
 }
 apply plugin: 'com.google.gms.google-services'
+apply plugin: 'realm-android'
 
 

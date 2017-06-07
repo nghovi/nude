@@ -9,6 +9,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import trente.asia.messenger.R;
@@ -29,6 +30,7 @@ public class MessageView extends LinearLayout{
 	public ImageButton					imgLike;
     public LinearLayout					lnrLike;
 	public MsgMultiAutoCompleteTextView	edtMessage;
+	public ImageView	imgStamp;
 
 	public MsgRecyclerView				revMessage;
 
@@ -97,6 +99,7 @@ public class MessageView extends LinearLayout{
         lnrSend = (LinearLayout)this.findViewById(R.id.lnr_id_send);
 		imgLike = (ImageButton)this.findViewById(R.id.img_id_like);
         lnrLike = (LinearLayout) this.findViewById(R.id.lnr_id_like);
+		imgStamp = (ImageView) this.findViewById(R.id.btn_stamp);
 
 		edtMessage = (MsgMultiAutoCompleteTextView)this.findViewById(R.id.edt_id_message);
 		edtMessage.addTextChangedListener(etMessageTextWatcher);

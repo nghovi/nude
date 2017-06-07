@@ -169,7 +169,7 @@
 
                         <ImageView
                             android:layout_width="@dimen/ac_common_field_icon_dimen"
-                            android:layout_height="@dimen/ac_common_field_icon_dimen"
+                             android:layout_height="@dimen/ac_common_field_icon_dimen"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
                             android:src="@drawable/ac_icon_mail" />

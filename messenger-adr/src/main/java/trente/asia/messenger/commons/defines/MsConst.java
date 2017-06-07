@@ -7,23 +7,25 @@ package trente.asia.messenger.commons.defines;
  */
 public class MsConst{
 
-	public static final String	API_MESSAGE_LIST			= "/api/message/list";
-	public static final String	API_MESSAGE_BOARD			= "/api/message/board";
-	public static final String	API_MESSAGE_DETAIL			= "/api/message/detail";
-	public static final String	API_MESSAGE_UPDATE			= "/api/message/update";
-	public static final String	API_MESSAGE_LIKE			= "/api/message/like";
-	public static final String	API_MESSAGE_LATEST			= "/api/message/latest";
-	public static final String	API_MESSAGE_DELETE			= "/api/message/delete";
+	public static final String	API_MESSAGE_LIST				= "/api/message/list";
+	public static final String	API_MESSAGE_BOARD				= "/api/message/board";
+	public static final String	API_MESSAGE_DETAIL				= "/api/message/detail";
+	public static final String	API_MESSAGE_UPDATE				= "/api/message/update";
+	public static final String	API_MESSAGE_LIKE				= "/api/message/like";
+	public static final String	API_MESSAGE_LATEST				= "/api/message/latest";
+	public static final String	API_MESSAGE_DELETE				= "/api/message/delete";
 
-	public static final String	API_MESSAGE_NOTE_UPDATE		= "/api/message/note/update";
-	public static final String	API_MESSAGE_NOTE_COPY		= "/api/message/note/copy";
-	public static final String	API_MESSAGE_NOTE_DETAIL		= "/api/message/note/detail";
+	public static final String	API_MESSAGE_NOTE_UPDATE			= "/api/message/note/update";
+	public static final String	API_MESSAGE_NOTE_COPY			= "/api/message/note/copy";
+	public static final String	API_MESSAGE_NOTE_DETAIL			= "/api/message/note/detail";
 
-	public static final String	API_MESSAGE_COMMENT			= "/api/message/comment";
-	public static final String	API_MESSAGE_COMMENT_LATEST	= "/api/message/comment/lastest";
+	public static final String	API_MESSAGE_COMMENT				= "/api/message/comment";
+	public static final String	API_MESSAGE_COMMENT_LATEST		= "/api/message/comment/lastest";
 
-	public static final String	API_MESSAGE_CONTACT_LIST	= "/api/message/contact/list";
-	public static final String	API_MESSAGE_CONTACT_UPDATE	= "/api/message/contact/update";
+	public static final String	API_MESSAGE_CONTACT_LIST		= "/api/message/contact/list";
+	public static final String	API_MESSAGE_CONTACT_UPDATE		= "/api/message/contact/update";
+
+	public static final String	API_MESSAGE_STAMP_CATEGORY_LIST	= "/api/system/stamp/category/list";
 
 	public static final class EmitKeyWord{
 
@@ -53,4 +55,6 @@ public class MsConst{
 	public static final String	MESSAGE_ACTION_COPY		= "1";
 	public static final String	MESSAGE_ACTION_EDIT		= "2";
 	public static final String	MESSAGE_ACTION_DELETE	= "3";
+
+	public static final String MESSAGE_STAMP_LAST_UPDATE_DATE = "stamp_last_update_date";
 }
