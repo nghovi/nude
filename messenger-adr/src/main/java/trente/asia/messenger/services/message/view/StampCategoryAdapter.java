@@ -14,7 +14,7 @@ import java.util.List;
 import trente.asia.messenger.BuildConfig;
 import trente.asia.messenger.R;
 import trente.asia.messenger.databinding.ItemStampCategoryBinding;
-import trente.asia.messenger.services.message.model.SSStampCategoryModel;
+import trente.asia.messenger.services.message.model.WFMStampCategoryModel;
 
 /**
  * Created by tien on 6/8/2017.
@@ -22,7 +22,7 @@ import trente.asia.messenger.services.message.model.SSStampCategoryModel;
 
 public class StampCategoryAdapter extends RecyclerView.Adapter<ViewHolder>{
 
-	private List<SSStampCategoryModel>		stampCategories	= new ArrayList<>();
+	private List<WFMStampCategoryModel>		stampCategories	= new ArrayList<>();
 	private Context							context;
 	private OnStampCategoryAdapterListener	callback;
     private int    selectedStampCategory = 0;
@@ -40,9 +40,9 @@ public class StampCategoryAdapter extends RecyclerView.Adapter<ViewHolder>{
 
 	@Override
 	public void onBindViewHolder(ViewHolder holder, int position){
-		SSStampCategoryModel stampCategory = stampCategories.get(position);
+		WFMStampCategoryModel stampCategory = stampCategories.get(position);
 		ItemStampCategoryBinding binding = (ItemStampCategoryBinding)holder.getBinding();
-		Picasso.with(context).load(BuildConfig.HOST + stampCategory.attachment.fileUrl)
+		Picasso.with(context).load(BuildConfig.HOST + stampCategory.categoryUrl)
                 .into(binding.imageView);
         binding.imageView.setOnClickListener((View v) -> {
             callback.onStampCategoryClick(stampCategory);
@@ -60,12 +60,12 @@ public class StampCategoryAdapter extends RecyclerView.Adapter<ViewHolder>{
 		return stampCategories.size();
 	}
 
-	public void setStampCategories(List<SSStampCategoryModel> stampCategories){
+	public void setStampCategories(List<WFMStampCategoryModel> stampCategories){
 		this.stampCategories = stampCategories;
 		notifyDataSetChanged();
 	}
 
 	public interface OnStampCategoryAdapterListener{
-		void onStampCategoryClick(SSStampCategoryModel stampCategory);
+		void onStampCategoryClick(WFMStampCategoryModel stampCategory);
 	}
 }

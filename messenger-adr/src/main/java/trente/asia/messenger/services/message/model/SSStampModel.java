@@ -10,9 +10,8 @@ public class SSStampModel{
 
 	public String			stampName;
 	public String			stampKey;
-	public String			stampNote;
 	public String			keyword;
 	public AttachmentModel	attachment;
-	public int				key;
-	public int				categoryId;
+	public String			key;
+	public String			categoryId;
 }

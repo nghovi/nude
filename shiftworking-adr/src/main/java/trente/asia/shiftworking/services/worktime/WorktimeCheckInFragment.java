@@ -38,6 +38,7 @@ import trente.asia.shiftworking.services.worktime.listener.ItemWorkTimeClickList
 import trente.asia.shiftworking.services.worktime.model.CheckinTypeModel;
 import trente.asia.shiftworking.services.worktime.model.ProjectModel;
 import trente.asia.shiftworking.services.worktime.model.WorkingTimeModel;
+import trente.asia.shiftworking.services.worktime.view.CheckinTypesDialog;
 import trente.asia.shiftworking.services.worktime.view.WorkTimeAdapter;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
@@ -60,7 +61,7 @@ public class WorktimeCheckInFragment extends AbstractLocationFragment{
 	private LinearLayout				lnrProjectInfo;
 	private LinearLayout				lnrNoProject;
 	private WorkingTimeModel			activeWorkingTime;
-	private ChiaseListDialog			dlgCheckinTypes;
+	private CheckinTypesDialog			dlgCheckinTypes;
 	private Map<String, String>			checkinTypeMap;
 
 	private ItemWorkTimeClickListener	itemWorkTimeClickListener	= new ItemWorkTimeClickListener() {
@@ -79,18 +80,21 @@ public class WorktimeCheckInFragment extends AbstractLocationFragment{
 
 																		@Override
 																		public boolean onItemLongClicked(WorkingTimeModel model, ChiaseTextView txtWorkingType){
-																			return showCheckinTypesDialog(model, txtWorkingType);
+																			if(SwConst.SW_WORK_TIME_TYPE_UNDEFINED.equals(model.workingType)){
+																				return showCheckinTypesDialog(model, txtWorkingType);
+																			}
+																			return true;
 																		}
 																	};
 
 	private boolean showCheckinTypesDialog(WorkingTimeModel model, ChiaseTextView displayedText){
-		dlgCheckinTypes = new ChiaseListDialog(activity, getString(R.string.dlg_checkin_types_title), checkinTypeMap, displayedText, new ChiaseListDialog.OnItemClicked() {
+		dlgCheckinTypes = new CheckinTypesDialog(activity, getString(R.string.dlg_checkin_types_title), checkinTypeMap, displayedText, new ChiaseListDialog.OnItemClicked() {
 
 			@Override
 			public void onClicked(String selectedKey, boolean isSelected){
 				updateCheckinType(model, selectedKey);
 			}
-		});
+		}, model);
 		dlgCheckinTypes.show();
 		return true;
 	}

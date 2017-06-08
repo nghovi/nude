@@ -52,9 +52,9 @@ public class MsConst{
 		public static final String	MEMBER	= "3";
 	}
 
-	public static final String	MESSAGE_ACTION_COPY		= "1";
-	public static final String	MESSAGE_ACTION_EDIT		= "2";
-	public static final String	MESSAGE_ACTION_DELETE	= "3";
+	public static final String	MESSAGE_ACTION_COPY				= "1";
+	public static final String	MESSAGE_ACTION_EDIT				= "2";
+	public static final String	MESSAGE_ACTION_DELETE			= "3";
 
-	public static final String MESSAGE_STAMP_LAST_UPDATE_DATE = "stamp_last_update_date";
+	public static final String	MESSAGE_STAMP_LAST_UPDATE_DATE	= "stamp_last_update_date";
 }

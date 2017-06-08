@@ -120,4 +120,5 @@
     <string name="sw_work_offer_action_reject">Reject</string>
     <string name="sw_work_offer_list_filter">Filter: %1$s</string>
     <string name="dlg_checkin_types_title">Change work type</string>
+    <string name="txt_dialog_checkin_types_guide">Choose check in type</string>
 </resources>

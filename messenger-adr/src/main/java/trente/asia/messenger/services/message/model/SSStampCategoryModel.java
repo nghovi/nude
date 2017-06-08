@@ -12,8 +12,8 @@ public class SSStampCategoryModel{
 
 	public String				categoryName;
 	public String				categoryKey;
-	public String				categoryNote;
 	public List<SSStampModel>	stamps;
-	public int					key;
+	public String				key;
 	public AttachmentModel		attachment;
+
 }

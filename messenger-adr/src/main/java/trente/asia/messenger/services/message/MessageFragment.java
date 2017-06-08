@@ -51,7 +51,6 @@ import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCNumberUtil;
 import asia.chiase.core.util.CCStringUtil;
-import io.realm.Realm;
 import trente.asia.android.view.model.ChiaseListItemModel;
 import trente.asia.messenger.BuildConfig;
 import trente.asia.messenger.R;
@@ -74,6 +73,8 @@ import trente.asia.messenger.services.message.model.BoardModel;
 import trente.asia.messenger.services.message.model.MessageContentModel;
 import trente.asia.messenger.services.message.model.SSStampCategoryModel;
 import trente.asia.messenger.services.message.model.SSStampModel;
+import trente.asia.messenger.services.message.model.WFMStampCategoryModel;
+import trente.asia.messenger.services.message.model.WFMStampModel;
 import trente.asia.messenger.services.message.view.BoardPagerAdapter;
 import trente.asia.messenger.services.message.view.MemberListView;
 import trente.asia.messenger.services.message.view.MembersAdapter;
@@ -82,7 +83,7 @@ import trente.asia.messenger.services.message.view.MessageView;
 import trente.asia.messenger.services.message.view.NoteView;
 import trente.asia.messenger.services.message.view.StampAdapter;
 import trente.asia.messenger.services.message.view.StampCategoryAdapter;
-import trente.asia.messenger.services.user.UserListActivity;
+import trente.asia.messenger.services.user.UserListFragment;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.dialog.WfProfileDialog;
@@ -99,7 +100,9 @@ import trente.asia.welfare.adr.view.WfSlideMenuLayout;
  *
  * @author TrungND
  */
-public class MessageFragment extends AbstractMsgFragment implements View.OnClickListener,ItemMsgClickListener,GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener,StampCategoryAdapter.OnStampCategoryAdapterListener,StampAdapter.OnStampAdapterListener{
+
+public class MessageFragment extends AbstractMsgFragment implements View.OnClickListener,ItemMsgClickListener,GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener,StampCategoryAdapter.OnStampCategoryAdapterListener
+		,StampAdapter.OnStampAdapterListener, UserListFragment.OnAddUserSuccessListener{
 
 	private ImageView									mImgLeftHeader;
 	private WfSlideMenuLayout							mSlideMenuLayout;
@@ -117,7 +120,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 	private BoardListFragment							boardListFragment;
 	private MessageMenuManager							menuManager;
 	private final int									TIME_RELOAD					= 10000;																																																				// 10
-																																																																											// seconds
+	// seconds
 	private Timer										mTimer;
 	private boolean										isFirstScroll2Top			= true;
 	private String										latestMessageId				= "0";
@@ -134,12 +137,10 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 	private FragmentMessageBinding						binding;
 	private StampAdapter								stampAdapter;
 	private StampCategoryAdapter						stampCategoryAdapter;
-	private SSStampCategoryModel						selectedStampCategory;
 
 	private final int									REQUEST_CHECK_SETTINGS		= 31;
 	private OnRefreshBoardListListener					onRefreshBoardListListener;
-	private Realm										realm;
-	private List<SSStampCategoryModel>					stampCategories;
+
 
 	private OnChangedBoardListener						onChangedBoardListener		= new OnChangedBoardListener() {
 
@@ -320,6 +321,8 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 																					};
 
 	private WfProfileDialog								mDlgProfile;
+
+	private long										pivotTime					= 0;
 	// private String latestBoardId;
 
 	@Override
@@ -368,9 +371,6 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 		mSlideMenuLayout = (WfSlideMenuLayout)getView().findViewById(R.id.drawer_layout);
 		mSlideMenuLayout.setOutsideLayout((LinearLayoutOnInterceptTouch)getView().findViewById(R.id.main_layout));
 		mViewForMenuBehind = getView().findViewById(R.id.viewForMenuBehind);
-
-		// Realm.init(getContext());
-		// realm = Realm.getDefaultInstance();
 		loadStamps();
 
 		menuManager = new MessageMenuManager();
@@ -576,14 +576,14 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 				if(!CCCollectionUtil.isEmpty(lstAction)){
 					this.updateMessage(lstAction);
 				}
-			}else if(MsConst.API_MESSAGE_STAMP_CATEGORY_LIST.equals(url)){
-				saveStamps(response);
-				loadBoards();
 			}else if(MsConst.API_MESSAGE_NOTE_DETAIL.equals(url)){
 				BoardModel boardModel = LoganSquare.parse(response.optString("board"), BoardModel.class);
 				activeBoard = boardModel;
 				updateNoteData();
-			}else{
+			} else if (MsConst.API_MESSAGE_STAMP_CATEGORY_LIST.equals(url)) {
+				saveStamps(response);
+				loadBoards();
+			} else{
 				super.successLoad(response, url);
 			}
 		}catch(IOException e){
@@ -592,33 +592,19 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 	}
 
 	private void saveStamps(JSONObject response){
-		stampCategories = CCJsonUtil.convertToModelList(response.optString("stampCategories"), SSStampCategoryModel.class);
-		stampCategoryAdapter.setStampCategories(stampCategories);
-		stampAdapter.setStamps(stampCategories.get(0).stamps);
-		mMsgAdapter.setStampCategories(stampCategories);
-		selectedStampCategory = stampCategories.get(0);
-		// String lastUpdateDate = response.optString("lastUpdateDate");
-		// SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-		// preferences.edit().putString(MsConst.MESSAGE_STAMP_LAST_UPDATE_DATE, lastUpdateDate).apply();
-		//
-		// log("categories size: " + stampCategories.size());
-		// for(SSStampCategoryModel category : stampCategories){
-		// log("stamps size: " + category.stamps.size());
-		// realm.beginTransaction();
-		// WFMStampCategoryModel dbCategory = realm.createObject(WFMStampCategoryModel.class);
-		// dbCategory.setValues(category);
-		// realm.commitTransaction();
-		//
-		// for (SSStampModel stamp : category.stamps) {
-		// realm.beginTransaction();
-		// WFMStampModel dbStamp = realm.createObject(WFMStampModel.class);
-		// dbStamp.setValues(stamp);
-		// realm.commitTransaction();
-		// }
-		// }
-		//
-		// List<WFMStampCategoryModel> stamps = realm.where(WFMStampCategoryModel.class).findAll();
-		// Log.e("MessageFragment", "Stamp name: " + stamps.size());
+		List<SSStampCategoryModel> stampCategories = CCJsonUtil.convertToModelList(response.optString("stampCategories"),
+				SSStampCategoryModel.class);
+		for (SSStampCategoryModel stampCategory : stampCategories) {
+			new WFMStampCategoryModel(stampCategory).save();
+			for (SSStampModel stamp : stampCategory.stamps) {
+				new WFMStampModel(stamp).save();
+			}
+		}
+
+		List<WFMStampCategoryModel> wfmStampCategories = WFMStampCategoryModel.getAll();
+		stampCategoryAdapter.setStampCategories(wfmStampCategories);
+		List<WFMStampModel> wfmStamps = WFMStampModel.getAll(wfmStampCategories.get(0).categoryId);
+		stampAdapter.setStamps(wfmStamps);
 	}
 
 	private void log(String msg){
@@ -832,8 +818,9 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 			break;
 
 		case R.id.lnr_header_right_icon:
-			Intent intent = new Intent(activity, UserListActivity.class);
-			startActivityForResult(intent, MsConst.REQUEST_CODE_ADD_CONTACT);
+			UserListFragment fragment = new UserListFragment();
+			fragment.setOnAddUserSuccessListener(this);
+			gotoFragment(fragment);
 			break;
 
 		case R.id.btn_id_save:
@@ -979,7 +966,6 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 			}catch(IOException e){
 				e.printStackTrace();
 			}
-
 		default:
 			break;
 		}
@@ -1054,7 +1040,6 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 
 		boardListFragment = null;
 		menuManager = null;
-		realm.close();
 	}
 
 	@Override
@@ -1083,15 +1068,21 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 	}
 
 	@Override
-	public void onStampCategoryClick(SSStampCategoryModel stampCategory){
-		selectedStampCategory = stampCategory;
-		stampAdapter.setStamps(stampCategory.stamps);
+	public void onStampCategoryClick(WFMStampCategoryModel stampCategory){
+		List<WFMStampModel> stamps = WFMStampModel.getAll(stampCategory.categoryId);
+		stampAdapter.setStamps(stamps);
 	}
 
 	@Override
-	public void onStampClick(SSStampModel stamp) {
+	public void onStampClick(WFMStampModel stamp) {
+		WFMStampCategoryModel stampCategory = WFMStampCategoryModel.get(stamp.categoryId);
 		sendMessage(WelfareConst.ITEM_TEXT_TYPE_ICON,
-				selectedStampCategory.categoryKey + "_" + stamp.stampKey, null, null);
+				stampCategory.categoryKey + "_" + stamp.stampKey, null, null);
 		binding.layoutStamp.getRoot().setVisibility(View.GONE);
+	}
+
+	@Override
+	public void onSuccess(BoardModel boardModel) {
+		if(boardListFragment != null) boardListFragment.onAddedContactListener(boardModel);
 	}
 }
