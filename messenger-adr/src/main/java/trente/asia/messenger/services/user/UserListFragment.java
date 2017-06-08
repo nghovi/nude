@@ -9,7 +9,6 @@ import org.json.JSONObject;
 
 import com.bluelinelabs.logansquare.LoganSquare;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -25,6 +24,8 @@ import trente.asia.messenger.BuildConfig;
 import trente.asia.messenger.R;
 import trente.asia.messenger.commons.defines.MsConst;
 import trente.asia.messenger.fragment.AbstractMsgFragment;
+import trente.asia.messenger.services.message.BoardListFragment;
+import trente.asia.messenger.services.message.model.BoardModel;
 import trente.asia.messenger.services.user.listener.OnAddUserListener;
 import trente.asia.messenger.services.user.view.UserListAdapter;
 import trente.asia.welfare.adr.dialog.WfProfileDialog;
@@ -35,133 +36,136 @@ import trente.asia.welfare.adr.models.UserModel;
  *
  * @author TrungND
  */
-public class UserListFragment extends AbstractMsgFragment implements OnAddUserListener{
+public class UserListFragment extends AbstractMsgFragment implements OnAddUserListener {
 
-	private ListView		mLsvUser;
-	private EditText		mEdtSearch;
-	private UserListAdapter	mAdapter;
-	private WfProfileDialog	mDlgProfile;
+    private ListView mLsvUser;
+    private EditText mEdtSearch;
+    private UserListAdapter mAdapter;
+    private WfProfileDialog mDlgProfile;
+    private BoardListFragment boardFragment;
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-		if(mRootView == null){
-			mRootView = inflater.inflate(R.layout.fragment_user_list, container, false);
-		}
-		return mRootView;
-	}
+    public void setOnAddUserSuccessListener(OnAddUserSuccessListener onAddUserSuccessListener) {
+        this.onAddUserSuccessListener = onAddUserSuccessListener;
+    }
 
-	@Override
-	protected void initView(){
-		super.initView();
-		initHeader(R.drawable.wf_back_white, getString(R.string.msg_contract_list), null);
+    private OnAddUserSuccessListener onAddUserSuccessListener;
 
-		mLsvUser = (ListView)getView().findViewById(R.id.lsv_id_user);
-		mEdtSearch = (EditText)getView().findViewById(R.id.edt_id_search);
+    public interface OnAddUserSuccessListener {
+        public void onSuccess(BoardModel boardModel);
+    }
 
-		mEdtSearch.addTextChangedListener(new TextWatcher() {
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        if (mRootView == null) {
+            mRootView = inflater.inflate(R.layout.fragment_user_list, container, false);
+        }
+        return mRootView;
+    }
 
-			@Override
-			public void onTextChanged(CharSequence s, int start, int before, int count){
-				// When user changed the Text
-				mAdapter.getFilter().filter(s);
-			}
+    @Override
+    protected void initView() {
+        super.initView();
+        initHeader(R.drawable.wf_back_white, getString(R.string.msg_contract_list), null);
 
-			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count, int after){
+        mLsvUser = (ListView) getView().findViewById(R.id.lsv_id_user);
+        mEdtSearch = (EditText) getView().findViewById(R.id.edt_id_search);
 
-			}
+        mEdtSearch.addTextChangedListener(new TextWatcher() {
 
-			@Override
-			public void afterTextChanged(Editable s){
-			}
-		});
-		mDlgProfile = new WfProfileDialog(activity);
-		mDlgProfile.setDialogProfileDetail(50, 50);
-	}
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // When user changed the Text
+                mAdapter.getFilter().filter(s);
+            }
 
-	@Override
-	protected void initData(){
-		loadUserList();
-	}
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-	private void loadUserList(){
-		JSONObject jsonObject = new JSONObject();
-		requestLoad(MsConst.API_MESSAGE_CONTACT_LIST, jsonObject, true);
-	}
+            }
 
-	@Override
-	protected void successLoad(JSONObject response, String url){
-		if(MsConst.API_MESSAGE_CONTACT_LIST.equals(url)){
-			List<UserModel> lstUser = null;
-			try{
-				lstUser = LoganSquare.parseList(response.optString("userList"), UserModel.class);
-				OnAvatarClickListener listener = new OnAvatarClickListener() {
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+        mDlgProfile = new WfProfileDialog(activity);
+        mDlgProfile.setDialogProfileDetail(50, 50);
+    }
 
-					@Override
-					public void OnAvatarClick(String userName, String avatarPath){
-						mDlgProfile.show(BuildConfig.HOST, userName, avatarPath);
-					}
-				};
-				if(!CCCollectionUtil.isEmpty(lstUser)){
-					mAdapter = new UserListAdapter(activity, lstUser, UserListFragment.this, listener);
-					mLsvUser.setAdapter(mAdapter);
-				}else{
-					mAdapter = new UserListAdapter(activity, new ArrayList<UserModel>(), UserListFragment.this, listener);
-					mLsvUser.setAdapter(mAdapter);
-				}
-			}catch(IOException e){
-				e.printStackTrace();
-			}
-		}else{
-			super.successLoad(response, url);
-		}
-	}
+    @Override
+    protected void initData() {
+        loadUserList();
+    }
 
-	public void onAddUsertListener(UserModel userModel){
-		addContact(userModel);
-	}
+    private void loadUserList() {
+        JSONObject jsonObject = new JSONObject();
+        requestLoad(MsConst.API_MESSAGE_CONTACT_LIST, jsonObject, true);
+    }
 
-	private void addContact(UserModel userModel){
-		JSONObject jsonObject = new JSONObject();
-		try{
-			jsonObject.put("targetUserId", userModel.key);
-		}catch(JSONException e){
-			e.printStackTrace();
-		}
-		requestUpdate(MsConst.API_MESSAGE_CONTACT_UPDATE, jsonObject, true);
-	}
+    @Override
+    protected void successLoad(JSONObject response, String url) {
+        if (MsConst.API_MESSAGE_CONTACT_LIST.equals(url)) {
+            List<UserModel> lstUser = null;
+            try {
+                lstUser = LoganSquare.parseList(response.optString("userList"), UserModel.class);
+                OnAvatarClickListener listener = new OnAvatarClickListener() {
 
-	@Override
-	protected void successUpdate(JSONObject response, String url){
-		if(MsConst.API_MESSAGE_CONTACT_UPDATE.equals(url)){
+                    @Override
+                    public void OnAvatarClick(String userName, String avatarPath) {
+                        mDlgProfile.show(BuildConfig.HOST, userName, avatarPath);
+                    }
+                };
+                if (!CCCollectionUtil.isEmpty(lstUser)) {
+                    mAdapter = new UserListAdapter(activity, lstUser, UserListFragment.this, listener);
+                    mLsvUser.setAdapter(mAdapter);
+                } else {
+                    mAdapter = new UserListAdapter(activity, new ArrayList<UserModel>(), UserListFragment.this, listener);
+                    mLsvUser.setAdapter(mAdapter);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            super.successLoad(response, url);
+        }
+    }
 
-			Intent intent = activity.getIntent();
-			intent.putExtra("detail", response.optString("detail"));
-			activity.setResult(Activity.RESULT_OK, intent);
-			activity.finish();
+    public void onAddUsertListener(UserModel userModel) {
+        addContact(userModel);
+    }
 
-			// if(addedContactListener != null){
-			// BoardModel boardModel = CCJsonUtil.convertToModel(response.optString("detail"), BoardModel.class);
-			// addedContactListener.onAddedContactListener(boardModel);
-			// }
-			// super.onBackListener();
-		}else{
-			super.successUpdate(response, url);
-		}
-	}
+    private void addContact(UserModel userModel) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("targetUserId", userModel.key);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        requestUpdate(MsConst.API_MESSAGE_CONTACT_UPDATE, jsonObject, true);
+    }
 
-	@Override
-	protected void onClickBackBtn(){
-		activity.setResult(Activity.RESULT_CANCELED);
-		activity.finish();
-	}
+    @Override
+    protected void successUpdate(JSONObject response, String url) {
+        if (MsConst.API_MESSAGE_CONTACT_UPDATE.equals(url)) {
+            BoardModel boardModel = null;
+            try {
+                boardModel = LoganSquare.parse(response.optString("detail"), BoardModel.class);
+                onAddUserSuccessListener.onSuccess(boardModel);
+                onClickBackBtn();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            super.successUpdate(response, url);
+        }
+    }
 
-	@Override
-	public void onDestroy(){
-		super.onDestroy();
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
 
-		mLsvUser = null;
-		mEdtSearch = null;
-		mAdapter = null;
-	}
+        mLsvUser = null;
+        mEdtSearch = null;
+        mAdapter = null;
+    }
+
 }

@@ -61,7 +61,7 @@ public class WorktimeCheckInFragment extends AbstractLocationFragment{
 	private LinearLayout				lnrProjectInfo;
 	private LinearLayout				lnrNoProject;
 	private WorkingTimeModel			activeWorkingTime;
-	private CheckinTypesDialog dlgCheckinTypes;
+	private CheckinTypesDialog			dlgCheckinTypes;
 	private Map<String, String>			checkinTypeMap;
 
 	private ItemWorkTimeClickListener	itemWorkTimeClickListener	= new ItemWorkTimeClickListener() {
@@ -80,7 +80,10 @@ public class WorktimeCheckInFragment extends AbstractLocationFragment{
 
 																		@Override
 																		public boolean onItemLongClicked(WorkingTimeModel model, ChiaseTextView txtWorkingType){
-																			return showCheckinTypesDialog(model, txtWorkingType);
+																			if(SwConst.SW_WORK_TIME_TYPE_UNDEFINED.equals(model.workingType)){
+																				return showCheckinTypesDialog(model, txtWorkingType);
+																			}
+																			return true;
 																		}
 																	};
 

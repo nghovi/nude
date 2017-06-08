@@ -1,5 +1,27 @@
 package trente.asia.messenger.services.message;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.bluelinelabs.logansquare.LoganSquare;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResult;
+import com.google.android.gms.location.LocationSettingsStatusCodes;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.IntentSender;
@@ -23,28 +45,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.bluelinelabs.logansquare.LoganSquare;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.PendingResult;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Status;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.LocationSettingsRequest;
-import com.google.android.gms.location.LocationSettingsResult;
-import com.google.android.gms.location.LocationSettingsStatusCodes;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCCollectionUtil;
@@ -83,7 +83,7 @@ import trente.asia.messenger.services.message.view.MessageAdapter;
 import trente.asia.messenger.services.message.view.MessageView;
 import trente.asia.messenger.services.message.view.NoteView;
 import trente.asia.messenger.services.message.view.StampAdapter;
-import trente.asia.messenger.services.user.UserListActivity;
+import trente.asia.messenger.services.user.UserListFragment;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.EmotionConst;
 import trente.asia.welfare.adr.define.WelfareConst;
@@ -101,7 +101,7 @@ import trente.asia.welfare.adr.view.WfSlideMenuLayout;
  *
  * @author TrungND
  */
-public class MessageFragment extends AbstractMsgFragment implements View.OnClickListener,ItemMsgClickListener,GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener{
+public class MessageFragment extends AbstractMsgFragment implements View.OnClickListener,ItemMsgClickListener,GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener,UserListFragment.OnAddUserSuccessListener{
 
 	private ImageView									mImgLeftHeader;
 	private WfSlideMenuLayout							mSlideMenuLayout;
@@ -119,7 +119,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 	private BoardListFragment							boardListFragment;
 	private MessageMenuManager							menuManager;
 	private final int									TIME_RELOAD					= 10000;																																																				// 10
-																																																																											// seconds
+	// seconds
 	private Timer										mTimer;
 	private boolean										isFirstScroll2Top			= true;
 	private String										latestMessageId				= "0";
@@ -319,7 +319,8 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 																					};
 
 	private WfProfileDialog								mDlgProfile;
-//	private String										latestBoardId;
+	private long										pivotTime					= 0;
+	// private String latestBoardId;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState){
@@ -370,7 +371,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 		Realm.init(getContext());
 		realm = Realm.getDefaultInstance();
 		loadBoards();
-//		loadStamps();
+		// loadStamps();
 
 		menuManager = new MessageMenuManager();
 		menuManager.setMenuLayout(activity, R.id.menuMain, onMenuManagerListener, onMenuButtonsListener);
@@ -401,13 +402,13 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
 		String lastUpdateDate = preferences.getString(MsConst.MESSAGE_STAMP_LAST_UPDATE_DATE, null);
 		JSONObject jsonObject = new JSONObject();
-//		if(lastUpdateDate != null){
-//			try{
-//				jsonObject.put("lastUpdateDate", lastUpdateDate);
-//			}catch(JSONException e){
-//				e.printStackTrace();
-//			}
-//		}
+		// if(lastUpdateDate != null){
+		// try{
+		// jsonObject.put("lastUpdateDate", lastUpdateDate);
+		// }catch(JSONException e){
+		// e.printStackTrace();
+		// }
+		// }
 		requestLoad(MsConst.API_MESSAGE_STAMP_CATEGORY_LIST, jsonObject, true);
 	}
 
@@ -591,8 +592,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 	}
 
 	private void saveStamps(JSONObject response){
-		List<SSStampCategoryModel> stampCategories = CCJsonUtil.convertToModelList(response.optString("stampCategories"),
-				SSStampCategoryModel.class);
+		List<SSStampCategoryModel> stampCategories = CCJsonUtil.convertToModelList(response.optString("stampCategories"), SSStampCategoryModel.class);
 		String lastUpdateDate = response.optString("lastUpdateDate");
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
 		preferences.edit().putString(MsConst.MESSAGE_STAMP_LAST_UPDATE_DATE, lastUpdateDate).apply();
@@ -604,7 +604,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 			dbCategory.setValues(category);
 			realm.commitTransaction();
 			log("stamps size: " + category.stamps.size());
-			for (SSStampModel stamp : category.stamps) {
+			for(SSStampModel stamp : category.stamps){
 				realm.beginTransaction();
 				WFMStampModel dbStamp = realm.createObject(WFMStampModel.class);
 				dbStamp.setValues(stamp);
@@ -616,7 +616,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 		Log.e("MessageFragment", "Stamp name: " + stamps.size());
 	}
 
-	private void log(String msg) {
+	private void log(String msg){
 		Log.e("MessageFragment", msg);
 	}
 
@@ -755,12 +755,12 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 			MessageContentModel contentModel = null;
 			try{
 				contentModel = LoganSquare.parse(response.optString("detail"), MessageContentModel.class);
-				if(!CCStringUtil.isEmpty(activeBoardId) && activeBoardId.equals(contentModel.boardId)) {
-					if (messageView.likeButtonType == MessageView.LikeButtonType.EDIT) {
+				if(!CCStringUtil.isEmpty(activeBoardId) && activeBoardId.equals(contentModel.boardId)){
+					if(messageView.likeButtonType == MessageView.LikeButtonType.EDIT){
 						List<MessageContentModel> lstUpdate = new ArrayList<>();
 						lstUpdate.add(contentModel);
 						mMsgAdapter.updateMessage(lstUpdate);
-					} else {
+					}else{
 						appendMessage(contentModel);
 						// latestMessageId = contentModel.key;
 					}
@@ -823,8 +823,9 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 			break;
 
 		case R.id.lnr_header_right_icon:
-			Intent intent = new Intent(activity, UserListActivity.class);
-			startActivityForResult(intent, MsConst.REQUEST_CODE_ADD_CONTACT);
+			UserListFragment fragment = new UserListFragment();
+			fragment.setOnAddUserSuccessListener(this);
+			gotoFragment(fragment);
 			break;
 
 		case R.id.btn_id_save:
@@ -989,7 +990,6 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 			}catch(IOException e){
 				e.printStackTrace();
 			}
-
 		default:
 			break;
 		}
@@ -1090,5 +1090,10 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 	@Override
 	public void onConnectionFailed(@NonNull ConnectionResult connectionResult){
 
+	}
+
+	@Override
+	public void onSuccess(BoardModel boardModel){
+		if(boardListFragment != null) boardListFragment.onAddedContactListener(boardModel);
 	}
 }
