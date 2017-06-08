@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'realm-android'
 android {
     compileSdkVersion 24
     buildToolsVersion '25.0.0'
@@ -17,21 +17,15 @@ android {
         versionCode 5
         versionName "1.4"
         multiDexEnabled true
+
         jackOptions {
             enabled true
-            additionalParameters('jack.incremental': 'true')
         }
     }
 
     compileOptions {
-        incremental true
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
-    }
-
-    dexOptions {
-        incremental true
-        javaMaxHeapSize "4g"
     }
 
     dataBinding {
@@ -41,7 +35,7 @@ android {
     productFlavors {
         develop {
             buildConfigField "Boolean", "DEVELOP", "true"
-            buildConfigField "String", "HOST", "\"http://dev.trente.asia:9000\""
+            buildConfigField "String", "HOST", "\"http://192.168.1.124:9000\""
         }
         production {
             buildConfigField "Boolean", "DEVELOP", "false"
@@ -90,6 +84,6 @@ dependencies {
     compile 'com.google.android.gms:play-services:10.2.6'
 }
 apply plugin: 'com.google.gms.google-services'
-apply plugin: 'realm-android'
+
 
 

@@ -21,7 +21,7 @@ public class WFMStampModel extends RealmObject{
 		this.stampName = stamp.stampName;
 		this.stampNote = stamp.stampNote;
 		this.keyword = stamp.keyword;
-		this.stampUrl = stamp.attachmentModel.fileUrl;
+		this.stampUrl = stamp.attachment.fileUrl;
 		this.key = stamp.key;
 		this.categoryId = stamp.categoryId;
 	}

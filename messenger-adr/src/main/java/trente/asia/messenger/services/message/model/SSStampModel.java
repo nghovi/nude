@@ -12,7 +12,7 @@ public class SSStampModel{
 	public String			stampKey;
 	public String			stampNote;
 	public String			keyword;
-	public AttachmentModel	attachmentModel;
+	public AttachmentModel	attachment;
 	public int				key;
 	public int				categoryId;
 }

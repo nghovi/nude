@@ -1,12 +1,9 @@
 package trente.asia.messenger.services.message.view;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +11,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCCollectionUtil;
@@ -25,6 +28,8 @@ import trente.asia.messenger.BuildConfig;
 import trente.asia.messenger.R;
 import trente.asia.messenger.services.message.listener.ItemMsgClickListener;
 import trente.asia.messenger.services.message.model.MessageContentModel;
+import trente.asia.messenger.services.message.model.SSStampCategoryModel;
+import trente.asia.messenger.services.message.model.SSStampModel;
 import trente.asia.welfare.adr.activity.WelfareFragment;
 import trente.asia.welfare.adr.define.EmotionConst;
 import trente.asia.welfare.adr.define.WelfareConst;
@@ -45,6 +50,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
 	private List<String>								lstDate	= new ArrayList<>();
 	private List<String>								lstKey	= new ArrayList<>();
+	private List<SSStampCategoryModel> stampCategories;
 
 	public class MessageViewHolder extends RecyclerView.ViewHolder{
 
@@ -186,8 +192,21 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 			}else if(WelfareConst.ITEM_TEXT_TYPE_ICON.equals(contentModel.messageType)){
 				if(EmotionConst.EMO_LIKE.equals(contentModel.messageContent)){
 
-				}else if(EmotionConst.EMO_SMILE.equals(contentModel.messageContent)){
-					viewHolder.imgIcon.setImageResource(R.drawable.wf_mile);
+				}else {
+					Log.e("MessageAdapter", contentModel.messageContent);
+					String[] keys = contentModel.messageContent.split("_");
+					for (SSStampCategoryModel stampCategory : stampCategories) {
+						if (stampCategory.categoryKey.equals(keys[0])) {
+							for (SSStampModel stamp : stampCategory.stamps) {
+								if (stamp.stampKey.equals(keys[1])) {
+									Picasso.with(mContext).load(BuildConfig.HOST + stamp.attachment.fileUrl)
+											.into(viewHolder.imgIcon);
+									break;
+								}
+							}
+							break;
+						}
+					}
 				}
 			}else{
 				viewHolder.txtContent.setText(contentModel.messageContent);
@@ -319,6 +338,10 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 			}
 		}
 		return lstAppend;
+	}
+	
+	public void setStampCategories(List<SSStampCategoryModel> stampCategories) {
+		this.stampCategories = stampCategories;
 	}
 
 	private List<MessageContentModel> appendMessageWithDateLabel(MessageContentModel messageModel){
