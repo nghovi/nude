@@ -10,6 +10,8 @@ import java.util.TimerTask;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.activeandroid.ActiveAndroid;
+import com.activeandroid.query.Select;
 import com.bluelinelabs.logansquare.LoganSquare;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -51,7 +53,6 @@ import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCNumberUtil;
 import asia.chiase.core.util.CCStringUtil;
-import io.realm.Realm;
 import trente.asia.android.view.model.ChiaseListItemModel;
 import trente.asia.messenger.BuildConfig;
 import trente.asia.messenger.R;
@@ -138,7 +139,6 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 
 	private final int									REQUEST_CHECK_SETTINGS		= 31;
 	private OnRefreshBoardListListener					onRefreshBoardListListener;
-	private Realm										realm;
 
 	private OnChangedBoardListener						onChangedBoardListener		= new OnChangedBoardListener() {
 
@@ -368,10 +368,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 		mSlideMenuLayout.setOutsideLayout((LinearLayoutOnInterceptTouch)getView().findViewById(R.id.main_layout));
 		mViewForMenuBehind = getView().findViewById(R.id.viewForMenuBehind);
 
-		Realm.init(getContext());
-		realm = Realm.getDefaultInstance();
 		loadBoards();
-		// loadStamps();
 
 		menuManager = new MessageMenuManager();
 		menuManager.setMenuLayout(activity, R.id.menuMain, onMenuManagerListener, onMenuButtonsListener);
@@ -396,20 +393,6 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 		messageView.revMessage.setAdapter(mMsgAdapter);
 
 		initDialog();
-	}
-
-	private void loadStamps(){
-		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-		String lastUpdateDate = preferences.getString(MsConst.MESSAGE_STAMP_LAST_UPDATE_DATE, null);
-		JSONObject jsonObject = new JSONObject();
-		// if(lastUpdateDate != null){
-		// try{
-		// jsonObject.put("lastUpdateDate", lastUpdateDate);
-		// }catch(JSONException e){
-		// e.printStackTrace();
-		// }
-		// }
-		requestLoad(MsConst.API_MESSAGE_STAMP_CATEGORY_LIST, jsonObject, true);
 	}
 
 	private void initViewPager(){
@@ -576,9 +559,6 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 				if(!CCCollectionUtil.isEmpty(lstAction)){
 					this.updateMessage(lstAction);
 				}
-			}else if(MsConst.API_MESSAGE_STAMP_CATEGORY_LIST.equals(url)){
-				saveStamps(response);
-				loadBoards();
 			}else if(MsConst.API_MESSAGE_NOTE_DETAIL.equals(url)){
 				BoardModel boardModel = LoganSquare.parse(response.optString("board"), BoardModel.class);
 				activeBoard = boardModel;
@@ -589,31 +569,6 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 		}catch(IOException e){
 			e.printStackTrace();
 		}
-	}
-
-	private void saveStamps(JSONObject response){
-		List<SSStampCategoryModel> stampCategories = CCJsonUtil.convertToModelList(response.optString("stampCategories"), SSStampCategoryModel.class);
-		String lastUpdateDate = response.optString("lastUpdateDate");
-		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-		preferences.edit().putString(MsConst.MESSAGE_STAMP_LAST_UPDATE_DATE, lastUpdateDate).apply();
-
-		log("categories size: " + stampCategories.size());
-		for(SSStampCategoryModel category : stampCategories){
-			realm.beginTransaction();
-			WFMStampCategoryModel dbCategory = realm.createObject(WFMStampCategoryModel.class);
-			dbCategory.setValues(category);
-			realm.commitTransaction();
-			log("stamps size: " + category.stamps.size());
-			for(SSStampModel stamp : category.stamps){
-				realm.beginTransaction();
-				WFMStampModel dbStamp = realm.createObject(WFMStampModel.class);
-				dbStamp.setValues(stamp);
-				realm.commitTransaction();
-			}
-		}
-
-		List<WFMStampCategoryModel> stamps = realm.where(WFMStampCategoryModel.class).findAll();
-		Log.e("MessageFragment", "Stamp name: " + stamps.size());
 	}
 
 	private void log(String msg){
@@ -1064,7 +1019,6 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 
 		boardListFragment = null;
 		menuManager = null;
-		realm.close();
 	}
 
 	@Override
