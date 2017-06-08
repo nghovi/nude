@@ -161,6 +161,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 			viewHolder.txtDate.setText(contentModel.messageDate);
 		}else{
 			viewHolder.bind(viewHolder, contentModel, itemMsgClickListener);
+			// viewHolder.imgAvatar.setImageDrawable(null);
+			// WfPicassoHelper.cancelLoadImage(mContext, viewHolder.imgAvatar);
 			if(WelfareConst.ITEM_TEXT_TYPE_LOC.equals(contentModel.messageType)){
 				viewHolder.txtLocation.setText(contentModel.messageContent);
 			}else if(WelfareConst.ITEM_FILE_TYPE_FILE.equals(contentModel.messageType)){
@@ -196,11 +198,6 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 			String messageDateFormat = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE_HH_MM, messageDate);
 			viewHolder.txtUserName.setText(contentModel.messageSender.userName);
 			viewHolder.txtMessageDate.setText(messageDateFormat);
-			if(!CCStringUtil.isEmpty(contentModel.messageSender.avatarPath)){
-				WfPicassoHelper.loadImage(mContext, BuildConfig.HOST + contentModel.messageSender.avatarPath, viewHolder.imgAvatar, null);
-			}else{
-				viewHolder.imgAvatar.setImageResource(R.drawable.wf_profile);
-			}
 			viewHolder.imgAvatar.setOnClickListener(new View.OnClickListener() {
 
 				@Override
@@ -242,6 +239,27 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 	@Override
 	public int getItemCount(){
 		return mLstMessage.size();
+	}
+
+	@Override
+	public void onViewDetachedFromWindow(MessageViewHolder viewHolder){
+		if(viewHolder.imgAvatar != null){
+			viewHolder.imgAvatar.setImageDrawable(null);
+			WfPicassoHelper.cancelLoadImage(mContext, viewHolder.imgAvatar);
+		}
+	}
+
+	@Override
+	public void onViewAttachedToWindow(MessageViewHolder viewHolder){
+		if(viewHolder.imgAvatar != null){
+			int position = viewHolder.getAdapterPosition();
+			MessageContentModel contentModel = mLstMessage.get(position);
+			if(!CCStringUtil.isEmpty(contentModel.messageSender.avatarPath)){
+				WfPicassoHelper.loadImage(mContext, BuildConfig.HOST + contentModel.messageSender.avatarPath, viewHolder.imgAvatar, null);
+			}else{
+				viewHolder.imgAvatar.setImageResource(R.drawable.wf_profile);
+			}
+		}
 	}
 
 	@Override
