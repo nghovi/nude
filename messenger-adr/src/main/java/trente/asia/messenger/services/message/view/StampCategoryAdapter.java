@@ -44,12 +44,12 @@ public class StampCategoryAdapter extends RecyclerView.Adapter<ViewHolder>{
 		ItemStampCategoryBinding binding = (ItemStampCategoryBinding)holder.getBinding();
 		Picasso.with(context).load(BuildConfig.HOST + stampCategory.categoryUrl)
                 .into(binding.imageView);
-        binding.imageView.setOnClickListener((View v) -> {
-            callback.onStampCategoryClick(stampCategory);
-            selectedStampCategory = holder.getAdapterPosition();
-            v.setBackground(context.getResources().getDrawable(R.drawable.select_stamp_category_background, null));
-			notifyDataSetChanged();
-        });
+//        binding.imageView.setOnClickListener((View v) -> {
+//            callback.onStampCategoryClick(stampCategory);
+//            selectedStampCategory = holder.getAdapterPosition();
+//            v.setBackground(context.getResources().getDrawable(R.drawable.select_stamp_category_background, null));
+//			notifyDataSetChanged();
+//        });
         binding.imageView.setBackground(selectedStampCategory == position ?
             context.getResources().getDrawable(R.drawable.select_stamp_category_background, null) :
             context.getResources().getDrawable(R.drawable.normal_stamp_category_background, null));
