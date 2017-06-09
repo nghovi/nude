@@ -35,7 +35,8 @@ public class AbstractMsgFragment extends WelfareFragment{
 	@Override
 	protected void commonNotSuccess(JSONObject response){
 		String returnCd = response.optString(CsConst.RETURN_CODE_PARAM);
-		if(WfErrorConst.MS_ERR_CODE_DEPT_CHANGED.equals(returnCd) || WfErrorConst.MS_ERR_CODE_CONTENT_DELETED.equals(returnCd)){
+		if(WfErrorConst.MS_ERR_CODE_DEPT_CHANGED.equals(returnCd) ||
+				WfErrorConst.MS_ERR_CODE_CONTENT_DELETED.equals(returnCd)){
 			emptyBackStack();
 			gotoFragment(new MessageFragment());
 		}else{
@@ -48,8 +49,4 @@ public class AbstractMsgFragment extends WelfareFragment{
 		return WelfareConst.SERVICE_CD_MS;
 	}
 
-	@Override
-	public void onClickDeviceBackButton() {
-		super.onClickDeviceBackButton();
-	}
 }

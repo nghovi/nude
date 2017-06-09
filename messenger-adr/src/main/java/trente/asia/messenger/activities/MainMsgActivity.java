@@ -2,13 +2,11 @@ package trente.asia.messenger.activities;
 
 import android.os.Bundle;
 
-import asia.chiase.core.util.CCStringUtil;
 import trente.asia.messenger.R;
 import trente.asia.messenger.services.message.MessageDetailFragment;
 import trente.asia.messenger.services.message.MessageFragment;
 import trente.asia.messenger.services.message.model.BoardModel;
 import trente.asia.messenger.services.message.model.MessageContentModel;
-import trente.asia.messenger.services.user.MsgLoginFragment;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.models.UserModel;
@@ -24,15 +22,16 @@ public class MainMsgActivity extends WelfareActivity{
 		UserModel userModel = prefAccUtil.getUserPref();
 		Bundle mExtras = getIntent().getExtras();
 
-		if(!CCStringUtil.isEmpty(userModel.key)){
-			if(mExtras != null){
-				showFragment(mExtras);
-			}else{
-				addFragment(new MessageFragment());
-			}
-		}else{
-			addFragment(new MsgLoginFragment());
-		}
+//		if(!CCStringUtil.isEmpty(userModel.key)){
+//			if(mExtras != null){
+//				showFragment(mExtras);
+//			}else{
+//				addFragment(new MessageFragment());
+//			}
+//		}else{
+//			addFragment(new MsgLoginFragment());
+//		}
+		addFragment(new MessageFragment());
 	}
 
 	private void showFragment(Bundle mExtras){
