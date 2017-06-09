@@ -58,10 +58,10 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 	protected List<CategoryModel>	lstCategory;
 	protected List<UserModel>		lstBirthdayUser;
 	protected List<WorkOffer>		lstWorkOffer;
-	protected boolean refreshDialogData = false;
+	protected boolean				refreshDialogData	= false;
 	protected String				dayStr;
 	private String					scheduleStrings;
-	protected boolean				isChangedData					= true;
+	protected boolean				isChangedData		= true;
 
 	abstract protected List<Date> getAllDate();
 
@@ -70,9 +70,11 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 	@Override
 	protected void initView(){
 		super.initView();
-		lnrCalendarContainer = (LinearLayout)getView().findViewById(R.id.lnr_calendar_container);
-		dates = getAllDate();
-		initCalendarView();
+		if(pageSharingHolder.isLoadingSchedules == false){
+			lnrCalendarContainer = (LinearLayout)getView().findViewById(R.id.lnr_calendar_container);
+			dates = getAllDate();
+			initCalendarView();
+		}
 	}
 
 	private void initCalendarView(){
@@ -112,8 +114,11 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 	}
 
 	protected void loadScheduleList(){
-		JSONObject jsonObject = prepareJsonObject();
-		requestLoad(ClConst.API_SCHEDULE_LIST, jsonObject, false);
+		if(pageSharingHolder.isLoadingSchedules == false){
+			pageSharingHolder.isLoadingSchedules = true;
+			JSONObject jsonObject = prepareJsonObject();
+			requestLoad(ClConst.API_SCHEDULE_LIST, jsonObject, false);
+		}
 	}
 
 	protected JSONObject prepareJsonObject(){
@@ -145,6 +150,12 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 		}
 	}
 
+	@Override
+	protected void commonNotSuccess(JSONObject response){
+		pageSharingHolder.isLoadingSchedules = false;
+		super.commonNotSuccess(response);
+	}
+
 	public static List<Date> getAllDateForMonth(PreferencesAccountUtil prefAccUtil, Date selectedDate){
 		int firstDay = Calendar.SUNDAY;
 		if(!CCStringUtil.isEmpty(prefAccUtil.getSetting().CL_START_DAY_IN_WEEK)){
@@ -158,7 +169,6 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 	}
 
 	protected void onLoadSchedulesSuccess(JSONObject response){
-		// long startMLS = System.currentTimeMillis();
 		try{
 			String newScheduleStrings = response.optString("schedules");
 			lstSchedule = LoganSquare.parseList(newScheduleStrings, ScheduleModel.class);
@@ -172,6 +182,7 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 				isChangedData = true;
 			}
 			scheduleStrings = newScheduleStrings;
+			pageSharingHolder.isLoadingSchedules = false;
 		}catch(IOException e){
 			e.printStackTrace();
 		}

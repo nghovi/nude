@@ -25,12 +25,13 @@ public class PageSharingHolder{
 	private Context						mContext;
 	public int							selectedPagePosition;
 	public boolean						isRefreshUserList	= true;
+	public boolean						isLoadingSchedules	= false;
 
 	public CalendarDayView getClickedDayView(){
 		return clickedDayView;
 	}
 
-	private CalendarDayView	clickedDayView;
+	private CalendarDayView clickedDayView;
 
 	public PageSharingHolder(NavigationHeader navigationHeader, UserListLinearLayout userListLinearLayout, final View.OnClickListener listener){
 		this.mContext = navigationHeader.getContext();
