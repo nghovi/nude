@@ -20,7 +20,6 @@ android {
 
 repositories {
     mavenCentral()
-    maven { url "http://repo.trente.asia:8081/nexus/content/repositories/snapshots/" }
 }
 
 dependencies {
