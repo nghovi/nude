@@ -3,7 +3,6 @@ package trente.asia.messenger.services.message.view;
 import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -192,11 +191,11 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 			}else if(WelfareConst.ITEM_TEXT_TYPE_LIKE.equals(contentModel.messageType)){
 
 			} else if (WelfareConst.ITEM_TEXT_TYPE_STAMP.equals(contentModel.messageType)) {
-                Log.e("MessageAdapter", "keys: " + contentModel.messageContent);
                 WFMStampModel stamp = WFMStampModel.get(contentModel.messageContent);
-				Log.e("MessageAdapter", "stamp Url: " + stamp.stampUrl);
-                Picasso.with(mContext).load(BuildConfig.HOST + stamp.stampUrl)
-                        .into(viewHolder.imgIcon);
+				if (stamp != null) {
+					Picasso.with(mContext).load(BuildConfig.HOST + stamp.stampUrl)
+							.into(viewHolder.imgIcon);
+				}
             }else{
 				viewHolder.txtContent.setText(contentModel.messageContent);
 			}

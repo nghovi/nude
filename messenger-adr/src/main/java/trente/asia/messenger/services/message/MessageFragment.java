@@ -102,7 +102,11 @@ import trente.asia.welfare.adr.view.WfSlideMenuLayout;
  * @author TrungND
  */
 
-public class MessageFragment extends AbstractMsgFragment implements View.OnClickListener,ItemMsgClickListener,GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener,StampCategoryAdapter.OnStampCategoryAdapterListener,StampAdapter.OnStampAdapterListener,UserListFragment.OnAddUserSuccessListener{
+public class MessageFragment extends AbstractMsgFragment implements
+		View.OnClickListener,ItemMsgClickListener,GoogleApiClient.ConnectionCallbacks,
+		GoogleApiClient.OnConnectionFailedListener,StampCategoryAdapter.OnStampCategoryAdapterListener,
+		StampAdapter.OnStampAdapterListener,UserListFragment.OnAddUserSuccessListener,
+		MessageView.OnTextChangedListener{
 
 	private ImageView									mImgLeftHeader;
 	private WfSlideMenuLayout							mSlideMenuLayout;
@@ -359,6 +363,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 		LayoutInflater inflater = (LayoutInflater)activity.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 		messageView = (MessageView)inflater.inflate(R.layout.board_pager_message, null);
 		messageView.initialization();
+		messageView.setOnTextChangedListener(this);
 		messageView.revMessage.listener = onScrollToTopListener;
 		noteView = (NoteView)inflater.inflate(R.layout.board_pager_note, null);
 		noteView.initialization();
@@ -401,13 +406,13 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
 		String lastUpdateDate = preferences.getString(MsConst.MESSAGE_STAMP_LAST_UPDATE_DATE, null);
 		JSONObject jsonObject = new JSONObject();
-		// if(lastUpdateDate != null){
-		// try{
-		// jsonObject.put("lastUpdateDate", lastUpdateDate);
-		// }catch(JSONException e){
-		// e.printStackTrace();
-		// }
-		// }
+		if(lastUpdateDate != null){
+			try{
+				jsonObject.put("lastUpdateDate", lastUpdateDate);
+			}catch(JSONException e){
+				e.printStackTrace();
+			}
+		}
 		requestLoad(MsConst.API_MESSAGE_STAMP_CATEGORY_LIST, jsonObject, true);
 	}
 
@@ -551,8 +556,8 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 					isSuccessLoad = true;
 				}
 			}else if(MsConst.API_MESSAGE_LATEST.equals(url)){
-				List<MessageContentModel> lstMessage = LoganSquare.parseList(response.optString("contents"), MessageContentModel.class);
-				// lastUpdateTime = response.optString("lastUpdateTime");
+				List<MessageContentModel> lstMessage = LoganSquare.parseList(response.optString("contents"),
+						MessageContentModel.class);
 				if(!CCCollectionUtil.isEmpty(lstMessage)){
 					MessageContentModel firstMessage = lstMessage.get(0);
 					if(!CCStringUtil.isEmpty(activeBoardId) && activeBoardId.equals(firstMessage.boardId)){
@@ -571,7 +576,8 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 				if(onRefreshBoardListListener != null) onRefreshBoardListListener.onRefreshBoardListListener(lstBoard);
 
 				// update action list
-				List<MessageContentModel> lstAction = LoganSquare.parseList(response.optString("actions"), MessageContentModel.class);
+				List<MessageContentModel> lstAction = LoganSquare.parseList(
+						response.optString("actions"), MessageContentModel.class);
 				if(!CCCollectionUtil.isEmpty(lstAction)){
 					this.updateMessage(lstAction);
 				}
@@ -591,11 +597,30 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 	}
 
 	private void saveStamps(JSONObject response){
-		List<SSStampCategoryModel> stampCategories = CCJsonUtil.convertToModelList(response.optString("stampCategories"), SSStampCategoryModel.class);
+		List<SSStampCategoryModel> stampCategories = CCJsonUtil.convertToModelList
+				(response.optString("stampCategories"), SSStampCategoryModel.class);
+		String lastUpdateDate = response.optString("lastUpdateDate");
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+		preferences.edit().putString(MsConst.MESSAGE_STAMP_LAST_UPDATE_DATE, lastUpdateDate).apply();
+
 		for(SSStampCategoryModel stampCategory : stampCategories){
-			new WFMStampCategoryModel(stampCategory).save();
-			for(SSStampModel stamp : stampCategory.stamps){
-				new WFMStampModel(stamp).save();
+			if (stampCategory.deleteFlag) {
+				WFMStampCategoryModel wfmStampCategory = WFMStampCategoryModel.get(stampCategory.key);
+				if (wfmStampCategory != null) {
+					wfmStampCategory.delete();
+				}
+			} else {
+				new WFMStampCategoryModel(stampCategory).save();
+				for(SSStampModel stamp : stampCategory.stamps){
+					if (stamp.deleteFlag) {
+							WFMStampModel wfStamp = WFMStampModel.get(stamp.key);
+						if (wfStamp != null) {
+							wfStamp.delete();
+						}
+					} else {
+						new WFMStampModel(stamp).save();
+					}
+				}
 			}
 		}
 
@@ -1079,5 +1104,10 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 	@Override
 	public void onSuccess(BoardModel boardModel){
 		if(boardListFragment != null) boardListFragment.onAddedContactListener(boardModel);
+	}
+
+	@Override
+	public void onTextChanged(CharSequence charSequence) {
+		Log.e("MessageFragment", "text: " + charSequence);
 	}
 }

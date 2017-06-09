@@ -25,14 +25,15 @@ public class MessageView extends LinearLayout{
 
 	private Context						mContext;
 	public ImageButton					imgSend;
-    public LinearLayout					lnrSend;
+	public LinearLayout					lnrSend;
 
 	public ImageButton					imgLike;
-    public LinearLayout					lnrLike;
+	public LinearLayout					lnrLike;
 	public MsgMultiAutoCompleteTextView	edtMessage;
-	public ImageView	imgStamp;
+	public ImageView					imgStamp;
 
 	public MsgRecyclerView				revMessage;
+	private OnTextChangedListener		callback;
 
 	protected TextWatcher				etMessageTextWatcher	= new TextWatcher() {
 
@@ -42,6 +43,9 @@ public class MessageView extends LinearLayout{
 
 																	@Override
 																	public void onTextChanged(CharSequence s, int start, int before, int count){
+																		if (callback != null) {
+																			callback.onTextChanged(s);
+																		}
 																	}
 
 																	@Override
@@ -96,10 +100,10 @@ public class MessageView extends LinearLayout{
 		// this.addView(view);
 
 		imgSend = (ImageButton)this.findViewById(R.id.btn_id_send);
-        lnrSend = (LinearLayout)this.findViewById(R.id.lnr_id_send);
+		lnrSend = (LinearLayout)this.findViewById(R.id.lnr_id_send);
 		imgLike = (ImageButton)this.findViewById(R.id.img_id_like);
-        lnrLike = (LinearLayout) this.findViewById(R.id.lnr_id_like);
-		imgStamp = (ImageView) this.findViewById(R.id.btn_stamp);
+		lnrLike = (LinearLayout)this.findViewById(R.id.lnr_id_like);
+		imgStamp = (ImageView)this.findViewById(R.id.btn_stamp);
 
 		edtMessage = (MsgMultiAutoCompleteTextView)this.findViewById(R.id.edt_id_message);
 		edtMessage.addTextChangedListener(etMessageTextWatcher);
@@ -155,5 +159,13 @@ public class MessageView extends LinearLayout{
 				AnimUtils.fade(imgLike, 0, 1, 100, null);
 			}
 		});
+	}
+
+	public void setOnTextChangedListener(OnTextChangedListener listener){
+		this.callback = listener;
+	}
+
+	public interface OnTextChangedListener{
+		void onTextChanged(CharSequence charSequence);
 	}
 }

@@ -15,5 +15,6 @@ public class SSStampCategoryModel{
 	public List<SSStampModel>	stamps;
 	public String				key;
 	public AttachmentModel		attachment;
+	public boolean				deleteFlag;
 
 }

@@ -55,6 +55,9 @@ public class WFMStampModel extends Model{
 	public static WFMStampModel get(String stampId) {
 		List<WFMStampModel> stamps = new Select().from(WFMStampModel.class)
 				.where("stamp_id = ?", stampId).execute();
+		if (stamps.size() == 0) {
+			return null;
+		}
 		return stamps.get(0);
 	}
 }
