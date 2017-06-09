@@ -128,7 +128,7 @@ public class WorktimeCheckInFragment extends AbstractLocationFragment{
 	@Override
 	public void initView(){
 		super.initView();
-		super.initHeader(null, myself.userName, null);
+		super.initHeader(null, myself.userName, R.drawable.sw_icon_action_notice);
 
 		lsvWorkTime = (ListView)getView().findViewById(R.id.lsv_id_work_time);
 		txtCheckInTime = (TextView)getView().findViewById(R.id.txt_id_check_in_time);
