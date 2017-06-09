@@ -3,6 +3,7 @@ package trente.asia.messenger.services.message.view;
 import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -25,6 +28,7 @@ import trente.asia.messenger.BuildConfig;
 import trente.asia.messenger.R;
 import trente.asia.messenger.services.message.listener.ItemMsgClickListener;
 import trente.asia.messenger.services.message.model.MessageContentModel;
+import trente.asia.messenger.services.message.model.WFMStampModel;
 import trente.asia.welfare.adr.activity.WelfareFragment;
 import trente.asia.welfare.adr.define.EmotionConst;
 import trente.asia.welfare.adr.define.WelfareConst;
@@ -190,10 +194,10 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
 				}else {
 					String[] keys = contentModel.messageContent.split("_");
-//					Log.e("MessageAdapter", "keys: " + keys[0] + " + " + keys[1]);
-//					WFMStampModel stamp = WFMStampModel.get(keys[1]);
-//					Picasso.with(mContext).load(BuildConfig.HOST + stamp.stampUrl)
-//							.into(viewHolder.imgIcon);
+					Log.e("MessageAdapter", "keys: " + contentModel.messageContent);
+					WFMStampModel stamp = WFMStampModel.get(keys[1]);
+					Picasso.with(mContext).load(BuildConfig.HOST + stamp.stampUrl)
+							.into(viewHolder.imgIcon);
 				}
 			}else{
 				viewHolder.txtContent.setText(contentModel.messageContent);

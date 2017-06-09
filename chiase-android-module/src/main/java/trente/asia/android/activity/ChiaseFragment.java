@@ -1,11 +1,5 @@
 package trente.asia.android.activity;
 
-import java.io.File;
-import java.util.Map;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -18,6 +12,12 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.util.Map;
 
 import asia.chiase.core.define.CCConst;
 import trente.asia.android.R;
