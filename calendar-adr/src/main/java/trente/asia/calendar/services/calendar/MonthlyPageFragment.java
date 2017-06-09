@@ -219,7 +219,7 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 
 	@Override
 	public void onDailyScheduleClickListener(String day){
-		if(!dialogDailySummary.isShowing()){
+		if(dialogDailySummary != null && !dialogDailySummary.isShowing()){
 			dayStr = day;
 			dialogDailySummary.show(CCDateUtil.makeDateCustom(dayStr, WelfareConst.WF_DATE_TIME_DATE));
 			refreshDialogData = true;
