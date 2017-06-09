@@ -30,7 +30,6 @@ import trente.asia.messenger.services.message.listener.ItemMsgClickListener;
 import trente.asia.messenger.services.message.model.MessageContentModel;
 import trente.asia.messenger.services.message.model.WFMStampModel;
 import trente.asia.welfare.adr.activity.WelfareFragment;
-import trente.asia.welfare.adr.define.EmotionConst;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.models.CommentModel;
 import trente.asia.welfare.adr.models.UserModel;
@@ -105,7 +104,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 		}
 
 		public void bind(final MessageViewHolder holder, final MessageContentModel item, final ItemMsgClickListener listener){
-			if(!WelfareConst.ITEM_TEXT_TYPE_TEXT.equals(item.messageType) && !WelfareConst.ITEM_TEXT_TYPE_ICON.equals(item.messageType)){
+			if(!WelfareConst.ITEM_TEXT_TYPE_TEXT.equals(item.messageType) && !WelfareConst.ITEM_TEXT_TYPE_LIKE.equals(item.messageType)){
 				itemView.setOnClickListener(new View.OnClickListener() {
 
 					@Override
@@ -124,7 +123,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 				}
 			});
 
-			if(!WelfareConst.ITEM_TEXT_TYPE_ICON.equals(item.messageType)){
+			if(!WelfareConst.ITEM_TEXT_TYPE_LIKE.equals(item.messageType)
+					&& !WelfareConst.ITEM_TEXT_TYPE_STAMP.equals(item.messageType)){
 				if(item.getCheckCount().compareTo(CCConst.ZERO) > 0){
 					lnrCheck.setOnClickListener(new View.OnClickListener() {
 
@@ -189,16 +189,15 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 					viewHolder.txtContent.setVisibility(View.VISIBLE);
 					viewHolder.txtContent.setText(contentModel.messageContent);
 				}
-			}else if(WelfareConst.ITEM_TEXT_TYPE_ICON.equals(contentModel.messageType)){
-				if(EmotionConst.EMO_LIKE.equals(contentModel.messageContent)){
+			}else if(WelfareConst.ITEM_TEXT_TYPE_LIKE.equals(contentModel.messageType)){
 
-				}else {
-					Log.e("MessageAdapter", "keys: " + contentModel.messageContent);
-					WFMStampModel stamp = WFMStampModel.get(contentModel.messageContent);
-					Picasso.with(mContext).load(BuildConfig.HOST + stamp.stampUrl)
-							.into(viewHolder.imgIcon);
-				}
-			}else{
+			} else if (WelfareConst.ITEM_TEXT_TYPE_STAMP.equals(contentModel.messageType)) {
+                Log.e("MessageAdapter", "keys: " + contentModel.messageContent);
+                WFMStampModel stamp = WFMStampModel.get(contentModel.messageContent);
+				Log.e("MessageAdapter", "stamp Url: " + stamp.stampUrl);
+                Picasso.with(mContext).load(BuildConfig.HOST + stamp.stampUrl)
+                        .into(viewHolder.imgIcon);
+            }else{
 				viewHolder.txtContent.setText(contentModel.messageContent);
 			}
 			Date messageDate = CCDateUtil.makeDateCustom(contentModel.messageDate, WelfareConst.WF_DATE_TIME);
@@ -213,7 +212,9 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 				}
 			});
 
-			if(!WelfareConst.ITEM_TEXT_TYPE_TEXT.equals(contentModel.messageType) && !WelfareConst.ITEM_TEXT_TYPE_ICON.equals(contentModel.messageType)){
+			if(!WelfareConst.ITEM_TEXT_TYPE_TEXT.equals(contentModel.messageType)
+					&& !WelfareConst.ITEM_TEXT_TYPE_LIKE.equals(contentModel.messageType)
+					&& !WelfareConst.ITEM_TEXT_TYPE_STAMP.equals(contentModel.messageType)){
 				viewHolder.txtCommentNumber.setText(String.valueOf(WelfareUtil.size(contentModel.comments)));
 			}
 
@@ -236,7 +237,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 			}
 
 			// if(!CCCollectionUtil.isEmpty(contentModel.checks)){
-			if(!WelfareConst.ITEM_TEXT_TYPE_ICON.equals(contentModel.messageType)){
+			if(!WelfareConst.ITEM_TEXT_TYPE_LIKE.equals(contentModel.messageType) &&
+			!WelfareConst.ITEM_TEXT_TYPE_STAMP.equals(contentModel.messageType)){
 				viewHolder.txtNumCheck.setText(String.valueOf(contentModel.getCheckCount()));
 			}
 			// }
@@ -276,7 +278,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 			return R.layout.item_messages_date;
 		}else if(WelfareConst.ITEM_TEXT_TYPE_LOC.equals(contentModel.messageType)){
 			return R.layout.item_messages_location;
-		}else if(WelfareConst.ITEM_TEXT_TYPE_ICON.equals(contentModel.messageType)){
+		}else if(WelfareConst.ITEM_TEXT_TYPE_LIKE.equals(contentModel.messageType) ||
+				WelfareConst.ITEM_TEXT_TYPE_STAMP.equals(contentModel.messageType)){
 			return R.layout.item_messages_emotion;
 		}else if(WelfareConst.ITEM_FILE_TYPE_FILE.equals(contentModel.messageType)){
 			return R.layout.item_messages_file;

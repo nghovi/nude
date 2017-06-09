@@ -14,7 +14,6 @@ import java.util.List;
 import trente.asia.messenger.BuildConfig;
 import trente.asia.messenger.R;
 import trente.asia.messenger.databinding.ItemStampBinding;
-import trente.asia.messenger.services.message.model.WFMStampCategoryModel;
 import trente.asia.messenger.services.message.model.WFMStampModel;
 
 /**
@@ -25,13 +24,10 @@ public class StampAdapter extends RecyclerView.Adapter<ViewHolder>{
 
 	private List<WFMStampModel>		stamps	= new ArrayList<>();
 	private Context					context;
-	private int						imageId;
 	private OnStampAdapterListener	callback;
-	private WFMStampCategoryModel stampCategory;
 
 	public StampAdapter(OnStampAdapterListener listener){
 		this.callback = listener;
-		imageId = R.drawable.test_thai_airline;
 	}
 
 	@Override
@@ -43,12 +39,15 @@ public class StampAdapter extends RecyclerView.Adapter<ViewHolder>{
 
 	@Override
 	public void onBindViewHolder(ViewHolder holder, int position){
-		WFMStampModel stamp = stamps.get(position);
+		final WFMStampModel stamp = stamps.get(position);
 		ItemStampBinding binding = (ItemStampBinding)holder.getBinding();
 		Picasso.with(context).load(BuildConfig.HOST + stamp.stampUrl).into(binding.imageView);
-//		binding.imageView.setOnClickListener((View v) -> {
-//			callback.onStampClick(stamp);
-//		});
+		binding.imageView.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				callback.onStampClick(stamp);
+			}
+		});
 	}
 
 	@Override
@@ -58,11 +57,6 @@ public class StampAdapter extends RecyclerView.Adapter<ViewHolder>{
 
 	public void setStamps(List<WFMStampModel> stamps){
 		this.stamps = stamps;
-		notifyDataSetChanged();
-	}
-
-	public void setImageId(int imageId){
-		this.imageId = imageId;
 		notifyDataSetChanged();
 	}
 

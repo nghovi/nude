@@ -26,7 +26,8 @@ public class WelfareConst{
 	public static final String		ITEM_TEXT_TYPE_TEXT				= "TEXT";
 	public static final String		ITEM_TEXT_TYPE_LOC				= "LOC";
 	public static final String		ITEM_TEXT_TYPE_DATE				= "DAT";
-	public static final String		ITEM_TEXT_TYPE_ICON				= "ICON";
+	public static final String		ITEM_TEXT_TYPE_LIKE				= "ICON";
+	public static final String		ITEM_TEXT_TYPE_STAMP			= "STAMP";
 
 	public static final String		ITEM_FILE_TYPE_PHOTO			= "PHOTO";
 	public static final String		ITEM_FILE_TYPE_MOVIE			= "MOVIE";
@@ -74,7 +75,7 @@ public class WelfareConst{
 		IMG_EXT_SET.add(IMG_EXT_GIF.toUpperCase());
 	}
 
-	public static final Set<String>	MOVIE_EXT_SET					= new HashSet<String>();
+	public static final Set<String> MOVIE_EXT_SET = new HashSet<String>();
 
 	static{
 		MOVIE_EXT_SET.add("mp4");
@@ -85,9 +86,9 @@ public class WelfareConst{
 		MOVIE_EXT_SET.add("avi".toUpperCase());
 	}
 
-	public static final String		BOARD_TYPE_DEPT					= "D";
-	public static final String		BOARD_TYPE_USER					= "U";
-	public static final String		BOARD_TYPE_GROUP				= "G";
+	public static final String	BOARD_TYPE_DEPT		= "D";
+	public static final String	BOARD_TYPE_USER		= "U";
+	public static final String	BOARD_TYPE_GROUP	= "G";
 
 	public static final class Extras{
 

@@ -85,6 +85,7 @@ import trente.asia.messenger.services.message.view.StampAdapter;
 import trente.asia.messenger.services.message.view.StampCategoryAdapter;
 import trente.asia.messenger.services.user.UserListFragment;
 import trente.asia.welfare.adr.activity.WelfareActivity;
+import trente.asia.welfare.adr.define.EmotionConst;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.dialog.WfProfileDialog;
 import trente.asia.welfare.adr.menu.OnMenuButtonsListener;
@@ -101,8 +102,7 @@ import trente.asia.welfare.adr.view.WfSlideMenuLayout;
  * @author TrungND
  */
 
-public class MessageFragment extends AbstractMsgFragment implements View.OnClickListener,ItemMsgClickListener,GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener,StampCategoryAdapter.OnStampCategoryAdapterListener
-		,StampAdapter.OnStampAdapterListener, UserListFragment.OnAddUserSuccessListener{
+public class MessageFragment extends AbstractMsgFragment implements View.OnClickListener,ItemMsgClickListener,GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener,StampCategoryAdapter.OnStampCategoryAdapterListener,StampAdapter.OnStampAdapterListener,UserListFragment.OnAddUserSuccessListener{
 
 	private ImageView									mImgLeftHeader;
 	private WfSlideMenuLayout							mSlideMenuLayout;
@@ -140,7 +140,6 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 
 	private final int									REQUEST_CHECK_SETTINGS		= 31;
 	private OnRefreshBoardListListener					onRefreshBoardListListener;
-
 
 	private OnChangedBoardListener						onChangedBoardListener		= new OnChangedBoardListener() {
 
@@ -580,10 +579,10 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 				BoardModel boardModel = LoganSquare.parse(response.optString("board"), BoardModel.class);
 				activeBoard = boardModel;
 				updateNoteData();
-			} else if (MsConst.API_MESSAGE_STAMP_CATEGORY_LIST.equals(url)) {
+			}else if(MsConst.API_MESSAGE_STAMP_CATEGORY_LIST.equals(url)){
 				saveStamps(response);
 				loadBoards();
-			} else{
+			}else{
 				super.successLoad(response, url);
 			}
 		}catch(IOException e){
@@ -592,11 +591,10 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 	}
 
 	private void saveStamps(JSONObject response){
-		List<SSStampCategoryModel> stampCategories = CCJsonUtil.convertToModelList(response.optString("stampCategories"),
-				SSStampCategoryModel.class);
-		for (SSStampCategoryModel stampCategory : stampCategories) {
+		List<SSStampCategoryModel> stampCategories = CCJsonUtil.convertToModelList(response.optString("stampCategories"), SSStampCategoryModel.class);
+		for(SSStampCategoryModel stampCategory : stampCategories){
 			new WFMStampCategoryModel(stampCategory).save();
-			for (SSStampModel stamp : stampCategory.stamps) {
+			for(SSStampModel stamp : stampCategory.stamps){
 				new WFMStampModel(stamp).save();
 			}
 		}
@@ -676,13 +674,12 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 		JSONObject jsonObject = new JSONObject();
 		try{
 			jsonObject.put("boardId", activeBoard.key);
-			if(WelfareConst.ITEM_TEXT_TYPE_ICON.equals(messageType)){
-				jsonObject.put("execType", WelfareConst.ITEM_TEXT_TYPE_ICON);
-				if (content == null) {
-					jsonObject.put("messageContent", "");
-				} else {
-					jsonObject.put("messageContent", content);
-				}
+			if(WelfareConst.ITEM_TEXT_TYPE_LIKE.equals(messageType)){
+				jsonObject.put("execType", WelfareConst.ITEM_TEXT_TYPE_LIKE);
+				jsonObject.put("messageContent", EmotionConst.EMO_LIKE);
+			}else if(WelfareConst.ITEM_TEXT_TYPE_STAMP.equals(messageType)){
+				jsonObject.put("execType", WelfareConst.ITEM_TEXT_TYPE_STAMP);
+				jsonObject.put("messageContent", content);
 			}else if(WelfareConst.ITEM_TEXT_TYPE_LOC.equals(messageType)){
 				jsonObject.put("gpsLongtitude", longitude);
 				jsonObject.put("gpsLatitude", latitude);
@@ -811,7 +808,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 
 		case R.id.lnr_id_like:
 			if(messageView.likeButtonType == MessageView.LikeButtonType.LIKE){
-				sendMessage(WelfareConst.ITEM_TEXT_TYPE_ICON, null, null, null);
+				sendMessage(WelfareConst.ITEM_TEXT_TYPE_LIKE, null, null, null);
 			}else{
 				messageView.edtMessage.setText("");
 			}
@@ -1074,13 +1071,13 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 	}
 
 	@Override
-	public void onStampClick(WFMStampModel stamp) {
-		sendMessage(WelfareConst.ITEM_TEXT_TYPE_ICON, stamp.stampId, null, null);
+	public void onStampClick(WFMStampModel stamp){
+		sendMessage(WelfareConst.ITEM_TEXT_TYPE_STAMP, stamp.stampId, null, null);
 		binding.layoutStamp.getRoot().setVisibility(View.GONE);
 	}
 
 	@Override
-	public void onSuccess(BoardModel boardModel) {
+	public void onSuccess(BoardModel boardModel){
 		if(boardListFragment != null) boardListFragment.onAddedContactListener(boardModel);
 	}
 }
