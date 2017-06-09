@@ -279,7 +279,6 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
                 }
             });
 
-            //
             onButtonMenuOpenedClicked();
         }
 
@@ -342,15 +341,18 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
             binding = DataBindingUtil.inflate(inflater, R.layout.fragment_message, container, false);
             mRootView = binding.getRoot();
 
-            binding.layoutStamp.listStamps.setLayoutManager(new GridLayoutManager(getContext(), 2, LinearLayoutManager.HORIZONTAL, false));
+            binding.layoutStamp.listStamps.setLayoutManager(
+                    new GridLayoutManager(getContext(), 2, LinearLayoutManager.HORIZONTAL, false));
             stampAdapter = new StampAdapter(this);
             binding.layoutStamp.listStamps.setAdapter(stampAdapter);
 
-            binding.layoutStamp.listStampCategories.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+            binding.layoutStamp.listStampCategories.setLayoutManager(
+                    new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
             stampCategoryAdapter = new StampCategoryAdapter(this);
             binding.layoutStamp.listStampCategories.setAdapter(stampCategoryAdapter);
 
-            binding.layoutRecommendStamp.listRecommendStamp.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+            binding.layoutRecommendStamp.listRecommendStamp.setLayoutManager(
+                    new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
             recommendStampAdapter = new RecommendStampAdapter(this);
             binding.layoutRecommendStamp.listRecommendStamp.setAdapter(recommendStampAdapter);
 
@@ -499,6 +501,11 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
         }
         messageView.buttonType = MessageView.ButtonType.IN_ANIMATION;
         menuManager.closeMenu();
+    }
+
+    private void closeLayoutStamps() {
+        mViewForMenuBehind.setVisibility(View.GONE);
+        binding.layoutStamp.getRoot().setVisibility(View.GONE);
     }
 
     private void loadMessageList() {
@@ -838,6 +845,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
                 break;
             case R.id.viewForMenuBehind:
                 onButtonMenuOpenedClicked();
+                closeLayoutStamps();
                 break;
 
             case R.id.lnr_id_like:
@@ -859,9 +867,11 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
                 break;
             case R.id.btn_cancel:
                 binding.layoutStamp.getRoot().setVisibility(View.GONE);
+                mViewForMenuBehind.setVisibility(View.GONE);
                 break;
             case R.id.btn_stamp:
                 binding.layoutStamp.getRoot().setVisibility(View.VISIBLE);
+                mViewForMenuBehind.setVisibility(View.VISIBLE);
                 break;
             default:
                 break;
@@ -1028,14 +1038,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
         activeBoardId = activeBoard.key;
     }
 
-    @Override
-    protected void onClickBackBtn() {
-        if (messageView.buttonType == MessageView.ButtonType.MENU_OPENED) {
-            onButtonMenuOpenedClicked();
-        } else {
-            super.onClickBackBtn();
-        }
-    }
+
 
     protected void commonNotSuccess(JSONObject response) {
         super.commonNotSuccess(response);
@@ -1150,15 +1153,20 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
         binding.layoutRecommendStamp.getRoot().setVisibility(View.GONE);
     }
 
-//	@Override
-//	public void onClickDeviceBackButton() {
-//		super.onClickDeviceBackButton();
-//	}
+    @Override
+    protected void onClickBackBtn() {
+        if (messageView.buttonType == MessageView.ButtonType.MENU_OPENED) {
+            onButtonMenuOpenedClicked();
+        } else {
+            super.onClickBackBtn();
+        }
+    }
 
     @Override
     public void onClickDeviceBackButton() {
         binding.layoutRecommendStamp.getRoot().setVisibility(View.GONE);
         binding.layoutStamp.getRoot().setVisibility(View.GONE);
+        mViewForMenuBehind.setVisibility(View.GONE);
         super.onClickDeviceBackButton();
     }
 }

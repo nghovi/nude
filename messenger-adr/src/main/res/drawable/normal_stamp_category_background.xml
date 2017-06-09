@@ -2,7 +2,7 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <shape android:shape="rectangle">
-            <solid  android:color="#848383"/>
+            <solid  android:color="@color/msg_layout_stamp_divider"/>
         </shape>
     </item>
     <item android:top="2dp" android:bottom="2dp">

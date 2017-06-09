@@ -4,11 +4,13 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#2ffaf0">
+        android:background="@color/wf_app_color_base">
         <android.support.v7.widget.RecyclerView
             android:id="@+id/list_stamp_categories"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:minHeight="40dp"
+            android:background="@drawable/normal_stamp_category_background"/>
         <android.support.v7.widget.RecyclerView
             android:id="@+id/list_stamps"
             android:layout_width="match_parent"
@@ -24,6 +26,6 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:gravity="center"
-            android:text="Cancel"/>
+            android:text="@string/wf_cancel"/>
     </LinearLayout>
 </layout>

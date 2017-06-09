@@ -20,4 +20,5 @@
     <color name="msg_message_action_active">#880007</color>
     <color name="service_profile_bg_color">#e04099bc</color>
 
+    <color name="msg_layout_stamp_divider">#b8b8b8</color>
 </resources>

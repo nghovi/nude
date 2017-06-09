@@ -5,7 +5,6 @@ import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.widget.Toast;
 
 import java.util.HashMap;
@@ -54,7 +53,6 @@ public class WelfareActivity extends ChiaseActivity{
 	@Override
 	public void onBackPressed(){
 		if(onDeviceBackButtonClickListener != null){
-			Log.e("WelfareActivity", "onBackPressed");
 			onDeviceBackButtonClickListener.onClickDeviceBackButton();
 		}else if(getSupportFragmentManager().getBackStackEntryCount() <= 1){
 			setDoubleBackPressedToFinish();
