@@ -61,7 +61,7 @@ public class MessageView extends LinearLayout{
 																};
 
 	public enum ButtonType{
-		MENU, SEND, MENU_OPENED, IN_ANIMATION;
+		MENU, SEND, MENU_OPENED, IN_ANIMATION
 	}
 
 	public enum LikeButtonType{

@@ -1,8 +1,5 @@
 package trente.asia.messenger.services.user;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,6 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import trente.asia.messenger.R;
 import trente.asia.messenger.fragment.AbstractMsgFragment;
@@ -116,6 +116,7 @@ public class MsgSettingFragment extends AbstractMsgFragment implements View.OnCl
 		if(WfUrlConst.WF_ACC_0004.equals(url)){
 			Toast.makeText(activity, "Signed out successfully", Toast.LENGTH_LONG).show();
 			gotoSignIn();
+
 		}else{
 			super.successUpdate(response, url);
 		}

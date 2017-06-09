@@ -1,8 +1,8 @@
 package trente.asia.messenger.fragment;
 
-import org.json.JSONObject;
-
 import android.os.Bundle;
+
+import org.json.JSONObject;
 
 import trente.asia.android.define.CsConst;
 import trente.asia.messenger.BuildConfig;
@@ -46,5 +46,10 @@ public class AbstractMsgFragment extends WelfareFragment{
 	@Override
 	protected String getServiceCd(){
 		return WelfareConst.SERVICE_CD_MS;
+	}
+
+	@Override
+	public void onClickDeviceBackButton() {
+		super.onClickDeviceBackButton();
 	}
 }

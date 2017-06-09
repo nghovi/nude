@@ -53,6 +53,15 @@
                 android:layout_height="wrap_content"
                 android:visibility="gone"
                 android:layout_alignParentBottom="true" />
+
+            <include
+                android:id="@+id/layout_recommend_stamp"
+                layout="@layout/layout_recommend_stamp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="50dp"/>
         </RelativeLayout>
 
     </trente.asia.welfare.adr.view.WfSlideMenuLayout>

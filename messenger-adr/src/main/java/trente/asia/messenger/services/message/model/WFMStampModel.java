@@ -60,4 +60,10 @@ public class WFMStampModel extends Model{
 		}
 		return stamps.get(0);
 	}
+
+	public static List<WFMStampModel> getRecommendStamps(String keyword) {
+		return new Select().from(WFMStampModel.class)
+				.where("instr(stamp_keyword, '" + keyword + "') > 0 collate nocase")
+				.execute();
+	}
 }

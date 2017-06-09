@@ -26,6 +26,8 @@ public class WFMStampCategoryModel extends Model{
 	@Column(name = "category_url")
 	public String	categoryUrl;
 
+	public List<WFMStampModel> stamps;
+
 	public WFMStampCategoryModel(){
 		super();
 	}

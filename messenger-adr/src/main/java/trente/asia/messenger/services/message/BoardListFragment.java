@@ -1,12 +1,5 @@
 package trente.asia.messenger.services.message;
 
-import java.io.IOException;
-import java.util.List;
-
-import org.json.JSONObject;
-
-import com.bluelinelabs.logansquare.LoganSquare;
-
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +8,13 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.bluelinelabs.logansquare.LoganSquare;
+
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.List;
 
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCNumberUtil;
@@ -31,7 +31,6 @@ import trente.asia.messenger.services.message.view.BoardAdapter;
 import trente.asia.messenger.services.user.MsgSettingFragment;
 import trente.asia.messenger.services.user.listener.OnAddedContactListener;
 import trente.asia.welfare.adr.activity.WelfareActivity;
-import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.dialog.WfProfileDialog;
 import trente.asia.welfare.adr.utils.WfPicassoHelper;
 
@@ -70,9 +69,9 @@ public class BoardListFragment extends AbstractMsgFragment implements View.OnCli
 	public void onCreate(Bundle savedInstanceState){
 		WelfareActivity.OnDeviceBackButtonClickListener listener = ((WelfareActivity)getActivity()).getOnDeviceBackButtonClickListener();
 		super.onCreate(savedInstanceState);
-		if(listener != null){
-			((WelfareActivity)getActivity()).setOnDeviceBackButtonClickListener(listener);
-		}
+//		if(listener != null){
+//			((WelfareActivity)getActivity()).setOnDeviceBackButtonClickListener(listener);
+//		}
 	}
 
 	@Override
