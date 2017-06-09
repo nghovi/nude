@@ -1075,9 +1075,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 
 	@Override
 	public void onStampClick(WFMStampModel stamp) {
-		WFMStampCategoryModel stampCategory = WFMStampCategoryModel.get(stamp.categoryId);
-		sendMessage(WelfareConst.ITEM_TEXT_TYPE_ICON,
-				stampCategory.categoryKey + "_" + stamp.stampKey, null, null);
+		sendMessage(WelfareConst.ITEM_TEXT_TYPE_ICON, stamp.stampId, null, null);
 		binding.layoutStamp.getRoot().setVisibility(View.GONE);
 	}
 

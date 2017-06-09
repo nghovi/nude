@@ -193,9 +193,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 				if(EmotionConst.EMO_LIKE.equals(contentModel.messageContent)){
 
 				}else {
-					String[] keys = contentModel.messageContent.split("_");
 					Log.e("MessageAdapter", "keys: " + contentModel.messageContent);
-					WFMStampModel stamp = WFMStampModel.get(keys[1]);
+					WFMStampModel stamp = WFMStampModel.get(contentModel.messageContent);
 					Picasso.with(mContext).load(BuildConfig.HOST + stamp.stampUrl)
 							.into(viewHolder.imgIcon);
 				}

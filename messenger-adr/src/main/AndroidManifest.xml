@@ -73,7 +73,7 @@
         <!--Active android setting-->
         <meta-data
             android:name="AA_DB_NAME"
-            android:value="ms-db1.db"/>
+            android:value="m=s-db1.db"/>
         <meta-data
             android:name="AA_DB_VERSION"
             android:value="1"/>

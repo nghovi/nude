@@ -52,9 +52,9 @@ public class WFMStampModel extends Model{
 				.execute();
 	}
 
-	public static WFMStampModel get(String stampKey) {
+	public static WFMStampModel get(String stampId) {
 		List<WFMStampModel> stamps = new Select().from(WFMStampModel.class)
-				.where("stamp_key = ?", stampKey).execute();
+				.where("stamp_id = ?", stampId).execute();
 		return stamps.get(0);
 	}
 }
