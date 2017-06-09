@@ -59,7 +59,7 @@
                     android:layout_marginRight="@dimen/margin_10dp"
                     android:layout_marginTop="@dimen/margin_10dp"
                     android:src="@drawable/sw_icon_action_transit"
-                    android:visibility="invisible"/>
+                    android:visibility="visible"/>
             </LinearLayout>
 
             <TextView
@@ -92,7 +92,7 @@
                     android:layout_marginRight="@dimen/margin_10dp"
                     android:layout_marginTop="@dimen/margin_10dp"
                     android:src="@drawable/sw_icon_action_notice"
-                    android:visibility="invisible"/>
+                    android:visibility="visible"/>
             </LinearLayout>
 
             <TextView
