@@ -17,9 +17,6 @@ allprojects {
     repositories {
         jcenter()
         mavenCentral()
-        maven {
-            url 'https://gitlab.com/chiase/chiase-core2/raw/master/maven/'
-        }
     }
     dependencies {
 
