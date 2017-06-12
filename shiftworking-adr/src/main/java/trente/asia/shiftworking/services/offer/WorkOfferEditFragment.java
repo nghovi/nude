@@ -1,15 +1,8 @@
 package trente.asia.shiftworking.services.offer;
 
-import java.util.Calendar;
-import java.util.Date;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import com.google.gson.Gson;
-
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +12,14 @@ import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TimePicker;
+
+import com.google.gson.Gson;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Calendar;
+import java.util.Date;
 
 import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCDateUtil;
@@ -32,6 +33,7 @@ import trente.asia.android.view.util.CAObjectSerializeUtil;
 import trente.asia.shiftworking.R;
 import trente.asia.shiftworking.common.defines.SwConst;
 import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
+import trente.asia.shiftworking.databinding.FragmentOfferEditBinding;
 import trente.asia.shiftworking.services.offer.model.WorkOfferModel;
 import trente.asia.shiftworking.services.offer.model.WorkOfferModelHolder;
 import trente.asia.welfare.adr.activity.WelfareActivity;
@@ -44,19 +46,20 @@ import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 
 public class WorkOfferEditFragment extends AbstractSwFragment{
 
-	private ChiaseListDialog	spnType;
-	private DatePickerDialog	datePickerDialogStart;
-	private DatePickerDialog	datePickerDialogEnd;
-	private TimePickerDialog	timePickerDialogStart;
-	private TimePickerDialog	timePickerDialogEnd;
-	private ChiaseTextView		txtStartTime;
-	private ChiaseTextView		txtEndTime;
+	private ChiaseListDialog			spnType;
+	private DatePickerDialog			datePickerDialogStart;
+	private DatePickerDialog			datePickerDialogEnd;
+	private TimePickerDialog			timePickerDialogStart;
+	private TimePickerDialog			timePickerDialogEnd;
+	private ChiaseTextView				txtStartTime;
+	private ChiaseTextView				txtEndTime;
 
-	private ChiaseTextView		txtStartDate;
-	private ChiaseTextView		txtEndDate;
+	private ChiaseTextView				txtStartDate;
+	private ChiaseTextView				txtEndDate;
 
-	private ChiaseTextView		txtOfferType;
-	private String				activeOfferId;
+	private ChiaseTextView				txtOfferType;
+	private String						activeOfferId;
+	private FragmentOfferEditBinding	binding;
 
 	public void setActiveOfferId(String activeOfferId){
 		this.activeOfferId = activeOfferId;
@@ -65,7 +68,8 @@ public class WorkOfferEditFragment extends AbstractSwFragment{
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 		if(mRootView == null){
-			mRootView = inflater.inflate(R.layout.fragment_offer_edit, container, false);
+			binding = DataBindingUtil.inflate(inflater, R.layout.fragment_offer_edit, container, false);
+			mRootView = binding.getRoot();
 		}
 		return mRootView;
 	}
@@ -136,9 +140,8 @@ public class WorkOfferEditFragment extends AbstractSwFragment{
 
 		spnType = new ChiaseListDialog(activity, getString(R.string.fragment_work_offer_edit_offer_type), WelfareFormatUtil.convertList2Map(holder.offerTypeList), txtOfferType, new ChiaseListDialog.OnItemClicked() {
 
-
 			@Override
-			public void onClicked(String selectedKey, boolean isSelected) {
+			public void onClicked(String selectedKey, boolean isSelected){
 				OnOfferTypeChangedUpdateLayout();
 			}
 		});
@@ -155,6 +158,7 @@ public class WorkOfferEditFragment extends AbstractSwFragment{
 			txtStartTime.setText(holder.offer.startTimeString);
 			txtEndDate.setText(CCStringUtil.toString(holder.offer.endDateString));
 			txtEndTime.setText(CCStringUtil.toString(holder.offer.endTimeString));
+			binding.switchSickAbsent.setChecked(holder.offer.sickAbsent);
 		}catch(JSONException e){
 			e.printStackTrace();
 		}

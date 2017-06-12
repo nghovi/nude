@@ -1,5 +1,6 @@
 package trente.asia.shiftworking.services.offer;
 
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +31,7 @@ import trente.asia.shiftworking.R;
 import trente.asia.shiftworking.common.activities.MainActivity;
 import trente.asia.shiftworking.common.defines.SwConst;
 import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
+import trente.asia.shiftworking.databinding.FragmentOfferDetailBinding;
 import trente.asia.shiftworking.services.offer.model.WorkOfferModel;
 import trente.asia.shiftworking.services.offer.view.ApproveHistoryAdapter;
 import trente.asia.welfare.adr.activity.WelfareActivity;
@@ -47,6 +49,7 @@ public class WorkOfferDetailFragment extends AbstractSwFragment{
 
 	private EditText					edtComment;
 	private String						activeOfferId;
+	private FragmentOfferDetailBinding	binding;
 
 	public void setActiveOfferId(String activeOfferId){
 		this.activeOfferId = activeOfferId;
@@ -55,7 +58,8 @@ public class WorkOfferDetailFragment extends AbstractSwFragment{
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 		if(mRootView == null){
-			mRootView = inflater.inflate(R.layout.fragment_offer_detail, container, false);
+			binding = DataBindingUtil.inflate(inflater, R.layout.fragment_offer_detail, container, false);
+			mRootView = binding.getRoot();
 		}
 		return mRootView;
 	}
@@ -157,6 +161,7 @@ public class WorkOfferDetailFragment extends AbstractSwFragment{
 		((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_start_date)).setText(offerModel.startDateString);
 		((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_end_date)).setText(offerModel.endDateString);
 		((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_note)).setText(offerModel.note);
+		binding.txtSickAbsent.setText(offerModel.sickAbsent ? "Yes" : "No");
 
 		if(WorkOfferModel.OFFER_TYPE_HOLIDAY_WORKING.equals(offer.offerType) || WorkOfferModel.OFFER_TYPE_OVERTIME.equals(offerModel.offerType) || WorkOfferModel.OFFER_TYPE_SHORT_TIME.equals(offerModel.offerType)){
 			((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_start_time)).setText(offerModel.startTimeString);

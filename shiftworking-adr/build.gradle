@@ -22,6 +22,10 @@ android {
         multiDexEnabled true
     }
 
+    dataBinding {
+        enabled = true
+    }
+
     productFlavors {
         develop {
             applicationId "trente.asia.shiftworking"

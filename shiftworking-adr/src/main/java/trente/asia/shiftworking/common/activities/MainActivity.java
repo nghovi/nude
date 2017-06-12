@@ -1,16 +1,16 @@
 package trente.asia.shiftworking.common.activities;
 
-import java.util.TimeZone;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.TimeZone;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCStringUtil;
@@ -171,7 +171,6 @@ public class MainActivity extends WelfareActivity{
 							}
 						}
 					});
-
 				}
 			}
 		}else{

@@ -1,200 +1,225 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:custom="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/chiase_white"
-              android:gravity="center_vertical"
-              android:orientation="vertical"
-              android:padding="0dp">
+<layout>
 
-    <include layout="@layout/view_common_header"/>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:custom="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/chiase_white"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:padding="0dp">
 
-    <ScrollView
-        style="@style/wf_common_match"
-        android:layout_weight="1">
+        <include layout="@layout/view_common_header" />
 
-        <LinearLayout
-            android:id="@+id/lnr_id_content"
-            style="@style/cs_common_match"
-            android:orientation="vertical"
-            android:paddingBottom="@dimen/margin_16dp"
-            android:paddingTop="@dimen/margin_16dp"
-            android:visibility="invisible">
-
-            <TextView
-                style="@style/wl_common_text"
-                android:layout_marginBottom="@dimen/margin_10dp"
-                android:paddingLeft="@dimen/margin_16dp"
-                android:paddingRight="@dimen/margin_16dp"
-                android:text="@string/fragment_offer_edit_header"/>
-
-            <View style="@style/cs_common_divider"/>
+        <ScrollView
+            style="@style/wf_common_match"
+            android:layout_weight="1">
 
             <LinearLayout
-                android:id="@+id/lnr_id_type"
-                style="@style/wf_common_item_linear2"
-                android:background="@drawable/state_common_selectable_row">
+                android:id="@+id/lnr_id_content"
+                style="@style/cs_common_match"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/margin_16dp"
+                android:paddingTop="@dimen/margin_16dp"
+                android:visibility="invisible">
 
                 <TextView
                     style="@style/wl_common_text"
-                    android:layout_width="wrap_content"
-                    android:text="@string/fragment_offer_edit_offer_type"/>
+                    android:layout_marginBottom="@dimen/margin_10dp"
+                    android:paddingLeft="@dimen/margin_16dp"
+                    android:paddingRight="@dimen/margin_16dp"
+                    android:text="@string/fragment_offer_edit_header" />
 
-                <trente.asia.android.view.ChiaseTextView
-                    android:id="@+id/txt_fragment_offer_edit_offer_type"
-                    style="@style/wl_common_edit_text2"
-                    android:layout_marginLeft="@dimen/margin_10dp"
-                    android:layout_weight="1"
-                    custom:mName="offerType"/>
-
-                <ImageView style="@style/sw_right_hand_arrow_image"/>
-
-            </LinearLayout>
-
-            <View style="@style/cs_common_divider"/>
-
-            <LinearLayout
-                android:id="@+id/lnr_start_date"
-                style="@style/wf_common_item_linear2"
-                android:background="@drawable/state_common_selectable_row">
-
-                <TextView
-                    style="@style/wl_common_text"
-                    android:layout_width="wrap_content"
-                    android:text="@string/fragment_offer_detail_start_date"/>
-
-                <trente.asia.android.view.ChiaseTextView
-                    android:id="@+id/txt_fragment_offer_edit_start_date"
-                    style="@style/wl_common_edit_text2"
-                    android:layout_marginLeft="@dimen/margin_10dp"
-                    android:layout_weight="1"
-                    custom:mName="startDateString"/>
-
-                <ImageView style="@style/sw_right_hand_arrow_image"/>
-
-
-            </LinearLayout>
-
-            <View style="@style/cs_common_divider"/>
-
-            <LinearLayout
-                android:id="@+id/lnr_start_time"
-                style="@style/cs_common_match_wrap"
-                android:background="@drawable/state_common_selectable_row"
-                android:orientation="vertical">
+                <View style="@style/cs_common_divider" />
 
                 <LinearLayout
-                    style="@style/wf_common_item_linear2">
+                    android:id="@+id/lnr_id_type"
+                    style="@style/wf_common_item_linear2"
+                    android:background="@drawable/state_common_selectable_row">
 
                     <TextView
                         style="@style/wl_common_text"
                         android:layout_width="wrap_content"
-                        android:text="@string/fragment_offer_detail_start_time"/>
+                        android:text="@string/fragment_offer_edit_offer_type" />
 
                     <trente.asia.android.view.ChiaseTextView
-                        android:id="@+id/txt_fragment_offer_edit_start_time"
+                        android:id="@+id/txt_fragment_offer_edit_offer_type"
                         style="@style/wl_common_edit_text2"
-                        android:layout_marginLeft="@dimen/margin_10dp"
+                        android:layout_marginStart="@dimen/margin_10dp"
                         android:layout_weight="1"
-                        android:enabled="false"
-                        custom:mName="startTimeString"/>
+                        custom:mName="offerType" />
 
-                    <ImageView style="@style/sw_right_hand_arrow_image"/>
+                    <ImageView style="@style/sw_right_hand_arrow_image" />
 
                 </LinearLayout>
 
-                <View style="@style/cs_common_divider"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/lnr_end_date"
-                style="@style/wf_common_item_linear2"
-                android:background="@drawable/state_common_selectable_row">
-
-                <TextView
-                    style="@style/wl_common_text"
-                    android:layout_width="wrap_content"
-                    android:text="@string/fragment_offer_detail_end_date"/>
-
-                <trente.asia.android.view.ChiaseTextView
-                    android:id="@+id/txt_fragment_offer_edit_end_date"
-                    style="@style/wl_common_edit_text2"
-                    android:layout_marginLeft="@dimen/margin_10dp"
-                    android:layout_weight="1"
-                    android:enabled="false"
-                    custom:mName="endDateString"/>
-
-                <ImageView style="@style/sw_right_hand_arrow_image"/>
-
-            </LinearLayout>
-
-            <View style="@style/cs_common_divider"/>
-
-            <LinearLayout
-                android:id="@+id/lnr_end_time"
-                style="@style/cs_common_match_wrap"
-                android:background="@drawable/state_common_selectable_row"
-                android:orientation="vertical">
+                <View style="@style/cs_common_divider" />
 
                 <LinearLayout
-                    style="@style/wf_common_item_linear2">
+                    android:id="@+id/lnr_start_date"
+                    style="@style/wf_common_item_linear2"
+                    android:background="@drawable/state_common_selectable_row">
 
                     <TextView
                         style="@style/wl_common_text"
                         android:layout_width="wrap_content"
-                        android:text="@string/fragment_offer_detail_end_time"/>
+                        android:text="@string/fragment_offer_detail_start_date" />
 
                     <trente.asia.android.view.ChiaseTextView
-                        android:id="@+id/txt_fragment_offer_edit_end_time"
+                        android:id="@+id/txt_fragment_offer_edit_start_date"
                         style="@style/wl_common_edit_text2"
-                        android:layout_marginLeft="@dimen/margin_10dp"
+                        android:layout_marginStart="@dimen/margin_10dp"
                         android:layout_weight="1"
-                        android:enabled="false"
-                        custom:mName="endTimeString"/>
+                        custom:mName="startDateString" />
 
-                    <ImageView style="@style/sw_right_hand_arrow_image"/>
+                    <ImageView style="@style/sw_right_hand_arrow_image" />
+
 
                 </LinearLayout>
 
-                <View style="@style/cs_common_divider"/>
-            </LinearLayout>
+                <View style="@style/cs_common_divider" />
 
-            <TextView
-                style="@style/wl_common_text"
-                android:layout_marginBottom="@dimen/margin_10dp"
-                android:layout_marginTop="@dimen/margin_10dp"
-                android:paddingLeft="@dimen/margin_16dp"
-                android:paddingRight="@dimen/margin_16dp"
-                android:text="@string/fragment_offer_detail_note"/>
+                <LinearLayout
+                    android:id="@+id/lnr_start_time"
+                    style="@style/cs_common_match_wrap"
+                    android:background="@drawable/state_common_selectable_row"
+                    android:orientation="vertical">
 
-            <View style="@style/cs_common_divider"/>
+                    <LinearLayout style="@style/wf_common_item_linear2">
 
-            <LinearLayout
-                style="@style/wf_common_item_linear2"
-                android:orientation="vertical">
+                        <TextView
+                            style="@style/wl_common_text"
+                            android:layout_width="wrap_content"
+                            android:text="@string/fragment_offer_detail_start_time" />
 
-                <trente.asia.android.view.ChiaseEditText
-                    android:id="@+id/edt_fragment_offer_edit_note"
-                    style="@style/wl_common_edit_text_multi_line2"
+                        <trente.asia.android.view.ChiaseTextView
+                            android:id="@+id/txt_fragment_offer_edit_start_time"
+                            style="@style/wl_common_edit_text2"
+                            android:layout_marginStart="@dimen/margin_10dp"
+                            android:layout_weight="1"
+                            android:enabled="false"
+                            custom:mName="startTimeString" />
+
+                        <ImageView style="@style/sw_right_hand_arrow_image" />
+
+                    </LinearLayout>
+
+                    <View style="@style/cs_common_divider" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/lnr_end_date"
+                    style="@style/wf_common_item_linear2"
+                    android:background="@drawable/state_common_selectable_row">
+
+                    <TextView
+                        style="@style/wl_common_text"
+                        android:layout_width="wrap_content"
+                        android:text="@string/fragment_offer_detail_end_date" />
+
+                    <trente.asia.android.view.ChiaseTextView
+                        android:id="@+id/txt_fragment_offer_edit_end_date"
+                        style="@style/wl_common_edit_text2"
+                        android:layout_marginStart="@dimen/margin_10dp"
+                        android:layout_weight="1"
+                        android:enabled="false"
+                        custom:mName="endDateString" />
+
+                    <ImageView style="@style/sw_right_hand_arrow_image" />
+
+                </LinearLayout>
+
+                <View style="@style/cs_common_divider" />
+
+                <LinearLayout
+                    android:id="@+id/lnr_end_time"
+                    style="@style/cs_common_match_wrap"
+                    android:background="@drawable/state_common_selectable_row"
+                    android:orientation="vertical">
+
+                    <LinearLayout style="@style/wf_common_item_linear2">
+
+                        <TextView
+                            style="@style/wl_common_text"
+                            android:layout_width="wrap_content"
+                            android:text="@string/fragment_offer_detail_end_time" />
+
+                        <trente.asia.android.view.ChiaseTextView
+                            android:id="@+id/txt_fragment_offer_edit_end_time"
+                            style="@style/wl_common_edit_text2"
+                            android:layout_marginStart="@dimen/margin_10dp"
+                            android:layout_weight="1"
+                            android:enabled="false"
+                            custom:mName="endTimeString" />
+
+                        <ImageView style="@style/sw_right_hand_arrow_image" />
+
+                    </LinearLayout>
+
+                    <View style="@style/cs_common_divider" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/lnr_sick_absent"
+                    style="@style/cs_common_match_wrap"
+                    android:background="@drawable/state_common_selectable_row"
+                    android:orientation="vertical">
+
+                    <LinearLayout style="@style/wf_common_item_linear2">
+
+                        <TextView
+                            style="@style/wl_common_text"
+                            android:layout_width="wrap_content"
+                            android:text="@string/fragment_offer_detail_sick_absent" />
+
+                        <trente.asia.android.view.ChiaseSwitch
+                            android:id="@+id/switch_sick_absent"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            custom:mName="sickAbsent" />
+                    </LinearLayout>
+
+                    <View style="@style/cs_common_divider" />
+                </LinearLayout>
+
+                <TextView
+                    style="@style/wl_common_text"
+                    android:layout_marginBottom="@dimen/margin_10dp"
                     android:layout_marginTop="@dimen/margin_10dp"
-                    android:inputType="textMultiLine"
-                    custom:mName="note"/>
+                    android:paddingLeft="@dimen/margin_16dp"
+                    android:paddingRight="@dimen/margin_16dp"
+                    android:text="@string/fragment_offer_detail_note" />
+
+                <View style="@style/cs_common_divider" />
+
+                <LinearLayout
+                    style="@style/wf_common_item_linear2"
+                    android:orientation="vertical">
+
+                    <trente.asia.android.view.ChiaseEditText
+                        android:id="@+id/edt_fragment_offer_edit_note"
+                        style="@style/wl_common_edit_text_multi_line2"
+                        android:layout_marginTop="@dimen/margin_10dp"
+                        android:inputType="textMultiLine"
+                        custom:mName="note" />
+                </LinearLayout>
+
+                <View style="@style/cs_common_divider" />
+
+                <Button
+                    android:id="@+id/btn_fragment_offer_detail_delete"
+                    style="@style/cs_common_button_delete"
+                    android:layout_marginLeft="@dimen/margin_26dp"
+                    android:layout_marginRight="@dimen/margin_26dp"
+                    android:layout_marginTop="@dimen/margin_10dp"
+                    android:text="@string/chiase_common_delete"
+                    android:visibility="gone" />
+
             </LinearLayout>
+        </ScrollView>
 
-            <View style="@style/cs_common_divider"/>
+        <!--<include layout="@layout/view_common_footer"/>-->
 
-            <Button
-                android:id="@+id/btn_fragment_offer_detail_delete"
-                style="@style/cs_common_button_delete"
-                android:layout_marginLeft="@dimen/margin_26dp"
-                android:layout_marginRight="@dimen/margin_26dp"
-                android:layout_marginTop="@dimen/margin_10dp"
-                android:text="@string/chiase_common_delete"
-                android:visibility="gone"/>
-
-        </LinearLayout>
-    </ScrollView>
-
-    <!--<include layout="@layout/view_common_footer"/>-->
-
-</LinearLayout>
+    </LinearLayout>
+</layout>

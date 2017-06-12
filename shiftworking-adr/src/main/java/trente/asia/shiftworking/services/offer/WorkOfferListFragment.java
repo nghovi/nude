@@ -1,21 +1,22 @@
 package trente.asia.shiftworking.services.offer;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCFormatUtil;
@@ -134,6 +135,7 @@ public class WorkOfferListFragment extends AbstractSwFragment{
 		JSONObject jsonObject = new JSONObject();
 		try{
 			jsonObject.put("targetUserId", prefAccUtil.getUserPref().key);
+			Log.e("WorkOfferList", "targetUserId" + prefAccUtil.getUserPref().key);
 			if(filters != null){
 				if(filters.containsKey(WorkOfferFilterFragment.DEPT)){
 					jsonObject.put("offerDept", filters.get(WorkOfferFilterFragment.DEPT));
@@ -145,7 +147,10 @@ public class WorkOfferListFragment extends AbstractSwFragment{
 					jsonObject.put("offerType", filters.get(WorkOfferFilterFragment.TYPE));
 				}
 			}
-			jsonObject.put("searchDateString", CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_YYYY_MM, monthView.workMonth));
+			jsonObject.put("searchDateString", CCFormatUtil.
+					formatDateCustom(WelfareConst.WF_DATE_TIME_YYYY_MM, monthView.workMonth));
+			Log.e("WorkOfferList", "searchDateString" + CCFormatUtil.formatDateCustom
+					(WelfareConst.WF_DATE_TIME_YYYY_MM, monthView.workMonth));
 		}catch(JSONException e){
 			e.printStackTrace();
 		}

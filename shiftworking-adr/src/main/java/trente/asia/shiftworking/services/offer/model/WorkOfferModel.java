@@ -37,4 +37,5 @@ public class WorkOfferModel{
 	public String				note;
 	public String				companyId;
 	public List<ApproveHistory>	listHistories;
+	public boolean				sickAbsent;
 }
