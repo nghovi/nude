@@ -1,16 +1,5 @@
 package trente.asia.shiftworking.services.worktime;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.location.Location;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -22,6 +11,17 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCCollectionUtil;
@@ -87,7 +87,7 @@ public class WorktimeCheckInFragment extends AbstractLocationFragment{
 																		}
 																	};
 
-	private boolean showCheckinTypesDialog(WorkingTimeModel model, ChiaseTextView displayedText){
+	private boolean showCheckinTypesDialog(final WorkingTimeModel model, ChiaseTextView displayedText){
 		dlgCheckinTypes = new CheckinTypesDialog(activity, getString(R.string.dlg_checkin_types_title), checkinTypeMap, displayedText, new ChiaseListDialog.OnItemClicked() {
 
 			@Override
