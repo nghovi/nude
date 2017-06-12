@@ -31,7 +31,7 @@ android {
             applicationId "trente.asia.shiftworking"
             manifestPlaceholders = [appName:"${APP_NAME} DEV"]
             buildConfigField "Boolean", "DEVELOP", "true"
-            buildConfigField "String", "HOST", "\"http://192.168.1.124:9000\""
+            buildConfigField "String", "HOST", "\"http://dev.trente.asia:9000\""
         }
         production {
             applicationId "trente.fukuri.shiftworking"
@@ -75,7 +75,7 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(path: ':welfare-android-core')
-    compile 'com.google.android.gms:play-services:10.2.6'
+
 //    compile 'com.google.maps.android:android-maps-utils:0.3.4'
     compile "com.daimajia.swipelayout:library:1.2.0@aar"
 }

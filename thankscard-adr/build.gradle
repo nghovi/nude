@@ -83,7 +83,7 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':welfare-android-core')
-    compile 'com.google.firebase:firebase-messaging:10.2.6'
 }
+
 apply plugin: 'com.google.gms.google-services'
 
