@@ -1,6 +1,7 @@
 package trente.asia.messenger.services.message;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
@@ -19,6 +20,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -872,9 +874,19 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
             case R.id.btn_stamp:
                 binding.layoutStamp.getRoot().setVisibility(View.VISIBLE);
                 mViewForMenuBehind.setVisibility(View.VISIBLE);
+                hideSoftKeyboard();
                 break;
             default:
                 break;
+        }
+    }
+
+    private void hideSoftKeyboard() {
+        View view = getActivity().getCurrentFocus();
+        if (view != null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(
+                    Context.INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
 

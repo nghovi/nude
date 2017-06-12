@@ -103,7 +103,9 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 		}
 
 		public void bind(final MessageViewHolder holder, final MessageContentModel item, final ItemMsgClickListener listener){
-			if(!WelfareConst.ITEM_TEXT_TYPE_TEXT.equals(item.messageType) && !WelfareConst.ITEM_TEXT_TYPE_LIKE.equals(item.messageType)){
+			if(!WelfareConst.ITEM_TEXT_TYPE_TEXT.equals(item.messageType)
+					&& !WelfareConst.ITEM_TEXT_TYPE_LIKE.equals(item.messageType)
+					&& !WelfareConst.ITEM_TEXT_TYPE_STAMP.equals(item.messageType)){
 				itemView.setOnClickListener(new View.OnClickListener() {
 
 					@Override

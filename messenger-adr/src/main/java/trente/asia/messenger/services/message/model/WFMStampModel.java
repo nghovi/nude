@@ -43,7 +43,7 @@ public class WFMStampModel extends Model{
 		this.stampName = stamp.stampName;
 		this.stampId = stamp.key;
 		this.stampKeyword = stamp.keyword;
-		this.stampUrl = stamp.attachment.fileUrl;
+		this.stampUrl = stamp.stampPath;
 		this.categoryId = stamp.categoryId;
 	}
 

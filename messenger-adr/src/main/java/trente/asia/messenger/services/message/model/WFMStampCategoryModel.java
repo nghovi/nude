@@ -38,7 +38,7 @@ public class WFMStampCategoryModel extends Model{
 		this.categoryId = category.key;
 		this.categoryName = category.categoryName;
 		this.categoryKey = category.categoryKey;
-		this.categoryUrl = category.attachment.fileUrl;
+		this.categoryUrl = category.categoryPath;
 	}
 
 	public static WFMStampCategoryModel get(String categoryId) {
