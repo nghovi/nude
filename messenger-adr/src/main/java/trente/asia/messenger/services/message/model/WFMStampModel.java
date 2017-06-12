@@ -3,6 +3,7 @@ package trente.asia.messenger.services.message.model;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
 
 import java.util.List;
@@ -59,6 +60,10 @@ public class WFMStampModel extends Model{
 			return null;
 		}
 		return stamps.get(0);
+	}
+
+	public static void deleteAll() {
+		new Delete().from(WFMStampModel.class).execute();
 	}
 
 	public static List<WFMStampModel> getRecommendStamps(String keyword) {

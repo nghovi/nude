@@ -1,6 +1,8 @@
 package trente.asia.messenger.services.user;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +14,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import trente.asia.messenger.R;
+import trente.asia.messenger.commons.defines.MsConst;
 import trente.asia.messenger.fragment.AbstractMsgFragment;
+import trente.asia.messenger.services.message.model.WFMStampCategoryModel;
+import trente.asia.messenger.services.message.model.WFMStampModel;
 import trente.asia.messenger.services.setting.MsContactUsFragment;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
@@ -116,10 +121,17 @@ public class MsgSettingFragment extends AbstractMsgFragment implements View.OnCl
 		if(WfUrlConst.WF_ACC_0004.equals(url)){
 			Toast.makeText(activity, "Signed out successfully", Toast.LENGTH_LONG).show();
 			gotoSignIn();
-
+            clearAllStamps();
 		}else{
 			super.successUpdate(response, url);
 		}
 	}
+
+	private void clearAllStamps() {
+        WFMStampCategoryModel.deleteAll();
+        WFMStampModel.deleteAll();
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        sharedPreferences.edit().remove(MsConst.MESSAGE_STAMP_LAST_UPDATE_DATE).apply();
+    }
 
 }

@@ -1111,6 +1111,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
     public void onStampClick(WFMStampModel stamp) {
         sendMessage(WelfareConst.ITEM_TEXT_TYPE_STAMP, stamp.stampId, null, null);
         binding.layoutStamp.getRoot().setVisibility(View.GONE);
+        mViewForMenuBehind.setVisibility(View.GONE);
     }
 
     @Override
@@ -1155,6 +1156,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 
     @Override
     protected void onClickBackBtn() {
+        log("onClickBackBtn");
         if (messageView.buttonType == MessageView.ButtonType.MENU_OPENED) {
             onButtonMenuOpenedClicked();
         } else {
@@ -1164,6 +1166,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 
     @Override
     public void onClickDeviceBackButton() {
+        log("onClickDeviceBackButton");
         binding.layoutRecommendStamp.getRoot().setVisibility(View.GONE);
         binding.layoutStamp.getRoot().setVisibility(View.GONE);
         mViewForMenuBehind.setVisibility(View.GONE);
