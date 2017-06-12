@@ -189,11 +189,12 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 					viewHolder.txtContent.setText(contentModel.messageContent);
 				}
 			}else if(WelfareConst.ITEM_TEXT_TYPE_LIKE.equals(contentModel.messageType)){
-
+				Picasso.with(mContext).load(R.drawable.wf_good).into(viewHolder.imgIcon);
 			} else if (WelfareConst.ITEM_TEXT_TYPE_STAMP.equals(contentModel.messageType)) {
                 WFMStampModel stamp = WFMStampModel.get(contentModel.messageContent);
 				if (stamp != null) {
 					Picasso.with(mContext).load(BuildConfig.HOST + stamp.stampUrl)
+							.resize(WelfareUtil.dpToPx(80), WelfareUtil.dpToPx(80))
 							.into(viewHolder.imgIcon);
 				}
             }else{
