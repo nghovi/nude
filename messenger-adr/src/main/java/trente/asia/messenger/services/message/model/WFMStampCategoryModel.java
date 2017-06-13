@@ -45,6 +45,9 @@ public class WFMStampCategoryModel extends Model{
 		List<WFMStampCategoryModel> categories = new Select().from(WFMStampCategoryModel.class)
 				.where("category_id = ?", categoryId)
 				.execute();
+		if (categories.size() == 0) {
+			return null;
+		}
 		return  categories.get(0);
 	}
 

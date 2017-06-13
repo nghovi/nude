@@ -615,7 +615,6 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
     private void saveStamps(JSONObject response) {
         List<SSStampCategoryModel> stampCategories = CCJsonUtil.convertToModelList(response.optString("stampCategories"), SSStampCategoryModel.class);
         String lastUpdateDate = response.optString("lastUpdateDate");
-        Log.e("MessageFragment", "save lastUpdateDate = " + lastUpdateDate);
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         preferences.edit().putString(MsConst.MESSAGE_STAMP_LAST_UPDATE_DATE, lastUpdateDate).apply();
 
@@ -626,7 +625,10 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
                     wfmStampCategory.delete();
                 }
             } else {
-                new WFMStampCategoryModel(stampCategory).save();
+                WFMStampCategoryModel wfmStampCategory = WFMStampCategoryModel.get(stampCategory.key);
+                if (wfmStampCategory == null) {
+                    new WFMStampCategoryModel(stampCategory).save();
+                }
                 for (SSStampModel stamp : stampCategory.stamps) {
                     if (stamp.deleteFlag) {
                         WFMStampModel wfStamp = WFMStampModel.get(stamp.key);
@@ -634,7 +636,10 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
                             wfStamp.delete();
                         }
                     } else {
-                        new WFMStampModel(stamp).save();
+                        WFMStampModel wfStamp = WFMStampModel.get(stamp.key);
+                        if (wfStamp == null) {
+                            new WFMStampModel(stamp).save();
+                        }
                     }
                 }
             }
@@ -645,7 +650,9 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
         for (WFMStampCategoryModel wfmStampCategory : mStampCategories) {
             wfmStampCategory.stamps = WFMStampModel.getAll(wfmStampCategory.categoryId);
         }
-        stampAdapter.setStamps(mStampCategories.get(0).stamps);
+        if (!mStampCategories.isEmpty()) {
+            stampAdapter.setStamps(mStampCategories.get(0).stamps);
+        }
     }
 
     private void log(String msg) {
