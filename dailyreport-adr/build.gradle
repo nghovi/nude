@@ -19,19 +19,6 @@ android {
         versionName "2.0"
         multiDexEnabled true
 
-        jackOptions {
-            enabled true
-            additionalParameters('jack.incremental': 'true')
-        }
-    }
-
-    dexOptions {
-        javaMaxHeapSize "4g"
-    }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     productFlavors {
