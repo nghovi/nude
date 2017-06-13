@@ -44,6 +44,6 @@ dependencies {
     compile 'com.commit451:PhotoView:1.2.4'
 
     apt 'com.bluelinelabs:logansquare-compiler:1.3.6'
-    annotationProcessor 'com.bluelinelabs:logansquare-compiler:1.3.6'
     compile 'com.bluelinelabs:logansquare:1.3.6'
+
 }
