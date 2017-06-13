@@ -292,7 +292,7 @@ public class MessageDetailFragment extends AbstractMsgFragment implements View.O
 						mLnrFile.setVisibility(View.GONE);
 
 						if(messageModel.thumbnailAttachment != null && !CCStringUtil.isEmpty(messageModel.thumbnailAttachment.fileUrl)){
-							WfPicassoHelper.loadImageNoFit(activity, host + messageModel.thumbnailAttachment.fileUrl, mImgThumbnail, null);
+							WfPicassoHelper.loadImage(activity, host + messageModel.thumbnailAttachment.fileUrl, mImgThumbnail, null);
 						}
 
 						if(WelfareConst.ITEM_FILE_TYPE_MOVIE.equals(messageModel.messageType)){

@@ -40,7 +40,7 @@ public class WfPicassoHelper{
 
 		if(pgrLoading != null) pgrLoading.setVisibility(View.VISIBLE);
 
-		Picasso.with(context).load(imageUrl).fit().into(imageView, new Callback.EmptyCallback() {
+		Picasso.with(context).load(imageUrl).into(imageView, new Callback.EmptyCallback() {
 
 			@Override
 			public void onSuccess(){
@@ -55,7 +55,7 @@ public class WfPicassoHelper{
 	}
 
 
-	public static void loadImageNoFit(Context context, String imageUrl, final ImageView imageView, final ProgressBar pgrLoading){
+	public static void loadImageFit(Context context, String imageUrl, final ImageView imageView, final ProgressBar pgrLoading){
 
 		if(context == null || CCStringUtil.isEmpty(imageUrl) || imageView == null){
 			return;
@@ -66,7 +66,7 @@ public class WfPicassoHelper{
 
 		if(pgrLoading != null) pgrLoading.setVisibility(View.VISIBLE);
 
-		Picasso.with(context).load(imageUrl).into(imageView, new Callback.EmptyCallback() {
+		Picasso.with(context).load(imageUrl).fit().into(imageView, new Callback.EmptyCallback() {
 
 			@Override
 			public void onSuccess(){
