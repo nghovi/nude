@@ -42,22 +42,31 @@ public class CustomerEditCardAdapter extends RecyclerView.Adapter<ViewHolder>{
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        BusinessCardModel card = cards.get(position);
+        final BusinessCardModel card = cards.get(position);
         binding = (CardItemCustomerEditBinding) holder.getBinding();
         binding.setVariable(BR.card, card);
         binding.executePendingBindings();
         WfPicassoHelper.loadImage(context, BuildConfig.HOST + card.attachment.fileUrl,
                 binding.card, null);
-        binding.btnUngroup.setOnClickListener((View v) -> {
-            callback.ungroupCard(card);
-            removeCard(card);
+        binding.btnUngroup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                callback.ungroupCard(card);
+                removeCard(card);
+            }
+        } );
+        binding.btnDeleteCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                callback.deleteCard(card);
+                removeCard(card);
+            }
         });
-        binding.btnDeleteCard.setOnClickListener((View v) -> {
-            callback.deleteCard(card);
-            removeCard(card);
-        });
-        binding.rltCard.setOnClickListener((View v) -> {
-            callback.onCardItemClick(card.key);
+        binding.rltCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                callback.onCardItemClick(card.key);
+            }
         });
     }
 

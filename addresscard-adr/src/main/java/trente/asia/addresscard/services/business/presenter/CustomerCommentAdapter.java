@@ -36,13 +36,16 @@ public class CustomerCommentAdapter extends RecyclerView.Adapter<ViewHolder> {
     public void onBindViewHolder(ViewHolder holder, int position) {
         CommentItemCustomerDetailBinding binding =
                 (CommentItemCustomerDetailBinding) holder.getBinding();
-        CommentModel comment = comments.get(position);
+        final CommentModel comment = comments.get(position);
         binding.setVariable(BR.comment, comment);
         binding.executePendingBindings();
-        binding.btnDeleteComment.setOnClickListener((View v) -> {
-            callback.deleteComment(comment.key);
-            comments.remove(comment);
-            notifyDataSetChanged();
+        binding.btnDeleteComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                callback.deleteComment(comment.key);
+                comments.remove(comment);
+                notifyDataSetChanged();
+            }
         });
     }
 

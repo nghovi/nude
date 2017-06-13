@@ -43,7 +43,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        CategoryModel category = categories.get(position);
+        final CategoryModel category = categories.get(position);
         CategoryItemBinding binding = (CategoryItemBinding) holder.getBinding();
         binding.setVariable(BR.category, category);
         binding.executePendingBindings();
@@ -52,8 +52,11 @@ public class CategoryAdapter extends RecyclerView.Adapter<ViewHolder> {
         loadImage(binding.customer2, 2, category.customers);
         loadImage(binding.customer3, 3, category.customers);
 
-        binding.getRoot().setOnClickListener((View v) -> {
+        binding.getRoot().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 callback.onItemClick(category.key);
+            }
         });
     }
 

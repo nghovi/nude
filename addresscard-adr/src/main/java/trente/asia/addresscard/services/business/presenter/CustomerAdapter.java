@@ -45,7 +45,7 @@ public class CustomerAdapter extends RecyclerView.Adapter<ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        CustomerModel customer = customers.get(position);
+        final CustomerModel customer = customers.get(position);
         binding = (CustomerRowItemBinding) holder.getBinding();
         binding.setVariable(BR.customer, customer);
         binding.executePendingBindings();
@@ -56,8 +56,11 @@ public class CustomerAdapter extends RecyclerView.Adapter<ViewHolder> {
         loadCardImage(binding.card2, 1, customer.cards);
 
         View view = binding.getRoot();
-        view.setOnClickListener((View v) -> {
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 callback.onItemClick(customer.key);
+            }
         });
     }
 
