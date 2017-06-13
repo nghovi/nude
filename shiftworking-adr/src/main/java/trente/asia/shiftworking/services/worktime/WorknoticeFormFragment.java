@@ -145,7 +145,7 @@ public class WorknoticeFormFragment extends AbstractSwFragment {
         }
 
         if (notice.attachment != null && !CCStringUtil.isEmpty(notice.attachment.fileUrl)) {
-            WfPicassoHelper.loadImageNoFit(activity, BuildConfig.HOST + notice.attachment.fileUrl, imgPhoto, null);
+            WfPicassoHelper.loadImage(activity, BuildConfig.HOST + notice.attachment.fileUrl, imgPhoto, null);
         } else {
             LinearLayout lnrPhoto = (LinearLayout) getView().findViewById(R.id.lnr_id_photo);
             lnrPhoto.setVisibility(View.GONE);
