@@ -38,12 +38,15 @@ public class CustomerDialogAdapter extends RecyclerView.Adapter<ViewHolder>{
 
 	@Override
 	public void onBindViewHolder(ViewHolder holder, int position){
-		CustomerModel customer = list.get(position);
+		final CustomerModel customer = list.get(position);
 		CustomerDialogItemBinding binding = (CustomerDialogItemBinding)holder.getBinding();
 		binding.setVariable(BR.customer, customer);
 		binding.executePendingBindings();
-		binding.getRoot().setOnClickListener((View v) -> {
-			callback.onSelectCustomer(customer);
+		binding.getRoot().setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				callback.onSelectCustomer(customer);
+			}
 		});
         binding.iconRight.setVisibility(
                 customer.key == selectedCustomerId ? View.VISIBLE : View.INVISIBLE);

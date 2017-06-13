@@ -45,8 +45,8 @@ public class CategoryEditCustomerAdapter extends RecyclerView.Adapter<ViewHolder
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        CustomerModel customer = allCustomers.get(position);
-        CustomerCategoryItemBinding binding = (CustomerCategoryItemBinding) holder.getBinding();
+        final CustomerModel customer = allCustomers.get(position);
+        final CustomerCategoryItemBinding binding = (CustomerCategoryItemBinding) holder.getBinding();
         binding.setVariable(BR.customer, customer);
         binding.executePendingBindings();
         WfPicassoHelper.loadImageWithDefaultIcon(context, BuildConfig.HOST, binding.customerLogo,
@@ -57,14 +57,17 @@ public class CategoryEditCustomerAdapter extends RecyclerView.Adapter<ViewHolder
             binding.imageCheckbox.setVisibility(View.INVISIBLE);
         }
 
-        binding.getRoot().setOnClickListener((View v) -> {
-            int index = selectedCustomerIds.indexOf(customer.key);
-            if (index >= 0) {
-                selectedCustomerIds.remove(index);
-                binding.imageCheckbox.setVisibility(View.INVISIBLE);
-            } else {
-                selectedCustomerIds.add(customer.key);
-                binding.imageCheckbox.setVisibility(View.VISIBLE);
+        binding.getRoot().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int index = selectedCustomerIds.indexOf(customer.key);
+                if (index >= 0) {
+                    selectedCustomerIds.remove(index);
+                    binding.imageCheckbox.setVisibility(View.INVISIBLE);
+                } else {
+                    selectedCustomerIds.add(customer.key);
+                    binding.imageCheckbox.setVisibility(View.VISIBLE);
+                }
             }
         });
     }

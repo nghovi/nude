@@ -58,13 +58,18 @@ public class CardAdapter extends RecyclerView.Adapter<ViewHolder> {
             binding.lastUpdateUser.setVisibility(View.GONE);
         }
         View view = binding.getRoot();
-        view.setOnLongClickListener((View v) -> {
+        view.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
                 card.setBackground(true);
                 selectedCards.add(card);
                 callback.onItemLongClickListener();
                 return true;
+            }
         });
-        view.setOnClickListener((View v) -> {
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 if (selectedCards.isEmpty()) {
                     callback.onItemClick(card);
                     return;
@@ -80,6 +85,7 @@ public class CardAdapter extends RecyclerView.Adapter<ViewHolder> {
                     card.setBackground(true);
                     selectedCards.add(card);
                 }
+            }
         });
     }
 

@@ -41,12 +41,15 @@ public class CustomerDetailCardAdapter extends RecyclerView.Adapter<ViewHolder>{
 
 	@Override
 	public void onBindViewHolder(ViewHolder holder, int position){
-		BusinessCardModel card = cards.get(position);
+		final BusinessCardModel card = cards.get(position);
 		binding = (CardItemCustomerDetailBinding)holder.getBinding();
 		binding.setVariable(BR.card, card);
 		binding.executePendingBindings();
-		binding.rltCard.setOnClickListener((View v) -> {
-            callback.onCardClick(card.key);
+		binding.rltCard.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				callback.onCardClick(card.key);
+			}
 		});
 		WfPicassoHelper.loadImage(context, BuildConfig.HOST + card.attachment.fileUrl, binding.card, null);
 	}
