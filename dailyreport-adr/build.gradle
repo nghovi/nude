@@ -18,9 +18,7 @@ android {
         versionCode 1
         versionName "2.0"
         multiDexEnabled true
-
     }
-
     productFlavors {
         develop {
             applicationId "trente.asia.dailyreport"
