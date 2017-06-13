@@ -1,42 +1,56 @@
 package trente.asia.shiftworking.services.offer;
 
-import java.util.Map;
-
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import trente.asia.android.activity.ChiaseActivity;
 import trente.asia.android.view.ChiaseListDialog;
 import trente.asia.android.view.ChiaseTextView;
 import trente.asia.shiftworking.R;
 import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
+import trente.asia.shiftworking.databinding.FragmentOfferFilterBinding;
 
-public class WorkOfferFilterFragment extends AbstractSwFragment{
+public class WorkOfferFilterFragment extends AbstractSwFragment {
 
-	public static final String	TYPE	= "TYPE";
-	public static final String	STATUS	= "STATUS";
-	public static final String	DEPT	= "DEPT";
+	public static final String TYPE = "TYPE";
+	public static final String STATUS = "STATUS";
+	public static final String DEPT = "DEPT";
+	public static final String SICK_ABSENT = "SICK_ABSENT";
 
-	private LinearLayout		lnrType;
-	private LinearLayout		lnrStatus;
-	private LinearLayout		lnrDept;
+	private LinearLayout lnrType;
+	private LinearLayout lnrStatus;
+	private LinearLayout lnrDept;
+	private FragmentOfferFilterBinding binding;
 
-	private ChiaseListDialog	dlgType;
-	private ChiaseListDialog	dlgStatus;
-	private ChiaseListDialog	dlgDept;
-	private ChiaseTextView		txtType;
-	private ChiaseTextView		txtStatus;
-	private ChiaseTextView		txtDept;
+	private ChiaseListDialog dlgType;
+	private ChiaseListDialog dlgStatus;
+	private ChiaseListDialog dlgDept;
+	private ChiaseListDialog dlgSickAbsent;
+	private ChiaseTextView txtType;
+	private ChiaseTextView txtStatus;
+	private ChiaseTextView txtDept;
 
-	private String					selectedType;
-	private String					selectedStatus;
-	private String					selectedDept;
-	private Map<String, String>	depts;
-	private Map<String, String>	offerTypesMaster;
-	private Map<String, String>	offerStatusMaster;
+	private String selectedType;
+	private String selectedStatus;
+	private String selectedDept;
+	private String selectedSickAbsentFilter;
+	private Map<String, String> depts;
+	private Map<String, String> offerTypesMaster;
+	private Map<String, String> offerStatusMaster;
+	public static Map<String, String> sickAbsentFilters = new LinkedHashMap<>();
+
+	static {
+		sickAbsentFilters.put("All","All");
+		sickAbsentFilters.put("1","Yes");
+		sickAbsentFilters.put("0","No");
+	}
 
 	public void setOfferTypeStatusMaster(Map<String, String> offerTypesMaster, Map<String, String> offerStatusMaster){
 		this.offerTypesMaster = offerTypesMaster;
@@ -48,12 +62,13 @@ public class WorkOfferFilterFragment extends AbstractSwFragment{
 		depts = offerDepts;
 	}
 
-	private Map<String, String>	filters;
+	private Map<String, String> filters;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 		if(mRootView == null){
-			mRootView = inflater.inflate(R.layout.fragment_offer_filter, container, false);
+			binding = DataBindingUtil.inflate(inflater, R.layout.fragment_offer_filter, container, false);
+			mRootView = binding.getRoot();
 		}
 		return mRootView;
 	}
@@ -77,6 +92,7 @@ public class WorkOfferFilterFragment extends AbstractSwFragment{
 		lnrType.setOnClickListener(this);
 		lnrStatus.setOnClickListener(this);
 		lnrDept.setOnClickListener(this);
+		binding.lnrIdOfferSickAbsent.setOnClickListener(this);
 
 		getView().findViewById(R.id.btn_fragment_filter_clear).setOnClickListener(this);
 		getView().findViewById(R.id.btn_fragment_filter_update).setOnClickListener(this);
@@ -129,6 +145,17 @@ public class WorkOfferFilterFragment extends AbstractSwFragment{
 				selectedDept = selectedKey;
 			}
 		});
+
+		selectedSickAbsentFilter = filters.get(SICK_ABSENT);
+		binding.txtFragmentOfferFilterSickAbsent.setText(sickAbsentFilters.get(selectedSickAbsentFilter));
+		binding.txtFragmentOfferFilterSickAbsent.setValue(selectedSickAbsentFilter);
+		dlgSickAbsent = new ChiaseListDialog(activity, getString(R.string.fragment_offer_detail_sick_absent),
+				sickAbsentFilters, binding.txtFragmentOfferFilterSickAbsent, new ChiaseListDialog.OnItemClicked() {
+			@Override
+			public void onClicked(String selectedKey, boolean isSelected){
+				selectedSickAbsentFilter = selectedKey;
+			}
+		});
 	}
 
 	@Override
@@ -162,6 +189,9 @@ public class WorkOfferFilterFragment extends AbstractSwFragment{
 		case R.id.lnr_id_offer_dept:
 			dlgDept.show();
 			break;
+		case R.id.lnr_id_offer_sick_absent:
+			dlgSickAbsent.show();
+			break;
 		default:
 			break;
 		}
@@ -171,5 +201,6 @@ public class WorkOfferFilterFragment extends AbstractSwFragment{
 		filters.put(TYPE, selectedType);
 		filters.put(STATUS, selectedStatus);
 		filters.put(DEPT, selectedDept);
+		filters.put(SICK_ABSENT, selectedSickAbsentFilter);
 	}
 }

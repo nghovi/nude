@@ -161,7 +161,16 @@ public class WorkOfferDetailFragment extends AbstractSwFragment{
 		((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_start_date)).setText(offerModel.startDateString);
 		((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_end_date)).setText(offerModel.endDateString);
 		((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_note)).setText(offerModel.note);
-		binding.txtSickAbsent.setText(offerModel.sickAbsent ? "Yes" : "No");
+
+		if(WorkOfferModel.OFFER_TYPE_PAID_VACATION_ALL.equals(offerModel.offerType) ||
+				WorkOfferModel.OFFER_TYPE_PAID_VACATION_MORNING.equals(offerModel.offerType) ||
+				WorkOfferModel.OFFER_TYPE_PAID_VACATION_AFTERNOON.equals(offerModel.offerType) ||
+				WorkOfferModel.OFFER_TYPE_COMPENSATORY_HOLIDAY.equals(offerModel.offerType)){
+			binding.lnrSickAbsent.setVisibility(View.VISIBLE);
+			binding.txtSickAbsent.setText(offerModel.sickAbsent ? "Yes" : "No");
+		} else {
+			binding.lnrSickAbsent.setVisibility(View.INVISIBLE);
+		}
 
 		if(WorkOfferModel.OFFER_TYPE_HOLIDAY_WORKING.equals(offer.offerType) || WorkOfferModel.OFFER_TYPE_OVERTIME.equals(offerModel.offerType) || WorkOfferModel.OFFER_TYPE_SHORT_TIME.equals(offerModel.offerType)){
 			((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_start_time)).setText(offerModel.startTimeString);

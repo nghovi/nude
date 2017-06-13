@@ -8,9 +8,15 @@ import java.util.List;
 
 public class WorkOfferModel{
 
-	public static final String	OFFER_TYPE_OVERTIME			= "OTW";
-	public static final String	OFFER_TYPE_HOLIDAY_WORKING	= "HDW";
-	public static final String	OFFER_TYPE_SHORT_TIME		= "STO";
+	public static final String	OFFER_TYPE_OVERTIME					= "OTW";
+	public static final String	OFFER_TYPE_HOLIDAY_WORKING			= "HDW";
+	public static final String	OFFER_TYPE_SHORT_TIME				= "STO";
+	public static final String	OFFER_TYPE_PAID_VACATION_ALL		= "PVAL";
+	public static final String	OFFER_TYPE_PAID_VACATION_MORNING	= "PVMO";
+	public static final String	OFFER_TYPE_PAID_VACATION_AFTERNOON	= "PVAF";
+	public static final String	OFFER_TYPE_SPECIAL_HOLIDAY			= "SPH";
+	public static final String	OFFER_TYPE_COMPENSATORY_HOLIDAY		= "CPH";
+	public static final String	OFFER_TYPE_ABSENT					= "ABS";
 
 	public WorkOfferModel(){
 	}

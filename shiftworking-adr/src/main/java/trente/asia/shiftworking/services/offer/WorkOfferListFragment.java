@@ -38,7 +38,7 @@ public class WorkOfferListFragment extends AbstractSwFragment{
 	private List<WorkOfferModel>	offers;
 	private ListView				mLstOffer;
 	private CommonMonthView			monthView;
-	private Map<String, String>	filters;
+	private Map<String, String>		filters;
 	private TextView				txtFilterDesc;
 	private Map<String, String>		offerTypesMaster;
 	private Map<String, String>		offerStatusMaster;
@@ -69,23 +69,26 @@ public class WorkOfferListFragment extends AbstractSwFragment{
 	public void onActivityCreated(Bundle savedInstanceState){
 		super.onActivityCreated(savedInstanceState);
 		if(filters != null){
-            String filterType = getString(R.string.chiase_common_all);
-            if(filters.containsKey(WorkOfferFilterFragment.TYPE)){
-                filterType = offerTypesMaster.get(filters.get(WorkOfferFilterFragment.TYPE));
-            }
+			String filterType = getString(R.string.chiase_common_all);
+			if(filters.containsKey(WorkOfferFilterFragment.TYPE)){
+				filterType = offerTypesMaster.get(filters.get(WorkOfferFilterFragment.TYPE));
+			}
 			String filterStatus = getString(R.string.chiase_common_all);
-            if(filters.containsKey(WorkOfferFilterFragment.STATUS)){
-                filterStatus = offerStatusMaster.get(filters.get(WorkOfferFilterFragment.STATUS));
-            }
+			if(filters.containsKey(WorkOfferFilterFragment.STATUS)){
+				filterStatus = offerStatusMaster.get(filters.get(WorkOfferFilterFragment.STATUS));
+			}
 			String filterDept = getString(R.string.chiase_common_all);
-            if(filters.containsKey(WorkOfferFilterFragment.DEPT)){
-                filterDept = offerDepts.get(filters.get(WorkOfferFilterFragment.DEPT));
-            }
-			String filtersDesc = filterType + " - " + filterStatus + " - " + filterDept;
+			if(filters.containsKey(WorkOfferFilterFragment.DEPT)){
+				filterDept = offerDepts.get(filters.get(WorkOfferFilterFragment.DEPT));
+			}
+			String filterSickAbsent = WorkOfferFilterFragment.sickAbsentFilters
+					.get(filters.get(WorkOfferFilterFragment.SICK_ABSENT));
+			String filtersDesc = filterType + " - " + filterStatus + " - " + filterDept + " - " + filterSickAbsent;
 			txtFilterDesc.setText(getString(R.string.sw_work_offer_list_filter, filtersDesc));
 		}else{
 			txtFilterDesc.setText(getString(R.string.chiase_common_none));
 			filters = new HashMap<>();
+			filters.put(WorkOfferFilterFragment.SICK_ABSENT, "All");
 		}
 	}
 
@@ -146,11 +149,16 @@ public class WorkOfferListFragment extends AbstractSwFragment{
 				if(filters.containsKey(WorkOfferFilterFragment.TYPE)){
 					jsonObject.put("offerType", filters.get(WorkOfferFilterFragment.TYPE));
 				}
+
+				if(filters.containsKey(WorkOfferFilterFragment.SICK_ABSENT)){
+					String sickAbsentFilter = filters.get(WorkOfferFilterFragment.SICK_ABSENT);
+					if(sickAbsentFilter != null && !sickAbsentFilter.equals("All")){
+						jsonObject.put("sickAbsent", sickAbsentFilter);
+					}
+				}
 			}
-			jsonObject.put("searchDateString", CCFormatUtil.
-					formatDateCustom(WelfareConst.WF_DATE_TIME_YYYY_MM, monthView.workMonth));
-			Log.e("WorkOfferList", "searchDateString" + CCFormatUtil.formatDateCustom
-					(WelfareConst.WF_DATE_TIME_YYYY_MM, monthView.workMonth));
+			jsonObject.put("searchDateString", CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_YYYY_MM, monthView.workMonth));
+			Log.e("WorkOfferList", "searchDateString" + CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_YYYY_MM, monthView.workMonth));
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
@@ -159,26 +167,26 @@ public class WorkOfferListFragment extends AbstractSwFragment{
 
 	@Override
 	protected void successLoad(JSONObject response, String url){
-        if(SwConst.API_OFFER_LIST.equals(url)){
-            offers = CCJsonUtil.convertToModelList(response.optString("myOffers"), WorkOfferModel.class);
-            otherOffers = CCJsonUtil.convertToModelList(response.optString("otherOffers"), WorkOfferModel.class);
-            offerTypesMaster = buildOfferTypeMaster(activity, response);
-            offerStatusMaster = buildOfferStatusMaster(response);
-            offerDepts = buildOfferDepts(activity, response);
+		if(SwConst.API_OFFER_LIST.equals(url)){
+			offers = CCJsonUtil.convertToModelList(response.optString("myOffers"), WorkOfferModel.class);
+			otherOffers = CCJsonUtil.convertToModelList(response.optString("otherOffers"), WorkOfferModel.class);
+			offerTypesMaster = buildOfferTypeMaster(activity, response);
+			offerStatusMaster = buildOfferStatusMaster(response);
+			offerDepts = buildOfferDepts(activity, response);
 
-            if(filters == null || filters.isEmpty()){
-                String filtersDesc = getString(R.string.chiase_common_all) + " - " + getString(R.string.chiase_common_all) + " - " + getString(R.string.chiase_common_all);
-                txtFilterDesc.setText(getString(R.string.sw_work_offer_list_filter, filtersDesc));
-            }
+			if(filters == null || filters.isEmpty()){
+				String filtersDesc = getString(R.string.chiase_common_all) + " - " + getString(R.string.chiase_common_all) + " - " + getString(R.string.chiase_common_all) + " - " + getString(R.string.chiase_common_all);
+				txtFilterDesc.setText(getString(R.string.sw_work_offer_list_filter, filtersDesc));
+			}
 
-            adapterOther = new WorkOfferAdapter(activity, otherOffers);
-            mLstOfferOther.setAdapter(adapterOther);
+			adapterOther = new WorkOfferAdapter(activity, otherOffers);
+			mLstOfferOther.setAdapter(adapterOther);
 
-            adapter = new WorkOfferAdapter(activity, offers);
-            mLstOffer.setAdapter(adapter);
-        }else {
-            super.successLoad(response, url);
-        }
+			adapter = new WorkOfferAdapter(activity, offers);
+			mLstOffer.setAdapter(adapter);
+		}else{
+			super.successLoad(response, url);
+		}
 	}
 
 	private Map<String, String> buildOfferDepts(Context context, JSONObject response){
@@ -194,13 +202,13 @@ public class WorkOfferListFragment extends AbstractSwFragment{
 
 	public Map<String, String> buildOfferTypeMaster(Context context, JSONObject response){
 		List<ApiObjectModel> lstType = CCJsonUtil.convertToModelList(response.optString("offerTypeList"), ApiObjectModel.class);
-        lstType.add(0, new ApiObjectModel(CCConst.NONE, getString(R.string.chiase_common_all)));
-        return WelfareFormatUtil.convertList2Map(lstType);
+		lstType.add(0, new ApiObjectModel(CCConst.NONE, getString(R.string.chiase_common_all)));
+		return WelfareFormatUtil.convertList2Map(lstType);
 	}
 
 	public Map<String, String> buildOfferStatusMaster(JSONObject response){
 		Map<String, String> offerStatusMaster = new LinkedHashMap<>();
-        List<ApiObjectModel> lstStatus = CCJsonUtil.convertToModelList(response.optString("offerStatusList"), ApiObjectModel.class);
+		List<ApiObjectModel> lstStatus = CCJsonUtil.convertToModelList(response.optString("offerStatusList"), ApiObjectModel.class);
 		lstStatus.add(0, new ApiObjectModel(CCConst.NONE, getString(R.string.chiase_common_all)));
 		return WelfareFormatUtil.convertList2Map(lstStatus);
 	}

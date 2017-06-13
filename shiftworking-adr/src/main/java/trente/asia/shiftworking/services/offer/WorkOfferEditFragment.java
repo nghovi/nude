@@ -158,7 +158,15 @@ public class WorkOfferEditFragment extends AbstractSwFragment{
 			txtStartTime.setText(holder.offer.startTimeString);
 			txtEndDate.setText(CCStringUtil.toString(holder.offer.endDateString));
 			txtEndTime.setText(CCStringUtil.toString(holder.offer.endTimeString));
-			binding.switchSickAbsent.setChecked(holder.offer.sickAbsent);
+			if(WorkOfferModel.OFFER_TYPE_PAID_VACATION_ALL.equals(holder.offer.offerType) ||
+					WorkOfferModel.OFFER_TYPE_PAID_VACATION_MORNING.equals(holder.offer.offerType) ||
+					WorkOfferModel.OFFER_TYPE_PAID_VACATION_AFTERNOON.equals(holder.offer.offerType) ||
+					WorkOfferModel.OFFER_TYPE_COMPENSATORY_HOLIDAY.equals(holder.offer.offerType)){
+				binding.lnrSickAbsent.setVisibility(View.VISIBLE);
+				binding.switchSickAbsent.setChecked(holder.offer.sickAbsent);
+			} else {
+				binding.lnrSickAbsent.setVisibility(View.INVISIBLE);
+			}
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
@@ -174,12 +182,23 @@ public class WorkOfferEditFragment extends AbstractSwFragment{
 
 	private void OnOfferTypeChangedUpdateLayout(){
 		String selectedType = txtOfferType.getValue();
-		if(WorkOfferModel.OFFER_TYPE_HOLIDAY_WORKING.equals(selectedType) || WorkOfferModel.OFFER_TYPE_OVERTIME.equals(selectedType) || WorkOfferModel.OFFER_TYPE_SHORT_TIME.equals(selectedType)){
+		if(WorkOfferModel.OFFER_TYPE_HOLIDAY_WORKING.equals(selectedType) ||
+				WorkOfferModel.OFFER_TYPE_OVERTIME.equals(selectedType) ||
+				WorkOfferModel.OFFER_TYPE_SHORT_TIME.equals(selectedType)){
 			getView().findViewById(R.id.lnr_start_time).setVisibility(View.VISIBLE);
 			getView().findViewById(R.id.lnr_end_time).setVisibility(View.VISIBLE);
 		}else{
 			getView().findViewById(R.id.lnr_start_time).setVisibility(View.GONE);
 			getView().findViewById(R.id.lnr_end_time).setVisibility(View.GONE);
+		}
+
+		if(WorkOfferModel.OFFER_TYPE_PAID_VACATION_ALL.equals(selectedType) ||
+				WorkOfferModel.OFFER_TYPE_PAID_VACATION_MORNING.equals(selectedType) ||
+				WorkOfferModel.OFFER_TYPE_PAID_VACATION_AFTERNOON.equals(selectedType) ||
+				WorkOfferModel.OFFER_TYPE_COMPENSATORY_HOLIDAY.equals(selectedType)){
+			binding.lnrSickAbsent.setVisibility(View.VISIBLE);
+		} else {
+			binding.lnrSickAbsent.setVisibility(View.INVISIBLE);
 		}
 	}
 
