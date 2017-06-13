@@ -282,35 +282,35 @@ public class MessageDetailFragment extends AbstractMsgFragment implements View.O
 					TextView txtFileName = (TextView)getView().findViewById(R.id.txt_id_file_name);
 					txtFileName.setText(messageModel.attachment.fileName);
 				}else{
-					if(WelfareConst.ITEM_FILE_TYPE_PHOTO.equals(messageModel.messageType) && CCNumberUtil.checkNull(messageModel.attachment.fileSize) > WelfareConst.MAX_FILE_SIZE_2MB){
-						mRltMedia.setVisibility(View.GONE);
-						mLnrFile.setVisibility(View.VISIBLE);
-						TextView txtFileName = (TextView)getView().findViewById(R.id.txt_id_file_name);
-						txtFileName.setText(messageModel.attachment.fileName);
-					}else{
-						mRltMedia.setVisibility(View.VISIBLE);
-						mLnrFile.setVisibility(View.GONE);
+//					if(WelfareConst.ITEM_FILE_TYPE_PHOTO.equals(messageModel.messageType) && CCNumberUtil.checkNull(messageModel.attachment.fileSize) > WelfareConst.MAX_FILE_SIZE_2MB){
+//						mRltMedia.setVisibility(View.GONE);
+//						mLnrFile.setVisibility(View.VISIBLE);
+//						TextView txtFileName = (TextView)getView().findViewById(R.id.txt_id_file_name);
+//						txtFileName.setText(messageModel.attachment.fileName);
+//					}else{
+					mRltMedia.setVisibility(View.VISIBLE);
+					mLnrFile.setVisibility(View.GONE);
 
-						if(messageModel.thumbnailAttachment != null && !CCStringUtil.isEmpty(messageModel.thumbnailAttachment.fileUrl)){
-							WfPicassoHelper.loadImage(activity, host + messageModel.thumbnailAttachment.fileUrl, mImgThumbnail, null);
-						}
-
-						if(WelfareConst.ITEM_FILE_TYPE_MOVIE.equals(messageModel.messageType)){
-							imgPlay = (ImageView)getView().findViewById(R.id.img_id_play);
-							imgPlay.setVisibility(View.VISIBLE);
-							mImgThumbnail.setOnClickListener(this);
-						}else{
-							mDlgPhotoDetail = new WfDialog(activity);
-							mDlgPhotoDetail.setDialogPhotoDetail(BuildConfig.HOST + messageModel.attachment.fileUrl);
-							mImgThumbnail.setOnClickListener(new View.OnClickListener() {
-
-								@Override
-								public void onClick(View v){
-									mDlgPhotoDetail.show();
-								}
-							});
-						}
+					if(messageModel.thumbnailAttachment != null && !CCStringUtil.isEmpty(messageModel.thumbnailAttachment.fileUrl)){
+						WfPicassoHelper.loadImage(activity, host + messageModel.thumbnailAttachment.fileUrl, mImgThumbnail, null);
 					}
+
+					if(WelfareConst.ITEM_FILE_TYPE_MOVIE.equals(messageModel.messageType)){
+						imgPlay = (ImageView)getView().findViewById(R.id.img_id_play);
+						imgPlay.setVisibility(View.VISIBLE);
+						mImgThumbnail.setOnClickListener(this);
+					}else{
+						mDlgPhotoDetail = new WfDialog(activity);
+						mDlgPhotoDetail.setDialogPhotoDetail(BuildConfig.HOST + messageModel.attachment.fileUrl);
+						mImgThumbnail.setOnClickListener(new View.OnClickListener() {
+
+							@Override
+							public void onClick(View v){
+								mDlgPhotoDetail.show();
+							}
+						});
+					}
+//					}
 				}
 
 				if(!CCCollectionUtil.isEmpty(messageModel.comments)){
