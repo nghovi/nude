@@ -16,21 +16,12 @@ android {
         targetSdkVersion 24
         versionCode 4
         versionName "1.3"
-
+        multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
-        jackOptions {
-            enabled true
-        }
     }
 
     dexOptions {
         javaMaxHeapSize "4g"
-    }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     productFlavors {
@@ -80,9 +71,9 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':welfare-android-core')
-
     compile 'com.github.ksoichiro:android-observablescrollview:1.6.0'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.0'
+    annotationProcessor 'com.bluelinelabs:logansquare-compiler:1.3.6'
 }
 
 apply plugin: 'com.google.gms.google-services'
