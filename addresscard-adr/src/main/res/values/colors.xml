@@ -9,6 +9,7 @@
 
     <color name="wf_app_color_base">#808080</color>
     <color name="wf_app_color_base_50">#80808080</color>
+    <color name="wf_app_color_base_30">#50808080</color>
 
     <color name="wf_login_background_color">#fbf8f1</color>
     <color name="wf_app_button_color_off">#808c8464</color>

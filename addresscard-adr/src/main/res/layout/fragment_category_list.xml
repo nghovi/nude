@@ -7,9 +7,7 @@
 
     <LinearLayout
         style="@style/cs_common_match"
-        android:background="@color/wf_login_background_color"
         android:orientation="vertical">
-
 
         <include layout="@layout/ac_header" />
 
@@ -17,16 +15,19 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:background="@color/wf_app_color_base_30"
             android:orientation="vertical">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#dad9d9"
-                android:padding="16dp"
+                android:paddingTop="@dimen/margin_16dp"
+                android:paddingBottom="@dimen/margin_16dp"
+                android:paddingStart="@dimen/margin_8dp"
+                android:paddingEnd="@dimen/margin_8dp"
                 android:text="@string/ac_category_list"
                 android:textColor="@android:color/black"
-                android:textSize="17sp" />
+                android:textSize="@dimen/text_size_16sp" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/list_categories"

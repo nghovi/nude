@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.databinding.library.baseAdapters.BR;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -14,7 +15,6 @@ import trente.asia.addresscard.BuildConfig;
 import trente.asia.addresscard.R;
 import trente.asia.addresscard.databinding.CardItemCustomerEditBinding;
 import trente.asia.addresscard.services.business.model.BusinessCardModel;
-import trente.asia.welfare.adr.utils.WfPicassoHelper;
 
 /**
  * Created by tien on 5/12/2017.
@@ -46,8 +46,10 @@ public class CustomerEditCardAdapter extends RecyclerView.Adapter<ViewHolder>{
         binding = (CardItemCustomerEditBinding) holder.getBinding();
         binding.setVariable(BR.card, card);
         binding.executePendingBindings();
-        WfPicassoHelper.loadImage(context, BuildConfig.HOST + card.attachment.fileUrl,
-                binding.card, null);
+        Picasso.with(context)
+                .load(BuildConfig.HOST + card.attachment.fileUrl)
+                .fit()
+                .into(binding.card);
 
         binding.btnUngroup.setOnClickListener(new View.OnClickListener() {
             @Override

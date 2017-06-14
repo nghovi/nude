@@ -18,7 +18,6 @@ import trente.asia.addresscard.R;
 import trente.asia.addresscard.databinding.CustomerRowItemBinding;
 import trente.asia.addresscard.services.business.model.BusinessCardModel;
 import trente.asia.addresscard.services.business.model.CustomerModel;
-import trente.asia.welfare.adr.utils.WfPicassoHelper;
 
 /**
  * Created by Windows 10 Gamer on 13/05/2017.
@@ -50,8 +49,10 @@ public class CustomerAdapter extends RecyclerView.Adapter<ViewHolder> {
         binding.setVariable(BR.customer, customer);
         binding.executePendingBindings();
 
-        WfPicassoHelper.loadImageWithDefaultIcon(context, BuildConfig.HOST, binding.leftIcon,
-                customer.attachment.fileUrl, R.drawable.default_logo);
+        Picasso.with(context).load(BuildConfig.HOST + customer.attachment.fileUrl)
+                .placeholder(R.drawable.default_logo)
+                .fit()
+                .into(binding.leftIcon);
         loadCardImage(binding.card1, 0, customer.cards);
         loadCardImage(binding.card2, 1, customer.cards);
 

@@ -18,7 +18,6 @@ import trente.asia.addresscard.R;
 import trente.asia.addresscard.databinding.CategoryItemBinding;
 import trente.asia.addresscard.services.business.model.CategoryModel;
 import trente.asia.addresscard.services.business.model.CustomerModel;
-import trente.asia.welfare.adr.utils.WfPicassoHelper;
 
 /**
  * Created by tien on 5/8/2017.
@@ -62,8 +61,11 @@ public class CategoryAdapter extends RecyclerView.Adapter<ViewHolder> {
 
     private void loadImage(ImageView imageView, int position, List<CustomerModel> customers) {
         if (position < customers.size()) {
-            WfPicassoHelper.loadImageWithDefaultIcon(context, BuildConfig.HOST, imageView,
-                            customers.get(position).attachment.fileUrl, R.drawable.default_logo);
+            Picasso.with(context)
+                    .load(BuildConfig.HOST + customers.get(position).attachment.fileUrl)
+                    .fit()
+                    .placeholder(R.drawable.default_logo)
+                    .into(imageView);
         } else {
             Picasso.with(context).load("url").into(imageView);
         }

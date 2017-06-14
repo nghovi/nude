@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.databinding.library.baseAdapters.BR;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,7 +23,6 @@ import trente.asia.addresscard.commons.utils.Utils;
 import trente.asia.addresscard.databinding.FragmentCustomerDetailBinding;
 import trente.asia.addresscard.services.business.model.CustomerModel;
 import trente.asia.addresscard.services.business.presenter.CustomerDetailCardAdapter;
-import trente.asia.welfare.adr.utils.WfPicassoHelper;
 
 /**
  * Created by tien on 5/12/2017.
@@ -84,8 +84,11 @@ public class BusinessCustomerDetailFragment extends AbstractAddressCardFragment
         binding.listCards.setAdapter(new CustomerDetailCardAdapter(customer.cards, this));
         binding.setVariable(BR.customer, customer);
         binding.executePendingBindings();
-        WfPicassoHelper.loadImageWithDefaultIcon(getContext(), BuildConfig.HOST,
-                binding.customerLogo, customer.attachment.fileUrl, R.drawable.default_logo);
+        Picasso.with(getContext())
+                .load(BuildConfig.HOST + customer.attachment.fileUrl)
+                .placeholder(R.drawable.default_logo)
+                .fit()
+                .into(binding.customerLogo);
         super.initHeader(R.drawable.ac_back_white, customer.customerName, R.drawable.ac_action_edit);
     }
 

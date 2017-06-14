@@ -27,13 +27,16 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/ac_customer_title"
-                        android:padding="@dimen/title_padding"
+                        android:paddingTop="@dimen/margin_16dp"
+                        android:paddingBottom="@dimen/margin_16dp"
+                        android:paddingStart="@dimen/margin_8dp"
+                        android:paddingEnd="@dimen/margin_8dp"
                         style="@style/ac_body_text"/>
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@android:color/white"
-                        android:padding="@dimen/ac_common_field_padding">
+                        android:padding="@dimen/margin_8dp">
                         <ImageView
                             android:id="@+id/customer_logo"
                             android:src="@drawable/logo"
@@ -63,7 +66,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@android:color/white"
-                        android:padding="@dimen/ac_common_field_padding">
+                        android:padding="@dimen/margin_8dp">
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -83,7 +86,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@android:color/white"
-                        android:padding="@dimen/ac_common_field_padding">
+                        android:padding="@dimen/margin_8dp">
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -104,7 +107,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@android:color/white"
-                        android:padding="@dimen/ac_common_field_padding">
+                        android:padding="@dimen/margin_8dp">
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -124,7 +127,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@android:color/white"
-                        android:padding="@dimen/ac_common_field_padding">
+                        android:padding="@dimen/margin_8dp">
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -149,10 +152,10 @@
             <TextView
                 android:id="@+id/btn_delete"
                 android:layout_width="300dp"
-                android:layout_height="60dp"
+                android:layout_height="40dp"
                 android:background="@drawable/btn_delete_background"
                 android:text="@string/ac_delete_company"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textColor="@android:color/white"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"

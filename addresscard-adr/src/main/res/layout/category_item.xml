@@ -7,7 +7,7 @@
     </data>
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/ac_row_body_height"
+        android:layout_height="@dimen/margin_70dp"
         android:background="@drawable/state_common_selectable_row">
         <TextView
             android:id="@+id/category_name"
@@ -17,8 +17,8 @@
             android:layout_centerVertical="true"
             android:maxLines="2"
             android:ellipsize="end"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
+            android:paddingStart="@dimen/margin_8dp"
+            android:paddingEnd="@dimen/margin_8dp"
             android:textSize="@dimen/ac_common_text_size_title"
             android:textColor="@android:color/black"
             android:text="@{category.categoryName}"/>
@@ -29,50 +29,51 @@
             android:orientation="horizontal"
             android:layout_marginStart="5dp"
             android:layout_marginEnd="10dp"
+            android:gravity="center_vertical"
             android:layout_toStartOf="@+id/customer_number"
             android:layout_toEndOf="@+id/category_name">
             <ImageView
                 android:id="@+id/customer_0"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_width="@dimen/margin_50dp"
+                android:layout_height="@dimen/margin_50dp"
                 android:layout_weight="1"
-                android:padding="@dimen/ac_image_padding"
+                android:padding="@dimen/margin_8dp"
                 android:src="@drawable/thumbnail_failure"/>
 
             <ImageView
                 android:id="@+id/customer_1"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_width="@dimen/margin_50dp"
+                android:layout_height="@dimen/margin_50dp"
                 android:layout_weight="1"
-                android:padding="@dimen/ac_image_padding"
+                android:padding="@dimen/margin_8dp"
                 android:src="@drawable/thumbnail_failure"/>
             <ImageView
                 android:id="@+id/customer_2"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_width="@dimen/margin_50dp"
+                android:layout_height="@dimen/margin_50dp"
                 android:layout_weight="1"
-                android:padding="@dimen/ac_image_padding"
+                android:padding="@dimen/margin_8dp"
                 android:src="@drawable/thumbnail_failure"/>
             <ImageView
                 android:id="@+id/customer_3"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_width="@dimen/margin_50dp"
+                android:layout_height="@dimen/margin_50dp"
                 android:layout_weight="1"
-                android:padding="@dimen/ac_image_padding"
+                android:padding="@dimen/margin_8dp"
                 android:src="@drawable/thumbnail_failure"/>
         </LinearLayout>
 
         <TextView
             android:id="@+id/customer_number"
-            android:layout_width="@dimen/ac_row_body_height"
+            android:layout_width="@dimen/margin_50dp"
             android:layout_height="wrap_content"
             android:layout_toStartOf="@+id/arrow"
             android:text="@{category.customerCount}"
-            android:textSize="@dimen/ac_common_text_size_title"
+            android:textSize="@dimen/text_size_12sp"
             android:layout_centerVertical="true"
             android:drawablePadding="8dp"
             style="@style/ac_body_text"
-            android:drawableStart="@drawable/building"/>
+            android:drawableStart="@drawable/ac_icon_office"/>
 
         <ImageView
             android:id="@+id/arrow"
