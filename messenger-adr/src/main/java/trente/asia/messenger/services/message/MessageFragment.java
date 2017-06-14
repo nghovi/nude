@@ -652,8 +652,10 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 
         mStampCategories = WFMStampCategoryModel.getAll();
         stampCategoryAdapter.setStampCategories(mStampCategories);
+        log("stampCategory size = " + mStampCategories.size());
         for (WFMStampCategoryModel wfmStampCategory : mStampCategories) {
             wfmStampCategory.stamps = WFMStampModel.getAll(wfmStampCategory.categoryId);
+            log("Category " + wfmStampCategory.categoryName + " have: " + wfmStampCategory.stamps.size());
         }
         if (!mStampCategories.isEmpty()) {
             stampAdapter.setStamps(mStampCategories.get(0).stamps);

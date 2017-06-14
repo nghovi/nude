@@ -6,5 +6,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="90dp"
-        android:background="#f59f9f9f"/>
+        android:background="#E5ffffff"/>
 </layout>

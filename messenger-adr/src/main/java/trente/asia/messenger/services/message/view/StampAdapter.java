@@ -41,7 +41,7 @@ public class StampAdapter extends RecyclerView.Adapter<ViewHolder>{
 	public void onBindViewHolder(ViewHolder holder, int position){
 		final WFMStampModel stamp = stamps.get(position);
 		ItemStampBinding binding = (ItemStampBinding)holder.getBinding();
-		Picasso.with(context).load(BuildConfig.HOST + stamp.stampUrl).into(binding.imageView);
+		Picasso.with(context).load(BuildConfig.HOST + stamp.stampUrl).fit().into(binding.imageView);
 		binding.imageView.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {

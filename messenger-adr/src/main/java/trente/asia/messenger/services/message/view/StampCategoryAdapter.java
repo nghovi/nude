@@ -43,6 +43,7 @@ public class StampCategoryAdapter extends RecyclerView.Adapter<ViewHolder>{
 		final WFMStampCategoryModel stampCategory = stampCategories.get(position);
 		ItemStampCategoryBinding binding = (ItemStampCategoryBinding)holder.getBinding();
 		Picasso.with(context).load(BuildConfig.HOST + stampCategory.categoryUrl)
+				.fit()
                 .into(binding.imageView);
         binding.imageView.setOnClickListener(new View.OnClickListener() {
 			@Override
