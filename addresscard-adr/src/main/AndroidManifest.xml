@@ -4,7 +4,6 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <application android:allowBackup="true" android:icon="@mipmap/ic_launcher"
                  android:label="@string/app_name"
-                 android:resizeableActivity="false"
                  android:supportsRtl="true" android:theme="@style/AppTheme">
         <activity
             android:name="trente.asia.addresscard.commons.activities.SplashActivity">
@@ -16,7 +15,7 @@
         </activity>
         <activity
             android:name="trente.asia.addresscard.commons.activities.AddressCardActivity"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".commons.activities.CameraPhotoPreviewAccountActivity"/>
     </application>
 
