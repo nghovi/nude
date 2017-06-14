@@ -88,7 +88,6 @@ public class WorkOfferListFragment extends AbstractSwFragment{
 		}else{
 			txtFilterDesc.setText(getString(R.string.chiase_common_none));
 			filters = new HashMap<>();
-			filters.put(WorkOfferFilterFragment.SICK_ABSENT, "All");
 		}
 	}
 

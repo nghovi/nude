@@ -626,9 +626,12 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
                 }
             } else {
                 WFMStampCategoryModel wfmStampCategory = WFMStampCategoryModel.get(stampCategory.key);
-                if (wfmStampCategory == null) {
+                if (wfmStampCategory != null) {
+                    wfmStampCategory.update(stampCategory);
+                } else {
                     new WFMStampCategoryModel(stampCategory).save();
                 }
+
                 for (SSStampModel stamp : stampCategory.stamps) {
                     if (stamp.deleteFlag) {
                         WFMStampModel wfStamp = WFMStampModel.get(stamp.key);
@@ -637,7 +640,9 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
                         }
                     } else {
                         WFMStampModel wfStamp = WFMStampModel.get(stamp.key);
-                        if (wfStamp == null) {
+                        if (wfStamp != null) {
+                            wfStamp.update(stamp);
+                        } else {
                             new WFMStampModel(stamp).save();
                         }
                     }

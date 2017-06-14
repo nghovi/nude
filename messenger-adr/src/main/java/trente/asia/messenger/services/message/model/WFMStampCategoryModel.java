@@ -41,6 +41,14 @@ public class WFMStampCategoryModel extends Model{
 		this.categoryUrl = category.categoryPath;
 	}
 
+	public void update(SSStampCategoryModel category) {
+		this.categoryId = category.key;
+		this.categoryName = category.categoryName;
+		this.categoryKey = category.categoryKey;
+		this.categoryUrl = category.categoryPath;
+		save();
+	}
+
 	public static WFMStampCategoryModel get(String categoryId) {
 		List<WFMStampCategoryModel> categories = new Select().from(WFMStampCategoryModel.class)
 				.where("category_id = ?", categoryId)

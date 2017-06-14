@@ -146,7 +146,10 @@ public class WorkOfferFilterFragment extends AbstractSwFragment {
 			}
 		});
 
-		selectedSickAbsentFilter = filters.get(SICK_ABSENT);
+		selectedSickAbsentFilter = "All";
+		if (filters.containsKey(SICK_ABSENT)) {
+			selectedSickAbsentFilter = filters.get(SICK_ABSENT);
+		}
 		binding.txtFragmentOfferFilterSickAbsent.setText(sickAbsentFilters.get(selectedSickAbsentFilter));
 		binding.txtFragmentOfferFilterSickAbsent.setValue(selectedSickAbsentFilter);
 		dlgSickAbsent = new ChiaseListDialog(activity, getString(R.string.fragment_offer_detail_sick_absent),
@@ -173,6 +176,7 @@ public class WorkOfferFilterFragment extends AbstractSwFragment {
 			filters.remove(TYPE);
 			filters.remove(STATUS);
 			filters.remove(DEPT);
+			filters.remove(SICK_ABSENT);
 			buildDialog();
 			break;
 		case R.id.btn_fragment_filter_update:
