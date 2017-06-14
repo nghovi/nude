@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/ac_row_height"
         android:padding="@dimen/ac_common_field_padding"
-        android:background="@drawable/row_pressed_selector">
+        android:background="@drawable/state_common_selectable_row">
         <ImageView
             android:id="@+id/customer_logo"
             style="@style/ac_icon_left"

@@ -108,7 +108,7 @@
                         android:id="@+id/rlt_phone"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/ac_upload_card_edt_height"
-                        android:background="@drawable/row_pressed_selector"
+                        android:background="@drawable/state_common_selectable_row"
                         android:padding="@dimen/ac_common_field_padding">
 
                         <TextView
@@ -143,7 +143,7 @@
                         android:id="@+id/rlt_email"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/ac_upload_card_edt_height"
-                        android:background="@drawable/row_pressed_selector"
+                        android:background="@drawable/state_common_selectable_row"
                         android:padding="@dimen/ac_common_field_padding">
 
                         <TextView
@@ -180,7 +180,7 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/row_pressed_selector"
+                        android:background="@drawable/state_common_selectable_row"
                         android:minHeight="@dimen/ac_upload_card_edt_height"
                         android:padding="@dimen/ac_common_field_padding">
 

@@ -53,7 +53,7 @@
                         android:id="@+id/rlt_set_customer"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/ac_upload_card_edt_height"
-                        android:background="@drawable/row_pressed_selector"
+                        android:background="@drawable/state_common_selectable_row"
                         android:padding="@dimen/ac_common_field_padding">
 
                         <TextView

@@ -8,7 +8,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/ac_row_body_height"
-        android:background="@drawable/row_pressed_selector">
+        android:background="@drawable/state_common_selectable_row">
         <TextView
             android:id="@+id/category_name"
             android:layout_width="100dp"

@@ -32,7 +32,7 @@
                 android:drawableStart="@drawable/ac_action_ungroup"
                 android:text="@string/ac_ungroup"
                 android:padding="@dimen/title_padding"
-                style="@style/ac_body_text"
+                style="@style/ac_title_text"
                 android:textColor="@android:color/holo_red_dark"
                 android:drawablePadding="@dimen/ac_text_padding"/>
             <TextView
@@ -41,7 +41,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ac_action_trash"
-                style="@style/ac_body_text"
+                style="@style/ac_title_text"
                 android:padding="@dimen/title_padding"
                 android:textColor="@android:color/holo_red_dark"
                 android:text="@string/ac_delete"
@@ -52,52 +52,75 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clickable="true"
-            android:background="@drawable/row_pressed_selector">
+            android:background="@drawable/state_common_selectable_row">
             <ImageView
                 android:id="@+id/card"
                 android:layout_width="@dimen/ac_card_width"
                 android:layout_height="@dimen/ac_card_height"
                 android:src="@drawable/card"
-                android:padding="@dimen/ac_image_padding"
-                android:background="@android:color/white"/>
+                android:scaleType="fitXY"
+                android:padding="@dimen/margin_5dp"/>
             <View
                 android:id="@+id/divider1"
                 android:layout_toEndOf="@+id/card"
                 android:layout_width="1dp"
                 android:layout_height="@dimen/ac_card_height"
                 android:background="@color/ac_common_background"/>
-            <TextView
+            <LinearLayout
                 android:id="@+id/mail"
-                android:layout_toEndOf="@id/divider1"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/ac_card_half_height"
-                android:drawableEnd="@drawable/ac_icon_mail"
-                android:background="@android:color/white"
-                android:gravity="center_vertical"
-                android:maxLines="1"
-                android:ellipsize="end"
-                android:padding="@dimen/ac_text_padding"
-                android:text="@{card.cardEmail}"/>
+                android:layout_toEndOf="@id/divider1"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/ac_text_padding"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:text="@{card.cardEmail}" />
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="@dimen/ac_card_half_height"
+                    android:src="@drawable/ac_icon_mail"
+                    android:padding="@dimen/margin_10dp"
+                    android:layout_gravity="end"/>
+            </LinearLayout>
+
             <View
                 android:id="@+id/divider2"
-                android:layout_toEndOf="@+id/divider1"
-                android:layout_below="@+id/mail"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/ac_common_background"/>
-            <TextView
+                android:layout_below="@+id/mail"
+                android:layout_toEndOf="@+id/divider1"
+                android:background="@color/ac_common_background" />
+            <LinearLayout
                 android:id="@+id/phone"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_toEndOf="@+id/divider1"
                 android:layout_below="@+id/divider2"
-                android:background="@android:color/white"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/ac_card_half_height"
-                android:drawableEnd="@drawable/ac_icon_phone"
-                android:maxLines="1"
-                android:ellipsize="end"
-                android:gravity="center_vertical"
-                android:padding="@dimen/ac_text_padding"
-                android:text="@{card.cardTel}"/>
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/ac_text_padding"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:text="@{card.cardTel}" />
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="@dimen/ac_card_half_height"
+                    android:src="@drawable/ac_icon_phone"
+                    android:padding="@dimen/margin_10dp" />
+            </LinearLayout>
             <View
                 android:id="@+id/divider3"
                 android:layout_width="match_parent"
@@ -112,7 +135,6 @@
                 android:padding="@dimen/ac_text_padding"
                 android:maxLines="3"
                 style="@style/ac_body_text"
-                android:background="@android:color/white"
                 android:text="@{card.cardNote}"/>
             <View
                 android:layout_below="@+id/note"

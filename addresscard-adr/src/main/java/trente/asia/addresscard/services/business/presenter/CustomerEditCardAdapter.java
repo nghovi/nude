@@ -48,6 +48,7 @@ public class CustomerEditCardAdapter extends RecyclerView.Adapter<ViewHolder>{
         binding.executePendingBindings();
         WfPicassoHelper.loadImage(context, BuildConfig.HOST + card.attachment.fileUrl,
                 binding.card, null);
+
         binding.btnUngroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -55,6 +56,7 @@ public class CustomerEditCardAdapter extends RecyclerView.Adapter<ViewHolder>{
                 removeCard(card);
             }
         } );
+
         binding.btnDeleteCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,6 +64,7 @@ public class CustomerEditCardAdapter extends RecyclerView.Adapter<ViewHolder>{
                 removeCard(card);
             }
         });
+
         binding.rltCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

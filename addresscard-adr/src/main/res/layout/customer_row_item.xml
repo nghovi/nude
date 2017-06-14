@@ -8,7 +8,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/ac_row_height"
-        android:background="@drawable/row_pressed_selector">
+        android:background="@drawable/state_common_selectable_row">
         <ImageView
             android:id="@+id/left_icon"
             style="@style/ac_icon_left"

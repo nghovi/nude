@@ -32,7 +32,7 @@
                     android:id="@+id/rlt_tags"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/category_height"
-                    android:background="@drawable/row_pressed_selector">
+                    android:background="@drawable/state_common_selectable_row">
 
                     <TextView
                         android:id="@+id/text_category"

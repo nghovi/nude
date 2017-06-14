@@ -68,7 +68,7 @@
                     android:id="@+id/row_tel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/row_pressed_selector"
+                    android:background="@drawable/state_common_selectable_row"
                     android:padding="@dimen/ac_common_field_padding">
 
                     <TextView
@@ -97,7 +97,7 @@
                     android:id="@+id/row_address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/row_pressed_selector"
+                    android:background="@drawable/state_common_selectable_row"
                     android:padding="@dimen/ac_common_field_padding">
 
                     <TextView
@@ -128,7 +128,7 @@
                     android:id="@+id/row_browser"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/row_pressed_selector"
+                    android:background="@drawable/state_common_selectable_row"
                     android:padding="@dimen/ac_common_field_padding">
 
                     <TextView
@@ -183,7 +183,7 @@
                     android:id="@+id/row_last_comments"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/row_pressed_selector"
+                    android:background="@drawable/state_common_selectable_row"
                     android:padding="@dimen/ac_common_field_padding">
 
                     <TextView
