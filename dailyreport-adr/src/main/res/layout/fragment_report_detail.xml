@@ -57,7 +57,7 @@
                         </LinearLayout>
 
 
-                        <TextView
+                        <trente.asia.android.view.ZoomableTextView
                             android:id="@+id/fragment_report_edit_edt_content"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
