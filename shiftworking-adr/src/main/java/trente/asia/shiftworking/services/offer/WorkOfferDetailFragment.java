@@ -49,10 +49,15 @@ public class WorkOfferDetailFragment extends AbstractSwFragment{
 
 	private EditText					edtComment;
 	private String						activeOfferId;
+	private String						execType;
 	private FragmentOfferDetailBinding	binding;
 
 	public void setActiveOfferId(String activeOfferId){
 		this.activeOfferId = activeOfferId;
+	}
+
+	public void setExecType(String execType) {
+		this.execType = execType;
 	}
 
 	@Override
@@ -88,6 +93,7 @@ public class WorkOfferDetailFragment extends AbstractSwFragment{
 		JSONObject jsonObject = new JSONObject();
 		try{
 			jsonObject.put("key", activeOfferId);
+			jsonObject.put("execType", execType);
 		}catch(JSONException e){
 			e.printStackTrace();
 		}

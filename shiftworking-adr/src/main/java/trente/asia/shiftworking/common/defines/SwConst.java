@@ -25,6 +25,9 @@ public class SwConst{
 	public static final String	OFFER_ONLY_SHOW					= "VW";
 	public static final String	OFFER_CAN_ONLY_EDIT				= "OM";
 
+	public static final String	SW_OFFER_EXEC_TYPE_VIEW			= "SW_EXEC_TYPE_VIEW";
+	public static final String	SW_OFFER_EXEC_TYPE_APR			= "SW_EXEC_TYPE_APR";
+
 	public static final String	SW_TRANSIT_STATUS_DRAFT			= "DRFT";
 	public static final String	SW_TRANSIT_STATUS_DONE			= "DONE";
 
