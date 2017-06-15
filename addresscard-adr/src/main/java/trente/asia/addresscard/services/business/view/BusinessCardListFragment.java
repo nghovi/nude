@@ -49,13 +49,13 @@ public class BusinessCardListFragment extends AddressCardListFragment {
 
     @Override
     public void showBtnDelete() {
-        binding.btnDelete.setVisibility(View.VISIBLE);
+        binding.lnrDeleteCards.setVisibility(View.VISIBLE);
         binding.btnCapture.setVisibility(View.GONE);
     }
 
     @Override
     public void showBtnCapture() {
-        binding.btnDelete.setVisibility(View.GONE);
+        binding.lnrDeleteCards.setVisibility(View.GONE);
         binding.btnCapture.setVisibility(View.VISIBLE);
     }
 

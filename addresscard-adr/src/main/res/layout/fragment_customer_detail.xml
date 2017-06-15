@@ -44,7 +44,7 @@
                     <ImageView
                         android:id="@+id/customer_logo"
                         style="@style/ac_icon_left"
-                        android:src="@drawable/default_logo" />
+                        android:src="@drawable/ac_icon_office" />
 
                     <TextView
                         android:id="@+id/name_title"
@@ -215,7 +215,7 @@
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/list_cards"
                     android:layout_width="match_parent"
-                    android:layout_height="1000dp" />
+                    android:layout_height="wrap_content" />
             </LinearLayout>
         </ScrollView>
 
