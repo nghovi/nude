@@ -104,7 +104,7 @@ public class WorkOfferListFragment extends AbstractSwFragment{
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id){
 				WorkOfferModel offer = offers.get(position);
-				gotoWorkOfferDetail(offer);
+				gotoWorkOfferDetail(offer, SwConst.SW_OFFER_EXEC_TYPE_VIEW);
 			}
 		});
 		mLstOfferOther.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -112,7 +112,7 @@ public class WorkOfferListFragment extends AbstractSwFragment{
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id){
 				WorkOfferModel offer = otherOffers.get(position);
-				gotoWorkOfferDetail(offer);
+				gotoWorkOfferDetail(offer, SwConst.SW_OFFER_EXEC_TYPE_APR);
 			}
 		});
 
@@ -126,9 +126,10 @@ public class WorkOfferListFragment extends AbstractSwFragment{
 		getView().findViewById(R.id.lnr_id_filter).setOnClickListener(this);
 	}
 
-	private void gotoWorkOfferDetail(WorkOfferModel offer){
+	private void gotoWorkOfferDetail(WorkOfferModel offer, String execType){
 		WorkOfferDetailFragment fragment = new WorkOfferDetailFragment();
 		fragment.setActiveOfferId(offer.key);
+		fragment.setExecType(execType);
 		gotoFragment(fragment);
 	}
 
