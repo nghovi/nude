@@ -189,6 +189,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 				if(!CCStringUtil.isEmpty(contentModel.messageContent)){
 					viewHolder.txtContent.setVisibility(View.VISIBLE);
 					viewHolder.txtContent.setText(contentModel.messageContent);
+				}else{
+					viewHolder.txtContent.setVisibility(View.GONE);
 				}
 			}else if(WelfareConst.ITEM_TEXT_TYPE_LIKE.equals(contentModel.messageType)){
 				Picasso.with(mContext).load(R.drawable.wf_good).into(viewHolder.imgIcon);
