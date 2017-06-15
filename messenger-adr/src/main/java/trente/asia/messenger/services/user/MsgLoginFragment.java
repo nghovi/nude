@@ -5,10 +5,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import trente.asia.messenger.BuildConfig;
 import trente.asia.messenger.R;
+import trente.asia.messenger.commons.defines.MsConst;
 import trente.asia.messenger.services.message.MessageFragment;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.define.WfUrlConst;
@@ -39,6 +41,12 @@ public class MsgLoginFragment extends LoginFragment {
         super.successUpdate(response, url);
 
         if (WfUrlConst.WF_ACC_0003.equals(url)) {
+            try{
+                prefAccUtil.set(MsConst.PREF_ACTIVE_BOARD_ID, response.getJSONObject("myselfInfo").optString("DPET_BOARD_ID"));
+            }catch (JSONException ex){
+                ex.printStackTrace();
+            }
+
             emptyBackStack();
             gotoFragment(new MessageFragment());
         }
