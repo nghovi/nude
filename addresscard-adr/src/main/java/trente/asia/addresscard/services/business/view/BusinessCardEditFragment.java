@@ -86,6 +86,7 @@ public class BusinessCardEditFragment extends AddressCardEditFragment implements
 			card = CCJsonUtil.convertToModel(response.optString("card"), BusinessCardModel.class);
 			binding.setVariable(BR.card, card);
 			binding.executePendingBindings();
+            binding.cardName.setSelection(binding.cardName.getText().length());
 			DisplayMetrics metrics = new DisplayMetrics();
 			getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
 			Picasso.with(getContext()).load(BuildConfig.HOST + card.attachment.fileUrl)

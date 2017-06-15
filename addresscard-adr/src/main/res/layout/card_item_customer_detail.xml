@@ -36,8 +36,7 @@
                 android:layout_width="@dimen/ac_card_width"
                 android:layout_height="@dimen/ac_card_height"
                 android:padding="@dimen/margin_8dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/card" />
+                android:scaleType="fitXY" />
 
             <View
                 android:id="@+id/divider1"

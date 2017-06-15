@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +19,6 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import trente.asia.addresscard.ACConst;
 import trente.asia.addresscard.R;
 import trente.asia.addresscard.commons.fragments.AbstractAddressCardFragment;
 import trente.asia.addresscard.commons.utils.Utils;
@@ -68,16 +68,24 @@ public class CardCameraPreviewFragment extends AbstractAddressCardFragment {
         @Override
         protected Void doInBackground(Void... voids) {
             String folderCamera = Utils.createFolder("Camera");
-            cardPath = Utils.copyImageToStorage(folderCamera, System.currentTimeMillis() + ".png", cardBitmap, 5);
-            logoPath = Utils.copyImageToStorage(folderCamera, "logo" + System.currentTimeMillis() + ".png", logoBitmap, 1);
+            cardPath = Utils.copyImageToStorage(folderCamera,
+                    System.currentTimeMillis() + ".png", cardBitmap, 5);
+            logoPath = Utils.copyImageToStorage(folderCamera,
+                    "logo" + System.currentTimeMillis() + ".png", logoBitmap, 1);
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            Picasso.with(getContext()).load(new File(cardPath)).into(binding.cardImage);
-            Picasso.with(getContext()).load(new File(logoPath)).into(binding.customerLogo);
+            DisplayMetrics metrics = new DisplayMetrics();
+            getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
+            Picasso.with(getContext()).load(new File(cardPath))
+                    .placeholder(R.drawable.loading)
+                    .resize(metrics.widthPixels, 0).into(binding.cardImage);
+            Picasso.with(getContext()).load(new File(logoPath))
+                    .placeholder(R.drawable.loading)
+                    .fit().into(binding.customerLogo);
         }
     }
 

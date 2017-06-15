@@ -9,7 +9,9 @@
         <import type="trente.asia.addresscard.services.shop.model.TagModel" />
 
         <variable
-            name="tags" type="List&lt;TagModel&gt;" />
+            name="tags"
+            type="List&lt;TagModel&gt;" />
+
         <variable
             name="card"
             type="trente.asia.addresscard.services.shop.model.ShopCardModel" />
@@ -25,14 +27,14 @@
         <LinearLayout
             android:id="@+id/lnr_content"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="vertical">
 
-
             <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="@color/wf_app_color_base_30">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -42,15 +44,16 @@
                     <ImageView
                         android:id="@+id/card_image"
                         android:layout_width="match_parent"
-                        android:layout_height="200dp"
-                        android:background="@color/core_white"
-                        android:padding="@dimen/ac_image_padding" />
+                        android:layout_height="wrap_content" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="#c7c5c5"
-                        android:padding="@dimen/ac_common_field_padding"
+                        android:background="@color/wf_app_color_base_30"
+                        android:paddingBottom="@dimen/margin_16dp"
+                        android:paddingEnd="@dimen/margin_8dp"
+                        android:paddingStart="@dimen/margin_8dp"
+                        android:paddingTop="@dimen/margin_16dp"
                         android:text="@string/shop_card_detail_title"
                         android:textColor="@color/ac_common_text_color_body"
                         android:textSize="@dimen/ac_common_text_size_body" />
@@ -60,7 +63,8 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="@dimen/ac_common_field_padding">
+                        android:background="@color/core_white"
+                        android:padding="@dimen/margin_8dp">
 
                         <TextView
                             android:id="@+id/name_title"
@@ -71,6 +75,7 @@
                             android:textSize="@dimen/ac_common_text_size_title" />
 
                         <trente.asia.android.view.ChiaseEditText
+                            android:id="@+id/card_name"
                             style="@style/ac_edt_no_underbar_no_enter"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -90,7 +95,8 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="@dimen/ac_common_field_padding">
+                        android:background="@color/core_white"
+                        android:padding="@dimen/margin_8dp">
 
                         <TextView
                             android:id="@+id/tel_title"
@@ -117,7 +123,8 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="@dimen/ac_common_field_padding">
+                        android:background="@color/core_white"
+                        android:padding="@dimen/margin_8dp">
 
                         <TextView
                             android:id="@+id/email_title"
@@ -144,7 +151,8 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="@dimen/ac_common_field_padding">
+                        android:background="@color/core_white"
+                        android:padding="@dimen/margin_8dp">
 
                         <TextView
                             android:id="@+id/address_title"
@@ -172,7 +180,8 @@
                         android:id="@+id/rlt_card_tag"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="@dimen/ac_common_field_padding">
+                        android:background="@color/core_white"
+                        android:padding="@dimen/margin_8dp">
 
                         <TextView
                             android:id="@+id/txt_card_tag_title"
@@ -188,7 +197,8 @@
                             android:layout_below="@+id/txt_card_tag_title"
                             android:layout_centerVertical="true"
                             android:layout_marginTop="@dimen/margin_16dp"
-                            android:paddingRight="@dimen/margin_32dp"
+                            android:paddingEnd="@dimen/margin_32dp"
+                            android:paddingStart="0dp"
                             android:text="@{TagModel.getSelectedTagsString(context, tags)}"
                             android:textColor="@color/ac_common_text_color_body"
                             android:textSize="@dimen/ac_common_text_size_body" />
@@ -206,7 +216,8 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="@dimen/ac_common_field_padding">
+                        android:background="@color/core_white"
+                        android:padding="@dimen/margin_8dp">
 
                         <TextView
                             android:id="@+id/note_title"
@@ -228,29 +239,17 @@
                             custom:mName="cardNote" />
                     </RelativeLayout>
 
-
+                    <Button
+                        android:id="@+id/btn_delete"
+                        style="@style/ac_delete_button"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="@dimen/margin_16dp"
+                        android:layout_marginTop="@dimen/margin_16dp"
+                        android:text="@string/ac_delete_card"
+                        android:visibility="visible" />
                 </LinearLayout>
             </ScrollView>
-
-
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/ac_common_background">
-
-            <Button
-                style="@style/ac_delete_button"
-                android:id="@+id/btn_delete"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:text="@string/ac_delete_card"
-                android:visibility="visible" />
-
-        </LinearLayout>
-
-
 
         <include layout="@layout/view_common_footer" />
     </LinearLayout>

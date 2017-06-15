@@ -1,150 +1,243 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:custom="http://schemas.android.com/apk/res-auto">
+
     <data>
 
     </data>
+
     <LinearLayout
         style="@style/wf_common_match"
         android:orientation="vertical">
 
-        <include layout="@layout/ac_header"/>
+        <include layout="@layout/ac_header" />
 
         <LinearLayout
             android:id="@+id/lnr_upload_card"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:background="@color/wf_app_color_base_30"
             android:orientation="vertical">
-            <ImageView
-                android:id="@+id/card_image"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:padding="@dimen/ac_image_padding"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/ac_upload_card_modify_data"
-                style="@style/ac_title_text"
-                android:padding="@dimen/title_padding"/>
+
             <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
+
                 <LinearLayout
                     android:id="@+id/lnr_content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@android:color/white"
                     android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/card_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        style="@style/ac_body_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="@dimen/margin_16dp"
+                        android:paddingEnd="@dimen/margin_8dp"
+                        android:paddingStart="@dimen/margin_8dp"
+                        android:paddingTop="@dimen/margin_16dp"
+                        android:text="@string/ac_upload_card_modify_data" />
+
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/ac_upload_card_edt_height">
+                        android:layout_height="@dimen/ac_upload_card_edt_height"
+                        android:padding="@dimen/margin_8dp"
+                        android:background="@color/core_white">
+
                         <ImageView
                             android:id="@+id/customer_logo"
                             android:layout_width="@dimen/ac_upload_card_edt_height"
-                            android:layout_height="@dimen/ac_upload_card_edt_height"
-                            android:padding="@dimen/ac_image_padding"/>
+                            android:layout_height="@dimen/ac_upload_card_edt_height" />
+
                         <TextView
                             android:id="@+id/customer_title"
-                            android:layout_toEndOf="@+id/customer_logo"
+                            style="@style/ac_title_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            style="@style/ac_body_text"
-                            android:text="@string/ac_upload_card_customer"/>
+                            android:layout_marginStart="@dimen/margin_8dp"
+                            android:layout_toEndOf="@+id/customer_logo"
+                            android:text="@string/ac_upload_card_customer" />
+
                         <trente.asia.android.view.ChiaseEditText
-                            android:layout_toEndOf="@+id/customer_logo"
-                            android:layout_alignParentBottom="true"
+                            style="@style/ac_edt_no_underbar_no_enter_body_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_toEndOf="@+id/customer_logo"
+                            android:layout_marginStart="@dimen/margin_8dp"
                             android:text="Trente Vietnam"
-                            style="@style/ac_edt_no_underbar_no_enter_body_text"
                             custom:mName="customer.customerName">
-                            <requestFocus/>
+
+                            <requestFocus />
                         </trente.asia.android.view.ChiaseEditText>
                     </RelativeLayout>
-                    <View style="@style/cs_common_divider"/>
-                    <TextView
+
+                    <View style="@style/cs_common_divider" />
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/ac_address"/>
-                    <trente.asia.android.view.ChiaseEditText
+                        android:orientation="vertical"
+                        android:background="@color/core_white"
+                        android:padding="@dimen/margin_8dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/ac_address" />
+
+                        <trente.asia.android.view.ChiaseEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@android:color/transparent"
+                            android:text="Duy Tan, Cau Giay, Ha Noi"
+                            custom:mName="customer.customerAddress" />
+                    </LinearLayout>
+
+                    <View style="@style/cs_common_divider" />
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Duy Tan, Cau Giay, Ha Noi"
-                        android:background="@android:color/transparent"
-                        custom:mName="customer.customerAddress"/>
-                    <View style="@style/cs_common_divider"/>
-                    <TextView
+                        android:orientation="vertical"
+                        android:background="@color/core_white"
+                        android:padding="@dimen/margin_8dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/ac_company_tel" />
+
+                        <trente.asia.android.view.ChiaseEditText
+                            style="@style/ac_edt_no_underbar_no_enter_body_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="012345678"
+                            custom:mName="customer.customerTel" />
+                    </LinearLayout>
+
+                    <View style="@style/cs_common_divider" />
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/ac_company_tel"/>
-                    <trente.asia.android.view.ChiaseEditText
+                        android:orientation="vertical"
+                        android:background="@color/core_white"
+                        android:padding="@dimen/margin_8dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/ac_url" />
+
+                        <trente.asia.android.view.ChiaseEditText
+                            style="@style/ac_edt_no_underbar_no_enter_body_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="http://www.trente.asia"
+                            custom:mName="customer.customerUrl" />
+                    </LinearLayout>
+
+                    <View style="@style/cs_common_divider" />
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="012345678"
-                        style="@style/ac_edt_no_underbar_no_enter_body_text"
-                        custom:mName="customer.customerTel"/>
-                    <View style="@style/cs_common_divider"/>
-                    <TextView
+                        android:orientation="vertical"
+                        android:background="@color/core_white"
+                        android:padding="@dimen/margin_8dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/ac_name" />
+
+                        <trente.asia.android.view.ChiaseEditText
+                            style="@style/ac_edt_no_underbar_no_enter_body_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Tanaka Takayuki"
+                            custom:mName="cardName" />
+                    </LinearLayout>
+
+                    <View style="@style/cs_common_divider" />
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/ac_url"/>
-                    <trente.asia.android.view.ChiaseEditText
+                        android:orientation="vertical"
+                        android:background="@color/core_white"
+                        android:padding="@dimen/margin_8dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/ac_tel" />
+
+                        <trente.asia.android.view.ChiaseEditText
+                            style="@style/ac_edt_no_underbar_no_enter_body_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="09876543"
+                            custom:mName="cardTel" />
+                    </LinearLayout>
+
+                    <View style="@style/cs_common_divider" />
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="http://www.trente.asia"
-                        style="@style/ac_edt_no_underbar_no_enter_body_text"
-                        custom:mName="customer.customerUrl"/>
-                    <View style="@style/cs_common_divider"/>
-                    <TextView
+                        android:orientation="vertical"
+                        android:background="@color/core_white"
+                        android:padding="@dimen/margin_8dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/ac_email" />
+
+                        <trente.asia.android.view.ChiaseEditText
+                            style="@style/ac_edt_no_underbar_no_enter_body_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="tanaka-takayuki@trente.asia"
+                            custom:mName="cardEmail" />
+                    </LinearLayout>
+
+                    <View style="@style/cs_common_divider" />
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/ac_name"/>
-                    <trente.asia.android.view.ChiaseEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Tanaka Takayuki"
-                        style="@style/ac_edt_no_underbar_no_enter_body_text"
-                        custom:mName="cardName"/>
-                    <View style="@style/cs_common_divider"/>
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/ac_tel"/>
-                    <trente.asia.android.view.ChiaseEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="09876543"
-                        style="@style/ac_edt_no_underbar_no_enter_body_text"
-                        custom:mName="cardTel"/>
-                    <View style="@style/cs_common_divider"/>
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/ac_email"/>
-                    <trente.asia.android.view.ChiaseEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="tanaka-takayuki@trente.asia"
-                        style="@style/ac_edt_no_underbar_no_enter_body_text"
-                        custom:mName="cardEmail"/>
-                    <View style="@style/cs_common_divider"/>
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/ac_note"/>
-                    <trente.asia.android.view.ChiaseEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        custom:mName="cardNote"
-                        android:background="@android:color/transparent"
-                        style="@style/ac_body_text"
-                        android:text="OCR preset is nothing, just input"/>
+                        android:orientation="vertical"
+                        android:background="@color/core_white"
+                        android:padding="@dimen/margin_8dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/ac_note" />
+
+                        <trente.asia.android.view.ChiaseEditText
+                            style="@style/ac_body_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@android:color/transparent"
+                            android:text="OCR preset is nothing, just input"
+                            custom:mName="cardNote" />
+                    </LinearLayout>
                 </LinearLayout>
             </ScrollView>
         </LinearLayout>
 
-        <include layout="@layout/view_common_footer"/>
+        <include layout="@layout/view_common_footer" />
     </LinearLayout>
 
 </layout>

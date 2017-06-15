@@ -53,6 +53,7 @@ public class BusinessCustomerEditFragment extends AbstractAddressCardFragment
             binding = DataBindingUtil.inflate(inflater, R.layout.fragment_customer_edit, container, false);
             binding.setVariable(BR.customer, customer);
             binding.executePendingBindings();
+            binding.customerName.setSelection(binding.customerName.getText().length());
             Picasso.with(getContext())
                     .load(BuildConfig.HOST + customer.attachment.fileUrl)
                     .fit()
