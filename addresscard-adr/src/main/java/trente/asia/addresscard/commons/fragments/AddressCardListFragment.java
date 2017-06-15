@@ -23,7 +23,6 @@ import trente.asia.addresscard.ACConst;
 import trente.asia.addresscard.R;
 import trente.asia.addresscard.services.business.model.AddressCardModel;
 import trente.asia.addresscard.services.business.presenter.CardAdapter;
-import trente.asia.addresscard.services.business.view.BusinessCardDetailFragment;
 import trente.asia.addresscard.services.business.view.CardCameraPreviewFragment;
 
 /**
@@ -89,6 +88,9 @@ public abstract class AddressCardListFragment extends AbstractAddressCardFragmen
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
         startActivityForResult(intent, ACConst.AC_REQUEST_CODE_TAKE_CAPTURE);
+//        Bitmap card = BitmapFactory.decodeResource(getResources(), R.drawable.card);
+//        Bitmap logo = BitmapFactory.decodeResource(getResources(), R.drawable.logo);
+//        gotoFragment(CardCameraPreviewFragment.newInstance(card, logo, ""));
     }
 
     @Override

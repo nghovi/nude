@@ -1,20 +1,21 @@
 package trente.asia.addresscard.services.shop.view;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
+import android.databinding.DataBindingUtil;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.util.DisplayMetrics;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.squareup.picasso.Picasso;
-
-import android.databinding.DataBindingUtil;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 import asia.chiase.core.util.CCJsonUtil;
 import trente.asia.addresscard.ACConst;
@@ -65,17 +66,17 @@ public class ShopCardEditFragment extends AddressCardEditFragment{
 	@Override
 	protected void successLoad(JSONObject response, String url){
 		if(ACConst.API_SHOP_CARD_DETAIL.equals(url)){
-			// try{
 			card = (CCJsonUtil.convertToModel(response.optString("card"), ShopCardModel.class));
 			((ShopCardModel)card).setTagSelected(true);
 			binding.setTags(((ShopCardModel)card).tags);
 			binding.setVariable(BR.card, card);
 			binding.executePendingBindings();
-			Picasso.with(getContext()).load(BuildConfig.HOST + card.attachment.fileUrl).fit().into(binding.cardImage);
+			DisplayMetrics metrics = new DisplayMetrics();
+			getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
+			Picasso.with(getContext()).load(BuildConfig.HOST + card.attachment.fileUrl)
+					.resize(metrics.widthPixels, 0).into(binding.cardImage);
 			updateHeader(card.cardName);
-			// }catch(IOException e){
-			// e.printStackTrace();
-			// }
+			binding.cardName.setSelection(binding.cardName.getText().length());
 		}
 	}
 

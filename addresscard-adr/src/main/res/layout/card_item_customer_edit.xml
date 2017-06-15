@@ -60,7 +60,6 @@
                 android:id="@+id/card"
                 android:layout_width="@dimen/ac_card_width"
                 android:layout_height="@dimen/ac_card_height"
-                android:src="@drawable/card"
                 android:scaleType="fitXY"
                 android:padding="@dimen/margin_8dp"/>
             <View

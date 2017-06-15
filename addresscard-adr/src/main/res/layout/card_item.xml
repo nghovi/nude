@@ -24,8 +24,7 @@
             android:layout_height="80dp"
             android:paddingTop="@dimen/ac_image_padding"
             android:paddingBottom="@dimen/ac_image_padding"
-            android:scaleType="fitXY"
-            android:src="@drawable/card"/>
+            android:scaleType="fitXY"/>
         <TextView
             android:id="@+id/last_update_user"
             android:layout_width="match_parent"

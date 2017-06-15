@@ -1,11 +1,5 @@
 package trente.asia.addresscard.services.shop.view;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import org.json.JSONObject;
-
 import android.databinding.DataBindingUtil;
 import android.databinding.Observable;
 import android.os.Bundle;
@@ -13,6 +7,12 @@ import android.support.v7.widget.GridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCJsonUtil;
@@ -111,7 +111,8 @@ public class ShopCardListFragment extends AddressCardListFragment{
 	protected void successLoad(JSONObject response, String url){
 		cards = CCJsonUtil.convertToModelList(response.optString("cards"), ShopCardModel.class);
 
-		List<ApiObjectModel> mapTags = CCJsonUtil.convertToModelList(response.optString("mapTags"), ApiObjectModel.class);
+		List<ApiObjectModel> mapTags = CCJsonUtil.convertToModelList(response.optString("mapTags"),
+				ApiObjectModel.class);
 		List<TagModel> tags = getTags(mapTags);
 		binding.setTags(tags);
 		filterCards();
