@@ -108,12 +108,7 @@ import trente.asia.welfare.adr.view.WfSlideMenuLayout;
  * @author TrungND
  */
 
-public class MessageFragment extends AbstractMsgFragment implements
-        View.OnClickListener,ItemMsgClickListener,GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener,StampCategoryAdapter.OnStampCategoryAdapterListener,
-        StampAdapter.OnStampAdapterListener,UserListFragment.OnAddUserSuccessListener,
-        MessageView.OnTextChangedListener,RecommendStampAdapter.OnRecommendStampAdapterListener,
-        NetworkChangeReceiver.OnNetworkChangeListener {
+public class MessageFragment extends AbstractMsgFragment implements View.OnClickListener,ItemMsgClickListener,GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener,StampCategoryAdapter.OnStampCategoryAdapterListener,StampAdapter.OnStampAdapterListener,UserListFragment.OnAddUserSuccessListener,MessageView.OnTextChangedListener,RecommendStampAdapter.OnRecommendStampAdapterListener,NetworkChangeReceiver.OnNetworkChangeListener{
 
 	private ImageView									mImgLeftHeader;
 	private WfSlideMenuLayout							mSlideMenuLayout;
@@ -158,8 +153,8 @@ public class MessageFragment extends AbstractMsgFragment implements
 	private OnChangedBoardListener						onChangedBoardListener		= new OnChangedBoardListener() {
 
 																						@Override
-																						public void onChangedBoard(BoardModel boardModel){
-																							MessageFragment.this.onChangedBoard(boardModel);
+																						public void onChangedBoard(BoardModel boardModel, boolean isLoad){
+																							MessageFragment.this.onChangedBoard(boardModel, isLoad);
 																						}
 
 																						@Override
@@ -338,12 +333,11 @@ public class MessageFragment extends AbstractMsgFragment implements
 	// private String latestBoardId;
 
 	@Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        networkChangeReceiver = new NetworkChangeReceiver(this);
-        getActivity().registerReceiver(networkChangeReceiver,
-                new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
-    }
+	public void onCreate(Bundle savedInstanceState){
+		super.onCreate(savedInstanceState);
+		networkChangeReceiver = new NetworkChangeReceiver(this);
+		getActivity().registerReceiver(networkChangeReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -416,6 +410,17 @@ public class MessageFragment extends AbstractMsgFragment implements
 		messageView.revMessage.setAdapter(mMsgAdapter);
 
 		initDialog();
+
+		FragmentManager fragmentManager = getFragmentManager();
+		FragmentTransaction transaction = fragmentManager.beginTransaction();
+		boardListFragment = new BoardListFragment();
+		boardListFragment.setOnChangedBoardListener(onChangedBoardListener);
+		if(activeBoard != null && !CCStringUtil.isEmpty(activeBoard.key)){
+			boardListFragment.setActiveBoard(activeBoard);
+		}
+		this.onRefreshBoardListListener = boardListFragment.getOnRefreshBoardListListener();
+		transaction.replace(R.id.slice_menu_board, boardListFragment).commit();
+
 	}
 
 	private void loadStamps(){
@@ -607,7 +612,11 @@ public class MessageFragment extends AbstractMsgFragment implements
 				updateNoteData();
 			}else if(MsConst.API_MESSAGE_STAMP_CATEGORY_LIST.equals(url)){
 				saveStamps(response);
-				loadBoards();
+				activeBoard = new BoardModel();
+				activeBoard.key = prefAccUtil.get(MsConst.PREF_ACTIVE_BOARD_ID);
+				activeBoardId = activeBoard.key;
+				loadMessageList();
+
 			}else{
 				super.successLoad(response, url);
 			}
@@ -670,17 +679,17 @@ public class MessageFragment extends AbstractMsgFragment implements
 		Log.e("MessageFragment", msg);
 	}
 
-	private void loadBoards(){
-		FragmentManager fragmentManager = getFragmentManager();
-		FragmentTransaction transaction = fragmentManager.beginTransaction();
-		boardListFragment = new BoardListFragment();
-		boardListFragment.setOnChangedBoardListener(onChangedBoardListener);
-		if(activeBoard != null && !CCStringUtil.isEmpty(activeBoard.key)){
-			boardListFragment.setActiveBoard(activeBoard);
-		}
-		this.onRefreshBoardListListener = boardListFragment.getOnRefreshBoardListListener();
-		transaction.replace(R.id.slice_menu_board, boardListFragment).commit();
-	}
+	// private void loadBoards(){
+	// FragmentManager fragmentManager = getFragmentManager();
+	// FragmentTransaction transaction = fragmentManager.beginTransaction();
+	// boardListFragment = new BoardListFragment();
+	// boardListFragment.setOnChangedBoardListener(onChangedBoardListener);
+	// if(activeBoard != null && !CCStringUtil.isEmpty(activeBoard.key)){
+	// boardListFragment.setActiveBoard(activeBoard);
+	// }
+	// this.onRefreshBoardListListener = boardListFragment.getOnRefreshBoardListListener();
+	// transaction.replace(R.id.slice_menu_board, boardListFragment).commit();
+	// }
 
 	private void updateMessage(List<MessageContentModel> lstAction){
 		mMsgAdapter.updateMessage(lstAction);
@@ -952,7 +961,7 @@ public class MessageFragment extends AbstractMsgFragment implements
 		}
 	}
 
-	private void onChangedBoard(final BoardModel boardModel){
+	private void onChangedBoard(final BoardModel boardModel, boolean isLoad){
 		if(mSlideMenuLayout.isMenuShown()){
 			mSlideMenuLayout.toggleMenu();
 		}
@@ -964,15 +973,15 @@ public class MessageFragment extends AbstractMsgFragment implements
 				}
 			});
 
-			activeBoard = boardModel;
-			updateNoteData();
-			activeBoardId = boardModel.key;
-			mMsgAdapter.clearAll();
-			messageView.edtMessage.clearFocus();
-			messageView.edtMessage.setText("");
-			autoroadCd = "";
-			isFirstScroll2Top = true;
-			loadMessageList();
+			if(isLoad){
+				activeBoardId = boardModel.key;
+				mMsgAdapter.clearAll();
+				messageView.edtMessage.clearFocus();
+				messageView.edtMessage.setText("");
+				autoroadCd = "";
+				isFirstScroll2Top = true;
+				loadMessageList();
+			}
 		}else{
 			if(!boardModel.boardName.equals(activeBoard.boardName)){
 				activeBoard = boardModel;
@@ -1101,7 +1110,7 @@ public class MessageFragment extends AbstractMsgFragment implements
 
 		boardListFragment = null;
 		menuManager = null;
-        getActivity().unregisterReceiver(networkChangeReceiver);
+		getActivity().unregisterReceiver(networkChangeReceiver);
 	}
 
 	@Override
@@ -1199,8 +1208,8 @@ public class MessageFragment extends AbstractMsgFragment implements
 		super.onClickDeviceBackButton();
 	}
 
-    @Override
-    public void onNetworkConnectionChanged(boolean connected) {
-        messageView.textInternetConnection.setVisibility(connected ? View.GONE : View.VISIBLE);
-    }
+	@Override
+	public void onNetworkConnectionChanged(boolean connected){
+		messageView.textInternetConnection.setVisibility(connected ? View.GONE : View.VISIBLE);
+	}
 }

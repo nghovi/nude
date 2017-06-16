@@ -94,10 +94,14 @@ public class BoardListFragment extends AbstractMsgFragment implements View.OnCli
 
 				BoardModel boardModel = (BoardModel)parent.getItemAtPosition(position);
 				activeBoard = boardModel;
+				prefAccUtil.set(MsConst.PREF_ACTIVE_BOARD_ID, boardModel.key);
 				lsvBoard.setItemChecked(position, true);
-				if(onChangedBoardListener != null) onChangedBoardListener.onChangedBoard(boardModel);
+				if(onChangedBoardListener != null) onChangedBoardListener.onChangedBoard(boardModel, true);
 			}
 		});
+
+		activeBoard = new BoardModel();
+		activeBoard.key = prefAccUtil.get(MsConst.PREF_ACTIVE_BOARD_ID);
 
 		imgUserAvatar = (ImageView)getView().findViewById(R.id.img_id_myAvatar);
 		txtUserName = (TextView)getView().findViewById(R.id.txt_loginUserName);
@@ -121,8 +125,6 @@ public class BoardListFragment extends AbstractMsgFragment implements View.OnCli
 
 	@Override
 	protected void successLoad(JSONObject response, String url){
-		// System.out.println("===========================================");
-		// System.out.println(isDestroy);
 
 		txtUserName.setText(myself.userName);
 		txtUserMail.setText(myself.userMail);
@@ -158,14 +160,15 @@ public class BoardListFragment extends AbstractMsgFragment implements View.OnCli
 						if(activeBoard.key.equals(boardModel.key)){
 							activeBoard = boardModel;
 							lsvBoard.setItemChecked(i, true);
-							if(onChangedBoardListener != null) onChangedBoardListener.onChangedBoard(activeBoard);
+							if(onChangedBoardListener != null) onChangedBoardListener.onChangedBoard(activeBoard, false);
 							break;
 						}
 					}
 				}else{
 					lsvBoard.setItemChecked(0, true);
 					activeBoard = boardList.get(0);
-					if(onChangedBoardListener != null) onChangedBoardListener.onChangedBoard(boardList.get(0));
+					prefAccUtil.set(MsConst.PREF_ACTIVE_BOARD_ID, activeBoard.key);
+					if(onChangedBoardListener != null) onChangedBoardListener.onChangedBoard(boardList.get(0), false);
 				}
 
 				checkUnreadMessage(boardList);
@@ -191,7 +194,7 @@ public class BoardListFragment extends AbstractMsgFragment implements View.OnCli
 		activeBoard = boardModel;
 		mAdapter.add(boardModel, 0);
 		lsvBoard.setItemChecked(0, true);
-		if(onChangedBoardListener != null) onChangedBoardListener.onChangedBoard(boardModel);
+		if(onChangedBoardListener != null) onChangedBoardListener.onChangedBoard(boardModel, true);
 	}
 
 	// public void onReceiveMessage(MessageContentModel messageModel){
@@ -232,7 +235,7 @@ public class BoardListFragment extends AbstractMsgFragment implements View.OnCli
 
 			if(!isActive){
 				lsvBoard.setItemChecked(0, true);
-				if(onChangedBoardListener != null) onChangedBoardListener.onChangedBoard(lstBoard.get(0));
+				if(onChangedBoardListener != null) onChangedBoardListener.onChangedBoard(lstBoard.get(0), true);
 			}
 
 			checkUnreadMessage(lstBoard);

@@ -9,7 +9,7 @@ import trente.asia.messenger.services.message.model.BoardModel;
  */
 public interface OnChangedBoardListener{
 
-	public void onChangedBoard(BoardModel boardModel);
+	public void onChangedBoard(BoardModel boardModel, boolean isLoad);
 
 	public void onRefreshUnreadMessage(Integer unreadMessage);
 }

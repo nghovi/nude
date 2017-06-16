@@ -57,4 +57,6 @@ public class MsConst{
 	public static final String	MESSAGE_ACTION_DELETE			= "3";
 
 	public static final String	MESSAGE_STAMP_LAST_UPDATE_DATE	= "stamp_last_update_date";
+
+	public static String	PREF_ACTIVE_BOARD_ID			= "PREF_ACTIVE_BOARD_ID";
 }

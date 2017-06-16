@@ -8,6 +8,9 @@ public class Template{
 	public String	templateId;
 	public String	templateUrl;
 
+	public Template(){
+	}
+
 	public Template(String templateId, String url){
 		this.templateId = templateId;
 		this.templateUrl = url;
