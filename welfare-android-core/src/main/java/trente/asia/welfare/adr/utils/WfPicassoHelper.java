@@ -97,7 +97,7 @@ public class WfPicassoHelper{
 		if(pgrLoading != null) pgrLoading.setVisibility(View.VISIBLE);
 		bitmapModel.started = true;
 
-		Picasso.with(context).load(imageUrl).fit().into(imageView, new Callback.EmptyCallback() {
+		Picasso.with(context).load(imageUrl).into(imageView, new Callback.EmptyCallback() {
 
 			@Override
 			public void onSuccess(){
