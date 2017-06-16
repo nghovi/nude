@@ -29,4 +29,7 @@ public class TcConst{
 	public static final String API_POST_NEW_CARD = "/api/thanks/send";
 	public static final String API_POST_GET_RECEIVER_DEPARTMENT_INFO = "/api/thanks/getAllDeptNameForPost";
 	public static final String API_POST_LIKE = "/api/thanks/like";
+
+	public static String	PREF_TEMPLATE_ID			= "PREF_TEMPLATE_ID";
+	public static String	PREF_TEMPLATE_PATH			= "PREF_TEMPLATE_PATH";
 }

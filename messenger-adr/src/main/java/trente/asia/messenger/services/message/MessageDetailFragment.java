@@ -301,7 +301,7 @@ public class MessageDetailFragment extends AbstractMsgFragment implements View.O
 						mImgThumbnail.setOnClickListener(this);
 					}else{
 						mDlgPhotoDetail = new WfDialog(activity);
-						mDlgPhotoDetail.setDialogPhotoDetail(BuildConfig.HOST + messageModel.attachment.fileUrl);
+						mDlgPhotoDetail.setDialogPhotoDetail(BuildConfig.HOST + messageModel.thumbnailAttachment.fileUrl);
 						mImgThumbnail.setOnClickListener(new View.OnClickListener() {
 
 							@Override

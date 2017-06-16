@@ -124,9 +124,10 @@ public class ThanksCardEditFragment extends AbstractTCFragment {
             mHistoryModel.receiverId = selectedUser != null ? selectedUser.loginUserId : null;
         }
 
-        // loadNoticeData();
         buildSubmitBtn();
-        // buildCategorySelectionButton();
+        template = new Template();
+        template.templateId = prefAccUtil.get(TcConst.PREF_TEMPLATE_ID);
+        template.templateUrl = prefAccUtil.get(TcConst.PREF_TEMPLATE_PATH);
     }
 
     @Override
@@ -264,16 +265,6 @@ public class ThanksCardEditFragment extends AbstractTCFragment {
                     }
                 }, true);
 
-    }
-
-    private void getSelectedUserModel() {
-        Bundle bundle = getArguments();
-        if (bundle != null) {
-            String receiverId = bundle.getString(RECEIVE_USER_ID);
-            if (!CCStringUtil.isEmpty(receiverId)) {
-                selectedUser = createByUserId(receiverId);
-            }
-        }
     }
 
     private UserModel getSelectedUser(List<UserModel> users, UserModel previous) {

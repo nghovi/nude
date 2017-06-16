@@ -1,5 +1,6 @@
 package trente.asia.thankscard.services.common;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Intent;
@@ -9,6 +10,7 @@ import android.view.View;
 
 import trente.asia.thankscard.BuildConfig;
 import trente.asia.thankscard.R;
+import trente.asia.thankscard.commons.defines.TcConst;
 import trente.asia.thankscard.services.mypage.MypageFragment;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.define.WfUrlConst;
@@ -35,6 +37,13 @@ public class TcLogInFragment extends LoginFragment{
 	@Override
 	protected void successUpdate(JSONObject response, String url){
 		super.successUpdate(response, url);
+
+		try{
+			prefAccUtil.set(TcConst.PREF_TEMPLATE_ID, response.getJSONObject("myselfInfo").optString("DEF_TEMPLATE_ID"));
+			prefAccUtil.set(TcConst.PREF_TEMPLATE_PATH, response.getJSONObject("myselfInfo").optString("DEF_TEMPLATE_PATH"));
+		}catch (JSONException ex){
+			ex.printStackTrace();
+		}
 
 		if(WfUrlConst.WF_ACC_0003.equals(url)){
 			emptyBackStack();
