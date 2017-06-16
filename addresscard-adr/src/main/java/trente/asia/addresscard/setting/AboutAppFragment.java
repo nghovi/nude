@@ -27,7 +27,7 @@ public class AboutAppFragment extends AbstractAddressCardFragment{
 
 	@Override
 	public int getFooterItemId(){
-		return R.id.lnr_view_footer_setting;
+		return 0;
 	}
 
 	@Override

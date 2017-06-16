@@ -7,6 +7,4 @@
 
     <include layout="@layout/common_contact_us"/>
 
-    <include layout="@layout/view_common_footer"/>
-
 </LinearLayout>

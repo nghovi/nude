@@ -15,7 +15,7 @@
         </activity>
         <activity
             android:name="trente.asia.addresscard.commons.activities.AddressCardActivity"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustUnspecified"/>
         <activity android:name=".commons.activities.CameraPhotoPreviewAccountActivity"/>
     </application>
 

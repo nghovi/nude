@@ -1,13 +1,5 @@
 package trente.asia.addresscard.setting;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
@@ -23,6 +15,14 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCNumberUtil;
@@ -126,7 +126,7 @@ public class AccountInfoFragment extends AbstractAddressCardFragment{
 
 	@Override
 	public int getFooterItemId(){
-		return R.id.lnr_view_footer_setting;
+		return 0;
 	}
 
 	@Override

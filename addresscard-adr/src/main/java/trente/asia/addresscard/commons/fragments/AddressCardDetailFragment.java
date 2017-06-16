@@ -50,7 +50,7 @@ public abstract class AddressCardDetailFragment extends AbstractAddressCardFragm
 
 	@Override
 	public int getFooterItemId(){
-		return R.id.lnr_view_footer_card;
+		return 0;
 	}
 
 	@Override

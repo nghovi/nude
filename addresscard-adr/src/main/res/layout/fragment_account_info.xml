@@ -24,8 +24,6 @@
 
             </LinearLayout>
         </ScrollView>
-
-        <include layout="@layout/view_common_footer"/>
     </LinearLayout>
     <!-- include menu layout -->
     <View

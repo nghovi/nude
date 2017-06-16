@@ -1,11 +1,5 @@
 package trente.asia.addresscard.setting;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -15,6 +9,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
@@ -52,7 +52,7 @@ public class ContactUsFragment extends AbstractAddressCardFragment implements Vi
 
 	@Override
 	public int getFooterItemId(){
-		return R.id.lnr_view_footer_setting;
+		return 0;
 	}
 
 	@Override

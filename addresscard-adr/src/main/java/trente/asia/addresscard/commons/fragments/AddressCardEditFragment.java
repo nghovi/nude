@@ -7,7 +7,6 @@ import org.json.JSONObject;
 
 import trente.asia.addresscard.R;
 import trente.asia.addresscard.services.business.model.AddressCardModel;
-import trente.asia.addresscard.services.shop.model.ShopCardModel;
 
 /**
  * Created by tien on 5/23/2017.
@@ -40,7 +39,7 @@ public abstract class AddressCardEditFragment extends AbstractAddressCardFragmen
 
 	@Override
 	public int getFooterItemId(){
-		return R.id.lnr_view_footer_card;
+		return 0;
 	}
 
 	@Override
