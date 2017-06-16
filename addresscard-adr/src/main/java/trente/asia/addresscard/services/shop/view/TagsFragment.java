@@ -1,17 +1,5 @@
 package trente.asia.addresscard.services.shop.view;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.commons.lang3.StringUtils;
-import org.json.JSONObject;
-
-import com.bluelinelabs.logansquare.LoganSquare;
-
-import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
@@ -21,10 +9,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import asia.chiase.core.util.CCCollectionUtil;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import asia.chiase.core.util.CCJsonUtil;
 import trente.asia.addresscard.ACConst;
-import trente.asia.addresscard.BR;
 import trente.asia.addresscard.R;
 import trente.asia.addresscard.commons.fragments.AbstractAddressCardFragment;
 import trente.asia.addresscard.databinding.FragmentShopCardEditBinding;
@@ -32,7 +25,6 @@ import trente.asia.addresscard.databinding.FragmentShopCardsBinding;
 import trente.asia.addresscard.databinding.FragmentTagsBinding;
 import trente.asia.addresscard.services.shop.model.TagModel;
 import trente.asia.addresstag.services.shop.presenter.TagAdapter;
-import trente.asia.android.activity.ChiaseActivity;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.pref.PreferencesSystemUtil;
 
@@ -48,7 +40,7 @@ public class TagsFragment extends AbstractAddressCardFragment implements TagAdap
 	private Uri							photoUri;
 	private FragmentShopCardsBinding	shopCardBinding;
 	private FragmentShopCardEditBinding	editBinding;
-	private List<TagModel>				tagModels;									// master all
+	private List<TagModel>				tagModels = new ArrayList<>();									// master all
 	private List<TagModel>				tags				= new ArrayList<>();
 	private Map<String, Boolean>		originTagStatus		= new HashMap<>();
 
@@ -72,6 +64,8 @@ public class TagsFragment extends AbstractAddressCardFragment implements TagAdap
 			binding.btnCheckAll.setOnClickListener(this);
 			binding.btnUncheckAll.setOnClickListener(this);
 			binding.lstTag.setLayoutManager(new LinearLayoutManager(getContext()));
+			adapter = new TagAdapter(this);
+			binding.lstTag.setAdapter(adapter);
 			mRootView = binding.getRoot();
 		}
 		return mRootView;
@@ -109,8 +103,7 @@ public class TagsFragment extends AbstractAddressCardFragment implements TagAdap
 			originTagStatus.put(tagModel.key, tagModel.selected);
 		}
 
-		adapter = new TagAdapter(tagModels, this);
-		binding.lstTag.setAdapter(adapter);
+		adapter.setTags(tagModels);
 	}
 
 	//// TODO: 5/25/17 when
