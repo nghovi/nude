@@ -185,7 +185,7 @@ public class MessageDetailFragment extends AbstractMsgFragment implements View.O
 			@Override
 			public void run(){
 				if(isSuccessLoad){
-//					loadCommentLatest();
+					loadCommentLatest();
 				}
 			}
 		}, TIME_RELOAD, TIME_RELOAD);
