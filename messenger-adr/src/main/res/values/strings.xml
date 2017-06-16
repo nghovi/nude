@@ -33,4 +33,6 @@
     <!--Notifications-->
     <string name="FM_MS_001">%1$s: You have new message</string>
     <string name="FM_MS_002">%1$s: You have new comment</string>
+
+    <string name="msg_no_internet_connection">No internet connection</string>
 </resources>

@@ -11,6 +11,7 @@ import android.util.AttributeSet;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import trente.asia.messenger.R;
 import trente.asia.welfare.adr.utils.AnimUtils;
@@ -34,6 +35,7 @@ public class MessageView extends LinearLayout{
 
 	public MsgRecyclerView				revMessage;
 	private OnTextChangedListener		callback;
+	public TextView						textInternetConnection;
 
 	protected TextWatcher				etMessageTextWatcher	= new TextWatcher() {
 
@@ -43,7 +45,7 @@ public class MessageView extends LinearLayout{
 
 																	@Override
 																	public void onTextChanged(CharSequence s, int start, int before, int count){
-																		if (callback != null) {
+																		if(callback != null){
 																			callback.onTextChanged(s);
 																		}
 																	}
@@ -104,6 +106,7 @@ public class MessageView extends LinearLayout{
 		imgLike = (ImageButton)this.findViewById(R.id.img_id_like);
 		lnrLike = (LinearLayout)this.findViewById(R.id.lnr_id_like);
 		imgStamp = (ImageView)this.findViewById(R.id.btn_stamp);
+		textInternetConnection = (TextView) this.findViewById(R.id.txt_internet_connection);
 
 		edtMessage = (MsgMultiAutoCompleteTextView)this.findViewById(R.id.edt_id_message);
 		edtMessage.addTextChangedListener(etMessageTextWatcher);
@@ -166,6 +169,7 @@ public class MessageView extends LinearLayout{
 	}
 
 	public interface OnTextChangedListener{
+
 		void onTextChanged(CharSequence charSequence);
 	}
 }
