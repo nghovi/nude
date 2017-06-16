@@ -1,15 +1,14 @@
 package trente.asia.addresstag.services.shop.presenter;
 
-import java.util.List;
-
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import trente.asia.addresscard.BR;
+import java.util.ArrayList;
+import java.util.List;
+
 import trente.asia.addresscard.R;
 import trente.asia.addresscard.databinding.ItemTagBinding;
 import trente.asia.addresscard.services.business.presenter.ViewHolder;
@@ -22,7 +21,7 @@ import trente.asia.addresscard.services.shop.model.TagModel;
 public class TagAdapter extends RecyclerView.Adapter<ViewHolder>{
 
 	private Context			context;
-	private List<TagModel>	list;
+	private List<TagModel>	tags = new ArrayList<>();
 	private List<TagModel>	listSelected;
 
 	public interface OnItemClickListener{
@@ -32,8 +31,7 @@ public class TagAdapter extends RecyclerView.Adapter<ViewHolder>{
 
 	private OnItemClickListener listener;
 
-	public TagAdapter(List<TagModel> list, OnItemClickListener listener){
-		this.list = list;
+	public TagAdapter(OnItemClickListener listener){
 		this.listener = listener;
 		// this.listSelected = new ArrayList<>();
 		// this.callback = listener;
@@ -48,7 +46,7 @@ public class TagAdapter extends RecyclerView.Adapter<ViewHolder>{
 
 	@Override
 	public void onBindViewHolder(final ViewHolder holder, int position){
-		final TagModel tag = list.get(position);
+		final TagModel tag = tags.get(position);
 		ItemTagBinding binding = (ItemTagBinding)holder.getBinding();
 		binding.setTagModel(tag);
 		binding.executePendingBindings();
@@ -93,7 +91,7 @@ public class TagAdapter extends RecyclerView.Adapter<ViewHolder>{
 
 	@Override
 	public int getItemCount(){
-		return list.size();
+		return tags.size();
 	}
 
 	// public interface OnItemListener {
@@ -101,4 +99,9 @@ public class TagAdapter extends RecyclerView.Adapter<ViewHolder>{
 	// void onItemLongClickListener();
 	// void onUnselectAllItems();
 	// }
+
+	public void setTags(List<TagModel> tags) {
+		this.tags = tags;
+		notifyDataSetChanged();
+	}
 }
