@@ -69,9 +69,9 @@ public class BoardListFragment extends AbstractMsgFragment implements View.OnCli
 	public void onCreate(Bundle savedInstanceState){
 		WelfareActivity.OnDeviceBackButtonClickListener listener = ((WelfareActivity)getActivity()).getOnDeviceBackButtonClickListener();
 		super.onCreate(savedInstanceState);
-//		if(listener != null){
-//			((WelfareActivity)getActivity()).setOnDeviceBackButtonClickListener(listener);
-//		}
+		// if(listener != null){
+		// ((WelfareActivity)getActivity()).setOnDeviceBackButtonClickListener(listener);
+		// }
 	}
 
 	@Override

@@ -708,6 +708,10 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 			activeBoardId = activeBoard.key;
 		}
 
+		startTimer();
+	}
+
+	private void startTimer() {
 		if(mTimer == null) mTimer = new Timer();
 		mTimer.schedule(new TimerTask() {
 
@@ -1117,6 +1121,10 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 	public void onPause(){
 		super.onPause();
 		activeBoardId = null;
+		stopTimer();
+	}
+
+	private void stopTimer() {
 		if(mTimer != null){
 			mTimer.cancel();
 			mTimer = null;
@@ -1211,5 +1219,10 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 	@Override
 	public void onNetworkConnectionChanged(boolean connected){
 		messageView.textInternetConnection.setVisibility(connected ? View.GONE : View.VISIBLE);
+		if (connected) {
+			startTimer();
+		} else {
+			stopTimer();
+		}
 	}
 }
