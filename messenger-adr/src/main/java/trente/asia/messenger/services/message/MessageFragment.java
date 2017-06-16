@@ -3,10 +3,12 @@ package trente.asia.messenger.services.message;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
 import android.location.Location;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -87,6 +89,7 @@ import trente.asia.messenger.services.message.view.RecommendStampAdapter;
 import trente.asia.messenger.services.message.view.StampAdapter;
 import trente.asia.messenger.services.message.view.StampCategoryAdapter;
 import trente.asia.messenger.services.user.UserListFragment;
+import trente.asia.messenger.services.util.NetworkChangeReceiver;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.EmotionConst;
 import trente.asia.welfare.adr.define.WelfareConst;
@@ -105,1104 +108,1108 @@ import trente.asia.welfare.adr.view.WfSlideMenuLayout;
  * @author TrungND
  */
 
-public class MessageFragment extends AbstractMsgFragment implements View.OnClickListener, ItemMsgClickListener,
-        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
-        StampCategoryAdapter.OnStampCategoryAdapterListener, StampAdapter.OnStampAdapterListener,
-        UserListFragment.OnAddUserSuccessListener, MessageView.OnTextChangedListener,
-        RecommendStampAdapter.OnRecommendStampAdapterListener {
-
-    private ImageView mImgLeftHeader;
-    private WfSlideMenuLayout mSlideMenuLayout;
-
-    private MembersAdapter mMembersAdapter;
-    private StringBuilder mMessageBuilder = new StringBuilder();
-
-    private MessageAdapter mMsgAdapter;
-    private View mViewForMenuBehind;
-    private List<MessageContentModel> mMsgContentList = new ArrayList<>();
-    private BoardModel activeBoard;
-    public static String activeBoardId;
-    private String autoroadCd;
-
-    private BoardListFragment boardListFragment;
-    private MessageMenuManager menuManager;
-    private final int TIME_RELOAD = 10000;                                                                                                                                                                                                                // 10
-    // seconds
-    private Timer mTimer;
-    private boolean isFirstScroll2Top = true;
-    private String latestMessageId = "0";
-    private String startMessageId = "0";
-    private boolean isSuccessLoad = false;
-
-    private MsChiaseDialog mDlgCheckUser;
-    private MsChiaseDialog mDlgMessageAction;
-    private TextView mTxtUnreadMessage;
-    private ViewPager mPagerBoard;
-    private MessageView messageView;
-    private NoteView noteView;
-    private MemberListView memberView;
-    private FragmentMessageBinding binding;
-    private StampAdapter stampAdapter;
-    private StampCategoryAdapter stampCategoryAdapter;
-    private RecommendStampAdapter recommendStampAdapter;
-    private List<WFMStampCategoryModel> mStampCategories;
-
-    private final int REQUEST_CHECK_SETTINGS = 31;
-    private OnRefreshBoardListListener onRefreshBoardListListener;
-
-    private OnChangedBoardListener onChangedBoardListener = new OnChangedBoardListener() {
-
-        @Override
-        public void onChangedBoard(BoardModel boardModel, boolean isLoad) {
-            MessageFragment.this.onChangedBoard(boardModel, isLoad);
-        }
-
-        @Override
-        public void onRefreshUnreadMessage(Integer unreadMessage) {
-            MessageFragment.this.refreshUnreadMessage(unreadMessage);
-        }
-    };
-
-    private OnScrollToTopListener onScrollToTopListener = new OnScrollToTopListener() {
-
-        @Override
-        public void onScrollToTopListener() {
-            MessageFragment.this.onScrollToTopListener();
-        }
-    };
-
-    private OnAddCommentListener onAddCommentListener = new OnAddCommentListener() {
-
-        @Override
-        public void onAddCommentListener(String messageId) {
-            MessageFragment.this.onAddCommentListener(messageId);
-        }
-    };
-
-    private OnMenuManageListener onMenuManagerListener = new OnMenuManageListener() {
-
-        @Override
-        public void onMenuOpened() {
-            messageView.buttonType = MessageView.ButtonType.MENU_OPENED;
-        }
-
-        @Override
-        public void onMenuClosed() {
-            messageView.buttonType = MessageView.ButtonType.MENU;
-            mViewForMenuBehind.setVisibility(View.GONE);
-            messageView.edtMessage.setEnabled(true);
-        }
-    };
-
-    protected OnMenuButtonsListener onMenuButtonsListener = new OnMenuButtonsListener() {
-
-        @Override
-        public void onCameraClicked() {
-            CameraPhotoPreviewActivity.starCameraPhotoPreviewActivity(MessageFragment.this, activeBoard.key);
-            onButtonMenuOpenedClicked();
-        }
-
-        @Override
-        public void onAudioClicked() {
-        }
-
-        @Override
-        public void onFileClicked() {
-            FilePreviewActivity.startFilePreviewActivity(MessageFragment.this, activeBoard.key);
-            onButtonMenuOpenedClicked();
-        }
-
-        @Override
-        public void onVideoClicked() {
-            // alertDialog.setMessage(getString(R.string.chiase_common_disabled_function));
-            // alertDialog.show();
-            // onButtonMenuOpenedClicked();
-            RecorderVideoActivity.starVideoPreviewActivity(MessageFragment.this, activeBoard.key);
-            onButtonMenuOpenedClicked();
-        }
-
-        @Override
-        public void onLocationClicked() {
-            // Check if google play services is up to date
-            // final int playServicesStatus =
-            // GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(activity);
-            // if(playServicesStatus != ConnectionResult.SUCCESS){
-            // // If google play services in not available show an
-            // // error dialog and return
-            // final Dialog errorDialog =
-            // GoogleApiAvailability.getInstance().getErrorDialog(activity,
-            // playServicesStatus, 0, null);
-            // errorDialog.show();
-            // onButtonMenuOpenedClicked();
-            // return;
-            // }
-
-            // check location setting
-            GoogleApiClient mGoogleApiClient = new GoogleApiClient.Builder(activity).addApi(LocationServices.API).addConnectionCallbacks(MessageFragment.this).addOnConnectionFailedListener(MessageFragment.this).build();
-            mGoogleApiClient.connect();
-
-            LocationRequest locationRequestHighAccuracy = LocationRequest.create();
-            locationRequestHighAccuracy.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-            locationRequestHighAccuracy.setInterval(30 * 1000);
-            locationRequestHighAccuracy.setFastestInterval(5 * 1000);
-            LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder().addLocationRequest(locationRequestHighAccuracy);
-
-            PendingResult<LocationSettingsResult> result = LocationServices.SettingsApi.checkLocationSettings(mGoogleApiClient, builder.build());
-            result.setResultCallback(new ResultCallback<LocationSettingsResult>() {
-
-                @Override
-                public void onResult(LocationSettingsResult result) {
-                    final Status status = result.getStatus();
-                    // final
-                    // LocationSettingsStates
-                    // =
-                    // result.getLocationSettingsStates();
-                    switch (status.getStatusCode()) {
-                        case LocationSettingsStatusCodes.SUCCESS:
-                            // All-location-settings-are-satisfied.
-                            sendLocation();
-                            break;
-                        case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
-                            // Location-settings-are-not-satisfied.
-                            // But-could-be-fixed-by-showing-the-user-a-dialog.
-                            try {
-                                // Show-the-dialog-by-calling-startResolutionForResult(),
-                                // and-check-the-result-in-onActivityResult().
-                                status.startResolutionForResult(activity, REQUEST_CHECK_SETTINGS);
-                            } catch (IntentSender.SendIntentException e) {
-                                // Ignore-the-error.
-                            }
-                            break;
-                        case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
-                            // Location-settings-are-not-satisfied.However,we-have-no-way
-                            // to-fix-the-settings-so-we-won't-show-the-dialog.
-                            break;
-                    }
-                }
-            });
-
-            onButtonMenuOpenedClicked();
-        }
-
-        @Override
-        public void onGalleryClicked() {
-            CameraPhotoPreviewActivity.starCameraFromGalleryPhotoPreviewActivity(MessageFragment.this, activeBoard.key);
-            onButtonMenuOpenedClicked();
-        }
-
-        @Override
-        public void onContactClicked() {
-        }
-    };
-
-    private OnActionClickListener actionClickListener = new OnActionClickListener() {
-
-        @Override
-        public void onActionClickListener(ChiaseListItemModel item, MessageContentModel message) {
-            if (MsConst.MESSAGE_ACTION_EDIT.equals(item.key)) {
-                editMessage(message);
-            } else if (MsConst.MESSAGE_ACTION_DELETE.equals(item.key)) {
-                deleteMessage(message);
-            } else if (MsConst.MESSAGE_ACTION_COPY.equals(item.key)) {
-                copy2Note(message);
-            }
-        }
-    };
-
-    private WelfareActivity.OnActivityResultListener onActivityResultListener = new WelfareActivity.OnActivityResultListener() {
-
-        @Override
-        public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-            if (resultCode != Activity.RESULT_OK) return;
-            switch (requestCode) {
-
-                case REQUEST_CHECK_SETTINGS:
-                    sendLocation();
-                    break;
-
-                default:
-                    break;
-            }
-        }
-    };
-
-    private WfProfileDialog mDlgProfile;
-
-    private long pivotTime = 0;
-    // private String latestBoardId;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (mRootView == null) {
-            binding = DataBindingUtil.inflate(inflater, R.layout.fragment_message, container, false);
-            mRootView = binding.getRoot();
-
-            binding.layoutStamp.listStamps.setLayoutManager(
-                    new GridLayoutManager(getContext(), 2, LinearLayoutManager.HORIZONTAL, false));
-            stampAdapter = new StampAdapter(this);
-            binding.layoutStamp.listStamps.setAdapter(stampAdapter);
-
-            binding.layoutStamp.listStampCategories.setLayoutManager(
-                    new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-            stampCategoryAdapter = new StampCategoryAdapter(this);
-            binding.layoutStamp.listStampCategories.setAdapter(stampCategoryAdapter);
-
-            binding.layoutRecommendStamp.listRecommendStamp.setLayoutManager(
-                    new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-            recommendStampAdapter = new RecommendStampAdapter(this);
-            binding.layoutRecommendStamp.listRecommendStamp.setAdapter(recommendStampAdapter);
-
-            binding.layoutStamp.btnCancel.setOnClickListener(this);
-        }
-        return mRootView;
-    }
-
-    @Override
-    protected void initView() {
-        super.initView();
-
-        mImgLeftHeader = (ImageView) getView().findViewById(R.id.img_id_header_left_icon);
-        LinearLayout lnrRightHeader = (LinearLayout) getView().findViewById(R.id.lnr_header_right_icon);
-        mTxtUnreadMessage = (TextView) getView().findViewById(R.id.txt_id_unread_message);
-
-        LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-        messageView = (MessageView) inflater.inflate(R.layout.board_pager_message, null);
-        messageView.initialization();
-        messageView.setOnTextChangedListener(this);
-        messageView.revMessage.listener = onScrollToTopListener;
-        noteView = (NoteView) inflater.inflate(R.layout.board_pager_note, null);
-        noteView.initialization();
-        memberView = (MemberListView) inflater.inflate(R.layout.board_pager_member, null);
-        memberView.initialization();
-
-        initViewPager();
-
-        mSlideMenuLayout = (WfSlideMenuLayout) getView().findViewById(R.id.drawer_layout);
-        mSlideMenuLayout.setOutsideLayout((LinearLayoutOnInterceptTouch) getView().findViewById(R.id.main_layout));
-        mViewForMenuBehind = getView().findViewById(R.id.viewForMenuBehind);
-        loadStamps();
-
-        menuManager = new MessageMenuManager();
-        menuManager.setMenuLayout(activity, R.id.menuMain, onMenuManagerListener, onMenuButtonsListener);
-
-        messageView.imgStamp.setOnClickListener(this);
-        mImgLeftHeader.setOnClickListener(this);
-        messageView.imgSend.setOnClickListener(this);
-        mViewForMenuBehind.setOnClickListener(this);
-        messageView.lnrLike.setOnClickListener(this);
-        lnrRightHeader.setOnClickListener(this);
-        noteView.btnSave.setOnClickListener(this);
-        mDlgProfile = new WfProfileDialog(activity);
-        mDlgProfile.setDialogProfileDetail(50, 50);
-
-        mMsgAdapter = new MessageAdapter(activity, mMsgContentList, this, new OnAvatarClickListener() {
-
-            @Override
-            public void OnAvatarClick(String userName, String avatarPath) {
-                mDlgProfile.show(BuildConfig.HOST, userName, avatarPath);
-            }
-        });
-        messageView.revMessage.setAdapter(mMsgAdapter);
-
-        initDialog();
-
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        boardListFragment = new BoardListFragment();
-        boardListFragment.setOnChangedBoardListener(onChangedBoardListener);
-        if (activeBoard != null && !CCStringUtil.isEmpty(activeBoard.key)) {
-            boardListFragment.setActiveBoard(activeBoard);
-        }
-        this.onRefreshBoardListListener = boardListFragment.getOnRefreshBoardListListener();
-        transaction.replace(R.id.slice_menu_board, boardListFragment).commit();
-    }
-
-    private void loadStamps() {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        String lastUpdateDate = preferences.getString(MsConst.MESSAGE_STAMP_LAST_UPDATE_DATE, null);
-        Log.e("MessageFragment", "send lastUpdatedate = " + lastUpdateDate);
-        JSONObject jsonObject = new JSONObject();
-        if (lastUpdateDate != null) {
-            try {
-                jsonObject.put("lastUpdateDate", lastUpdateDate);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-        requestLoad(MsConst.API_MESSAGE_STAMP_CATEGORY_LIST, jsonObject, true);
-    }
-
-    private void initViewPager() {
-        mPagerBoard = (ViewPager) getView().findViewById(R.id.view_pager_id_board);
-        BoardPagerAdapter pagerAdapter = new BoardPagerAdapter(activity, messageView, noteView, memberView);
-        mPagerBoard.setAdapter(pagerAdapter);
-
-        ViewPager.OnPageChangeListener mListener = new ViewPager.OnPageChangeListener() {
-
-            @Override
-            public void onPageSelected(int arg0) {
-                switch (arg0) {
-                    case 0:
-                        break;
-                    case 1:
-                        loadNoteDetail();
-                        break;
-                    default:
-                        break;
-                }
-            }
-
-            @Override
-            public void onPageScrolled(int arg0, float arg1, int arg2) {
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int arg0) {
-            }
-        };
-        mPagerBoard.addOnPageChangeListener(mListener);
-    }
-
-    private void initDialog() {
-        mDlgCheckUser = new MsChiaseDialog(activity);
-        mDlgCheckUser.setDialogCheckUserList();
-
-        mDlgMessageAction = new MsChiaseDialog(activity);
-        mDlgMessageAction.setDialogAction(actionClickListener);
-    }
-
-    @Override
-    protected void initData() {
-        if (activeBoard != null) {
-            if (!CCStringUtil.isEmpty(activeBoard.key)) {
-                loadMessageList();
-            }
-        }
-    }
-
-    private void sendLocation() {
-        Location lastKnownLocation = MsUtils.getLocation(activity);
-        if (lastKnownLocation != null) {
-            String address = WelfareUtil.getAddress4Location(activity, lastKnownLocation);
-            sendMessage(WelfareConst.ITEM_TEXT_TYPE_LOC, address, String.valueOf(lastKnownLocation.getLatitude()), String.valueOf(lastKnownLocation.getLongitude()));
-        } else {
-            Toast.makeText(activity, getString(R.string.chiase_common_not_working_gps), Toast.LENGTH_LONG).show();
-        }
-    }
-
-    private void onButtonMenuClicked() {
-        if (messageView.buttonType == MessageView.ButtonType.IN_ANIMATION) {
-            return;
-        }
-
-        messageView.buttonType = MessageView.ButtonType.IN_ANIMATION;
-        messageView.edtMessage.setEnabled(false);
-        menuManager.openMenu(messageView.imgSend);
-        mViewForMenuBehind.setVisibility(View.VISIBLE);
-    }
-
-    private void onButtonMenuOpenedClicked() {
-        if (messageView.buttonType == MessageView.ButtonType.IN_ANIMATION || mViewForMenuBehind.getVisibility() == View.GONE) {
-            return;
-        }
-        messageView.buttonType = MessageView.ButtonType.IN_ANIMATION;
-        menuManager.closeMenu();
-    }
-
-    private void closeLayoutStamps() {
-        mViewForMenuBehind.setVisibility(View.GONE);
-        binding.layoutStamp.getRoot().setVisibility(View.GONE);
-    }
-
-    private void loadMessageList() {
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("boardId", activeBoard.key);
-            if (!CCStringUtil.isEmpty(autoroadCd) && !CCConst.NONE.equals(autoroadCd)) {
-                jsonObject.put("autoroadCd", autoroadCd);
-            } else {
-                jsonObject.put("execType", "NEW");
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        requestLoad(MsConst.API_MESSAGE_BOARD, jsonObject, true);
-    }
-
-    private void loadMessageLatest() {
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("boardId", activeBoard.key);
-            jsonObject.put("targetMessageId", latestMessageId);
-            jsonObject.put("startMessageId", startMessageId);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        requestLoad(MsConst.API_MESSAGE_LATEST, jsonObject, false);
-    }
-
-    private void loadNoteDetail() {
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("key", activeBoard.key);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        requestLoad(MsConst.API_MESSAGE_NOTE_DETAIL, jsonObject, true);
-    }
-
-    @Override
-    protected void successLoad(JSONObject response, String url) {
-        try {
-            if (MsConst.API_MESSAGE_BOARD.equals(url)) {
-
-                List<MessageContentModel> lstMessage = LoganSquare.parseList(response.optString("contents"), MessageContentModel.class);
-                if (!CCCollectionUtil.isEmpty(lstMessage)) {
-                    MessageContentModel firstMessage = lstMessage.get(0);
-                    if (!CCStringUtil.isEmpty(activeBoardId) && activeBoardId.equals(firstMessage.boardId)) {
-                        if (CCStringUtil.isEmpty(autoroadCd)) {
-                            mMsgAdapter.addMessages(lstMessage);
-                            messageView.revMessage.setLastVisibleItem(mMsgAdapter.getItemCount() - 1);
-                            messageView.revMessage.scrollRecyclerToBottom();
-                            startMessageId = lstMessage.get(0).key;
-                            latestMessageId = lstMessage.get(lstMessage.size() - 1).key;
-                        } else {
-                            // append to top
-                            Collections.reverse(lstMessage);
-                            mMsgAdapter.addMessage2Top(lstMessage);
-                            startMessageId = lstMessage.get(0).key;
-                        }
-                    }
-                    autoroadCd = response.optString("autoroadCd");
-                    isSuccessLoad = true;
-                }
-            } else if (MsConst.API_MESSAGE_LATEST.equals(url)) {
-                List<MessageContentModel> lstMessage = LoganSquare.parseList(response.optString("contents"), MessageContentModel.class);
-                if (!CCCollectionUtil.isEmpty(lstMessage)) {
-                    MessageContentModel firstMessage = lstMessage.get(0);
-                    if (!CCStringUtil.isEmpty(activeBoardId) && activeBoardId.equals(firstMessage.boardId)) {
-                        messageView.revMessage.isScrollToBottom();
-                        mMsgAdapter.addMessages(lstMessage);
-                        messageView.revMessage.scrollRecyclerToBottom();
-                        String lastKey = lstMessage.get(lstMessage.size() - 1).key;
-                        if (CCNumberUtil.toInteger(latestMessageId).compareTo(CCNumberUtil.toInteger(lastKey)) < 0) {
-                            latestMessageId = lastKey;
-                        }
-                    }
-                }
-
-                // update board list
-                List<BoardModel> lstBoard = LoganSquare.parseList(response.optString("boards"), BoardModel.class);
-                if (onRefreshBoardListListener != null)
-                    onRefreshBoardListListener.onRefreshBoardListListener(lstBoard);
-
-                // update action list
-                List<MessageContentModel> lstAction = LoganSquare.parseList(response.optString("actions"), MessageContentModel.class);
-                if (!CCCollectionUtil.isEmpty(lstAction)) {
-                    this.updateMessage(lstAction);
-                }
-            } else if (MsConst.API_MESSAGE_NOTE_DETAIL.equals(url)) {
-                BoardModel boardModel = LoganSquare.parse(response.optString("board"), BoardModel.class);
-                activeBoard = boardModel;
-                updateNoteData();
-            } else if (MsConst.API_MESSAGE_STAMP_CATEGORY_LIST.equals(url)) {
-                saveStamps(response);
-                activeBoard = new BoardModel();
-                activeBoard.key = prefAccUtil.get(MsConst.PREF_ACTIVE_BOARD_ID);
-                activeBoardId = activeBoard.key;
-                loadMessageList();
-            } else {
-                super.successLoad(response, url);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void saveStamps(JSONObject response) {
-        List<SSStampCategoryModel> stampCategories = CCJsonUtil.convertToModelList(response.optString("stampCategories"), SSStampCategoryModel.class);
-        String lastUpdateDate = response.optString("lastUpdateDate");
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        preferences.edit().putString(MsConst.MESSAGE_STAMP_LAST_UPDATE_DATE, lastUpdateDate).apply();
-
-        for (SSStampCategoryModel stampCategory : stampCategories) {
-            if (stampCategory.deleteFlag) {
-                WFMStampCategoryModel wfmStampCategory = WFMStampCategoryModel.get(stampCategory.key);
-                if (wfmStampCategory != null) {
-                    wfmStampCategory.delete();
-                }
-            } else {
-                WFMStampCategoryModel wfmStampCategory = WFMStampCategoryModel.get(stampCategory.key);
-                if (wfmStampCategory != null) {
-                    wfmStampCategory.update(stampCategory);
-                } else {
-                    new WFMStampCategoryModel(stampCategory).save();
-                }
-
-                for (SSStampModel stamp : stampCategory.stamps) {
-                    if (stamp.deleteFlag) {
-                        WFMStampModel wfStamp = WFMStampModel.get(stamp.key);
-                        if (wfStamp != null) {
-                            wfStamp.delete();
-                        }
-                    } else {
-                        WFMStampModel wfStamp = WFMStampModel.get(stamp.key);
-                        if (wfStamp != null) {
-                            wfStamp.update(stamp);
-                        } else {
-                            new WFMStampModel(stamp).save();
-                        }
-                    }
-                }
-            }
-        }
-
-        mStampCategories = WFMStampCategoryModel.getAll();
-        stampCategoryAdapter.setStampCategories(mStampCategories);
-        log("stampCategory size = " + mStampCategories.size());
-        for (WFMStampCategoryModel wfmStampCategory : mStampCategories) {
-            wfmStampCategory.stamps = WFMStampModel.getAll(wfmStampCategory.categoryId);
-            log("Category " + wfmStampCategory.categoryName + " have: " + wfmStampCategory.stamps.size());
-        }
-        if (!mStampCategories.isEmpty()) {
-            stampAdapter.setStamps(mStampCategories.get(0).stamps);
-        }
-    }
-
-    private void log(String msg) {
-        Log.e("MessageFragment", msg);
-    }
-
-//    private void loadBoards() {
-//
-//    }
-
-    private void updateMessage(List<MessageContentModel> lstAction) {
-        mMsgAdapter.updateMessage(lstAction);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-//		((WelfareActivity)activity).setOnDeviceBackButtonClickListener(this);
-        ((WelfareActivity) activity).setOnActivityResultListener(onActivityResultListener);
-
-        if (mSlideMenuLayout.isMenuShown()) {
-            mSlideMenuLayout.toggleMenu();
-        }
-        if (activeBoard != null) {
-            activeBoardId = activeBoard.key;
-        }
-
-        if (mTimer == null) mTimer = new Timer();
-        mTimer.schedule(new TimerTask() {
-
-            @Override
-            public void run() {
-                if (isSuccessLoad) {
-                    loadMessageLatest();
-                }
-            }
-        }, TIME_RELOAD, TIME_RELOAD);
-    }
-
-    private String filterToUserList(String message) {
-        mMessageBuilder.delete(0, mMessageBuilder.length());
-        StringBuilder toUserBuilder = new StringBuilder();
-        String[] words = message.split(" ");
-        for (String word : words) {
-            if (word.startsWith("@")) {
-                UserModel findUser = MsUtils.findUser4AccountName(activeBoard.memberList, word.substring(1, word.length()));
-                if (findUser != null) {
-                    toUserBuilder.append(findUser.key + ",");
-                } else {
-                    mMessageBuilder.append(word + " ");
-                }
-            } else {
-                mMessageBuilder.append(word + " ");
-            }
-        }
-        return toUserBuilder.toString();
-    }
-
-    private void sendMessage(String messageType, String content, String latitude, String longitude) {
-
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("boardId", activeBoard.key);
-            if (WelfareConst.ITEM_TEXT_TYPE_LIKE.equals(messageType)) {
-                jsonObject.put("execType", WelfareConst.ITEM_TEXT_TYPE_LIKE);
-                jsonObject.put("messageContent", EmotionConst.EMO_LIKE);
-            } else if (WelfareConst.ITEM_TEXT_TYPE_STAMP.equals(messageType)) {
-                jsonObject.put("execType", WelfareConst.ITEM_TEXT_TYPE_STAMP);
-                jsonObject.put("messageContent", content);
-            } else if (WelfareConst.ITEM_TEXT_TYPE_LOC.equals(messageType)) {
-                jsonObject.put("gpsLongtitude", longitude);
-                jsonObject.put("gpsLatitude", latitude);
-                jsonObject.put("messageContent", content);
-            } else {
-                messageView.imgSend.setEnabled(false);
-                jsonObject.put("execType", WelfareConst.ITEM_TEXT_TYPE_TEXT);
-                // get to user list in content
-                jsonObject.put("targetListString", filterToUserList(content));
-                int end = mMessageBuilder.length() >= 1 ? (mMessageBuilder.length() - 1) : 0;
-                jsonObject.put("messageContent", mMessageBuilder.substring(0, end));
-                if (messageView.likeButtonType == MessageView.LikeButtonType.EDIT) {
-                    jsonObject.put("key", mDlgMessageAction.getMessage().key);
-                }
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        requestUpdate(MsConst.API_MESSAGE_UPDATE, jsonObject, false);
-    }
-
-    private void deleteMessage(MessageContentModel message) {
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("key", message.key);
-            jsonObject.put("boardId", activeBoard.key);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        requestUpdate(MsConst.API_MESSAGE_DELETE, jsonObject, false);
-    }
-
-    private void editMessage(MessageContentModel message) {
-        messageView.edtMessage.setText(message.messageContent);
-        focusEditText(messageView.edtMessage);
-        messageView.animateLikeButton(false);
-    }
-
-    private void copy2Note(MessageContentModel message) {
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("key", activeBoard.key);
-            jsonObject.put("targetMessageId", message.key);
-        } catch (JSONException ex) {
-            ex.printStackTrace();
-        }
-        requestUpdate(MsConst.API_MESSAGE_NOTE_COPY, jsonObject, false);
-    }
-
-    private void updateNote() {
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("key", activeBoard.key);
-            jsonObject.put("boardNote", noteView.edtNote.getText());
-        } catch (JSONException ex) {
-            ex.printStackTrace();
-        }
-        requestUpdate(MsConst.API_MESSAGE_NOTE_UPDATE, jsonObject, false);
-    }
-
-    @Override
-    protected void successUpdate(JSONObject response, String url) {
-        if (MsConst.API_MESSAGE_UPDATE.equals(url)) {
-            messageView.imgSend.setEnabled(true);
-            MessageContentModel contentModel = null;
-            try {
-                contentModel = LoganSquare.parse(response.optString("detail"), MessageContentModel.class);
-                if (!CCStringUtil.isEmpty(activeBoardId) && activeBoardId.equals(contentModel.boardId)) {
-                    if (messageView.likeButtonType == MessageView.LikeButtonType.EDIT) {
-                        List<MessageContentModel> lstUpdate = new ArrayList<>();
-                        lstUpdate.add(contentModel);
-                        mMsgAdapter.updateMessage(lstUpdate);
-                    } else {
-                        appendMessage(contentModel);
-                        // latestMessageId = contentModel.key;
-                    }
-                    messageView.edtMessage.setText("");
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else if (MsConst.API_MESSAGE_LIKE.equals(url)) {
-
-        } else if (MsConst.API_MESSAGE_DELETE.equals(url)) {
-            mMsgAdapter.deleteMessage(response.optString("key"));
-        } else if (MsConst.API_MESSAGE_NOTE_UPDATE.equals(url)) {
-            noteView.changeMode(false);
-            loadMessageLatest();
-            // mPagerBoard.setCurrentItem(0, true);
-        } else {
-            super.successUpdate(response, url);
-        }
-
-    }
-
-    private void appendMessage(MessageContentModel messageModel) {
-        messageView.revMessage.isScrollToBottom();
-        mMsgAdapter.addMessage(messageModel);
-        messageView.revMessage.scrollRecyclerToBottom();
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.img_id_header_left_icon:
-                hideKeyBoard(activity);
-                mSlideMenuLayout.toggleMenu();
-                break;
-            case R.id.btn_id_send:
-                if (messageView.buttonType == MessageView.ButtonType.MENU) {
-                    onButtonMenuClicked();
-                } else {
-                    String messageText = CCStringUtil.toString(messageView.edtMessage.getText());
-                    // if(!CCStringUtil.isEmpty(messageText)){
-                    sendMessage(WelfareConst.ITEM_TEXT_TYPE_TEXT, messageText, null, null);
-                    // }else{
-                    // alertDialog.setMessage(getString(R.string.msg_msg_invalid_empty));
-                    // alertDialog.show();
-                    // messageView.edtMessage.setText("");
-                    // }
-                }
-                break;
-            case R.id.viewForMenuBehind:
-                onButtonMenuOpenedClicked();
-                closeLayoutStamps();
-                break;
-
-            case R.id.lnr_id_like:
-                if (messageView.likeButtonType == MessageView.LikeButtonType.LIKE) {
-                    sendMessage(WelfareConst.ITEM_TEXT_TYPE_LIKE, null, null, null);
-                } else {
-                    messageView.edtMessage.setText("");
-                }
-                break;
-
-            case R.id.lnr_header_right_icon:
-                UserListFragment fragment = new UserListFragment();
-                fragment.setOnAddUserSuccessListener(this);
-                gotoFragment(fragment);
-                break;
-
-            case R.id.btn_id_save:
-                updateNote();
-                break;
-            case R.id.btn_cancel:
-                binding.layoutStamp.getRoot().setVisibility(View.GONE);
-                mViewForMenuBehind.setVisibility(View.GONE);
-                break;
-            case R.id.btn_stamp:
-                binding.layoutStamp.getRoot().setVisibility(View.VISIBLE);
-                mViewForMenuBehind.setVisibility(View.VISIBLE);
-                hideSoftKeyboard();
-                break;
-            default:
-                break;
-        }
-    }
-
-    private void hideSoftKeyboard() {
-        View view = getActivity().getCurrentFocus();
-        if (view != null) {
-            InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(
-                    Context.INPUT_METHOD_SERVICE);
-            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        }
-    }
-
-    @Override
-    public void onItemMsgClickListener(MessageContentModel item) {
-        MessageDetailFragment fragment = new MessageDetailFragment();
-        fragment.setActiveMessage(item);
-        fragment.setOnAddCommentListener(onAddCommentListener);
-        gotoFragment(fragment);
-    }
-
-    @Override
-    public void onItemCheckClickListener(MessageContentModel item) {
-        if (!CCCollectionUtil.isEmpty(item.checks)) {
-            mDlgCheckUser.updateCheckUserList(item.getCheckList());
-            mDlgCheckUser.show();
-        }
-    }
-
-    @Override
-    public void onItemMsgLongClickListener(MessageContentModel item) {
-        List<ChiaseListItemModel> lstAction = new ArrayList<>();
-        if (myself.key.equals(item.messageSender.key)) {
-            if (WelfareConst.ITEM_TEXT_TYPE_TEXT.equals(item.messageType)) {
-                lstAction.add(new ChiaseListItemModel(MsConst.MESSAGE_ACTION_EDIT, getString(R.string.msg_msg_action_edit)));
-            }
-            lstAction.add(new ChiaseListItemModel(MsConst.MESSAGE_ACTION_DELETE, getString(R.string.msg_msg_action_delete)));
-        }
-
-        if (WelfareConst.ITEM_TEXT_TYPE_TEXT.equals(item.messageType)) {
-            lstAction.add(new ChiaseListItemModel(MsConst.MESSAGE_ACTION_COPY, getString(R.string.msg_msg_action_copy)));
-        }
-        if (!CCCollectionUtil.isEmpty(lstAction)) {
-            mDlgMessageAction.setMessage(item);
-            mDlgMessageAction.updateDialogAction(lstAction);
-        }
-    }
-
-    private void onScrollToTopListener() {
-        if (!CCStringUtil.isEmpty(autoroadCd) && !CCConst.NONE.equals(autoroadCd)) {
-            if (!isFirstScroll2Top) {
-                loadMessageList();
-            } else {
-                isFirstScroll2Top = false;
-            }
-        }
-    }
-
-    private void onChangedBoard(final BoardModel boardModel, boolean isLoad) {
-        if (mSlideMenuLayout.isMenuShown()) {
-            mSlideMenuLayout.toggleMenu();
-        }
-        if (activeBoard == null || !boardModel.key.equals(activeBoard.key)) {
-            activity.runOnUiThread(new Runnable() {
-
-                public void run() {
-                    MessageFragment.super.updateHeader(boardModel.boardName);
-                }
-            });
-
-            activeBoard = boardModel;
-            updateNoteData();
-            if(isLoad){
-                activeBoardId = boardModel.key;
-                mMsgAdapter.clearAll();
-                messageView.edtMessage.clearFocus();
-                messageView.edtMessage.setText("");
-                autoroadCd = "";
-                isFirstScroll2Top = true;
-                loadMessageList();
-            }
-        } else {
-            if (!boardModel.boardName.equals(activeBoard.boardName)) {
-                activeBoard = boardModel;
-                updateNoteData();
-                updateHeader(boardModel.boardName);
-            }
-        }
-    }
-
-    private void updateNoteData() {
-        noteView.edtNote.setText(CCStringUtil.toString(activeBoard.boardNote));
-        noteView.changeMode(false);
-        if (!CCCollectionUtil.isEmpty(activeBoard.memberList)) {
-            memberView.updateMemberList(activeBoard.memberList);
-            List<UserModel> userListWithoutMe = new ArrayList<>();
-            for (UserModel userModel : activeBoard.memberList) {
-                if (!userModel.key.equals(myself.key)) {
-                    userListWithoutMe.add(userModel);
-                }
-            }
-            mMembersAdapter = new MembersAdapter(activity, userListWithoutMe);
-            messageView.edtMessage.setAdapter(mMembersAdapter);
-            messageView.edtMessage.setTokenizer(new MsgMultiAutoCompleteTextView.CommaTokenizer());
-        }
-    }
-
-    private void refreshUnreadMessage(Integer unreadMessage) {
-        if (unreadMessage != null && unreadMessage.compareTo(CCConst.ZERO) > 0) {
-            mTxtUnreadMessage.setVisibility(View.VISIBLE);
-            mTxtUnreadMessage.setText(String.valueOf(unreadMessage));
-        } else {
-            mTxtUnreadMessage.setVisibility(View.GONE);
-        }
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent returnedIntent) {
-        super.onActivityResult(requestCode, resultCode, returnedIntent);
-
-        if (resultCode != Activity.RESULT_OK) return;
-        switch (requestCode) {
-            case WelfareConst.RequestCode.PHOTO_CHOOSE:
-                appendFile(returnedIntent);
-                break;
-
-            case WelfareConst.RequestCode.VIDEO_CHOOSE:
-                appendFile(returnedIntent);
-                break;
-
-            case WelfareConst.RequestCode.PICK_FILE:
-                appendFile(returnedIntent);
-                break;
-
-            case MsConst.REQUEST_CODE_ADD_CONTACT:
-                String detailBoard = returnedIntent.getExtras().getString("detail");
-                BoardModel boardModel = null;
-                try {
-                    boardModel = LoganSquare.parse(detailBoard, BoardModel.class);
-                    if (boardListFragment != null)
-                        boardListFragment.onAddedContactListener(boardModel);
-                    break;
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            default:
-                break;
-        }
-    }
-
-    private void appendFile(Intent returnedIntent) {
-        String detailMessage = returnedIntent.getExtras().getString("detail");
-        if (WelfareConst.WF_FILE_SIZE_NG.equals(detailMessage)) {
-            alertDialog.setMessage(getString(R.string.wf_invalid_photo_over));
-            alertDialog.show();
-        } else {
-            MessageContentModel photoModel = null;
-            try {
-                photoModel = LoganSquare.parse(CCStringUtil.toString(detailMessage), MessageContentModel.class);
-                appendMessage(photoModel);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    private void onAddCommentListener(String messageId) {
-        mMsgAdapter.addComment(messageId);
-    }
-
-    public void setActiveBoard(BoardModel activeBoard) {
-        this.activeBoard = activeBoard;
-        activeBoardId = activeBoard.key;
-    }
-
-
-
-    protected void commonNotSuccess(JSONObject response) {
-        super.commonNotSuccess(response);
-        messageView.imgSend.setEnabled(true);
-    }
-
-    // protected void errorRequest(VolleyError error){
-    // super.errorRequest(error);
-    // messageView.imgSend.setEnabled(true);
-    // }
-
-    protected void errorRequest2() {
-        super.errorRequest2();
-        messageView.imgSend.setEnabled(true);
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-
-        mImgLeftHeader = null;
-        mSlideMenuLayout = null;
-        mMembersAdapter = null;
-        mMessageBuilder = null;
-        messageView = null;
-        noteView = null;
-        mPagerBoard = null;
-
-        mMsgAdapter = null;
-        mViewForMenuBehind = null;
-        mMsgContentList = null;
-        activeBoard = null;
-        autoroadCd = null;
-
-        boardListFragment = null;
-        menuManager = null;
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        activeBoardId = null;
-        if (mTimer != null) {
-            mTimer.cancel();
-            mTimer = null;
-        }
-    }
-
-    @Override
-    public void onConnected(@Nullable Bundle bundle) {
-
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-
-    }
-
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
-    }
-
-    @Override
-    public void onStampCategoryClick(WFMStampCategoryModel stampCategory) {
-        stampAdapter.setStamps(stampCategory.stamps);
-    }
-
-    @Override
-    public void onStampClick(WFMStampModel stamp) {
-        sendMessage(WelfareConst.ITEM_TEXT_TYPE_STAMP, stamp.stampId, null, null);
-        binding.layoutStamp.getRoot().setVisibility(View.GONE);
-        mViewForMenuBehind.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void onSuccess(BoardModel boardModel) {
-        if (boardListFragment != null) boardListFragment.onAddedContactListener(boardModel);
-    }
-
-    @Override
-    public void onTextChanged(CharSequence charSequence) {
-
-        if (charSequence.length() < 3) {
-            binding.layoutRecommendStamp.getRoot().setVisibility(View.GONE);
-        } else {
-            List<WFMStampModel> recommendStamps = getRecommendStamps(charSequence.toString());
-            if (recommendStamps.size() == 0) {
-                binding.layoutRecommendStamp.getRoot().setVisibility(View.GONE);
-            } else {
-                binding.layoutRecommendStamp.getRoot().setVisibility(View.VISIBLE);
-                recommendStampAdapter.setRecommendStamps(recommendStamps);
-            }
-        }
-    }
-
-    private List<WFMStampModel> getRecommendStamps(String keyword) {
-        List<WFMStampModel> recommendStamps = new ArrayList<>();
-        for (WFMStampCategoryModel stampCategory : mStampCategories) {
-            for (WFMStampModel stamp : stampCategory.stamps) {
-                if (stamp.stampKeyword != null && !stamp.stampKeyword.isEmpty() &&
-                        stamp.stampKeyword.toLowerCase().contains(keyword.toLowerCase())) {
-                    recommendStamps.add(stamp);
-                }
-            }
-        }
-        return recommendStamps;
-    }
-
-    @Override
-    public void onRecommendStampAdapterClick(WFMStampModel recommendStamp) {
-        sendMessage(WelfareConst.ITEM_TEXT_TYPE_STAMP, recommendStamp.stampId, null, null);
-        binding.layoutRecommendStamp.getRoot().setVisibility(View.GONE);
-    }
-
-    @Override
-    protected void onClickBackBtn() {
-        log("onClickBackBtn");
-        if (messageView.buttonType == MessageView.ButtonType.MENU_OPENED) {
-            onButtonMenuOpenedClicked();
-        } else {
-            super.onClickBackBtn();
-        }
-    }
-
-    @Override
-    public void onClickDeviceBackButton() {
-        log("onClickDeviceBackButton");
-        binding.layoutRecommendStamp.getRoot().setVisibility(View.GONE);
-        binding.layoutStamp.getRoot().setVisibility(View.GONE);
-        mViewForMenuBehind.setVisibility(View.GONE);
-        super.onClickDeviceBackButton();
-    }
+public class MessageFragment extends AbstractMsgFragment implements View.OnClickListener,ItemMsgClickListener,GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener,StampCategoryAdapter.OnStampCategoryAdapterListener,StampAdapter.OnStampAdapterListener,UserListFragment.OnAddUserSuccessListener,MessageView.OnTextChangedListener,RecommendStampAdapter.OnRecommendStampAdapterListener,NetworkChangeReceiver.OnNetworkChangeListener{
+
+	private ImageView									mImgLeftHeader;
+	private WfSlideMenuLayout							mSlideMenuLayout;
+
+	private MembersAdapter								mMembersAdapter;
+	private StringBuilder								mMessageBuilder				= new StringBuilder();
+
+	private MessageAdapter								mMsgAdapter;
+	private View										mViewForMenuBehind;
+	private List<MessageContentModel>					mMsgContentList				= new ArrayList<>();
+	private BoardModel									activeBoard;
+	public static String								activeBoardId;
+	private String										autoroadCd;
+
+	private BoardListFragment							boardListFragment;
+	private MessageMenuManager							menuManager;
+	private final int									TIME_RELOAD					= 10000;																																																				// 10
+	// seconds
+	private Timer										mTimer;
+	private boolean										isFirstScroll2Top			= true;
+	private String										latestMessageId				= "0";
+	private String										startMessageId				= "0";
+	private boolean										isSuccessLoad				= false;
+
+	private MsChiaseDialog								mDlgCheckUser;
+	private MsChiaseDialog								mDlgMessageAction;
+	private TextView									mTxtUnreadMessage;
+	private ViewPager									mPagerBoard;
+	private MessageView									messageView;
+	private NoteView									noteView;
+	private MemberListView								memberView;
+	private FragmentMessageBinding						binding;
+	private StampAdapter								stampAdapter;
+	private StampCategoryAdapter						stampCategoryAdapter;
+	private RecommendStampAdapter						recommendStampAdapter;
+	private List<WFMStampCategoryModel>					mStampCategories;
+	private NetworkChangeReceiver						networkChangeReceiver;
+
+	private final int									REQUEST_CHECK_SETTINGS		= 31;
+	private OnRefreshBoardListListener					onRefreshBoardListListener;
+
+	private OnChangedBoardListener						onChangedBoardListener		= new OnChangedBoardListener() {
+
+																						@Override
+																						public void onChangedBoard(BoardModel boardModel, boolean isLoad){
+																							MessageFragment.this.onChangedBoard(boardModel, isLoad);
+																						}
+
+																						@Override
+																						public void onRefreshUnreadMessage(Integer unreadMessage){
+																							MessageFragment.this.refreshUnreadMessage(unreadMessage);
+																						}
+																					};
+
+	private OnScrollToTopListener						onScrollToTopListener		= new OnScrollToTopListener() {
+
+																						@Override
+																						public void onScrollToTopListener(){
+																							MessageFragment.this.onScrollToTopListener();
+																						}
+																					};
+
+	private OnAddCommentListener						onAddCommentListener		= new OnAddCommentListener() {
+
+																						@Override
+																						public void onAddCommentListener(String messageId){
+																							MessageFragment.this.onAddCommentListener(messageId);
+																						}
+																					};
+
+	private OnMenuManageListener						onMenuManagerListener		= new OnMenuManageListener() {
+
+																						@Override
+																						public void onMenuOpened(){
+																							messageView.buttonType = MessageView.ButtonType.MENU_OPENED;
+																						}
+
+																						@Override
+																						public void onMenuClosed(){
+																							messageView.buttonType = MessageView.ButtonType.MENU;
+																							mViewForMenuBehind.setVisibility(View.GONE);
+																							messageView.edtMessage.setEnabled(true);
+																						}
+																					};
+
+	protected OnMenuButtonsListener						onMenuButtonsListener		= new OnMenuButtonsListener() {
+
+																						@Override
+																						public void onCameraClicked(){
+																							CameraPhotoPreviewActivity.starCameraPhotoPreviewActivity(MessageFragment.this, activeBoard.key);
+																							onButtonMenuOpenedClicked();
+																						}
+
+																						@Override
+																						public void onAudioClicked(){
+																						}
+
+																						@Override
+																						public void onFileClicked(){
+																							FilePreviewActivity.startFilePreviewActivity(MessageFragment.this, activeBoard.key);
+																							onButtonMenuOpenedClicked();
+																						}
+
+																						@Override
+																						public void onVideoClicked(){
+																							// alertDialog.setMessage(getString(R.string.chiase_common_disabled_function));
+																							// alertDialog.show();
+																							// onButtonMenuOpenedClicked();
+																							RecorderVideoActivity.starVideoPreviewActivity(MessageFragment.this, activeBoard.key);
+																							onButtonMenuOpenedClicked();
+																						}
+
+																						@Override
+																						public void onLocationClicked(){
+																							// Check if google play services is up to date
+																							// final int playServicesStatus =
+																							// GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(activity);
+																							// if(playServicesStatus != ConnectionResult.SUCCESS){
+																							// // If google play services in not available show an
+																							// // error dialog and return
+																							// final Dialog errorDialog =
+																							// GoogleApiAvailability.getInstance().getErrorDialog(activity,
+																							// playServicesStatus, 0, null);
+																							// errorDialog.show();
+																							// onButtonMenuOpenedClicked();
+																							// return;
+																							// }
+
+																							// check location setting
+																							GoogleApiClient mGoogleApiClient = new GoogleApiClient.Builder(activity).addApi(LocationServices.API).addConnectionCallbacks(MessageFragment.this).addOnConnectionFailedListener(MessageFragment.this).build();
+																							mGoogleApiClient.connect();
+
+																							LocationRequest locationRequestHighAccuracy = LocationRequest.create();
+																							locationRequestHighAccuracy.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+																							locationRequestHighAccuracy.setInterval(30 * 1000);
+																							locationRequestHighAccuracy.setFastestInterval(5 * 1000);
+																							LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder().addLocationRequest(locationRequestHighAccuracy);
+
+																							PendingResult<LocationSettingsResult> result = LocationServices.SettingsApi.checkLocationSettings(mGoogleApiClient, builder.build());
+																							result.setResultCallback(new ResultCallback<LocationSettingsResult>() {
+
+																																												@Override
+																																												public void onResult(LocationSettingsResult result){
+																																													final Status status = result.getStatus();
+																																													// final
+																																													// LocationSettingsStates
+																																													// =
+																																													// result.getLocationSettingsStates();
+																																													switch(status.getStatusCode()){
+																																													case LocationSettingsStatusCodes.SUCCESS:
+																																														// All-location-settings-are-satisfied.
+																																														sendLocation();
+																																														break;
+																																													case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
+																																														// Location-settings-are-not-satisfied.
+																																														// But-could-be-fixed-by-showing-the-user-a-dialog.
+																																														try{
+																																															// Show-the-dialog-by-calling-startResolutionForResult(),
+																																															// and-check-the-result-in-onActivityResult().
+																																															status.startResolutionForResult(activity, REQUEST_CHECK_SETTINGS);
+																																														}catch(IntentSender.SendIntentException e){
+																																															// Ignore-the-error.
+																																														}
+																																														break;
+																																													case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
+																																														// Location-settings-are-not-satisfied.However,we-have-no-way
+																																														// to-fix-the-settings-so-we-won't-show-the-dialog.
+																																														break;
+																																													}
+																																												}
+																																											});
+
+																							onButtonMenuOpenedClicked();
+																						}
+
+																						@Override
+																						public void onGalleryClicked(){
+																							CameraPhotoPreviewActivity.starCameraFromGalleryPhotoPreviewActivity(MessageFragment.this, activeBoard.key);
+																							onButtonMenuOpenedClicked();
+																						}
+
+																						@Override
+																						public void onContactClicked(){
+																						}
+																					};
+
+	private OnActionClickListener						actionClickListener			= new OnActionClickListener() {
+
+																						@Override
+																						public void onActionClickListener(ChiaseListItemModel item, MessageContentModel message){
+																							if(MsConst.MESSAGE_ACTION_EDIT.equals(item.key)){
+																								editMessage(message);
+																							}else if(MsConst.MESSAGE_ACTION_DELETE.equals(item.key)){
+																								deleteMessage(message);
+																							}else if(MsConst.MESSAGE_ACTION_COPY.equals(item.key)){
+																								copy2Note(message);
+																							}
+																						}
+																					};
+
+	private WelfareActivity.OnActivityResultListener	onActivityResultListener	= new WelfareActivity.OnActivityResultListener() {
+
+																						@Override
+																						public void onActivityResult(int requestCode, int resultCode, Intent data){
+
+																							if(resultCode != Activity.RESULT_OK) return;
+																							switch(requestCode){
+
+																							case REQUEST_CHECK_SETTINGS:
+																								sendLocation();
+																								break;
+
+																							default:
+																								break;
+																							}
+																						}
+																					};
+
+	private WfProfileDialog								mDlgProfile;
+
+	private long										pivotTime					= 0;
+	// private String latestBoardId;
+
+	@Override
+	public void onCreate(Bundle savedInstanceState){
+		super.onCreate(savedInstanceState);
+		networkChangeReceiver = new NetworkChangeReceiver(this);
+		getActivity().registerReceiver(networkChangeReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+	}
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+		if(mRootView == null){
+			binding = DataBindingUtil.inflate(inflater, R.layout.fragment_message, container, false);
+			mRootView = binding.getRoot();
+
+			binding.layoutStamp.listStamps.setLayoutManager(new GridLayoutManager(getContext(), 2, LinearLayoutManager.HORIZONTAL, false));
+			stampAdapter = new StampAdapter(this);
+			binding.layoutStamp.listStamps.setAdapter(stampAdapter);
+
+			binding.layoutStamp.listStampCategories.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+			stampCategoryAdapter = new StampCategoryAdapter(this);
+			binding.layoutStamp.listStampCategories.setAdapter(stampCategoryAdapter);
+
+			binding.layoutRecommendStamp.listRecommendStamp.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+			recommendStampAdapter = new RecommendStampAdapter(this);
+			binding.layoutRecommendStamp.listRecommendStamp.setAdapter(recommendStampAdapter);
+
+			binding.layoutStamp.btnCancel.setOnClickListener(this);
+		}
+		return mRootView;
+	}
+
+	@Override
+	protected void initView(){
+		super.initView();
+
+		mImgLeftHeader = (ImageView)getView().findViewById(R.id.img_id_header_left_icon);
+		LinearLayout lnrRightHeader = (LinearLayout)getView().findViewById(R.id.lnr_header_right_icon);
+		mTxtUnreadMessage = (TextView)getView().findViewById(R.id.txt_id_unread_message);
+
+		LayoutInflater inflater = (LayoutInflater)activity.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+		messageView = (MessageView)inflater.inflate(R.layout.board_pager_message, null);
+		messageView.initialization();
+		messageView.setOnTextChangedListener(this);
+		messageView.revMessage.listener = onScrollToTopListener;
+		noteView = (NoteView)inflater.inflate(R.layout.board_pager_note, null);
+		noteView.initialization();
+		memberView = (MemberListView)inflater.inflate(R.layout.board_pager_member, null);
+		memberView.initialization();
+
+		initViewPager();
+
+		mSlideMenuLayout = (WfSlideMenuLayout)getView().findViewById(R.id.drawer_layout);
+		mSlideMenuLayout.setOutsideLayout((LinearLayoutOnInterceptTouch)getView().findViewById(R.id.main_layout));
+		mViewForMenuBehind = getView().findViewById(R.id.viewForMenuBehind);
+		loadStamps();
+
+		menuManager = new MessageMenuManager();
+		menuManager.setMenuLayout(activity, R.id.menuMain, onMenuManagerListener, onMenuButtonsListener);
+
+		messageView.imgStamp.setOnClickListener(this);
+		mImgLeftHeader.setOnClickListener(this);
+		messageView.imgSend.setOnClickListener(this);
+		mViewForMenuBehind.setOnClickListener(this);
+		messageView.lnrLike.setOnClickListener(this);
+		lnrRightHeader.setOnClickListener(this);
+		noteView.btnSave.setOnClickListener(this);
+		mDlgProfile = new WfProfileDialog(activity);
+		mDlgProfile.setDialogProfileDetail(50, 50);
+
+		mMsgAdapter = new MessageAdapter(activity, mMsgContentList, this, new OnAvatarClickListener() {
+
+			@Override
+			public void OnAvatarClick(String userName, String avatarPath){
+				mDlgProfile.show(BuildConfig.HOST, userName, avatarPath);
+			}
+		});
+		messageView.revMessage.setAdapter(mMsgAdapter);
+
+		initDialog();
+
+		FragmentManager fragmentManager = getFragmentManager();
+		FragmentTransaction transaction = fragmentManager.beginTransaction();
+		boardListFragment = new BoardListFragment();
+		boardListFragment.setOnChangedBoardListener(onChangedBoardListener);
+		if(activeBoard != null && !CCStringUtil.isEmpty(activeBoard.key)){
+			boardListFragment.setActiveBoard(activeBoard);
+		}
+		this.onRefreshBoardListListener = boardListFragment.getOnRefreshBoardListListener();
+		transaction.replace(R.id.slice_menu_board, boardListFragment).commit();
+
+	}
+
+	private void loadStamps(){
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+		String lastUpdateDate = preferences.getString(MsConst.MESSAGE_STAMP_LAST_UPDATE_DATE, null);
+		Log.e("MessageFragment", "send lastUpdatedate = " + lastUpdateDate);
+		JSONObject jsonObject = new JSONObject();
+		if(lastUpdateDate != null){
+			try{
+				jsonObject.put("lastUpdateDate", lastUpdateDate);
+			}catch(JSONException e){
+				e.printStackTrace();
+			}
+		}
+		requestLoad(MsConst.API_MESSAGE_STAMP_CATEGORY_LIST, jsonObject, true);
+	}
+
+	private void initViewPager(){
+		mPagerBoard = (ViewPager)getView().findViewById(R.id.view_pager_id_board);
+		BoardPagerAdapter pagerAdapter = new BoardPagerAdapter(activity, messageView, noteView, memberView);
+		mPagerBoard.setAdapter(pagerAdapter);
+
+		ViewPager.OnPageChangeListener mListener = new ViewPager.OnPageChangeListener() {
+
+			@Override
+			public void onPageSelected(int arg0){
+				switch(arg0){
+				case 0:
+					break;
+				case 1:
+					loadNoteDetail();
+					break;
+				default:
+					break;
+				}
+			}
+
+			@Override
+			public void onPageScrolled(int arg0, float arg1, int arg2){
+			}
+
+			@Override
+			public void onPageScrollStateChanged(int arg0){
+			}
+		};
+		mPagerBoard.addOnPageChangeListener(mListener);
+	}
+
+	private void initDialog(){
+		mDlgCheckUser = new MsChiaseDialog(activity);
+		mDlgCheckUser.setDialogCheckUserList();
+
+		mDlgMessageAction = new MsChiaseDialog(activity);
+		mDlgMessageAction.setDialogAction(actionClickListener);
+	}
+
+	@Override
+	protected void initData(){
+		if(activeBoard != null){
+			if(!CCStringUtil.isEmpty(activeBoard.key)){
+				loadMessageList();
+			}
+		}
+	}
+
+	private void sendLocation(){
+		Location lastKnownLocation = MsUtils.getLocation(activity);
+		if(lastKnownLocation != null){
+			String address = WelfareUtil.getAddress4Location(activity, lastKnownLocation);
+			sendMessage(WelfareConst.ITEM_TEXT_TYPE_LOC, address, String.valueOf(lastKnownLocation.getLatitude()), String.valueOf(lastKnownLocation.getLongitude()));
+		}else{
+			Toast.makeText(activity, getString(R.string.chiase_common_not_working_gps), Toast.LENGTH_LONG).show();
+		}
+	}
+
+	private void onButtonMenuClicked(){
+		if(messageView.buttonType == MessageView.ButtonType.IN_ANIMATION){
+			return;
+		}
+
+		messageView.buttonType = MessageView.ButtonType.IN_ANIMATION;
+		messageView.edtMessage.setEnabled(false);
+		menuManager.openMenu(messageView.imgSend);
+		mViewForMenuBehind.setVisibility(View.VISIBLE);
+	}
+
+	private void onButtonMenuOpenedClicked(){
+		if(messageView.buttonType == MessageView.ButtonType.IN_ANIMATION || mViewForMenuBehind.getVisibility() == View.GONE){
+			return;
+		}
+		messageView.buttonType = MessageView.ButtonType.IN_ANIMATION;
+		menuManager.closeMenu();
+	}
+
+	private void closeLayoutStamps(){
+		mViewForMenuBehind.setVisibility(View.GONE);
+		binding.layoutStamp.getRoot().setVisibility(View.GONE);
+	}
+
+	private void loadMessageList(){
+		JSONObject jsonObject = new JSONObject();
+		try{
+			jsonObject.put("boardId", activeBoard.key);
+			if(!CCStringUtil.isEmpty(autoroadCd) && !CCConst.NONE.equals(autoroadCd)){
+				jsonObject.put("autoroadCd", autoroadCd);
+			}else{
+				jsonObject.put("execType", "NEW");
+			}
+		}catch(JSONException e){
+			e.printStackTrace();
+		}
+		requestLoad(MsConst.API_MESSAGE_BOARD, jsonObject, true);
+	}
+
+	private void loadMessageLatest(){
+		JSONObject jsonObject = new JSONObject();
+		try{
+			jsonObject.put("boardId", activeBoard.key);
+			jsonObject.put("targetMessageId", latestMessageId);
+			jsonObject.put("startMessageId", startMessageId);
+		}catch(JSONException e){
+			e.printStackTrace();
+		}
+		requestLoad(MsConst.API_MESSAGE_LATEST, jsonObject, false);
+	}
+
+	private void loadNoteDetail(){
+		JSONObject jsonObject = new JSONObject();
+		try{
+			jsonObject.put("key", activeBoard.key);
+		}catch(JSONException e){
+			e.printStackTrace();
+		}
+		requestLoad(MsConst.API_MESSAGE_NOTE_DETAIL, jsonObject, true);
+	}
+
+	@Override
+	protected void successLoad(JSONObject response, String url){
+		try{
+			if(MsConst.API_MESSAGE_BOARD.equals(url)){
+
+				List<MessageContentModel> lstMessage = LoganSquare.parseList(response.optString("contents"), MessageContentModel.class);
+				if(!CCCollectionUtil.isEmpty(lstMessage)){
+					MessageContentModel firstMessage = lstMessage.get(0);
+					if(!CCStringUtil.isEmpty(activeBoardId) && activeBoardId.equals(firstMessage.boardId)){
+						if(CCStringUtil.isEmpty(autoroadCd)){
+							mMsgAdapter.addMessages(lstMessage);
+							messageView.revMessage.setLastVisibleItem(mMsgAdapter.getItemCount() - 1);
+							messageView.revMessage.scrollRecyclerToBottom();
+							startMessageId = lstMessage.get(0).key;
+							latestMessageId = lstMessage.get(lstMessage.size() - 1).key;
+						}else{
+							// append to top
+							Collections.reverse(lstMessage);
+							mMsgAdapter.addMessage2Top(lstMessage);
+							startMessageId = lstMessage.get(0).key;
+						}
+					}
+					autoroadCd = response.optString("autoroadCd");
+					isSuccessLoad = true;
+				}
+			}else if(MsConst.API_MESSAGE_LATEST.equals(url)){
+				List<MessageContentModel> lstMessage = LoganSquare.parseList(response.optString("contents"), MessageContentModel.class);
+				if(!CCCollectionUtil.isEmpty(lstMessage)){
+					MessageContentModel firstMessage = lstMessage.get(0);
+					if(!CCStringUtil.isEmpty(activeBoardId) && activeBoardId.equals(firstMessage.boardId)){
+						messageView.revMessage.isScrollToBottom();
+						mMsgAdapter.addMessages(lstMessage);
+						messageView.revMessage.scrollRecyclerToBottom();
+						String lastKey = lstMessage.get(lstMessage.size() - 1).key;
+						if(CCNumberUtil.toInteger(latestMessageId).compareTo(CCNumberUtil.toInteger(lastKey)) < 0){
+							latestMessageId = lastKey;
+						}
+					}
+				}
+
+				// update board list
+				List<BoardModel> lstBoard = LoganSquare.parseList(response.optString("boards"), BoardModel.class);
+				if(onRefreshBoardListListener != null) onRefreshBoardListListener.onRefreshBoardListListener(lstBoard);
+
+				// update action list
+				List<MessageContentModel> lstAction = LoganSquare.parseList(response.optString("actions"), MessageContentModel.class);
+				if(!CCCollectionUtil.isEmpty(lstAction)){
+					this.updateMessage(lstAction);
+				}
+			}else if(MsConst.API_MESSAGE_NOTE_DETAIL.equals(url)){
+				BoardModel boardModel = LoganSquare.parse(response.optString("board"), BoardModel.class);
+				activeBoard = boardModel;
+				updateNoteData();
+			}else if(MsConst.API_MESSAGE_STAMP_CATEGORY_LIST.equals(url)){
+				saveStamps(response);
+				activeBoard = new BoardModel();
+				activeBoard.key = prefAccUtil.get(MsConst.PREF_ACTIVE_BOARD_ID);
+				activeBoardId = activeBoard.key;
+				loadMessageList();
+
+			}else{
+				super.successLoad(response, url);
+			}
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+	}
+
+	private void saveStamps(JSONObject response){
+		List<SSStampCategoryModel> stampCategories = CCJsonUtil.convertToModelList(response.optString("stampCategories"), SSStampCategoryModel.class);
+		String lastUpdateDate = response.optString("lastUpdateDate");
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+		preferences.edit().putString(MsConst.MESSAGE_STAMP_LAST_UPDATE_DATE, lastUpdateDate).apply();
+
+		for(SSStampCategoryModel stampCategory : stampCategories){
+			if(stampCategory.deleteFlag){
+				WFMStampCategoryModel wfmStampCategory = WFMStampCategoryModel.get(stampCategory.key);
+				if(wfmStampCategory != null){
+					wfmStampCategory.delete();
+				}
+			}else{
+				WFMStampCategoryModel wfmStampCategory = WFMStampCategoryModel.get(stampCategory.key);
+				if(wfmStampCategory != null){
+					wfmStampCategory.update(stampCategory);
+				}else{
+					new WFMStampCategoryModel(stampCategory).save();
+				}
+
+				for(SSStampModel stamp : stampCategory.stamps){
+					if(stamp.deleteFlag){
+						WFMStampModel wfStamp = WFMStampModel.get(stamp.key);
+						if(wfStamp != null){
+							wfStamp.delete();
+						}
+					}else{
+						WFMStampModel wfStamp = WFMStampModel.get(stamp.key);
+						if(wfStamp != null){
+							wfStamp.update(stamp);
+						}else{
+							new WFMStampModel(stamp).save();
+						}
+					}
+				}
+			}
+		}
+
+		mStampCategories = WFMStampCategoryModel.getAll();
+		stampCategoryAdapter.setStampCategories(mStampCategories);
+		log("stampCategory size = " + mStampCategories.size());
+		for(WFMStampCategoryModel wfmStampCategory : mStampCategories){
+			wfmStampCategory.stamps = WFMStampModel.getAll(wfmStampCategory.categoryId);
+			log("Category " + wfmStampCategory.categoryName + " have: " + wfmStampCategory.stamps.size());
+		}
+		if(!mStampCategories.isEmpty()){
+			stampAdapter.setStamps(mStampCategories.get(0).stamps);
+		}
+	}
+
+	private void log(String msg){
+		Log.e("MessageFragment", msg);
+	}
+
+	// private void loadBoards(){
+	// FragmentManager fragmentManager = getFragmentManager();
+	// FragmentTransaction transaction = fragmentManager.beginTransaction();
+	// boardListFragment = new BoardListFragment();
+	// boardListFragment.setOnChangedBoardListener(onChangedBoardListener);
+	// if(activeBoard != null && !CCStringUtil.isEmpty(activeBoard.key)){
+	// boardListFragment.setActiveBoard(activeBoard);
+	// }
+	// this.onRefreshBoardListListener = boardListFragment.getOnRefreshBoardListListener();
+	// transaction.replace(R.id.slice_menu_board, boardListFragment).commit();
+	// }
+
+	private void updateMessage(List<MessageContentModel> lstAction){
+		mMsgAdapter.updateMessage(lstAction);
+	}
+
+	@Override
+	public void onResume(){
+		super.onResume();
+		// ((WelfareActivity)activity).setOnDeviceBackButtonClickListener(this);
+		((WelfareActivity)activity).setOnActivityResultListener(onActivityResultListener);
+
+		if(mSlideMenuLayout.isMenuShown()){
+			mSlideMenuLayout.toggleMenu();
+		}
+		if(activeBoard != null){
+			activeBoardId = activeBoard.key;
+		}
+
+		if(mTimer == null) mTimer = new Timer();
+		mTimer.schedule(new TimerTask() {
+
+			@Override
+			public void run(){
+				if(isSuccessLoad){
+					loadMessageLatest();
+				}
+			}
+		}, TIME_RELOAD, TIME_RELOAD);
+	}
+
+	private String filterToUserList(String message){
+		mMessageBuilder.delete(0, mMessageBuilder.length());
+		StringBuilder toUserBuilder = new StringBuilder();
+		String[] words = message.split(" ");
+		for(String word : words){
+			if(word.startsWith("@")){
+				UserModel findUser = MsUtils.findUser4AccountName(activeBoard.memberList, word.substring(1, word.length()));
+				if(findUser != null){
+					toUserBuilder.append(findUser.key + ",");
+				}else{
+					mMessageBuilder.append(word + " ");
+				}
+			}else{
+				mMessageBuilder.append(word + " ");
+			}
+		}
+		return toUserBuilder.toString();
+	}
+
+	private void sendMessage(String messageType, String content, String latitude, String longitude){
+
+		JSONObject jsonObject = new JSONObject();
+		try{
+			jsonObject.put("boardId", activeBoard.key);
+			if(WelfareConst.ITEM_TEXT_TYPE_LIKE.equals(messageType)){
+				jsonObject.put("execType", WelfareConst.ITEM_TEXT_TYPE_LIKE);
+				jsonObject.put("messageContent", EmotionConst.EMO_LIKE);
+			}else if(WelfareConst.ITEM_TEXT_TYPE_STAMP.equals(messageType)){
+				jsonObject.put("execType", WelfareConst.ITEM_TEXT_TYPE_STAMP);
+				jsonObject.put("messageContent", content);
+			}else if(WelfareConst.ITEM_TEXT_TYPE_LOC.equals(messageType)){
+				jsonObject.put("gpsLongtitude", longitude);
+				jsonObject.put("gpsLatitude", latitude);
+				jsonObject.put("messageContent", content);
+			}else{
+				messageView.imgSend.setEnabled(false);
+				jsonObject.put("execType", WelfareConst.ITEM_TEXT_TYPE_TEXT);
+				// get to user list in content
+				jsonObject.put("targetListString", filterToUserList(content));
+				int end = mMessageBuilder.length() >= 1 ? (mMessageBuilder.length() - 1) : 0;
+				jsonObject.put("messageContent", mMessageBuilder.substring(0, end));
+				if(messageView.likeButtonType == MessageView.LikeButtonType.EDIT){
+					jsonObject.put("key", mDlgMessageAction.getMessage().key);
+				}
+			}
+		}catch(JSONException e){
+			e.printStackTrace();
+		}
+		requestUpdate(MsConst.API_MESSAGE_UPDATE, jsonObject, false);
+	}
+
+	private void deleteMessage(MessageContentModel message){
+		JSONObject jsonObject = new JSONObject();
+		try{
+			jsonObject.put("key", message.key);
+			jsonObject.put("boardId", activeBoard.key);
+		}catch(JSONException e){
+			e.printStackTrace();
+		}
+		requestUpdate(MsConst.API_MESSAGE_DELETE, jsonObject, false);
+	}
+
+	private void editMessage(MessageContentModel message){
+		messageView.edtMessage.setText(message.messageContent);
+		focusEditText(messageView.edtMessage);
+		messageView.animateLikeButton(false);
+	}
+
+	private void copy2Note(MessageContentModel message){
+		JSONObject jsonObject = new JSONObject();
+		try{
+			jsonObject.put("key", activeBoard.key);
+			jsonObject.put("targetMessageId", message.key);
+		}catch(JSONException ex){
+			ex.printStackTrace();
+		}
+		requestUpdate(MsConst.API_MESSAGE_NOTE_COPY, jsonObject, false);
+	}
+
+	private void updateNote(){
+		JSONObject jsonObject = new JSONObject();
+		try{
+			jsonObject.put("key", activeBoard.key);
+			jsonObject.put("boardNote", noteView.edtNote.getText());
+		}catch(JSONException ex){
+			ex.printStackTrace();
+		}
+		requestUpdate(MsConst.API_MESSAGE_NOTE_UPDATE, jsonObject, false);
+	}
+
+	@Override
+	protected void successUpdate(JSONObject response, String url){
+		if(MsConst.API_MESSAGE_UPDATE.equals(url)){
+			messageView.imgSend.setEnabled(true);
+			MessageContentModel contentModel = null;
+			try{
+				contentModel = LoganSquare.parse(response.optString("detail"), MessageContentModel.class);
+				if(!CCStringUtil.isEmpty(activeBoardId) && activeBoardId.equals(contentModel.boardId)){
+					if(messageView.likeButtonType == MessageView.LikeButtonType.EDIT){
+						List<MessageContentModel> lstUpdate = new ArrayList<>();
+						lstUpdate.add(contentModel);
+						mMsgAdapter.updateMessage(lstUpdate);
+					}else{
+						appendMessage(contentModel);
+						// latestMessageId = contentModel.key;
+					}
+					messageView.edtMessage.setText("");
+				}
+			}catch(IOException e){
+				e.printStackTrace();
+			}
+		}else if(MsConst.API_MESSAGE_LIKE.equals(url)){
+
+		}else if(MsConst.API_MESSAGE_DELETE.equals(url)){
+			mMsgAdapter.deleteMessage(response.optString("key"));
+		}else if(MsConst.API_MESSAGE_NOTE_UPDATE.equals(url)){
+			noteView.changeMode(false);
+			loadMessageLatest();
+			// mPagerBoard.setCurrentItem(0, true);
+		}else{
+			super.successUpdate(response, url);
+		}
+
+	}
+
+	private void appendMessage(MessageContentModel messageModel){
+		messageView.revMessage.isScrollToBottom();
+		mMsgAdapter.addMessage(messageModel);
+		messageView.revMessage.scrollRecyclerToBottom();
+	}
+
+	@Override
+	public void onClick(View v){
+		switch(v.getId()){
+		case R.id.img_id_header_left_icon:
+			hideKeyBoard(activity);
+			mSlideMenuLayout.toggleMenu();
+			break;
+		case R.id.btn_id_send:
+			if(messageView.buttonType == MessageView.ButtonType.MENU){
+				onButtonMenuClicked();
+			}else{
+				String messageText = CCStringUtil.toString(messageView.edtMessage.getText());
+				// if(!CCStringUtil.isEmpty(messageText)){
+				sendMessage(WelfareConst.ITEM_TEXT_TYPE_TEXT, messageText, null, null);
+				// }else{
+				// alertDialog.setMessage(getString(R.string.msg_msg_invalid_empty));
+				// alertDialog.show();
+				// messageView.edtMessage.setText("");
+				// }
+			}
+			break;
+		case R.id.viewForMenuBehind:
+			onButtonMenuOpenedClicked();
+			closeLayoutStamps();
+			break;
+
+		case R.id.lnr_id_like:
+			if(messageView.likeButtonType == MessageView.LikeButtonType.LIKE){
+				sendMessage(WelfareConst.ITEM_TEXT_TYPE_LIKE, null, null, null);
+			}else{
+				messageView.edtMessage.setText("");
+			}
+			break;
+
+		case R.id.lnr_header_right_icon:
+			UserListFragment fragment = new UserListFragment();
+			fragment.setOnAddUserSuccessListener(this);
+			gotoFragment(fragment);
+			break;
+
+		case R.id.btn_id_save:
+			updateNote();
+			break;
+		case R.id.btn_cancel:
+			binding.layoutStamp.getRoot().setVisibility(View.GONE);
+			mViewForMenuBehind.setVisibility(View.GONE);
+			break;
+		case R.id.btn_stamp:
+			binding.layoutStamp.getRoot().setVisibility(View.VISIBLE);
+			mViewForMenuBehind.setVisibility(View.VISIBLE);
+			hideSoftKeyboard();
+			break;
+		default:
+			break;
+		}
+	}
+
+	private void hideSoftKeyboard(){
+		View view = getActivity().getCurrentFocus();
+		if(view != null){
+			InputMethodManager inputMethodManager = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+			inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+		}
+	}
+
+	@Override
+	public void onItemMsgClickListener(MessageContentModel item){
+		MessageDetailFragment fragment = new MessageDetailFragment();
+		fragment.setActiveMessage(item);
+		fragment.setOnAddCommentListener(onAddCommentListener);
+		gotoFragment(fragment);
+	}
+
+	@Override
+	public void onItemCheckClickListener(MessageContentModel item){
+		if(!CCCollectionUtil.isEmpty(item.checks)){
+			mDlgCheckUser.updateCheckUserList(item.getCheckList());
+			mDlgCheckUser.show();
+		}
+	}
+
+	@Override
+	public void onItemMsgLongClickListener(MessageContentModel item){
+		List<ChiaseListItemModel> lstAction = new ArrayList<>();
+		if(myself.key.equals(item.messageSender.key)){
+			if(WelfareConst.ITEM_TEXT_TYPE_TEXT.equals(item.messageType)){
+				lstAction.add(new ChiaseListItemModel(MsConst.MESSAGE_ACTION_EDIT, getString(R.string.msg_msg_action_edit)));
+			}
+			lstAction.add(new ChiaseListItemModel(MsConst.MESSAGE_ACTION_DELETE, getString(R.string.msg_msg_action_delete)));
+		}
+
+		if(WelfareConst.ITEM_TEXT_TYPE_TEXT.equals(item.messageType)){
+			lstAction.add(new ChiaseListItemModel(MsConst.MESSAGE_ACTION_COPY, getString(R.string.msg_msg_action_copy)));
+		}
+		if(!CCCollectionUtil.isEmpty(lstAction)){
+			mDlgMessageAction.setMessage(item);
+			mDlgMessageAction.updateDialogAction(lstAction);
+		}
+	}
+
+	private void onScrollToTopListener(){
+		if(!CCStringUtil.isEmpty(autoroadCd) && !CCConst.NONE.equals(autoroadCd)){
+			if(!isFirstScroll2Top){
+				loadMessageList();
+			}else{
+				isFirstScroll2Top = false;
+			}
+		}
+	}
+
+	private void onChangedBoard(final BoardModel boardModel, boolean isLoad){
+		if(mSlideMenuLayout.isMenuShown()){
+			mSlideMenuLayout.toggleMenu();
+		}
+		if(activeBoard == null || !boardModel.key.equals(activeBoard.key)){
+			activity.runOnUiThread(new Runnable() {
+
+				public void run(){
+					MessageFragment.super.updateHeader(boardModel.boardName);
+				}
+			});
+
+			if(isLoad){
+				activeBoardId = boardModel.key;
+				mMsgAdapter.clearAll();
+				messageView.edtMessage.clearFocus();
+				messageView.edtMessage.setText("");
+				autoroadCd = "";
+				isFirstScroll2Top = true;
+				loadMessageList();
+			}
+		}else{
+			if(!boardModel.boardName.equals(activeBoard.boardName)){
+				activeBoard = boardModel;
+				updateNoteData();
+				updateHeader(boardModel.boardName);
+			}
+		}
+	}
+
+	private void updateNoteData(){
+		noteView.edtNote.setText(CCStringUtil.toString(activeBoard.boardNote));
+		noteView.changeMode(false);
+		if(!CCCollectionUtil.isEmpty(activeBoard.memberList)){
+			memberView.updateMemberList(activeBoard.memberList);
+			List<UserModel> userListWithoutMe = new ArrayList<>();
+			for(UserModel userModel : activeBoard.memberList){
+				if(!userModel.key.equals(myself.key)){
+					userListWithoutMe.add(userModel);
+				}
+			}
+			mMembersAdapter = new MembersAdapter(activity, userListWithoutMe);
+			messageView.edtMessage.setAdapter(mMembersAdapter);
+			messageView.edtMessage.setTokenizer(new MsgMultiAutoCompleteTextView.CommaTokenizer());
+		}
+	}
+
+	private void refreshUnreadMessage(Integer unreadMessage){
+		if(unreadMessage != null && unreadMessage.compareTo(CCConst.ZERO) > 0){
+			mTxtUnreadMessage.setVisibility(View.VISIBLE);
+			mTxtUnreadMessage.setText(String.valueOf(unreadMessage));
+		}else{
+			mTxtUnreadMessage.setVisibility(View.GONE);
+		}
+	}
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent returnedIntent){
+		super.onActivityResult(requestCode, resultCode, returnedIntent);
+
+		if(resultCode != Activity.RESULT_OK) return;
+		switch(requestCode){
+		case WelfareConst.RequestCode.PHOTO_CHOOSE:
+			appendFile(returnedIntent);
+			break;
+
+		case WelfareConst.RequestCode.VIDEO_CHOOSE:
+			appendFile(returnedIntent);
+			break;
+
+		case WelfareConst.RequestCode.PICK_FILE:
+			appendFile(returnedIntent);
+			break;
+
+		case MsConst.REQUEST_CODE_ADD_CONTACT:
+			String detailBoard = returnedIntent.getExtras().getString("detail");
+			BoardModel boardModel = null;
+			try{
+				boardModel = LoganSquare.parse(detailBoard, BoardModel.class);
+				if(boardListFragment != null) boardListFragment.onAddedContactListener(boardModel);
+				break;
+			}catch(IOException e){
+				e.printStackTrace();
+			}
+		default:
+			break;
+		}
+	}
+
+	private void appendFile(Intent returnedIntent){
+		String detailMessage = returnedIntent.getExtras().getString("detail");
+		if(WelfareConst.WF_FILE_SIZE_NG.equals(detailMessage)){
+			alertDialog.setMessage(getString(R.string.wf_invalid_photo_over));
+			alertDialog.show();
+		}else{
+			MessageContentModel photoModel = null;
+			try{
+				photoModel = LoganSquare.parse(CCStringUtil.toString(detailMessage), MessageContentModel.class);
+				appendMessage(photoModel);
+			}catch(IOException e){
+				e.printStackTrace();
+			}
+		}
+	}
+
+	private void onAddCommentListener(String messageId){
+		mMsgAdapter.addComment(messageId);
+	}
+
+	public void setActiveBoard(BoardModel activeBoard){
+		this.activeBoard = activeBoard;
+		activeBoardId = activeBoard.key;
+	}
+
+	protected void commonNotSuccess(JSONObject response){
+		super.commonNotSuccess(response);
+		messageView.imgSend.setEnabled(true);
+	}
+
+	// protected void errorRequest(VolleyError error){
+	// super.errorRequest(error);
+	// messageView.imgSend.setEnabled(true);
+	// }
+
+	protected void errorRequest2(){
+		super.errorRequest2();
+		messageView.imgSend.setEnabled(true);
+	}
+
+	@Override
+	public void onDestroy(){
+		super.onDestroy();
+
+		mImgLeftHeader = null;
+		mSlideMenuLayout = null;
+		mMembersAdapter = null;
+		mMessageBuilder = null;
+		messageView = null;
+		noteView = null;
+		mPagerBoard = null;
+
+		mMsgAdapter = null;
+		mViewForMenuBehind = null;
+		mMsgContentList = null;
+		activeBoard = null;
+		autoroadCd = null;
+
+		boardListFragment = null;
+		menuManager = null;
+		getActivity().unregisterReceiver(networkChangeReceiver);
+	}
+
+	@Override
+	public void onPause(){
+		super.onPause();
+		activeBoardId = null;
+		if(mTimer != null){
+			mTimer.cancel();
+			mTimer = null;
+		}
+	}
+
+	@Override
+	public void onConnected(@Nullable Bundle bundle){
+
+	}
+
+	@Override
+	public void onConnectionSuspended(int i){
+
+	}
+
+	@Override
+	public void onConnectionFailed(@NonNull ConnectionResult connectionResult){
+
+	}
+
+	@Override
+	public void onStampCategoryClick(WFMStampCategoryModel stampCategory){
+		stampAdapter.setStamps(stampCategory.stamps);
+	}
+
+	@Override
+	public void onStampClick(WFMStampModel stamp){
+		sendMessage(WelfareConst.ITEM_TEXT_TYPE_STAMP, stamp.stampId, null, null);
+		binding.layoutStamp.getRoot().setVisibility(View.GONE);
+		mViewForMenuBehind.setVisibility(View.GONE);
+	}
+
+	@Override
+	public void onSuccess(BoardModel boardModel){
+		if(boardListFragment != null) boardListFragment.onAddedContactListener(boardModel);
+	}
+
+	@Override
+	public void onTextChanged(CharSequence charSequence){
+
+		if(charSequence.length() < 3){
+			binding.layoutRecommendStamp.getRoot().setVisibility(View.GONE);
+		}else{
+			List<WFMStampModel> recommendStamps = getRecommendStamps(charSequence.toString());
+			if(recommendStamps.size() == 0){
+				binding.layoutRecommendStamp.getRoot().setVisibility(View.GONE);
+			}else{
+				binding.layoutRecommendStamp.getRoot().setVisibility(View.VISIBLE);
+				recommendStampAdapter.setRecommendStamps(recommendStamps);
+			}
+		}
+	}
+
+	private List<WFMStampModel> getRecommendStamps(String keyword){
+		List<WFMStampModel> recommendStamps = new ArrayList<>();
+		for(WFMStampCategoryModel stampCategory : mStampCategories){
+			for(WFMStampModel stamp : stampCategory.stamps){
+				if(stamp.stampKeyword != null && !stamp.stampKeyword.isEmpty() && stamp.stampKeyword.toLowerCase().contains(keyword.toLowerCase())){
+					recommendStamps.add(stamp);
+				}
+			}
+		}
+		return recommendStamps;
+	}
+
+	@Override
+	public void onRecommendStampAdapterClick(WFMStampModel recommendStamp){
+		sendMessage(WelfareConst.ITEM_TEXT_TYPE_STAMP, recommendStamp.stampId, null, null);
+		binding.layoutRecommendStamp.getRoot().setVisibility(View.GONE);
+	}
+
+	@Override
+	protected void onClickBackBtn(){
+		log("onClickBackBtn");
+		if(messageView.buttonType == MessageView.ButtonType.MENU_OPENED){
+			onButtonMenuOpenedClicked();
+		}else{
+			super.onClickBackBtn();
+		}
+	}
+
+	@Override
+	public void onClickDeviceBackButton(){
+		log("onClickDeviceBackButton");
+		binding.layoutRecommendStamp.getRoot().setVisibility(View.GONE);
+		binding.layoutStamp.getRoot().setVisibility(View.GONE);
+		mViewForMenuBehind.setVisibility(View.GONE);
+		super.onClickDeviceBackButton();
+	}
+
+	@Override
+	public void onNetworkConnectionChanged(boolean connected){
+		messageView.textInternetConnection.setVisibility(connected ? View.GONE : View.VISIBLE);
+	}
 }

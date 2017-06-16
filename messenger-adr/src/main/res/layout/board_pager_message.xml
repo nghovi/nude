@@ -3,7 +3,7 @@
     style="@style/wf_common_match"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <LinearLayout
+    <RelativeLayout
         style="@style/cs_common_match"
         android:orientation="vertical">
 
@@ -11,16 +11,21 @@
             android:id="@+id/rev_id_message"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:scrollbars="vertical"
+            android:layout_above="@+id/divider"
             android:splitMotionEvents="false"/>
 
-        <View style="@style/cs_common_divider"/>
+        <View
+            android:id="@+id/divider"
+            android:layout_above="@+id/lnr_control_message_view"
+            style="@style/cs_common_divider"/>
 
         <LinearLayout
+            android:id="@+id/lnr_control_message_view"
             style="@style/cs_common_match_wrap"
             android:background="@color/chiase_white"
             android:gravity="center_vertical"
+            android:layout_alignParentBottom="true"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -72,5 +77,16 @@
             </LinearLayout>
 
         </LinearLayout>
-    </LinearLayout>
+
+        <TextView
+            android:id="@+id/txt_internet_connection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin_8dp"
+            android:gravity="center"
+            android:textColor="@color/core_white"
+            android:textSize="16sp"
+            android:background="#aa000000"
+            android:text="@string/msg_no_internet_connection"/>
+    </RelativeLayout>
 </trente.asia.messenger.services.message.view.MessageView>
