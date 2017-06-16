@@ -212,7 +212,8 @@ public abstract class WelfareFragment extends ChiaseFragment implements WelfareA
 			response = createSystemErrorResponse(activity);
 		}
 		String status = response.optString(CsConst.STATUS);
-		if(CsConst.STATUS_OK.equals(status)){
+		String returnCd = response.optString(CsConst.RETURN_CODE_PARAM);
+		if(CsConst.STATUS_OK.equals(status) && (CCStringUtil.isEmpty(returnCd) || CCConst.NONE.equals(returnCd))){
 			dismissLoad();
 			successUpdate(response, url);
 		}else{
@@ -241,7 +242,8 @@ public abstract class WelfareFragment extends ChiaseFragment implements WelfareA
 			response = createSystemErrorResponse(activity);
 		}
 		String status = response.optString(CsConst.STATUS);
-		if(CsConst.STATUS_OK.equals(status)){
+		String returnCd = response.optString(CsConst.RETURN_CODE_PARAM);
+		if(CsConst.STATUS_OK.equals(status) && (CCStringUtil.isEmpty(returnCd) || CCConst.NONE.equals(returnCd))){
 			dismissLoad();
 			successUpload(response, url);
 		}else{

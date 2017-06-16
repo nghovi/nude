@@ -185,7 +185,7 @@ public class MessageDetailFragment extends AbstractMsgFragment implements View.O
 			@Override
 			public void run(){
 				if(isSuccessLoad){
-					loadCommentLatest();
+//					loadCommentLatest();
 				}
 			}
 		}, TIME_RELOAD, TIME_RELOAD);
@@ -617,7 +617,9 @@ public class MessageDetailFragment extends AbstractMsgFragment implements View.O
 				// }
 				scroll2Bottom();
 
-				if(onAddCommentListener != null) onAddCommentListener.onAddCommentListener(activeMessage.key);
+				if(onAddCommentListener != null){
+					onAddCommentListener.onAddCommentListener(activeMessage.key);
+				}
 			}catch(IOException e){
 				e.printStackTrace();
 			}
