@@ -977,6 +977,8 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 				}
 			});
 
+			activeBoard = boardModel;
+			updateNoteData();
 			if(isLoad){
 				activeBoardId = boardModel.key;
 				mMsgAdapter.clearAll();
