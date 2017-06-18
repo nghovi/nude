@@ -17,41 +17,6 @@
 
         <include layout="@layout/view_common_header" />
 
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="@{test.testText}" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="26dp"
-                android:layout_weight="0.99"
-                android:src="@drawable/wf_camera"
-                />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:onClick="@{handlers.onClickEvent}"
-                android:text="Change text" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:onClick="@{handlers.onClickImage}"
-                android:text="Change image" />
-
-        </LinearLayout>
-
         <GridView
             android:id="@+id/gridview"
             android:layout_width="match_parent"
