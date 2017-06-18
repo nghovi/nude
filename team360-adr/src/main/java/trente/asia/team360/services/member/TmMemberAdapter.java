@@ -1,9 +1,11 @@
-package trente.asia.team360.services.login;
+package trente.asia.team360.services.member;
 
 import android.content.Context;
+import android.databinding.DataBindingUtil;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -11,9 +13,11 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.team360.BuildConfig;
 import trente.asia.team360.R;
+import trente.asia.team360.databinding.ViewGridMemberBinding;
 import trente.asia.team360.services.model.StampModel;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WfPicassoHelper;
@@ -24,7 +28,6 @@ import trente.asia.welfare.adr.utils.WfPicassoHelper;
 public class TmMemberAdapter extends BaseAdapter {
 
     private Context mContext;
-    private LayoutInflater mLayoutInflater;
 
     private List<UserModel> users = new ArrayList<UserModel>();
 
@@ -32,55 +35,52 @@ public class TmMemberAdapter extends BaseAdapter {
         this.users = users;
     }
 
-    private String[] mHueArray = {
-            "FF4040", "FFCF40", "9FFF40", "40FF6F",
-            "40FFFF", "406FFF", "9F40FF", "FF40CF"
-    };
-
-    private static class ViewHolder {
-        public ImageView hueImageView;
-        public TextView hueTextView;
-    }
+//    public TmMemberAdapter(Context context) {
+//        super(context, 0);
+//    }
 
     public TmMemberAdapter(Context context) {
+        super();
         mContext = context;
-        mLayoutInflater = LayoutInflater.from(context);
     }
 
+
+    @Override
     public int getCount() {
-        return users.size();
+        return CCCollectionUtil.size(this.users);
     }
 
+    @Override
     public Object getItem(int position) {
         return users.get(position);
     }
 
+    @Override
     public long getItemId(int position) {
         return position;
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        ViewHolder holder;
+
         if (convertView == null) {
-            convertView = mLayoutInflater.inflate(R.layout.view_grid_member, null);
-            holder = new ViewHolder();
-            holder.hueImageView = (ImageView) convertView.findViewById(R.id.hue_imageview);
-            holder.hueTextView = (TextView) convertView.findViewById(R.id.hue_textview);
-            convertView.setTag(holder);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
+            ViewGridMemberBinding binding = DataBindingUtil.inflate(LayoutInflater.from(mContext), R.layout.view_grid_member, parent, false);
+            convertView = binding.getRoot();
         }
+        ViewGridMemberBinding binding = DataBindingUtil.getBinding(convertView);
+        binding.setMember(users.get(position));
 
-
-        holder.hueTextView.setText(users.get(position).userName);
 
         if (!CCStringUtil.isEmpty(users.get(position).avatarPath)) {
             // WfPicassoHelper.loadImage(context, BuildConfig.HOST + activityModel.activityUserAvatarPath, viewHolder.imgAvatar, null);
-            WfPicassoHelper.loadImageWithDefaultIcon(mContext, BuildConfig.HOST, holder.hueImageView, users.get(position).avatarPath, R.drawable.wf_profile);
+            WfPicassoHelper.loadImageWithDefaultIcon(mContext, BuildConfig.HOST, binding.hueImageview, users.get(position).avatarPath, R.drawable.wf_profile);
         }
 
 
+
+
         return convertView;
+
+
     }
 }

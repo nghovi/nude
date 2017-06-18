@@ -1,17 +1,18 @@
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
+        <import type="trente.asia.welfare.adr.models.UserModel"/>
+        <import type="java.util.List"/>
         <variable
-            name="test"
-            type="trente.asia.team360.services.model.TestModel" />
-
-        <variable
-            name="handlers"
-            type="trente.asia.team360.services.model.TestHandlers" />
+            name="members"
+            type="List&lt;UserModel>" />
     </data>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         style="@style/wf_common_match">
 
 
@@ -28,7 +29,8 @@
             android:numColumns="auto_fit"
             android:paddingTop="@dimen/margin_20dp"
             android:stretchMode="columnWidth"
-            android:verticalSpacing="8dp" />
+            android:verticalSpacing="8dp"
+            />
 
 
     </LinearLayout>
