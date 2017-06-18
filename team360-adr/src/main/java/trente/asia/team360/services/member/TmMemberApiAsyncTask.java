@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,8 +24,6 @@ import io.realm.RealmQuery;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import trente.asia.android.activity.ChiaseFragment;
-import trente.asia.android.activity.HttpDelegate;
 import trente.asia.android.define.CsConst;
 import trente.asia.android.exception.CAException;
 import trente.asia.android.util.AndroidUtil;
@@ -60,6 +59,8 @@ public class TmMemberApiAsyncTask extends AsyncTask<Context, Integer, String> {
     @Override
     protected String doInBackground(Context... params) {
 
+        //Toast.makeText(ctx, "[async] start call api", Toast.LENGTH_LONG).show();
+
         JSONObject jsonObject = new JSONObject();
         String result = null;
         try {
@@ -94,7 +95,7 @@ public class TmMemberApiAsyncTask extends AsyncTask<Context, Integer, String> {
 
         }
 
-
+        //Toast.makeText(ctx, "[async] end call api", Toast.LENGTH_LONG).show();
         return result;
     }
 
@@ -124,6 +125,9 @@ public class TmMemberApiAsyncTask extends AsyncTask<Context, Integer, String> {
     @Override
     protected void onPostExecute(String r) {
         try {
+
+            //Toast.makeText(ctx, "[async] start update db", Toast.LENGTH_LONG).show();
+
             if (!CCStringUtil.isEmpty(r)) {
 
                 Realm realm = Realm.getDefaultInstance();
@@ -155,7 +159,7 @@ public class TmMemberApiAsyncTask extends AsyncTask<Context, Integer, String> {
                 realm.commitTransaction();
 
 
-                Log.d("TEST", "ABX");
+                //Toast.makeText(ctx, "[async] end update db", Toast.LENGTH_LONG).show();
 
             }
         } catch (Exception ex) {

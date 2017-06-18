@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.GridView;
+import android.widget.Toast;
 
 import org.json.JSONObject;
 
@@ -22,14 +22,12 @@ import trente.asia.team360.common.fragments.AbstractTmFragment;
 import trente.asia.team360.databinding.FragmentMemberViewBinding;
 import trente.asia.team360.services.entity.UserEntity;
 import trente.asia.team360.services.login.TmStampFormFragment;
-import trente.asia.team360.services.model.TestHandlers;
 import trente.asia.team360.services.model.TestModel;
 import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.models.UserModel;
 
 public class TmMemberViewFragment extends AbstractTmFragment {
 
-    private GridView gridView;
 
     private FragmentMemberViewBinding binding;
 
@@ -47,9 +45,8 @@ public class TmMemberViewFragment extends AbstractTmFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding = FragmentMemberViewBinding.bind(view);
-
+        binding.setHandlers(new Handlers());
     }
-
 
     @Override
     public void initView() {
@@ -57,11 +54,7 @@ public class TmMemberViewFragment extends AbstractTmFragment {
 
         UserModel userModel = prefAccUtil.getUserPref();
         super.initHeader(null, userModel.getUserName(), R.drawable.wf_setting_white);
-
-        gridView = (GridView) getView().findViewById(R.id.gridview);
-
     }
-
 
     @Override
     protected void initData() {
@@ -73,8 +66,6 @@ public class TmMemberViewFragment extends AbstractTmFragment {
         }
 
         loadMemberListByApi();
-
-
     }
 
     private List<UserModel> loadMemberListByRealM() {
@@ -93,11 +84,15 @@ public class TmMemberViewFragment extends AbstractTmFragment {
             results.add(user);
         }
 
+        Toast.makeText(getActivity(), "done select database", Toast.LENGTH_LONG).show();
         return results;
 
     }
 
     private void loadMemberListByApi() {
+
+
+        Toast.makeText(getActivity(), "start call api", Toast.LENGTH_LONG).show();
 
         // TODO Tak confirm structure
         // We have to use async style to get data from api.
@@ -164,9 +159,9 @@ public class TmMemberViewFragment extends AbstractTmFragment {
 
         TmMemberAdapter adapter = new TmMemberAdapter(getContext());
         adapter.setUsers(users);
-        gridView.setAdapter(adapter);
+        binding.gridview.setAdapter(adapter);
 
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        binding.gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
@@ -201,12 +196,19 @@ public class TmMemberViewFragment extends AbstractTmFragment {
 //		}
 //	}
 
+    public class Handlers{
+        public void onClickRefresh(View view) {
+            Toast.makeText(getActivity(), "click refresh button", Toast.LENGTH_LONG).show();
+            loadMemberListByApi();
+        }
+    }
+
 
     @Override
     public void onDestroy() {
         super.onDestroy();
 
-        gridView = null;
+        //binding.gridview = null;
     }
 
 }
