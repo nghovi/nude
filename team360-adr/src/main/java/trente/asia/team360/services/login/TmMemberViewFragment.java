@@ -14,15 +14,24 @@ import android.widget.GridView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
+import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
+import io.realm.Realm;
+import io.realm.RealmQuery;
+import io.realm.RealmResults;
+import io.realm.Sort;
 import trente.asia.team360.BR;
 import trente.asia.team360.R;
 import trente.asia.team360.common.fragments.AbstractTmFragment;
 import trente.asia.team360.databinding.FragmentMemberViewBinding;
+import trente.asia.team360.services.entity.UserEntity;
 import trente.asia.team360.services.model.TestHandlers;
 import trente.asia.team360.services.model.TestModel;
 import trente.asia.welfare.adr.define.WelfareConst;
@@ -39,6 +48,7 @@ public class TmMemberViewFragment extends AbstractTmFragment {
 
     private TestModel mTestModel = new TestModel();
 
+    private final Realm realm = Realm.getDefaultInstance();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -69,10 +79,39 @@ public class TmMemberViewFragment extends AbstractTmFragment {
 
     @Override
     protected void initData() {
-        loadMemberList();
+
+        List<UserModel> users = loadMemberListByRealM();
+
+        if (!CCCollectionUtil.isEmpty(users)) {
+            createUserView(users);
+        } else {
+            loadMemberListByApi();
+        }
+
     }
 
-    private void loadMemberList() {
+    private List<UserModel> loadMemberListByRealM() {
+
+        List<UserModel> results = new ArrayList<>();
+        RealmQuery<UserEntity> query = realm.where(UserEntity.class);
+
+        // Execute the query:
+        RealmResults<UserEntity> result1 = query.findAll();
+        for (UserEntity entity : result1) {
+
+            UserModel user = new UserModel();
+            user.userAccount = entity.getAvatarPath();
+            user.userName = entity.getUserName();
+            user.avatarPath = entity.getAvatarPath();
+            results.add(user);
+        }
+
+        return results;
+
+    }
+
+    private void loadMemberListByApi() {
+
         JSONObject jsonObject = new JSONObject();
         try {
             Date date = new Date();
@@ -81,6 +120,7 @@ public class TmMemberViewFragment extends AbstractTmFragment {
             e.printStackTrace();
         }
         requestLoad(WfUrlConst.WF_ACC_INFO_MEMBER, jsonObject, true);
+
     }
 
 
@@ -90,28 +130,31 @@ public class TmMemberViewFragment extends AbstractTmFragment {
         switch (url) {
             case WfUrlConst.WF_ACC_INFO_MEMBER:
 
+                List<UserModel> results = new ArrayList<>();
+                RealmQuery<UserEntity> query = realm.where(UserEntity.class);
+                Map<String, UserEntity> exists = new LinkedHashMap<>();
+                for (UserEntity entity : query.findAll()) {
+                    exists.put(entity.getUserAccount(), entity);
+                }
+
                 final List<UserModel> userModels = CCJsonUtil.convertToModelList(response.optString("members"), UserModel.class);
 
-                TmMemberAdapter adapter = new TmMemberAdapter(getContext());
-                adapter.setUsers(userModels);
-                gridView.setAdapter(adapter);
+                realm.beginTransaction();
+                for (UserModel user : userModels) {
 
-                gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    UserEntity result = exists.get(user.userAccount);
 
-                        UserModel target = userModels.get(position);
-
-                        Bundle bundle = new Bundle();
-                        bundle.putString("USER_NAME", target.getUserName());
-                        bundle.putString("AVATAR_PATH", target.getAvatarPath());
-
-                        TmStampFormFragment fgmt = new TmStampFormFragment();
-                        fgmt.setArguments(bundle);
-
-                        gotoFragment(fgmt);
+                    if (result == null) { // insert
+                        result = realm.createObject(UserEntity.class);
                     }
-                });
+                    result.setUserAccount(user.userAccount);
+                    result.setUserName(user.userName);
+                    result.setAvatarPath(user.avatarPath);
+
+                }
+                realm.commitTransaction();
+
+                createUserView(userModels);
 
                 break;
             default:
@@ -119,6 +162,31 @@ public class TmMemberViewFragment extends AbstractTmFragment {
         super.successLoad(response, url);
     }
 
+
+    private void createUserView(final List<UserModel> users) {
+
+        TmMemberAdapter adapter = new TmMemberAdapter(getContext());
+        adapter.setUsers(users);
+        gridView.setAdapter(adapter);
+
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                UserModel target = users.get(position);
+
+                Bundle bundle = new Bundle();
+                bundle.putString("USER_NAME", target.getUserName());
+                bundle.putString("AVATAR_PATH", target.getAvatarPath());
+
+                TmStampFormFragment fgmt = new TmStampFormFragment();
+                fgmt.setArguments(bundle);
+
+                gotoFragment(fgmt);
+            }
+        });
+
+    }
 
 //	@Override
 //	public void onClick(View v){
