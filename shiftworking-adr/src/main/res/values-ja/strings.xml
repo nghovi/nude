@@ -68,7 +68,7 @@
     <string name="sw_work_action_check_in">チェックイン</string>
     <string name="sw_work_action_choose_loc">場所情報を選択</string>
 
-    <string name="sw_msg_no_project">プロジェクトが設定されていません</string>
+    <string name="sw_msg_no_shift">プロジェクトが設定されていません</string>
 
     <!--Notifications-->
     <string name="FM_SW_001">新しい勤怠お知らせを受け取りました</string>

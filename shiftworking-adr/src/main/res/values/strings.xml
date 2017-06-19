@@ -65,7 +65,7 @@
     <string name="sw_work_action_check_in">Check in</string>
     <string name="sw_work_action_choose_loc">Set location</string>
 
-    <string name="sw_msg_no_project">You don’t have project.</string>
+    <string name="sw_msg_no_shift">Shift is not registered</string>
 
     <!--Notifications-->
     <string name="FM_SW_001">You have new work notice</string>
