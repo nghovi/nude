@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">team360</string>
+
+
+    <string name="footer_item1">Member</string>
+    <string name="footer_item2">Camera</string>
+    <string name="footer_item3">Setting</string>
+
 </resources>

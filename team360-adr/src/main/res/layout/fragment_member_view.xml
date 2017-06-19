@@ -13,8 +13,11 @@
             name="members"
             type="List&lt;UserEntity>" />
 
-        <variable name="handlers" type="trente.asia.team360.services.member.TmMemberViewFragment.Handlers"/>
+        <variable
+            name="handlers"
+            type="trente.asia.team360.services.member.TmMemberViewFragment.Handlers" />
     </data>
+
 
     <LinearLayout style="@style/wf_common_match">
 
@@ -26,19 +29,28 @@
             android:onClick="@{handlers.onClickRefresh}"
             android:text="Refresh" />
 
-        <GridView
-            android:id="@+id/gridview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:columnWidth="100dp"
-            android:gravity="center"
-            android:horizontalSpacing="8dp"
-            android:minHeight="100dp"
-            android:numColumns="auto_fit"
-            android:paddingTop="@dimen/margin_20dp"
-            android:stretchMode="columnWidth"
-            android:verticalSpacing="8dp" />
+        <ScrollView
+            style="@style/cs_common_match"
+            android:layout_weight="1">
 
+            <GridView
+                android:id="@+id/gridview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:columnWidth="100dp"
+                android:gravity="center"
+                android:horizontalSpacing="8dp"
+                android:minHeight="300dp"
+                android:numColumns="auto_fit"
+                android:paddingTop="@dimen/margin_20dp"
+                android:stretchMode="columnWidth"
+                android:verticalSpacing="8dp"
+                />
 
+        </ScrollView>
+
+        <include layout="@layout/view_common_footer" />
     </LinearLayout>
+
+
 </layout>

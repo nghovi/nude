@@ -22,7 +22,6 @@ import trente.asia.team360.common.fragments.AbstractTmFragment;
 import trente.asia.team360.databinding.FragmentMemberViewBinding;
 import trente.asia.team360.services.entity.UserEntity;
 import trente.asia.team360.services.login.TmStampFormFragment;
-import trente.asia.team360.services.model.TestModel;
 import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.models.UserModel;
 
@@ -54,6 +53,11 @@ public class TmMemberViewFragment extends AbstractTmFragment {
 
         UserModel userModel = prefAccUtil.getUserPref();
         super.initHeader(null, userModel.getUserName(), R.drawable.wf_setting_white);
+    }
+
+    @Override
+    public int getFooterItemId() {
+        return R.id.lnr_view_common_footer_member;
     }
 
     @Override

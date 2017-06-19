@@ -1,0 +1,24 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+
+    <LinearLayout style="@style/wf_common_match">
+
+        <include layout="@layout/view_common_header" />
+
+        <Button
+            android:id="@+id/btn_id_refresh2"
+            style="@style/wl_common_button_10"
+            android:text="Refresh" />
+
+
+        <include layout="@layout/view_common_footer" />
+    </LinearLayout>
+
+
+</layout>
