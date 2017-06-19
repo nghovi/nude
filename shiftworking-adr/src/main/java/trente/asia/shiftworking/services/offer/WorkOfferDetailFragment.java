@@ -163,6 +163,8 @@ public class WorkOfferDetailFragment extends AbstractSwFragment{
 			((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_offer_status)).setText(offerModel.offerStatusName);
 		}
 
+
+		((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_offer_user)).setText(offerModel.userName);
 		((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_offer_type)).setText(offerModel.offerTypeName);
 		((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_start_date)).setText(offerModel.startDateString);
 		((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_end_date)).setText(offerModel.endDateString);

@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.team360.R;
-import trente.asia.team360.services.login.TmMemberViewFragment;
+import trente.asia.team360.services.member.TmMemberViewFragment;
 import trente.asia.team360.services.login.TmLoginFragment;
 
 import trente.asia.welfare.adr.activity.WelfareActivity;
