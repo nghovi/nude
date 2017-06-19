@@ -119,7 +119,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 	private MessageAdapter								mMsgAdapter;
 	private View										mViewForMenuBehind;
 	private List<MessageContentModel>					mMsgContentList				= new ArrayList<>();
-	private BoardModel									activeBoard;
+	private BoardModel									activeBoard = new BoardModel();
 	public static String								activeBoardId;
 	private String										autoroadCd;
 
@@ -1094,8 +1094,6 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 
     @Override
     protected void errorNetwork() {
-        super.errorNetwork();
-        activeBoard = new BoardModel();
     }
 
     protected void errorRequest2(){
