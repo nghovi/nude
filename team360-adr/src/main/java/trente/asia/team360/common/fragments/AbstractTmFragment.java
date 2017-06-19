@@ -5,12 +5,12 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import trente.asia.team360.BuildConfig;
 import trente.asia.team360.R;
+import trente.asia.team360.services.camera.TmCameraViewFragment;
 import trente.asia.team360.services.login.TmLoginFragment;
 import trente.asia.team360.services.member.TmMemberViewFragment;
 import trente.asia.team360.services.setting.TmSettingViewFragment;
@@ -62,7 +62,7 @@ public abstract class AbstractTmFragment extends WelfareFragment {
                             if(activeFooterItemId != R.id.lnr_view_common_footer_camera){
                                 activeFooterItemId = R.id.lnr_view_common_footer_camera;
                                 emptyBackStack();
-                                gotoFragment(new TmMemberViewFragment());
+                                gotoFragment(new TmCameraViewFragment());
                             }
                             break;
                         case R.id.lnr_view_common_footer_setting:
@@ -99,7 +99,7 @@ public abstract class AbstractTmFragment extends WelfareFragment {
 
     @Override
     protected String getServiceCd() {
-        return WelfareConst.SERVICE_CD_SW;
+        return WelfareConst.SERVICE_CD_TM;
     }
 
     @Override

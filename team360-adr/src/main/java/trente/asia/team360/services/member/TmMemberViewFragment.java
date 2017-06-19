@@ -52,7 +52,7 @@ public class TmMemberViewFragment extends AbstractTmFragment {
         super.initView();
 
         UserModel userModel = prefAccUtil.getUserPref();
-        super.initHeader(null, userModel.getUserName(), R.drawable.wf_setting_white);
+        super.initHeader(null, userModel.getUserName(), null);
     }
 
     @Override

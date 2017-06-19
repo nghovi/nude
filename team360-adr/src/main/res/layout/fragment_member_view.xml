@@ -35,8 +35,7 @@
 
             <GridView
                 android:id="@+id/gridview"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                style="@style/wf_common_match"
                 android:columnWidth="100dp"
                 android:gravity="center"
                 android:horizontalSpacing="8dp"
@@ -44,8 +43,7 @@
                 android:numColumns="auto_fit"
                 android:paddingTop="@dimen/margin_20dp"
                 android:stretchMode="columnWidth"
-                android:verticalSpacing="8dp"
-                />
+                android:verticalSpacing="8dp" />
 
         </ScrollView>
 

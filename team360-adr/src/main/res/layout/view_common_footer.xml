@@ -9,7 +9,9 @@
         android:background="@color/colorPrimaryDark"
         android:baselineAligned="false"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        >
 
         <RelativeLayout
             android:id="@+id/lnr_view_common_footer_member"
