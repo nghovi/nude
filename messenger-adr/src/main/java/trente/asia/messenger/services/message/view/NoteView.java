@@ -78,15 +78,15 @@ public class NoteView extends LinearLayout{
 	private void setEditMode(boolean isEditMode){
 		if(isEditMode){
 			noteContent = CCStringUtil.toString(edtNote.getText());
-			// edtNote.setEnabled(true);
+			edtNote.setEnabled(true);
 			edtNote.setKeyListener(mDefaultKeyListener);
-			// edtNote.setFocusable(true);
 			btnSave.setEnabled(true);
 			btnEdit.setText(mContext.getString(R.string.chiase_common_cancel1));
 		}else{
 			noteContent = "";
 			ChiaseFragment.hideKeyBoard((Activity)getContext());
 			btnSave.setEnabled(false);
+			edtNote.setEnabled(false);
 			btnEdit.setText(mContext.getString(R.string.chiase_common_edit));
 		}
 	}
