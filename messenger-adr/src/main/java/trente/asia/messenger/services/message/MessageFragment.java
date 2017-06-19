@@ -1091,7 +1091,14 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 	// messageView.imgSend.setEnabled(true);
 	// }
 
-	protected void errorRequest2(){
+
+    @Override
+    protected void errorNetwork() {
+        super.errorNetwork();
+        activeBoard = new BoardModel();
+    }
+
+    protected void errorRequest2(){
 		super.errorRequest2();
 		messageView.imgSend.setEnabled(true);
 	}
