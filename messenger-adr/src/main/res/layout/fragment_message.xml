@@ -20,11 +20,24 @@
                 android:orientation="vertical">
 
                 <include layout="@layout/view_message_header" />
-
-                <android.support.v4.view.ViewPager
-                    android:id="@+id/view_pager_id_board"
-                    style="@style/cs_common_match"
-                    android:layout_weight="1" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <android.support.v4.view.ViewPager
+                        android:id="@+id/view_pager_id_board"
+                        style="@style/cs_common_match"/>
+                    <TextView
+                        android:id="@+id/txt_internet_connection"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/margin_8dp"
+                        android:gravity="center"
+                        android:textColor="@color/core_white"
+                        android:visibility="gone"
+                        android:textSize="16sp"
+                        android:background="#aa000000"
+                        android:text="@string/msg_no_internet_connection"/>
+                </RelativeLayout>
             </trente.asia.welfare.adr.view.LinearLayoutOnInterceptTouch>
 
             <!-- include menu layout -->

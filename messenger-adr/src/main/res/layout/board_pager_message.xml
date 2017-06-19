@@ -78,16 +78,6 @@
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/txt_internet_connection"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/margin_8dp"
-            android:gravity="center"
-            android:textColor="@color/core_white"
-            android:textSize="16sp"
-            android:visibility="gone"
-            android:background="#aa000000"
-            android:text="@string/msg_no_internet_connection"/>
+
     </RelativeLayout>
 </trente.asia.messenger.services.message.view.MessageView>

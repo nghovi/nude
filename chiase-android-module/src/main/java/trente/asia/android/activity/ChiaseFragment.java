@@ -289,7 +289,7 @@ public class ChiaseFragment extends Fragment implements HttpCallback{
 		activity.runOnUiThread(new Runnable() {
 
 			public void run(){
-				Toast.makeText(activity, "No internet access.", Toast.LENGTH_LONG).show();
+				Toast.makeText(activity, "No internet connection", Toast.LENGTH_LONG).show();
 			}
 		});
 	}

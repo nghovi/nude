@@ -1220,7 +1220,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 
 	@Override
 	public void onNetworkConnectionChanged(boolean connected){
-		messageView.textInternetConnection.setVisibility(connected ? View.GONE : View.VISIBLE);
+		binding.txtInternetConnection.setVisibility(connected ? View.GONE : View.VISIBLE);
 		if (connected) {
 			startTimer();
 		} else {
