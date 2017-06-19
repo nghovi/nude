@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -18,7 +19,8 @@
             android:layout_height="80dp"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="4dp"
-            android:background="#000000" />
+            android:background="#000000"
+            app:loadImg="@{member.avatarPath}"/>
 
         <TextView
             android:id="@+id/hue_textview"
@@ -28,7 +30,8 @@
             android:layout_centerHorizontal="true"
             android:gravity="center_horizontal"
             android:text="@{member.userName}"
-            android:textSize="14dp" />
+            android:textSize="14dp"
+            />
 
     </RelativeLayout>
 </layout>

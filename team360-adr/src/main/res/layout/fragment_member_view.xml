@@ -4,14 +4,14 @@
 
     <data>
 
-        <import type="trente.asia.welfare.adr.models.UserModel" />
+        <import type="trente.asia.team360.services.entity.UserEntity" />
 
         <import type="java.util.List" />
 
         <!-- [Note] &lt; is correct-->
         <variable
             name="members"
-            type="List&lt;UserModel>" />
+            type="List&lt;UserEntity>" />
 
         <variable name="handlers" type="trente.asia.team360.services.member.TmMemberViewFragment.Handlers"/>
     </data>
