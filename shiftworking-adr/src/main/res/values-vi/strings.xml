@@ -68,7 +68,7 @@
     <string name="sw_work_action_check_in">Checkin</string>
     <string name="sw_work_action_choose_loc">Chọn thông tin địa chỉnh</string>
 
-    <string name="sw_msg_no_project">Dự án chưa được thiết lập</string>
+    <string name="sw_msg_no_shift">Bạn không có shift</string>
 
     <!--Notifications-->
     <string name="FM_SW_001">Đã nhận được thông báo mới</string>

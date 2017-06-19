@@ -127,7 +127,7 @@
             <TextView
                 style="@style/wl_common_text"
                 android:gravity="center"
-                android:text="@string/sw_msg_no_project"
+                android:text="@string/sw_msg_no_shift"
                 android:textColor="@color/chiase_warning"/>
         </LinearLayout>
 

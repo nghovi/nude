@@ -1,22 +1,10 @@
 package trente.asia.messenger.services.message;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import com.bluelinelabs.logansquare.LoganSquare;
-
 import android.app.Activity;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.media.MediaPlayer;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,6 +18,20 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.VideoView;
+
+import com.bluelinelabs.logansquare.LoganSquare;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
@@ -51,6 +53,7 @@ import trente.asia.messenger.fragment.AbstractMsgFragment;
 import trente.asia.messenger.services.message.listener.OnAddCommentListener;
 import trente.asia.messenger.services.message.model.BoardModel;
 import trente.asia.messenger.services.message.model.MessageContentModel;
+import trente.asia.messenger.services.util.NetworkChangeReceiver;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.EmotionConst;
 import trente.asia.welfare.adr.define.WelfareConst;
@@ -66,7 +69,8 @@ import trente.asia.welfare.adr.utils.WfPicassoHelper;
  *
  * @author HuyNQ
  */
-public class MessageDetailFragment extends AbstractMsgFragment implements View.OnClickListener{
+public class MessageDetailFragment extends AbstractMsgFragment
+		implements View.OnClickListener, NetworkChangeReceiver.OnNetworkChangeListener {
 
 	private LinearLayout				mLnrRightHeader;
 	private ChiaseImageViewRatioWidth	mImgThumbnail;
@@ -99,6 +103,7 @@ public class MessageDetailFragment extends AbstractMsgFragment implements View.O
 	public LinearLayout					lnrCheck;
 	public TextView						mTxtCheck;
 	public TextView						mTxtComment;
+	private TextView 					mTxtInternetConnection;
 
 	private Integer						latestCommentId	= 0;
 	private Timer						mTimer;
@@ -106,6 +111,7 @@ public class MessageDetailFragment extends AbstractMsgFragment implements View.O
 	private final int					TIME_RELOAD		= 10000;
 	private List<String>				mLstCommentId	= new ArrayList<>();
 	private WfProfileDialog				mDlgProfile;
+	private NetworkChangeReceiver		networkChangeReceiver;
 
 	public void setActiveMessage(MessageContentModel activeMessage){
 		this.activeMessage = activeMessage;
@@ -119,6 +125,9 @@ public class MessageDetailFragment extends AbstractMsgFragment implements View.O
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		((WelfareActivity)activity).setOnDeviceBackButtonClickListener(this);
+		networkChangeReceiver = new NetworkChangeReceiver(this);
+		getActivity().registerReceiver(networkChangeReceiver,
+				new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
 	}
 
 	@Override
@@ -158,6 +167,7 @@ public class MessageDetailFragment extends AbstractMsgFragment implements View.O
 		mScrDetail = (ScrollView)getView().findViewById(R.id.scr_id_detail);
 		mRltMedia = (RelativeLayout)getView().findViewById(R.id.rlt_id_media);
 		mLnrFile = (LinearLayout)getView().findViewById(R.id.lnr_id_file);
+		mTxtInternetConnection = (TextView) getView().findViewById(R.id.txt_internet_connection);
 
 		mLnrRightHeader.setOnClickListener(this);
 		mLnrSend.setOnClickListener(this);
@@ -664,6 +674,11 @@ public class MessageDetailFragment extends AbstractMsgFragment implements View.O
 	}
 
 	@Override
+	public void onNetworkConnectionChanged(boolean connected) {
+		mTxtInternetConnection.setVisibility(connected ? View.GONE : View.VISIBLE);
+	}
+
+	@Override
 	public void onDestroy(){
 		super.onDestroy();
 
@@ -690,5 +705,7 @@ public class MessageDetailFragment extends AbstractMsgFragment implements View.O
 		mDlgCheckUser = null;
 		lnrCheck = null;
 		mTxtCheck = null;
+
+		getActivity().unregisterReceiver(networkChangeReceiver);
 	}
 }

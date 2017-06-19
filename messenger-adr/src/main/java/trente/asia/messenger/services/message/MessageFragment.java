@@ -119,7 +119,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 	private MessageAdapter								mMsgAdapter;
 	private View										mViewForMenuBehind;
 	private List<MessageContentModel>					mMsgContentList				= new ArrayList<>();
-	private BoardModel									activeBoard;
+	private BoardModel									activeBoard = new BoardModel();
 	public static String								activeBoardId;
 	private String										autoroadCd;
 
@@ -1091,7 +1091,12 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 	// messageView.imgSend.setEnabled(true);
 	// }
 
-	protected void errorRequest2(){
+
+    @Override
+    protected void errorNetwork() {
+    }
+
+    protected void errorRequest2(){
 		super.errorRequest2();
 		messageView.imgSend.setEnabled(true);
 	}
@@ -1220,7 +1225,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 
 	@Override
 	public void onNetworkConnectionChanged(boolean connected){
-		messageView.textInternetConnection.setVisibility(connected ? View.GONE : View.VISIBLE);
+		binding.txtInternetConnection.setVisibility(connected ? View.GONE : View.VISIBLE);
 		if (connected) {
 			startTimer();
 		} else {
