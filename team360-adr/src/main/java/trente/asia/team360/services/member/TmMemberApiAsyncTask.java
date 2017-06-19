@@ -45,9 +45,18 @@ public class TmMemberApiAsyncTask extends AsyncTask<Context, Integer, String> {
 
     private Context ctx;
 
-    public TmMemberApiAsyncTask(Context ctx) {
+    private  List<UserEntity> mBindingUsers = new ArrayList<>();
+
+    private  Map<String,Integer> mBindingIndexes = new LinkedHashMap<>();
+
+    public TmMemberApiAsyncTask(Context ctx, List<UserEntity> bindingUsers) {
         super();
         this.ctx = ctx;
+        this.mBindingUsers = bindingUsers;
+
+        for(int i = 0; i < bindingUsers.size(); i++){
+            mBindingIndexes.put(bindingUsers.get(i).getUserAccount(), i);
+        }
     }
 
     // doInBackgroundの事前準備処理（UIスレッド）
@@ -145,6 +154,11 @@ public class TmMemberApiAsyncTask extends AsyncTask<Context, Integer, String> {
 
                 realm.beginTransaction();
                 for (UserModel user : userModels) {
+
+                    if(mBindingIndexes.containsKey(user.userAccount)){
+                        int idx = mBindingIndexes.get(user.userAccount);
+                        mBindingUsers.get(idx).userName = user.userName;
+                    }
 
                     UserEntity result = exists.get(user.userAccount);
 

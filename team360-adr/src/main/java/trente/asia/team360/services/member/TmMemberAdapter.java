@@ -12,38 +12,41 @@ import java.util.List;
 
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCStringUtil;
+import io.realm.RealmChangeListener;
+import io.realm.RealmResults;
 import trente.asia.team360.BuildConfig;
 import trente.asia.team360.R;
 import trente.asia.team360.databinding.ViewGridMemberBinding;
+import trente.asia.team360.services.entity.UserEntity;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WfPicassoHelper;
 
 /**
  * Created by rakuishi on 6/22/14.
  */
-public class TmMemberAdapter extends BaseAdapter {
+public class TmMemberAdapter extends BaseAdapter implements RealmChangeListener {
 
     private Context mContext;
 
-    private List<UserModel> users = new ArrayList<UserModel>();
+    private RealmResults<UserEntity> mUsers;
 
-    public TmMemberAdapter(Context context) {
+
+    public TmMemberAdapter(Context context, RealmResults<UserEntity> users) {
         super();
         mContext = context;
+        mUsers = users;
+        mUsers.addChangeListener(this);
     }
 
-    public void setUsers(List<UserModel> users) {
-        this.users = users;
-    }
 
     @Override
     public int getCount() {
-        return CCCollectionUtil.size(this.users);
+        return CCCollectionUtil.size(this.mUsers);
     }
 
     @Override
     public Object getItem(int position) {
-        return users.get(position);
+        return mUsers.get(position);
     }
 
     @Override
@@ -59,13 +62,19 @@ public class TmMemberAdapter extends BaseAdapter {
         }
 
         ViewGridMemberBinding binding = DataBindingUtil.getBinding(convertView);
-        binding.setMember(users.get(position));
+        binding.setMember(mUsers.get(position));
 
-        if (!CCStringUtil.isEmpty(users.get(position).avatarPath)) {
+        if (!CCStringUtil.isEmpty(mUsers.get(position).avatarPath)) {
             // WfPicassoHelper.loadImage(context, BuildConfig.HOST + activityModel.activityUserAvatarPath, viewHolder.imgAvatar, null);
-            WfPicassoHelper.loadImageWithDefaultIcon(mContext, BuildConfig.HOST, binding.hueImageview, users.get(position).avatarPath, R.drawable.wf_profile);
+            WfPicassoHelper.loadImageWithDefaultIcon(mContext, BuildConfig.HOST, binding.hueImageview, mUsers.get(position).avatarPath, R.drawable.wf_profile);
         }
 
         return convertView;
+    }
+
+
+    @Override
+    public void onChange(Object o) {
+        notifyDataSetChanged();
     }
 }

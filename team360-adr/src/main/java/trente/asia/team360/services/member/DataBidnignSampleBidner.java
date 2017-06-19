@@ -16,8 +16,8 @@ public class DataBidnignSampleBidner {
 
     @BindingAdapter("items")
     public static void setItems(GridView listView, List<UserModel> tasks) {
-        TmMemberAdapter adapter = new TmMemberAdapter(listView.getContext());
+        //TmMemberAdapter adapter = new TmMemberAdapter(listView.getContext());
         //adapter.addAll(tasks);
-        listView.setAdapter(adapter);
+        //listView.setAdapter(adapter);
     }
 }

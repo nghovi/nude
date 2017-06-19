@@ -31,7 +31,7 @@ public class TmMemberViewFragment extends AbstractTmFragment {
 
     private FragmentMemberViewBinding binding;
 
-    private TestModel mTestModel = new TestModel();
+    private RealmResults<UserEntity> bindingUsers;
 
     private final Realm realm = Realm.getDefaultInstance();
 
@@ -59,33 +59,34 @@ public class TmMemberViewFragment extends AbstractTmFragment {
     @Override
     protected void initData() {
 
-        List<UserModel> users = loadMemberListByRealM();
+        this.bindingUsers = loadMemberListByRealM();
 
-        if (!CCCollectionUtil.isEmpty(users)) {
-            createUserView(users);
+        if (!CCCollectionUtil.isEmpty(this.bindingUsers)) {
+            createUserView();
         }
 
         loadMemberListByApi();
     }
 
-    private List<UserModel> loadMemberListByRealM() {
+    private RealmResults<UserEntity> loadMemberListByRealM() {
 
         List<UserModel> results = new ArrayList<>();
         RealmQuery<UserEntity> query = realm.where(UserEntity.class);
 
         // Execute the query:
         RealmResults<UserEntity> result1 = query.findAll();
-        for (UserEntity entity : result1) {
-
-            UserModel user = new UserModel();
-            user.userAccount = entity.getAvatarPath();
-            user.userName = entity.getUserName();
-            user.avatarPath = entity.getAvatarPath();
-            results.add(user);
-        }
+//        for (UserEntity entity : result1) {
+//
+//            UserModel user = new UserModel();
+//            user.userAccount = entity.getAvatarPath();
+//            user.userName = entity.getUserName();
+//            user.avatarPath = entity.getAvatarPath();
+//            results.add(user);
+//        }
 
         Toast.makeText(getActivity(), "done select database", Toast.LENGTH_LONG).show();
-        return results;
+        //return results;
+        return result1;
 
     }
 
@@ -97,7 +98,7 @@ public class TmMemberViewFragment extends AbstractTmFragment {
         // TODO Tak confirm structure
         // We have to use async style to get data from api.
         // So I move logic to async class
-        TmMemberApiAsyncTask get = new TmMemberApiAsyncTask(getContext());
+        TmMemberApiAsyncTask get = new TmMemberApiAsyncTask(getContext(), this.bindingUsers);
         get.execute();
 
 //        JSONObject jsonObject = new JSONObject();
@@ -155,24 +156,23 @@ public class TmMemberViewFragment extends AbstractTmFragment {
     }
 
 
-    private void createUserView(final List<UserModel> users) {
+    private void createUserView() {
 
-        TmMemberAdapter adapter = new TmMemberAdapter(getContext());
-        adapter.setUsers(users);
+        TmMemberAdapter adapter = new TmMemberAdapter(getContext(), this.bindingUsers);
         binding.gridview.setAdapter(adapter);
 
         binding.gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                UserModel target = users.get(position);
-
-                Bundle bundle = new Bundle();
-                bundle.putString("USER_NAME", target.getUserName());
-                bundle.putString("AVATAR_PATH", target.getAvatarPath());
+//                UserModel target = bindingUsers.get(position);
+//
+//                Bundle bundle = new Bundle();
+//                bundle.putString("USER_NAME", target.getUserName());
+//                bundle.putString("AVATAR_PATH", target.getAvatarPath());
 
                 TmStampFormFragment fgmt = new TmStampFormFragment();
-                fgmt.setArguments(bundle);
+//                fgmt.setArguments(bundle);
 
                 gotoFragment(fgmt);
             }
@@ -196,7 +196,7 @@ public class TmMemberViewFragment extends AbstractTmFragment {
 //		}
 //	}
 
-    public class Handlers{
+    public class Handlers {
         public void onClickRefresh(View view) {
             Toast.makeText(getActivity(), "click refresh button", Toast.LENGTH_LONG).show();
             loadMemberListByApi();
