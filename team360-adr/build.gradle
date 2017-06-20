@@ -29,7 +29,7 @@ android {
             applicationId "asia.trente.team360"
             manifestPlaceholders = [appName: "${APP_NAME} DEV"]
             buildConfigField "Boolean", "DEVELOP", "true"
-            buildConfigField "String", "HOST", "\"http://192.168.1.4:9000\""
+            buildConfigField "String", "HOST", "\"http://192.168.1.98:9000\""
         }
         production {
             applicationId "asia.trente.team360"
@@ -78,4 +78,6 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':welfare-android-core')
+
+    compile 'com.google.android.gms:play-services-vision:9.4.0+'
 }
