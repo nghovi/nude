@@ -39,6 +39,9 @@
         <TextView xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/item_calendar_txt_work_offer_info"
             style="@style/txt_item_calendar_work_offer_info"
+            android:layout_centerInParent="false"
+            android:layout_marginLeft="@dimen/margin_13dp"
+            android:layout_marginTop="@dimen/margin_8dp"
             android:visibility="invisible"></TextView>
 
     </RelativeLayout>

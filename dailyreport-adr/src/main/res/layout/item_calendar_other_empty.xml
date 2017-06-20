@@ -16,7 +16,7 @@
         <TextView xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/item_calendar_txt_work_offer_info"
             style="@style/txt_item_calendar_work_offer_info"
-            android:visibility="visible"></TextView>
+            android:visibility="invisible"></TextView>
 
     </LinearLayout>
 </LinearLayout>
