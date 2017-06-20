@@ -1,84 +1,65 @@
 package trente.asia.messenger.services.message.model;
 
-import com.activeandroid.Model;
-import com.activeandroid.annotation.Column;
-import com.activeandroid.annotation.Table;
-import com.activeandroid.query.Delete;
-import com.activeandroid.query.Select;
+import android.databinding.BindingAdapter;
+import android.widget.ImageView;
 
-import java.util.List;
+import com.squareup.picasso.Picasso;
+
+import io.realm.Realm;
+import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
+import trente.asia.messenger.BuildConfig;
 
 /**
  * Created by tien on 6/7/2017.
  */
 
-@Table(name = "ss_stamp")
-public class WFMStampModel extends Model{
+public class WFMStampModel extends RealmObject{
 
-	@Column(name = "stamp_id")
-	public String	stampId;
+	public String	key;
 
-	@Column(name = "stamp_name")
 	public String	stampName;
 
-	@Column(name = "stamp_key")
-	public String	stampKey;
+	public String	keyword;
 
-	@Column(name = "stamp_keyword")
-	public String	stampKeyword;
+	public String	stampPath;
 
-	@Column(name = "stamp_url")
-	public String	stampUrl;
-
-	@Column(name = "category_id")
 	public String	categoryId;
+    @Ignore
+	public boolean	deleteFlag;
 
-	public WFMStampModel() {
+	public WFMStampModel(){
 		super();
 	}
 
-	public WFMStampModel(SSStampModel stamp){
-		super();
-		this.stampKey = stamp.stampKey;
+	@BindingAdapter("imageUrl")
+	public static void loadImage(ImageView imageView, String url){
+		Picasso.with(imageView.getContext()).load(BuildConfig.HOST + url).fit().into(imageView);
+	}
+
+	public static WFMStampModel getStamp(String stampId){
+		Realm realm = Realm.getDefaultInstance();
+		WFMStampModel wfmStampModel = realm.where(WFMStampModel.class).equalTo("key", stampId).findFirst();
+		realm.close();
+		return wfmStampModel;
+	}
+
+	public static WFMStampModel getStamp(Realm realm, String stampId){
+		return realm.where(WFMStampModel.class).equalTo("key", stampId).findFirst();
+	}
+
+	public void updateStamp(WFMStampModel stamp){
 		this.stampName = stamp.stampName;
-		this.stampId = stamp.key;
-		this.stampKeyword = stamp.keyword;
-		this.stampUrl = stamp.stampPath;
+		this.key = stamp.key;
+		this.keyword = stamp.keyword;
+		this.stampPath = stamp.stampPath;
 		this.categoryId = stamp.categoryId;
 	}
 
-	public void update(SSStampModel stamp) {
-		this.stampKey = stamp.stampKey;
-		this.stampName = stamp.stampName;
-		this.stampId = stamp.key;
-		this.stampKeyword = stamp.keyword;
-		this.stampUrl = stamp.stampPath;
-		this.categoryId = stamp.categoryId;
-		save();
-	}
-
-	public static List<WFMStampModel> getAll(String categoryId) {
-		return new Select().from(WFMStampModel.class)
-				.where("category_id = ?", categoryId)
-				.execute();
-	}
-
-	public static WFMStampModel get(String stampId) {
-		List<WFMStampModel> stamps = new Select().from(WFMStampModel.class)
-				.where("stamp_id = ?", stampId).execute();
-		if (stamps.size() == 0) {
-			return null;
+	public static void deleteStamp(Realm realm, String stampId){
+		WFMStampModel wfmStampModel = realm.where(WFMStampModel.class).equalTo("key", stampId).findFirst();
+		if(wfmStampModel != null){
+			wfmStampModel.deleteFromRealm();
 		}
-		return stamps.get(0);
-	}
-
-	public static void deleteAll() {
-		new Delete().from(WFMStampModel.class).execute();
-	}
-
-	public static List<WFMStampModel> getRecommendStamps(String keyword) {
-		return new Select().from(WFMStampModel.class)
-				.where("instr(stamp_keyword, '" + keyword + "') > 0 collate nocase")
-				.execute();
 	}
 }

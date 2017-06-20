@@ -9,7 +9,6 @@ import java.util.List;
 public class SSStampCategoryModel{
 
 	public String				categoryName;
-	public String				categoryKey;
 	public List<SSStampModel>	stamps;
 	public String				key;
 	public String				categoryPath;

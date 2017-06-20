@@ -13,11 +13,10 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import io.realm.Realm;
 import trente.asia.messenger.R;
 import trente.asia.messenger.commons.defines.MsConst;
 import trente.asia.messenger.fragment.AbstractMsgFragment;
-import trente.asia.messenger.services.message.model.WFMStampCategoryModel;
-import trente.asia.messenger.services.message.model.WFMStampModel;
 import trente.asia.messenger.services.setting.MsContactUsFragment;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
@@ -128,8 +127,11 @@ public class MsgSettingFragment extends AbstractMsgFragment implements View.OnCl
 	}
 
 	private void clearAllStamps() {
-        WFMStampCategoryModel.deleteAll();
-        WFMStampModel.deleteAll();
+		Realm realm = Realm.getDefaultInstance();
+		realm.beginTransaction();
+		realm.deleteAll();
+		realm.commitTransaction();
+		realm.close();
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         sharedPreferences.edit().remove(MsConst.MESSAGE_STAMP_LAST_UPDATE_DATE).apply();
     }

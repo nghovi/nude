@@ -43,6 +43,8 @@ public class MsgLoginFragment extends LoginFragment {
         if (WfUrlConst.WF_ACC_0003.equals(url)) {
             try{
                 prefAccUtil.set(MsConst.PREF_ACTIVE_BOARD_ID, response.getJSONObject("myselfInfo").optString("DPET_BOARD_ID"));
+                prefAccUtil.set(MsConst.DEF_STAMP_ID, response.getJSONObject("myselfInfo").optString(MsConst.DEF_STAMP_ID));
+                prefAccUtil.set(MsConst.DEF_STAMP_PATH, response.getJSONObject("myselfInfo").optString(MsConst.DEF_STAMP_PATH));
             }catch (JSONException ex){
                 ex.printStackTrace();
             }

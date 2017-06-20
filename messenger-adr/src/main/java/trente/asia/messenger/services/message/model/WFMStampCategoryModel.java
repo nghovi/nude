@@ -1,70 +1,55 @@
 package trente.asia.messenger.services.message.model;
 
-import com.activeandroid.Model;
-import com.activeandroid.annotation.Column;
-import com.activeandroid.annotation.Table;
-import com.activeandroid.query.Delete;
-import com.activeandroid.query.Select;
+import android.databinding.BindingAdapter;
+import android.widget.ImageView;
 
-import java.util.List;
+import com.squareup.picasso.Picasso;
+
+import io.realm.Realm;
+import io.realm.RealmList;
+import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
+import trente.asia.messenger.BuildConfig;
 
 /**
  * Created by tien on 6/7/2017.
  */
 
-@Table(name = "ss_stamp_category")
-public class WFMStampCategoryModel extends Model{
+public class WFMStampCategoryModel extends RealmObject{
 
-	@Column(name = "category_id")
-	public String	categoryId;
+	public String				key;
 
-	@Column(name = "category_name")
-	public String	categoryName;
+	public String				categoryName;
 
-	@Column(name = "category_key")
-	public String	categoryKey;
+	public String				categoryPath;
 
-	@Column(name = "category_url")
-	public String	categoryUrl;
-
-	public List<WFMStampModel> stamps;
+	public RealmList<WFMStampModel> stamps;
+	@Ignore
+	public boolean				deleteFlag;
 
 	public WFMStampCategoryModel(){
 		super();
 	}
 
-	public WFMStampCategoryModel(SSStampCategoryModel category) {
-		super();
-		this.categoryId = category.key;
-		this.categoryName = category.categoryName;
-		this.categoryKey = category.categoryKey;
-		this.categoryUrl = category.categoryPath;
+	@BindingAdapter("imageUrl")
+	public static void loadImage(ImageView imageView, String url){
+		Picasso.with(imageView.getContext()).load(BuildConfig.HOST + url).fit().into(imageView);
 	}
 
-	public void update(SSStampCategoryModel category) {
-		this.categoryId = category.key;
+	public void updateStampCategory(WFMStampCategoryModel category){
+		this.key = category.key;
 		this.categoryName = category.categoryName;
-		this.categoryKey = category.categoryKey;
-		this.categoryUrl = category.categoryPath;
-		save();
+		this.categoryPath = category.categoryPath;
 	}
 
-	public static WFMStampCategoryModel get(String categoryId) {
-		List<WFMStampCategoryModel> categories = new Select().from(WFMStampCategoryModel.class)
-				.where("category_id = ?", categoryId)
-				.execute();
-		if (categories.size() == 0) {
-			return null;
+	public static WFMStampCategoryModel getCategory(Realm realm, String categoryId){
+		return realm.where(WFMStampCategoryModel.class).equalTo("key", categoryId).findFirst();
+	}
+
+	public static void deleteStampCategory(Realm realm, String categoryId){
+		WFMStampCategoryModel wfmStampCategoryModel = realm.where(WFMStampCategoryModel.class).equalTo("key", categoryId).findFirst();
+		if(wfmStampCategoryModel != null){
+			wfmStampCategoryModel.deleteFromRealm();
 		}
-		return  categories.get(0);
-	}
-
-	public static List<WFMStampCategoryModel> getAll() {
-		return new Select().from(WFMStampCategoryModel.class)
-				.execute();
-	}
-
-	public static void deleteAll() {
-		new Delete().from(WFMStampCategoryModel.class).execute();
 	}
 }
