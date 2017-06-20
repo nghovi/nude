@@ -18,14 +18,14 @@
 
 
 
-    <color name="cl_cell_bg_color">#fbf8f1</color>
+    <color name="cl_cell_bg_color">#ffffe3</color>
 
 
 
     <color name="wf_app_color_base">#fad851</color>
     <color name="wf_app_color_base_50">#80fad851</color>
 
-    <color name="wf_login_background_color">#efca3b</color>
+    <color name="wf_login_background_color">#ffffe3</color>
     <color name="wf_app_button_color_off">#80efca3b</color>
     <color name="wf_app_button_color_on">#efca3b</color>
 
