@@ -58,7 +58,7 @@
                         android:id="@+id/txt_fragment_offer_detail_offer_user"
                         style="@style/wl_common_edit_text2"
                         android:layout_marginStart="@dimen/margin_10dp"
-                        custom:mName="offerType" />
+                        custom:mName="offerUser" />
                 </LinearLayout>
 
                 <View style="@style/cs_common_divider" />
