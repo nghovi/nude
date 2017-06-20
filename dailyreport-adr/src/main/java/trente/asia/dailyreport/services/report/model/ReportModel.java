@@ -27,6 +27,7 @@ public class ReportModel{
 	public List<ActionEntry>	actionEntries;
 	public String				reportCustom;
 	public String				reportCustomTitle;
+	public String				workingSymbol;
 
 	public ReportModel(){
 

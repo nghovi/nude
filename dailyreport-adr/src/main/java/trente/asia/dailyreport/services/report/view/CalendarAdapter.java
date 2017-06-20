@@ -83,6 +83,8 @@ public class CalendarAdapter extends BaseAdapter{
 		}
 		TextView txtDay = (TextView)v.findViewById(R.id.item_calendar_txt_date);
 		ImageView imgReportStatus = (ImageView)v.findViewById(R.id.item_calendar_img_status);
+		TextView txtWorkOfferInfo = (TextView)v.findViewById(R.id.item_calendar_txt_work_offer_info);
+
 		int gridvalue = dayString.get(position).get(Calendar.DAY_OF_MONTH);
 		int dayColor = Color.BLACK;
 		RelativeLayout rltBackground = (RelativeLayout)v.findViewById(R.id.item_calendar_background);
@@ -122,6 +124,11 @@ public class CalendarAdapter extends BaseAdapter{
 			if(CCStringUtil.isEmpty(reportModel.key)){
 				// imgReportStatus.setImageResource(R.drawable.ic_action_new);
 				imgReportStatus.setVisibility(View.INVISIBLE);
+				if(!CCStringUtil.isEmpty(reportModel.workingSymbol)){
+					// imgReportStatus.setVisibility(View.INVISIBLE);
+					txtWorkOfferInfo.setVisibility(View.VISIBLE);
+					txtWorkOfferInfo.setText(reportModel.workingSymbol);
+				}
 			}else{
 				if(ReportModel.REPORT_STATUS_DRTT.equals(reportModel.reportStatus)){
 					imgReportStatus.setImageResource(R.drawable.dr_draft);

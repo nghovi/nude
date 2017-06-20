@@ -1,18 +1,22 @@
-<LinearLayout
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/cs_common_match_wrap"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:paddingRight="@dimen/margin_1dp"
-    android:paddingBottom="@dimen/margin_1dp">
+    android:paddingBottom="@dimen/margin_1dp"
+    android:paddingRight="@dimen/margin_1dp">
 
     <LinearLayout
+        android:id="@+id/item_calendar_other_main_content"
         android:layout_width="match_parent"
         android:layout_height="@dimen/margin_50dp"
         android:layout_weight="1"
-        android:orientation="horizontal"
-        android:padding="@dimen/margin_6dp"
-        android:id="@+id/item_calendar_other_main_content"
+        android:background="@color/chiase_white"
         android:gravity="center_vertical|center_horizontal"
-        android:background="@color/chiase_white">
+        android:orientation="horizontal"
+        android:padding="@dimen/margin_6dp">
+
+        <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/item_calendar_txt_work_offer_info"
+            style="@style/txt_item_calendar_work_offer_info"
+            android:visibility="invisible"></TextView>
 
     </LinearLayout>
 </LinearLayout>
