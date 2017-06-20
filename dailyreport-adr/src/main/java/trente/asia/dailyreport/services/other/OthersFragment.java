@@ -499,7 +499,7 @@ public class OthersFragment extends AbstractDRFragment{
 			drDeptModels.add(drDeptModel);
 		}
 		// if(drDeptModels.size() > 1){
-		appendDepartmentDeptAll();
+		// appendDepartmentDeptAll();
 		// }
 		selectedDept = getSelectedDepth(drDeptModels, selectedDept);
 		appendUserUserAll();
