@@ -4,10 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:descendantFocusability="blocksDescendants"
+    android:background="@color/cl_cell_bg_color"
     android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/lnr_daily_schedules_list_event"
+        android:background="@color/cl_cell_bg_color"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"

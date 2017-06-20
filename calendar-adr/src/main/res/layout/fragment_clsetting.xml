@@ -1,6 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               style="@style/cs_common_match"
-              android:background="@color/wf_login_background_color"
+              android:background="@color/cl_cell_bg_color"
               android:orientation="vertical">
 
     <include layout="@layout/view_common_header"/>

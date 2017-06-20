@@ -9,12 +9,12 @@
                   android:layout_height="match_parent"
                     android:id="@+id/rlt_row_content"
                     android:minHeight="@dimen/margin_48dp"
-                    android:background="@color/wf_login_background_color">
+                    android:background="@color/cl_cell_bg_color">
 
         <LinearLayout
             android:id="@+id/lnr_id_row_content"
             style="@style/cs_common_match_wrap"
-            android:background="@color/wf_login_background_color"
+            android:background="@color/cl_cell_bg_color"
             android:orientation="horizontal"
             android:weightSum="7"/>
     </RelativeLayout>

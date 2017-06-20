@@ -20,6 +20,7 @@
     <com.github.ksoichiro.android.observablescrollview.ObservableScrollView
         android:id="@+id/scr_calendar_day"
         xmlns:android="http://schemas.android.com/apk/res/android"
+        android:background="@color/cl_cell_bg_color"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
