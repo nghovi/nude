@@ -187,9 +187,9 @@ public class MyReportFragment extends AbstractDRFragment implements DRCalendarVi
 
 	public static Map<String, Map<String, String>> buildWorkingSymbolMap(List<WorkingSymbolModel> workingSymbolModels){
 		Map<String, Map<String, String>> result = new HashMap<>();
-		if(workingSymbolModels != null){
+		if(!CCCollectionUtil.isEmpty(workingSymbolModels)){
 			for(WorkingSymbolModel workingSymbolModel : workingSymbolModels){
-				if(!CCCollectionUtil.isEmpty(workingSymbolModel.symbols)){
+				if(workingSymbolModel != null && !CCCollectionUtil.isEmpty(workingSymbolModel.symbols)){
 					Map<String, String> dateSymbolMap = result.get(workingSymbolModel.userId);
 					if(dateSymbolMap == null){
 						dateSymbolMap = new HashMap<>();
