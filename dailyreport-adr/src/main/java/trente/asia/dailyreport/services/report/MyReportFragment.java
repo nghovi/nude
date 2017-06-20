@@ -3,7 +3,9 @@ package trente.asia.dailyreport.services.report;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,6 +20,8 @@ import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import asia.chiase.core.util.CCCollectionUtil;
+import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
@@ -28,12 +32,14 @@ import trente.asia.dailyreport.services.report.model.GoalEntry;
 import trente.asia.dailyreport.services.report.model.Holiday;
 import trente.asia.dailyreport.services.report.model.Kpi;
 import trente.asia.dailyreport.services.report.model.ReportModel;
+import trente.asia.dailyreport.services.report.model.WorkingSymbolModel;
 import trente.asia.dailyreport.services.report.view.DRCalendarView;
 import trente.asia.dailyreport.services.report.view.MyReportListAdapter;
 import trente.asia.dailyreport.utils.DRUtil;
 import trente.asia.dailyreport.view.DRCalendarHeader;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
+import trente.asia.welfare.adr.models.ApiObjectModel;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WelfareUtil;
 
@@ -150,7 +156,13 @@ public class MyReportFragment extends AbstractDRFragment implements DRCalendarVi
 	protected void successLoad(JSONObject response, String url){
 		if(getView() != null){
 			reports = CCJsonUtil.convertToModelList(response.optString("reports"), ReportModel.class);
-			reports = appendReports(reports);
+			reports = addReportsForEmptyDays(reports);
+
+			WorkingSymbolModel workingSymbolModel = CCJsonUtil.convertToModel(response.optString("working"), WorkingSymbolModel.class);
+			List<WorkingSymbolModel> workingSymbolModels = new ArrayList<>();
+			workingSymbolModels.add(workingSymbolModel);
+			appendWorkingSymbol(reports, workingSymbolModels);
+
 			holidays = CCJsonUtil.convertToModelList(response.optString("holidays"), Holiday.class);
 			goalSummaries = CCJsonUtil.convertToModelList(response.optString("goalSummaries"), GoalEntry.class);
 			appendHolidayInfo(reports, holidays);
@@ -159,6 +171,37 @@ public class MyReportFragment extends AbstractDRFragment implements DRCalendarVi
 			buildListView(reports);
 			builGoalSummaries();
 		}
+	}
+
+	public static void appendWorkingSymbol(List<ReportModel> reports, List<WorkingSymbolModel> workingSymbolModels){
+		Map<String, Map<String, String>> workingSymbolMap = buildWorkingSymbolMap(workingSymbolModels);
+		for(ReportModel reportModel : reports){
+			String reportUserId = reportModel.reportUser != null ? reportModel.reportUser.key : reportModel.loginUserId;
+			Map<String, String> userWorkingSymbolMap = workingSymbolMap.get(reportUserId);
+			if(userWorkingSymbolMap != null){
+				String reportDateKey = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_CODE, CCDateUtil.makeDateCustom(reportModel.reportDate, WelfareConst.WF_DATE_TIME));
+				reportModel.workingSymbol = userWorkingSymbolMap.get(reportDateKey);
+			}
+		}
+	}
+
+	public static Map<String, Map<String, String>> buildWorkingSymbolMap(List<WorkingSymbolModel> workingSymbolModels){
+		Map<String, Map<String, String>> result = new HashMap<>();
+		if(workingSymbolModels != null){
+			for(WorkingSymbolModel workingSymbolModel : workingSymbolModels){
+				if(!CCCollectionUtil.isEmpty(workingSymbolModel.symbols)){
+					Map<String, String> dateSymbolMap = result.get(workingSymbolModel.userId);
+					if(dateSymbolMap == null){
+						dateSymbolMap = new HashMap<>();
+					}
+					for(ApiObjectModel apiObjectModel : workingSymbolModel.symbols){
+						dateSymbolMap.put(apiObjectModel.key, apiObjectModel.value);
+					}
+					result.put(workingSymbolModel.userId, dateSymbolMap);
+				}
+			}
+		}
+		return result;
 	}
 
 	private void builGoalSummaries(){
@@ -201,7 +244,7 @@ public class MyReportFragment extends AbstractDRFragment implements DRCalendarVi
 	 * If there is no report on date 2016/04/05, add an empty report to it
 	 * @return reports: a month full of report
 	 */
-	private List<ReportModel> appendReports(List<ReportModel> reports){
+	private List<ReportModel> addReportsForEmptyDays(List<ReportModel> reports){
 		Calendar c = Calendar.getInstance();
 		c.set(Calendar.YEAR, calendarHeader.getSelectedYear());
 		c.set(Calendar.MONTH, calendarHeader.getSelectedMonth());
@@ -209,6 +252,7 @@ public class MyReportFragment extends AbstractDRFragment implements DRCalendarVi
 		for(int i = c.getActualMinimum(Calendar.DAY_OF_MONTH); i <= c.getActualMaximum(Calendar.DAY_OF_MONTH); i++){
 			c.set(Calendar.DAY_OF_MONTH, i);
 			ReportModel reportModel = getReportByDay(c, reports);
+			reportModel.reportUser = myself;
 			results.add(reportModel);
 		}
 		return results;

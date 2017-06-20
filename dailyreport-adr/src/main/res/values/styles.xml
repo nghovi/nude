@@ -65,8 +65,7 @@
         <item name="android:ellipsize">end</item>
     </style>
 
-    <style name="dr_edit_text_small_no_corner"
-           parent="@style/cs_common_match_wrap">
+    <style name="dr_edit_text_small_no_corner" parent="@style/cs_common_match_wrap">
         <item name="android:background">
             @drawable/dr_background_gray_border_padding
         </item>
@@ -243,6 +242,18 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">2px</item>
         <item name="android:background">@android:color/darker_gray</item>
+    </style>
+
+    <style name="txt_item_calendar_work_offer_info">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/chiase_blue</item>
+        <item name="android:layout_centerInParent">true</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:padding">4dp</item>
+        <item name="android:background">@drawable/dr_circle_border</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center_horizontal|center_vertical</item>
     </style>
 
 </resources>
