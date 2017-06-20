@@ -6,12 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import trente.asia.messenger.BuildConfig;
+import io.realm.RealmList;
+import trente.asia.messenger.BR;
 import trente.asia.messenger.R;
 import trente.asia.messenger.databinding.ItemStampBinding;
 import trente.asia.messenger.services.message.model.WFMStampModel;
@@ -20,9 +16,9 @@ import trente.asia.messenger.services.message.model.WFMStampModel;
  * Created by tien on 6/6/2017.
  */
 
-public class StampAdapter extends RecyclerView.Adapter<ViewHolder>{
+public class StampAdapter extends RecyclerView.Adapter<ViewHolder> {
 
-	private List<WFMStampModel>		stamps	= new ArrayList<>();
+	private RealmList<WFMStampModel> stamps;
 	private Context					context;
 	private OnStampAdapterListener	callback;
 
@@ -41,7 +37,8 @@ public class StampAdapter extends RecyclerView.Adapter<ViewHolder>{
 	public void onBindViewHolder(ViewHolder holder, int position){
 		final WFMStampModel stamp = stamps.get(position);
 		ItemStampBinding binding = (ItemStampBinding)holder.getBinding();
-		Picasso.with(context).load(BuildConfig.HOST + stamp.stampUrl).fit().into(binding.imageView);
+		binding.setVariable(BR.stamp, stamp);
+		binding.executePendingBindings();
 		binding.imageView.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
@@ -52,16 +49,15 @@ public class StampAdapter extends RecyclerView.Adapter<ViewHolder>{
 
 	@Override
 	public int getItemCount(){
-		return stamps.size();
+		return stamps == null ? 0 : stamps.size();
 	}
 
-	public void setStamps(List<WFMStampModel> stamps){
+	public void setStamps(RealmList<WFMStampModel> stamps) {
 		this.stamps = stamps;
 		notifyDataSetChanged();
 	}
 
 	public interface OnStampAdapterListener{
-
 		void onStampClick(WFMStampModel stamp);
 	}
 }

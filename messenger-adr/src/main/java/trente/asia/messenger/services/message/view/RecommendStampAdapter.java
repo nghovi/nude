@@ -40,7 +40,7 @@ public class RecommendStampAdapter extends RecyclerView.Adapter<ViewHolder> {
     public void onBindViewHolder(ViewHolder holder, int position) {
         ItemStampBinding binding = (ItemStampBinding) holder.getBinding();
         final WFMStampModel recommendStamp = recommendStamps.get(position);
-        Picasso.with(context).load(BuildConfig.HOST + recommendStamp.stampUrl)
+        Picasso.with(context).load(BuildConfig.HOST + recommendStamp.stampPath)
                 .fit().into(binding.imageView);
         binding.imageView.setOnClickListener(new View.OnClickListener() {
             @Override

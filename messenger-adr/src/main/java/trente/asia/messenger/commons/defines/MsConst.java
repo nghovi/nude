@@ -58,5 +58,7 @@ public class MsConst{
 
 	public static final String	MESSAGE_STAMP_LAST_UPDATE_DATE	= "stamp_last_update_date";
 
-	public static String	PREF_ACTIVE_BOARD_ID			= "PREF_ACTIVE_BOARD_ID";
+	public static String		PREF_ACTIVE_BOARD_ID			= "PREF_ACTIVE_BOARD_ID";
+	public static String		DEF_STAMP_ID					= "DEF_STAMP_ID";
+	public static String		DEF_STAMP_PATH					= "DEF_STAMP_PATH";
 }

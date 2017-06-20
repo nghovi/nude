@@ -7,7 +7,6 @@ package trente.asia.messenger.services.message.model;
 public class SSStampModel{
 
 	public String	stampName;
-	public String	stampKey;
 	public String	keyword;
 	public String	stampPath;
 	public String	key;

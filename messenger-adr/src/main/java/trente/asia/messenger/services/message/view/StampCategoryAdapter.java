@@ -6,12 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import trente.asia.messenger.BuildConfig;
+import io.realm.RealmChangeListener;
+import io.realm.RealmResults;
+import trente.asia.messenger.BR;
 import trente.asia.messenger.R;
 import trente.asia.messenger.databinding.ItemStampCategoryBinding;
 import trente.asia.messenger.services.message.model.WFMStampCategoryModel;
@@ -20,15 +17,16 @@ import trente.asia.messenger.services.message.model.WFMStampCategoryModel;
  * Created by tien on 6/8/2017.
  */
 
-public class StampCategoryAdapter extends RecyclerView.Adapter<ViewHolder>{
+public class StampCategoryAdapter extends RecyclerView.Adapter<ViewHolder>
+		implements RealmChangeListener<RealmResults<WFMStampCategoryModel>>{
 
-	private List<WFMStampCategoryModel>		stampCategories	= new ArrayList<>();
+	private RealmResults<WFMStampCategoryModel> stampCategories;
 	private Context							context;
 	private OnStampCategoryAdapterListener	callback;
-    private int    selectedStampCategory = 0;
+	private int								selectedStampCategory	= 0;
 
 	public StampCategoryAdapter(OnStampCategoryAdapterListener listener){
-        this.callback = listener;
+		this.callback = listener;
 	}
 
 	@Override
@@ -42,30 +40,34 @@ public class StampCategoryAdapter extends RecyclerView.Adapter<ViewHolder>{
 	public void onBindViewHolder(final ViewHolder holder, int position){
 		final WFMStampCategoryModel stampCategory = stampCategories.get(position);
 		ItemStampCategoryBinding binding = (ItemStampCategoryBinding)holder.getBinding();
-		Picasso.with(context).load(BuildConfig.HOST + stampCategory.categoryUrl)
-				.fit()
-                .into(binding.imageView);
-        binding.imageView.setOnClickListener(new View.OnClickListener() {
+		binding.setVariable(BR.category, stampCategory);
+		binding.executePendingBindings();
+		binding.imageView.setOnClickListener(new View.OnClickListener() {
+
 			@Override
-			public void onClick(View view) {
+			public void onClick(View view){
 				callback.onStampCategoryClick(stampCategory);
 				selectedStampCategory = holder.getAdapterPosition();
 				view.setBackground(context.getResources().getDrawable(R.drawable.select_stamp_category_background, null));
 				notifyDataSetChanged();
 			}
 		});
-        binding.imageView.setBackground(selectedStampCategory == position ?
-            context.getResources().getDrawable(R.drawable.select_stamp_category_background, null) :
-            context.getResources().getDrawable(R.drawable.normal_stamp_category_background, null));
+		binding.imageView.setBackground(selectedStampCategory == position ? context.getResources().getDrawable(R.drawable.select_stamp_category_background, null) : context.getResources().getDrawable(R.drawable.normal_stamp_category_background, null));
 	}
 
 	@Override
 	public int getItemCount(){
-		return stampCategories.size();
+		return stampCategories == null ? 0 : stampCategories.size();
 	}
 
-	public void setStampCategories(List<WFMStampCategoryModel> stampCategories){
+	public void setStampCategories(RealmResults<WFMStampCategoryModel> stampCategories) {
 		this.stampCategories = stampCategories;
+		this.stampCategories.addChangeListener(this);
+		notifyDataSetChanged();
+	}
+
+	@Override
+	public void onChange(RealmResults<WFMStampCategoryModel> wfmStampCategoryModels) {
 		notifyDataSetChanged();
 	}
 

@@ -8,12 +8,19 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.squareup.picasso.Picasso;
+
+import trente.asia.messenger.BuildConfig;
 import trente.asia.messenger.R;
+import trente.asia.messenger.commons.defines.MsConst;
+import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
 import trente.asia.welfare.adr.utils.AnimUtils;
+import trente.asia.welfare.adr.utils.WelfareUtil;
 import trente.asia.welfare.adr.view.MsgMultiAutoCompleteTextView;
 
 /**
@@ -113,6 +120,12 @@ public class MessageView extends LinearLayout{
 		// mLayoutManager.setStackFromEnd(true);
 		revMessage.setLayoutManager(mLayoutManager);
 		revMessage.setItemAnimator(new DefaultItemAnimator());
+
+		PreferencesAccountUtil prefAccUtil = new PreferencesAccountUtil(mContext);
+		String stampUrl = prefAccUtil.get(MsConst.DEF_STAMP_PATH);
+		Log.e("MessageView", "stampUrl = " + stampUrl);
+		Picasso.with(mContext).load(BuildConfig.HOST + stampUrl)
+				.resize(WelfareUtil.dpToPx(24), WelfareUtil.dpToPx(24)).into(imgLike);
 	}
 
 	private void animateSendButton(final boolean toSend){
