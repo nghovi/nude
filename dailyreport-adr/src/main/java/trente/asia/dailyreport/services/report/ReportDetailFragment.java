@@ -312,7 +312,7 @@ public class ReportDetailFragment extends AbstractDRFragment implements View.OnC
 		}
 		buildReportDetailWithTemplate();
 		buildReportCustom();
-		buildKPI();
+		// buildKPI();
 		buildCommentList();
 	}
 
@@ -329,74 +329,74 @@ public class ReportDetailFragment extends AbstractDRFragment implements View.OnC
 		}
 	}
 
-	private void buildKPI(){
-		buildMonthlyGoals();
-		buildActionPlans();
-	}
-
-	private void buildMonthlyGoals(){
-		if(reportModel.goalEntries.size() > 0){
-			LinearLayout lnrMonthlyGoalList = (LinearLayout)getView().findViewById(R.id.view_kpi_lnr_monthly);
-			buildGoalEntries(lnrMonthlyGoalList);
-		}else{
-			LinearLayout lnrMonthlyGoal = (LinearLayout)getView().findViewById(R.id.view_kpi_lnr_monthly_goal);
-			lnrMonthlyGoal.setVisibility(View.GONE);
-		}
-	}
-
-	private void buildActionPlans(){
-		if(reportModel.actionEntries.size() > 0){
-			final LinearLayout kpiActualPlanHeader = (LinearLayout)getView().findViewById(R.id.view_kpi_lnr_actual_plan_header);
-			final LinearLayout kpiActualPlanContainer = (LinearLayout)getView().findViewById(R.id.view_kpi_lnr_actual_plan);
-			buildOldActualPlanKpis(kpiActualPlanContainer, kpiActualPlanHeader);
-		}else{
-			LinearLayout lnrActionPlan = (LinearLayout)getView().findViewById(R.id.view_kpi_lnr_action_plan);
-			lnrActionPlan.setVisibility(View.GONE);
-		}
-	}
-
-	private void buildGoalEntries(LinearLayout container){
-		container.removeAllViews();
-		for(GoalEntry goalEntry : reportModel.goalEntries){
-			addGoalEntry(goalEntry, container);
-		}
-	}
-
-	private void buildOldActualPlanKpis(LinearLayout container, LinearLayout header){
-		container.removeAllViews();
-		for(ActionEntry actionEntry : reportModel.actionEntries){
-			View itemView = inflater.inflate(R.layout.item_action_entry, null);
-			ReportEditFragment.buildActionPlanItemLayout(itemView, actionEntry);
-			container.addView(itemView);
-			header.setVisibility(View.VISIBLE);
-		}
-	}
-
-	private void addGoalEntry(GoalEntry goalEntry, LinearLayout lnrConainer){
-		View itemView = inflater.inflate(R.layout.item_goal_entry_detail, null);
-		TextView txtItem = (TextView)itemView.findViewById(R.id.item_kpi_name);
-		TextView txtGoal = (TextView)itemView.findViewById(R.id.item_kpi_goal);
-		TextView txtSum = (TextView)itemView.findViewById(R.id.item_kpi_sum);
-		TextView txtPlan = (TextView)itemView.findViewById(R.id.item_kpi_month_txt_plan);
-		TextView txtActual = (TextView)itemView.findViewById(R.id.item_kpi_month_txt_actual);
-		TextView txtAchievement = (TextView)itemView.findViewById(R.id.item_kpi_achievement);
-
-		txtItem.setText(goalEntry.goalName);
-		if(Kpi.KPI_UNIT_TIME.equals(goalEntry.goalUnit)){
-			txtGoal.setText(goalEntry.goalValue);
-			txtPlan.setText(goalEntry.goalPlan);
-			txtActual.setText(goalEntry.goalActual);
-			txtSum.setText(goalEntry.actualSum);
-		}else{
-			txtGoal.setText(WelfareUtil.formatAmount(goalEntry.goalValue));
-			txtPlan.setText(WelfareUtil.formatAmount(goalEntry.goalPlan));
-			txtActual.setText(WelfareUtil.formatAmount(goalEntry.goalActual));
-			txtSum.setText(WelfareUtil.formatAmount(goalEntry.actualSum));
-		}
-
-		txtAchievement.setText(GoalEntry.getAchievementString(goalEntry));
-		lnrConainer.addView(itemView);
-	}
+	// private void buildKPI(){
+	// buildMonthlyGoals();
+	// buildActionPlans();
+	// }
+	//
+	// private void buildMonthlyGoals(){
+	// if(reportModel.goalEntries.size() > 0){
+	// LinearLayout lnrMonthlyGoalList = (LinearLayout)getView().findViewById(R.id.view_kpi_lnr_monthly);
+	// buildGoalEntries(lnrMonthlyGoalList);
+	// }else{
+	// LinearLayout lnrMonthlyGoal = (LinearLayout)getView().findViewById(R.id.view_kpi_lnr_monthly_goal);
+	// lnrMonthlyGoal.setVisibility(View.GONE);
+	// }
+	// }
+	//
+	// private void buildActionPlans(){
+	// if(reportModel.actionEntries.size() > 0){
+	// final LinearLayout kpiActualPlanHeader = (LinearLayout)getView().findViewById(R.id.view_kpi_lnr_actual_plan_header);
+	// final LinearLayout kpiActualPlanContainer = (LinearLayout)getView().findViewById(R.id.view_kpi_lnr_actual_plan);
+	// buildOldActualPlanKpis(kpiActualPlanContainer, kpiActualPlanHeader);
+	// }else{
+	// LinearLayout lnrActionPlan = (LinearLayout)getView().findViewById(R.id.view_kpi_lnr_action_plan);
+	// lnrActionPlan.setVisibility(View.GONE);
+	// }
+	// }
+	//
+	// private void buildGoalEntries(LinearLayout container){
+	// container.removeAllViews();
+	// for(GoalEntry goalEntry : reportModel.goalEntries){
+	// addGoalEntry(goalEntry, container);
+	// }
+	// }
+	//
+	// private void buildOldActualPlanKpis(LinearLayout container, LinearLayout header){
+	// container.removeAllViews();
+	// for(ActionEntry actionEntry : reportModel.actionEntries){
+	// View itemView = inflater.inflate(R.layout.item_action_entry, null);
+	// ReportEditFragment.buildActionPlanItemLayout(itemView, actionEntry);
+	// container.addView(itemView);
+	// header.setVisibility(View.VISIBLE);
+	// }
+	// }
+	//
+	// private void addGoalEntry(GoalEntry goalEntry, LinearLayout lnrConainer){
+	// View itemView = inflater.inflate(R.layout.item_goal_entry_detail, null);
+	// TextView txtItem = (TextView)itemView.findViewById(R.id.item_kpi_name);
+	// TextView txtGoal = (TextView)itemView.findViewById(R.id.item_kpi_goal);
+	// TextView txtSum = (TextView)itemView.findViewById(R.id.item_kpi_sum);
+	// TextView txtPlan = (TextView)itemView.findViewById(R.id.item_kpi_month_txt_plan);
+	// TextView txtActual = (TextView)itemView.findViewById(R.id.item_kpi_month_txt_actual);
+	// TextView txtAchievement = (TextView)itemView.findViewById(R.id.item_kpi_achievement);
+	//
+	// txtItem.setText(goalEntry.goalName);
+	// if(Kpi.KPI_UNIT_TIME.equals(goalEntry.goalUnit)){
+	// txtGoal.setText(goalEntry.goalValue);
+	// txtPlan.setText(goalEntry.goalPlan);
+	// txtActual.setText(goalEntry.goalActual);
+	// txtSum.setText(goalEntry.actualSum);
+	// }else{
+	// txtGoal.setText(WelfareUtil.formatAmount(goalEntry.goalValue));
+	// txtPlan.setText(WelfareUtil.formatAmount(goalEntry.goalPlan));
+	// txtActual.setText(WelfareUtil.formatAmount(goalEntry.goalActual));
+	// txtSum.setText(WelfareUtil.formatAmount(goalEntry.actualSum));
+	// }
+	//
+	// txtAchievement.setText(GoalEntry.getAchievementString(goalEntry));
+	// lnrConainer.addView(itemView);
+	// }
 
 	@Override
 	protected void onClickBackBtn(){

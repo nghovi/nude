@@ -1,35 +1,32 @@
-<trente.asia.welfare.adr.view.WfSlideMenuLayout android:id="@+id/drawer_layout"
-                                                style="@style/cs_common_match"
-                                                xmlns:android="http://schemas.android.com/apk/res/android">
+<trente.asia.welfare.adr.view.WfSlideMenuLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drawer_layout"
+    style="@style/cs_common_match">
 
     <!-- Slide Menu  -->
     <LinearLayout
         android:id="@+id/slice_menu_board"
         style="@style/cs_common_match"
-        android:orientation="vertical"/>
+        android:orientation="vertical" />
 
     <trente.asia.welfare.adr.view.LinearLayoutOnInterceptTouch
         android:id="@+id/main_layout"
         style="@style/wf_common_match">
 
-        <include layout="@layout/view_navigation_header"/>
+        <include layout="@layout/view_navigation_header" />
 
         <trente.asia.calendar.commons.views.UserListLinearLayout
             android:id="@+id/lnr_fragment_pager_container_user_list"
             style="@style/cs_common_match_wrap"
             android:layout_height="@dimen/margin_30dp"
-            android:layout_marginTop="@dimen/margin_10dp"
-            android:layout_marginLeft="@dimen/margin_10dp"
-            android:background="@drawable/state_common_selectable_row2"/>
+            android:background="@color/wf_app_color_base" />
 
-        <android.support.v4.view.ViewPager
+        <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/view_id_pager"
-            xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
 
-        <include layout="@layout/view_common_footer"/>
+        <include layout="@layout/view_common_footer" />
     </trente.asia.welfare.adr.view.LinearLayoutOnInterceptTouch>
 
 </trente.asia.welfare.adr.view.WfSlideMenuLayout>

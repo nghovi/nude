@@ -1,17 +1,19 @@
-<RelativeLayout style="@style/cs_common_match"
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                android:background="@color/core_white"
-                android:orientation="vertical">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/cs_common_match"
+    android:background="@color/core_white"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/viewForMenuBehind"
+        android:background="@color/core_white"
         android:gravity="center_vertical"
         android:orientation="vertical"
-        android:padding="0dp"
-        android:background="@color/core_white">
+        android:padding="0dp">
 
-        <include layout="@layout/view_common_header"/>
+        <include layout="@layout/view_common_header" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -23,37 +25,34 @@
                 android:id="@+id/fragment_report_detail_scroll_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:isScrollContainer="false"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:isScrollContainer="false">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    >
+                    android:orientation="vertical">
 
-                    <LinearLayout
-                        style="@style/wf_common_linear">
+                    <LinearLayout style="@style/wf_common_linear">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            >
+                            android:orientation="horizontal">
 
                             <TextView
                                 style="@style/dr_text_title_bold"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="@string/dlr_report_content"/>
+                                android:text="@string/dlr_report_content" />
 
                             <TextView
                                 android:id="@+id/fragment_report_detail_date"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="right"
-                                android:textColor="@color/chiase_black"/>
+                                android:textColor="@color/chiase_black" />
                         </LinearLayout>
 
 
@@ -63,7 +62,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="@dimen/margin_16dp"
                             android:layout_marginTop="@dimen/margin_10dp"
-                            android:ellipsize="none"/>
+                            android:ellipsize="none" />
 
                         <LinearLayout
                             android:id="@+id/fragment_report_detail_lnr_custom"
@@ -76,12 +75,12 @@
                                 android:id="@+id/fragment_report_detail_txt_custom_title"
                                 style="@style/dr_text_title_bold"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"/>
+                                android:layout_height="wrap_content" />
 
                             <TextView
                                 android:id="@+id/fragment_report_detail_txt_custom_content"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"/>
+                                android:layout_height="wrap_content" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -92,7 +91,7 @@
                             android:orientation="vertical"
                             android:visibility="visible">
 
-                            <include layout="@layout/view_kpi_detail"/>
+                            <!--<include layout="@layout/view_kpi_detail"/>-->
                         </LinearLayout>
 
                         <LinearLayout
@@ -111,13 +110,13 @@
                                     android:id="@+id/fragment_report_detail_img_check"
                                     style="@style/cs_common_wrap"
                                     android:layout_marginRight="@dimen/margin_6dp"
-                                    android:src="@drawable/wf_seen"/>
+                                    android:src="@drawable/wf_seen" />
 
                                 <TextView
                                     android:id="@+id/share_lnr_check_txt_checked_num"
                                     style="@style/dr_text_follower_info"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"/>
+                                    android:layout_height="wrap_content" />
                             </LinearLayout>
 
                             <LinearLayout
@@ -132,13 +131,13 @@
                                     android:id="@+id/fragment_report_detail_img_like"
                                     style="@style/cs_common_wrap"
                                     android:layout_marginRight="@dimen/margin_6dp"
-                                    android:src="@drawable/wf_good"/>
+                                    android:src="@drawable/wf_good" />
 
                                 <TextView
                                     android:id="@+id/share_lnr_like_txt_num"
                                     style="@style/dr_text_follower_info"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"/>
+                                    android:layout_height="wrap_content" />
                             </LinearLayout>
 
                             <LinearLayout
@@ -153,13 +152,13 @@
                                     android:id="@+id/fragment_report_detail_img_comment"
                                     style="@style/cs_common_wrap"
                                     android:layout_marginRight="@dimen/margin_6dp"
-                                    android:src="@drawable/wf_comment"/>
+                                    android:src="@drawable/wf_comment" />
 
                                 <TextView
                                     android:id="@+id/share_lnr_comment_txt_num"
                                     style="@style/dr_text_follower_info"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"/>
+                                    android:layout_height="wrap_content" />
                             </LinearLayout>
 
                             <LinearLayout
@@ -173,13 +172,13 @@
                                     android:id="@+id/fragment_report_detail_img_file"
                                     style="@style/cs_common_wrap"
                                     android:layout_marginRight="@dimen/margin_6dp"
-                                    android:src="@drawable/dr_report"/>
+                                    android:src="@drawable/dr_report" />
 
                                 <TextView
                                     android:id="@+id/share_lnr_file_txt_num"
                                     style="@style/dr_text_follower_info"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"/>
+                                    android:layout_height="wrap_content" />
                             </LinearLayout>
 
                         </LinearLayout>
@@ -188,7 +187,7 @@
                     <trente.asia.android.view.ChiaseListViewNoScroll
                         android:id="@+id/fragment_report_detail_lst_comment"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content" />
 
                 </LinearLayout>
             </ScrollView>
@@ -201,7 +200,7 @@
                 android:orientation="vertical"
                 android:visibility="gone">
 
-                <View style="@style/cs_common_divider"/>
+                <View style="@style/cs_common_divider" />
 
                 <LinearLayout
                     style="@style/cs_common_match_wrap"
@@ -220,14 +219,14 @@
                         android:inputType="textMultiLine"
                         android:maxLines="5"
                         android:scrollHorizontally="false"
-                        android:textColorHint="@color/wf_common_color_hint"/>
+                        android:textColorHint="@color/wf_common_color_hint" />
 
                     <ImageButton
                         android:id="@+id/btn_id_send_cmt"
                         style="@style/cs_common_wrap"
                         android:layout_marginLeft="@dimen/margin_10dp"
                         android:background="@color/chiase_white"
-                        android:src="@drawable/wf_attachment"/>
+                        android:src="@drawable/wf_attachment" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -236,9 +235,9 @@
                 android:id="@+id/lnr_btn_like_comment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/wf_login_background_color"
                 android:gravity="center_vertical|center_horizontal"
                 android:orientation="horizontal"
-                android:background="@color/wf_login_background_color"
                 android:paddingTop="@dimen/margin_10dp">
 
                 <LinearLayout
@@ -247,20 +246,19 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/wf_margin_16"
                     android:gravity="center_vertical|center_horizontal"
-                    android:orientation="vertical"
-                    >
+                    android:orientation="vertical">
 
                     <ImageView
                         android:id="@+id/img_like"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/wf_good"/>
+                        android:src="@drawable/wf_good" />
 
                     <TextView
                         android:id="@+id/fragment_report_detail_txt_like"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/dlr_like"/>
+                        android:text="@string/dlr_like" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -274,16 +272,14 @@
                         android:id="@+id/img_comment"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/wf_comment"/>
+                        android:src="@drawable/wf_comment" />
 
                     <TextView
                         android:id="@+id/fragment_report_detail_txt_comment"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/dlr_add_comment"/>
+                        android:text="@string/dlr_add_comment" />
                 </LinearLayout>
-
-
 
 
             </LinearLayout>
@@ -299,7 +295,7 @@
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
         android:background="@color/wf_common_black_transparent"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <!--action menu: camera, photo, recorder-->
     <include
@@ -307,5 +303,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_margin="10dp"/>
+        android:layout_margin="10dp" />
 </RelativeLayout>

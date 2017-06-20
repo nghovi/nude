@@ -1,0 +1,42 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+
+    <LinearLayout style="@style/wf_common_match">
+
+        <include layout="@layout/view_common_header" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/btn_id_start_camera"
+                style="@style/wl_common_button_10"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="Start camera" />
+
+            <ImageView
+                android:id="@+id/img_id_camera_view"
+                android:scaleType="fitCenter"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="300dp"
+                android:layout_height="300dp" />
+
+
+        </LinearLayout>
+
+
+        <include layout="@layout/view_common_footer" />
+    </LinearLayout>
+
+
+</layout>

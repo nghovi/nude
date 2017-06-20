@@ -235,7 +235,7 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 	}
 
 	protected int getHeaderBgColor(){
-		return ContextCompat.getColor(activity, R.color.wf_login_background_color);
+		return ContextCompat.getColor(activity, R.color.wf_app_color_base);
 	}
 
 	abstract int getCalendarHeaderItem();

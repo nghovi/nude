@@ -5,7 +5,7 @@
     <LinearLayout android:layout_width="match_parent"
                   android:layout_height="match_parent"
                   android:layout_weight="1"
-                  android:background="@color/wf_login_background_color"
+                  android:background="@color/cl_cell_bg_color"
                   android:gravity="center" android:orientation="vertical">
 
 

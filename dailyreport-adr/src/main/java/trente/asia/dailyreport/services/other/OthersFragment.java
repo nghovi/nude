@@ -7,6 +7,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,6 +39,7 @@ import trente.asia.dailyreport.services.report.model.DRDeptModel;
 import trente.asia.dailyreport.services.report.model.DRUserModel;
 import trente.asia.dailyreport.services.report.model.Holiday;
 import trente.asia.dailyreport.services.report.model.ReportModel;
+import trente.asia.dailyreport.services.report.model.WorkingSymbolModel;
 import trente.asia.dailyreport.utils.DRUtil;
 import trente.asia.dailyreport.view.DRCalendarHeader;
 import trente.asia.welfare.adr.define.WelfareConst;
@@ -75,7 +77,7 @@ public class OthersFragment extends AbstractDRFragment{
 	private WfSpinner							wfSpinnerDept;
 	// private WfSpinner wfSpinnerUser;
 	private List<DRDeptModel>					drDeptModels;								// dept list for spinner
-	private List<DeptModel>						deptModels;								// dept list for spinner
+	private List<DeptModel>						deptModels;									// dept list for spinner
 
 	private DRDeptModel							selectedDept;
 	// private DRUserModel selectedUser;
@@ -86,6 +88,7 @@ public class OthersFragment extends AbstractDRFragment{
 	private TextView							txtDate;
 	private WfProfileDialog						mDlgProfile;
 	private Date								selectedDate;
+	private Map<String, Map<String, String>>	workingSymbolMap;
 
 	@Override
 	public int getFragmentLayoutId(){
@@ -261,7 +264,7 @@ public class OthersFragment extends AbstractDRFragment{
 
 			LinearLayout.LayoutParams LLParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 			reportRow.setLayoutParams(LLParams);
-
+			Map<String, String> userWorkingSymbolMap = workingSymbolMap.get(user.key);
 			for(Date date : lstDate){
 				c.setTime(date);
 				final ReportModel reportModel = MyReportFragment.getReportByDayAndUser(c, filteredReports, user);
@@ -279,6 +282,16 @@ public class OthersFragment extends AbstractDRFragment{
 					});
 				}else{
 					cell = inflater.inflate(R.layout.item_calendar_other_empty, null);
+
+					if(userWorkingSymbolMap != null){
+						String reportDateKey = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_CODE, date);
+						String workingSymbol = userWorkingSymbolMap.get(reportDateKey);
+						if(!CCStringUtil.isEmpty(workingSymbol)){
+							TextView txtWorkOfferInfo = (TextView)cell.findViewById(R.id.item_calendar_txt_work_offer_info);
+							txtWorkOfferInfo.setVisibility(View.VISIBLE);
+							txtWorkOfferInfo.setText(workingSymbol);
+						}
+					}
 				}
 				cell.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
 				buildCalendarCellImage(date, reportModel, cell, cToday);
@@ -436,6 +449,9 @@ public class OthersFragment extends AbstractDRFragment{
 		if(getView() != null){
 			holidays = CCJsonUtil.convertToModelList(response.optString("holidays"), Holiday.class);
 			drUserModels = CCJsonUtil.convertToModelList(response.optString("reportByUsers"), DRUserModel.class);
+			List<WorkingSymbolModel> workingSymbolModels = CCJsonUtil.convertToModelList(response.optString("workingByUsers"), WorkingSymbolModel.class);
+			workingSymbolMap = MyReportFragment.buildWorkingSymbolMap(workingSymbolModels);
+
 			deptModels = CCJsonUtil.convertToModelList(response.optString("depts"), DeptModel.class);
 			buildReports();
 			if(deptSpinnerInited == false){
@@ -483,7 +499,7 @@ public class OthersFragment extends AbstractDRFragment{
 			drDeptModels.add(drDeptModel);
 		}
 		// if(drDeptModels.size() > 1){
-		appendDepartmentDeptAll();
+		// appendDepartmentDeptAll();
 		// }
 		selectedDept = getSelectedDepth(drDeptModels, selectedDept);
 		appendUserUserAll();

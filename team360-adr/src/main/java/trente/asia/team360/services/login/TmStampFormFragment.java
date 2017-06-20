@@ -63,6 +63,11 @@ public class TmStampFormFragment extends AbstractTmFragment {
 
     }
 
+    @Override
+    public int getFooterItemId() {
+        return 0;
+    }
+
 
     @Override
     protected void initData() {
