@@ -57,6 +57,7 @@ import asia.chiase.core.util.CCNumberUtil;
 import asia.chiase.core.util.CCStringUtil;
 import io.realm.Realm;
 import io.realm.RealmResults;
+import trente.asia.android.define.CsConst;
 import trente.asia.android.view.model.ChiaseListItemModel;
 import trente.asia.messenger.BuildConfig;
 import trente.asia.messenger.R;
@@ -93,6 +94,7 @@ import trente.asia.messenger.services.util.NetworkChangeReceiver;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.EmotionConst;
 import trente.asia.welfare.adr.define.WelfareConst;
+import trente.asia.welfare.adr.define.WfErrorConst;
 import trente.asia.welfare.adr.dialog.WfProfileDialog;
 import trente.asia.welfare.adr.menu.OnMenuButtonsListener;
 import trente.asia.welfare.adr.menu.OnMenuManageListener;
@@ -1079,7 +1081,12 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 	}
 
 	protected void commonNotSuccess(JSONObject response){
-		super.commonNotSuccess(response);
+		String returnCd = response.optString(CsConst.RETURN_CODE_PARAM);
+		if (WfErrorConst.ERR_CODE_CONNECTION_ERROR.equals(returnCd)) {
+			log("commonNotSuccess: get here");
+		} else {
+			super.commonNotSuccess(response);
+		}
 		messageView.imgSend.setEnabled(true);
 	}
 
@@ -1229,4 +1236,6 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 			stopTimer();
 		}
 	}
+
+
 }
