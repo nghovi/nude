@@ -495,7 +495,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 		activeBoard = new BoardModel();
 		activeBoard.key = prefAccUtil.get(MsConst.PREF_ACTIVE_BOARD_ID);
 		activeBoardId = activeBoard.key;
-		loadMessageList();
+		loadMessageList(true);
 	}
 
 	private void sendLocation(){
@@ -532,7 +532,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 		binding.layoutStamp.getRoot().setVisibility(View.GONE);
 	}
 
-	private void loadMessageList(){
+	private void loadMessageList(boolean showLoading){
 		JSONObject jsonObject = new JSONObject();
 		try{
 			jsonObject.put("boardId", activeBoard.key);
@@ -544,19 +544,23 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
-		requestLoad(MsConst.API_MESSAGE_BOARD, jsonObject, true);
+		requestLoad(MsConst.API_MESSAGE_BOARD, jsonObject, showLoading);
 	}
 
 	private void loadMessageLatest(){
-		JSONObject jsonObject = new JSONObject();
-		try{
-			jsonObject.put("boardId", activeBoard.key);
-			jsonObject.put("targetMessageId", latestMessageId);
-			jsonObject.put("startMessageId", startMessageId);
-		}catch(JSONException e){
-			e.printStackTrace();
+		if("0".equals(latestMessageId)){
+			loadMessageList(false);
+		}else{
+			JSONObject jsonObject = new JSONObject();
+			try{
+				jsonObject.put("boardId", activeBoard.key);
+				jsonObject.put("targetMessageId", latestMessageId);
+				jsonObject.put("startMessageId", startMessageId);
+			}catch(JSONException e){
+				e.printStackTrace();
+			}
+			requestLoad(MsConst.API_MESSAGE_LATEST, jsonObject, false);
 		}
-		requestLoad(MsConst.API_MESSAGE_LATEST, jsonObject, false);
 	}
 
 	private void loadNoteDetail(){
@@ -950,7 +954,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 	private void onScrollToTopListener(){
 		if(!CCStringUtil.isEmpty(autoroadCd) && !CCConst.NONE.equals(autoroadCd)){
 			if(!isFirstScroll2Top){
-				loadMessageList();
+				loadMessageList(true);
 			}else{
 				isFirstScroll2Top = false;
 			}
@@ -962,6 +966,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 			mSlideMenuLayout.toggleMenu();
 		}
 		if(activeBoard == null || !boardModel.key.equals(activeBoard.key)){
+			latestMessageId = "0";
 			activity.runOnUiThread(new Runnable() {
 
 				public void run(){
@@ -978,7 +983,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 				messageView.edtMessage.setText("");
 				autoroadCd = "";
 				isFirstScroll2Top = true;
-				loadMessageList();
+				loadMessageList(true);
 			}
 		}else{
 			if(!boardModel.boardName.equals(activeBoard.boardName)){
