@@ -1,6 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/cs_common_match_wrap"
-    android:background="@color/wf_app_color_base"
+    android:background="@color/cl_cell_bg_color"
     android:orientation="vertical"
     android:paddingRight="@dimen/margin_1dp"
     android:paddingTop="@dimen/margin_10dp">
