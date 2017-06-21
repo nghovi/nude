@@ -11,10 +11,10 @@
         <ScrollView
             android:id="@+id/scr_id_detail"
             android:layout_above="@+id/divider"
-            style="@style/cs_common_match_wrap">
+            style="@style/cs_common_match">
 
             <LinearLayout
-                style="@style/cs_common_match_wrap"
+                style="@style/cs_common_match"
                 android:orientation="vertical"
                 android:padding="@dimen/margin_16dp">
 
