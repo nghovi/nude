@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 import asia.chiase.core.util.CCJsonUtil;
-import trente.asia.addresscard.ACConst;
+import trente.asia.addresscard.commons.defines.ACConst;
 import trente.asia.addresscard.R;
 import trente.asia.addresscard.commons.fragments.AbstractAddressCardFragment;
 import trente.asia.addresscard.databinding.FragmentShopCardEditBinding;

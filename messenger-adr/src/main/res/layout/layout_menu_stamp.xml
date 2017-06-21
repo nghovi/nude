@@ -18,7 +18,7 @@
             android:minHeight="180dp"/>
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="1px"
             android:background="#f1f1f1"/>
         <TextView
             android:id="@+id/btn_cancel"

@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import trente.asia.addresscard.ACConst;
+import trente.asia.addresscard.commons.defines.ACConst;
 import trente.asia.addresscard.R;
 import trente.asia.addresscard.commons.fragments.AddressCardListFragment;
 import trente.asia.addresscard.databinding.FragmentBusinessCardsBinding;

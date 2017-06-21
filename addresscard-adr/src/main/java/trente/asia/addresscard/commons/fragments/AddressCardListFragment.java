@@ -1,12 +1,7 @@
 package trente.asia.addresscard.commons.fragments;
 
-import android.app.Activity;
-import android.content.ContentValues;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,15 +10,14 @@ import android.view.ViewGroup;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.List;
 
 import asia.chiase.core.util.CCJsonUtil;
-import trente.asia.addresscard.ACConst;
+import trente.asia.addresscard.commons.defines.ACConst;
 import trente.asia.addresscard.R;
+import trente.asia.addresscard.commons.activities.CameraActivity;
 import trente.asia.addresscard.services.business.model.AddressCardModel;
 import trente.asia.addresscard.services.business.presenter.CardAdapter;
-import trente.asia.addresscard.services.business.view.CardCameraPreviewFragment;
 
 /**
  * Created by tien on 4/18/2017.
@@ -82,33 +76,14 @@ public abstract class AddressCardListFragment extends AbstractAddressCardFragmen
     }
 
     private void takeCapture() {
-        ContentValues values = new ContentValues();
-        photoUri = getActivity().getContentResolver().insert(
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+        Intent intent = new Intent(getActivity(), CameraActivity.class);
         startActivityForResult(intent, ACConst.AC_REQUEST_CODE_TAKE_CAPTURE);
-//        Bitmap card = BitmapFactory.decodeResource(getResources(), R.drawable.card);
-//        Bitmap logo = BitmapFactory.decodeResource(getResources(), R.drawable.logo);
-//        gotoFragment(CardCameraPreviewFragment.newInstance(card, logo, ""));
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == ACConst.AC_REQUEST_CODE_TAKE_CAPTURE &&
-                resultCode == Activity.RESULT_OK) {
-            Bitmap cardBitmap = null;
-            try {
-                cardBitmap = MediaStore.Images.Media.getBitmap(
-                        getActivity().getContentResolver(), photoUri);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            Bitmap logoBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.logo);
-            String uploadApi = getUploadApi();
-            gotoFragment(CardCameraPreviewFragment.newInstance(cardBitmap, logoBitmap, uploadApi));
-        }
+
     }
 
     protected abstract String getUploadApi();

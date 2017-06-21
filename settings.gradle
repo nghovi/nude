@@ -1,1 +1,2 @@
 include ':chiase-android-module', ':dailyreport-adr', ':messenger-adr', ':thankscard-adr', ':welfare-android-core', ':shiftworking-adr', ':team360-adr', ':calendar-adr', ':addresscard-adr'
+include ':openCVLibrary320'

@@ -14,7 +14,7 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONObject;
 
 import asia.chiase.core.util.CCJsonUtil;
-import trente.asia.addresscard.ACConst;
+import trente.asia.addresscard.commons.defines.ACConst;
 import trente.asia.addresscard.BuildConfig;
 import trente.asia.addresscard.R;
 import trente.asia.addresscard.commons.fragments.AddressCardDetailFragment;

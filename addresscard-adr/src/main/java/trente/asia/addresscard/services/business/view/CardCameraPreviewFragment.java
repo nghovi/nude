@@ -118,7 +118,6 @@ public class CardCameraPreviewFragment extends AbstractAddressCardFragment {
         File logo = new File(logoPath);
         fileMap.put("card", cardImage);
         fileMap.put("logo", logo);
-        Log.e("Upload Address Card", jsonObject.toString());
         requestUpload(this.apiString, jsonObject, fileMap, true);
     }
 
