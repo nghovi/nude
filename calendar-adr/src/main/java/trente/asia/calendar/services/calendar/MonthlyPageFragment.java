@@ -11,6 +11,7 @@ import org.json.JSONObject;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -225,6 +226,11 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 			refreshDialogData = true;
 			loadScheduleList();
 		}
+	}
+
+	@Override
+	protected int getHeaderBgColor(){
+		return ContextCompat.getColor(activity, R.color.cl_cell_bg_color);
 	}
 
 	@Override
