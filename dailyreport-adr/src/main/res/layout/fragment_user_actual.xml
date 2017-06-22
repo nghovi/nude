@@ -37,64 +37,10 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_10dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/margin_16dp"
-            android:paddingRight="@dimen/margin_16dp">
+            style="@style/wf_common_linear"
+            android:paddingBottom="@dimen/wf_margin_16">
 
-            <RelativeLayout
-                style="@style/cs_common_wrap"
-                android:layout_marginRight="@dimen/margin_6dp"
-                android:gravity="center_vertical">
-
-                <trente.asia.android.view.ChiaseCheckableImageView
-                    android:id="@+id/btn_calendar_header_back"
-                    style="@style/dr_button_previous" />
-
-                <TextView
-                    style="@style/wl_common_text"
-                    android:layout_width="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:text="@string/btn_prev"
-                    android:textColor="@color/chiase_white" />
-            </RelativeLayout>
-
-            <LinearLayout
-                style="@style/cs_common_match_wrap"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center_vertical">
-
-                <Button
-                    android:id="@+id/img_calendar_header_this_group"
-                    style="@style/wl_common_button_small"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/margin_32dp"
-                    android:text="@string/header_calendar_this_month"
-                    android:textColor="@color/chiase_white"
-                    android:textSize="12sp" />
-
-            </LinearLayout>
-
-            <RelativeLayout
-                style="@style/cs_common_wrap"
-                android:layout_marginLeft="@dimen/margin_6dp"
-                android:gravity="center_vertical">
-
-                <trente.asia.android.view.ChiaseCheckableImageView
-                    android:id="@+id/btn_calendar_header_next"
-                    style="@style/dr_button_next" />
-
-                <TextView
-                    style="@style/wl_common_text"
-                    android:layout_width="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:text="@string/btn_next"
-                    android:textColor="@color/chiase_white" />
-            </RelativeLayout>
+            <include layout="@layout/view_common_groups_header" />
         </LinearLayout>
 
         <LinearLayout
@@ -203,10 +149,10 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/btn_fragment_kpi_save"
+            android:id="@+id/btn_fragment_user_actual_save"
             style="@style/wl_common_button_small"
             android:layout_marginTop="@dimen/margin_16dp"
-            android:text="@string/header_calendar_this_month"
+            android:text="@string/chiase_common_save"
             android:textColor="@color/chiase_white"
             android:textSize="12sp" />
 

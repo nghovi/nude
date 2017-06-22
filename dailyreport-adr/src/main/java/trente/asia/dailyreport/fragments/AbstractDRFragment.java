@@ -15,7 +15,7 @@ import trente.asia.android.define.CsConst;
 import trente.asia.dailyreport.BuildConfig;
 import trente.asia.dailyreport.R;
 import trente.asia.dailyreport.services.activities.ActivityFragment;
-import trente.asia.dailyreport.services.kpi.KpiFragment;
+import trente.asia.dailyreport.services.kpi.UserActualFragment;
 import trente.asia.dailyreport.services.other.OthersFragment;
 import trente.asia.dailyreport.services.report.MyReportFragment;
 import trente.asia.dailyreport.services.setting.DRSettingFragment;
@@ -179,7 +179,7 @@ public abstract class AbstractDRFragment extends WelfareFragment{
 		if(activeFooterItemId != R.id.lnr_view_common_footer_kpi){
 			activeFooterItemId = R.id.lnr_view_common_footer_kpi;
 			emptyBackStack();
-			gotoFragment(new KpiFragment());
+			gotoFragment(new UserActualFragment());
 		}
 	}
 

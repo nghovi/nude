@@ -104,4 +104,9 @@
     <string name="fragment_kpi_5">tittle5</string>
     <string name="footer_itemkpi">KPI</string>
     <string name="fragment_kpi_title">nyuryoku</string>
+    <string name="fragment_actual_plan_title">actual-plan-title</string>
+    <string name="fragment_group_actual_title">Group Actual</string>
+    <string name="fragment_group_actual_list_title">GroupActualList</string>
+    <string name="fragment_group_actual_list">Group List</string>
+    <string name="group_actual_list_goal">Group goal list</string>
 </resources>

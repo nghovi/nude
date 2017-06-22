@@ -23,7 +23,7 @@
                 android:layout_marginRight="@dimen/margin_6dp">
 
                 <trente.asia.android.view.ChiaseCheckableImageView
-                    android:id="@+id/btn_calendar_header_back"
+                    android:id="@+id/btn_group_header_back"
                     style="@style/dr_button_previous"/>
 
                 <TextView
@@ -57,7 +57,7 @@
                 android:layout_marginLeft="@dimen/margin_6dp">
 
                 <trente.asia.android.view.ChiaseCheckableImageView
-                    android:id="@+id/btn_calendar_header_next"
+                    android:id="@+id/btn_group_header_next"
                     style="@style/dr_button_next"/>
 
                 <TextView
