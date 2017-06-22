@@ -27,6 +27,8 @@ import trente.asia.dailyreport.R;
 import trente.asia.dailyreport.services.report.MyReportFragment;
 import trente.asia.dailyreport.services.report.model.ReportModel;
 import trente.asia.dailyreport.utils.DRUtil;
+import trente.asia.welfare.adr.BuildConfig;
+import trente.asia.welfare.adr.utils.WfPicassoHelper;
 
 public class CalendarAdapter extends BaseAdapter{
 
@@ -117,17 +119,14 @@ public class CalendarAdapter extends BaseAdapter{
 
 							DRConst.DATE_FORMAT_YYYY_MM_DD).equals(DRUtil.getDateString(reportModel.reportDate, DRConst.DATE_FORMAT_YYYY_MM_DD_HH_MM_SS, DRConst.DATE_FORMAT_YYYY_MM_DD))){
 				dayColor = ContextCompat.getColor(mContext, R.color.core_white);
-				// rltBackground.setBackgroundResource(R.drawable.dr_item_calendar_background_today);
 				txtDay.setBackgroundResource(R.drawable.dr_background_base_color_circle);
 			}
 
 			if(CCStringUtil.isEmpty(reportModel.key)){
-				// imgReportStatus.setImageResource(R.drawable.ic_action_new);
-				imgReportStatus.setVisibility(View.INVISIBLE);
 				if(!CCStringUtil.isEmpty(reportModel.workingSymbol)){
-					// imgReportStatus.setVisibility(View.INVISIBLE);
-					txtWorkOfferInfo.setVisibility(View.VISIBLE);
-					txtWorkOfferInfo.setText(reportModel.workingSymbol);
+					WfPicassoHelper.loadImage2(mContext, trente.asia.dailyreport.BuildConfig.HOST, imgReportStatus, reportModel.workingSymbol);
+				} else {
+					imgReportStatus.setVisibility(View.INVISIBLE);
 				}
 			}else{
 				if(ReportModel.REPORT_STATUS_DRTT.equals(reportModel.reportStatus)){
