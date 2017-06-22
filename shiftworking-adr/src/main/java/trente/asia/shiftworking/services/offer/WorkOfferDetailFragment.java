@@ -56,7 +56,7 @@ public class WorkOfferDetailFragment extends AbstractSwFragment{
 		this.activeOfferId = activeOfferId;
 	}
 
-	public void setExecType(String execType) {
+	public void setExecType(String execType){
 		this.execType = execType;
 	}
 
@@ -163,20 +163,16 @@ public class WorkOfferDetailFragment extends AbstractSwFragment{
 			((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_offer_status)).setText(offerModel.offerStatusName);
 		}
 
-
 		((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_offer_user)).setText(offerModel.userName);
 		((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_offer_type)).setText(offerModel.offerTypeName);
 		((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_start_date)).setText(offerModel.startDateString);
 		((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_end_date)).setText(offerModel.endDateString);
 		((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_note)).setText(offerModel.note);
 
-		if(WorkOfferModel.OFFER_TYPE_PAID_VACATION_ALL.equals(offerModel.offerType) ||
-				WorkOfferModel.OFFER_TYPE_PAID_VACATION_MORNING.equals(offerModel.offerType) ||
-				WorkOfferModel.OFFER_TYPE_PAID_VACATION_AFTERNOON.equals(offerModel.offerType) ||
-				WorkOfferModel.OFFER_TYPE_COMPENSATORY_HOLIDAY.equals(offerModel.offerType)){
+		if(WorkOfferModel.OFFER_TYPE_PAID_VACATION_ALL.equals(offerModel.offerType) || WorkOfferModel.OFFER_TYPE_PAID_VACATION_MORNING.equals(offerModel.offerType) || WorkOfferModel.OFFER_TYPE_PAID_VACATION_AFTERNOON.equals(offerModel.offerType) || WorkOfferModel.OFFER_TYPE_COMPENSATORY_HOLIDAY.equals(offerModel.offerType)){
 			binding.lnrSickAbsent.setVisibility(View.VISIBLE);
 			binding.txtSickAbsent.setText(offerModel.sickAbsent ? "Yes" : "No");
-		} else {
+		}else{
 			binding.lnrSickAbsent.setVisibility(View.INVISIBLE);
 		}
 
@@ -234,7 +230,7 @@ public class WorkOfferDetailFragment extends AbstractSwFragment{
 	}
 
 	protected void judgeEditPermission(){
-		if(SwConst.OFFER_CAN_EDIT_DELETE.equals(offerPermission) || SwConst.OFFER_CAN_ONLY_EDIT.equals(offerPermission)){
+		if(SwConst.OFFER_CAN_EDIT_DELETE.equals(offerPermission) || SwConst.OFFER_ONLY_DELETE.equals(offerPermission) || SwConst.OFFER_CAN_ONLY_EDIT.equals(offerPermission)){
 			imgEdit.setImageResource(R.drawable.sw_action_edit);
 			imgEdit.setVisibility(View.VISIBLE);
 			imgEdit.setOnClickListener(this);

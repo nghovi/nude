@@ -96,4 +96,11 @@
     <string name="FM_DR_002">Có %1$s lượt thích mới</string>
     <string name="FM_DR_003">Có %1$s bình luận mới</string>
     <string name="header_calendar_this_week">Tuần này</string>
+    <string name="fragment_kpi_1">Title1</string>
+    <string name="fragment_kpi_2">title2</string>
+    <string name="fragment_kpi_3">title3</string>
+    <string name="fragment_kpi_4">title4</string>
+    <string name="fragment_kpi_5">tittle5</string>
+    <string name="footer_itemkpi">KPI</string>
+    <string name="fragment_kpi_title">nyuryoku</string>
 </resources>

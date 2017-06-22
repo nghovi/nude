@@ -181,7 +181,7 @@ public class WorkOfferEditFragment extends AbstractSwFragment{
 		}
 
 		Button btnDelete = (Button)getView().findViewById(R.id.btn_fragment_offer_detail_delete);
-		if(SwConst.OFFER_CAN_EDIT_DELETE.equals(holder.permission)){
+		if(SwConst.OFFER_CAN_EDIT_DELETE.equals(holder.permission) || SwConst.OFFER_ONLY_DELETE.equals(holder.permission)){
 			btnDelete.setVisibility(View.VISIBLE);
 			btnDelete.setOnClickListener(this);
 		}else{

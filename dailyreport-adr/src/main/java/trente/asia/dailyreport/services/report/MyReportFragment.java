@@ -117,7 +117,6 @@ public class MyReportFragment extends AbstractDRFragment implements DRCalendarVi
 		drCalendarView.setOnReportModelSelectedListener(this);
 
 		lnrMonthlyGoal = (LinearLayout)getView().findViewById(R.id.lnr_id_monthly_goal);
-
 	}
 
 	public static void gotoReportDetailFragment(Activity activity, ReportModel reportModel){

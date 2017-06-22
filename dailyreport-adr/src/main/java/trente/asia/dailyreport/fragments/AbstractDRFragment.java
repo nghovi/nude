@@ -15,7 +15,7 @@ import trente.asia.android.define.CsConst;
 import trente.asia.dailyreport.BuildConfig;
 import trente.asia.dailyreport.R;
 import trente.asia.dailyreport.services.activities.ActivityFragment;
-import trente.asia.dailyreport.services.kpigraph.KPIMonthlyGoalGraphFragment;
+import trente.asia.dailyreport.services.kpi.KpiFragment;
 import trente.asia.dailyreport.services.other.OthersFragment;
 import trente.asia.dailyreport.services.report.MyReportFragment;
 import trente.asia.dailyreport.services.setting.DRSettingFragment;
@@ -58,11 +58,6 @@ public abstract class AbstractDRFragment extends WelfareFragment{
 	public abstract int getFragmentLayoutId();
 
 	/**
-	 * @return do we show back button at the header ?
-	 */
-	// public abstract boolean hasBackBtn();
-
-	/**
 	 * return 0 if we don't want to show footer
 	 *
 	 * @return view id of the footer item. E.g. lnr_view_common_footer_mypage
@@ -75,30 +70,6 @@ public abstract class AbstractDRFragment extends WelfareFragment{
 	// public abstract int getTitle();
 
 	public abstract void buildBodyLayout();
-
-	// // //////////////////////////////////* Fragment Header and Footer *///////////////////////
-	// public void buildTitle() {
-	// if (DRUtil.isNotEmpty(getString(getTitle()))) {
-	// TextView txtTitle = (TextView) getView().findViewById(R.id.txt_id_header_title);
-	// if (txtTitle != null) txtTitle.setText(getString(getTitle()));
-	// }
-	// }
-
-	// protected void buildBackBtn() {
-	// ImageView imgBack = (ImageView) getView().findViewById(R.id.img_id_header_left_icon);
-	// if (hasBackBtn() == true) {
-	// imgBack.setVisibility(View.VISIBLE);
-	// imgBack.setOnClickListener(new View.OnClickListener() {
-	//
-	// @Override
-	// public void onClick(View v) {
-	// onClickBackBtn();
-	// }
-	// });
-	// } else {
-	// imgBack.setVisibility(View.INVISIBLE);
-	// }
-	// }
 
 	@Override
 	protected void commonNotSuccess(JSONObject response){
@@ -127,11 +98,11 @@ public abstract class AbstractDRFragment extends WelfareFragment{
 					case R.id.lnr_view_common_footer_others:
 						onClickFooterOthersReport();
 						break;
-					case R.id.lnr_view_common_footer_KPI:
-						onClickFooterGraphKPI();
-						break;
 					case R.id.lnr_view_common_footer_activity:
 						onClickFooterActivities();
+						break;
+					case R.id.lnr_view_common_footer_kpi:
+						onClickFooterItemKpi();
 						break;
 					case R.id.lnr_view_common_footer_setting:
 						onClickFooterItemSetting();
@@ -144,8 +115,8 @@ public abstract class AbstractDRFragment extends WelfareFragment{
 
 			getView().findViewById(R.id.lnr_view_common_footer_myreport).setOnClickListener(listener);
 			getView().findViewById(R.id.lnr_view_common_footer_others).setOnClickListener(listener);
-			getView().findViewById(R.id.lnr_view_common_footer_KPI).setOnClickListener(listener);
 			getView().findViewById(R.id.lnr_view_common_footer_activity).setOnClickListener(listener);
+			getView().findViewById(R.id.lnr_view_common_footer_kpi).setOnClickListener(listener);
 			getView().findViewById(R.id.lnr_view_common_footer_setting).setOnClickListener(listener);
 			setSelectedFooterItem(footerItemId);
 
@@ -166,7 +137,7 @@ public abstract class AbstractDRFragment extends WelfareFragment{
 		case R.id.lnr_view_common_footer_others:
 			imgFooterItem.setImageResource(R.drawable.dr_footer_report_all);
 			break;
-		case R.id.lnr_view_common_footer_KPI:
+		case R.id.lnr_view_common_footer_kpi:
 			imgFooterItem.setImageResource(R.drawable.dr_footer_kpi);
 			break;
 		case R.id.lnr_view_common_footer_activity:
@@ -204,11 +175,11 @@ public abstract class AbstractDRFragment extends WelfareFragment{
 		}
 	}
 
-	public void onClickFooterGraphKPI(){
-		if(activeFooterItemId != R.id.lnr_view_common_footer_KPI){
-			activeFooterItemId = R.id.lnr_view_common_footer_KPI;
+	public void onClickFooterItemKpi(){
+		if(activeFooterItemId != R.id.lnr_view_common_footer_kpi){
+			activeFooterItemId = R.id.lnr_view_common_footer_kpi;
 			emptyBackStack();
-			gotoFragment(new KPIMonthlyGoalGraphFragment());
+			gotoFragment(new KpiFragment());
 		}
 	}
 
