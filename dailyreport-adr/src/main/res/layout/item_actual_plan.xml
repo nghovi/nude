@@ -4,7 +4,7 @@
 
 
     <TextView
-        android:id="@+id/txt_fragment_kpi_date"
+        android:id="@+id/txt_item_actual_plan_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/margin_16dp"
@@ -36,7 +36,7 @@
                 android:text="@string/fragment_kpi_1" />
 
             <TextView
-                android:id="@+id/txt_fragment_kpi_value_1"
+                android:id="@+id/txt_item_actual_plan_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="value" />
@@ -54,7 +54,7 @@
                 android:text="@string/fragment_kpi_5" />
 
             <trente.asia.android.view.ChiaseEditText
-                android:id="@+id/txt_fragment_kpi_value_5"
+                android:id="@+id/edt_item_actual_plan_real"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="value" />

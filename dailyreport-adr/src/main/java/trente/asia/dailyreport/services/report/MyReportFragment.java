@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
@@ -28,9 +29,8 @@ import asia.chiase.core.util.CCStringUtil;
 import trente.asia.dailyreport.DRConst;
 import trente.asia.dailyreport.R;
 import trente.asia.dailyreport.fragments.AbstractDRFragment;
-import trente.asia.dailyreport.services.report.model.GoalEntry;
+import trente.asia.dailyreport.services.kpi.ActualPlan;
 import trente.asia.dailyreport.services.report.model.Holiday;
-import trente.asia.dailyreport.services.report.model.Kpi;
 import trente.asia.dailyreport.services.report.model.ReportModel;
 import trente.asia.dailyreport.services.report.model.WorkingSymbolModel;
 import trente.asia.dailyreport.services.report.view.DRCalendarView;
@@ -41,13 +41,13 @@ import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.models.ApiObjectModel;
 import trente.asia.welfare.adr.models.UserModel;
-import trente.asia.welfare.adr.utils.WelfareUtil;
 
 /**
  * Created by viet on 2/15/2016.
  */
 public class MyReportFragment extends AbstractDRFragment implements DRCalendarView.OnReportModelSelectedListener{
 
+	private static final String	ACTUAL_PLAN_EDT_ID	= "edt_actual_plan_";
 	public static int			VIEW_AS_CALENDAR	= 1;
 	public static int			VIEW_AS_LIST		= 2;
 
@@ -59,8 +59,9 @@ public class MyReportFragment extends AbstractDRFragment implements DRCalendarVi
 	private List<ReportModel>	reports;
 	private List<Holiday>		holidays;
 	private TextView			txtDate;
-	private List<GoalEntry>		goalSummaries;
+	private List<ActualPlan>	actualPlanList;
 	private LinearLayout		lnrMonthlyGoal;
+	private LinearLayout		lnrKpiSection;
 	private LayoutInflater		inflater;
 
 	@Override
@@ -117,6 +118,7 @@ public class MyReportFragment extends AbstractDRFragment implements DRCalendarVi
 		drCalendarView.setOnReportModelSelectedListener(this);
 
 		lnrMonthlyGoal = (LinearLayout)getView().findViewById(R.id.lnr_id_monthly_goal);
+		lnrKpiSection = (LinearLayout)getView().findViewById(R.id.my_report_kpi_section);
 	}
 
 	public static void gotoReportDetailFragment(Activity activity, ReportModel reportModel){
@@ -129,10 +131,10 @@ public class MyReportFragment extends AbstractDRFragment implements DRCalendarVi
 		if(viewType == VIEW_AS_CALENDAR){
 			lstReports.setVisibility(View.GONE);
 			mScrCalendarView.setVisibility(View.VISIBLE);
-			if(goalSummaries.size() > 0) lnrMonthlyGoal.setVisibility(View.VISIBLE);
+			if(actualPlanList.size() > 0) lnrKpiSection.setVisibility(View.VISIBLE);
 		}else{
 			mScrCalendarView.setVisibility(View.GONE);
-			lnrMonthlyGoal.setVisibility(View.GONE);
+			lnrKpiSection.setVisibility(View.GONE);
 			lstReports.setVisibility(View.VISIBLE);
 		}
 	}
@@ -163,12 +165,12 @@ public class MyReportFragment extends AbstractDRFragment implements DRCalendarVi
 			appendWorkingSymbol(reports, workingSymbolModels);
 
 			holidays = CCJsonUtil.convertToModelList(response.optString("holidays"), Holiday.class);
-			goalSummaries = CCJsonUtil.convertToModelList(response.optString("goalSummaries"), GoalEntry.class);
+			actualPlanList = CCJsonUtil.convertToModelList(response.optString("actualPlanList"), ActualPlan.class);
 			appendHolidayInfo(reports, holidays);
 			updateHeader(prefAccUtil.getUserPref().userName);
 			buildCalendarView(reports);
 			buildListView(reports);
-			builGoalSummaries();
+			builActualPlans();
 		}
 	}
 
@@ -203,40 +205,26 @@ public class MyReportFragment extends AbstractDRFragment implements DRCalendarVi
 		return result;
 	}
 
-	private void builGoalSummaries(){
-		if(goalSummaries.size() > 0){
-			lnrMonthlyGoal.setVisibility(View.VISIBLE);
-			buildGoalEntries();
+	private void builActualPlans(){
+		if(!CCCollectionUtil.isEmpty(actualPlanList)){
+			lnrMonthlyGoal.removeAllViews();
+			lnrKpiSection.setVisibility(View.VISIBLE);
+			for(ActualPlan actualPlan : actualPlanList){
+				addActualPlan(actualPlan);
+			}
 		}else{
-			lnrMonthlyGoal.setVisibility(View.INVISIBLE);
+			lnrKpiSection.setVisibility(View.INVISIBLE);
 		}
 	}
 
-	private void buildGoalEntries(){
-		LinearLayout lnrMonthlyContainer = (LinearLayout)getView().findViewById(R.id.view_kpi_lnr_monthly);
-		lnrMonthlyContainer.removeAllViews();
-		for(GoalEntry goalEntry : goalSummaries){
-			addGoalEntry(goalEntry, lnrMonthlyContainer);
-		}
-	}
-
-	private void addGoalEntry(GoalEntry goalEntry, LinearLayout lnrConainer){
-		View itemView = inflater.inflate(R.layout.item_goal_entry_detail_myreport, null);
-		TextView txtItem = (TextView)itemView.findViewById(R.id.item_kpi_name);
-		TextView txtGoal = (TextView)itemView.findViewById(R.id.item_kpi_goal);
-		TextView txtNow = (TextView)itemView.findViewById(R.id.item_kpi_month_txt_plan);
-		TextView txtAchievement = (TextView)itemView.findViewById(R.id.item_kpi_achievement);
-
-		txtItem.setText(goalEntry.goalName);
-		if(Kpi.KPI_UNIT_TIME.equals(goalEntry.goalUnit)){
-			txtGoal.setText(goalEntry.goalValue);
-			txtNow.setText(goalEntry.actualSum);
-		}else{
-			txtGoal.setText(WelfareUtil.formatAmount(goalEntry.goalValue));
-			txtNow.setText(WelfareUtil.formatAmount(goalEntry.actualSum));
-		}
-		txtAchievement.setText(GoalEntry.getAchievementString(goalEntry));
-		lnrConainer.addView(itemView);
+	private void addActualPlan(ActualPlan actualPlan){
+		View cellView = inflater.inflate(R.layout.item_actual_plan, null);
+		TextView txtName = (TextView)cellView.findViewById(R.id.txt_item_actual_plan_name);
+		txtName.setText(actualPlan.name);
+		TextView txtValue = (TextView)cellView.findViewById(R.id.txt_item_actual_plan_value);
+		txtValue.setText(actualPlan.goal);
+		EditText edtReal = (EditText)cellView.findViewById(R.id.edt_item_actual_plan_real);
+		edtReal.setTag(ACTUAL_PLAN_EDT_ID + actualPlan.key);
 	}
 
 	/*
