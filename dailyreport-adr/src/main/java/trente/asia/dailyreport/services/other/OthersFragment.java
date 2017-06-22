@@ -289,7 +289,7 @@ public class OthersFragment extends AbstractDRFragment{
 						String workingSymbol = userWorkingSymbolMap.get(reportDateKey);
 						if(!CCStringUtil.isEmpty(workingSymbol)){
 							ImageView imgSymbol = (ImageView)cell.findViewById(R.id.item_other_img_status);
-							WfPicassoHelper.loadImage2(activity, BuildConfig.HOST, imgSymbol, reportModel.workingSymbol);
+							WfPicassoHelper.loadImage2(activity, BuildConfig.HOST, imgSymbol, workingSymbol);
 						}
 					}
 				}
