@@ -120,7 +120,7 @@
     <string name="sw_work_offer_action_approve">承認</string>
     <string name="sw_work_offer_action_reject">却下</string>
     <string name="sw_work_offer_list_filter">絞り込み: %1$s</string>
-    <string name="dlg_checkin_types_title">Change work type</string>
-    <string name="txt_dialog_checkin_types_guide">Choose check in type</string>
-    <string name="fragment_offer_edit_offer_user">Request user</string>
+    <string name="dlg_checkin_types_title">申請タイプの変更</string>
+    <string name="txt_dialog_checkin_types_guide">打刻区分の変更</string>
+    <string name="fragment_offer_edit_offer_user">申請者</string>
 </resources>
