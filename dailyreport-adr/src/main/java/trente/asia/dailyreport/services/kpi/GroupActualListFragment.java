@@ -16,6 +16,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import asia.chiase.core.util.CCFormatUtil;
+import asia.chiase.core.util.CCJsonUtil;
 import trente.asia.dailyreport.DRConst;
 import trente.asia.dailyreport.R;
 import trente.asia.dailyreport.fragments.AbstractDRFragment;
@@ -48,7 +49,7 @@ public class GroupActualListFragment extends AbstractDRFragment{
 
 	@Override
 	public void initData(){
-		// requestDailyReportSingle(calendarHeader.getSelectedDate());
+		requestKpiGroups();
 	}
 
 	@Override
@@ -77,6 +78,26 @@ public class GroupActualListFragment extends AbstractDRFragment{
 
 	}
 
+	private void requestKpiGroups(){
+		String dateStr = txtSelectedDate.getText().toString();
+		JSONObject jsonObject = new JSONObject();
+		try{
+			jsonObject.put("targetDate", dateStr);
+		}catch(JSONException ex){
+			ex.printStackTrace();
+		}
+		super.requestLoad(DRConst.API_KPI_GROUPS, jsonObject, true);
+	}
+
+	@Override
+	protected void successLoad(JSONObject response, String url){
+		if(getView() != null){
+			List<GroupKpi> groupKpiList = CCJsonUtil.convertToModelList(response.optString("groups"), GroupKpi.class);
+			adapter = new GroupActualListAdapter(getContext(), R.layout.item_group_actual, groupKpiList);
+			lstGroupActual.setAdapter(adapter);
+		}
+	}
+
 	private void onClickDateIcon(){
 		datePickerDialog.show();
 	}
@@ -95,27 +116,6 @@ public class GroupActualListFragment extends AbstractDRFragment{
 	protected void successUpdate(JSONObject response, String url){
 		if(getView() != null){
 
-		}
-	}
-
-	private void requestDailyReportSingle(Date date){
-		String monthStr = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_YYYY_MM, date);
-		UserModel userMe = prefAccUtil.getUserPref();
-		JSONObject jsonObject = new JSONObject();
-		try{
-			jsonObject.put("targetUserId", userMe.key);
-			jsonObject.put("targetDeptId", userMe.dept.key);
-			jsonObject.put("targetMonth", monthStr);
-		}catch(JSONException ex){
-			ex.printStackTrace();
-		}
-		super.requestLoad(DRConst.API_KPI_LIST, jsonObject, true);
-	}
-
-	@Override
-	protected void successLoad(JSONObject response, String url){
-		if(getView() != null){
-			List<GroupKpi> groupKpiList = new ArrayList<>();
 		}
 	}
 

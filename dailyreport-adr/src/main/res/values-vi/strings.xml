@@ -108,4 +108,6 @@
     <string name="fragment_group_actual_list_title">GroupActualList</string>
     <string name="fragment_group_actual_list">Group List</string>
     <string name="group_actual_list_goal">Group goal list</string>
+    <string name="fragment_group_actual_group_goal">Group goal</string>
+    <string name="fragmen_group_actual_needed_amount">Amount you need to reach the goal</string>
 </resources>

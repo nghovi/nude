@@ -2,7 +2,6 @@ package trente.asia.dailyreport.services.kpi;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import org.json.JSONException;
@@ -14,11 +13,14 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
+import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
+import asia.chiase.core.util.CCJsonUtil;
 import trente.asia.dailyreport.DRConst;
 import trente.asia.dailyreport.R;
 import trente.asia.dailyreport.fragments.AbstractDRFragment;
 import trente.asia.dailyreport.services.kpi.model.GroupKpi;
+import trente.asia.dailyreport.services.kpi.model.Personal;
 import trente.asia.dailyreport.view.DRGroupHeader;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
@@ -46,7 +48,7 @@ public class UserActualFragment extends AbstractDRFragment{
 
 	@Override
 	public void initData(){
-		// requestDailyReportSingle(calendarHeader.getSelectedDate());
+		requestPersonalGoal();
 	}
 
 	@Override
@@ -61,6 +63,7 @@ public class UserActualFragment extends AbstractDRFragment{
 			@Override
 			public void onDateSet(DatePicker view, int year, int month, int dayOfMonth){
 				String startDateStr = year + "/" + CCFormatUtil.formatZero(month + 1) + "/" + CCFormatUtil.formatZero(dayOfMonth);
+				requestPersonalGoal();
 				txtSelectedDate.setText(startDateStr);
 			}
 		}, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
@@ -120,27 +123,35 @@ public class UserActualFragment extends AbstractDRFragment{
 		}
 	}
 
-	private void requestDailyReportSingle(Date date){
-		String monthStr = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_YYYY_MM, date);
+	private void requestPersonalGoal(){
+		String dateStr = txtSelectedDate.getText().toString();
 		UserModel userMe = prefAccUtil.getUserPref();
 		JSONObject jsonObject = new JSONObject();
 		try{
-			jsonObject.put("targetUserId", userMe.key);
-			jsonObject.put("targetDeptId", userMe.dept.key);
-			jsonObject.put("targetMonth", monthStr);
+			jsonObject.put("targetGroupId", userMe.key);
+			jsonObject.put("targetDate", dateStr);
 		}catch(JSONException ex){
 			ex.printStackTrace();
 		}
-		super.requestLoad(DRConst.API_KPI_LIST, jsonObject, true);
+		super.requestLoad(DRConst.API_KPI_PERSONAL, jsonObject, true);
 	}
 
 	@Override
 	protected void successLoad(JSONObject response, String url){
 		if(getView() != null){
-			List<GroupKpi> groupKpiList = new ArrayList<>();
-			//// TODO: 6/22/17
-			// drGroupHeader setup;
+			List<GroupKpi> groupKpiList = CCJsonUtil.convertToModelList(response.optString("groups"), GroupKpi.class);
+			drGroupHeader.buildLayout(groupKpiList, 0);
+			Personal personal = CCJsonUtil.convertToModel(response.optString("personal"), Personal.class);
+			buildPersonalGoalInfo(personal);
 		}
+	}
+
+	private void buildPersonalGoalInfo(Personal personal){
+		String periodString = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, CCDateUtil.makeDateCustom(personal.startDate, WelfareConst.WF_DATE_TIME)) + " ~ " + CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, CCDateUtil.makeDateCustom(personal.endDate, WelfareConst.WF_DATE_TIME));
+		((TextView)getView().findViewById(R.id.txt_fragment_user_actual_period)).setText(periodString);
+		((TextView)getView().findViewById(R.id.txt_fragment_user_actual_goal)).setText(CCFormatUtil.formatAmount(personal.goal));
+		((TextView)getView().findViewById(R.id.txt_fragment_user_actual_total)).setText(CCFormatUtil.formatAmount(personal.todayActual));
+		((TextView)getView().findViewById(R.id.txt_fragment_user_actual_achievement_rate)).setText(CCFormatUtil.formatAmount(personal.achievementRate));
 	}
 
 	@Override

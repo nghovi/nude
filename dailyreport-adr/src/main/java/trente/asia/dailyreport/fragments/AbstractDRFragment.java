@@ -15,6 +15,7 @@ import trente.asia.android.define.CsConst;
 import trente.asia.dailyreport.BuildConfig;
 import trente.asia.dailyreport.R;
 import trente.asia.dailyreport.services.activities.ActivityFragment;
+import trente.asia.dailyreport.services.kpi.ActualPlanAddFragment;
 import trente.asia.dailyreport.services.kpi.UserActualFragment;
 import trente.asia.dailyreport.services.other.OthersFragment;
 import trente.asia.dailyreport.services.report.MyReportFragment;
@@ -98,8 +99,8 @@ public abstract class AbstractDRFragment extends WelfareFragment{
 					case R.id.lnr_view_common_footer_others:
 						onClickFooterOthersReport();
 						break;
-					case R.id.lnr_view_common_footer_activity:
-						onClickFooterActivities();
+					case R.id.lnr_view_common_footer_ap:
+						onClickFooterActionPlans();
 						break;
 					case R.id.lnr_view_common_footer_kpi:
 						onClickFooterItemKpi();
@@ -115,7 +116,7 @@ public abstract class AbstractDRFragment extends WelfareFragment{
 
 			getView().findViewById(R.id.lnr_view_common_footer_myreport).setOnClickListener(listener);
 			getView().findViewById(R.id.lnr_view_common_footer_others).setOnClickListener(listener);
-			getView().findViewById(R.id.lnr_view_common_footer_activity).setOnClickListener(listener);
+			getView().findViewById(R.id.lnr_view_common_footer_ap).setOnClickListener(listener);
 			getView().findViewById(R.id.lnr_view_common_footer_kpi).setOnClickListener(listener);
 			getView().findViewById(R.id.lnr_view_common_footer_setting).setOnClickListener(listener);
 			setSelectedFooterItem(footerItemId);
@@ -140,7 +141,7 @@ public abstract class AbstractDRFragment extends WelfareFragment{
 		case R.id.lnr_view_common_footer_kpi:
 			imgFooterItem.setImageResource(R.drawable.dr_footer_kpi);
 			break;
-		case R.id.lnr_view_common_footer_activity:
+		case R.id.lnr_view_common_footer_ap:
 			imgFooterItem.setImageResource(R.drawable.dr_footer_activity);
 			break;
 		case R.id.lnr_view_common_footer_setting:
@@ -183,11 +184,11 @@ public abstract class AbstractDRFragment extends WelfareFragment{
 		}
 	}
 
-	public void onClickFooterActivities(){
-		if(activeFooterItemId != R.id.lnr_view_common_footer_activity){
-			activeFooterItemId = R.id.lnr_view_common_footer_activity;
+	public void onClickFooterActionPlans(){
+		if(activeFooterItemId != R.id.lnr_view_common_footer_ap){
+			activeFooterItemId = R.id.lnr_view_common_footer_ap;
 			emptyBackStack();
-			gotoFragment(new ActivityFragment());
+			gotoFragment(new ActualPlanAddFragment());
 		}
 	}
 

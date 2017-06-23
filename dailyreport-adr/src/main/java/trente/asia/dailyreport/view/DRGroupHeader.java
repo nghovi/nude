@@ -18,10 +18,10 @@ import trente.asia.dailyreport.services.kpi.model.GroupKpi;
  */
 public class DRGroupHeader extends LinearLayout{
 
-	private GroupKpi		selectedGroup;
-	private int				currentIdx	= 0;
-	private List<GroupKpi>	groups;
-	private OnGroupHeaderActionsListener onGroupHeaderActionsListener;
+	private GroupKpi						selectedGroup;
+	private int								currentIdx	= 0;
+	private List<GroupKpi>					groups;
+	private OnGroupHeaderActionsListener	onGroupHeaderActionsListener;
 
 	public DRGroupHeader(Context context){
 		super(context);
@@ -43,12 +43,38 @@ public class DRGroupHeader extends LinearLayout{
 		return selectedGroup;
 	}
 
-	private ImageView						btnNext;
-	private ImageView						btnBack;
-	private Button							btnNowGroup;
+	private ImageView	btnNext;
+	private ImageView	btnBack;
+	private Button		btnNowGroup;
 
-	public void setOnGroupHeaderActionListener(OnGroupHeaderActionsListener onGroupHeaderActionsListener) {
-		this.onGroupHeaderActionsListener = onGroupHeaderActionsListener;
+	public void setOnGroupHeaderActionListener(OnGroupHeaderActionsListener listener){
+		this.onGroupHeaderActionsListener = listener;
+		btnNext = (ImageView)findViewById(R.id.btn_group_header_next);
+		btnBack = (ImageView)findViewById(R.id.btn_group_header_back);
+
+		btnNowGroup = (Button)findViewById(R.id.img_calendar_header_this_group);
+		btnNowGroup.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View view){
+				onGroupHeaderActionsListener.onNowGroupClicked(selectedGroup);
+			}
+		});
+
+		btnNext.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v){
+				selectOtherGroup(true);
+			}
+		});
+		btnBack.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v){
+				selectOtherGroup(false);
+			}
+		});
 	}
 
 	public interface OnGroupHeaderActionsListener{
@@ -65,35 +91,9 @@ public class DRGroupHeader extends LinearLayout{
 		this.groups = groups;
 		this.currentIdx = selectedIdx;
 		this.selectedGroup = this.groups.get(this.currentIdx);
-		btnNext = (ImageView)findViewById(R.id.btn_group_header_next);
-		btnBack = (ImageView)findViewById(R.id.btn_group_header_back);
-
-		btnNowGroup = (Button)findViewById(R.id.img_calendar_header_this_group);
-		btnNowGroup.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View view){
-				onGroupHeaderActionsListener.onNowGroupClicked(selectedGroup);
-			}
-		});
-
 		btnNowGroup.setText(this.selectedGroup.name);
 
-		btnNext.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v){
-				selectOtherGroup(true);
-			}
-		});
-		btnBack.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v){
-				selectOtherGroup(false);
-			}
-		});
-		updateDirectingButtonStatusByDate();
+		updateDirectingButtonStatus();
 
 	}
 
@@ -105,11 +105,11 @@ public class DRGroupHeader extends LinearLayout{
 		}
 
 		selectedGroup = groups.get(currentIdx);
-		updateDirectingButtonStatusByDate();
+		updateDirectingButtonStatus();
 		onGroupHeaderActionsListener.onGroupChange(selectedGroup);
 	}
 
-	private void updateDirectingButtonStatusByDate(){
+	private void updateDirectingButtonStatus(){
 		if(currentIdx == groups.size() - 1){
 			btnNext.setEnabled(false);
 		}else{

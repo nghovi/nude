@@ -1,9 +1,6 @@
 package trente.asia.dailyreport.services.kpi;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,12 +12,11 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 
 import asia.chiase.core.util.CCFormatUtil;
+import asia.chiase.core.util.CCJsonUtil;
 import trente.asia.dailyreport.DRConst;
 import trente.asia.dailyreport.R;
 import trente.asia.dailyreport.fragments.AbstractDRFragment;
 import trente.asia.dailyreport.services.kpi.model.GroupKpi;
-import trente.asia.dailyreport.view.DRGroupHeader;
-import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.models.UserModel;
 
@@ -45,7 +41,7 @@ public class GroupActualFragment extends AbstractDRFragment{
 
 	@Override
 	public void initData(){
-		// requestDailyReportSingle(calendarHeader.getSelectedDate());
+		requestKpiGroup();
 	}
 
 	@Override
@@ -81,6 +77,27 @@ public class GroupActualFragment extends AbstractDRFragment{
 
 	}
 
+	private void requestKpiGroup(){
+		String dateStr = txtSelectedDate.getText().toString();
+		UserModel userMe = prefAccUtil.getUserPref();
+		JSONObject jsonObject = new JSONObject();
+		try{
+			jsonObject.put("targetGroupId", userMe.key);
+			jsonObject.put("targetDate", dateStr);
+		}catch(JSONException ex){
+			ex.printStackTrace();
+		}
+		super.requestLoad(DRConst.API_KPI_GROUP, jsonObject, true);
+	}
+
+	@Override
+	protected void successLoad(JSONObject response, String url){
+		if(getView() != null){
+			GroupKpi groupKpi = CCJsonUtil.convertToModel(response.optString("groupKpi"), GroupKpi.class);
+
+		}
+	}
+
 	private void onClickDateIcon(){
 		datePickerDialog.show();
 	}
@@ -94,27 +111,6 @@ public class GroupActualFragment extends AbstractDRFragment{
 	protected void successUpdate(JSONObject response, String url){
 		if(getView() != null){
 
-		}
-	}
-
-	private void requestDailyReportSingle(Date date){
-		String monthStr = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_YYYY_MM, date);
-		UserModel userMe = prefAccUtil.getUserPref();
-		JSONObject jsonObject = new JSONObject();
-		try{
-			jsonObject.put("targetUserId", userMe.key);
-			jsonObject.put("targetDeptId", userMe.dept.key);
-			jsonObject.put("targetMonth", monthStr);
-		}catch(JSONException ex){
-			ex.printStackTrace();
-		}
-		super.requestLoad(DRConst.API_KPI_LIST, jsonObject, true);
-	}
-
-	@Override
-	protected void successLoad(JSONObject response, String url){
-		if(getView() != null){
-			List<GroupKpi> groupKpiList = new ArrayList<>();
 		}
 	}
 

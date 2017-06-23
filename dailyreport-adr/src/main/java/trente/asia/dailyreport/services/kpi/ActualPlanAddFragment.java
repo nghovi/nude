@@ -74,11 +74,12 @@ public class ActualPlanAddFragment extends AbstractDRFragment implements DRCalen
 
 	@Override
 	public int getFooterItemId(){
-		return R.id.lnr_view_common_footer_kpi;
+		return R.id.lnr_view_common_footer_ap;
 	}
 
 	@Override
 	public void initData(){
+
 	}
 
 	@Override
@@ -107,18 +108,6 @@ public class ActualPlanAddFragment extends AbstractDRFragment implements DRCalen
 		((WelfareActivity)activity).addFragment(reportDetailFragment);
 	}
 
-	private void switchView(int viewType){
-		if(viewType == VIEW_AS_CALENDAR){
-			lstReports.setVisibility(View.GONE);
-			mScrCalendarView.setVisibility(View.VISIBLE);
-			if(actualPlanList.size() > 0) lnrKpiSection.setVisibility(View.VISIBLE);
-		}else{
-			mScrCalendarView.setVisibility(View.GONE);
-			lnrKpiSection.setVisibility(View.GONE);
-			lstReports.setVisibility(View.VISIBLE);
-		}
-	}
-
 	private void requestDailyReportSingle(Date date){
 		String monthStr = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_YYYY_MM, date);
 		UserModel userMe = prefAccUtil.getUserPref();
@@ -142,7 +131,6 @@ public class ActualPlanAddFragment extends AbstractDRFragment implements DRCalen
 			WorkingSymbolModel workingSymbolModel = CCJsonUtil.convertToModel(response.optString("working"), WorkingSymbolModel.class);
 			List<WorkingSymbolModel> workingSymbolModels = new ArrayList<>();
 			workingSymbolModels.add(workingSymbolModel);
-			appendWorkingSymbol(reports, workingSymbolModels);
 
 			holidays = CCJsonUtil.convertToModelList(response.optString("holidays"), Holiday.class);
 			actualPlanList = CCJsonUtil.convertToModelList(response.optString("actualPlanList"), ActualPlan.class);
@@ -154,36 +142,6 @@ public class ActualPlanAddFragment extends AbstractDRFragment implements DRCalen
 		}
 	}
 
-	public static void appendWorkingSymbol(List<ReportModel> reports, List<WorkingSymbolModel> workingSymbolModels){
-		Map<String, Map<String, String>> workingSymbolMap = buildWorkingSymbolMap(workingSymbolModels);
-		for(ReportModel reportModel : reports){
-			String reportUserId = reportModel.reportUser != null ? reportModel.reportUser.key : reportModel.loginUserId;
-			Map<String, String> userWorkingSymbolMap = workingSymbolMap.get(reportUserId);
-			if(userWorkingSymbolMap != null){
-				String reportDateKey = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_CODE, CCDateUtil.makeDateCustom(reportModel.reportDate, WelfareConst.WF_DATE_TIME));
-				reportModel.workingSymbol = userWorkingSymbolMap.get(reportDateKey);
-			}
-		}
-	}
-
-	public static Map<String, Map<String, String>> buildWorkingSymbolMap(List<WorkingSymbolModel> workingSymbolModels){
-		Map<String, Map<String, String>> result = new HashMap<>();
-		if(!CCCollectionUtil.isEmpty(workingSymbolModels)){
-			for(WorkingSymbolModel workingSymbolModel : workingSymbolModels){
-				if(workingSymbolModel != null && !CCCollectionUtil.isEmpty(workingSymbolModel.symbols)){
-					Map<String, String> dateSymbolMap = result.get(workingSymbolModel.userId);
-					if(dateSymbolMap == null){
-						dateSymbolMap = new HashMap<>();
-					}
-					for(ApiObjectModel apiObjectModel : workingSymbolModel.symbols){
-						dateSymbolMap.put(apiObjectModel.key, apiObjectModel.value);
-					}
-					result.put(workingSymbolModel.userId, dateSymbolMap);
-				}
-			}
-		}
-		return result;
-	}
 
 	private void builActualPlans(){
 		if(!CCCollectionUtil.isEmpty(actualPlanList)){

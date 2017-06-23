@@ -41,119 +41,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/margin_16dp"
-            android:text="2017/06/21"
+            android:text="Group AAAA"
             android:textColor="@color/chiase_black" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_16dp"
-            android:layout_marginRight="@dimen/margin_16dp"
-            android:layout_marginTop="@dimen/margin_16dp"
-            android:background="@drawable/dr_background_gray_border_padding"
-
-            android:orientation="vertical"
-            android:padding="@dimen/margin_16dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/fragment_kpi_1" />
-
-                <TextView
-                    android:id="@+id/txt_fragment_kpi_value_1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="value" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_10dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/fragment_kpi_2" />
-
-                <TextView
-                    android:id="@+id/txt_fragment_kpi_value_2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="value" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_10dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/fragment_kpi_3" />
-
-                <TextView
-                    android:id="@+id/txt_fragment_kpi_value_3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="value" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_10dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/fragment_kpi_4" />
-
-                <TextView
-                    android:id="@+id/txt_fragment_kpi_value_4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="value" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_10dp">
-
-                <TextView
-                    android:layout_width="@dimen/margin_120dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/fragment_kpi_5" />
-
-                <trente.asia.android.view.ChiaseEditText
-                    android:id="@+id/txt_fragment_kpi_value_5"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="value" />
-
-            </LinearLayout>
-        </LinearLayout>
+        <include layout="@layout/group_actual_info"/>
 
         <Button
             android:id="@+id/btn_fragment_group_actual_list"
             style="@style/wl_common_button_small"
             android:layout_marginTop="@dimen/margin_16dp"
-            android:text="@string/fragment_group_actual_list"
+            android:text="@string/group_actual_list_goal"
             android:textColor="@color/chiase_white"
             android:textSize="12sp" />
 

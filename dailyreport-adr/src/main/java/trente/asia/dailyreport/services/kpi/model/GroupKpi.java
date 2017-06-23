@@ -6,6 +6,11 @@ package trente.asia.dailyreport.services.kpi.model;
 
 public class GroupKpi{
 
-	public String	key;
 	public String	name;
+	public String	goal;
+	public String	startDate;
+	public String	endDate;
+	public String	kpiMembers;
+	public String	achievement;
+	public String	achievementRate;
 }

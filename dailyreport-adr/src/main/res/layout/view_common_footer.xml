@@ -60,30 +60,6 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/lnr_view_common_footer_activity"
-            style="@style/cs_common_wrap"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <ImageView
-                style="@style/cs_common_wrap"
-                android:alpha="0.5"
-                android:src="@drawable/dr_footer_activity"
-                android:layout_centerInParent="true"/>
-
-            <TextView
-                style="@style/dr_text_footer_item"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:paddingTop="@dimen/margin_30dp"
-                android:text="@string/footer_item3"
-                android:textColor="@color/core_gray"
-                android:layout_centerInParent="true"/>
-        </RelativeLayout>
-
-        <RelativeLayout
             android:id="@+id/lnr_view_common_footer_kpi"
             style="@style/cs_common_wrap"
             android:layout_weight="1"
@@ -104,6 +80,30 @@
                 android:paddingTop="@dimen/margin_30dp"
                 android:text="@string/footer_itemkpi"
                 android:textColor="@color/core_gray"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/lnr_view_common_footer_ap"
+            style="@style/cs_common_wrap"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                style="@style/cs_common_wrap"
+                android:alpha="0.5"
+                android:src="@drawable/dr_footer_activity"
+                android:layout_centerInParent="true"/>
+
+            <TextView
+                style="@style/dr_text_footer_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingTop="@dimen/margin_30dp"
+                android:text="@string/footer_item3"
+                android:textColor="@color/core_gray"
+                android:layout_centerInParent="true"/>
         </RelativeLayout>
 
         <RelativeLayout

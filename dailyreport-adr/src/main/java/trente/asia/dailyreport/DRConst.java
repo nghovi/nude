@@ -24,4 +24,8 @@ public class DRConst{
 	public static final String	API_REPORT_ACTIVITY				= "/api/report/activity";
 	public static final String	API_KPI_UPDATE					= "/api/report-kpi/update";
 	public static final String	API_KPI_LIST					= "/api/report-kpi/list";
+	public static final String	API_KPI_PERSONAL				= "/api/report/kpi/perosnal";
+
+	public static final String	API_KPI_GROUP					= "/api/report/kpi/group";
+	public static final String	API_KPI_GROUPS					= "api/report/kpi/groups";
 }
