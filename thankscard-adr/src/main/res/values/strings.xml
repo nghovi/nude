@@ -128,4 +128,6 @@
     <string name="tc_contact_us_content_title">Content</string>
     <string name="tc_contact_us_service_title">Service name</string>
     <string name="tc_contact_us_select_item">Select</string>
+    <string name="fragment_mypage_rank_next_post">Next post rank: %1$s</string>
+    <string name="fragment_mypage_rank_next_receive">Next receive rank: %1$s</string>
 </resources>
