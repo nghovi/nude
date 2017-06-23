@@ -114,11 +114,11 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 	}
 
 	protected void loadScheduleList(){
-		if(pageSharingHolder.isLoadingSchedules == false){
-			pageSharingHolder.isLoadingSchedules = true;
-			JSONObject jsonObject = prepareJsonObject();
-			requestLoad(ClConst.API_SCHEDULE_LIST, jsonObject, false);
-		}
+		// if(pageSharingHolder.selectedPagePosition != pagePosition || (pageSharingHolder.selectedPagePosition ={
+		// pageSharingHolder.isLoadingSchedules = true;
+		JSONObject jsonObject = prepareJsonObject();
+		requestLoad(ClConst.API_SCHEDULE_LIST, jsonObject, false);
+		// }
 	}
 
 	protected JSONObject prepareJsonObject(){
