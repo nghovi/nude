@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,7 +79,9 @@ public class RankingListAdapter extends ArrayAdapter<RankModel>{
 			holder.txtTitle.setText(model.title);
 		}else{
 			if(myself.key.equals(model.userId)){
-				convertView.setBackgroundColor(mContext.getResources().getColor(R.color.wf_login_background_color));
+				convertView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.wf_login_background_color));
+			}else{
+				convertView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.chiase_white));
 			}
 			holder.imgMedal.setVisibility(View.VISIBLE);
 			holder.txtRanking.setVisibility(View.GONE);
@@ -101,9 +104,9 @@ public class RankingListAdapter extends ArrayAdapter<RankModel>{
 		return convertView;
 	}
 
-    @Override
-    public boolean isEnabled(int position){
-        RankModel model = getItem(position);
-        return !(model.isTitle || CCStringUtil.isEmpty(model.userId) || CCConst.NONE.equals(model.userId));
-    }
+	@Override
+	public boolean isEnabled(int position){
+		RankModel model = getItem(position);
+		return !(model.isTitle || CCStringUtil.isEmpty(model.userId) || CCConst.NONE.equals(model.userId));
+	}
 }
