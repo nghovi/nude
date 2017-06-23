@@ -7,7 +7,6 @@
     <LinearLayout
         android:id="@+id/lnr_container"
         style="@style/cs_common_match_wrap"
-        android:background="@color/wf_login_background_color"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingBottom="@dimen/margin_4dp"
