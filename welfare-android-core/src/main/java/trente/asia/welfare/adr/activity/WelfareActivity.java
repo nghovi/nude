@@ -54,7 +54,6 @@ public class WelfareActivity extends ChiaseActivity{
 	@Override
 	public void onBackPressed(){
 		if(onDeviceBackButtonClickListener != null){
-            Log.e("WelfareActivity", "onBackPressed");
 			onDeviceBackButtonClickListener.onClickDeviceBackButton();
 		}else if(getSupportFragmentManager().getBackStackEntryCount() <= 1){
 			setDoubleBackPressedToFinish();

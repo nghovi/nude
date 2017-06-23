@@ -29,7 +29,8 @@
             android:name="trente.asia.addresscard.commons.activities.AddressCardActivity"
             android:windowSoftInputMode="adjustUnspecified"/>
         <activity android:name=".commons.activities.CameraPhotoPreviewAccountActivity"/>
-        <activity android:name=".commons.activities.CameraActivity"/>
+        <activity android:name=".commons.activities.CameraActivity"
+            android:theme="@style/ThemeNoActionBar"/>
     </application>
 
 </manifest>

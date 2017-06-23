@@ -26,7 +26,7 @@
     <color name="title_background">#c2c2c2</color>
     <color name="transparent">#00000000</color>
 
-    <color name="ac_button_pressed_color">#e6f988dc</color>
+    <color name="ac_button_pressed_color">#98848484</color>
     <color name="ac_common_text_color_title">#818181</color>
     <color name="ac_common_text_color_body">#000000</color>
 

@@ -600,7 +600,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 					autoroadCd = response.optString("autoroadCd");
 					isSuccessLoad = true;
 				}
-			}else if(MsConst.API_MESSAGE_LATEST.equals(url)){
+			} else if (MsConst.API_MESSAGE_LATEST.equals(url)){
 				List<MessageContentModel> lstMessage = LoganSquare.parseList(response.optString("contents"), MessageContentModel.class);
 				if(!CCCollectionUtil.isEmpty(lstMessage)){
 					MessageContentModel firstMessage = lstMessage.get(0);

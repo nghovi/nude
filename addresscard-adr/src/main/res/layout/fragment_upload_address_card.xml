@@ -207,7 +207,7 @@
                             style="@style/ac_edt_no_underbar_no_enter_body_text"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="tanaka-takayuki@trente.asia"
+                            android:text="tanaka_takayuki@trente.asia"
                             custom:mName="cardEmail" />
                     </LinearLayout>
 
@@ -226,6 +226,7 @@
                             android:text="@string/ac_note" />
 
                         <trente.asia.android.view.ChiaseEditText
+                            android:id="@+id/edt_note"
                             style="@style/ac_body_text"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"

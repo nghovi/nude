@@ -263,12 +263,10 @@ public abstract class WelfareFragment extends ChiaseFragment implements WelfareA
 
 	@Override
 	public void onClickDeviceBackButton(){
-		Log.e("WelfareFragment", "onClickDeviceBackButton");
 		onClickBackBtn();
 	}
 
 	protected void onClickBackBtn(){
-		Log.e("WelfareFragment", "onClickBackBtn");
 		if(getFragmentManager().getBackStackEntryCount() <= 1){
 			((WelfareActivity)activity).setDoubleBackPressedToFinish();
 		}else{
