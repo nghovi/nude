@@ -77,9 +77,6 @@ public class RankingListAdapter extends ArrayAdapter<RankModel>{
 		if(model.isTitle){
 			holder.txtTitle.setText(model.title);
 		}else{
-			if(myself.key.equals(model.userId)){
-				convertView.setBackgroundColor(mContext.getResources().getColor(R.color.wf_login_background_color));
-			}
 			holder.imgMedal.setVisibility(View.VISIBLE);
 			holder.txtRanking.setVisibility(View.GONE);
 			holder.txtUserName.setText(model.userName);
@@ -101,9 +98,9 @@ public class RankingListAdapter extends ArrayAdapter<RankModel>{
 		return convertView;
 	}
 
-    @Override
-    public boolean isEnabled(int position){
-        RankModel model = getItem(position);
-        return !(model.isTitle || CCStringUtil.isEmpty(model.userId) || CCConst.NONE.equals(model.userId));
-    }
+	@Override
+	public boolean isEnabled(int position){
+		RankModel model = getItem(position);
+		return !(model.isTitle || CCStringUtil.isEmpty(model.userId) || CCConst.NONE.equals(model.userId));
+	}
 }
