@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.HorizontalScrollView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -287,9 +288,8 @@ public class OthersFragment extends AbstractDRFragment{
 						String reportDateKey = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_CODE, date);
 						String workingSymbol = userWorkingSymbolMap.get(reportDateKey);
 						if(!CCStringUtil.isEmpty(workingSymbol)){
-							TextView txtWorkOfferInfo = (TextView)cell.findViewById(R.id.item_calendar_txt_work_offer_info);
-							txtWorkOfferInfo.setVisibility(View.VISIBLE);
-							txtWorkOfferInfo.setText(workingSymbol);
+							ImageView imgSymbol = (ImageView)cell.findViewById(R.id.item_other_img_status);
+							WfPicassoHelper.loadImage2(activity, BuildConfig.HOST, imgSymbol, workingSymbol);
 						}
 					}
 				}

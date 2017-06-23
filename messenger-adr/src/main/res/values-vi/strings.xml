@@ -34,5 +34,7 @@
     <string name="FM_MS_001">%1$s: Có tin nhắn mới</string>
     <string name="FM_MS_002">%1$s: Có bình luận mới</string>
 
+    <string name="msg_no_internet_connection">No internet connection</string>
+
     <string name="msg_common_error_ms002">This file is deleted.</string>
 </resources>
