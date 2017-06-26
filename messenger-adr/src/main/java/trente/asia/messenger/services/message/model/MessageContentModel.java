@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import asia.chiase.core.util.CCCollectionUtil;
+import io.realm.annotations.Ignore;
+import io.realm.annotations.PrimaryKey;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.models.BitmapModel;
 import trente.asia.welfare.adr.models.CommentModel;
@@ -16,9 +18,10 @@ import trente.asia.welfare.adr.models.UserModel;
  */
 @com.bluelinelabs.logansquare.annotation.JsonObject(fieldDetectionPolicy = com.bluelinelabs.logansquare.annotation.JsonObject.FieldDetectionPolicy.NONPRIVATE_FIELDS)
 public class MessageContentModel extends BitmapModel{
-
+	@PrimaryKey
 	public String				key;
 	public String				boardId;
+	@Ignore
 	public UserModel			messageSender;
 	public String				messageType;
 	public String				messageDate;
@@ -28,19 +31,27 @@ public class MessageContentModel extends BitmapModel{
 	public String				messageUrlThumbnail;
 	public String				messageOriginal;
 
+	@Ignore
 	public FileModel			attachment;
+	@Ignore
 	public FileModel			thumbnailAttachment;
+	@Ignore
 	public List<UserModel>		checks;
 	public String				gpsLongtitude;
 	public String				gpsLatitude;
 
+	@Ignore
 	public List<LikeModel>		likes;
+	@Ignore
 	public List<CommentModel>	comments;
+	@Ignore
 	public List<UserModel>		targets;
 	// public boolean isEmotion = false;
 	// public int sequence;
 
+	@Ignore
 	public Integer				checkCount;
+	@Ignore
 	public List<UserModel>		checkList;
 	public boolean				isChanged	= false;
 

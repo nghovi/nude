@@ -1,5 +1,8 @@
 package trente.asia.android.util;
 
+import android.content.Context;
+import android.os.AsyncTask;
+
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -8,9 +11,6 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
-
-import android.content.Context;
-import android.os.AsyncTask;
 
 /**
  * DownloadFileManager
@@ -97,7 +97,6 @@ public class DownloadFileManager{
 			protected void onPreExecute(){
 				super.onPreExecute();
 				if(pbListener != null){
-
 					pbListener.onStart();
 				}
 			}
