@@ -7,7 +7,6 @@ import android.graphics.Bitmap;
  *
  * @author TrungND
  */
-
 public class BitmapModel {
 	public Bitmap	bitmap;
 	public boolean	started	= false;

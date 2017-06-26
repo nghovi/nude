@@ -173,14 +173,14 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 			}else if(WelfareConst.ITEM_FILE_TYPE_FILE.equals(contentModel.messageType)){
 				viewHolder.txtFileName.setText(contentModel.attachment.fileName);
 			}else if(WelfareConst.ITEM_FILE_TYPE_PHOTO.equals(contentModel.messageType) || WelfareConst.ITEM_FILE_TYPE_MOVIE.equals(contentModel.messageType)){
-				if(contentModel.bitmap != null){
-					viewHolder.imgViewContent.setImageBitmap(contentModel.bitmap);
+				if(contentModel.bitmapModel.bitmap != null){
+					viewHolder.imgViewContent.setImageBitmap(contentModel.bitmapModel.bitmap);
 				}else{
 					viewHolder.imgViewContent.setImageBitmap(null);
 					if(contentModel.thumbnailAttachment != null && !CCStringUtil.isEmpty(contentModel.thumbnailAttachment.fileUrl)){
-						if(!contentModel.started){
+						if(!contentModel.bitmapModel.started){
 							String fullUrl = BuildConfig.HOST + contentModel.thumbnailAttachment.fileUrl;
-							WfPicassoHelper.loadImage(mContext, fullUrl, viewHolder.imgViewContent, viewHolder.pgrLoading, contentModel);
+							WfPicassoHelper.loadImage(mContext, fullUrl, viewHolder.imgViewContent, viewHolder.pgrLoading, contentModel.bitmapModel);
 						}
 					}
 				}

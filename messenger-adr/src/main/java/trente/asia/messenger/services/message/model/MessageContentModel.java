@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import asia.chiase.core.util.CCCollectionUtil;
+import io.realm.RealmModel;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.RealmClass;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.models.BitmapModel;
 import trente.asia.welfare.adr.models.CommentModel;
@@ -17,7 +19,9 @@ import trente.asia.welfare.adr.models.UserModel;
  * Created by Huy-nq on 7/12/2016.
  */
 @com.bluelinelabs.logansquare.annotation.JsonObject(fieldDetectionPolicy = com.bluelinelabs.logansquare.annotation.JsonObject.FieldDetectionPolicy.NONPRIVATE_FIELDS)
-public class MessageContentModel extends BitmapModel{
+@RealmClass
+public class MessageContentModel implements RealmModel{
+
 	@PrimaryKey
 	public String				key;
 	public String				boardId;
@@ -54,6 +58,8 @@ public class MessageContentModel extends BitmapModel{
 	@Ignore
 	public List<UserModel>		checkList;
 	public boolean				isChanged	= false;
+	@Ignore
+	public BitmapModel			bitmapModel = new BitmapModel();
 
 	public MessageContentModel(){
 	}
