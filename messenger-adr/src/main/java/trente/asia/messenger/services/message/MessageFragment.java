@@ -581,6 +581,13 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 			if(MsConst.API_MESSAGE_BOARD.equals(url)){
 
 				List<MessageContentModel> lstMessage = LoganSquare.parseList(response.optString("contents"), MessageContentModel.class);
+//				mRealm.beginTransaction();
+//				for (MessageContentModel message : lstMessage) {
+//					mRealm.copyToRealmOrUpdate(message);
+//				}
+//				mRealm.commitTransaction();
+//				RealmResults<MessageContentModel> messagesFromRealm = mRealm.where(MessageContentModel.class).findAll();
+//				log("messagesFromRealm = " + messagesFromRealm.size());
 				if(!CCCollectionUtil.isEmpty(lstMessage)){
 					MessageContentModel firstMessage = lstMessage.get(0);
 					if(!CCStringUtil.isEmpty(activeBoardId) && activeBoardId.equals(firstMessage.boardId)){

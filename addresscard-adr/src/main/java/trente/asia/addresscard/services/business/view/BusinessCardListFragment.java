@@ -1,14 +1,15 @@
 package trente.asia.addresscard.services.business.view;
 
 import android.databinding.DataBindingUtil;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import trente.asia.addresscard.commons.defines.ACConst;
 import trente.asia.addresscard.R;
+import trente.asia.addresscard.commons.defines.ACConst;
 import trente.asia.addresscard.commons.fragments.AddressCardListFragment;
 import trente.asia.addresscard.databinding.FragmentBusinessCardsBinding;
 import trente.asia.addresscard.services.business.model.AddressCardModel;

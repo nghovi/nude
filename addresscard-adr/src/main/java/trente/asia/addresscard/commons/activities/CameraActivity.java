@@ -6,6 +6,7 @@ import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
@@ -51,22 +52,6 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
 
 	int								width, height;
 
-	private BaseLoaderCallback		mLoaderCallback	= new BaseLoaderCallback(this) {
-
-														@Override
-														public void onManagerConnected(int status){
-
-															switch(status){
-															case LoaderCallbackInterface.SUCCESS:
-																mOpenCvCameraView.enableView();
-																break;
-															default:
-																super.onManagerConnected(status);
-																break;
-															}
-														}
-													};
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
@@ -83,13 +68,43 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
 
 			@Override
 			public void onClick(View v){
-				 new TakeImageTask().execute();
+				new TakeImageTask().execute();
 			}
 		});
 
 		binding.btnCancel.setOnClickListener(this);
 		binding.btnFlash.setOnClickListener(this);
 	}
+
+	@Override
+	protected void onResume(){
+		super.onResume();
+		startCameraPreview();
+	}
+
+	private void startCameraPreview(){
+		if(!OpenCVLoader.initDebug()){
+			OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_0_0, this, mLoaderCallback);
+		}else{
+			mLoaderCallback.onManagerConnected(LoaderCallbackInterface.SUCCESS);
+		}
+	}
+
+	private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
+
+		@Override
+		public void onManagerConnected(int status){
+
+			switch(status){
+			case LoaderCallbackInterface.SUCCESS:
+				mOpenCvCameraView.enableView();
+				break;
+			default:
+				super.onManagerConnected(status);
+				break;
+			}
+		}
+	};
 
 	@Override
 	protected void onPause(){
@@ -101,20 +116,6 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
 		if(mOpenCvCameraView != null){
 			mOpenCvCameraView.disableView();
 		}
-	}
-
-	private void startCameraPreview(){
-		if(!OpenCVLoader.initDebug()){
-			OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_0_0, this, mLoaderCallback);
-		}else{
-			mLoaderCallback.onManagerConnected(LoaderCallbackInterface.SUCCESS);
-		}
-	}
-
-	@Override
-	protected void onResume(){
-		super.onResume();
-		startCameraPreview();
 	}
 
 	@Override
@@ -142,7 +143,11 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
 		mRgba = inputFrame.rgba();
 		Core.transpose(mRgba, mRgbaT);
 
-		Core.flip(mRgbaT, mRgbaT, 0);
+		if (Build.MODEL.contains("Nexus")) {
+			Core.flip(mRgbaT, mRgbaT, 0); // 1 - flip veritcal, 0 - flip horizontal, -1 - flip vertical, horizontal
+		} else {
+			Core.flip(mRgbaT, mRgbaT, 1);
+		}
 
 		Imgproc.resize(mRgbaT, mRgbaF, mRgbaF.size());
 
@@ -154,6 +159,7 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
 		}catch(Exception e){
 			e.printStackTrace();
 		}
+		log("Brand: " + Build.MODEL);
 		return mRgba;
 	}
 
@@ -196,10 +202,10 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
 		protected void onPostExecute(Void aVoid){
 			super.onPostExecute(aVoid);
 			progressDialog.dismiss();
-			if (detectedText.isEmpty()) {
+			if(detectedText.isEmpty()){
 				setResult(RESULT_CANCELED);
 				Toast.makeText(CameraActivity.this, "Please take photo again !!", Toast.LENGTH_LONG).show();
-			} else {
+			}else{
 				Intent intent = new Intent();
 				intent.putExtra("cardPath", cardPath);
 				intent.putExtra("logoPath", logoPath);
@@ -229,8 +235,7 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
 				matrix = Imgproc.getRotationMatrix2D(rotatedRect.center, angle, 1.0);
 				Imgproc.warpAffine(outMat, rotated, matrix, outMat.size(), Imgproc.INTER_CUBIC);
 
-				Rect roi = new Rect((int)(rotatedRect.center.x - rect_size.width / 2),
-                        (int)(rotatedRect.center.y - rect_size.height / 2), (int)rect_size.width, (int)rect_size.height);
+				Rect roi = new Rect((int)(rotatedRect.center.x - rect_size.width / 2), (int)(rotatedRect.center.y - rect_size.height / 2), (int)rect_size.width, (int)rect_size.height);
 
 				cropped = new Mat(rotated, roi);
 				Mat output = cropped;
