@@ -104,9 +104,9 @@ public class RankingListAdapter extends ArrayAdapter<RankModel>{
 		return convertView;
 	}
 
-	@Override
-	public boolean isEnabled(int position){
-		RankModel model = getItem(position);
-		return !(model.isTitle || CCStringUtil.isEmpty(model.userId) || CCConst.NONE.equals(model.userId));
-	}
+//	@Override
+//	public boolean isEnabled(int position){
+//		RankModel model = getItem(position);
+//		return !(model.isTitle || CCStringUtil.isEmpty(model.userId) || CCConst.NONE.equals(model.userId));
+//	}
 }
