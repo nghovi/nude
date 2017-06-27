@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import asia.chiase.core.util.CCCollectionUtil;
+import io.realm.annotations.Ignore;
 
 /**
  * UserModel
@@ -15,7 +16,7 @@ import asia.chiase.core.util.CCCollectionUtil;
  */
 
 @com.bluelinelabs.logansquare.annotation.JsonObject(fieldDetectionPolicy = com.bluelinelabs.logansquare.annotation.JsonObject.FieldDetectionPolicy.NONPRIVATE_FIELDS)
-public class UserModel extends BitmapModel implements Serializable{
+public class UserModel implements Serializable{
 
 	public String				key;
 	public String				userName;
@@ -26,7 +27,7 @@ public class UserModel extends BitmapModel implements Serializable{
 	public String				adminFlag;
 	public String				loginUserId;
 	public String				avatarPath;
-
+	@Ignore
 	public DeptModel			dept;
 	public String				companyId;
 	public String				pathProfile;
@@ -34,7 +35,9 @@ public class UserModel extends BitmapModel implements Serializable{
 	public String				language	= "en";
 	public String				timezone	= "Asia/Ho_Chi_Minh";
 	public String				dateBirth;
-
+	@Ignore
+	public BitmapModel			bitmapModel;
+	@Ignore
 	public Map<String, String>	userInfoMap	= new LinkedHashMap<String, String>();
 
 	public UserModel(){

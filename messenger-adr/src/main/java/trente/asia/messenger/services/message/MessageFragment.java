@@ -57,6 +57,7 @@ import asia.chiase.core.util.CCNumberUtil;
 import asia.chiase.core.util.CCStringUtil;
 import io.realm.Realm;
 import io.realm.RealmResults;
+import io.realm.Sort;
 import trente.asia.android.define.CsConst;
 import trente.asia.android.view.model.ChiaseListItemModel;
 import trente.asia.messenger.BuildConfig;
@@ -497,7 +498,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 		activeBoard = new BoardModel();
 		activeBoard.key = prefAccUtil.get(MsConst.PREF_ACTIVE_BOARD_ID);
 		activeBoardId = activeBoard.key;
-		loadMessageList(true);
+		load10Messages(true);
 	}
 
 	private void sendLocation(){
@@ -534,15 +535,10 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 		binding.layoutStamp.getRoot().setVisibility(View.GONE);
 	}
 
-	private void loadMessageList(boolean showLoading){
+	private void load10Messages(boolean showLoading){
 		JSONObject jsonObject = new JSONObject();
 		try{
 			jsonObject.put("boardId", activeBoard.key);
-			if(!CCStringUtil.isEmpty(autoroadCd) && !CCConst.NONE.equals(autoroadCd)){
-				jsonObject.put("autoroadCd", autoroadCd);
-			}else{
-				jsonObject.put("execType", "NEW");
-			}
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
@@ -551,7 +547,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 
 	private void loadMessageLatest(){
 		if("0".equals(latestMessageId)){
-			loadMessageList(false);
+			load10Messages(false);
 		}else{
 			JSONObject jsonObject = new JSONObject();
 			try{
@@ -579,33 +575,9 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 	protected void successLoad(JSONObject response, String url){
 		try{
 			if(MsConst.API_MESSAGE_BOARD.equals(url)){
-
 				List<MessageContentModel> lstMessage = LoganSquare.parseList(response.optString("contents"), MessageContentModel.class);
-				mRealm.beginTransaction();
-				for (MessageContentModel message : lstMessage) {
-					mRealm.copyToRealmOrUpdate(message);
-				}
-				mRealm.commitTransaction();
-
-				if(!CCCollectionUtil.isEmpty(lstMessage)){
-					MessageContentModel firstMessage = lstMessage.get(0);
-					if(!CCStringUtil.isEmpty(activeBoardId) && activeBoardId.equals(firstMessage.boardId)){
-						if(CCStringUtil.isEmpty(autoroadCd)){
-							mMsgAdapter.addMessages(lstMessage);
-							messageView.revMessage.setLastVisibleItem(mMsgAdapter.getItemCount() - 1);
-							messageView.revMessage.scrollRecyclerToBottom();
-							startMessageId = lstMessage.get(0).key;
-							latestMessageId = lstMessage.get(lstMessage.size() - 1).key;
-						}else{
-							// append to top
-							Collections.reverse(lstMessage);
-							mMsgAdapter.addMessage2Top(lstMessage);
-							startMessageId = lstMessage.get(0).key;
-						}
-					}
-					autoroadCd = response.optString("autoroadCd");
-					isSuccessLoad = true;
-				}
+				add10Messages(lstMessage);
+				saveMessageToDB(lstMessage);
 			} else if (MsConst.API_MESSAGE_LATEST.equals(url)){
 				List<MessageContentModel> lstMessage = LoganSquare.parseList(response.optString("contents"), MessageContentModel.class);
 				if(!CCCollectionUtil.isEmpty(lstMessage)){
@@ -641,6 +613,35 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 			}
 		}catch(IOException e){
 			e.printStackTrace();
+		}
+	}
+
+	private void saveMessageToDB(List<MessageContentModel> lstMessage) {
+		mRealm.beginTransaction();
+		for (MessageContentModel message : lstMessage) {
+			mRealm.copyToRealmOrUpdate(message);
+		}
+		mRealm.commitTransaction();
+	}
+
+	private void add10Messages(List<MessageContentModel> lstMessage) {
+		if(!CCCollectionUtil.isEmpty(lstMessage)){
+			MessageContentModel firstMessage = lstMessage.get(0);
+			if(!CCStringUtil.isEmpty(activeBoardId) && activeBoardId.equals(firstMessage.boardId)){
+				if(CCStringUtil.isEmpty(autoroadCd)){
+					mMsgAdapter.addMessages(lstMessage);
+					messageView.revMessage.setLastVisibleItem(mMsgAdapter.getItemCount() - 1);
+					messageView.revMessage.scrollRecyclerToBottom();
+					startMessageId = lstMessage.get(0).key;
+					latestMessageId = lstMessage.get(lstMessage.size() - 1).key;
+				}else{
+					// append to top
+					Collections.reverse(lstMessage);
+					mMsgAdapter.addMessage2Top(lstMessage);
+					startMessageId = lstMessage.get(0).key;
+				}
+			}
+			isSuccessLoad = true;
 		}
 	}
 
@@ -712,7 +713,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 			activeBoardId = activeBoard.key;
 		}
 
-		startTimer();
+//		startTimer();
 	}
 
 	private void startTimer(){
@@ -962,7 +963,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 	private void onScrollToTopListener(){
 		if(!CCStringUtil.isEmpty(autoroadCd) && !CCConst.NONE.equals(autoroadCd)){
 			if(!isFirstScroll2Top){
-				loadMessageList(true);
+				load10Messages(true);
 			}else{
 				isFirstScroll2Top = false;
 			}
@@ -991,7 +992,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 				messageView.edtMessage.setText("");
 				autoroadCd = "";
 				isFirstScroll2Top = true;
-				loadMessageList(true);
+				load10Messages(true);
 			}
 		}else{
 			if(!boardModel.boardName.equals(activeBoard.boardName)){
@@ -1102,7 +1103,13 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 	// }
 
 	@Override
-	protected void errorNetwork(){
+	protected void errorNetwork(String url){
+		if (MsConst.API_MESSAGE_BOARD.equals(url)) {
+			RealmResults<MessageContentModel> lstMessage = mRealm.where(MessageContentModel.class)
+					.findAllSorted("key", Sort.ASCENDING);
+			List<MessageContentModel> lastMessage = lstMessage.subList(lstMessage.size() - 10, lstMessage.size());
+			add10Messages(lastMessage);
+		}
 	}
 
 	protected void errorRequest2(){
@@ -1138,7 +1145,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 	public void onPause(){
 		super.onPause();
 		activeBoardId = null;
-		stopTimer();
+//		stopTimer();
 	}
 
 	private void stopTimer(){
@@ -1236,11 +1243,11 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 	@Override
 	public void onNetworkConnectionChanged(boolean connected){
 		binding.txtInternetConnection.setVisibility(connected ? View.GONE : View.VISIBLE);
-		if(connected){
-			startTimer();
-		}else{
-			stopTimer();
-		}
+//		if(connected){
+//			startTimer();
+//		}else{
+//			stopTimer();
+//		}
 	}
 
 

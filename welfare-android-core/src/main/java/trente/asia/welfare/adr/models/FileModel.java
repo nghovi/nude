@@ -1,12 +1,14 @@
 package trente.asia.welfare.adr.models;
 
+import io.realm.RealmObject;
+
 /**
  * LikeModel
  *
  * @author TrungND
  */
 @com.bluelinelabs.logansquare.annotation.JsonObject(fieldDetectionPolicy = com.bluelinelabs.logansquare.annotation.JsonObject.FieldDetectionPolicy.NONPRIVATE_FIELDS)
-public class FileModel{
+public class FileModel extends RealmObject{
 
 	public String	key;
 	public String	fileType;

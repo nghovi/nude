@@ -25,7 +25,6 @@ public class MessageContentModel implements RealmModel{
 	@PrimaryKey
 	public String				key;
 	public String				boardId;
-	@Ignore
 	public UserModel			messageSender;
 	public String				messageType;
 	public String				messageDate;
@@ -35,9 +34,7 @@ public class MessageContentModel implements RealmModel{
 	public String				messageUrlThumbnail;
 	public String				messageOriginal;
 
-	@Ignore
 	public FileModel			attachment;
-	@Ignore
 	public FileModel			thumbnailAttachment;
 	@Ignore
 	public List<UserModel>		checks;
@@ -53,7 +50,6 @@ public class MessageContentModel implements RealmModel{
 	// public boolean isEmotion = false;
 	// public int sequence;
 
-	@Ignore
 	public Integer				checkCount;
 	@Ignore
 	public List<UserModel>		checkList;
