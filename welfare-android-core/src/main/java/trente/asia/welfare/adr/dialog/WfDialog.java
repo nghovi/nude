@@ -7,6 +7,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.view.ChiaseDialog;
 import trente.asia.welfare.adr.R;
@@ -97,5 +99,29 @@ public class WfDialog extends ChiaseDialog{
 		WfPicassoHelper.loadImage(mContext, photoUrl, imgPhoto, null);
 
 		return this;
+	}
+
+	public static WfDialog makeDialogNotice(Context context, String title, String content, int titleTextColor){
+		final WfDialog wfDialog = new WfDialog(context);
+
+		wfDialog.setCanceledOnTouchOutside(false);
+		wfDialog.setContentView(R.layout.dialog_notice);
+
+		TextView txtTitle = (TextView)wfDialog.findViewById(R.id.txt_dialog_notice_title);
+		txtTitle.setText(title);
+		if(titleTextColor != 0) txtTitle.setTextColor(titleTextColor);
+
+		TextView txtContent = (TextView)wfDialog.findViewById(R.id.txt_dialog_notice_content);
+		txtContent.setText(content);
+
+		wfDialog.findViewById(R.id.btn_dialog_notice_ok).setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v){
+				wfDialog.dismiss();
+			}
+		});
+
+		return wfDialog;
 	}
 }

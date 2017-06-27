@@ -70,6 +70,7 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':welfare-android-core')
+    compile 'com.github.PhilJay:MPAndroidChart:v3.0.2'
 }
 
 apply plugin: 'com.google.gms.google-services'

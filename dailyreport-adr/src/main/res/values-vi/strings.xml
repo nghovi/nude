@@ -96,11 +96,11 @@
     <string name="FM_DR_002">Có %1$s lượt thích mới</string>
     <string name="FM_DR_003">Có %1$s bình luận mới</string>
     <string name="header_calendar_this_week">Tuần này</string>
-    <string name="fragment_kpi_1">Title1</string>
-    <string name="fragment_kpi_2">title2</string>
-    <string name="fragment_kpi_3">title3</string>
-    <string name="fragment_kpi_4">title4</string>
-    <string name="fragment_kpi_5">tittle5</string>
+    <string name="goal_period">Title1</string>
+    <string name="personal_goal">title2</string>
+    <string name="total_performance">title3</string>
+    <string name="achievement_rate">title4</string>
+    <string name="today_performance">tittle5</string>
     <string name="footer_itemkpi">KPI</string>
     <string name="fragment_kpi_title">nyuryoku</string>
     <string name="fragment_actual_plan_title">actual-plan-title</string>
@@ -110,4 +110,13 @@
     <string name="group_actual_list_goal">Group goal list</string>
     <string name="fragment_group_actual_group_goal">Group goal</string>
     <string name="fragmen_group_actual_needed_amount">Amount you need to reach the goal</string>
+    <string name="achieve_dialog_title">Achieved!</string>
+    <string name="achieve_dialog_content">Congratulations!!\\nYou have achieved your personal goal.\\nWonderfull!!\\nContinue the good work!</string>
+    <string name="achieve_warning_dialog_title">Today is checkpoint day</string>
+    <string name="achieve_warning_dialog_content">You have not achieved KPI.\\nPlease rethink your action plans.</string>
+    <string name="user_has_no_action_plan_setup">No action plan set up</string>
+    <string name="today_goal">Today\'s goal</string>
+    <string name="supplement_memo">Supplement memo</string>
+    <string name="performance_in_month">Performance in %1$s</string>
+    <string name="achievement_rate_in_month">Achievement rate in %1$s</string>
 </resources>

@@ -33,10 +33,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/fragment_kpi_1" />
+                android:text="@string/today_goal" />
 
             <TextView
-                android:id="@+id/txt_item_actual_plan_value"
+                android:id="@+id/txt_item_actual_plan_today_goal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="value" />
@@ -51,7 +51,7 @@
             <TextView
                 android:layout_width="@dimen/margin_120dp"
                 android:layout_height="wrap_content"
-                android:text="@string/fragment_kpi_5" />
+                android:text="@string/today_performance" />
 
             <trente.asia.android.view.ChiaseEditText
                 android:id="@+id/edt_item_actual_plan_real"

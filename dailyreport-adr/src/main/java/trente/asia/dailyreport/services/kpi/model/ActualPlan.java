@@ -9,4 +9,5 @@ public class ActualPlan{
 	public String	name;
 	public String	goal;
 	public String	key;
+	public String	date;
 }

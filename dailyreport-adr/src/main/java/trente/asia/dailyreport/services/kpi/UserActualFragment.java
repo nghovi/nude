@@ -8,10 +8,20 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.DatePickerDialog;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.TextView;
+
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
@@ -24,6 +34,7 @@ import trente.asia.dailyreport.services.kpi.model.Personal;
 import trente.asia.dailyreport.view.DRGroupHeader;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
+import trente.asia.welfare.adr.dialog.WfDialog;
 import trente.asia.welfare.adr.models.UserModel;
 
 /**
@@ -35,6 +46,9 @@ public class UserActualFragment extends AbstractDRFragment{
 	private DatePickerDialog	datePickerDialog;
 	private TextView			txtSelectedDate;
 	private DRGroupHeader		drGroupHeader;
+	private WfDialog			wfDialog;
+	private List<GroupKpi>		groupKpiList;
+	LineChart					lineChart;
 
 	@Override
 	public int getFragmentLayoutId(){
@@ -93,13 +107,72 @@ public class UserActualFragment extends AbstractDRFragment{
 			@Override
 			public void onNowGroupClicked(GroupKpi selectedGroup){
 				GroupActualFragment groupActualFragment = new GroupActualFragment();
+				groupActualFragment.setGroupKpi(selectedGroup);
 				((WelfareActivity)activity).addFragment(groupActualFragment);
 			}
 		});
-		List<GroupKpi> groupKpis = new ArrayList<>();
-		groupKpis.add(new GroupKpi());
-		groupKpis.add(new GroupKpi());
-		drGroupHeader.buildLayout(groupKpis, 0);
+		groupKpiList = createDummy();
+		drGroupHeader.buildLayout(groupKpiList, 0);
+
+		lineChart = (LineChart)getView().findViewById(R.id.chart);
+		List<Entry> entries = new ArrayList<Entry>();
+		Calendar c = Calendar.getInstance();
+		for(int i = 0; i < 8; i++){
+			Entry t = new Entry(i, (int)(Math.random() * i));
+			entries.add(t);
+		}
+		LineDataSet dataSet = new LineDataSet(entries, "Label"); // add entries to dataset
+		dataSet.setColor(Color.RED);
+		dataSet.setValueTextColor(Color.BLUE); // styling, ...
+
+		LineData lineData = new LineData();
+		lineData.addDataSet(dataSet);
+		lineChart.setData(lineData);
+
+		// the labels that should be drawn on the XAxis
+		final String[] quarters = new String[]{"gotosfsfskdf1", "gotosfsfskdf2", "gotosfsfskdf3", "gotosfsfskdf4", "gotosfsfskdf5", "gotosfsfskdf6", "gotosfsfskdf7", "gotosfsfskdf8"};
+
+		IAxisValueFormatter formatter = new IAxisValueFormatter() {
+
+			@Override
+			public String getFormattedValue(float value, AxisBase axis){
+				return quarters[(int)value];
+			}
+
+		};
+
+		XAxis xAxis = lineChart.getXAxis();
+		xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+		xAxis.setTextSize(10f);
+		xAxis.setTextColor(Color.CYAN);
+		xAxis.setDrawAxisLine(true);
+		xAxis.setDrawGridLines(false);
+
+		xAxis.setGranularity(1f); // minimum axis-step (interval) is 1
+		xAxis.setValueFormatter(formatter);
+
+		// set a custom value formatter
+		// xAxis.setValueFormatter(new MyCustomFormatter());
+		// and more...
+
+		lineChart.invalidate(); // refresh
+	}
+
+	private void showGoalAchieveDialog(){
+		String title = getString(R.string.achieve_dialog_title);
+		String content = getString(R.string.achieve_dialog_content);
+		showNoticeDialog(title, content, Color.RED);
+	}
+
+	private void showGoalWarningDialog(){
+		String title = getString(R.string.achieve_warning_dialog_title);
+		String content = getString(R.string.achieve_warning_dialog_content);
+		showNoticeDialog(title, content, 0);
+	}
+
+	private void showNoticeDialog(String title, String content, int titleTextColor){
+		wfDialog = WfDialog.makeDialogNotice(activity, title, content, titleTextColor);
+		wfDialog.show();
 	}
 
 	private void onClickDateIcon(){
@@ -128,7 +201,7 @@ public class UserActualFragment extends AbstractDRFragment{
 		UserModel userMe = prefAccUtil.getUserPref();
 		JSONObject jsonObject = new JSONObject();
 		try{
-			jsonObject.put("targetGroupId", userMe.key);
+			jsonObject.put("targetGroupId", drGroupHeader.getSelectedGroup().key);
 			jsonObject.put("targetDate", dateStr);
 		}catch(JSONException ex){
 			ex.printStackTrace();
@@ -139,11 +212,29 @@ public class UserActualFragment extends AbstractDRFragment{
 	@Override
 	protected void successLoad(JSONObject response, String url){
 		if(getView() != null){
-			List<GroupKpi> groupKpiList = CCJsonUtil.convertToModelList(response.optString("groups"), GroupKpi.class);
-			drGroupHeader.buildLayout(groupKpiList, 0);
+			// groupKpiList = CCJsonUtil.convertToModelList(response.optString("groups"), GroupKpi.class);
 			Personal personal = CCJsonUtil.convertToModel(response.optString("personal"), Personal.class);
 			buildPersonalGoalInfo(personal);
+			showGoalAchieveDialog();
+			showGoalWarningDialog();
 		}
+	}
+
+	private List<GroupKpi> createDummy(){
+		List<GroupKpi> groupKpis = new ArrayList<>();
+		GroupKpi g1 = new GroupKpi();
+		g1.name = "g1";
+		g1.key = "1";
+		GroupKpi g2 = new GroupKpi();
+		g2.name = "g2";
+		g2.key = "2";
+		GroupKpi g3 = new GroupKpi();
+		g3.name = "g3";
+		g3.key = "3";
+		groupKpis.add(g1);
+		groupKpis.add(g2);
+		groupKpis.add(g3);
+		return groupKpis;
 	}
 
 	private void buildPersonalGoalInfo(Personal personal){

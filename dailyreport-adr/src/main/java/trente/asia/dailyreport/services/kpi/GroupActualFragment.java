@@ -28,6 +28,7 @@ public class GroupActualFragment extends AbstractDRFragment{
 	private LayoutInflater		inflater;
 	private DatePickerDialog	datePickerDialog;
 	private TextView			txtSelectedDate;
+	private GroupKpi			groupKpi;
 
 	@Override
 	public int getFragmentLayoutId(){
@@ -81,8 +82,12 @@ public class GroupActualFragment extends AbstractDRFragment{
 		String dateStr = txtSelectedDate.getText().toString();
 		UserModel userMe = prefAccUtil.getUserPref();
 		JSONObject jsonObject = new JSONObject();
+		String targetGroupId = "0";
+		if(groupKpi != null){
+			targetGroupId = groupKpi.key;
+		}
 		try{
-			jsonObject.put("targetGroupId", userMe.key);
+			jsonObject.put("targetGroupId", targetGroupId);
 			jsonObject.put("targetDate", dateStr);
 		}catch(JSONException ex){
 			ex.printStackTrace();
@@ -93,8 +98,7 @@ public class GroupActualFragment extends AbstractDRFragment{
 	@Override
 	protected void successLoad(JSONObject response, String url){
 		if(getView() != null){
-			GroupKpi groupKpi = CCJsonUtil.convertToModel(response.optString("groupKpi"), GroupKpi.class);
-
+			groupKpi = CCJsonUtil.convertToModel(response.optString("groupKpi"), GroupKpi.class);
 		}
 	}
 
@@ -117,5 +121,9 @@ public class GroupActualFragment extends AbstractDRFragment{
 	@Override
 	public void onDestroy(){
 		super.onDestroy();
+	}
+
+	public void setGroupKpi(GroupKpi groupKpi){
+		this.groupKpi = groupKpi;
 	}
 }

@@ -5,23 +5,24 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_16dp"
+        android:layout_marginRight="@dimen/margin_16dp"
         android:gravity="center_vertical">
 
         <TextView
             android:id="@+id/txt_item_actual_plan_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_16dp"
-            android:layout_marginRight="@dimen/margin_16dp"
             android:layout_weight="1"
             android:text="2017/06/21"
             android:textColor="@color/chiase_black"
             android:textStyle="bold" />
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/pn_icon" />
+            android:layout_width="@dimen/margin_32dp"
+            android:layout_height="@dimen/margin_32dp"
+            android:id="@+id/img_item_group_actual_chart"
+            android:src="@drawable/dr_footer_kpi" />
     </LinearLayout>
 
 

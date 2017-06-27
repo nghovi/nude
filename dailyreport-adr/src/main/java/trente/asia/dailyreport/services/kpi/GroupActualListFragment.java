@@ -1,15 +1,12 @@
 package trente.asia.dailyreport.services.kpi;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.DatePickerDialog;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.ListView;
@@ -22,15 +19,13 @@ import trente.asia.dailyreport.R;
 import trente.asia.dailyreport.fragments.AbstractDRFragment;
 import trente.asia.dailyreport.services.kpi.model.GroupKpi;
 import trente.asia.dailyreport.services.kpi.view.GroupActualListAdapter;
-import trente.asia.dailyreport.view.DRGroupHeader;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.models.UserModel;
 
 /**
  * Created by viet on 2/15/2016.
  */
-public class GroupActualListFragment extends AbstractDRFragment{
+public class GroupActualListFragment extends AbstractDRFragment implements GroupActualListAdapter.OnGraphIconClickListener{
 
 	private ListView				lstGroupActual;
 	private GroupActualListAdapter	adapter;
@@ -93,7 +88,7 @@ public class GroupActualListFragment extends AbstractDRFragment{
 	protected void successLoad(JSONObject response, String url){
 		if(getView() != null){
 			List<GroupKpi> groupKpiList = CCJsonUtil.convertToModelList(response.optString("groups"), GroupKpi.class);
-			adapter = new GroupActualListAdapter(getContext(), R.layout.item_group_actual, groupKpiList);
+			adapter = new GroupActualListAdapter(getContext(), R.layout.item_group_actual, groupKpiList, this);
 			lstGroupActual.setAdapter(adapter);
 		}
 	}
@@ -122,5 +117,12 @@ public class GroupActualListFragment extends AbstractDRFragment{
 	@Override
 	public void onDestroy(){
 		super.onDestroy();
+	}
+
+	@Override
+	public void onGraphIconClicked(GroupKpi groupKpi){
+		GroupActualFragment groupActualFragment = new GroupActualFragment();
+		groupActualFragment.setGroupKpi(groupKpi);
+		((WelfareActivity)activity).addFragment(groupActualFragment);
 	}
 }

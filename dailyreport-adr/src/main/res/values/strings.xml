@@ -97,11 +97,11 @@
     <string name="FM_DR_002">%1$s like your report</string>
     <string name="FM_DR_003">%1$s comment on your report</string>
     <string name="header_calendar_this_week">This week</string>
-    <string name="fragment_kpi_1">Goal period</string>
-    <string name="fragment_kpi_2">Personal goal</string>
-    <string name="fragment_kpi_3">Total actual results</string>
-    <string name="fragment_kpi_4">Achievement rate</string>
-    <string name="fragment_kpi_5">Today\'s actual result</string>
+    <string name="goal_period">Goal period</string>
+    <string name="personal_goal">Personal goal</string>
+    <string name="total_performance">Total actual results</string>
+    <string name="achievement_rate">Achievement rate</string>
+    <string name="today_performance">Today\'s actual result</string>
     <string name="footer_itemkpi">KPI</string>
     <string name="fragment_kpi_title">Actual result input</string>
     <string name="fragment_actual_plan_title">Personal action plan</string>
@@ -111,4 +111,13 @@
     <string name="group_actual_list_goal">Group goal list</string>
     <string name="fragment_group_actual_group_goal">Group goal</string>
     <string name="fragmen_group_actual_needed_amount">Amount you need to reach the goal</string>
+    <string name="achieve_dialog_title">Achieved!</string>
+    <string name="achieve_dialog_content">Congratulations!!\\nYou have achieved your personal goal.\\nWonderfull!!\\nContinue the good work!</string>
+    <string name="achieve_warning_dialog_title">Today is checkpoint day</string>
+    <string name="achieve_warning_dialog_content">You have not achieved KPI.\\nPlease rethink your action plans.</string>
+    <string name="user_has_no_action_plan_setup">No action plan set up</string>
+    <string name="today_goal">Today\'s goal</string>
+    <string name="supplement_memo">Supplement memo</string>
+    <string name="performance_in_month">Performance in %1$s</string>
+    <string name="achievement_rate_in_month">Achievement rate in %1$s</string>
 </resources>

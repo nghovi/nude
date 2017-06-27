@@ -13,4 +13,5 @@ public class GroupKpi{
 	public String	kpiMembers;
 	public String	achievement;
 	public String	achievementRate;
+	public String	key;
 }

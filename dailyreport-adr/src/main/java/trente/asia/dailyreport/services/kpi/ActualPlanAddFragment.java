@@ -3,9 +3,7 @@ package trente.asia.dailyreport.services.kpi;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -14,7 +12,6 @@ import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -30,32 +27,29 @@ import trente.asia.dailyreport.DRConst;
 import trente.asia.dailyreport.R;
 import trente.asia.dailyreport.fragments.AbstractDRFragment;
 import trente.asia.dailyreport.services.kpi.model.ActualPlan;
-import trente.asia.dailyreport.services.report.ReportDetailFragment;
+import trente.asia.dailyreport.services.kpi.model.GroupKpi;
+import trente.asia.dailyreport.services.kpi.view.KpiCalendarView;
 import trente.asia.dailyreport.services.report.ReportEditFragment;
 import trente.asia.dailyreport.services.report.model.Holiday;
 import trente.asia.dailyreport.services.report.model.ReportModel;
-import trente.asia.dailyreport.services.report.model.WorkingSymbolModel;
 import trente.asia.dailyreport.services.report.view.DRCalendarView;
-import trente.asia.dailyreport.services.report.view.MyReportListAdapter;
 import trente.asia.dailyreport.utils.DRUtil;
-import trente.asia.dailyreport.view.DRCalendarHeader;
 import trente.asia.dailyreport.view.DRGroupHeader;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.models.ApiObjectModel;
 import trente.asia.welfare.adr.models.UserModel;
 
 /**
  * Created by viet on 2/15/2016.
  */
-public class ActualPlanAddFragment extends AbstractDRFragment implements DRCalendarView.OnReportModelSelectedListener{
+public class ActualPlanAddFragment extends AbstractDRFragment implements DRCalendarView.OnReportModelSelectedListener,KpiCalendarView.OnDayClickedListener{
 
 	private static final String	ACTUAL_PLAN_EDT_ID	= "edt_actual_plan_";
 	public static int			VIEW_AS_CALENDAR	= 1;
 	public static int			VIEW_AS_LIST		= 2;
 
 	private ListView			lstReports;
-	private DRCalendarView		drCalendarView;
+	private KpiCalendarView		kpiCalendarView;
 	private ScrollView			mScrCalendarView;
 
 	private List<ReportModel>	reports;
@@ -65,6 +59,7 @@ public class ActualPlanAddFragment extends AbstractDRFragment implements DRCalen
 	private LinearLayout		lnrMonthlyGoal;
 	private LinearLayout		lnrKpiSection;
 	private LayoutInflater		inflater;
+	private List<ActualPlan>	actionPlans			= new ArrayList<>();
 	private DRGroupHeader		drGroupHeader;
 
 	@Override
@@ -79,7 +74,7 @@ public class ActualPlanAddFragment extends AbstractDRFragment implements DRCalen
 
 	@Override
 	public void initData(){
-
+		loadActionPlans();
 	}
 
 	@Override
@@ -89,61 +84,70 @@ public class ActualPlanAddFragment extends AbstractDRFragment implements DRCalen
 		activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		inflater = LayoutInflater.from(activity);
 		Calendar c = Calendar.getInstance();
-		txtDate = (TextView)getView().findViewById(R.id.fragment_txt_calendar_header_date);
+		txtDate = (TextView)getView().findViewById(R.id.txt_fragment_kpi_date);
 		drGroupHeader = (DRGroupHeader)getView().findViewById(R.id.lnr_group_header);
 
 		lstReports = (ListView)getView().findViewById(R.id.lst_my_report_fragment);
 
 		mScrCalendarView = (ScrollView)getView().findViewById(R.id.src_id_calendar_view);
-		drCalendarView = (DRCalendarView)getView().findViewById(R.id.my_report_fragment_calendar_view);
-		drCalendarView.setOnReportModelSelectedListener(this);
+		kpiCalendarView = (KpiCalendarView)getView().findViewById(R.id.my_report_fragment_calendar_view);
+		kpiCalendarView.setOnDayClickedListener(this);
 
 		lnrMonthlyGoal = (LinearLayout)getView().findViewById(R.id.lnr_id_monthly_goal);
 		lnrKpiSection = (LinearLayout)getView().findViewById(R.id.my_report_kpi_section);
 	}
 
-	public static void gotoReportDetailFragment(Activity activity, ReportModel reportModel){
-		ReportDetailFragment reportDetailFragment = new ReportDetailFragment();
-		reportDetailFragment.setReportModel(reportModel);
-		((WelfareActivity)activity).addFragment(reportDetailFragment);
-	}
-
-	private void requestDailyReportSingle(Date date){
-		String monthStr = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_YYYY_MM, date);
+	private void loadActionPlans(){
 		UserModel userMe = prefAccUtil.getUserPref();
 		JSONObject jsonObject = new JSONObject();
 		try{
-			jsonObject.put("targetUserId", userMe.key);
-			jsonObject.put("targetDeptId", userMe.dept.key);
-			jsonObject.put("targetMonth", monthStr);
+			jsonObject.put("targetGroupId", userMe.key);
+			jsonObject.put("targetDate", userMe.dept.key);
+			// jsonObject.put("targetMonth", monthStr);
 		}catch(JSONException ex){
 			ex.printStackTrace();
 		}
-		super.requestLoad(DRConst.API_REPORT_LIST_MYSELF, jsonObject, true);
+		super.requestLoad(DRConst.API_KPI_PERSONAL, jsonObject, true);
 	}
 
 	@Override
 	protected void successLoad(JSONObject response, String url){
 		if(getView() != null){
-			reports = CCJsonUtil.convertToModelList(response.optString("reports"), ReportModel.class);
-			reports = addReportsForEmptyDays(reports);
 
-			WorkingSymbolModel workingSymbolModel = CCJsonUtil.convertToModel(response.optString("working"), WorkingSymbolModel.class);
-			List<WorkingSymbolModel> workingSymbolModels = new ArrayList<>();
-			workingSymbolModels.add(workingSymbolModel);
-
-			holidays = CCJsonUtil.convertToModelList(response.optString("holidays"), Holiday.class);
 			actualPlanList = CCJsonUtil.convertToModelList(response.optString("actualPlanList"), ActualPlan.class);
-			appendHolidayInfo(reports, holidays);
 			updateHeader(prefAccUtil.getUserPref().userName);
-			buildCalendarView(reports);
-			buildListView(reports);
-			builActualPlans();
+			actualPlanList = new ArrayList<>();
+			actualPlanList = addForEmptyDays(actualPlanList);
+			buildCalendarView(actualPlanList);
+
+			drGroupHeader.buildLayout(new ArrayList<GroupKpi>(), 0);
+
+			buildActualPlans();
+			if(false){
+				getView().findViewById(R.id.lnr_fragment_action_plan_main).setVisibility(View.GONE);
+				getView().findViewById(R.id.txt_fragment_action_plan_empty).setVisibility(View.VISIBLE);
+			}
 		}
 	}
 
+	/*
+	 * If there is no report on date 2016/04/05, add an empty report to it
+	 * @return reports: a month full of report
+	 */
+	private List<ActualPlan> addForEmptyDays(List<ActualPlan> actualPlanList){
+		Date d = CCDateUtil.makeDateCustom(txtDate.getText().toString(), WelfareConst.WF_DATE_TIME_DATE);
+		Calendar c = CCDateUtil.makeCalendar(d);
 
-	private void builActualPlans(){
+		List<ActualPlan> results = new ArrayList<>();
+		for(int i = c.getActualMinimum(Calendar.DAY_OF_MONTH); i <= c.getActualMaximum(Calendar.DAY_OF_MONTH); i++){
+			c.set(Calendar.DAY_OF_MONTH, i);
+			ActualPlan actualPlan = getActualPlanByDay(c, actualPlanList);
+			results.add(actualPlan);
+		}
+		return results;
+	}
+
+	private void buildActualPlans(){
 		if(!CCCollectionUtil.isEmpty(actualPlanList)){
 			lnrMonthlyGoal.removeAllViews();
 			lnrKpiSection.setVisibility(View.VISIBLE);
@@ -156,75 +160,33 @@ public class ActualPlanAddFragment extends AbstractDRFragment implements DRCalen
 	}
 
 	private void addActualPlan(ActualPlan actualPlan){
-		View cellView = inflater.inflate(R.layout.item_actual_plan, null);
-		TextView txtName = (TextView)cellView.findViewById(R.id.txt_item_actual_plan_name);
-		txtName.setText(actualPlan.name);
-		TextView txtValue = (TextView)cellView.findViewById(R.id.txt_item_actual_plan_value);
-		txtValue.setText(actualPlan.goal);
-		EditText edtReal = (EditText)cellView.findViewById(R.id.edt_item_actual_plan_real);
-		edtReal.setTag(ACTUAL_PLAN_EDT_ID + actualPlan.key);
-	}
+		if(true){
+			View cellView = inflater.inflate(R.layout.item_actual_plan, null);
 
-	/*
-	 * If there is no report on date 2016/04/05, add an empty report to it
-	 * @return reports: a month full of report
-	 */
-	private List<ReportModel> addReportsForEmptyDays(List<ReportModel> reports){
-		Calendar c = Calendar.getInstance();
-		List<ReportModel> results = new ArrayList<>();
-		for(int i = c.getActualMinimum(Calendar.DAY_OF_MONTH); i <= c.getActualMaximum(Calendar.DAY_OF_MONTH); i++){
-			c.set(Calendar.DAY_OF_MONTH, i);
-			ReportModel reportModel = getReportByDay(c, reports);
-			reportModel.reportUser = myself;
-			results.add(reportModel);
+			TextView txtTodayGoal = (TextView)cellView.findViewById(R.id.txt_item_actual_plan_today_goal);
+			txtTodayGoal.setText(actualPlan.name);
+			EditText edtReal = (EditText)cellView.findViewById(R.id.edt_item_actual_plan_real);
+			edtReal.setTag(ACTUAL_PLAN_EDT_ID + actualPlan.key);
+		}else{
+			View cellView = inflater.inflate(R.layout.item_actual_plan_view, null);
+			TextView txtTodayGoal = (TextView)cellView.findViewById(R.id.txt_item_actual_plan_today_goal);
+			txtTodayGoal.setText(actualPlan.goal);
+
+			TextView txtPerformance = (TextView)cellView.findViewById(R.id.txt_item_actual_plan_today_performance);
+			txtPerformance.setText(actualPlan.goal);
+
+			TextView txtPerformanceMonth = (TextView)cellView.findViewById(R.id.txt_item_actual_plan_performance_month);
+			txtPerformanceMonth.setText(actualPlan.goal);
+
+			TextView txtRate = (TextView)cellView.findViewById(R.id.txt_item_actual_plan_month_rate);
+			txtRate.setText(actualPlan.goal);
 		}
-		return results;
 	}
 
-	public static ReportModel createEmptyReportModel(Calendar c, UserModel reportUser){
-		ReportModel reportModel = new ReportModel();
-		reportModel.reportDate = CCFormatUtil.formatDateCustom(DRConst.DATE_FORMAT_YYYY_MM_DD_HH_MM_SS, c.getTime());
-		reportModel.reportUser = reportUser;
-		reportModel.checks = new ArrayList<>();
-		reportModel.comments = new ArrayList<>();
-		reportModel.likes = new ArrayList<>();
-		return reportModel;
-	}
-
-	/*
-	 * @return ReportModel if no report found at date X, return an empty report
-	 */
-	public static ReportModel getReportByDay(Calendar c, List<ReportModel> reportModels){
-		for(ReportModel reportModel : reportModels){
-			String day = DRUtil.getDateString(reportModel.reportDate, DRConst.DATE_FORMAT_YYYY_MM_DD_HH_MM_SS, DRConst.DATE_FORMAT_YYYY_MM_DD);
-			if(day.equals(DRUtil.getDateString(c.getTime(), DRConst.DATE_FORMAT_YYYY_MM_DD))){
-				return reportModel;
-			}
-		}
-		return createEmptyReportModel(c, null);
-	}
-
-	/*
-	 * @return ReportModel if no report found at date X, return an empty report
-	 */
-	public static ReportModel getReportByDayAndUser(Calendar c, List<ReportModel> filteredReports, UserModel user){
-		for(ReportModel reportModel : filteredReports){
-			if(reportModel.reportUser.key.equals(user.key)){
-				String day = DRUtil.getDateString(reportModel.reportDate, DRConst.DATE_FORMAT_YYYY_MM_DD_HH_MM_SS, DRConst.DATE_FORMAT_YYYY_MM_DD);
-				if(day.equals(DRUtil.getDateString(c.getTime(), DRConst.DATE_FORMAT_YYYY_MM_DD))){
-					return reportModel;
-				}
-			}
-		}
-		return createEmptyReportModel(c, user);
-	}
-
-	public static void appendHolidayInfo(List<ReportModel> reportModels, List<Holiday> holidays){
-		if(reportModels != null && holidays != null){
-			for(ReportModel reportModel : reportModels){
-				appendHolidayInfo(reportModel, holidays);
-			}
-		}
+	public static ActualPlan createEmptyActualPlanModel(Calendar c){
+		ActualPlan actualPlan = new ActualPlan();
+		actualPlan.date = CCFormatUtil.formatDateCustom(DRConst.DATE_FORMAT_YYYY_MM_DD_HH_MM_SS, c.getTime());
+		return actualPlan;
 	}
 
 	public static void appendHolidayInfo(ReportModel reportModel, List<Holiday> holidays){
@@ -238,21 +200,10 @@ public class ActualPlanAddFragment extends AbstractDRFragment implements DRCalen
 		}
 	}
 
-	private void buildListView(final List<ReportModel> reports){
-		MyReportListAdapter myReportListAdapter = new MyReportListAdapter(activity, R.layout.item_my_report, reports);
-		lstReports.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> adapterView, View view, int i, long l){
-				ReportModel reportModel = reports.get(i);
-				onReportModelSelected(reportModel);
-			}
-		});
-		lstReports.setAdapter(myReportListAdapter);
-	}
-
-	private void buildCalendarView(List<ReportModel> reports){
-		// drCalendarView.updateLayout(activity, calendarHeader.getSelectedYear(), calendarHeader.getSelectedMonth(), reports);
+	private void buildCalendarView(List<ActualPlan> actionPlans){
+		Date d = CCDateUtil.makeDateCustom(txtDate.getText().toString(), WelfareConst.WF_DATE_TIME_DATE);
+		Calendar c = CCDateUtil.makeCalendar(d);
+		kpiCalendarView.updateLayout(activity, c.get(Calendar.YEAR), c.get(Calendar.MONTH), actionPlans);
 	}
 
 	@Override
@@ -263,7 +214,7 @@ public class ActualPlanAddFragment extends AbstractDRFragment implements DRCalen
 			if(ReportModel.REPORT_STATUS_DRTT.equals(reportModel.reportStatus)){
 				gotoReportEditFragment(activity, reportModel);
 			}else if(ReportModel.REPORT_STATUS_DONE.equals(reportModel.reportStatus)){
-				gotoReportDetailFragment(activity, reportModel);
+				// gotoReportDetailFragment(activity, reportModel);
 			}
 		}
 	}
@@ -278,7 +229,23 @@ public class ActualPlanAddFragment extends AbstractDRFragment implements DRCalen
 	public void onDestroy(){
 		super.onDestroy();
 		lstReports = null;
-		drCalendarView = null;
+		kpiCalendarView = null;
 		txtDate = null;
+	}
+
+	public static ActualPlan getActualPlanByDay(Calendar c, List<ActualPlan> actualPlans){
+		for(ActualPlan actualPlan : actualPlans){
+			String day = DRUtil.getDateString(actualPlan.date, DRConst.DATE_FORMAT_YYYY_MM_DD_HH_MM_SS, DRConst.DATE_FORMAT_YYYY_MM_DD);
+			if(day.equals(DRUtil.getDateString(c.getTime(), DRConst.DATE_FORMAT_YYYY_MM_DD))){
+				return actualPlan;
+			}
+		}
+		return createEmptyActualPlanModel(c);
+		// todo></todo>
+	}
+
+	@Override
+	public void onDayClicked(ActualPlan actualPlan){
+
 	}
 }

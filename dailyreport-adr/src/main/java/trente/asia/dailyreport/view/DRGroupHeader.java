@@ -92,7 +92,6 @@ public class DRGroupHeader extends LinearLayout{
 		this.currentIdx = selectedIdx;
 		this.selectedGroup = this.groups.get(this.currentIdx);
 		btnNowGroup.setText(this.selectedGroup.name);
-
 		updateDirectingButtonStatus();
 
 	}
@@ -105,6 +104,7 @@ public class DRGroupHeader extends LinearLayout{
 		}
 
 		selectedGroup = groups.get(currentIdx);
+		btnNowGroup.setText(selectedGroup.name);
 		updateDirectingButtonStatus();
 		onGroupHeaderActionsListener.onGroupChange(selectedGroup);
 	}
