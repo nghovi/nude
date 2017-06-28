@@ -28,11 +28,14 @@
 
     <string name="cl_schedule_edit_mode_title">Chế độ sửa</string>
     <string name="cl_schedule_delete_mode_title">Chế độ xóa</string>
-    <string name="cl_schedule_edit_mode_only_this">Chỉ thay đổi hiện tại
-    </string>
-    <string name="cl_schedule_edit_mode_only_future">Chỉ thay đổi tương lai
-    </string>
+    <string name="cl_schedule_edit_mode_only_this">Chỉ thay đổi hiện tại</string>
+    <string name="cl_schedule_edit_mode_only_future">Chỉ thay đổi tương lai</string>
     <string name="cl_schedule_edit_mode_all">Thay đổi tất cả</string>
+
+    <string name="cl_schedule_confirm_mode_title">Confirm for duplicate</string>
+    <string name="cl_schedule_confirm_mode_action_ok">Update</string>
+    <string name="cl_schedule_confirm_mode_label_user">Duplicate time for users</string>
+    <string name="cl_schedule_confirm_mode_label_room">Duplicate time for rooms</string>
 
     <string name="cl_filter_user_dialog_title">Lọc người dùng</string>
     <string name="cl_join_user_dialog_title">Người tham gia</string>

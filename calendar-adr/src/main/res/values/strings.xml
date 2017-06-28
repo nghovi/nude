@@ -33,6 +33,11 @@
     <string name="cl_schedule_edit_mode_only_future">Change only future</string>
     <string name="cl_schedule_edit_mode_all">Change all</string>
 
+    <string name="cl_schedule_confirm_mode_title">Confirm for duplicate</string>
+    <string name="cl_schedule_confirm_mode_action_ok">Update</string>
+    <string name="cl_schedule_confirm_mode_label_user">Duplicate time for users</string>
+    <string name="cl_schedule_confirm_mode_label_room">Duplicate time for rooms</string>
+
     <string name="cl_filter_user_dialog_title">Filter users</string>
     <string name="cl_join_user_dialog_title">Join users</string>
     <string name="cl_schedule_repeat_dialog_title">Schedule repeat</string>

@@ -30,6 +30,11 @@
     <string name="cl_schedule_edit_mode_only_future">今回以降</string>
     <string name="cl_schedule_edit_mode_all">この予定すべて</string>
 
+    <string name="cl_schedule_confirm_mode_title">時間が重複しています</string>
+    <string name="cl_schedule_confirm_mode_action_ok">更新する</string>
+    <string name="cl_schedule_confirm_mode_label_user">以下のユーザースケジュールの時間が重複しています。</string>
+    <string name="cl_schedule_confirm_mode_label_room">以下の会議室スケジュールの時間が重複しています。</string>
+
     <string name="cl_filter_user_dialog_title">ユーザーフィルター</string>
     <string name="cl_join_user_dialog_title">参加ユーザー</string>
     <string name="cl_schedule_repeat_dialog_title">繰り返しスケジュール</string>
