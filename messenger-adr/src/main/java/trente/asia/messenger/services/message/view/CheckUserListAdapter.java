@@ -15,6 +15,7 @@ import android.widget.TextView;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.messenger.BuildConfig;
 import trente.asia.messenger.R;
+import trente.asia.messenger.services.message.model.RealmUserModel;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WfPicassoHelper;
 
@@ -23,9 +24,9 @@ import trente.asia.welfare.adr.utils.WfPicassoHelper;
  *
  * @author TrungND
  */
-public class CheckUserListAdapter extends ArrayAdapter<UserModel>{
+public class CheckUserListAdapter extends ArrayAdapter<RealmUserModel>{
 
-	private List<UserModel>	mLstUser	= new ArrayList<>();
+	private List<RealmUserModel>	mLstUser	= new ArrayList<>();
 	private Context			mContext;
 
 	public class UserViewHolder{
@@ -39,7 +40,7 @@ public class CheckUserListAdapter extends ArrayAdapter<UserModel>{
 		}
 	}
 
-	public CheckUserListAdapter(Context context, List<UserModel> userList){
+	public CheckUserListAdapter(Context context, List<RealmUserModel> userList){
 		super(context, R.layout.item_check_user_list, userList);
 		this.mContext = context;
 		this.mLstUser = userList;
@@ -47,7 +48,7 @@ public class CheckUserListAdapter extends ArrayAdapter<UserModel>{
 
 	public View getView(int position, View convertView, ViewGroup parent){
 
-		final UserModel model = this.mLstUser.get(position);
+		final RealmUserModel model = this.mLstUser.get(position);
 
 		LayoutInflater mInflater = (LayoutInflater)mContext.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 		convertView = mInflater.inflate(R.layout.item_check_user_list, null);

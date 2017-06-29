@@ -22,9 +22,7 @@ public class CommentModel{
 	public String				itemType;
 	public String				commentType;
 	public UserModel			commentUser;
-	@Ignore
 	public AttachmentModel		attachment;
-	@Ignore
 	public ThumbnailModel		thumbnail;
 	public String				key;
 	public String				loginUserId;

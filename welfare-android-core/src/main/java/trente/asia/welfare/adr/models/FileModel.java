@@ -8,8 +8,7 @@ import io.realm.RealmObject;
  * @author TrungND
  */
 @com.bluelinelabs.logansquare.annotation.JsonObject(fieldDetectionPolicy = com.bluelinelabs.logansquare.annotation.JsonObject.FieldDetectionPolicy.NONPRIVATE_FIELDS)
-public class FileModel extends RealmObject{
-
+public class FileModel {
 	public String	key;
 	public String	fileType;
 	public String	fileName;

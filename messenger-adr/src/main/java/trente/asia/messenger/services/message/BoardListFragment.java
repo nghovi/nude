@@ -94,14 +94,14 @@ public class BoardListFragment extends AbstractMsgFragment implements View.OnCli
 
 				BoardModel boardModel = (BoardModel)parent.getItemAtPosition(position);
 				activeBoard = boardModel;
-				prefAccUtil.set(MsConst.PREF_ACTIVE_BOARD_ID, boardModel.key);
+				prefAccUtil.set(MsConst.PREF_ACTIVE_BOARD_ID, boardModel.key + "");
 				lsvBoard.setItemChecked(position, true);
 				if(onChangedBoardListener != null) onChangedBoardListener.onChangedBoard(boardModel, true);
 			}
 		});
 
 		activeBoard = new BoardModel();
-		activeBoard.key = prefAccUtil.get(MsConst.PREF_ACTIVE_BOARD_ID);
+		activeBoard.key = Integer.parseInt(prefAccUtil.get(MsConst.PREF_ACTIVE_BOARD_ID));
 
 		imgUserAvatar = (ImageView)getView().findViewById(R.id.img_id_myAvatar);
 		txtUserName = (TextView)getView().findViewById(R.id.txt_loginUserName);
@@ -157,7 +157,7 @@ public class BoardListFragment extends AbstractMsgFragment implements View.OnCli
 				if(activeBoard != null && !CCStringUtil.isEmpty(activeBoard.key)){
 					for(int i = 0; i < boardList.size(); i++){
 						BoardModel boardModel = boardList.get(i);
-						if(activeBoard.key.equals(boardModel.key)){
+						if(activeBoard.key == boardModel.key){
 							activeBoard = boardModel;
 							lsvBoard.setItemChecked(i, true);
 							if(onChangedBoardListener != null) onChangedBoardListener.onChangedBoard(activeBoard, false);
@@ -167,7 +167,7 @@ public class BoardListFragment extends AbstractMsgFragment implements View.OnCli
 				}else{
 					lsvBoard.setItemChecked(0, true);
 					activeBoard = boardList.get(0);
-					prefAccUtil.set(MsConst.PREF_ACTIVE_BOARD_ID, activeBoard.key);
+					prefAccUtil.set(MsConst.PREF_ACTIVE_BOARD_ID, activeBoard.key + "");
 					if(onChangedBoardListener != null) onChangedBoardListener.onChangedBoard(boardList.get(0), false);
 				}
 
@@ -226,7 +226,7 @@ public class BoardListFragment extends AbstractMsgFragment implements View.OnCli
 			boolean isActive = false;
 			for(int i = 0; i < lstBoard.size(); i++){
 				BoardModel boardModel = lstBoard.get(i);
-				if(boardModel.key.equals(activeBoard.key)){
+				if(boardModel.key == activeBoard.key){
 					lsvBoard.setItemChecked(i, true);
 					isActive = true;
 					break;

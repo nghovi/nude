@@ -102,7 +102,7 @@ public class BoardAdapter extends ArrayAdapter<BoardModel>{
 
 	public void addUnreadMessage(MessageContentModel messageModel){
 		for(BoardModel boardModel : boardList){
-			if(boardModel.key.equals(messageModel.boardId)){
+			if(boardModel.key == Integer.parseInt(messageModel.boardId)){
 				boardModel.boardUnread = CCStringUtil.toString(CCNumberUtil.checkNull(boardModel.boardUnread) + 1);
 				this.notifyDataSetChanged();
 				break;

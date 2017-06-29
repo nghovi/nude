@@ -61,4 +61,8 @@ public class MsConst{
 	public static String		PREF_ACTIVE_BOARD_ID			= "PREF_ACTIVE_BOARD_ID";
 	public static String		DEF_STAMP_ID					= "DEF_STAMP_ID";
 	public static String		DEF_STAMP_PATH					= "DEF_STAMP_PATH";
+
+	public static final String PREF_LOAD_MESSAGE_FIRST_TIME = "PREF_LOAD_MESSAGE_FIRST_TIME";
+	public static final String PREF_LAST_MESSAGE_KEY = "PREF_LAST_MESSAGE_KEY";
+	public static final String PREF_LAST_MESSAGE_UPDATE_DATE = "PREF_LAST_MESSAGE_UPDATE_DATE";
 }

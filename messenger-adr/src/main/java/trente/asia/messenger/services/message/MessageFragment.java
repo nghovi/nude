@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
 import android.location.Location;
 import android.net.ConnectivityManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -53,11 +54,9 @@ import java.util.TimerTask;
 import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCJsonUtil;
-import asia.chiase.core.util.CCNumberUtil;
 import asia.chiase.core.util.CCStringUtil;
 import io.realm.Realm;
 import io.realm.RealmResults;
-import io.realm.Sort;
 import trente.asia.android.define.CsConst;
 import trente.asia.android.view.model.ChiaseListItemModel;
 import trente.asia.messenger.BuildConfig;
@@ -79,6 +78,7 @@ import trente.asia.messenger.services.message.listener.OnRefreshBoardListListene
 import trente.asia.messenger.services.message.listener.OnScrollToTopListener;
 import trente.asia.messenger.services.message.model.BoardModel;
 import trente.asia.messenger.services.message.model.MessageContentModel;
+import trente.asia.messenger.services.message.model.RealmMessageModel;
 import trente.asia.messenger.services.message.model.WFMStampCategoryModel;
 import trente.asia.messenger.services.message.model.WFMStampModel;
 import trente.asia.messenger.services.message.view.BoardPagerAdapter;
@@ -122,9 +122,9 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 
 	private MessageAdapter								mMsgAdapter;
 	private View										mViewForMenuBehind;
-	private List<MessageContentModel>					mMsgContentList				= new ArrayList<>();
+	private List<RealmMessageModel>					mMsgContentList				= new ArrayList<>();
 	private BoardModel									activeBoard					= new BoardModel();
-	public static String								activeBoardId;
+	public static int								activeBoardId;
 	private String										autoroadCd;
 
 	private BoardListFragment							boardListFragment;
@@ -133,8 +133,8 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 	// seconds
 	private Timer										mTimer;
 	private boolean										isFirstScroll2Top			= true;
-	private String										latestMessageId				= "0";
-	private String										startMessageId				= "0";
+	private int latestMessageKey = 0;
+	private int startMessageKey = 0;
 	private boolean										isSuccessLoad				= false;
 
 	private MsChiaseDialog								mDlgCheckUser;
@@ -178,7 +178,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 	private OnAddCommentListener						onAddCommentListener		= new OnAddCommentListener() {
 
 																						@Override
-																						public void onAddCommentListener(String messageId){
+																						public void onAddCommentListener(int messageId){
 																							MessageFragment.this.onAddCommentListener(messageId);
 																						}
 																					};
@@ -302,7 +302,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 	private OnActionClickListener						actionClickListener			= new OnActionClickListener() {
 
 																						@Override
-																						public void onActionClickListener(ChiaseListItemModel item, MessageContentModel message){
+																						public void onActionClickListener(ChiaseListItemModel item, RealmMessageModel message){
 																							if(MsConst.MESSAGE_ACTION_EDIT.equals(item.key)){
 																								editMessage(message);
 																							}else if(MsConst.MESSAGE_ACTION_DELETE.equals(item.key)){
@@ -336,6 +336,8 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 	private long										pivotTime					= 0;
 	private Realm										mRealm;
 	private String										staticStampId;
+	private PreferencesAccountUtil preferencesAccountUtil;
+	private String lastMessageUpdateDate;
 	// private String latestBoardId;
 
 	@Override
@@ -343,7 +345,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 		super.onCreate(savedInstanceState);
 		mRealm = Realm.getDefaultInstance();
 		networkChangeReceiver = new NetworkChangeReceiver(this);
-		PreferencesAccountUtil preferencesAccountUtil = new PreferencesAccountUtil(getContext());
+		preferencesAccountUtil = new PreferencesAccountUtil(getContext());
 		staticStampId = preferencesAccountUtil.get(MsConst.DEF_STAMP_ID);
 		getActivity().registerReceiver(networkChangeReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
 	}
@@ -496,9 +498,19 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 	@Override
 	protected void initData(){
 		activeBoard = new BoardModel();
-		activeBoard.key = prefAccUtil.get(MsConst.PREF_ACTIVE_BOARD_ID);
+		activeBoard.key = Integer.parseInt(prefAccUtil.get(MsConst.PREF_ACTIVE_BOARD_ID));
 		activeBoardId = activeBoard.key;
-		load10Messages(true);
+		String prefFirstTime = preferencesAccountUtil.get(MsConst.PREF_LOAD_MESSAGE_FIRST_TIME);
+		if (prefFirstTime == null || "".equals(prefFirstTime)) {
+			loadMessageFirstTime(true);
+		} else {
+			latestMessageKey = Integer.parseInt(preferencesAccountUtil.get(MsConst.PREF_LAST_MESSAGE_KEY));
+			RealmResults<RealmMessageModel> messages = mRealm.where(RealmMessageModel.class)
+					.lessThanOrEqualTo("key", latestMessageKey)
+					.greaterThan("key", latestMessageKey - 10)
+					.findAll();
+			add10Messages(messages);
+		}
 	}
 
 	private void sendLocation(){
@@ -535,7 +547,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 		binding.layoutStamp.getRoot().setVisibility(View.GONE);
 	}
 
-	private void load10Messages(boolean showLoading){
+	private void loadMessageFirstTime(boolean showLoading){
 		JSONObject jsonObject = new JSONObject();
 		try{
 			jsonObject.put("boardId", activeBoard.key);
@@ -543,22 +555,21 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 			e.printStackTrace();
 		}
 		requestLoad(MsConst.API_MESSAGE_BOARD, jsonObject, showLoading);
+		preferencesAccountUtil.set(MsConst.PREF_LOAD_MESSAGE_FIRST_TIME, "done");
 	}
 
 	private void loadMessageLatest(){
-		if("0".equals(latestMessageId)){
-			load10Messages(false);
-		}else{
+		lastMessageUpdateDate = preferencesAccountUtil.get(MsConst.PREF_LAST_MESSAGE_UPDATE_DATE);
 			JSONObject jsonObject = new JSONObject();
 			try{
 				jsonObject.put("boardId", activeBoard.key);
-				jsonObject.put("targetMessageId", latestMessageId);
-				jsonObject.put("startMessageId", startMessageId);
+				if (lastMessageUpdateDate != null && !lastMessageUpdateDate.isEmpty()) {
+					jsonObject.put("lastMessageUpdateDate", lastMessageUpdateDate);
+				}
 			}catch(JSONException e){
 				e.printStackTrace();
 			}
 			requestLoad(MsConst.API_MESSAGE_LATEST, jsonObject, false);
-		}
 	}
 
 	private void loadNoteDetail(){
@@ -576,32 +587,57 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 		try{
 			if(MsConst.API_MESSAGE_BOARD.equals(url)){
 				List<MessageContentModel> lstMessage = LoganSquare.parseList(response.optString("contents"), MessageContentModel.class);
-				add10Messages(lstMessage);
-				saveMessageToDB(lstMessage);
+				List<RealmMessageModel> lstRealmMessage = new ArrayList<>();
+				for (MessageContentModel message : lstMessage) {
+					lstRealmMessage.add(new RealmMessageModel(message));
+				}
+				add10Messages(lstRealmMessage);
+				saveMessageToDB(lstRealmMessage);
+
 			} else if (MsConst.API_MESSAGE_LATEST.equals(url)){
+				lastMessageUpdateDate = response.optString("lastMessageUpdateDate");
+				preferencesAccountUtil.set(MsConst.PREF_LAST_MESSAGE_UPDATE_DATE, lastMessageUpdateDate);
 				List<MessageContentModel> lstMessage = LoganSquare.parseList(response.optString("contents"), MessageContentModel.class);
-				if(!CCCollectionUtil.isEmpty(lstMessage)){
-					MessageContentModel firstMessage = lstMessage.get(0);
-					if(!CCStringUtil.isEmpty(activeBoardId) && activeBoardId.equals(firstMessage.boardId)){
-						messageView.revMessage.isScrollToBottom();
-						mMsgAdapter.addMessages(lstMessage);
-						messageView.revMessage.scrollRecyclerToBottom();
-						String lastKey = lstMessage.get(lstMessage.size() - 1).key;
-						if(CCNumberUtil.toInteger(latestMessageId).compareTo(CCNumberUtil.toInteger(lastKey)) < 0){
-							latestMessageId = lastKey;
-						}
+				log("Contents: " + response.optString("contents"));
+				if (lstMessage.size() > 0) {
+					List<RealmMessageModel> messages = new ArrayList<>();
+					for (MessageContentModel message : lstMessage) {
+						messages.add(new RealmMessageModel(message));
+					}
+					saveMessageToDB(messages);
+					int messageKey = messages.get(messages.size() - 1).key;
+					log("latestMessageKey = " + latestMessageKey);
+					log("messageKey = " + messageKey);
+					if (latestMessageKey < messageKey) {
+						RealmResults<RealmMessageModel> newMessages = mRealm.where(RealmMessageModel.class)
+								.greaterThan("key", latestMessageKey).findAll();
+						mMsgAdapter.addMessages(newMessages);
+						latestMessageKey = messageKey;
 					}
 				}
 
-				// update board list
-				List<BoardModel> lstBoard = LoganSquare.parseList(response.optString("boards"), BoardModel.class);
-				if(onRefreshBoardListListener != null) onRefreshBoardListListener.onRefreshBoardListListener(lstBoard);
-
-				// update action list
-				List<MessageContentModel> lstAction = LoganSquare.parseList(response.optString("actions"), MessageContentModel.class);
-				if(!CCCollectionUtil.isEmpty(lstAction)){
-					this.updateMessage(lstAction);
-				}
+//				if(!CCCollectionUtil.isEmpty(lstMessage)){
+//					MessageContentModel firstMessage = lstMessage.get(0);
+//					if(!CCStringUtil.isEmpty(activeBoardId) && activeBoardId.equals(firstMessage.boardId)){
+//						messageView.revMessage.isScrollToBottom();
+//						mMsgAdapter.addMessages(lstMessage);
+//						messageView.revMessage.scrollRecyclerToBottom();
+//						String lastKey = lstMessage.get(lstMessage.size() - 1).key;
+//						if(CCNumberUtil.toInteger(latestMessageKey).compareTo(CCNumberUtil.toInteger(lastKey)) < 0){
+//							latestMessageKey = lastKey;
+//						}
+//					}
+//				}
+//
+//				// update board list
+//				List<BoardModel> lstBoard = LoganSquare.parseList(response.optString("boards"), BoardModel.class);
+//				if(onRefreshBoardListListener != null) onRefreshBoardListListener.onRefreshBoardListListener(lstBoard);
+//
+//				// update action list
+//				List<MessageContentModel> lstAction = LoganSquare.parseList(response.optString("actions"), MessageContentModel.class);
+//				if(!CCCollectionUtil.isEmpty(lstAction)){
+//					this.updateMessage(lstAction);
+//				}
 			}else if(MsConst.API_MESSAGE_NOTE_DETAIL.equals(url)){
 				BoardModel boardModel = LoganSquare.parse(response.optString("board"), BoardModel.class);
 				activeBoard = boardModel;
@@ -616,29 +652,29 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 		}
 	}
 
-	private void saveMessageToDB(List<MessageContentModel> lstMessage) {
+	private void saveMessageToDB(List<RealmMessageModel> lstMessage) {
 		mRealm.beginTransaction();
-		for (MessageContentModel message : lstMessage) {
+		for (RealmMessageModel message : lstMessage) {
 			mRealm.copyToRealmOrUpdate(message);
 		}
 		mRealm.commitTransaction();
 	}
 
-	private void add10Messages(List<MessageContentModel> lstMessage) {
+	private void add10Messages(List<RealmMessageModel> lstMessage) {
 		if(!CCCollectionUtil.isEmpty(lstMessage)){
-			MessageContentModel firstMessage = lstMessage.get(0);
-			if(!CCStringUtil.isEmpty(activeBoardId) && activeBoardId.equals(firstMessage.boardId)){
+			RealmMessageModel firstMessage = lstMessage.get(0);
+			if(activeBoardId == firstMessage.boardId){
 				if(CCStringUtil.isEmpty(autoroadCd)){
 					mMsgAdapter.addMessages(lstMessage);
 					messageView.revMessage.setLastVisibleItem(mMsgAdapter.getItemCount() - 1);
 					messageView.revMessage.scrollRecyclerToBottom();
-					startMessageId = lstMessage.get(0).key;
-					latestMessageId = lstMessage.get(lstMessage.size() - 1).key;
+					startMessageKey = lstMessage.get(0).key;
+					latestMessageKey = lstMessage.get(lstMessage.size() - 1).key;
 				}else{
 					// append to top
 					Collections.reverse(lstMessage);
 					mMsgAdapter.addMessage2Top(lstMessage);
-					startMessageId = lstMessage.get(0).key;
+					startMessageKey = lstMessage.get(0).key;
 				}
 			}
 			isSuccessLoad = true;
@@ -696,7 +732,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 	// transaction.replace(R.id.slice_menu_board, boardListFragment).commit();
 	// }
 
-	private void updateMessage(List<MessageContentModel> lstAction){
+	private void updateMessage(List<RealmMessageModel> lstAction){
 		mMsgAdapter.updateMessage(lstAction);
 	}
 
@@ -713,7 +749,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 			activeBoardId = activeBoard.key;
 		}
 
-//		startTimer();
+		startTimer();
 	}
 
 	private void startTimer(){
@@ -780,7 +816,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 		requestUpdate(MsConst.API_MESSAGE_UPDATE, jsonObject, false);
 	}
 
-	private void deleteMessage(MessageContentModel message){
+	private void deleteMessage(RealmMessageModel message){
 		JSONObject jsonObject = new JSONObject();
 		try{
 			jsonObject.put("key", message.key);
@@ -791,13 +827,13 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 		requestUpdate(MsConst.API_MESSAGE_DELETE, jsonObject, false);
 	}
 
-	private void editMessage(MessageContentModel message){
+	private void editMessage(RealmMessageModel message){
 		messageView.edtMessage.setText(message.messageContent);
 		focusEditText(messageView.edtMessage);
 		messageView.animateLikeButton(false);
 	}
 
-	private void copy2Note(MessageContentModel message){
+	private void copy2Note(RealmMessageModel message){
 		JSONObject jsonObject = new JSONObject();
 		try{
 			jsonObject.put("key", activeBoard.key);
@@ -826,17 +862,17 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 			MessageContentModel contentModel = null;
 			try{
 				contentModel = LoganSquare.parse(response.optString("detail"), MessageContentModel.class);
-				if(!CCStringUtil.isEmpty(activeBoardId) && activeBoardId.equals(contentModel.boardId)){
-					if(messageView.likeButtonType == MessageView.LikeButtonType.EDIT){
-						List<MessageContentModel> lstUpdate = new ArrayList<>();
-						lstUpdate.add(contentModel);
-						mMsgAdapter.updateMessage(lstUpdate);
-					}else{
-						appendMessage(contentModel);
-						// latestMessageId = contentModel.key;
-					}
-					messageView.edtMessage.setText("");
-				}
+//				if(!CCStringUtil.isEmpty(activeBoardId) && activeBoardId.equals(contentModel.boardId)){
+//					if(messageView.likeButtonType == MessageView.LikeButtonType.EDIT){
+//						List<MessageContentModel> lstUpdate = new ArrayList<>();
+//						lstUpdate.add(contentModel);
+//						mMsgAdapter.updateMessage(lstUpdate);
+//					}else{
+//						appendMessage(contentModel);
+//						// latestMessageKey = contentModel.key;
+//					}
+//					messageView.edtMessage.setText("");
+//				}
 			}catch(IOException e){
 				e.printStackTrace();
 			}
@@ -854,7 +890,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 
 	}
 
-	private void appendMessage(MessageContentModel messageModel){
+	private void appendMessage(RealmMessageModel messageModel){
 		messageView.revMessage.isScrollToBottom();
 		mMsgAdapter.addMessage(messageModel);
 		messageView.revMessage.scrollRecyclerToBottom();
@@ -926,7 +962,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 	}
 
 	@Override
-	public void onItemMsgClickListener(MessageContentModel item){
+	public void onItemMsgClickListener(RealmMessageModel item){
 		MessageDetailFragment fragment = new MessageDetailFragment();
 		fragment.setActiveMessage(item);
 		fragment.setOnAddCommentListener(onAddCommentListener);
@@ -934,7 +970,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 	}
 
 	@Override
-	public void onItemCheckClickListener(MessageContentModel item){
+	public void onItemCheckClickListener(RealmMessageModel item){
 		if(!CCCollectionUtil.isEmpty(item.checks)){
 			mDlgCheckUser.updateCheckUserList(item.getCheckList());
 			mDlgCheckUser.show();
@@ -942,7 +978,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 	}
 
 	@Override
-	public void onItemMsgLongClickListener(MessageContentModel item){
+	public void onItemMsgLongClickListener(RealmMessageModel item){
 		List<ChiaseListItemModel> lstAction = new ArrayList<>();
 		if(myself.key.equals(item.messageSender.key)){
 			if(WelfareConst.ITEM_TEXT_TYPE_TEXT.equals(item.messageType)){
@@ -963,7 +999,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 	private void onScrollToTopListener(){
 		if(!CCStringUtil.isEmpty(autoroadCd) && !CCConst.NONE.equals(autoroadCd)){
 			if(!isFirstScroll2Top){
-				load10Messages(true);
+				loadMessageFirstTime(true);
 			}else{
 				isFirstScroll2Top = false;
 			}
@@ -974,8 +1010,8 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 		if(mSlideMenuLayout.isMenuShown()){
 			mSlideMenuLayout.toggleMenu();
 		}
-		if(activeBoard == null || !boardModel.key.equals(activeBoard.key)){
-			latestMessageId = "0";
+		if(activeBoard == null || boardModel.key != activeBoard.key){
+			latestMessageKey = 0;
 			activity.runOnUiThread(new Runnable() {
 
 				public void run(){
@@ -992,7 +1028,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 				messageView.edtMessage.setText("");
 				autoroadCd = "";
 				isFirstScroll2Top = true;
-				load10Messages(true);
+				loadMessageFirstTime(true);
 			}
 		}else{
 			if(!boardModel.boardName.equals(activeBoard.boardName)){
@@ -1069,16 +1105,17 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 			alertDialog.show();
 		}else{
 			MessageContentModel photoModel = null;
-			try{
-				photoModel = LoganSquare.parse(CCStringUtil.toString(detailMessage), MessageContentModel.class);
-				appendMessage(photoModel);
-			}catch(IOException e){
-				e.printStackTrace();
-			}
+//			try{
+//				photoModel = LoganSquare.parse(CCStringUtil.toString(detailMessage), MessageContentModel.class);
+//				RealmMessageModel
+//				appendMessage(photoModel);
+//			}catch(IOException e){
+//				e.printStackTrace();
+//			}
 		}
 	}
 
-	private void onAddCommentListener(String messageId){
+	private void onAddCommentListener(int messageId){
 		mMsgAdapter.addComment(messageId);
 	}
 
@@ -1105,10 +1142,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 	@Override
 	protected void errorNetwork(String url){
 		if (MsConst.API_MESSAGE_BOARD.equals(url)) {
-			RealmResults<MessageContentModel> lstMessage = mRealm.where(MessageContentModel.class)
-					.findAllSorted("key", Sort.ASCENDING);
-			List<MessageContentModel> lastMessage = lstMessage.subList(lstMessage.size() - 10, lstMessage.size());
-			add10Messages(lastMessage);
+
 		}
 	}
 
@@ -1138,14 +1172,14 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 		boardListFragment = null;
 		menuManager = null;
 		getActivity().unregisterReceiver(networkChangeReceiver);
+		preferencesAccountUtil.set(MsConst.PREF_LAST_MESSAGE_KEY, latestMessageKey + "");
 		mRealm.close();
 	}
 
 	@Override
 	public void onPause(){
 		super.onPause();
-		activeBoardId = null;
-//		stopTimer();
+		stopTimer();
 	}
 
 	private void stopTimer(){

@@ -53,6 +53,7 @@ import trente.asia.messenger.fragment.AbstractMsgFragment;
 import trente.asia.messenger.services.message.listener.OnAddCommentListener;
 import trente.asia.messenger.services.message.model.BoardModel;
 import trente.asia.messenger.services.message.model.MessageContentModel;
+import trente.asia.messenger.services.message.model.RealmMessageModel;
 import trente.asia.messenger.services.util.NetworkChangeReceiver;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.EmotionConst;
@@ -77,12 +78,12 @@ public class MessageDetailFragment extends AbstractMsgFragment
 	private VideoView					mVideoView;
 	private ImageView					imgPlay;
 
-	private MessageContentModel			messageModel;
+	private RealmMessageModel			messageModel;
 	private ImageView					mBtnComment;
 	private LinearLayout				mLnrSend;
 	private ChiaseEditText				mEdtComment;
-	public static String				activeMessageId;
-	private MessageContentModel			activeMessage;
+	public static int				activeMessageId;
+	private RealmMessageModel			activeMessage;
 
 	private TextView					mTxtUserDetail;
 	private TextView					mTxtDetailDate;
@@ -113,7 +114,7 @@ public class MessageDetailFragment extends AbstractMsgFragment
 	private WfProfileDialog				mDlgProfile;
 	private NetworkChangeReceiver		networkChangeReceiver;
 
-	public void setActiveMessage(MessageContentModel activeMessage){
+	public void setActiveMessage(RealmMessageModel activeMessage){
 		this.activeMessage = activeMessage;
 	}
 
@@ -229,7 +230,7 @@ public class MessageDetailFragment extends AbstractMsgFragment
 		try{
 
 			if(MsConst.API_MESSAGE_DETAIL.equals(url)){
-				messageModel = LoganSquare.parse(response.optString("detail"), MessageContentModel.class);
+//				messageModel = LoganSquare.parse(response.optString("detail"), MessageContentModel.class);
 
 				// prefAccUtil.set(WelfareConst.ACTIVE_BOARD_ID, messageModel.boardId);
 				if(!CCStringUtil.isEmpty(messageModel.messageSender.avatarPath)){
@@ -251,16 +252,16 @@ public class MessageDetailFragment extends AbstractMsgFragment
 					WfPicassoHelper.loadImage(activity, BuildConfig.HOST + messageModel.messageSender.avatarPath, mImgAvatar, null);
 				}
 				if(!CCCollectionUtil.isEmpty(messageModel.targets)){
-					mLnrTarget.setVisibility(View.VISIBLE);
-					LayoutInflater mInflater = (LayoutInflater)activity.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-					for(UserModel userModel : messageModel.targets){
-						View toUserView = mInflater.inflate(R.layout.item_to_user_list, null);
-						ImageView imgToUserAvatar = (ImageView)toUserView.findViewById(R.id.img_id_to_user_avatar);
-						if(!CCStringUtil.isEmpty(userModel.avatarPath)){
-							WfPicassoHelper.loadImage(activity, BuildConfig.HOST + userModel.avatarPath, imgToUserAvatar, null);
-						}
-						mLnrTarget.addView(toUserView);
-					}
+//					mLnrTarget.setVisibility(View.VISIBLE);
+//					LayoutInflater mInflater = (LayoutInflater)activity.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+//					for(UserModel userModel : messageModel.targets){
+//						View toUserView = mInflater.inflate(R.layout.item_to_user_list, null);
+//						ImageView imgToUserAvatar = (ImageView)toUserView.findViewById(R.id.img_id_to_user_avatar);
+//						if(!CCStringUtil.isEmpty(userModel.avatarPath)){
+//							WfPicassoHelper.loadImage(activity, BuildConfig.HOST + userModel.avatarPath, imgToUserAvatar, null);
+//						}
+//						mLnrTarget.addView(toUserView);
+//					}
 				}
 
 				if(WelfareConst.ITEM_TEXT_TYPE_LOC.equals(messageModel.messageType)){
@@ -324,11 +325,11 @@ public class MessageDetailFragment extends AbstractMsgFragment
 				}
 
 				if(!CCCollectionUtil.isEmpty(messageModel.comments)){
-					latestCommentId = CCNumberUtil.toInteger(messageModel.comments.get(messageModel.comments.size() - 1).key);
-					for(CommentModel model : messageModel.comments){
-						addComment(model);
-					}
-					mTxtComment.setText(String.valueOf(mLstCommentId.size()));
+//					latestCommentId = CCNumberUtil.toInteger(messageModel.comments.get(messageModel.comments.size() - 1).key);
+//					for(CommentModel model : messageModel.comments){
+//						addComment(model);
+//					}
+//					mTxtComment.setText(String.valueOf(mLstCommentId.size()));
 				}
 
 				if(!CCCollectionUtil.isEmpty(messageModel.checks)){
@@ -651,7 +652,6 @@ public class MessageDetailFragment extends AbstractMsgFragment
 	@Override
 	public void onPause(){
 		super.onPause();
-		activeMessageId = null;
 
 		if(mTimer != null){
 			mTimer.cancel();
@@ -688,7 +688,6 @@ public class MessageDetailFragment extends AbstractMsgFragment
 		messageModel = null;
 		mBtnComment = null;
 		mEdtComment = null;
-		activeMessageId = null;
 
 		mTxtUserDetail = null;
 		mImgAvatar = null;

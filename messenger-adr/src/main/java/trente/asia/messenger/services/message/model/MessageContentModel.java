@@ -19,10 +19,8 @@ import trente.asia.welfare.adr.models.UserModel;
  * Created by Huy-nq on 7/12/2016.
  */
 @com.bluelinelabs.logansquare.annotation.JsonObject(fieldDetectionPolicy = com.bluelinelabs.logansquare.annotation.JsonObject.FieldDetectionPolicy.NONPRIVATE_FIELDS)
-@RealmClass
-public class MessageContentModel implements RealmModel{
+public class MessageContentModel extends BitmapModel {
 
-	@PrimaryKey
 	public String				key;
 	public String				boardId;
 	public UserModel			messageSender;
@@ -36,26 +34,19 @@ public class MessageContentModel implements RealmModel{
 
 	public FileModel			attachment;
 	public FileModel			thumbnailAttachment;
-	@Ignore
 	public List<UserModel>		checks;
 	public String				gpsLongtitude;
 	public String				gpsLatitude;
 
-	@Ignore
 	public List<LikeModel>		likes;
-	@Ignore
 	public List<CommentModel>	comments;
-	@Ignore
 	public List<UserModel>		targets;
 	// public boolean isEmotion = false;
 	// public int sequence;
 
 	public Integer				checkCount;
-	@Ignore
-	public List<UserModel>		checkList;
+	public List<UserModel>		checkList = new ArrayList<>();
 	public boolean				isChanged	= false;
-	@Ignore
-	public BitmapModel			bitmapModel = new BitmapModel();
 
 	public MessageContentModel(){
 	}

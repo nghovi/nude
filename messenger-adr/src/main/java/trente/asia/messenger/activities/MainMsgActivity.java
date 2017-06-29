@@ -8,6 +8,7 @@ import trente.asia.messenger.services.message.MessageDetailFragment;
 import trente.asia.messenger.services.message.MessageFragment;
 import trente.asia.messenger.services.message.model.BoardModel;
 import trente.asia.messenger.services.message.model.MessageContentModel;
+import trente.asia.messenger.services.message.model.RealmMessageModel;
 import trente.asia.messenger.services.user.MsgLoginFragment;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
@@ -37,8 +38,8 @@ public class MainMsgActivity extends WelfareActivity{
 
 	private void showFragment(Bundle mExtras){
 		String serviceCode = mExtras.getString(WelfareConst.NotificationReceived.USER_INFO_NOTI_TYPE);
-		String key = mExtras.getString(WelfareConst.NotificationReceived.USER_INFO_NOTI_KEY);
-		String parentKey = mExtras.getString(WelfareConst.NotificationReceived.USER_INFO_NOTI_PARENT_KEY);
+		int key = Integer.parseInt(mExtras.getString(WelfareConst.NotificationReceived.USER_INFO_NOTI_KEY));
+		int parentKey = Integer.parseInt(mExtras.getString(WelfareConst.NotificationReceived.USER_INFO_NOTI_PARENT_KEY));
 		if(WelfareConst.NotificationType.MS_NOTI_NEW_MESSAGE.equals(serviceCode)){
 			MessageFragment messageFragment = new MessageFragment();
 			BoardModel boardModel = new BoardModel(key);
@@ -46,7 +47,7 @@ public class MainMsgActivity extends WelfareActivity{
 			addFragment(messageFragment);
 		}else if(WelfareConst.NotificationType.MS_NOTI_NEW_COMMENT.equals(serviceCode)){
 			MessageDetailFragment messageFragment = new MessageDetailFragment();
-			MessageContentModel activeMessage = new MessageContentModel();
+			RealmMessageModel activeMessage = new RealmMessageModel();
 			activeMessage.key = key;
 			activeMessage.boardId = parentKey;
 			messageFragment.setActiveMessage(activeMessage);

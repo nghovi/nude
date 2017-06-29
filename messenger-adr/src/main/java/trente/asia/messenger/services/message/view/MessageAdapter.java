@@ -23,10 +23,14 @@ import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCNumberUtil;
 import asia.chiase.core.util.CCStringUtil;
+import io.realm.RealmList;
 import trente.asia.messenger.BuildConfig;
 import trente.asia.messenger.R;
 import trente.asia.messenger.services.message.listener.ItemMsgClickListener;
 import trente.asia.messenger.services.message.model.MessageContentModel;
+import trente.asia.messenger.services.message.model.RealmCommentModel;
+import trente.asia.messenger.services.message.model.RealmMessageModel;
+import trente.asia.messenger.services.message.model.RealmUserModel;
 import trente.asia.messenger.services.message.model.WFMStampModel;
 import trente.asia.welfare.adr.activity.WelfareFragment;
 import trente.asia.welfare.adr.define.WelfareConst;
@@ -42,11 +46,11 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
 	private final WelfareFragment.OnAvatarClickListener	onAvatarClickListener;
 	private Context										mContext;
-	private List<MessageContentModel>					mLstMessage;
+	private List<RealmMessageModel>					mLstMessage;
 	public ItemMsgClickListener							itemMsgClickListener;
 
 	private List<String>								lstDate	= new ArrayList<>();
-	private List<String>								lstKey	= new ArrayList<>();
+	private List<Integer>								lstKey	= new ArrayList<>();
 
 	public class MessageViewHolder extends RecyclerView.ViewHolder{
 
@@ -102,7 +106,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 			}
 		}
 
-		public void bind(final MessageViewHolder holder, final MessageContentModel item, final ItemMsgClickListener listener){
+		public void bind(final MessageViewHolder holder, final RealmMessageModel item, final ItemMsgClickListener listener){
 			if(!WelfareConst.ITEM_TEXT_TYPE_TEXT.equals(item.messageType)
 					&& !WelfareConst.ITEM_TEXT_TYPE_LIKE.equals(item.messageType)
 					&& !WelfareConst.ITEM_TEXT_TYPE_STAMP.equals(item.messageType)){
@@ -126,26 +130,26 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
 			if(!WelfareConst.ITEM_TEXT_TYPE_LIKE.equals(item.messageType)
 					&& !WelfareConst.ITEM_TEXT_TYPE_STAMP.equals(item.messageType)){
-				if(item.getCheckCount().compareTo(CCConst.ZERO) > 0){
-					lnrCheck.setOnClickListener(new View.OnClickListener() {
-
-						@Override
-						public void onClick(View v){
-							if(itemMsgClickListener != null) itemMsgClickListener.onItemCheckClickListener(item);
-						}
-					});
-				}else{
-					lnrCheck.setOnClickListener(null);
-				}
+//				if(item.getCheckCount().compareTo(CCConst.ZERO) > 0){
+//					lnrCheck.setOnClickListener(new View.OnClickListener() {
+//
+//						@Override
+//						public void onClick(View v){
+//							if(itemMsgClickListener != null) itemMsgClickListener.onItemCheckClickListener(item);
+//						}
+//					});
+//				}else{
+//					lnrCheck.setOnClickListener(null);
+//				}
 			}
 		}
 	}
 
-	public MessageAdapter(Context context, List<MessageContentModel> contentModelList, ItemMsgClickListener itemMsgClickListener, WelfareFragment.OnAvatarClickListener listener){
+	public MessageAdapter(Context context, List<RealmMessageModel> contentModelList, ItemMsgClickListener itemMsgClickListener, WelfareFragment.OnAvatarClickListener listener){
 		super();
 		this.mContext = context;
 		this.mLstMessage = contentModelList;
-		for(MessageContentModel contentModel : contentModelList){
+		for(RealmMessageModel contentModel : contentModelList){
 			lstKey.add(contentModel.key);
 		}
 		this.itemMsgClickListener = itemMsgClickListener;
@@ -161,7 +165,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 	@Override
 	public void onBindViewHolder(MessageViewHolder viewHolder, int position){
 		// boolean isEmotion = false;
-		final MessageContentModel contentModel = mLstMessage.get(position);
+		final RealmMessageModel contentModel = mLstMessage.get(position);
 		if(WelfareConst.ITEM_TEXT_TYPE_DATE.equals(contentModel.messageType)){
 			viewHolder.txtDate.setText(contentModel.messageDate);
 		}else{
@@ -230,7 +234,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 				LayoutInflater mInflater = (LayoutInflater)mContext.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 
 				for(int i = 0; i < contentModel.targets.size() && i < 5; i++){
-					UserModel userModel = contentModel.targets.get(i);
+					RealmUserModel userModel = contentModel.targets.get(i);
 					View toUserView = mInflater.inflate(R.layout.item_to_user_list, null);
 					ImageView imgToUserAvatar = (ImageView)toUserView.findViewById(R.id.img_id_to_user_avatar);
 					if(!CCStringUtil.isEmpty(userModel.avatarPath)){
@@ -243,7 +247,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 			// if(!CCCollectionUtil.isEmpty(contentModel.checks)){
 			if(!WelfareConst.ITEM_TEXT_TYPE_LIKE.equals(contentModel.messageType) &&
 			!WelfareConst.ITEM_TEXT_TYPE_STAMP.equals(contentModel.messageType)){
-				viewHolder.txtNumCheck.setText(String.valueOf(contentModel.getCheckCount()));
+//				viewHolder.txtNumCheck.setText(String.valueOf(contentModel.getCheckCount()));
 			}
 			// }
 		}
@@ -266,7 +270,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 	public void onViewAttachedToWindow(MessageViewHolder viewHolder){
 		if(viewHolder.imgAvatar != null){
 			int position = viewHolder.getAdapterPosition();
-			MessageContentModel contentModel = mLstMessage.get(position);
+			RealmMessageModel contentModel = mLstMessage.get(position);
 			if(!CCStringUtil.isEmpty(contentModel.messageSender.avatarPath)){
 				WfPicassoHelper.loadImage(mContext, BuildConfig.HOST + contentModel.messageSender.avatarPath, viewHolder.imgAvatar, null);
 			}else{
@@ -277,7 +281,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
 	@Override
 	public int getItemViewType(int position){
-		MessageContentModel contentModel = mLstMessage.get(position);
+		RealmMessageModel contentModel = mLstMessage.get(position);
 		if(WelfareConst.ITEM_TEXT_TYPE_DATE.equals(contentModel.messageType)){
 			return R.layout.item_messages_date;
 		}else if(WelfareConst.ITEM_TEXT_TYPE_LOC.equals(contentModel.messageType)){
@@ -302,8 +306,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 	 *
 	 * @param message received message
 	 */
-	public void addMessage(MessageContentModel message){
-		List<MessageContentModel> lstMessage = appendMessageWithDateLabel(message);
+	public void addMessage(RealmMessageModel message){
+		List<RealmMessageModel> lstMessage = appendMessageWithDateLabel(message);
 		this.mLstMessage.addAll(lstMessage);
 		notifyItemRangeInserted(mLstMessage.size() - lstMessage.size(), mLstMessage.size());
 	}
@@ -313,11 +317,11 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 	 *
 	 * @param messages received message
 	 */
-	public void addMessage2Top(List<MessageContentModel> messages){
+	public void addMessage2Top(List<RealmMessageModel> messages){
 		// notifyItemRangeChanged(0, 1);
 		int oldSize = this.mLstMessage.size();
-		for(MessageContentModel messageModel : messages){
-			List<MessageContentModel> lstAppend = appendMessageWithDateLabel(messageModel);
+		for(RealmMessageModel messageModel : messages){
+			List<RealmMessageModel> lstAppend = appendMessageWithDateLabel(messageModel);
 			if(lstAppend.size() > 1){
 				this.mLstMessage.addAll(0, lstAppend);
 				// notifyItemRangeInserted(0, lstAppend.size() - 1);
@@ -335,17 +339,17 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 	 *
 	 * @param lstMessage messages to add
 	 */
-	public void addMessages(List<MessageContentModel> lstMessage){
-		List<MessageContentModel> lstAppend = appendDateLabel(lstMessage);
+	public void addMessages(List<RealmMessageModel> lstMessage){
+		List<RealmMessageModel> lstAppend = appendDateLabel(lstMessage);
 		int size = this.mLstMessage.size();
 		this.mLstMessage.addAll(lstAppend);
 		notifyItemRangeInserted(size, this.mLstMessage.size());
 	}
 
-	private List<MessageContentModel> appendDateLabel(List<MessageContentModel> lstMessage){
-		List<MessageContentModel> lstAppend = new ArrayList<>();
-		for(MessageContentModel contentModel : lstMessage){
-			List<MessageContentModel> list = appendMessageWithDateLabel(contentModel);
+	private List<RealmMessageModel> appendDateLabel(List<RealmMessageModel> lstMessage){
+		List<RealmMessageModel> lstAppend = new ArrayList<>();
+		for(RealmMessageModel contentModel : lstMessage){
+			List<RealmMessageModel> list = appendMessageWithDateLabel(contentModel);
 			if(!CCCollectionUtil.isEmpty(list)){
 				lstAppend.addAll(list);
 			}
@@ -353,13 +357,13 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 		return lstAppend;
 	}
 
-	private List<MessageContentModel> appendMessageWithDateLabel(MessageContentModel messageModel){
-		List<MessageContentModel> lstMessage = new ArrayList<>();
+	private List<RealmMessageModel> appendMessageWithDateLabel(RealmMessageModel messageModel){
+		List<RealmMessageModel> lstMessage = new ArrayList<>();
 		if(!lstKey.contains(messageModel.key)){
 			Date messageDate = CCDateUtil.makeDateCustom(messageModel.messageDate, WelfareConst.WF_DATE_TIME);
 			if(CCCollectionUtil.isEmpty(this.lstDate) || !this.lstDate.contains(CCFormatUtil.formatDateCustom(CCFormatUtil.SDF_DATE_SLS, messageDate))){
 				this.lstDate.add(CCFormatUtil.formatDateCustom(CCFormatUtil.SDF_DATE_SLS, messageDate));
-				MessageContentModel dateModel = new MessageContentModel(CCFormatUtil.formatDateCustom(CCFormatUtil.SDF_DATE_SLS, messageDate));
+				RealmMessageModel dateModel = new RealmMessageModel(CCFormatUtil.formatDateCustom(CCFormatUtil.SDF_DATE_SLS, messageDate));
 				lstMessage.add(dateModel);
 			}
 			lstMessage.add(messageModel);
@@ -376,15 +380,15 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 		this.notifyDataSetChanged();
 	}
 
-	public void addComment(String messageId){
+	public void addComment(int messageId){
 		for(int i = 0; i < mLstMessage.size(); i++){
-			MessageContentModel messageModel = mLstMessage.get(i);
+			RealmMessageModel messageModel = mLstMessage.get(i);
 			boolean canComment = WelfareConst.ITEM_FILE_TYPE_PHOTO.equals(messageModel.messageType) || WelfareConst.ITEM_FILE_TYPE_MOVIE.equals(messageModel.messageType) || WelfareConst.ITEM_TEXT_TYPE_LOC.equals(messageModel.messageType);
-			if(canComment && messageModel.key.equals(messageId)){
+			if(canComment && messageModel.key == messageId){
 				if(CCCollectionUtil.isEmpty(messageModel.comments)){
-					messageModel.comments = new ArrayList<>();
+					messageModel.comments = new RealmList<>();
 				}
-				messageModel.comments.add(new CommentModel());
+				messageModel.comments.add(new RealmCommentModel());
 				this.notifyItemChanged(i);
 				break;
 			}
@@ -396,16 +400,16 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 	 *
 	 * @param lstMessage received message
 	 */
-	public void updateMessage(List<MessageContentModel> lstMessage){
+	public void updateMessage(List<RealmMessageModel> lstMessage){
 		int index = 0;
 		int minKey = CCNumberUtil.toInteger(lstMessage.get(0).key);
 		int maxKey = CCNumberUtil.toInteger(lstMessage.get(lstMessage.size() - 1).key);
-		List<MessageContentModel> lstClone = new ArrayList<>();
-		for(MessageContentModel messageModel : mLstMessage){
+		List<RealmMessageModel> lstClone = new ArrayList<>();
+		for(RealmMessageModel messageModel : mLstMessage){
 			lstClone.add(messageModel);
 		}
 
-		for(MessageContentModel messageModel : lstClone){
+		for(RealmMessageModel messageModel : lstClone){
 			if(!WelfareConst.ITEM_TEXT_TYPE_DATE.equals(messageModel.messageType)){
 				findMessage4Update(lstMessage, messageModel, index, minKey, maxKey);
 			}
@@ -419,15 +423,15 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 	 *
 	 * @param messageContentModel received message
 	 */
-	private void findMessage4Update(List<MessageContentModel> lstMessage, MessageContentModel messageContentModel, int index, int minKey, int maxKey){
+	private void findMessage4Update(List<RealmMessageModel> lstMessage, RealmMessageModel messageContentModel, int index, int minKey, int maxKey){
 		boolean isDeleted = true;
-		for(MessageContentModel message : lstMessage){
+		for(RealmMessageModel message : lstMessage){
 			int messageKey = CCNumberUtil.toInteger(messageContentModel.key);
 			if(messageKey > maxKey || messageKey < minKey){
 				isDeleted = false;
 				break;
 			}
-			if(messageContentModel.key.equals(message.key)){
+			if(messageContentModel.key == message.key){
 				isDeleted = false;
 				if(isChanged(messageContentModel, message)){
 					messageContentModel.messageContent = message.messageContent;
@@ -449,7 +453,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 	/**
 	 * message is changed
 	 */
-	private boolean isChanged(MessageContentModel message1, MessageContentModel message2){
+	private boolean isChanged(RealmMessageModel message1, RealmMessageModel message2){
 		if(WelfareUtil.size(message1.comments) != WelfareUtil.size(message2.comments) || WelfareUtil.size(message1.checks) != WelfareUtil.size(message2.checks)){
 			return true;
 		}else if(WelfareConst.ITEM_TEXT_TYPE_TEXT.equals(message1.messageType) && !message1.messageContent.equals(message2.messageContent)){
@@ -466,7 +470,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 	 */
 	public void deleteMessage(String messageId){
 		int index = 0;
-		for(MessageContentModel message : mLstMessage){
+		for(RealmMessageModel message : mLstMessage){
 			if(messageId.equals(message.key)){
 				deleteMessage4Index(index);
 				break;
@@ -479,7 +483,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 		this.mLstMessage.remove(index);
 		this.notifyItemRemoved(index);
 		// check last message is date
-		MessageContentModel contentModel = this.mLstMessage.get(index - 1);
+		RealmMessageModel contentModel = this.mLstMessage.get(index - 1);
 		if(WelfareConst.ITEM_TEXT_TYPE_DATE.equals(contentModel.messageType)){
 			// check we need delete date label
 			boolean isDelete = WelfareUtil.size(this.mLstMessage) == (index) || WelfareConst.ITEM_TEXT_TYPE_DATE.equals(this.mLstMessage.get(index).messageType);
