@@ -28,6 +28,7 @@
         android:background="@drawable/state_common_selectable_row">
 
         <TextView
+            android:id="@+id/txt_cl_confirm_label1"
             style="@style/wl_common_text"
             android:layout_width="wrap_content"
             android:textStyle="italic"
@@ -40,6 +41,7 @@
             android:text="confirm messagen in here"/>
 
         <TextView
+            android:id="@+id/txt_cl_confirm_label2"
             style="@style/wl_common_text"
             android:layout_width="wrap_content"
             android:textStyle="italic"

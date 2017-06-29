@@ -544,17 +544,28 @@ public class ScheduleFormFragment extends AbstractScheduleFragment {
                 } else { // show dialog
 
                     TextView textMessageUser = (TextView) confirmModeDialog.findViewById(R.id.txt_cl_confirm_message1);
-                    StringBuffer sbUser = new StringBuffer();
-                    for(ApiObjectModel  obj : users){
-                        sbUser.append(obj.value).append("\n");
+                    if(!CCCollectionUtil.isEmpty(users)){
+                        StringBuffer sbUser = new StringBuffer();
+                        for(ApiObjectModel  obj : users){
+                            sbUser.append(obj.value).append("\n");
+                        }
+                        textMessageUser.setText(sbUser.toString());
+                    }else{
+                        confirmModeDialog.findViewById(R.id.txt_cl_confirm_label1).setVisibility(View.GONE);
+                        textMessageUser.setVisibility(View.GONE);
                     }
-                    textMessageUser.setText(sbUser.toString());
+
                     TextView textMessageRoom = (TextView) confirmModeDialog.findViewById(R.id.txt_cl_confirm_message2);
-                    StringBuffer sbRoom = new StringBuffer();
-                    for(ApiObjectModel  obj : rooms){
-                        sbUser.append(obj.value).append("\n");
+                    if(!CCCollectionUtil.isEmpty(rooms)) {
+                        StringBuffer sbRoom = new StringBuffer();
+                        for (ApiObjectModel obj : rooms) {
+                            sbRoom.append(obj.value).append("\n");
+                        }
+                        textMessageRoom.setText(sbRoom.toString());
+                    }else{
+                        confirmModeDialog.findViewById(R.id.txt_cl_confirm_label2).setVisibility(View.GONE);
+                        textMessageRoom.setVisibility(View.GONE);
                     }
-                    textMessageRoom.setText(sbRoom.toString());
 
                     confirmModeDialog.updateScheduleEditModeTitle(getString(R.string.cl_schedule_confirm_mode_title));
                     confirmModeDialog.show();
