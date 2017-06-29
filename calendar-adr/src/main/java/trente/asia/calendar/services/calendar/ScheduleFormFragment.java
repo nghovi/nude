@@ -10,14 +10,18 @@ import java.util.Map;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import com.bluelinelabs.logansquare.LoganSquare;
 
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -390,7 +394,13 @@ public class ScheduleFormFragment extends AbstractScheduleFragment {
                 dlgChooseCategory.show();
                 break;
             case R.id.lnr_id_calendar:
+
+                if (schedule != null && !CCStringUtil.isEmpty(schedule.key)) {
+                    ChangeCalendarConfirmDialog alert = new ChangeCalendarConfirmDialog();
+                    alert.show(getFragmentManager(), "");
+                }
                 dlgChooseCalendar.show();
+
                 break;
             case R.id.txt_id_start_date:
                 datePickerDialogStart.show();
@@ -457,6 +467,21 @@ public class ScheduleFormFragment extends AbstractScheduleFragment {
                 confirmModeDialog.dismiss();
             default:
                 break;
+        }
+    }
+
+    public static class ChangeCalendarConfirmDialog extends DialogFragment {
+        @NonNull
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setMessage(getString(R.string.cl_schedule_confirm_change_cal))
+                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                        }
+                    });
+            return builder.create();
         }
     }
 
@@ -530,25 +555,25 @@ public class ScheduleFormFragment extends AbstractScheduleFragment {
                 } else { // show dialog
 
                     TextView textMessageUser = (TextView) confirmModeDialog.findViewById(R.id.txt_cl_confirm_message1);
-                    if(!CCCollectionUtil.isEmpty(users)){
+                    if (!CCCollectionUtil.isEmpty(users)) {
                         StringBuffer sbUser = new StringBuffer();
-                        for(ApiObjectModel  obj : users){
+                        for (ApiObjectModel obj : users) {
                             sbUser.append(obj.value).append("\n");
                         }
                         textMessageUser.setText(sbUser.toString());
-                    }else{
+                    } else {
                         confirmModeDialog.findViewById(R.id.txt_cl_confirm_label1).setVisibility(View.GONE);
                         textMessageUser.setVisibility(View.GONE);
                     }
 
                     TextView textMessageRoom = (TextView) confirmModeDialog.findViewById(R.id.txt_cl_confirm_message2);
-                    if(!CCCollectionUtil.isEmpty(rooms)) {
+                    if (!CCCollectionUtil.isEmpty(rooms)) {
                         StringBuffer sbRoom = new StringBuffer();
                         for (ApiObjectModel obj : rooms) {
                             sbRoom.append(obj.value).append("\n");
                         }
                         textMessageRoom.setText(sbRoom.toString());
-                    }else{
+                    } else {
                         confirmModeDialog.findViewById(R.id.txt_cl_confirm_label2).setVisibility(View.GONE);
                         textMessageRoom.setVisibility(View.GONE);
                     }

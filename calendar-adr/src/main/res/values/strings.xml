@@ -38,6 +38,8 @@
     <string name="cl_schedule_confirm_mode_label_user">Duplicate time for users</string>
     <string name="cl_schedule_confirm_mode_label_room">Duplicate time for rooms</string>
 
+    <string name="cl_schedule_confirm_change_cal">Join user information will be cleared because of changing calendar.</string>
+
     <string name="cl_filter_user_dialog_title">Filter users</string>
     <string name="cl_join_user_dialog_title">Join users</string>
     <string name="cl_schedule_repeat_dialog_title">Schedule repeat</string>

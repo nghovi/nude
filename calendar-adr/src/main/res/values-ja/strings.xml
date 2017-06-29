@@ -35,6 +35,8 @@
     <string name="cl_schedule_confirm_mode_label_user">以下のユーザースケジュールの時間が重複しています。</string>
     <string name="cl_schedule_confirm_mode_label_room">以下の会議室スケジュールの時間が重複しています。</string>
 
+    <string name="cl_schedule_confirm_change_cal">カレンダー変更により、参加ユーザー情報はクリアされます。</string>
+
     <string name="cl_filter_user_dialog_title">ユーザーフィルター</string>
     <string name="cl_join_user_dialog_title">参加ユーザー</string>
     <string name="cl_schedule_repeat_dialog_title">繰り返しスケジュール</string>
