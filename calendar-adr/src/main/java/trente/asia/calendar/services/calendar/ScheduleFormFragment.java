@@ -561,6 +561,8 @@ public class ScheduleFormFragment extends AbstractScheduleFragment {
                             sbUser.append(obj.value).append("\n");
                         }
                         textMessageUser.setText(sbUser.toString());
+                        confirmModeDialog.findViewById(R.id.txt_cl_confirm_label1).setVisibility(View.VISIBLE);
+                        textMessageUser.setVisibility(View.VISIBLE);
                     } else {
                         confirmModeDialog.findViewById(R.id.txt_cl_confirm_label1).setVisibility(View.GONE);
                         textMessageUser.setVisibility(View.GONE);
@@ -573,6 +575,8 @@ public class ScheduleFormFragment extends AbstractScheduleFragment {
                             sbRoom.append(obj.value).append("\n");
                         }
                         textMessageRoom.setText(sbRoom.toString());
+                        confirmModeDialog.findViewById(R.id.txt_cl_confirm_label2).setVisibility(View.VISIBLE);
+                        textMessageRoom.setVisibility(View.VISIBLE);
                     } else {
                         confirmModeDialog.findViewById(R.id.txt_cl_confirm_label2).setVisibility(View.GONE);
                         textMessageRoom.setVisibility(View.GONE);
