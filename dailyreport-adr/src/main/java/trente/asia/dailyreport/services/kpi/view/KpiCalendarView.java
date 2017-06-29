@@ -1,6 +1,8 @@
 package trente.asia.dailyreport.services.kpi.view;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
@@ -25,13 +27,11 @@ import trente.asia.dailyreport.services.report.view.CalendarAdapter;
  */
 public class KpiCalendarView extends RelativeLayout{
 
-	private Activity			activity;
 	public GregorianCalendar	gregorianCalendar, gregorianCalendarCloned;	// view_dr_calendar
 																			// instances.
 
-	public KpiCalendarAdapter	adapter;									// adapter instance
-
-	// marker.
+	private KpiCalendarAdapter	adapter;									// adapter instance
+	private GridView			gridview;
 
 	public KpiCalendarView(Context context){
 		super(context);
@@ -49,35 +49,19 @@ public class KpiCalendarView extends RelativeLayout{
 		super(context, attrs, defStyleAttr, defStyleRes);
 	}
 
-	public interface OnDayClickedListener{
-
-		public void onDayClicked(ActualPlan actualPlan);
-	}
-
-	public void setOnDayClickedListener(OnDayClickedListener onDayClickedListener){
-		this.onDayClickedListener = onDayClickedListener;
-	}
-
-	private OnDayClickedListener onDayClickedListener;
-
-	public void updateLayout(Activity activity, int year, int month, final List<ActualPlan> actualPlanList){
-		this.activity = activity;
+	public void setCalendar(Calendar calendar){
 		Locale.setDefault(Locale.US);
-
 		gregorianCalendar = (GregorianCalendar)GregorianCalendar.getInstance();
-		gregorianCalendar.set(GregorianCalendar.YEAR, year);
-		gregorianCalendar.set(GregorianCalendar.MONTH, month);
+		gregorianCalendar.set(GregorianCalendar.YEAR, calendar.get(Calendar.YEAR));
+		gregorianCalendar.set(GregorianCalendar.MONTH, calendar.get(Calendar.MONTH));
 		gregorianCalendarCloned = (GregorianCalendar)gregorianCalendar.clone();
 
-		adapter = new KpiCalendarAdapter(this.activity, gregorianCalendar, actualPlanList);
-
-		GridView gridview = (GridView)findViewById(R.id.view_dr_calendar_gridview);
-		gridview.setAdapter(adapter);
-
+		adapter = new KpiCalendarAdapter(getContext(), gregorianCalendar);
+		gridview = (GridView)findViewById(R.id.view_dr_calendar_gridview);
 		gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
 			public void onItemClick(AdapterView parent, View v, int position, long id){
-				Calendar selectedDate = CalendarAdapter.dayString.get(position);
+				Calendar selectedDate = adapter.dayString.get(position);
 				int gridvalue = selectedDate.get(Calendar.DAY_OF_MONTH);
 
 				// navigate to next or previous gregorianCalendar on clicking offdays.
@@ -88,11 +72,26 @@ public class KpiCalendarView extends RelativeLayout{
 					// setNextMonth();
 					// refreshCalendar();
 				}else{ // currentMonth
-					ActualPlan actualPlan = ActualPlanAddFragment.getActualPlanByDay(selectedDate, actualPlanList);
-					onDayClickedListener.onDayClicked(actualPlan);
+					onDayClickedListener.onDayClicked(selectedDate);
 				}
 			}
 		});
+		gridview.setAdapter(adapter);
+	}
+
+	public interface OnDayClickedListener{
+
+		public void onDayClicked(Calendar selectedDate);
+	}
+
+	public void setOnDayClickedListener(OnDayClickedListener onDayClickedListener){
+		this.onDayClickedListener = onDayClickedListener;
+	}
+
+	private OnDayClickedListener onDayClickedListener;
+
+	public void updateLayoutWithData(final List<ActualPlan> actualPlanList){
+		adapter.updateLayout(actualPlanList);
 	}
 
 }

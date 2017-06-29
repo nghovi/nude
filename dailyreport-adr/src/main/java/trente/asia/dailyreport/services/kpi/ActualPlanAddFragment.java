@@ -9,13 +9,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import asia.chiase.core.util.CCCollectionUtil;
@@ -28,9 +28,10 @@ import trente.asia.dailyreport.R;
 import trente.asia.dailyreport.fragments.AbstractDRFragment;
 import trente.asia.dailyreport.services.kpi.model.ActualPlan;
 import trente.asia.dailyreport.services.kpi.model.GroupKpi;
+import trente.asia.dailyreport.services.kpi.view.CalendarFragment;
+import trente.asia.dailyreport.services.kpi.view.CalendarPagerAdapter;
 import trente.asia.dailyreport.services.kpi.view.KpiCalendarView;
 import trente.asia.dailyreport.services.report.ReportEditFragment;
-import trente.asia.dailyreport.services.report.model.Holiday;
 import trente.asia.dailyreport.services.report.model.ReportModel;
 import trente.asia.dailyreport.services.report.view.DRCalendarView;
 import trente.asia.dailyreport.utils.DRUtil;
@@ -45,22 +46,16 @@ import trente.asia.welfare.adr.models.UserModel;
 public class ActualPlanAddFragment extends AbstractDRFragment implements DRCalendarView.OnReportModelSelectedListener,KpiCalendarView.OnDayClickedListener{
 
 	private static final String	ACTUAL_PLAN_EDT_ID	= "edt_actual_plan_";
-	public static int			VIEW_AS_CALENDAR	= 1;
-	public static int			VIEW_AS_LIST		= 2;
-
-	private ListView			lstReports;
-	private KpiCalendarView		kpiCalendarView;
-	private ScrollView			mScrCalendarView;
-
-	private List<ReportModel>	reports;
-	private List<Holiday>		holidays;
 	private TextView			txtDate;
 	private List<ActualPlan>	actualPlanList;
 	private LinearLayout		lnrMonthlyGoal;
 	private LinearLayout		lnrKpiSection;
 	private LayoutInflater		inflater;
-	private List<ActualPlan>	actionPlans			= new ArrayList<>();
 	private DRGroupHeader		drGroupHeader;
+
+	ViewPager					mPager;
+	CalendarPagerAdapter		adapter;
+	private KpiCalendarView		kpiCalendarView;
 
 	@Override
 	public int getFragmentLayoutId(){
@@ -87,14 +82,22 @@ public class ActualPlanAddFragment extends AbstractDRFragment implements DRCalen
 		txtDate = (TextView)getView().findViewById(R.id.txt_fragment_kpi_date);
 		drGroupHeader = (DRGroupHeader)getView().findViewById(R.id.lnr_group_header);
 
-		lstReports = (ListView)getView().findViewById(R.id.lst_my_report_fragment);
-
-		mScrCalendarView = (ScrollView)getView().findViewById(R.id.src_id_calendar_view);
-		kpiCalendarView = (KpiCalendarView)getView().findViewById(R.id.my_report_fragment_calendar_view);
-		kpiCalendarView.setOnDayClickedListener(this);
-
 		lnrMonthlyGoal = (LinearLayout)getView().findViewById(R.id.lnr_id_monthly_goal);
 		lnrKpiSection = (LinearLayout)getView().findViewById(R.id.my_report_kpi_section);
+
+		mPager = (ViewPager)getView().findViewById(R.id.view_pager);
+		mPager.setOnTouchListener(new View.OnTouchListener() {
+
+			@Override
+			public boolean onTouch(View v, MotionEvent event){
+				mPager.getParent().requestDisallowInterceptTouchEvent(true);
+				return false;
+			}
+		});
+		adapter = new CalendarPagerAdapter(getChildFragmentManager());
+		adapter.setOnDayClickListener(this);
+		mPager.setAdapter(adapter);
+		mPager.setCurrentItem(Integer.MAX_VALUE / 2);
 	}
 
 	private void loadActionPlans(){
@@ -103,7 +106,6 @@ public class ActualPlanAddFragment extends AbstractDRFragment implements DRCalen
 		try{
 			jsonObject.put("targetGroupId", userMe.key);
 			jsonObject.put("targetDate", userMe.dept.key);
-			// jsonObject.put("targetMonth", monthStr);
 		}catch(JSONException ex){
 			ex.printStackTrace();
 		}
@@ -117,34 +119,14 @@ public class ActualPlanAddFragment extends AbstractDRFragment implements DRCalen
 			actualPlanList = CCJsonUtil.convertToModelList(response.optString("actualPlanList"), ActualPlan.class);
 			updateHeader(prefAccUtil.getUserPref().userName);
 			actualPlanList = new ArrayList<>();
-			actualPlanList = addForEmptyDays(actualPlanList);
-			buildCalendarView(actualPlanList);
-
 			drGroupHeader.buildLayout(new ArrayList<GroupKpi>(), 0);
-
+			buildCalendarView(actualPlanList);
 			buildActualPlans();
 			if(false){
 				getView().findViewById(R.id.lnr_fragment_action_plan_main).setVisibility(View.GONE);
 				getView().findViewById(R.id.txt_fragment_action_plan_empty).setVisibility(View.VISIBLE);
 			}
 		}
-	}
-
-	/*
-	 * If there is no report on date 2016/04/05, add an empty report to it
-	 * @return reports: a month full of report
-	 */
-	private List<ActualPlan> addForEmptyDays(List<ActualPlan> actualPlanList){
-		Date d = CCDateUtil.makeDateCustom(txtDate.getText().toString(), WelfareConst.WF_DATE_TIME_DATE);
-		Calendar c = CCDateUtil.makeCalendar(d);
-
-		List<ActualPlan> results = new ArrayList<>();
-		for(int i = c.getActualMinimum(Calendar.DAY_OF_MONTH); i <= c.getActualMaximum(Calendar.DAY_OF_MONTH); i++){
-			c.set(Calendar.DAY_OF_MONTH, i);
-			ActualPlan actualPlan = getActualPlanByDay(c, actualPlanList);
-			results.add(actualPlan);
-		}
-		return results;
 	}
 
 	private void buildActualPlans(){
@@ -189,21 +171,11 @@ public class ActualPlanAddFragment extends AbstractDRFragment implements DRCalen
 		return actualPlan;
 	}
 
-	public static void appendHolidayInfo(ReportModel reportModel, List<Holiday> holidays){
-		String dateStr = DRUtil.getDateString(reportModel.reportDate, DRConst.DATE_FORMAT_YYYY_MM_DD_HH_MM_SS, DRConst.DATE_FORMAT_YYYY_MM_DD);
-
-		for(Holiday holiday : holidays){
-			if(holiday.key.equals(dateStr)){
-				reportModel.holiday = holiday;
-				break;
-			}
-		}
-	}
-
 	private void buildCalendarView(List<ActualPlan> actionPlans){
+		kpiCalendarView = ((CalendarFragment)adapter.getItem(mPager.getCurrentItem())).getKpiCalendarView();
 		Date d = CCDateUtil.makeDateCustom(txtDate.getText().toString(), WelfareConst.WF_DATE_TIME_DATE);
 		Calendar c = CCDateUtil.makeCalendar(d);
-		kpiCalendarView.updateLayout(activity, c.get(Calendar.YEAR), c.get(Calendar.MONTH), actionPlans);
+		kpiCalendarView.updateLayoutWithData(actionPlans);
 	}
 
 	@Override
@@ -228,8 +200,6 @@ public class ActualPlanAddFragment extends AbstractDRFragment implements DRCalen
 	@Override
 	public void onDestroy(){
 		super.onDestroy();
-		lstReports = null;
-		kpiCalendarView = null;
 		txtDate = null;
 	}
 
@@ -245,7 +215,8 @@ public class ActualPlanAddFragment extends AbstractDRFragment implements DRCalen
 	}
 
 	@Override
-	public void onDayClicked(ActualPlan actualPlan){
-
+	public void onDayClicked(Calendar selectedDate){
+		Date t = selectedDate.getTime();
+		Date y = t;
 	}
 }

@@ -43,131 +43,152 @@
             <include layout="@layout/view_common_groups_header" />
         </LinearLayout>
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_16dp"
-            android:layout_marginRight="@dimen/margin_16dp"
-            android:layout_marginTop="@dimen/margin_16dp"
-            android:background="@drawable/dr_background_gray_border_padding"
-
-            android:orientation="vertical"
-            android:padding="@dimen/margin_16dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/goal_period" />
-
-                <TextView
-                    android:id="@+id/txt_fragment_user_actual_period"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="value" />
-
-            </LinearLayout>
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_10dp">
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/personal_goal" />
-
-                <TextView
-                    android:id="@+id/txt_fragment_user_actual_goal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="value" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_10dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/total_performance" />
-
-                <TextView
-                    android:id="@+id/txt_fragment_user_actual_total"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="value" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_10dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/achievement_rate" />
-
-                <TextView
-                    android:id="@+id/txt_fragment_user_actual_achievement_rate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="value" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_10dp">
-
-                <TextView
-                    android:layout_width="@dimen/margin_120dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/today_performance" />
-
-                <trente.asia.android.view.ChiaseEditText
-                    android:id="@+id/txt_fragment_kpi_value_5"
+                <LinearLayout
+                    android:id="@+id/lnr_fragment_user_actual_info"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textAlignment="textEnd"
-                    android:hint="@string/chiase_common_please_input"
-                    android:text="円" />
+                    android:layout_marginLeft="@dimen/margin_16dp"
+                    android:layout_marginRight="@dimen/margin_16dp"
+                    android:layout_marginTop="@dimen/margin_16dp"
+                    android:background="@drawable/dr_background_gray_border_padding"
+
+                    android:orientation="vertical"
+                    android:padding="@dimen/margin_16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/goal_period" />
+
+                        <TextView
+                            android:id="@+id/txt_fragment_user_actual_period"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="value" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_10dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/personal_goal" />
+
+                        <TextView
+                            android:id="@+id/txt_fragment_user_actual_goal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="value" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_10dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/total_performance" />
+
+                        <TextView
+                            android:id="@+id/txt_fragment_user_actual_total"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="value" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_10dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/achievement_rate" />
+
+                        <TextView
+                            android:id="@+id/txt_fragment_user_actual_achievement_rate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="value" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_10dp">
+
+                        <TextView
+                            android:layout_width="@dimen/margin_120dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/today_performance" />
+
+                        <trente.asia.android.view.ChiaseEditText
+                            android:id="@+id/txt_fragment_kpi_value_5"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/chiase_common_please_input"
+                            android:text="円"
+                            android:textAlignment="textEnd" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btn_fragment_user_actual_save"
+                    style="@style/wl_common_button_small"
+                    android:layout_marginTop="@dimen/margin_16dp"
+                    android:text="@string/chiase_common_save"
+                    android:textColor="@color/chiase_white"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_16dp"
+                    android:text="Group A" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="320dp">
+
+                    <com.github.mikephil.charting.charts.LineChart
+                        android:id="@+id/chart"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </LinearLayout>
 
             </LinearLayout>
-        </LinearLayout>
 
-        <Button
-            android:id="@+id/btn_fragment_user_actual_save"
-            style="@style/wl_common_button_small"
-            android:layout_marginTop="@dimen/margin_16dp"
-            android:text="@string/chiase_common_save"
-            android:textColor="@color/chiase_white"
-            android:textSize="12sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_16dp"
-            android:text="Group A" />
-
-            <com.github.mikephil.charting.charts.LineChart
-                android:id="@+id/chart"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+        </ScrollView>
 
 
     </LinearLayout>

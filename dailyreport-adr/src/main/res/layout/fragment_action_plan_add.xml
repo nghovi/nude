@@ -51,6 +51,7 @@
 
         <ScrollView
             android:id="@+id/src_id_calendar_view"
+            android:fillViewport="true"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -59,9 +60,13 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <include
-                    android:id="@+id/my_report_fragment_calendar_view"
-                    layout="@layout/view_kpi_calendar" />
+                <trente.asia.dailyreport.services.kpi.view.WrapContentHeightViewPager
+                    android:id="@+id/view_pager"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/my_report_kpi_section">
+
+                </trente.asia.dailyreport.services.kpi.view.WrapContentHeightViewPager>
 
                 <LinearLayout
                     android:id="@+id/my_report_kpi_section"
@@ -94,6 +99,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/dr_background_gray_border_padding"
+                        android:gravity="left|top"
                         android:lines="4" />
 
                     <LinearLayout

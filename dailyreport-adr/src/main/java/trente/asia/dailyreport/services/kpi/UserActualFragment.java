@@ -2,21 +2,29 @@ package trente.asia.dailyreport.services.kpi;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.DatePickerDialog;
 import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.DatePicker;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
@@ -26,6 +34,8 @@ import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
+import asia.chiase.core.util.CCStringEditUtil;
+import asia.chiase.core.util.CCStringUtil;
 import trente.asia.dailyreport.DRConst;
 import trente.asia.dailyreport.R;
 import trente.asia.dailyreport.fragments.AbstractDRFragment;
@@ -49,6 +59,9 @@ public class UserActualFragment extends AbstractDRFragment{
 	private WfDialog			wfDialog;
 	private List<GroupKpi>		groupKpiList;
 	LineChart					lineChart;
+	private LinearLayout		lnrInfo;
+	private GroupKpi			selectedGroup;
+	private Map<Float, String>	formattedValuesMap	= new HashMap<>();
 
 	@Override
 	public int getFragmentLayoutId(){
@@ -101,7 +114,7 @@ public class UserActualFragment extends AbstractDRFragment{
 
 			@Override
 			public void onGroupChange(GroupKpi newGroup){
-
+				selectedGroup = newGroup;
 			}
 
 			@Override
@@ -113,30 +126,45 @@ public class UserActualFragment extends AbstractDRFragment{
 		});
 		groupKpiList = createDummy();
 		drGroupHeader.buildLayout(groupKpiList, 0);
+		selectedGroup = drGroupHeader.getSelectedGroup();
 
+		lnrInfo = (LinearLayout)getView().findViewById(R.id.lnr_fragment_user_actual_info);
+
+		buildChart();
+	}
+
+	private void buildChart(){
 		lineChart = (LineChart)getView().findViewById(R.id.chart);
 		List<Entry> entries = new ArrayList<Entry>();
 		Calendar c = Calendar.getInstance();
-		for(int i = 0; i < 8; i++){
-			Entry t = new Entry(i, (int)(Math.random() * i));
+
+		Date lastCheckPointDate = CCDateUtil.makeDateCustom(selectedGroup.checkPointList.get(selectedGroup.checkPointList.size() - 1).date, WelfareConst.WF_DATE_TIME_DATE);
+		Date firstCheckPointDate = CCDateUtil.makeDateCustom(selectedGroup.checkPointList.get(0).date, WelfareConst.WF_DATE_TIME_DATE);
+		int averageDistance = (int)((lastCheckPointDate.getTime() - firstCheckPointDate.getTime()) / selectedGroup.checkPointList.size());
+
+		for(GroupKpi.CheckPoint checkPoint : selectedGroup.checkPointList){
+			Date checkPointDate = CCDateUtil.makeDateCustom(checkPoint.date, WelfareConst.WF_DATE_TIME_DATE);
+			float x = (checkPointDate.getTime() - firstCheckPointDate.getTime()) / averageDistance;
+			formattedValuesMap.put(x, checkPoint.date);
+			Entry t = new Entry(x, Float.valueOf(checkPoint.achievement));
 			entries.add(t);
 		}
-		LineDataSet dataSet = new LineDataSet(entries, "Label"); // add entries to dataset
+		LineDataSet dataSet = new LineDataSet(entries, ""); // add entries to dataset
 		dataSet.setColor(Color.RED);
 		dataSet.setValueTextColor(Color.BLUE); // styling, ...
+		dataSet.setValueTextSize(11);
+		dataSet.setLabel("Group checkpoint achievement");
 
 		LineData lineData = new LineData();
 		lineData.addDataSet(dataSet);
 		lineChart.setData(lineData);
 
-		// the labels that should be drawn on the XAxis
-		final String[] quarters = new String[]{"gotosfsfskdf1", "gotosfsfskdf2", "gotosfsfskdf3", "gotosfsfskdf4", "gotosfsfskdf5", "gotosfsfskdf6", "gotosfsfskdf7", "gotosfsfskdf8"};
-
 		IAxisValueFormatter formatter = new IAxisValueFormatter() {
 
 			@Override
 			public String getFormattedValue(float value, AxisBase axis){
-				return quarters[(int)value];
+				String dateStr = formattedValuesMap.get(value);
+				return CCStringUtil.isEmpty(dateStr) ? "" : dateStr;
 			}
 
 		};
@@ -144,17 +172,56 @@ public class UserActualFragment extends AbstractDRFragment{
 		XAxis xAxis = lineChart.getXAxis();
 		xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
 		xAxis.setTextSize(10f);
-		xAxis.setTextColor(Color.CYAN);
+		xAxis.setTextColor(Color.BLACK);
 		xAxis.setDrawAxisLine(true);
 		xAxis.setDrawGridLines(false);
 
-		xAxis.setGranularity(1f); // minimum axis-step (interval) is 1
+		YAxis yAxisLeft = lineChart.getAxisLeft();
+		// yAxisLeft.setZeroLineColor(Color.RED);
+		// yAxisLeft.setDrawZeroLine(true);
+		// yAxisLeft.setZeroLineWidth(10);
+		yAxisLeft.setValueFormatter(new IAxisValueFormatter() {
+
+			@Override
+			public String getFormattedValue(float value, AxisBase axis){
+				return String.valueOf((int)value * Integer.valueOf(selectedGroup.goal) + "円");
+			}
+		});
+
+		LimitLine upper_limit = new LimitLine(100f, "");
+		upper_limit.setLineWidth(0.5f);
+		upper_limit.setLineColor(Color.RED);
+		// upper_limit.enableDashedLine(10f, 10f, 0f);
+		upper_limit.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_TOP);
+		upper_limit.setTextSize(10f);
+
+		yAxisLeft.removeAllLimitLines();
+		yAxisLeft.addLimitLine(upper_limit);
+		// yAxisLeft.enableGridDashedLine(10f, 10f, 0f);
+		// yAxisLeft.setDrawZeroLine(false);
+		// yAxisLeft.setDrawGridLines(false);
+
+		YAxis yAxisRight = lineChart.getAxisRight();
+		// yAxisRight.setPosition(YAxis.YAxisLabelPosition.INSIDE_CHART);
+		yAxisRight.setValueFormatter(new IAxisValueFormatter() {
+
+			@Override
+			public String getFormattedValue(float value, AxisBase axis){
+				return value + "%";
+			}
+		});
+
+		// xAxis.setGranularity(1f); // minimum axis-step (interval) is 1
 		xAxis.setValueFormatter(formatter);
+		xAxis.setLabelRotationAngle(-45f);
 
 		// set a custom value formatter
 		// xAxis.setValueFormatter(new MyCustomFormatter());
 		// and more...
-
+		Description description = new Description();
+		description.setText("");
+		lineChart.setDescription(description);
+		lineChart.setVisibleXRangeMaximum(4);
 		lineChart.invalidate(); // refresh
 	}
 
@@ -217,20 +284,49 @@ public class UserActualFragment extends AbstractDRFragment{
 			buildPersonalGoalInfo(personal);
 			showGoalAchieveDialog();
 			showGoalWarningDialog();
+
+			if(true){
+				lnrInfo.setBackgroundColor(ContextCompat.getColor(activity, R.color.wf_app_color_base_50));
+			}else{
+				lnrInfo.setBackgroundColor(ContextCompat.getColor(activity, R.color.chiase_white));
+			}
 		}
 	}
 
 	private List<GroupKpi> createDummy(){
+		List<GroupKpi.CheckPoint> checkPointList = new ArrayList<>();
+		GroupKpi.CheckPoint cp1 = new GroupKpi.CheckPoint();
+		cp1.date = "2017/05/29";
+		cp1.achievement = "25";
+
+		GroupKpi.CheckPoint cp2 = new GroupKpi.CheckPoint();
+		cp2.date = "2017/06/29";
+		cp2.achievement = "50";
+
+		GroupKpi.CheckPoint cp3 = new GroupKpi.CheckPoint();
+		cp3.date = "2017/07/29";
+		cp3.achievement = "120";
+
+		checkPointList.add(0, cp1);
+		checkPointList.add(1, cp2);
+		checkPointList.add(2, cp3);
+
 		List<GroupKpi> groupKpis = new ArrayList<>();
 		GroupKpi g1 = new GroupKpi();
 		g1.name = "g1";
 		g1.key = "1";
+		g1.goal = "150000";
+		g1.checkPointList = checkPointList;
 		GroupKpi g2 = new GroupKpi();
 		g2.name = "g2";
 		g2.key = "2";
+		g2.goal = "100000";
+		g2.checkPointList = checkPointList;
 		GroupKpi g3 = new GroupKpi();
 		g3.name = "g3";
 		g3.key = "3";
+		g3.goal = "550000";
+		g3.checkPointList = checkPointList;
 		groupKpis.add(g1);
 		groupKpis.add(g2);
 		groupKpis.add(g3);
