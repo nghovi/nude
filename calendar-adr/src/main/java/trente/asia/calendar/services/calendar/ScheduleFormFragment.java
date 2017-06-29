@@ -352,7 +352,6 @@ public class ScheduleFormFragment extends AbstractScheduleFragment {
         filterDialog = new ClFilterUserListDialog(activity, lnrUserList, getString(R.string.cl_join_user_dialog_title));
         filterDialog.findViewById(R.id.img_id_done).setOnClickListener(this);
 
-        buildCalendarChooseDialog();
         buildDatePickerDialogs(schedule);
 
         if (schedule != null && !CCStringUtil.isEmpty(schedule.key)) {
@@ -364,13 +363,6 @@ public class ScheduleFormFragment extends AbstractScheduleFragment {
         if (!ScheduleModel.isRepeat(schedule)) {
             txtStartDate.setOnClickListener(this);
             txtEndDate.setOnClickListener(this);
-        }
-    }
-
-    private void buildCalendarChooseDialog() {
-        if (schedule != null && schedule.key != null) {
-            getView().findViewById(R.id.img_arrow_right_calendar).setVisibility(View.GONE);
-            getView().findViewById(R.id.lnr_id_calendar).setClickable(false);
         }
     }
 
@@ -398,7 +390,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment {
                 dlgChooseCategory.show();
                 break;
             case R.id.lnr_id_calendar:
-                showCalendarChooseDialog();
+                dlgChooseCalendar.show();
                 break;
             case R.id.txt_id_start_date:
                 datePickerDialogStart.show();
@@ -465,12 +457,6 @@ public class ScheduleFormFragment extends AbstractScheduleFragment {
                 confirmModeDialog.dismiss();
             default:
                 break;
-        }
-    }
-
-    private void showCalendarChooseDialog() {
-        if (schedule != null && schedule.key == null) {
-            dlgChooseCalendar.show();
         }
     }
 
