@@ -539,7 +539,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment {
                     e.printStackTrace();
                 }
 
-                if (CCStringUtil.isEmpty(users) && CCStringUtil.isEmpty(rooms)) { // update directly
+                if (CCCollectionUtil.isEmpty(users) && CCCollectionUtil.isEmpty(rooms)) { // update directly
                     updateSchedule(null, ClConst.API_SCHEDULE_UPDATE);
                 } else { // show dialog
 
