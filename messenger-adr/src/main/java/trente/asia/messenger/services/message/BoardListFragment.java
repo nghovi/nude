@@ -76,7 +76,7 @@ public class BoardListFragment extends AbstractMsgFragment implements View.OnCli
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-		if(mRootView == null){
+		if (mRootView == null){
 			mRootView = inflater.inflate(R.layout.fragment_board_list, container, false);
 		}
 		return mRootView;

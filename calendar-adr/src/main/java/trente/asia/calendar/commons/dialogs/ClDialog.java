@@ -38,6 +38,12 @@ public class ClDialog extends ChiaseDialog{
 		return this;
 	}
 
+	public ClDialog setDialogScheduleConfirmMode(){
+		this.setContentView(R.layout.dialog_schedule_confirm_mode);
+
+		return this;
+	}
+
 	public void updateScheduleEditModeTitle(String title){
 		if(!CCStringUtil.isEmpty(title)){
 			TextView txtTitle = (TextView)this.findViewById(R.id.txt_id_edit_mode_title);

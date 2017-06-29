@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -263,12 +262,10 @@ public abstract class WelfareFragment extends ChiaseFragment implements WelfareA
 
 	@Override
 	public void onClickDeviceBackButton(){
-		Log.e("WelfareFragment", "onClickDeviceBackButton");
 		onClickBackBtn();
 	}
 
 	protected void onClickBackBtn(){
-		Log.e("WelfareFragment", "onClickBackBtn");
 		if(getFragmentManager().getBackStackEntryCount() <= 1){
 			((WelfareActivity)activity).setDoubleBackPressedToFinish();
 		}else{

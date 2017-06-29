@@ -56,10 +56,13 @@ public class ClConst{
 	public static final String	WORKING_OFFER_TYPE_OVERTIME_WORKING			= "OTW";
 	public static final String	WORKING_OFFER_TYPE_HOLIDAY_WORKING			= "HDW";
 	public static final String	WORKING_OFFER_TYPE_SHORT_TIME				= "STO";
-    public static final String	API_SCHEDULE_DETAIL			= "/api/cl/schedule/detail";
+
     public static final String	API_CALENDAR_LIST			= "/api/cl/calendars";
     public static final String	API_SUMMARY					= "/api/cl/summary";
-    public static final String	API_SCHEDULE_UPDATE			= "/api/cl/schedule/upd";
+
+	public static final String	API_SCHEDULE_LIST			= "/api/cl/schedule/list";
+	public static final String	API_SCHEDULE_DETAIL			= "/api/cl/schedule/detail";
+	public static final String	API_SCHEDULE_CHECK_UPDATE	= "/api/cl/schedule/checkupd";
+	public static final String	API_SCHEDULE_UPDATE			= "/api/cl/schedule/upd";
     public static final String	API_SCHEDULE_DEL			= "/api/cl/schedule/del";
-    public static final String	API_SCHEDULE_LIST			= "/api/cl/schedule/list";
 }

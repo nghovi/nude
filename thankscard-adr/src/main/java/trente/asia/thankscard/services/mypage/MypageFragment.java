@@ -53,6 +53,8 @@ public class MypageFragment extends AbstractTCFragment{
 	private NoticeListAdapter	adapter;
 	private RankStageDialog		rankStageDialog;
 	private List<RankStage>		rankStages;
+	private TextView			txtPostRankNext;
+	private TextView			txtReceiveRankNext;
 
 	public boolean hasBackBtn(){
 		return false;
@@ -81,7 +83,9 @@ public class MypageFragment extends AbstractTCFragment{
 	public void buildBodyLayout(){
 		imgAvatar = (ImageView)getView().findViewById(R.id.img_fragment_mypage_avatar);
 		txtPostRank = (TextView)getView().findViewById(R.id.txt_fragment_mypage_rank_post);
+		txtPostRankNext = (TextView)getView().findViewById(R.id.txt_fragment_mypage_rank_post2);
 		txtReceiveRank = (TextView)getView().findViewById(R.id.txt_fragment_mypage_rank_receive);
+		txtReceiveRankNext = (TextView)getView().findViewById(R.id.txt_fragment_mypage_rank_receive2);
 		imgRankStage = (ImageView)getView().findViewById(R.id.img_fragment_mypage_rank_stage);
 
 		buildUserInfoLayout();
@@ -107,18 +111,18 @@ public class MypageFragment extends AbstractTCFragment{
 			}
 		});
 
-		Button btnRank = (Button)getView().findViewById(R.id.btn_fragment_mypage_rank);
-		btnRank.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v){
-				if(!CCCollectionUtil.isEmpty(rankStages)){
-					showRankStageDialog();
-				}else{
-					requestRankStageInfo();
-				}
-			}
-		});
+		// Button btnRank = (Button)getView().findViewById(R.id.btn_fragment_mypage_rank);
+		// btnRank.setOnClickListener(new View.OnClickListener() {
+		//
+		// @Override
+		// public void onClick(View v){
+		// if(!CCCollectionUtil.isEmpty(rankStages)){
+		// showRankStageDialog();
+		// }else{
+		// requestRankStageInfo();
+		// }
+		// }
+		// });
 	}
 
 	private void showRankStageDialog(){
@@ -200,7 +204,10 @@ public class MypageFragment extends AbstractTCFragment{
 	private void requestMypageInfoSuccess(JSONObject response){
 		mypageModel = CCJsonUtil.convertToModel(response.toString(), MypageModel.class);
 		txtPostRank.setText(getString(R.string.fragment_mypage_rank_post, getRank(mypageModel.pointPost, CCStringUtil.toString(mypageModel.seqPost))));
+		txtPostRankNext.setText(getString(R.string.fragment_mypage_rank_next_post, getRank(mypageModel.pointPost, CCStringUtil.toString(mypageModel.seqPost))));
+
 		txtReceiveRank.setText(getString(R.string.fragment_mypage_rank_receive, getRank(mypageModel.pointReceive, CCStringUtil.toString(mypageModel.seqRecieve))));
+		txtReceiveRankNext.setText(getString(R.string.fragment_mypage_rank_next_receive, getRank(mypageModel.pointReceive, CCStringUtil.toString(mypageModel.seqRecieve))));
 
 		WfPicassoHelper.loadImageWithDefaultIcon(activity, host, imgAvatar, myself.avatarPath, R.drawable.wf_profile);
 		setRankStage(imgRankStage, mypageModel.stageNo);
@@ -250,7 +257,9 @@ public class MypageFragment extends AbstractTCFragment{
 	public void onDestroy(){
 		super.onDestroy();
 		txtPostRank = null;
+		txtPostRankNext = null;
 		txtReceiveRank = null;
+		txtReceiveRankNext = null;
 		lstNotice = null;
 	}
 
