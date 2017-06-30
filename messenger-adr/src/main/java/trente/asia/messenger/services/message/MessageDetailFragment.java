@@ -53,6 +53,7 @@ import trente.asia.messenger.fragment.AbstractMsgFragment;
 import trente.asia.messenger.services.message.listener.OnAddCommentListener;
 import trente.asia.messenger.services.message.model.BoardModel;
 import trente.asia.messenger.services.message.model.MessageContentModel;
+import trente.asia.messenger.services.message.model.RealmBoardModel;
 import trente.asia.messenger.services.message.model.RealmMessageModel;
 import trente.asia.messenger.services.util.NetworkChangeReceiver;
 import trente.asia.welfare.adr.activity.WelfareActivity;
@@ -70,8 +71,7 @@ import trente.asia.welfare.adr.utils.WfPicassoHelper;
  *
  * @author HuyNQ
  */
-public class MessageDetailFragment extends AbstractMsgFragment
-		implements View.OnClickListener, NetworkChangeReceiver.OnNetworkChangeListener {
+public class MessageDetailFragment extends AbstractMsgFragment implements View.OnClickListener,NetworkChangeReceiver.OnNetworkChangeListener{
 
 	private LinearLayout				mLnrRightHeader;
 	private ChiaseImageViewRatioWidth	mImgThumbnail;
@@ -82,7 +82,7 @@ public class MessageDetailFragment extends AbstractMsgFragment
 	private ImageView					mBtnComment;
 	private LinearLayout				mLnrSend;
 	private ChiaseEditText				mEdtComment;
-	public static int				activeMessageId;
+	public static int					activeMessageId;
 	private RealmMessageModel			activeMessage;
 
 	private TextView					mTxtUserDetail;
@@ -104,7 +104,7 @@ public class MessageDetailFragment extends AbstractMsgFragment
 	public LinearLayout					lnrCheck;
 	public TextView						mTxtCheck;
 	public TextView						mTxtComment;
-	private TextView 					mTxtInternetConnection;
+	private TextView					mTxtInternetConnection;
 
 	private Integer						latestCommentId	= 0;
 	private Timer						mTimer;
@@ -127,8 +127,7 @@ public class MessageDetailFragment extends AbstractMsgFragment
 		super.onCreate(savedInstanceState);
 		((WelfareActivity)activity).setOnDeviceBackButtonClickListener(this);
 		networkChangeReceiver = new NetworkChangeReceiver(this);
-		getActivity().registerReceiver(networkChangeReceiver,
-				new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+		getActivity().registerReceiver(networkChangeReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
 	}
 
 	@Override
@@ -168,7 +167,7 @@ public class MessageDetailFragment extends AbstractMsgFragment
 		mScrDetail = (ScrollView)getView().findViewById(R.id.scr_id_detail);
 		mRltMedia = (RelativeLayout)getView().findViewById(R.id.rlt_id_media);
 		mLnrFile = (LinearLayout)getView().findViewById(R.id.lnr_id_file);
-		mTxtInternetConnection = (TextView) getView().findViewById(R.id.txt_internet_connection);
+		mTxtInternetConnection = (TextView)getView().findViewById(R.id.txt_internet_connection);
 
 		mLnrRightHeader.setOnClickListener(this);
 		mLnrSend.setOnClickListener(this);
@@ -203,26 +202,29 @@ public class MessageDetailFragment extends AbstractMsgFragment
 	}
 
 	private void loadMessageDetail(){
-		JSONObject jsonObject = new JSONObject();
-		try{
-			jsonObject.put("boardId", activeMessage.boardId);
-			jsonObject.put("targetMessageId", activeMessage.key);
-		}catch(JSONException e){
-			e.printStackTrace();
+		mTxtComment.setText(activeMessage.comments.size() + "");
+		if(!CCStringUtil.isEmpty(activeMessage.messageSender.avatarPath)){
+			WfPicassoHelper.loadImage(activity, host + activeMessage.messageSender.avatarPath, mImgAvatar, null);
 		}
-		requestLoad(MsConst.API_MESSAGE_DETAIL, jsonObject, true);
+		mImgAvatar.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v){
+				mDlgProfile.show(BuildConfig.HOST, activeMessage.messageSender.userName, activeMessage.messageSender.avatarPath);
+			}
+		});
+
+		Date messageDate = CCDateUtil.makeDateCustom(activeMessage.messageDate, WelfareConst.WF_DATE_TIME);
+		String messageDateFormat = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE_HH_MM, messageDate);
+		mTxtUserDetail.setText(activeMessage.messageSender.userName);
+		mTxtDetailDate.setText(messageDateFormat);
+		if(!CCStringUtil.isEmpty(activeMessage.messageSender.avatarPath)){
+			WfPicassoHelper.loadImage(activity, BuildConfig.HOST + activeMessage.messageSender.avatarPath, mImgAvatar, null);
+		}
 	}
 
 	private void loadCommentLatest(){
-		JSONObject jsonObject = new JSONObject();
-		try{
-			jsonObject.put("boardId", activeMessage.boardId);
-			jsonObject.put("targetMessageId", activeMessage.key);
-			jsonObject.put("lastId", this.latestCommentId);
-		}catch(JSONException e){
-			e.printStackTrace();
-		}
-		requestLoad(MsConst.API_MESSAGE_COMMENT_LATEST, jsonObject, false);
+
 	}
 
 	@Override
@@ -230,38 +232,21 @@ public class MessageDetailFragment extends AbstractMsgFragment
 		try{
 
 			if(MsConst.API_MESSAGE_DETAIL.equals(url)){
-//				messageModel = LoganSquare.parse(response.optString("detail"), MessageContentModel.class);
-
+				MessageContentModel messageContentModel = LoganSquare.parse(response.optString("detail"), MessageContentModel.class);
+				messageModel = new RealmMessageModel(messageContentModel);
 				// prefAccUtil.set(WelfareConst.ACTIVE_BOARD_ID, messageModel.boardId);
-				if(!CCStringUtil.isEmpty(messageModel.messageSender.avatarPath)){
-					WfPicassoHelper.loadImage(activity, host + messageModel.messageSender.avatarPath, mImgAvatar, null);
-				}
-				mImgAvatar.setOnClickListener(new View.OnClickListener() {
 
-					@Override
-					public void onClick(View v){
-						mDlgProfile.show(BuildConfig.HOST, messageModel.messageSender.userName, messageModel.messageSender.avatarPath);
-					}
-				});
-
-				Date messageDate = CCDateUtil.makeDateCustom(messageModel.messageDate, WelfareConst.WF_DATE_TIME);
-				String messageDateFormat = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE_HH_MM, messageDate);
-				mTxtUserDetail.setText(messageModel.messageSender.userName);
-				mTxtDetailDate.setText(messageDateFormat);
-				if(!CCStringUtil.isEmpty(messageModel.messageSender.avatarPath)){
-					WfPicassoHelper.loadImage(activity, BuildConfig.HOST + messageModel.messageSender.avatarPath, mImgAvatar, null);
-				}
 				if(!CCCollectionUtil.isEmpty(messageModel.targets)){
-//					mLnrTarget.setVisibility(View.VISIBLE);
-//					LayoutInflater mInflater = (LayoutInflater)activity.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-//					for(UserModel userModel : messageModel.targets){
-//						View toUserView = mInflater.inflate(R.layout.item_to_user_list, null);
-//						ImageView imgToUserAvatar = (ImageView)toUserView.findViewById(R.id.img_id_to_user_avatar);
-//						if(!CCStringUtil.isEmpty(userModel.avatarPath)){
-//							WfPicassoHelper.loadImage(activity, BuildConfig.HOST + userModel.avatarPath, imgToUserAvatar, null);
-//						}
-//						mLnrTarget.addView(toUserView);
-//					}
+					// mLnrTarget.setVisibility(View.VISIBLE);
+					// LayoutInflater mInflater = (LayoutInflater)activity.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+					// for(UserModel userModel : messageModel.targets){
+					// View toUserView = mInflater.inflate(R.layout.item_to_user_list, null);
+					// ImageView imgToUserAvatar = (ImageView)toUserView.findViewById(R.id.img_id_to_user_avatar);
+					// if(!CCStringUtil.isEmpty(userModel.avatarPath)){
+					// WfPicassoHelper.loadImage(activity, BuildConfig.HOST + userModel.avatarPath, imgToUserAvatar, null);
+					// }
+					// mLnrTarget.addView(toUserView);
+					// }
 				}
 
 				if(WelfareConst.ITEM_TEXT_TYPE_LOC.equals(messageModel.messageType)){
@@ -293,12 +278,13 @@ public class MessageDetailFragment extends AbstractMsgFragment
 					TextView txtFileName = (TextView)getView().findViewById(R.id.txt_id_file_name);
 					txtFileName.setText(messageModel.attachment.fileName);
 				}else{
-//					if(WelfareConst.ITEM_FILE_TYPE_PHOTO.equals(messageModel.messageType) && CCNumberUtil.checkNull(messageModel.attachment.fileSize) > WelfareConst.MAX_FILE_SIZE_2MB){
-//						mRltMedia.setVisibility(View.GONE);
-//						mLnrFile.setVisibility(View.VISIBLE);
-//						TextView txtFileName = (TextView)getView().findViewById(R.id.txt_id_file_name);
-//						txtFileName.setText(messageModel.attachment.fileName);
-//					}else{
+					// if(WelfareConst.ITEM_FILE_TYPE_PHOTO.equals(messageModel.messageType) &&
+					// CCNumberUtil.checkNull(messageModel.attachment.fileSize) > WelfareConst.MAX_FILE_SIZE_2MB){
+					// mRltMedia.setVisibility(View.GONE);
+					// mLnrFile.setVisibility(View.VISIBLE);
+					// TextView txtFileName = (TextView)getView().findViewById(R.id.txt_id_file_name);
+					// txtFileName.setText(messageModel.attachment.fileName);
+					// }else{
 					mRltMedia.setVisibility(View.VISIBLE);
 					mLnrFile.setVisibility(View.GONE);
 
@@ -321,15 +307,7 @@ public class MessageDetailFragment extends AbstractMsgFragment
 							}
 						});
 					}
-//					}
-				}
-
-				if(!CCCollectionUtil.isEmpty(messageModel.comments)){
-//					latestCommentId = CCNumberUtil.toInteger(messageModel.comments.get(messageModel.comments.size() - 1).key);
-//					for(CommentModel model : messageModel.comments){
-//						addComment(model);
-//					}
-//					mTxtComment.setText(String.valueOf(mLstCommentId.size()));
+					// }
 				}
 
 				if(!CCCollectionUtil.isEmpty(messageModel.checks)){
@@ -662,7 +640,7 @@ public class MessageDetailFragment extends AbstractMsgFragment
 	@Override
 	protected void onClickBackBtn(){
 		if(isClickNotification){
-			BoardModel boardModel = new BoardModel();
+			RealmBoardModel boardModel = new RealmBoardModel();
 			boardModel.key = messageModel.boardId;
 			MessageFragment messageFragment = new MessageFragment();
 			messageFragment.setActiveBoard(boardModel);
@@ -674,7 +652,7 @@ public class MessageDetailFragment extends AbstractMsgFragment
 	}
 
 	@Override
-	public void onNetworkConnectionChanged(boolean connected) {
+	public void onNetworkConnectionChanged(boolean connected){
 		mTxtInternetConnection.setVisibility(connected ? View.GONE : View.VISIBLE);
 	}
 

@@ -468,10 +468,10 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 	 *
 	 * @param messageId message id
 	 */
-	public void deleteMessage(String messageId){
+	public void deleteMessage(int messageId){
 		int index = 0;
 		for(RealmMessageModel message : mLstMessage){
-			if(messageId.equals(message.key)){
+			if(messageId == message.key){
 				deleteMessage4Index(index);
 				break;
 			}

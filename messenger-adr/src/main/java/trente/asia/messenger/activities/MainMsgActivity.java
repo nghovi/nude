@@ -8,6 +8,7 @@ import trente.asia.messenger.services.message.MessageDetailFragment;
 import trente.asia.messenger.services.message.MessageFragment;
 import trente.asia.messenger.services.message.model.BoardModel;
 import trente.asia.messenger.services.message.model.MessageContentModel;
+import trente.asia.messenger.services.message.model.RealmBoardModel;
 import trente.asia.messenger.services.message.model.RealmMessageModel;
 import trente.asia.messenger.services.user.MsgLoginFragment;
 import trente.asia.welfare.adr.activity.WelfareActivity;
@@ -42,7 +43,8 @@ public class MainMsgActivity extends WelfareActivity{
 		int parentKey = Integer.parseInt(mExtras.getString(WelfareConst.NotificationReceived.USER_INFO_NOTI_PARENT_KEY));
 		if(WelfareConst.NotificationType.MS_NOTI_NEW_MESSAGE.equals(serviceCode)){
 			MessageFragment messageFragment = new MessageFragment();
-			BoardModel boardModel = new BoardModel(key);
+			RealmBoardModel boardModel = new RealmBoardModel();
+			boardModel.key = key;
 			messageFragment.setActiveBoard(boardModel);
 			addFragment(messageFragment);
 		}else if(WelfareConst.NotificationType.MS_NOTI_NEW_COMMENT.equals(serviceCode)){

@@ -11,7 +11,8 @@ import trente.asia.welfare.adr.models.UserModel;
  */
 @com.bluelinelabs.logansquare.annotation.JsonObject(fieldDetectionPolicy = com.bluelinelabs.logansquare.annotation.JsonObject.FieldDetectionPolicy.NONPRIVATE_FIELDS)
 public class BoardModel{
-	public int			key;
+
+	public int				key;
 	public String			boardType;
 	public String			boardName;
 	public String			boardUnread;
