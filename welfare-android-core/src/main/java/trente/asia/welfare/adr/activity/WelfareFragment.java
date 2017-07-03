@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -164,6 +165,7 @@ public abstract class WelfareFragment extends ChiaseFragment implements WelfareA
 
 	protected void commonNotSuccess(JSONObject response){
 		String returnCd = response.optString(CsConst.RETURN_CODE_PARAM);
+		Log.e("WelfareFragment", "Return: " + response.toString());
 		if(WfErrorConst.ERR_CODE_INVALID_ACCOUNT.equals(returnCd)){
 			gotoSignIn();
 		}else if(WfErrorConst.ERR_CODE_INVALID_VERSION_AND_UPDATE.equals(returnCd)){

@@ -46,7 +46,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
 	private final WelfareFragment.OnAvatarClickListener	onAvatarClickListener;
 	private Context										mContext;
-	private List<RealmMessageModel>					mLstMessage;
+	private List<RealmMessageModel>						mLstMessage;
 	public ItemMsgClickListener							itemMsgClickListener;
 
 	private List<String>								lstDate	= new ArrayList<>();
@@ -107,9 +107,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 		}
 
 		public void bind(final MessageViewHolder holder, final RealmMessageModel item, final ItemMsgClickListener listener){
-			if(!WelfareConst.ITEM_TEXT_TYPE_TEXT.equals(item.messageType)
-					&& !WelfareConst.ITEM_TEXT_TYPE_LIKE.equals(item.messageType)
-					&& !WelfareConst.ITEM_TEXT_TYPE_STAMP.equals(item.messageType)){
+			if(!WelfareConst.ITEM_TEXT_TYPE_TEXT.equals(item.messageType) && !WelfareConst.ITEM_TEXT_TYPE_LIKE.equals(item.messageType) && !WelfareConst.ITEM_TEXT_TYPE_STAMP.equals(item.messageType)){
 				itemView.setOnClickListener(new View.OnClickListener() {
 
 					@Override
@@ -128,19 +126,18 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 				}
 			});
 
-			if(!WelfareConst.ITEM_TEXT_TYPE_LIKE.equals(item.messageType)
-					&& !WelfareConst.ITEM_TEXT_TYPE_STAMP.equals(item.messageType)){
-//				if(item.getCheckCount().compareTo(CCConst.ZERO) > 0){
-//					lnrCheck.setOnClickListener(new View.OnClickListener() {
-//
-//						@Override
-//						public void onClick(View v){
-//							if(itemMsgClickListener != null) itemMsgClickListener.onItemCheckClickListener(item);
-//						}
-//					});
-//				}else{
-//					lnrCheck.setOnClickListener(null);
-//				}
+			if(!WelfareConst.ITEM_TEXT_TYPE_LIKE.equals(item.messageType) && !WelfareConst.ITEM_TEXT_TYPE_STAMP.equals(item.messageType)){
+				// if(item.getCheckCount().compareTo(CCConst.ZERO) > 0){
+				// lnrCheck.setOnClickListener(new View.OnClickListener() {
+				//
+				// @Override
+				// public void onClick(View v){
+				// if(itemMsgClickListener != null) itemMsgClickListener.onItemCheckClickListener(item);
+				// }
+				// });
+				// }else{
+				// lnrCheck.setOnClickListener(null);
+				// }
 			}
 		}
 	}
@@ -198,14 +195,12 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 				}
 			}else if(WelfareConst.ITEM_TEXT_TYPE_LIKE.equals(contentModel.messageType)){
 				Picasso.with(mContext).load(R.drawable.wf_good).into(viewHolder.imgIcon);
-			} else if (WelfareConst.ITEM_TEXT_TYPE_STAMP.equals(contentModel.messageType)) {
-                WFMStampModel stamp = WFMStampModel.getStamp(contentModel.messageContent);
-				if (stamp != null) {
-					Picasso.with(mContext).load(BuildConfig.HOST + stamp.stampPath)
-							.resize(WelfareUtil.dpToPx(80), WelfareUtil.dpToPx(80))
-							.into(viewHolder.imgIcon);
+			}else if(WelfareConst.ITEM_TEXT_TYPE_STAMP.equals(contentModel.messageType)){
+				WFMStampModel stamp = WFMStampModel.getStamp(contentModel.messageContent);
+				if(stamp != null){
+					Picasso.with(mContext).load(BuildConfig.HOST + stamp.stampPath).resize(WelfareUtil.dpToPx(80), WelfareUtil.dpToPx(80)).into(viewHolder.imgIcon);
 				}
-            }else{
+			}else{
 				viewHolder.txtContent.setText(contentModel.messageContent);
 			}
 			Date messageDate = CCDateUtil.makeDateCustom(contentModel.messageDate, WelfareConst.WF_DATE_TIME);
@@ -220,9 +215,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 				}
 			});
 
-			if(!WelfareConst.ITEM_TEXT_TYPE_TEXT.equals(contentModel.messageType)
-					&& !WelfareConst.ITEM_TEXT_TYPE_LIKE.equals(contentModel.messageType)
-					&& !WelfareConst.ITEM_TEXT_TYPE_STAMP.equals(contentModel.messageType)){
+			if(!WelfareConst.ITEM_TEXT_TYPE_TEXT.equals(contentModel.messageType) && !WelfareConst.ITEM_TEXT_TYPE_LIKE.equals(contentModel.messageType) && !WelfareConst.ITEM_TEXT_TYPE_STAMP.equals(contentModel.messageType)){
 				viewHolder.txtCommentNumber.setText(String.valueOf(WelfareUtil.size(contentModel.comments)));
 			}
 
@@ -244,12 +237,11 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 				}
 			}
 
-			// if(!CCCollectionUtil.isEmpty(contentModel.checks)){
-			if(!WelfareConst.ITEM_TEXT_TYPE_LIKE.equals(contentModel.messageType) &&
-			!WelfareConst.ITEM_TEXT_TYPE_STAMP.equals(contentModel.messageType)){
-//				viewHolder.txtNumCheck.setText(String.valueOf(contentModel.getCheckCount()));
+			if(!CCCollectionUtil.isEmpty(contentModel.checks)){
+				if(!WelfareConst.ITEM_TEXT_TYPE_LIKE.equals(contentModel.messageType) && !WelfareConst.ITEM_TEXT_TYPE_STAMP.equals(contentModel.messageType)){
+					viewHolder.txtNumCheck.setText(String.valueOf(contentModel.checks.size()));
+				}
 			}
-			// }
 		}
 	}
 
@@ -286,8 +278,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 			return R.layout.item_messages_date;
 		}else if(WelfareConst.ITEM_TEXT_TYPE_LOC.equals(contentModel.messageType)){
 			return R.layout.item_messages_location;
-		}else if(WelfareConst.ITEM_TEXT_TYPE_LIKE.equals(contentModel.messageType) ||
-				WelfareConst.ITEM_TEXT_TYPE_STAMP.equals(contentModel.messageType)){
+		}else if(WelfareConst.ITEM_TEXT_TYPE_LIKE.equals(contentModel.messageType) || WelfareConst.ITEM_TEXT_TYPE_STAMP.equals(contentModel.messageType)){
 			return R.layout.item_messages_emotion;
 		}else if(WelfareConst.ITEM_FILE_TYPE_FILE.equals(contentModel.messageType)){
 			return R.layout.item_messages_file;
@@ -383,12 +374,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 	public void addComment(int messageId){
 		for(int i = 0; i < mLstMessage.size(); i++){
 			RealmMessageModel messageModel = mLstMessage.get(i);
-			boolean canComment = WelfareConst.ITEM_FILE_TYPE_PHOTO.equals(messageModel.messageType) || WelfareConst.ITEM_FILE_TYPE_MOVIE.equals(messageModel.messageType) || WelfareConst.ITEM_TEXT_TYPE_LOC.equals(messageModel.messageType);
-			if(canComment && messageModel.key == messageId){
-				if(CCCollectionUtil.isEmpty(messageModel.comments)){
-					messageModel.comments = new RealmList<>();
-				}
-				messageModel.comments.add(new RealmCommentModel());
+			if(messageModel.key == messageId){
 				this.notifyItemChanged(i);
 				break;
 			}

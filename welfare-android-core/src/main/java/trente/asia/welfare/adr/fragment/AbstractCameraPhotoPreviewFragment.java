@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.widget.Toast;
 
 import asia.chiase.core.util.CCNumberUtil;
@@ -117,7 +118,9 @@ public abstract class AbstractCameraPhotoPreviewFragment extends WelfareFragment
 				File originalFile = new File(mOriginalPath);
 				if(isCheckMaxSize){
                     SettingModel settingModel = prefAccUtil.getSetting();
-					if(CCNumberUtil.toLong(settingModel.WF_MAX_FILE_SIZE).compareTo(originalFile.length()) < 0){
+					Log.e("Photo Preview", "MAX_SIZE = " + settingModel.WF_MAX_FILE_SIZE);
+					if(settingModel.WF_MAX_FILE_SIZE != null &&
+							CCNumberUtil.toLong(settingModel.WF_MAX_FILE_SIZE).compareTo(originalFile.length()) < 0){
 						Intent intent = activity.getIntent();
 						intent.putExtra("detail", WelfareConst.WF_FILE_SIZE_NG);
 						activity.setResult(Activity.RESULT_OK, intent);

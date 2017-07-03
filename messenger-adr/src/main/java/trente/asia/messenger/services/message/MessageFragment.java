@@ -290,7 +290,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 
 																						@Override
 																						public void onGalleryClicked(){
-																							CameraPhotoPreviewActivity.starCameraFromGalleryPhotoPreviewActivity(MessageFragment.this, activeBoard.key);
+																							CameraPhotoPreviewActivity.starCameraFromGalleryPhotoPreviewActivity(MessageFragment.this, activeBoardId);
 																							onButtonMenuOpenedClicked();
 																						}
 
@@ -338,6 +338,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 	private String										staticStampId;
 	private PreferencesAccountUtil						preferencesAccountUtil;
 	private String										lastMessageUpdateDate;
+	private MessageDetailFragment						detailFragment;
 	// private String latestBoardId;
 
 	@Override
@@ -513,6 +514,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 		int startIndex = messages.size() < 10 ? 0 : messages.size() - 10;
 		List<RealmMessageModel> subListMessages = messages.subList(startIndex, messages.size());
 		addFirstMessages(subListMessages);
+		activeBoard = mRealm.where(RealmBoardModel.class).equalTo("key", activeBoardId).findFirst();
 	}
 
 	private void sendLocation(){
@@ -595,8 +597,10 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 				}
 				addFirstMessages(lstRealmMessage);
 				saveMessageToDB(lstRealmMessage);
+				activeBoard = mRealm.where(RealmBoardModel.class).equalTo("key", activeBoardId).findFirst();
 
 			}else if(MsConst.API_MESSAGE_LATEST.equals(url)){
+				log("Successload");
 				lastMessageUpdateDate = response.optString("lastMessageUpdateDate");
 				preferencesAccountUtil.set(MsConst.PREF_LAST_MESSAGE_UPDATE_DATE, lastMessageUpdateDate);
 				List<MessageContentModel> lstMessage = LoganSquare.parseList(response.optString("contents"), MessageContentModel.class);
@@ -623,6 +627,9 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 
 					if(updateMessages.size() > 0){
 						mMsgAdapter.updateMessage(updateMessages);
+						if (detailFragment != null) {
+							detailFragment.loadNewComment();
+						}
 					}
 
 					if(newMessages.size() > 0){
@@ -652,7 +659,6 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 						mRealm.commitTransaction();
 					}
 				}
-
 			}else if(MsConst.API_MESSAGE_NOTE_DETAIL.equals(url)){
 				BoardModel boardModel = LoganSquare.parse(response.optString("board"), BoardModel.class);
 				activeBoard = new RealmBoardModel(boardModel);
@@ -755,6 +761,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 	private void startTimer(){
 		if(mTimer == null) mTimer = new Timer();
 		mTimer.schedule(new TimerTask() {
+
 			@Override
 			public void run(){
 				loadMessageLatest();
@@ -966,10 +973,10 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 
 	@Override
 	public void onItemMsgClickListener(RealmMessageModel item){
-		MessageDetailFragment fragment = new MessageDetailFragment();
-		fragment.setActiveMessage(item);
-		fragment.setOnAddCommentListener(onAddCommentListener);
-		gotoFragment(fragment);
+		detailFragment = new MessageDetailFragment();
+		detailFragment.setActiveMessage(item);
+		detailFragment.setOnAddCommentListener(onAddCommentListener);
+		gotoFragment(detailFragment);
 	}
 
 	@Override
@@ -1110,6 +1117,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 	}
 
 	private void appendFile(Intent returnedIntent){
+		log("Append photo");
 		String detailMessage = returnedIntent.getExtras().getString("detail");
 		if(WelfareConst.WF_FILE_SIZE_NG.equals(detailMessage)){
 			alertDialog.setMessage(getString(R.string.wf_invalid_photo_over));

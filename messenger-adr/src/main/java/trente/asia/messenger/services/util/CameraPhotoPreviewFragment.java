@@ -11,6 +11,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -115,8 +116,9 @@ public class CameraPhotoPreviewFragment extends AbstractCameraPhotoPreviewFragme
 	private void uploadPhoto(){
 		Map<String, File> fileMap = new HashMap<>();
 		File originalFile = new File(mOriginalPath);
+		Log.e("CameraFragment", "mOriginalPath = " + mOriginalPath);
 		fileMap.put("messageFile", originalFile);
-		// fileMap.put("thumbnailFile", originalFile);
+//		 fileMap.put("thumbnailFile", originalFile);
 
 		JSONObject jsonObject = new JSONObject();
 		try{
@@ -124,15 +126,16 @@ public class CameraPhotoPreviewFragment extends AbstractCameraPhotoPreviewFragme
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
+		Log.e("CameraFragment", "activeBoardId = " + activeBoardId);
 		requestUpload(MsConst.API_MESSAGE_UPDATE, jsonObject, fileMap, true);
 	}
 
 	@Override
 	protected void successUpload(JSONObject response, String url){
+		Log.e("CameraFragment", "successUpload");
 		if(MsConst.API_MESSAGE_UPDATE.equals(url)){
 			File appFolder = new File(MsUtils.getFilesFolderPath());
 			deleteAppFolder(appFolder);
-
 			Intent intent = activity.getIntent();
 			intent.putExtra("detail", response.optString("detail"));
 			activity.setResult(Activity.RESULT_OK, intent);
@@ -145,6 +148,7 @@ public class CameraPhotoPreviewFragment extends AbstractCameraPhotoPreviewFragme
 	@Override
 	protected void gotoSignIn(){
 		super.gotoSignIn();
+		Log.e("CameraFragment", "gotoSignIn");
 		gotoFragment(new MsgLoginFragment());
 	}
 

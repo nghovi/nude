@@ -38,6 +38,7 @@ import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCNumberUtil;
 import asia.chiase.core.util.CCStringUtil;
+import io.realm.Realm;
 import trente.asia.android.util.AndroidUtil;
 import trente.asia.android.util.DownloadFileManager;
 import trente.asia.android.util.OpenDownloadedFile;
@@ -54,6 +55,7 @@ import trente.asia.messenger.services.message.listener.OnAddCommentListener;
 import trente.asia.messenger.services.message.model.BoardModel;
 import trente.asia.messenger.services.message.model.MessageContentModel;
 import trente.asia.messenger.services.message.model.RealmBoardModel;
+import trente.asia.messenger.services.message.model.RealmCommentModel;
 import trente.asia.messenger.services.message.model.RealmMessageModel;
 import trente.asia.messenger.services.util.NetworkChangeReceiver;
 import trente.asia.welfare.adr.activity.WelfareActivity;
@@ -110,7 +112,7 @@ public class MessageDetailFragment extends AbstractMsgFragment implements View.O
 	private Timer						mTimer;
 	private boolean						isSuccessLoad	= false;
 	private final int					TIME_RELOAD		= 10000;
-	private List<String>				mLstCommentId	= new ArrayList<>();
+	private List<Integer>				mLstCommentId	= new ArrayList<>();
 	private WfProfileDialog				mDlgProfile;
 	private NetworkChangeReceiver		networkChangeReceiver;
 
@@ -203,6 +205,7 @@ public class MessageDetailFragment extends AbstractMsgFragment implements View.O
 
 	private void loadMessageDetail(){
 		mTxtComment.setText(activeMessage.comments.size() + "");
+		mTxtCheck.setText(activeMessage.checks.size() + "");
 		if(!CCStringUtil.isEmpty(activeMessage.messageSender.avatarPath)){
 			WfPicassoHelper.loadImage(activity, host + activeMessage.messageSender.avatarPath, mImgAvatar, null);
 		}
@@ -221,6 +224,74 @@ public class MessageDetailFragment extends AbstractMsgFragment implements View.O
 		if(!CCStringUtil.isEmpty(activeMessage.messageSender.avatarPath)){
 			WfPicassoHelper.loadImage(activity, BuildConfig.HOST + activeMessage.messageSender.avatarPath, mImgAvatar, null);
 		}
+
+        if(WelfareConst.ITEM_TEXT_TYPE_LOC.equals(activeMessage.messageType)){
+            mRltMedia.setVisibility(View.VISIBLE);
+            mLnrFile.setVisibility(View.GONE);
+            // get image from google service
+            int imageWidth = AndroidUtil.getWidthScreen(activity);
+            int imageHeight = imageWidth * 6 / 9;
+            mLocationUrl = WelfareUtil.getGoogleUrl(activeMessage.gpsLatitude, activeMessage.gpsLongtitude, imageWidth, imageHeight);
+            WfPicassoHelper.loadImage(activity, mLocationUrl, mImgThumbnail, null);
+
+            mImgThumbnail.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v){
+                    Intent intentMapApp = new Intent(android.content.Intent.ACTION_VIEW);
+                    intentMapApp.setData(Uri.parse("http://maps.google.com/maps??hl=en&saddr=" + activeMessage.messageContent + "&daddr="
+							+ activeMessage.gpsLatitude + "," + activeMessage.gpsLongtitude));
+                    activity.startActivity(intentMapApp);
+                }
+            });
+
+            // show address
+            TextView txtAddress = (TextView)getView().findViewById(R.id.txt_id_address);
+            txtAddress.setText(activeMessage.messageContent);
+            txtAddress.setVisibility(View.VISIBLE);
+        }else if(WelfareConst.ITEM_FILE_TYPE_FILE.equals(activeMessage.messageType)){
+            mRltMedia.setVisibility(View.GONE);
+            mLnrFile.setVisibility(View.VISIBLE);
+            TextView txtFileName = (TextView)getView().findViewById(R.id.txt_id_file_name);
+            txtFileName.setText(activeMessage.attachment.fileName);
+        }else{
+            mRltMedia.setVisibility(View.VISIBLE);
+            mLnrFile.setVisibility(View.GONE);
+
+            if(activeMessage.thumbnailAttachment != null && !CCStringUtil.isEmpty(activeMessage.thumbnailAttachment.fileUrl)){
+                WfPicassoHelper.loadImage(activity, host + activeMessage.thumbnailAttachment.fileUrl, mImgThumbnail, null);
+            }
+
+            if(WelfareConst.ITEM_FILE_TYPE_MOVIE.equals(activeMessage.messageType)){
+                imgPlay = (ImageView)getView().findViewById(R.id.img_id_play);
+                imgPlay.setVisibility(View.VISIBLE);
+                mImgThumbnail.setOnClickListener(this);
+            }else{
+                mDlgPhotoDetail = new WfDialog(activity);
+                mDlgPhotoDetail.setDialogPhotoDetail(BuildConfig.HOST + activeMessage.thumbnailAttachment.fileUrl);
+                mImgThumbnail.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v){
+                        mDlgPhotoDetail.show();
+                    }
+                });
+            }
+        }
+
+		for(RealmCommentModel comment : activeMessage.comments){
+			addComment(comment);
+		}
+	}
+
+	public void loadNewComment() {
+		if (activeMessage == null) {
+			return;
+		}
+		for (RealmCommentModel comment : activeMessage.comments) {
+			addComment(comment);
+		}
+		mTxtComment.setText(String.valueOf(activeMessage.comments.size()));
 	}
 
 	private void loadCommentLatest(){
@@ -325,7 +396,7 @@ public class MessageDetailFragment extends AbstractMsgFragment implements View.O
 						latestCommentId = CCNumberUtil.toInteger(lastItem.key);
 					}
 					for(CommentModel comment : lstComment){
-						addComment(comment);
+//						addComment(comment);
 					}
 					mTxtComment.setText(String.valueOf(mLstCommentId.size()));
 					scroll2Bottom();
@@ -338,7 +409,7 @@ public class MessageDetailFragment extends AbstractMsgFragment implements View.O
 		}
 	}
 
-	private void addComment(final CommentModel commentModel){
+	private void addComment(final RealmCommentModel commentModel){
 		if(!mLstCommentId.contains(commentModel.key)){
 			LayoutInflater mInflater = (LayoutInflater)activity.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 			View commentView = mInflater.inflate(R.layout.item_comment_list, null);
@@ -584,8 +655,8 @@ public class MessageDetailFragment extends AbstractMsgFragment implements View.O
 		mEdtComment.setText("");
 		JSONObject jsonObject = new JSONObject();
 		try{
-			jsonObject.put("boardId", messageModel.boardId);
-			jsonObject.put("messageId", messageModel.key);
+			jsonObject.put("boardId", activeMessage.boardId + "");
+			jsonObject.put("messageId", activeMessage.key + "");
 			jsonObject.put("commentContent", content);
 		}catch(JSONException e){
 			e.printStackTrace();
@@ -599,13 +670,14 @@ public class MessageDetailFragment extends AbstractMsgFragment implements View.O
 			CommentModel commentModel = null;
 			try{
 				commentModel = LoganSquare.parse(response.optString("detail"), CommentModel.class);
-				addComment(commentModel);
+				RealmCommentModel comment = new RealmCommentModel(commentModel);
+				Realm realm = Realm.getDefaultInstance();
+				realm.beginTransaction();
+				activeMessage.comments.add(comment);
+				realm.commitTransaction();
+				addComment(comment);
 				mTxtComment.setText(String.valueOf(mLstCommentId.size()));
-				// if(latestCommentId.compareTo(CCNumberUtil.toInteger(commentModel.key)) < 0){
-				// latestCommentId = CCNumberUtil.toInteger(commentModel.key);
-				// }
 				scroll2Bottom();
-
 				if(onAddCommentListener != null){
 					onAddCommentListener.onAddCommentListener(activeMessage.key);
 				}

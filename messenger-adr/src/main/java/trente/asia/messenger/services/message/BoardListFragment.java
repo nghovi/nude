@@ -1,6 +1,7 @@
 package trente.asia.messenger.services.message;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import com.bluelinelabs.logansquare.LoganSquare;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import asia.chiase.core.util.CCCollectionUtil;
@@ -137,8 +139,13 @@ public class BoardListFragment extends AbstractMsgFragment implements View.OnCli
 
 	private void loadBoardList(){
 		RealmResults<RealmBoardModel> boardList = Realm.getDefaultInstance().where(RealmBoardModel.class).findAll();
-		if(!CCCollectionUtil.isEmpty(boardList)){
-			mAdapter = new BoardAdapter(activity, boardList, new OnAvatarClickListener() {
+		List<RealmBoardModel> boards = new ArrayList<>();
+		for (RealmBoardModel board : boardList) {
+			boards.add(board);
+		}
+
+		if(!CCCollectionUtil.isEmpty(boards)){
+			mAdapter = new BoardAdapter(activity, boards, new OnAvatarClickListener() {
 
 				@Override
 				public void OnAvatarClick(String userName, String avatarPath){
@@ -164,7 +171,6 @@ public class BoardListFragment extends AbstractMsgFragment implements View.OnCli
 				prefAccUtil.set(MsConst.PREF_ACTIVE_BOARD_ID, activeBoard.key + "");
 				if(onChangedBoardListener != null) onChangedBoardListener.onChangedBoard(boardList.get(0), false);
 			}
-
 			checkUnreadMessage(boardList);
 		}
 	}

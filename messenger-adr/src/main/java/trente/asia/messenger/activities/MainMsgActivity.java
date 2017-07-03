@@ -24,6 +24,7 @@ public class MainMsgActivity extends WelfareActivity{
 		setContentView(R.layout.activity_main);
 		PreferencesAccountUtil prefAccUtil = new PreferencesAccountUtil(this);
 		UserModel userModel = prefAccUtil.getUserPref();
+
 		Bundle mExtras = getIntent().getExtras();
 
 		if(!CCStringUtil.isEmpty(userModel.key)){
