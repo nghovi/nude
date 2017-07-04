@@ -64,7 +64,7 @@
     <string name="fragment_post_edit_button">Submit</string>
     <string name="fragment_post_edit_hint"></string>
     <string name="fragment_post_edit_alert_dlg_title">Error Message</string>
-    <string name="txt_fragment_post_edit_template">Template ></string>
+    <string name="txt_fragment_post_edit_template">Card ></string>
     <string name="fragment_post_edit_dept">Dept</string>
     <string name="fragment_post_edit_user">User</string>
     <string name="fragment_post_edit_category">Category</string>
