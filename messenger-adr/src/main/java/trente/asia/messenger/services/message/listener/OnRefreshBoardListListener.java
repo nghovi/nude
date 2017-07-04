@@ -3,6 +3,7 @@ package trente.asia.messenger.services.message.listener;
 import java.util.List;
 
 import trente.asia.messenger.services.message.model.BoardModel;
+import trente.asia.messenger.services.message.model.RealmBoardModel;
 
 /**
  * OnRefreshBoardListListener
@@ -11,6 +12,6 @@ import trente.asia.messenger.services.message.model.BoardModel;
  */
 public interface OnRefreshBoardListListener{
 
-	public void onRefreshBoardListListener(List<BoardModel> lstBoard);
+	public void onRefreshBoardListListener(List<RealmBoardModel> lstBoard);
 
 }

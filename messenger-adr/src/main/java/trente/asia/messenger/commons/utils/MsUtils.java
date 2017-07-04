@@ -18,6 +18,7 @@ import android.widget.Toast;
 import asia.chiase.core.util.CCCollectionUtil;
 import trente.asia.android.util.AndroidUtil;
 import trente.asia.messenger.commons.defines.MsConst;
+import trente.asia.messenger.services.message.model.RealmUserModel;
 import trente.asia.welfare.adr.models.LikeModel;
 import trente.asia.welfare.adr.models.UserModel;
 
@@ -143,10 +144,10 @@ public class MsUtils{
 	 *
 	 * @param lstUser
 	 */
-	public static UserModel findUser4AccountName(List<UserModel> lstUser, String accountName){
+	public static RealmUserModel findUser4AccountName(List<RealmUserModel> lstUser, String accountName){
 
-		UserModel userModel = null;
-		for(UserModel user : lstUser){
+		RealmUserModel userModel = null;
+		for(RealmUserModel user : lstUser){
 			if(user.userAccount.equals(accountName)){
 				userModel = user;
 				break;

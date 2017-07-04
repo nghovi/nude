@@ -1,5 +1,7 @@
 package trente.asia.welfare.adr.models;
 
+import io.realm.annotations.Ignore;
+
 /**
  * CommentModel
  *
@@ -20,7 +22,6 @@ public class CommentModel{
 	public String				itemType;
 	public String				commentType;
 	public UserModel			commentUser;
-
 	public AttachmentModel		attachment;
 	public ThumbnailModel		thumbnail;
 	public String				key;

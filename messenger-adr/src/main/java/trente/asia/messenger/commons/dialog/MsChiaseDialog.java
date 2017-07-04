@@ -18,6 +18,8 @@ import trente.asia.android.view.model.ChiaseListItemModel;
 import trente.asia.messenger.R;
 import trente.asia.messenger.services.message.listener.OnActionClickListener;
 import trente.asia.messenger.services.message.model.MessageContentModel;
+import trente.asia.messenger.services.message.model.RealmMessageModel;
+import trente.asia.messenger.services.message.model.RealmUserModel;
 import trente.asia.messenger.services.message.view.CheckUserListAdapter;
 import trente.asia.welfare.adr.models.UserModel;
 
@@ -30,7 +32,7 @@ public class MsChiaseDialog extends ChiaseDialog{
 
 	private Context				mContext;
 
-	private MessageContentModel	message;
+	private RealmMessageModel	message;
 
 	public MsChiaseDialog(Context context){
 		super(context);
@@ -57,7 +59,7 @@ public class MsChiaseDialog extends ChiaseDialog{
 		return this;
 	}
 
-	public void updateCheckUserList(List<UserModel> lstCheck){
+	public void updateCheckUserList(List<RealmUserModel> lstCheck){
 		ListView lsvUser = (ListView)this.findViewById(R.id.lsv_id_user);
 		CheckUserListAdapter adapter = new CheckUserListAdapter(this.mContext, lstCheck);
 		lsvUser.setAdapter(adapter);
@@ -127,11 +129,11 @@ public class MsChiaseDialog extends ChiaseDialog{
 		this.show();
 	}
 
-	public MessageContentModel getMessage(){
+	public RealmMessageModel getMessage(){
 		return message;
 	}
 
-	public void setMessage(MessageContentModel message){
+	public void setMessage(RealmMessageModel message){
 		this.message = message;
 	}
 }

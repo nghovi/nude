@@ -7,6 +7,6 @@ package trente.asia.messenger.services.message.listener;
  */
 public interface OnAddCommentListener{
 
-	public void onAddCommentListener(String messageId);
+	public void onAddCommentListener(int messageId);
 
 }

@@ -17,11 +17,11 @@ public class CameraPhotoPreviewActivity extends WelfareActivity{
 	 * 
 	 * @param fragment
 	 */
-	public static void starCameraFromGalleryPhotoPreviewActivity(Fragment fragment, String activeBoardId){
+	public static void starCameraFromGalleryPhotoPreviewActivity(Fragment fragment, int activeBoardId){
 		if(AndroidUtil.verifyStoragePermissions(fragment.getActivity())){
 			Intent intent = new Intent(fragment.getActivity(), CameraPhotoPreviewActivity.class);
 			intent.putExtra(WelfareConst.Extras.TYPE_OF_PHOTO_INTENT, WelfareConst.PhotoIntents.GALLERY);
-			intent.putExtra(WelfareConst.Extras.ACTIVE_BOARD_ID, activeBoardId);
+			intent.putExtra(WelfareConst.Extras.ACTIVE_BOARD_ID, activeBoardId + "");
 			fragment.startActivityForResult(intent, WelfareConst.RequestCode.PHOTO_CHOOSE);
 		}
 	}
@@ -31,11 +31,11 @@ public class CameraPhotoPreviewActivity extends WelfareActivity{
 	 * 
 	 * @param fragment
 	 */
-	public static void starCameraPhotoPreviewActivity(Fragment fragment, String activeBoardId){
+	public static void starCameraPhotoPreviewActivity(Fragment fragment, int activeBoardId){
 		if(AndroidUtil.verifyStoragePermissions(fragment.getActivity())){
 			Intent intent = new Intent(fragment.getActivity(), CameraPhotoPreviewActivity.class);
 			intent.putExtra(WelfareConst.Extras.TYPE_OF_PHOTO_INTENT, WelfareConst.PhotoIntents.CAMERA);
-			intent.putExtra(WelfareConst.Extras.ACTIVE_BOARD_ID, activeBoardId);
+			intent.putExtra(WelfareConst.Extras.ACTIVE_BOARD_ID, activeBoardId + "");
 			fragment.startActivityForResult(intent, WelfareConst.RequestCode.PHOTO_CHOOSE);
 		}
 	}
