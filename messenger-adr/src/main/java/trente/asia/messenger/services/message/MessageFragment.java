@@ -600,7 +600,6 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 				activeBoard = mRealm.where(RealmBoardModel.class).equalTo("key", activeBoardId).findFirst();
 
 			}else if(MsConst.API_MESSAGE_LATEST.equals(url)){
-				log("Successload");
 				lastMessageUpdateDate = response.optString("lastMessageUpdateDate");
 				preferencesAccountUtil.set(MsConst.PREF_LAST_MESSAGE_UPDATE_DATE, lastMessageUpdateDate);
 				List<MessageContentModel> lstMessage = LoganSquare.parseList(response.optString("contents"), MessageContentModel.class);

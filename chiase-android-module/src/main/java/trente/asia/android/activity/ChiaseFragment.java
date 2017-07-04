@@ -245,10 +245,9 @@ public class ChiaseFragment extends Fragment implements HttpCallback{
 		}
 
 		initParams(jsonObject);
-
+		Log.e("ChiaseFragment", "JsonObject: " + jsonObject.toString());
 		HttpDelegate http = new HttpDelegate(host);
 		http.upload(ChiaseFragment.this, url, jsonObject, files, isAlert);
-
 	}
 
 	@Override
