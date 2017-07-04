@@ -149,4 +149,9 @@ public class FilePreviewFragment extends AbstractFilePreviewFragment implements 
 		super.gotoSignIn();
 		gotoFragment(new MsgLoginFragment());
 	}
+
+	@Override
+	protected String getServiceCd() {
+		return WelfareConst.SERVICE_CD_MS;
+	}
 }

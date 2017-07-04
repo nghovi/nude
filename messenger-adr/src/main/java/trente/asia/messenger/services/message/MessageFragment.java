@@ -197,7 +197,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 
 																						@Override
 																						public void onCameraClicked(){
-																							CameraPhotoPreviewActivity.starCameraPhotoPreviewActivity(MessageFragment.this, activeBoard.key);
+																							CameraPhotoPreviewActivity.starCameraPhotoPreviewActivity(MessageFragment.this, activeBoardId);
 																							onButtonMenuOpenedClicked();
 																						}
 
@@ -207,7 +207,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 
 																						@Override
 																						public void onFileClicked(){
-																							FilePreviewActivity.startFilePreviewActivity(MessageFragment.this, activeBoard.key);
+																							FilePreviewActivity.startFilePreviewActivity(MessageFragment.this, activeBoardId);
 																							onButtonMenuOpenedClicked();
 																						}
 
@@ -216,7 +216,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 																							// alertDialog.setMessage(getString(R.string.chiase_common_disabled_function));
 																							// alertDialog.show();
 																							// onButtonMenuOpenedClicked();
-																							RecorderVideoActivity.starVideoPreviewActivity(MessageFragment.this, activeBoard.key);
+																							RecorderVideoActivity.starVideoPreviewActivity(MessageFragment.this, activeBoardId);
 																							onButtonMenuOpenedClicked();
 																						}
 

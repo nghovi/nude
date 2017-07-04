@@ -15,7 +15,7 @@ public class RecorderVideoActivity extends WelfareActivity{
 	public static void starVideoPreviewActivity(Fragment fragment, int activeBoardId){
 		if(AndroidUtil.verifyStoragePermissions(fragment.getActivity())){
 			Intent intent = new Intent(fragment.getActivity(), RecorderVideoActivity.class);
-			intent.putExtra(WelfareConst.Extras.ACTIVE_BOARD_ID, activeBoardId);
+			intent.putExtra(WelfareConst.Extras.ACTIVE_BOARD_ID, activeBoardId + "");
 			fragment.startActivityForResult(intent, WelfareConst.RequestCode.VIDEO_CHOOSE);
 		}
 	}

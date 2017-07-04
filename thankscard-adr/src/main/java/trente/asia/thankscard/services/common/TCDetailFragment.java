@@ -161,8 +161,7 @@ public class TCDetailFragment extends AbstractPagerFragment{
 		Bundle args = new Bundle();
 		args.putInt(TcConst.ACTIVE_FOOTER_ITEM_ID, getFooterItemId());
 		String toUserId = myself.key.equals(historyModel.receiverId) ? historyModel.posterId : historyModel.receiverId;
-		args.putString(ThanksCardEditFragment.MESSAGE, historyModel.message);//
-
+		args.putString(ThanksCardEditFragment.MESSAGE, historyModel.message);
 		thanksCardEditFragment.setSelectedDept(WelfareUtil.getDept4UserId(depts, toUserId));
 		thanksCardEditFragment.setSelectedUser(new UserModel(toUserId));
 
