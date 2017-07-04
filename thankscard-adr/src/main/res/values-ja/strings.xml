@@ -64,7 +64,7 @@
     <string name="fragment_post_edit_button">送信する</string>
     <string name="fragment_post_edit_hint"></string>
     <string name="fragment_post_edit_alert_dlg_title">エラー</string>
-    <string name="txt_fragment_post_edit_template">テンプレート ></string>
+    <string name="txt_fragment_post_edit_template">カード選択 ></string>
     <string name="fragment_post_edit_dept">部署</string>
     <string name="fragment_post_edit_user">ユーザ</string>
     <string name="fragment_post_edit_category">カテゴリ</string>
@@ -89,7 +89,7 @@
     <string name="spinner_dept_selection_prompt">全て</string>
     <string name="spinner_user_selection_prompt">全て</string>
     <string name="dialog_category_selection_category">カテゴリ</string>
-    <string name="dialog_template_selection_template">テンプレート</string>
+    <string name="dialog_template_selection_template">カード選択</string>
 
 
     <string name="dialog_avatar_handlers_camera">カメラ</string>

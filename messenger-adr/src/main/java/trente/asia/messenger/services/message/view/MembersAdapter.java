@@ -16,23 +16,24 @@ import android.widget.TextView;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.messenger.BuildConfig;
 import trente.asia.messenger.R;
+import trente.asia.messenger.services.message.model.RealmUserModel;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WfPicassoHelper;
 
 /**
  * Created by Huy-nq on 7/28/2016.
  */
-public class MembersAdapter extends ArrayAdapter<UserModel>{
+public class MembersAdapter extends ArrayAdapter<RealmUserModel>{
 
-	private List<UserModel>	mMemberList = new ArrayList<>();
+	private List<RealmUserModel>	mMemberList = new ArrayList<>();
 	private Context			mContext;
-    private List<UserModel>	fullMemberList;
+    private List<RealmUserModel>	fullMemberList;
 
-	public MembersAdapter(Context context, List<UserModel> mMembers){
+	public MembersAdapter(Context context, List<RealmUserModel> mMembers){
 		super(context, R.layout.item_members, mMembers);
 		this.mContext = context;
 		this.fullMemberList = mMembers;
-        for(UserModel userModel : fullMemberList){
+        for(RealmUserModel userModel : fullMemberList){
             this.mMemberList.add(userModel);
         }
 	}
@@ -56,7 +57,7 @@ public class MembersAdapter extends ArrayAdapter<UserModel>{
 	}
 
 	public View getView(int position, View convertView, ViewGroup parent){
-		UserModel model = this.mMemberList.get(position);
+		RealmUserModel model = this.mMemberList.get(position);
 		LayoutInflater mInflater = (LayoutInflater)mContext.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 		convertView = mInflater.inflate(R.layout.item_members, null);
 
@@ -77,7 +78,7 @@ public class MembersAdapter extends ArrayAdapter<UserModel>{
 			@Override
 			protected void publishResults(CharSequence constraint, FilterResults results){
 				if(results.count > 0){
-					mMemberList = (ArrayList<UserModel>)results.values;
+					mMemberList = (ArrayList<RealmUserModel>)results.values;
 					notifyDataSetChanged();
 				}else{
 					notifyDataSetInvalidated();
@@ -87,13 +88,13 @@ public class MembersAdapter extends ArrayAdapter<UserModel>{
 			@Override
 			protected FilterResults performFiltering(CharSequence constraint){
 				FilterResults results = new FilterResults();
-				ArrayList<UserModel> filterArrayList = new ArrayList<UserModel>();
+				ArrayList<RealmUserModel> filterArrayList = new ArrayList<>();
 				if(CCStringUtil.isEmpty(CCStringUtil.toString(constraint))){
 					results.count = filterArrayList.size();
 					results.values = filterArrayList;
 				}else{
 					constraint = constraint.subSequence(1, constraint.length()).toString().toLowerCase();
-					for(UserModel userModel : fullMemberList){
+					for(RealmUserModel userModel : fullMemberList){
 						if(userModel.userAccount.toLowerCase().contains(constraint)){
 							filterArrayList.add(userModel);
 						}

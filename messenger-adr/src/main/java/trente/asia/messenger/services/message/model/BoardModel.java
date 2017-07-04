@@ -11,7 +11,8 @@ import trente.asia.welfare.adr.models.UserModel;
  */
 @com.bluelinelabs.logansquare.annotation.JsonObject(fieldDetectionPolicy = com.bluelinelabs.logansquare.annotation.JsonObject.FieldDetectionPolicy.NONPRIVATE_FIELDS)
 public class BoardModel{
-	public String			key;
+
+	public int				key;
 	public String			boardType;
 	public String			boardName;
 	public String			boardUnread;
@@ -24,20 +25,20 @@ public class BoardModel{
 
 	}
 
-	public BoardModel(String key, String boardName){
+	public BoardModel(int key, String boardName){
 		this.key = key;
 		this.boardName = boardName;
 	}
 
-	public BoardModel(String key){
+	public BoardModel(int key){
 		this.key = key;
 	}
 
-	public String getKey(){
+	public int getKey(){
 		return key;
 	}
 
-	public void setKey(String key){
+	public void setKey(int key){
 		this.key = key;
 	}
 

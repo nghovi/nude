@@ -148,6 +148,8 @@
                 <ImageButton
                     android:id="@+id/btn_like_cmt"
                     style="@style/cs_common_wrap"
+                    android:layout_width="@dimen/margin_24dp"
+                    android:layout_height="@dimen/margin_24dp"
                     android:background="@android:color/transparent"
                     android:clickable="false"
                     android:src="@drawable/wf_good"/>

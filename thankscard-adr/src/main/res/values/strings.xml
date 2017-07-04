@@ -64,7 +64,7 @@
     <string name="fragment_post_edit_button">Submit</string>
     <string name="fragment_post_edit_hint"></string>
     <string name="fragment_post_edit_alert_dlg_title">Error Message</string>
-    <string name="txt_fragment_post_edit_template">Template ></string>
+    <string name="txt_fragment_post_edit_template">Card ></string>
     <string name="fragment_post_edit_dept">Dept</string>
     <string name="fragment_post_edit_user">User</string>
     <string name="fragment_post_edit_category">Category</string>
@@ -89,7 +89,7 @@
     <string name="spinner_dept_selection_prompt">All Dept</string>
     <string name="spinner_user_selection_prompt">All User</string>
     <string name="dialog_category_selection_category">Category</string>
-    <string name="dialog_template_selection_template">Template</string>
+    <string name="dialog_template_selection_template">Card</string>
 
 
     <string name="dialog_avatar_handlers_camera">Camera</string>

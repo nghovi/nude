@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import asia.chiase.core.util.CCCollectionUtil;
+import io.realm.annotations.Ignore;
 
 /**
  * UserModel
@@ -26,7 +27,6 @@ public class UserModel extends BitmapModel implements Serializable{
 	public String				adminFlag;
 	public String				loginUserId;
 	public String				avatarPath;
-
 	public DeptModel			dept;
 	public String				companyId;
 	public String				pathProfile;
@@ -34,7 +34,6 @@ public class UserModel extends BitmapModel implements Serializable{
 	public String				language	= "en";
 	public String				timezone	= "Asia/Ho_Chi_Minh";
 	public String				dateBirth;
-
 	public Map<String, String>	userInfoMap	= new LinkedHashMap<String, String>();
 
 	public UserModel(){

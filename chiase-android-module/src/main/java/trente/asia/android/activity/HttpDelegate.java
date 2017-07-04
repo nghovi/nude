@@ -8,6 +8,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import asia.chiase.core.util.CCStringUtil;
 import okhttp3.MediaType;
@@ -115,7 +116,6 @@ public class HttpDelegate{
 		};
 
 		asyncTask.execute();
-
 	}
 
 	public void upload(final HttpCallback callback, final String url, final JSONObject param, final Map<String, File> files, final boolean isAlert){
