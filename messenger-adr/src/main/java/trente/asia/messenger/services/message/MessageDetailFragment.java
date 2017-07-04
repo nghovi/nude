@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.VideoView;
 
 import com.bluelinelabs.logansquare.LoganSquare;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -118,6 +119,7 @@ public class MessageDetailFragment extends AbstractMsgFragment implements View.O
 
 	public void setActiveMessage(RealmMessageModel activeMessage){
 		this.activeMessage = activeMessage;
+		activeBoardId = activeMessage.boardId;
 	}
 
 	public void setOnAddCommentListener(OnAddCommentListener onAddCommentListener){
@@ -179,6 +181,9 @@ public class MessageDetailFragment extends AbstractMsgFragment implements View.O
 		mDlgCheckUser.setDialogCheckUserList();
 		mDlgProfile = new WfProfileDialog(activity);
 		mDlgProfile.setDialogProfileDetail(50, 50);
+
+		Picasso.with(getContext()).load(BuildConfig.HOST + preferencesAccountUtil.get(MsConst.DEF_STAMP_PATH))
+				.fit().into(mBtnLikeCmt);
 	}
 
 	@Override
@@ -187,23 +192,21 @@ public class MessageDetailFragment extends AbstractMsgFragment implements View.O
 	}
 
 	@Override
+	protected void updateComments() {
+		super.updateComments();
+		loadNewComment();
+	}
+
+	@Override
 	public void onResume(){
 		super.onResume();
 		activeMessageId = activeMessage.key;
-
-		if(mTimer == null) mTimer = new Timer();
-		mTimer.schedule(new TimerTask() {
-
-			@Override
-			public void run(){
-				if(isSuccessLoad){
-					loadCommentLatest();
-				}
-			}
-		}, TIME_RELOAD, TIME_RELOAD);
 	}
 
 	private void loadMessageDetail(){
+		if(activeMessage.comments == null){
+			return;
+		}
 		mTxtComment.setText(activeMessage.comments.size() + "");
 		mTxtCheck.setText(activeMessage.checks.size() + "");
 		if(!CCStringUtil.isEmpty(activeMessage.messageSender.avatarPath)){
@@ -225,188 +228,69 @@ public class MessageDetailFragment extends AbstractMsgFragment implements View.O
 			WfPicassoHelper.loadImage(activity, BuildConfig.HOST + activeMessage.messageSender.avatarPath, mImgAvatar, null);
 		}
 
-        if(WelfareConst.ITEM_TEXT_TYPE_LOC.equals(activeMessage.messageType)){
-            mRltMedia.setVisibility(View.VISIBLE);
-            mLnrFile.setVisibility(View.GONE);
-            // get image from google service
-            int imageWidth = AndroidUtil.getWidthScreen(activity);
-            int imageHeight = imageWidth * 6 / 9;
-            mLocationUrl = WelfareUtil.getGoogleUrl(activeMessage.gpsLatitude, activeMessage.gpsLongtitude, imageWidth, imageHeight);
-            WfPicassoHelper.loadImage(activity, mLocationUrl, mImgThumbnail, null);
+		if(WelfareConst.ITEM_TEXT_TYPE_LOC.equals(activeMessage.messageType)){
+			mRltMedia.setVisibility(View.VISIBLE);
+			mLnrFile.setVisibility(View.GONE);
+			// get image from google service
+			int imageWidth = AndroidUtil.getWidthScreen(activity);
+			int imageHeight = imageWidth * 6 / 9;
+			mLocationUrl = WelfareUtil.getGoogleUrl(activeMessage.gpsLatitude, activeMessage.gpsLongtitude, imageWidth, imageHeight);
+			WfPicassoHelper.loadImage(activity, mLocationUrl, mImgThumbnail, null);
 
-            mImgThumbnail.setOnClickListener(new View.OnClickListener() {
+			mImgThumbnail.setOnClickListener(new View.OnClickListener() {
 
-                @Override
-                public void onClick(View v){
-                    Intent intentMapApp = new Intent(android.content.Intent.ACTION_VIEW);
-                    intentMapApp.setData(Uri.parse("http://maps.google.com/maps??hl=en&saddr=" + activeMessage.messageContent + "&daddr="
-							+ activeMessage.gpsLatitude + "," + activeMessage.gpsLongtitude));
-                    activity.startActivity(intentMapApp);
-                }
-            });
+				@Override
+				public void onClick(View v){
+					Intent intentMapApp = new Intent(android.content.Intent.ACTION_VIEW);
+					intentMapApp.setData(Uri.parse("http://maps.google.com/maps??hl=en&saddr=" + activeMessage.messageContent + "&daddr=" + activeMessage.gpsLatitude + "," + activeMessage.gpsLongtitude));
+					activity.startActivity(intentMapApp);
+				}
+			});
 
-            // show address
-            TextView txtAddress = (TextView)getView().findViewById(R.id.txt_id_address);
-            txtAddress.setText(activeMessage.messageContent);
-            txtAddress.setVisibility(View.VISIBLE);
-        }else if(WelfareConst.ITEM_FILE_TYPE_FILE.equals(activeMessage.messageType)){
-            mRltMedia.setVisibility(View.GONE);
-            mLnrFile.setVisibility(View.VISIBLE);
-            TextView txtFileName = (TextView)getView().findViewById(R.id.txt_id_file_name);
-            txtFileName.setText(activeMessage.attachment.fileName);
-        }else{
-            mRltMedia.setVisibility(View.VISIBLE);
-            mLnrFile.setVisibility(View.GONE);
+			// show address
+			TextView txtAddress = (TextView)getView().findViewById(R.id.txt_id_address);
+			txtAddress.setText(activeMessage.messageContent);
+			txtAddress.setVisibility(View.VISIBLE);
+		}else if(WelfareConst.ITEM_FILE_TYPE_FILE.equals(activeMessage.messageType)){
+			mRltMedia.setVisibility(View.GONE);
+			mLnrFile.setVisibility(View.VISIBLE);
+			TextView txtFileName = (TextView)getView().findViewById(R.id.txt_id_file_name);
+			txtFileName.setText(activeMessage.attachment.fileName);
+		}else{
+			mRltMedia.setVisibility(View.VISIBLE);
+			mLnrFile.setVisibility(View.GONE);
 
-            if(activeMessage.thumbnailAttachment != null && !CCStringUtil.isEmpty(activeMessage.thumbnailAttachment.fileUrl)){
-                WfPicassoHelper.loadImage(activity, host + activeMessage.thumbnailAttachment.fileUrl, mImgThumbnail, null);
-            }
+			if(activeMessage.thumbnailAttachment != null && !CCStringUtil.isEmpty(activeMessage.thumbnailAttachment.fileUrl)){
+				WfPicassoHelper.loadImage(activity, host + activeMessage.thumbnailAttachment.fileUrl, mImgThumbnail, null);
+			}
 
-            if(WelfareConst.ITEM_FILE_TYPE_MOVIE.equals(activeMessage.messageType)){
-                imgPlay = (ImageView)getView().findViewById(R.id.img_id_play);
-                imgPlay.setVisibility(View.VISIBLE);
-                mImgThumbnail.setOnClickListener(this);
-            }else{
-                mDlgPhotoDetail = new WfDialog(activity);
-                mDlgPhotoDetail.setDialogPhotoDetail(BuildConfig.HOST + activeMessage.thumbnailAttachment.fileUrl);
-                mImgThumbnail.setOnClickListener(new View.OnClickListener() {
+			if(WelfareConst.ITEM_FILE_TYPE_MOVIE.equals(activeMessage.messageType)){
+				imgPlay = (ImageView)getView().findViewById(R.id.img_id_play);
+				imgPlay.setVisibility(View.VISIBLE);
+				mImgThumbnail.setOnClickListener(this);
+			}else{
+				mDlgPhotoDetail = new WfDialog(activity);
+				mDlgPhotoDetail.setDialogPhotoDetail(BuildConfig.HOST + activeMessage.thumbnailAttachment.fileUrl);
+				mImgThumbnail.setOnClickListener(new View.OnClickListener() {
 
-                    @Override
-                    public void onClick(View v){
-                        mDlgPhotoDetail.show();
-                    }
-                });
-            }
-        }
-
+					@Override
+					public void onClick(View v){
+						mDlgPhotoDetail.show();
+					}
+				});
+			}
+		}
 		for(RealmCommentModel comment : activeMessage.comments){
 			addComment(comment);
 		}
 	}
 
-	public void loadNewComment() {
-		if (activeMessage == null) {
-			return;
-		}
-		for (RealmCommentModel comment : activeMessage.comments) {
+	public void loadNewComment(){
+		activeMessage = mRealm.where(RealmMessageModel.class).equalTo("key", activeMessageId).findFirst();
+		for(RealmCommentModel comment : activeMessage.comments){
 			addComment(comment);
 		}
 		mTxtComment.setText(String.valueOf(activeMessage.comments.size()));
-	}
-
-	private void loadCommentLatest(){
-
-	}
-
-	@Override
-	protected void successLoad(JSONObject response, String url){
-		try{
-
-			if(MsConst.API_MESSAGE_DETAIL.equals(url)){
-				MessageContentModel messageContentModel = LoganSquare.parse(response.optString("detail"), MessageContentModel.class);
-				messageModel = new RealmMessageModel(messageContentModel);
-				// prefAccUtil.set(WelfareConst.ACTIVE_BOARD_ID, messageModel.boardId);
-
-				if(!CCCollectionUtil.isEmpty(messageModel.targets)){
-					// mLnrTarget.setVisibility(View.VISIBLE);
-					// LayoutInflater mInflater = (LayoutInflater)activity.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-					// for(UserModel userModel : messageModel.targets){
-					// View toUserView = mInflater.inflate(R.layout.item_to_user_list, null);
-					// ImageView imgToUserAvatar = (ImageView)toUserView.findViewById(R.id.img_id_to_user_avatar);
-					// if(!CCStringUtil.isEmpty(userModel.avatarPath)){
-					// WfPicassoHelper.loadImage(activity, BuildConfig.HOST + userModel.avatarPath, imgToUserAvatar, null);
-					// }
-					// mLnrTarget.addView(toUserView);
-					// }
-				}
-
-				if(WelfareConst.ITEM_TEXT_TYPE_LOC.equals(messageModel.messageType)){
-					mRltMedia.setVisibility(View.VISIBLE);
-					mLnrFile.setVisibility(View.GONE);
-					// get image from google service
-					int imageWidth = AndroidUtil.getWidthScreen(activity);
-					int imageHeight = imageWidth * 6 / 9;
-					mLocationUrl = WelfareUtil.getGoogleUrl(messageModel.gpsLatitude, messageModel.gpsLongtitude, imageWidth, imageHeight);
-					WfPicassoHelper.loadImage(activity, mLocationUrl, mImgThumbnail, null);
-
-					mImgThumbnail.setOnClickListener(new View.OnClickListener() {
-
-						@Override
-						public void onClick(View v){
-							Intent intentMapApp = new Intent(android.content.Intent.ACTION_VIEW);
-							intentMapApp.setData(Uri.parse("http://maps.google.com/maps??hl=en&saddr=" + messageModel.messageContent + "&daddr=" + messageModel.gpsLatitude + "," + messageModel.gpsLongtitude));
-							activity.startActivity(intentMapApp);
-						}
-					});
-
-					// show address
-					TextView txtAddress = (TextView)getView().findViewById(R.id.txt_id_address);
-					txtAddress.setText(messageModel.messageContent);
-					txtAddress.setVisibility(View.VISIBLE);
-				}else if(WelfareConst.ITEM_FILE_TYPE_FILE.equals(messageModel.messageType)){
-					mRltMedia.setVisibility(View.GONE);
-					mLnrFile.setVisibility(View.VISIBLE);
-					TextView txtFileName = (TextView)getView().findViewById(R.id.txt_id_file_name);
-					txtFileName.setText(messageModel.attachment.fileName);
-				}else{
-					// if(WelfareConst.ITEM_FILE_TYPE_PHOTO.equals(messageModel.messageType) &&
-					// CCNumberUtil.checkNull(messageModel.attachment.fileSize) > WelfareConst.MAX_FILE_SIZE_2MB){
-					// mRltMedia.setVisibility(View.GONE);
-					// mLnrFile.setVisibility(View.VISIBLE);
-					// TextView txtFileName = (TextView)getView().findViewById(R.id.txt_id_file_name);
-					// txtFileName.setText(messageModel.attachment.fileName);
-					// }else{
-					mRltMedia.setVisibility(View.VISIBLE);
-					mLnrFile.setVisibility(View.GONE);
-
-					if(messageModel.thumbnailAttachment != null && !CCStringUtil.isEmpty(messageModel.thumbnailAttachment.fileUrl)){
-						WfPicassoHelper.loadImage(activity, host + messageModel.thumbnailAttachment.fileUrl, mImgThumbnail, null);
-					}
-
-					if(WelfareConst.ITEM_FILE_TYPE_MOVIE.equals(messageModel.messageType)){
-						imgPlay = (ImageView)getView().findViewById(R.id.img_id_play);
-						imgPlay.setVisibility(View.VISIBLE);
-						mImgThumbnail.setOnClickListener(this);
-					}else{
-						mDlgPhotoDetail = new WfDialog(activity);
-						mDlgPhotoDetail.setDialogPhotoDetail(BuildConfig.HOST + messageModel.thumbnailAttachment.fileUrl);
-						mImgThumbnail.setOnClickListener(new View.OnClickListener() {
-
-							@Override
-							public void onClick(View v){
-								mDlgPhotoDetail.show();
-							}
-						});
-					}
-					// }
-				}
-
-				if(!CCCollectionUtil.isEmpty(messageModel.checks)){
-					lnrCheck.setOnClickListener(this);
-					mTxtCheck.setText(String.valueOf(WelfareUtil.size(messageModel.checks)));
-					mDlgCheckUser.updateCheckUserList(messageModel.checks);
-				}
-
-				isSuccessLoad = true;
-			}else if(MsConst.API_MESSAGE_COMMENT_LATEST.equals(url)){
-				List<CommentModel> lstComment = LoganSquare.parseList(response.optString("comments"), CommentModel.class);
-				if(!CCCollectionUtil.isEmpty(lstComment)){
-					CommentModel lastItem = lstComment.get(lstComment.size() - 1);
-					if(latestCommentId.compareTo(CCNumberUtil.toInteger(lastItem.key)) < 0){
-						latestCommentId = CCNumberUtil.toInteger(lastItem.key);
-					}
-					for(CommentModel comment : lstComment){
-//						addComment(comment);
-					}
-					mTxtComment.setText(String.valueOf(mLstCommentId.size()));
-					scroll2Bottom();
-				}
-			}else{
-				super.successLoad(response, url);
-			}
-		}catch(IOException e){
-			e.printStackTrace();
-		}
 	}
 
 	private void addComment(final RealmCommentModel commentModel){
@@ -418,6 +302,8 @@ public class MessageDetailFragment extends AbstractMsgFragment implements View.O
 			TextView txtDateCmt = (TextView)commentView.findViewById(R.id.txt_date_cmt);
 			TextView txtContentCmt = (TextView)commentView.findViewById(R.id.txt_contentCmt);
 			ImageView imgEmotion = (ImageView)commentView.findViewById(R.id.img_id_emotion);
+			Picasso.with(getContext()).load(BuildConfig.HOST + preferencesAccountUtil.get(MsConst.DEF_STAMP_PATH))
+					.fit().into(imgEmotion);
 
 			Date commentDate = CCDateUtil.makeDateCustom(commentModel.commentDate, WelfareConst.WF_DATE_TIME);
 			String commentDateFormat = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE_HH_MM, commentDate);
@@ -700,20 +586,10 @@ public class MessageDetailFragment extends AbstractMsgFragment implements View.O
 	}
 
 	@Override
-	public void onPause(){
-		super.onPause();
-
-		if(mTimer != null){
-			mTimer.cancel();
-			mTimer = null;
-		}
-	}
-
-	@Override
 	protected void onClickBackBtn(){
 		if(isClickNotification){
 			RealmBoardModel boardModel = new RealmBoardModel();
-			boardModel.key = messageModel.boardId;
+			boardModel.key = activeMessage.boardId;
 			MessageFragment messageFragment = new MessageFragment();
 			messageFragment.setActiveBoard(boardModel);
 			emptyBackStack();

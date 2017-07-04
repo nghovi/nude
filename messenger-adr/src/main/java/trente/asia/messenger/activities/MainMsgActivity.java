@@ -2,7 +2,11 @@ package trente.asia.messenger.activities;
 
 import android.os.Bundle;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import asia.chiase.core.util.CCStringUtil;
+import io.realm.Realm;
 import trente.asia.messenger.R;
 import trente.asia.messenger.services.message.MessageDetailFragment;
 import trente.asia.messenger.services.message.MessageFragment;
@@ -31,7 +35,8 @@ public class MainMsgActivity extends WelfareActivity{
 			if(mExtras != null){
 				showFragment(mExtras);
 			}else{
-				addFragment(new MessageFragment());
+				MessageFragment messageFragment = new MessageFragment();
+				addFragment(messageFragment);
 			}
 		}else{
 			addFragment(new MsgLoginFragment());
@@ -49,13 +54,11 @@ public class MainMsgActivity extends WelfareActivity{
 			messageFragment.setActiveBoard(boardModel);
 			addFragment(messageFragment);
 		}else if(WelfareConst.NotificationType.MS_NOTI_NEW_COMMENT.equals(serviceCode)){
-			MessageDetailFragment messageFragment = new MessageDetailFragment();
-			RealmMessageModel activeMessage = new RealmMessageModel();
-			activeMessage.key = key;
-			activeMessage.boardId = parentKey;
-			messageFragment.setActiveMessage(activeMessage);
-			messageFragment.isClickNotification = true;
-			addFragment(messageFragment);
+			MessageDetailFragment messageDetail = new MessageDetailFragment();
+			RealmMessageModel activeMessage = Realm.getDefaultInstance().where(RealmMessageModel.class).equalTo("key", key).findFirst();
+			messageDetail.setActiveMessage(activeMessage);
+			messageDetail.isClickNotification = true;
+			addFragment(messageDetail);
 		}
 	}
 }
