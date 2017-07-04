@@ -12,6 +12,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -138,9 +139,8 @@ public class TCDetailFragment extends AbstractPagerFragment{
 		imgLike = (ImageView)getView().findViewById(R.id.img_pate_tc_detail_like);
 		lnrLike = (LinearLayout)getView().findViewById(R.id.lnr_fragment_tc_detail_like);
 		TextView txtSend = (TextView)getView().findViewById(R.id.txt_fragment_tc_detail_send);
-		if(!myself.key.equals(historyModel.receiverId) && !myself.key.equals(historyModel.posterId)){
-			txtSend.setVisibility(View.INVISIBLE);
-		}else{
+
+		if (myself.key.equals(historyModel.receiverId) && getTitle() == R.string.fragment_tc_detail_title_receive) {
 			txtSend.setVisibility(View.VISIBLE);
 			txtSend.setOnClickListener(new View.OnClickListener() {
 
@@ -149,6 +149,8 @@ public class TCDetailFragment extends AbstractPagerFragment{
 					gotoPostedEditFragment(historyModel);
 				}
 			});
+		} else {
+			txtSend.setVisibility(View.INVISIBLE);
 		}
 
 		updateLikeLayout();
