@@ -89,7 +89,7 @@
     <string name="spinner_dept_selection_prompt">All Dept</string>
     <string name="spinner_user_selection_prompt">All User</string>
     <string name="dialog_category_selection_category">Category</string>
-    <string name="dialog_template_selection_template">Template</string>
+    <string name="dialog_template_selection_template">Card</string>
 
 
     <string name="dialog_avatar_handlers_camera">Camera</string>
