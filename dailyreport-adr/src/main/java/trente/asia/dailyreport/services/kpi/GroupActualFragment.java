@@ -1,6 +1,7 @@
 package trente.asia.dailyreport.services.kpi;
 
 import java.util.Calendar;
+import java.util.List;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -11,12 +12,16 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
+import com.github.mikephil.charting.charts.LineChart;
+
+import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import trente.asia.dailyreport.DRConst;
 import trente.asia.dailyreport.R;
 import trente.asia.dailyreport.fragments.AbstractDRFragment;
 import trente.asia.dailyreport.services.kpi.model.GroupKpi;
+import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.models.UserModel;
 
@@ -28,7 +33,15 @@ public class GroupActualFragment extends AbstractDRFragment{
 	private LayoutInflater		inflater;
 	private DatePickerDialog	datePickerDialog;
 	private TextView			txtSelectedDate;
+	TextView					txtPeriod;
+	TextView					txtGoal;
+	TextView					txtActualTotal;
+	TextView					txtAchievementRate;
+	TextView					txtToGoal;
+	private TextView			txtGroupName;
 	private GroupKpi			groupKpi;
+	LineChart					lineChart;
+	private String				groupKpiKey;
 
 	@Override
 	public int getFragmentLayoutId(){
@@ -42,7 +55,12 @@ public class GroupActualFragment extends AbstractDRFragment{
 
 	@Override
 	public void initData(){
-		requestKpiGroup();
+		if(groupKpiKey == null){
+			groupKpiKey = (String)((WelfareActivity)activity).dataMap.get(GroupActualListFragment.GROUP_KPI_KEY);
+			((WelfareActivity)activity).dataMap.clear();
+		}
+
+		loadGroupDetail(groupKpiKey);
 	}
 
 	@Override
@@ -51,6 +69,7 @@ public class GroupActualFragment extends AbstractDRFragment{
 
 		Calendar calendar = Calendar.getInstance();
 		txtSelectedDate = (TextView)getView().findViewById(R.id.txt_fragment_kpi_date);
+		txtGroupName = (TextView)getView().findViewById(R.id.txt_fragment_group_name);
 		txtSelectedDate.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, calendar.getTime()));
 		datePickerDialog = new DatePickerDialog(activity, new DatePickerDialog.OnDateSetListener() {
 
@@ -68,6 +87,12 @@ public class GroupActualFragment extends AbstractDRFragment{
 			}
 		});
 
+		txtPeriod = ((TextView)getView().findViewById(R.id.group_actual_info_period));
+		txtGoal = ((TextView)getView().findViewById(R.id.group_actual_info_goal));
+		txtActualTotal = ((TextView)getView().findViewById(R.id.group_actual_info_actual_total));
+		txtAchievementRate = ((TextView)getView().findViewById(R.id.group_actual_info_achievement_rate));
+		txtToGoal = ((TextView)getView().findViewById(R.id.group_actual_info_to_goal));
+
 		getView().findViewById(R.id.btn_fragment_group_actual_list).setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -76,18 +101,14 @@ public class GroupActualFragment extends AbstractDRFragment{
 			}
 		});
 
+		lineChart = (LineChart)getView().findViewById(R.id.chart);
 	}
 
-	private void requestKpiGroup(){
+	private void loadGroupDetail(String groupKpiKey){
 		String dateStr = txtSelectedDate.getText().toString();
-		UserModel userMe = prefAccUtil.getUserPref();
 		JSONObject jsonObject = new JSONObject();
-		String targetGroupId = "0";
-		if(groupKpi != null){
-			targetGroupId = groupKpi.key;
-		}
 		try{
-			jsonObject.put("targetGroupId", targetGroupId);
+			jsonObject.put("targetGroupId", groupKpiKey);
 			jsonObject.put("targetDate", dateStr);
 		}catch(JSONException ex){
 			ex.printStackTrace();
@@ -98,7 +119,17 @@ public class GroupActualFragment extends AbstractDRFragment{
 	@Override
 	protected void successLoad(JSONObject response, String url){
 		if(getView() != null){
-			groupKpi = CCJsonUtil.convertToModel(response.optString("groupKpi"), GroupKpi.class);
+			groupKpi = CCJsonUtil.convertToModel(response.optString("group"), GroupKpi.class);
+			txtGroupName.setText(groupKpi.name);
+
+			String periodString = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, CCDateUtil.makeDateCustom(groupKpi.startDate, WelfareConst.WF_DATE_TIME)) + " ~ " + CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, CCDateUtil.makeDateCustom(groupKpi.endDate, WelfareConst.WF_DATE_TIME));
+			txtPeriod.setText(periodString);
+			txtGoal.setText(CCFormatUtil.formatAmount(groupKpi.goal));
+			txtActualTotal.setText(CCFormatUtil.formatAmount(groupKpi.achievement));
+			txtAchievementRate.setText(CCFormatUtil.formatAmount(groupKpi.achievementRate));
+			txtToGoal.setText(CCFormatUtil.formatAmount(Integer.parseInt(groupKpi.goal) - Integer.parseInt(groupKpi.achievement)));
+
+			// UserActualFragment.buildChart(lineChart, groupKpi);
 		}
 	}
 
@@ -123,7 +154,7 @@ public class GroupActualFragment extends AbstractDRFragment{
 		super.onDestroy();
 	}
 
-	public void setGroupKpi(GroupKpi groupKpi){
-		this.groupKpi = groupKpi;
+	public void setGroupKpiKey(String groupKpiKey){
+		this.groupKpiKey = groupKpiKey;
 	}
 }

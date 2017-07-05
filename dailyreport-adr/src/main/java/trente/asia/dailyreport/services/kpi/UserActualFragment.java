@@ -10,31 +10,31 @@ import java.util.Map;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.DatePickerDialog;
-import android.graphics.Color;
-import android.support.v4.content.ContextCompat;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.DatePicker;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 
+import android.app.DatePickerDialog;
+import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
-import asia.chiase.core.util.CCStringEditUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.dailyreport.DRConst;
 import trente.asia.dailyreport.R;
@@ -45,13 +45,13 @@ import trente.asia.dailyreport.view.DRGroupHeader;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.dialog.WfDialog;
-import trente.asia.welfare.adr.models.UserModel;
 
 /**
  * Created by viet on 2/15/2016.
  */
 public class UserActualFragment extends AbstractDRFragment{
 
+	private static final int	LABEL_COUNT	= 25;
 	private LayoutInflater		inflater;
 	private DatePickerDialog	datePickerDialog;
 	private TextView			txtSelectedDate;
@@ -61,7 +61,12 @@ public class UserActualFragment extends AbstractDRFragment{
 	LineChart					lineChart;
 	private LinearLayout		lnrInfo;
 	private GroupKpi			selectedGroup;
-	private Map<Float, String>	formattedValuesMap	= new HashMap<>();
+	private TextView			txtPeriod;
+	private TextView			txtGoal;
+	private TextView			txtActualTotal;
+	private TextView			txtAchievementRate;
+	private EditText			edtActualToday;
+	private Personal			personal;
 
 	@Override
 	public int getFragmentLayoutId(){
@@ -75,12 +80,25 @@ public class UserActualFragment extends AbstractDRFragment{
 
 	@Override
 	public void initData(){
-		requestPersonalGoal();
+		loadGroupInfo();
+	}
+
+	private void loadGroupInfo(){
+		String dateStr = txtSelectedDate.getText().toString();
+		JSONObject jsonObject = new JSONObject();
+		try{
+			jsonObject.put("targetDate", dateStr);
+		}catch(JSONException ex){
+			ex.printStackTrace();
+		}
+		super.requestLoad(DRConst.API_KPI_GROUPS, jsonObject, true);
 	}
 
 	@Override
 	public void buildBodyLayout(){
 		super.initHeader(null, getString(R.string.fragment_kpi_title), null);
+
+		// getView().findViewById(R.id.lnr_fragment_action_plan_main).setVisibility(View.GONE);
 
 		Calendar calendar = Calendar.getInstance();
 		txtSelectedDate = (TextView)getView().findViewById(R.id.txt_fragment_kpi_date);
@@ -90,7 +108,9 @@ public class UserActualFragment extends AbstractDRFragment{
 			@Override
 			public void onDateSet(DatePicker view, int year, int month, int dayOfMonth){
 				String startDateStr = year + "/" + CCFormatUtil.formatZero(month + 1) + "/" + CCFormatUtil.formatZero(dayOfMonth);
-				requestPersonalGoal();
+				if(!CCCollectionUtil.isEmpty(groupKpiList)){
+					loadPersonalInfo();
+				}
 				txtSelectedDate.setText(startDateStr);
 			}
 		}, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
@@ -115,114 +135,192 @@ public class UserActualFragment extends AbstractDRFragment{
 			@Override
 			public void onGroupChange(GroupKpi newGroup){
 				selectedGroup = newGroup;
+				loadPersonalInfo();
 			}
 
 			@Override
 			public void onNowGroupClicked(GroupKpi selectedGroup){
 				GroupActualFragment groupActualFragment = new GroupActualFragment();
-				groupActualFragment.setGroupKpi(selectedGroup);
+				groupActualFragment.setGroupKpiKey(selectedGroup.key);
 				((WelfareActivity)activity).addFragment(groupActualFragment);
 			}
 		});
-		groupKpiList = createDummy();
-		drGroupHeader.buildLayout(groupKpiList, 0);
-		selectedGroup = drGroupHeader.getSelectedGroup();
+
+		txtPeriod = ((TextView)getView().findViewById(R.id.txt_fragment_user_actual_period));
+		txtGoal = ((TextView)getView().findViewById(R.id.txt_fragment_user_actual_goal));
+		txtActualTotal = ((TextView)getView().findViewById(R.id.txt_fragment_user_actual_total));
+		txtAchievementRate = ((TextView)getView().findViewById(R.id.txt_fragment_user_actual_achievement_rate));
+		edtActualToday = ((EditText)getView().findViewById(R.id.edt_fragment_kpi_value));
 
 		lnrInfo = (LinearLayout)getView().findViewById(R.id.lnr_fragment_user_actual_info);
+		lineChart = (LineChart)getView().findViewById(R.id.chart);
 
-		buildChart();
+		// groupKpiList = createDummy();
+		// buildChart(lineChart, groupKpiList.get(0));
+
 	}
 
-	private void buildChart(){
-		lineChart = (LineChart)getView().findViewById(R.id.chart);
-		List<Entry> entries = new ArrayList<Entry>();
-		Calendar c = Calendar.getInstance();
+	public static void buildChart(LineChart lineChart, GroupKpi groupKpi){
+		if(!CCCollectionUtil.isEmpty(groupKpi.checkPointList)){
+			final Map<Float, String> formattedValuesMap = new HashMap<>();
+			List<Entry> entries = new ArrayList<Entry>();
+			Calendar c = Calendar.getInstance();
 
-		Date lastCheckPointDate = CCDateUtil.makeDateCustom(selectedGroup.checkPointList.get(selectedGroup.checkPointList.size() - 1).date, WelfareConst.WF_DATE_TIME_DATE);
-		Date firstCheckPointDate = CCDateUtil.makeDateCustom(selectedGroup.checkPointList.get(0).date, WelfareConst.WF_DATE_TIME_DATE);
-		int averageDistance = (int)((lastCheckPointDate.getTime() - firstCheckPointDate.getTime()) / selectedGroup.checkPointList.size());
+			GroupKpi.CheckPoint maxCheckPoint = groupKpi.checkPointList.get(groupKpi.checkPointList.size() - 1);
 
-		for(GroupKpi.CheckPoint checkPoint : selectedGroup.checkPointList){
-			Date checkPointDate = CCDateUtil.makeDateCustom(checkPoint.date, WelfareConst.WF_DATE_TIME_DATE);
-			float x = (checkPointDate.getTime() - firstCheckPointDate.getTime()) / averageDistance;
-			formattedValuesMap.put(x, checkPoint.date);
-			Entry t = new Entry(x, Float.valueOf(checkPoint.achievement));
-			entries.add(t);
+			Date lastCheckPointDate = CCDateUtil.makeDateCustom(maxCheckPoint.date, WelfareConst.WF_DATE_TIME_DATE);
+			Date firstCheckPointDate = CCDateUtil.makeDateCustom(groupKpi.checkPointList.get(0).date, WelfareConst.WF_DATE_TIME_DATE);
+			long maxDistanceDay = (lastCheckPointDate.getTime() - firstCheckPointDate.getTime()) / (24 * 60 * 60 * 1000);
+			lineChart.fitScreen();
+
+			int pageNum = groupKpi.checkPointList.size() / 7 + 1;
+			float maxVisibleRange = maxDistanceDay / pageNum;
+			float labelDistance = Math.round(maxVisibleRange / LABEL_COUNT);
+
+			for(GroupKpi.CheckPoint checkPoint : groupKpi.checkPointList){
+				Date checkPointDate = CCDateUtil.makeDateCustom(checkPoint.date, WelfareConst.WF_DATE_TIME_DATE);
+				float xDay = (checkPointDate.getTime() - firstCheckPointDate.getTime()) / (24 * 60 * 60 * 1000);
+
+				float labelAxisValue = (Math.round(xDay / labelDistance)) * labelDistance;
+				formattedValuesMap.put(labelAxisValue, checkPoint.date);
+				Entry t = new Entry(xDay, Float.valueOf(checkPoint.achievement));
+				entries.add(t);
+			}
+			LineDataSet dataSet = new LineDataSet(entries, ""); // add entries to dataset
+			dataSet.setColor(Color.BLUE);
+			dataSet.setLineWidth(1f);
+			dataSet.setValueTextColor(Color.BLUE); // styling, ...
+			dataSet.setValueTextSize(9);
+			dataSet.setLabel(groupKpi.name + " checkpoint achievement");
+
+			LineData lineData = new LineData();
+			lineData.addDataSet(dataSet);
+
+			lineChart.setData(lineData);
+			lineChart.setVisibleYRangeMaximum(200f, YAxis.AxisDependency.LEFT);
+			lineChart.setVisibleYRangeMaximum(200f, YAxis.AxisDependency.RIGHT);
+
+			IAxisValueFormatter formatter = new IAxisValueFormatter() {
+
+				@Override
+				public String getFormattedValue(float value, AxisBase axis){
+					// return String.valueOf(value);
+					String dateStr = formattedValuesMap.get(value);
+					return CCStringUtil.isEmpty(dateStr) ? "" : dateStr;
+				}
+
+			};
+
+			XAxis xAxis = lineChart.getXAxis();
+			xAxis.setGranularityEnabled(false);
+			// xAxis.setGranularity(1f);
+			xAxis.setLabelCount(LABEL_COUNT, false);
+			xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+			xAxis.setTextSize(10f);
+			xAxis.setTextColor(Color.BLACK);
+			xAxis.setDrawAxisLine(true);
+			xAxis.setDrawGridLines(false);
+
+			YAxis yAxisLeft = lineChart.getAxisLeft();
+			yAxisLeft.setDrawAxisLine(false);
+			// yAxisLeft.setZeroLineColor(Color.RED);
+			// yAxisLeft.setDrawZeroLine(true);
+			// yAxisLeft.setZeroLineWidth(10);
+			yAxisLeft.setValueFormatter(new IAxisValueFormatter() {
+
+				@Override
+				public String getFormattedValue(float value, AxisBase axis){
+					return "";
+					// return String.valueOf((int)value * Integer.valueOf(selectedGroup.goal) + "円");
+				}
+			});
+
+			//// TODO: 6/29/17 cannot add 150% line so add max %line instead
+			LimitLine line150Left = new LimitLine(Float.valueOf(maxCheckPoint.achievement), String.valueOf(Integer.parseInt(groupKpi.goal) * Integer.parseInt(maxCheckPoint.achievement) / 100) + "円");
+			line150Left.setLineWidth(0.5f);
+			line150Left.setLineColor(Color.GRAY);
+			// upper_limit.enableDashedLine(10f, 10f, 0f);
+			line150Left.setLabelPosition(LimitLine.LimitLabelPosition.LEFT_TOP);
+			line150Left.setTextSize(10f);
+
+			LimitLine line150Right = new LimitLine(Float.valueOf(maxCheckPoint.achievement), "");
+			line150Right.setLineWidth(0.5f);
+			line150Right.setLineColor(Color.GRAY);
+			// upper_limit.enableDashedLine(10f, 10f, 0f);
+			line150Right.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_TOP);
+			line150Right.setTextSize(10f);
+
+			LimitLine line100Left = new LimitLine(100f, groupKpi.goal + "円");
+			line100Left.setLineWidth(0.5f);
+			line100Left.setLineColor(Color.RED);
+			// upper_limit.enableDashedLine(10f, 10f, 0f);
+			line100Left.setLabelPosition(LimitLine.LimitLabelPosition.LEFT_TOP);
+			line100Left.setTextSize(10f);
+
+			LimitLine line100Right = new LimitLine(100f, "100%");
+			line100Right.setLineWidth(0.5f);
+			line100Right.setLineColor(Color.RED);
+			// upper_limit.enableDashedLine(10f, 10f, 0f);
+			line100Right.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_TOP);
+			line100Right.setTextSize(10f);
+
+			LimitLine line50Left = new LimitLine(50f, String.valueOf(Integer.parseInt(groupKpi.goal) / 2) + "円");
+			line50Left.setLineWidth(0.5f);
+			line50Left.setLineColor(Color.GRAY);
+			// upper_limit.enableDashedLine(10f, 10f, 0f);
+			line50Left.setLabelPosition(LimitLine.LimitLabelPosition.LEFT_TOP);
+			line50Left.setTextSize(10f);
+
+			LimitLine line50Right = new LimitLine(50f, "50%");
+			line50Right.setLineWidth(0.5f);
+			line50Right.setLineColor(Color.GRAY);
+			// upper_limit.enableDashedLine(10f, 10f, 0f);
+			line50Right.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_TOP);
+
+			line50Right.setTextSize(10f);
+
+			yAxisLeft.removeAllLimitLines();
+			yAxisLeft.addLimitLine(line50Left);
+			yAxisLeft.addLimitLine(line50Right);
+			yAxisLeft.addLimitLine(line100Left);
+			yAxisLeft.addLimitLine(line100Right);
+			// yAxisLeft.addLimitLine(line150Left);
+			// yAxisLeft.addLimitLine(line150Right);
+
+			// yAxisLeft.enableGridDashedLine(10f, 10f, 0f);
+			// yAxisLeft.setDrawZeroLine(false);
+			yAxisLeft.setDrawGridLines(false);
+
+			YAxis yAxisRight = lineChart.getAxisRight();
+			yAxisRight.setDrawAxisLine(false);
+			yAxisRight.setDrawGridLines(false);
+			// yAxisRight.setPosition(YAxis.YAxisLabelPosition.INSIDE_CHART);
+			yAxisRight.setValueFormatter(new IAxisValueFormatter() {
+
+				@Override
+				public String getFormattedValue(float value, AxisBase axis){
+					// return value + "%";
+					return "";
+				}
+			});
+
+			// xAxis.setGranularity(1f); // minimum axis-step (interval) is 1
+			xAxis.setValueFormatter(formatter);
+			// xAxis.setAvoidFirstLastClipping(true);
+			xAxis.setLabelRotationAngle(-50f);
+			xAxis.setTextSize(7);
+			xAxis.setAxisMaximum(maxDistanceDay + labelDistance);
+
+			// set a custom value formatter
+			// xAxis.setValueFormatter(new MyCustomFormatter());
+			// and more...
+			Description description = new Description();
+			description.setText("");
+			lineChart.setDescription(description);
+			lineChart.setVisibleXRangeMaximum(maxVisibleRange);
+			lineChart.invalidate(); // refresh
 		}
-		LineDataSet dataSet = new LineDataSet(entries, ""); // add entries to dataset
-		dataSet.setColor(Color.RED);
-		dataSet.setValueTextColor(Color.BLUE); // styling, ...
-		dataSet.setValueTextSize(11);
-		dataSet.setLabel("Group checkpoint achievement");
 
-		LineData lineData = new LineData();
-		lineData.addDataSet(dataSet);
-		lineChart.setData(lineData);
-
-		IAxisValueFormatter formatter = new IAxisValueFormatter() {
-
-			@Override
-			public String getFormattedValue(float value, AxisBase axis){
-				String dateStr = formattedValuesMap.get(value);
-				return CCStringUtil.isEmpty(dateStr) ? "" : dateStr;
-			}
-
-		};
-
-		XAxis xAxis = lineChart.getXAxis();
-		xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-		xAxis.setTextSize(10f);
-		xAxis.setTextColor(Color.BLACK);
-		xAxis.setDrawAxisLine(true);
-		xAxis.setDrawGridLines(false);
-
-		YAxis yAxisLeft = lineChart.getAxisLeft();
-		// yAxisLeft.setZeroLineColor(Color.RED);
-		// yAxisLeft.setDrawZeroLine(true);
-		// yAxisLeft.setZeroLineWidth(10);
-		yAxisLeft.setValueFormatter(new IAxisValueFormatter() {
-
-			@Override
-			public String getFormattedValue(float value, AxisBase axis){
-				return String.valueOf((int)value * Integer.valueOf(selectedGroup.goal) + "円");
-			}
-		});
-
-		LimitLine upper_limit = new LimitLine(100f, "");
-		upper_limit.setLineWidth(0.5f);
-		upper_limit.setLineColor(Color.RED);
-		// upper_limit.enableDashedLine(10f, 10f, 0f);
-		upper_limit.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_TOP);
-		upper_limit.setTextSize(10f);
-
-		yAxisLeft.removeAllLimitLines();
-		yAxisLeft.addLimitLine(upper_limit);
-		// yAxisLeft.enableGridDashedLine(10f, 10f, 0f);
-		// yAxisLeft.setDrawZeroLine(false);
-		// yAxisLeft.setDrawGridLines(false);
-
-		YAxis yAxisRight = lineChart.getAxisRight();
-		// yAxisRight.setPosition(YAxis.YAxisLabelPosition.INSIDE_CHART);
-		yAxisRight.setValueFormatter(new IAxisValueFormatter() {
-
-			@Override
-			public String getFormattedValue(float value, AxisBase axis){
-				return value + "%";
-			}
-		});
-
-		// xAxis.setGranularity(1f); // minimum axis-step (interval) is 1
-		xAxis.setValueFormatter(formatter);
-		xAxis.setLabelRotationAngle(-45f);
-
-		// set a custom value formatter
-		// xAxis.setValueFormatter(new MyCustomFormatter());
-		// and more...
-		Description description = new Description();
-		description.setText("");
-		lineChart.setDescription(description);
-		lineChart.setVisibleXRangeMaximum(4);
-		lineChart.invalidate(); // refresh
 	}
 
 	private void showGoalAchieveDialog(){
@@ -247,25 +345,29 @@ public class UserActualFragment extends AbstractDRFragment{
 	}
 
 	private void onClickSaveButton(){
+		String dateStr = txtSelectedDate.getText().toString();
+		String todayActual = edtActualToday.getText().toString().replaceAll("[^\\d.]", "");
 		JSONObject jsonObject = new JSONObject();
 		try{
-			jsonObject.put("Test", "test");
+			jsonObject.put("targetDate", dateStr);
+			jsonObject.put("todayActual", todayActual);
+			jsonObject.put("targetGroupId", selectedGroup.key);
+
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
-		requestUpdate(DRConst.API_KPI_UPDATE, jsonObject, true);
+		requestUpdate(DRConst.API_KPI_PERSONAL_UPDATE, jsonObject, true);
 	}
 
 	@Override
 	protected void successUpdate(JSONObject response, String url){
 		if(getView() != null){
-
+			loadPersonalInfo();
 		}
 	}
 
-	private void requestPersonalGoal(){
+	private void loadPersonalInfo(){
 		String dateStr = txtSelectedDate.getText().toString();
-		UserModel userMe = prefAccUtil.getUserPref();
 		JSONObject jsonObject = new JSONObject();
 		try{
 			jsonObject.put("targetGroupId", drGroupHeader.getSelectedGroup().key);
@@ -279,53 +381,127 @@ public class UserActualFragment extends AbstractDRFragment{
 	@Override
 	protected void successLoad(JSONObject response, String url){
 		if(getView() != null){
-			// groupKpiList = CCJsonUtil.convertToModelList(response.optString("groups"), GroupKpi.class);
-			Personal personal = CCJsonUtil.convertToModel(response.optString("personal"), Personal.class);
-			buildPersonalGoalInfo(personal);
-			showGoalAchieveDialog();
-			showGoalWarningDialog();
-
-			if(true){
-				lnrInfo.setBackgroundColor(ContextCompat.getColor(activity, R.color.wf_app_color_base_50));
+			if(DRConst.API_KPI_GROUPS.equals(url)){
+				onLoadGroupsSuccess(response);
+			}else if(DRConst.API_KPI_PERSONAL.equals(url)){
+				onGetPersonalSuccess(response);
 			}else{
-				lnrInfo.setBackgroundColor(ContextCompat.getColor(activity, R.color.chiase_white));
+				super.successLoad(response, url);
+			}
+
+		}
+	}
+
+	private void onLoadGroupsSuccess(JSONObject response){
+		groupKpiList = CCJsonUtil.convertToModelList(response.optString("groups"), GroupKpi.class);
+		if(CCCollectionUtil.isEmpty(groupKpiList)){
+			getView().findViewById(R.id.lnr_fragment_action_plan_main).setVisibility(View.GONE);
+			getView().findViewById(R.id.txt_fragment_action_plan_empty).setVisibility(View.VISIBLE);
+		}else{
+			// groupKpiList = createDummy();
+			drGroupHeader.buildLayout(groupKpiList, 0, true);
+			selectedGroup = drGroupHeader.getSelectedGroup();
+			loadPersonalInfo();
+		}
+	}
+
+	private void onGetPersonalSuccess(JSONObject response){
+		personal = CCJsonUtil.convertToModel(response.optString("personal"), Personal.class);
+		buildPersonalGoalInfo(personal);
+		checkToShowNoticeDialogs();
+
+		getView().findViewById(R.id.lnr_fragment_action_plan_main).setVisibility(View.VISIBLE);
+
+		buildChart(lineChart, selectedGroup);
+	}
+
+	private void checkToShowNoticeDialogs(){
+		Calendar c = Calendar.getInstance();
+		for(GroupKpi.CheckPoint checkPoint : selectedGroup.checkPointList){
+			if(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, c.getTime()).equals(checkPoint.date)){
+				if(Integer.parseInt(checkPoint.achievement) <= Integer.parseInt(personal.achievement)){ // success
+					showGoalAchieveDialog();
+				}else{
+					showGoalWarningDialog();
+				}
 			}
 		}
 	}
 
-	private List<GroupKpi> createDummy(){
+	public static List<GroupKpi> createDummy(){
 		List<GroupKpi.CheckPoint> checkPointList = new ArrayList<>();
 		GroupKpi.CheckPoint cp1 = new GroupKpi.CheckPoint();
-		cp1.date = "2017/05/29";
+		cp1.date = "2017/06/25";
 		cp1.achievement = "25";
 
 		GroupKpi.CheckPoint cp2 = new GroupKpi.CheckPoint();
 		cp2.date = "2017/06/29";
-		cp2.achievement = "50";
+		cp2.achievement = "30";
 
 		GroupKpi.CheckPoint cp3 = new GroupKpi.CheckPoint();
-		cp3.date = "2017/07/29";
-		cp3.achievement = "120";
+		cp3.date = "2017/08/22";
+		cp3.achievement = "40";
+
+		GroupKpi.CheckPoint cp4 = new GroupKpi.CheckPoint();
+		cp4.date = "2017/08/29";
+		cp4.achievement = "50";
+
+		GroupKpi.CheckPoint cp5 = new GroupKpi.CheckPoint();
+		cp5.date = "2017/10/29";
+		cp5.achievement = "60";
+
+		GroupKpi.CheckPoint cp6 = new GroupKpi.CheckPoint();
+		cp6.date = "2017/11/30";
+		cp6.achievement = "40";
+
+		GroupKpi.CheckPoint cp7 = new GroupKpi.CheckPoint();
+		cp7.date = "2017/12/30";
+		cp7.achievement = "90";
+
+		GroupKpi.CheckPoint cp8 = new GroupKpi.CheckPoint();
+		cp8.date = "2018/01/01";
+		cp8.achievement = "100";
+
+		GroupKpi.CheckPoint cp9 = new GroupKpi.CheckPoint();
+		cp9.date = "2018/01/09";
+		cp9.achievement = "65";
+
+		GroupKpi.CheckPoint cp10 = new GroupKpi.CheckPoint();
+		cp10.date = "2018/01/22";
+		cp10.achievement = "130";
 
 		checkPointList.add(0, cp1);
 		checkPointList.add(1, cp2);
 		checkPointList.add(2, cp3);
+		checkPointList.add(3, cp4);
+		checkPointList.add(4, cp5);
+		checkPointList.add(5, cp6);
+		checkPointList.add(6, cp7);
+		checkPointList.add(7, cp8);
+		checkPointList.add(8, cp9);
+		checkPointList.add(9, cp10);
 
 		List<GroupKpi> groupKpis = new ArrayList<>();
 		GroupKpi g1 = new GroupKpi();
 		g1.name = "g1";
 		g1.key = "1";
 		g1.goal = "150000";
+		g1.achievement = "1000";
+		g1.achievementRate = "20";
 		g1.checkPointList = checkPointList;
 		GroupKpi g2 = new GroupKpi();
 		g2.name = "g2";
 		g2.key = "2";
 		g2.goal = "100000";
+		g2.achievement = "1000";
+		g2.achievementRate = "20";
 		g2.checkPointList = checkPointList;
 		GroupKpi g3 = new GroupKpi();
 		g3.name = "g3";
 		g3.key = "3";
 		g3.goal = "550000";
+		g3.achievement = "1000";
+		g3.achievementRate = "20";
 		g3.checkPointList = checkPointList;
 		groupKpis.add(g1);
 		groupKpis.add(g2);
@@ -334,11 +510,20 @@ public class UserActualFragment extends AbstractDRFragment{
 	}
 
 	private void buildPersonalGoalInfo(Personal personal){
+		if(!CCStringUtil.isEmpty(personal.todayActual)){// already enter
+			lnrInfo.setBackgroundColor(ContextCompat.getColor(activity, R.color.wf_app_color_base_50));
+			updateHeader(getString(R.string.fragment_kpi_title_tassei));
+			edtActualToday.setText(personal.todayActual);
+		}else{
+			updateHeader(getString(R.string.fragment_kpi_title_jisseki));
+			lnrInfo.setBackgroundColor(ContextCompat.getColor(activity, R.color.chiase_white));
+		}
+
 		String periodString = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, CCDateUtil.makeDateCustom(personal.startDate, WelfareConst.WF_DATE_TIME)) + " ~ " + CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, CCDateUtil.makeDateCustom(personal.endDate, WelfareConst.WF_DATE_TIME));
-		((TextView)getView().findViewById(R.id.txt_fragment_user_actual_period)).setText(periodString);
-		((TextView)getView().findViewById(R.id.txt_fragment_user_actual_goal)).setText(CCFormatUtil.formatAmount(personal.goal));
-		((TextView)getView().findViewById(R.id.txt_fragment_user_actual_total)).setText(CCFormatUtil.formatAmount(personal.todayActual));
-		((TextView)getView().findViewById(R.id.txt_fragment_user_actual_achievement_rate)).setText(CCFormatUtil.formatAmount(personal.achievementRate));
+		txtPeriod.setText(periodString);
+		txtGoal.setText(CCFormatUtil.formatAmount(personal.goal));
+		txtActualTotal.setText(CCFormatUtil.formatAmount(personal.achievement));
+		txtAchievementRate.setText(CCFormatUtil.formatAmount(personal.achievementRate));
 	}
 
 	@Override

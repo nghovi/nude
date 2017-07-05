@@ -108,7 +108,8 @@
     <string name="fragment_group_actual_list_title">GroupActualList</string>
     <string name="group_actual_list_goal">グループ目標一覧</string>
     <string name="fragment_group_actual_group_goal">実績入力</string>
-    <string name="fragmen_group_actual_needed_amount">Amount you need to reach the goal</string>
+    <string name="fragmen_group_actual_needed_amount">達成まであと</string>
+    <string name="fragmen_group_actual_needed_amount2">達成まであと%1$s</string>
     <string name="achieve_dialog_title">達成!!(tattsei)</string>
     <string name="achieve_dialog_content">おめでとうございます。 \n個人目標を達成しました。\n素晴らしい！！ \nこの調子でいきましょう！</string>
     <string name="achieve_warning_dialog_title">本日は進捗確認日です</string>
@@ -118,4 +119,7 @@
     <string name="supplement_memo">補足メモ(hosoku)</string>
     <string name="performance_in_month">%1$s月の実績</string>
     <string name="achievement_rate_in_month">%1$s月の達成率</string>
+    <string name="user_has_no_kpi_setup">KPIが設定されていません</string>
+    <string name="fragment_kpi_title_tassei">個人成績</string>
+    <string name="fragment_kpi_title_jisseki">個人実績</string>
 </resources>

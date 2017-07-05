@@ -1,12 +1,17 @@
 package trente.asia.dailyreport.services.kpi.view;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.util.Calendar;
+
+import asia.chiase.core.util.CCFormatUtil;
+import trente.asia.dailyreport.DRConst;
 import trente.asia.dailyreport.R;
 import trente.asia.dailyreport.fragments.AbstractDRFragment;
-import trente.asia.dailyreport.services.kpi.model.ActualPlan;
+import trente.asia.dailyreport.services.kpi.ActualPlanAddFragment;
+import trente.asia.dailyreport.services.kpi.model.GroupKpi;
+import trente.asia.welfare.adr.define.WelfareConst;
 
 /**
  * Created by hviet on 6/28/17.
@@ -16,7 +21,7 @@ public class CalendarFragment extends AbstractDRFragment{
 
 	private KpiCalendarView							kpiCalendarView;
 	private KpiCalendarView.OnDayClickedListener	onDayClickListener;
-	private Calendar calendar;
+	private Calendar								calendar;
 
 	@Override
 	public int getFragmentLayoutId(){
@@ -43,7 +48,12 @@ public class CalendarFragment extends AbstractDRFragment{
 		return kpiCalendarView;
 	}
 
-	public void setCalendar(Calendar calendar) {
+	public void setCalendar(Calendar calendar){
 		this.calendar = calendar;
 	}
+
+	public Calendar getCalendar(){
+		return this.calendar;
+	}
+
 }

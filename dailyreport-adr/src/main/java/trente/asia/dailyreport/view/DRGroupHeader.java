@@ -3,6 +3,7 @@ package trente.asia.dailyreport.view;
 import java.util.List;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Button;
@@ -84,7 +85,12 @@ public class DRGroupHeader extends LinearLayout{
 		public void onNowGroupClicked(GroupKpi selectedGroup);
 	}
 
-	public void buildLayout(List<GroupKpi> groups, int selectedIdx){
+	public void buildLayout(List<GroupKpi> groups, int selectedIdx, boolean hasNowButton){
+		if(!hasNowButton){
+			btnNowGroup.setOnClickListener(null);
+			btnNowGroup.setBackgroundColor(Color.TRANSPARENT);
+			btnNowGroup.setTextColor(Color.BLACK);
+		}
 		if(CCCollectionUtil.isEmpty(groups)){
 			return;
 		}

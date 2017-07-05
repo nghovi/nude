@@ -120,4 +120,7 @@
     <string name="supplement_memo">Supplement memo</string>
     <string name="performance_in_month">Performance in %1$s</string>
     <string name="achievement_rate_in_month">Achievement rate in %1$s</string>
+    <string name="user_has_no_kpi_setup">Your KPI is not set</string>
+    <string name="fragment_kpi_title_tassei">Personal achievement</string>
+    <string name="fragment_kpi_title_jisseki">Personal performance</string>
 </resources>

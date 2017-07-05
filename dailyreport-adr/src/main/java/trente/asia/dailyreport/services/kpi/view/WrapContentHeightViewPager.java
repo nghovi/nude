@@ -35,12 +35,13 @@ public class WrapContentHeightViewPager extends ViewPager{
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec){
 		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 		if(getLayoutParams().height == ViewGroup.LayoutParams.WRAP_CONTENT){
-			View view = getChildAt(0);
-			if(view != null){
-				view.measure(widthMeasureSpec, heightMeasureSpec);
-				int h = view.getMeasuredHeight();
-				setMeasuredDimension(getMeasuredWidth(), h);
-				getLayoutParams().height = h;
+			int height = 0;
+			for(int i = 0; i < getChildCount(); i++){
+				View child = getChildAt(i);
+				child.measure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
+				int h = child.getMeasuredHeight();
+				if(h > height) // 采用最大的view的高度。
+					height = h;
 			}
 		}
 	}

@@ -8,17 +8,6 @@
 
     <include layout="@layout/view_common_header" />
 
-    <TextView
-        android:id="@+id/txt_fragment_action_plan_empty"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_32dp"
-        android:layout_weight="1"
-        android:text="@string/user_has_no_action_plan_setup"
-        android:textAlignment="center"
-        android:textColor="@color/chiase_red"
-        android:visibility="gone" />
-
     <LinearLayout
         android:id="@+id/lnr_fragment_action_plan_main"
         android:layout_width="match_parent"
@@ -51,14 +40,24 @@
 
         <ScrollView
             android:id="@+id/src_id_calendar_view"
-            android:fillViewport="true"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:fillViewport="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txt_fragment_action_plan_empty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:paddingBottom="@dimen/margin_32dp"
+                    android:paddingTop="@dimen/margin_32dp"
+                    android:textColor="@color/chiase_red"
+                    android:visibility="gone" />
 
                 <trente.asia.dailyreport.services.kpi.view.WrapContentHeightViewPager
                     android:id="@+id/view_pager"
@@ -69,33 +68,33 @@
                 </trente.asia.dailyreport.services.kpi.view.WrapContentHeightViewPager>
 
                 <LinearLayout
-                    android:id="@+id/my_report_kpi_section"
+                    android:id="@+id/lnr_action_plan_section"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:paddingLeft="@dimen/margin_16dp"
-                    android:paddingRight="@dimen/margin_16dp">
+                    android:paddingRight="@dimen/margin_16dp"
+                    android:visibility="gone">
 
                     <LinearLayout
-                        android:id="@+id/lnr_id_monthly_goal"
+                        android:id="@+id/lnr_actual_plan_container"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/wf_margin_16"
                         android:layout_marginTop="@dimen/wf_margin_16"
                         android:orientation="vertical"
-                        android:paddingBottom="@dimen/wf_margin_16"
-                        android:paddingLeft="@dimen/wf_margin_16"
-                        android:paddingRight="@dimen/wf_margin_16"
-                        android:visibility="invisible">
+                        android:visibility="visible">
 
                     </LinearLayout>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/margin_10dp"
                         android:text="@string/supplement_memo" />
 
                     <trente.asia.android.view.ChiaseEditText
+                        android:id="@+id/edt_supplement_memo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/dr_background_gray_border_padding"
@@ -105,6 +104,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/margin_16dp"
                         android:layout_marginTop="@dimen/margin_16dp"
                         android:gravity="center_vertical|center_horizontal"
                         android:orientation="horizontal">
@@ -130,26 +130,6 @@
 
             </LinearLayout>
         </ScrollView>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical|center_horizontal"
-            android:orientation="vertical"
-            android:paddingLeft="@dimen/margin_32dp"
-            android:paddingRight="@dimen/margin_32dp"
-            android:visibility="gone">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/margin_200dp"
-                android:background="@drawable/lnr_background_oval"
-                android:gravity="center_vertical|center_horizontal"
-                android:text="@string/fragment_common_list_empty"
-                android:textColor="@color/chiase_white"
-                android:textSize="20sp" />
-        </LinearLayout>
-
 
     </LinearLayout>
 

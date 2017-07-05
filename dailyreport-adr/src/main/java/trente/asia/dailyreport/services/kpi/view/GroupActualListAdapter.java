@@ -12,8 +12,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import asia.chiase.core.util.CCDateUtil;
+import asia.chiase.core.util.CCFormatUtil;
 import trente.asia.dailyreport.R;
 import trente.asia.dailyreport.services.kpi.model.GroupKpi;
+import trente.asia.welfare.adr.define.WelfareConst;
 
 /**
  * Created by viet on 5/13/2016.
@@ -46,11 +49,32 @@ public class GroupActualListAdapter extends ArrayAdapter<GroupKpi>{
 			viewHolder.lnrContainer = (LinearLayout)convertView.findViewById(R.id.item_my_report_container);
 			viewHolder.txtDate = (TextView)convertView.findViewById(R.id.txt_item_my_report_date);
 			viewHolder.imgChart = (ImageView)convertView.findViewById(R.id.img_item_group_actual_chart);
+
+			viewHolder.txtPeriod = ((TextView)convertView.findViewById(R.id.group_actual_info_period));
+			viewHolder.txtGoal = ((TextView)convertView.findViewById(R.id.group_actual_info_goal));
+			viewHolder.txtTodayPerformance = ((TextView)convertView.findViewById(R.id.group_actual_info_today_performance));
+			viewHolder.txtAchievementRate = ((TextView)convertView.findViewById(R.id.group_actual_info_achievement_rate));
+			viewHolder.txtToGoal = ((TextView)convertView.findViewById(R.id.group_actual_info_to_goal));
+			viewHolder.txtResult = ((TextView)convertView.findViewById(R.id.txt_item_group_actual_result));
 			convertView.setTag(viewHolder);
 		}else{
 			viewHolder = (ViewHolder)convertView.getTag();
 		}
 		final GroupKpi groupKpi = getItem(position);
+
+		String periodString = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, CCDateUtil.makeDateCustom(groupKpi.startDate, WelfareConst.WF_DATE_TIME)) + " ~ " + CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, CCDateUtil.makeDateCustom(groupKpi.endDate, WelfareConst.WF_DATE_TIME));
+		viewHolder.txtPeriod.setText(periodString);
+		viewHolder.txtGoal.setText(CCFormatUtil.formatAmount(groupKpi.goal));
+		viewHolder.txtTodayPerformance.setText(CCFormatUtil.formatAmount(groupKpi.achievement));
+		viewHolder.txtAchievementRate.setText(CCFormatUtil.formatAmount(groupKpi.achievementRate));
+		int toGoal = Integer.parseInt(groupKpi.goal) - Integer.parseInt(groupKpi.achievement);
+		viewHolder.txtToGoal.setText(CCFormatUtil.formatAmount(toGoal));
+		if(toGoal < 0){ // achieved
+			viewHolder.txtResult.setText("->" + context.getResources().getString(R.string.achieve_dialog_title));
+		}else{
+			viewHolder.txtResult.setText("->" + context.getResources().getString(R.string.fragmen_group_actual_needed_amount2, toGoal + ""));
+		}
+
 		viewHolder.imgChart.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -74,16 +98,12 @@ public class GroupActualListAdapter extends ArrayAdapter<GroupKpi>{
 
 		LinearLayout	lnrContainer;
 		ImageView		imgChart;
-		LinearLayout	lnrFile;
-		LinearLayout	lnrIcons;
 		TextView		txtDate;
-		TextView		txtGoalPeriod;
-		TextView		txtGroupGoal;
-		TextView		txtCheckedNum;
-		TextView		txtLikedNum;
-		TextView		txtLastComment;
-		TextView		txtCommentedNum;
-		public TextView	txtFileNum;
-
+		TextView		txtPeriod;
+		TextView		txtGoal;
+		TextView		txtTodayPerformance;
+		TextView		txtAchievementRate;
+		TextView		txtToGoal;
+		TextView		txtResult;
 	}
 }

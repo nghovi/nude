@@ -26,7 +26,9 @@
         android:id="@+id/btn_dialog_notice_ok"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/wf_background_gray_border_white_padding_round"
         android:gravity="center_vertical|center_horizontal"
-        android:text="@string/chiase_common_ok"
-        android:textColor="@color/chiase_green2" />
+        android:paddingLeft="@dimen/margin_32dp"
+        android:paddingRight="@dimen/margin_32dp"
+        android:text="@string/chiase_common_ok" />
 </LinearLayout>

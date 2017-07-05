@@ -7,8 +7,6 @@
         android:id="@+id/txt_item_actual_plan_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/margin_16dp"
-        android:layout_marginRight="@dimen/margin_16dp"
         android:text="2017/06/21"
         android:textColor="@color/chiase_black"
         android:textStyle="bold" />
@@ -17,13 +15,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/margin_16dp"
-        android:layout_marginRight="@dimen/margin_16dp"
-        android:layout_marginTop="@dimen/margin_16dp"
+        android:layout_marginBottom="@dimen/margin_10dp"
+        android:layout_marginTop="@dimen/margin_10dp"
         android:background="@drawable/dr_background_gray_border_padding"
-
         android:orientation="vertical"
-        android:padding="@dimen/margin_16dp">
+        android:paddingBottom="@dimen/margin_10dp"
+        android:paddingTop="@dimen/margin_10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -57,7 +54,8 @@
                 android:id="@+id/edt_item_actual_plan_real"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="value" />
+                android:gravity="right"
+                android:hint="@string/chiase_common_please_input" />
 
         </LinearLayout>
     </LinearLayout>

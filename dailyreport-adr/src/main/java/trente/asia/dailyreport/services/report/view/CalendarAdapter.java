@@ -85,7 +85,6 @@ public class CalendarAdapter extends BaseAdapter{
 		}
 		TextView txtDay = (TextView)v.findViewById(R.id.item_calendar_txt_date);
 		ImageView imgReportStatus = (ImageView)v.findViewById(R.id.item_calendar_img_status);
-		TextView txtWorkOfferInfo = (TextView)v.findViewById(R.id.item_calendar_txt_work_offer_info);
 
 		int gridvalue = dayString.get(position).get(Calendar.DAY_OF_MONTH);
 		int dayColor = Color.BLACK;

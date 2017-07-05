@@ -6,7 +6,6 @@ package trente.asia.dailyreport.services.kpi.view;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
@@ -24,11 +23,11 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import trente.asia.dailyreport.DRConst;
+import asia.chiase.core.util.CCFormatUtil;
 import trente.asia.dailyreport.R;
 import trente.asia.dailyreport.services.kpi.ActualPlanAddFragment;
-import trente.asia.dailyreport.services.kpi.model.ActualPlan;
-import trente.asia.dailyreport.utils.DRUtil;
+import trente.asia.dailyreport.services.kpi.model.ActionPlan;
+import trente.asia.welfare.adr.define.WelfareConst;
 
 public class KpiCalendarAdapter extends BaseAdapter{
 
@@ -103,6 +102,10 @@ public class KpiCalendarAdapter extends BaseAdapter{
 				rltBackground.setBackgroundResource(R.drawable.dr_item_calendar_background_sat);
 			}
 
+			if(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, Calendar.getInstance().getTime()).equals(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, dayString.get(position).getTime()))){
+				dayColor = ContextCompat.getColor(mContext, R.color.core_white);
+				txtDay.setBackgroundResource(R.drawable.dr_background_base_color_circle);
+			}
 		}
 
 		txtDay.setTextColor(dayColor);
@@ -159,19 +162,18 @@ public class KpiCalendarAdapter extends BaseAdapter{
 		return maxP;
 	}
 
-	public void updateLayout(List<ActualPlan> actualPlanList){
+	public void updateLayout(List<ActionPlan> actionPlanList){
 		for(int i = 0; i < viewMap.size(); i++){
 			View cell = viewMap.get(i);
-			ActualPlan actualPlan = ActualPlanAddFragment.getActualPlanByDay(dayString.get(i), actualPlanList);
-			updateCellLayout(cell, actualPlan);
+			ActionPlan actionPlan = ActualPlanAddFragment.getActualPlanByDay(dayString.get(i), actionPlanList);
+			updateCellLayout(cell, actionPlan);
 		}
 	}
 
-	private void updateCellLayout(View v, ActualPlan actualPlan){
-		if(actualPlan != null && actualPlan.key != null){
-			//// TODO: 6/28/17 showRoundIcon
-			ImageView imgReportStatus = (ImageView)v.findViewById(R.id.item_calendar_img_status);
-			imgReportStatus.setVisibility(View.VISIBLE);
+	private void updateCellLayout(View v, ActionPlan actionPlan){
+		if(actionPlan != null && actionPlan.key != null){
+			View kpiStatus = v.findViewById(R.id.view_item_kpi_calendar_cell);
+			v.setVisibility(View.VISIBLE);
 		}
 	}
 }

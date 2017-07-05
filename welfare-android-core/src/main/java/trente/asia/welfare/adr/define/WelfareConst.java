@@ -150,23 +150,27 @@ public class WelfareConst{
 
 	public static final class NotificationType{
 
-		public static final String	MS_NOTI_NEW_MESSAGE		= "MS_NOTI_NEW_MESSAGE";
-		public static final String	MS_NOTI_NEW_COMMENT		= "MS_NOTI_NEW_COMMENT";
+		public static final String	MS_NOTI_NEW_MESSAGE				= "MS_NOTI_NEW_MESSAGE";
+		public static final String	MS_NOTI_NEW_COMMENT				= "MS_NOTI_NEW_COMMENT";
 
-		public static final String	DR_NOTI_NEW_REPORT		= "DR_NOTI_NEW_REPORT";
-		public static final String	DR_NOTI_COMMENT_REPORT	= "DR_NOTI_COMMENT_REPORT";
-		public static final String	DR_NOTI_LIKE_REPORT		= "DR_NOTI_LIKE_REPORT";
+		public static final String	DR_NOTI_NEW_REPORT				= "DR_NOTI_NEW_REPORT";
+		public static final String	DR_NOTI_COMMENT_REPORT			= "DR_NOTI_COMMENT_REPORT";
+		public static final String	DR_NOTI_LIKE_REPORT				= "DR_NOTI_LIKE_REPORT";
+		public static final String	DR_NOTICE_CHECKPOINT			= "DR_NOTI_CHECKPOINT";
+		public static final String	DR_NOTICE_MEMBER_SUCCESS		= "DR_NOTICE_MEMBER_SUCCESS";
+		public static final String	DR_NOTICE_MEMBER_NOT_SUCCESS	= "DR_NOTICE_MEMBER_NOT_SUCCESS";
+		public static final String	DR_NOTICE_GROUP_GOAL_ACHIEVED	= "DR_NOTICE_GROUP_GOAL_ACHIEVED";
 
-		public static final String	TC_NOTI_NEW_NOTICE		= "TC_NOTI_NEW_NOTICE";
-		public static final String	TC_NOTI_BIRTHDAY		= "TC_NOTI_BIRTHDAY";
-		public static final String	TC_NOTI_RECEIVE_CARD	= "TC_NOTI_RECEIVE_CARD";
+		public static final String	TC_NOTI_NEW_NOTICE				= "TC_NOTI_NEW_NOTICE";
+		public static final String	TC_NOTI_BIRTHDAY				= "TC_NOTI_BIRTHDAY";
+		public static final String	TC_NOTI_RECEIVE_CARD			= "TC_NOTI_RECEIVE_CARD";
 
-		public static final String	SW_NOTI_NEW_NOTICE		= "SW_NOTI_NEW_NOTICE";
-		public static final String	SW_NOTI_CHECK_IN		= "SW_NOTI_CHECK_IN";
-		public static final String	SW_NOTI_OVER_TIME		= "SW_NOTI_OVER_TIME";
-		public static final String	SW_NOTI_OFFER			= "SW_NOTI_OFFER";
+		public static final String	SW_NOTI_NEW_NOTICE				= "SW_NOTI_NEW_NOTICE";
+		public static final String	SW_NOTI_CHECK_IN				= "SW_NOTI_CHECK_IN";
+		public static final String	SW_NOTI_OVER_TIME				= "SW_NOTI_OVER_TIME";
+		public static final String	SW_NOTI_OFFER					= "SW_NOTI_OFFER";
 
-		public static final String	CL_NOTI_NEW_SCHEDULE	= "CL_NOTI_NEW_SCHEDULE";
+		public static final String	CL_NOTI_NEW_SCHEDULE			= "CL_NOTI_NEW_SCHEDULE";
 	}
 
 	public static final class NotificationReceived{

@@ -1,13 +1,10 @@
 package trente.asia.dailyreport.services.kpi.view;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 
-import android.app.Activity;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
@@ -16,11 +13,7 @@ import android.widget.GridView;
 import android.widget.RelativeLayout;
 
 import trente.asia.dailyreport.R;
-import trente.asia.dailyreport.services.kpi.ActualPlanAddFragment;
-import trente.asia.dailyreport.services.kpi.model.ActualPlan;
-import trente.asia.dailyreport.services.report.MyReportFragment;
-import trente.asia.dailyreport.services.report.model.ReportModel;
-import trente.asia.dailyreport.services.report.view.CalendarAdapter;
+import trente.asia.dailyreport.services.kpi.model.ActionPlan;
 
 /**
  * Created by viet on 7/12/2016.
@@ -90,8 +83,8 @@ public class KpiCalendarView extends RelativeLayout{
 
 	private OnDayClickedListener onDayClickedListener;
 
-	public void updateLayoutWithData(final List<ActualPlan> actualPlanList){
-		adapter.updateLayout(actualPlanList);
+	public void updateLayoutWithData(final List<ActionPlan> actionPlanList){
+		adapter.updateLayout(actionPlanList);
 	}
 
 }

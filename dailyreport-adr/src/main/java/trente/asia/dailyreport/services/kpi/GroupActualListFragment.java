@@ -27,6 +27,7 @@ import trente.asia.welfare.adr.define.WelfareConst;
  */
 public class GroupActualListFragment extends AbstractDRFragment implements GroupActualListAdapter.OnGraphIconClickListener{
 
+	public static final String		GROUP_KPI_KEY	= "GROUP_KPI_KEY";
 	private ListView				lstGroupActual;
 	private GroupActualListAdapter	adapter;
 	private DatePickerDialog		datePickerDialog;
@@ -44,7 +45,7 @@ public class GroupActualListFragment extends AbstractDRFragment implements Group
 
 	@Override
 	public void initData(){
-		requestKpiGroups();
+		loadKpiGroups();
 	}
 
 	@Override
@@ -73,7 +74,7 @@ public class GroupActualListFragment extends AbstractDRFragment implements Group
 
 	}
 
-	private void requestKpiGroups(){
+	private void loadKpiGroups(){
 		String dateStr = txtSelectedDate.getText().toString();
 		JSONObject jsonObject = new JSONObject();
 		try{
@@ -88,6 +89,7 @@ public class GroupActualListFragment extends AbstractDRFragment implements Group
 	protected void successLoad(JSONObject response, String url){
 		if(getView() != null){
 			List<GroupKpi> groupKpiList = CCJsonUtil.convertToModelList(response.optString("groups"), GroupKpi.class);
+			groupKpiList = UserActualFragment.createDummy();
 			adapter = new GroupActualListAdapter(getContext(), R.layout.item_group_actual, groupKpiList, this);
 			lstGroupActual.setAdapter(adapter);
 		}
@@ -95,16 +97,6 @@ public class GroupActualListFragment extends AbstractDRFragment implements Group
 
 	private void onClickDateIcon(){
 		datePickerDialog.show();
-	}
-
-	private void onClickSaveButton(){
-		JSONObject jsonObject = new JSONObject();
-		try{
-			jsonObject.put("Test", "test");
-		}catch(JSONException e){
-			e.printStackTrace();
-		}
-		requestUpdate(DRConst.API_KPI_UPDATE, jsonObject, true);
 	}
 
 	@Override
@@ -121,8 +113,7 @@ public class GroupActualListFragment extends AbstractDRFragment implements Group
 
 	@Override
 	public void onGraphIconClicked(GroupKpi groupKpi){
-		GroupActualFragment groupActualFragment = new GroupActualFragment();
-		groupActualFragment.setGroupKpi(groupKpi);
-		((WelfareActivity)activity).addFragment(groupActualFragment);
+		((WelfareActivity)activity).dataMap.put(GROUP_KPI_KEY, groupKpi.key);
+		super.onClickBackBtn();
 	}
 }
