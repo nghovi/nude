@@ -39,6 +39,8 @@ public class TcContactUsFragment extends AbstractTCFragment implements View.OnCl
 	private String		requestType;
 	private String		serviceType;
 
+	private List<ApiObjectModel> services;
+
 	@Override
 	public int getFragmentLayoutId(){
 		return R.layout.fragment_tc_contact_us;
@@ -108,7 +110,7 @@ public class TcContactUsFragment extends AbstractTCFragment implements View.OnCl
 
 			@Override
 			public void onItemSelected(int selectedPosition){
-				serviceType = WelfareUtil.getServiceCd().get(selectedPosition);
+				serviceType = services.get(selectedPosition).key;
 			}
 		}, true);
 	}
@@ -134,7 +136,7 @@ public class TcContactUsFragment extends AbstractTCFragment implements View.OnCl
 
 	private void onRequestAccountInfoFormSuccess(JSONObject response){
 		List<ApiObjectModel> requestTypes = CCJsonUtil.convertToModelList(response.optString("requestTypes"), ApiObjectModel.class);
-		List<ApiObjectModel> services = CCJsonUtil.convertToModelList(response.optString("serviceTypes"), ApiObjectModel.class);
+		services = CCJsonUtil.convertToModelList(response.optString("serviceTypes"), ApiObjectModel.class);
 		List<String> lstType = new ArrayList<>();
 		lstType.add(getString(R.string.wf_contact_us_select_item));
 		for(ApiObjectModel requestType : requestTypes){
