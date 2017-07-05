@@ -8,6 +8,7 @@ import org.json.JSONObject;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -229,6 +230,7 @@ public abstract class AbstractTCListFragment extends AbstractTCFragment implemen
 
 	private void requestCardHistoryInfo(){
 		JSONObject param = getHistoryParam();
+
 		requestLoad(getConstApi(), param, true);
 	}
 

@@ -54,7 +54,7 @@ public class PostedConfirmFragment extends AbstractTCFragment{
 
 	@Override
 	public void buildBodyLayout(){
-		TCDetailFragment.buildTCFrame(getActivity(), (LinearLayout)getView().findViewById(R.id.page_posted_confirm_fragment), historyModel, true);
+		TCDetailFragment.buildTCFrame(getActivity(), getView().findViewById(R.id.page_posted_confirm_fragment), historyModel, true);
 
 		getView().findViewById(R.id.btn_fragment_post_confirm_cancel).setOnClickListener(new View.OnClickListener() {
 

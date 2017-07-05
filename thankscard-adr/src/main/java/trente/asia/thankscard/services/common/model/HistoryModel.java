@@ -22,6 +22,7 @@ public class HistoryModel{
 	public List<LikeModel>	likeInfo;
 	public String			cateogryId;
 	public String			key;
+	public String			posterAvatarPath;
 
 	public void setTemplate(Template template){
 		this.template = template;

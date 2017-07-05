@@ -16,6 +16,7 @@ import trente.asia.welfare.adr.utils.WelfareUtil;
 /**
  * Created by viet on 2/15/2016.
  */
+
 public class PostTCListFragment extends AbstractTCListFragment{
 
 	@Override

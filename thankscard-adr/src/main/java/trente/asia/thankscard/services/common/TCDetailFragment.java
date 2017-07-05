@@ -8,18 +8,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import asia.chiase.core.util.CCCollectionUtil;
+import com.squareup.picasso.Picasso;
+
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
@@ -33,7 +30,6 @@ import trente.asia.thankscard.utils.TCUtil;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.models.DeptModel;
-import trente.asia.welfare.adr.models.LikeModel;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WelfareUtil;
 import trente.asia.welfare.adr.utils.WfPicassoHelper;
@@ -126,21 +122,19 @@ public class TCDetailFragment extends AbstractPagerFragment{
 	@Override
 	protected void onPageHistorySelected(int position){
 		currentHistory = this.lstHistory.get(position);
-		buildLikeButton(currentHistory);
+		buildLayoutSender(currentHistory);
 	}
 
 	public void buildBodyLayout(){
 		super.buildBodyLayout();
 	}
 
-	private void buildLikeButton(final HistoryModel historyModel){
-		txtLikeCount = (TextView)getView().findViewById(R.id.txt_fragment_tc_detail_like_count);
-		txtLikeText = (TextView)getView().findViewById(R.id.txt_fragment_tc_detail_like);
-		imgLike = (ImageView)getView().findViewById(R.id.img_pate_tc_detail_like);
-		lnrLike = (LinearLayout)getView().findViewById(R.id.lnr_fragment_tc_detail_like);
+	private void buildLayoutSender(final HistoryModel historyModel){
 		TextView txtSend = (TextView)getView().findViewById(R.id.txt_fragment_tc_detail_send);
+		TextView txtSenderName = (TextView)getView().findViewById(R.id.txt_sender_name);
+		ImageView senderAvatar = (ImageView)getView().findViewById(R.id.img_sender_avatar);
 
-		if (myself.key.equals(historyModel.receiverId) && getTitle() == R.string.fragment_tc_detail_title_receive) {
+		if(myself.key.equals(historyModel.receiverId) && getTitle() == R.string.fragment_tc_detail_title_receive){
 			txtSend.setVisibility(View.VISIBLE);
 			txtSend.setOnClickListener(new View.OnClickListener() {
 
@@ -149,11 +143,11 @@ public class TCDetailFragment extends AbstractPagerFragment{
 					gotoPostedEditFragment(historyModel);
 				}
 			});
-		} else {
+		}else{
 			txtSend.setVisibility(View.INVISIBLE);
 		}
-
-		updateLikeLayout();
+		txtSenderName.setText(historyModel.posterName);
+		Picasso.with(getContext()).load(BuildConfig.HOST + historyModel.posterAvatarPath).fit().into(senderAvatar);
 	}
 
 	private void gotoPostedEditFragment(HistoryModel historyModel){
@@ -169,71 +163,6 @@ public class TCDetailFragment extends AbstractPagerFragment{
 		gotoFragment(thanksCardEditFragment);
 	}
 
-	private void updateLikeLayout(){
-		boolean alreadyLiked = false;
-		if(!CCCollectionUtil.isEmpty(currentHistory.likeInfo)){
-			for(LikeModel likeModel : currentHistory.likeInfo){
-				UserModel liker = likeModel.likeUser;
-				if(liker.key.equals(myself.key)){
-					alreadyLiked = true;
-					break;
-				}
-			}
-		}
-
-		txtLikeCount.setText(String.valueOf(WelfareUtil.size(currentHistory.likeInfo)));
-		if(alreadyLiked){
-			lnrLike.setOnClickListener(null);
-			imgLike.setImageResource(R.drawable.tc_like_off);
-			txtLikeText.setText(getString(R.string.fragment_tc_detail_liked));
-			txtLikeText.setTextColor(Color.BLACK);
-		}else{
-			lnrLike.setOnClickListener(new View.OnClickListener() {
-
-				@Override
-				public void onClick(View view){
-					sendLike(currentHistory);
-				}
-			});
-			imgLike.setImageResource(R.drawable.tc_like_on);
-			txtLikeText.setText(getString(R.string.fragment_tc_detail_like));
-			txtLikeText.setTextColor(ContextCompat.getColor(getContext(), R.color.tc_like_text_disabled));
-		}
-
-		LinearLayout lnrFollowerContainer = (LinearLayout)getView().findViewById(R.id.lnr_follower_list);
-		lnrFollowerContainer.removeAllViews();
-		LayoutInflater inflater = getActivity().getLayoutInflater();
-		for(LikeModel likeModel : currentHistory.likeInfo){
-			UserModel liker = likeModel.likeUser;
-			LinearLayout lnrFollower = (LinearLayout)inflater.inflate(R.layout.item_follower, null);
-			ImageView imgAvatar = (ImageView)lnrFollower.findViewById(R.id.img_item_follower_avatar);
-			WfPicassoHelper.loadImage2(activity, host, imgAvatar, liker.avatarPath);
-			TextView txtFollower = (TextView)lnrFollower.findViewById(R.id.txt_item_follower_name);
-			txtFollower.setText(liker.userName);
-			lnrFollowerContainer.addView(lnrFollower);
-		}
-
-	}
-
-	private void sendLike(HistoryModel historyModel){
-		JSONObject jsonObject = new JSONObject();
-		try{
-			jsonObject.put("postId", historyModel.key);
-		}catch(JSONException ex){
-			ex.printStackTrace();
-		}
-		requestUpdate(TcConst.API_POST_LIKE, jsonObject, true);
-	}
-
-	@Override
-	protected void successUpdate(JSONObject response, String url){
-		currentHistory = CCJsonUtil.convertToModel(response.optString("history"), HistoryModel.class);
-		int currentItem = viewPager.getCurrentItem();
-		lstHistory.set(currentItem, currentHistory);
-		// adapter.rebuildData(wrapToPageModels(createPageModels()));
-		updateLikeLayout();
-	}
-
 	public static void buildTCFrame(Context context, View lnrFrame, final HistoryModel historyModel, boolean isShowContent){
 		Date postDate = CCDateUtil.makeDateCustom(historyModel.postDate, WelfareConst.WF_DATE_TIME);
 		String postDateFormat = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, postDate);
@@ -247,6 +176,7 @@ public class TCDetailFragment extends AbstractPagerFragment{
 			txtDate.setVisibility(View.INVISIBLE);
 			txtTo.setVisibility(View.INVISIBLE);
 			txtFrom.setVisibility(View.INVISIBLE);
+
 		}else{
 			txtDate.setText(context.getResources().getString(R.string.fragment_tc_detail_date, postDateFormat));
 			txtTo.setText(context.getResources().getString(R.string.fragment_tc_detail_to, to));
