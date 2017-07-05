@@ -418,26 +418,26 @@ public class WelfareUtil{
 	}
 
 	// // TODO: 12/22/2016 delete this function
-	public static List<String> getServiceName(Context context){
-		List<String> lstService = new ArrayList<>();
-		lstService.add(context.getString(R.string.wf_thanks_card_service_name));
-		lstService.add(context.getString(R.string.wf_messenger_service_name));
-		lstService.add(context.getString(R.string.wf_daily_report_service_name));
-		lstService.add(context.getString(R.string.wf_shift_working_service_name));
-		lstService.add(context.getString(R.string.wf_fukuri_service_name));
-		return lstService;
-	}
+//	public static List<String> getServiceName(Context context){
+//		List<String> lstService = new ArrayList<>();
+//		lstService.add(context.getString(R.string.wf_thanks_card_service_name));
+//		lstService.add(context.getString(R.string.wf_messenger_service_name));
+//		lstService.add(context.getString(R.string.wf_daily_report_service_name));
+//		lstService.add(context.getString(R.string.wf_shift_working_service_name));
+//		lstService.add(context.getString(R.string.wf_fukuri_service_name));
+//		return lstService;
+//	}
 
-	public static List<String> getServiceCd(){
-		List<String> lstCd = new ArrayList<>();
-		lstCd.add("");
-		lstCd.add(WelfareConst.SERVICE_CD_TC);
-		lstCd.add(WelfareConst.SERVICE_CD_MS);
-		lstCd.add(WelfareConst.SERVICE_CD_DR);
-		lstCd.add(WelfareConst.SERVICE_CD_SW);
-		lstCd.add(WelfareConst.SERVICE_CD_FUKURI);
-		return lstCd;
-	}
+//	public static List<String> getServiceCd(){
+//		List<String> lstCd = new ArrayList<>();
+//		lstCd.add("");
+//		lstCd.add(WelfareConst.SERVICE_CD_TC);
+//		lstCd.add(WelfareConst.SERVICE_CD_MS);
+//		lstCd.add(WelfareConst.SERVICE_CD_DR);
+//		lstCd.add(WelfareConst.SERVICE_CD_SW);
+//		lstCd.add(WelfareConst.SERVICE_CD_FUKURI);
+//		return lstCd;
+//	}
 
 	public static List<String> getContactTypeCd(){
 		List<String> lstCd = new ArrayList<>();
