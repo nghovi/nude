@@ -17,10 +17,10 @@ public class FilePreviewActivity extends WelfareActivity{
 	 * 
 	 * @param fragment
 	 */
-	public static void startFilePreviewActivity(Fragment fragment, String activeBoardId){
+	public static void startFilePreviewActivity(Fragment fragment, int activeBoardId){
 		if(AndroidUtil.verifyStoragePermissions(fragment.getActivity())){
 			Intent intent = new Intent(fragment.getActivity(), FilePreviewActivity.class);
-			intent.putExtra(WelfareConst.Extras.ACTIVE_BOARD_ID, activeBoardId);
+			intent.putExtra(WelfareConst.Extras.ACTIVE_BOARD_ID, activeBoardId + "");
 			fragment.startActivityForResult(intent, WelfareConst.RequestCode.PICK_FILE);
 		}
 	}

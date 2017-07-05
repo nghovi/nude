@@ -10,14 +10,18 @@ import java.util.Map;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import com.bluelinelabs.logansquare.LoganSquare;
 
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -352,7 +356,6 @@ public class ScheduleFormFragment extends AbstractScheduleFragment {
         filterDialog = new ClFilterUserListDialog(activity, lnrUserList, getString(R.string.cl_join_user_dialog_title));
         filterDialog.findViewById(R.id.img_id_done).setOnClickListener(this);
 
-        buildCalendarChooseDialog();
         buildDatePickerDialogs(schedule);
 
         if (schedule != null && !CCStringUtil.isEmpty(schedule.key)) {
@@ -364,13 +367,6 @@ public class ScheduleFormFragment extends AbstractScheduleFragment {
         if (!ScheduleModel.isRepeat(schedule)) {
             txtStartDate.setOnClickListener(this);
             txtEndDate.setOnClickListener(this);
-        }
-    }
-
-    private void buildCalendarChooseDialog() {
-        if (schedule != null && schedule.key != null) {
-            getView().findViewById(R.id.img_arrow_right_calendar).setVisibility(View.GONE);
-            getView().findViewById(R.id.lnr_id_calendar).setClickable(false);
         }
     }
 
@@ -398,7 +394,13 @@ public class ScheduleFormFragment extends AbstractScheduleFragment {
                 dlgChooseCategory.show();
                 break;
             case R.id.lnr_id_calendar:
-                showCalendarChooseDialog();
+
+                if (schedule != null && !CCStringUtil.isEmpty(schedule.key)) {
+                    ChangeCalendarConfirmDialog alert = new ChangeCalendarConfirmDialog();
+                    alert.show(getFragmentManager(), "");
+                }
+                dlgChooseCalendar.show();
+
                 break;
             case R.id.txt_id_start_date:
                 datePickerDialogStart.show();
@@ -468,9 +470,18 @@ public class ScheduleFormFragment extends AbstractScheduleFragment {
         }
     }
 
-    private void showCalendarChooseDialog() {
-        if (schedule != null && schedule.key == null) {
-            dlgChooseCalendar.show();
+    public static class ChangeCalendarConfirmDialog extends DialogFragment {
+        @NonNull
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setMessage(getString(R.string.cl_schedule_confirm_change_cal))
+                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                        }
+                    });
+            return builder.create();
         }
     }
 
@@ -544,17 +555,32 @@ public class ScheduleFormFragment extends AbstractScheduleFragment {
                 } else { // show dialog
 
                     TextView textMessageUser = (TextView) confirmModeDialog.findViewById(R.id.txt_cl_confirm_message1);
-                    StringBuffer sbUser = new StringBuffer();
-                    for(ApiObjectModel  obj : users){
-                        sbUser.append(obj.value).append("\n");
+                    if (!CCCollectionUtil.isEmpty(users)) {
+                        StringBuffer sbUser = new StringBuffer();
+                        for (ApiObjectModel obj : users) {
+                            sbUser.append(obj.value).append("\n");
+                        }
+                        textMessageUser.setText(sbUser.toString());
+                        confirmModeDialog.findViewById(R.id.txt_cl_confirm_label1).setVisibility(View.VISIBLE);
+                        textMessageUser.setVisibility(View.VISIBLE);
+                    } else {
+                        confirmModeDialog.findViewById(R.id.txt_cl_confirm_label1).setVisibility(View.GONE);
+                        textMessageUser.setVisibility(View.GONE);
                     }
-                    textMessageUser.setText(sbUser.toString());
+
                     TextView textMessageRoom = (TextView) confirmModeDialog.findViewById(R.id.txt_cl_confirm_message2);
-                    StringBuffer sbRoom = new StringBuffer();
-                    for(ApiObjectModel  obj : rooms){
-                        sbUser.append(obj.value).append("\n");
+                    if (!CCCollectionUtil.isEmpty(rooms)) {
+                        StringBuffer sbRoom = new StringBuffer();
+                        for (ApiObjectModel obj : rooms) {
+                            sbRoom.append(obj.value).append("\n");
+                        }
+                        textMessageRoom.setText(sbRoom.toString());
+                        confirmModeDialog.findViewById(R.id.txt_cl_confirm_label2).setVisibility(View.VISIBLE);
+                        textMessageRoom.setVisibility(View.VISIBLE);
+                    } else {
+                        confirmModeDialog.findViewById(R.id.txt_cl_confirm_label2).setVisibility(View.GONE);
+                        textMessageRoom.setVisibility(View.GONE);
                     }
-                    textMessageRoom.setText(sbRoom.toString());
 
                     confirmModeDialog.updateScheduleEditModeTitle(getString(R.string.cl_schedule_confirm_mode_title));
                     confirmModeDialog.show();

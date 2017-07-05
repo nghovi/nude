@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -155,7 +156,7 @@ public class ChiaseFragment extends Fragment implements HttpCallback{
 	protected void requestLoad(final String url, JSONObject jsonObject, final boolean isAlert){
 
 		if(AndroidUtil.invalidInternet(activity)){
-			errorNetwork();
+			errorNetwork(url);
 			return;
 		}
 
@@ -202,7 +203,7 @@ public class ChiaseFragment extends Fragment implements HttpCallback{
 	protected void requestUpdate(final String url, JSONObject jsonObject, final boolean isAlert){
 
 		if(AndroidUtil.invalidInternet(activity)){
-			errorNetwork();
+			errorNetwork(url);
 			return;
 		}
 
@@ -236,7 +237,7 @@ public class ChiaseFragment extends Fragment implements HttpCallback{
 	protected void requestUpload(final String url, JSONObject jsonObject, Map<String, File> files, final boolean isAlert){
 
 		if(AndroidUtil.invalidInternet(activity)){
-			errorNetwork();
+			errorNetwork(url);
 			return;
 		}
 		if(isAlert){
@@ -244,10 +245,9 @@ public class ChiaseFragment extends Fragment implements HttpCallback{
 		}
 
 		initParams(jsonObject);
-
+		Log.e("ChiaseFragment", "JsonObject: " + jsonObject.toString());
 		HttpDelegate http = new HttpDelegate(host);
 		http.upload(ChiaseFragment.this, url, jsonObject, files, isAlert);
-
 	}
 
 	@Override
@@ -285,7 +285,7 @@ public class ChiaseFragment extends Fragment implements HttpCallback{
 	/**
 	 * errorNetwork
 	 */
-	protected void errorNetwork(){
+	protected void errorNetwork(String url){
 		activity.runOnUiThread(new Runnable() {
 
 			public void run(){

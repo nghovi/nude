@@ -14,6 +14,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -162,23 +163,26 @@ public abstract class WelfareFragment extends ChiaseFragment implements WelfareA
 	}
 
 
+    protected void commonNotSuccess(JSONObject response) {
+        String returnCd = response.optString(CsConst.RETURN_CODE_PARAM);
+        if (WfErrorConst.ERR_CODE_INVALID_ACCOUNT.equals(returnCd)) {
 
-	protected void commonNotSuccess(JSONObject response){
-		String returnCd = response.optString(CsConst.RETURN_CODE_PARAM);
-		if(WfErrorConst.ERR_CODE_INVALID_ACCOUNT.equals(returnCd)){
-			gotoSignIn();
-		}else if(WfErrorConst.ERR_CODE_INVALID_VERSION_AND_UPDATE.equals(returnCd)){
-			// show dialog
-			WfDialog dlgUpgrade = new WfDialog(activity);
-			dlgUpgrade.setDialogUpgradeVersion();
-			dlgUpgrade.show();
-			gotoSignIn();
-		}else{
-			String msg = response.optString(CsConst.MESSAGES);
-			alertDialog.setMessage(Html.fromHtml(msg).toString());
-			alertDialog.show();
-		}
-	}
+            String msg = response.optString(CsConst.MESSAGES);
+            Toast.makeText(getContext(), msg, Toast.LENGTH_LONG).show();
+
+            gotoSignIn();
+        } else if (WfErrorConst.ERR_CODE_INVALID_VERSION_AND_UPDATE.equals(returnCd)) {
+            // show dialog
+            WfDialog dlgUpgrade = new WfDialog(activity);
+            dlgUpgrade.setDialogUpgradeVersion();
+            dlgUpgrade.show();
+            gotoSignIn();
+        } else {
+            String msg = response.optString(CsConst.MESSAGES);
+            alertDialog.setMessage(Html.fromHtml(msg).toString());
+            alertDialog.show();
+        }
+    }
 
 	protected void cancelNotification(Context context){
 		String notificationService = Context.NOTIFICATION_SERVICE;

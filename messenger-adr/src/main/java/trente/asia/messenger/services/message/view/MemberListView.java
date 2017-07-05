@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import trente.asia.messenger.R;
+import trente.asia.messenger.services.message.model.RealmUserModel;
 import trente.asia.welfare.adr.models.UserModel;
 
 /**
@@ -39,7 +40,7 @@ public class MemberListView extends LinearLayout{
 		lsvMember = (ListView)this.findViewById(R.id.lsv_id_member);
 	}
 
-	public void updateMemberList(List<UserModel> lstMember){
+	public void updateMemberList(List<RealmUserModel> lstMember){
 		BoardMemberAdapter adapter = new BoardMemberAdapter(mContext, lstMember);
 		lsvMember.setAdapter(adapter);
 	}

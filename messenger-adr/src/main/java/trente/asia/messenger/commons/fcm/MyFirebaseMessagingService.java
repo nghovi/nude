@@ -33,7 +33,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService{
 
 	private final String	TAG	= "MessagingService";
 	private String			mNoticeType;
-	private String			mKey;
+	private int			mKey;
 	private String			mParentKey;
 
 	public void onMessageReceived(RemoteMessage remoteMessage){
@@ -46,14 +46,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService{
 			String notification = remoteMessage.getData().get("bodyData");
 			mNoticeType = CCStringUtil.toString(remoteMessage.getData().get("type"));
 			mParentKey = CCStringUtil.toString(remoteMessage.getData().get("parentKey"));
-			mKey = CCStringUtil.toString(remoteMessage.getData().get("key"));
+			mKey = Integer.parseInt(CCStringUtil.toString(remoteMessage.getData().get("key")));
 			boolean isNotification = false;
 			if(WelfareConst.NotificationType.MS_NOTI_NEW_MESSAGE.equals(mNoticeType)){
-				if(MessageFragment.activeBoardId == null || !MessageFragment.activeBoardId.equals(mKey)){
+				if(MessageFragment.activeBoardId != mKey){
 					isNotification = true;
 				}
 			}else if(WelfareConst.NotificationType.MS_NOTI_NEW_COMMENT.equals(mNoticeType)){
-				if(MessageDetailFragment.activeMessageId == null || !MessageDetailFragment.activeMessageId.equals(mKey)){
+				if(MessageDetailFragment.activeMessageId != mKey){
 					isNotification = true;
 				}
 			}
@@ -65,7 +65,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService{
 		}
 	}
 
-	private void sendNotification(String notification, String noticeType, String key, String parentKey){
+	private void sendNotification(String notification, String noticeType, int key, String parentKey){
 
 		FcmNotificationModel model = null;
 		try{

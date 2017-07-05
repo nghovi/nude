@@ -17,6 +17,7 @@ import trente.asia.messenger.BuildConfig;
 import trente.asia.messenger.R;
 import trente.asia.messenger.services.message.model.BoardModel;
 import trente.asia.messenger.services.message.model.MessageContentModel;
+import trente.asia.messenger.services.message.model.RealmBoardModel;
 import trente.asia.welfare.adr.activity.WelfareFragment;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.utils.WelfareUtil;
@@ -27,9 +28,9 @@ import trente.asia.welfare.adr.utils.WfPicassoHelper;
  *
  * @author TrungND
  */
-public class BoardAdapter extends ArrayAdapter<BoardModel>{
+public class BoardAdapter extends ArrayAdapter<RealmBoardModel>{
 
-	private List<BoardModel>						boardList;
+	private List<RealmBoardModel>						boardList;
 	private Context									mContext;
 	private WelfareFragment.OnAvatarClickListener	listener;
 
@@ -49,16 +50,21 @@ public class BoardAdapter extends ArrayAdapter<BoardModel>{
 		}
 	}
 
-	public BoardAdapter(Context context, List<BoardModel> boardList, WelfareFragment.OnAvatarClickListener listener){
+	public BoardAdapter(Context context, List<RealmBoardModel> boardList, WelfareFragment.OnAvatarClickListener listener){
 		super(context, R.layout.item_board_list, boardList);
 		this.mContext = context;
 		this.boardList = boardList;
 		this.listener = listener;
 	}
 
+	public void setBoardList(List<RealmBoardModel> boards) {
+		this.boardList = boards;
+		notifyDataSetChanged();
+	}
+
 	public View getView(int position, View convertView, ViewGroup parent){
 
-		final BoardModel model = this.boardList.get(position);
+		final RealmBoardModel model = this.boardList.get(position);
 
 		LayoutInflater mInflater = (LayoutInflater)mContext.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 		convertView = mInflater.inflate(R.layout.item_board_list, null);
@@ -95,14 +101,14 @@ public class BoardAdapter extends ArrayAdapter<BoardModel>{
 		return convertView;
 	}
 
-	public void add(BoardModel item, int position){
+	public void add(RealmBoardModel item, int position){
 		this.boardList.add(position, item);
 		this.notifyDataSetChanged();
 	}
 
 	public void addUnreadMessage(MessageContentModel messageModel){
-		for(BoardModel boardModel : boardList){
-			if(boardModel.key.equals(messageModel.boardId)){
+		for(RealmBoardModel boardModel : boardList){
+			if(boardModel.key == Integer.parseInt(messageModel.boardId)){
 				boardModel.boardUnread = CCStringUtil.toString(CCNumberUtil.checkNull(boardModel.boardUnread) + 1);
 				this.notifyDataSetChanged();
 				break;

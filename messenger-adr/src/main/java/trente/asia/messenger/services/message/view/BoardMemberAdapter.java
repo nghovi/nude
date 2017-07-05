@@ -14,6 +14,7 @@ import android.widget.TextView;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.messenger.BuildConfig;
 import trente.asia.messenger.R;
+import trente.asia.messenger.services.message.model.RealmUserModel;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WfPicassoHelper;
 
@@ -22,12 +23,12 @@ import trente.asia.welfare.adr.utils.WfPicassoHelper;
  *
  * @author TrungND
  */
-public class BoardMemberAdapter extends ArrayAdapter<UserModel>{
+public class BoardMemberAdapter extends ArrayAdapter<RealmUserModel>{
 
-	private List<UserModel>	mMemberList;
+	private List<RealmUserModel>	mMemberList;
 	private Context			mContext;
 
-	public BoardMemberAdapter(Context context, List<UserModel> memberList){
+	public BoardMemberAdapter(Context context, List<RealmUserModel> memberList){
 		super(context, R.layout.item_board_member, memberList);
 		this.mContext = context;
 		this.mMemberList = memberList;
@@ -52,7 +53,7 @@ public class BoardMemberAdapter extends ArrayAdapter<UserModel>{
 	}
 
 	public View getView(int position, View convertView, ViewGroup parent){
-		UserModel model = this.mMemberList.get(position);
+		RealmUserModel model = this.mMemberList.get(position);
 		LayoutInflater mInflater = (LayoutInflater)mContext.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 		convertView = mInflater.inflate(R.layout.item_board_member, null);
 

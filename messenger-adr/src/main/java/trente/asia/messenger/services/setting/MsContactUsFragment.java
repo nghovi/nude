@@ -45,6 +45,8 @@ public class MsContactUsFragment extends AbstractMsgFragment implements View.OnC
 	private String		requestType;
 	private String		serviceType;
 
+	private List<ApiObjectModel> services;
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 		if(mRootView == null){
@@ -101,7 +103,7 @@ public class MsContactUsFragment extends AbstractMsgFragment implements View.OnC
 
 							@Override
 							public void onItemSelected(int selectedPosition){
-								serviceType = WelfareUtil.getServiceCd().get(selectedPosition);
+								serviceType = services.get(selectedPosition).key;
 							}
 						}, true);
 	}
@@ -129,7 +131,7 @@ public class MsContactUsFragment extends AbstractMsgFragment implements View.OnC
 		List<ApiObjectModel> requestTypes = null;
 		try{
 			requestTypes = LoganSquare.parseList(response.optString("requestTypes"), ApiObjectModel.class);
-			List<ApiObjectModel> services = LoganSquare.parseList(response.optString("serviceTypes"), ApiObjectModel.class);
+			services = LoganSquare.parseList(response.optString("serviceTypes"), ApiObjectModel.class);
 			List<String> lstType = new ArrayList<>();
 			lstType.add(getString(R.string.wf_contact_us_select_item));
 			for(ApiObjectModel requestType : requestTypes){

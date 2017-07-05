@@ -141,4 +141,9 @@ public class RecorderVideoFragment extends AbstractRecorderVideoFragment impleme
 		super.gotoSignIn();
 		gotoFragment(new MsgLoginFragment());
 	}
+
+	@Override
+	protected String getServiceCd() {
+		return WelfareConst.SERVICE_CD_MS;
+	}
 }

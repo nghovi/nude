@@ -26,6 +26,7 @@ import trente.asia.messenger.commons.defines.MsConst;
 import trente.asia.messenger.fragment.AbstractMsgFragment;
 import trente.asia.messenger.services.message.BoardListFragment;
 import trente.asia.messenger.services.message.model.BoardModel;
+import trente.asia.messenger.services.message.model.RealmBoardModel;
 import trente.asia.messenger.services.user.listener.OnAddUserListener;
 import trente.asia.messenger.services.user.view.UserListAdapter;
 import trente.asia.welfare.adr.dialog.WfProfileDialog;
@@ -51,7 +52,7 @@ public class UserListFragment extends AbstractMsgFragment implements OnAddUserLi
     private OnAddUserSuccessListener onAddUserSuccessListener;
 
     public interface OnAddUserSuccessListener {
-        public void onSuccess(BoardModel boardModel);
+        public void onSuccess(RealmBoardModel boardModel);
     }
 
     @Override
@@ -149,7 +150,8 @@ public class UserListFragment extends AbstractMsgFragment implements OnAddUserLi
             BoardModel boardModel = null;
             try {
                 boardModel = LoganSquare.parse(response.optString("detail"), BoardModel.class);
-                onAddUserSuccessListener.onSuccess(boardModel);
+                RealmBoardModel realmBoardModel = new RealmBoardModel(boardModel);
+                onAddUserSuccessListener.onSuccess(realmBoardModel);
                 onClickBackBtn();
             } catch (IOException e) {
                 e.printStackTrace();
