@@ -143,7 +143,10 @@ public class BoardListFragment extends AbstractMsgFragment implements View.OnCli
 		for (RealmBoardModel board : boardList) {
 			boards.add(board);
 		}
+		showBoards(boards);
+	}
 
+	private void showBoards(List<RealmBoardModel> boards) {
 		if(!CCCollectionUtil.isEmpty(boards)){
 			mAdapter = new BoardAdapter(activity, boards, new OnAvatarClickListener() {
 
@@ -156,8 +159,8 @@ public class BoardListFragment extends AbstractMsgFragment implements View.OnCli
 
 			// set active board
 			if(activeBoard != null && !CCStringUtil.isEmpty(activeBoard.key)){
-				for(int i = 0; i < boardList.size(); i++){
-					RealmBoardModel boardModel = boardList.get(i);
+				for(int i = 0; i < boards.size(); i++){
+					RealmBoardModel boardModel = boards.get(i);
 					if(activeBoard.key == boardModel.key){
 						activeBoard = boardModel;
 						lsvBoard.setItemChecked(i, true);
@@ -167,13 +170,21 @@ public class BoardListFragment extends AbstractMsgFragment implements View.OnCli
 				}
 			}else{
 				lsvBoard.setItemChecked(0, true);
-				activeBoard = boardList.get(0);
+				activeBoard = boards.get(0);
 				prefAccUtil.set(MsConst.PREF_ACTIVE_BOARD_ID, activeBoard.key + "");
-				if(onChangedBoardListener != null) onChangedBoardListener.onChangedBoard(boardList.get(0), false);
+				if(onChangedBoardListener != null) onChangedBoardListener.onChangedBoard(boards.get(0), false);
 			}
-			checkUnreadMessage(boardList);
+			checkUnreadMessage(boards);
 		}
 	}
+
+	public void updateBoards(List<RealmBoardModel> boards) {
+		if (mAdapter == null) {
+			showBoards(boards);
+		} else {
+			mAdapter.setBoardList(boards);
+		}
+    }
 
 	@Override
 	protected void successLoad(JSONObject response, String url){

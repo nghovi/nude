@@ -57,6 +57,11 @@ public class BoardAdapter extends ArrayAdapter<RealmBoardModel>{
 		this.listener = listener;
 	}
 
+	public void setBoardList(List<RealmBoardModel> boards) {
+		this.boardList = boards;
+		notifyDataSetChanged();
+	}
+
 	public View getView(int position, View convertView, ViewGroup parent){
 
 		final RealmBoardModel model = this.boardList.get(position);

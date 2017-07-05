@@ -433,10 +433,15 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 
 	}
 
+	@Override
+	protected void updateBoardList(List<RealmBoardModel> boards) {
+		super.updateBoardList(boards);
+		boardListFragment.updateBoards(boards);
+	}
+
 	private void loadStamps(){
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
 		String lastUpdateDate = preferences.getString(MsConst.MESSAGE_STAMP_LAST_UPDATE_DATE, null);
-		Log.e("MessageFragment", "send lastUpdatedate = " + lastUpdateDate);
 		JSONObject jsonObject = new JSONObject();
 		if(lastUpdateDate != null){
 			try{

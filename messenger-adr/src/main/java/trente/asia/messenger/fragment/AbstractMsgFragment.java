@@ -139,6 +139,7 @@ public class AbstractMsgFragment extends WelfareFragment{
 					realmBoards.add(new RealmBoardModel(boardModel));
 				}
 				saveBoardsToDB(realmBoards);
+				updateBoardList(realmBoards);
 
 				RealmResults<RealmBoardModel> localBoards = mRealm.where(RealmBoardModel.class).findAll();
 				for(RealmBoardModel localBoard : localBoards){
@@ -179,6 +180,8 @@ public class AbstractMsgFragment extends WelfareFragment{
 		}
 		mRealm.commitTransaction();
 	}
+
+	protected void updateBoardList(List<RealmBoardModel> boards) {}
 
 	protected void updateMessages(List<RealmMessageModel> updateMessages){
 	}
