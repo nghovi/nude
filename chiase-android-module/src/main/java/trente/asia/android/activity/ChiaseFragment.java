@@ -166,7 +166,6 @@ public class ChiaseFragment extends Fragment implements HttpCallback{
 
 		initParams(jsonObject);
 
-		Log.e("ChiaseFragment", "JsonObject: " + jsonObject.toString());
 		HttpDelegate http = new HttpDelegate(host);
 		http.get(ChiaseFragment.this, url, jsonObject, isAlert);
 

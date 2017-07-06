@@ -673,7 +673,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 		if(activeBoard != null){
 			activeBoardId = activeBoard.key;
 		}
-
+		startTimer();
 	}
 
 	private String filterToUserList(String message){
@@ -1053,7 +1053,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 	protected void commonNotSuccess(JSONObject response){
 		String returnCd = response.optString(CsConst.RETURN_CODE_PARAM);
 		if(WfErrorConst.ERR_CODE_CONNECTION_ERROR.equals(returnCd)){
-			log("commonNotSuccess: get here");
+
 		}else{
 			super.commonNotSuccess(response);
 		}
@@ -1102,6 +1102,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 	@Override
 	public void onPause(){
 		super.onPause();
+		stopTimer();
 		preferencesAccountUtil.set(MsConst.PREF_LAST_MESSAGE_KEY, latestMessageKey + "");
 	}
 
@@ -1173,7 +1174,6 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 
 	@Override
 	protected void onClickBackBtn(){
-		log("onClickBackBtn");
 		if(messageView.buttonType == MessageView.ButtonType.MENU_OPENED){
 			onButtonMenuOpenedClicked();
 		}else{
@@ -1183,7 +1183,6 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 
 	@Override
 	public void onClickDeviceBackButton(){
-		log("onClickDeviceBackButton");
 		binding.layoutRecommendStamp.getRoot().setVisibility(View.GONE);
 		binding.layoutStamp.getRoot().setVisibility(View.GONE);
 		mViewForMenuBehind.setVisibility(View.GONE);

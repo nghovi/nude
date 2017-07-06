@@ -1,6 +1,7 @@
 package trente.asia.messenger.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import com.bluelinelabs.logansquare.LoganSquare;
 
@@ -39,10 +40,10 @@ public class AbstractMsgFragment extends WelfareFragment{
 
 	public PreferencesAccountUtil	preferencesAccountUtil;
 	public String					lastMessageUpdateDate;
-	public static int						activeBoardId;
+	public static int				activeBoardId;
 	public int						latestMessageKey	= 0;
 	public int						startMessageKey		= 0;
-	private Timer					mTimer;
+	private static Timer					mTimer;
 	public Realm					mRealm;
 	private final int				TIME_RELOAD			= 10000;
 
@@ -82,6 +83,7 @@ public class AbstractMsgFragment extends WelfareFragment{
 
 	public void loadMessageLatest(){
 		lastMessageUpdateDate = preferencesAccountUtil.get(MsConst.PREF_LAST_MESSAGE_UPDATE_DATE);
+
 		JSONObject jsonObject = new JSONObject();
 		try{
 			jsonObject.put("boardId", activeBoardId);
@@ -91,6 +93,7 @@ public class AbstractMsgFragment extends WelfareFragment{
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
+
 		requestLoad(MsConst.API_MESSAGE_LATEST, jsonObject, false);
 	}
 
@@ -100,9 +103,13 @@ public class AbstractMsgFragment extends WelfareFragment{
 		if(MsConst.API_MESSAGE_LATEST.equals(url)){
 			try{
 				lastMessageUpdateDate = response.optString("lastMessageUpdateDate");
-				preferencesAccountUtil.set(MsConst.PREF_LAST_MESSAGE_UPDATE_DATE, lastMessageUpdateDate);
+
+				if (!"".equals(lastMessageUpdateDate)) {
+					preferencesAccountUtil.set(MsConst.PREF_LAST_MESSAGE_UPDATE_DATE, lastMessageUpdateDate);
+				}
 				List<MessageContentModel> lstMessage = LoganSquare.parseList(response.optString("contents"), MessageContentModel.class);
 				if(lstMessage.size() > 0){
+
 					List<RealmMessageModel> messages = new ArrayList<>();
 					for(MessageContentModel message : lstMessage){
 						messages.add(new RealmMessageModel(message));
@@ -131,14 +138,18 @@ public class AbstractMsgFragment extends WelfareFragment{
 					if(newMessages.size() > 0){
 						addNewMessage(newMessages);
 					}
+
 				}
 
 				List<BoardModel> listBoard = LoganSquare.parseList(response.optString("boards"), BoardModel.class);
+
+
 				List<RealmBoardModel> realmBoards = new ArrayList<>();
 				for(BoardModel boardModel : listBoard){
 					realmBoards.add(new RealmBoardModel(boardModel));
 				}
 				saveBoardsToDB(realmBoards);
+
 				updateBoardList(realmBoards);
 
 				RealmResults<RealmBoardModel> localBoards = mRealm.where(RealmBoardModel.class).findAll();
@@ -156,6 +167,7 @@ public class AbstractMsgFragment extends WelfareFragment{
 						mRealm.commitTransaction();
 					}
 				}
+
 			}catch(IOException e){
 				e.printStackTrace();
 			}
@@ -181,7 +193,8 @@ public class AbstractMsgFragment extends WelfareFragment{
 		mRealm.commitTransaction();
 	}
 
-	protected void updateBoardList(List<RealmBoardModel> boards) {}
+	protected void updateBoardList(List<RealmBoardModel> boards){
+	}
 
 	protected void updateMessages(List<RealmMessageModel> updateMessages){
 	}
@@ -192,27 +205,21 @@ public class AbstractMsgFragment extends WelfareFragment{
 	protected void addNewMessage(List<RealmMessageModel> newMessages){
 	}
 
-	@Override
-	public void onResume(){
-		super.onResume();
-		startTimer();
-	}
-
-	@Override
-	public void onPause(){
-		super.onPause();
-		stopTimer();
+	private void log(String msg){
+		Log.e("AbstractMsg", msg);
 	}
 
 	public void startTimer(){
-		if(mTimer == null) mTimer = new Timer();
-		mTimer.schedule(new TimerTask() {
+		if(mTimer == null) {
+			mTimer = new Timer();
+			mTimer.schedule(new TimerTask() {
 
-			@Override
-			public void run(){
-				loadMessageLatest();
-			}
-		}, TIME_RELOAD, TIME_RELOAD);
+				@Override
+				public void run(){
+					loadMessageLatest();
+				}
+			}, TIME_RELOAD, TIME_RELOAD);
+		}
 	}
 
 	public void stopTimer(){

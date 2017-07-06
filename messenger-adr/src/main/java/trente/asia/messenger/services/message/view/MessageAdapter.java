@@ -181,7 +181,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 					if(contentModel.thumbnailAttachment != null && !CCStringUtil.isEmpty(contentModel.thumbnailAttachment.fileUrl)){
 						if(!contentModel.bitmapModel.started){
 							String fullUrl = BuildConfig.HOST + contentModel.thumbnailAttachment.fileUrl;
-							WfPicassoHelper.loadImage(mContext, fullUrl, viewHolder.imgViewContent, viewHolder.pgrLoading, contentModel.bitmapModel);
+							WfPicassoHelper.loadImageFit(mContext, fullUrl, viewHolder.imgViewContent, viewHolder.pgrLoading, contentModel.bitmapModel);
 						}
 					}
 				}

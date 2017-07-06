@@ -116,6 +116,34 @@ public class WfPicassoHelper{
 		});
 	}
 
+	public static void loadImageFit(Context context, String imageUrl, final ImageView imageView, final ProgressBar pgrLoading, final BitmapModel bitmapModel){
+
+		if(context == null || CCStringUtil.isEmpty(imageUrl) || imageView == null){
+			return;
+		}
+
+		if(pgrLoading != null) pgrLoading.setVisibility(View.VISIBLE);
+		bitmapModel.started = true;
+
+		Picasso.with(context).load(imageUrl).fit().into(imageView, new Callback.EmptyCallback() {
+
+			@Override
+			public void onSuccess(){
+				if(pgrLoading != null) pgrLoading.setVisibility(View.GONE);
+				if(imageView instanceof SelectableRoundedImageView){
+					bitmapModel.bitmap = ((SelectableRoundedImageView.SelectableRoundedCornerDrawable)imageView.getDrawable()).getSourceBitmap();
+				}else{
+					bitmapModel.bitmap = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
+				}
+			}
+
+			@Override
+			public void onError(){
+				if(pgrLoading != null) pgrLoading.setVisibility(View.GONE);
+			}
+		});
+	}
+
 	public static void cancelLoadImage(Context context, ImageView imageView){
 		Picasso.with(context).cancelRequest(imageView);
 	}
