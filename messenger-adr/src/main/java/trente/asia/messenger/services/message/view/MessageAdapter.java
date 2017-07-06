@@ -3,6 +3,7 @@ package trente.asia.messenger.services.message.view;
 import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -364,11 +365,15 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 	}
 
 	public void clearAll(){
-		// int itemCount = this.getItemCount();
+		log("clearAll");
 		this.mLstMessage.clear();
 		this.lstDate.clear();
 		this.lstKey.clear();
 		this.notifyDataSetChanged();
+	}
+
+	private void log(String msg) {
+		Log.e("MessageAdapter", msg);
 	}
 
 	public void addComment(int messageId){
