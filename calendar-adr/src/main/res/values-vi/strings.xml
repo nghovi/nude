@@ -46,7 +46,6 @@
 
     <string name="cl_schedule_repeat_type_weekly">Tuần</string>
     <string name="cl_schedule_repeat_type_monthly">Tháng</string>
-    <string name="cl_schedule_repeat_type_yearly">Yearly</string>
 
     <string name="cl_schedule_repeat_weekly_message">Lặp lại hàng tuần vào %1$s
     </string>

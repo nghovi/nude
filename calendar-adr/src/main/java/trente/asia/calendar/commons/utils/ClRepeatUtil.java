@@ -108,40 +108,7 @@ public class ClRepeatUtil{
 //				}
 //			}
 			break;
-		case ClConst.SCHEDULE_REPEAT_TYPE_YEARLY:
-			if(ClConst.SCHEDULE_REPEAT_LIMIT_FOREVER.equals(scheduleModel.repeatLimitType)){
-				for(MonthlyCalendarDayView dayView : lstView){
-					Date dateView = WelfareFormatUtil.makeDate(dayView.day);
-					if(WfDateUtil.diffDate(dateView, dateStart) >= 0){
-						int dayOfYear = CCDateUtil.makeCalendar(dateView).get(Calendar.DAY_OF_YEAR);
-						int dayOfYearStart = CCDateUtil.makeCalendar(dateStart).get(Calendar.DAY_OF_YEAR);
-						if(dayOfYear == dayOfYearStart){
-							lstCalendarDay.add(dayView);
-						}
-					}
-				}
-			}else if(ClConst.SCHEDULE_REPEAT_LIMIT_UNTIL.equals(scheduleModel.repeatLimitType)){
-				for(MonthlyCalendarDayView dayView : lstView){
-					Date dateView = WelfareFormatUtil.makeDate(dayView.day);
-					if(ClUtil.belongPeriod(dateView, scheduleModel.startDate, scheduleModel.repeatEnd)){
-						int dayOfYear = CCDateUtil.makeCalendar(dateView).get(Calendar.DAY_OF_YEAR);
-						int dayOfYearStart = CCDateUtil.makeCalendar(dateStart).get(Calendar.DAY_OF_YEAR);
-						if(dayOfYear == dayOfYearStart){
-							lstCalendarDay.add(dayView);
-						}
-					}
-				}
-			}
-//            else if(ClConst.SCHEDULE_REPEAT_LIMIT_AFTER.equals(scheduleModel.repeatLimitType)){
-//				List<String> lstActiveDate = ClRepeatUtil.getDateList4RepeatTimes(scheduleModel);
-//				for(MonthlyCalendarDayView dayView : lstView){
-//					if(lstActiveDate.contains(dayView.day)){
-//						lstCalendarDay.add(dayView);
-//					}
-//				}
-//			}
 
-			break;
 		default:
 			break;
 		}
@@ -172,12 +139,6 @@ public class ClRepeatUtil{
 		}else if(ClConst.SCHEDULE_REPEAT_TYPE_MONTHLY.equals(scheduleModel.repeatType)){
 			while(indexSchedule <= Integer.valueOf(scheduleModel.repeatInterval)){
 				startCalendar.add(Calendar.MONTH, 1);
-				lstDate.add(WelfareFormatUtil.formatDate(startCalendar.getTime()));
-				indexSchedule++;
-			}
-		}else if(ClConst.SCHEDULE_REPEAT_TYPE_YEARLY.equals(scheduleModel.repeatType)){
-			while(indexSchedule <= Integer.valueOf(scheduleModel.repeatInterval)){
-				startCalendar.add(Calendar.YEAR, 1);
 				lstDate.add(WelfareFormatUtil.formatDate(startCalendar.getTime()));
 				indexSchedule++;
 			}
@@ -226,8 +187,6 @@ public class ClRepeatUtil{
 			}
 		}else if(ClConst.SCHEDULE_REPEAT_TYPE_MONTHLY.equals(repeatModel.repeatType)){
 			builder.append(context.getString(R.string.cl_schedule_repeat_monthly_message));
-		}else if(ClConst.SCHEDULE_REPEAT_TYPE_YEARLY.equals(repeatModel.repeatType)){
-			builder.append(context.getString(R.string.cl_schedule_repeat_yearly_message));
 		}
 
 		if(ClConst.SCHEDULE_REPEAT_LIMIT_FOREVER.equals(repeatModel.repeatLimitType)){

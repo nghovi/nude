@@ -47,7 +47,6 @@
 
     <string name="cl_schedule_repeat_type_weekly">Weekly</string>
     <string name="cl_schedule_repeat_type_monthly">Monthly</string>
-    <string name="cl_schedule_repeat_type_yearly">Yearly</string>
 
     <string name="cl_schedule_repeat_weekly_message">Repeats weekly on %1$s
     </string>
