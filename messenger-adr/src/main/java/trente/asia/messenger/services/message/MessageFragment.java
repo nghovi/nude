@@ -671,7 +671,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 		if(mSlideMenuLayout.isMenuShown()){
 			mSlideMenuLayout.toggleMenu();
 		}
-		if(activeBoard != null){
+		if(activeBoard != null && activeBoard.isValid()){
 			activeBoardId = activeBoard.key;
 		}
 		startTimer();
