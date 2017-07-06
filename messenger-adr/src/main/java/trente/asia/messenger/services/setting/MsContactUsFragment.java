@@ -37,7 +37,7 @@ public class MsContactUsFragment extends AbstractMsgFragment implements View.OnC
 
 	private WfSpinner	spnType;
 	private WfSpinner	spnServiceName;
-	private Button btnSend;
+	private ImageButton btnSend;
 
 	private EditText	edtContent;
 	private TextView	txtContentNumber;
@@ -64,7 +64,7 @@ public class MsContactUsFragment extends AbstractMsgFragment implements View.OnC
 		spnServiceName = (WfSpinner)getView().findViewById(R.id.spn_id_service_name);
 		edtContent = (EditText)getView().findViewById(R.id.edt_id_content);
 		txtContentNumber = (TextView)getView().findViewById(R.id.txt_id_content_number);
-		btnSend = (Button)getView().findViewById(R.id.btn_id_send);
+		btnSend = (ImageButton)getView().findViewById(R.id.btn_id_send);
 
 		edtContent.addTextChangedListener(new TextWatcher() {
 

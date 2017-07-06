@@ -22,5 +22,11 @@ public class DRConst{
 	public static final String	API_REPORT_COMMENT				= "/api/report/comment";
 	public static final String	API_REPORT_DETAIL				= "/api/report/detail";
 	public static final String	API_REPORT_ACTIVITY				= "/api/report/activity";
-	public static final String	API_REPORT_GRAPH_RATE			= "/api/report-graph/rate";
+	public static final String	API_KPI_PERSONAL_UPDATE			= "/api/report/kpi/personal/update";
+	public static final String	API_KPI_ACTIONS_UPDATE			= "/api/report/kpi/action/update";
+	public static final String	API_KPI_PERSONAL				= "/api/report/kpi/personal";
+
+	public static final String	API_KPI_GROUP					= "/api/report/kpi/group";
+	public static final String	API_KPI_GROUPS					= "/api/report/kpi/groups";
+	public static final String	API_KPI_ACTIONS					= "/api/report/kpi/actions";
 }
