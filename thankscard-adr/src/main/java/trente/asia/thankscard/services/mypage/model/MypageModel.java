@@ -17,8 +17,11 @@ public class MypageModel{
 	public Integer				seqPost;
 	public Integer				seqRecieve;
 	public Integer				stageNo;
+	public Integer				archivePost;
+	public Integer				archiveReceive;
 
 	public List<DeptModel>		depts;
 	public List<Template>		templates;
 	public List<NoticeModel>	notices;
+
 }
