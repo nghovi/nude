@@ -21,7 +21,6 @@ public class ClConst{
 
 	public static final String	SCHEDULE_REPEAT_TYPE_WEEKLY					= "WL";
 	public static final String	SCHEDULE_REPEAT_TYPE_MONTHLY				= "ML";
-	public static final String	SCHEDULE_REPEAT_TYPE_YEARLY					= "YL";
 	public static final String	SCHEDULE_REPEAT_TYPE_NONE					= "NN";
 
 	public static final String	SCHEDULE_REPEAT_LIMIT_FOREVER				= "F";

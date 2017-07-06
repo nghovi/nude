@@ -106,7 +106,6 @@ public class ClScheduleRepeatDialog extends CLOutboundDismissDialog{
 		lstRepeatType = new ArrayList<>();
 		lstRepeatType.add(new ChiaseSpinnerModel(ClConst.SCHEDULE_REPEAT_TYPE_WEEKLY, mContext.getString(R.string.cl_schedule_repeat_type_weekly)));
 		lstRepeatType.add(new ChiaseSpinnerModel(ClConst.SCHEDULE_REPEAT_TYPE_MONTHLY, mContext.getString(R.string.cl_schedule_repeat_type_monthly)));
-		lstRepeatType.add(new ChiaseSpinnerModel(ClConst.SCHEDULE_REPEAT_TYPE_YEARLY, mContext.getString(R.string.cl_schedule_repeat_type_yearly)));
 
 		lstRepeatLimit = new ArrayList<>();
 		lstRepeatLimit.add(new ChiaseSpinnerModel(ClConst.SCHEDULE_REPEAT_LIMIT_FOREVER, mContext.getString(R.string.cl_schedule_repeat_limit_forever)));
@@ -218,7 +217,6 @@ public class ClScheduleRepeatDialog extends CLOutboundDismissDialog{
 				repeatModel.repeatData = lnrRepeatWeeklyDay.getRepeatData();
 			}
 		}else if(ClConst.SCHEDULE_REPEAT_TYPE_MONTHLY.equals(repeatType.key)){
-		}else if(ClConst.SCHEDULE_REPEAT_TYPE_YEARLY.equals(repeatType.key)){
 		}
 
 		ChiaseSpinnerModel repeatLimit = (ChiaseSpinnerModel)spnRepeatLimit.getSelectedItem();
