@@ -127,6 +127,6 @@
     <string name="tc_contact_us_content_title">内容</string>
     <string name="tc_contact_us_service_title">サービス名</string>
     <string name="tc_contact_us_select_item">選択する</string>
-    <string name="fragment_mypage_rank_next_post">Next post rank: %1$s</string>
-    <string name="fragment_mypage_rank_next_receive">Next receive rank: %1$s</string>
+    <string name="fragment_mypage_rank_next_post">%1$s位まであと%2$spt</string>
+    <string name="fragment_mypage_rank_next_receive">%1$s位まであと%2$spt</string>
 </resources>
