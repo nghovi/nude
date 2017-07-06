@@ -81,7 +81,6 @@ public class MessageDetailFragment extends AbstractMsgFragment implements View.O
 	private VideoView					mVideoView;
 	private ImageView					imgPlay;
 
-	private RealmMessageModel			messageModel;
 	private ImageView					mBtnComment;
 	private LinearLayout				mLnrSend;
 	private ChiaseEditText				mEdtComment;
@@ -336,13 +335,13 @@ public class MessageDetailFragment extends AbstractMsgFragment implements View.O
 		if(AndroidUtil.verifyStoragePermissions(activity)){
 			String fileUrl = null;
 			String filename = null;
-			if(WelfareConst.ITEM_TEXT_TYPE_LOC.equals(messageModel.messageType)){
+			if(WelfareConst.ITEM_TEXT_TYPE_LOC.equals(activeMessage.messageType)){
 				long date = System.currentTimeMillis();
 				filename = WelfareConst.FilesName.CAMERA_TEMP_FILE_NAME + String.valueOf(date) + WelfareConst.FilesName.CAMERA_TEMP_FILE_EXT;
 				fileUrl = mLocationUrl;
 			}else{
-				filename = messageModel.attachment.fileName;
-				fileUrl = host + messageModel.attachment.fileUrl;
+				filename = activeMessage.attachment.fileName;
+				fileUrl = host + activeMessage.attachment.fileUrl;
 			}
 
 			String filePath = MsUtils.getFilesFolderPath() + "/" + filename;
@@ -412,13 +411,13 @@ public class MessageDetailFragment extends AbstractMsgFragment implements View.O
 
 		String fileUrl = null;
 		String filename = null;
-		if(WelfareConst.ITEM_TEXT_TYPE_LOC.equals(messageModel.messageType)){
+		if(WelfareConst.ITEM_TEXT_TYPE_LOC.equals(activeMessage.messageType)){
 			long date = System.currentTimeMillis();
 			filename = WelfareConst.FilesName.CAMERA_TEMP_FILE_NAME + String.valueOf(date) + WelfareConst.FilesName.CAMERA_TEMP_FILE_EXT;
 			fileUrl = mLocationUrl;
 		}else{
-			filename = messageModel.attachment.fileName;
-			fileUrl = host + messageModel.attachment.fileUrl;
+			filename = activeMessage.attachment.fileName;
+			fileUrl = host + activeMessage.attachment.fileUrl;
 		}
 
 		String filePath = MsUtils.getFilesFolderPath() + "/" + filename;
@@ -490,6 +489,7 @@ public class MessageDetailFragment extends AbstractMsgFragment implements View.O
 	}
 
 	private void startPlay(String videoPath){
+		Log.e("MessageDetail", "video path = " + videoPath);
 		mVideoView.setVideoPath(videoPath);
 		mVideoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
 
@@ -611,7 +611,6 @@ public class MessageDetailFragment extends AbstractMsgFragment implements View.O
 		mLnrRightHeader = null;
 		mImgThumbnail = null;
 		activeMessage = null;
-		messageModel = null;
 		mBtnComment = null;
 		mEdtComment = null;
 
