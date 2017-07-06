@@ -506,7 +506,8 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 	}
 
 	private void loadFirstMessagesFromDB(){
-		RealmResults<RealmMessageModel> messages = mRealm.where(RealmMessageModel.class).equalTo("boardId", activeBoardId).findAllSorted("key", Sort.ASCENDING);
+		RealmResults<RealmMessageModel> messages = mRealm.where(RealmMessageModel.class).equalTo("boardId", activeBoardId)
+				.findAllSorted("key", Sort.ASCENDING);
 		int startIndex = messages.size() < 10 ? 0 : messages.size() - 10;
 		List<RealmMessageModel> subListMessages = messages.subList(startIndex, messages.size());
 		addFirstMessages(subListMessages);
@@ -922,7 +923,8 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 	}
 
 	private void loadOldMessages(){
-		RealmResults<RealmMessageModel> oldMessages = mRealm.where(RealmMessageModel.class).lessThan("key", startMessageKey).equalTo("boardId", activeBoardId).findAllSorted("key", Sort.DESCENDING);
+		RealmResults<RealmMessageModel> oldMessages = mRealm.where(RealmMessageModel.class)
+				.lessThan("key", startMessageKey).equalTo("boardId", activeBoardId).findAllSorted("key", Sort.DESCENDING);
 		int endIndex = oldMessages.size() < 10 ? oldMessages.size() : 10;
 		List<RealmMessageModel> subOldMessage = oldMessages.subList(0, endIndex);
 		if(subOldMessage.size() > 0){
@@ -936,7 +938,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 			mSlideMenuLayout.toggleMenu();
 		}
 		if(activeBoard == null || boardModel.key != activeBoard.key){
-			latestMessageKey = 0;
+
 			activity.runOnUiThread(new Runnable() {
 
 				public void run(){
@@ -947,6 +949,8 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 			activeBoard = boardModel;
 			updateNoteData();
 			if(isLoad){
+				startMessageKey = 0;
+				latestMessageKey = 0;
 				activeBoardId = boardModel.key;
 				mMsgAdapter.clearAll();
 				messageView.edtMessage.clearFocus();
