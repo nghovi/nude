@@ -10,6 +10,8 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
 import trente.asia.dailyreport.R;
+import trente.asia.dailyreport.services.kpi.GroupActualFragment;
+import trente.asia.dailyreport.services.kpi.UserActualFragment;
 import trente.asia.dailyreport.services.report.MyReportFragment;
 import trente.asia.dailyreport.services.report.ReportDetailFragment;
 import trente.asia.dailyreport.services.report.model.ReportModel;
@@ -54,13 +56,42 @@ public class MainDLActivity extends WelfareActivity{
 		String serviceCode = mExtras.getString(WelfareConst.NotificationReceived.USER_INFO_NOTI_TYPE);
 		String key = mExtras.getString(WelfareConst.NotificationReceived.USER_INFO_NOTI_KEY);
 		String parentKey = mExtras.getString(WelfareConst.NotificationReceived.USER_INFO_NOTI_PARENT_KEY);
-		if(WelfareConst.NotificationType.DR_NOTI_NEW_REPORT.equals(serviceCode) || WelfareConst.NotificationType.DR_NOTI_COMMENT_REPORT.equals(serviceCode) || WelfareConst.NotificationType.DR_NOTI_LIKE_REPORT.equals(serviceCode)){
-			ReportDetailFragment reportDetailFragment = new ReportDetailFragment();
-			ReportModel reportModel = new ReportModel(key);
-			reportDetailFragment.setReportModel(reportModel);
-			reportDetailFragment.isClickNotification = true;
-			addFragment(reportDetailFragment);
+		switch(serviceCode){
+		case WelfareConst.NotificationType.DR_NOTI_NEW_REPORT:
+		case WelfareConst.NotificationType.DR_NOTI_COMMENT_REPORT:
+		case WelfareConst.NotificationType.DR_NOTI_LIKE_REPORT:
+			gotoReportDetail(key);
+			break;
+		case WelfareConst.NotificationType.DR_NOTICE_CHECKPOINT:
+			gotoUserActualFragment(key);
+			break;
+		case WelfareConst.NotificationType.DR_NOTICE_MEMBER_SUCCESS:
+		case WelfareConst.NotificationType.DR_NOTICE_MEMBER_NOT_SUCCESS:
+		case WelfareConst.NotificationType.DR_NOTICE_GROUP_GOAL_ACHIEVED:
+			gotoGroupActualFragment(key);
+			break;
+		default:
+			break;
 		}
+	}
+
+	private void gotoGroupActualFragment(String key){
+		GroupActualFragment groupActualFragment = new GroupActualFragment();
+		groupActualFragment.setGroupKpiKey(key);
+		addFragment(groupActualFragment);
+	}
+
+	private void gotoUserActualFragment(String key){
+		UserActualFragment userActualFragment = new UserActualFragment();
+		addFragment(userActualFragment);
+	}
+
+	private void gotoReportDetail(String key){
+		ReportDetailFragment reportDetailFragment = new ReportDetailFragment();
+		ReportModel reportModel = new ReportModel(key);
+		reportDetailFragment.setReportModel(reportModel);
+		reportDetailFragment.isClickNotification = true;
+		addFragment(reportDetailFragment);
 	}
 
 	@Override

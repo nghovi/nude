@@ -14,7 +14,6 @@ import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import trente.asia.dailyreport.R;
 import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.utils.WelfareUtil;
 
 /**
  * Created by viet on 7/8/2016.
@@ -103,8 +102,8 @@ public class DRCalendarHeader extends LinearLayout{
 		this.selectedDate = selectedDate;
 		this.onViewChangeListener = onViewChangeListener;
 		this.onTimeChangeListener = onTimeChangeListener;
-		btnNext = (ImageView)findViewById(R.id.btn_calendar_header_next);
-		btnBack = (ImageView)findViewById(R.id.btn_calendar_header_back);
+		btnNext = (ImageView)findViewById(R.id.btn_group_header_next);
+		btnBack = (ImageView)findViewById(R.id.btn_group_header_back);
 		btnList = (ImageView)findViewById(R.id.btn_view_list);
 		btnCalendar = (ImageView)findViewById(R.id.btn_view_calendar);
 		btnCalendar.setEnabled(false);

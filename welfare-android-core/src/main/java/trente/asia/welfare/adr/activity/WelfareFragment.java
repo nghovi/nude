@@ -110,6 +110,7 @@ public abstract class WelfareFragment extends ChiaseFragment implements WelfareA
 		}
 	}
 
+	//// TODO: 7/5/17 Refactor name -> updateHeaderTitle
 	protected void updateHeader(String title){
 		if(!CCStringUtil.isEmpty(title)){
 			TextView txtTitle = (TextView)activity.findViewById(R.id.txt_id_header_title);

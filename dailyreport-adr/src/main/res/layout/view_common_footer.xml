@@ -60,12 +60,11 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/lnr_view_common_footer_KPI"
+            android:id="@+id/lnr_view_common_footer_kpi"
             style="@style/cs_common_wrap"
             android:layout_weight="1"
             android:gravity="center"
-            android:orientation="vertical"
-            android:visibility="gone">
+            android:orientation="vertical">
 
             <ImageView
                 style="@style/cs_common_wrap"
@@ -79,13 +78,12 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:paddingTop="@dimen/margin_30dp"
-                android:text="KPI"
-                android:textColor="@color/core_gray"
-                />
+                android:text="@string/footer_itemkpi"
+                android:textColor="@color/core_gray"/>
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/lnr_view_common_footer_activity"
+            android:id="@+id/lnr_view_common_footer_ap"
             style="@style/cs_common_wrap"
             android:layout_weight="1"
             android:gravity="center"

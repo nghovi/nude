@@ -1,0 +1,66 @@
+<trente.asia.dailyreport.view.DRGroupHeader
+    android:id="@+id/lnr_group_header"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/margin_16dp"
+        android:paddingRight="@dimen/margin_16dp">
+
+        <RelativeLayout
+            style="@style/cs_common_wrap"
+            android:layout_marginRight="@dimen/margin_6dp"
+            android:gravity="center_vertical">
+
+            <trente.asia.android.view.ChiaseCheckableImageView
+                android:id="@+id/btn_group_header_back"
+                style="@style/dr_button_previous" />
+
+            <TextView
+                style="@style/wl_common_text"
+                android:layout_width="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@string/btn_prev"
+                android:textColor="@color/chiase_white" />
+        </RelativeLayout>
+
+        <LinearLayout
+            style="@style/cs_common_match_wrap"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical">
+
+            <Button
+                android:id="@+id/img_calendar_header_this_group"
+                style="@style/wl_common_button_small"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_32dp"
+                android:textColor="@color/chiase_white"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <RelativeLayout
+            style="@style/cs_common_wrap"
+            android:layout_marginLeft="@dimen/margin_6dp"
+            android:gravity="center_vertical">
+
+            <trente.asia.android.view.ChiaseCheckableImageView
+                android:id="@+id/btn_group_header_next"
+                style="@style/dr_button_next" />
+
+            <TextView
+                style="@style/wl_common_text"
+                android:layout_width="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@string/btn_next"
+                android:textColor="@color/chiase_white" />
+        </RelativeLayout>
+    </LinearLayout>
+</trente.asia.dailyreport.view.DRGroupHeader>

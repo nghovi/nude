@@ -1,4 +1,4 @@
-package trente.asia.dailyreport.services.report.view;
+package trente.asia.dailyreport.services.kpi.view;
 
 /**
  * Created by viet on 7/12/2016.
@@ -7,8 +7,10 @@ package trente.asia.dailyreport.services.report.view;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -21,38 +23,34 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import asia.chiase.core.util.CCStringUtil;
-import trente.asia.dailyreport.DRConst;
+import asia.chiase.core.util.CCFormatUtil;
 import trente.asia.dailyreport.R;
-import trente.asia.dailyreport.services.report.MyReportFragment;
-import trente.asia.dailyreport.services.report.model.ReportModel;
-import trente.asia.dailyreport.utils.DRUtil;
-import trente.asia.welfare.adr.BuildConfig;
-import trente.asia.welfare.adr.utils.WfPicassoHelper;
+import trente.asia.dailyreport.services.kpi.ActualPlanAddFragment;
+import trente.asia.dailyreport.services.kpi.model.ActionPlan;
+import trente.asia.welfare.adr.define.WelfareConst;
 
-public class CalendarAdapter extends BaseAdapter{
+public class KpiCalendarAdapter extends BaseAdapter{
 
-	private Context					mContext;
+	private Context				mContext;
 
-	private java.util.Calendar		month;
-	public GregorianCalendar		pmonth;			// view_dr_calendar instance for previous gregorianCalendar
+	private Calendar			month;
+	public GregorianCalendar	pmonth;						// view_dr_calendar instance for previous gregorianCalendar
 	/**
 	 * view_dr_calendar instance for previous gregorianCalendar for getting complete view
 	 */
-	public GregorianCalendar		pmonthmaxset;
-	private GregorianCalendar		selectedDate;
-	int								firstDay;
-	int								maxWeeknumber;
-	int								maxP;
-	int								calMaxP;
-	int								mnthlength;
-	private ArrayList<String>		items;
-	public static List<Calendar>	dayString;
-	private List<ReportModel>		reportModels;
+	public GregorianCalendar	pmonthmaxset;
+	private GregorianCalendar	selectedDate;
+	int							firstDay;
+	int							maxWeeknumber;
+	int							maxP;
+	int							calMaxP;
+	int							mnthlength;
+	private ArrayList<String>	items;
+	public List<Calendar>		dayString;
+	private Map<Integer, View>	viewMap	= new HashMap<>();
 
-	public CalendarAdapter(Context c, GregorianCalendar monthCalendar, List<ReportModel> reportModels){
-		this.reportModels = reportModels;
-		CalendarAdapter.dayString = new ArrayList<Calendar>();
+	public KpiCalendarAdapter(Context c, GregorianCalendar monthCalendar){
+		dayString = new ArrayList<Calendar>();
 		Locale.setDefault(Locale.US);
 		month = monthCalendar;
 		selectedDate = (GregorianCalendar)monthCalendar.clone();
@@ -78,13 +76,13 @@ public class CalendarAdapter extends BaseAdapter{
 	public View getView(int position, View convertView, ViewGroup parent){
 		View v = convertView;
 		if(convertView == null){ // if it's not recycled, initialize some
-			// attributes
 			LayoutInflater vi = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			v = vi.inflate(R.layout.item_calendar, null);
 
 		}
 		TextView txtDay = (TextView)v.findViewById(R.id.item_calendar_txt_date);
 		ImageView imgReportStatus = (ImageView)v.findViewById(R.id.item_calendar_img_status);
+		imgReportStatus.setVisibility(View.INVISIBLE);
 
 		int gridvalue = dayString.get(position).get(Calendar.DAY_OF_MONTH);
 		int dayColor = Color.BLACK;
@@ -95,12 +93,7 @@ public class CalendarAdapter extends BaseAdapter{
 			dayColor = ContextCompat.getColor(mContext, R.color.dr_other_month);
 			txtDay.setClickable(false);
 			txtDay.setFocusable(false);
-			imgReportStatus.setVisibility(View.INVISIBLE);
-			// rltBackground.setBackgroundColor(ContextCompat.getColor(mContext,
-			// R.color.core_silver));
 		}else{
-			// setting day text color: red for sundays, blue for saturday and
-			// black for normal day
 			if(position % 7 == 0){// Sundays
 				dayColor = ContextCompat.getColor(mContext, R.color.dr_day_color_sun);
 				rltBackground.setBackgroundResource(R.drawable.dr_item_calendar_background_sun);
@@ -109,35 +102,15 @@ public class CalendarAdapter extends BaseAdapter{
 				rltBackground.setBackgroundResource(R.drawable.dr_item_calendar_background_sat);
 			}
 
-			ReportModel reportModel = MyReportFragment.getReportByDay(dayString.get(position), reportModels);
-			if(reportModel.holiday != null){
-				dayColor = ContextCompat.getColor(mContext, R.color.dr_day_color_sun);
-				rltBackground.setBackgroundResource(R.drawable.dr_item_calendar_background_holiday);
-			}else if(DRUtil.getDateString(Calendar.getInstance().getTime(), // background for
-																			// today
-
-							DRConst.DATE_FORMAT_YYYY_MM_DD).equals(DRUtil.getDateString(reportModel.reportDate, DRConst.DATE_FORMAT_YYYY_MM_DD_HH_MM_SS, DRConst.DATE_FORMAT_YYYY_MM_DD))){
+			if(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, Calendar.getInstance().getTime()).equals(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, dayString.get(position).getTime()))){
 				dayColor = ContextCompat.getColor(mContext, R.color.core_white);
 				txtDay.setBackgroundResource(R.drawable.dr_background_base_color_circle);
-			}
-
-			if(CCStringUtil.isEmpty(reportModel.key)){
-				if(!CCStringUtil.isEmpty(reportModel.workingSymbol)){
-					WfPicassoHelper.loadImage2(mContext, trente.asia.dailyreport.BuildConfig.HOST, imgReportStatus, reportModel.workingSymbol);
-				} else {
-					imgReportStatus.setVisibility(View.INVISIBLE);
-				}
-			}else{
-				if(ReportModel.REPORT_STATUS_DRTT.equals(reportModel.reportStatus)){
-					imgReportStatus.setImageResource(R.drawable.dr_draft);
-				}else if(ReportModel.REPORT_STATUS_DONE.equals(reportModel.reportStatus)){
-					imgReportStatus.setImageResource(R.drawable.wf_check);
-				}
 			}
 		}
 
 		txtDay.setTextColor(dayColor);
 		txtDay.setText(String.valueOf(gridvalue));
+		viewMap.put(position, v);
 		return v;
 	}
 
@@ -179,7 +152,7 @@ public class CalendarAdapter extends BaseAdapter{
 
 	private int getMaxP(){
 		int maxP;
-		if(month.get(GregorianCalendar.MONTH) == month.getActualMinimum(GregorianCalendar.MONTH)){
+		if(month.get(Calendar.MONTH) == month.getActualMinimum(Calendar.MONTH)){
 			pmonth.set((month.get(GregorianCalendar.YEAR) - 1), month.getActualMaximum(GregorianCalendar.MONTH), 1);
 		}else{
 			pmonth.set(GregorianCalendar.MONTH, month.get(GregorianCalendar.MONTH) - 1);
@@ -189,4 +162,18 @@ public class CalendarAdapter extends BaseAdapter{
 		return maxP;
 	}
 
+	public void updateLayout(List<ActionPlan> actionPlanList){
+		for(int i = 0; i < viewMap.size(); i++){
+			View cell = viewMap.get(i);
+			ActionPlan actionPlan = ActualPlanAddFragment.getActualPlanByDay(dayString.get(i), actionPlanList);
+			updateCellLayout(cell, actionPlan);
+		}
+	}
+
+	private void updateCellLayout(View v, ActionPlan actionPlan){
+		if(actionPlan != null && actionPlan.key != null){
+			View kpiStatus = v.findViewById(R.id.view_item_kpi_calendar_cell);
+			v.setVisibility(View.VISIBLE);
+		}
+	}
 }

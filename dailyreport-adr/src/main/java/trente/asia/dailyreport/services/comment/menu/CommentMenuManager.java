@@ -51,7 +51,7 @@ public class CommentMenuManager{
 		// location.setOnClickListener(new View.OnClickListener() {
 		//
 		// @Override
-		// public void onClick(View v){
+		// public void onGraphIconClicked(View v){
 		// buttonsListener.onLocationClicked();
 		// }
 		// });

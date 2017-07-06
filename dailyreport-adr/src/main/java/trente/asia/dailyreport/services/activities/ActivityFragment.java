@@ -48,7 +48,7 @@ public class ActivityFragment extends AbstractDRFragment{
 
 	@Override
 	public int getFooterItemId(){
-		return R.id.lnr_view_common_footer_activity;
+		return R.id.lnr_view_common_footer_ap;
 	}
 
 	@Override
