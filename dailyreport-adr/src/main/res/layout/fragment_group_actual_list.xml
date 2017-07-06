@@ -40,7 +40,8 @@
             android:id="@+id/txt_fragment_group_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/margin_16dp"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:layout_marginTop="@dimen/margin_6dp"
             android:text="@string/group_actual_list_goal"
             android:textColor="@color/chiase_black" />
 

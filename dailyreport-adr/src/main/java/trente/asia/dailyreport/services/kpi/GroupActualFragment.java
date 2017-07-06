@@ -124,10 +124,10 @@ public class GroupActualFragment extends AbstractDRFragment{
 
 			String periodString = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, CCDateUtil.makeDateCustom(groupKpi.startDate, WelfareConst.WF_DATE_TIME)) + " ~ " + CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, CCDateUtil.makeDateCustom(groupKpi.endDate, WelfareConst.WF_DATE_TIME));
 			txtPeriod.setText(periodString);
-			txtGoal.setText(CCFormatUtil.formatAmount(groupKpi.goal));
-			txtActualTotal.setText(CCFormatUtil.formatAmount(groupKpi.achievement));
-			txtAchievementRate.setText(CCFormatUtil.formatAmount(groupKpi.achievementRate));
-			txtToGoal.setText(CCFormatUtil.formatAmount(Integer.parseInt(groupKpi.goal) - Integer.parseInt(groupKpi.achievement)));
+			txtGoal.setText(CCFormatUtil.formatAmount(groupKpi.goal) + groupKpi.unit);
+			txtActualTotal.setText(CCFormatUtil.formatAmount(groupKpi.achievement) + groupKpi.unit);
+			txtAchievementRate.setText(CCFormatUtil.formatAmount(groupKpi.achievementRate) + "%");
+			txtToGoal.setText(CCFormatUtil.formatAmount(Integer.parseInt(groupKpi.goal) - Integer.parseInt(groupKpi.achievement)) + groupKpi.unit);
 
 			// UserActualFragment.buildChart(lineChart, groupKpi);
 		}

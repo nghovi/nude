@@ -14,13 +14,15 @@ public class GroupKpi{
 	public static class CheckPoint{
 
 		public String	date;
+
 		public String	achievement;
 	}
 
 	public String			name;
+	public String			todayActual		= "0";
 	public String			groupPeriod;
 	public String			goal			= "0";
-	public String			unit;
+	public String			unit			= "VND";
 	public String			condition;
 	public String			note;
 	public String			startDate;
@@ -32,6 +34,7 @@ public class GroupKpi{
 	public List<UserModel>	kpiMembers;
 	public List<CheckPoint>	checkPointList	= new ArrayList<>();
 	public String			achievement		= "0";
-	public String			achievementRate;
+	public String			achievementRate	= "0";
 	public String			companyId;
+	public String			toGoal			= "0";
 }

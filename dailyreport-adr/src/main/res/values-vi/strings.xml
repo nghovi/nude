@@ -122,4 +122,5 @@
     <string name="user_has_no_kpi_setup">Your KPI is not set</string>
     <string name="fragment_kpi_title_tassei">Personal achievement</string>
     <string name="fragment_kpi_title_jisseki">Personal performance</string>
+    <string name="overall_performance">Overall performance</string>
 </resources>

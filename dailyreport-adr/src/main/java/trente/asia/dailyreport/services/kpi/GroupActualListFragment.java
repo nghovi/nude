@@ -89,7 +89,7 @@ public class GroupActualListFragment extends AbstractDRFragment implements Group
 	protected void successLoad(JSONObject response, String url){
 		if(getView() != null){
 			List<GroupKpi> groupKpiList = CCJsonUtil.convertToModelList(response.optString("groups"), GroupKpi.class);
-			groupKpiList = UserActualFragment.createDummy();
+//			groupKpiList = UserActualFragment.createDummy();
 			adapter = new GroupActualListAdapter(getContext(), R.layout.item_group_actual, groupKpiList, this);
 			lstGroupActual.setAdapter(adapter);
 		}
