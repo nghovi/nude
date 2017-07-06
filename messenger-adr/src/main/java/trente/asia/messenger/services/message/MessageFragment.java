@@ -956,6 +956,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 				messageView.edtMessage.clearFocus();
 				messageView.edtMessage.setText("");
 				isFirstScroll2Top = true;
+				preferencesAccountUtil.set(MsConst.PREF_LAST_MESSAGE_UPDATE_DATE, "");
 				loadFirstMessagesFromDB();
 			}
 		}else{

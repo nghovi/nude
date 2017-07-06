@@ -365,7 +365,6 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 	}
 
 	public void clearAll(){
-		log("clearAll");
 		this.mLstMessage.clear();
 		this.lstDate.clear();
 		this.lstKey.clear();
