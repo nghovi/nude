@@ -110,14 +110,12 @@
                         android:orientation="horizontal">
 
                         <Button
-                            android:id="@+id/btn_fragment_my_report_cancel"
                             style="@style/wl_common_button_small"
                             android:layout_marginRight="10dp"
                             android:layout_weight="1"
                             android:text="@string/chiase_common_cancel" />
 
                         <Button
-                            android:id="@+id/btn_fragment_my_report_save"
                             style="@style/wl_common_button_small"
                             android:layout_marginLeft="10dp"
                             android:layout_weight="1"

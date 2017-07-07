@@ -16,7 +16,6 @@
     <string name="dr_report_comment_title">コメント</string>
     <string name="spinner_name_template">テンプレート</string>
     <string name="spinner_name_dept">部門</string>
-    <string name="spinner_name_user">ユーザー</string>
 
     <string name="fragment_setting_title">設定</string>
     <string name="fragment_title_empty"></string>
@@ -40,7 +39,6 @@
     <string name="dlr_content">日報</string>
 
     <string name="dlr_add_kpi">追加</string>
-    <string name="dlr_unit">単位</string>
 
     <string name="dlr_saturday">土</string>
     <string name="dlr_sunday">日</string>
@@ -58,43 +56,15 @@
     <string name="dlr_goal">目標値</string>
     <string name="dlr_sum">累計</string>
     <string name="dlr_avg">平均</string>
-    <string name="dlr_monthly_goal">月間目標</string>
-    <string name="dlr_input_rule">説明</string>
-    <string name="dlr_clear">クリア</string>
-    <string name="dlr_done">完了</string>
-    <string name="dlr_delete">削除</string>
-    <string name="dlr_archievement">達成率</string>
-
-    <string name="dr_report_kpi_item_required">You have to make KPI item.</string>
 
     <string name="dr_comment_edittext_hint">メッセージを入力</string>
     <string name="spinner_name_report_user">日報者</string>
     <string name="spinner_name_action_user">活動者</string>
 
     <string name="dr_activity_item_desc">日報: %1$s %2$s さんから日報</string>
-    <string name="dlg_monthly_goal_title">月間目標・エントリー</string>
-    <string name="dlg_add_actual_plan_title">アクションプラン・エントリー</string>
-    <string name="dr_item_name">項目名</string>
-    <string name="dlr_monthly_goal_achievement">月間目標の達成状況</string>
-    <string name="dlr_now">累計</string>
-    <string name="dlr_max_entries">最大10件まで登録できます。</string>
-    <string name="dlr_action_plan">予定</string>
-    <string name="dr_action_name">アクションプラン</string>
-    <string name="dlr_action_actual">実績</string>
-    <string name="dlr_monthly_goal_title">月間目標</string>
-    <string name="spn_goal_title">目標</string>
     <string name="dr_item">目標</string>
-    <string name="kpi_empty">目標が空きです \n管理者にご連絡下さい！</string>
-    <string name="kpi_graph_byuser">グラフ（ユーザー別）</string>
-    <string name="kpi_graph_bymonth">グラフ（月間別）</string>
-    <string name="msg_msg_invalid_empty">コメントは１文字から1,000文字までです。</string>
-    <string name="msg_msg_report_content_null">日報：３文字以上、10000文字以下にしてください。</string>
-    <string name="msg_msg_report_custome_null">%1$s : 3文字から10,000文字までです。</string>
 
     <!--Notifications-->
-    <string name="FM_DR_001">%1$sさんが新しい日報を作成しました</string>
-    <string name="FM_DR_002">%1$s新しいいいね！があります</string>
-    <string name="FM_DR_003">%1$s新しいコメントがあります</string>
     <string name="header_calendar_this_week">今週</string>
     <string name="goal_period">目標期限(moku hyou kigen)</string>
     <string name="personal_goal">個人目標</string>
@@ -114,7 +84,6 @@
     <string name="achieve_dialog_content">おめでとうございます。 \n個人目標を達成しました。\n素晴らしい！！ \nこの調子でいきましょう！</string>
     <string name="achieve_warning_dialog_title">本日は進捗確認日です</string>
     <string name="achieve_warning_dialog_content">KPIを達成していません\nアクションプランの見直しを考えましょう。</string>
-    <string name="user_has_no_action_plan_setup">アクションプランが設定されていません</string>
     <string name="today_goal">本日の目標</string>
     <string name="supplement_memo">補足メモ(hosoku)</string>
     <string name="performance_in_month">%1$s月の実績</string>

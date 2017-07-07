@@ -127,6 +127,7 @@
     <string name="tc_contact_us_content_title">Nội dung</string>
     <string name="tc_contact_us_service_title">Tên dịch vụ</string>
     <string name="tc_contact_us_select_item">Chọn</string>
-    <string name="fragment_mypage_rank_next_post">%2$spt cần cho rank %1$s</string>
-    <string name="fragment_mypage_rank_next_receive">%2$spt cần cho rank %1$s</string>
+    <string name="fragment_mypage_rank_next_post">%2$spt đến rank %1$s</string>
+    <string name="fragment_mypage_rank_next_receive">%2$spt đến rank %1$s</string>
+    <string name="rank_first_congrats">Xin chúc mừng！☆</string>
 </resources>

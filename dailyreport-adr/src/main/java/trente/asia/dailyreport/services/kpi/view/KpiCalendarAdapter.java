@@ -172,7 +172,7 @@ public class KpiCalendarAdapter extends BaseAdapter{
 
 	private void updateCellLayout(View v, ActionPlan actionPlan){
 		if(actionPlan != null && actionPlan.key != null){
-			View kpiStatus = v.findViewById(R.id.view_item_kpi_calendar_cell);
+			View kpiStatus = v.findViewById(R.id.item_calendar_img_status);
 			v.setVisibility(View.VISIBLE);
 		}
 	}

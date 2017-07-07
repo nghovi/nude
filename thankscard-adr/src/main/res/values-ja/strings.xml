@@ -129,4 +129,5 @@
     <string name="tc_contact_us_select_item">選択する</string>
     <string name="fragment_mypage_rank_next_post">%1$s位まであと%2$spt</string>
     <string name="fragment_mypage_rank_next_receive">%1$s位まであと%2$spt</string>
+    <string name="rank_first_congrats">おめでとうございます！☆</string>
 </resources>
