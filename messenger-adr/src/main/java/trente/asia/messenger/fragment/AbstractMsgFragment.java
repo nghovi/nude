@@ -39,12 +39,12 @@ import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
 public class AbstractMsgFragment extends WelfareFragment{
 
 	public PreferencesAccountUtil	preferencesAccountUtil;
-	public String					lastMessageUpdateDate;
+	public static String			lastMessageUpdateDate;
 	public static int				activeBoardId;
 	public int						latestMessageKey	= 0;
 	public int						startMessageKey		= 0;
-	private static Timer					mTimer;
-	public Realm					mRealm;
+	private static Timer			mTimer;
+	public static Realm				mRealm;
 	private final int				TIME_RELOAD			= 10000;
 
 	@Override
@@ -52,7 +52,9 @@ public class AbstractMsgFragment extends WelfareFragment{
 		super.onCreate(savedInstanceState);
 		preferencesAccountUtil = new PreferencesAccountUtil(getContext());
 		host = BuildConfig.HOST;
-		mRealm = Realm.getDefaultInstance();
+		if(mRealm == null){
+			mRealm = Realm.getDefaultInstance();
+		}
 	}
 
 	@Override
@@ -82,7 +84,6 @@ public class AbstractMsgFragment extends WelfareFragment{
 	}
 
 	public void loadMessageLatest(){
-		lastMessageUpdateDate = preferencesAccountUtil.get(MsConst.PREF_LAST_MESSAGE_UPDATE_DATE);
 
 		JSONObject jsonObject = new JSONObject();
 		try{
@@ -104,9 +105,6 @@ public class AbstractMsgFragment extends WelfareFragment{
 			try{
 				lastMessageUpdateDate = response.optString("lastMessageUpdateDate");
 
-				if (!"".equals(lastMessageUpdateDate)) {
-					preferencesAccountUtil.set(MsConst.PREF_LAST_MESSAGE_UPDATE_DATE, lastMessageUpdateDate);
-				}
 				List<MessageContentModel> lstMessage = LoganSquare.parseList(response.optString("contents"), MessageContentModel.class);
 				if(lstMessage.size() > 0){
 
@@ -132,7 +130,7 @@ public class AbstractMsgFragment extends WelfareFragment{
 
 					if(updateMessages.size() > 0){
 						updateMessages(updateMessages);
-						updateComments();
+						updateDetailMessage();
 					}
 
 					if(newMessages.size() > 0){
@@ -143,12 +141,25 @@ public class AbstractMsgFragment extends WelfareFragment{
 
 				List<BoardModel> listBoard = LoganSquare.parseList(response.optString("boards"), BoardModel.class);
 
-
+				mRealm.beginTransaction();
 				List<RealmBoardModel> realmBoards = new ArrayList<>();
 				for(BoardModel boardModel : listBoard){
-					realmBoards.add(new RealmBoardModel(boardModel));
+					RealmBoardModel realmBoard = mRealm.where(RealmBoardModel.class).equalTo("key", boardModel.key).findFirst();
+					if(realmBoard != null){
+						realmBoard.update(boardModel);
+					}else{
+						realmBoard = new RealmBoardModel(boardModel);
+					}
+
+					if(activeBoardId == boardModel.key && !"".equals(lastMessageUpdateDate)){
+						realmBoard.lastMessageUpdateDate = lastMessageUpdateDate;
+					}
+					mRealm.copyToRealmOrUpdate(realmBoard);
+
+					realmBoards.add(realmBoard);
+					log(realmBoard.boardName);
 				}
-				saveBoardsToDB(realmBoards);
+				mRealm.commitTransaction();
 
 				updateBoardList(realmBoards);
 
@@ -177,14 +188,6 @@ public class AbstractMsgFragment extends WelfareFragment{
 		}
 	}
 
-	private void saveBoardsToDB(List<RealmBoardModel> boards){
-		mRealm.beginTransaction();
-		for(RealmBoardModel board : boards){
-			mRealm.copyToRealmOrUpdate(board);
-		}
-		mRealm.commitTransaction();
-	}
-
 	public void saveMessageToDB(List<RealmMessageModel> lstMessage){
 		mRealm.beginTransaction();
 		for(RealmMessageModel message : lstMessage){
@@ -199,7 +202,7 @@ public class AbstractMsgFragment extends WelfareFragment{
 	protected void updateMessages(List<RealmMessageModel> updateMessages){
 	}
 
-	protected void updateComments(){
+	protected void updateDetailMessage(){
 	}
 
 	protected void addNewMessage(List<RealmMessageModel> newMessages){
@@ -210,7 +213,7 @@ public class AbstractMsgFragment extends WelfareFragment{
 	}
 
 	public void startTimer(){
-		if(mTimer == null) {
+		if(mTimer == null){
 			mTimer = new Timer();
 			mTimer.schedule(new TimerTask() {
 

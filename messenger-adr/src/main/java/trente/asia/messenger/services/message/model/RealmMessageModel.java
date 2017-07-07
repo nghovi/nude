@@ -19,116 +19,119 @@ import trente.asia.welfare.adr.models.UserModel;
  * Created by tien on 6/29/2017.
  */
 
-public class RealmMessageModel extends RealmObject {
-    @PrimaryKey
-    public int				key;
-    public int				boardId;
-    public RealmUserModel messageSender;
-    public String				messageType;
-    public String				messageDate;
-    public String				messageContent;
-    public String				messageFileName;
-    public String				messageUrlThumbnail;
-    public String				messageOriginal;
+public class RealmMessageModel extends RealmObject{
 
-    public RealmFileModel attachment;
-    public RealmFileModel			thumbnailAttachment;
-    public RealmList<RealmUserModel> checks;
-    public String				gpsLongtitude;
-    public String				gpsLatitude;
+	@PrimaryKey
+	public int							key;
+	public int							boardId;
+	public RealmUserModel				messageSender;
+	public String						messageType;
+	public String						messageDate;
+	public String						messageContent;
+	public String						messageFileName;
+	public String						messageUrlThumbnail;
+	public String						messageOriginal;
 
-    public RealmList<RealmCommentModel>	comments;
-    public RealmList<RealmUserModel>		targets;
 
-    public Integer				checkCount;
-    public RealmList<RealmUserModel>		checkList;
-    public boolean				isChanged	= false;
-    @Ignore
-    public BitmapModel bitmapModel = new BitmapModel();
+	public RealmFileModel				attachment;
+	public RealmFileModel				thumbnailAttachment;
+	public RealmList<RealmUserModel>	checks;
+	public String						gpsLongtitude;
+	public String						gpsLatitude;
 
-    public RealmMessageModel(){}
+	public RealmList<RealmCommentModel>	comments;
+	public RealmList<RealmUserModel>	targets;
 
-    public RealmMessageModel(MessageContentModel message) {
-        this.key = Integer.parseInt(message.key);
-        this.boardId = Integer.parseInt(message.boardId);
-        this.messageSender = new RealmUserModel(message.messageSender);
-        this.messageType = message.messageType;
-        this.messageDate = message.messageDate;
-        this.messageContent = message.messageContent;
-        this.messageFileName = message.messageFileName;
-        this.messageUrlThumbnail = message.messageUrlThumbnail;
-        this.messageOriginal = message.messageOriginal;
+	public Integer						checkCount;
+	public RealmList<RealmUserModel>	checkList;
+	public boolean						isChanged	= false;
+	@Ignore
+	public BitmapModel					bitmapModel	= new BitmapModel();
 
-        this.attachment = new RealmFileModel(message.attachment);
-        this.thumbnailAttachment = new RealmFileModel(message.thumbnailAttachment);
-        this.checks = new RealmList<>();
-        for (UserModel check : message.checks) {
-            this.checks.add(new RealmUserModel(check));
-        }
+	public RealmMessageModel(){
+	}
 
-        this.gpsLongtitude = message.gpsLongtitude;
-        this.gpsLatitude = message.gpsLatitude;
+	public RealmMessageModel(MessageContentModel message){
+		this.key = Integer.parseInt(message.key);
+		this.boardId = Integer.parseInt(message.boardId);
+		this.messageSender = new RealmUserModel(message.messageSender);
+		this.messageType = message.messageType;
+		this.messageDate = message.messageDate;
+		this.messageContent = message.messageContent;
+		this.messageFileName = message.messageFileName;
+		this.messageUrlThumbnail = message.messageUrlThumbnail;
+		this.messageOriginal = message.messageOriginal;
 
-        this.comments = new RealmList<>();
-        for (CommentModel comment : message.comments) {
-            this.comments.add(new RealmCommentModel(comment));
-        }
+		this.attachment = new RealmFileModel(message.attachment);
+		this.thumbnailAttachment = new RealmFileModel(message.thumbnailAttachment);
+		this.checks = new RealmList<>();
+		for(UserModel check : message.checks){
+			this.checks.add(new RealmUserModel(check));
+		}
 
-        this.targets = new RealmList<>();
-        for (UserModel target : message.targets) {
-            this.targets.add(new RealmUserModel(target));
-        }
+		this.gpsLongtitude = message.gpsLongtitude;
+		this.gpsLatitude = message.gpsLatitude;
 
-        this.checkCount = message.checkCount;
+		this.comments = new RealmList<>();
+		for(CommentModel comment : message.comments){
+			this.comments.add(new RealmCommentModel(comment));
+		}
 
-        this.checkList = new RealmList<>();
-        for (UserModel user : message.checkList) {
-            this.checkList.add(new RealmUserModel(user));
-        }
+		this.targets = new RealmList<>();
+		for(UserModel target : message.targets){
+			this.targets.add(new RealmUserModel(target));
+		}
 
-        this.isChanged = message.isChanged;
-    }
+		this.checkCount = message.checkCount;
 
-    public RealmMessageModel(String messageDate){
-        this.messageType = WelfareConst.ITEM_TEXT_TYPE_DATE;
-        this.messageDate = messageDate;
-    }
+		this.checkList = new RealmList<>();
+		for(UserModel user : message.checkList){
+			this.checkList.add(new RealmUserModel(user));
+		}
 
-    public Integer getCheckCount(){
-        if(checkCount != null && !isChanged){
-            return checkCount;
-        }
+		this.isChanged = message.isChanged;
+	}
 
-        int index = 0;
-        checkList = new RealmList<>();
-        if(messageSender != null && !CCCollectionUtil.isEmpty(checks)){
-            for(RealmUserModel userModel : checks){
-                if(messageSender.key != userModel.key){
-                    checkList.add(userModel);
-                    index++;
-                }
-            }
-        }
-        checkCount = index;
-        isChanged = false;
-        return checkCount;
-    }
+	public RealmMessageModel(String messageDate){
+		this.messageType = WelfareConst.ITEM_TEXT_TYPE_DATE;
+		this.messageDate = messageDate;
+	}
 
-    public List<RealmUserModel> getCheckList(){
-        if(checkList != null){
-            return checkList;
-        }
+	public Integer getCheckCount(){
+		if(checkCount != null && !isChanged){
+			return checkCount;
+		}
 
-        RealmList<RealmUserModel> lstUser = new RealmList<>();
-        if(messageSender != null && !CCCollectionUtil.isEmpty(checks)){
-            for(RealmUserModel userModel : checks){
-                if(messageSender.key != userModel.key){
-                    lstUser.add(userModel);
-                }
-            }
-        }
-        checkList = lstUser;
-        return checkList;
-    }
+		int index = 0;
+		checkList = new RealmList<>();
+		if(messageSender != null && !CCCollectionUtil.isEmpty(checks)){
+			for(RealmUserModel userModel : checks){
+				if(messageSender.key != userModel.key){
+					checkList.add(userModel);
+					index++;
+				}
+			}
+		}
+		checkCount = index;
+		isChanged = false;
+		return checkCount;
+	}
+
+	public List<RealmUserModel> getCheckList(){
+		if(checkList != null){
+			return checkList;
+		}
+
+		RealmList<RealmUserModel> lstUser = new RealmList<>();
+		if(messageSender != null && !CCCollectionUtil.isEmpty(checks)){
+			for(RealmUserModel userModel : checks){
+				if(messageSender.key != userModel.key){
+					lstUser.add(userModel);
+				}
+			}
+		}
+		checkList = lstUser;
+		return checkList;
+	}
 
 }

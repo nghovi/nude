@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -144,6 +145,10 @@ public class UserListFragment extends AbstractMsgFragment implements OnAddUserLi
         requestUpdate(MsConst.API_MESSAGE_CONTACT_UPDATE, jsonObject, true);
     }
 
+    private void log(String msg) {
+        Log.e("UserList", msg);
+    }
+
     @Override
     protected void successUpdate(JSONObject response, String url) {
         if (MsConst.API_MESSAGE_CONTACT_UPDATE.equals(url)) {
@@ -151,6 +156,9 @@ public class UserListFragment extends AbstractMsgFragment implements OnAddUserLi
             try {
                 boardModel = LoganSquare.parse(response.optString("detail"), BoardModel.class);
                 RealmBoardModel realmBoardModel = new RealmBoardModel(boardModel);
+                mRealm.beginTransaction();
+                mRealm.copyToRealmOrUpdate(realmBoardModel);
+                mRealm.commitTransaction();
                 onAddUserSuccessListener.onSuccess(realmBoardModel);
                 onClickBackBtn();
             } catch (IOException e) {
@@ -169,5 +177,4 @@ public class UserListFragment extends AbstractMsgFragment implements OnAddUserLi
         mEdtSearch = null;
         mAdapter = null;
     }
-
 }

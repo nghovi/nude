@@ -48,7 +48,6 @@ public class BoardListFragment extends AbstractMsgFragment implements View.OnCli
 
 	private ListView					lsvBoard;
 	private BoardAdapter				mAdapter;
-	private RealmBoardModel				activeBoard;
 
 	private ImageView					imgUserAvatar;
 	private TextView					txtUserName;
@@ -74,9 +73,6 @@ public class BoardListFragment extends AbstractMsgFragment implements View.OnCli
 	public void onCreate(Bundle savedInstanceState){
 		WelfareActivity.OnDeviceBackButtonClickListener listener = ((WelfareActivity)getActivity()).getOnDeviceBackButtonClickListener();
 		super.onCreate(savedInstanceState);
-		// if(listener != null){
-		// ((WelfareActivity)getActivity()).setOnDeviceBackButtonClickListener(listener);
-		// }
 	}
 
 	@Override
@@ -96,17 +92,17 @@ public class BoardListFragment extends AbstractMsgFragment implements View.OnCli
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id){
-
-				RealmBoardModel boardModel = (RealmBoardModel)parent.getItemAtPosition(position);
-				activeBoard = boardModel;
-				prefAccUtil.set(MsConst.PREF_ACTIVE_BOARD_ID, boardModel.key + "");
+				RealmBoardModel boardModel = mAdapter.getItem(position);
+                log(boardModel.boardName);
+				log("position = " + position);
+				activeBoardId = boardModel.key;
+				prefAccUtil.set(MsConst.PREF_ACTIVE_BOARD_ID, activeBoardId + "");
 				lsvBoard.setItemChecked(position, true);
 				if(onChangedBoardListener != null) onChangedBoardListener.onChangedBoard(boardModel, true);
 			}
 		});
 
-		activeBoard = new RealmBoardModel();
-		activeBoard.key = Integer.parseInt(prefAccUtil.get(MsConst.PREF_ACTIVE_BOARD_ID));
+		activeBoardId = Integer.parseInt(prefAccUtil.get(MsConst.PREF_ACTIVE_BOARD_ID));
 
 		imgUserAvatar = (ImageView)getView().findViewById(R.id.img_id_myAvatar);
 		txtUserName = (TextView)getView().findViewById(R.id.txt_loginUserName);
@@ -131,6 +127,10 @@ public class BoardListFragment extends AbstractMsgFragment implements View.OnCli
 		});
 	}
 
+	private void log(String msg) {
+        Log.e("BoardList", msg);
+    }
+
 	@Override
 	protected void initData(){
 		super.initData();
@@ -140,13 +140,13 @@ public class BoardListFragment extends AbstractMsgFragment implements View.OnCli
 	private void loadBoardList(){
 		RealmResults<RealmBoardModel> boardList = Realm.getDefaultInstance().where(RealmBoardModel.class).findAll();
 		List<RealmBoardModel> boards = new ArrayList<>();
-		for (RealmBoardModel board : boardList) {
+		for(RealmBoardModel board : boardList){
 			boards.add(board);
 		}
 		showBoards(boards);
 	}
 
-	private void showBoards(List<RealmBoardModel> boards) {
+	private void showBoards(List<RealmBoardModel> boards){
 		if(!CCCollectionUtil.isEmpty(boards)){
 			mAdapter = new BoardAdapter(activity, boards, new OnAvatarClickListener() {
 
@@ -158,33 +158,39 @@ public class BoardListFragment extends AbstractMsgFragment implements View.OnCli
 			lsvBoard.setAdapter(mAdapter);
 
 			// set active board
-			if(activeBoard != null && !CCStringUtil.isEmpty(activeBoard.key)){
+			if(activeBoardId != -1){
 				for(int i = 0; i < boards.size(); i++){
 					RealmBoardModel boardModel = boards.get(i);
-					if(activeBoard.key == boardModel.key){
-						activeBoard = boardModel;
+					if(activeBoardId == boardModel.key){
 						lsvBoard.setItemChecked(i, true);
-						if(onChangedBoardListener != null) onChangedBoardListener.onChangedBoard(activeBoard, false);
 						break;
 					}
 				}
-			}else{
+			} else {
 				lsvBoard.setItemChecked(0, true);
-				activeBoard = boards.get(0);
-				prefAccUtil.set(MsConst.PREF_ACTIVE_BOARD_ID, activeBoard.key + "");
+				activeBoardId = boards.get(0).key;
+				prefAccUtil.set(MsConst.PREF_ACTIVE_BOARD_ID, activeBoardId + "");
 				if(onChangedBoardListener != null) onChangedBoardListener.onChangedBoard(boards.get(0), false);
 			}
 			checkUnreadMessage(boards);
 		}
 	}
 
-	public void updateBoards(List<RealmBoardModel> boards) {
-		if (mAdapter == null) {
+	public void updateBoards(List<RealmBoardModel> boards){
+		if(mAdapter == null){
 			showBoards(boards);
-		} else {
+		}else{
 			mAdapter.setBoardList(boards);
+			for(int i = 0; i < boards.size(); i++){
+				RealmBoardModel boardModel = boards.get(i);
+				if(activeBoardId == boardModel.key){
+					lsvBoard.setItemChecked(i, true);
+					break;
+				}
+			}
+			checkUnreadMessage(boards);
 		}
-    }
+	}
 
 	@Override
 	protected void successLoad(JSONObject response, String url){
@@ -203,16 +209,11 @@ public class BoardListFragment extends AbstractMsgFragment implements View.OnCli
 	}
 
 	public void onAddedContactListener(RealmBoardModel boardModel){
-		// int checkedPosition = lsvBoard.getCheckedItemPosition();
-		activeBoard = boardModel;
 		mAdapter.add(boardModel, 0);
 		lsvBoard.setItemChecked(0, true);
-		if(onChangedBoardListener != null) onChangedBoardListener.onChangedBoard(boardModel, true);
+		activeBoardId = boardModel.key;
+		preferencesAccountUtil.set(MsConst.PREF_ACTIVE_BOARD_ID, activeBoardId + "");
 	}
-
-	// public void onReceiveMessage(MessageContentModel messageModel){
-	// mAdapter.addUnreadMessage(messageModel);
-	// }
 
 	private void refreshBoardList(List<RealmBoardModel> lstBoard){
 		// check avatar path
@@ -239,7 +240,7 @@ public class BoardListFragment extends AbstractMsgFragment implements View.OnCli
 			boolean isActive = false;
 			for(int i = 0; i < lstBoard.size(); i++){
 				RealmBoardModel boardModel = lstBoard.get(i);
-				if(boardModel.key == activeBoard.key){
+				if(boardModel.key == activeBoardId){
 					lsvBoard.setItemChecked(i, true);
 					isActive = true;
 					break;
@@ -267,8 +268,8 @@ public class BoardListFragment extends AbstractMsgFragment implements View.OnCli
 		return onRefreshBoardListListener;
 	}
 
-	public void setActiveBoard(RealmBoardModel activeBoard){
-		this.activeBoard = activeBoard;
+	public void setActiveBoard(int activeBoardId){
+		this.activeBoardId = activeBoardId;
 	}
 
 	@Override
@@ -281,7 +282,6 @@ public class BoardListFragment extends AbstractMsgFragment implements View.OnCli
 		super.onDestroy();
 		lsvBoard = null;
 		mAdapter = null;
-		activeBoard = null;
 
 		imgUserAvatar = null;
 		txtUserName = null;

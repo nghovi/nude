@@ -64,5 +64,4 @@ public class MsConst{
 
 	public static final String PREF_LOAD_MESSAGE_FIRST_TIME = "PREF_LOAD_MESSAGE_FIRST_TIME";
 	public static final String PREF_LAST_MESSAGE_KEY = "PREF_LAST_MESSAGE_KEY";
-	public static final String PREF_LAST_MESSAGE_UPDATE_DATE = "PREF_LAST_MESSAGE_UPDATE_DATE";
 }

@@ -62,6 +62,10 @@ public class BoardAdapter extends ArrayAdapter<RealmBoardModel>{
 		notifyDataSetChanged();
 	}
 
+	public RealmBoardModel getItem(int position) {
+		return boardList.get(position);
+	}
+
 	public View getView(int position, View convertView, ViewGroup parent){
 
 		final RealmBoardModel model = this.boardList.get(position);
@@ -104,6 +108,11 @@ public class BoardAdapter extends ArrayAdapter<RealmBoardModel>{
 	public void add(RealmBoardModel item, int position){
 		this.boardList.add(position, item);
 		this.notifyDataSetChanged();
+	}
+
+	@Override
+	public int getCount() {
+		return boardList.size();
 	}
 
 	public void addUnreadMessage(MessageContentModel messageModel){

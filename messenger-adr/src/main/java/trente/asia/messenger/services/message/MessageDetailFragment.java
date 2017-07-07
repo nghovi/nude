@@ -32,12 +32,9 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Timer;
-import java.util.TimerTask;
 
-import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
-import asia.chiase.core.util.CCNumberUtil;
 import asia.chiase.core.util.CCStringUtil;
 import io.realm.Realm;
 import trente.asia.android.util.AndroidUtil;
@@ -53,8 +50,6 @@ import trente.asia.messenger.commons.dialog.MsChiaseDialog;
 import trente.asia.messenger.commons.utils.MsUtils;
 import trente.asia.messenger.fragment.AbstractMsgFragment;
 import trente.asia.messenger.services.message.listener.OnAddCommentListener;
-import trente.asia.messenger.services.message.model.BoardModel;
-import trente.asia.messenger.services.message.model.MessageContentModel;
 import trente.asia.messenger.services.message.model.RealmBoardModel;
 import trente.asia.messenger.services.message.model.RealmCommentModel;
 import trente.asia.messenger.services.message.model.RealmMessageModel;
@@ -65,7 +60,6 @@ import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.dialog.WfDialog;
 import trente.asia.welfare.adr.dialog.WfProfileDialog;
 import trente.asia.welfare.adr.models.CommentModel;
-import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WelfareUtil;
 import trente.asia.welfare.adr.utils.WfPicassoHelper;
 
@@ -191,15 +185,22 @@ public class MessageDetailFragment extends AbstractMsgFragment implements View.O
 	}
 
 	@Override
-	protected void updateComments() {
-		super.updateComments();
-		loadNewComment();
+	protected void updateDetailMessage() {
+		super.updateDetailMessage();
+		refreshMessage();
 	}
 
 	@Override
 	public void onResume(){
 		super.onResume();
 		activeMessageId = activeMessage.key;
+		startTimer();
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+		stopTimer();
 	}
 
 	private void loadMessageDetail(){
@@ -284,12 +285,13 @@ public class MessageDetailFragment extends AbstractMsgFragment implements View.O
 		}
 	}
 
-	public void loadNewComment(){
+	public void refreshMessage(){
 		activeMessage = mRealm.where(RealmMessageModel.class).equalTo("key", activeMessageId).findFirst();
 		for(RealmCommentModel comment : activeMessage.comments){
 			addComment(comment);
 		}
 		mTxtComment.setText(String.valueOf(activeMessage.comments.size()));
+		mTxtCheck.setText(String.valueOf(activeMessage.checks.size()));
 	}
 
 	private void addComment(final RealmCommentModel commentModel){
