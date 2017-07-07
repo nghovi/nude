@@ -700,7 +700,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 
 		JSONObject jsonObject = new JSONObject();
 		try{
-			jsonObject.put("boardId", activeBoard.key);
+			jsonObject.put("boardId", activeBoardId);
 			if(WelfareConst.ITEM_TEXT_TYPE_LIKE.equals(messageType)){
 				jsonObject.put("execType", WelfareConst.ITEM_TEXT_TYPE_LIKE);
 				jsonObject.put("messageContent", EmotionConst.EMO_LIKE);
