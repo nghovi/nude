@@ -204,14 +204,22 @@ public class MypageFragment extends AbstractTCFragment{
 	private void requestMypageInfoSuccess(JSONObject response){
 		mypageModel = CCJsonUtil.convertToModel(response.toString(), MypageModel.class);
 		String postRank = getRank(mypageModel.pointPost, CCStringUtil.toString(mypageModel.seqPost));
-		String nextPostRank = String.valueOf(Integer.valueOf(mypageModel.seqPost) - 1);
 		txtPostRank.setText(getString(R.string.fragment_mypage_rank_post, postRank));
-		txtPostRankNext.setText(getString(R.string.fragment_mypage_rank_next_post, nextPostRank, String.valueOf(Math.abs(mypageModel.archivePost))));
+		if(mypageModel.seqPost == 1){
+			txtPostRankNext.setText(getString(R.string.rank_first_congrats));
+		}else{
+			String nextPostRank = String.valueOf(Integer.valueOf(mypageModel.seqPost) - 1);
+			txtPostRankNext.setText(getString(R.string.fragment_mypage_rank_next_post, nextPostRank, String.valueOf(Math.abs(mypageModel.archivePost))));
+		}
 
 		String receiveRank = getRank(mypageModel.pointReceive, CCStringUtil.toString(mypageModel.seqRecieve));
-		String nextReceiveRank = String.valueOf(Integer.valueOf(mypageModel.seqRecieve) - 1);
 		txtReceiveRank.setText(getString(R.string.fragment_mypage_rank_receive, receiveRank));
-		txtReceiveRankNext.setText(getString(R.string.fragment_mypage_rank_next_receive, nextReceiveRank, String.valueOf(Math.abs(mypageModel.archiveReceive))));
+		if(mypageModel.seqRecieve == 1){
+			txtReceiveRankNext.setText(getString(R.string.rank_first_congrats));
+		}else{
+			String nextReceiveRank = String.valueOf(Integer.valueOf(mypageModel.seqRecieve) - 1);
+			txtReceiveRankNext.setText(getString(R.string.fragment_mypage_rank_next_receive, nextReceiveRank, String.valueOf(Math.abs(mypageModel.archiveReceive))));
+		}
 
 		WfPicassoHelper.loadImageWithDefaultIcon(activity, host, imgAvatar, myself.avatarPath, R.drawable.wf_profile);
 		setRankStage(imgRankStage, mypageModel.stageNo);
