@@ -46,7 +46,6 @@
 
 
         <LinearLayout
-            android:id="@+id/item_report_follower_info_lnr_comment"
             style="@style/cs_common_wrap"
             android:layout_marginLeft="@dimen/margin_4dp"
             android:gravity="center_vertical"
@@ -67,7 +66,6 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/item_report_follower_info_lnr_file"
             style="@style/cs_common_wrap"
             android:layout_marginLeft="@dimen/margin_4dp"
             android:gravity="center_vertical"

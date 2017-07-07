@@ -1,12 +1,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/cs_work_background"
-              android:gravity="center_vertical"
-              android:orientation="vertical"
-              android:padding="0dp">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/cs_work_background"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    android:padding="0dp">
 
-    <include layout="@layout/view_common_header"/>
+    <include layout="@layout/view_common_header" />
 
     <ScrollView
         android:id="@+id/fragment_report_edit_scrollview"
@@ -30,12 +30,11 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    >
+                    android:orientation="vertical">
 
                     <include
                         android:id="@+id/fragment_report_edit_spn"
-                        layout="@layout/view_wf_spinner"/>
+                        layout="@layout/view_wf_spinner" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -46,24 +45,23 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical">
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
                         <TextView
                             style="@style/dr_text_title_bold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="@dimen/wf_margin_10"
-                            android:text="@string/dlr_content"
                             android:layout_marginTop="@dimen/wf_margin_10"
-                            android:layout_weight="1"/>
+                            android:layout_weight="1"
+                            android:text="@string/dlr_content" />
 
                         <TextView
                             android:id="@+id/fragment_report_edit_date"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/chiase_black"
-                            />
+                            android:textColor="@color/chiase_black" />
 
                     </LinearLayout>
 
@@ -74,7 +72,7 @@
                         android:layout_marginBottom="@dimen/margin_10dp"
                         android:allowUndo="true"
                         android:background="@drawable/dr_background_gray_border_padding"
-                        android:lines="10"/>
+                        android:lines="10" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -91,7 +89,7 @@
                     style="@style/dr_text_title_bold"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/wf_margin_10"/>
+                    android:layout_marginBottom="@dimen/wf_margin_10" />
 
                 <EditText
                     android:id="@+id/fragment_report_edit_edt_custom_content"
@@ -100,33 +98,30 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/dr_background_gray_border_padding"
                     android:lines="10"
-                    android:minLines="2"/>
+                    android:minLines="2" />
 
             </LinearLayout>
-
-            <include layout="@layout/view_kpi"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_16dp"
                 android:gravity="center_vertical|center_horizontal"
-                android:orientation="horizontal"
-                >
+                android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/fragment_report_edit_btn_save"
                     style="@style/wl_common_button_small"
                     android:layout_marginRight="10dp"
                     android:layout_weight="1"
-                    android:text="@string/dlr_save"/>
+                    android:text="@string/dlr_save" />
 
                 <Button
                     android:id="@+id/fragment_report_edit_btn_send"
                     style="@style/wl_common_button_small"
                     android:layout_marginLeft="10dp"
                     android:layout_weight="1"
-                    android:text="@string/dlr_send"/>
+                    android:text="@string/dlr_send" />
 
             </LinearLayout>
 

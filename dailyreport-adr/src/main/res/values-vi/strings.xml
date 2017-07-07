@@ -16,7 +16,6 @@
     <string name="dr_report_comment_title">Bình luận</string>
     <string name="spinner_name_template">Mẫu</string>
     <string name="spinner_name_dept">Phòng ban</string>
-    <string name="spinner_name_user">Người dùng</string>
 
     <string name="fragment_setting_title">Cài đặt</string>
     <string name="fragment_title_empty"></string>
@@ -40,7 +39,6 @@
     <string name="dlr_content">Báo cáo hàng ngày</string>
 
     <string name="dlr_add_kpi">Thêm</string>
-    <string name="dlr_unit">Đơn vị</string>
 
     <string name="dlr_saturday">T7</string>
     <string name="dlr_sunday">CN</string>
@@ -58,43 +56,15 @@
     <string name="dlr_goal">Giá trị mục tiêu</string>
     <string name="dlr_sum">Lũy kế</string>
     <string name="dlr_avg">Bình quân</string>
-    <string name="dlr_monthly_goal">Mục tiêu tháng</string>
-    <string name="dlr_input_rule">Giải thích</string>
-    <string name="dlr_clear">Xóa</string>
-    <string name="dlr_done">Hoàn thành</string>
-    <string name="dlr_delete">Xóa</string>
-    <string name="dlr_archievement">Tỷ lệ đạt</string>
-
-    <string name="dr_report_kpi_item_required">Hãy tạo hạng mục KPI</string>
 
     <string name="dr_comment_edittext_hint">Viết bình luận</string>
     <string name="spinner_name_report_user">Người báo cáo</string>
     <string name="spinner_name_action_user">Người hoạt động</string>
 
     <string name="dr_activity_item_desc">Báo cáo hàng ngày: %1$s Báo cáo từ %2$s</string>
-    <string name="dlg_monthly_goal_title">Nhập mục tiêu tháng</string>
-    <string name="dlg_add_actual_plan_title">Nhập kế hoạch hành động</string>
-    <string name="dr_item_name">Tên hạng mục</string>
-    <string name="dlr_monthly_goal_achievement">Trạng thái đạt mục tiêu tháng</string>
-    <string name="dlr_now">Lũy kế</string>
-    <string name="dlr_max_entries">Không thể thêm nhiều hơn 10 hạng mục</string>
-    <string name="dlr_action_plan">Dự định</string>
-    <string name="dr_action_name">Kế hoạch hành động</string>
-    <string name="dlr_action_actual">Thực tế</string>
-    <string name="dlr_monthly_goal_title">Mục tiêu tháng</string>
-    <string name="spn_goal_title">Mục tiêu</string>
     <string name="dr_item">Mục tiêu</string>
-    <string name="kpi_empty">Chưa có mục tiêu \n Hãy liên lạc đến người quản lý!</string>
-    <string name="kpi_graph_byuser">Biểu đồ (người dùng)</string>
-    <string name="kpi_graph_bymonth">Biểu đồ (tháng)</string>
-    <string name="msg_msg_invalid_empty">Bình luận trong khoảng từ 1 đến 1000 ký tự</string>
-    <string name="msg_msg_report_content_null">Báo cáo hàng ngày trong khoảng từ 3 đến 10000 ký tự</string>
-    <string name="msg_msg_report_custome_null">%1$s : trong khoảng từ 3 đến 10000 ký tự</string>
 
     <!--Notifications-->
-    <string name="FM_DR_001">%1$s đã tạo báo cáo hàng ngày mới</string>
-    <string name="FM_DR_002">Có %1$s lượt thích mới</string>
-    <string name="FM_DR_003">Có %1$s bình luận mới</string>
     <string name="header_calendar_this_week">Tuần này</string>
     <string name="goal_period">Title1</string>
     <string name="personal_goal">title2</string>
@@ -106,7 +76,6 @@
     <string name="fragment_actual_plan_title">actual-plan-title</string>
     <string name="fragment_group_actual_title">Group Actual</string>
     <string name="fragment_group_actual_list_title">GroupActualList</string>
-    <string name="fragment_group_actual_list">Group List</string>
     <string name="group_actual_list_goal">Group goal list</string>
     <string name="fragment_group_actual_group_goal">Group goal</string>
     <string name="fragmen_group_actual_needed_amount">Amount you need to reach the goal</string>
@@ -114,7 +83,6 @@
     <string name="achieve_dialog_content">Congratulations!!\\nYou have achieved your personal goal.\\nWonderfull!!\\nContinue the good work!</string>
     <string name="achieve_warning_dialog_title">Today is checkpoint day</string>
     <string name="achieve_warning_dialog_content">You have not achieved KPI.\\nPlease rethink your action plans.</string>
-    <string name="user_has_no_action_plan_setup">No action plan set up</string>
     <string name="today_goal">Today\'s goal</string>
     <string name="supplement_memo">Supplement memo</string>
     <string name="performance_in_month">Performance in %1$s</string>

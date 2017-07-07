@@ -30,9 +30,6 @@ import trente.asia.dailyreport.DRConst;
 import trente.asia.dailyreport.R;
 import trente.asia.dailyreport.dialogs.DRDialog;
 import trente.asia.dailyreport.fragments.AbstractDRFragment;
-import trente.asia.dailyreport.services.report.model.ActionEntry;
-import trente.asia.dailyreport.services.report.model.GoalEntry;
-import trente.asia.dailyreport.services.report.model.Kpi;
 import trente.asia.dailyreport.services.report.model.ReportModel;
 import trente.asia.dailyreport.services.report.model.ReportTemplate;
 import trente.asia.dailyreport.utils.DRUtil;
@@ -52,14 +49,9 @@ public class ReportEditFragment extends AbstractDRFragment implements WfSpinner.
 	private ReportModel				reportModel;
 	private EditText				edtContent;
 	private TextView				txtDate;
-	private LayoutInflater			inflater;
 	private ScrollView				scrollView;
-	private List<ActionEntry>		actionEntries			= new ArrayList<>();
-	private List<Kpi>				kpis					= new ArrayList<>();
 
 	private EditText				edtCustomContent;
-	private ReportModel				reportModelRef;
-	private Button					btnCopyActionEntries;
 
 	@Override
 	public int getFragmentLayoutId(){
@@ -87,31 +79,6 @@ public class ReportEditFragment extends AbstractDRFragment implements WfSpinner.
 		edtCustomContent = (EditText)getView().findViewById(R.id.fragment_report_edit_edt_custom_content);
 		txtDate = (TextView)getView().findViewById(R.id.fragment_report_edit_date);
 		scrollView = (ScrollView)getView().findViewById(R.id.fragment_report_edit_scrollview);
-		inflater = LayoutInflater.from(activity);
-		// TextWatcher textWatcher = new TextWatcher() {
-		//
-		// @Override
-		// public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2){
-		//
-		// }
-		//
-		// @Override
-		// public void onTextChanged(CharSequence charSequence, int i, int i1, int i2){
-		//
-		// }
-		//
-		// @Override
-		// public void afterTextChanged(Editable editable){
-		// if(CCStringUtil.isEmpty(edtContent.getText().toString()) || (!CCStringUtil.isEmpty(reportModel.reportCustomTitle) &&
-		// CCStringUtil.isEmpty(edtCustomContent.getText().toString()))){
-		// btnSave.setEnabled(false);
-		// btnSend.setEnabled(false);
-		// }else{
-		// btnSave.setEnabled(true);
-		// btnSend.setEnabled(true);
-		// }
-		// }
-		// };
 
 		// edtContent.addTextChangedListener(textWatcher);
 		View.OnTouchListener onTouchListener = new View.OnTouchListener() {
@@ -179,8 +146,6 @@ public class ReportEditFragment extends AbstractDRFragment implements WfSpinner.
 		// alertDialog.show();
 		// }else{
 		String reportUserKey = reportModel.reportUser == null ? prefAccUtil.getUserPref().key : reportModel.reportUser.key;
-		String actionEntriesListString = getActionEntriesListString();
-		String goalEntriesString = getGoalEntriesListString();
 		String reportTemplate = selectedReportTemplate == null || selectedReportTemplate.key.equals(ReportTemplate.TEMPLATE_NONE_KEY) ? null : selectedReportTemplate.key;
 
 		JSONObject jsonObject = new JSONObject();
@@ -195,8 +160,6 @@ public class ReportEditFragment extends AbstractDRFragment implements WfSpinner.
 			jsonObject.put("reportUserKey", reportUserKey);
 			jsonObject.put("reportStatus", reportStatus);
 			jsonObject.put("reportTemplate", reportTemplate);
-			jsonObject.put("actionEntriesString", actionEntriesListString);
-			jsonObject.put("goalEntiriesString", goalEntriesString);
 		}catch(JSONException ex){
 			ex.printStackTrace();
 		}
@@ -220,12 +183,7 @@ public class ReportEditFragment extends AbstractDRFragment implements WfSpinner.
 				report.reportUser = prefAccUtil.getUserPref();
 			}
 			reportModel = report;
-
-			reportModelRef = CCJsonUtil.convertToModel(response.optString("detailRef"), ReportModel.class);
-
 			reportTemplates = CCJsonUtil.convertToModelList(response.optString("templateList"), ReportTemplate.class);
-			kpis = CCJsonUtil.convertToModelList(response.optString("kpis"), Kpi.class);
-
 			filterTemplateByStatus();
 			buildReportDetail();
 		}
@@ -270,8 +228,6 @@ public class ReportEditFragment extends AbstractDRFragment implements WfSpinner.
 		});
 
 		buildReportCustom();
-
-		buildKPI();
 	}
 
 	private void buildReportCustom(){
@@ -301,267 +257,6 @@ public class ReportEditFragment extends AbstractDRFragment implements WfSpinner.
 			}
 		}
 		return 0;
-	}
-
-	private void buildKPI(){
-		buildMonthlyGoals();
-		buildActionPlans();
-	}
-
-	private void buildMonthlyGoals(){
-		if(reportModel.goalEntries.size() > 0){
-			LinearLayout lnrGoalEntriesContainer = (LinearLayout)getView().findViewById(R.id.view_kpi_lnr_monthly);
-			buildGoalEntries(lnrGoalEntriesContainer);
-		}else{
-			LinearLayout lnrMonthlyGoal = (LinearLayout)getView().findViewById(R.id.view_kpi_lnr_monthly_goal);
-			lnrMonthlyGoal.setVisibility(View.GONE);
-		}
-	}
-
-	private void buildActionPlans(){
-		if(kpis.size() > 0){
-			final LinearLayout lnrActionEntriesHeader = (LinearLayout)getView().findViewById(R.id.view_kpi_lnr_actual_plan_header);
-			final LinearLayout actionEntriesContainer = (LinearLayout)getView().findViewById(R.id.view_kpi_lnr_actual_plan);
-			Button btnAddActualPlan = (Button)getView().findViewById(R.id.view_kpi_btn_add);
-			btnCopyActionEntries = (Button)getView().findViewById(R.id.view_kpi_btn_copy);
-
-			if(reportModel.actionEntries.size() > 0){
-				buildOldActionEntries(actionEntriesContainer, lnrActionEntriesHeader);
-			}else{
-				// Now always show header
-				// lnrActionEntriesHeader.setVisibility(View.GONE);
-			}
-
-			btnAddActualPlan.setOnClickListener(new View.OnClickListener() {
-
-				@Override
-				public void onClick(View view){
-					if(CCCollectionUtil.isEmpty(kpis)){
-						alertDialog.setMessage(getString(R.string.dr_report_kpi_item_required));
-						alertDialog.show();
-					}else{
-						if(actionEntries.size() >= ACTION_ENTRIES_SIZE_MAX){
-							showDialogMaxEntriesWarning();
-						}else{
-							ActionEntry actionEntry = new ActionEntry();
-							actionEntry.tmpIdx = actionEntries.size();
-							showAddActionEntryDialog(actionEntry, actionEntriesContainer, lnrActionEntriesHeader, true);
-						}
-					}
-				}
-			});
-
-			btnCopyActionEntries.setOnClickListener(new View.OnClickListener() {
-
-				@Override
-				public void onClick(View view){
-					copyActionPlans(actionEntriesContainer, lnrActionEntriesHeader);
-				}
-			});
-
-			updateBtnCopyVisibility();
-		}else{
-			LinearLayout lnrActionPlan = (LinearLayout)getView().findViewById(R.id.view_kpi_lnr_action_plan);
-			lnrActionPlan.setVisibility(View.GONE);
-		}
-	}
-
-	private void updateBtnCopyVisibility(){
-		if(reportModelRef != null && reportModelRef.actionEntries.size() > 0 && actionEntries.size() < ACTION_ENTRIES_SIZE_MAX){
-			btnCopyActionEntries.setVisibility(View.VISIBLE);
-		}else{
-			btnCopyActionEntries.setVisibility(View.GONE);
-		}
-	}
-
-	private void copyActionPlans(LinearLayout actionEntriesContainer, LinearLayout lnrActionEntriesHeader){
-		for(ActionEntry actionEntry : reportModelRef.actionEntries){
-			if(actionEntries.size() >= ACTION_ENTRIES_SIZE_MAX){
-				return;
-			}
-			ActionEntry clonedActionEntry = ActionEntry.copyFrom(actionEntry);
-			addActionPlan(clonedActionEntry, actionEntriesContainer, lnrActionEntriesHeader);
-		}
-	}
-
-	private void buildGoalEntries(LinearLayout container){
-		container.removeAllViews();
-		for(int i = 0; i < reportModel.goalEntries.size(); i++){
-			addGoalEntry(reportModel.goalEntries.get(i), container, i);
-		}
-	}
-
-	private void buildOldActionEntries(LinearLayout container, LinearLayout header){
-		container.removeAllViews();
-		for(ActionEntry actionEntry : reportModel.actionEntries){
-			addActionPlan(actionEntry, container, header);
-		}
-	}
-
-	private void showAddActionEntryDialog(ActionEntry actionEntry, final LinearLayout lnrContainer, final LinearLayout header, final boolean isNew){
-		DRDialog.OnActionPlanCreationListener listener = new DRDialog.OnActionPlanCreationListener() {
-
-			@Override
-			public void onDone(ActionEntry actualPlan){
-				activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-				if(isNew){
-					addActionPlan(actualPlan, lnrContainer, header);
-				}else{
-					updateActualKpi(lnrContainer, actualPlan);
-				}
-				scrollView.post(new Runnable() {
-
-					@Override
-					public void run(){
-						scrollView.fullScroll(ScrollView.FOCUS_DOWN);
-					}
-				});
-			}
-
-			@Override
-			public void onDelete(ActionEntry actionEntry){
-				deleteActualPlan(lnrContainer, actionEntry, header);
-			}
-		};
-		DRDialog dlgAddActualPlan = new DRDialog(activity);
-		dlgAddActualPlan.setDialogAddActionEntry(kpis, actionEntry, listener, isNew).show();
-	}
-
-	private void updateActualKpi(final LinearLayout lnrContainer, ActionEntry actionEntry){
-		View itemView = lnrContainer.getChildAt(getActionEntryIdx(actionEntry));
-		buildActionPlanItemLayout(itemView, actionEntry);
-	}
-
-	private int getActionEntryIdx(ActionEntry actionEntry){
-		for(int i = 0; i < actionEntries.size(); i++){
-			if(actionEntries.get(i).tmpIdx == actionEntry.tmpIdx){
-				return i;
-			}
-		}
-		return -1;
-	}
-
-	public static void buildActionPlanItemLayout(View itemView, final ActionEntry actionEntry){
-		TextView txtItem = (TextView)itemView.findViewById(R.id.item_kpi_name);
-		// TextView txtAvg = (TextView)itemView.findViewById(R.id.item_kpi_avg);
-		TextView txtPlan = (TextView)itemView.findViewById(R.id.item_kpi_edt_plan);
-		TextView txtActual = (TextView)itemView.findViewById(R.id.item_kpi_edt_actual);
-
-		txtItem.setText(actionEntry.actionName);
-		if(actionEntry.actionActual.contains(".") || actionEntry.actionPlan.contains(".")){// ITEM UNIT TIME
-			txtPlan.setText(actionEntry.actionPlan);
-			txtActual.setText(actionEntry.actionActual);
-		}else{
-			txtPlan.setText(WelfareUtil.formatAmount(actionEntry.actionPlan));
-			txtActual.setText(WelfareUtil.formatAmount(actionEntry.actionActual));
-		}
-	}
-
-	private void deleteActualPlan(LinearLayout container, ActionEntry actionEntry, LinearLayout header){
-		int actionEntryIdx = getActionEntryIdx(actionEntry);
-		if(actionEntries.size() > 0){
-			actionEntries.remove(actionEntryIdx);
-			container.removeViewAt(actionEntryIdx);
-		}
-
-		if(actionEntries.size() <= 0){
-			header.setVisibility(View.GONE);
-		}
-		updateBtnCopyVisibility();
-	}
-
-	private void addGoalEntry(final GoalEntry goalEntry, final LinearLayout lnrContainer, final int index){
-		View itemView = inflater.inflate(R.layout.item_goal_entry, null);
-
-		itemView.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View view){
-				showGoalEntriesDialog(goalEntry, lnrContainer, index);
-			}
-		});
-		buildGoalEntryItemLayout(itemView, goalEntry);
-		lnrContainer.addView(itemView);
-	}
-
-	private void buildGoalEntryItemLayout(View itemView, GoalEntry goalEntry){
-		TextView txtItem = (TextView)itemView.findViewById(R.id.item_kpi_name);
-		TextView txtGoal = (TextView)itemView.findViewById(R.id.item_kpi_goal);
-		TextView txtSum = (TextView)itemView.findViewById(R.id.item_kpi_sum);
-		TextView txtPlan = (TextView)itemView.findViewById(R.id.item_kpi_month_txt_plan);
-		TextView txtActual = (TextView)itemView.findViewById(R.id.item_kpi_month_txt_actual);
-
-		txtItem.setText(goalEntry.goalName);
-
-		if(Kpi.KPI_UNIT_TIME.equals(goalEntry.goalUnit)){// ITEM UNIT TIME
-			txtGoal.setText(goalEntry.goalValue);
-			txtSum.setText(goalEntry.actualSum);
-			txtPlan.setText(goalEntry.goalPlan);
-			txtActual.setText(goalEntry.goalActual);
-		}else{
-			txtGoal.setText(WelfareUtil.formatAmount(goalEntry.goalValue));
-			txtSum.setText(WelfareUtil.formatAmount(goalEntry.actualSum));
-			txtPlan.setText(WelfareUtil.formatAmount(goalEntry.goalPlan));
-			txtActual.setText(WelfareUtil.formatAmount(goalEntry.goalActual));
-		}
-
-	}
-
-	private void showGoalEntriesDialog(final GoalEntry goalEntry, final LinearLayout lnrConainer, final int index){
-		DRDialog.OnGoalEntryUpdateListener listener = new DRDialog.OnGoalEntryUpdateListener() {
-
-			@Override
-			public void onDone(GoalEntry goalEntry){
-				updateGoalEntriesLayout(lnrConainer, goalEntry, index);
-			}
-
-			@Override
-			public void onClear(GoalEntry kpi){
-				updateGoalEntriesLayout(lnrConainer, goalEntry, index);
-			}
-		};
-		final DRDialog dlgMonthlyKpiUpdate = new DRDialog(activity);
-		dlgMonthlyKpiUpdate.setDialogGoalEntries(goalEntry, listener).show();
-	}
-
-	private void updateGoalEntriesLayout(LinearLayout lnrContainer, GoalEntry goalEntry, int index){
-		View itemView = lnrContainer.getChildAt(index);
-		buildGoalEntryItemLayout(itemView, goalEntry);
-	}
-
-	private void addActionPlan(final ActionEntry actionEntry, final LinearLayout lnrConainer, final LinearLayout header){
-		View itemView = inflater.inflate(R.layout.item_action_entry, null);
-		actionEntries.add(actionEntry);
-		actionEntry.tmpIdx = actionEntries.size();
-		itemView.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View view){
-				showAddActionEntryDialog(actionEntry, lnrConainer, header, false);
-			}
-		});
-		buildActionPlanItemLayout(itemView, actionEntry);
-		lnrConainer.addView(itemView);
-		header.setVisibility(View.VISIBLE);
-		updateBtnCopyVisibility();
-	}
-
-	private void showDialogMaxEntriesWarning(){
-		DRDialog dlgMaxEntries = new DRDialog(activity);
-		dlgMaxEntries.setDialogConfirm(getString(R.string.dlr_max_entries), getString(android.R.string.ok), null, null, null).show();
-	}
-
-	public String getActionEntriesListString(){
-		Gson gson = new Gson();
-		for(ActionEntry actionEntry : actionEntries){
-			actionEntry.kpiItem = actionEntry.itemId;
-		}
-		return gson.toJson(actionEntries);
-	}
-
-	public String getGoalEntriesListString(){
-		Gson gson = new Gson();
-		return gson.toJson(reportModel.goalEntries);
 	}
 
 	private ReportTemplate getSelectedReportTemplate(){
@@ -631,7 +326,6 @@ public class ReportEditFragment extends AbstractDRFragment implements WfSpinner.
 	@Override
 	public void onDestroy(){
 		super.onDestroy();
-		btnCopyActionEntries = null;
 		edtContent = null;
 		edtCustomContent = null;
 		txtDate = null;

@@ -23,8 +23,6 @@ public class ReportModel{
 	public List<DRCheckModel>	checks;
 	public String				reportTemplate;
 	public Holiday				holiday;
-	public List<GoalEntry>		goalEntries;
-	public List<ActionEntry>	actionEntries;
 	public String				reportCustom;
 	public String				reportCustomTitle;
 	public String				workingSymbol;

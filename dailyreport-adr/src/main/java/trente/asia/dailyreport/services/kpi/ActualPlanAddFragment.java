@@ -37,7 +37,6 @@ import trente.asia.dailyreport.services.kpi.view.CalendarFragment;
 import trente.asia.dailyreport.services.kpi.view.CalendarPagerAdapter;
 import trente.asia.dailyreport.services.kpi.view.KpiCalendarView;
 import trente.asia.dailyreport.services.report.ReportEditFragment;
-import trente.asia.dailyreport.services.report.model.ActionEntry;
 import trente.asia.dailyreport.services.report.model.ReportModel;
 import trente.asia.dailyreport.services.report.view.DRCalendarView;
 import trente.asia.dailyreport.utils.DRUtil;
