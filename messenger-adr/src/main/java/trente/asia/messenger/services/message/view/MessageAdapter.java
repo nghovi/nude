@@ -128,17 +128,17 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 			});
 
 			if(!WelfareConst.ITEM_TEXT_TYPE_LIKE.equals(item.messageType) && !WelfareConst.ITEM_TEXT_TYPE_STAMP.equals(item.messageType)){
-				// if(item.getCheckCount().compareTo(CCConst.ZERO) > 0){
-				// lnrCheck.setOnClickListener(new View.OnClickListener() {
-				//
-				// @Override
-				// public void onClick(View v){
-				// if(itemMsgClickListener != null) itemMsgClickListener.onItemCheckClickListener(item);
-				// }
-				// });
-				// }else{
-				// lnrCheck.setOnClickListener(null);
-				// }
+				if(item.checks.size() > 0){
+					lnrCheck.setOnClickListener(new View.OnClickListener() {
+
+						@Override
+						public void onClick(View v){
+							if(itemMsgClickListener != null) itemMsgClickListener.onItemCheckClickListener(item);
+						}
+					});
+				}else{
+					lnrCheck.setOnClickListener(null);
+				}
 			}
 		}
 	}

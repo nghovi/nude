@@ -797,7 +797,6 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 			mRealm.commitTransaction();
 		}else if(MsConst.API_MESSAGE_NOTE_UPDATE.equals(url)){
 			noteView.changeMode(false);
-			// loadMessageLatest();
 		}else{
 			super.successUpdate(response, url);
 		}
@@ -885,7 +884,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 	@Override
 	public void onItemCheckClickListener(RealmMessageModel item){
 		if(!CCCollectionUtil.isEmpty(item.checks)){
-			mDlgCheckUser.updateCheckUserList(item.getCheckList());
+			mDlgCheckUser.updateCheckUserList(item.checks);
 			mDlgCheckUser.show();
 		}
 	}

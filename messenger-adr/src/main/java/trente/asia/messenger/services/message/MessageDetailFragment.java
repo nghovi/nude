@@ -207,8 +207,15 @@ public class MessageDetailFragment extends AbstractMsgFragment implements View.O
 		if(activeMessage.comments == null){
 			return;
 		}
-		mTxtComment.setText(activeMessage.comments.size() + "");
-		mTxtCheck.setText(activeMessage.checks.size() + "");
+		lnrCheck.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				mDlgCheckUser.updateCheckUserList(activeMessage.checks);
+				mDlgCheckUser.show();
+			}
+		});
+		mTxtComment.setText(String.valueOf(activeMessage.comments.size()));
+		mTxtCheck.setText(String.valueOf(activeMessage.checks.size()));
 		if(!CCStringUtil.isEmpty(activeMessage.messageSender.avatarPath)){
 			WfPicassoHelper.loadImage(activity, host + activeMessage.messageSender.avatarPath, mImgAvatar, null);
 		}
@@ -491,7 +498,6 @@ public class MessageDetailFragment extends AbstractMsgFragment implements View.O
 	}
 
 	private void startPlay(String videoPath){
-		Log.e("MessageDetail", "video path = " + videoPath);
 		mVideoView.setVideoPath(videoPath);
 		mVideoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
 
