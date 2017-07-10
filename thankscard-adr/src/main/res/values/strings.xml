@@ -132,4 +132,18 @@
     <string name="fragment_mypage_rank_next_receive">%2$spt needed to rank %1$s</string>
     <string name="fragment_card_detail_from">From:</string>
     <string name="rank_first_congrats">Congratulations！☆</string>
+    <string name="tc_stage_information">Stage information</string>
+    <string name="tc_stage_infor_explain">You get 1 point every time you send/receive a card. The more points you have the higher the stage you are on, and the number of card and decoration types you can use will also increase accordingly. Let\'s climb the stages and send out even more wonderful cards.</string>
+    <string name="tc_rank_gold">Gold</string>
+    <string name="tc_rank_silver">Silver</string>
+    <string name="tc_rank_bronze">Bronze</string>
+    <string name="tc_rank_regular">Regular</string>
+    <string name="tc_point_gold">%1$spt</string>
+    <string name="tc_point_silver">%1$spt</string>
+    <string name="tc_point_bronze">%1$spt</string>
+    <string name="tc_point_regular">0pt</string>
+    <string name="tc_explain_gold">Сard, sticker types increase</string>
+    <string name="tc_explain_silver">Sticker types increase</string>
+    <string name="tc_explain_bronze">You can use photos and stickers to decorate your cards</string>
+    <string name="tc_explain_regular">You can use cards to send your messages</string>
 </resources>

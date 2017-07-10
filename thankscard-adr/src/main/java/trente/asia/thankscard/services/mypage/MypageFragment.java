@@ -222,29 +222,26 @@ public class MypageFragment extends AbstractTCFragment{
 		}
 
 		WfPicassoHelper.loadImageWithDefaultIcon(activity, host, imgAvatar, myself.avatarPath, R.drawable.wf_profile);
-		setRankStage(imgRankStage, mypageModel.stageNo);
+		setRankStage(imgRankStage, mypageModel.pointTotal);
 
 		adapter = new NoticeListAdapter(getContext(), R.layout.item_notice, mypageModel.notices);
 		lstNotice.setAdapter(adapter);
 	}
 
-	private void setRankStage(ImageView imageView, int rankStage){
+	private void setRankStage(ImageView imageView, int totalPoint){
+		int pointBronze = Integer.parseInt(prefAccUtil.get(TcConst.PREF_POINT_BRONZE));
+		int pointSilver = Integer.parseInt(prefAccUtil.get(TcConst.PREF_POINT_SILVER));
+		int pointGold = Integer.parseInt(prefAccUtil.get(TcConst.PREF_POINT_GOLD));
 
-		switch(rankStage){
-		case 1:
+		if (totalPoint < pointBronze) {
 			imageView.setImageResource(R.drawable.tc_rank_regular);
-			break;
-		case 2:
+		} else if (totalPoint >= pointBronze && totalPoint < pointSilver) {
 			imageView.setImageResource(R.drawable.tc_rank_bronze);
-			break;
-		case 3:
+		} else if (totalPoint >= pointSilver && totalPoint < pointGold) {
 			imageView.setImageResource(R.drawable.tc_rank_silver);
-			break;
-		case 4:
+		} else if (totalPoint > pointGold) {
 			imageView.setImageResource(R.drawable.tc_rank_gold);
-			break;
 		}
-
 	}
 
 	public static String getRank(Integer point, String rank){

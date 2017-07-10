@@ -6,6 +6,7 @@ import org.json.JSONObject;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import trente.asia.thankscard.BuildConfig;
@@ -41,6 +42,10 @@ public class TcLogInFragment extends LoginFragment{
 		try{
 			prefAccUtil.set(TcConst.PREF_TEMPLATE_ID, response.getJSONObject("myselfInfo").optString("DEF_TEMPLATE_ID"));
 			prefAccUtil.set(TcConst.PREF_TEMPLATE_PATH, response.getJSONObject("myselfInfo").optString("DEF_TEMPLATE_PATH"));
+			prefAccUtil.set(TcConst.PREF_POINT_GOLD, response.getJSONObject("myselfInfo").optString("POINT_GOLD"));
+			prefAccUtil.set(TcConst.PREF_POINT_SILVER, response.getJSONObject("myselfInfo").optString("POINT_SILVER"));
+			prefAccUtil.set(TcConst.PREF_POINT_BRONZE, response.getJSONObject("myselfInfo").optString("POINT_BRONZE"));
+			log(response.optJSONObject("myselfInfo").toString());
 		}catch (JSONException ex){
 			ex.printStackTrace();
 		}
@@ -65,5 +70,9 @@ public class TcLogInFragment extends LoginFragment{
 	@Override
 	protected String getServiceCd(){
 		return WelfareConst.SERVICE_CD_TC;
+	}
+
+	private void log(String msg) {
+		Log.e("TcLoginFragment", msg);
 	}
 }

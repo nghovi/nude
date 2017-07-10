@@ -6,13 +6,17 @@ import org.json.JSONObject;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.vision.text.Line;
 
 import trente.asia.thankscard.R;
 import trente.asia.thankscard.activities.MainActivity;
 import trente.asia.thankscard.commons.defines.TcConst;
 import trente.asia.thankscard.fragments.AbstractTCFragment;
 import trente.asia.thankscard.services.setting.TcContactUsFragment;
+import trente.asia.thankscard.services.setting.TcStageInformationFragment;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.define.WfUrlConst;
@@ -54,6 +58,7 @@ public class TCSettingFragment extends AbstractTCFragment implements View.OnClic
 		LinearLayout lnrTerm = (LinearLayout)getView().findViewById(R.id.lnr_term);
 		LinearLayout lnrSignOut = (LinearLayout)getView().findViewById(R.id.lnr_signout);
 		LinearLayout lnrContactUs = (LinearLayout)getView().findViewById(R.id.lnr_contact_us);
+		TextView lnrStageInformation = (TextView)getView().findViewById(R.id.txt_stage_infor);
 
 		lnrAccountInfo.setOnClickListener(this);
 		lnrAbout.setOnClickListener(this);
@@ -61,6 +66,7 @@ public class TCSettingFragment extends AbstractTCFragment implements View.OnClic
 		lnrTerm.setOnClickListener(this);
 		lnrSignOut.setOnClickListener(this);
 		lnrContactUs.setOnClickListener(this);
+		lnrStageInformation.setOnClickListener(this);
 	}
 
 	@Override
@@ -91,6 +97,9 @@ public class TCSettingFragment extends AbstractTCFragment implements View.OnClic
 			break;
 		case R.id.lnr_contact_us:
 			gotoFragment(new TcContactUsFragment());
+			break;
+		case R.id.txt_stage_infor:
+			gotoFragment(new TcStageInformationFragment());
 			break;
 		default:
 			break;

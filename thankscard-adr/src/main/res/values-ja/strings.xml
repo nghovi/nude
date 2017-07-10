@@ -64,11 +64,10 @@
     <string name="fragment_post_edit_button">送信する</string>
     <string name="fragment_post_edit_hint"></string>
     <string name="fragment_post_edit_alert_dlg_title">エラー</string>
-    <string name="txt_fragment_post_edit_template">カード選択 ></string>
     <string name="fragment_post_edit_dept">部署</string>
     <string name="fragment_post_edit_user">ユーザ</string>
     <string name="fragment_post_edit_category">カテゴリ</string>
-    <string name="txt_fragment_post_edit_message">メッセージ</string>
+    <string name="txt_fragment_post_edit_message">１回につき、１ポイントがもらえます。</string>
     <string name="fragment_post_edit_alert_dlg_message1">ユーザを選択してください</string>
     <string name="fragment_post_edit_alert_dlg_message2">メッセージは 1 文字以上 %1$s 文字以下です</string>
     <string name="fragment_post_edit_alert_dlg_message3">テンプレートを選択してください</string>
@@ -130,4 +129,13 @@
     <string name="fragment_mypage_rank_next_post">%1$s位まであと%2$spt</string>
     <string name="fragment_mypage_rank_next_receive">%1$s位まであと%2$spt</string>
     <string name="rank_first_congrats">おめでとうございます！☆</string>
+    <string name="tc_stage_infor_explain">カードを送ったり、受け取ったりすると、</string>
+    <string name="tc_rank_gold">ゴールド</string>
+    <string name="tc_rank_silver">シルバー</string>
+    <string name="tc_explain_silver">シールの種類が増えます</string>
+    <string name="tc_rank_bronze">ブロンズ</string>
+    <string name="tc_explain_bronze">カードでメッセージを送ることができます。</string>
+    <string name="tc_rank_regular">レギュラー</string>
+    <string name="tc_explain_gold">カード、シールの種類が増えます</string>
+    <string name="tc_explain_regular">カードでメッセージを送ることができます。</string>
 </resources>
