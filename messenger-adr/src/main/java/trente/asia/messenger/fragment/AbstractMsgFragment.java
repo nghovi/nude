@@ -157,7 +157,6 @@ public class AbstractMsgFragment extends WelfareFragment{
 					mRealm.copyToRealmOrUpdate(realmBoard);
 
 					realmBoards.add(realmBoard);
-					log(realmBoard.boardName);
 				}
 				mRealm.commitTransaction();
 

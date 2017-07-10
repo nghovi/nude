@@ -341,7 +341,6 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 		if(mRootView == null){
-			log("onCreateView");
 			binding = DataBindingUtil.inflate(inflater, R.layout.fragment_message, container, false);
 			mRootView = binding.getRoot();
 
@@ -372,7 +371,6 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 	@Override
 	protected void initView(){
 		super.initView();
-		log("initView");
 		mImgLeftHeader = (ImageView)getView().findViewById(R.id.img_id_header_left_icon);
 		LinearLayout lnrRightHeader = (LinearLayout)getView().findViewById(R.id.lnr_header_right_icon);
 		mTxtUnreadMessage = (TextView)getView().findViewById(R.id.txt_id_unread_message);
@@ -490,7 +488,6 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 
 	@Override
 	protected void initData(){
-		log("initData");
 		activeBoard = new RealmBoardModel();
 		activeBoard.key = Integer.parseInt(prefAccUtil.get(MsConst.PREF_ACTIVE_BOARD_ID));
 		activeBoardId = activeBoard.key;
@@ -666,8 +663,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 		if(mSlideMenuLayout.isMenuShown()){
 			mSlideMenuLayout.toggleMenu();
 		}
-		if (!"".equals(preferencesAccountUtil.get(MsConst.PREF_ACTIVE_BOARD_ID)))
-			activeBoardId = Integer.parseInt(preferencesAccountUtil.get(MsConst.PREF_ACTIVE_BOARD_ID));
+		if(!"".equals(preferencesAccountUtil.get(MsConst.PREF_ACTIVE_BOARD_ID))) activeBoardId = Integer.parseInt(preferencesAccountUtil.get(MsConst.PREF_ACTIVE_BOARD_ID));
 		activeBoard = mRealm.where(RealmBoardModel.class).equalTo("key", activeBoardId).findFirst();
 
 		if(activeBoard != null && activeBoard.isValid()){
@@ -932,7 +928,6 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 	}
 
 	private void onChangedBoard(final RealmBoardModel boardModel, boolean isLoad){
-		log("board name: " + boardModel.boardName);
 		if(mSlideMenuLayout.isMenuShown()){
 			mSlideMenuLayout.toggleMenu();
 		}
@@ -955,7 +950,12 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 				messageView.edtMessage.clearFocus();
 				messageView.edtMessage.setText("");
 				isFirstScroll2Top = true;
-				loadFirstMessagesFromDB();
+				if(boardModel.lastMessageUpdateDate != null){
+					loadFirstMessagesFromDB();
+				}else{
+					loadMessageFirstTime(true);
+				}
+
 			}
 		}else{
 			if(!boardModel.boardName.equals(activeBoard.boardName)){
@@ -1033,20 +1033,19 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 	}
 
 	private void appendFile(Intent returnedIntent){
-		log("Append photo");
 		String detailMessage = returnedIntent.getExtras().getString("detail");
 		if(WelfareConst.WF_FILE_SIZE_NG.equals(detailMessage)){
 			alertDialog.setMessage(getString(R.string.wf_invalid_photo_over));
 			alertDialog.show();
 		}else{
 			MessageContentModel photoModel = null;
-			// try{
-			// photoModel = LoganSquare.parse(CCStringUtil.toString(detailMessage), MessageContentModel.class);
-			// RealmMessageModel
-			// appendMessage(photoModel);
-			// }catch(IOException e){
-			// e.printStackTrace();
-			// }
+			try{
+				photoModel = LoganSquare.parse(CCStringUtil.toString(detailMessage), MessageContentModel.class);
+				RealmMessageModel message = new RealmMessageModel(photoModel);
+				appendMessage(message);
+			}catch(IOException e){
+				e.printStackTrace();
+			}
 		}
 	}
 
