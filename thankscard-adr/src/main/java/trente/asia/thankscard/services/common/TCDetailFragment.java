@@ -134,6 +134,7 @@ public class TCDetailFragment extends AbstractPagerFragment{
 		TextView txtSend = (TextView)getView().findViewById(R.id.txt_fragment_tc_detail_send);
 		TextView txtSenderName = (TextView)getView().findViewById(R.id.txt_sender_name);
 		ImageView senderAvatar = (ImageView)getView().findViewById(R.id.img_sender_avatar);
+		ImageView imgSeal = (ImageView) getView().findViewById(R.id.img_seal);
 
 		if(myself.key.equals(historyModel.receiverId) && getTitle() == R.string.fragment_tc_detail_title_receive){
 			txtSend.setVisibility(View.VISIBLE);
@@ -152,11 +153,14 @@ public class TCDetailFragment extends AbstractPagerFragment{
 			if (myself.key.equals(historyModel.receiverId) && getTitle() == R.string.fragment_tc_detail_title_receive ||
 					myself.key.equals(historyModel.posterId) && getTitle() == R.string.fragment_tc_detail_title_pos) {
 				adapter.showMessage();
+				imgSeal.setVisibility(View.VISIBLE);
 			} else {
 				adapter.hideMessage();
+				imgSeal.setVisibility(View.INVISIBLE);
 			}
 		} else {
 			adapter.showMessage();
+			imgSeal.setVisibility(View.INVISIBLE);
 		}
 
 		txtSenderName.setText(historyModel.posterName);

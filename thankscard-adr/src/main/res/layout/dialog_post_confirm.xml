@@ -15,6 +15,7 @@
             android:textColor="@color/chiase_black"
             android:textSize="16sp"/>
         <TextView
+            android:id="@+id/txt_poster_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/tc_confirm_name"

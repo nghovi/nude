@@ -15,6 +15,12 @@ import trente.asia.thankscard.databinding.DialogPostConfirmBinding;
 
 public class PostConfirmDialog extends TCDialog {
     private DialogPostConfirmBinding binding;
+    private String posterName;
+
+    public void setPosterName(String posterName) {
+        this.posterName = posterName;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -41,6 +47,7 @@ public class PostConfirmDialog extends TCDialog {
                 btnNegativeListener.onClick(view);
             }
         });
+        binding.txtPosterName.setText(getString(R.string.tc_confirm_name, posterName));
     }
 
     public boolean isSecret() {
