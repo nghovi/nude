@@ -5,7 +5,6 @@
     <include layout="@layout/view_common_header" />
 
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -52,9 +51,9 @@
         <LinearLayout
             android:id="@+id/lnr_fragment_action_plan_main"
             android:layout_width="match_parent"
-            android:visibility="visible"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="visible">
 
             <LinearLayout
                 style="@style/wf_common_linear"
@@ -176,7 +175,8 @@
                                 android:layout_height="wrap_content"
                                 android:hint="@string/chiase_common_please_input"
                                 android:text=""
-                                android:textAlignment="textEnd" />
+                                android:textAlignment="textEnd"
+                                android:textSize="12sp" />
 
                         </LinearLayout>
                     </LinearLayout>
