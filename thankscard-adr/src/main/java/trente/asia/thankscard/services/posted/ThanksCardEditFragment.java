@@ -219,8 +219,7 @@ public class ThanksCardEditFragment extends AbstractTCFragment {
     }
 
     private void onDeptSelected(int selectedPosition) {
-        DeptModel newSelectedDept = departments.get(selectedPosition);
-        selectedDept = newSelectedDept;
+        selectedDept = departments.get(selectedPosition);
         updateUserSpinner();
     }
 
@@ -266,7 +265,6 @@ public class ThanksCardEditFragment extends AbstractTCFragment {
                         onDeptSelected(selectedPosition);
                     }
                 }, true);
-
     }
 
     private UserModel getSelectedUser(List<UserModel> users, UserModel previous) {
@@ -340,12 +338,6 @@ public class ThanksCardEditFragment extends AbstractTCFragment {
 
         categories = Category.getCategoryList();
     }
-
-    // private void onCategorySelected(){
-    // selectedCategory = categorySelectiondialog.getSelectedCategory();
-    // TextView txtCategory = (TextView)getView().findViewById(R.id.txt_fragment_post_edit_category);
-    // txtCategory.setText(selectedCategory.categoryName);
-    // }
 
     private void buildTemplateSelectionButton() {
         if (templateSelectionDialog == null) {
