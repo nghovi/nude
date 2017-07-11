@@ -209,7 +209,9 @@ public class BoardListFragment extends AbstractMsgFragment implements View.OnCli
 	}
 
 	public void onAddedContactListener(RealmBoardModel boardModel){
-		mAdapter.add(boardModel, 0);
+		if (mAdapter != null) {
+			mAdapter.add(boardModel, 0);
+		}
 		lsvBoard.setItemChecked(0, true);
 		activeBoardId = boardModel.key;
 		preferencesAccountUtil.set(MsConst.PREF_ACTIVE_BOARD_ID, activeBoardId + "");

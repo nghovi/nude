@@ -110,19 +110,6 @@ public class MypageFragment extends AbstractTCFragment{
 				gotoPostEdit(null);
 			}
 		});
-
-		// Button btnRank = (Button)getView().findViewById(R.id.btn_fragment_mypage_rank);
-		// btnRank.setOnClickListener(new View.OnClickListener() {
-		//
-		// @Override
-		// public void onClick(View v){
-		// if(!CCCollectionUtil.isEmpty(rankStages)){
-		// showRankStageDialog();
-		// }else{
-		// requestRankStageInfo();
-		// }
-		// }
-		// });
 	}
 
 	private void showRankStageDialog(){

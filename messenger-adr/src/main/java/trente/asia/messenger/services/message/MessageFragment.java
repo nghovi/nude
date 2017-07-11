@@ -424,7 +424,6 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 			boardListFragment.setActiveBoard(activeBoardId);
 		}
 		transaction.replace(R.id.slice_menu_board, boardListFragment).commit();
-
 	}
 
 	@Override

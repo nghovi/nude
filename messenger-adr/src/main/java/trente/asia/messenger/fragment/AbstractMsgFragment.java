@@ -212,6 +212,7 @@ public class AbstractMsgFragment extends WelfareFragment{
 	}
 
 	public void startTimer(){
+		loadMessageLatest();
 		if(mTimer == null){
 			mTimer = new Timer();
 			mTimer.schedule(new TimerTask() {
