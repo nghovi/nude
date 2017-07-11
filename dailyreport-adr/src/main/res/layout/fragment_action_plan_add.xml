@@ -21,6 +21,7 @@
 
         <LinearLayout
             style="@style/wf_common_linear"
+            android:id="@+id/lnr_header"
             android:gravity="center_horizontal|center_vertical"
             android:paddingBottom="@dimen/wf_margin_16">
 
@@ -57,6 +58,7 @@
                     android:paddingBottom="@dimen/margin_32dp"
                     android:paddingTop="@dimen/margin_32dp"
                     android:textColor="@color/chiase_red"
+                    android:text="@string/action_plan_empty"
                     android:visibility="gone" />
 
                 <trente.asia.dailyreport.services.kpi.view.WrapContentHeightViewPager

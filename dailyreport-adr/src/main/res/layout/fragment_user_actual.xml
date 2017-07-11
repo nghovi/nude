@@ -99,7 +99,7 @@
                                 android:id="@+id/txt_fragment_user_actual_period"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="value" />
+                                android:text="" />
 
                         </LinearLayout>
 
@@ -118,7 +118,7 @@
                                 android:id="@+id/txt_fragment_user_actual_goal"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="value" />
+                                android:text="" />
 
                         </LinearLayout>
 
@@ -137,7 +137,7 @@
                                 android:id="@+id/txt_fragment_user_actual_total"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="value" />
+                                android:text="" />
 
                         </LinearLayout>
 
@@ -156,7 +156,7 @@
                                 android:id="@+id/txt_fragment_user_actual_achievement_rate"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="value" />
+                                android:text="" />
 
                         </LinearLayout>
 
@@ -175,7 +175,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="@string/chiase_common_please_input"
-                                android:text="円"
+                                android:text=""
                                 android:textAlignment="textEnd" />
 
                         </LinearLayout>

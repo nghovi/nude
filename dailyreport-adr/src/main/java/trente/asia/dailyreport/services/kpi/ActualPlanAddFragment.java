@@ -11,6 +11,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.MediaRouteButton;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -71,6 +72,8 @@ public class ActualPlanAddFragment extends AbstractDRFragment implements DRCalen
 	private Map<String, String>	statusMap;
 	private boolean				showStatusOnly		= false;
 	private List<EditText>		edtActionValues;
+	private LinearLayout		lnrGroupHeader;
+	private List<ActionPlan>	filteredActionPlans;
 
 	@Override
 	public int getFragmentLayoutId(){
@@ -84,7 +87,7 @@ public class ActualPlanAddFragment extends AbstractDRFragment implements DRCalen
 
 	@Override
 	public void initData(){
-		loadGroupInfo();
+		loadActionPlans(selectedDate, false);
 	}
 
 	@Override
@@ -103,7 +106,8 @@ public class ActualPlanAddFragment extends AbstractDRFragment implements DRCalen
 			@Override
 			public void onGroupChange(GroupKpi newGroup){
 				selectedGroup = newGroup;
-				loadActionPlans(selectedDate, false);
+				filteredActionPlans = filterByGroup();
+				buildActionPlans();
 			}
 
 			@Override
@@ -112,6 +116,7 @@ public class ActualPlanAddFragment extends AbstractDRFragment implements DRCalen
 			}
 		});
 
+		lnrGroupHeader = (LinearLayout)getView().findViewById(R.id.lnr_header);
 		lnrActualPlanContainer = (LinearLayout)getView().findViewById(R.id.lnr_actual_plan_container);
 		lnrActionPlanSection = (LinearLayout)getView().findViewById(R.id.lnr_action_plan_section);
 		txtNoAction = (TextView)getView().findViewById(R.id.txt_fragment_action_plan_empty);
@@ -154,25 +159,50 @@ public class ActualPlanAddFragment extends AbstractDRFragment implements DRCalen
 	@Override
 	protected void successLoad(JSONObject response, String url){
 		if(getView() != null){
-			if(DRConst.API_KPI_GROUPS.equals(url)){
-				onLoadGroupsSuccess(response);
-			}else if(DRConst.API_KPI_ACTIONS.equals(url)){
-				onGetActionsSuccess(response);
-			}else{
-				super.successLoad(response, url);
-			}
+			// if(DRConst.API_KPI_GROUPS.equals(url)){
+			// onLoadGroupsSuccess(response);
+			// }else if(DRConst.API_KPI_ACTIONS.equals(url)){
+			onGetActionsSuccess(response);
+			// }else{
+			// super.successLoad(response, url);
+			// }
 
 		}
 	}
 
 	private void onGetActionsSuccess(JSONObject response){
-		List<ApiObjectModel> statusList = CCJsonUtil.convertToModelList(response.optString("statusList"), ApiObjectModel.class);
-		statusMap = buildStatusMap(statusList);
-		updateCalendarView(actionPlanList);
-		if(showStatusOnly == false){
-			actionPlanList = CCJsonUtil.convertToModelList(response.optString("actionPlanList"), ActionPlan.class);
-			buildActionPlans();
+		groupKpiList = CCJsonUtil.convertToModelList(response.optString("groups"), GroupKpi.class);
+		if(CCCollectionUtil.isEmpty(groupKpiList)){
+			imgHeaderRightIcon.setVisibility(View.INVISIBLE);
+			lnrActionPlanSection.setVisibility(View.GONE);
+			lnrGroupHeader.setVisibility(View.GONE);
+			txtNoAction.setVisibility(View.VISIBLE);
+			// getView().findViewById(R.id.lnr_fragment_action_plan_main).setVisibility(View.GONE);
+		}else{
+			// groupKpiList = createDummy();
+			drGroupHeader.buildLayout(groupKpiList, 0, false);
+			selectedGroup = drGroupHeader.getSelectedGroup();
+
+			List<ApiObjectModel> statusList = CCJsonUtil.convertToModelList(response.optString("statusList"), ApiObjectModel.class);
+			statusMap = buildStatusMap(statusList);
+			updateCalendarView(actionPlanList);
+			if(showStatusOnly == false){
+				actionPlanList = CCJsonUtil.convertToModelList(response.optString("actionPlanList"), ActionPlan.class);
+				filteredActionPlans = filterByGroup();
+				buildActionPlans();
+			}
 		}
+
+	}
+
+	private List<ActionPlan> filterByGroup(){
+		List<ActionPlan> result = new ArrayList<>();
+		for(ActionPlan actionPlan : actionPlanList){
+			if(actionPlan.groupId.equals(selectedGroup.key)){
+				result.add(actionPlan);
+			}
+		}
+		return result;
 	}
 
 	private Map<String, String> buildStatusMap(List<ApiObjectModel> statusList){
@@ -183,36 +213,36 @@ public class ActualPlanAddFragment extends AbstractDRFragment implements DRCalen
 		return result;
 	}
 
-	private void onLoadGroupsSuccess(JSONObject response){
-		groupKpiList = CCJsonUtil.convertToModelList(response.optString("groups"), GroupKpi.class);
-		if(CCCollectionUtil.isEmpty(groupKpiList)){
-			getView().findViewById(R.id.lnr_fragment_action_plan_main).setVisibility(View.GONE);
-			getView().findViewById(R.id.txt_fragment_action_plan_empty).setVisibility(View.VISIBLE);
-		}else{
-			// groupKpiList = createDummy();
-			drGroupHeader.buildLayout(groupKpiList, 0, false);
-			selectedGroup = drGroupHeader.getSelectedGroup();
-			loadActionPlans(selectedDate, false);
-		}
-	}
+	// private void onLoadGroupsSuccess(JSONObject response){
+	// groupKpiList = CCJsonUtil.convertToModelList(response.optString("groups"), GroupKpi.class);
+	// if(CCCollectionUtil.isEmpty(groupKpiList)){
+	// getView().findViewById(R.id.lnr_fragment_action_plan_main).setVisibility(View.GONE);
+	// getView().findViewById(R.id.txt_fragment_action_plan_empty).setVisibility(View.VISIBLE);
+	// }else{
+	// // groupKpiList = createDummy();
+	// drGroupHeader.buildLayout(groupKpiList, 0, false);
+	// selectedGroup = drGroupHeader.getSelectedGroup();
+	// loadActionPlans(selectedDate, false);
+	// }
+	// }
 
-	private void loadGroupInfo(){
-		String dateStr = txtDate.getText().toString();
-		JSONObject jsonObject = new JSONObject();
-		try{
-			jsonObject.put("targetDate", dateStr);
-		}catch(JSONException ex){
-			ex.printStackTrace();
-		}
-		super.requestLoad(DRConst.API_KPI_GROUPS, jsonObject, true);
-	}
+	// private void loadGroupInfo(){
+	// String dateStr = txtDate.getText().toString();
+	// JSONObject jsonObject = new JSONObject();
+	// try{
+	// jsonObject.put("targetDate", dateStr);
+	// }catch(JSONException ex){
+	// ex.printStackTrace();
+	// }
+	// super.requestLoad(DRConst.API_KPI_GROUPS, jsonObject, true);
+	// }
 
 	private void loadActionPlans(Date date, boolean showStatusOnly){
 		this.showStatusOnly = showStatusOnly;
 		String targetDate = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, date);
 		JSONObject jsonObject = new JSONObject();
 		try{
-			jsonObject.put("targetGroupId", selectedGroup.key);
+			// jsonObject.put("targetGroupId", selectedGroup.key);
 			jsonObject.put("targetDate", targetDate);
 		}catch(JSONException ex){
 			ex.printStackTrace();
@@ -221,11 +251,11 @@ public class ActualPlanAddFragment extends AbstractDRFragment implements DRCalen
 	}
 
 	private void buildActionPlans(){
-		if(!CCCollectionUtil.isEmpty(actionPlanList)){
+		if(!CCCollectionUtil.isEmpty(filteredActionPlans)){
 			imgHeaderRightIcon.setVisibility(View.VISIBLE);
 			boolean editMode = ActionPlan.STATUS_YET.equals(statusMap.get(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, selectedDate)));
 			if(editMode){
-				imgHeaderRightIcon.setImageResource(R.drawable.wf_check);
+				imgHeaderRightIcon.setImageResource(R.drawable.ic_save);
 				imgHeaderRightIcon.setOnClickListener(new View.OnClickListener() {
 
 					@Override
@@ -234,7 +264,7 @@ public class ActualPlanAddFragment extends AbstractDRFragment implements DRCalen
 					}
 				});
 			}else{
-				imgHeaderRightIcon.setImageResource(R.drawable.wf_attachment);
+				imgHeaderRightIcon.setImageResource(R.drawable.ic_edit);
 				imgHeaderRightIcon.setOnClickListener(new View.OnClickListener() {
 
 					@Override
@@ -258,7 +288,7 @@ public class ActualPlanAddFragment extends AbstractDRFragment implements DRCalen
 		lnrActualPlanContainer.removeAllViews();
 		edtActionValues.clear();
 
-		for(ActionPlan actionPlan : actionPlanList){
+		for(ActionPlan actionPlan : filteredActionPlans){
 			addActionPlanView(actionPlan, editMode);
 		}
 	}

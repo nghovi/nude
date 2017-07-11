@@ -91,4 +91,5 @@
     <string name="fragment_kpi_title_tassei">Personal achievement</string>
     <string name="fragment_kpi_title_jisseki">Personal performance</string>
     <string name="overall_performance">Overall performance</string>
+    <string name="action_plan_empty">アクションプランが設定されていません</string>
 </resources>

@@ -11,9 +11,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import asia.chiase.core.util.CCFormatUtil;
 import trente.asia.dailyreport.R;
 import trente.asia.dailyreport.services.kpi.model.ActionPlan;
+import trente.asia.welfare.adr.define.WelfareConst;
 
 /**
  * Created by viet on 7/12/2016.
@@ -65,11 +68,13 @@ public class KpiCalendarView extends RelativeLayout{
 					// setNextMonth();
 					// refreshCalendar();
 				}else{ // currentMonth
+					adapter.updateSelectedCell(position);
 					onDayClickedListener.onDayClicked(selectedDate);
 				}
 			}
 		});
 		gridview.setAdapter(adapter);
+		((TextView)findViewById(R.id.fragment_txt_calendar_header_date)).setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_YYYY_MM, calendar.getTime()));
 	}
 
 	public interface OnDayClickedListener{

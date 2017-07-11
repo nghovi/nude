@@ -69,7 +69,7 @@
                     android:id="@+id/group_actual_info_period"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="value" />
+                    android:text="" />
 
             </LinearLayout>
 
@@ -88,7 +88,7 @@
                     android:id="@+id/group_actual_info_goal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="value" />
+                    android:text="" />
 
             </LinearLayout>
 
@@ -107,7 +107,7 @@
                     android:id="@+id/group_actual_info_actual_total"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="value" />
+                    android:text="" />
 
             </LinearLayout>
 
@@ -126,7 +126,7 @@
                     android:id="@+id/group_actual_info_achievement_rate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="value" />
+                    android:text="" />
 
             </LinearLayout>
 
@@ -145,7 +145,7 @@
                     android:id="@+id/group_actual_info_to_goal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="value" />
+                    android:text="" />
 
             </LinearLayout>
         </LinearLayout>

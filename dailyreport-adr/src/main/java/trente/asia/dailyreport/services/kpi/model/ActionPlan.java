@@ -8,6 +8,7 @@ public class ActionPlan{
 
 	public static final String	STATUS_NG	= "NG";
 	public static final String	STATUS_YET	= "YET";
+	public static final String	STATUS_OK	= "OK";
 	public String				name		= "today lam gi";
 	public String				goal		= "today bao nhieu";
 	public String				key			= "2";
@@ -20,4 +21,5 @@ public class ActionPlan{
 	public String				achievementRate;
 	public String				unit;
 	public String				actionDate;
+	public String				groupId;
 }
