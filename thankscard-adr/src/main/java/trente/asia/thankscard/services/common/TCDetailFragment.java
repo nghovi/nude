@@ -8,6 +8,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.media.Image;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
@@ -146,6 +147,18 @@ public class TCDetailFragment extends AbstractPagerFragment{
 		}else{
 			txtSend.setVisibility(View.INVISIBLE);
 		}
+
+		if (historyModel.isSecret) {
+			if (myself.key.equals(historyModel.receiverId) && getTitle() == R.string.fragment_tc_detail_title_receive ||
+					myself.key.equals(historyModel.posterId) && getTitle() == R.string.fragment_tc_detail_title_pos) {
+				adapter.showMessage();
+			} else {
+				adapter.hideMessage();
+			}
+		} else {
+			adapter.showMessage();
+		}
+
 		txtSenderName.setText(historyModel.posterName);
 		Picasso.with(getContext()).load(BuildConfig.HOST + historyModel.posterAvatarPath).fit().into(senderAvatar);
 	}

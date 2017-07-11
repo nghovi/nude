@@ -23,6 +23,7 @@ public class HistoryModel{
 	public String			cateogryId;
 	public String			key;
 	public String			posterAvatarPath;
+	public boolean			isSecret;
 
 	public void setTemplate(Template template){
 		this.template = template;

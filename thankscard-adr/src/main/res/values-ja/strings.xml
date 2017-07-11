@@ -138,4 +138,5 @@
     <string name="tc_rank_regular">レギュラー</string>
     <string name="tc_explain_gold">カード、シールの種類が増えます</string>
     <string name="tc_explain_regular">カードでメッセージを送ることができます。</string>
+    <string name="tc_stage_information">ステージ情報</string>
 </resources>

@@ -29,6 +29,7 @@ public class MyPagerAdapter2 extends PagerAdapter{
 	private Context				mContext;
 	private List<HistoryModel>	lstHistory;
 	private LayoutInflater		mInflater;
+	private boolean hideMessage;
 
 	public class HistoryViewHolder{
 
@@ -38,6 +39,7 @@ public class MyPagerAdapter2 extends PagerAdapter{
 
 		public TextView		txtMessage;
 		public ImageView	imgTemplate;
+		public ImageView	imgSecret;
 
 		public HistoryViewHolder(View view){
 			txtTo = (TextView)view.findViewById(R.id.txt_tc_detail_to);
@@ -46,6 +48,7 @@ public class MyPagerAdapter2 extends PagerAdapter{
 
 			txtMessage = (TextView)view.findViewById(R.id.txt_tc_detail_message);
 			imgTemplate = (ImageView)view.findViewById(R.id.img_item_thanks_card_frame);
+			imgSecret = (ImageView)view.findViewById(R.id.img_secret);
 		}
 	}
 
@@ -53,6 +56,14 @@ public class MyPagerAdapter2 extends PagerAdapter{
 		this.mContext = context;
 		this.lstHistory = lstHistory;
 		mInflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	}
+
+	public void showMessage(){
+		hideMessage = false;
+	}
+
+	public void hideMessage() {
+		hideMessage = true;
 	}
 
 	/**
@@ -93,7 +104,14 @@ public class MyPagerAdapter2 extends PagerAdapter{
 		viewHolder.txtMessage.setMovementMethod(new ScrollingMovementMethod());
 		if(model.template != null){
 			WfPicassoHelper.loadImage2(mContext, BuildConfig.HOST, viewHolder.imgTemplate, model.template.templateUrl);
+		}
 
+		if (hideMessage) {
+			viewHolder.txtMessage.setVisibility(View.INVISIBLE);
+			viewHolder.imgSecret.setVisibility(View.VISIBLE);
+		} else {
+			viewHolder.txtMessage.setVisibility(View.VISIBLE);
+			viewHolder.imgSecret.setVisibility(View.INVISIBLE);
 		}
 
 		container.addView(view);

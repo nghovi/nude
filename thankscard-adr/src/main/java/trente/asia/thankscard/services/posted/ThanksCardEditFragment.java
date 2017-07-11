@@ -329,7 +329,6 @@ public class ThanksCardEditFragment extends AbstractTCFragment {
 
     private void buildCategorySelectionButton() {
         spnCategory.setupLayout(getString(R.string.fragment_post_edit_category), Category.getCategoryNameList(), 0,
-
                 new WfSpinner.OnDRSpinnerItemSelectedListener() {
 
                     @Override
@@ -450,7 +449,6 @@ public class ThanksCardEditFragment extends AbstractTCFragment {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("postDate", CCFormatUtil.formatDate(new Date()));
-
             jsonObject.put("categoryId", mHistoryModel.categoryId);
             jsonObject.put("templateId", template.templateId);
 
@@ -464,7 +462,6 @@ public class ThanksCardEditFragment extends AbstractTCFragment {
             ex.printStackTrace();
         }
         requestUpdate(TcConst.API_POST_NEW_CARD, jsonObject, true);
-        // }
     }
 
     private void requestPostNewCardSuccess(JSONObject response) {
