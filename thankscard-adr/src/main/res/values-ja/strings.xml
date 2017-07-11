@@ -75,7 +75,6 @@
     <string name="fragment_post_edit_alert_dlg_confirm_title">確認メッセージ</string>
     <string name="fragment_post_edit_alert_dlg_confirm_message">%1$s さんへメッセージを送りますか？</string>
 
-
     <string name="fragment_post_confirm_title">Post - Confirm</string>
     <string name="fragment_post_confirm_btn_cancel">キャンセル</string>
     <string name="fragment_post_confirm_btn_submit">Submit</string>

@@ -6,6 +6,7 @@ import java.util.List;
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,10 +61,12 @@ public class MyPagerAdapter2 extends PagerAdapter{
 
 	public void showMessage(){
 		hideMessage = false;
+		notifyDataSetChanged();
 	}
 
 	public void hideMessage() {
 		hideMessage = true;
+		notifyDataSetChanged();
 	}
 
 	/**
@@ -72,6 +75,11 @@ public class MyPagerAdapter2 extends PagerAdapter{
 	@Override
 	public int getCount(){
 		return lstHistory.size();
+	}
+
+	@Override
+	public int getItemPosition(Object object) {
+		return POSITION_NONE;
 	}
 
 	/**
@@ -113,9 +121,14 @@ public class MyPagerAdapter2 extends PagerAdapter{
 			viewHolder.txtMessage.setVisibility(View.VISIBLE);
 			viewHolder.imgSecret.setVisibility(View.INVISIBLE);
 		}
-
+		log("instantiateItem");
 		container.addView(view);
+
 		return view;
+	}
+
+	private void log(String msg) {
+		Log.e("MyPager", msg);
 	}
 
 	/**

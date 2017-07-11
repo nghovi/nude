@@ -11,6 +11,7 @@ import android.content.Context;
 import android.media.Image;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -150,8 +151,8 @@ public class TCDetailFragment extends AbstractPagerFragment{
 		}
 
 		if (historyModel.isSecret) {
-			if (myself.key.equals(historyModel.receiverId) && getTitle() == R.string.fragment_tc_detail_title_receive ||
-					myself.key.equals(historyModel.posterId) && getTitle() == R.string.fragment_tc_detail_title_pos) {
+			if (myself.key.equals(historyModel.receiverId) ||
+					myself.key.equals(historyModel.posterId)) {
 				adapter.showMessage();
 				imgSeal.setVisibility(View.VISIBLE);
 			} else {
@@ -162,9 +163,13 @@ public class TCDetailFragment extends AbstractPagerFragment{
 			adapter.showMessage();
 			imgSeal.setVisibility(View.INVISIBLE);
 		}
-
+		log("buildLayoutSender");
 		txtSenderName.setText(historyModel.posterName);
 		Picasso.with(getContext()).load(BuildConfig.HOST + historyModel.posterAvatarPath).fit().into(senderAvatar);
+	}
+
+	private void log(String msg) {
+		Log.e("TCDetail", msg);
 	}
 
 	private void gotoPostedEditFragment(HistoryModel historyModel){
@@ -212,7 +217,6 @@ public class TCDetailFragment extends AbstractPagerFragment{
 			ImageView templateImage = (ImageView)lnrFrame.findViewById(R.id.img_item_thanks_card_frame);
 			templateImage.setScaleType(ImageView.ScaleType.FIT_XY);
 			WfPicassoHelper.loadImage2(context, BuildConfig.HOST, templateImage, historyModel.template.templateUrl);
-
 		}
 	}
 
