@@ -41,6 +41,7 @@ import trente.asia.dailyreport.R;
 import trente.asia.dailyreport.fragments.AbstractDRFragment;
 import trente.asia.dailyreport.services.kpi.model.GroupKpi;
 import trente.asia.dailyreport.services.kpi.model.Personal;
+import trente.asia.dailyreport.services.kpi.model.Progress;
 import trente.asia.dailyreport.view.DRGroupHeader;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
@@ -52,7 +53,6 @@ import trente.asia.welfare.adr.dialog.WfDialog;
 public class UserActualFragment extends AbstractDRFragment{
 
 	private static final int	LABEL_COUNT	= 25;
-	private LayoutInflater		inflater;
 	private DatePickerDialog	datePickerDialog;
 	private TextView			txtSelectedDate;
 	private DRGroupHeader		drGroupHeader;
@@ -160,29 +160,27 @@ public class UserActualFragment extends AbstractDRFragment{
 
 	}
 
-	public static void buildChart(LineChart lineChart, GroupKpi groupKpi){
-		if(!CCCollectionUtil.isEmpty(groupKpi.checkPointList)){
+	public static void buildChart(LineChart lineChart, Personal personal){
+		if(!CCCollectionUtil.isEmpty(personal.progressList)){
 			final Map<Float, String> formattedValuesMap = new HashMap<>();
 			List<Entry> entries = new ArrayList<Entry>();
-			Calendar c = Calendar.getInstance();
+			Progress maxCheckPoint = personal.progressList.get(personal.progressList.size() - 1);
 
-			GroupKpi.CheckPoint maxCheckPoint = groupKpi.checkPointList.get(groupKpi.checkPointList.size() - 1);
-
-			Date lastCheckPointDate = CCDateUtil.makeDateCustom(maxCheckPoint.date, WelfareConst.WF_DATE_TIME_DATE);
-			Date firstCheckPointDate = CCDateUtil.makeDateCustom(groupKpi.checkPointList.get(0).date, WelfareConst.WF_DATE_TIME_DATE);
+			Date lastCheckPointDate = CCDateUtil.makeDateCustom(maxCheckPoint.checkPointDate, WelfareConst.WF_DATE_TIME_DATE);
+			Date firstCheckPointDate = CCDateUtil.makeDateCustom(personal.progressList.get(0).checkPointDate, WelfareConst.WF_DATE_TIME_DATE);
 			long maxDistanceDay = (lastCheckPointDate.getTime() - firstCheckPointDate.getTime()) / (24 * 60 * 60 * 1000);
 			lineChart.fitScreen();
 
-			int pageNum = groupKpi.checkPointList.size() / 7 + 1;
+			int pageNum = personal.progressList.size() / 7 + 1;
 			float maxVisibleRange = maxDistanceDay / pageNum;
 			float labelDistance = Math.round(maxVisibleRange / LABEL_COUNT);
 
-			for(GroupKpi.CheckPoint checkPoint : groupKpi.checkPointList){
-				Date checkPointDate = CCDateUtil.makeDateCustom(checkPoint.date, WelfareConst.WF_DATE_TIME_DATE);
+			for(Progress checkPoint : personal.progressList){
+				Date checkPointDate = CCDateUtil.makeDateCustom(checkPoint.checkPointDate, WelfareConst.WF_DATE_TIME_DATE);
 				float xDay = (checkPointDate.getTime() - firstCheckPointDate.getTime()) / (24 * 60 * 60 * 1000);
 
 				float labelAxisValue = (Math.round(xDay / labelDistance)) * labelDistance;
-				formattedValuesMap.put(labelAxisValue, checkPoint.date);
+				formattedValuesMap.put(labelAxisValue, checkPoint.checkPointDate);
 				Entry t = new Entry(xDay, Float.valueOf(checkPoint.achievement));
 				entries.add(t);
 			}
@@ -191,7 +189,7 @@ public class UserActualFragment extends AbstractDRFragment{
 			dataSet.setLineWidth(1f);
 			dataSet.setValueTextColor(Color.BLUE); // styling, ...
 			dataSet.setValueTextSize(9);
-			dataSet.setLabel(groupKpi.name + " checkpoint achievement");
+			dataSet.setLabel(personal.group.name + " checkpoint achievement");
 
 			LineData lineData = new LineData();
 			lineData.addDataSet(dataSet);
@@ -236,7 +234,7 @@ public class UserActualFragment extends AbstractDRFragment{
 			});
 
 			//// TODO: 6/29/17 cannot add 150% line so add max %line instead
-			LimitLine line150Left = new LimitLine(Float.valueOf(maxCheckPoint.achievement), String.valueOf(Integer.parseInt(groupKpi.goal) * Integer.parseInt(maxCheckPoint.achievement) / 100) + "円");
+			LimitLine line150Left = new LimitLine(Float.valueOf(maxCheckPoint.achievement), String.valueOf(Integer.parseInt(personal.group.goal) * Integer.parseInt(maxCheckPoint.achievement) / 100) + "円");
 			line150Left.setLineWidth(0.5f);
 			line150Left.setLineColor(Color.GRAY);
 			// upper_limit.enableDashedLine(10f, 10f, 0f);
@@ -250,7 +248,7 @@ public class UserActualFragment extends AbstractDRFragment{
 			line150Right.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_TOP);
 			line150Right.setTextSize(10f);
 
-			LimitLine line100Left = new LimitLine(100f, groupKpi.goal + "円");
+			LimitLine line100Left = new LimitLine(100f, personal.group.goal + "円");
 			line100Left.setLineWidth(0.5f);
 			line100Left.setLineColor(Color.RED);
 			// upper_limit.enableDashedLine(10f, 10f, 0f);
@@ -264,7 +262,7 @@ public class UserActualFragment extends AbstractDRFragment{
 			line100Right.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_TOP);
 			line100Right.setTextSize(10f);
 
-			LimitLine line50Left = new LimitLine(50f, String.valueOf(Integer.parseInt(groupKpi.goal) / 2) + "円");
+			LimitLine line50Left = new LimitLine(50f, String.valueOf(Integer.parseInt(personal.group.goal) / 2) + "円");
 			line50Left.setLineWidth(0.5f);
 			line50Left.setLineColor(Color.GRAY);
 			// upper_limit.enableDashedLine(10f, 10f, 0f);
@@ -412,14 +410,14 @@ public class UserActualFragment extends AbstractDRFragment{
 
 		getView().findViewById(R.id.lnr_fragment_action_plan_main).setVisibility(View.VISIBLE);
 
-		buildChart(lineChart, selectedGroup);
+		buildChart(lineChart, personal);
 	}
 
 	private void checkToShowNoticeDialogs(){
 		Calendar c = Calendar.getInstance();
-		for(GroupKpi.CheckPoint checkPoint : selectedGroup.checkPointList){
-			if(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, c.getTime()).equals(checkPoint.date)){
-				if(Integer.parseInt(checkPoint.achievement) <= Integer.parseInt(personal.achievement)){ // success
+		for(Progress progress : personal.progressList){
+			if(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, c.getTime()).equals(progress.checkPointDate)){
+				if(Integer.parseInt(progress.achievement) <= Integer.parseInt(personal.achievement)){ // success
 					showGoalAchieveDialog();
 				}else{
 					showGoalWarningDialog();
@@ -428,102 +426,21 @@ public class UserActualFragment extends AbstractDRFragment{
 		}
 	}
 
-	public static List<GroupKpi> createDummy(){
-		List<GroupKpi.CheckPoint> checkPointList = new ArrayList<>();
-		GroupKpi.CheckPoint cp1 = new GroupKpi.CheckPoint();
-		cp1.date = "2017/06/25";
-		cp1.achievement = "25";
-
-		GroupKpi.CheckPoint cp2 = new GroupKpi.CheckPoint();
-		cp2.date = "2017/06/29";
-		cp2.achievement = "30";
-
-		GroupKpi.CheckPoint cp3 = new GroupKpi.CheckPoint();
-		cp3.date = "2017/08/22";
-		cp3.achievement = "40";
-
-		GroupKpi.CheckPoint cp4 = new GroupKpi.CheckPoint();
-		cp4.date = "2017/08/29";
-		cp4.achievement = "50";
-
-		GroupKpi.CheckPoint cp5 = new GroupKpi.CheckPoint();
-		cp5.date = "2017/10/29";
-		cp5.achievement = "60";
-
-		GroupKpi.CheckPoint cp6 = new GroupKpi.CheckPoint();
-		cp6.date = "2017/11/30";
-		cp6.achievement = "40";
-
-		GroupKpi.CheckPoint cp7 = new GroupKpi.CheckPoint();
-		cp7.date = "2017/12/30";
-		cp7.achievement = "90";
-
-		GroupKpi.CheckPoint cp8 = new GroupKpi.CheckPoint();
-		cp8.date = "2018/01/01";
-		cp8.achievement = "100";
-
-		GroupKpi.CheckPoint cp9 = new GroupKpi.CheckPoint();
-		cp9.date = "2018/01/09";
-		cp9.achievement = "65";
-
-		GroupKpi.CheckPoint cp10 = new GroupKpi.CheckPoint();
-		cp10.date = "2018/01/22";
-		cp10.achievement = "130";
-
-		checkPointList.add(0, cp1);
-		checkPointList.add(1, cp2);
-		checkPointList.add(2, cp3);
-		checkPointList.add(3, cp4);
-		checkPointList.add(4, cp5);
-		checkPointList.add(5, cp6);
-		checkPointList.add(6, cp7);
-		checkPointList.add(7, cp8);
-		checkPointList.add(8, cp9);
-		checkPointList.add(9, cp10);
-
-		List<GroupKpi> groupKpis = new ArrayList<>();
-		GroupKpi g1 = new GroupKpi();
-		g1.name = "g1";
-		g1.key = "1";
-		g1.goal = "150000";
-		g1.achievement = "1000";
-		g1.achievementRate = "20";
-		g1.checkPointList = checkPointList;
-		GroupKpi g2 = new GroupKpi();
-		g2.name = "g2";
-		g2.key = "2";
-		g2.goal = "100000";
-		g2.achievement = "1000";
-		g2.achievementRate = "20";
-		g2.checkPointList = checkPointList;
-		GroupKpi g3 = new GroupKpi();
-		g3.name = "g3";
-		g3.key = "3";
-		g3.goal = "550000";
-		g3.achievement = "1000";
-		g3.achievementRate = "20";
-		g3.checkPointList = checkPointList;
-		groupKpis.add(g1);
-		groupKpis.add(g2);
-		groupKpis.add(g3);
-		return groupKpis;
-	}
-
 	private void buildPersonalGoalInfo(Personal personal){
 		if(!CCStringUtil.isEmpty(personal.todayActual)){// already enter
 			lnrInfo.setBackgroundColor(ContextCompat.getColor(activity, R.color.wf_app_color_base_50));
 			updateHeader(getString(R.string.fragment_kpi_title_tassei));
-			edtActualToday.setText(personal.todayActual);
 		}else{
 			updateHeader(getString(R.string.fragment_kpi_title_jisseki));
 			lnrInfo.setBackgroundColor(ContextCompat.getColor(activity, R.color.chiase_white));
 		}
-
+		personal.todayActual = personal.todayActual == null ? "0" : personal.todayActual;
+		edtActualToday.setText(personal.todayActual + " " + selectedGroup.unit);
 		String periodString = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, CCDateUtil.makeDateCustom(personal.startDate, WelfareConst.WF_DATE_TIME)) + " ~ " + CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, CCDateUtil.makeDateCustom(personal.endDate, WelfareConst.WF_DATE_TIME));
 		txtPeriod.setText(periodString);
-		txtGoal.setText(CCFormatUtil.formatAmount(personal.goal));
-		txtActualTotal.setText(CCFormatUtil.formatAmount(personal.achievement));
-		txtAchievementRate.setText(CCFormatUtil.formatAmount(personal.achievementRate));
+		txtGoal.setText(CCFormatUtil.formatAmount(personal.goal) + " " + selectedGroup.unit);
+		txtActualTotal.setText(CCFormatUtil.formatAmount(personal.achievement) + " " + selectedGroup.unit);
+		txtAchievementRate.setText(CCFormatUtil.formatAmount(personal.achievementRate) + "%");
 	}
 
 	@Override

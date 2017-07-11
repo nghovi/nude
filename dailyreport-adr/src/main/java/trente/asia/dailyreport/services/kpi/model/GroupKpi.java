@@ -11,13 +11,6 @@ import trente.asia.welfare.adr.models.UserModel;
 
 public class GroupKpi{
 
-	public static class CheckPoint{
-
-		public String	date;
-
-		public String	achievement;
-	}
-
 	public String			name;
 	public String			todayActual		= "0";
 	public String			groupPeriod;
@@ -32,7 +25,6 @@ public class GroupKpi{
 	public String			ownerDeptId;
 	public String			key;
 	public List<UserModel>	kpiMembers;
-	public List<CheckPoint>	checkPointList	= new ArrayList<>();
 	public String			achievement		= "0";
 	public String			achievementRate	= "0";
 	public String			companyId;

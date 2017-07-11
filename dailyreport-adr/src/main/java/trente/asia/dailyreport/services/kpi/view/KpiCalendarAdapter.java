@@ -34,7 +34,7 @@ public class KpiCalendarAdapter extends BaseAdapter{
 	private Context				mContext;
 
 	private Calendar			month;
-	public GregorianCalendar	pmonth;						// view_dr_calendar instance for previous gregorianCalendar
+	public GregorianCalendar	pmonth;									// view_dr_calendar instance for previous gregorianCalendar
 	/**
 	 * view_dr_calendar instance for previous gregorianCalendar for getting complete view
 	 */
@@ -47,7 +47,8 @@ public class KpiCalendarAdapter extends BaseAdapter{
 	int							mnthlength;
 	private ArrayList<String>	items;
 	public List<Calendar>		dayString;
-	private Map<Integer, View>	viewMap	= new HashMap<>();
+	private Map<Integer, View>	viewMap				= new HashMap<>();
+	private int					selectedPosition	= -1;
 
 	public KpiCalendarAdapter(Context c, GregorianCalendar monthCalendar){
 		dayString = new ArrayList<Calendar>();
@@ -86,7 +87,6 @@ public class KpiCalendarAdapter extends BaseAdapter{
 
 		int gridvalue = dayString.get(position).get(Calendar.DAY_OF_MONTH);
 		int dayColor = Color.BLACK;
-		RelativeLayout rltBackground = (RelativeLayout)v.findViewById(R.id.item_calendar_background);
 
 		// checking whether the day is in current month or not.
 		if(((gridvalue > 1) && (position < firstDay)) || ((gridvalue < 7) && (position > 28))){
@@ -96,22 +96,42 @@ public class KpiCalendarAdapter extends BaseAdapter{
 		}else{
 			if(position % 7 == 0){// Sundays
 				dayColor = ContextCompat.getColor(mContext, R.color.dr_day_color_sun);
-				rltBackground.setBackgroundResource(R.drawable.dr_item_calendar_background_sun);
 			}else if(position % 7 == 6){// Saturdays
 				dayColor = ContextCompat.getColor(mContext, R.color.dr_text_day_color_sat);
-				rltBackground.setBackgroundResource(R.drawable.dr_item_calendar_background_sat);
+			}
+			if(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, Calendar.getInstance().getTime()).equals(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, dayString.get(position).getTime()))){
+				dayColor = ContextCompat.getColor(mContext, R.color.core_white);
 			}
 
+			updateBackground(v, position, 0);
 			if(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, Calendar.getInstance().getTime()).equals(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, dayString.get(position).getTime()))){
 				dayColor = ContextCompat.getColor(mContext, R.color.core_white);
 				txtDay.setBackgroundResource(R.drawable.dr_background_base_color_circle);
+				selectedPosition = position;
+				updateBackground(v, position, Color.GRAY);
 			}
+
 		}
 
 		txtDay.setTextColor(dayColor);
 		txtDay.setText(String.valueOf(gridvalue));
 		viewMap.put(position, v);
 		return v;
+	}
+
+	public void updateBackground(View cell, int position, int bgColor){
+		RelativeLayout rltBackground = (RelativeLayout)cell.findViewById(R.id.item_calendar_background);
+		if(bgColor != 0){
+			rltBackground.setBackgroundColor(bgColor);
+		}else{
+			if(position % 7 == 0){// Sundays
+				rltBackground.setBackgroundResource(R.drawable.dr_item_calendar_background_sun);
+			}else if(position % 7 == 6){// Saturdays
+				rltBackground.setBackgroundResource(R.drawable.dr_item_calendar_background_sat);
+			}else{
+				rltBackground.setBackgroundColor(Color.WHITE);
+			}
+		}
 	}
 
 	public void refreshDays(){
@@ -172,8 +192,27 @@ public class KpiCalendarAdapter extends BaseAdapter{
 
 	private void updateCellLayout(View v, ActionPlan actionPlan){
 		if(actionPlan != null && actionPlan.key != null){
-			View kpiStatus = v.findViewById(R.id.item_calendar_img_status);
-			v.setVisibility(View.VISIBLE);
+			ImageView kpiStatus = (ImageView)v.findViewById(R.id.item_calendar_img_status);
+			if(ActionPlan.STATUS_YET.equals(actionPlan.actionStatus)){
+				kpiStatus.setVisibility(View.INVISIBLE);
+			}else{
+				kpiStatus.setVisibility(View.VISIBLE);
+				if(ActionPlan.STATUS_OK.equals(actionPlan.actionStatus)){
+					kpiStatus.setImageResource(R.drawable.wf_check);
+				}else if(ActionPlan.STATUS_NG.equals(actionPlan.actionStatus)){
+					// kpiStatus.setImageResource(R.drawable.wf_check);
+				}
+			}
 		}
+	}
+
+	public void updateSelectedCell(int position){
+		View cell = viewMap.get(position);
+		updateBackground(cell, position, Color.GRAY);
+		if(selectedPosition != -1){
+			cell = viewMap.get(selectedPosition);
+			updateBackground(cell, selectedPosition, 0);
+		}
+		selectedPosition = position;
 	}
 }
