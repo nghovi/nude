@@ -67,7 +67,7 @@
     <string name="fragment_post_edit_dept">部署</string>
     <string name="fragment_post_edit_user">ユーザ</string>
     <string name="fragment_post_edit_category">カテゴリ</string>
-    <string name="txt_fragment_post_edit_message">１回につき、１ポイントがもらえます。</string>
+    <string name="txt_fragment_post_edit_message">メッセージ</string>
     <string name="fragment_post_edit_alert_dlg_message1">ユーザを選択してください</string>
     <string name="fragment_post_edit_alert_dlg_message2">メッセージは 1 文字以上 %1$s 文字以下です</string>
     <string name="fragment_post_edit_alert_dlg_message3">テンプレートを選択してください</string>
