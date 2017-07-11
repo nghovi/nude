@@ -30,6 +30,7 @@ import trente.asia.thankscard.services.common.model.HistoryModel;
 import trente.asia.thankscard.services.common.model.Template;
 import trente.asia.thankscard.services.posted.ThanksCardEditFragment;
 import trente.asia.thankscard.services.rank.view.TCTabLinearLayout;
+import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.models.DeptModel;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WelfareUtil;
@@ -486,4 +487,8 @@ public abstract class AbstractTCListFragment extends AbstractTCFragment implemen
 		btnPost = null;
 	}
 
+	@Override
+	protected String getServiceCd() {
+		return WelfareConst.SERVICE_CD_TC;
+	}
 }

@@ -50,6 +50,7 @@
     <color name="wf_app_edit_text">#fff6db</color>
 
     <color name="service_profile_bg_color">#e0f48a09</color>
-
+    <color name="tc_dialog_confirm_divider">#ffc403</color>
+    <color name="tc_dialog_confirm_text">#3ec5f7</color>
 
 </resources>

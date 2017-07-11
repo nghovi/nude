@@ -146,4 +146,9 @@
     <string name="tc_explain_silver">Sticker types increase</string>
     <string name="tc_explain_bronze">You can use photos and stickers to decorate your cards</string>
     <string name="tc_explain_regular">You can use cards to send your messages</string>
+    <string name="tc_confirm_dialog_title">Confirmation</string>
+    <string name="tc_confirm_name">Dear %1$s</string>
+    <string name="tc_confirm_msg">Do you want to send message?</string>
+    <string name="tc_secret_mode">Send on secret mode</string>
+    <string name="tc_ok">OK</string>
 </resources>
