@@ -5,6 +5,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -29,6 +30,7 @@ import trente.asia.thankscard.BuildConfig;
 import trente.asia.thankscard.R;
 import trente.asia.thankscard.commons.defines.TcConst;
 import trente.asia.thankscard.fragments.AbstractTCFragment;
+import trente.asia.thankscard.fragments.dialogs.PostConfirmDialog;
 import trente.asia.thankscard.fragments.dialogs.TemplateSelectionDialog;
 import trente.asia.thankscard.services.common.model.Category;
 import trente.asia.thankscard.services.common.model.HistoryModel;
@@ -304,6 +306,27 @@ public class ThanksCardEditFragment extends AbstractTCFragment {
         });
     }
 
+    private void showConfirmDialog() {
+        final PostConfirmDialog dialog = new PostConfirmDialog();
+        dialog.show(getFragmentManager(), null);
+        dialog.setListeners(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+                requestPostNewCard(dialog.isSecret());
+            }
+        }, new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+    }
+
+    private void log(String msg) {
+        Log.e("Card Edit", msg);
+    }
+
     private void buildCategorySelectionButton() {
         spnCategory.setupLayout(getString(R.string.fragment_post_edit_category), Category.getCategoryNameList(), 0,
 
@@ -419,24 +442,11 @@ public class ThanksCardEditFragment extends AbstractTCFragment {
         } else if (this.template == null) {
             showAlertDialog(getString(R.string.fragment_post_edit_alert_dlg_title), getString(R.string.fragment_post_edit_alert_dlg_message3), getString(android.R.string.ok), null);
         } else {
-            DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
-
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    requestPostNewCard();
-                }
-            };
-            showAlertDialogWithOption(getString(R.string.fragment_post_edit_alert_dlg_confirm_title), getString(R.string.fragment_post_edit_alert_dlg_confirm_message, selectedUser.userName), getString(R.string.chiase_common_ok), getString(R.string.chiase_common_cancel), listener, null);
-            // gotoConfirmFragment();
+            showConfirmDialog();
         }
     }
 
-    private void requestPostNewCard() {
-        // if(CCStringUtil.isEmpty(mHistoryModel.message.trim())){
-        // alertDialog.setMessage(getString(R.string.msg_msg_invalid_empty));
-        // alertDialog.show();
-        // edtMessage.setText("");
-        // }else{
+    private void requestPostNewCard(boolean isSecret) {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("postDate", CCFormatUtil.formatDate(new Date()));
@@ -449,6 +459,7 @@ public class ThanksCardEditFragment extends AbstractTCFragment {
 
             jsonObject.put("receiverId", mHistoryModel.receiverId);
             jsonObject.put("message", mHistoryModel.message);
+            jsonObject.put("isSecret", isSecret);
         } catch (JSONException ex) {
             ex.printStackTrace();
         }

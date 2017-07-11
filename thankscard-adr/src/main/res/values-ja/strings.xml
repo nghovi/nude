@@ -129,12 +129,12 @@
     <string name="fragment_mypage_rank_next_post">%1$s位まであと%2$spt</string>
     <string name="fragment_mypage_rank_next_receive">%1$s位まであと%2$spt</string>
     <string name="rank_first_congrats">おめでとうございます！☆</string>
-    <string name="tc_stage_infor_explain">カードを送ったり、受け取ったりすると、</string>
+    <string name="tc_stage_infor_explain">カードを送ったり、受け取ったりすると、１回につき、１ポイントがもらえます。ポイントを貯めると、ステージが上がり、カードやデコレーションの種類が増えます。ステージを上げ、素敵なカードを送りましょう。</string>
     <string name="tc_rank_gold">ゴールド</string>
     <string name="tc_rank_silver">シルバー</string>
     <string name="tc_explain_silver">シールの種類が増えます</string>
     <string name="tc_rank_bronze">ブロンズ</string>
-    <string name="tc_explain_bronze">カードでメッセージを送ることができます。</string>
+    <string name="tc_explain_bronze">カードをデコレーションするための、写真・シールが使えるようになります</string>
     <string name="tc_rank_regular">レギュラー</string>
     <string name="tc_explain_gold">カード、シールの種類が増えます</string>
     <string name="tc_explain_regular">カードでメッセージを送ることができます。</string>

@@ -87,7 +87,7 @@ public class MyPagerAdapter2 extends PagerAdapter{
 		viewHolder.txtDate.setText(mContext.getResources().getString(R.string.fragment_tc_detail_date, postDateFormat));
 		viewHolder.txtTo.setText(mContext.getResources().getString(R.string.fragment_tc_detail_to, model.receiverName));
 		viewHolder.txtFrom.setText(mContext.getResources().getString(R.string.fragment_tc_detail_from, model.posterName));
-		viewHolder.txtFrom.setVisibility(View.GONE);
+		viewHolder.txtFrom.setVisibility(View.INVISIBLE);
 
 		viewHolder.txtMessage.setText(model.message);
 		viewHolder.txtMessage.setMovementMethod(new ScrollingMovementMethod());
