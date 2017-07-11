@@ -66,13 +66,13 @@
 
     <!--Notifications-->
     <string name="header_calendar_this_week">今週</string>
-    <string name="goal_period">目標期限(moku hyou kigen)</string>
+    <string name="goal_period">目標期限</string>
     <string name="personal_goal">個人目標</string>
-    <string name="total_performance">累計実績(Ruikei jisseki)</string>
-    <string name="achievement_rate">達成率(tassei ritsu)</string>
+    <string name="total_performance">累計実績</string>
+    <string name="achievement_rate">達成率</string>
     <string name="today_performance">本日の実績</string>
     <string name="footer_itemkpi">KPI</string>
-    <string name="fragment_kpi_title">実績入力(jissekinyuryoku)</string>
+    <string name="fragment_kpi_title">実績入力</string>
     <string name="fragment_actual_plan_title">個人アクションプラン</string>
     <string name="fragment_group_actual_title">Group Actual</string>
     <string name="fragment_group_actual_list_title">GroupActualList</string>
@@ -80,12 +80,12 @@
     <string name="fragment_group_actual_group_goal">グループ目標</string>
     <string name="fragmen_group_actual_needed_amount">達成まであと</string>
     <string name="fragmen_group_actual_needed_amount2">達成まであと%1$s</string>
-    <string name="achieve_dialog_title">達成!!(tattsei)</string>
+    <string name="achieve_dialog_title">達成!!</string>
     <string name="achieve_dialog_content">おめでとうございます。 \n個人目標を達成しました。\n素晴らしい！！ \nこの調子でいきましょう！</string>
     <string name="achieve_warning_dialog_title">本日は進捗確認日です</string>
     <string name="achieve_warning_dialog_content">KPIを達成していません\nアクションプランの見直しを考えましょう。</string>
     <string name="today_goal">本日の目標</string>
-    <string name="supplement_memo">補足メモ(hosoku)</string>
+    <string name="supplement_memo">補足メモ</string>
     <string name="performance_in_month">%1$s月の実績</string>
     <string name="achievement_rate_in_month">%1$s月の達成率</string>
     <string name="user_has_no_kpi_setup">KPIが設定されていません</string>
