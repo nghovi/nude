@@ -52,21 +52,22 @@ import trente.asia.welfare.adr.dialog.WfDialog;
  */
 public class UserActualFragment extends AbstractDRFragment{
 
-	private static final int	LABEL_COUNT	= 25;
-	private DatePickerDialog	datePickerDialog;
-	private TextView			txtSelectedDate;
-	private DRGroupHeader		drGroupHeader;
-	private WfDialog			wfDialog;
-	private List<GroupKpi>		groupKpiList;
-	LineChart					lineChart;
-	private LinearLayout		lnrInfo;
-	private GroupKpi			selectedGroup;
-	private TextView			txtPeriod;
-	private TextView			txtGoal;
-	private TextView			txtActualTotal;
-	private TextView			txtAchievementRate;
-	private EditText			edtActualToday;
-	private Personal			personal;
+	private static final int			LABEL_COUNT	= 25;
+	private static Map<Float, String>	formattedValuesMap;
+	private DatePickerDialog			datePickerDialog;
+	private TextView					txtSelectedDate;
+	private DRGroupHeader				drGroupHeader;
+	private WfDialog					wfDialog;
+	private List<GroupKpi>				groupKpiList;
+	LineChart							lineChart;
+	private LinearLayout				lnrInfo;
+	private GroupKpi					selectedGroup;
+	private TextView					txtPeriod;
+	private TextView					txtGoal;
+	private TextView					txtActualTotal;
+	private TextView					txtAchievementRate;
+	private EditText					edtActualToday;
+	private Personal					personal;
 
 	@Override
 	public int getFragmentLayoutId(){
@@ -162,14 +163,13 @@ public class UserActualFragment extends AbstractDRFragment{
 
 	public static void buildChart(LineChart lineChart, Personal personal){
 		if(!CCCollectionUtil.isEmpty(personal.progressList)){
-			final Map<Float, String> formattedValuesMap = new HashMap<>();
+			formattedValuesMap = new HashMap<>();
 			List<Entry> entries = new ArrayList<Entry>();
 			Progress maxCheckPoint = personal.progressList.get(personal.progressList.size() - 1);
 
 			Date lastCheckPointDate = CCDateUtil.makeDateCustom(maxCheckPoint.checkPointDate, WelfareConst.WF_DATE_TIME_DATE);
 			Date firstCheckPointDate = CCDateUtil.makeDateCustom(personal.progressList.get(0).checkPointDate, WelfareConst.WF_DATE_TIME_DATE);
 			long maxDistanceDay = (lastCheckPointDate.getTime() - firstCheckPointDate.getTime()) / (24 * 60 * 60 * 1000);
-			lineChart.fitScreen();
 
 			int pageNum = personal.progressList.size() / 7 + 1;
 			float maxVisibleRange = maxDistanceDay / pageNum;
@@ -211,13 +211,22 @@ public class UserActualFragment extends AbstractDRFragment{
 
 			XAxis xAxis = lineChart.getXAxis();
 			xAxis.setGranularityEnabled(false);
-			// xAxis.setGranularity(1f);
 			xAxis.setLabelCount(LABEL_COUNT, false);
 			xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
 			xAxis.setTextSize(10f);
 			xAxis.setTextColor(Color.BLACK);
 			xAxis.setDrawAxisLine(true);
 			xAxis.setDrawGridLines(false);
+			// xAxis.setGranularity(1f); // minimum axis-step (interval) is 1
+			xAxis.setValueFormatter(formatter);
+			// xAxis.setAvoidFirstLastClipping(true);
+			xAxis.setLabelRotationAngle(-50f);
+			xAxis.setTextSize(7);
+			xAxis.setAxisMaximum(maxDistanceDay + labelDistance);
+
+			// set a custom value formatter
+			// xAxis.setValueFormatter(new MyCustomFormatter());
+			// and more...
 
 			YAxis yAxisLeft = lineChart.getAxisLeft();
 			yAxisLeft.setDrawAxisLine(false);
@@ -302,20 +311,12 @@ public class UserActualFragment extends AbstractDRFragment{
 				}
 			});
 
-			// xAxis.setGranularity(1f); // minimum axis-step (interval) is 1
-			xAxis.setValueFormatter(formatter);
-			// xAxis.setAvoidFirstLastClipping(true);
-			xAxis.setLabelRotationAngle(-50f);
-			xAxis.setTextSize(7);
-			xAxis.setAxisMaximum(maxDistanceDay + labelDistance);
-
-			// set a custom value formatter
-			// xAxis.setValueFormatter(new MyCustomFormatter());
-			// and more...
 			Description description = new Description();
 			description.setText("");
 			lineChart.setDescription(description);
 			lineChart.setVisibleXRangeMaximum(maxVisibleRange);
+			lineChart.setScaleMinima(0f, 0f);
+			lineChart.fitScreen();
 			lineChart.invalidate(); // refresh
 		}
 
