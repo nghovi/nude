@@ -128,8 +128,8 @@
     <string name="tc_contact_us_content_title">Content</string>
     <string name="tc_contact_us_service_title">Service name</string>
     <string name="tc_contact_us_select_item">Select</string>
-    <string name="fragment_mypage_rank_next_post">%2$spt needed to rank %1$s</string>
-    <string name="fragment_mypage_rank_next_receive">%2$spt needed to rank %1$s</string>
+    <string name="fragment_mypage_rank_next_post">"Another %2$spt until rank %1$s "</string>
+    <string name="fragment_mypage_rank_next_receive">Another %2$spt until rank %1$s</string>
     <string name="fragment_card_detail_from">From:</string>
     <string name="rank_first_congrats">Congratulations！☆</string>
     <string name="tc_stage_information">Stage information</string>
