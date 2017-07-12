@@ -79,7 +79,7 @@
                         android:id="@+id/img_seal"
                         android:layout_width="@dimen/margin_60dp"
                         android:layout_height="@dimen/margin_60dp"
-                        android:src="@drawable/ic_seal"
+                        android:src="@drawable/tc_ic_seal"
                         android:layout_alignParentEnd="true"
                         android:layout_marginEnd="@dimen/margin_16dp"
                         android:layout_marginTop="@dimen/margin_5dp"/>
