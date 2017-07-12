@@ -5,6 +5,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,7 @@ import trente.asia.thankscard.commons.defines.TcConst;
 import trente.asia.thankscard.databinding.FragmentPostTcBinding;
 import trente.asia.thankscard.fragments.AbstractTCFragment;
 import trente.asia.thankscard.services.common.model.Template;
+import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.models.DeptModel;
 import trente.asia.welfare.adr.models.UserModel;
@@ -37,7 +39,7 @@ import trente.asia.welfare.adr.utils.WfPicassoHelper;
  * Created by tien on 7/12/2017.
  */
 
-public class PostTCFragment extends AbstractTCFragment implements View.OnClickListener {
+public class PostTCFragment extends AbstractTCFragment implements View.OnClickListener, SelectDeptFragment.OnSelectDeptListener {
 
     private List<Template> templates;
     private FragmentPostTcBinding binding;
@@ -93,6 +95,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
     @Override
     protected void initData() {
         super.initData();
+        requestAccountInfo();
         requestTemplate();
         buildTemplate(false);
     }
@@ -100,6 +103,11 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
     private void requestTemplate() {
         JSONObject param = new JSONObject();
         requestLoad(TcConst.API_GET_TEMPLATE, param, true);
+    }
+
+    private void requestAccountInfo() {
+        JSONObject param = new JSONObject();
+        requestLoad(WfUrlConst.WF_ACC_INFO_DETAIL, param, true);
     }
 
     @Override
@@ -134,7 +142,11 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.rlt_select_dept:
-                gotoFragment(new SelectDeptFragment());
+                SelectDeptFragment fragment = new SelectDeptFragment();
+                gotoFragment(fragment);
+                fragment.setDepartments(departments, department);
+                log(department.deptName);
+                fragment.setCallback(this);
                 break;
             case R.id.rlt_select_user:
                 break;
@@ -143,5 +155,19 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onDoneClick(DeptModel deptModel) {
+        this.department = deptModel;
+        binding.deptName.setText(department.deptName);
+        if (WelfareConst.NONE.equals(department.key)) {
+            member = department.members.get(0);
+            binding.userName.setText(member.userName);
+        }
+    }
+
+    private void log(String msg) {
+        Log.e("PostTc", msg);
     }
 }
