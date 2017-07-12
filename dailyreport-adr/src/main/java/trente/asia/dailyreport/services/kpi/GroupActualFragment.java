@@ -108,8 +108,8 @@ public class GroupActualFragment extends AbstractDRFragment{
 		String dateStr = txtSelectedDate.getText().toString();
 		JSONObject jsonObject = new JSONObject();
 		try{
-			jsonObject.put("targetGroupId", groupKpiKey);
-			jsonObject.put("targetDate", dateStr);
+			jsonObject.put("searchNo", groupKpiKey);
+			jsonObject.put("searchDateString", dateStr);
 		}catch(JSONException ex){
 			ex.printStackTrace();
 		}

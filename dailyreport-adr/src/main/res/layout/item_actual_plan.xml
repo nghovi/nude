@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/margin_10dp"
         android:layout_marginTop="@dimen/margin_10dp"
-        android:background="@drawable/dr_background_gray_border_padding"
+        android:background="@drawable/dr_white_background_gray_border_padding"
         android:orientation="vertical"
         android:paddingBottom="@dimen/margin_10dp"
         android:paddingTop="@dimen/margin_10dp">
@@ -55,8 +55,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="right"
-                android:textSize="12sp"
-                android:hint="@string/chiase_common_please_input" />
+                android:hint="@string/chiase_common_please_input"
+                android:textSize="12sp" />
 
         </LinearLayout>
     </LinearLayout>
