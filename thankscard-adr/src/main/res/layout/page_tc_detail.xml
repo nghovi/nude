@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:src="@drawable/ic_secret"/>
+            android:src="@drawable/tc_ic_secret"/>
 
         <LinearLayout
             android:id="@+id/lnr_thanks_card_frame_container"
