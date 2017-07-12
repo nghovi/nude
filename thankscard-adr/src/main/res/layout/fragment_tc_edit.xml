@@ -82,8 +82,7 @@
                 android:text="@string/txt_fragment_post_edit_template"
                 android:textColor="@color/chiase_white"/>
         </LinearLayout>
-
-
+        
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">

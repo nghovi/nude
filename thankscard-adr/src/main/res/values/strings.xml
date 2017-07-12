@@ -152,4 +152,7 @@
     <string name="tc_secret_mode">Send on secret mode</string>
     <string name="tc_ok">OK</string>
     <string name="tc_select_card">Select card</string>
+    <string name="tc_select_dept">Select department</string>
+    <string name="tc_select_user">Select user</string>
+    <string name="tc_search">Search</string>
 </resources>

@@ -16,6 +16,7 @@
             android:orientation="vertical">
 
             <RelativeLayout
+                android:id="@+id/rlt_select_dept"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/margin_16dp"
@@ -50,6 +51,7 @@
             <View style="@style/cs_common_divider" />
 
             <RelativeLayout
+                android:id="@+id/rlt_select_user"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/margin_16dp"
@@ -133,7 +135,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:gravity="center_horizontal">
+                android:gravity="center_horizontal"
+                android:background="@drawable/state_common_selectable_row">
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

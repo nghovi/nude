@@ -37,13 +37,16 @@ import trente.asia.welfare.adr.utils.WfPicassoHelper;
  * Created by tien on 7/12/2017.
  */
 
-public class PostTCFragment extends AbstractTCFragment{
+public class PostTCFragment extends AbstractTCFragment implements View.OnClickListener {
 
-	private List<Template>			templates;
-	private FragmentPostTcBinding	binding;
-	private Template template;
+    private List<Template> templates;
+    private FragmentPostTcBinding binding;
+    private Template template;
+    private List<DeptModel> departments;
+    private DeptModel department;
+    private UserModel member;
 
-	@Override
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (mRootView == null) {
             binding = DataBindingUtil.inflate(inflater, R.layout.fragment_post_tc, container, false);
@@ -53,80 +56,92 @@ public class PostTCFragment extends AbstractTCFragment{
     }
 
     @Override
-	public int getFragmentLayoutId(){
-		return R.layout.fragment_post_tc;
-	}
+    public int getFragmentLayoutId() {
+        return R.layout.fragment_post_tc;
+    }
 
-	@Override
-	public boolean hasBackBtn(){
-		return true;
-	}
+    @Override
+    public boolean hasBackBtn() {
+        return true;
+    }
 
-	@Override
-	public boolean hasSettingBtn(){
-		return true;
-	}
+    @Override
+    public boolean hasSettingBtn() {
+        return true;
+    }
 
-	@Override
-	public int getFooterItemId(){
-		return 0;
-	}
+    @Override
+    public int getFooterItemId() {
+        return 0;
+    }
 
-	@Override
-	public int getTitle(){
-		return R.string.fragment_post_edit_title;
-	}
+    @Override
+    public int getTitle() {
+        return R.string.fragment_post_edit_title;
+    }
 
-	@Override
-	public void buildBodyLayout(){
-		template = new Template();
-		template.templateId = prefAccUtil.get(TcConst.PREF_TEMPLATE_ID);
-		template.templateUrl = prefAccUtil.get(TcConst.PREF_TEMPLATE_PATH);
-	}
+    @Override
+    public void buildBodyLayout() {
+        template = new Template();
+        template.templateId = prefAccUtil.get(TcConst.PREF_TEMPLATE_ID);
+        template.templateUrl = prefAccUtil.get(TcConst.PREF_TEMPLATE_PATH);
+        binding.rltSelectDept.setOnClickListener(this);
+        binding.rltSelectUser.setOnClickListener(this);
+        binding.lnrSelectCard.setOnClickListener(this);
+    }
 
-	@Override
-	protected void initData(){
-		super.initData();
-		requestTemplate();
-		buildTemplate(false);
-	}
+    @Override
+    protected void initData() {
+        super.initData();
+        requestTemplate();
+        buildTemplate(false);
+    }
 
-	private void requestTemplate(){
-		JSONObject param = new JSONObject();
-		requestLoad(TcConst.API_GET_TEMPLATE, param, true);
-	}
+    private void requestTemplate() {
+        JSONObject param = new JSONObject();
+        requestLoad(TcConst.API_GET_TEMPLATE, param, true);
+    }
 
-	@Override
-	protected void successLoad(JSONObject response, String url){
-		if(TcConst.API_GET_TEMPLATE.equals(url)){
-			requestTemplateSuccess(response);
-		}else if(WfUrlConst.WF_ACC_INFO_DETAIL.equals(url)){
-			// departments = CCJsonUtil.convertToModelList(response.optString("depts"), DeptModel.class);
-			// loadNoticeData();
-			// buildCategorySelectionButton();
-			//
-			// DeptModel deptModel = new DeptModel(CCConst.NONE, getString(R.string.chiase_common_none));
-			// departments.add(0, deptModel);
-			// // add none user to member list
-			// for (DeptModel dept : departments) {
-			// if (CCCollectionUtil.isEmpty(dept.members)) {
-			// dept.members = new ArrayList<>();
-			// }
-			// dept.members.add(0, new UserModel(CCConst.NONE, getString(R.string.chiase_common_none)));
-			// }
-			//
-			// buildSpinners();
-		}else{
-			super.successLoad(response, url);
-		}
-	}
+    @Override
+    protected void successLoad(JSONObject response, String url) {
+        if (TcConst.API_GET_TEMPLATE.equals(url)) {
+            requestTemplateSuccess(response);
+        } else if (WfUrlConst.WF_ACC_INFO_DETAIL.equals(url)) {
+            departments = CCJsonUtil.convertToModelList(response.optString("depts"), DeptModel.class);
+            department = new DeptModel(CCConst.NONE, getString(R.string.chiase_common_none));
+            departments.add(0, department);
+            for (DeptModel dept : departments) {
+                if (CCCollectionUtil.isEmpty(dept.members)) {
+                    dept.members = new ArrayList<>();
+                }
+                member = new UserModel(CCConst.NONE, getString(R.string.chiase_common_none));
+                dept.members.add(0, member);
+            }
+        } else {
+            super.successLoad(response, url);
+        }
+    }
 
-	private void requestTemplateSuccess(JSONObject response){
-		templates = CCJsonUtil.convertToModelList(response.optString("templates"), Template.class);
-	}
+    private void requestTemplateSuccess(JSONObject response) {
+        templates = CCJsonUtil.convertToModelList(response.optString("templates"), Template.class);
+    }
 
-	private void buildTemplate(boolean keepCurrentMessage){
+    private void buildTemplate(boolean keepCurrentMessage) {
         WfPicassoHelper.loadImage(getContext(), BuildConfig.HOST + template.templateUrl, binding.imgCard, null);
-	}
+    }
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.rlt_select_dept:
+                gotoFragment(new SelectDeptFragment());
+                break;
+            case R.id.rlt_select_user:
+                break;
+            case R.id.lnr_select_card:
+                break;
+            default:
+                break;
+        }
+    }
 }
