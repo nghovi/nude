@@ -86,8 +86,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
+            android:layout_height="match_parent">
 
             <ImageView
                 android:id="@+id/img_fragment_post_edit_template"
@@ -119,8 +118,7 @@
                     android:maxLength="75"
                     android:maxLines="6"
                     android:paddingLeft="@dimen/margin_20dp"
-                    android:paddingRight="@dimen/margin_20dp"
-                    />
+                    android:paddingRight="@dimen/margin_20dp" />
 
                 <TextView
                     android:id="@+id/txt_fragment_post_edit_count"
