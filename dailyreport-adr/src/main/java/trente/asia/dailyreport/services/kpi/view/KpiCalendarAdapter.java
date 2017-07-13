@@ -215,4 +215,8 @@ public class KpiCalendarAdapter extends BaseAdapter{
 		}
 		selectedPosition = position;
 	}
+
+	public int getSelectedPosition() {
+		return selectedPosition;
+	}
 }

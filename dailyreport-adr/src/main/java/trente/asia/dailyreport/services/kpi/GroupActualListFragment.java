@@ -1,6 +1,7 @@
 package trente.asia.dailyreport.services.kpi;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.json.JSONException;
@@ -32,6 +33,7 @@ public class GroupActualListFragment extends AbstractDRFragment implements Group
 	private GroupActualListAdapter	adapter;
 	private DatePickerDialog		datePickerDialog;
 	private TextView				txtSelectedDate;
+	private Date					selectedDate;
 
 	@Override
 	public int getFragmentLayoutId(){
@@ -54,8 +56,13 @@ public class GroupActualListFragment extends AbstractDRFragment implements Group
 		lstGroupActual = (ListView)getView().findViewById(R.id.lst_group_actual);
 
 		Calendar calendar = Calendar.getInstance();
+		if(selectedDate == null){
+			selectedDate = calendar.getTime();
+		}else{
+			calendar.setTime(selectedDate);
+		}
 		txtSelectedDate = (TextView)getView().findViewById(R.id.txt_fragment_kpi_date);
-		txtSelectedDate.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, calendar.getTime()));
+		txtSelectedDate.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, selectedDate));
 		datePickerDialog = new DatePickerDialog(activity, new DatePickerDialog.OnDateSetListener() {
 
 			@Override
@@ -78,7 +85,7 @@ public class GroupActualListFragment extends AbstractDRFragment implements Group
 		String dateStr = txtSelectedDate.getText().toString();
 		JSONObject jsonObject = new JSONObject();
 		try{
-			jsonObject.put("targetDate", dateStr);
+			jsonObject.put("searchDateString", dateStr);
 		}catch(JSONException ex){
 			ex.printStackTrace();
 		}
@@ -89,7 +96,7 @@ public class GroupActualListFragment extends AbstractDRFragment implements Group
 	protected void successLoad(JSONObject response, String url){
 		if(getView() != null){
 			List<GroupKpi> groupKpiList = CCJsonUtil.convertToModelList(response.optString("groups"), GroupKpi.class);
-//			groupKpiList = UserActualFragment.createDummy();
+			// groupKpiList = UserActualFragment.createDummy();
 			adapter = new GroupActualListAdapter(getContext(), R.layout.item_group_actual, groupKpiList, this);
 			lstGroupActual.setAdapter(adapter);
 		}
@@ -115,5 +122,9 @@ public class GroupActualListFragment extends AbstractDRFragment implements Group
 	public void onGraphIconClicked(GroupKpi groupKpi){
 		((WelfareActivity)activity).dataMap.put(GROUP_KPI_KEY, groupKpi.key);
 		super.onClickBackBtn();
+	}
+
+	public void setSelectedDate(Date selectedDate){
+		this.selectedDate = selectedDate;
 	}
 }
