@@ -42,7 +42,11 @@ public class WrapContentHeightViewPager extends ViewPager{
 				int h = child.getMeasuredHeight();
 				if(h > height) // 采用最大的view的高度。
 					height = h;
+
 			}
+
+			getLayoutParams().height = height;
+
 		}
 	}
 

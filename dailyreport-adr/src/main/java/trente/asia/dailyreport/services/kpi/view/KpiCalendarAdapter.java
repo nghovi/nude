@@ -25,7 +25,7 @@ import android.widget.TextView;
 
 import asia.chiase.core.util.CCFormatUtil;
 import trente.asia.dailyreport.R;
-import trente.asia.dailyreport.services.kpi.ActualPlanAddFragment;
+import trente.asia.dailyreport.services.kpi.ActionPlansAddFragment;
 import trente.asia.dailyreport.services.kpi.model.ActionPlan;
 import trente.asia.welfare.adr.define.WelfareConst;
 
@@ -185,7 +185,7 @@ public class KpiCalendarAdapter extends BaseAdapter{
 	public void updateLayout(List<ActionPlan> actionPlanList){
 		for(int i = 0; i < viewMap.size(); i++){
 			View cell = viewMap.get(i);
-			ActionPlan actionPlan = ActualPlanAddFragment.getActualPlanByDay(dayString.get(i), actionPlanList);
+			ActionPlan actionPlan = ActionPlansAddFragment.getActionPlanByDay(dayString.get(i), actionPlanList);
 			updateCellLayout(cell, actionPlan);
 		}
 	}

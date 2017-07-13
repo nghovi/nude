@@ -1,5 +1,6 @@
 package trente.asia.dailyreport.view;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
@@ -21,7 +22,7 @@ public class DRGroupHeader extends LinearLayout{
 
 	private GroupKpi						selectedGroup;
 	private int								currentIdx	= 0;
-	private List<GroupKpi>					groups;
+	private List<GroupKpi>					groups		= new ArrayList<>();
 	private OnGroupHeaderActionsListener	onGroupHeaderActionsListener;
 
 	public DRGroupHeader(Context context){
@@ -76,6 +77,8 @@ public class DRGroupHeader extends LinearLayout{
 				selectOtherGroup(false);
 			}
 		});
+		btnNext.setEnabled(false);
+		btnBack.setEnabled(false);
 	}
 
 	public interface OnGroupHeaderActionsListener{

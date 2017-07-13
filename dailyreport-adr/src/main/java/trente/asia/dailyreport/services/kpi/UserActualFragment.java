@@ -13,6 +13,8 @@ import org.json.JSONObject;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.LegendEntry;
 import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -22,13 +24,18 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.ScrollerCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import asia.chiase.core.util.CCCollectionUtil;
@@ -68,6 +75,7 @@ public class UserActualFragment extends AbstractDRFragment{
 	private TextView					txtAchievementRate;
 	private EditText					edtActualToday;
 	private Personal					personal;
+	private ScrollView					scrollView;
 
 	@Override
 	public int getFragmentLayoutId(){
@@ -88,7 +96,7 @@ public class UserActualFragment extends AbstractDRFragment{
 		String dateStr = txtSelectedDate.getText().toString();
 		JSONObject jsonObject = new JSONObject();
 		try{
-			jsonObject.put("targetDate", dateStr);
+			jsonObject.put("searchDateString", dateStr);
 		}catch(JSONException ex){
 			ex.printStackTrace();
 		}
@@ -147,6 +155,8 @@ public class UserActualFragment extends AbstractDRFragment{
 			}
 		});
 
+		scrollView = (ScrollView)getView().findViewById(R.id.scr_user_actual);
+
 		txtPeriod = ((TextView)getView().findViewById(R.id.txt_fragment_user_actual_period));
 		txtGoal = ((TextView)getView().findViewById(R.id.txt_fragment_user_actual_goal));
 		txtActualTotal = ((TextView)getView().findViewById(R.id.txt_fragment_user_actual_total));
@@ -161,13 +171,13 @@ public class UserActualFragment extends AbstractDRFragment{
 
 	}
 
-	public static void buildChart(LineChart lineChart, Personal personal){
+	public static void buildChart(Context context, LineChart lineChart, Personal personal){
 		if(!CCCollectionUtil.isEmpty(personal.progressList)){
 			formattedValuesMap = new HashMap<>();
 			List<Entry> entries = new ArrayList<Entry>();
-			Progress maxCheckPoint = personal.progressList.get(personal.progressList.size() - 1);
+			Progress maxProgress = personal.progressList.get(personal.progressList.size() - 1);
 
-			Date lastCheckPointDate = CCDateUtil.makeDateCustom(maxCheckPoint.checkPointDate, WelfareConst.WF_DATE_TIME_DATE);
+			Date lastCheckPointDate = CCDateUtil.makeDateCustom(maxProgress.checkPointDate, WelfareConst.WF_DATE_TIME_DATE);
 			Date firstCheckPointDate = CCDateUtil.makeDateCustom(personal.progressList.get(0).checkPointDate, WelfareConst.WF_DATE_TIME_DATE);
 			long maxDistanceDay = (lastCheckPointDate.getTime() - firstCheckPointDate.getTime()) / (24 * 60 * 60 * 1000);
 
@@ -175,13 +185,13 @@ public class UserActualFragment extends AbstractDRFragment{
 			float maxVisibleRange = maxDistanceDay / pageNum;
 			float labelDistance = Math.round(maxVisibleRange / LABEL_COUNT);
 
-			for(Progress checkPoint : personal.progressList){
-				Date checkPointDate = CCDateUtil.makeDateCustom(checkPoint.checkPointDate, WelfareConst.WF_DATE_TIME_DATE);
+			for(Progress progress : personal.progressList){
+				Date checkPointDate = CCDateUtil.makeDateCustom(progress.checkPointDate, WelfareConst.WF_DATE_TIME_DATE);
 				float xDay = (checkPointDate.getTime() - firstCheckPointDate.getTime()) / (24 * 60 * 60 * 1000);
 
 				float labelAxisValue = (Math.round(xDay / labelDistance)) * labelDistance;
-				formattedValuesMap.put(labelAxisValue, checkPoint.checkPointDate);
-				Entry t = new Entry(xDay, Float.valueOf(checkPoint.achievement));
+				formattedValuesMap.put(labelAxisValue, progress.checkPointDate);
+				Entry t = new Entry(xDay, Float.valueOf(progress.achievementOver));
 				entries.add(t);
 			}
 			LineDataSet dataSet = new LineDataSet(entries, ""); // add entries to dataset
@@ -189,14 +199,15 @@ public class UserActualFragment extends AbstractDRFragment{
 			dataSet.setLineWidth(1f);
 			dataSet.setValueTextColor(Color.BLUE); // styling, ...
 			dataSet.setValueTextSize(9);
-			dataSet.setLabel(personal.group.name + " checkpoint achievement");
+			dataSet.setLabel(personal.group.name);
+			// lineChart.getLegend().setEnabled(false);
 
 			LineData lineData = new LineData();
 			lineData.addDataSet(dataSet);
 
 			lineChart.setData(lineData);
-			lineChart.setVisibleYRangeMaximum(200f, YAxis.AxisDependency.LEFT);
-			lineChart.setVisibleYRangeMaximum(200f, YAxis.AxisDependency.RIGHT);
+			// lineChart.setVisibleYRangeMaximum(200f, YAxis.AxisDependency.LEFT);
+			// lineChart.setVisibleYRangeMaximum(200f, YAxis.AxisDependency.RIGHT);
 
 			IAxisValueFormatter formatter = new IAxisValueFormatter() {
 
@@ -215,7 +226,7 @@ public class UserActualFragment extends AbstractDRFragment{
 			xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
 			xAxis.setTextSize(10f);
 			xAxis.setTextColor(Color.BLACK);
-			xAxis.setDrawAxisLine(true);
+			// xAxis.setDrawAxisLine(true);
 			xAxis.setDrawGridLines(false);
 			// xAxis.setGranularity(1f); // minimum axis-step (interval) is 1
 			xAxis.setValueFormatter(formatter);
@@ -223,13 +234,12 @@ public class UserActualFragment extends AbstractDRFragment{
 			xAxis.setLabelRotationAngle(-50f);
 			xAxis.setTextSize(7);
 			xAxis.setAxisMaximum(maxDistanceDay + labelDistance);
+			xAxis.setYOffset(5f);
 
-			// set a custom value formatter
-			// xAxis.setValueFormatter(new MyCustomFormatter());
-			// and more...
-
+			float maxYValue = Math.max(Float.valueOf(maxProgress.achievementOver), Float.valueOf(personal.group.goal));
 			YAxis yAxisLeft = lineChart.getAxisLeft();
 			yAxisLeft.setDrawAxisLine(false);
+			yAxisLeft.setAxisMaximum(maxYValue * 2f);
 			// yAxisLeft.setZeroLineColor(Color.RED);
 			// yAxisLeft.setDrawZeroLine(true);
 			// yAxisLeft.setZeroLineWidth(10);
@@ -238,67 +248,15 @@ public class UserActualFragment extends AbstractDRFragment{
 				@Override
 				public String getFormattedValue(float value, AxisBase axis){
 					return "";
-					// return String.valueOf((int)value * Integer.valueOf(selectedGroup.goal) + "円");
+					// return String.valueOf((int)value * Integer.valueOf(selectedGroup.planValue) + "円");
 				}
 			});
-
-			//// TODO: 6/29/17 cannot add 150% line so add max %line instead
-			LimitLine line150Left = new LimitLine(Float.valueOf(maxCheckPoint.achievement), String.valueOf(Integer.parseInt(personal.group.goal) * Integer.parseInt(maxCheckPoint.achievement) / 100) + "円");
-			line150Left.setLineWidth(0.5f);
-			line150Left.setLineColor(Color.GRAY);
-			// upper_limit.enableDashedLine(10f, 10f, 0f);
-			line150Left.setLabelPosition(LimitLine.LimitLabelPosition.LEFT_TOP);
-			line150Left.setTextSize(10f);
-
-			LimitLine line150Right = new LimitLine(Float.valueOf(maxCheckPoint.achievement), "");
-			line150Right.setLineWidth(0.5f);
-			line150Right.setLineColor(Color.GRAY);
-			// upper_limit.enableDashedLine(10f, 10f, 0f);
-			line150Right.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_TOP);
-			line150Right.setTextSize(10f);
-
-			LimitLine line100Left = new LimitLine(100f, personal.group.goal + "円");
-			line100Left.setLineWidth(0.5f);
-			line100Left.setLineColor(Color.RED);
-			// upper_limit.enableDashedLine(10f, 10f, 0f);
-			line100Left.setLabelPosition(LimitLine.LimitLabelPosition.LEFT_TOP);
-			line100Left.setTextSize(10f);
-
-			LimitLine line100Right = new LimitLine(100f, "100%");
-			line100Right.setLineWidth(0.5f);
-			line100Right.setLineColor(Color.RED);
-			// upper_limit.enableDashedLine(10f, 10f, 0f);
-			line100Right.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_TOP);
-			line100Right.setTextSize(10f);
-
-			LimitLine line50Left = new LimitLine(50f, String.valueOf(Integer.parseInt(personal.group.goal) / 2) + "円");
-			line50Left.setLineWidth(0.5f);
-			line50Left.setLineColor(Color.GRAY);
-			// upper_limit.enableDashedLine(10f, 10f, 0f);
-			line50Left.setLabelPosition(LimitLine.LimitLabelPosition.LEFT_TOP);
-			line50Left.setTextSize(10f);
-
-			LimitLine line50Right = new LimitLine(50f, "50%");
-			line50Right.setLineWidth(0.5f);
-			line50Right.setLineColor(Color.GRAY);
-			// upper_limit.enableDashedLine(10f, 10f, 0f);
-			line50Right.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_TOP);
-
-			line50Right.setTextSize(10f);
-
-			yAxisLeft.removeAllLimitLines();
-			yAxisLeft.addLimitLine(line50Left);
-			yAxisLeft.addLimitLine(line50Right);
-			yAxisLeft.addLimitLine(line100Left);
-			yAxisLeft.addLimitLine(line100Right);
-			// yAxisLeft.addLimitLine(line150Left);
-			// yAxisLeft.addLimitLine(line150Right);
-
 			// yAxisLeft.enableGridDashedLine(10f, 10f, 0f);
 			// yAxisLeft.setDrawZeroLine(false);
 			yAxisLeft.setDrawGridLines(false);
 
 			YAxis yAxisRight = lineChart.getAxisRight();
+			yAxisRight.setAxisMaximum(maxYValue * 2f);
 			yAxisRight.setDrawAxisLine(false);
 			yAxisRight.setDrawGridLines(false);
 			// yAxisRight.setPosition(YAxis.YAxisLabelPosition.INSIDE_CHART);
@@ -311,11 +269,71 @@ public class UserActualFragment extends AbstractDRFragment{
 				}
 			});
 
+			//// TODO: 6/29/17 cannot add 150% line so add max %line instead
+			float value150 = maxYValue * 1.5f;
+			LimitLine line150Left = new LimitLine(value150, String.valueOf(Integer.parseInt(personal.group.goal) * Integer.parseInt(maxProgress.achievement) / 100) + "円");
+			line150Left.setLineWidth(0.5f);
+			line150Left.setLineColor(Color.GRAY);
+			// upper_limit.enableDashedLine(10f, 10f, 0f);
+			line150Left.setLabelPosition(LimitLine.LimitLabelPosition.LEFT_TOP);
+			line150Left.setTextSize(10f);
+
+			LimitLine line150Right = new LimitLine(value150, "150%");
+			line150Right.setLineWidth(0.5f);
+			line150Right.setLineColor(Color.TRANSPARENT);
+			// upper_limit.enableDashedLine(10f, 10f, 0f);
+			line150Right.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_TOP);
+			line150Right.setTextSize(10f);
+
+			float value100 = maxYValue * 1f;
+			LimitLine line100Left = new LimitLine(value100, personal.group.goal + personal.group.unit);
+			line100Left.setLineWidth(0.5f);
+			line100Left.setLineColor(Color.RED);
+			// upper_limit.enableDashedLine(10f, 10f, 0f);
+			line100Left.setLabelPosition(LimitLine.LimitLabelPosition.LEFT_TOP);
+			line100Left.setTextSize(10f);
+
+			LimitLine line100Right = new LimitLine(value100, "100%");
+			line100Right.setLineWidth(0.5f);
+			line100Right.setLineColor(Color.TRANSPARENT);
+			// upper_limit.enableDashedLine(10f, 10f, 0f);
+			line100Right.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_TOP);
+			line100Right.setTextSize(10f);
+
+			float value50 = maxYValue * 0.5f;
+			LimitLine line50Left = new LimitLine(value50, String.valueOf(Integer.parseInt(personal.group.goal) / 2) + personal.group.unit);
+			line50Left.setLineWidth(0.5f);
+			line50Left.setLineColor(Color.GRAY);
+			// upper_limit.enableDashedLine(10f, 10f, 0f);
+			line50Left.setLabelPosition(LimitLine.LimitLabelPosition.LEFT_TOP);
+			line50Left.setTextSize(10f);
+
+			LimitLine line50Right = new LimitLine(value50, "50%");
+			line50Right.setLineWidth(0.5f);
+			line50Right.setLineColor(Color.TRANSPARENT);
+			// upper_limit.enableDashedLine(10f, 10f, 0f);
+			line50Right.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_TOP);
+
+			line50Right.setTextSize(10f);
+
+			yAxisLeft.removeAllLimitLines();
+			yAxisLeft.addLimitLine(line50Left);
+			yAxisLeft.addLimitLine(line50Right);
+			yAxisLeft.addLimitLine(line100Left);
+			yAxisLeft.addLimitLine(line100Right);
+			yAxisLeft.addLimitLine(line150Left);
+			yAxisLeft.addLimitLine(line150Right);
+
 			Description description = new Description();
-			description.setText("");
+			description.setText(context.getResources().getString(R.string.text_period));
 			lineChart.setDescription(description);
 			lineChart.setVisibleXRangeMaximum(maxVisibleRange);
+			Legend legend = lineChart.getLegend();
+			legend.setCustom(new ArrayList<LegendEntry>());
 			lineChart.setScaleMinima(0f, 0f);
+			lineChart.setVisibleYRangeMaximum(maxYValue * 2f, YAxis.AxisDependency.LEFT);
+			lineChart.setVisibleYRangeMaximum(maxYValue * 2f, YAxis.AxisDependency.RIGHT);
+
 			lineChart.fitScreen();
 			lineChart.invalidate(); // refresh
 		}
@@ -369,8 +387,8 @@ public class UserActualFragment extends AbstractDRFragment{
 		String dateStr = txtSelectedDate.getText().toString();
 		JSONObject jsonObject = new JSONObject();
 		try{
-			jsonObject.put("targetGroupId", drGroupHeader.getSelectedGroup().key);
-			jsonObject.put("targetDate", dateStr);
+			jsonObject.put("searchNo", drGroupHeader.getSelectedGroup().key);
+			jsonObject.put("searchDateString", dateStr);
 		}catch(JSONException ex){
 			ex.printStackTrace();
 		}
@@ -410,15 +428,15 @@ public class UserActualFragment extends AbstractDRFragment{
 		checkToShowNoticeDialogs();
 
 		getView().findViewById(R.id.lnr_fragment_action_plan_main).setVisibility(View.VISIBLE);
-
-		buildChart(lineChart, personal);
+		buildChart(activity, lineChart, personal);
+		scrollView.fullScroll(ScrollView.FOCUS_UP);
 	}
 
 	private void checkToShowNoticeDialogs(){
 		Calendar c = Calendar.getInstance();
 		for(Progress progress : personal.progressList){
 			if(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, c.getTime()).equals(progress.checkPointDate)){
-				if(Integer.parseInt(progress.achievement) <= Integer.parseInt(personal.achievement)){ // success
+				if(Integer.parseInt(progress.achievementOver) <= Integer.parseInt(personal.achievement)){ // success
 					showGoalAchieveDialog();
 				}else{
 					showGoalWarningDialog();
@@ -429,11 +447,11 @@ public class UserActualFragment extends AbstractDRFragment{
 
 	private void buildPersonalGoalInfo(Personal personal){
 		if(!CCStringUtil.isEmpty(personal.todayActual)){// already enter
-			lnrInfo.setBackgroundColor(ContextCompat.getColor(activity, R.color.wf_app_color_base_50));
+			lnrInfo.setBackground(ContextCompat.getDrawable(activity, R.drawable.dr_blue_background_gray_border_padding));
 			updateHeader(getString(R.string.fragment_kpi_title_tassei));
 		}else{
 			updateHeader(getString(R.string.fragment_kpi_title_jisseki));
-			lnrInfo.setBackgroundColor(ContextCompat.getColor(activity, R.color.chiase_white));
+			lnrInfo.setBackground(ContextCompat.getDrawable(activity, R.drawable.dr_white_background_gray_border_padding));
 		}
 		personal.todayActual = personal.todayActual == null ? "0" : personal.todayActual;
 		edtActualToday.setText(personal.todayActual + " " + selectedGroup.unit);

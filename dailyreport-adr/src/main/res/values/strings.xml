@@ -93,4 +93,5 @@
     <string name="fragment_kpi_title_jisseki">Personal performance</string>
     <string name="overall_performance">Overall performance</string>
     <string name="action_plan_empty">Your action plan is not set</string>
+    <string name="text_period">(Period)</string>
 </resources>

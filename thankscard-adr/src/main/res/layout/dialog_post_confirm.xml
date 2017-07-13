@@ -18,18 +18,13 @@
             android:id="@+id/txt_poster_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/tc_confirm_name"
-            android:gravity="center_horizontal"
-            android:layout_marginBottom="@dimen/margin_8dp"
-            android:textColor="@color/chiase_black"
-            android:textSize="14sp"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="@string/tc_confirm_msg"
             android:gravity="center_horizontal"
             android:layout_marginBottom="@dimen/margin_16dp"
             android:textColor="@color/chiase_black"
+            android:paddingStart="@dimen/margin_16dp"
+            android:paddingEnd="@dimen/margin_16dp"
+            android:maxLines="2"
             android:textSize="14sp" />
         <CheckBox
             android:id="@+id/checkbox_secret"

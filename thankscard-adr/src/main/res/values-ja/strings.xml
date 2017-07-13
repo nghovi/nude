@@ -139,7 +139,6 @@
     <string name="tc_explain_regular">カードでメッセージを送ることができます。</string>
     <string name="tc_stage_information">ステージ情報</string>
     <string name="tc_confirm_dialog_title">確認メッセージ</string>
-    <string name="tc_confirm_name">%1$sさんへ</string>
-    <string name="tc_confirm_msg">メッセージを送りますか？</string>
+    <string name="tc_confirm_msg">%1$sさんへ\nメッセージを送りますか？</string>
     <string name="tc_secret_mode">シークレットモードで送る</string>
 </resources>

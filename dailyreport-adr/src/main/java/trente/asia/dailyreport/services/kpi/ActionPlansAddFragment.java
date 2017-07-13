@@ -11,7 +11,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
-import android.app.MediaRouteButton;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -49,7 +49,7 @@ import trente.asia.welfare.adr.models.ApiObjectModel;
 /**
  * Created by viet on 2/15/2016.
  */
-public class ActualPlanAddFragment extends AbstractDRFragment implements DRCalendarView.OnReportModelSelectedListener,KpiCalendarView.OnDayClickedListener{
+public class ActionPlansAddFragment extends AbstractDRFragment implements DRCalendarView.OnReportModelSelectedListener,KpiCalendarView.OnDayClickedListener{
 
 	private static final String	ACTUAL_PLAN_EDT_ID	= "edt_actual_plan_";
 	private TextView			txtDate;
@@ -71,7 +71,7 @@ public class ActualPlanAddFragment extends AbstractDRFragment implements DRCalen
 	ImageView					imgHeaderRightIcon;
 	private Map<String, String>	statusMap;
 	private boolean				showStatusOnly		= false;
-	private List<EditText>		edtActionValues;
+	private List<EditText>		edtActionValues		= new ArrayList<>();
 	private LinearLayout		lnrGroupHeader;
 	private List<ActionPlan>	filteredActionPlans;
 
@@ -107,7 +107,8 @@ public class ActualPlanAddFragment extends AbstractDRFragment implements DRCalen
 			public void onGroupChange(GroupKpi newGroup){
 				selectedGroup = newGroup;
 				filteredActionPlans = filterByGroup();
-				buildActionPlans();
+				boolean editMode = ActionPlan.STATUS_YET.equals(statusMap.get(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, selectedDate)));
+				buildActionPlans(editMode);
 			}
 
 			@Override
@@ -146,7 +147,8 @@ public class ActualPlanAddFragment extends AbstractDRFragment implements DRCalen
 				lnrActionPlanSection.setVisibility(View.GONE);
 				txtNoAction.setVisibility(View.GONE);
 				Calendar c = ((CalendarFragment)adapter.getItem(mPager.getCurrentItem())).getCalendar();
-				loadActionPlans(c.getTime(), true);
+				boolean showStatusOnly = Calendar.getInstance().get(Calendar.MONTH) != c.get(Calendar.MONTH);
+				loadActionPlans(c.getTime(), showStatusOnly);
 			}
 
 			@Override
@@ -187,9 +189,10 @@ public class ActualPlanAddFragment extends AbstractDRFragment implements DRCalen
 			statusMap = buildStatusMap(statusList);
 			updateCalendarView(actionPlanList);
 			if(showStatusOnly == false){
-				actionPlanList = CCJsonUtil.convertToModelList(response.optString("actionPlanList"), ActionPlan.class);
+				actionPlanList = CCJsonUtil.convertToModelList(response.optString("actions"), ActionPlan.class);
 				filteredActionPlans = filterByGroup();
-				buildActionPlans();
+				boolean editMode = ActionPlan.STATUS_YET.equals(statusMap.get(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, selectedDate)));
+				buildActionPlans(editMode);
 			}
 		}
 
@@ -197,9 +200,11 @@ public class ActualPlanAddFragment extends AbstractDRFragment implements DRCalen
 
 	private List<ActionPlan> filterByGroup(){
 		List<ActionPlan> result = new ArrayList<>();
-		for(ActionPlan actionPlan : actionPlanList){
-			if(actionPlan.groupId.equals(selectedGroup.key)){
-				result.add(actionPlan);
+		if(!CCCollectionUtil.isEmpty(actionPlanList)){
+			for(ActionPlan actionPlan : actionPlanList){
+				if(actionPlan.groupId.equals(selectedGroup.key)){
+					result.add(actionPlan);
+				}
 			}
 		}
 		return result;
@@ -243,18 +248,19 @@ public class ActualPlanAddFragment extends AbstractDRFragment implements DRCalen
 		JSONObject jsonObject = new JSONObject();
 		try{
 			// jsonObject.put("targetGroupId", selectedGroup.key);
-			jsonObject.put("targetDate", targetDate);
+			jsonObject.put("searchDateString", targetDate);
 		}catch(JSONException ex){
 			ex.printStackTrace();
 		}
 		super.requestLoad(DRConst.API_KPI_ACTIONS, jsonObject, true);
 	}
 
-	private void buildActionPlans(){
+	private void buildActionPlans(Boolean editMode){
 		if(!CCCollectionUtil.isEmpty(filteredActionPlans)){
 			imgHeaderRightIcon.setVisibility(View.VISIBLE);
-			boolean editMode = ActionPlan.STATUS_YET.equals(statusMap.get(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, selectedDate)));
 			if(editMode){
+				edtMemo.setEnabled(true);
+				edtMemo.setBackgroundResource( R.drawable.dr_white_background_gray_border_padding);
 				imgHeaderRightIcon.setImageResource(R.drawable.ic_save);
 				imgHeaderRightIcon.setOnClickListener(new View.OnClickListener() {
 
@@ -264,12 +270,14 @@ public class ActualPlanAddFragment extends AbstractDRFragment implements DRCalen
 					}
 				});
 			}else{
+				 edtMemo.setEnabled(false);
+				edtMemo.setBackgroundResource( R.drawable.dr_blue_background_gray_border_padding);
 				imgHeaderRightIcon.setImageResource(R.drawable.ic_edit);
 				imgHeaderRightIcon.setOnClickListener(new View.OnClickListener() {
 
 					@Override
 					public void onClick(View v){
-						showActionPlans(true);
+						buildActionPlans(true);
 					}
 				});
 			}
@@ -289,7 +297,7 @@ public class ActualPlanAddFragment extends AbstractDRFragment implements DRCalen
 		edtActionValues.clear();
 
 		for(ActionPlan actionPlan : filteredActionPlans){
-			addActionPlanView(actionPlan, editMode);
+			inflateActionPlanView(actionPlan, editMode);
 		}
 	}
 
@@ -298,10 +306,10 @@ public class ActualPlanAddFragment extends AbstractDRFragment implements DRCalen
 		String dateStr = txtDate.getText().toString();
 		String actionJson = getActionJson();
 		try{
-			jsonObject.put("actionJson", actionJson);
-			jsonObject.put("targetDate", dateStr);
-			jsonObject.put("note", edtMemo.getText().toString());
 			jsonObject.put("targetGroupId", selectedGroup.key);
+			jsonObject.put("targetDate", dateStr);
+			jsonObject.put("dayNote", edtMemo.getText().toString());
+			jsonObject.put("actionJson", actionJson);
 
 		}catch(JSONException e){
 			e.printStackTrace();
@@ -314,34 +322,44 @@ public class ActualPlanAddFragment extends AbstractDRFragment implements DRCalen
 		loadActionPlans(selectedDate, false);
 	}
 
-	private void addActionPlanView(ActionPlan actionPlan, boolean editMode){
+	private void inflateActionPlanView(ActionPlan actionPlan, boolean editMode){
 		View cellView;
 		if(editMode){
 			cellView = inflater.inflate(R.layout.item_actual_plan, null);
 			TextView txtActualName = (TextView)cellView.findViewById(R.id.txt_item_actual_plan_name);
-			txtActualName.setText(actionPlan.name);
+			txtActualName.setText(actionPlan.planName);
 
 			TextView txtTodayGoal = (TextView)cellView.findViewById(R.id.txt_item_actual_plan_today_goal);
-			txtTodayGoal.setText(actionPlan.goal);
+			txtTodayGoal.setText(actionPlan.planValue);
 			EditText edtReal = (EditText)cellView.findViewById(R.id.edt_item_actual_plan_real);
+			edtReal.setText(actionPlan.actual + actionPlan.unit);
 			edtReal.setTag(actionPlan.key);
 			edtActionValues.add(edtReal);
 		}else{
 			cellView = inflater.inflate(R.layout.item_actual_plan_view, null);
 			TextView txtActualName = (TextView)cellView.findViewById(R.id.txt_item_actual_plan_name);
-			txtActualName.setText(actionPlan.name);
+			txtActualName.setText(actionPlan.planName);
 
 			TextView txtTodayGoal = (TextView)cellView.findViewById(R.id.txt_item_actual_plan_today_goal);
-			txtTodayGoal.setText(actionPlan.goal);
+			txtTodayGoal.setText(actionPlan.planValue + actionPlan.unit);
 
 			TextView txtPerformance = (TextView)cellView.findViewById(R.id.txt_item_actual_plan_today_performance);
-			txtPerformance.setText(actionPlan.goal);
+			txtPerformance.setText(actionPlan.actual + actionPlan.unit);
+
+			String monthStr = CCFormatUtil.formatDateCustom("M", selectedDate);
+
+			TextView txtPerformanceMonthLabel = (TextView)cellView.findViewById(R.id.txt_item_actual_plan_performance_month_label);
+			txtPerformanceMonthLabel.setText(getString(R.string.performance_in_month, monthStr));
 
 			TextView txtPerformanceMonth = (TextView)cellView.findViewById(R.id.txt_item_actual_plan_performance_month);
-			txtPerformanceMonth.setText(actionPlan.goal);
+			txtPerformanceMonth.setText(actionPlan.achievement + actionPlan.unit);
+
+			TextView txtRateLabel = (TextView)cellView.findViewById(R.id.txt_item_actual_plan_month_rate_label);
+			txtRateLabel.setText(getString(R.string.achievement_rate_in_month, monthStr));
 
 			TextView txtRate = (TextView)cellView.findViewById(R.id.txt_item_actual_plan_month_rate);
-			txtRate.setText(actionPlan.goal);
+			txtRate.setText(actionPlan.achievementRate + "%");
+
 		}
 		lnrActualPlanContainer.addView(cellView);
 	}
@@ -349,6 +367,7 @@ public class ActualPlanAddFragment extends AbstractDRFragment implements DRCalen
 	public static ActionPlan createEmptyActualPlanModel(Calendar c){
 		ActionPlan actionPlan = new ActionPlan();
 		actionPlan.date = CCFormatUtil.formatDateCustom(DRConst.DATE_FORMAT_YYYY_MM_DD_HH_MM_SS, c.getTime());
+		actionPlan.actionStatus = ActionPlan.STATUS_YET;
 		return actionPlan;
 	}
 
@@ -384,11 +403,13 @@ public class ActualPlanAddFragment extends AbstractDRFragment implements DRCalen
 		txtDate = null;
 	}
 
-	public static ActionPlan getActualPlanByDay(Calendar c, List<ActionPlan> actionPlen){
-		for(ActionPlan actionPlan : actionPlen){
-			String day = DRUtil.getDateString(actionPlan.date, DRConst.DATE_FORMAT_YYYY_MM_DD_HH_MM_SS, DRConst.DATE_FORMAT_YYYY_MM_DD);
-			if(day.equals(DRUtil.getDateString(c.getTime(), DRConst.DATE_FORMAT_YYYY_MM_DD))){
-				return actionPlan;
+	public static ActionPlan getActionPlanByDay(Calendar c, List<ActionPlan> actionPlans){
+		if(!CCCollectionUtil.isEmpty(actionPlans)){
+			for(ActionPlan actionPlan : actionPlans){
+				String day = DRUtil.getDateString(actionPlan.date, DRConst.DATE_FORMAT_YYYY_MM_DD_HH_MM_SS, DRConst.DATE_FORMAT_YYYY_MM_DD);
+				if(day.equals(DRUtil.getDateString(c.getTime(), DRConst.DATE_FORMAT_YYYY_MM_DD))){
+					return actionPlan;
+				}
 			}
 		}
 		return createEmptyActualPlanModel(c);
@@ -402,14 +423,15 @@ public class ActualPlanAddFragment extends AbstractDRFragment implements DRCalen
 		loadActionPlans(c.getTime(), false);
 	}
 
+	public static class Action{
+
+		public String	key;
+		public String	actual;
+	}
+
 	public String getActionJson(){
-		class Action{
 
-			public String	key;
-			public String	actual;
-		}
-
-		List<Action> actions = new ArrayList<>();
+		List<Action> actions = new ArrayList<Action>();
 
 		for(EditText edtActionValue : edtActionValues){
 			Action action = new Action();
