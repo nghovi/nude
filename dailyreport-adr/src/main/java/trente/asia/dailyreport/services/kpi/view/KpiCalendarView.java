@@ -68,8 +68,10 @@ public class KpiCalendarView extends RelativeLayout{
 					// setNextMonth();
 					// refreshCalendar();
 				}else{ // currentMonth
-					adapter.updateSelectedCell(position);
-					onDayClickedListener.onDayClicked(selectedDate);
+					if(position != adapter.getSelectedPosition()){
+						adapter.updateSelectedCell(position);
+						onDayClickedListener.onDayClicked(selectedDate);
+					}
 				}
 			}
 		});

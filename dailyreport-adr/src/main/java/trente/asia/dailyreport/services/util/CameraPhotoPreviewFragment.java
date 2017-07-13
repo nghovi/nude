@@ -142,6 +142,11 @@ public class CameraPhotoPreviewFragment extends AbstractCameraPhotoPreviewFragme
 	}
 
 	@Override
+	protected String getServiceCd(){
+		return WelfareConst.SERVICE_CD_DR;
+	}
+
+	@Override
 	protected void gotoSignIn(){
 		super.gotoSignIn();
 		gotoFragment(new DrLoginFragment());

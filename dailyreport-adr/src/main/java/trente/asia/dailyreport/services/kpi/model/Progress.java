@@ -8,6 +8,6 @@ public class Progress{
 
 	public String	goal;
 	public String	checkPointDate;
-	public String	achievement;
-	public String	achievementOver;
+	public String	achievement		= "0";
+	public String	achievementOver	= "0";
 }
