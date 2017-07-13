@@ -111,7 +111,7 @@
                 android:paddingRight="@dimen/margin_90dp">
 
                 <EditText
-                    android:id="@+id/edt_fragment_post_edit_message"
+                    android:id="@+id/edt_message"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="left|top"
@@ -126,8 +126,8 @@
                     android:id="@+id/txt_fragment_post_edit_count"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/edt_fragment_post_edit_message"
-                    android:layout_alignRight="@+id/edt_fragment_post_edit_message"
+                    android:layout_alignBottom="@+id/edt_message"
+                    android:layout_alignRight="@+id/edt_message"
                     android:layout_gravity="end"
                     android:layout_marginBottom="@dimen/wf_margin_10"
                     android:layout_marginRight="@dimen/wf_margin_10"

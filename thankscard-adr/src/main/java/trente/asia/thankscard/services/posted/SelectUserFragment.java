@@ -14,48 +14,48 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import trente.asia.thankscard.R;
-import trente.asia.thankscard.databinding.FragmentSelectDeptBinding;
+import trente.asia.thankscard.databinding.FragmentSelectUserBinding;
 import trente.asia.thankscard.fragments.AbstractTCFragment;
-import trente.asia.thankscard.services.posted.presenter.DepartmentAdapter;
-import trente.asia.welfare.adr.models.DeptModel;
+import trente.asia.thankscard.services.posted.presenter.UserAdapter;
+import trente.asia.welfare.adr.models.UserModel;
 
 /**
  * Created by tien on 7/12/2017.
  */
 
-public class SelectUserFragment extends AbstractTCFragment implements DepartmentAdapter.OnDepartmentAdapterListener{
+public class SelectUserFragment extends AbstractTCFragment implements UserAdapter.OnUserAdapterListener{
 
-	private FragmentSelectDeptBinding	binding;
-	private DepartmentAdapter			adapter	= new DepartmentAdapter();
-	private DeptModel					department;
-	private OnSelectDeptListener		callback;
-	private List<DeptModel>				departments;
-	private List<DeptModel>				searchList = new ArrayList<>();
+	private FragmentSelectUserBinding binding;
+	private UserAdapter adapter	= new UserAdapter();
+	private UserModel					user;
+	private OnSelectUserListener callback;
+	private List<UserModel>				users;
+	private List<UserModel>				searchList = new ArrayList<>();
 
-	public void setCallback(OnSelectDeptListener callback){
+	public void setCallback(OnSelectUserListener callback){
 		this.callback = callback;
 	}
 
-	public void setDepartments(List<DeptModel> departments, DeptModel selectDept){
-		adapter.setDepartments(departments, selectDept);
-		this.department = selectDept;
-		this.departments = departments;
+	public void setDepartments(List<UserModel> users, UserModel user){
+		adapter.setDepartments(users, user);
+		this.user = user;
+		this.users = users;
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 		if(mRootView == null){
-			binding = DataBindingUtil.inflate(inflater, R.layout.fragment_select_dept, container, false);
+			binding = DataBindingUtil.inflate(inflater, R.layout.fragment_select_user, container, false);
 			mRootView = binding.getRoot();
-			binding.listDepartments.setAdapter(adapter);
-			binding.listDepartments.setLayoutManager(new LinearLayoutManager(getContext()));
+			binding.listUsers.setAdapter(adapter);
+			binding.listUsers.setLayoutManager(new LinearLayoutManager(getContext()));
 			adapter.setCallback(this);
 			binding.btnDone.setOnClickListener(new View.OnClickListener() {
 
 				@Override
 				public void onClick(View view){
 					if(callback != null){
-						callback.onDoneClick(department);
+						callback.onSelectUserDone(user);
 						getFragmentManager().popBackStack();
 					}
 				}
@@ -86,7 +86,7 @@ public class SelectUserFragment extends AbstractTCFragment implements Department
 						showSearchList(editable.toString().toLowerCase());
 					}else{
 						if (adapter != null) {
-							adapter.setDepartments(departments, department);
+							adapter.setDepartments(users, user);
 						}
 					}
 				}
@@ -97,12 +97,12 @@ public class SelectUserFragment extends AbstractTCFragment implements Department
 
 	private void showSearchList(String text) {
 		searchList.clear();
-		for (DeptModel deptModel : departments) {
-			if (deptModel.deptName.toLowerCase().contains(text)) {
-				searchList.add(deptModel);
+		for (UserModel userModel : users) {
+			if (userModel.userName.toLowerCase().contains(text)) {
+				searchList.add(userModel);
 			}
 		}
-		adapter.setDepartments(searchList, department);
+		adapter.setDepartments(searchList, user);
 	}
 
 	@Override
@@ -136,13 +136,12 @@ public class SelectUserFragment extends AbstractTCFragment implements Department
 	}
 
 	@Override
-	public void onSelectDepartment(DeptModel deptModel){
-		this.department = deptModel;
+	public void onSelectUser(UserModel userModel) {
+		this.user = userModel;
 	}
 
-	public interface OnSelectDeptListener{
-
-		void onDoneClick(DeptModel deptModel);
+	public interface OnSelectUserListener {
+		void onSelectUserDone(UserModel userModel);
 	}
 
 	@Override

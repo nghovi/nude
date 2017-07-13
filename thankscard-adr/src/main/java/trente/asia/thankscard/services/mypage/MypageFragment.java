@@ -30,6 +30,7 @@ import trente.asia.thankscard.fragments.dialogs.RankStageDialog;
 import trente.asia.thankscard.services.mypage.model.MypageModel;
 import trente.asia.thankscard.services.mypage.model.NoticeModel;
 import trente.asia.thankscard.services.mypage.view.NoticeListAdapter;
+import trente.asia.thankscard.services.posted.PostTCFragment;
 import trente.asia.thankscard.services.posted.ThanksCardEditFragment;
 import trente.asia.thankscard.services.rank.model.RankStage;
 import trente.asia.welfare.adr.define.WelfareConst;
@@ -107,7 +108,8 @@ public class MypageFragment extends AbstractTCFragment{
 
 			@Override
 			public void onClick(View v){
-				gotoPostEdit(null);
+//				gotoPostEdit(null);
+				gotoFragment(new PostTCFragment());
 			}
 		});
 	}

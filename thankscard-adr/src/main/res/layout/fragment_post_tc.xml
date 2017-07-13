@@ -111,7 +111,7 @@
                     android:paddingRight="@dimen/margin_60dp">
 
                     <EditText
-                        android:id="@+id/edt_fragment_post_edit_message"
+                        android:id="@+id/edt_message"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:hint="@string/fragment_post_edit_hint"

@@ -170,7 +170,7 @@ public class ThanksCardEditFragment extends AbstractTCFragment {
     private void buildTemplate(boolean keepCurrentMessage) {
         ImageView imgTemplate = (ImageView) getView().findViewById(R.id.img_fragment_post_edit_template);
         imgTemplate.setScaleType(ImageView.ScaleType.FIT_XY);
-        edtMessage = (EditText) getView().findViewById(R.id.edt_fragment_post_edit_message);
+        edtMessage = (EditText) getView().findViewById(R.id.edt_message);
         if (template != null && !CCStringUtil.isEmpty(template.templateUrl)) {
             imgTemplate.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
             WfPicassoHelper.loadImage2(activity, BuildConfig.HOST, imgTemplate, template.templateUrl);
@@ -451,6 +451,7 @@ public class ThanksCardEditFragment extends AbstractTCFragment {
             jsonObject.put("receiverId", mHistoryModel.receiverId);
             jsonObject.put("message", mHistoryModel.message);
             jsonObject.put("isSecret", isSecret);
+            log(jsonObject.toString());
         } catch (JSONException ex) {
             ex.printStackTrace();
         }

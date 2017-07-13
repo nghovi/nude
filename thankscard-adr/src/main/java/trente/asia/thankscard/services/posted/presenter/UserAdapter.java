@@ -10,9 +10,7 @@ import android.view.ViewGroup;
 
 import trente.asia.thankscard.BR;
 import trente.asia.thankscard.R;
-import trente.asia.thankscard.databinding.ItemDepartmentBinding;
 import trente.asia.thankscard.databinding.ItemUserBinding;
-import trente.asia.welfare.adr.models.DeptModel;
 import trente.asia.welfare.adr.models.UserModel;
 
 /**
