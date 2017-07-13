@@ -55,6 +55,7 @@ public class MypageFragment extends AbstractTCFragment{
 	private List<RankStage>		rankStages;
 	private TextView			txtPostRankNext;
 	private TextView			txtReceiveRankNext;
+	private TextView			txtRank;
 
 	public boolean hasBackBtn(){
 		return false;
@@ -87,6 +88,7 @@ public class MypageFragment extends AbstractTCFragment{
 		txtReceiveRank = (TextView)getView().findViewById(R.id.txt_fragment_mypage_rank_receive);
 		txtReceiveRankNext = (TextView)getView().findViewById(R.id.txt_fragment_mypage_rank_receive2);
 		imgRankStage = (ImageView)getView().findViewById(R.id.img_fragment_mypage_rank_stage);
+		txtRank = (TextView) getView().findViewById(R.id.txt_rank);
 
 		buildUserInfoLayout();
 		builNoticeList();
@@ -220,14 +222,18 @@ public class MypageFragment extends AbstractTCFragment{
 		int pointSilver = Integer.parseInt(prefAccUtil.get(TcConst.PREF_POINT_SILVER));
 		int pointGold = Integer.parseInt(prefAccUtil.get(TcConst.PREF_POINT_GOLD));
 
-		if (totalPoint < pointBronze) {
+		if(totalPoint < pointBronze){
 			imageView.setImageResource(R.drawable.tc_rank_regular);
-		} else if (totalPoint >= pointBronze && totalPoint < pointSilver) {
+			txtRank.setText(R.string.tc_rank_regular);
+		}else if(totalPoint >= pointBronze && totalPoint < pointSilver){
 			imageView.setImageResource(R.drawable.tc_rank_bronze);
-		} else if (totalPoint >= pointSilver && totalPoint < pointGold) {
+			txtRank.setText(R.string.tc_rank_bronze);
+		}else if(totalPoint >= pointSilver && totalPoint < pointGold){
 			imageView.setImageResource(R.drawable.tc_rank_silver);
-		} else if (totalPoint > pointGold) {
+			txtRank.setText(R.string.tc_rank_silver);
+		}else if(totalPoint > pointGold){
 			imageView.setImageResource(R.drawable.tc_rank_gold);
+			txtRank.setText(R.string.tc_rank_gold);
 		}
 	}
 

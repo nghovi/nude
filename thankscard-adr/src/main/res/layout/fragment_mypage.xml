@@ -101,12 +101,24 @@
                         android:textSize="14sp" />
                 </LinearLayout>
 
-                <trente.asia.thankscard.services.rank.view.RoundedImageView
-                    android:id="@+id/img_fragment_mypage_rank_stage"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/tc_rank_regular" />
-
+                    android:orientation="vertical"
+                    android:gravity="center_horizontal">
+                    <trente.asia.thankscard.services.rank.view.RoundedImageView
+                        android:id="@+id/img_fragment_mypage_rank_stage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/tc_rank_regular" />
+                    <TextView
+                        android:id="@+id/txt_rank"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tc_rank_regular"
+                        android:textSize="14sp"
+                        android:textColor="@color/chiase_black"/>
+                </LinearLayout>
             </LinearLayout>
 
 
