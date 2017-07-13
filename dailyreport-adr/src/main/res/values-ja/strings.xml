@@ -93,4 +93,5 @@
     <string name="fragment_kpi_title_jisseki">個人実績</string>
     <string name="overall_performance">累計実績</string>
     <string name="action_plan_empty">アクションプランが設定されていません</string>
+    <string name="text_period">(期間)</string>
 </resources>

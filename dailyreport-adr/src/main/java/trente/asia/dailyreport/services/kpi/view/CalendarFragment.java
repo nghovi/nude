@@ -1,17 +1,9 @@
 package trente.asia.dailyreport.services.kpi.view;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.Calendar;
 
-import asia.chiase.core.util.CCFormatUtil;
-import trente.asia.dailyreport.DRConst;
 import trente.asia.dailyreport.R;
 import trente.asia.dailyreport.fragments.AbstractDRFragment;
-import trente.asia.dailyreport.services.kpi.ActualPlanAddFragment;
-import trente.asia.dailyreport.services.kpi.model.GroupKpi;
-import trente.asia.welfare.adr.define.WelfareConst;
 
 /**
  * Created by hviet on 6/28/17.

@@ -9,4 +9,5 @@ public class Progress{
 	public String	goal;
 	public String	checkPointDate;
 	public String	achievement;
+	public String	achievementOver;
 }

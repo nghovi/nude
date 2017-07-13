@@ -1,8 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="320dp"
-    android:background="@color/chiase_white"
-    android:padding="0dp">
+    android:layout_height="match_parent"
+    android:background="@color/chiase_white">
 
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/chart"
