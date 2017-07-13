@@ -306,7 +306,7 @@ public class ThanksCardEditFragment extends AbstractTCFragment {
 
     private void showConfirmDialog() {
         final PostConfirmDialog dialog = new PostConfirmDialog();
-        dialog.setPosterName(myself.userName);
+        dialog.setReceiverName(selectedUser.userName);
         dialog.show(getFragmentManager(), null);
         dialog.setListeners(new View.OnClickListener() {
             @Override
