@@ -198,7 +198,7 @@ public class MypageFragment extends AbstractTCFragment{
 			txtPostRankNext.setText(getString(R.string.rank_first_congrats));
 		}else{
             String nextPostRank = String.valueOf(mypageModel.seqPost - 1);
-            if (mypageModel.pointPost == 0 || mypageModel.pointReceive == 0) {
+            if (mypageModel.pointPost == 0) {
                 nextPostRank = String.valueOf(mypageModel.seqPost);
             }
 			txtPostRankNext.setText(getString(R.string.fragment_mypage_rank_next_post, nextPostRank, String.valueOf(Math.abs(mypageModel.archivePost))));
@@ -209,7 +209,10 @@ public class MypageFragment extends AbstractTCFragment{
 		if(mypageModel.seqRecieve == 1){
 			txtReceiveRankNext.setText(getString(R.string.rank_first_congrats));
 		}else{
-			String nextReceiveRank = String.valueOf(Integer.valueOf(mypageModel.seqRecieve) - 1);
+            String nextReceiveRank = String.valueOf(mypageModel.seqRecieve - 1);
+            if (mypageModel.pointReceive == 0) {
+                nextReceiveRank = String.valueOf(mypageModel.seqRecieve);
+            }
 			txtReceiveRankNext.setText(getString(R.string.fragment_mypage_rank_next_receive, nextReceiveRank, String.valueOf(Math.abs(mypageModel.archiveReceive))));
 		}
 
