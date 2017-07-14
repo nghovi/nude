@@ -24,6 +24,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import asia.chiase.core.util.CCFormatUtil;
+import asia.chiase.core.util.CCStringUtil;
 import trente.asia.dailyreport.R;
 import trente.asia.dailyreport.services.kpi.ActionPlansAddFragment;
 import trente.asia.dailyreport.services.kpi.model.ActionPlan;
@@ -182,27 +183,23 @@ public class KpiCalendarAdapter extends BaseAdapter{
 		return maxP;
 	}
 
-	public void updateLayout(List<ActionPlan> actionPlanList){
-		for(int i = 0; i < viewMap.size(); i++){
-			View cell = viewMap.get(i);
-			ActionPlan actionPlan = ActionPlansAddFragment.getActionPlanByDay(dayString.get(i), actionPlanList);
-			updateCellLayout(cell, actionPlan);
+	public void updateLayout(Map<String, String> statusMap){
+		for(int i = 0; i < dayString.size(); i++){
+			String dayStatus = statusMap.get(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, dayString.get(i).getTime()));
+			if(!CCStringUtil.isEmpty(dayStatus)){
+				View cell = viewMap.get(i);
+				updateCellLayout(cell, dayStatus);
+			}
 		}
 	}
 
-	private void updateCellLayout(View v, ActionPlan actionPlan){
-		if(actionPlan != null && actionPlan.key != null){
-			ImageView kpiStatus = (ImageView)v.findViewById(R.id.item_calendar_img_status);
-			if(ActionPlan.STATUS_YET.equals(actionPlan.actionStatus)){
-				kpiStatus.setVisibility(View.INVISIBLE);
-			}else{
-				kpiStatus.setVisibility(View.VISIBLE);
-				if(ActionPlan.STATUS_OK.equals(actionPlan.actionStatus)){
-					kpiStatus.setImageResource(R.drawable.wf_check);
-				}else if(ActionPlan.STATUS_NG.equals(actionPlan.actionStatus)){
-					// kpiStatus.setImageResource(R.drawable.wf_check);
-				}
-			}
+	private void updateCellLayout(View v, String dayStatus){
+		ImageView kpiStatus = (ImageView)v.findViewById(R.id.item_calendar_img_status);
+		kpiStatus.setVisibility(View.VISIBLE);
+		if(ActionPlan.STATUS_OK.equals(dayStatus)){
+			kpiStatus.setImageResource(R.drawable.wf_check);
+		}else if(ActionPlan.STATUS_NG.equals(dayStatus)){
+			// kpiStatus.setImageResource(R.drawable.wf_check);
 		}
 	}
 
@@ -216,7 +213,7 @@ public class KpiCalendarAdapter extends BaseAdapter{
 		selectedPosition = position;
 	}
 
-	public int getSelectedPosition() {
+	public int getSelectedPosition(){
 		return selectedPosition;
 	}
 }

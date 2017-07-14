@@ -77,6 +77,7 @@ public class UserActualFragment extends AbstractDRFragment{
 	private Personal					personal;
 	private ScrollView					scrollView;
 	private TextView					txtUnit;
+	private int							selectedGroupPosition;
 
 	@Override
 	public int getFragmentLayoutId(){
@@ -168,26 +169,26 @@ public class UserActualFragment extends AbstractDRFragment{
 		lineChart = (LineChart)getView().findViewById(R.id.chart);
 	}
 
-	public static void buildChart(Context context, LineChart lineChart, Personal personal){
-		if(!CCCollectionUtil.isEmpty(personal.progressList)){
+	public static void buildChart(Context context, LineChart lineChart, List<Progress> progressList, GroupKpi group){
+		if(!CCCollectionUtil.isEmpty(progressList)){
 			formattedValuesMap = new HashMap<>();
 			List<Entry> entries = new ArrayList<Entry>();
-			Progress maxProgress = personal.progressList.get(personal.progressList.size() - 1);
+			Progress maxProgress = progressList.get(progressList.size() - 1);
 
 			Date lastCheckPointDate = CCDateUtil.makeDateCustom(maxProgress.checkPointDate, WelfareConst.WF_DATE_TIME_DATE);
-			Date firstCheckPointDate = CCDateUtil.makeDateCustom(personal.progressList.get(0).checkPointDate, WelfareConst.WF_DATE_TIME_DATE);
+			Date firstCheckPointDate = CCDateUtil.makeDateCustom(progressList.get(0).checkPointDate, WelfareConst.WF_DATE_TIME_DATE);
 			long maxDistanceDay = (lastCheckPointDate.getTime() - firstCheckPointDate.getTime()) / (24 * 60 * 60 * 1000);
 
-			int pageNum = personal.progressList.size() / 7 + 1;
+			int pageNum = progressList.size() / 7 + 1;
 			float maxVisibleRange = maxDistanceDay / pageNum;
 			float labelDistance = Math.round(maxVisibleRange / LABEL_COUNT);
 
-			for(Progress progress : personal.progressList){
+			for(Progress progress : progressList){
 				Date checkPointDate = CCDateUtil.makeDateCustom(progress.checkPointDate, WelfareConst.WF_DATE_TIME_DATE);
 				float xDay = (checkPointDate.getTime() - firstCheckPointDate.getTime()) / (24 * 60 * 60 * 1000);
 
 				float labelAxisValue = (Math.round(xDay / labelDistance)) * labelDistance;
-				formattedValuesMap.put(labelAxisValue, progress.checkPointDate);
+				formattedValuesMap.put(labelAxisValue, progress.checkPointDate.split(" ")[0]);
 				Entry t = new Entry(xDay, Float.valueOf(progress.achievementOver));
 				entries.add(t);
 			}
@@ -196,7 +197,7 @@ public class UserActualFragment extends AbstractDRFragment{
 			dataSet.setLineWidth(1f);
 			dataSet.setValueTextColor(Color.BLUE); // styling, ...
 			dataSet.setValueTextSize(9);
-			dataSet.setLabel(personal.group.name);
+			dataSet.setLabel(group.name);
 			// lineChart.getLegend().setEnabled(false);
 
 			LineData lineData = new LineData();
@@ -232,7 +233,7 @@ public class UserActualFragment extends AbstractDRFragment{
 			xAxis.setTextSize(7);
 			xAxis.setAxisMaximum(maxDistanceDay + labelDistance);
 			xAxis.setYOffset(5f);
-			float maxYValue = Math.max(Float.valueOf(maxProgress.achievementOver) * 1.1f, Float.valueOf(personal.group.goal) * 1.6f);
+			float maxYValue = Math.max(Float.valueOf(maxProgress.achievementOver) * 1.1f, Float.valueOf(group.goal) * 1.6f);
 			YAxis yAxisLeft = lineChart.getAxisLeft();
 			yAxisLeft.setDrawAxisLine(false);
 			yAxisLeft.setAxisMaximum(maxYValue);
@@ -266,8 +267,8 @@ public class UserActualFragment extends AbstractDRFragment{
 			});
 
 			//// TODO: 6/29/17 cannot add 150% line so add max %line instead
-			float value150 = Float.valueOf(personal.group.goal) * 1.5f;
-			LimitLine line150Left = new LimitLine(value150, String.valueOf(value150) + personal.group.unit);
+			float value150 = Float.valueOf(group.goal) * 1.5f;
+			LimitLine line150Left = new LimitLine(value150, String.valueOf(value150) + group.unit);
 			line150Left.setLineWidth(0.5f);
 			line150Left.setLineColor(Color.GRAY);
 			// upper_limit.enableDashedLine(10f, 10f, 0f);
@@ -281,8 +282,8 @@ public class UserActualFragment extends AbstractDRFragment{
 			line150Right.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_TOP);
 			line150Right.setTextSize(10f);
 
-			float value100 = Float.valueOf(personal.group.goal) * 1f;
-			LimitLine line100Left = new LimitLine(value100, String.valueOf(value100) + personal.group.unit);
+			float value100 = Float.valueOf(group.goal) * 1f;
+			LimitLine line100Left = new LimitLine(value100, String.valueOf(value100) + group.unit);
 			line100Left.setLineWidth(0.5f);
 			line100Left.setLineColor(Color.RED);
 			// upper_limit.enableDashedLine(10f, 10f, 0f);
@@ -296,8 +297,8 @@ public class UserActualFragment extends AbstractDRFragment{
 			line100Right.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_TOP);
 			line100Right.setTextSize(10f);
 
-			float value50 = Float.valueOf(personal.group.goal) * 0.5f;
-			LimitLine line50Left = new LimitLine(value50, String.valueOf(value50) + personal.group.unit);
+			float value50 = Float.valueOf(group.goal) * 0.5f;
+			LimitLine line50Left = new LimitLine(value50, String.valueOf(value50) + group.unit);
 			line50Left.setLineWidth(0.5f);
 			line50Left.setLineColor(Color.GRAY);
 			// upper_limit.enableDashedLine(10f, 10f, 0f);
@@ -409,7 +410,8 @@ public class UserActualFragment extends AbstractDRFragment{
 			showEmptyActualMessage();
 		}else{
 			// groupKpiList = createDummy();
-			drGroupHeader.buildLayout(groupKpiList, 0, true);
+			int selectedGroupPosition = getSelectedGroupPosition();
+			drGroupHeader.buildLayout(groupKpiList, selectedGroupPosition, true);
 			selectedGroup = drGroupHeader.getSelectedGroup();
 			loadPersonalInfo();
 		}
@@ -426,7 +428,7 @@ public class UserActualFragment extends AbstractDRFragment{
 		checkToShowNoticeDialogs();
 
 		getView().findViewById(R.id.lnr_fragment_action_plan_main).setVisibility(View.VISIBLE);
-		buildChart(activity, lineChart, personal);
+		buildChart(activity, lineChart, personal.progressList, selectedGroup);
 		scrollView.fullScroll(ScrollView.FOCUS_UP);
 	}
 
@@ -464,5 +466,17 @@ public class UserActualFragment extends AbstractDRFragment{
 	@Override
 	public void onDestroy(){
 		super.onDestroy();
+	}
+
+	public int getSelectedGroupPosition(){
+		if(selectedGroup == null){
+			return 0;
+		}
+		for(int i = 0; i < groupKpiList.size(); i++){
+			if(groupKpiList.get(i).key.equals(selectedGroup.key)){
+				return i;
+			}
+		}
+		return 0;
 	}
 }

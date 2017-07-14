@@ -176,6 +176,7 @@
                             <trente.asia.android.view.ChiaseEditText
                                 android:id="@+id/edt_fragment_kpi_value"
                                 android:layout_width="wrap_content"
+                                android:inputType="number"
                                 android:layout_height="wrap_content"
                                 android:hint="@string/chiase_common_please_input"
                                 android:text=""

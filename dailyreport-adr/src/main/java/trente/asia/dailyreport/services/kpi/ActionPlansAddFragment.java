@@ -184,14 +184,12 @@ public class ActionPlansAddFragment extends AbstractDRFragment implements DRCale
 			// groupKpiList = createDummy();
 			drGroupHeader.buildLayout(groupKpiList, 0, false);
 			selectedGroup = drGroupHeader.getSelectedGroup();
-
-			List<ApiObjectModel> statusList = CCJsonUtil.convertToModelList(response.optString("statusList"), ApiObjectModel.class);
-			statusMap = buildStatusMap(statusList);
-			updateCalendarView(actionPlanList);
+			statusMap = buildStatusMap();
+			updateCalendarView(statusMap);
 			if(showStatusOnly == false){
 				actionPlanList = CCJsonUtil.convertToModelList(response.optString("actions"), ActionPlan.class);
 				filteredActionPlans = filterByGroup();
-				boolean editMode = ActionPlan.STATUS_YET.equals(statusMap.get(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, selectedDate)));
+				boolean editMode = CCStringUtil.isEmpty(statusMap.get(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, selectedDate)));
 				buildActionPlans(editMode);
 			}
 		}
@@ -210,37 +208,21 @@ public class ActionPlansAddFragment extends AbstractDRFragment implements DRCale
 		return result;
 	}
 
-	private Map<String, String> buildStatusMap(List<ApiObjectModel> statusList){
+	private Map<String, String> buildStatusMap(){
 		Map<String, String> result = new HashMap<>();
-		for(ApiObjectModel status : statusList){
-			result.put(status.key, status.value);
+		for(GroupKpi groupKpi : groupKpiList){
+			if(!CCCollectionUtil.isEmpty(groupKpi.statusList)){
+				for(ApiObjectModel status : groupKpi.statusList){
+					String dayStatus = result.get(status.key);
+					if(CCStringUtil.isEmpty(dayStatus) || !dayStatus.equals(ActionPlan.STATUS_NG)){
+						dayStatus = status.value;
+					}
+					result.put(status.key, dayStatus);
+				}
+			}
 		}
 		return result;
 	}
-
-	// private void onLoadGroupsSuccess(JSONObject response){
-	// groupKpiList = CCJsonUtil.convertToModelList(response.optString("groups"), GroupKpi.class);
-	// if(CCCollectionUtil.isEmpty(groupKpiList)){
-	// getView().findViewById(R.id.lnr_fragment_action_plan_main).setVisibility(View.GONE);
-	// getView().findViewById(R.id.txt_fragment_action_plan_empty).setVisibility(View.VISIBLE);
-	// }else{
-	// // groupKpiList = createDummy();
-	// drGroupHeader.buildLayout(groupKpiList, 0, false);
-	// selectedGroup = drGroupHeader.getSelectedGroup();
-	// loadActionPlans(selectedDate, false);
-	// }
-	// }
-
-	// private void loadGroupInfo(){
-	// String dateStr = txtDate.getText().toString();
-	// JSONObject jsonObject = new JSONObject();
-	// try{
-	// jsonObject.put("targetDate", dateStr);
-	// }catch(JSONException ex){
-	// ex.printStackTrace();
-	// }
-	// super.requestLoad(DRConst.API_KPI_GROUPS, jsonObject, true);
-	// }
 
 	private void loadActionPlans(Date date, boolean showStatusOnly){
 		this.showStatusOnly = showStatusOnly;
@@ -260,7 +242,7 @@ public class ActionPlansAddFragment extends AbstractDRFragment implements DRCale
 			imgHeaderRightIcon.setVisibility(View.VISIBLE);
 			if(editMode){
 				edtMemo.setEnabled(true);
-				edtMemo.setBackgroundResource( R.drawable.dr_white_background_gray_border_padding);
+				edtMemo.setBackgroundResource(R.drawable.dr_white_background_gray_border_padding);
 				imgHeaderRightIcon.setImageResource(R.drawable.ic_save);
 				imgHeaderRightIcon.setOnClickListener(new View.OnClickListener() {
 
@@ -270,8 +252,8 @@ public class ActionPlansAddFragment extends AbstractDRFragment implements DRCale
 					}
 				});
 			}else{
-				 edtMemo.setEnabled(false);
-				edtMemo.setBackgroundResource( R.drawable.dr_blue_background_gray_border_padding);
+				edtMemo.setEnabled(false);
+				edtMemo.setBackgroundResource(R.drawable.dr_blue_background_gray_border_padding);
 				imgHeaderRightIcon.setImageResource(R.drawable.ic_edit);
 				imgHeaderRightIcon.setOnClickListener(new View.OnClickListener() {
 
@@ -332,9 +314,11 @@ public class ActionPlansAddFragment extends AbstractDRFragment implements DRCale
 			TextView txtTodayGoal = (TextView)cellView.findViewById(R.id.txt_item_actual_plan_today_goal);
 			txtTodayGoal.setText(actionPlan.planValue);
 			EditText edtReal = (EditText)cellView.findViewById(R.id.edt_item_actual_plan_real);
-			edtReal.setText(actionPlan.actual + actionPlan.unit);
+			edtReal.setText(actionPlan.actual);
 			edtReal.setTag(actionPlan.key);
 			edtActionValues.add(edtReal);
+			TextView txtUnit = (TextView)cellView.findViewById(R.id.txt_item_actual_plan_real_unit);
+			txtUnit.setText(actionPlan.unit);
 		}else{
 			cellView = inflater.inflate(R.layout.item_actual_plan_view, null);
 			TextView txtActualName = (TextView)cellView.findViewById(R.id.txt_item_actual_plan_name);
@@ -359,7 +343,6 @@ public class ActionPlansAddFragment extends AbstractDRFragment implements DRCale
 
 			TextView txtRate = (TextView)cellView.findViewById(R.id.txt_item_actual_plan_month_rate);
 			txtRate.setText(actionPlan.achievementRate + "%");
-
 		}
 		lnrActualPlanContainer.addView(cellView);
 	}
@@ -371,11 +354,9 @@ public class ActionPlansAddFragment extends AbstractDRFragment implements DRCale
 		return actionPlan;
 	}
 
-	private void updateCalendarView(List<ActionPlan> actionPlans){
+	private void updateCalendarView(Map<String, String> statusMap){
 		kpiCalendarView = ((CalendarFragment)adapter.getItem(mPager.getCurrentItem())).getKpiCalendarView();
-		Date d = CCDateUtil.makeDateCustom(txtDate.getText().toString(), WelfareConst.WF_DATE_TIME_DATE);
-		Calendar c = CCDateUtil.makeCalendar(d);
-		kpiCalendarView.updateLayoutWithData(actionPlans);
+		kpiCalendarView.updateLayoutWithData(statusMap);
 	}
 
 	@Override
