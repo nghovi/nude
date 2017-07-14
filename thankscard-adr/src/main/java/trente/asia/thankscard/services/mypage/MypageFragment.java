@@ -260,5 +260,4 @@ public class MypageFragment extends AbstractTCFragment{
 		txtReceiveRankNext = null;
 		lstNotice = null;
 	}
-
 }
