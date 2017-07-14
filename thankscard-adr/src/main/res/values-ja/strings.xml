@@ -141,4 +141,9 @@
     <string name="tc_confirm_dialog_title">確認メッセージ</string>
     <string name="tc_confirm_msg">%1$sさんへ\nメッセージを送りますか？</string>
     <string name="tc_secret_mode">シークレットモードで送る</string>
+    <string name="tc_no_rank">- 位</string>
+    <string name="tc_1_rank">%1$s位</string>
+    <string name="tc_2_rank">%1$s位</string>
+    <string name="tc_3_rank">%1$s位</string>
+    <string name="tc_4_more_rank">%1$s位</string>
 </resources>

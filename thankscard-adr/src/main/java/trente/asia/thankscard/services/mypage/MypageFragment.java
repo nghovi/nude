@@ -237,21 +237,21 @@ public class MypageFragment extends AbstractTCFragment{
 		}
 	}
 
-	public static String getRank(Integer point, String rank){
+	public String getRank(Integer point, String rank){
 		if(CCConst.ZERO.equals(CCNumberUtil.checkNull(point))){
-			return "--";
+			return getString(R.string.tc_no_rank);
 		}
 		switch(rank){
 		case "0":
-			return "--";
+			return getString(R.string.tc_no_rank);
 		case "1":
-			return rank + "st";
+			return getString(R.string.tc_1_rank, rank);
 		case "2":
-			return rank + "nd";
+			return getString(R.string.tc_2_rank, rank);
 		case "3":
-			return rank + "rd";
+			return getString(R.string.tc_3_rank, rank);
 		default:
-			return rank + "th";
+			return getString(R.string.tc_4_more_rank, rank);
 		}
 	}
 
