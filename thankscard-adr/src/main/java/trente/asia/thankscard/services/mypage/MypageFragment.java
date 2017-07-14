@@ -201,7 +201,11 @@ public class MypageFragment extends AbstractTCFragment{
             if (mypageModel.pointPost == 0) {
                 nextPostRank = String.valueOf(mypageModel.seqPost);
             }
-			txtPostRankNext.setText(getString(R.string.fragment_mypage_rank_next_post, nextPostRank, String.valueOf(Math.abs(mypageModel.archivePost))));
+            if (mypageModel.seqPost == 0) {
+				txtPostRankNext.setText(getString(R.string.fragment_mypage_rank_next_post, "1", "1"));
+			} else {
+				txtPostRankNext.setText(getString(R.string.fragment_mypage_rank_next_post, nextPostRank, String.valueOf(Math.abs(mypageModel.archivePost))));
+			}
 		}
 
 		String receiveRank = getRank(mypageModel.pointReceive, CCStringUtil.toString(mypageModel.seqRecieve));
@@ -213,7 +217,13 @@ public class MypageFragment extends AbstractTCFragment{
             if (mypageModel.pointReceive == 0) {
                 nextReceiveRank = String.valueOf(mypageModel.seqRecieve);
             }
-			txtReceiveRankNext.setText(getString(R.string.fragment_mypage_rank_next_receive, nextReceiveRank, String.valueOf(Math.abs(mypageModel.archiveReceive))));
+
+            if (mypageModel.seqRecieve == 0) {
+				txtReceiveRankNext.setText(getString(R.string.fragment_mypage_rank_next_receive, "1", "1"));
+			} else {
+				txtReceiveRankNext.setText(getString(R.string.fragment_mypage_rank_next_receive, nextReceiveRank, String.valueOf(Math.abs(mypageModel.archiveReceive))));
+			}
+
 		}
 
 		WfPicassoHelper.loadImageWithDefaultIcon(activity, host, imgAvatar, myself.avatarPath, R.drawable.wf_profile);
