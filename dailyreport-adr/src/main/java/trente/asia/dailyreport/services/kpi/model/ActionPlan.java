@@ -6,9 +6,9 @@ package trente.asia.dailyreport.services.kpi.model;
 
 public class ActionPlan{
 
-	public static final String	STATUS_NG		= "NG";
+	public static final String	STATUS_NG		= "N";
 	public static final String	STATUS_YET		= "YET";
-	public static final String	STATUS_OK		= "OK";
+	public static final String	STATUS_OK		= "Y";
 	public String				planName;
 	public String				planValue;
 	public String				key				= "2";

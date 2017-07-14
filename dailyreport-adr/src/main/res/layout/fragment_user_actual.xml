@@ -164,21 +164,30 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/margin_10dp">
+                            android:layout_marginTop="@dimen/margin_10dp"
+                            android:orientation="horizontal">
 
                             <TextView
-                                android:layout_width="@dimen/margin_120dp"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_weight="1"
                                 android:text="@string/today_performance" />
 
                             <trente.asia.android.view.ChiaseEditText
                                 android:id="@+id/edt_fragment_kpi_value"
-                                android:layout_width="match_parent"
+                                android:layout_width="wrap_content"
+                                android:inputType="number"
                                 android:layout_height="wrap_content"
                                 android:hint="@string/chiase_common_please_input"
                                 android:text=""
                                 android:textAlignment="textEnd"
                                 android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/txt_fragment_kpi_unit"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="$" />
 
                         </LinearLayout>
                     </LinearLayout>
@@ -187,7 +196,7 @@
                         android:id="@+id/btn_fragment_user_actual_save"
                         style="@style/wl_common_button_small"
                         android:layout_marginBottom="@dimen/margin_10dp"
-                        android:layout_marginTop="@dimen/margin_16dp"
+                        android:layout_marginTop="@dimen/margin_10dp"
                         android:text="@string/chiase_common_save"
                         android:textColor="@color/chiase_white"
                         android:textSize="12sp" />

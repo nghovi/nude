@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -68,8 +69,10 @@ public class KpiCalendarView extends RelativeLayout{
 					// setNextMonth();
 					// refreshCalendar();
 				}else{ // currentMonth
-					adapter.updateSelectedCell(position);
-					onDayClickedListener.onDayClicked(selectedDate);
+					if(position != adapter.getSelectedPosition()){
+						adapter.updateSelectedCell(position);
+						onDayClickedListener.onDayClicked(selectedDate);
+					}
 				}
 			}
 		});
@@ -88,8 +91,8 @@ public class KpiCalendarView extends RelativeLayout{
 
 	private OnDayClickedListener onDayClickedListener;
 
-	public void updateLayoutWithData(final List<ActionPlan> actionPlanList){
-		adapter.updateLayout(actionPlanList);
+	public void updateLayoutWithData(Map<String, String> statusMap){
+		adapter.updateLayout(statusMap);
 	}
 
 }

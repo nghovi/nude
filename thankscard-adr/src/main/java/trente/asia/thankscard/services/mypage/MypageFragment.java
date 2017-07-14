@@ -56,6 +56,7 @@ public class MypageFragment extends AbstractTCFragment{
 	private List<RankStage>		rankStages;
 	private TextView			txtPostRankNext;
 	private TextView			txtReceiveRankNext;
+	private TextView			txtRank;
 
 	public boolean hasBackBtn(){
 		return false;
@@ -88,6 +89,7 @@ public class MypageFragment extends AbstractTCFragment{
 		txtReceiveRank = (TextView)getView().findViewById(R.id.txt_fragment_mypage_rank_receive);
 		txtReceiveRankNext = (TextView)getView().findViewById(R.id.txt_fragment_mypage_rank_receive2);
 		imgRankStage = (ImageView)getView().findViewById(R.id.img_fragment_mypage_rank_stage);
+		txtRank = (TextView) getView().findViewById(R.id.txt_rank);
 
 		buildUserInfoLayout();
 		builNoticeList();
@@ -197,8 +199,15 @@ public class MypageFragment extends AbstractTCFragment{
 		if(mypageModel.seqPost == 1){
 			txtPostRankNext.setText(getString(R.string.rank_first_congrats));
 		}else{
-			String nextPostRank = String.valueOf(Integer.valueOf(mypageModel.seqPost) - 1);
-			txtPostRankNext.setText(getString(R.string.fragment_mypage_rank_next_post, nextPostRank, String.valueOf(Math.abs(mypageModel.archivePost))));
+            String nextPostRank = String.valueOf(mypageModel.seqPost - 1);
+            if (mypageModel.pointPost == 0) {
+                nextPostRank = String.valueOf(mypageModel.seqPost);
+            }
+            if (mypageModel.seqPost == 0) {
+				txtPostRankNext.setText(getString(R.string.fragment_mypage_rank_next_post, "1", "1"));
+			} else {
+				txtPostRankNext.setText(getString(R.string.fragment_mypage_rank_next_post, nextPostRank, String.valueOf(Math.abs(mypageModel.archivePost))));
+			}
 		}
 
 		String receiveRank = getRank(mypageModel.pointReceive, CCStringUtil.toString(mypageModel.seqRecieve));
@@ -206,8 +215,17 @@ public class MypageFragment extends AbstractTCFragment{
 		if(mypageModel.seqRecieve == 1){
 			txtReceiveRankNext.setText(getString(R.string.rank_first_congrats));
 		}else{
-			String nextReceiveRank = String.valueOf(Integer.valueOf(mypageModel.seqRecieve) - 1);
-			txtReceiveRankNext.setText(getString(R.string.fragment_mypage_rank_next_receive, nextReceiveRank, String.valueOf(Math.abs(mypageModel.archiveReceive))));
+            String nextReceiveRank = String.valueOf(mypageModel.seqRecieve - 1);
+            if (mypageModel.pointReceive == 0) {
+                nextReceiveRank = String.valueOf(mypageModel.seqRecieve);
+            }
+
+            if (mypageModel.seqRecieve == 0) {
+				txtReceiveRankNext.setText(getString(R.string.fragment_mypage_rank_next_receive, "1", "1"));
+			} else {
+				txtReceiveRankNext.setText(getString(R.string.fragment_mypage_rank_next_receive, nextReceiveRank, String.valueOf(Math.abs(mypageModel.archiveReceive))));
+			}
+
 		}
 
 		WfPicassoHelper.loadImageWithDefaultIcon(activity, host, imgAvatar, myself.avatarPath, R.drawable.wf_profile);
@@ -222,32 +240,36 @@ public class MypageFragment extends AbstractTCFragment{
 		int pointSilver = Integer.parseInt(prefAccUtil.get(TcConst.PREF_POINT_SILVER));
 		int pointGold = Integer.parseInt(prefAccUtil.get(TcConst.PREF_POINT_GOLD));
 
-		if (totalPoint < pointBronze) {
+		if(totalPoint < pointBronze){
 			imageView.setImageResource(R.drawable.tc_rank_regular);
-		} else if (totalPoint >= pointBronze && totalPoint < pointSilver) {
+			txtRank.setText(R.string.tc_rank_regular);
+		}else if(totalPoint >= pointBronze && totalPoint < pointSilver){
 			imageView.setImageResource(R.drawable.tc_rank_bronze);
-		} else if (totalPoint >= pointSilver && totalPoint < pointGold) {
+			txtRank.setText(R.string.tc_rank_bronze);
+		}else if(totalPoint >= pointSilver && totalPoint < pointGold){
 			imageView.setImageResource(R.drawable.tc_rank_silver);
-		} else if (totalPoint > pointGold) {
+			txtRank.setText(R.string.tc_rank_silver);
+		}else if(totalPoint > pointGold){
 			imageView.setImageResource(R.drawable.tc_rank_gold);
+			txtRank.setText(R.string.tc_rank_gold);
 		}
 	}
 
-	public static String getRank(Integer point, String rank){
+	public String getRank(Integer point, String rank){
 		if(CCConst.ZERO.equals(CCNumberUtil.checkNull(point))){
-			return "--";
+			return getString(R.string.tc_no_rank);
 		}
 		switch(rank){
 		case "0":
-			return "--";
+			return getString(R.string.tc_no_rank);
 		case "1":
-			return rank + "st";
+			return getString(R.string.tc_1_rank, rank);
 		case "2":
-			return rank + "nd";
+			return getString(R.string.tc_2_rank, rank);
 		case "3":
-			return rank + "rd";
+			return getString(R.string.tc_3_rank, rank);
 		default:
-			return rank + "th";
+			return getString(R.string.tc_4_more_rank, rank);
 		}
 	}
 
