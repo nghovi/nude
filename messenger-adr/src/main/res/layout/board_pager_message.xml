@@ -69,7 +69,7 @@
                 android:padding="@dimen/margin_8dp">
 
                 <ImageButton
-                    android:id="@+id/btn_id_send"
+                    android:id="@+id/img_btn_id_send"
                     style="@style/cs_common_wrap"
                     android:background="@android:color/transparent"
                     android:clickable="false"

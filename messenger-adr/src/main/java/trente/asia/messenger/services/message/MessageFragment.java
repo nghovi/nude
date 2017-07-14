@@ -814,7 +814,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 			hideKeyBoard(activity);
 			mSlideMenuLayout.toggleMenu();
 			break;
-		case R.id.btn_id_send:
+		case R.id.img_btn_id_send:
 			if(messageView.buttonType == MessageView.ButtonType.MENU){
 				onButtonMenuClicked();
 			}else{

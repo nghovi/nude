@@ -106,7 +106,7 @@ public class MessageView extends LinearLayout{
 		// View view = inflater.inflate(R.layout.board_pager_message, null);
 		// this.addView(view);
 
-		imgSend = (ImageButton)this.findViewById(R.id.btn_id_send);
+		imgSend = (ImageButton)this.findViewById(R.id.img_btn_id_send);
 		lnrSend = (LinearLayout)this.findViewById(R.id.lnr_id_send);
 		imgLike = (ImageButton)this.findViewById(R.id.img_id_like);
 		lnrLike = (LinearLayout)this.findViewById(R.id.lnr_id_like);
