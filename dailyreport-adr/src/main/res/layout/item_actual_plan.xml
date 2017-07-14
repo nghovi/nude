@@ -35,28 +35,36 @@
             <TextView
                 android:id="@+id/txt_item_actual_plan_today_goal"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="value" />
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_10dp">
+            android:layout_marginTop="@dimen/margin_10dp"
+            android:orientation="horizontal">
 
             <TextView
-                android:layout_width="@dimen/margin_120dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="@string/today_performance" />
 
             <trente.asia.android.view.ChiaseEditText
                 android:id="@+id/edt_item_actual_plan_real"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="right"
                 android:hint="@string/chiase_common_please_input"
+                android:inputType="number"
                 android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/txt_item_actual_plan_real_unit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="$" />
 
         </LinearLayout>
     </LinearLayout>

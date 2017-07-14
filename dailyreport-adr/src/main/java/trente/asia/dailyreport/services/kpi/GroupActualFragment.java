@@ -86,6 +86,7 @@ public class GroupActualFragment extends AbstractDRFragment{
 			public void onDateSet(DatePicker view, int year, int month, int dayOfMonth){
 				String startDateStr = year + "/" + CCFormatUtil.formatZero(month + 1) + "/" + CCFormatUtil.formatZero(dayOfMonth);
 				txtSelectedDate.setText(startDateStr);
+				loadGroupDetail(groupKpi.key);
 			}
 		}, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
 		getView().findViewById(R.id.lnr_fragment_kpi_date).setOnClickListener(new View.OnClickListener() {
@@ -130,7 +131,6 @@ public class GroupActualFragment extends AbstractDRFragment{
 		if(getView() != null){
 			groupKpi = CCJsonUtil.convertToModel(response.optString("group"), GroupKpi.class);
 			txtGroupName.setText(groupKpi.name);
-
 			String periodString = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, CCDateUtil.makeDateCustom(groupKpi.startDate, WelfareConst.WF_DATE_TIME)) + " ~ " + CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, CCDateUtil.makeDateCustom(groupKpi.endDate, WelfareConst.WF_DATE_TIME));
 			txtPeriod.setText(periodString);
 			txtGoal.setText(CCFormatUtil.formatAmount(groupKpi.goal) + " " + groupKpi.unit);
@@ -138,7 +138,13 @@ public class GroupActualFragment extends AbstractDRFragment{
 			txtAchievementRate.setText(CCFormatUtil.formatAmount(groupKpi.achievementRate) + "%");
 			txtToGoal.setText(CCFormatUtil.formatAmount(Integer.parseInt(groupKpi.goal) - Integer.parseInt(groupKpi.achievement)) + " " + groupKpi.unit);
 
-			// UserActualFragment.buildChart(lineChart, groupKpi);
+			Date groupStartDate = CCDateUtil.makeDateCustom(groupKpi.startDate, WelfareConst.WF_DATE_TIME);
+			Date groupEndDate = CCDateUtil.makeDateCustom(groupKpi.endDate, WelfareConst.WF_DATE_TIME);
+			datePickerDialog.getDatePicker().setMinDate(groupStartDate.getTime());
+			datePickerDialog.getDatePicker().setMaxDate(groupEndDate.getTime());
+			//// TODO: 7/14/17 setMinDate not work right away
+			// datePickerDialog.getDatePicker().forceLayout();
+			UserActualFragment.buildChart(activity, lineChart, groupKpi.checkPoints, groupKpi);
 		}
 	}
 

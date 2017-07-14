@@ -40,9 +40,11 @@
             android:id="@+id/txt_fragment_group_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/margin_16dp"
-            android:text="Group Name"
+            android:layout_gravity="center"
             android:layout_marginBottom="@dimen/margin_16dp"
+            android:layout_marginRight="@dimen/margin_16dp"
+            android:text=""
+            android:textAlignment="center"
             android:textColor="@color/chiase_black" />
 
         <LinearLayout
