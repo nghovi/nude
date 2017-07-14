@@ -173,7 +173,7 @@ public class MypageFragment extends AbstractTCFragment{
 			// control post button
 			List<DeptModel> lstDept = CCJsonUtil.convertToModelList(response.optString("depts"), DeptModel.class);
 			if(WelfareUtil.size(lstDept) == 1 && WelfareUtil.size(lstDept.get(0).members) == 1){
-				btnPost.setEnabled(false);
+//				btnPost.setEnabled(false);
 			}
 		}else if(TcConst.API_GET_RANK_STAGE_INFO.equals(url)){
 			rankStages = CCJsonUtil.convertToModelList(response.optString("rankingStageList"), RankStage.class);
