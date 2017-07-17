@@ -10,7 +10,9 @@ import org.json.JSONObject;
 import android.app.DatePickerDialog;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.DatePicker;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -45,6 +47,7 @@ public class GroupActualFragment extends AbstractDRFragment{
 	LineChart					lineChart;
 	private String				groupKpiKey;
 	private Date				selectedDate;
+	private LinearLayout		lnrChartContainer;
 
 	@Override
 	public int getFragmentLayoutId(){
@@ -111,7 +114,9 @@ public class GroupActualFragment extends AbstractDRFragment{
 			}
 		});
 
-		lineChart = (LineChart)getView().findViewById(R.id.chart);
+		lnrChartContainer = (LinearLayout)getView().findViewById(R.id.lnr_chart_container);
+
+		// lineChart = (LineChart)getView().findViewById(R.id.chart);
 	}
 
 	private void loadGroupDetail(String groupKpiKey){
@@ -144,7 +149,13 @@ public class GroupActualFragment extends AbstractDRFragment{
 			datePickerDialog.getDatePicker().setMaxDate(groupEndDate.getTime());
 			//// TODO: 7/14/17 setMinDate not work right away
 			// datePickerDialog.getDatePicker().forceLayout();
-			UserActualFragment.buildChart(activity, lineChart, groupKpi.checkPoints, groupKpi);
+			//// TODO: 7/17/17 create field for chart_unit
+			lnrChartContainer.removeAllViews();
+			LinearLayout chartView = (LinearLayout)LayoutInflater.from(activity).inflate(R.layout.kpi_chart, null);
+			lineChart = (LineChart)chartView.findViewById(R.id.chart);
+			((TextView)chartView.findViewById(R.id.txt_kpi_chart_unit)).setText(groupKpi.unit);
+			UserActualFragment.buildChart(activity, lineChart, groupKpi.checkPoints, groupKpi, null);
+			lnrChartContainer.addView(chartView);
 		}
 	}
 

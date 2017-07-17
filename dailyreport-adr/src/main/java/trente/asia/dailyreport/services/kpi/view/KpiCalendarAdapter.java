@@ -197,9 +197,9 @@ public class KpiCalendarAdapter extends BaseAdapter{
 		ImageView kpiStatus = (ImageView)v.findViewById(R.id.item_calendar_img_status);
 		kpiStatus.setVisibility(View.VISIBLE);
 		if(ActionPlan.STATUS_OK.equals(dayStatus)){
-			kpiStatus.setImageResource(R.drawable.wf_check);
+			kpiStatus.setImageResource(R.drawable.ic_circle);
 		}else if(ActionPlan.STATUS_NG.equals(dayStatus)){
-			// kpiStatus.setImageResource(R.drawable.wf_check);
+			kpiStatus.setImageResource(R.drawable.ic_cross);
 		}
 	}
 

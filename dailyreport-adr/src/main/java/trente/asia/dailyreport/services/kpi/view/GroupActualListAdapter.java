@@ -69,7 +69,7 @@ public class GroupActualListAdapter extends ArrayAdapter<GroupKpi>{
 		viewHolder.txtOverallPerformance.setText(CCFormatUtil.formatAmount(groupKpi.achievement) + " " + groupKpi.unit);
 		viewHolder.txtAchievementRate.setText(CCFormatUtil.formatAmount(groupKpi.achievementRate) + "%");
 		int toGoal = Integer.parseInt(groupKpi.toGoal);
-		if(toGoal < 0){ // achieved
+		if(toGoal <= 0){ // achieved
 			viewHolder.txtResult.setText("->" + context.getResources().getString(R.string.achieve_dialog_title));
 		}else{
 			viewHolder.txtResult.setText("->" + context.getResources().getString(R.string.fragmen_group_actual_needed_amount2, toGoal + groupKpi.unit));

@@ -338,6 +338,7 @@ public class ActionPlansAddFragment extends AbstractDRFragment implements DRCale
 			EditText edtReal = (EditText)cellView.findViewById(R.id.edt_item_actual_plan_real);
 			edtReal.setText(actionPlan.actual);
 			edtReal.setTag(actionPlan.key);
+			edtReal.setSelection(actionPlan.actual.length());
 			edtActionValues.add(edtReal);
 			TextView txtUnit = (TextView)cellView.findViewById(R.id.txt_item_actual_plan_real_unit);
 			txtUnit.setText(actionPlan.unit);

@@ -4,7 +4,6 @@
 
     <include layout="@layout/view_common_header" />
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -66,7 +65,8 @@
                 android:id="@+id/scr_user_actual"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fillViewport="true">
+                android:fillViewport="true"
+                android:visibility="invisible">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -82,7 +82,6 @@
                         android:layout_marginRight="@dimen/margin_16dp"
                         android:layout_marginTop="@dimen/margin_16dp"
                         android:background="@drawable/dr_white_background_gray_border_padding"
-
                         android:orientation="vertical"
                         android:padding="@dimen/margin_16dp">
 
@@ -176,9 +175,10 @@
                             <trente.asia.android.view.ChiaseEditText
                                 android:id="@+id/edt_fragment_kpi_value"
                                 android:layout_width="wrap_content"
-                                android:inputType="number"
                                 android:layout_height="wrap_content"
+                                android:gravity="right"
                                 android:hint="@string/chiase_common_please_input"
+                                android:inputType="number"
                                 android:text=""
                                 android:textAlignment="textEnd"
                                 android:textSize="12sp" />
@@ -202,10 +202,11 @@
                         android:textSize="12sp" />
 
 
-                    <include
-                        layout="@layout/kpi_chart"
+                    <LinearLayout
+                        android:id="@+id/lnr_chart_container"
                         android:layout_width="match_parent"
-                        android:layout_height="320dp" />
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"></LinearLayout>
 
 
                 </LinearLayout>

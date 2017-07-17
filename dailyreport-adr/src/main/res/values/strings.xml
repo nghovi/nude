@@ -76,7 +76,7 @@
     <string name="fragment_kpi_title">Actual result input</string>
     <string name="fragment_actual_plan_title">Personal action plan</string>
     <string name="fragment_group_actual_title">Group’s performance</string>
-    <string name="fragment_group_actual_list_title">GroupActualList</string>
+    <string name="fragment_group_actual_list_title">KPI</string>
     <string name="group_actual_list_goal">Group goal list</string>
     <string name="fragment_group_actual_group_goal">Group goal</string>
     <string name="fragmen_group_actual_needed_amount">Amount you need to reach the goal</string>
