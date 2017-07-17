@@ -7,7 +7,7 @@
     <!-- footer -->
     <string name="footer_item1">日報</string>
     <string name="footer_item2">みんなの日報</string>
-    <string name="footer_item3">アクティビティ</string>
+    <string name="footer_item3">AP</string>
     <string name="footer_item4">設定</string>
     <string name="fragment_report_edit_change_template_confirm">このテンプレートを変更しますか？</string>
     <string name="fragment_other_title">みんなの日報</string>
@@ -89,7 +89,7 @@
     <string name="performance_in_month">%1$s月の実績</string>
     <string name="achievement_rate_in_month">%1$s月の達成率</string>
     <string name="user_has_no_kpi_setup">KPIが設定されていません</string>
-    <string name="fragment_kpi_title_tassei">個人成績</string>
+    <string name="fragment_kpi_title_tassei">実績入力</string>
     <string name="fragment_kpi_title_jisseki">個人実績</string>
     <string name="overall_performance">累計実績</string>
     <string name="action_plan_empty">アクションプランが設定されていません</string>

@@ -453,7 +453,6 @@ public class UserActualFragment extends AbstractDRFragment{
 			updateHeader(getString(R.string.fragment_kpi_title_jisseki));
 			lnrInfo.setBackground(ContextCompat.getDrawable(activity, R.drawable.dr_white_background_gray_border_padding));
 		}
-		personal.todayActual = personal.todayActual == null ? "0" : personal.todayActual;
 		edtActualToday.setText(personal.todayActual);
 		txtUnit.setText(selectedGroup.unit);
 		String periodString = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, CCDateUtil.makeDateCustom(personal.startDate, WelfareConst.WF_DATE_TIME)) + " ~ " + CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, CCDateUtil.makeDateCustom(personal.endDate, WelfareConst.WF_DATE_TIME));

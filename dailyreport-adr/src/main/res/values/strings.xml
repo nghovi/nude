@@ -69,9 +69,9 @@
     <string name="header_calendar_this_week">This week</string>
     <string name="goal_period">Goal period</string>
     <string name="personal_goal">Personal goal</string>
-    <string name="total_performance">Total actual results</string>
+    <string name="total_performance">Total performance</string>
     <string name="achievement_rate">Achievement rate</string>
-    <string name="today_performance">Today\'s actual result</string>
+    <string name="today_performance">Today\'s performance</string>
     <string name="footer_itemkpi">KPI</string>
     <string name="fragment_kpi_title">Actual result input</string>
     <string name="fragment_actual_plan_title">Personal action plan</string>
@@ -89,7 +89,7 @@
     <string name="performance_in_month">Performance in %1$s</string>
     <string name="achievement_rate_in_month">Achievement rate in %1$s</string>
     <string name="user_has_no_kpi_setup">Your KPI is not set</string>
-    <string name="fragment_kpi_title_tassei">Personal achievement</string>
+    <string name="fragment_kpi_title_tassei">Personal input</string>
     <string name="fragment_kpi_title_jisseki">Personal performance</string>
     <string name="overall_performance">Overall performance</string>
     <string name="action_plan_empty">Your action plan is not set</string>

@@ -5,12 +5,15 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.content.res.Resources;
+import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -74,6 +77,7 @@ public class ActionPlansAddFragment extends AbstractDRFragment implements DRCale
 	private List<EditText>		edtActionValues		= new ArrayList<>();
 	private LinearLayout		lnrGroupHeader;
 	private List<ActionPlan>	filteredActionPlans;
+	private Locale				locale;
 
 	@Override
 	public int getFragmentLayoutId(){
@@ -156,6 +160,11 @@ public class ActionPlansAddFragment extends AbstractDRFragment implements DRCale
 
 			}
 		});
+		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
+			locale = getResources().getConfiguration().getLocales().get(0);
+		}else{
+			locale = getResources().getConfiguration().locale;
+		}
 	}
 
 	@Override
@@ -330,7 +339,11 @@ public class ActionPlansAddFragment extends AbstractDRFragment implements DRCale
 			TextView txtPerformance = (TextView)cellView.findViewById(R.id.txt_item_actual_plan_today_performance);
 			txtPerformance.setText(actionPlan.actual + actionPlan.unit);
 
+			String language = locale.getLanguage();
 			String monthStr = CCFormatUtil.formatDateCustom("M", selectedDate);
+			if("en".equals(language)){
+				monthStr = CCFormatUtil.formatDateCustom("MMM", selectedDate);
+			}
 
 			TextView txtPerformanceMonthLabel = (TextView)cellView.findViewById(R.id.txt_item_actual_plan_performance_month_label);
 			txtPerformanceMonthLabel.setText(getString(R.string.performance_in_month, monthStr));
@@ -382,19 +395,6 @@ public class ActionPlansAddFragment extends AbstractDRFragment implements DRCale
 	public void onDestroy(){
 		super.onDestroy();
 		txtDate = null;
-	}
-
-	public static ActionPlan getActionPlanByDay(Calendar c, List<ActionPlan> actionPlans){
-		if(!CCCollectionUtil.isEmpty(actionPlans)){
-			for(ActionPlan actionPlan : actionPlans){
-				String day = DRUtil.getDateString(actionPlan.date, DRConst.DATE_FORMAT_YYYY_MM_DD_HH_MM_SS, DRConst.DATE_FORMAT_YYYY_MM_DD);
-				if(day.equals(DRUtil.getDateString(c.getTime(), DRConst.DATE_FORMAT_YYYY_MM_DD))){
-					return actionPlan;
-				}
-			}
-		}
-		return createEmptyActualPlanModel(c);
-		// todo></todo>
 	}
 
 	@Override
