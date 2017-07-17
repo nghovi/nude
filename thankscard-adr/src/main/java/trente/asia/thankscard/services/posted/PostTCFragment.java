@@ -2,7 +2,6 @@ package trente.asia.thankscard.services.posted;
 
 import android.content.DialogInterface;
 import android.databinding.DataBindingUtil;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -10,10 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,6 +29,7 @@ import trente.asia.thankscard.databinding.FragmentPostTcBinding;
 import trente.asia.thankscard.fragments.AbstractTCFragment;
 import trente.asia.thankscard.fragments.dialogs.PostConfirmDialog;
 import trente.asia.thankscard.services.common.model.Template;
+import trente.asia.thankscard.services.posted.model.StickerModel;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.define.WfUrlConst;
@@ -45,8 +41,9 @@ import trente.asia.welfare.adr.utils.WfPicassoHelper;
  * Created by tien on 7/12/2017.
  */
 
-public class PostTCFragment extends AbstractTCFragment implements View.OnClickListener,SelectDeptFragment.OnSelectDeptListener,SelectUserFragment.OnSelectUserListener,SelectCardFragment.OnSelectCardListener{
-	public final int MAX_LETTER = 75;
+public class PostTCFragment extends AbstractTCFragment implements View.OnClickListener,SelectDeptFragment.OnSelectDeptListener,SelectUserFragment.OnSelectUserListener,SelectCardFragment.OnSelectCardListener,StickerModel.OnStickerListener{
+
+	public final int				MAX_LETTER	= 75;
 
 	private List<Template>			templates;
 	private FragmentPostTcBinding	binding;
@@ -55,6 +52,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 	private DeptModel				department;
 	private UserModel				member;
 	private String					message;
+	private List<StickerModel>		stickers	= new ArrayList<>();
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -100,19 +98,22 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 		binding.rltSelectUser.setOnClickListener(this);
 		binding.lnrSelectCard.setOnClickListener(this);
 		binding.btnSend.setOnClickListener(this);
+		binding.lnrSelectSticker.setOnClickListener(this);
+		binding.lnrSelectPhoto.setOnClickListener(this);
 		binding.edtMessage.addTextChangedListener(new TextWatcher() {
+
 			@Override
-			public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+			public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2){
 
 			}
 
 			@Override
-			public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+			public void onTextChanged(CharSequence charSequence, int i, int i1, int i2){
 
 			}
 
 			@Override
-			public void afterTextChanged(Editable editable) {
+			public void afterTextChanged(Editable editable){
 				message = editable.toString();
 				binding.txtCount.setText(String.valueOf(MAX_LETTER - message.length()));
 			}
@@ -163,6 +164,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 
 	private void buildTemplate(){
 		WfPicassoHelper.loadImage(getContext(), BuildConfig.HOST + template.templateUrl, binding.imgCard, null);
+
 	}
 
 	@Override
@@ -188,6 +190,18 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 			cardFragment.setCallback(this);
 			gotoFragment(cardFragment);
 			break;
+		case R.id.lnr_select_sticker:
+			for (StickerModel sticker : stickers) {
+				sticker.unselectSticker();
+			}
+			StickerModel stickerModel = new StickerModel(getContext());
+			stickerModel.key = stickers.size();
+			stickerModel.setCallback(this);
+			binding.rltMsg.addView(stickerModel);
+			stickers.add(stickerModel);
+			break;
+		case R.id.lnr_select_photo:
+			break;
 		case R.id.btn_send:
 			checkNewCard();
 			break;
@@ -208,7 +222,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 		}
 	}
 
-	private boolean hasTooManyLetters(String message) {
+	private boolean hasTooManyLetters(String message){
 		return message.length() > MAX_LETTER;
 	}
 
@@ -254,26 +268,26 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 	}
 
 	@Override
-	protected void successUpdate(JSONObject response, String url) {
-		if (TcConst.API_POST_NEW_CARD.equals(url)) {
+	protected void successUpdate(JSONObject response, String url){
+		if(TcConst.API_POST_NEW_CARD.equals(url)){
 			requestPostNewCardSuccess(response);
-		} else {
+		}else{
 			super.successUpdate(response, url);
 		}
 	}
 
-	private void requestPostNewCardSuccess(JSONObject response) {
+	private void requestPostNewCardSuccess(JSONObject response){
 		showAlertDialog(getString(R.string.fragment_posted_confirm_success_title), getString(R.string.fragment_posted_confirm_success_message), getString(android.R.string.ok), new DialogInterface.OnClickListener() {
 
 			@Override
-			public void onClick(DialogInterface dialog, int which) {
+			public void onClick(DialogInterface dialog, int which){
 				onClickOkButtonAfterShowingSuccessDialog();
 			}
 		});
 	}
 
-	private void onClickOkButtonAfterShowingSuccessDialog() {
-		((WelfareActivity) activity).isInitData = true;
+	private void onClickOkButtonAfterShowingSuccessDialog(){
+		((WelfareActivity)activity).isInitData = true;
 		onClickBackBtn();
 	}
 
@@ -299,5 +313,24 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 	public void onSelectCardDone(Template card){
 		this.template = card;
 		buildTemplate();
+	}
+
+	@Override
+	public void onDeleteStickerClick(StickerModel sticker){
+		binding.rltMsg.removeView(sticker);
+		stickers.remove(sticker);
+	}
+
+	@Override
+	public void onStickerClick(float x, float y, StickerModel sticker){
+		for(StickerModel stickerModel : stickers){
+			if(!sticker.equals(stickerModel)){
+				if(x > stickerModel.lowX && x < stickerModel.highX && y > stickerModel.lowY && y < stickerModel.highY){
+					stickerModel.selectSticker();
+				}else{
+					stickerModel.unselectSticker();
+				}
+			}
+		}
 	}
 }

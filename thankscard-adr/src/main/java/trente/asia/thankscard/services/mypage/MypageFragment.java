@@ -138,7 +138,6 @@ public class MypageFragment extends AbstractTCFragment{
 
 	private void onNoticeClicked(final NoticeModel notice){
 		DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
-
 			@Override
 			public void onClick(DialogInterface dialog, int which){
 				gotoPostEdit(notice);

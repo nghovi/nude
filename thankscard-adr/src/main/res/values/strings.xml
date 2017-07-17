@@ -159,4 +159,6 @@
     <string name="tc_2_rank">%1$snd</string>
     <string name="tc_3_rank">%1$srd</string>
     <string name="tc_4_more_rank">%1$sth</string>
+    <string name="tc_select_sticker">Sticker</string>
+    <string name="tc_select_photo">Gallery</string>
 </resources>

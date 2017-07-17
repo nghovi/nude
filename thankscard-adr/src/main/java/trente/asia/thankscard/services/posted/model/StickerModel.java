@@ -27,8 +27,9 @@ import trente.asia.thankscard.R;
  * Created by on 11/14/2016.
  */
 
-public class StickerModel extends AppCompatImageView {
+public class StickerModel extends AppCompatImageView{
 
+	public int							key;
 	public float						rotation		= 0;
 	public float						scaleValue		= 1f;
 	public int							translateX		= 0;
@@ -36,7 +37,7 @@ public class StickerModel extends AppCompatImageView {
 	public String						stickerPath		= "http://www.unixstickers.com/image/data/stickers/gruntjs/Grunt.sh.png";
 
 	private Bitmap						bitmapSticker, mainBitmap, rotateBitmap, scaleBitmap, deleteBitmap;
-	private Paint						paint;
+	private Paint						paint			= new Paint();
 	private RelativeLayout.LayoutParams	params;
 	private Rect						rectBorder;
 
@@ -53,9 +54,9 @@ public class StickerModel extends AppCompatImageView {
 
 	private boolean						drawBorder;
 	private int							maxDimensionLayout;
-	private Matrix						matrix;
+	private Matrix						matrix			= new Matrix();
 	private DashPathEffect				dashPathEffect	= new DashPathEffect(new float[]{6, 4}, 0);
-	private OnFloatImageListener		callback;
+	private OnStickerListener			callback;
 
 	public static final int				MAX_DIMENSION	= 300;
 	public static final int				ROTATE_CONSTANT	= 30;
@@ -103,14 +104,13 @@ public class StickerModel extends AppCompatImageView {
 
 		maxDimensionLayout = (int)Math.sqrt(width * width + height * height);
 		params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-		setFullLayout();
 		setOnTouchListener(onTouchListener);
 		setOnClickListener(onClickListener);
 		rectBorder = new Rect(0, 0, (int)widthScale, (int)heightScale);
 		drawBorder = true;
-		matrix = new Matrix();
-		paint = new Paint();
 		updateStickerLimit();
+		setFullLayout();
+		invalidate();
 	}
 
 	public void selectSticker(){
@@ -202,7 +202,6 @@ public class StickerModel extends AppCompatImageView {
 		y += moveY;
 		translateX = x;
 		translateY = y;
-
 		invalidate();
 	}
 
@@ -216,6 +215,9 @@ public class StickerModel extends AppCompatImageView {
 	@Override
 	protected void onDraw(Canvas canvas){
 		super.onDraw(canvas);
+		if(bitmapSticker == null){
+			return;
+		}
 		matrix.reset();
 		// translate pic
 		matrix.postTranslate(translateX, translateY);
@@ -291,7 +293,6 @@ public class StickerModel extends AppCompatImageView {
 			case MotionEvent.ACTION_MOVE:
 				moveX = motionEvent.getX() - oldX;
 				moveY = motionEvent.getY() - oldY;
-				// log("move X= "+moveX+" moveY= "+moveY);
 				if(Math.abs(moveX) >= delta && Math.abs(moveY) >= delta){
 					isTouch = true;
 				}
@@ -319,11 +320,15 @@ public class StickerModel extends AppCompatImageView {
 				if(!isTouch){
 					if(touch == 4){
 						deleteSticker();
-					}else{
-						performClick();
+					} else {
 						if(callback != null){
-							callback.onStickerClick(motionEvent.getX(), motionEvent.getY(), StickerModel.this);
+							if (drawBorder) {
+								callback.onStickerClick(oldX, oldY, StickerModel.this);
+							} else {
+								callback.onStickerClick(params.leftMargin + oldX, params.topMargin + oldY, StickerModel.this);
+							}
 						}
+						performClick();
 					}
 				}
 				break;
@@ -356,11 +361,11 @@ public class StickerModel extends AppCompatImageView {
 		}
 	};
 
-	public void setCallback(OnFloatImageListener callback){
+	public void setCallback(OnStickerListener callback){
 		this.callback = callback;
 	}
 
-	public interface OnFloatImageListener{
+	public interface OnStickerListener{
 
 		void onDeleteStickerClick(StickerModel sticker);
 

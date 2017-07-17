@@ -175,11 +175,11 @@ public class ThanksCardEditFragment extends AbstractTCFragment {
             imgTemplate.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
             WfPicassoHelper.loadImage2(activity, BuildConfig.HOST, imgTemplate, template.templateUrl);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                getView().findViewById(R.id.rlt_msg_background).setBackground(null);
+                getView().findViewById(R.id.rlt_msg).setBackground(null);
             }
         } else {
             imgTemplate.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT));
-            getView().findViewById(R.id.rlt_msg_background).setBackgroundColor(getResources().getColor(R.color.tc_fragment_background));
+            getView().findViewById(R.id.rlt_msg).setBackgroundColor(getResources().getColor(R.color.tc_fragment_background));
         }
         final TextView txtCount = (TextView) getView().findViewById(R.id.txt_fragment_post_edit_count);
         edtMessage.addTextChangedListener(new TextWatcher() {

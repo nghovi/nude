@@ -97,18 +97,13 @@
                     android:layout_centerInParent="true"/>
 
                 <RelativeLayout
-                    android:id="@+id/rlt_msg_background"
+                    android:id="@+id/rlt_msg"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
+                    android:layout_height="match_parent"
                     android:layout_alignStart="@+id/img_card"
                     android:layout_alignTop="@+id/img_card"
                     android:layout_alignEnd="@+id/img_card"
-                    android:layout_alignBottom="@+id/img_card"
-                    android:paddingBottom="@dimen/margin_60dp"
-                    android:paddingTop="@dimen/margin_60dp"
-                    android:paddingLeft="@dimen/margin_60dp"
-                    android:paddingRight="@dimen/margin_60dp">
+                    android:layout_alignBottom="@+id/img_card">
 
                     <EditText
                         android:id="@+id/edt_message"
@@ -118,7 +113,11 @@
                         android:maxLength="75"
                         android:maxLines="6"
                         android:paddingLeft="@dimen/margin_20dp"
-                        android:paddingRight="@dimen/margin_20dp" />
+                        android:paddingRight="@dimen/margin_20dp"
+                        android:layout_marginStart="@dimen/margin_60dp"
+                        android:layout_marginEnd="@dimen/margin_60dp"
+                        android:layout_marginTop="@dimen/margin_60dp"
+                        android:layout_marginBottom="@dimen/margin_60dp"/>
 
                 </RelativeLayout>
             </RelativeLayout>
@@ -145,6 +144,48 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/tc_select_card"
+                    android:textSize="12sp"
+                    android:textColor="@color/chiase_black"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lnr_select_sticker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                android:layout_toEndOf="@+id/lnr_select_card"
+                android:layout_marginStart="@dimen/margin_8dp"
+                android:background="@drawable/state_common_selectable_row">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/tc_ic_sticker"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tc_select_sticker"
+                    android:textSize="12sp"
+                    android:textColor="@color/chiase_black"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lnr_select_photo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                android:layout_toEndOf="@+id/lnr_select_sticker"
+                android:layout_marginStart="@dimen/margin_8dp"
+                android:background="@drawable/state_common_selectable_row">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/tc_ic_camera"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tc_select_photo"
                     android:textSize="12sp"
                     android:textColor="@color/chiase_black"/>
             </LinearLayout>
