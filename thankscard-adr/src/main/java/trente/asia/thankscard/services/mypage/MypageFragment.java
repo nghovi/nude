@@ -175,7 +175,7 @@ public class MypageFragment extends AbstractTCFragment{
 			// control post button
 			List<DeptModel> lstDept = CCJsonUtil.convertToModelList(response.optString("depts"), DeptModel.class);
 			if(WelfareUtil.size(lstDept) == 1 && WelfareUtil.size(lstDept.get(0).members) == 1){
-				btnPost.setEnabled(false);
+//				btnPost.setEnabled(false);
 			}
 		}else if(TcConst.API_GET_RANK_STAGE_INFO.equals(url)){
 			rankStages = CCJsonUtil.convertToModelList(response.optString("rankingStageList"), RankStage.class);
@@ -196,7 +196,7 @@ public class MypageFragment extends AbstractTCFragment{
 		mypageModel = CCJsonUtil.convertToModel(response.toString(), MypageModel.class);
 		String postRank = getRank(mypageModel.pointPost, CCStringUtil.toString(mypageModel.seqPost));
 		txtPostRank.setText(getString(R.string.fragment_mypage_rank_post, postRank));
-		if(mypageModel.seqPost == 1){
+		if(mypageModel.seqPost == 1 && mypageModel.pointPost != 0){
 			txtPostRankNext.setText(getString(R.string.rank_first_congrats));
 		}else{
             String nextPostRank = String.valueOf(mypageModel.seqPost - 1);
@@ -212,7 +212,7 @@ public class MypageFragment extends AbstractTCFragment{
 
 		String receiveRank = getRank(mypageModel.pointReceive, CCStringUtil.toString(mypageModel.seqRecieve));
 		txtReceiveRank.setText(getString(R.string.fragment_mypage_rank_receive, receiveRank));
-		if(mypageModel.seqRecieve == 1){
+		if(mypageModel.seqRecieve == 1 && mypageModel.pointReceive != 0){
 			txtReceiveRankNext.setText(getString(R.string.rank_first_congrats));
 		}else{
             String nextReceiveRank = String.valueOf(mypageModel.seqRecieve - 1);
