@@ -94,4 +94,5 @@
     <string name="overall_performance">累計実績</string>
     <string name="action_plan_empty">アクションプランが設定されていません</string>
     <string name="text_period">(期間)</string>
+    <string name="choose_the_day">日付を選択してください</string>
 </resources>

@@ -213,6 +213,14 @@ public class KpiCalendarAdapter extends BaseAdapter{
 		selectedPosition = position;
 	}
 
+	public void deselectCell(){
+		if(selectedPosition != -1){
+			View cell = viewMap.get(selectedPosition);
+			updateBackground(cell, selectedPosition, 0);
+			selectedPosition = -1;
+		}
+	}
+
 	public int getSelectedPosition(){
 		return selectedPosition;
 	}

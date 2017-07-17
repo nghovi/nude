@@ -80,6 +80,7 @@
     <string name="group_actual_list_goal">Group goal list</string>
     <string name="fragment_group_actual_group_goal">Group goal</string>
     <string name="fragmen_group_actual_needed_amount">Amount you need to reach the goal</string>
+    <string name="fragmen_group_actual_needed_amount2">Amount you need to reach the goal: %1$s</string>
     <string name="achieve_dialog_title">Achieved!</string>
     <string name="achieve_dialog_content">Congratulations!!\\nYou have achieved your personal goal.\\nWonderfull!!\\nContinue the good work!</string>
     <string name="achieve_warning_dialog_title">Today is checkpoint day</string>
@@ -89,9 +90,10 @@
     <string name="performance_in_month">Performance in %1$s</string>
     <string name="achievement_rate_in_month">Achievement rate in %1$s</string>
     <string name="user_has_no_kpi_setup">Your KPI is not set</string>
-    <string name="fragment_kpi_title_tassei">Personal input</string>
+    <string name="fragment_kpi_title_tassei">Performance input</string>
     <string name="fragment_kpi_title_jisseki">Personal performance</string>
     <string name="overall_performance">Overall performance</string>
     <string name="action_plan_empty">Your action plan is not set</string>
     <string name="text_period">(Period)</string>
+    <string name="choose_the_day">Please select date</string>
 </resources>

@@ -80,6 +80,10 @@ public class KpiCalendarView extends RelativeLayout{
 		((TextView)findViewById(R.id.fragment_txt_calendar_header_date)).setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_YYYY_MM, calendar.getTime()));
 	}
 
+	public void unselectDay(){
+		adapter.deselectCell();
+	}
+
 	public interface OnDayClickedListener{
 
 		public void onDayClicked(Calendar selectedDate);

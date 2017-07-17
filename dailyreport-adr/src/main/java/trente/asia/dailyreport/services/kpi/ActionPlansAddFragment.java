@@ -13,6 +13,7 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
@@ -148,9 +149,9 @@ public class ActionPlansAddFragment extends AbstractDRFragment implements DRCale
 
 			@Override
 			public void onPageSelected(int position){
+				Calendar c = ((CalendarFragment)adapter.getItem(mPager.getCurrentItem())).getCalendar();
 				lnrActionPlanSection.setVisibility(View.GONE);
 				txtNoAction.setVisibility(View.GONE);
-				Calendar c = ((CalendarFragment)adapter.getItem(mPager.getCurrentItem())).getCalendar();
 				boolean showStatusOnly = Calendar.getInstance().get(Calendar.MONTH) != c.get(Calendar.MONTH);
 				loadActionPlans(c.getTime(), showStatusOnly);
 			}
@@ -183,26 +184,35 @@ public class ActionPlansAddFragment extends AbstractDRFragment implements DRCale
 
 	private void onGetActionsSuccess(JSONObject response){
 		groupKpiList = CCJsonUtil.convertToModelList(response.optString("groups"), GroupKpi.class);
-		if(CCCollectionUtil.isEmpty(groupKpiList)){
+		if(showStatusOnly){
 			imgHeaderRightIcon.setVisibility(View.INVISIBLE);
 			lnrActionPlanSection.setVisibility(View.GONE);
 			lnrGroupHeader.setVisibility(View.GONE);
+			txtNoAction.setTextColor(Color.BLACK);
+			txtNoAction.setText(getString(R.string.choose_the_day));
 			txtNoAction.setVisibility(View.VISIBLE);
-			// getView().findViewById(R.id.lnr_fragment_action_plan_main).setVisibility(View.GONE);
+			kpiCalendarView = ((CalendarFragment)adapter.getItem(mPager.getCurrentItem())).getKpiCalendarView();
+			kpiCalendarView.unselectDay();
+
 		}else{
-			// groupKpiList = createDummy();
 			drGroupHeader.buildLayout(groupKpiList, 0, false);
 			selectedGroup = drGroupHeader.getSelectedGroup();
 			statusMap = buildStatusMap();
 			updateCalendarView(statusMap);
-			if(showStatusOnly == false){
+			if(CCCollectionUtil.isEmpty(groupKpiList)){
+				imgHeaderRightIcon.setVisibility(View.INVISIBLE);
+				lnrActionPlanSection.setVisibility(View.GONE);
+				lnrGroupHeader.setVisibility(View.GONE);
+				txtNoAction.setTextColor(Color.RED);
+				txtNoAction.setText(getString(R.string.action_plan_empty));
+				txtNoAction.setVisibility(View.VISIBLE);
+			}else{
 				actionPlanList = CCJsonUtil.convertToModelList(response.optString("actions"), ActionPlan.class);
 				filteredActionPlans = filterByGroup();
 				boolean editMode = CCStringUtil.isEmpty(statusMap.get(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, selectedDate)));
 				buildActionPlans(editMode);
 			}
 		}
-
 	}
 
 	private List<ActionPlan> filterByGroup(){
@@ -248,6 +258,8 @@ public class ActionPlansAddFragment extends AbstractDRFragment implements DRCale
 
 	private void buildActionPlans(Boolean editMode){
 		if(!CCCollectionUtil.isEmpty(filteredActionPlans)){
+			txtNoAction.setVisibility(View.GONE);
+			lnrGroupHeader.setVisibility(View.VISIBLE);
 			imgHeaderRightIcon.setVisibility(View.VISIBLE);
 			if(editMode){
 				edtMemo.setEnabled(true);
@@ -270,6 +282,7 @@ public class ActionPlansAddFragment extends AbstractDRFragment implements DRCale
 					public void onClick(View v){
 						buildActionPlans(true);
 					}
+
 				});
 			}
 
