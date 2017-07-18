@@ -15,7 +15,7 @@ public class GroupKpi{
 	public String				name;
 	public String				todayActual		= "0";
 	public String				goal			= "0";
-	public String				unit			= "VND";
+	// public String unit = "VND";
 	public String				condition;
 	public String				note;
 	public String				startDate;
@@ -31,4 +31,6 @@ public class GroupKpi{
 	public String				toGoal			= "0";
 	public List<ApiObjectModel>	statusList;
 	public List<Progress>		checkPoints;
+	public String				actual;
+	public String				goalUnit;
 }

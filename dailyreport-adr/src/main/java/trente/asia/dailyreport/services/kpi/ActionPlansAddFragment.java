@@ -326,7 +326,7 @@ public class ActionPlansAddFragment extends AbstractDRFragment implements DRCale
 		loadActionPlans(selectedDate, false);
 	}
 
-	private void inflateActionPlanView(ActionPlan actionPlan, boolean editMode){
+	private void inflateActionPlanView(final ActionPlan actionPlan, boolean editMode){
 		View cellView;
 		if(editMode){
 			cellView = inflater.inflate(R.layout.item_actual_plan, null);
@@ -335,10 +335,18 @@ public class ActionPlansAddFragment extends AbstractDRFragment implements DRCale
 
 			TextView txtTodayGoal = (TextView)cellView.findViewById(R.id.txt_item_actual_plan_today_goal);
 			txtTodayGoal.setText(actionPlan.planValue);
-			EditText edtReal = (EditText)cellView.findViewById(R.id.edt_item_actual_plan_real);
+			final EditText edtReal = (EditText)cellView.findViewById(R.id.edt_item_actual_plan_real);
+			edtReal.setCursorVisible(false);
 			edtReal.setText(actionPlan.actual);
 			edtReal.setTag(actionPlan.key);
-			edtReal.setSelection(actionPlan.actual.length());
+			edtReal.setOnClickListener(new View.OnClickListener() {
+
+				@Override
+				public void onClick(View v){
+					edtReal.setCursorVisible(true);
+					edtReal.setSelection(edtReal.getText().length());
+				}
+			});
 			edtActionValues.add(edtReal);
 			TextView txtUnit = (TextView)cellView.findViewById(R.id.txt_item_actual_plan_real_unit);
 			txtUnit.setText(actionPlan.unit);

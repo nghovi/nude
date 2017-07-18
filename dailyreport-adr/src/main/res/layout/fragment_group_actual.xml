@@ -102,7 +102,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/total_performance" />
+                    android:text="@string/overall_performance" />
 
                 <TextView
                     android:id="@+id/group_actual_info_actual_total"
