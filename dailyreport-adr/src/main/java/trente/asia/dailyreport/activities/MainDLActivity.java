@@ -62,12 +62,12 @@ public class MainDLActivity extends WelfareActivity{
 		case WelfareConst.NotificationType.DR_NOTI_LIKE_REPORT:
 			gotoReportDetail(key);
 			break;
-		case WelfareConst.NotificationType.DR_NOTICE_CHECKPOINT:
+		case WelfareConst.NotificationType.DR_NOTI_CHECKPOINT:
 			gotoUserActualFragment(key);
 			break;
-		case WelfareConst.NotificationType.DR_NOTICE_MEMBER_SUCCESS:
-		case WelfareConst.NotificationType.DR_NOTICE_MEMBER_NOT_SUCCESS:
-		case WelfareConst.NotificationType.DR_NOTICE_GROUP_GOAL_ACHIEVED:
+		case WelfareConst.NotificationType.DR_NOTI_COMPLETE_PROGRESS:
+		case WelfareConst.NotificationType.DR_NOTI_UNCOMPLETE_PROGRESS:
+		case WelfareConst.NotificationType.DR_NOTI_COMPLETE_GROUP_GOAL:
 			gotoGroupActualFragment(key);
 			break;
 		default:

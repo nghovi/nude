@@ -55,10 +55,10 @@
                 android:id="@+id/edt_item_actual_plan_real"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
                 android:gravity="right"
                 android:hint="@string/chiase_common_please_input"
                 android:inputType="number"
-                android:textAlignment="textEnd"
                 android:textSize="12sp" />
 
             <TextView

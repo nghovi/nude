@@ -92,7 +92,8 @@
             <ImageView
                 style="@style/cs_common_wrap"
                 android:alpha="0.5"
-                android:src="@drawable/dr_footer_activity"
+                android:src="@drawable/dr_footer_ap"
+                android:paddingBottom="@dimen/margin_7dp"
                 android:layout_centerInParent="true"/>
 
             <TextView

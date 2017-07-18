@@ -66,6 +66,14 @@
     <string name="dr_item">Item</string>
 
     <!--Notifications-->
+    <string name="FM_DR_001">%1$s made new daily report</string>
+    <string name="FM_DR_002">%1$s like your report</string>
+    <string name="FM_DR_003">%1$s comment on your report</string>
+    <string name="FM_DR_004">Today is checkpoint day. Please input/confirm your performance.</string>
+    <string name="FM_DR_005">%1$s has achieved their goal.</string>
+    <string name="FM_DR_006">%1$s has not achieved their goal.</string>
+    <string name="FM_DR_007">Group goal has been achieved!</string>
+
     <string name="header_calendar_this_week">This week</string>
     <string name="goal_period">Goal period</string>
     <string name="personal_goal">Personal goal</string>
