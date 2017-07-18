@@ -186,10 +186,8 @@ public class KpiCalendarAdapter extends BaseAdapter{
 	public void updateLayout(Map<String, String> statusMap){
 		for(int i = 0; i < dayString.size(); i++){
 			String dayStatus = statusMap.get(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, dayString.get(i).getTime()));
-			if(!CCStringUtil.isEmpty(dayStatus)){
-				View cell = viewMap.get(i);
-				updateCellLayout(cell, dayStatus);
-			}
+			View cell = viewMap.get(i);
+			updateCellLayout(cell, dayStatus);
 		}
 	}
 
@@ -200,6 +198,8 @@ public class KpiCalendarAdapter extends BaseAdapter{
 			kpiStatus.setImageResource(R.drawable.ic_circle);
 		}else if(ActionPlan.STATUS_NG.equals(dayStatus)){
 			kpiStatus.setImageResource(R.drawable.ic_cross);
+		}else{
+			kpiStatus.setVisibility(View.INVISIBLE);
 		}
 	}
 

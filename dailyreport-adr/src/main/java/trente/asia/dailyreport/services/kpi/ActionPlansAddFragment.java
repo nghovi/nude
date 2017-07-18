@@ -115,8 +115,11 @@ public class ActionPlansAddFragment extends AbstractDRFragment implements DRCale
 			@Override
 			public void onGroupChange(GroupKpi newGroup){
 				selectedGroup = newGroup;
+				statusMap = buildStatusMap();
+				updateCalendarView(statusMap);
 				filteredActionPlans = filterByGroup();
-				boolean editMode = ActionPlan.STATUS_YET.equals(statusMap.get(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, selectedDate)));
+				String actionStatus = statusMap.get(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, selectedDate));
+				boolean editMode = CCStringUtil.isEmpty(actionStatus) || ActionPlan.STATUS_YET.equals(actionStatus);
 				buildActionPlans(editMode);
 			}
 
@@ -246,15 +249,14 @@ public class ActionPlansAddFragment extends AbstractDRFragment implements DRCale
 
 	private Map<String, String> buildStatusMap(){
 		Map<String, String> result = new HashMap<>();
-		for(GroupKpi groupKpi : groupKpiList){
-			if(!CCCollectionUtil.isEmpty(groupKpi.statusList)){
-				for(ApiObjectModel status : groupKpi.statusList){
-					String dayStatus = result.get(status.key);
-					if(CCStringUtil.isEmpty(dayStatus) || !dayStatus.equals(ActionPlan.STATUS_NG)){
-						dayStatus = status.value;
-					}
-					result.put(status.key, dayStatus);
+
+		if(!CCCollectionUtil.isEmpty(selectedGroup.statusList)){
+			for(ApiObjectModel status : selectedGroup.statusList){
+				String dayStatus = result.get(status.key);
+				if(CCStringUtil.isEmpty(dayStatus) || !dayStatus.equals(ActionPlan.STATUS_NG)){
+					dayStatus = status.value;
 				}
+				result.put(status.key, dayStatus);
 			}
 		}
 		return result;
