@@ -33,4 +33,5 @@ public class GroupKpi{
 	public List<Progress>		checkPoints;
 	public String				actual;
 	public String				goalUnit;
+	public String				todayActualGroup;
 }

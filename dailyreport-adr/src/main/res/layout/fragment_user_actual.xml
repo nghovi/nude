@@ -40,7 +40,7 @@
             android:id="@+id/txt_fragment_action_plan_empty"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_32dp"
+            android:layout_marginTop="@dimen/margin_16dp"
             android:layout_weight="1"
             android:text="@string/user_has_no_kpi_setup"
             android:textAlignment="center"
@@ -56,7 +56,8 @@
 
             <LinearLayout
                 style="@style/wf_common_linear"
-                android:paddingBottom="@dimen/wf_margin_16">
+                android:paddingBottom="@dimen/wf_margin_10"
+                android:paddingTop="@dimen/wf_margin_10">
 
                 <include layout="@layout/view_common_groups_header" />
             </LinearLayout>
