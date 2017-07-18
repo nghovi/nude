@@ -91,6 +91,11 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_alignStart="@+id/img_card"
+                    android:layout_alignTop="@+id/img_card"
+                    android:layout_alignBottom="@+id/img_card"
+                    android:layout_alignEnd="@+id/img_card"
+                    android:background="@color/chiase_white"
                     android:orientation="horizontal">
                     <trente.asia.thankscard.services.posted.model.ImageModel
                         android:id="@+id/layout_photo"
@@ -139,6 +144,10 @@
                     android:id="@+id/lnr_body"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_alignEnd="@+id/img_card"
+                    android:layout_alignBottom="@+id/img_card"
+                    android:layout_alignTop="@+id/img_card"
+                    android:layout_alignStart="@+id/img_card"
                     android:orientation="horizontal"
                     android:visibility="gone">
                     <trente.asia.thankscard.services.posted.view.TouchPad
