@@ -33,6 +33,7 @@ import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
+import trente.asia.android.activity.ChiaseActivity;
 import trente.asia.dailyreport.DRConst;
 import trente.asia.dailyreport.R;
 import trente.asia.dailyreport.fragments.AbstractDRFragment;
@@ -73,6 +74,8 @@ public class ActionPlansAddFragment extends AbstractDRFragment implements DRCale
 	private Date				selectedDate;
 
 	ImageView					imgHeaderRightIcon;
+	ImageView					imgHeaderLeftIcon;
+
 	private Map<String, String>	statusMap;
 	private boolean				showStatusOnly		= false;
 	private List<EditText>		edtActionValues		= new ArrayList<>();
@@ -97,10 +100,11 @@ public class ActionPlansAddFragment extends AbstractDRFragment implements DRCale
 
 	@Override
 	public void buildBodyLayout(){
-		super.initHeader(null, getString(R.string.fragment_actual_plan_title), null);
+		super.initHeader(R.drawable.wf_back_white, getString(R.string.fragment_actual_plan_title), null);
 		// updateHeader(prefAccUtil.getUserPref().userName);
 		activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		inflater = LayoutInflater.from(activity);
+		imgHeaderLeftIcon = (ImageView)activity.findViewById(trente.asia.welfare.adr.R.id.img_id_header_left_icon);
 		imgHeaderRightIcon = (ImageView)activity.findViewById(trente.asia.welfare.adr.R.id.img_id_header_right_icon);
 		selectedDate = Calendar.getInstance().getTime();
 		txtDate = (TextView)getView().findViewById(R.id.txt_fragment_kpi_date);
@@ -286,6 +290,7 @@ public class ActionPlansAddFragment extends AbstractDRFragment implements DRCale
 					}
 				});
 			}else{
+				imgHeaderLeftIcon.setVisibility(View.INVISIBLE);
 				edtMemo.setEnabled(false);
 				edtMemo.setBackgroundResource(R.drawable.dr_blue_background_gray_border_padding);
 				imgHeaderRightIcon.setImageResource(R.drawable.ic_edit);
@@ -293,6 +298,7 @@ public class ActionPlansAddFragment extends AbstractDRFragment implements DRCale
 
 					@Override
 					public void onClick(View v){
+						imgHeaderLeftIcon.setVisibility(View.VISIBLE);
 						buildActionPlans(true);
 					}
 
@@ -305,6 +311,11 @@ public class ActionPlansAddFragment extends AbstractDRFragment implements DRCale
 			lnrActionPlanSection.setVisibility(View.GONE);
 			txtNoAction.setVisibility(View.VISIBLE);
 		}
+	}
+
+	@Override
+	protected void onClickBackBtn(){
+		buildActionPlans(false);
 	}
 
 	private void showActionPlans(Boolean editMode){
@@ -347,9 +358,13 @@ public class ActionPlansAddFragment extends AbstractDRFragment implements DRCale
 			txtActualName.setText(actionPlan.planName);
 
 			TextView txtTodayGoal = (TextView)cellView.findViewById(R.id.txt_item_actual_plan_today_goal);
-			txtTodayGoal.setText(actionPlan.planValue);
+			txtTodayGoal.setText(actionPlan.planValue + actionPlan.unit);
 			final EditText edtReal = (EditText)cellView.findViewById(R.id.edt_item_actual_plan_real);
-			edtReal.setCursorVisible(false);
+			// edtReal.setCursorVisible(false)
+			// ;
+			if("0".equals(actionPlan.actual) && CCStringUtil.isEmpty(statusMap.get(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, selectedDate)))){
+				actionPlan.actual = null;
+			}
 			edtReal.setText(actionPlan.actual);
 			edtReal.setTag(actionPlan.key);
 			edtReal.setOnClickListener(new View.OnClickListener() {
