@@ -155,7 +155,7 @@
                 android:orientation="vertical"
                 android:gravity="center_horizontal"
                 android:layout_toEndOf="@+id/lnr_select_card"
-                android:layout_marginStart="@dimen/margin_8dp"
+                android:layout_marginStart="@dimen/margin_32dp"
                 android:background="@drawable/state_common_selectable_row">
                 <ImageView
                     android:layout_width="wrap_content"
@@ -176,7 +176,7 @@
                 android:orientation="vertical"
                 android:gravity="center_horizontal"
                 android:layout_toEndOf="@+id/lnr_select_sticker"
-                android:layout_marginStart="@dimen/margin_8dp"
+                android:layout_marginStart="@dimen/margin_32dp"
                 android:background="@drawable/state_common_selectable_row">
                 <ImageView
                     android:layout_width="wrap_content"

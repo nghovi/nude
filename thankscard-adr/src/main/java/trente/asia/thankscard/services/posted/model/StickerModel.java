@@ -21,6 +21,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
+import java.io.File;
+
 import trente.asia.thankscard.R;
 
 /**
@@ -34,7 +36,7 @@ public class StickerModel extends AppCompatImageView{
 	public float						scaleValue		= 1f;
 	public int							translateX		= 0;
 	public int							translateY		= 0;
-	public String						stickerPath		= "http://www.unixstickers.com/image/data/stickers/gruntjs/Grunt.sh.png";
+	public static String STICKER_PATH = "http://www.unixstickers.com/image/data/stickers/gruntjs/Grunt.sh.png";
 
 	private Bitmap						bitmapSticker, mainBitmap, rotateBitmap, scaleBitmap, deleteBitmap;
 	private Paint						paint			= new Paint();
@@ -64,7 +66,10 @@ public class StickerModel extends AppCompatImageView{
 
 	public StickerModel(Context context){
 		super(context);
-		Picasso.with(context).load(stickerPath).into(new Target() {
+	}
+
+	public void setStickerPath(String stickerPath) {
+		Picasso.with(getContext()).load(stickerPath).into(new Target() {
 
 			@Override
 			public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from){
@@ -82,6 +87,11 @@ public class StickerModel extends AppCompatImageView{
 
 			}
 		});
+	}
+
+	public void setImagePath(String path) {
+		bitmapSticker = BitmapFactory.decodeFile(path);
+		init();
 	}
 
 	private void init(){
