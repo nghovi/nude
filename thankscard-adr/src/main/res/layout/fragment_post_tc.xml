@@ -88,6 +88,20 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+                    <trente.asia.thankscard.services.posted.model.ImageModel
+                        android:id="@+id/layout_photo"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent" />
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"/>
+                </LinearLayout>
 
                 <ImageView
                     android:id="@+id/img_card"
@@ -120,6 +134,40 @@
                         android:layout_marginBottom="@dimen/margin_60dp"/>
 
                 </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/lnr_body"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+                    <trente.asia.thankscard.services.posted.view.TouchPad
+                        android:id="@+id/touch_pad"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent" />
+                    <RelativeLayout
+                        android:id="@+id/rlt_msg_photo"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent">
+
+                        <EditText
+                            android:id="@+id/edt_message_photo"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="@string/fragment_post_edit_hint"
+                            android:maxLength="75"
+                            android:maxLines="6"
+                            android:paddingLeft="@dimen/margin_20dp"
+                            android:paddingRight="@dimen/margin_20dp"
+                            android:layout_marginStart="@dimen/margin_60dp"
+                            android:layout_marginEnd="@dimen/margin_60dp"
+                            android:layout_marginTop="@dimen/margin_60dp"
+                            android:layout_marginBottom="@dimen/margin_60dp"/>
+
+                    </RelativeLayout>
+                </LinearLayout>
             </RelativeLayout>
         </LinearLayout>
 

@@ -37,6 +37,7 @@ import trente.asia.thankscard.fragments.AbstractTCFragment;
 import trente.asia.thankscard.fragments.dialogs.PostConfirmDialog;
 import trente.asia.thankscard.services.common.model.Template;
 import trente.asia.thankscard.services.posted.model.StickerModel;
+import trente.asia.thankscard.services.posted.view.TouchPad;
 import trente.asia.thankscard.utils.TCUtil;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
@@ -50,7 +51,9 @@ import trente.asia.welfare.adr.utils.WfPicassoHelper;
  * Created by tien on 7/12/2017.
  */
 
-public class PostTCFragment extends AbstractTCFragment implements View.OnClickListener, SelectDeptFragment.OnSelectDeptListener, SelectUserFragment.OnSelectUserListener, SelectCardFragment.OnSelectCardListener, StickerModel.OnStickerListener {
+public class PostTCFragment extends AbstractTCFragment implements View.OnClickListener,
+        SelectDeptFragment.OnSelectDeptListener, SelectUserFragment.OnSelectUserListener,
+        SelectCardFragment.OnSelectCardListener, StickerModel.OnStickerListener, TouchPad.OnTouchPadListener {
 
     public final int MAX_LETTER = 75;
 
@@ -205,18 +208,25 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
                 addImage(StickerModel.STICKER_PATH, true);
                 break;
             case R.id.lnr_select_photo:
-                if (AndroidUtil.verifyStoragePermissions(getActivity())) {
-                    Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-                    intent.addCategory(Intent.CATEGORY_OPENABLE);
-                    intent.setType("image/*");
-                    startActivityForResult(intent, WelfareConst.RequestCode.GALLERY);
-                }
+                binding.imgCard.setImageResource(R.drawable.tc_star_card);
+                binding.lnrBody.setVisibility(View.VISIBLE);
+                binding.rltMsg.setVisibility(View.GONE);
+                binding.touchPad.setCallback(this);
                 break;
             case R.id.btn_send:
                 checkNewCard();
                 break;
             default:
                 break;
+        }
+    }
+
+    private void chooseImage() {
+        if (AndroidUtil.verifyStoragePermissions(getActivity())) {
+            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            intent.setType("image/*");
+            startActivityForResult(intent, WelfareConst.RequestCode.GALLERY);
         }
     }
 
@@ -259,7 +269,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
                 }
                 break;
             case WelfareConst.RequestCode.PHOTO_CROP:
-                addImage(mImageUri.getPath(), false);
+                binding.layoutPhoto.setImage(mImageUri.getPath());
                 break;
         }
     }
@@ -405,5 +415,25 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
                 }
             }
         }
+    }
+
+    @Override
+    public void onTouchMove(float moveX, float moveY) {
+        binding.layoutPhoto.move(moveX, moveY);
+    }
+
+    @Override
+    public void onTouchScale(float scale) {
+        binding.layoutPhoto.scale(scale);
+    }
+
+    @Override
+    public void onTouchScaleEnd() {
+        binding.layoutPhoto.endScale();
+    }
+
+    @Override
+    public void onTouchPadClick() {
+        chooseImage();
     }
 }
