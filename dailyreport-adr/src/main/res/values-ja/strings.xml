@@ -82,8 +82,8 @@
     <string name="footer_itemkpi">KPI</string>
     <string name="fragment_kpi_title">実績入力</string>
     <string name="fragment_actual_plan_title">個人アクションプラン</string>
-    <string name="fragment_group_actual_title">Group Actual</string>
-    <string name="fragment_group_actual_list_title">GroupActualList</string>
+    <string name="fragment_group_actual_title">グループ成績</string>
+    <string name="fragment_group_actual_list_title">KPI</string>
     <string name="group_actual_list_goal">グループ目標一覧</string>
     <string name="fragment_group_actual_group_goal">グループ目標</string>
     <string name="fragmen_group_actual_needed_amount">達成まであと</string>

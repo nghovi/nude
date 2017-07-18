@@ -90,9 +90,9 @@
     <string name="fragmen_group_actual_needed_amount">Amount you need to reach the goal</string>
     <string name="fragmen_group_actual_needed_amount2">Amount you need to reach the goal: %1$s</string>
     <string name="achieve_dialog_title">Achieved!</string>
-    <string name="achieve_dialog_content">Congratulations!!\\nYou have achieved your personal goal.\\nWonderfull!!\\nContinue the good work!</string>
+    <string name="achieve_dialog_content">Congratulations!!\nYou have achieved your personal goal.\nWonderful!!\nContinue the good work!</string>
     <string name="achieve_warning_dialog_title">Today is checkpoint day</string>
-    <string name="achieve_warning_dialog_content">You have not achieved KPI.\\nPlease rethink your action plans.</string>
+    <string name="achieve_warning_dialog_content">You have not achieved KPI.\nPlease rethink your action plans.</string>
     <string name="today_goal">Today\'s goal</string>
     <string name="supplement_memo">Supplement memo</string>
     <string name="performance_in_month">Performance in %1$s</string>

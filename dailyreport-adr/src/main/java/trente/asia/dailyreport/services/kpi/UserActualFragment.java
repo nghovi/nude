@@ -79,6 +79,8 @@ public class UserActualFragment extends AbstractDRFragment{
 	private TextView					txtUnit;
 	private int							selectedGroupPosition;
 	private LinearLayout				lnrChartContainer;
+	private String						groupId;
+	private String						targetDate;
 
 	@Override
 	public int getFragmentLayoutId(){
@@ -113,6 +115,11 @@ public class UserActualFragment extends AbstractDRFragment{
 		// getView().findViewById(R.id.lnr_fragment_action_plan_main).setVisibility(View.GONE);
 
 		Calendar calendar = Calendar.getInstance();
+		if(!CCStringUtil.isEmpty(targetDate)){
+			Date date = CCDateUtil.makeDateCustom(targetDate, WelfareConst.WF_DATE_TIME);
+			calendar.setTime(date);
+		}
+
 		txtSelectedDate = (TextView)getView().findViewById(R.id.txt_fragment_kpi_date);
 		txtSelectedDate.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, calendar.getTime()));
 		datePickerDialog = new DatePickerDialog(activity, new DatePickerDialog.OnDateSetListener() {
@@ -510,11 +517,21 @@ public class UserActualFragment extends AbstractDRFragment{
 		if(selectedGroup == null){
 			return 0;
 		}
+
+		String key = CCStringUtil.isEmpty(groupId) ? selectedGroup.key : groupId;
 		for(int i = 0; i < groupKpiList.size(); i++){
-			if(groupKpiList.get(i).key.equals(selectedGroup.key)){
+			if(groupKpiList.get(i).key.equals(key)){
 				return i;
 			}
 		}
 		return 0;
+	}
+
+	public void setGroupId(String groupId){
+		this.groupId = groupId;
+	}
+
+	public void setTargetDate(String targetDate){
+		this.targetDate = targetDate;
 	}
 }

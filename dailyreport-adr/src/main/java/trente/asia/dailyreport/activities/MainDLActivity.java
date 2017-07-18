@@ -9,6 +9,9 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
+import java.util.Date;
+
+import asia.chiase.core.util.CCDateUtil;
 import trente.asia.dailyreport.R;
 import trente.asia.dailyreport.services.kpi.GroupActualFragment;
 import trente.asia.dailyreport.services.kpi.UserActualFragment;
@@ -63,26 +66,30 @@ public class MainDLActivity extends WelfareActivity{
 			gotoReportDetail(key);
 			break;
 		case WelfareConst.NotificationType.DR_NOTI_CHECKPOINT:
-			gotoUserActualFragment(key);
+			gotoUserActualFragment(key, parentKey);
 			break;
 		case WelfareConst.NotificationType.DR_NOTI_COMPLETE_PROGRESS:
 		case WelfareConst.NotificationType.DR_NOTI_UNCOMPLETE_PROGRESS:
 		case WelfareConst.NotificationType.DR_NOTI_COMPLETE_GROUP_GOAL:
-			gotoGroupActualFragment(key);
+			gotoGroupActualFragment(key, parentKey);
 			break;
 		default:
 			break;
 		}
 	}
 
-	private void gotoGroupActualFragment(String key){
+	private void gotoGroupActualFragment(String key, String selectedDate){
 		GroupActualFragment groupActualFragment = new GroupActualFragment();
 		groupActualFragment.setGroupKpiKey(key);
+		Date date = CCDateUtil.makeDateCustom(selectedDate, WelfareConst.WF_DATE_TIME);
+		groupActualFragment.setSelectedDate(date);
 		addFragment(groupActualFragment);
 	}
 
-	private void gotoUserActualFragment(String key){
+	private void gotoUserActualFragment(String groupId, String targetDate){
 		UserActualFragment userActualFragment = new UserActualFragment();
+		userActualFragment.setGroupId(groupId);
+		userActualFragment.setTargetDate(targetDate);
 		addFragment(userActualFragment);
 	}
 

@@ -195,7 +195,8 @@ public class ActionPlansAddFragment extends AbstractDRFragment implements DRCale
 			kpiCalendarView.unselectDay();
 
 		}else{
-			drGroupHeader.buildLayout(groupKpiList, 0, false);
+			int selectedGroupPosition = getSelectedGroupPosition();
+			drGroupHeader.buildLayout(groupKpiList, selectedGroupPosition, false);
 			selectedGroup = drGroupHeader.getSelectedGroup();
 			statusMap = buildStatusMap();
 			updateCalendarView(statusMap);
@@ -213,6 +214,18 @@ public class ActionPlansAddFragment extends AbstractDRFragment implements DRCale
 				buildActionPlans(editMode);
 			}
 		}
+	}
+
+	public int getSelectedGroupPosition(){
+		if(selectedGroup == null){
+			return 0;
+		}
+		for(int i = 0; i < groupKpiList.size(); i++){
+			if(groupKpiList.get(i).key.equals(selectedGroup.key)){
+				return i;
+			}
+		}
+		return 0;
 	}
 
 	private List<ActionPlan> filterByGroup(){
