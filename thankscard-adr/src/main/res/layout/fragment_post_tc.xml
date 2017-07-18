@@ -136,7 +136,7 @@
                         android:layout_marginStart="@dimen/margin_60dp"
                         android:layout_marginEnd="@dimen/margin_60dp"
                         android:layout_marginTop="@dimen/margin_60dp"
-                        android:layout_marginBottom="@dimen/margin_60dp"/>
+                        android:layout_marginBottom="@dimen/margin_60dp" />
 
                 </RelativeLayout>
 
@@ -170,10 +170,11 @@
                             android:maxLines="6"
                             android:paddingLeft="@dimen/margin_20dp"
                             android:paddingRight="@dimen/margin_20dp"
-                            android:layout_marginStart="@dimen/margin_60dp"
-                            android:layout_marginEnd="@dimen/margin_60dp"
-                            android:layout_marginTop="@dimen/margin_60dp"
-                            android:layout_marginBottom="@dimen/margin_60dp"/>
+                            android:layout_marginStart="@dimen/margin_20dp"
+                            android:layout_marginEnd="@dimen/margin_20dp"
+                            android:layout_marginTop="@dimen/margin_20dp"
+                            android:layout_marginBottom="@dimen/margin_20dp"
+                            android:background="#8bffffff"/>
 
                     </RelativeLayout>
                 </LinearLayout>

@@ -65,6 +65,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 	private List<StickerModel>		stickers	= new ArrayList<>();
 	private Uri						mImageUri;
 	private String					mImagePath;
+	private boolean					photoCard	= false;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -210,6 +211,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 			binding.lnrBody.setVisibility(View.VISIBLE);
 			binding.rltMsg.setVisibility(View.GONE);
 			binding.touchPad.setCallback(this);
+			photoCard = true;
 			break;
 		case R.id.btn_send:
 			checkNewCard();
@@ -236,7 +238,11 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 		stickerModel.setStickerPath(imagePath);
 		stickerModel.key = stickers.size();
 		stickerModel.setCallback(this);
-		binding.rltMsg.addView(stickerModel);
+		if (photoCard) {
+			binding.rltMsgPhoto.addView(stickerModel);
+		} else {
+			binding.rltMsg.addView(stickerModel);
+		}
 		stickers.add(stickerModel);
 	}
 
@@ -389,6 +395,15 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 	public void onSelectCardDone(Template card){
 		this.template = card;
 		buildTemplate();
+		binding.lnrBody.setVisibility(View.GONE);
+		binding.rltMsg.setVisibility(View.VISIBLE);
+		binding.edtMessage.setText(binding.edtMessagePhoto.getText());
+		for (StickerModel sticker : stickers) {
+			binding.rltMsg.removeView(sticker);
+			binding.rltMsgPhoto.removeView(sticker);
+		}
+		stickers.clear();
+		photoCard = false;
 	}
 
 	@Override
