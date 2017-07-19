@@ -43,12 +43,12 @@ public class TemplateSelectionDialog extends TCDialog{
 	}
 
 	@Override
-	int getDialogLayoutId(){
+	public int getDialogLayoutId(){
 		return R.layout.dialog_template_selection;
 	}
 
 	@Override
-	void buildDialogLayout(View rootView){
+    public void buildDialogLayout(View rootView){
 		Button btnCancel = (Button)rootView.findViewById(R.id.btn_dialog_template_selection_cancel);
 		btnCancel.setOnClickListener(this.btnNegativeListener);
 		addTemplates(rootView);

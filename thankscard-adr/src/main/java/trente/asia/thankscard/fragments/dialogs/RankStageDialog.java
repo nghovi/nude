@@ -28,12 +28,12 @@ public class RankStageDialog extends TCDialog{
 	}
 
 	@Override
-	int getDialogLayoutId(){
+	public int getDialogLayoutId(){
 		return R.layout.dialog_rank_stage;
 	}
 
 	@Override
-	void buildDialogLayout(View rootView){
+    public void buildDialogLayout(View rootView){
 		((TextView)rootView.findViewById(R.id.txt_rank_stage_dialog_title)).setText(getString(R.string.dialog_rank_stage_title, this.totalPoint));
 		Button btnCancel = (Button)rootView.findViewById(R.id.btn_dialog_rank_stage_cancel);
 		btnCancel.setOnClickListener(new View.OnClickListener() {

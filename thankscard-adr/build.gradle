@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'realm-android'
 def APP_NAME = "Thanks card"
 
 android {

@@ -28,6 +28,8 @@ import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
+import io.realm.Realm;
+import io.realm.RealmResults;
 import trente.asia.android.util.AndroidUtil;
 import trente.asia.thankscard.BuildConfig;
 import trente.asia.thankscard.R;
@@ -36,7 +38,10 @@ import trente.asia.thankscard.databinding.FragmentPostTcBinding;
 import trente.asia.thankscard.fragments.AbstractTCFragment;
 import trente.asia.thankscard.fragments.dialogs.PostConfirmDialog;
 import trente.asia.thankscard.services.common.model.Template;
+import trente.asia.thankscard.services.mypage.model.StickerCategoryModel;
 import trente.asia.thankscard.services.posted.model.StickerModel;
+import trente.asia.thankscard.services.posted.view.ChangeToNormalCardDialog;
+import trente.asia.thankscard.services.posted.view.ChoosePictureDialog;
 import trente.asia.thankscard.services.posted.view.TouchPad;
 import trente.asia.thankscard.utils.TCUtil;
 import trente.asia.welfare.adr.activity.WelfareActivity;
@@ -53,19 +58,27 @@ import trente.asia.welfare.adr.utils.WfPicassoHelper;
 
 public class PostTCFragment extends AbstractTCFragment implements View.OnClickListener,SelectDeptFragment.OnSelectDeptListener,SelectUserFragment.OnSelectUserListener,SelectCardFragment.OnSelectCardListener,StickerModel.OnStickerListener,TouchPad.OnTouchPadListener{
 
-	public final int				MAX_LETTER	= 75;
+	public final int					MAX_LETTER		= 75;
 
-	private List<Template>			templates;
-	private FragmentPostTcBinding	binding;
-	private Template				template;
-	private List<DeptModel>			departments;
-	private DeptModel				department;
-	private UserModel				member;
-	private String					message;
-	private List<StickerModel>		stickers	= new ArrayList<>();
-	private Uri						mImageUri;
-	private String					mImagePath;
-	private boolean canSendPhoto = false;
+	private List<Template>				templates;
+	private FragmentPostTcBinding		binding;
+	private Template					template;
+	private List<DeptModel>				departments;
+	private DeptModel					department;
+	private UserModel					member;
+	private String						message;
+	private List<StickerModel>			stickers		= new ArrayList<>();
+	private Uri							mImageUri;
+	private String						mImagePath;
+	private boolean						canSendPhoto	= false;
+	private List<StickerCategoryModel>	stampCategories;
+	private Realm mRealm;
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		mRealm = Realm.getDefaultInstance();
+	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -133,18 +146,19 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 		});
 
 		binding.edtMessagePhoto.addTextChangedListener(new TextWatcher() {
+
 			@Override
-			public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+			public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2){
 
 			}
 
 			@Override
-			public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+			public void onTextChanged(CharSequence charSequence, int i, int i1, int i2){
 
 			}
 
 			@Override
-			public void afterTextChanged(Editable editable) {
+			public void afterTextChanged(Editable editable){
 				message = editable.toString();
 				binding.txtCount.setText(String.valueOf(MAX_LETTER - message.length()));
 			}
@@ -157,6 +171,8 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 		requestAccountInfo();
 		requestTemplate();
 		buildTemplate();
+		RealmResults<StickerCategoryModel> categories = mRealm.where(StickerCategoryModel.class).findAll();
+		log("categories = " + categories.size());
 	}
 
 	private void requestTemplate(){
@@ -215,10 +231,14 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 			}
 			break;
 		case R.id.lnr_select_card:
-			SelectCardFragment cardFragment = new SelectCardFragment();
-			cardFragment.setCards(templates);
-			cardFragment.setCallback(this);
-			gotoFragment(cardFragment);
+			buildTemplate();
+			if(canSendPhoto && (binding.layoutPhoto.hasImage() || !stickers.isEmpty())){
+				showDialogChangeToNormalCard();
+			}else{
+				showLayoutCards();
+				binding.lnrBody.setVisibility(View.GONE);
+				binding.rltMsg.setVisibility(View.VISIBLE);
+			}
 			break;
 		case R.id.lnr_select_sticker:
 			addSticker(StickerModel.STICKER_PATH);
@@ -234,13 +254,53 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 		}
 	}
 
-	private void changeToPhotoCard() {
+	private void showLayoutCards(){
+		SelectCardFragment cardFragment = new SelectCardFragment();
+		cardFragment.setCards(templates);
+		cardFragment.setCallback(this);
+		gotoFragment(cardFragment);
+	}
+
+	private void showDialogChangeToNormalCard(){
+		final ChangeToNormalCardDialog dialog = new ChangeToNormalCardDialog();
+		dialog.setListeners(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View view){
+				binding.lnrBody.setVisibility(View.GONE);
+				binding.rltMsg.setVisibility(View.VISIBLE);
+				binding.layoutPhoto.clearImage();
+				binding.edtMessage.setText(message);
+				for(StickerModel sticker : stickers){
+					binding.rltMsg.removeView(sticker);
+					binding.lnrBody.removeView(sticker);
+				}
+				stickers.clear();
+				canSendPhoto = false;
+				showLayoutCards();
+				dialog.dismiss();
+			}
+		}, new View.OnClickListener() {
+
+			@Override
+			public void onClick(View view){
+				dialog.dismiss();
+			}
+		});
+		dialog.show(getFragmentManager(), null);
+	}
+
+	private void changeToPhotoCard(){
 		binding.imgCard.setImageResource(R.drawable.tc_star_card);
 		binding.lnrBody.setVisibility(View.VISIBLE);
 		binding.rltMsg.setVisibility(View.GONE);
 		binding.touchPad.setCallback(this);
 		binding.edtMessagePhoto.setText(message);
 		binding.edtMessagePhoto.setSelection(message.length());
+		for(StickerModel sticker : stickers){
+			binding.rltMsg.removeView(sticker);
+		}
+		stickers.clear();
 		canSendPhoto = true;
 	}
 
@@ -419,22 +479,13 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 	public void onSelectCardDone(Template card){
 		this.template = card;
 		buildTemplate();
-		binding.lnrBody.setVisibility(View.GONE);
-		binding.rltMsg.setVisibility(View.VISIBLE);
-		binding.layoutPhoto.clearImage();
-		binding.edtMessage.setText(message);
-		for(StickerModel sticker : stickers){
-			binding.rltMsg.removeView(sticker);
-			binding.lnrBody.removeView(sticker);
-		}
-		stickers.clear();
-		canSendPhoto = false;
+
 	}
 
 	@Override
-	public void onResume() {
+	public void onResume(){
 		super.onResume();
-		if (binding != null && binding.edtMessage != null) {
+		if(binding != null && binding.edtMessage != null){
 			binding.edtMessage.setText(message);
 		}
 	}
@@ -475,6 +526,31 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 
 	@Override
 	public void onTouchPadClick(){
-		chooseImage();
+		if(binding.layoutPhoto.hasImage()){
+			final ChoosePictureDialog dialog = new ChoosePictureDialog();
+			dialog.setListeners(new View.OnClickListener() {
+
+				@Override
+				public void onClick(View view){
+					chooseImage();
+					dialog.dismiss();
+				}
+			}, new View.OnClickListener() {
+
+				@Override
+				public void onClick(View view){
+					dialog.dismiss();
+				}
+			});
+			dialog.show(getFragmentManager(), null);
+		}else{
+			chooseImage();
+		}
+	}
+
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		mRealm.close();
 	}
 }
