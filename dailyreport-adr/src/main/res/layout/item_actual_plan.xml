@@ -2,6 +2,13 @@
     style="@style/wf_common_match"
     android:padding="0dp">
 
+    <TextView
+        android:id="@+id/txt_item_actual_plan_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2017/06/21"
+        android:textColor="@color/chiase_black"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -54,21 +61,13 @@
 
             <TextView
                 android:id="@+id/txt_item_actual_plan_real_unit"
-                android:layout_marginLeft="@dimen/margin_2dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_2dp"
                 android:text="$" />
 
         </LinearLayout>
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/txt_item_actual_plan_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="2017/06/21"
-        android:textColor="@color/chiase_black"
-        android:textStyle="bold" />
 
 
 </LinearLayout>
