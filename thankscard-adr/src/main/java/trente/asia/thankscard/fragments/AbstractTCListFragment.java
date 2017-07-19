@@ -85,7 +85,7 @@ public abstract class AbstractTCListFragment extends AbstractTCFragment implemen
 		spnDeparment = (WfSpinner)getView().findViewById(R.id.spn_fragment_tc_list_departure);
 		spnUserModel = (WfSpinner)getView().findViewById(R.id.spn_fragment_tc_list_user);
 
-		buildCategoriesTab();
+//		buildCategoriesTab();
 		buildSelectMonthBtn();
 		buildPostBtn();
 
