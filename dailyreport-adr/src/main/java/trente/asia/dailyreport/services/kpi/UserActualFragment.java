@@ -294,7 +294,7 @@ public class UserActualFragment extends AbstractDRFragment{
 
 			//// TODO: 6/29/17 cannot add 150% line so add max %line instead
 			int value150 = Math.round(goal * 1.5f);
-			LimitLine line150Left = new LimitLine(value150, String.valueOf(value150));
+			LimitLine line150Left = new LimitLine(value150, CCFormatUtil.formatAmount(String.valueOf(value150)));
 			line150Left.setLineWidth(0.5f);
 			line150Left.setLineColor(Color.GRAY);
 			// upper_limit.enableDashedLine(10f, 10f, 0f);
@@ -309,7 +309,7 @@ public class UserActualFragment extends AbstractDRFragment{
 			line150Right.setTextSize(10f);
 
 			int value100 = Math.round(goal * 1f);
-			LimitLine line100Left = new LimitLine(value100, String.valueOf(value100));
+			LimitLine line100Left = new LimitLine(value100, CCFormatUtil.formatAmount(String.valueOf(value100)));
 			line100Left.setLineWidth(0.5f);
 			line100Left.setLineColor(Color.RED);
 			// upper_limit.enableDashedLine(10f, 10f, 0f);
@@ -324,7 +324,7 @@ public class UserActualFragment extends AbstractDRFragment{
 			line100Right.setTextSize(10f);
 
 			int value50 = Math.round(goal * 0.5f);
-			LimitLine line50Left = new LimitLine(value50, String.valueOf(value50));
+			LimitLine line50Left = new LimitLine(value50, CCFormatUtil.formatAmount(String.valueOf(value50)));
 			line50Left.setLineWidth(0.5f);
 			line50Left.setLineColor(Color.GRAY);
 			// upper_limit.enableDashedLine(10f, 10f, 0f);

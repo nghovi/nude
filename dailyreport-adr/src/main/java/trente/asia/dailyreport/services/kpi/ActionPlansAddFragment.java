@@ -387,7 +387,7 @@ public class ActionPlansAddFragment extends AbstractDRFragment implements DRCale
 			txtActualName.setText(actionPlan.planName);
 
 			TextView txtTodayGoal = (TextView)cellView.findViewById(R.id.txt_item_actual_plan_today_goal);
-			txtTodayGoal.setText(actionPlan.planValue + actionPlan.unit);
+			txtTodayGoal.setText(CCFormatUtil.formatAmount(actionPlan.planValue) + actionPlan.unit);
 			final EditText edtReal = (EditText)cellView.findViewById(R.id.edt_item_actual_plan_real);
 			// edtReal.setCursorVisible(false)
 			// ;
@@ -413,7 +413,7 @@ public class ActionPlansAddFragment extends AbstractDRFragment implements DRCale
 			txtActualName.setText(actionPlan.planName);
 
 			TextView txtTodayGoal = (TextView)cellView.findViewById(R.id.txt_item_actual_plan_today_goal);
-			txtTodayGoal.setText(actionPlan.planValue + actionPlan.unit);
+			txtTodayGoal.setText(CCFormatUtil.formatAmount(actionPlan.planValue) + actionPlan.unit);
 
 			TextView txtPerformance = (TextView)cellView.findViewById(R.id.txt_item_actual_plan_today_performance);
 			txtPerformance.setText(actionPlan.actual + actionPlan.unit);

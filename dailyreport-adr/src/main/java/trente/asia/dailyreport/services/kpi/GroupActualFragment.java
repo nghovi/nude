@@ -169,10 +169,10 @@ public class GroupActualFragment extends AbstractDRFragment{
 			lineChart = (LineChart)chartView.findViewById(R.id.chart);
 			((TextView)chartView.findViewById(R.id.txt_kpi_chart_unit)).setText(groupKpi.goalUnit);
 			String status = null;
-			if(Integer.parseInt(groupKpi.achievement) >= Integer.valueOf(groupKpi.goal)){
+			if(Integer.parseInt(groupKpi.actual) >= Integer.valueOf(groupKpi.goal)){
 				status = getString(R.string.achieve_dialog_title);
 			}else{
-				status = getString(R.string.fragmen_group_actual_needed_amount2, groupKpi.toGoal) + groupKpi.goalUnit;
+				status = getString(R.string.fragmen_group_actual_needed_amount2, CCFormatUtil.formatAmount(groupKpi.toGoal)) + groupKpi.goalUnit;
 			}
 			((TextView)chartView.findViewById(R.id.txt_kpi_chart_result)).setText(status);
 			UserActualFragment.buildChart(activity, lineChart, groupKpi.checkPoints, groupKpi, null);
