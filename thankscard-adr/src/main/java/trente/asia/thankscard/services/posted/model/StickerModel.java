@@ -73,7 +73,6 @@ public class StickerModel extends AppCompatImageView{
 
 			@Override
 			public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from){
-				log("onBitmapLoaded");
 				bitmapSticker = bitmap;
 				init();
 			}

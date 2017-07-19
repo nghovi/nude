@@ -65,7 +65,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 	private List<StickerModel>		stickers	= new ArrayList<>();
 	private Uri						mImageUri;
 	private String					mImagePath;
-	private boolean					photoCard	= false;
+	private boolean canSendPhoto = false;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -131,6 +131,24 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 				binding.txtCount.setText(String.valueOf(MAX_LETTER - message.length()));
 			}
 		});
+
+		binding.edtMessagePhoto.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+			}
+
+			@Override
+			public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+			}
+
+			@Override
+			public void afterTextChanged(Editable editable) {
+				message = editable.toString();
+				binding.txtCount.setText(String.valueOf(MAX_LETTER - message.length()));
+			}
+		});
 	}
 
 	@Override
@@ -177,7 +195,6 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 
 	private void buildTemplate(){
 		WfPicassoHelper.loadImage(getContext(), BuildConfig.HOST + template.templateUrl, binding.imgCard, null);
-
 	}
 
 	@Override
@@ -207,11 +224,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 			addSticker(StickerModel.STICKER_PATH);
 			break;
 		case R.id.lnr_select_photo:
-			binding.imgCard.setImageResource(R.drawable.tc_star_card);
-			binding.lnrBody.setVisibility(View.VISIBLE);
-			binding.rltMsg.setVisibility(View.GONE);
-			binding.touchPad.setCallback(this);
-			photoCard = true;
+			changeToPhotoCard();
 			break;
 		case R.id.btn_send:
 			checkNewCard();
@@ -219,6 +232,16 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 		default:
 			break;
 		}
+	}
+
+	private void changeToPhotoCard() {
+		binding.imgCard.setImageResource(R.drawable.tc_star_card);
+		binding.lnrBody.setVisibility(View.VISIBLE);
+		binding.rltMsg.setVisibility(View.GONE);
+		binding.touchPad.setCallback(this);
+		binding.edtMessagePhoto.setText(message);
+		binding.edtMessagePhoto.setSelection(message.length());
+		canSendPhoto = true;
 	}
 
 	private void chooseImage(){
@@ -238,9 +261,9 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 		stickerModel.setStickerPath(imagePath);
 		stickerModel.key = stickers.size();
 		stickerModel.setCallback(this);
-		if (photoCard) {
-			binding.rltMsgPhoto.addView(stickerModel);
-		} else {
+		if(canSendPhoto){
+			binding.lnrBody.addView(stickerModel);
+		}else{
 			binding.rltMsg.addView(stickerModel);
 		}
 		stickers.add(stickerModel);
@@ -269,6 +292,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 			break;
 		case WelfareConst.RequestCode.PHOTO_CROP:
 			binding.layoutPhoto.setImage(mImageUri.getPath());
+
 			break;
 		}
 	}
@@ -397,13 +421,22 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 		buildTemplate();
 		binding.lnrBody.setVisibility(View.GONE);
 		binding.rltMsg.setVisibility(View.VISIBLE);
-		binding.edtMessage.setText(binding.edtMessagePhoto.getText());
-		for (StickerModel sticker : stickers) {
+		binding.layoutPhoto.clearImage();
+		binding.edtMessage.setText(message);
+		for(StickerModel sticker : stickers){
 			binding.rltMsg.removeView(sticker);
-			binding.rltMsgPhoto.removeView(sticker);
+			binding.lnrBody.removeView(sticker);
 		}
 		stickers.clear();
-		photoCard = false;
+		canSendPhoto = false;
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		if (binding != null && binding.edtMessage != null) {
+			binding.edtMessage.setText(message);
+		}
 	}
 
 	@Override

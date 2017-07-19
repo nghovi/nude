@@ -44,6 +44,15 @@ public class ImageModel extends AppCompatImageView{
 		invalidate();
 	}
 
+	public void clearImage() {
+		bitmap = null;
+		invalidate();
+	}
+
+	public boolean hasImage() {
+		return bitmap != null;
+	}
+
 	public void move(float moveX, float moveY){
 		if(bitmap == null){
 			return;
@@ -72,6 +81,7 @@ public class ImageModel extends AppCompatImageView{
 	protected void onDraw(Canvas canvas){
 		super.onDraw(canvas);
 		if(bitmap == null){
+			canvas.drawARGB(255, 255, 255, 255);
 			return;
 		}
 		matrix.reset();
