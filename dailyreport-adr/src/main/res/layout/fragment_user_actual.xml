@@ -67,6 +67,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fillViewport="true"
+                android:isScrollContainer="false"
                 android:visibility="invisible">
 
                 <LinearLayout
@@ -188,6 +189,7 @@
                                 android:id="@+id/txt_fragment_kpi_unit"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/margin_2dp"
                                 android:text="$" />
 
                         </LinearLayout>

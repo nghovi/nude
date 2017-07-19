@@ -34,4 +34,5 @@ public class GroupKpi{
 	public String				actual;
 	public String				goalUnit;
 	public String				todayActualGroup;
+	public String				dayNote;
 }

@@ -97,10 +97,11 @@
     <string name="performance_in_month">%1$s月の実績</string>
     <string name="achievement_rate_in_month">%1$s月の達成率</string>
     <string name="user_has_no_kpi_setup">KPIが設定されていません</string>
-    <string name="fragment_kpi_title_tassei">実績入力</string>
-    <string name="fragment_kpi_title_jisseki">個人実績</string>
+    <string name="performance_input">個人実績</string>
+    <string name="personal_performance">実績入力</string>
     <string name="overall_performance">累計実績</string>
     <string name="action_plan_empty">アクションプランが設定されていません</string>
     <string name="text_period">(期間)</string>
     <string name="choose_the_day">日付を選択してください</string>
+    <string name="action_plan_please_input">実績を入力してください</string>
 </resources>

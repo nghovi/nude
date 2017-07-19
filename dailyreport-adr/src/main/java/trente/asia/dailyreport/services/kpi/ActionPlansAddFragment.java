@@ -36,6 +36,7 @@ import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.activity.ChiaseActivity;
 import trente.asia.dailyreport.DRConst;
 import trente.asia.dailyreport.R;
+import trente.asia.dailyreport.dialogs.DRDialog;
 import trente.asia.dailyreport.fragments.AbstractDRFragment;
 import trente.asia.dailyreport.services.kpi.model.ActionPlan;
 import trente.asia.dailyreport.services.kpi.model.GroupKpi;
@@ -56,7 +57,6 @@ import trente.asia.welfare.adr.models.ApiObjectModel;
  */
 public class ActionPlansAddFragment extends AbstractDRFragment implements DRCalendarView.OnReportModelSelectedListener,KpiCalendarView.OnDayClickedListener{
 
-	private static final String	ACTUAL_PLAN_EDT_ID	= "edt_actual_plan_";
 	private TextView			txtDate;
 	private List<ActionPlan>	actionPlanList;
 	private LinearLayout		lnrActualPlanContainer;
@@ -77,11 +77,12 @@ public class ActionPlansAddFragment extends AbstractDRFragment implements DRCale
 	ImageView					imgHeaderLeftIcon;
 
 	private Map<String, String>	statusMap;
-	private boolean				showStatusOnly		= false;
-	private List<EditText>		edtActionValues		= new ArrayList<>();
+	private boolean				showStatusOnly	= false;
+	private List<EditText>		edtActionValues	= new ArrayList<>();
 	private LinearLayout		lnrGroupHeader;
 	private List<ActionPlan>	filteredActionPlans;
 	private Locale				locale;
+	private DRDialog			drDialog;
 
 	@Override
 	public int getFragmentLayoutId(){
@@ -101,8 +102,6 @@ public class ActionPlansAddFragment extends AbstractDRFragment implements DRCale
 	@Override
 	public void buildBodyLayout(){
 		super.initHeader(R.drawable.wf_back_white, getString(R.string.fragment_actual_plan_title), null);
-		// updateHeader(prefAccUtil.getUserPref().userName);
-		activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		inflater = LayoutInflater.from(activity);
 		imgHeaderLeftIcon = (ImageView)activity.findViewById(trente.asia.welfare.adr.R.id.img_id_header_left_icon);
 		imgHeaderRightIcon = (ImageView)activity.findViewById(trente.asia.welfare.adr.R.id.img_id_header_right_icon);
@@ -178,14 +177,14 @@ public class ActionPlansAddFragment extends AbstractDRFragment implements DRCale
 	@Override
 	protected void successLoad(JSONObject response, String url){
 		if(getView() != null){
-			// if(DRConst.API_KPI_GROUPS.equals(url)){
-			// onLoadGroupsSuccess(response);
-			// }else if(DRConst.API_KPI_ACTIONS.equals(url)){
 			onGetActionsSuccess(response);
-			// }else{
-			// super.successLoad(response, url);
-			// }
+			getView().post(new Runnable() {
 
+				@Override
+				public void run(){
+					activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+				}
+			});
 		}
 	}
 
@@ -250,7 +249,7 @@ public class ActionPlansAddFragment extends AbstractDRFragment implements DRCale
 	private Map<String, String> buildStatusMap(){
 		Map<String, String> result = new HashMap<>();
 
-		if(!CCCollectionUtil.isEmpty(selectedGroup.statusList)){
+		if(selectedGroup != null && !CCCollectionUtil.isEmpty(selectedGroup.statusList)){
 			for(ApiObjectModel status : selectedGroup.statusList){
 				String dayStatus = result.get(status.key);
 				if(CCStringUtil.isEmpty(dayStatus) || !dayStatus.equals(ActionPlan.STATUS_NG)){
@@ -280,6 +279,7 @@ public class ActionPlansAddFragment extends AbstractDRFragment implements DRCale
 			txtNoAction.setVisibility(View.GONE);
 			lnrGroupHeader.setVisibility(View.VISIBLE);
 			imgHeaderRightIcon.setVisibility(View.VISIBLE);
+			edtMemo.setText(selectedGroup.dayNote);
 			if(editMode){
 				edtMemo.setEnabled(true);
 				edtMemo.setBackgroundResource(R.drawable.dr_white_background_gray_border_padding);
@@ -329,22 +329,49 @@ public class ActionPlansAddFragment extends AbstractDRFragment implements DRCale
 		for(ActionPlan actionPlan : filteredActionPlans){
 			inflateActionPlanView(actionPlan, editMode);
 		}
+		lnrActualPlanContainer.post(new Runnable() {
+
+			@Override
+			public void run(){
+				activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+			}
+		});
 	}
 
 	private void saveActionPlans(){
-		JSONObject jsonObject = new JSONObject();
-		String dateStr = txtDate.getText().toString();
-		String actionJson = getActionJson();
-		try{
-			jsonObject.put("targetGroupId", selectedGroup.key);
-			jsonObject.put("targetDate", dateStr);
-			jsonObject.put("dayNote", edtMemo.getText().toString());
-			jsonObject.put("actionJson", actionJson);
+		if(checkValidData()){
+			JSONObject jsonObject = new JSONObject();
+			String dateStr = txtDate.getText().toString();
+			String actionJson = getActionJson();
+			try{
+				jsonObject.put("targetGroupId", selectedGroup.key);
+				jsonObject.put("targetDate", dateStr);
+				jsonObject.put("dayNote", edtMemo.getText().toString());
+				jsonObject.put("actionJson", actionJson);
 
-		}catch(JSONException e){
-			e.printStackTrace();
+			}catch(JSONException e){
+				e.printStackTrace();
+			}
+			requestUpdate(DRConst.API_KPI_ACTIONS_UPDATE, jsonObject, true);
 		}
-		requestUpdate(DRConst.API_KPI_ACTIONS_UPDATE, jsonObject, true);
+	}
+
+	private boolean checkValidData(){
+		for(EditText edtActionValue : edtActionValues){
+			if(CCStringUtil.isEmpty(edtActionValue.getText().toString())){
+				showValidationDialog();
+				return false;
+			}
+		}
+		return true;
+	}
+
+	private void showValidationDialog(){
+		if(drDialog == null){
+			drDialog = new DRDialog(activity);
+			drDialog.setDialogConfirm(getString(R.string.action_plan_please_input), getString(R.string.chiase_common_ok), null, null, null);
+		}
+		drDialog.show();
 	}
 
 	@Override
@@ -401,7 +428,7 @@ public class ActionPlansAddFragment extends AbstractDRFragment implements DRCale
 			txtPerformanceMonthLabel.setText(getString(R.string.performance_in_month, monthStr));
 
 			TextView txtPerformanceMonth = (TextView)cellView.findViewById(R.id.txt_item_actual_plan_performance_month);
-			txtPerformanceMonth.setText(actionPlan.achievement + actionPlan.unit);
+			txtPerformanceMonth.setText(actionPlan.achievementMonth + actionPlan.unit);
 
 			TextView txtRateLabel = (TextView)cellView.findViewById(R.id.txt_item_actual_plan_month_rate_label);
 			txtRateLabel.setText(getString(R.string.achievement_rate_in_month, monthStr));

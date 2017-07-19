@@ -22,4 +22,5 @@ public class ActionPlan{
 	public String				unit;
 	public String				actionDate;
 	public String				groupId;
+	public String				achievementMonth;
 }

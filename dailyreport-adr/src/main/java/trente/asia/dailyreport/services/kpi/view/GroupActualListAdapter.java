@@ -72,7 +72,7 @@ public class GroupActualListAdapter extends ArrayAdapter<GroupKpi>{
 		if(toGoal <= 0){ // achieved
 			viewHolder.txtResult.setText("→" + context.getResources().getString(R.string.achieve_dialog_title));
 		}else{
-			viewHolder.txtResult.setText("→" + context.getResources().getString(R.string.fragmen_group_actual_needed_amount2, toGoal + groupKpi.goalUnit));
+			viewHolder.txtResult.setText("→" + context.getResources().getString(R.string.fragmen_group_actual_needed_amount2, CCFormatUtil.formatAmount(toGoal) + groupKpi.goalUnit));
 		}
 
 		viewHolder.imgChart.setOnClickListener(new View.OnClickListener() {

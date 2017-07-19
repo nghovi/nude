@@ -98,10 +98,11 @@
     <string name="performance_in_month">Performance in %1$s</string>
     <string name="achievement_rate_in_month">Achievement rate in %1$s</string>
     <string name="user_has_no_kpi_setup">Your KPI is not set</string>
-    <string name="fragment_kpi_title_tassei">Performance input</string>
-    <string name="fragment_kpi_title_jisseki">Personal performance</string>
+    <string name="performance_input">Performance input</string>
+    <string name="personal_performance">Personal performance</string>
     <string name="overall_performance">Overall performance</string>
     <string name="action_plan_empty">Your action plan is not set</string>
     <string name="text_period">(Period)</string>
     <string name="choose_the_day">Please select date</string>
+    <string name="action_plan_please_input">Please input your performance</string>
 </resources>
