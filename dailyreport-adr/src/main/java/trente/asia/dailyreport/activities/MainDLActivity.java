@@ -81,7 +81,7 @@ public class MainDLActivity extends WelfareActivity{
 	private void gotoGroupActualFragment(String key, String selectedDate){
 		GroupActualFragment groupActualFragment = new GroupActualFragment();
 		groupActualFragment.setGroupKpiKey(key);
-		Date date = CCDateUtil.makeDateCustom(selectedDate, WelfareConst.WF_DATE_TIME);
+		Date date = CCDateUtil.makeDateCustom(selectedDate, WelfareConst.WF_DATE_TIME_DATE);
 		groupActualFragment.setSelectedDate(date);
 		addFragment(groupActualFragment);
 	}
