@@ -8,7 +8,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -22,6 +25,7 @@ import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCNumberUtil;
 import asia.chiase.core.util.CCStringUtil;
+import io.realm.Realm;
 import trente.asia.thankscard.R;
 import trente.asia.thankscard.activities.MainActivity;
 import trente.asia.thankscard.commons.defines.TcConst;
@@ -29,7 +33,10 @@ import trente.asia.thankscard.fragments.AbstractTCFragment;
 import trente.asia.thankscard.fragments.dialogs.RankStageDialog;
 import trente.asia.thankscard.services.mypage.model.MypageModel;
 import trente.asia.thankscard.services.mypage.model.NoticeModel;
+import trente.asia.thankscard.services.mypage.model.StickerCategoryModel;
+import trente.asia.thankscard.services.mypage.model.StickerModel;
 import trente.asia.thankscard.services.mypage.view.NoticeListAdapter;
+import trente.asia.thankscard.services.posted.PostTCFragment;
 import trente.asia.thankscard.services.posted.ThanksCardEditFragment;
 import trente.asia.thankscard.services.rank.model.RankStage;
 import trente.asia.welfare.adr.define.WelfareConst;
@@ -56,6 +63,13 @@ public class MypageFragment extends AbstractTCFragment{
 	private TextView			txtPostRankNext;
 	private TextView			txtReceiveRankNext;
 	private TextView			txtRank;
+	private Realm				mRealm;
+
+	@Override
+	public void onCreate(Bundle savedInstanceState){
+		super.onCreate(savedInstanceState);
+		mRealm = Realm.getDefaultInstance();
+	}
 
 	public boolean hasBackBtn(){
 		return false;
@@ -88,7 +102,7 @@ public class MypageFragment extends AbstractTCFragment{
 		txtReceiveRank = (TextView)getView().findViewById(R.id.txt_fragment_mypage_rank_receive);
 		txtReceiveRankNext = (TextView)getView().findViewById(R.id.txt_fragment_mypage_rank_receive2);
 		imgRankStage = (ImageView)getView().findViewById(R.id.img_fragment_mypage_rank_stage);
-		txtRank = (TextView) getView().findViewById(R.id.txt_rank);
+		txtRank = (TextView)getView().findViewById(R.id.txt_rank);
 
 		buildUserInfoLayout();
 		builNoticeList();
@@ -96,8 +110,22 @@ public class MypageFragment extends AbstractTCFragment{
 
 	@Override
 	protected void initData(){
-
 		requestMypageInfo();
+		loadStamps();
+	}
+
+	private void loadStamps(){
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+		String lastUpdateDate = preferences.getString(TcConst.MESSAGE_STAMP_LAST_UPDATE_DATE, null);
+		JSONObject jsonObject = new JSONObject();
+		if(lastUpdateDate != null){
+			try{
+				jsonObject.put("lastUpdateDate", lastUpdateDate);
+			}catch(JSONException e){
+				e.printStackTrace();
+			}
+		}
+		requestLoad(TcConst.API_MESSAGE_STAMP_CATEGORY_LIST, jsonObject, true);
 	}
 
 	private void buildUserInfoLayout(){
@@ -109,7 +137,8 @@ public class MypageFragment extends AbstractTCFragment{
 
 			@Override
 			public void onClick(View v){
-				gotoPostEdit(null);
+				// gotoPostEdit(null);
+				gotoFragment(new PostTCFragment());
 			}
 		});
 	}
@@ -173,7 +202,7 @@ public class MypageFragment extends AbstractTCFragment{
 			// control post button
 			List<DeptModel> lstDept = CCJsonUtil.convertToModelList(response.optString("depts"), DeptModel.class);
 			if(WelfareUtil.size(lstDept) == 1 && WelfareUtil.size(lstDept.get(0).members) == 1){
-//				btnPost.setEnabled(false);
+				// btnPost.setEnabled(false);
 			}
 		}else if(TcConst.API_GET_RANK_STAGE_INFO.equals(url)){
 			rankStages = CCJsonUtil.convertToModelList(response.optString("rankingStageList"), RankStage.class);
@@ -181,9 +210,51 @@ public class MypageFragment extends AbstractTCFragment{
 				Collections.reverse(rankStages);
 				showRankStageDialog();
 			}
+		}else if(TcConst.API_MESSAGE_STAMP_CATEGORY_LIST.equals(url)){
+			saveStamps(response);
 		}else{
 			super.successLoad(response, url);
 		}
+	}
+
+	private void log(String msg) {
+		Log.e("MypageFragment", msg);
+	}
+
+	private void saveStamps(JSONObject response){
+		List<StickerCategoryModel> stampCategories = CCJsonUtil.convertToModelList(response.optString("stampCategories"), StickerCategoryModel.class);
+		String lastUpdateDate = response.optString("lastUpdateDate");
+		log("categories = " + stampCategories.size());
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+//		preferences.edit().putString(TcConst.MESSAGE_STAMP_LAST_UPDATE_DATE, lastUpdateDate).apply();
+
+		mRealm.beginTransaction();
+		for(StickerCategoryModel category : stampCategories){
+			if(category.deleteFlag){
+				StickerCategoryModel.deleteStampCategory(mRealm, category.key);
+			}else{
+				StickerCategoryModel wfmStampCategory = StickerCategoryModel.getCategory(mRealm, category.key);
+				if(wfmStampCategory == null){
+					mRealm.copyToRealm(category);
+				}else{
+					wfmStampCategory.updateStampCategory(category);
+					for(StickerModel stamp : category.stamps){
+						if(stamp.deleteFlag){
+							StickerModel.deleteStamp(mRealm, stamp.key);
+						}else{
+							StickerModel wfmStamp = StickerModel.getStamp(mRealm, stamp.key);
+							if(wfmStamp == null){
+								wfmStampCategory.stamps.add(stamp);
+							}else{
+								wfmStamp.updateStamp(wfmStamp);
+							}
+						}
+					}
+				}
+			}
+		}
+		mRealm.commitTransaction();
+
 	}
 
 	private void requestRankStageInfo(){
@@ -197,13 +268,13 @@ public class MypageFragment extends AbstractTCFragment{
 		if(mypageModel.seqPost == 1 && mypageModel.pointPost != 0){
 			txtPostRankNext.setText(getString(R.string.rank_first_congrats));
 		}else{
-            String nextPostRank = String.valueOf(mypageModel.seqPost - 1);
-            if (mypageModel.pointPost == 0) {
-                nextPostRank = String.valueOf(mypageModel.seqPost);
-            }
-            if (mypageModel.seqPost == 0) {
+			String nextPostRank = String.valueOf(mypageModel.seqPost - 1);
+			if(mypageModel.pointPost == 0){
+				nextPostRank = String.valueOf(mypageModel.seqPost);
+			}
+			if(mypageModel.seqPost == 0){
 				txtPostRankNext.setText(getString(R.string.fragment_mypage_rank_next_post, "1", "1"));
-			} else {
+			}else{
 				txtPostRankNext.setText(getString(R.string.fragment_mypage_rank_next_post, nextPostRank, String.valueOf(Math.abs(mypageModel.archivePost))));
 			}
 		}
@@ -213,14 +284,14 @@ public class MypageFragment extends AbstractTCFragment{
 		if(mypageModel.seqRecieve == 1 && mypageModel.pointReceive != 0){
 			txtReceiveRankNext.setText(getString(R.string.rank_first_congrats));
 		}else{
-            String nextReceiveRank = String.valueOf(mypageModel.seqRecieve - 1);
-            if (mypageModel.pointReceive == 0) {
-                nextReceiveRank = String.valueOf(mypageModel.seqRecieve);
-            }
+			String nextReceiveRank = String.valueOf(mypageModel.seqRecieve - 1);
+			if(mypageModel.pointReceive == 0){
+				nextReceiveRank = String.valueOf(mypageModel.seqRecieve);
+			}
 
-            if (mypageModel.seqRecieve == 0) {
+			if(mypageModel.seqRecieve == 0){
 				txtReceiveRankNext.setText(getString(R.string.fragment_mypage_rank_next_receive, "1", "1"));
-			} else {
+			}else{
 				txtReceiveRankNext.setText(getString(R.string.fragment_mypage_rank_next_receive, nextReceiveRank, String.valueOf(Math.abs(mypageModel.archiveReceive))));
 			}
 
@@ -279,6 +350,6 @@ public class MypageFragment extends AbstractTCFragment{
 		txtReceiveRank = null;
 		txtReceiveRankNext = null;
 		lstNotice = null;
+		mRealm.close();
 	}
-
 }

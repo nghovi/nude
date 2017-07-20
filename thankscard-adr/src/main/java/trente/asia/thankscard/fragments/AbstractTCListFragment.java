@@ -28,6 +28,7 @@ import trente.asia.thankscard.services.common.TCDetailFragment;
 import trente.asia.thankscard.services.common.model.Category;
 import trente.asia.thankscard.services.common.model.HistoryModel;
 import trente.asia.thankscard.services.common.model.Template;
+import trente.asia.thankscard.services.posted.PostTCFragment;
 import trente.asia.thankscard.services.posted.ThanksCardEditFragment;
 import trente.asia.thankscard.services.rank.view.TCTabLinearLayout;
 import trente.asia.welfare.adr.define.WelfareConst;
@@ -84,7 +85,7 @@ public abstract class AbstractTCListFragment extends AbstractTCFragment implemen
 		spnDeparment = (WfSpinner)getView().findViewById(R.id.spn_fragment_tc_list_departure);
 		spnUserModel = (WfSpinner)getView().findViewById(R.id.spn_fragment_tc_list_user);
 
-		buildCategoriesTab();
+//		buildCategoriesTab();
 		buildSelectMonthBtn();
 		buildPostBtn();
 
@@ -217,14 +218,15 @@ public abstract class AbstractTCListFragment extends AbstractTCFragment implemen
 	}
 
 	private void gotoPostEditFragment(){
-		ThanksCardEditFragment thanksCardEditFragment = new ThanksCardEditFragment();
-		thanksCardEditFragment.setTemplates(templates);
-		thanksCardEditFragment.setDepartments(departments);
-		thanksCardEditFragment.setCategory(selectedCategory);
-		Bundle args = new Bundle();
-		args.putInt(TcConst.ACTIVE_FOOTER_ITEM_ID, getFooterItemId());
-		thanksCardEditFragment.setArguments(args);
-		gotoFragment(thanksCardEditFragment);
+//		ThanksCardEditFragment thanksCardEditFragment = new ThanksCardEditFragment();
+//		thanksCardEditFragment.setTemplates(templates);
+//		thanksCardEditFragment.setDepartments(departments);
+//		thanksCardEditFragment.setCategory(selectedCategory);
+//		Bundle args = new Bundle();
+//		args.putInt(TcConst.ACTIVE_FOOTER_ITEM_ID, getFooterItemId());
+//		thanksCardEditFragment.setArguments(args);
+//		gotoFragment(thanksCardEditFragment);
+		gotoFragment(new PostTCFragment());
 	}
 
 	abstract protected JSONObject getHistoryParam();

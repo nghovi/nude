@@ -20,7 +20,7 @@ public class CategorySelectionDialog extends TCDialog{
 	private List<Category>		categories;
 
 	@Override
-	int getDialogLayoutId(){
+	public int getDialogLayoutId(){
 		return R.layout.dialog_category_selection;
 	}
 
@@ -38,7 +38,7 @@ public class CategorySelectionDialog extends TCDialog{
 	}
 
 	@Override
-	void buildDialogLayout(View rootView){
+    public void buildDialogLayout(View rootView){
 		adapter = new CategoryListAdapter(getActivity(), R.layout.item_category, categories);
 		int selectedPosition = getSelectedPosition();
 		adapter.setmSelectedPosition(selectedPosition);

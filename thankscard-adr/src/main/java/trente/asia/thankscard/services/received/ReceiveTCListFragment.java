@@ -72,7 +72,7 @@ public class ReceiveTCListFragment extends AbstractTCListFragment{
 		JSONObject jsonObject = new JSONObject();
 		try{
 			jsonObject.put("targetMonth", targetMonth);
-			jsonObject.put("categoryId", categoryId);
+//			jsonObject.put("categoryId", categoryId);
 			// jsonObject.put("recDeptId", recDeptId);
 		}catch(JSONException ex){
 			ex.printStackTrace();

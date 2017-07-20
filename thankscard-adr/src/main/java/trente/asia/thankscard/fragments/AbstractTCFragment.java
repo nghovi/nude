@@ -107,7 +107,7 @@ public abstract class AbstractTCFragment extends WelfareFragment{
 
 	// //////////////////////////////////* Fragment Header and Footer *///////////////////////
 	public void buildTitle(){
-		if(!CCStringUtil.isEmpty(getString(getTitle()))){
+		if(getTitle() != 0 && !CCStringUtil.isEmpty(getString(getTitle()))){
 			TextView txtTitle = (TextView)getView().findViewById(R.id.txt_view_common_header_title);
 			if(txtTitle != null) txtTitle.setText(getString(getTitle()));
 		}

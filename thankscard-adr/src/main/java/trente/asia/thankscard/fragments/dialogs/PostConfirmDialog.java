@@ -28,12 +28,12 @@ public class PostConfirmDialog extends TCDialog {
     }
 
     @Override
-    int getDialogLayoutId() {
+    public int getDialogLayoutId() {
         return R.layout.dialog_post_confirm;
     }
 
     @Override
-    void buildDialogLayout(View rootView) {
+    public void buildDialogLayout(View rootView) {
         binding = DataBindingUtil.bind(rootView);
         binding.btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
