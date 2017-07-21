@@ -84,7 +84,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/lnr_view_footer_summary"
+            android:id="@+id/lnr_view_footer_todo"
             style="@style/cs_common_wrap"
             android:layout_width="@dimen/margin_0dp"
             android:layout_weight="1"
@@ -103,7 +103,7 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:paddingTop="@dimen/margin_5dp"
-                android:text="@string/cl_footer_summary"
+                android:text="@string/cl_footer_todo"
                 android:textColor="@color/core_gray"/>
         </LinearLayout>
 

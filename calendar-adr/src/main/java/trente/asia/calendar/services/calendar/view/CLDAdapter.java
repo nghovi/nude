@@ -146,7 +146,7 @@ public class CLDAdapter extends BaseAdapter{
 			// dayColor = ContextCompat.getColor(mContext, R.color.core_white);
 			// // rltBackground.setBackgroundResource(R.drawable
 			// .dr_item_calendar_background_today);
-			// txtDay.setBackgroundResource(R.drawable
+			// txtDate.setBackgroundResource(R.drawable
 			// .dr_background_base_color_circle);
 			// }
 

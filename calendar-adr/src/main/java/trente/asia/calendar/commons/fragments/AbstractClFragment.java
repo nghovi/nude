@@ -17,6 +17,7 @@ import trente.asia.calendar.services.calendar.MonthlyFragment;
 import trente.asia.calendar.services.calendar.WeeklyFragment;
 import trente.asia.calendar.services.setting.ClSettingFragment;
 import trente.asia.calendar.services.summary.SummaryFragment;
+import trente.asia.calendar.services.todo.TodoListFragment;
 import trente.asia.calendar.services.user.ClLoginFragment;
 import trente.asia.welfare.adr.activity.WelfareFragment;
 import trente.asia.welfare.adr.define.WelfareConst;
@@ -42,7 +43,7 @@ public abstract class AbstractClFragment extends WelfareFragment implements View
 	@Override
 	protected void initView(){
 		super.initView();
-        lnrContentId = R.id.lnr_id_content;
+		lnrContentId = R.id.lnr_id_content;
 	}
 
 	/**
@@ -69,8 +70,8 @@ public abstract class AbstractClFragment extends WelfareFragment implements View
 					case R.id.lnr_view_footer_daily:
 						onClickFooterItemDaily();
 						break;
-					case R.id.lnr_view_footer_summary:
-						onClickFooterItemSummary();
+					case R.id.lnr_view_footer_todo:
+						onClickFooterItemTodo();
 						break;
 					case R.id.lnr_view_footer_setting:
 						onClickFooterItemSetting();
@@ -84,7 +85,8 @@ public abstract class AbstractClFragment extends WelfareFragment implements View
 			getView().findViewById(R.id.lnr_view_footer_monthly).setOnClickListener(listener);
 			getView().findViewById(R.id.lnr_view_footer_weekly).setOnClickListener(listener);
 			getView().findViewById(R.id.lnr_view_footer_daily).setOnClickListener(listener);
-			getView().findViewById(R.id.lnr_view_footer_summary).setOnClickListener(listener);
+			getView().findViewById(R.id.lnr_view_footer_todo).setOnClickListener(listener);
+			// getView().findViewById(R.id.lnr_view_footer_summary).setOnClickListener(listener);
 			getView().findViewById(R.id.lnr_view_footer_setting).setOnClickListener(listener);
 			LinearLayout lnrFooter = (LinearLayout)getView().findViewById(footerItemId);
 			setSelectedFooterItem(lnrFooter);
@@ -120,6 +122,11 @@ public abstract class AbstractClFragment extends WelfareFragment implements View
 		gotoFragment(new DailyFragment());
 	}
 
+	public void onClickFooterItemTodo(){
+		emptyBackStack();
+		gotoFragment(new TodoListFragment());
+	}
+
 	public void onClickFooterItemSummary(){
 		emptyBackStack();
 		gotoFragment(new SummaryFragment());
@@ -146,10 +153,10 @@ public abstract class AbstractClFragment extends WelfareFragment implements View
 		return filePath;
 	}
 
-    /**
-     * emptyLocalData
-     * remove local data when user sign out
-     */
-    protected void emptyLocalData(){
-    }
+	/**
+	 * emptyLocalData
+	 * remove local data when user sign out
+	 */
+	protected void emptyLocalData(){
+	}
 }

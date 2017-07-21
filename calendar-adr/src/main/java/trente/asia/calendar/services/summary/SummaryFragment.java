@@ -36,6 +36,6 @@ public class SummaryFragment extends PageContainerFragment{
 
 	@Override
 	public int getFooterItemId(){
-		return R.id.lnr_view_footer_summary;
+		return 0;
 	}
 }

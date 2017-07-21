@@ -81,4 +81,13 @@
     <string name="cl_schedule_offer_name">[O]%1$s</string>
     <string name="my_calendar">Lịch của tôi</string>
     <string name="check_all">Chọn tất cả</string>
+    <string name="cl_footer_todo">Todo</string>
+    <string name="todo_title">To Do</string>
+    <string name="content">Content</string>
+    <string name="sure_to_delete">Are you sure to delete this todo?</string>
+    <string name="show_finished_task">Show finished tasks</string>
+    <string name="deadline">Deadline</string>
+    <string name="hide_unfinished_task">Hide finished tasks</string>
+    <string name="title">Title</string>
+    <string name="note">Note</string>
 </resources>

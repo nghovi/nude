@@ -104,7 +104,7 @@ public class SummaryDetailFragment extends AbstractClFragment implements WeeklyS
 
 	@Override
 	public int getFooterItemId(){
-		return R.id.lnr_view_footer_summary;
+		return 0;
 	}
 
 	@Override

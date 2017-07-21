@@ -59,7 +59,7 @@ public class SummaryPageFragment extends ClPageFragment{
 	@Override
 	protected void initView(){
 		super.initView();
-		inflater = getLayoutInflater(null);
+		inflater = LayoutInflater.from(activity);
 		pageSharingHolder.hideNavigationRightBtn();
 		updateHeaderTitles();
 		lnrGraphContainer = (LinearLayout)getView().findViewById(R.id.lnr_graph_container);

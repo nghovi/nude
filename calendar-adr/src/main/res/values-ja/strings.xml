@@ -79,4 +79,13 @@
     <string name="cl_schedule_offer_name">[O]%1$s</string>
     <string name="my_calendar">マイカレンダー</string>
     <string name="check_all">すべて</string>
+    <string name="cl_footer_todo">Todo</string>
+    <string name="todo_title">To Do</string>
+    <string name="content">Content</string>
+    <string name="sure_to_delete">Are you sure to delete this todo?</string>
+    <string name="show_finished_task">完了済みタスクの表示</string>
+    <string name="deadline">期限</string>
+    <string name="hide_unfinished_task">Hide finished tasks</string>
+    <string name="title">Title</string>
+    <string name="note">Note</string>
 </resources>
