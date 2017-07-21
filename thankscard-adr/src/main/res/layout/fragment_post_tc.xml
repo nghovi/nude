@@ -162,8 +162,8 @@
                     <RelativeLayout
                         android:id="@+id/rlt_msg_photo"
                         android:layout_height="match_parent"
-                        app:layout_widthPercent="50%"
-                        android:layout_toEndOf="@+id/touch_pad">
+                        android:layout_toEndOf="@+id/touch_pad"
+                        app:layout_widthPercent="50%">
 
                         <EditText
                             android:id="@+id/edt_message_photo"
@@ -280,5 +280,25 @@
                 android:paddingStart="@dimen/margin_8dp"
                 android:text="@string/chiase_common_send" />
         </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_sticker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/wf_login_background_color"
+            android:visibility="gone">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/list_stamp_categories"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="40dp"
+                android:background="@drawable/normal_stamp_category_background"/>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/list_stamps"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="180dp"/>
+        </LinearLayout>
     </LinearLayout>
 </layout>

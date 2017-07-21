@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -38,8 +40,11 @@ import trente.asia.thankscard.databinding.FragmentPostTcBinding;
 import trente.asia.thankscard.fragments.AbstractTCFragment;
 import trente.asia.thankscard.fragments.dialogs.PostConfirmDialog;
 import trente.asia.thankscard.services.common.model.Template;
-import trente.asia.thankscard.services.mypage.model.StickerCategoryModel;
+import trente.asia.thankscard.services.mypage.model.StampCategoryModel;
+import trente.asia.thankscard.services.mypage.model.StampModel;
 import trente.asia.thankscard.services.posted.model.StickerModel;
+import trente.asia.thankscard.services.posted.presenter.StampAdapter;
+import trente.asia.thankscard.services.posted.presenter.StampCategoryAdapter;
 import trente.asia.thankscard.services.posted.view.ChangeToNormalCardDialog;
 import trente.asia.thankscard.services.posted.view.ChoosePictureDialog;
 import trente.asia.thankscard.services.posted.view.TouchPad;
@@ -56,26 +61,27 @@ import trente.asia.welfare.adr.utils.WfPicassoHelper;
  * Created by tien on 7/12/2017.
  */
 
-public class PostTCFragment extends AbstractTCFragment implements View.OnClickListener,SelectDeptFragment.OnSelectDeptListener,SelectUserFragment.OnSelectUserListener,SelectCardFragment.OnSelectCardListener,StickerModel.OnStickerListener,TouchPad.OnTouchPadListener{
+public class PostTCFragment extends AbstractTCFragment implements View.OnClickListener,SelectDeptFragment.OnSelectDeptListener,SelectUserFragment.OnSelectUserListener,SelectCardFragment.OnSelectCardListener,StickerModel.OnStickerListener,TouchPad.OnTouchPadListener,StampCategoryAdapter.OnStampCategoryAdapterListener,StampAdapter.OnStampAdapterListener{
 
-	public final int					MAX_LETTER		= 75;
+	public final int							MAX_LETTER		= 75;
 
-	private List<Template>				templates;
-	private FragmentPostTcBinding		binding;
-	private Template					template;
-	private List<DeptModel>				departments;
-	private DeptModel					department;
-	private UserModel					member;
-	private String						message;
-	private List<StickerModel>			stickers		= new ArrayList<>();
-	private Uri							mImageUri;
-	private String						mImagePath;
-	private boolean						canSendPhoto	= false;
-	private List<StickerCategoryModel>	stampCategories;
-	private Realm mRealm;
+	private List<Template>						templates;
+	private FragmentPostTcBinding				binding;
+	private Template							template;
+	private List<DeptModel>						departments;
+	private DeptModel							department;
+	private UserModel							member;
+	private String								message;
+	private List<StickerModel>					stickers		= new ArrayList<>();
+	private Uri									mImageUri;
+	private String								mImagePath;
+	private boolean								canSendPhoto	= false;
+	private RealmResults<StampCategoryModel>	stampCategories;
+	private StampAdapter						stampAdapter;
+	private Realm								mRealm;
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		mRealm = Realm.getDefaultInstance();
 	}
@@ -171,8 +177,24 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 		requestAccountInfo();
 		requestTemplate();
 		buildTemplate();
-		RealmResults<StickerCategoryModel> categories = mRealm.where(StickerCategoryModel.class).findAll();
-		log("categories = " + categories.size());
+		buildLayoutSticker();
+	}
+
+	private void buildLayoutSticker(){
+		stampCategories = mRealm.where(StampCategoryModel.class).findAll();
+
+		StampCategoryAdapter categoryAdapter = new StampCategoryAdapter(this);
+		categoryAdapter.setStampCategories(stampCategories);
+		binding.listStampCategories.setAdapter(categoryAdapter);
+		binding.listStampCategories.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+
+		stampAdapter = new StampAdapter(this);
+		binding.listStamps.setAdapter(stampAdapter);
+		binding.listStamps.setLayoutManager(new GridLayoutManager(getContext(), 2, LinearLayoutManager.HORIZONTAL, false));
+
+		if(!stampCategories.isEmpty()){
+			stampAdapter.setStamps(stampCategories.get(0).stamps);
+		}
 	}
 
 	private void requestTemplate(){
@@ -241,7 +263,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 			}
 			break;
 		case R.id.lnr_select_sticker:
-			addSticker(StickerModel.STICKER_PATH);
+			showLayoutSticker();
 			break;
 		case R.id.lnr_select_photo:
 			changeToPhotoCard();
@@ -252,6 +274,18 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 		default:
 			break;
 		}
+	}
+
+	private void showLayoutSticker() {
+		binding.layoutSticker.setVisibility(View.VISIBLE);
+		binding.rltSelectDept.setVisibility(View.GONE);
+		binding.rltSelectUser.setVisibility(View.GONE);
+	}
+
+	private void closeLayoutSticker() {
+		binding.layoutSticker.setVisibility(View.GONE);
+		binding.rltSelectDept.setVisibility(View.VISIBLE);
+		binding.rltSelectUser.setVisibility(View.VISIBLE);
 	}
 
 	private void showLayoutCards(){
@@ -352,7 +386,6 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 			break;
 		case WelfareConst.RequestCode.PHOTO_CROP:
 			binding.layoutPhoto.setImage(mImageUri.getPath());
-
 			break;
 		}
 	}
@@ -549,8 +582,19 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 	}
 
 	@Override
-	public void onDestroy() {
+	public void onDestroy(){
 		super.onDestroy();
 		mRealm.close();
+	}
+
+	@Override
+	public void onStampClick(StampModel stamp){
+		closeLayoutSticker();
+		addSticker(BuildConfig.HOST + stamp.stampPath);
+	}
+
+	@Override
+	public void onStampCategoryClick(StampCategoryModel stampCategory){
+		stampAdapter.setStamps(stampCategory.stamps);
 	}
 }
