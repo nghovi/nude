@@ -46,6 +46,7 @@ import trente.asia.dailyreport.services.kpi.view.KpiCalendarView;
 import trente.asia.dailyreport.services.report.ReportEditFragment;
 import trente.asia.dailyreport.services.report.model.ReportModel;
 import trente.asia.dailyreport.services.report.view.DRCalendarView;
+import trente.asia.dailyreport.services.util.KpiUtil;
 import trente.asia.dailyreport.utils.DRUtil;
 import trente.asia.dailyreport.view.DRGroupHeader;
 import trente.asia.welfare.adr.activity.WelfareActivity;
@@ -360,17 +361,24 @@ public class ActionPlansAddFragment extends AbstractDRFragment implements DRCale
 	private boolean checkValidData(){
 		for(EditText edtActionValue : edtActionValues){
 			if(CCStringUtil.isEmpty(edtActionValue.getText().toString())){
-				showValidationDialog();
+				showValidationDialog(getString(R.string.action_plan_please_input));
 				return false;
 			}
+
+			if(!KpiUtil.isCheckSize("", edtActionValue.getText().toString())){
+				showValidationDialog(getString(R.string.action_num_over_max, KpiUtil.getMax("")));
+				return false;
+			}
+
 		}
+
 		return true;
 	}
 
-	private void showValidationDialog(){
+	private void showValidationDialog(String message){
 		if(drDialog == null){
 			drDialog = new DRDialog(activity);
-			drDialog.setDialogConfirm(getString(R.string.action_plan_please_input), getString(R.string.chiase_common_ok), null, null, null);
+			drDialog.setDialogConfirm(message, getString(R.string.chiase_common_ok), null, null, null);
 		}
 		drDialog.show();
 	}
