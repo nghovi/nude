@@ -90,7 +90,7 @@
     <string name="fragmen_group_actual_needed_amount2">達成まであと%1$s</string>
     <string name="achieve_dialog_title">達成!!</string>
     <string name="achieve_dialog_content">おめでとうございます。 \n個人目標を達成しました。\n素晴らしい！！ \nこの調子でいきましょう！</string>
-    <string name="achieve_warning_dialog_title">本日は進捗確認日です</string>
+    <string name="achieve_warning_dialog_title">本日は進捗確認日です。</string>
     <string name="achieve_warning_dialog_content">KPIを達成していません\nアクションプランの見直しを考えましょう。</string>
     <string name="today_goal">本日の目標</string>
     <string name="supplement_memo">補足メモ</string>

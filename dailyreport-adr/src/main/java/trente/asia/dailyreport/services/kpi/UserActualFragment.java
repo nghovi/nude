@@ -520,7 +520,7 @@ public class UserActualFragment extends AbstractDRFragment{
 	}
 
 	public int getSelectedGroupPosition(){
-		if(selectedGroup == null){
+		if(selectedGroup == null && CCStringUtil.isEmpty(groupId)){
 			return 0;
 		}
 
