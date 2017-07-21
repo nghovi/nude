@@ -57,7 +57,7 @@ public class GroupActualFragment extends AbstractDRFragment{
 
 	@Override
 	public int getFooterItemId(){
-		return R.id.lnr_view_common_footer_kpi;
+		return 0;
 	}
 
 	@Override

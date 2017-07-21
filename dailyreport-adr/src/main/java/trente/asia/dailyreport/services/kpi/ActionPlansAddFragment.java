@@ -155,6 +155,7 @@ public class ActionPlansAddFragment extends AbstractDRFragment implements DRCale
 
 			@Override
 			public void onPageSelected(int position){
+				imgHeaderLeftIcon.setVisibility(View.INVISIBLE);
 				Calendar c = ((CalendarFragment)adapter.getItem(mPager.getCurrentItem())).getCalendar();
 				lnrActionPlanSection.setVisibility(View.GONE);
 				txtNoAction.setVisibility(View.GONE);
@@ -416,7 +417,7 @@ public class ActionPlansAddFragment extends AbstractDRFragment implements DRCale
 			txtTodayGoal.setText(CCFormatUtil.formatAmount(actionPlan.planValue) + actionPlan.unit);
 
 			TextView txtPerformance = (TextView)cellView.findViewById(R.id.txt_item_actual_plan_today_performance);
-			txtPerformance.setText(actionPlan.actual + actionPlan.unit);
+			txtPerformance.setText(CCFormatUtil.formatAmount(actionPlan.actual) + actionPlan.unit);
 
 			String language = locale.getLanguage();
 			String monthStr = CCFormatUtil.formatDateCustom("M", selectedDate);
@@ -428,7 +429,7 @@ public class ActionPlansAddFragment extends AbstractDRFragment implements DRCale
 			txtPerformanceMonthLabel.setText(getString(R.string.performance_in_month, monthStr));
 
 			TextView txtPerformanceMonth = (TextView)cellView.findViewById(R.id.txt_item_actual_plan_performance_month);
-			txtPerformanceMonth.setText(actionPlan.achievementMonth + actionPlan.unit);
+			txtPerformanceMonth.setText(CCFormatUtil.formatAmount(actionPlan.achievementMonth) + actionPlan.unit);
 
 			TextView txtRateLabel = (TextView)cellView.findViewById(R.id.txt_item_actual_plan_month_rate_label);
 			txtRateLabel.setText(getString(R.string.achievement_rate_in_month, monthStr));
