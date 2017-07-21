@@ -11,7 +11,7 @@ public class KpiUtil {
 
     public static final String KPI_UNIT_SALE = "SALE";
     public static final String KPI_UNIT_COUNT = "COUNT";
-    
+
     private static final int MAX_CHARACTER_COUNT = 9999;
     private static final int MAX_CHARACTER_SALE = 9999999;
 
@@ -34,7 +34,10 @@ public class KpiUtil {
 
                 break;
             default:
-                return false;
+                if (val > MAX_CHARACTER_SALE) {
+                    return false;
+                }
+                break;
         }
         return true;
 
