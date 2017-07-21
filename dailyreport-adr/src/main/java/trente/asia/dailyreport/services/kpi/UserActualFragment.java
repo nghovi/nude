@@ -452,6 +452,7 @@ public class UserActualFragment extends AbstractDRFragment{
 	}
 
 	private void showEmptyActualMessage(){
+		updateHeader(getString(R.string.performance_input));
 		getView().findViewById(R.id.lnr_fragment_action_plan_main).setVisibility(View.GONE);
 		getView().findViewById(R.id.txt_fragment_action_plan_empty).setVisibility(View.VISIBLE);
 	}
@@ -471,6 +472,8 @@ public class UserActualFragment extends AbstractDRFragment{
 		String status = null;
 		if(Integer.parseInt(personal.progressList.get(personal.progressList.size() - 1).achievementOver) >= Integer.valueOf(personal.goal)){
 			status = getString(R.string.achieve_dialog_title);
+		}else{
+			status = getString(R.string.fragmen_group_actual_needed_amount2, CCFormatUtil.formatAmount(Integer.valueOf(personal.goal) - Integer.valueOf(personal.achievement))) + personal.group.goalUnit;
 		}
 		((TextView)chartView.findViewById(R.id.txt_kpi_chart_result)).setText(status);
 		buildChart(activity, lineChart, personal.progressList, selectedGroup, personal);
