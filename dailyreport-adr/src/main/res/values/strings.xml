@@ -105,4 +105,5 @@
     <string name="text_period">(Period)</string>
     <string name="choose_the_day">Please select date</string>
     <string name="action_plan_please_input">Please input your performance</string>
+    <string name="action_num_over_max">Maximum input value is %1$s</string>
 </resources>

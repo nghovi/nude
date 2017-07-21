@@ -42,10 +42,12 @@ import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.dailyreport.DRConst;
 import trente.asia.dailyreport.R;
+import trente.asia.dailyreport.dialogs.DRDialog;
 import trente.asia.dailyreport.fragments.AbstractDRFragment;
 import trente.asia.dailyreport.services.kpi.model.GroupKpi;
 import trente.asia.dailyreport.services.kpi.model.Personal;
 import trente.asia.dailyreport.services.kpi.model.Progress;
+import trente.asia.dailyreport.services.util.KpiUtil;
 import trente.asia.dailyreport.view.DRGroupHeader;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
@@ -78,6 +80,7 @@ public class UserActualFragment extends AbstractDRFragment{
 	private LinearLayout				lnrChartContainer;
 	private String						groupId;
 	private String						targetDate;
+	private DRDialog			drDialog;
 
 	@Override
 	public int getFragmentLayoutId(){
@@ -391,20 +394,39 @@ public class UserActualFragment extends AbstractDRFragment{
 		datePickerDialog.show();
 	}
 
-	private void onClickSaveButton(){
-		String dateStr = txtSelectedDate.getText().toString();
-		String todayActual = edtActualToday.getText().toString().replaceAll("[^\\d.]", "");
-		JSONObject jsonObject = new JSONObject();
-		try{
-			jsonObject.put("targetDate", dateStr);
-			jsonObject.put("todayActual", todayActual);
-			jsonObject.put("targetGroupId", selectedGroup.key);
+    private void onClickSaveButton() {
+        String dateStr = txtSelectedDate.getText().toString();
+        String todayActual = edtActualToday.getText().toString().replaceAll("[^\\d.]", "");
 
-		}catch(JSONException e){
-			e.printStackTrace();
-		}
-		requestUpdate(DRConst.API_KPI_PERSONAL_UPDATE, jsonObject, true);
-	}
+        if (!KpiUtil.isCheckSize(selectedGroup.unit, todayActual)) {
+
+            showValidationDialog(getString(R.string.action_num_over_max, KpiUtil.getMax(selectedGroup.unit)));
+
+        } else {
+
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.put("targetDate", dateStr);
+                jsonObject.put("todayActual", todayActual);
+                jsonObject.put("targetGroupId", selectedGroup.key);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            requestUpdate(DRConst.API_KPI_PERSONAL_UPDATE, jsonObject, true);
+
+        }
+
+
+    }
+
+    private void showValidationDialog(String message) {
+        if (drDialog == null) {
+            drDialog = new DRDialog(activity);
+            drDialog.setDialogConfirm(message, getString(R.string.chiase_common_ok), null, null, null);
+        }
+        drDialog.show();
+    }
 
 	@Override
 	protected void successUpdate(JSONObject response, String url){
