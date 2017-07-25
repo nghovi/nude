@@ -29,6 +29,7 @@ import asia.chiase.core.util.CCBooleanUtil;
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
+import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.define.CsConst;
 import trente.asia.android.util.CsDateUtil;
@@ -99,14 +100,6 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 				}
 			}
 		});
-
-		List<Todo> todos = new ArrayList<>();
-		todos.add(new Todo());
-		todos.add(new Todo());
-		todos.add(new Todo());
-		todos.add(new Todo());
-		todos.add(new Todo());
-		buildTodoList(todos);
 	}
 
 	private void gotoUserFilterFragment(){
@@ -130,6 +123,12 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 		for(int i = 0; i < todos.size(); i++){
 			final Todo todo = todos.get(i);
 			View cell = inflater.inflate(R.layout.item_todo_unfinished_month, null);
+			cell.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					showTodoDetailDialog(todo);
+				}
+			});
 			TextView txtDate = (TextView)cell.findViewById(R.id.txt_item_todo_date);
 			TextView txtTitle = (TextView)cell.findViewById(R.id.txt_item_todo_title);
 			txtTitle.setText(todo.name);
@@ -155,8 +154,13 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 					finishTodo(todo);
 				}
 			});
+			cell.setTag(todo.key);
 			lnrTodo.addView(cell);
 		}
+	}
+
+	private void showTodoDetailDialog(Todo todo) {
+
 	}
 
 	private void finishTodo(Todo todo){
@@ -172,7 +176,6 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 			e.printStackTrace();
 		}
 		requestUpdate(ClConst.API_TODO_UPDATE, jsonObject, true);
-		Toast.makeText(activity, "call api to update finish", Toast.LENGTH_LONG).show();
 	}
 
 	@Override
@@ -387,6 +390,9 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 			dialogDailySummary.setData(lstSchedule, lstBirthdayUser, lstHoliday, lstWorkOffer);
 			isChangedData = false;
 		}
+
+		List<Todo> todos = CCJsonUtil.convertToModelList(response.optString("todoList"), Todo.class);
+		buildTodoList(todos);
 	}
 
 	@Override

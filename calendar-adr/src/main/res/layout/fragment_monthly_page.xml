@@ -8,14 +8,14 @@
 
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        style="@style/wf_common_match"
+        style="@style/cs_common_match_wrap"
         android:layout_weight="1"
         android:background="@color/cl_cell_bg_color"
         android:fillViewport="true">
 
         <LinearLayout
             android:id="@+id/lnr_calendar_container"
-            style="@style/wf_common_match"
+            style="@style/cs_common_match_wrap"
             android:layout_weight="1"
             android:orientation="vertical">
 

@@ -78,11 +78,19 @@ public class TodoDetailFragment extends AbstractClFragment{
 	@Override
 	public void initView(){
 		super.initView();
-		initHeader(R.drawable.wf_back_white, getString(R.string.todo_title), R.drawable.cl_action_save);
-		getView().findViewById(R.id.img_id_header_right_icon).setOnClickListener(this);
 		edtTitle = (EditText)getView().findViewById(R.id.txt_fragment_todo_detail_title);
 		edtContent = (EditText)getView().findViewById(R.id.txt_fragment_todo_detail_content);
 		txtDeadline = (TextView)getView().findViewById(R.id.txt_deadline);
+		if(todo != null && todo.isFinish == true){
+			initHeader(R.drawable.wf_back_white, getString(R.string.todo_title), null);
+			edtTitle.setEnabled(false);
+			edtContent.setEnabled(false);
+		}else{
+			getView().findViewById(R.id.img_id_header_right_icon).setOnClickListener(this);
+			initHeader(R.drawable.wf_back_white, getString(R.string.todo_title), R.drawable.cl_action_save);
+			getView().findViewById(R.id.lnr_deadline).setOnClickListener(this);
+		}
+
 		Calendar calendar = Calendar.getInstance();
 		if(todo != null && !CCStringUtil.isEmpty(todo.limitDate)){
 			Date date = CCDateUtil.makeDateCustom(todo.limitDate, WelfareConst.WF_DATE_TIME_DATE);
@@ -103,7 +111,6 @@ public class TodoDetailFragment extends AbstractClFragment{
 				txtDeadline.setText("");
 			}
 		});
-		getView().findViewById(R.id.lnr_deadline).setOnClickListener(this);
 	}
 
 	private void buildLayout(JSONObject response){
