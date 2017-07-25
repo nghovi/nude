@@ -4,6 +4,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import java.util.Date;
 
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
+import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
@@ -47,25 +49,30 @@ public class TodoDetailFragment extends AbstractClFragment{
 
 	@Override
 	protected void initData(){
-		// loadTodoDetail();
+		loadTodoDetail();
 	}
 
 	private void loadTodoDetail(){
-		// JSONObject jsonObject = new JSONObject();
-		// try{
-		// jsonObject.put("key", todoKey);
-		// }catch(JSONException e){
-		// e.printStackTrace();
-		// }
-		// requestLoad(ClConst.API_TODO_LIST, jsonObject, true);
+		String todoKey = todo == null ? null : todo.key;
+		JSONObject jsonObject = new JSONObject();
+		try{
+			jsonObject.put("key", todoKey);
+		}catch(JSONException e){
+			e.printStackTrace();
+		}
+		requestLoad(ClConst.API_TODO_DETAIL, jsonObject, true);
 	}
-	//
-	// protected void successLoad(JSONObject response, String url){
-	// buildLayout(response);
-	// }
+
+	protected void successLoad(JSONObject response, String url){
+		buildLayout(response);
+	}
 
 	protected void successUpdate(JSONObject response, String url){
-		buildLayout(response);
+		if(todo == null || todo.key == null){
+			onClickBackBtn();
+		}else{
+			loadTodoDetail();
+		}
 	}
 
 	@Override
@@ -81,7 +88,6 @@ public class TodoDetailFragment extends AbstractClFragment{
 			Date date = CCDateUtil.makeDateCustom(todo.limitDate, WelfareConst.WF_DATE_TIME_DATE);
 			calendar.setTime(date);
 		}
-		txtDeadline.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, calendar.getTime()));
 		datePickerDialog = new DatePickerDialog(activity, new DatePickerDialog.OnDateSetListener() {
 
 			@Override
@@ -90,16 +96,22 @@ public class TodoDetailFragment extends AbstractClFragment{
 				txtDeadline.setText(startDateStr);
 			}
 		}, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+		datePickerDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+
+			@Override
+			public void onCancel(DialogInterface dialog){
+				txtDeadline.setText("");
+			}
+		});
 		getView().findViewById(R.id.lnr_deadline).setOnClickListener(this);
-		buildLayout(null);
 	}
 
 	private void buildLayout(JSONObject response){
-		// todo = CCJsonUtil.convertToModel(response.optString("todo"), Todo.class);
-		// todoKey = todo.key;
+		todo = CCJsonUtil.convertToModel(response.optString("detail"), Todo.class);
 		if(todo != null){
 			edtTitle.setText(todo.name);
 			edtContent.setText(todo.note);
+			txtDeadline.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, CCDateUtil.makeDateCustom(todo.limitDate, WelfareConst.WF_DATE_TIME)));
 		}else{
 		}
 	}
@@ -115,9 +127,9 @@ public class TodoDetailFragment extends AbstractClFragment{
 		case R.id.img_id_header_right_icon:
 			onClickSaveIcon();
 			break;
-			case R.id.lnr_deadline:
-				datePickerDialog.show();
-				break;
+		case R.id.lnr_deadline:
+			datePickerDialog.show();
+			break;
 		default:
 			break;
 		}

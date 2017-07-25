@@ -4,10 +4,23 @@
 
     <include layout="@layout/view_common_header" />
 
-    <ScrollView
-        android:layout_weight="1"
+    <TextView
+        android:id="@+id/txt_todo_empty"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_weight="1"
+        android:gravity="center_horizontal|top"
+        android:text="@string/tap_button_to_add"
+        android:visibility="gone" />
+
+    <ScrollView
+        android:id="@+id/scr_todo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:visibility="visible">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -32,10 +45,10 @@
 
             <LinearLayout
                 android:id="@+id/lnr_finished_todo_containter"
-                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
             </LinearLayout>
 
@@ -43,7 +56,6 @@
 
 
     </ScrollView>
-
 
 
     <include layout="@layout/view_common_footer" />

@@ -6,32 +6,45 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.zip.Inflater;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.Transformation;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import asia.chiase.core.util.CCBooleanUtil;
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
+import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.define.CsConst;
 import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.R;
+import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.dialogs.DailySummaryDialog;
+import trente.asia.calendar.commons.fragments.AbstractClFragment;
 import trente.asia.calendar.commons.utils.ClUtil;
+import trente.asia.calendar.commons.views.UserFacilityView;
 import trente.asia.calendar.services.calendar.listener.DailyScheduleClickListener;
 import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.model.WorkOffer;
 import trente.asia.calendar.services.calendar.view.MonthlyCalendarDayView;
 import trente.asia.calendar.services.calendar.view.MonthlyCalendarRowView;
+import trente.asia.calendar.services.todo.model.Todo;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
@@ -47,6 +60,120 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 	private List<MonthlyCalendarRowView>	lstCalendarRow	= new ArrayList<>();
 
 	private DailySummaryDialog				dialogDailySummary;
+	private LinearLayout					lnrTodo;
+	private boolean							isExpanded		= false;
+	private LayoutInflater					inflater;
+	private Todo							selectedTodo;
+
+	@Override
+	protected void initView(){
+		super.initView();
+
+		inflater = LayoutInflater.from(activity);
+
+		UserFacilityView userFacilityView = (UserFacilityView)getView().findViewById(R.id.user_facility_view);
+		userFacilityView.initChildren(new UserFacilityView.OnTabClickListener() {
+
+			@Override
+			public void onBtnUserClicked(){
+				gotoUserFilterFragment();
+			}
+
+			@Override
+			public void onBtnFacilityClicked(){
+
+			}
+		});
+
+		lnrTodo = (LinearLayout)getView().findViewById(R.id.lnr_todos);
+		lnrTodo.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v){
+				if(isExpanded){
+					collapse(lnrTodo);
+					isExpanded = false;
+				}else{
+					expand(lnrTodo);
+					isExpanded = true;
+				}
+			}
+		});
+
+		List<Todo> todos = new ArrayList<>();
+		todos.add(new Todo());
+		todos.add(new Todo());
+		todos.add(new Todo());
+		todos.add(new Todo());
+		todos.add(new Todo());
+		buildTodoList(todos);
+	}
+
+	private void gotoUserFilterFragment(){
+		UserFilterFragment userFilterFragment = new UserFilterFragment();
+		userFilterFragment.setData(new ArrayList<UserModel>(), new ArrayList<UserModel>());
+		((AbstractClFragment)getParentFragment()).gotoFragment(userFilterFragment);
+	}
+
+	@Override
+	protected void successUpdate(JSONObject response, String url){
+		if(ClConst.API_TODO_UPDATE.equals(url)){
+			View cell = lnrTodo.findViewWithTag(selectedTodo.key);
+			lnrTodo.removeView(cell);
+		}else{
+			super.successUpdate(response, url);
+		}
+	}
+
+	public void buildTodoList(List<Todo> todos){
+		Date today = Calendar.getInstance().getTime();
+		for(int i = 0; i < todos.size(); i++){
+			final Todo todo = todos.get(i);
+			View cell = inflater.inflate(R.layout.item_todo_unfinished_month, null);
+			TextView txtDate = (TextView)cell.findViewById(R.id.txt_item_todo_date);
+			TextView txtTitle = (TextView)cell.findViewById(R.id.txt_item_todo_title);
+			txtTitle.setText(todo.name);
+
+			if(CCStringUtil.isEmpty(todo.limitDate)){
+				txtTitle.setText(getString(R.string.no_deadline));
+			}else{
+				Date date = CCDateUtil.makeDateCustom(todo.limitDate, WelfareConst.WF_DATE_TIME);
+				if(CCDateUtil.compareDate(date, today, false) >= 0){
+					txtDate.setTextColor(Color.RED);
+				}
+				if(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, today).equals(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, date))){
+					txtDate.setText(getString(R.string.chiase_common_today));
+				}else{
+					txtDate.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_MM_DD, date));
+				}
+			}
+			RadioButton radioButton = (RadioButton)cell.findViewById(R.id.radio);
+			radioButton.setOnClickListener(new View.OnClickListener() {
+
+				@Override
+				public void onClick(View v){
+					finishTodo(todo);
+				}
+			});
+			lnrTodo.addView(cell);
+		}
+	}
+
+	private void finishTodo(Todo todo){
+		this.selectedTodo = todo;
+		JSONObject jsonObject = new JSONObject();
+		try{
+			jsonObject.put("key", todo.key);
+			jsonObject.put("name", todo.name);
+			jsonObject.put("note", todo.note);
+			jsonObject.put("isFinish", true);
+			jsonObject.put("limitDate", CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, Calendar.getInstance().getTime()));
+		}catch(JSONException e){
+			e.printStackTrace();
+		}
+		requestUpdate(ClConst.API_TODO_UPDATE, jsonObject, true);
+		Toast.makeText(activity, "call api to update finish", Toast.LENGTH_LONG).show();
+	}
 
 	@Override
 	public int getCalendarHeaderItem(){
@@ -121,6 +248,62 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 				lnrRowContent.addView(dayView);
 			}
 		}
+	}
+
+	public static void expand(final View v){
+		v.measure(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+		final int targetHeight = v.getMeasuredHeight();
+
+		// Older versions of android (pre API 21) cancel animations for views with a height of 0.
+		v.getLayoutParams().height = 1;
+		v.setVisibility(View.VISIBLE);
+		Animation a = new Animation() {
+
+			@Override
+			protected void applyTransformation(float interpolatedTime, Transformation t){
+				v.getLayoutParams().height = interpolatedTime == 1 ? LinearLayout.LayoutParams.WRAP_CONTENT : (int)(targetHeight * interpolatedTime);
+				v.requestLayout();
+			}
+
+			@Override
+			public boolean willChangeBounds(){
+				return true;
+			}
+		};
+
+		// 1dp/ms
+		a.setDuration((int)(targetHeight / v.getContext().getResources().getDisplayMetrics().density));
+		v.startAnimation(a);
+	}
+
+	public static void collapse(final View v){
+		final int initialHeight = v.getMeasuredHeight();
+
+		final int firstChildHeight = ((LinearLayout)v).getChildAt(0).getMeasuredHeight();
+
+		Animation a = new Animation() {
+
+			@Override
+			protected void applyTransformation(float interpolatedTime, Transformation t){
+				if(interpolatedTime == 1){
+					// v.setVisibility(VTodoiew.GONE);
+					v.getLayoutParams().height = firstChildHeight;
+					v.requestLayout();
+				}else{
+					v.getLayoutParams().height = initialHeight - (int)(initialHeight * interpolatedTime);
+					v.requestLayout();
+				}
+			}
+
+			@Override
+			public boolean willChangeBounds(){
+				return true;
+			}
+		};
+
+		// 1dp/ms
+		a.setDuration((int)(initialHeight / v.getContext().getResources().getDisplayMetrics().density));
+		v.startAnimation(a);
 	}
 
 	@Override

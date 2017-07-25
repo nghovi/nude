@@ -68,5 +68,5 @@ public class ClConst{
 	public static final String	API_TODO_LIST								= "/api/cl/todo/list";
 	public static final String	API_TODO_DETAIL								= "/api/cl/todo/detail";
 	public static final String	API_TODO_UPDATE								= "/api/cl/todo/update";
-
+	public static final String	API_TODO_DELETE								= "/api/cl/todo/delete";
 }

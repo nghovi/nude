@@ -1,6 +1,16 @@
 package trente.asia.calendar.services.todo;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.daimajia.swipe.SwipeLayout;
+
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,20 +19,12 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.daimajia.swipe.SwipeLayout;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-
+import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
+import asia.chiase.core.util.CCStringUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.fragments.AbstractClFragment;
@@ -46,6 +48,8 @@ public class TodoListFragment extends AbstractClFragment{
 	private WfDialog		dlgDeleteConfirm;
 	private LayoutInflater	inflater;
 	private SwipeLayout		swipeLayout;
+	private Date			today;
+	private Todo			selectedTodo;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -58,6 +62,7 @@ public class TodoListFragment extends AbstractClFragment{
 	@Override
 	public void initView(){
 		super.initView();
+		today = Calendar.getInstance().getTime();
 		initHeader(null, getString(R.string.todo_title), R.drawable.cl_action_add);
 		getView().findViewById(R.id.img_id_header_right_icon).setOnClickListener(this);
 		lnrUnfinished = (LinearLayout)getView().findViewById(R.id.lnr_unfinished_todo_containter);
@@ -65,32 +70,30 @@ public class TodoListFragment extends AbstractClFragment{
 		btnShowFinished = (Button)getView().findViewById(R.id.btn_fragment_todo_list_show_finished);
 		btnShowFinished.setOnClickListener(this);
 		inflater = LayoutInflater.from(activity);
-		todoList = new ArrayList<>();
-		todoList.add(new Todo());
-		todoList.add(new Todo());
-		todoList.add(new Todo());
-		todoList.add(new Todo());
-		buildTodos();
 	}
 
 	@Override
 	protected void initData(){
-		// loadTodoList();
+		loadTodoList();
 	}
 
 	private void loadTodoList(){
 		JSONObject jsonObject = new JSONObject();
-		try{
-			jsonObject.put("targetDateString", "2017/02/22");
-		}catch(JSONException e){
-			e.printStackTrace();
-		}
+		// try{
+		// jsonObject.put("targetDateString", "2017/02/22");
+		// }catch(JSONException e){
+		// e.printStackTrace();
+		// }
 		requestLoad(ClConst.API_TODO_LIST, jsonObject, true);
 
 	}
 
 	protected void successLoad(JSONObject response, String url){
-		todoList = CCJsonUtil.convertToModelList(response.optString("todos"), Todo.class);
+		todoList = CCJsonUtil.convertToModelList(response.optString("todoList"), Todo.class);
+		if(CCCollectionUtil.isEmpty(todoList)){
+			getView().findViewById(R.id.txt_todo_empty).setVisibility(View.VISIBLE);
+			getView().findViewById(R.id.scr_todo).setVisibility(View.GONE);
+		}
 		buildTodos();
 	}
 
@@ -104,14 +107,8 @@ public class TodoListFragment extends AbstractClFragment{
 
 	private void buildTodoItem(final Todo todo){
 		if(todo.isFinish){
-			View cell = inflater.inflate(R.layout.item_todo_finished, null);
-			TextView txtDate = (TextView)cell.findViewById(R.id.txt_item_todo_date);
-			TextView txtTitle = (TextView)cell.findViewById(R.id.txt_item_todo_title);
-			RadioButton radioButton = (RadioButton)cell.findViewById(R.id.radio);
-			radioButton.setChecked(true);
-			txtDate.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, CCDateUtil.makeDateCustom(todo.limitDate, WelfareConst.WF_DATE_TIME)));
-			txtTitle.setText(todo.name);
-			lnrFinished.addView(cell);
+			boolean atEnd = true;
+			buildFinishedTodoItem(todo, atEnd);
 		}else{
 			final SwipeLayout cell = (SwipeLayout)inflater.inflate(R.layout.item_todo_unfinished, null);
 			cell.getSurfaceView().setOnClickListener(new View.OnClickListener() {
@@ -168,7 +165,7 @@ public class TodoListFragment extends AbstractClFragment{
 
 				@Override
 				public void onClick(View v){
-					finishTodo(todo);
+					finishTodo(todo, true);
 				}
 			});
 
@@ -180,44 +177,77 @@ public class TodoListFragment extends AbstractClFragment{
 					showDeleteDialog(todo);
 				}
 			});
-
-			txtDate.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, CCDateUtil.makeDateCustom(todo.limitDate, WelfareConst.WF_DATE_TIME)));
+			if(CCStringUtil.isEmpty(todo.limitDate)){
+				txtTitle.setText(getString(R.string.no_deadline));
+			}else{
+				Date date = CCDateUtil.makeDateCustom(todo.limitDate, WelfareConst.WF_DATE_TIME);
+				if(CCDateUtil.compareDate(date, today, false) >= 0){
+					txtDate.setTextColor(Color.RED);
+				}
+				if(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, today).equals(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, date))){
+					txtDate.setText(getString(R.string.chiase_common_today));
+				}else{
+					txtDate.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_MM_DD, date));
+				}
+			}
 			txtTitle.setText(todo.name);
+			cell.setTag(lnrUnfinished.getChildCount());
 			lnrUnfinished.addView(cell);
 		}
 	}
 
-	private void finishTodo(Todo todo){
+	private void buildFinishedTodoItem(final Todo todo, boolean atEnd){
+		View cell = inflater.inflate(R.layout.item_todo_finished, null);
+		TextView txtDate = (TextView)cell.findViewById(R.id.txt_item_todo_date);
+		TextView txtTitle = (TextView)cell.findViewById(R.id.txt_item_todo_title);
+		RadioButton radioButton = (RadioButton)cell.findViewById(R.id.radio);
+		radioButton.setChecked(true);
+		radioButton.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v){
+				finishTodo(todo, false);
+			}
+		});
+		txtDate.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_MM_DD, CCDateUtil.makeDateCustom(todo.limitDate, WelfareConst.WF_DATE_TIME)));
+		txtTitle.setText(todo.name);
+		cell.setTag(todo.key);
+		if(atEnd){
+			lnrFinished.addView(cell);
+		}else{
+			lnrFinished.addView(cell, 0);
+		}
+	}
+
+	private void finishTodo(Todo todo, boolean isFinish){
+		this.selectedTodo = todo;
 		JSONObject jsonObject = new JSONObject();
 		try{
 			jsonObject.put("key", todo.key);
 			jsonObject.put("name", todo.name);
 			jsonObject.put("note", todo.note);
-			jsonObject.put("isFinish", true);
+			jsonObject.put("isFinish", isFinish);
 			jsonObject.put("limitDate", CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, Calendar.getInstance().getTime()));
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
 		requestUpdate(ClConst.API_TODO_UPDATE, jsonObject, true);
-		Toast.makeText(activity, "call api to update finish", Toast.LENGTH_LONG).show();
 	}
 
-	private void showDeleteDialog(Todo todo){
+	private void showDeleteDialog(final Todo todo){
 		if(dlgDeleteConfirm == null){
 			dlgDeleteConfirm = new WfDialog(activity);
 			dlgDeleteConfirm.setDialogTitleButton(getString(R.string.sure_to_delete), getString(R.string.chiase_common_ok), getString(R.string.wf_cancel), new View.OnClickListener() {
 
 				@Override
 				public void onClick(View v){
-					callDeleteApi();
+					callDeleteApi(todo);
 				}
 			});
 			dlgDeleteConfirm.setOnDismissListener(new DialogInterface.OnDismissListener() {
 
 				@Override
 				public void onDismiss(DialogInterface dialog){
-					//// TODO: 7/20/17 hide again
-					Toast.makeText(activity, "TODO HIDE DELETE BUTTON", Toast.LENGTH_LONG).show();
 					if(swipeLayout != null){
 						swipeLayout.close(true, true);
 					}
@@ -227,18 +257,15 @@ public class TodoListFragment extends AbstractClFragment{
 		dlgDeleteConfirm.show();
 	}
 
-	private void callDeleteApi(){
-		Toast.makeText(activity, "todo call api delete", Toast.LENGTH_LONG).show();
+	private void callDeleteApi(Todo todo){
 		JSONObject jsonObject = new JSONObject();
 		try{
-			// jsonObject.put("key", key);
-			// jsonObject.put("name", edtTitle.getText().toString());
-			// jsonObject.put("note", edtContent.getText().toString());
+			jsonObject.put("key", todo.key);
 			jsonObject.put("limitDate", CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, Calendar.getInstance().getTime()));
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
-		requestUpdate(ClConst.API_TODO_UPDATE, jsonObject, true);
+		requestUpdate(ClConst.API_TODO_DELETE, jsonObject, true);
 	}
 
 	private void gotoTodoDetail(Todo todo){
@@ -279,7 +306,13 @@ public class TodoListFragment extends AbstractClFragment{
 
 	@Override
 	protected void successUpdate(JSONObject response, String url){
-
+		if(ClConst.API_TODO_DELETE.equals(url)){
+			dlgDeleteConfirm.dismiss();
+		}
+		loadTodoList();
+		// View cell = lnrUnfinished.findViewWithTag(selectedTodo.key);
+		// lnrUnfinished.removeView(cell);
+		// buildFinishedTodoItem(selectedTodo, false);
 	}
 
 }

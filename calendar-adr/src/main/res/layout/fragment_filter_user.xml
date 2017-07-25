@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/wf_common_match"
+    android:orientation="vertical">
+
+    <include layout="@layout/view_common_header" />
+
+    <LinearLayout
+        style="@style/wf_common_item_linear2"
+        android:gravity="right">
+
+        <TextView
+            style="@style/wl_common_text"
+            android:layout_width="wrap_content"
+            android:text="@string/chiase_common_all" />
+
+        <CheckBox
+            android:id="@+id/cbx_id_all"
+            style="@style/wl_common_text2"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="@dimen/margin_10dp" />
+    </LinearLayout>
+
+    <ScrollView
+        style="@style/cs_common_match_wrap"
+        android:layout_weight="1">
+
+        <trente.asia.calendar.commons.views.FilterUserLinearLayout
+            android:id="@+id/lnr_id_user"
+            style="@style/cs_common_match_wrap"
+            android:orientation="vertical" />
+    </ScrollView>
+
+    <View style="@style/cs_common_divider" />
+
+
+    <include layout="@layout/view_common_footer" />
+
+</LinearLayout>

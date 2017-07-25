@@ -88,4 +88,7 @@
     <string name="hide_unfinished_task">Hide finished tasks</string>
     <string name="title">Title</string>
     <string name="note">Note</string>
+    <string name="no_deadline">期限なし</string>
+    <string name="tap_button_to_add">＋ボタンでタスクを追加</string>
+    <string name="this_month_todo">This month todo</string>
 </resources>

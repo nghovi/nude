@@ -7,8 +7,8 @@ package trente.asia.calendar.services.todo.model;
 public class Todo{
 
 	public String	key;
-	public String	name		= "Todo name";
-	public String note = "This is todo note";
+	public String	name;
+	public String	note;
 	public Boolean	isFinish	= false;
-	public String	limitDate	= "2017/07/07";
+	public String	limitDate;
 }

@@ -1,11 +1,58 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/cs_common_match_wrap"
-    android:background="@color/cl_cell_bg_color">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/wf_common_match"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/user_facility_view"
+        layout="@layout/view_user_facility_tabs" />
+
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/wf_common_match"
+        android:layout_weight="1"
+        android:background="@color/cl_cell_bg_color"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:id="@+id/lnr_calendar_container"
+            style="@style/wf_common_match"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+        </LinearLayout>
+
+
+    </ScrollView>
 
     <LinearLayout
-        android:id="@+id/lnr_calendar_container"
-        style="@style/cs_common_match_wrap"
-        android:orientation="vertical">
+        android:id="@+id/lnr_todos"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_44dp"
+        android:background="@drawable/shape_gray_border"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/margin_16dp"
+        android:paddingRight="@dimen/margin_16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/this_month_todo" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:padding="@dimen/margin_10dp"
+                android:src="@drawable/wf_file" />
+        </LinearLayout>
 
     </LinearLayout>
-</ScrollView>
+
+</LinearLayout>
