@@ -224,7 +224,6 @@ public class MypageFragment extends AbstractTCFragment{
 	private void saveStamps(JSONObject response){
 		List<StampCategoryModel> stampCategories = CCJsonUtil.convertToModelList(response.optString("stampCategories"), StampCategoryModel.class);
 		String lastUpdateDate = response.optString("lastUpdateDate");
-		log("categories = " + stampCategories.size());
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
 //		preferences.edit().putString(TcConst.MESSAGE_STAMP_LAST_UPDATE_DATE, lastUpdateDate).apply();
 

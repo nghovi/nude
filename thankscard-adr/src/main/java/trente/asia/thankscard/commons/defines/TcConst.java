@@ -30,12 +30,14 @@ public class TcConst{
 	public static final String	API_POST_GET_RECEIVER_DEPARTMENT_INFO	= "/api/thanks/getAllDeptNameForPost";
 	public static final String	API_POST_LIKE							= "/api/thanks/like";
 
-	public static String		PREF_TEMPLATE_ID						= "PREF_TEMPLATE_ID";
-	public static String		PREF_TEMPLATE_PATH						= "PREF_TEMPLATE_PATH";
-	public static String		PREF_POINT_BRONZE						= "PREF_POINT_BRONZE";
-	public static String		PREF_POINT_SILVER						= "PREF_POINT_SILVER";
-	public static String		PREF_POINT_GOLD							= "PREF_POINT_GOLD";
+	public static final String	PREF_TEMPLATE_ID						= "PREF_TEMPLATE_ID";
+	public static final String	PREF_TEMPLATE_PATH						= "PREF_TEMPLATE_PATH";
+	public static final String	PREF_POINT_BRONZE						= "PREF_POINT_BRONZE";
+	public static final String	PREF_POINT_SILVER						= "PREF_POINT_SILVER";
+	public static final String	PREF_POINT_GOLD							= "PREF_POINT_GOLD";
 
 	public static final String	MESSAGE_STAMP_LAST_UPDATE_DATE			= "MESSAGE_STAMP_LAST_UPDATE_DATE";
 	public static final String	API_MESSAGE_STAMP_CATEGORY_LIST			= "/api/system/stamp/category/list";
+
+	public static final float	FRAME_RATIO								= 1.78f;
 }

@@ -7,6 +7,7 @@ public class Template{
 
 	public String	templateId;
 	public String	templateUrl;
+	public String	templateType;
 
 	public Template(){
 	}

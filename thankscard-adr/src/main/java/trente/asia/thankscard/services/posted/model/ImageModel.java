@@ -9,9 +9,11 @@ import android.graphics.Paint;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.util.Log;
 
 import trente.asia.thankscard.R;
+import trente.asia.thankscard.commons.defines.TcConst;
 
 /**
  * Created by tien on 7/17/2017.
@@ -28,6 +30,8 @@ public class ImageModel extends AppCompatImageView{
 	private float[]	centerPoint	= new float[2];
 	private float	scale		= 1f;
 	private float	saveScale	= 1f;
+	private float	frameWidth;
+	private float	frameHeight;
 
 	public ImageModel(Context context){
 		super(context);
@@ -37,6 +41,23 @@ public class ImageModel extends AppCompatImageView{
 		super(context, attrs);
 	}
 
+	public String getPhotoLocationX(){
+		return String.valueOf(centerPoint[0] / frameWidth);
+	}
+
+	public String getPhotoLocationY(){
+		return String.valueOf(centerPoint[1] / frameHeight);
+	}
+
+	public String getPhotoScale(){
+		return String.valueOf(height * scale / frameHeight);
+	}
+
+	public void setFrameWidth(float frameWidth) {
+		this.frameWidth = frameWidth;
+		this.frameHeight = frameWidth / TcConst.FRAME_RATIO;
+	}
+
 	public void setImage(String imagePath){
 		bitmap = BitmapFactory.decodeFile(imagePath);
 		width = bitmap.getWidth();
@@ -44,12 +65,12 @@ public class ImageModel extends AppCompatImageView{
 		invalidate();
 	}
 
-	public void clearImage() {
+	public void clearImage(){
 		bitmap = null;
 		invalidate();
 	}
 
-	public boolean hasImage() {
+	public boolean hasImage(){
 		return bitmap != null;
 	}
 

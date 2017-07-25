@@ -197,7 +197,6 @@ public class TCDetailFragment extends AbstractPagerFragment{
 			txtDate.setVisibility(View.INVISIBLE);
 			txtTo.setVisibility(View.INVISIBLE);
 			txtFrom.setVisibility(View.INVISIBLE);
-
 		}else{
 			txtDate.setText(context.getResources().getString(R.string.fragment_tc_detail_date, postDateFormat));
 			txtTo.setText(context.getResources().getString(R.string.fragment_tc_detail_to, to));

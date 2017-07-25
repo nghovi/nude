@@ -378,7 +378,7 @@ public class WelfareUtil{
 			intent.putExtra("outputY", WelfareConst.PROFILE_SIZE_TB);
 			intent.putExtra("aspectX", 1);
 			intent.putExtra("aspectY", 1);
-			intent.putExtra("scale", true);
+			intent.putExtra("scale", false);
 			intent.putExtra("noFaceDetection", true);
 			intent.putExtra(MediaStore.EXTRA_OUTPUT, outputUri);
 			fragment.startActivityForResult(intent, WelfareConst.RequestCode.PHOTO_CROP);

@@ -10,12 +10,14 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -23,6 +25,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import asia.chiase.core.define.CCConst;
@@ -79,11 +82,15 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 	private RealmResults<StampCategoryModel>	stampCategories;
 	private StampAdapter						stampAdapter;
 	private Realm								mRealm;
+	private int									screenWidth;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		mRealm = Realm.getDefaultInstance();
+		DisplayMetrics displayMetrics = new DisplayMetrics();
+		getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+		screenWidth = displayMetrics.widthPixels;
 	}
 
 	@Override
@@ -132,6 +139,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 		binding.btnSend.setOnClickListener(this);
 		binding.lnrSelectSticker.setOnClickListener(this);
 		binding.lnrSelectPhoto.setOnClickListener(this);
+		binding.layoutPhoto.setFrameWidth(screenWidth);
 		binding.edtMessage.addTextChangedListener(new TextWatcher() {
 
 			@Override
@@ -276,13 +284,13 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 		}
 	}
 
-	private void showLayoutSticker() {
+	private void showLayoutSticker(){
 		binding.layoutSticker.setVisibility(View.VISIBLE);
 		binding.rltSelectDept.setVisibility(View.GONE);
 		binding.rltSelectUser.setVisibility(View.GONE);
 	}
 
-	private void closeLayoutSticker() {
+	private void closeLayoutSticker(){
 		binding.layoutSticker.setVisibility(View.GONE);
 		binding.rltSelectDept.setVisibility(View.VISIBLE);
 		binding.rltSelectUser.setVisibility(View.VISIBLE);
@@ -347,13 +355,14 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 		}
 	}
 
-	private void addSticker(String imagePath){
+	private void addSticker(StampModel stamp){
 		for(StickerModel sticker : stickers){
 			sticker.unselectSticker();
 		}
 		StickerModel stickerModel = new StickerModel(getContext());
-		stickerModel.setStickerPath(imagePath);
-		stickerModel.key = stickers.size();
+		stickerModel.setStickerPath(BuildConfig.HOST + stamp.stampPath);
+		stickerModel.key = stamp.key;
+		stickerModel.setFrameWidth(screenWidth);
 		stickerModel.setCallback(this);
 		if(canSendPhoto){
 			binding.lnrBody.addView(stickerModel);
@@ -375,7 +384,8 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 			if(data != null){
 				uri = data.getData();
 				long date = System.currentTimeMillis();
-				String filename = WelfareConst.FilesName.CAMERA_TEMP_FILE_NAME + String.valueOf(date) + WelfareConst.FilesName.CAMERA_TEMP_FILE_EXT;
+				String filename = WelfareConst.FilesName.CAMERA_TEMP_FILE_NAME + String.valueOf(date) +
+						WelfareConst.FilesName.CAMERA_TEMP_FILE_EXT;
 				String desPath = TCUtil.getFilesFolderPath() + filename;
 				mImagePath = WelfareUtil.getImagePath(activity, uri, true, desPath);
 				Uri uri1 = AndroidUtil.getUriFromFileInternal(activity, new File(mImagePath));
@@ -454,11 +464,38 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 			jsonObject.put("receiverId", member.key);
 			jsonObject.put("message", binding.edtMessage.getText().toString());
 			jsonObject.put("isSecret", isSecret);
+
+			JSONArray jsonStickers = new JSONArray();
+			for (StickerModel sticker : stickers) {
+				JSONObject jsonSticker = new JSONObject();
+				jsonSticker.put("key", sticker.key);
+				jsonSticker.put("locationX", sticker.getLocationX());
+				jsonSticker.put("locationY", sticker.getLocationY());
+				jsonSticker.put("scale", sticker.getScale());
+				jsonSticker.put("degree", sticker.getDegree());
+				jsonStickers.put(jsonSticker);
+			}
+			jsonObject.put("stickerListString", jsonStickers.toString());
+
+			if (canSendPhoto) {
+				jsonObject.put("templateType", "PH");
+				jsonObject.put("photoLocationX", binding.layoutPhoto.getPhotoLocationX());
+				jsonObject.put("photoLocationY", binding.layoutPhoto.getPhotoLocationY());
+				jsonObject.put("photoScale", binding.layoutPhoto.getPhotoScale());
+			} else {
+				jsonObject.put("templateType", "NM");
+			}
 		}catch(JSONException ex){
 			ex.printStackTrace();
 		}
 
-		requestUpdate(TcConst.API_POST_NEW_CARD, jsonObject, true);
+		if (canSendPhoto) {
+			HashMap<String, File> photo = new HashMap<>();
+			photo.put("photoFile", new File(mImageUri.getPath()));
+			requestUpload(TcConst.API_POST_NEW_CARD, jsonObject, photo, true);
+		} else {
+			requestUpdate(TcConst.API_POST_NEW_CARD, jsonObject, true);
+		}
 	}
 
 	@Override
@@ -467,6 +504,15 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 			requestPostNewCardSuccess(response);
 		}else{
 			super.successUpdate(response, url);
+		}
+	}
+
+	@Override
+	protected void successUpload(JSONObject response, String url) {
+		if (TcConst.API_POST_NEW_CARD.equals(url)) {
+			log(response.toString());
+		} else {
+			super.successUpload(response, url);
 		}
 	}
 
@@ -512,7 +558,6 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 	public void onSelectCardDone(Template card){
 		this.template = card;
 		buildTemplate();
-
 	}
 
 	@Override
@@ -533,9 +578,9 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 	public void onStickerClick(float x, float y, StickerModel sticker){
 		for(StickerModel stickerModel : stickers){
 			if(!sticker.equals(stickerModel)){
-				if(x > stickerModel.lowX && x < stickerModel.highX && y > stickerModel.lowY && y < stickerModel.highY){
+				if (x > stickerModel.lowX && x < stickerModel.highX && y > stickerModel.lowY && y < stickerModel.highY){
 					stickerModel.selectSticker();
-				}else{
+				} else {
 					stickerModel.unselectSticker();
 				}
 			}
@@ -590,7 +635,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 	@Override
 	public void onStampClick(StampModel stamp){
 		closeLayoutSticker();
-		addSticker(BuildConfig.HOST + stamp.stampPath);
+		addSticker(stamp);
 	}
 
 	@Override

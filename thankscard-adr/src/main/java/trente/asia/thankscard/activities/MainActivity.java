@@ -2,6 +2,11 @@ package trente.asia.thankscard.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import asia.chiase.core.util.CCStringUtil;
 import io.realm.Realm;
@@ -54,5 +59,9 @@ public class MainActivity extends WelfareActivity{
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data){
 		super.onActivityResult(requestCode, resultCode, data);
+	}
+
+	private void log(String msg) {
+		Log.e("MainActivity", msg);
 	}
 }

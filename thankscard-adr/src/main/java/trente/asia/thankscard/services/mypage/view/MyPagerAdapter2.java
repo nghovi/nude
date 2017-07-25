@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 
 import android.content.Context;
+import android.support.percent.PercentLayoutHelper;
+import android.support.percent.PercentRelativeLayout;
 import android.support.v4.view.PagerAdapter;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
@@ -11,7 +13,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.google.android.gms.vision.text.Line;
 
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
@@ -19,6 +25,7 @@ import trente.asia.thankscard.BuildConfig;
 import trente.asia.thankscard.R;
 import trente.asia.thankscard.services.common.model.HistoryModel;
 import trente.asia.welfare.adr.define.WelfareConst;
+import trente.asia.welfare.adr.utils.WelfareUtil;
 import trente.asia.welfare.adr.utils.WfPicassoHelper;
 
 /**
@@ -41,6 +48,7 @@ public class MyPagerAdapter2 extends PagerAdapter{
 		public TextView		txtMessage;
 		public ImageView	imgTemplate;
 		public ImageView	imgSecret;
+		public LinearLayout lnrMessage;
 
 		public HistoryViewHolder(View view){
 			txtTo = (TextView)view.findViewById(R.id.txt_tc_detail_to);
@@ -50,6 +58,7 @@ public class MyPagerAdapter2 extends PagerAdapter{
 			txtMessage = (TextView)view.findViewById(R.id.txt_tc_detail_message);
 			imgTemplate = (ImageView)view.findViewById(R.id.img_item_thanks_card_frame);
 			imgSecret = (ImageView)view.findViewById(R.id.img_secret);
+			lnrMessage = (LinearLayout) view.findViewById(R.id.lnr_thanks_card_frame_container);
 		}
 	}
 
@@ -123,7 +132,20 @@ public class MyPagerAdapter2 extends PagerAdapter{
 		}
 		container.addView(view);
 
+		if ("NM".equals(model.templateType)) {
+			setLayoutMessageCenter(viewHolder.lnrMessage);
+		} else {
+
+		}
 		return view;
+	}
+
+	private void setLayoutMessageCenter(LinearLayout lnrMessage){
+		PercentRelativeLayout.LayoutParams params = (PercentRelativeLayout.LayoutParams) lnrMessage.getLayoutParams();
+		params.addRule(RelativeLayout.CENTER_IN_PARENT);
+		params.width = ViewGroup.LayoutParams.MATCH_PARENT;
+		params.getPercentLayoutInfo().widthPercent = 1f;
+		params.setMargins(WelfareUtil.dpToPx(30), WelfareUtil.dpToPx(20), WelfareUtil.dpToPx(30), WelfareUtil.dpToPx(20));
 	}
 
 	private void log(String msg) {

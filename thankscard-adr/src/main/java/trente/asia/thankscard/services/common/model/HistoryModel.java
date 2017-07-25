@@ -2,6 +2,8 @@ package trente.asia.thankscard.services.common.model;
 
 import java.util.List;
 
+import trente.asia.thankscard.services.posted.model.ApiStickerModel;
+import trente.asia.welfare.adr.models.AttachmentModel;
 import trente.asia.welfare.adr.models.LikeModel;
 
 /**
@@ -9,21 +11,27 @@ import trente.asia.welfare.adr.models.LikeModel;
  */
 public class HistoryModel{
 
-	public Template			template;
-	public String			message;
-	public String			loginUserId;
-	public String			posterId;
-	public String			posterName;
-	public String			receiverName;
-	public String			receiverId;
-	public String			postDate;
-	public String			categoryId;
-	public String			deleteFlag;
-	public List<LikeModel>	likeInfo;
-	public String			cateogryId;
-	public String			key;
-	public String			posterAvatarPath;
-	public boolean			isSecret;
+	public Template					template;
+	public String					message;
+	public String					loginUserId;
+	public String					posterId;
+	public String					posterName;
+	public String					receiverName;
+	public String					receiverId;
+	public String					postDate;
+	public String					categoryId;
+	public String					deleteFlag;
+	public List<LikeModel>			likeInfo;
+	public String					cateogryId;
+	public String					key;
+	public String					posterAvatarPath;
+	public boolean					isSecret;
+	public List<ApiStickerModel>	stickers;
+	public String					templateType;
+	public String					photoLocationX;
+	public String					photoLocationY;
+	public String					photoScale;
+	public AttachmentModel			attachment;
 
 	public void setTemplate(Template template){
 		this.template = template;

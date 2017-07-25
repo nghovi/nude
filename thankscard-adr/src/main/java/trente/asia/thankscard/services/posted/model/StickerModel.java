@@ -21,9 +21,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
-import java.io.File;
-
 import trente.asia.thankscard.R;
+import trente.asia.thankscard.commons.defines.TcConst;
 
 /**
  * Created by on 11/14/2016.
@@ -31,12 +30,13 @@ import trente.asia.thankscard.R;
 
 public class StickerModel extends AppCompatImageView{
 
-	public int							key;
+	public String						key;
 	public float						rotation		= 0;
 	public float						scaleValue		= 1f;
 	public int							translateX		= 0;
 	public int							translateY		= 0;
-	public static String STICKER_PATH = "http://www.unixstickers.com/image/data/stickers/gruntjs/Grunt.sh.png";
+	private float						frameWidth		= 0;
+	private float						frameHeight		= 0;
 
 	private Bitmap						bitmapSticker, mainBitmap, rotateBitmap, scaleBitmap, deleteBitmap;
 	private Paint						paint			= new Paint();
@@ -68,7 +68,32 @@ public class StickerModel extends AppCompatImageView{
 		super(context);
 	}
 
-	public void setStickerPath(String stickerPath) {
+	public String getKey(){
+		return key;
+	}
+
+	public String getLocationX(){
+		return String.valueOf((centerPoint[0] + params.leftMargin) / frameWidth);
+	}
+
+	public String getLocationY(){
+		return String.valueOf((centerPoint[1] + params.topMargin) / frameHeight);
+	}
+
+	public String getScale(){
+		return String.valueOf(heightScale / frameHeight);
+	}
+
+	public String getDegree(){
+		return String.valueOf(rotation);
+	}
+
+	public void setFrameWidth(float screenWidth){
+		this.frameWidth = screenWidth;
+		this.frameHeight = screenWidth / TcConst.FRAME_RATIO;
+	}
+
+	public void setStickerPath(String stickerPath){
 		Picasso.with(getContext()).load(stickerPath).into(new Target() {
 
 			@Override
@@ -89,7 +114,7 @@ public class StickerModel extends AppCompatImageView{
 		});
 	}
 
-	public void setImagePath(String path) {
+	public void setImagePath(String path){
 		bitmapSticker = BitmapFactory.decodeFile(path);
 		init();
 	}
@@ -330,11 +355,11 @@ public class StickerModel extends AppCompatImageView{
 				if(!isTouch){
 					if(touch == 4){
 						deleteSticker();
-					} else {
+					}else{
 						if(callback != null){
-							if (drawBorder) {
+							if(drawBorder){
 								callback.onStickerClick(oldX, oldY, StickerModel.this);
-							} else {
+							}else{
 								callback.onStickerClick(params.leftMargin + oldX, params.topMargin + oldY, StickerModel.this);
 							}
 						}

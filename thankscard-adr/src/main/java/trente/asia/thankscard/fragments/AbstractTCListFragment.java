@@ -30,6 +30,7 @@ import trente.asia.thankscard.services.common.model.HistoryModel;
 import trente.asia.thankscard.services.common.model.Template;
 import trente.asia.thankscard.services.posted.PostTCFragment;
 import trente.asia.thankscard.services.posted.ThanksCardEditFragment;
+import trente.asia.thankscard.services.posted.model.ApiStickerModel;
 import trente.asia.thankscard.services.rank.view.TCTabLinearLayout;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.models.DeptModel;
@@ -258,10 +259,23 @@ public abstract class AbstractTCListFragment extends AbstractTCFragment implemen
 			btnPost.setEnabled(false);
 		}
 		templates = CCJsonUtil.convertToModelList(response.optString("templates"), Template.class);
+		for (HistoryModel history : mLstHistory) {
+			if (!history.stickers.isEmpty()) {
+				for (ApiStickerModel stickerModel : history.stickers) {
+					log(stickerModel.locationX);
+					log(stickerModel.degree);
+					log(stickerModel.stickerId);
+				}
+			}
+		}
 
 		// appendUserNames();
 		appendDepartmentDeptAll();
 		buildSpinners();
+	}
+
+	private void log(String msg) {
+		Log.e("AbstractTC", msg);
 	}
 
 	// private void appendUserNames(){
