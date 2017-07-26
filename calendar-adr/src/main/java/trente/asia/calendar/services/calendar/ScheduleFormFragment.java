@@ -491,7 +491,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment {
             if (schedule != null && !CCStringUtil.isEmpty(schedule.key)) {
                 jsonObject.put("key", schedule.key);
             }
-            jsonObject.put("joinUsers", lnrUserList.formatUserList());
+            jsonObject.put("listUsers", lnrUserList.formatUserList());
             jsonObject.put("isAllDay", swtAllDay.isChecked());
 
             ScheduleRepeatModel scheduleRepeatModel = repeatDialog.getRepeatModel();

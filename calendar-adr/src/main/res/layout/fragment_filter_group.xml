@@ -19,28 +19,27 @@
         android:layout_height="wrap_content" />
 
     <LinearLayout
-        android:id="@+id/lnr_select_group"
         style="@style/wf_common_item_linear2"
-        android:gravity="center_vertical">
+        android:gravity="left">
 
         <TextView
             style="@style/wl_common_text"
             android:layout_width="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/select_from_group" />
+            android:text="@string/chiase_common_all" />
 
-        <ImageView
+        <CheckBox
+            android:id="@+id/cbx_id_all"
+            style="@style/wl_common_text2"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/pn_icon" />
+            android:layout_marginLeft="@dimen/margin_10dp" />
     </LinearLayout>
 
     <ScrollView
         style="@style/cs_common_match_wrap"
         android:layout_weight="1">
 
-        <trente.asia.calendar.commons.views.FilterUserLinearLayout
-            android:id="@+id/lnr_id_user"
+        <trente.asia.calendar.commons.views.FilterDeptLinearLayout
+            android:id="@+id/lnr_id_filter_dept"
             style="@style/cs_common_match_wrap"
             android:orientation="vertical" />
     </ScrollView>

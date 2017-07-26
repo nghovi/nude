@@ -7,11 +7,12 @@ import java.util.List;
  *
  * @author TrungND
  */
+@com.bluelinelabs.logansquare.annotation.JsonObject(fieldDetectionPolicy = com.bluelinelabs.logansquare.annotation.JsonObject.FieldDetectionPolicy.NONPRIVATE_FIELDS)
 public class GroupModel{
 
 	public String			key;
 	public String			groupName;
-	public List<UserModel>	joinUsers;
+	public List<UserModel>	listUsers;
 
 	public String getKey(){
 		return key;
@@ -29,11 +30,11 @@ public class GroupModel{
 		this.groupName = groupName;
 	}
 
-	public List<UserModel> getJoinUsers(){
-		return joinUsers;
+	public List<UserModel> getListUsers(){
+		return listUsers;
 	}
 
-	public void setJoinUsers(List<UserModel> joinUsers){
-		this.joinUsers = joinUsers;
+	public void setListUsers(List<UserModel> listUsers){
+		this.listUsers = listUsers;
 	}
 }

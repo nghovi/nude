@@ -5,6 +5,7 @@ import org.json.JSONObject;
 
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,9 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.bluelinelabs.logansquare.LoganSquare;
+
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -49,7 +53,9 @@ public class TodoDetailFragment extends AbstractClFragment{
 
 	@Override
 	protected void initData(){
-		loadTodoDetail();
+		if (todo != null) {
+			loadTodoDetail();
+		}
 	}
 
 	private void loadTodoDetail(){
@@ -101,6 +107,7 @@ public class TodoDetailFragment extends AbstractClFragment{
 			@Override
 			public void onDateSet(DatePicker view, int year, int month, int dayOfMonth){
 				String startDateStr = year + "/" + CCFormatUtil.formatZero(month + 1) + "/" + CCFormatUtil.formatZero(dayOfMonth);
+				txtDeadline.setTextColor(Color.BLACK);
 				txtDeadline.setText(startDateStr);
 			}
 		}, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
@@ -108,18 +115,28 @@ public class TodoDetailFragment extends AbstractClFragment{
 
 			@Override
 			public void onCancel(DialogInterface dialog){
-				txtDeadline.setText("");
+				txtDeadline.setTextColor(Color.GRAY);
+				txtDeadline.setText(getString(R.string.deadline));
 			}
 		});
 	}
 
 	private void buildLayout(JSONObject response){
-		todo = CCJsonUtil.convertToModel(response.optString("detail"), Todo.class);
-		if(todo != null){
-			edtTitle.setText(todo.name);
-			edtContent.setText(todo.note);
-			txtDeadline.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, CCDateUtil.makeDateCustom(todo.limitDate, WelfareConst.WF_DATE_TIME)));
-		}else{
+		try {
+			todo = LoganSquare.parse(response.optString("detail"), Todo.class);
+			if(todo != null){
+				edtTitle.setText(todo.name);
+				edtContent.setText(todo.note);
+				txtDeadline.setTextColor(Color.BLACK);
+				if(CCStringUtil.isEmpty(todo.limitDate)){
+					txtDeadline.setText(getString(R.string.no_deadline));
+				}else{
+					txtDeadline.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, CCDateUtil.makeDateCustom(todo.limitDate, WelfareConst.WF_DATE_TIME)));
+				}
+			}else{
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 

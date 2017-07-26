@@ -1,5 +1,6 @@
 package trente.asia.calendar.services.todo;
 
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.bluelinelabs.logansquare.LoganSquare;
 import com.daimajia.swipe.SwipeLayout;
 
 import android.content.DialogInterface;
@@ -89,14 +91,18 @@ public class TodoListFragment extends AbstractClFragment{
 	}
 
 	protected void successLoad(JSONObject response, String url){
-		todoList = CCJsonUtil.convertToModelList(response.optString("todoList"), Todo.class);
-		if(CCCollectionUtil.isEmpty(todoList)){
-			getView().findViewById(R.id.txt_todo_empty).setVisibility(View.VISIBLE);
-			getView().findViewById(R.id.scr_todo).setVisibility(View.GONE);
-		}else{
-			getView().findViewById(R.id.txt_todo_empty).setVisibility(View.GONE);
-			getView().findViewById(R.id.scr_todo).setVisibility(View.VISIBLE);
-			buildTodos();
+		try {
+			todoList = LoganSquare.parseList(response.optString("todoList"), Todo.class);
+			if(CCCollectionUtil.isEmpty(todoList)){
+				getView().findViewById(R.id.txt_todo_empty).setVisibility(View.VISIBLE);
+				getView().findViewById(R.id.scr_todo).setVisibility(View.GONE);
+			}else{
+				getView().findViewById(R.id.txt_todo_empty).setVisibility(View.GONE);
+				getView().findViewById(R.id.scr_todo).setVisibility(View.VISIBLE);
+				buildTodos();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -171,7 +177,7 @@ public class TodoListFragment extends AbstractClFragment{
 					finishTodo(todo, false);
 				}
 			});
-			radioButton.setChecked(true);
+			// radioButton.setChecked(true);
 
 			// Button btnDelete = (Button)cell.findViewById(R.id.btn_id_delete);
 			// btnDelete.setOnClickListener(new View.OnClickListener() {

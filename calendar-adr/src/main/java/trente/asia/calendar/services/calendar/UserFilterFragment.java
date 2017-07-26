@@ -1,5 +1,6 @@
 package trente.asia.calendar.services.calendar;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -19,8 +20,11 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.bluelinelabs.logansquare.LoganSquare;
+
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
+import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.view.layout.CheckableLinearLayout;
 import trente.asia.calendar.R;
@@ -31,6 +35,8 @@ import trente.asia.calendar.commons.views.FilterUserLinearLayout;
 import trente.asia.calendar.commons.views.UserListLinearLayout;
 import trente.asia.calendar.services.todo.model.Todo;
 import trente.asia.welfare.adr.define.WelfareConst;
+import trente.asia.welfare.adr.models.DeptModel;
+import trente.asia.welfare.adr.models.GroupModel;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
 
@@ -42,9 +48,9 @@ import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
 public class UserFilterFragment extends AbstractClFragment{
 
 	private FilterUserLinearLayout	mLnrFilterUser;
-	private List<UserModel>			mLstUser;
-	private CheckBox				mCbxAll;
-	private List<UserModel>			mSelectedUsers;
+	private List<UserModel>			users;
+	private List<GroupModel>		groups;
+	private List<DeptModel>			depts;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -56,45 +62,55 @@ public class UserFilterFragment extends AbstractClFragment{
 
 	@Override
 	protected void initData(){
-		// loadTodoDetail();
+		loadFilterData();
+	}
+
+	private void loadFilterData(){
+		JSONObject jsonObject = new JSONObject();
+		requestLoad(ClConst.API_FILTER, jsonObject, true);
+	}
+
+	protected void successLoad(JSONObject response, String url){
+		super.successLoad(response, url);
+		try{
+			users = LoganSquare.parseList(response.optString("users"), UserModel.class);
+			groups = LoganSquare.parseList(response.optString("groups"), GroupModel.class);
+			depts = LoganSquare.parseList(response.optString("depts"), DeptModel.class);
+			List<UserModel> selectedUsers = ClUtil.getTargetUserList(users, prefAccUtil.get(ClConst.PREF_ACTIVE_USER_LIST));
+			this.mLnrFilterUser.addUserList(users, selectedUsers, null);
+		}catch(IOException e){
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void initView(){
 		super.initView();
-		initHeader(R.drawable.wf_back_white, getString(R.string.todo_title), R.drawable.cl_action_save);
-		mCbxAll = (CheckBox)getView().findViewById(R.id.cbx_id_all);
+		initHeader(R.drawable.wf_back_white, getString(R.string.select_user), R.drawable.cl_action_save);
+		getView().findViewById(R.id.img_id_header_right_icon).setOnClickListener(this);
+		getView().findViewById(R.id.lnr_select_group).setOnClickListener(this);
 		mLnrFilterUser = (FilterUserLinearLayout)getView().findViewById(R.id.lnr_id_user);
-		mCbxAll.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v){
-				clickCheckbox();
-			}
-		});
-		this.mLnrFilterUser.addUserList(this.mLstUser, this.mSelectedUsers, mCbxAll);
 	}
 
-	private void clickCheckbox(){
-		boolean isChecked = mCbxAll.isChecked();
-		for(CheckableLinearLayout checkableLinearLayout : mLnrFilterUser.lstCheckable){
-			checkableLinearLayout.setChecked(isChecked);
-		}
-	}
-
+	// // TODO: 7/26/17 save selected user into pref is not good esp when there are a lot of user
 	public void saveActiveUserList(){
+		List<UserModel> lstSelectedUser = setSelectedUserList();
+		PreferencesAccountUtil prefAccUtil = new PreferencesAccountUtil(activity);
+		prefAccUtil.set(ClConst.PREF_ACTIVE_USER_LIST, ClUtil.convertUserList2String(lstSelectedUser));
+	}
+
+	private List<UserModel> setSelectedUserList() {
 		List<UserModel> lstSelectedUser = new ArrayList<>();
 		for(int index = 0; index < mLnrFilterUser.lstCheckable.size(); index++){
 			CheckableLinearLayout checkableLinearLayout = mLnrFilterUser.lstCheckable.get(index);
 			if(checkableLinearLayout.isChecked()){
-				UserModel userModel = this.mLstUser.get(index);
+				UserModel userModel = users.get(index);
 				lstSelectedUser.add(userModel);
 			}
 		}
-
-		PreferencesAccountUtil prefAccUtil = new PreferencesAccountUtil(activity);
-		prefAccUtil.set(ClConst.PREF_ACTIVE_USER_LIST, ClUtil.convertUserList2String(lstSelectedUser));
+		return lstSelectedUser;
 	}
+
 
 	@Override
 	public int getFooterItemId(){
@@ -107,17 +123,26 @@ public class UserFilterFragment extends AbstractClFragment{
 		case R.id.img_id_header_right_icon:
 			onClickSaveIcon();
 			break;
+		case R.id.lnr_select_group:
+			gotoGroupFilterFragment();
 		default:
 			break;
 		}
+	}
+
+	private void gotoGroupFilterFragment(){
+		GroupFilterFragment groupFilterFragment = new GroupFilterFragment();
+		groupFilterFragment.setGroups(groups);
+		groupFilterFragment.setDepts(depts);
+		groupFilterFragment.setMyGroups(groups);
+		groupFilterFragment.setUsers(users);
+		List<UserModel> lstSelectedUser = setSelectedUserList();
+		groupFilterFragment.setSelectedUsers(lstSelectedUser);
+		gotoFragment(groupFilterFragment);
 	}
 
 	private void onClickSaveIcon(){
 		saveActiveUserList();
 	}
 
-	public void setData(ArrayList<UserModel> userModels, ArrayList<UserModel> selectedUsers){
-		mLstUser = userModels;
-		mSelectedUsers = selectedUsers;
-	}
 }

@@ -46,13 +46,13 @@
                 android:paddingTop="@dimen/margin_10dp">
 
                 <TextView
+                    android:id="@+id/txt_deadline"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/deadline" />
 
                 <TextView
-                    android:id="@+id/txt_deadline"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
@@ -75,7 +75,7 @@
                 android:background="@android:color/transparent"
                 android:gravity="top|left"
                 android:hint="@string/note"
-                android:lines="4"
+                android:lines="10"
                 android:paddingBottom="@dimen/margin_10dp"
                 android:paddingLeft="@dimen/margin_16dp"
                 android:paddingRight="@dimen/margin_16dp"

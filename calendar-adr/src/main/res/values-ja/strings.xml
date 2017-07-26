@@ -91,4 +91,7 @@
     <string name="no_deadline">期限なし</string>
     <string name="tap_button_to_add">＋ボタンでタスクを追加</string>
     <string name="this_month_todo">This month todo</string>
+    <string name="select_from_group">グループから選択</string>
+    <string name="select_user">Select user</string>
+    <string name="select_group">Select group</string>
 </resources>

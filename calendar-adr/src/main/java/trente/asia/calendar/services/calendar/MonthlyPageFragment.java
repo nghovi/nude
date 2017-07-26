@@ -6,12 +6,12 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
-import java.util.zip.Inflater;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -23,7 +23,6 @@ import android.view.animation.Transformation;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import asia.chiase.core.util.CCBooleanUtil;
 import asia.chiase.core.util.CCCollectionUtil;
@@ -36,6 +35,7 @@ import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.dialogs.DailySummaryDialog;
+import trente.asia.calendar.commons.dialogs.TodoDialog;
 import trente.asia.calendar.commons.fragments.AbstractClFragment;
 import trente.asia.calendar.commons.utils.ClUtil;
 import trente.asia.calendar.commons.views.UserFacilityView;
@@ -47,6 +47,7 @@ import trente.asia.calendar.services.calendar.view.MonthlyCalendarDayView;
 import trente.asia.calendar.services.calendar.view.MonthlyCalendarRowView;
 import trente.asia.calendar.services.todo.model.Todo;
 import trente.asia.welfare.adr.define.WelfareConst;
+import trente.asia.welfare.adr.dialog.WfDialog;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 
@@ -65,6 +66,8 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 	private boolean							isExpanded		= false;
 	private LayoutInflater					inflater;
 	private Todo							selectedTodo;
+	private TodoDialog						dlgTodoDetail;
+	private WfDialog						dlgDeleteConfirm;
 
 	@Override
 	protected void initView(){
@@ -82,7 +85,7 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 
 			@Override
 			public void onBtnFacilityClicked(){
-
+				gotoRoomFilterFragment();
 			}
 		});
 
@@ -102,15 +105,18 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 		});
 	}
 
+	private void gotoRoomFilterFragment() {
+		//<></>
+	}
+
 	private void gotoUserFilterFragment(){
 		UserFilterFragment userFilterFragment = new UserFilterFragment();
-		userFilterFragment.setData(new ArrayList<UserModel>(), new ArrayList<UserModel>());
 		((AbstractClFragment)getParentFragment()).gotoFragment(userFilterFragment);
 	}
 
 	@Override
 	protected void successUpdate(JSONObject response, String url){
-		if(ClConst.API_TODO_UPDATE.equals(url)){
+		if(ClConst.API_TODO_UPDATE.equals(url) || ClConst.API_TODO_DELETE.equals(url)){
 			View cell = lnrTodo.findViewWithTag(selectedTodo.key);
 			lnrTodo.removeView(cell);
 		}else{
@@ -124,8 +130,9 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 			final Todo todo = todos.get(i);
 			View cell = inflater.inflate(R.layout.item_todo_unfinished_month, null);
 			cell.setOnClickListener(new View.OnClickListener() {
+
 				@Override
-				public void onClick(View v) {
+				public void onClick(View v){
 					showTodoDetailDialog(todo);
 				}
 			});
@@ -159,8 +166,50 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 		}
 	}
 
-	private void showTodoDetailDialog(Todo todo) {
+	private void showTodoDetailDialog(final Todo todo){
+		if(dlgTodoDetail == null || !dlgTodoDetail.isShowing()){
+			dlgTodoDetail = new TodoDialog(activity, todo, new View.OnClickListener() {
 
+				@Override
+				public void onClick(View v){
+					showDeleteDialog(todo);
+				}
+			}, new View.OnClickListener() {
+
+				@Override
+				public void onClick(View v){
+					finishTodo(todo);
+				}
+			});
+
+			dlgTodoDetail.show();
+		}
+	}
+
+	private void showDeleteDialog(final Todo todo){
+		if(dlgDeleteConfirm == null || !dlgDeleteConfirm.isShowing()){
+			dlgDeleteConfirm = new WfDialog(activity);
+			dlgDeleteConfirm.setDialogTitleButton(getString(R.string.sure_to_delete), getString(R.string.chiase_common_ok), getString(R.string.wf_cancel), new View.OnClickListener() {
+
+				@Override
+				public void onClick(View v){
+					callDeleteApi(todo);
+				}
+			});
+			dlgDeleteConfirm.show();
+		}
+
+	}
+
+	private void callDeleteApi(Todo todo){
+		selectedTodo = todo;
+		JSONObject jsonObject = new JSONObject();
+		try{
+			jsonObject.put("key", todo.key);
+		}catch(JSONException e){
+			e.printStackTrace();
+		}
+		requestUpdate(ClConst.API_TODO_DELETE, jsonObject, true);
 	}
 
 	private void finishTodo(Todo todo){

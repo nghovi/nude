@@ -113,7 +113,9 @@ public class FilterUserLinearLayout extends LinearLayout{
 							judgeCheckAll();
 						}else{
 							holder.imgCheck.setVisibility(View.INVISIBLE);
-							cbxAll.setChecked(false);
+							if(mCbxAll != null){
+								cbxAll.setChecked(false);
+							}
 						}
 					}
 				});
@@ -131,6 +133,8 @@ public class FilterUserLinearLayout extends LinearLayout{
 				isChecked = false;
 			}
 		}
-		mCbxAll.setChecked(isChecked);
+		if(mCbxAll != null){
+			mCbxAll.setChecked(isChecked);
+		}
 	}
 }
