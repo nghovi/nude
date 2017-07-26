@@ -58,28 +58,29 @@ import trente.asia.welfare.adr.dialog.WfDialog;
  */
 public class UserActualFragment extends AbstractDRFragment{
 
-	private static final int			LABEL_COUNT	= 25;
-	private static Map<Float, String>	formattedValuesMap;
-	private DatePickerDialog			datePickerDialog;
-	private TextView					txtSelectedDate;
-	private DRGroupHeader				drGroupHeader;
-	private WfDialog					wfDialog;
-	private List<GroupKpi>				groupKpiList;
-	LineChart							lineChart;
-	private LinearLayout				lnrInfo;
-	private GroupKpi					selectedGroup;
-	private TextView					txtPeriod;
-	private TextView					txtGoal;
-	private TextView					txtActualTotal;
-	private TextView					txtAchievementRate;
-	private EditText					edtActualToday;
-	private Personal					personal;
-	private ScrollView					scrollView;
-	private TextView					txtUnit;
-	private int							selectedGroupPosition;
-	private LinearLayout				lnrChartContainer;
-	private String						groupId;
-	private String						targetDate;
+	private static final int	POINT_PER_PAGE	= 7;
+	// private static final int LABEL_COUNT = 25;
+	// private static Map<Float, String> formattedValuesMap;
+	private DatePickerDialog	datePickerDialog;
+	private TextView			txtSelectedDate;
+	private DRGroupHeader		drGroupHeader;
+	private WfDialog			wfDialog;
+	private List<GroupKpi>		groupKpiList;
+	LineChart					lineChart;
+	private LinearLayout		lnrInfo;
+	private GroupKpi			selectedGroup;
+	private TextView			txtPeriod;
+	private TextView			txtGoal;
+	private TextView			txtActualTotal;
+	private TextView			txtAchievementRate;
+	private EditText			edtActualToday;
+	private Personal			personal;
+	private ScrollView			scrollView;
+	private TextView			txtUnit;
+	private int					selectedGroupPosition;
+	private LinearLayout		lnrChartContainer;
+	private String				groupId;
+	private String				targetDate;
 	private DRDialog			drDialog;
 
 	@Override
@@ -189,32 +190,20 @@ public class UserActualFragment extends AbstractDRFragment{
 		lnrChartContainer = (LinearLayout)getView().findViewById(R.id.lnr_chart_container);
 	}
 
-	public static void buildChart(Context context, LineChart lineChart, List<Progress> progressList, GroupKpi group, Personal personal){
+	public static void buildChart(Context context, LineChart lineChart, final List<Progress> progressList, GroupKpi group, Personal personal){
 		if(!CCCollectionUtil.isEmpty(progressList)){
 			Progress progressFirst = new Progress();
 			progressFirst.checkPointDate = group.startDate;
 			progressFirst.achievementOver = "0";
 			progressList.add(0, progressFirst);
-			formattedValuesMap = new HashMap<>();
 			List<Entry> entries = new ArrayList<Entry>();
 			Progress maxProgress = progressList.get(progressList.size() - 1);
 
-			Date lastCheckPointDate = CCDateUtil.makeDateCustom(maxProgress.checkPointDate, WelfareConst.WF_DATE_TIME_DATE);
-			Date firstCheckPointDate = CCDateUtil.makeDateCustom(progressList.get(0).checkPointDate, WelfareConst.WF_DATE_TIME_DATE);
-			long maxDistanceDay = (lastCheckPointDate.getTime() - firstCheckPointDate.getTime()) / (24 * 60 * 60 * 1000);
-
-			int pageNum = progressList.size() / 7 + 1;
-			float maxVisibleRange = maxDistanceDay / pageNum;
-			float labelDistance = Math.round(maxVisibleRange / LABEL_COUNT);
-
+			int i = 0;
 			for(Progress progress : progressList){
-				Date checkPointDate = CCDateUtil.makeDateCustom(progress.checkPointDate, WelfareConst.WF_DATE_TIME_DATE);
-				float xDay = (checkPointDate.getTime() - firstCheckPointDate.getTime()) / (24 * 60 * 60 * 1000);
-
-				int labelAxisValue = (int)((Math.round(xDay / labelDistance)) * labelDistance);
-				formattedValuesMap.put((float)labelAxisValue, progress.checkPointDate.split(" ")[0]);
-				Entry t = new Entry(xDay, Float.valueOf(progress.achievementOver));
+				Entry t = new Entry(i, Float.valueOf(progress.achievementOver));
 				entries.add(t);
+				i++;
 			}
 			LineDataSet dataSet = new LineDataSet(entries, ""); // add entries to dataset
 			//// TODO: 7/17/17 comment out
@@ -230,24 +219,19 @@ public class UserActualFragment extends AbstractDRFragment{
 			lineData.addDataSet(dataSet);
 
 			lineChart.setData(lineData);
-			// lineChart.setVisibleYRangeMaximum(200f, YAxis.AxisDependency.LEFT);
-			// lineChart.setVisibleYRangeMaximum(200f, YAxis.AxisDependency.RIGHT);
-
 			IAxisValueFormatter formatter = new IAxisValueFormatter() {
 
 				@Override
 				public String getFormattedValue(float value, AxisBase axis){
-					// return String.valueOf(value);
-					String dateStr = formattedValuesMap.get(value);
-					return CCStringUtil.isEmpty(dateStr) ? "" : dateStr;
+					Progress progress = progressList.get((int)value);
+					return CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, CCDateUtil.makeDateCustom(progress.checkPointDate, WelfareConst.WF_DATE_TIME_DATE));
 				}
-
 			};
 
 			XAxis xAxis = lineChart.getXAxis();
 			xAxis.setEnabled(true);
 			xAxis.setGranularityEnabled(false);
-			xAxis.setLabelCount(LABEL_COUNT, false);
+			// xAxis.setLabelCount(LABEL_COUNT, false);
 			xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
 			xAxis.setTextSize(10f);
 			xAxis.setTextColor(Color.BLACK);
@@ -255,13 +239,13 @@ public class UserActualFragment extends AbstractDRFragment{
 			xAxis.setDrawGridLines(false);
 			xAxis.setGranularity(1f); // minimum axis-step (interval) is 1
 			xAxis.setValueFormatter(formatter);
-			// xAxis.setAvoidFirstLastClipping(true);
+			xAxis.setAvoidFirstLastClipping(true);
 			xAxis.setLabelRotationAngle(-50f);
 			xAxis.setTextSize(7);
-			xAxis.setAxisMaximum(maxDistanceDay + labelDistance);
+			// xAxis.setAxisMaximum(maxDistanceDay + labelDistance);
 
 			int goal = Integer.valueOf(personal == null ? group.goal : personal.goal);
-			float maxYValue = Math.max(Float.valueOf(maxProgress.achievementOver) * 1.12f, goal * 1.62f);
+			float maxYValue = Math.max(Float.valueOf(maxProgress.achievementOver) * 1.2f, goal * 1.7f);
 
 			YAxis yAxisLeft = lineChart.getAxisLeft();
 			yAxisLeft.setDrawAxisLine(false);
@@ -359,7 +343,7 @@ public class UserActualFragment extends AbstractDRFragment{
 			Description description = new Description();
 			description.setText(context.getResources().getString(R.string.text_period));
 			lineChart.setDescription(description);
-			lineChart.setVisibleXRangeMaximum(maxVisibleRange);
+			lineChart.setVisibleXRangeMaximum(POINT_PER_PAGE);
 			//// TODO: 7/17/17 scroll to X
 			// lineChart.moveViewToX(////);
 			Legend legend = lineChart.getLegend();
@@ -394,39 +378,38 @@ public class UserActualFragment extends AbstractDRFragment{
 		datePickerDialog.show();
 	}
 
-    private void onClickSaveButton() {
-        String dateStr = txtSelectedDate.getText().toString();
-        String todayActual = edtActualToday.getText().toString().replaceAll("[^\\d.]", "");
+	private void onClickSaveButton(){
+		String dateStr = txtSelectedDate.getText().toString();
+		String todayActual = edtActualToday.getText().toString().replaceAll("[^\\d.]", "");
 
-        if (!KpiUtil.isCheckSize(selectedGroup.unit, todayActual)) {
+		if(!KpiUtil.isCheckSize(selectedGroup.unit, todayActual)){
 
-            showValidationDialog(getString(R.string.action_num_over_max, KpiUtil.getMax(selectedGroup.unit)));
+			showValidationDialog(getString(R.string.action_num_over_max, KpiUtil.getMax(selectedGroup.unit)));
 
-        } else {
+		}else{
 
-            JSONObject jsonObject = new JSONObject();
-            try {
-                jsonObject.put("targetDate", dateStr);
-                jsonObject.put("todayActual", todayActual);
-                jsonObject.put("targetGroupId", selectedGroup.key);
+			JSONObject jsonObject = new JSONObject();
+			try{
+				jsonObject.put("targetDate", dateStr);
+				jsonObject.put("todayActual", todayActual);
+				jsonObject.put("targetGroupId", selectedGroup.key);
 
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            requestUpdate(DRConst.API_KPI_PERSONAL_UPDATE, jsonObject, true);
+			}catch(JSONException e){
+				e.printStackTrace();
+			}
+			requestUpdate(DRConst.API_KPI_PERSONAL_UPDATE, jsonObject, true);
 
-        }
+		}
 
+	}
 
-    }
-
-    private void showValidationDialog(String message) {
-        if (drDialog == null) {
-            drDialog = new DRDialog(activity);
-            drDialog.setDialogConfirm(message, getString(R.string.chiase_common_ok), null, null, null);
-        }
-        drDialog.show();
-    }
+	private void showValidationDialog(String message){
+		if(drDialog == null){
+			drDialog = new DRDialog(activity);
+			drDialog.setDialogConfirm(message, getString(R.string.chiase_common_ok), null, null, null);
+		}
+		drDialog.show();
+	}
 
 	@Override
 	protected void successUpdate(JSONObject response, String url){

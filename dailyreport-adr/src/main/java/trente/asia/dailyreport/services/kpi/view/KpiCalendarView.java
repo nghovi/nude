@@ -1,6 +1,7 @@
 package trente.asia.dailyreport.services.kpi.view;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
@@ -44,6 +45,10 @@ public class KpiCalendarView extends RelativeLayout{
 
 	public KpiCalendarView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes){
 		super(context, attrs, defStyleAttr, defStyleRes);
+	}
+
+	public Calendar getSelectedDate(){
+		return adapter.getSelectedDate();
 	}
 
 	public void setCalendar(Calendar calendar){
