@@ -71,4 +71,5 @@ public class ClConst{
 	public static final String	API_TODO_DELETE								= "/api/cl/todo/delete";
 
 	public static final String	API_FILTER									= "/api/cl/filter";
+	public static final String	PREF_ACTIVE_ROOM							= "PREF_ACTIVE_ROOM";
 }

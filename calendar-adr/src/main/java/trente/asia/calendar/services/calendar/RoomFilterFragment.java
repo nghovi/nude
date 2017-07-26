@@ -1,6 +1,8 @@
 package trente.asia.calendar.services.calendar;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import android.os.Bundle;
@@ -12,6 +14,10 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
+import com.bluelinelabs.logansquare.LoganSquare;
+
+import org.json.JSONObject;
+
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.activity.ChiaseActivity;
@@ -21,7 +27,7 @@ import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.fragments.AbstractClFragment;
 import trente.asia.calendar.commons.utils.ClUtil;
 import trente.asia.calendar.commons.views.FilterDeptLinearLayout;
-import trente.asia.welfare.adr.activity.WelfareActivity;
+import trente.asia.calendar.services.calendar.model.RoomModel;
 import trente.asia.welfare.adr.models.DeptModel;
 import trente.asia.welfare.adr.models.GroupModel;
 import trente.asia.welfare.adr.models.UserModel;
@@ -32,23 +38,45 @@ import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
  *
  * @author VietNH
  */
-public class GroupFilterFragment extends AbstractClFragment{
+public class RoomFilterFragment extends AbstractClFragment{
 
 	private FilterDeptLinearLayout	mLnrFilterDept;
-	private CheckBox				mCbxAll;
 	private List<UserModel>			mSelectedUsers;
 	private List<GroupModel>		groups;
 	private List<DeptModel>			depts;
 	private List<GroupModel>		myGroups;
 	private List<UserModel>			users;
 	private List<UserModel>			selectedUsers;
+	private List<RoomModel>			rooms;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 		if(mRootView == null){
-			mRootView = inflater.inflate(R.layout.fragment_filter_group, container, false);
+			mRootView = inflater.inflate(R.layout.fragment_filter_room, container, false);
 		}
 		return mRootView;
+	}
+
+	@Override
+	protected void initData(){
+		loadFilterData();
+	}
+
+	private void loadFilterData(){
+		JSONObject jsonObject = new JSONObject();
+		requestLoad(ClConst.API_FILTER, jsonObject, true);
+	}
+
+	protected void successLoad(JSONObject response, String url){
+		super.successLoad(response, url);
+		try{
+			rooms = LoganSquare.parseList(response.optString("rooms"), RoomModel.class);
+			List<RoomModel> selectedRooms = getSelectedRooms(rooms);
+			this.mLnrFilterDept.fillInRoomData(rooms, selectedRooms, null);
+
+		}catch(IOException e){
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -56,17 +84,9 @@ public class GroupFilterFragment extends AbstractClFragment{
 		super.initView();
 		initHeader(R.drawable.wf_back_white, getString(R.string.select_group), R.drawable.cl_action_save);
 		getView().findViewById(R.id.img_id_header_right_icon).setOnClickListener(this);
-		mCbxAll = (CheckBox)getView().findViewById(R.id.cbx_id_all);
 		mLnrFilterDept = (FilterDeptLinearLayout)getView().findViewById(R.id.lnr_id_filter_dept);
-		mCbxAll.setOnClickListener(new View.OnClickListener() {
 
-			@Override
-			public void onClick(View v){
-				clickCheckbox();
-			}
-		});
-
-		((EditText)getView().findViewById(R.id.edt_filter_search_group)).addTextChangedListener(new TextWatcher() {
+		((EditText)getView().findViewById(R.id.edt_filter_search_room)).addTextChangedListener(new TextWatcher() {
 
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count, int after){
@@ -84,89 +104,38 @@ public class GroupFilterFragment extends AbstractClFragment{
 			}
 		});
 
-		List<GroupModel> selectedMyGroups = getSelectedGroups(selectedUsers, myGroups);
-		List<GroupModel> selectedGroups = getSelectedGroups(selectedUsers, groups);
-		List<DeptModel> selectedDepts = getSelectedDepts(selectedUsers);
-		this.mLnrFilterDept.fillInData(myGroups, selectedMyGroups, groups, selectedGroups, depts, selectedDepts, mCbxAll);
-
 	}
 
-	private List<DeptModel> getSelectedDepts(List<UserModel> selectedUsers){
-		List<DeptModel> result = new ArrayList<>();
-		if(!CCCollectionUtil.isEmpty(selectedUsers)){
-			for(DeptModel deptModel : depts){
-				boolean isSelected = true;
-				if(CCCollectionUtil.isEmpty(deptModel.members)){
-					isSelected = false;
-				}else{
-					for(UserModel userModel : deptModel.members){
-						if(!FilterDeptLinearLayout.checkSelectedUser(userModel, selectedUsers)){
-							isSelected = false;
-							break;
-						}
-					}
-				}
-				if(isSelected){
-					result.add(deptModel);
-				}
+	private List<RoomModel> getSelectedRooms(List<RoomModel> rooms){
+
+		String targetRoomData = prefAccUtil.get(ClConst.PREF_ACTIVE_ROOM);
+
+		List<RoomModel> result = new ArrayList<>();
+		if(CCStringUtil.isEmpty(targetRoomData) || CCCollectionUtil.isEmpty(rooms)){
+			return result;
+		}
+
+		List<String> targetRoomListId = Arrays.asList(targetRoomData.split(","));
+		for(RoomModel room : rooms){
+			if(targetRoomListId.contains(room.key)){
+				result.add(room);
 			}
 		}
-
 		return result;
-	}
-
-	private List<GroupModel> getSelectedGroups(List<UserModel> selectedUsers, List<GroupModel> groupModels){
-
-		List<GroupModel> result = new ArrayList<>();
-		if(!CCCollectionUtil.isEmpty(selectedUsers)){
-			for(GroupModel groupModel : groupModels){
-				boolean isSelected = true;
-				if(CCCollectionUtil.isEmpty(groupModel.listUsers)){
-					isSelected = false;
-				}else{
-					for(UserModel userModel : groupModel.listUsers){
-						if(!FilterDeptLinearLayout.checkSelectedUser(userModel, selectedUsers)){
-							isSelected = false;
-							break;
-						}
-					}
-				}
-				if(isSelected){
-					result.add(groupModel);
-				}
-			}
-		}
-
-		return result;
-	}
-
-	private void clickCheckbox(){
-		boolean isChecked = mCbxAll.isChecked();
-		for(CheckableLinearLayout checkableLinearLayout : mLnrFilterDept.lstCheckable){
-			checkableLinearLayout.setChecked(isChecked);
-		}
 	}
 
 	public void saveActiveUserList(){
-		List<UserModel> lstSelectedUser = new ArrayList<>();
+		List<RoomModel> selectedRooms = new ArrayList<>();
 		for(int index = 0; index < mLnrFilterDept.lstCheckable.size(); index++){
 			CheckableLinearLayout checkableLinearLayout = mLnrFilterDept.lstCheckable.get(index);
 			if(checkableLinearLayout.isChecked()){
-				List<UserModel> userModels = (List<UserModel>)checkableLinearLayout.getTag();
-				for(UserModel user : userModels){
-					if(!FilterDeptLinearLayout.checkSelectedUser(user, lstSelectedUser)){
-						lstSelectedUser.add(user);
-					}
-				}
+				selectedRooms.add(rooms.get(index));
 			}
 		}
 
 		PreferencesAccountUtil prefAccUtil = new PreferencesAccountUtil(activity);
-		prefAccUtil.set(ClConst.PREF_ACTIVE_USER_LIST, ClUtil.convertUserList2String(lstSelectedUser));
-		((ChiaseActivity)activity).isInitData = true;
-		getFragmentManager().popBackStack();
-		getFragmentManager().popBackStack();
-
+		prefAccUtil.set(ClConst.PREF_ACTIVE_ROOM, ClUtil.convertRoomList2String(selectedRooms));
+		onClickBackBtn();
 	}
 
 	@Override

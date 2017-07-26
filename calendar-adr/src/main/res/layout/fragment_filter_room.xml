@@ -6,7 +6,7 @@
     <include layout="@layout/view_common_header" />
 
     <trente.asia.android.view.ChiaseEditText
-        android:id="@+id/edt_filter_search_group"
+        android:id="@+id/edt_filter_search_room"
         android:layout_marginBottom="@dimen/margin_10dp"
         android:layout_marginLeft="@dimen/margin_16dp"
         android:layout_marginRight="@dimen/margin_16dp"
@@ -18,22 +18,6 @@
         android:hint="@string/chiase_common_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-
-    <LinearLayout
-        style="@style/wf_common_item_linear2"
-        android:gravity="left">
-
-        <TextView
-            style="@style/wl_common_text"
-            android:layout_width="wrap_content"
-            android:text="@string/chiase_common_all" />
-
-        <CheckBox
-            android:id="@+id/cbx_id_all"
-            style="@style/wl_common_text2"
-            android:layout_width="wrap_content"
-            android:layout_marginLeft="@dimen/margin_10dp" />
-    </LinearLayout>
 
     <ScrollView
         style="@style/cs_common_match_wrap"

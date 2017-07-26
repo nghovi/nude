@@ -12,6 +12,8 @@ import org.json.JSONObject;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -90,6 +92,23 @@ public class UserFilterFragment extends AbstractClFragment{
 		getView().findViewById(R.id.img_id_header_right_icon).setOnClickListener(this);
 		getView().findViewById(R.id.lnr_select_group).setOnClickListener(this);
 		mLnrFilterUser = (FilterUserLinearLayout)getView().findViewById(R.id.lnr_id_user);
+		((EditText)getView().findViewById(R.id.edt_filter_search)).addTextChangedListener(new TextWatcher() {
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after){
+
+			}
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count){
+
+			}
+
+			@Override
+			public void afterTextChanged(Editable s){
+				mLnrFilterUser.search(s.toString());
+			}
+		});
 	}
 
 	// // TODO: 7/26/17 save selected user into pref is not good esp when there are a lot of user
@@ -97,9 +116,10 @@ public class UserFilterFragment extends AbstractClFragment{
 		List<UserModel> lstSelectedUser = setSelectedUserList();
 		PreferencesAccountUtil prefAccUtil = new PreferencesAccountUtil(activity);
 		prefAccUtil.set(ClConst.PREF_ACTIVE_USER_LIST, ClUtil.convertUserList2String(lstSelectedUser));
+		onClickBackBtn();
 	}
 
-	private List<UserModel> setSelectedUserList() {
+	private List<UserModel> setSelectedUserList(){
 		List<UserModel> lstSelectedUser = new ArrayList<>();
 		for(int index = 0; index < mLnrFilterUser.lstCheckable.size(); index++){
 			CheckableLinearLayout checkableLinearLayout = mLnrFilterUser.lstCheckable.get(index);
@@ -110,7 +130,6 @@ public class UserFilterFragment extends AbstractClFragment{
 		}
 		return lstSelectedUser;
 	}
-
 
 	@Override
 	public int getFooterItemId(){

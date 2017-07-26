@@ -105,8 +105,9 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 		});
 	}
 
-	private void gotoRoomFilterFragment() {
-		//<></>
+	private void gotoRoomFilterFragment(){
+		RoomFilterFragment roomFilterFragment = new RoomFilterFragment();
+		((AbstractClFragment)getParentFragment()).gotoFragment(roomFilterFragment);
 	}
 
 	private void gotoUserFilterFragment(){

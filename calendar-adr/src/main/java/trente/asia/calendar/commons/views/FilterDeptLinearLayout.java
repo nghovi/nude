@@ -18,6 +18,7 @@ import asia.chiase.core.util.CCCollectionUtil;
 import trente.asia.android.listener.CsOnCheckedChangeListener;
 import trente.asia.android.view.layout.CheckableLinearLayout;
 import trente.asia.calendar.R;
+import trente.asia.calendar.services.calendar.model.RoomModel;
 import trente.asia.welfare.adr.models.DeptModel;
 import trente.asia.welfare.adr.models.GroupModel;
 import trente.asia.welfare.adr.models.UserModel;
@@ -30,7 +31,21 @@ import trente.asia.welfare.adr.models.UserModel;
 
 public class FilterDeptLinearLayout extends LinearLayout{
 
-	public List<CheckableLinearLayout> lstCheckable;
+	public List<CheckableLinearLayout>	lstCheckable;
+	private List<String>				names	= new ArrayList<>();
+
+	public void search(String s){
+		int i = 0;
+		for(CheckableLinearLayout checkableLinearLayout : lstCheckable){
+			String name = names.get(i);
+			if(!name.contains(s)){
+				checkableLinearLayout.setVisibility(View.GONE);
+			}else{
+				checkableLinearLayout.setVisibility(View.VISIBLE);
+			}
+			i++;
+		}
+	}
 
 	private class ViewHolder{
 
@@ -80,6 +95,29 @@ public class FilterDeptLinearLayout extends LinearLayout{
 			}
 		}
 		judgeCheckAll(cbxAll);
+	}
+
+	public void fillInRoomData(List<RoomModel> rooms, List<RoomModel> selectedRooms, final CheckBox cbxAll){
+
+		lstCheckable = new ArrayList<>();
+		this.removeAllViews();
+
+		if(!CCCollectionUtil.isEmpty(rooms)){
+			for(RoomModel roomModel : rooms){
+				addItem(roomModel.name, cbxAll, checkSelectedRoom(roomModel, selectedRooms), null);
+			}
+		}
+
+		judgeCheckAll(cbxAll);
+	}
+
+	private boolean checkSelectedRoom(RoomModel roomModel, List<RoomModel> selectedRooms){
+		for(RoomModel room : selectedRooms){
+			if(room.key.equals(roomModel.key)){
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public static boolean checkSelectedDept(DeptModel deptModel, List<DeptModel> deptModels){
@@ -142,12 +180,15 @@ public class FilterDeptLinearLayout extends LinearLayout{
 					judgeCheckAll(cbxAll);
 				}else{
 					holder.imgCheck.setVisibility(View.INVISIBLE);
-					cbxAll.setChecked(false);
+					if(cbxAll != null){
+						cbxAll.setChecked(false);
+					}
 				}
 			}
 		});
 		holder.lnrItem.setTag(userModels);
 		this.lstCheckable.add(holder.lnrItem);
+		this.names.add(name);
 		this.addView(userView);
 	}
 
@@ -158,6 +199,8 @@ public class FilterDeptLinearLayout extends LinearLayout{
 				isChecked = false;
 			}
 		}
-		checkBox.setChecked(isChecked);
+		if(checkBox != null){
+			checkBox.setChecked(isChecked);
+		}
 	}
 }

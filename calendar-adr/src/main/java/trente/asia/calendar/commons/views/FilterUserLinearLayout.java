@@ -38,6 +38,20 @@ public class FilterUserLinearLayout extends LinearLayout{
 
 	public List<CheckableLinearLayout>	lstCheckable;
 	private CheckBox					mCbxAll;
+	private List<UserModel>				lstUser;
+
+	public void search(String s){
+		int i = 0;
+		for(CheckableLinearLayout checkableLinearLayout : lstCheckable){
+			UserModel userModel = lstUser.get(i);
+			if(!userModel.userName.contains(s)){
+				checkableLinearLayout.setVisibility(View.GONE);
+			}else{
+				checkableLinearLayout.setVisibility(View.VISIBLE);
+			}
+			i++;
+		}
+	}
 
 	private class ViewHolder{
 
@@ -67,7 +81,7 @@ public class FilterUserLinearLayout extends LinearLayout{
 	}
 
 	public void addUserList(List<UserModel> lstUser, List<UserModel> lstSelectedUser, final CheckBox cbxAll){
-		// this.lstUser = lstUser;
+		this.lstUser = lstUser;
 		this.lstSelectedUser = lstSelectedUser;
 		lstCheckable = new ArrayList<>();
 		this.mCbxAll = cbxAll;

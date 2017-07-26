@@ -6,6 +6,7 @@
     <include layout="@layout/view_common_header" />
 
     <trente.asia.android.view.ChiaseEditText
+        android:id="@+id/edt_filter_search"
         android:layout_marginBottom="@dimen/margin_10dp"
         android:layout_marginLeft="@dimen/margin_16dp"
         android:layout_marginRight="@dimen/margin_16dp"
