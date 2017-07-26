@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 
 import asia.chiase.core.util.CCCollectionUtil;
+import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.activity.ChiaseActivity;
 import trente.asia.android.view.layout.CheckableLinearLayout;
 import trente.asia.calendar.R;
@@ -74,10 +75,14 @@ public class GroupFilterFragment extends AbstractClFragment{
 		if(!CCCollectionUtil.isEmpty(selectedUsers)){
 			for(DeptModel deptModel : depts){
 				boolean isSelected = true;
-				for(UserModel userModel : deptModel.members){
-					if(!FilterDeptLinearLayout.checkSelectedUser(userModel, selectedUsers)){
-						isSelected = false;
-						break;
+				if(CCCollectionUtil.isEmpty(deptModel.members)){
+					isSelected = false;
+				}else{
+					for(UserModel userModel : deptModel.members){
+						if(!FilterDeptLinearLayout.checkSelectedUser(userModel, selectedUsers)){
+							isSelected = false;
+							break;
+						}
 					}
 				}
 				if(isSelected){
@@ -95,10 +100,14 @@ public class GroupFilterFragment extends AbstractClFragment{
 		if(!CCCollectionUtil.isEmpty(selectedUsers)){
 			for(GroupModel groupModel : groupModels){
 				boolean isSelected = true;
-				for(UserModel userModel : groupModel.listUsers){
-					if(!FilterDeptLinearLayout.checkSelectedUser(userModel, selectedUsers)){
-						isSelected = false;
-						break;
+				if(CCCollectionUtil.isEmpty(groupModel.listUsers)){
+					isSelected = false;
+				}else{
+					for(UserModel userModel : groupModel.listUsers){
+						if(!FilterDeptLinearLayout.checkSelectedUser(userModel, selectedUsers)){
+							isSelected = false;
+							break;
+						}
 					}
 				}
 				if(isSelected){
