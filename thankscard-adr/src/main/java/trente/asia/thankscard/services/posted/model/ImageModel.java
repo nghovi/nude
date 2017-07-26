@@ -14,6 +14,7 @@ import android.util.Log;
 
 import trente.asia.thankscard.R;
 import trente.asia.thankscard.commons.defines.TcConst;
+import trente.asia.welfare.adr.pref.PreferencesSystemUtil;
 
 /**
  * Created by tien on 7/17/2017.
@@ -39,6 +40,9 @@ public class ImageModel extends AppCompatImageView{
 
 	public ImageModel(Context context, @Nullable AttributeSet attrs){
 		super(context, attrs);
+		PreferencesSystemUtil preference = new PreferencesSystemUtil(context);
+		this.frameWidth = Float.valueOf(preference.get(TcConst.PREF_FRAME_WIDTH));
+		this.frameHeight = Float.valueOf(preference.get(TcConst.PREF_FRAME_HEIGHT));
 	}
 
 	public String getPhotoLocationX(){
@@ -51,11 +55,6 @@ public class ImageModel extends AppCompatImageView{
 
 	public String getPhotoScale(){
 		return String.valueOf(height * scale / frameHeight);
-	}
-
-	public void setFrameWidth(float frameWidth) {
-		this.frameWidth = frameWidth;
-		this.frameHeight = frameWidth / TcConst.FRAME_RATIO;
 	}
 
 	public void setImage(String imagePath){

@@ -21,9 +21,15 @@ import com.google.android.gms.vision.text.Line;
 
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
+import io.realm.Realm;
 import trente.asia.thankscard.BuildConfig;
 import trente.asia.thankscard.R;
 import trente.asia.thankscard.services.common.model.HistoryModel;
+import trente.asia.thankscard.services.mypage.model.StampModel;
+import trente.asia.thankscard.services.posted.model.ApiStickerModel;
+import trente.asia.thankscard.services.posted.model.ImageShow;
+import trente.asia.thankscard.services.posted.model.StickerModel;
+import trente.asia.thankscard.services.posted.model.StickerShow;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.utils.WelfareUtil;
 import trente.asia.welfare.adr.utils.WfPicassoHelper;
@@ -37,18 +43,20 @@ public class MyPagerAdapter2 extends PagerAdapter{
 	private Context				mContext;
 	private List<HistoryModel>	lstHistory;
 	private LayoutInflater		mInflater;
-	private boolean hideMessage;
+	private boolean				hideMessage;
 
 	public class HistoryViewHolder{
 
-		public TextView		txtTo;
-		public TextView		txtFrom;
-		public TextView		txtDate;
+		public TextView			txtTo;
+		public TextView			txtFrom;
+		public TextView			txtDate;
 
-		public TextView		txtMessage;
-		public ImageView	imgTemplate;
-		public ImageView	imgSecret;
-		public LinearLayout lnrMessage;
+		public TextView			txtMessage;
+		public ImageView		imgTemplate;
+		public ImageView		imgSecret;
+		public LinearLayout		lnrMessage;
+		public ImageShow		imageShow;
+		public RelativeLayout	layoutCard;
 
 		public HistoryViewHolder(View view){
 			txtTo = (TextView)view.findViewById(R.id.txt_tc_detail_to);
@@ -58,7 +66,9 @@ public class MyPagerAdapter2 extends PagerAdapter{
 			txtMessage = (TextView)view.findViewById(R.id.txt_tc_detail_message);
 			imgTemplate = (ImageView)view.findViewById(R.id.img_item_thanks_card_frame);
 			imgSecret = (ImageView)view.findViewById(R.id.img_secret);
-			lnrMessage = (LinearLayout) view.findViewById(R.id.lnr_thanks_card_frame_container);
+			lnrMessage = (LinearLayout)view.findViewById(R.id.lnr_thanks_card_frame_container);
+			imageShow = (ImageShow)view.findViewById(R.id.layout_photo);
+			layoutCard = (RelativeLayout) view.findViewById(R.id.layout_card);
 		}
 	}
 
@@ -73,7 +83,7 @@ public class MyPagerAdapter2 extends PagerAdapter{
 		notifyDataSetChanged();
 	}
 
-	public void hideMessage() {
+	public void hideMessage(){
 		hideMessage = true;
 		notifyDataSetChanged();
 	}
@@ -87,7 +97,7 @@ public class MyPagerAdapter2 extends PagerAdapter{
 	}
 
 	@Override
-	public int getItemPosition(Object object) {
+	public int getItemPosition(Object object){
 		return POSITION_NONE;
 	}
 
@@ -123,32 +133,42 @@ public class MyPagerAdapter2 extends PagerAdapter{
 			WfPicassoHelper.loadImage2(mContext, BuildConfig.HOST, viewHolder.imgTemplate, model.template.templateUrl);
 		}
 
-		if (hideMessage) {
+		if(hideMessage){
 			viewHolder.txtMessage.setVisibility(View.INVISIBLE);
 			viewHolder.imgSecret.setVisibility(View.VISIBLE);
-		} else {
+		}else{
 			viewHolder.txtMessage.setVisibility(View.VISIBLE);
 			viewHolder.imgSecret.setVisibility(View.INVISIBLE);
 		}
 		container.addView(view);
 
-		if ("NM".equals(model.templateType)) {
+		if("NM".equals(model.templateType)){
 			setLayoutMessageCenter(viewHolder.lnrMessage);
-		} else {
-
+		}else{
+			if(model.attachment != null && model.attachment.fileUrl != null){
+				viewHolder.imageShow.restoreImage(model.attachment.fileUrl, Float.valueOf(model.photoLocationX),
+						Float.valueOf(model.photoLocationY), Float.valueOf(model.photoScale));
+			}
+		}
+		for (ApiStickerModel sticker : model.stickers) {
+			StampModel stamp = StampModel.getStamp(Realm.getDefaultInstance(), sticker.stickerId);
+			StickerShow stickerShow = new StickerShow(mContext);
+			viewHolder.layoutCard.addView(stickerShow);
+			stickerShow.restoreSticker(stamp.stampPath, Float.valueOf(sticker.locationX), Float.valueOf(sticker.locationY),
+					Float.valueOf(sticker.scale), Float.valueOf(sticker.degree));
 		}
 		return view;
 	}
 
 	private void setLayoutMessageCenter(LinearLayout lnrMessage){
-		PercentRelativeLayout.LayoutParams params = (PercentRelativeLayout.LayoutParams) lnrMessage.getLayoutParams();
+		PercentRelativeLayout.LayoutParams params = (PercentRelativeLayout.LayoutParams)lnrMessage.getLayoutParams();
 		params.addRule(RelativeLayout.CENTER_IN_PARENT);
 		params.width = ViewGroup.LayoutParams.MATCH_PARENT;
 		params.getPercentLayoutInfo().widthPercent = 1f;
 		params.setMargins(WelfareUtil.dpToPx(30), WelfareUtil.dpToPx(20), WelfareUtil.dpToPx(30), WelfareUtil.dpToPx(20));
 	}
 
-	private void log(String msg) {
+	private void log(String msg){
 		Log.e("MyPager", msg);
 	}
 

@@ -5,13 +5,17 @@
     android:gravity="center_vertical|center_horizontal"
     android:orientation="vertical">
 
-
     <android.support.percent.PercentRelativeLayout
+        android:id="@+id/layout_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="vertical"
         android:elevation="1dp">
+        <trente.asia.thankscard.services.posted.model.ImageShow
+            android:id="@+id/layout_photo"
+            android:layout_height="match_parent"
+            app:layout_widthPercent="50%"/>
 
         <ImageView
             android:id="@+id/img_item_thanks_card_frame"

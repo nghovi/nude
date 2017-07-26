@@ -2,6 +2,7 @@ package trente.asia.thankscard.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -11,6 +12,7 @@ import org.json.JSONObject;
 import asia.chiase.core.util.CCStringUtil;
 import io.realm.Realm;
 import trente.asia.thankscard.R;
+import trente.asia.thankscard.commons.defines.TcConst;
 import trente.asia.thankscard.services.common.TCDetailFragment;
 import trente.asia.thankscard.services.common.TcLogInFragment;
 import trente.asia.thankscard.services.common.model.HistoryModel;
@@ -19,6 +21,7 @@ import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
+import trente.asia.welfare.adr.pref.PreferencesSystemUtil;
 
 public class MainActivity extends WelfareActivity{
 
@@ -38,6 +41,12 @@ public class MainActivity extends WelfareActivity{
 				addFragment(new MypageFragment());
 			}
 		}
+
+		DisplayMetrics displayMetrics = new DisplayMetrics();
+		getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+		PreferencesSystemUtil preference = new PreferencesSystemUtil(this);
+		preference.set(TcConst.PREF_FRAME_WIDTH, String.valueOf(displayMetrics.widthPixels));
+		preference.set(TcConst.PREF_FRAME_HEIGHT, String.valueOf(displayMetrics.widthPixels / TcConst.FRAME_RATIO));
 	}
 
 	private void showFragment(Bundle mExtras){

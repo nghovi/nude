@@ -10,7 +10,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -69,6 +68,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 	public final int							MAX_LETTER		= 75;
 
 	private List<Template>						templates;
+	private List<Template>						photoTemplates;
 	private FragmentPostTcBinding				binding;
 	private Template							template;
 	private List<DeptModel>						departments;
@@ -82,15 +82,12 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 	private RealmResults<StampCategoryModel>	stampCategories;
 	private StampAdapter						stampAdapter;
 	private Realm								mRealm;
-	private int									screenWidth;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		mRealm = Realm.getDefaultInstance();
-		DisplayMetrics displayMetrics = new DisplayMetrics();
-		getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-		screenWidth = displayMetrics.widthPixels;
+
 	}
 
 	@Override
@@ -139,7 +136,6 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 		binding.btnSend.setOnClickListener(this);
 		binding.lnrSelectSticker.setOnClickListener(this);
 		binding.lnrSelectPhoto.setOnClickListener(this);
-		binding.layoutPhoto.setFrameWidth(screenWidth);
 		binding.edtMessage.addTextChangedListener(new TextWatcher() {
 
 			@Override
@@ -237,6 +233,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 
 	private void requestTemplateSuccess(JSONObject response){
 		templates = CCJsonUtil.convertToModelList(response.optString("templates"), Template.class);
+		photoTemplates = CCJsonUtil.convertToModelList(response.optString("photos"), Template.class);
 	}
 
 	private void buildTemplate(){
@@ -261,20 +258,17 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 			}
 			break;
 		case R.id.lnr_select_card:
-			buildTemplate();
 			if(canSendPhoto && (binding.layoutPhoto.hasImage() || !stickers.isEmpty())){
 				showDialogChangeToNormalCard();
 			}else{
-				showLayoutCards();
-				binding.lnrBody.setVisibility(View.GONE);
-				binding.rltMsg.setVisibility(View.VISIBLE);
+				showLayoutCards(templates);
 			}
 			break;
 		case R.id.lnr_select_sticker:
 			showLayoutSticker();
 			break;
 		case R.id.lnr_select_photo:
-			changeToPhotoCard();
+			showLayoutCards(photoTemplates);
 			break;
 		case R.id.btn_send:
 			checkNewCard();
@@ -296,7 +290,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 		binding.rltSelectUser.setVisibility(View.VISIBLE);
 	}
 
-	private void showLayoutCards(){
+	private void showLayoutCards(List<Template> templates){
 		SelectCardFragment cardFragment = new SelectCardFragment();
 		cardFragment.setCards(templates);
 		cardFragment.setCallback(this);
@@ -309,17 +303,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 
 			@Override
 			public void onClick(View view){
-				binding.lnrBody.setVisibility(View.GONE);
-				binding.rltMsg.setVisibility(View.VISIBLE);
-				binding.layoutPhoto.clearImage();
-				binding.edtMessage.setText(message);
-				for(StickerModel sticker : stickers){
-					binding.rltMsg.removeView(sticker);
-					binding.lnrBody.removeView(sticker);
-				}
-				stickers.clear();
-				canSendPhoto = false;
-				showLayoutCards();
+				showLayoutCards(templates);
 				dialog.dismiss();
 			}
 		}, new View.OnClickListener() {
@@ -332,18 +316,27 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 		dialog.show(getFragmentManager(), null);
 	}
 
-	private void changeToPhotoCard(){
-		binding.imgCard.setImageResource(R.drawable.tc_star_card);
-		binding.lnrBody.setVisibility(View.VISIBLE);
-		binding.rltMsg.setVisibility(View.GONE);
-		binding.touchPad.setCallback(this);
-		binding.edtMessagePhoto.setText(message);
-		binding.edtMessagePhoto.setSelection(message.length());
-		for(StickerModel sticker : stickers){
-			binding.rltMsg.removeView(sticker);
+	private void changeLayoutCard(){
+		buildTemplate();
+		if (canSendPhoto) {
+			binding.lnrBody.setVisibility(View.VISIBLE);
+			binding.rltMsg.setVisibility(View.GONE);
+			binding.touchPad.setCallback(this);
+			binding.edtMessagePhoto.setText(message);
+			binding.edtMessagePhoto.setSelection(message.length());
+			for(StickerModel sticker : stickers) {
+				binding.rltMsg.removeView(sticker);
+			}
+		} else {
+			binding.lnrBody.setVisibility(View.GONE);
+			binding.rltMsg.setVisibility(View.VISIBLE);
+			binding.layoutPhoto.clearImage();
+			binding.edtMessage.setText(message);
+			for(StickerModel sticker : stickers){
+				binding.lnrBody.removeView(sticker);
+			}
 		}
 		stickers.clear();
-		canSendPhoto = true;
 	}
 
 	private void chooseImage(){
@@ -362,7 +355,6 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 		StickerModel stickerModel = new StickerModel(getContext());
 		stickerModel.setStickerPath(BuildConfig.HOST + stamp.stampPath);
 		stickerModel.key = stamp.key;
-		stickerModel.setFrameWidth(screenWidth);
 		stickerModel.setCallback(this);
 		if(canSendPhoto){
 			binding.lnrBody.addView(stickerModel);
@@ -468,7 +460,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 			JSONArray jsonStickers = new JSONArray();
 			for (StickerModel sticker : stickers) {
 				JSONObject jsonSticker = new JSONObject();
-				jsonSticker.put("key", sticker.key);
+				jsonSticker.put("key", sticker.getKey());
 				jsonSticker.put("locationX", sticker.getLocationX());
 				jsonSticker.put("locationY", sticker.getLocationY());
 				jsonSticker.put("scale", sticker.getScale());
@@ -510,7 +502,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 	@Override
 	protected void successUpload(JSONObject response, String url) {
 		if (TcConst.API_POST_NEW_CARD.equals(url)) {
-			log(response.toString());
+			requestPostNewCardSuccess(response);
 		} else {
 			super.successUpload(response, url);
 		}
@@ -557,14 +549,20 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 	@Override
 	public void onSelectCardDone(Template card){
 		this.template = card;
-		buildTemplate();
+		this.canSendPhoto = card.templateType != null;
+		changeLayoutCard();
 	}
 
 	@Override
 	public void onResume(){
 		super.onResume();
-		if(binding != null && binding.edtMessage != null){
-			binding.edtMessage.setText(message);
+		if(binding != null ){
+			if (canSendPhoto && binding.edtMessagePhoto != null) {
+				binding.edtMessagePhoto.setText(message);
+			}
+			if (!canSendPhoto && binding.edtMessage != null) {
+				binding.edtMessage.setText(message);
+			}
 		}
 	}
 

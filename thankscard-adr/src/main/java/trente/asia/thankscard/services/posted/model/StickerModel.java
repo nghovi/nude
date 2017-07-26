@@ -15,6 +15,7 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.AppCompatImageView;
+import android.util.FloatProperty;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -23,6 +24,7 @@ import android.widget.RelativeLayout;
 
 import trente.asia.thankscard.R;
 import trente.asia.thankscard.commons.defines.TcConst;
+import trente.asia.welfare.adr.pref.PreferencesSystemUtil;
 
 /**
  * Created by on 11/14/2016.
@@ -66,6 +68,9 @@ public class StickerModel extends AppCompatImageView{
 
 	public StickerModel(Context context){
 		super(context);
+		PreferencesSystemUtil preference = new PreferencesSystemUtil(context);
+		this.frameWidth = Float.valueOf(preference.get(TcConst.PREF_FRAME_WIDTH));
+		this.frameHeight = Float.valueOf(preference.get(TcConst.PREF_FRAME_HEIGHT));
 	}
 
 	public String getKey(){
@@ -86,11 +91,6 @@ public class StickerModel extends AppCompatImageView{
 
 	public String getDegree(){
 		return String.valueOf(rotation);
-	}
-
-	public void setFrameWidth(float screenWidth){
-		this.frameWidth = screenWidth;
-		this.frameHeight = screenWidth / TcConst.FRAME_RATIO;
 	}
 
 	public void setStickerPath(String stickerPath){
