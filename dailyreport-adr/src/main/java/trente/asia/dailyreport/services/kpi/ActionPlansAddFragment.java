@@ -105,6 +105,7 @@ public class ActionPlansAddFragment extends AbstractDRFragment implements DRCale
         super.initHeader(R.drawable.wf_back_white, getString(R.string.fragment_actual_plan_title), null);
         inflater = LayoutInflater.from(activity);
         imgHeaderLeftIcon = (ImageView) activity.findViewById(trente.asia.welfare.adr.R.id.img_id_header_left_icon);
+        imgHeaderLeftIcon.setVisibility(View.INVISIBLE);
         imgHeaderRightIcon = (ImageView) activity.findViewById(trente.asia.welfare.adr.R.id.img_id_header_right_icon);
         selectedDate = Calendar.getInstance().getTime();
         txtDate = (TextView) getView().findViewById(R.id.txt_fragment_kpi_date);
@@ -156,7 +157,8 @@ public class ActionPlansAddFragment extends AbstractDRFragment implements DRCale
 
             @Override
             public void onPageSelected(int position) {
-                Calendar c = ((CalendarFragment) adapter.getItem(position)).getCalendar();
+                imgHeaderLeftIcon.setVisibility(View.INVISIBLE);
+                Calendar c = ((CalendarFragment) adapter.getItem(position)).getKpiCalendarView().getSelectedDate();
                 selectedDate = c.getTime();
                 lnrActionPlanSection.setVisibility(View.GONE);
                 txtNoAction.setVisibility(View.GONE);
@@ -265,7 +267,6 @@ public class ActionPlansAddFragment extends AbstractDRFragment implements DRCale
     }
 
     private void loadActionPlans(Date date, boolean showStatusOnly) {
-        imgHeaderLeftIcon.setVisibility(View.INVISIBLE);
         this.showStatusOnly = showStatusOnly;
         String targetDate = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, date);
         JSONObject jsonObject = new JSONObject();
@@ -490,9 +491,8 @@ public class ActionPlansAddFragment extends AbstractDRFragment implements DRCale
     @Override
     public void onDayClicked(Calendar c) {
         selectedDate = c.getTime();
-//        ((CalendarFragment) adapter.getItem(mPager.getCurrentItem())).getCalendar().setTime(selectedDate);
         txtDate.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, selectedDate));
-        loadActionPlans(selectedDate, false);
+        loadActionPlans(c.getTime(), false);
     }
 
     public static class Action {
