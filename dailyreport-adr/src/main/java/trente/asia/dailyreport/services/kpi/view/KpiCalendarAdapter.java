@@ -62,6 +62,13 @@ public class KpiCalendarAdapter extends BaseAdapter{
 		refreshDays();
 	}
 
+	public Calendar getSelectedDate(){
+		if(selectedPosition != -1){
+			return dayString.get(selectedPosition);
+		}
+		return month;
+	}
+
 	public int getCount(){
 		return dayString.size();
 	}
