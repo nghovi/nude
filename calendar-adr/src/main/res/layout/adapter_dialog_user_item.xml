@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
-    android:background="@color/chiase_white"
     style="@style/cs_common_match_wrap"
+    android:background="@color/chiase_white"
     android:orientation="vertical">
 
     <trente.asia.android.view.layout.CheckableLinearLayout
         android:id="@+id/lnr_id_item"
         style="@style/cs_common_match_wrap"
+        android:layout_marginTop="@dimen/margin_10dp"
         android:background="@drawable/state_common_selectable_row3"
         android:gravity="center_vertical"
-        android:orientation="vertical"
-        android:paddingTop="@dimen/margin_10dp">
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:paddingLeft="@dimen/margin_16dp"
             android:paddingRight="@dimen/margin_16dp">
 
@@ -32,6 +33,7 @@
                 android:id="@+id/txt_id_user_name"
                 style="@style/wl_common_text"
                 android:layout_width="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 android:focusable="false" />
 
