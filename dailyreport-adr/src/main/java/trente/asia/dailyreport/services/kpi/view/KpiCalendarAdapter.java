@@ -231,4 +231,12 @@ public class KpiCalendarAdapter extends BaseAdapter{
 	public int getSelectedPosition(){
 		return selectedPosition;
 	}
+
+	public void refreshKpiStatus(){
+		for(int i = 0; i < dayString.size(); i++){
+			View cell = viewMap.get(i);
+			ImageView kpiStatus = (ImageView)cell.findViewById(R.id.item_calendar_img_status);
+			kpiStatus.setVisibility(View.INVISIBLE);
+		}
+	}
 }

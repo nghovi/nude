@@ -89,6 +89,10 @@ public class KpiCalendarView extends RelativeLayout{
 		adapter.deselectCell();
 	}
 
+	public void refreshKpiStatus() {
+		adapter.refreshKpiStatus();
+	}
+
 	public interface OnDayClickedListener{
 
 		public void onDayClicked(Calendar selectedDate);

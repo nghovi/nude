@@ -204,6 +204,7 @@ public class ActionPlansAddFragment extends AbstractDRFragment implements DRCale
 			txtNoAction.setText(getString(R.string.choose_the_day));
 			txtNoAction.setVisibility(View.VISIBLE);
 			kpiCalendarView = ((CalendarFragment)adapter.getItem(mPager.getCurrentItem())).getKpiCalendarView();
+			kpiCalendarView.refreshKpiStatus();
 			kpiCalendarView.unselectDay();
 
 		}else{
