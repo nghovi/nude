@@ -12,6 +12,7 @@ import asia.chiase.core.util.CCFormatUtil;
 import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
+import trente.asia.calendar.commons.fragments.PageContainerFragment;
 import trente.asia.calendar.commons.views.ClFragmentPagerAdapter;
 import trente.asia.calendar.services.calendar.view.MonthlyCalendarPagerAdapter;
 import trente.asia.welfare.adr.define.WelfareConst;
@@ -21,7 +22,7 @@ import trente.asia.welfare.adr.define.WelfareConst;
  *
  * @author TrungND
  */
-public class MonthlyFragment extends SchedulesPageContainerFragment{
+public class MonthlyFragment extends PageContainerFragment{
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -32,18 +33,13 @@ public class MonthlyFragment extends SchedulesPageContainerFragment{
 	}
 
 	@Override
-	public int getFooterItemId(){
-		return R.id.lnr_view_footer_monthly;
+	protected Date getActiveDate(int position){
+		return CsDateUtil.addMonth(TODAY, position - INITIAL_POSITION);
 	}
 
 	@Override
-	protected void setActiveDate(int position){
-		Date activeDate = CsDateUtil.addMonth(TODAY, position - INITIAL_POSITION);
-		prefAccUtil.set(ClConst.PREF_ACTIVE_DATE, CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, activeDate));
-
-		String title = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_MMMM_YY, activeDate);
-		TextView txtHeaderTitle = (TextView)getView().findViewById(R.id.txt_id_header_title);
-		txtHeaderTitle.setText(title.substring(0, 1).toUpperCase() + title.substring(1));
+	public int getFooterItemId(){
+		return R.id.lnr_view_footer_monthly;
 	}
 
 	@Override

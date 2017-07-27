@@ -1,35 +1,24 @@
-<trente.asia.welfare.adr.view.WfSlideMenuLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/drawer_layout"
-    style="@style/cs_common_match">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_layout"
+    style="@style/wf_common_match">
 
-    <!-- Slide Menu  -->
-    <LinearLayout
-        android:id="@+id/slice_menu_board"
-        style="@style/cs_common_match"
-        android:orientation="vertical" />
+    <include layout="@layout/view_common_header" />
 
-    <trente.asia.welfare.adr.view.LinearLayoutOnInterceptTouch
-        android:id="@+id/main_layout"
-        style="@style/wf_common_match">
+    <trente.asia.calendar.commons.views.UserListLinearLayout
+        android:id="@+id/lnr_fragment_pager_container_user_list"
+        style="@style/cs_common_match_wrap"
+        android:layout_height="@dimen/margin_30dp"
+        android:layout_marginBottom="@dimen/margin_10dp"
+        android:layout_marginTop="@dimen/margin_10dp"
+        android:background="@color/cl_cell_bg_color"
+        android:visibility="gone" />
 
-        <include layout="@layout/view_navigation_header" />
+    <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/view_id_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
 
-        <trente.asia.calendar.commons.views.UserListLinearLayout
-            android:id="@+id/lnr_fragment_pager_container_user_list"
-            style="@style/cs_common_match_wrap"
-            android:layout_height="@dimen/margin_30dp"
-            android:layout_marginBottom="@dimen/margin_10dp"
-            android:layout_marginTop="@dimen/margin_10dp"
-            android:background="@color/cl_cell_bg_color"
-            android:visibility="gone" />
+    <include layout="@layout/view_common_footer" />
+</LinearLayout>
 
-        <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/view_id_pager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
-
-        <include layout="@layout/view_common_footer" />
-    </trente.asia.welfare.adr.view.LinearLayoutOnInterceptTouch>
-
-</trente.asia.welfare.adr.view.WfSlideMenuLayout>

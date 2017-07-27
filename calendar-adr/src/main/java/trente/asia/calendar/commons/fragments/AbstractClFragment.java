@@ -16,7 +16,6 @@ import trente.asia.calendar.services.calendar.DailyFragment;
 import trente.asia.calendar.services.calendar.MonthlyFragment;
 import trente.asia.calendar.services.calendar.WeeklyFragment;
 import trente.asia.calendar.services.setting.ClSettingFragment;
-import trente.asia.calendar.services.summary.SummaryFragment;
 import trente.asia.calendar.services.todo.TodoListFragment;
 import trente.asia.calendar.services.user.ClLoginFragment;
 import trente.asia.welfare.adr.activity.WelfareFragment;
@@ -86,7 +85,6 @@ public abstract class AbstractClFragment extends WelfareFragment implements View
 			getView().findViewById(R.id.lnr_view_footer_weekly).setOnClickListener(listener);
 			getView().findViewById(R.id.lnr_view_footer_daily).setOnClickListener(listener);
 			getView().findViewById(R.id.lnr_view_footer_todo).setOnClickListener(listener);
-			// getView().findViewById(R.id.lnr_view_footer_summary).setOnClickListener(listener);
 			getView().findViewById(R.id.lnr_view_footer_setting).setOnClickListener(listener);
 			LinearLayout lnrFooter = (LinearLayout)getView().findViewById(footerItemId);
 			setSelectedFooterItem(lnrFooter);
@@ -125,11 +123,6 @@ public abstract class AbstractClFragment extends WelfareFragment implements View
 	public void onClickFooterItemTodo(){
 		emptyBackStack();
 		gotoFragment(new TodoListFragment());
-	}
-
-	public void onClickFooterItemSummary(){
-		emptyBackStack();
-		gotoFragment(new SummaryFragment());
 	}
 
 	public void onClickFooterItemSetting(){

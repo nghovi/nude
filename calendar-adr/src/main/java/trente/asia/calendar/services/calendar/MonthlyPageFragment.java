@@ -45,6 +45,7 @@ import trente.asia.calendar.services.calendar.model.WorkOffer;
 import trente.asia.calendar.services.calendar.view.MonthlyCalendarDayView;
 import trente.asia.calendar.services.calendar.view.MonthlyCalendarRowView;
 import trente.asia.calendar.services.todo.model.Todo;
+import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.dialog.WfDialog;
 import trente.asia.welfare.adr.models.UserModel;
@@ -73,7 +74,6 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 	@Override
 	protected void initView(){
 		super.initView();
-
 		inflater = LayoutInflater.from(activity);
 
 		UserFacilityView userFacilityView = (UserFacilityView)getView().findViewById(R.id.user_facility_view);

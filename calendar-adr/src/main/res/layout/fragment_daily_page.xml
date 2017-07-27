@@ -3,14 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical">
 
-    <!--<include layout="@layout/view_day_shift_time"/>-->
-    <!--<include layout="@layout/view_horizontal_user_list"/>-->
-    <trente.asia.calendar.commons.views.UserListLinearLayout
-        android:id="@+id/lnr_fragment_pager_container_user_list"
-        style="@style/cs_common_match_wrap"
-        android:background="@color/wf_app_color_base">
-    </trente.asia.calendar.commons.views.UserListLinearLayout>
-
     <LinearLayout
         android:id="@+id/lnr_calendar_container"
         style="@style/cs_common_match_wrap"

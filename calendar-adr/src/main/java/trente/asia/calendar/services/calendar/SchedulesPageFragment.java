@@ -70,6 +70,7 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 	@Override
 	protected void initView(){
 		super.initView();
+
 		if(pageSharingHolder.isLoadingSchedules == false){
 			lnrCalendarContainer = (LinearLayout)getView().findViewById(R.id.lnr_calendar_container);
 			dates = getAllDate();
@@ -113,7 +114,7 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 	protected void initDayViews(){
 	}
 
-	protected void loadScheduleList(){
+	public void loadScheduleList(){
 		// if(pageSharingHolder.selectedPagePosition != pagePosition || (pageSharingHolder.selectedPagePosition ={
 		// pageSharingHolder.isLoadingSchedules = true;
 		JSONObject jsonObject = prepareJsonObject();
@@ -186,13 +187,6 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 		}catch(IOException e){
 			e.printStackTrace();
 		}
-
-		// long endMLS = System.currentTimeMillis();
-		// Log.e("BENCHMARKING", "PARSING TIME: " + (endMLS - startMLS));
-
-		if(changeCalendarUserListener != null){
-			changeCalendarUserListener.onChangeCalendarUserListener(lstCalendarUser);
-		}
 		updateSchedules(lstSchedule, lstCategory);
 	}
 
@@ -220,18 +214,8 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 		loadScheduleList();
 	}
 
-	@Override
-	protected void calendarChangedLoadData(){
-		refreshDialogData = true;
-		loadData();
-	};
-
 	protected int getNormalDayColor(){
 		return ContextCompat.getColor(activity, R.color.wf_common_color_text);
-	}
-
-	protected String getUpperTitle(){
-		return CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_MMMM_YY, dates.get(0));
 	}
 
 	protected int getHeaderBgColor(){

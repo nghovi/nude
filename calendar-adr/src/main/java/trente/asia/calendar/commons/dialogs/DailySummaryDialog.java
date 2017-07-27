@@ -9,7 +9,6 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import trente.asia.calendar.R;
-import trente.asia.calendar.commons.views.NavigationHeader;
 import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.model.WorkOffer;
@@ -25,7 +24,6 @@ import trente.asia.welfare.adr.models.UserModel;
 public class DailySummaryDialog extends CLOutboundDismissDialog{
 
 	private final Context												mContext;
-	private final NavigationHeader.OnAddBtnClickedListener				onAddBtnClickedListener;
 	private final WeeklyScheduleListAdapter.OnScheduleItemClickListener	listener;
 
 	private final List<Date>											dates;
@@ -37,10 +35,15 @@ public class DailySummaryDialog extends CLOutboundDismissDialog{
 	private List<HolidayModel>											lstHoliday;
 	private List<WorkOffer>												lstWorkOffer;
 
+	private Date														selectedDate;
+	private OnAddBtnClickedListener										onAddBtnClickedListener;
 
-	private Date selectedDate;
+	public interface OnAddBtnClickedListener{
 
-	public DailySummaryDialog(Context context, final WeeklyScheduleListAdapter.OnScheduleItemClickListener listener, final NavigationHeader.OnAddBtnClickedListener onAddBtnClickedListener, List<Date> dates){
+		public void onAddBtnClick(Date selectedDate);
+	}
+
+	public DailySummaryDialog(Context context, final WeeklyScheduleListAdapter.OnScheduleItemClickListener listener, final OnAddBtnClickedListener onAddBtnClickedListener, List<Date> dates){
 		super(context);
 
 		this.setContentView(R.layout.dialog_daily_summary);
@@ -49,7 +52,6 @@ public class DailySummaryDialog extends CLOutboundDismissDialog{
 
 		mViewPager = (ViewPager)findViewById(R.id.viewpager_dialog_daily_summary);
 		this.listener = listener;
-		this.onAddBtnClickedListener = onAddBtnClickedListener;
 
 		Window window = this.getWindow();
 		window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
@@ -63,7 +65,7 @@ public class DailySummaryDialog extends CLOutboundDismissDialog{
 		mPagerAdapter = new DailySummaryDialogPagerAdapter(this, mContext, dates);
 		mPagerAdapter.setData(this.lstSchedule, this.lstBirthdayUser, this.lstHoliday, this.lstWorkOffer, this.onAddBtnClickedListener, this.listener, this);
 		mViewPager.setAdapter(mPagerAdapter);
-		if (selectedDate != null) {
+		if(selectedDate != null){
 			int currentItemPosition = mPagerAdapter.getPositionByDate(selectedDate);
 			mViewPager.setCurrentItem(currentItemPosition, false);
 		}

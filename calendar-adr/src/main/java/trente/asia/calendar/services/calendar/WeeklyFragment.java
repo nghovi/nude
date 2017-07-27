@@ -1,6 +1,10 @@
 package trente.asia.calendar.services.calendar;
 
+import java.util.Date;
+
+import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.R;
+import trente.asia.calendar.commons.fragments.PageContainerFragment;
 import trente.asia.calendar.services.calendar.view.SchedulesPagerAdapter;
 import trente.asia.calendar.services.calendar.view.WeeklySchedulesPagerAdapter;
 
@@ -9,7 +13,7 @@ import trente.asia.calendar.services.calendar.view.WeeklySchedulesPagerAdapter;
  *
  * @author TrungND
  */
-public class WeeklyFragment extends SchedulesPageContainerFragment {
+public class WeeklyFragment extends PageContainerFragment{
 
 	@Override
 	public int getFooterItemId(){
@@ -19,5 +23,10 @@ public class WeeklyFragment extends SchedulesPageContainerFragment {
 	@Override
 	protected SchedulesPagerAdapter initPagerAdapter(){
 		return new WeeklySchedulesPagerAdapter(getChildFragmentManager());
+	}
+
+	@Override
+	protected Date getActiveDate(int position){
+		return CsDateUtil.addWeek(TODAY, position - INITIAL_POSITION);
 	}
 }
