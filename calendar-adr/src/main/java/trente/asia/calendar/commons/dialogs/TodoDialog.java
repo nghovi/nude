@@ -25,7 +25,7 @@ import trente.asia.welfare.adr.models.UserModel;
  *
  * @author TrungND
  */
-public class TodoDialog extends CLOutboundDismissDialog{
+public class TodoDialog extends ClDialog{
 
 	private final Context			mContext;
 	private Todo					todo;
@@ -47,6 +47,12 @@ public class TodoDialog extends CLOutboundDismissDialog{
 		((TextView)findViewById(R.id.txt_dlg_todo_content)).setText(todo.note);
 		findViewById(R.id.radio).setOnClickListener(this.onFinish);
 		findViewById(R.id.btn_todo_dialog_delete).setOnClickListener(this.onDelete);
+		findViewById(R.id.img_id_close).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				dismiss();
+			}
+		});
 
 		Window window = this.getWindow();
 		window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);

@@ -1,43 +1,43 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/wf_common_match"
+    style="@style/cs_common_match_wrap"
     android:orientation="vertical">
+
 
     <include
         android:id="@+id/user_facility_view"
-        layout="@layout/view_user_facility_tabs" />
-
+        layout="@layout/view_user_facility_tabs"
+        android:visibility="visible" />
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        style="@style/cs_common_match_wrap"
+        style="@style/cs_common_match"
         android:layout_weight="1"
-        android:background="@color/cl_cell_bg_color"
-        android:fillViewport="true">
+        android:background="@color/cl_cell_bg_color">
 
         <LinearLayout
             android:id="@+id/lnr_calendar_container"
-            style="@style/cs_common_match_wrap"
-            android:layout_weight="1"
+            style="@style/cs_common_match"
             android:orientation="vertical">
 
         </LinearLayout>
-
-
     </ScrollView>
 
     <LinearLayout
         android:id="@+id/lnr_todos"
         android:layout_width="match_parent"
         android:layout_height="@dimen/margin_44dp"
+        android:layout_gravity="bottom"
         android:background="@drawable/shape_gray_border"
         android:orientation="vertical"
-        android:paddingLeft="@dimen/margin_16dp"
-        android:paddingRight="@dimen/margin_16dp">
+
+        android:visibility="visible">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/margin_16dp"
+            android:paddingRight="@dimen/margin_16dp">
 
             <TextView
                 android:layout_width="match_parent"
@@ -53,6 +53,16 @@
                 android:src="@drawable/wf_file" />
         </LinearLayout>
 
-    </LinearLayout>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
+            <LinearLayout
+                android:id="@+id/lnr_todo_container"
+                android:layout_width="match_parent"
+                android:layout_height="176dp"
+                android:orientation="vertical"></LinearLayout>
+
+        </ScrollView>
+    </LinearLayout>
 </LinearLayout>

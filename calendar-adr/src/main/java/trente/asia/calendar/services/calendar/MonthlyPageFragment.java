@@ -11,7 +11,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -50,6 +49,7 @@ import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.dialog.WfDialog;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
+import trente.asia.welfare.adr.utils.WelfareUtil;
 
 /**
  * MonthlyPageFragment
@@ -62,7 +62,8 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 	private List<MonthlyCalendarRowView>	lstCalendarRow	= new ArrayList<>();
 
 	private DailySummaryDialog				dialogDailySummary;
-	private LinearLayout					lnrTodo;
+	private LinearLayout					lnrTodoSection;
+	private LinearLayout					lnrTodos;
 	private boolean							isExpanded		= false;
 	private LayoutInflater					inflater;
 	private Todo							selectedTodo;
@@ -89,16 +90,17 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 			}
 		});
 
-		lnrTodo = (LinearLayout)getView().findViewById(R.id.lnr_todos);
-		lnrTodo.setOnClickListener(new View.OnClickListener() {
+		lnrTodoSection = (LinearLayout)getView().findViewById(R.id.lnr_todos);
+		lnrTodos = (LinearLayout)getView().findViewById(R.id.lnr_todo_container);
+		lnrTodoSection.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v){
 				if(isExpanded){
-					collapse(lnrTodo);
+					collapse(lnrTodoSection);
 					isExpanded = false;
 				}else{
-					expand(lnrTodo);
+					expand(lnrTodoSection);
 					isExpanded = true;
 				}
 			}
@@ -118,8 +120,11 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 	@Override
 	protected void successUpdate(JSONObject response, String url){
 		if(ClConst.API_TODO_UPDATE.equals(url) || ClConst.API_TODO_DELETE.equals(url)){
-			View cell = lnrTodo.findViewWithTag(selectedTodo.key);
-			lnrTodo.removeView(cell);
+			if(dlgTodoDetail != null && dlgTodoDetail.isShowing()){
+				dlgTodoDetail.dismiss();
+			}
+			View cell = lnrTodoSection.findViewWithTag(selectedTodo.key);
+			lnrTodoSection.removeView(cell);
 		}else{
 			super.successUpdate(response, url);
 		}
@@ -163,7 +168,7 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 				}
 			});
 			cell.setTag(todo.key);
-			lnrTodo.addView(cell);
+			lnrTodos.addView(cell);
 		}
 	}
 
@@ -305,16 +310,16 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 
 	public static void expand(final View v){
 		v.measure(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-		final int targetHeight = v.getMeasuredHeight();
+		final int targetHeight = WelfareUtil.dpToPx(44 * 4);
 
 		// Older versions of android (pre API 21) cancel animations for views with a height of 0.
-		v.getLayoutParams().height = 1;
+		// v.getLayoutParams().height = 1;
 		v.setVisibility(View.VISIBLE);
 		Animation a = new Animation() {
 
 			@Override
 			protected void applyTransformation(float interpolatedTime, Transformation t){
-				v.getLayoutParams().height = interpolatedTime == 1 ? LinearLayout.LayoutParams.WRAP_CONTENT : (int)(targetHeight * interpolatedTime);
+				v.getLayoutParams().height = interpolatedTime == 1 ? targetHeight : (int)(targetHeight * interpolatedTime);
 				v.requestLayout();
 			}
 
