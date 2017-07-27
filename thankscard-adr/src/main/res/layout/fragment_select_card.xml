@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
-                android:text="@string/tc_select_user"
+                android:text="@string/tc_select_card"
                 android:textColor="@color/chiase_blue"
                 android:textSize="16sp" />
 

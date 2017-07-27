@@ -57,10 +57,20 @@ public class ImageModel extends AppCompatImageView{
 		return String.valueOf(height * scale / frameHeight);
 	}
 
-	public void setImage(String imagePath){
+	public void setImage(String imagePath, String position){
 		bitmap = BitmapFactory.decodeFile(imagePath);
 		width = bitmap.getWidth();
 		height = bitmap.getHeight();
+		x = frameWidth / 4 - width / 2;
+		if (TcConst.POSITION_CENTER.equals(position) || TcConst.POSITION_LEFT.equals(position)) {
+			y = frameHeight / 2 - height / 2;
+		} else if (TcConst.POSITION_TOP.equals(position)){
+			y = 50;
+		} else if (TcConst.POSITION_BOTTOM.equals(position)){
+			y = frameHeight - height - 50;
+		}
+		scale = 1f;
+		saveScale = 1f;
 		invalidate();
 	}
 

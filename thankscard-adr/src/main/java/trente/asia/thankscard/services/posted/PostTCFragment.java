@@ -16,6 +16,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -49,6 +51,7 @@ import trente.asia.thankscard.services.posted.presenter.StampAdapter;
 import trente.asia.thankscard.services.posted.presenter.StampCategoryAdapter;
 import trente.asia.thankscard.services.posted.view.ChangeToNormalCardDialog;
 import trente.asia.thankscard.services.posted.view.ChoosePictureDialog;
+import trente.asia.thankscard.services.posted.view.LimitStickerDialog;
 import trente.asia.thankscard.services.posted.view.TouchPad;
 import trente.asia.thankscard.utils.TCUtil;
 import trente.asia.welfare.adr.activity.WelfareActivity;
@@ -56,6 +59,7 @@ import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.models.DeptModel;
 import trente.asia.welfare.adr.models.UserModel;
+import trente.asia.welfare.adr.pref.PreferencesSystemUtil;
 import trente.asia.welfare.adr.utils.WelfareUtil;
 import trente.asia.welfare.adr.utils.WfPicassoHelper;
 
@@ -82,12 +86,16 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 	private RealmResults<StampCategoryModel>	stampCategories;
 	private StampAdapter						stampAdapter;
 	private Realm								mRealm;
+	private float								frameWidth;
+	private float								frameHeight;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		mRealm = Realm.getDefaultInstance();
-
+		PreferencesSystemUtil preference = new PreferencesSystemUtil(getContext());
+		frameWidth = Float.valueOf(preference.get(TcConst.PREF_FRAME_WIDTH));
+		frameHeight = Float.valueOf(preference.get(TcConst.PREF_FRAME_HEIGHT));
 	}
 
 	@Override
@@ -150,8 +158,11 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 
 			@Override
 			public void afterTextChanged(Editable editable){
-				message = editable.toString();
-				binding.txtCount.setText(String.valueOf(MAX_LETTER - message.length()));
+				if(!canSendPhoto){
+					message = editable.toString();
+					binding.txtCount.setText(String.valueOf(MAX_LETTER - message.length()));
+					binding.edtMessagePhoto.setText(message);
+				}
 			}
 		});
 
@@ -169,8 +180,11 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 
 			@Override
 			public void afterTextChanged(Editable editable){
-				message = editable.toString();
-				binding.txtCount.setText(String.valueOf(MAX_LETTER - message.length()));
+				if(canSendPhoto){
+					message = editable.toString();
+					binding.txtCount.setText(String.valueOf(MAX_LETTER - message.length()));
+					binding.edtMessage.setText(message);
+				}
 			}
 		});
 	}
@@ -237,7 +251,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 	}
 
 	private void buildTemplate(){
-		WfPicassoHelper.loadImage(getContext(), BuildConfig.HOST + template.templateUrl, binding.imgCard, null);
+		Picasso.with(getContext()).load(BuildConfig.HOST + template.templateUrl).resize((int)frameWidth, (int)frameHeight).into(binding.imgCard);
 	}
 
 	@Override
@@ -318,16 +332,16 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 
 	private void changeLayoutCard(){
 		buildTemplate();
-		if (canSendPhoto) {
+		if(canSendPhoto){
 			binding.lnrBody.setVisibility(View.VISIBLE);
 			binding.rltMsg.setVisibility(View.GONE);
 			binding.touchPad.setCallback(this);
 			binding.edtMessagePhoto.setText(message);
 			binding.edtMessagePhoto.setSelection(message.length());
-			for(StickerModel sticker : stickers) {
+			for(StickerModel sticker : stickers){
 				binding.rltMsg.removeView(sticker);
 			}
-		} else {
+		}else{
 			binding.lnrBody.setVisibility(View.GONE);
 			binding.rltMsg.setVisibility(View.VISIBLE);
 			binding.layoutPhoto.clearImage();
@@ -376,8 +390,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 			if(data != null){
 				uri = data.getData();
 				long date = System.currentTimeMillis();
-				String filename = WelfareConst.FilesName.CAMERA_TEMP_FILE_NAME + String.valueOf(date) +
-						WelfareConst.FilesName.CAMERA_TEMP_FILE_EXT;
+				String filename = WelfareConst.FilesName.CAMERA_TEMP_FILE_NAME + String.valueOf(date) + WelfareConst.FilesName.CAMERA_TEMP_FILE_EXT;
 				String desPath = TCUtil.getFilesFolderPath() + filename;
 				mImagePath = WelfareUtil.getImagePath(activity, uri, true, desPath);
 				Uri uri1 = AndroidUtil.getUriFromFileInternal(activity, new File(mImagePath));
@@ -387,7 +400,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 			}
 			break;
 		case WelfareConst.RequestCode.PHOTO_CROP:
-			binding.layoutPhoto.setImage(mImageUri.getPath());
+			binding.layoutPhoto.setImage(mImageUri.getPath(), template.templateType);
 			break;
 		}
 	}
@@ -402,9 +415,17 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 		}catch(IOException ex){
 			ex.printStackTrace();
 		}
-
 		mImageUri = Uri.fromFile(imageFile);
-		WelfareUtil.startCropActivity(this, imageUri, mImageUri);
+		int imageWidth;
+		int imageHeight;
+		if (TcConst.POSITION_LEFT.equals(template.templateType)) {
+			imageWidth = (int) (frameWidth / 2 - 50);
+			imageHeight = (int) (frameHeight - 50);
+		} else {
+			imageWidth = (int) (frameHeight * 2 / 3);
+			imageHeight = (int) (frameHeight * 2 / 3);;
+		}
+		WelfareUtil.startCrop(this, imageUri, mImageUri, imageWidth, imageHeight);
 	}
 
 	private void checkNewCard(){
@@ -458,7 +479,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 			jsonObject.put("isSecret", isSecret);
 
 			JSONArray jsonStickers = new JSONArray();
-			for (StickerModel sticker : stickers) {
+			for(StickerModel sticker : stickers){
 				JSONObject jsonSticker = new JSONObject();
 				jsonSticker.put("key", sticker.getKey());
 				jsonSticker.put("locationX", sticker.getLocationX());
@@ -469,23 +490,23 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 			}
 			jsonObject.put("stickerListString", jsonStickers.toString());
 
-			if (canSendPhoto) {
+			if(canSendPhoto){
 				jsonObject.put("templateType", "PH");
 				jsonObject.put("photoLocationX", binding.layoutPhoto.getPhotoLocationX());
 				jsonObject.put("photoLocationY", binding.layoutPhoto.getPhotoLocationY());
 				jsonObject.put("photoScale", binding.layoutPhoto.getPhotoScale());
-			} else {
+			}else{
 				jsonObject.put("templateType", "NM");
 			}
 		}catch(JSONException ex){
 			ex.printStackTrace();
 		}
 
-		if (canSendPhoto) {
+		if(canSendPhoto && mImageUri != null){
 			HashMap<String, File> photo = new HashMap<>();
 			photo.put("photoFile", new File(mImageUri.getPath()));
 			requestUpload(TcConst.API_POST_NEW_CARD, jsonObject, photo, true);
-		} else {
+		}else{
 			requestUpdate(TcConst.API_POST_NEW_CARD, jsonObject, true);
 		}
 	}
@@ -500,10 +521,10 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 	}
 
 	@Override
-	protected void successUpload(JSONObject response, String url) {
-		if (TcConst.API_POST_NEW_CARD.equals(url)) {
+	protected void successUpload(JSONObject response, String url){
+		if(TcConst.API_POST_NEW_CARD.equals(url)){
 			requestPostNewCardSuccess(response);
-		} else {
+		}else{
 			super.successUpload(response, url);
 		}
 	}
@@ -556,11 +577,11 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 	@Override
 	public void onResume(){
 		super.onResume();
-		if(binding != null ){
-			if (canSendPhoto && binding.edtMessagePhoto != null) {
+		if(binding != null){
+			if(canSendPhoto && binding.edtMessagePhoto != null){
 				binding.edtMessagePhoto.setText(message);
 			}
-			if (!canSendPhoto && binding.edtMessage != null) {
+			if(!canSendPhoto && binding.edtMessage != null){
 				binding.edtMessage.setText(message);
 			}
 		}
@@ -576,9 +597,9 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 	public void onStickerClick(float x, float y, StickerModel sticker){
 		for(StickerModel stickerModel : stickers){
 			if(!sticker.equals(stickerModel)){
-				if (x > stickerModel.lowX && x < stickerModel.highX && y > stickerModel.lowY && y < stickerModel.highY){
+				if(x > stickerModel.lowX && x < stickerModel.highX && y > stickerModel.lowY && y < stickerModel.highY){
 					stickerModel.selectSticker();
-				} else {
+				}else{
 					stickerModel.unselectSticker();
 				}
 			}
@@ -633,7 +654,22 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 	@Override
 	public void onStampClick(StampModel stamp){
 		closeLayoutSticker();
-		addSticker(stamp);
+		if (stickers.size() >= 50) {
+			showLimitStickerDialog();
+		} else {
+			addSticker(stamp);
+		}
+	}
+
+	private void showLimitStickerDialog() {
+		final LimitStickerDialog dialog = new LimitStickerDialog();
+		dialog.setListeners(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				dialog.dismiss();
+			}
+		}, null);
+		dialog.show(getFragmentManager(), null);
 	}
 
 	@Override

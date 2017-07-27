@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="vertical"
+        android:background="@color/chiase_white"
         android:elevation="1dp">
         <trente.asia.thankscard.services.posted.model.ImageShow
             android:id="@+id/layout_photo"

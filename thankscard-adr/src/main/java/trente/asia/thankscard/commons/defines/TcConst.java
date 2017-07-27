@@ -39,7 +39,11 @@ public class TcConst{
 	public static final String	MESSAGE_STAMP_LAST_UPDATE_DATE			= "MESSAGE_STAMP_LAST_UPDATE_DATE";
 	public static final String	API_MESSAGE_STAMP_CATEGORY_LIST			= "/api/system/stamp/category/list";
 
-	public static final float	FRAME_RATIO								= 1.78f;
+	public static final float	FRAME_RATIO								= 1.43f;
 	public static final String	PREF_FRAME_WIDTH						= "PREF_FRAME_WIDTH";
 	public static final String	PREF_FRAME_HEIGHT						= "PREF_FRAME_HEIGHT";
+	public static final String	POSITION_TOP							= "TOP";
+	public static final String	POSITION_CENTER							= "CENTER";
+	public static final String	POSITION_BOTTOM							= "BOTTOM";
+	public static final String	POSITION_LEFT							= "LEFT";
 }

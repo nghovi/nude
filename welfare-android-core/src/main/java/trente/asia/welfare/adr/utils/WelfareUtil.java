@@ -387,6 +387,23 @@ public class WelfareUtil{
 		}
 	}
 
+	public static void startCrop(Fragment fragment, Uri inputImage, Uri outputUri, int outputX, int outputY){
+		try{
+			Intent intent = new Intent("com.android.camera.action.CROP");
+			intent.setData(inputImage);
+			intent.putExtra("outputX", outputX);
+			intent.putExtra("outputY", outputY);
+			intent.putExtra("aspectX", 1);
+			intent.putExtra("aspectY", 1);
+			intent.putExtra("scale", false);
+			intent.putExtra("noFaceDetection", true);
+			intent.putExtra(MediaStore.EXTRA_OUTPUT, outputUri);
+			fragment.startActivityForResult(intent, WelfareConst.RequestCode.PHOTO_CROP);
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+	}
+
 	/**
 	 * get user location
 	 *
