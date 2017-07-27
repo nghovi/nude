@@ -22,6 +22,7 @@
     <LinearLayout
         android:id="@+id/lnr_select_group"
         style="@style/wf_common_item_linear2"
+        android:background="@drawable/cl_state_common_selectable_row"
         android:gravity="center_vertical">
 
         <TextView
@@ -35,6 +36,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/pn_icon" />
     </LinearLayout>
+    <View style="@style/cs_common_divider"/>
 
     <ScrollView
         style="@style/cs_common_match_wrap"

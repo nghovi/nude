@@ -49,11 +49,13 @@ public class FilterDeptLinearLayout extends LinearLayout{
 
 	private class ViewHolder{
 
+		private final ImageView			imgAvatar;
 		public TextView					txtName;
 		public CheckableLinearLayout	lnrItem;
 		public ImageView				imgCheck;
 
 		public ViewHolder(View view){
+			imgAvatar = (ImageView)view.findViewById(R.id.img_id_avatar);
 			txtName = (TextView)view.findViewById(R.id.txt_id_user_name);
 			lnrItem = (CheckableLinearLayout)view.findViewById(R.id.lnr_id_item);
 			imgCheck = (ImageView)view.findViewById(R.id.img_id_check);
@@ -153,6 +155,7 @@ public class FilterDeptLinearLayout extends LinearLayout{
 		View userView = mInflater.inflate(R.layout.adapter_dialog_user_item, null);
 
 		final ViewHolder holder = new ViewHolder(userView);
+		holder.imgAvatar.setVisibility(View.GONE);
 		holder.txtName.setText(name);
 
 		if(alreadySelected){
