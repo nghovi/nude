@@ -253,7 +253,6 @@ public class MypageFragment extends AbstractTCFragment{
 			}
 		}
 		mRealm.commitTransaction();
-
 	}
 
 	private void requestRankStageInfo(){

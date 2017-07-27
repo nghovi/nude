@@ -70,7 +70,6 @@ public class StickerViewPost extends AppCompatImageView{
 		PreferencesSystemUtil preference = new PreferencesSystemUtil(context);
 		this.frameWidth = Float.valueOf(preference.get(TcConst.PREF_FRAME_WIDTH));
 		this.frameHeight = Float.valueOf(preference.get(TcConst.PREF_FRAME_HEIGHT));
-		setBackgroundColor(Color.CYAN);
 	}
 
 	public String getKey(){
