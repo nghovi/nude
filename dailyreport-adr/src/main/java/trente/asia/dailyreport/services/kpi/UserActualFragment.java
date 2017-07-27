@@ -243,10 +243,10 @@ public class UserActualFragment extends AbstractDRFragment{
 			xAxis.setAvoidFirstLastClipping(true);
 			xAxis.setLabelRotationAngle(-50f);
 			xAxis.setTextSize(7);
-			xAxis.setAxisMaximum(progressList.size() + 0.5f);
+			//xAxis.setAxisMaximum(progressList.size() + 0.5f);
 
 			int goal = Integer.valueOf(personal == null ? group.goal : personal.goal);
-			float maxYValue = Math.max(Float.valueOf(maxProgress.achievementOver) * 1.2f, goal * 1.7f);
+			float maxYValue = Math.max(Float.valueOf(maxProgress.achievementOver) * 1.25f, goal * 1.8f);
 
 			YAxis yAxisLeft = lineChart.getAxisLeft();
 			yAxisLeft.setDrawAxisLine(false);
@@ -344,7 +344,8 @@ public class UserActualFragment extends AbstractDRFragment{
 			Description description = new Description();
 			description.setText(context.getResources().getString(R.string.text_period));
 			lineChart.setDescription(description);
-			lineChart.setVisibleXRangeMaximum(POINT_PER_PAGE + 0.5f);
+			float maxRange = progressList.size() >= POINT_PER_PAGE ? POINT_PER_PAGE + 0.2f : progressList.size();
+			lineChart.setVisibleXRangeMaximum(maxRange);
 			//// TODO: 7/17/17 scroll to X
 			// lineChart.moveViewToX(////);
 			Legend legend = lineChart.getLegend();

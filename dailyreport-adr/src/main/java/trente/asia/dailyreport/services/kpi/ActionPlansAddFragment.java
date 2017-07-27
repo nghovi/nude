@@ -157,10 +157,11 @@ public class ActionPlansAddFragment extends AbstractDRFragment implements DRCale
             @Override
             public void onPageSelected(int position) {
                 Calendar c = ((CalendarFragment) adapter.getItem(position)).getCalendar();
+                selectedDate = c.getTime();
                 lnrActionPlanSection.setVisibility(View.GONE);
                 txtNoAction.setVisibility(View.GONE);
                 boolean showStatusOnly = Calendar.getInstance().get(Calendar.MONTH) != c.get(Calendar.MONTH);
-                loadActionPlans(c.getTime(), showStatusOnly);
+                loadActionPlans(selectedDate, showStatusOnly);
             }
 
             @Override
