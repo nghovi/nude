@@ -58,9 +58,7 @@ import trente.asia.welfare.adr.dialog.WfDialog;
  */
 public class UserActualFragment extends AbstractDRFragment{
 
-	private static final int	POINT_PER_PAGE	= 7;
-	// private static final int LABEL_COUNT = 25;
-	// private static Map<Float, String> formattedValuesMap;
+	private static final int	POINT_PER_PAGE	= 6;
 	private DatePickerDialog	datePickerDialog;
 	private TextView			txtSelectedDate;
 	private DRGroupHeader		drGroupHeader;
@@ -206,7 +204,6 @@ public class UserActualFragment extends AbstractDRFragment{
 				i++;
 			}
 			LineDataSet dataSet = new LineDataSet(entries, ""); // add entries to dataset
-			//// TODO: 7/17/17 comment out
 			dataSet.setDrawValues(false);
 			dataSet.setColor(Color.BLUE);
 			dataSet.setLineWidth(1f);
@@ -223,8 +220,12 @@ public class UserActualFragment extends AbstractDRFragment{
 
 				@Override
 				public String getFormattedValue(float value, AxisBase axis){
-					Progress progress = progressList.get((int)value);
-					return CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, CCDateUtil.makeDateCustom(progress.checkPointDate, WelfareConst.WF_DATE_TIME_DATE));
+					int index = (int)value;
+					if(index < progressList.size()){
+						Progress progress = progressList.get((int)value);
+						return CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, CCDateUtil.makeDateCustom(progress.checkPointDate, WelfareConst.WF_DATE_TIME_DATE));
+					}
+					return "";
 				}
 			};
 
@@ -242,7 +243,7 @@ public class UserActualFragment extends AbstractDRFragment{
 			xAxis.setAvoidFirstLastClipping(true);
 			xAxis.setLabelRotationAngle(-50f);
 			xAxis.setTextSize(7);
-			// xAxis.setAxisMaximum(maxDistanceDay + labelDistance);
+			xAxis.setAxisMaximum(progressList.size() + 0.5f);
 
 			int goal = Integer.valueOf(personal == null ? group.goal : personal.goal);
 			float maxYValue = Math.max(Float.valueOf(maxProgress.achievementOver) * 1.2f, goal * 1.7f);
@@ -343,7 +344,7 @@ public class UserActualFragment extends AbstractDRFragment{
 			Description description = new Description();
 			description.setText(context.getResources().getString(R.string.text_period));
 			lineChart.setDescription(description);
-			lineChart.setVisibleXRangeMaximum(POINT_PER_PAGE);
+			lineChart.setVisibleXRangeMaximum(POINT_PER_PAGE + 0.5f);
 			//// TODO: 7/17/17 scroll to X
 			// lineChart.moveViewToX(////);
 			Legend legend = lineChart.getLegend();
