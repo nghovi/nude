@@ -99,7 +99,7 @@
                     android:background="@color/chiase_white"
                     android:orientation="horizontal">
 
-                    <trente.asia.thankscard.services.posted.model.ImageModel
+                    <trente.asia.thankscard.services.posted.view.PhotoViewPost
                         android:id="@+id/layout_photo"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"

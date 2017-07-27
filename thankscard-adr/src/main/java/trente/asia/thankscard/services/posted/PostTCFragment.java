@@ -46,7 +46,7 @@ import trente.asia.thankscard.fragments.dialogs.PostConfirmDialog;
 import trente.asia.thankscard.services.common.model.Template;
 import trente.asia.thankscard.services.mypage.model.StampCategoryModel;
 import trente.asia.thankscard.services.mypage.model.StampModel;
-import trente.asia.thankscard.services.posted.model.StickerModel;
+import trente.asia.thankscard.services.posted.view.StickerViewPost;
 import trente.asia.thankscard.services.posted.presenter.StampAdapter;
 import trente.asia.thankscard.services.posted.presenter.StampCategoryAdapter;
 import trente.asia.thankscard.services.posted.view.ChangeToNormalCardDialog;
@@ -61,13 +61,12 @@ import trente.asia.welfare.adr.models.DeptModel;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.pref.PreferencesSystemUtil;
 import trente.asia.welfare.adr.utils.WelfareUtil;
-import trente.asia.welfare.adr.utils.WfPicassoHelper;
 
 /**
  * Created by tien on 7/12/2017.
  */
 
-public class PostTCFragment extends AbstractTCFragment implements View.OnClickListener,SelectDeptFragment.OnSelectDeptListener,SelectUserFragment.OnSelectUserListener,SelectCardFragment.OnSelectCardListener,StickerModel.OnStickerListener,TouchPad.OnTouchPadListener,StampCategoryAdapter.OnStampCategoryAdapterListener,StampAdapter.OnStampAdapterListener{
+public class PostTCFragment extends AbstractTCFragment implements View.OnClickListener,SelectDeptFragment.OnSelectDeptListener,SelectUserFragment.OnSelectUserListener,SelectCardFragment.OnSelectCardListener, StickerViewPost.OnStickerListener,TouchPad.OnTouchPadListener,StampCategoryAdapter.OnStampCategoryAdapterListener,StampAdapter.OnStampAdapterListener{
 
 	public final int							MAX_LETTER		= 75;
 
@@ -79,7 +78,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 	private DeptModel							department;
 	private UserModel							member;
 	private String								message;
-	private List<StickerModel>					stickers		= new ArrayList<>();
+	private List<StickerViewPost>					stickers		= new ArrayList<>();
 	private Uri									mImageUri;
 	private String								mImagePath;
 	private boolean								canSendPhoto	= false;
@@ -338,7 +337,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 			binding.touchPad.setCallback(this);
 			binding.edtMessagePhoto.setText(message);
 			binding.edtMessagePhoto.setSelection(message.length());
-			for(StickerModel sticker : stickers){
+			for(StickerViewPost sticker : stickers){
 				binding.rltMsg.removeView(sticker);
 			}
 		}else{
@@ -346,7 +345,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 			binding.rltMsg.setVisibility(View.VISIBLE);
 			binding.layoutPhoto.clearImage();
 			binding.edtMessage.setText(message);
-			for(StickerModel sticker : stickers){
+			for(StickerViewPost sticker : stickers){
 				binding.lnrBody.removeView(sticker);
 			}
 		}
@@ -363,19 +362,19 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 	}
 
 	private void addSticker(StampModel stamp){
-		for(StickerModel sticker : stickers){
+		for(StickerViewPost sticker : stickers){
 			sticker.unselectSticker();
 		}
-		StickerModel stickerModel = new StickerModel(getContext());
-		stickerModel.setStickerPath(BuildConfig.HOST + stamp.stampPath);
-		stickerModel.key = stamp.key;
-		stickerModel.setCallback(this);
+		StickerViewPost stickerViewPost = new StickerViewPost(getContext());
+		stickerViewPost.setStickerPath(BuildConfig.HOST + stamp.stampPath);
+		stickerViewPost.key = stamp.key;
+		stickerViewPost.setCallback(this);
 		if(canSendPhoto){
-			binding.lnrBody.addView(stickerModel);
+			binding.lnrBody.addView(stickerViewPost);
 		}else{
-			binding.rltMsg.addView(stickerModel);
+			binding.rltMsg.addView(stickerViewPost);
 		}
-		stickers.add(stickerModel);
+		stickers.add(stickerViewPost);
 	}
 
 	@Override
@@ -418,12 +417,13 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 		mImageUri = Uri.fromFile(imageFile);
 		int imageWidth;
 		int imageHeight;
-		if (TcConst.POSITION_LEFT.equals(template.templateType)) {
-			imageWidth = (int) (frameWidth / 2 - 50);
-			imageHeight = (int) (frameHeight - 50);
-		} else {
-			imageWidth = (int) (frameHeight * 2 / 3);
-			imageHeight = (int) (frameHeight * 2 / 3);;
+		if(TcConst.POSITION_LEFT.equals(template.templateType)){
+			imageWidth = (int)(frameWidth / 2 - 50);
+			imageHeight = (int)(frameHeight - 50);
+		}else{
+			imageWidth = (int)(frameHeight * 2 / 3);
+			imageHeight = (int)(frameHeight * 2 / 3);
+			;
 		}
 		WelfareUtil.startCrop(this, imageUri, mImageUri, imageWidth, imageHeight);
 	}
@@ -479,7 +479,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 			jsonObject.put("isSecret", isSecret);
 
 			JSONArray jsonStickers = new JSONArray();
-			for(StickerModel sticker : stickers){
+			for(StickerViewPost sticker : stickers){
 				JSONObject jsonSticker = new JSONObject();
 				jsonSticker.put("key", sticker.getKey());
 				jsonSticker.put("locationX", sticker.getLocationX());
@@ -588,19 +588,19 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 	}
 
 	@Override
-	public void onDeleteStickerClick(StickerModel sticker){
+	public void onDeleteStickerClick(StickerViewPost sticker){
 		binding.rltMsg.removeView(sticker);
 		stickers.remove(sticker);
 	}
 
 	@Override
-	public void onStickerClick(float x, float y, StickerModel sticker){
-		for(StickerModel stickerModel : stickers){
-			if(!sticker.equals(stickerModel)){
-				if(x > stickerModel.lowX && x < stickerModel.highX && y > stickerModel.lowY && y < stickerModel.highY){
-					stickerModel.selectSticker();
+	public void onStickerClick(float x, float y, StickerViewPost sticker){
+		for(StickerViewPost stickerViewPost : stickers){
+			if(!sticker.equals(stickerViewPost)){
+				if(x > stickerViewPost.lowX && x < stickerViewPost.highX && y > stickerViewPost.lowY && y < stickerViewPost.highY){
+					stickerViewPost.selectSticker();
 				}else{
-					stickerModel.unselectSticker();
+					stickerViewPost.unselectSticker();
 				}
 			}
 		}
@@ -654,18 +654,19 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 	@Override
 	public void onStampClick(StampModel stamp){
 		closeLayoutSticker();
-		if (stickers.size() >= 50) {
+		if(stickers.size() >= 50){
 			showLimitStickerDialog();
-		} else {
+		}else{
 			addSticker(stamp);
 		}
 	}
 
-	private void showLimitStickerDialog() {
+	private void showLimitStickerDialog(){
 		final LimitStickerDialog dialog = new LimitStickerDialog();
 		dialog.setListeners(new View.OnClickListener() {
+
 			@Override
-			public void onClick(View view) {
+			public void onClick(View view){
 				dialog.dismiss();
 			}
 		}, null);

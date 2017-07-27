@@ -1,4 +1,4 @@
-package trente.asia.thankscard.services.posted.model;
+package trente.asia.thankscard.services.posted.view;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -23,7 +23,7 @@ import trente.asia.welfare.adr.pref.PreferencesSystemUtil;
  * Created by tien on 7/26/2017.
  */
 
-public class StickerShow extends AppCompatImageView{
+public class StickerViewDetail extends AppCompatImageView{
 
 	private float	frameWidth;
 	private float	frameHeight;
@@ -40,7 +40,7 @@ public class StickerShow extends AppCompatImageView{
     private Matrix matrix = new Matrix();
     private Paint paint = new Paint();
 
-	public StickerShow(Context context){
+	public StickerViewDetail(Context context){
 		super(context);
 		PreferencesSystemUtil preference = new PreferencesSystemUtil(context);
 		frameWidth = Float.valueOf(preference.get(TcConst.PREF_FRAME_WIDTH));

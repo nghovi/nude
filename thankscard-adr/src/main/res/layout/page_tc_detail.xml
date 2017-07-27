@@ -13,7 +13,7 @@
         android:orientation="vertical"
         android:background="@color/chiase_white"
         android:elevation="1dp">
-        <trente.asia.thankscard.services.posted.model.ImageShow
+        <trente.asia.thankscard.services.posted.view.PhotoViewDetail
             android:id="@+id/layout_photo"
             android:layout_height="match_parent"
             app:layout_widthPercent="50%"/>

@@ -1,4 +1,4 @@
-package trente.asia.thankscard.services.posted.model;
+package trente.asia.thankscard.services.posted.view;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -21,7 +21,7 @@ import trente.asia.welfare.adr.pref.PreferencesSystemUtil;
  * Created by tien on 7/26/2017.
  */
 
-public class ImageShow extends AppCompatImageView {
+public class PhotoViewDetail extends AppCompatImageView {
     private float frameWidth;
     private float frameHeight;
     private float translateX;
@@ -35,7 +35,7 @@ public class ImageShow extends AppCompatImageView {
     private Paint paint = new Paint();
     private Bitmap bitmap;
 
-    public ImageShow(Context context, AttributeSet attrs) {
+    public PhotoViewDetail(Context context, AttributeSet attrs) {
         super(context, attrs);
         PreferencesSystemUtil preference = new PreferencesSystemUtil(context);
         frameWidth = Float.valueOf(preference.get(TcConst.PREF_FRAME_WIDTH));

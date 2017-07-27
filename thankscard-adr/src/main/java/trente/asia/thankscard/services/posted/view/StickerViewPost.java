@@ -1,4 +1,4 @@
-package trente.asia.thankscard.services.posted.model;
+package trente.asia.thankscard.services.posted.view;
 
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
@@ -15,7 +15,6 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.AppCompatImageView;
-import android.util.FloatProperty;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -30,7 +29,7 @@ import trente.asia.welfare.adr.pref.PreferencesSystemUtil;
  * Created by on 11/14/2016.
  */
 
-public class StickerModel extends AppCompatImageView{
+public class StickerViewPost extends AppCompatImageView{
 
 	public String						key;
 	public float						rotation		= 0;
@@ -66,11 +65,12 @@ public class StickerModel extends AppCompatImageView{
 	public static final int				ROTATE_CONSTANT	= 30;
 	public static final int				INIT_X			= 300, INIT_Y = 300;
 
-	public StickerModel(Context context){
+	public StickerViewPost(Context context){
 		super(context);
 		PreferencesSystemUtil preference = new PreferencesSystemUtil(context);
 		this.frameWidth = Float.valueOf(preference.get(TcConst.PREF_FRAME_WIDTH));
 		this.frameHeight = Float.valueOf(preference.get(TcConst.PREF_FRAME_HEIGHT));
+		setBackgroundColor(Color.CYAN);
 	}
 
 	public String getKey(){
@@ -159,8 +159,8 @@ public class StickerModel extends AppCompatImageView{
 	}
 
 	private void setCompactLayout(){
-		translateX = (int)(maxDimensionLayout - widthScale) / 2;
-		translateY = (int)(maxDimensionLayout - heightScale) / 2;
+		translateX = (maxDimensionLayout - width) / 2;
+		translateY = (maxDimensionLayout - height) / 2;
 		params.width = maxDimensionLayout;
 		params.height = maxDimensionLayout;
 		params.leftMargin = x - translateX;
@@ -255,7 +255,7 @@ public class StickerModel extends AppCompatImageView{
 		}
 		matrix.reset();
 		// translate pic
-		matrix.postTranslate(translateX, translateY);
+		matrix.setTranslate(translateX, translateY);
 
 		rotatePoint[0] = initRotatePoint.x;
 		rotatePoint[1] = initRotatePoint.y;
@@ -358,9 +358,9 @@ public class StickerModel extends AppCompatImageView{
 					}else{
 						if(callback != null){
 							if(drawBorder){
-								callback.onStickerClick(oldX, oldY, StickerModel.this);
+								callback.onStickerClick(oldX, oldY, StickerViewPost.this);
 							}else{
-								callback.onStickerClick(params.leftMargin + oldX, params.topMargin + oldY, StickerModel.this);
+								callback.onStickerClick(params.leftMargin + oldX, params.topMargin + oldY, StickerViewPost.this);
 							}
 						}
 						performClick();
@@ -402,9 +402,9 @@ public class StickerModel extends AppCompatImageView{
 
 	public interface OnStickerListener{
 
-		void onDeleteStickerClick(StickerModel sticker);
+		void onDeleteStickerClick(StickerViewPost sticker);
 
-		void onStickerClick(float x, float y, StickerModel sticker);
+		void onStickerClick(float x, float y, StickerViewPost sticker);
 	}
 
 	private void log(String msg){

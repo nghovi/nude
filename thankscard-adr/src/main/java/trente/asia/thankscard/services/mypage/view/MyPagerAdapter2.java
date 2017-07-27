@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 
 import android.content.Context;
-import android.support.percent.PercentLayoutHelper;
 import android.support.percent.PercentRelativeLayout;
 import android.support.v4.view.PagerAdapter;
 import android.text.method.ScrollingMovementMethod;
@@ -17,8 +16,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.google.android.gms.vision.text.Line;
-
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import io.realm.Realm;
@@ -27,9 +24,8 @@ import trente.asia.thankscard.R;
 import trente.asia.thankscard.services.common.model.HistoryModel;
 import trente.asia.thankscard.services.mypage.model.StampModel;
 import trente.asia.thankscard.services.posted.model.ApiStickerModel;
-import trente.asia.thankscard.services.posted.model.ImageShow;
-import trente.asia.thankscard.services.posted.model.StickerModel;
-import trente.asia.thankscard.services.posted.model.StickerShow;
+import trente.asia.thankscard.services.posted.view.PhotoViewDetail;
+import trente.asia.thankscard.services.posted.view.StickerViewDetail;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.utils.WelfareUtil;
 import trente.asia.welfare.adr.utils.WfPicassoHelper;
@@ -55,7 +51,7 @@ public class MyPagerAdapter2 extends PagerAdapter{
 		public ImageView		imgTemplate;
 		public ImageView		imgSecret;
 		public LinearLayout		lnrMessage;
-		public ImageShow		imageShow;
+		public PhotoViewDetail photoViewDetail;
 		public RelativeLayout	layoutCard;
 
 		public HistoryViewHolder(View view){
@@ -67,7 +63,7 @@ public class MyPagerAdapter2 extends PagerAdapter{
 			imgTemplate = (ImageView)view.findViewById(R.id.img_item_thanks_card_frame);
 			imgSecret = (ImageView)view.findViewById(R.id.img_secret);
 			lnrMessage = (LinearLayout)view.findViewById(R.id.lnr_thanks_card_frame_container);
-			imageShow = (ImageShow)view.findViewById(R.id.layout_photo);
+			photoViewDetail = (PhotoViewDetail)view.findViewById(R.id.layout_photo);
 			layoutCard = (RelativeLayout) view.findViewById(R.id.layout_card);
 		}
 	}
@@ -146,15 +142,15 @@ public class MyPagerAdapter2 extends PagerAdapter{
 			setLayoutMessageCenter(viewHolder.lnrMessage);
 		}else{
 			if(model.attachment != null && model.attachment.fileUrl != null){
-				viewHolder.imageShow.restoreImage(model.attachment.fileUrl, Float.valueOf(model.photoLocationX),
+				viewHolder.photoViewDetail.restoreImage(model.attachment.fileUrl, Float.valueOf(model.photoLocationX),
 						Float.valueOf(model.photoLocationY), Float.valueOf(model.photoScale));
 			}
 		}
 		for (ApiStickerModel sticker : model.stickers) {
 			StampModel stamp = StampModel.getStamp(Realm.getDefaultInstance(), sticker.stickerId);
-			StickerShow stickerShow = new StickerShow(mContext);
-			viewHolder.layoutCard.addView(stickerShow);
-			stickerShow.restoreSticker(stamp.stampPath, Float.valueOf(sticker.locationX), Float.valueOf(sticker.locationY),
+			StickerViewDetail stickerViewDetail = new StickerViewDetail(mContext);
+			viewHolder.layoutCard.addView(stickerViewDetail);
+			stickerViewDetail.restoreSticker(stamp.stampPath, Float.valueOf(sticker.locationX), Float.valueOf(sticker.locationY),
 					Float.valueOf(sticker.scale), Float.valueOf(sticker.degree));
 		}
 		return view;
