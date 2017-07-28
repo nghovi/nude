@@ -140,7 +140,8 @@
                         android:maxLength="75"
                         android:maxLines="6"
                         android:paddingLeft="@dimen/margin_20dp"
-                        android:paddingRight="@dimen/margin_20dp" />
+                        android:paddingRight="@dimen/margin_20dp"
+                        android:background="#00000000"/>
 
                 </RelativeLayout>
 
@@ -178,7 +179,8 @@
                             android:maxLength="75"
                             android:maxLines="6"
                             android:paddingLeft="@dimen/margin_20dp"
-                            android:paddingRight="@dimen/margin_20dp" />
+                            android:paddingRight="@dimen/margin_20dp"
+                            android:background="#00000000"/>
                     </RelativeLayout>
                 </android.support.percent.PercentRelativeLayout>
             </RelativeLayout>

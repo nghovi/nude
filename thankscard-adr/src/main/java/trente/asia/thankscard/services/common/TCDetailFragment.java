@@ -26,6 +26,7 @@ import trente.asia.thankscard.BuildConfig;
 import trente.asia.thankscard.R;
 import trente.asia.thankscard.commons.defines.TcConst;
 import trente.asia.thankscard.services.common.model.HistoryModel;
+import trente.asia.thankscard.services.posted.PostTCFragment;
 import trente.asia.thankscard.services.posted.ThanksCardEditFragment;
 import trente.asia.thankscard.services.received.ReceiveTCListFragment;
 import trente.asia.thankscard.utils.TCUtil;
@@ -143,7 +144,8 @@ public class TCDetailFragment extends AbstractPagerFragment{
 
 				@Override
 				public void onClick(View v){
-					gotoPostedEditFragment(historyModel);
+//					gotoPostedEditFragment(historyModel);
+					gotoFragment(new PostTCFragment());
 				}
 			});
 		}else{

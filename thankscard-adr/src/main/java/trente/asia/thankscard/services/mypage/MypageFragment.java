@@ -168,7 +168,8 @@ public class MypageFragment extends AbstractTCFragment{
 
 			@Override
 			public void onClick(DialogInterface dialog, int which){
-				gotoPostEdit(notice);
+//				gotoPostEdit(notice);
+				gotoFragment(new PostTCFragment());
 			}
 		};
 		showAlertDialogWithOption(getString(R.string.fragment_mypage_alert_title), notice.noticeMessage, getString(R.string.fragment_mypage_alert_post), getString(android.R.string.cancel), listener, null);
