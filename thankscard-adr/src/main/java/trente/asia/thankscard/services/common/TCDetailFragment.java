@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
 
 import asia.chiase.core.util.CCDateUtil;
@@ -34,6 +35,7 @@ import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.models.DeptModel;
 import trente.asia.welfare.adr.models.UserModel;
+import trente.asia.welfare.adr.pref.PreferencesSystemUtil;
 import trente.asia.welfare.adr.utils.WelfareUtil;
 import trente.asia.welfare.adr.utils.WfPicassoHelper;
 
@@ -166,7 +168,8 @@ public class TCDetailFragment extends AbstractPagerFragment{
 			imgSeal.setVisibility(View.INVISIBLE);
 		}
 		txtSenderName.setText(historyModel.posterName);
-		Picasso.with(getContext()).load(BuildConfig.HOST + historyModel.posterAvatarPath).fit().into(senderAvatar);
+
+		Glide.with(getContext()).load(BuildConfig.HOST + historyModel.posterAvatarPath).into(senderAvatar);
 	}
 
 	private void log(String msg) {

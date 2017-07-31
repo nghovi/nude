@@ -14,8 +14,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -252,7 +254,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
     }
 
     private void buildTemplate() {
-        Picasso.with(getContext()).load(BuildConfig.HOST + template.templateUrl).resize((int) frameWidth, (int) frameHeight).into(binding.imgCard);
+        Glide.with(getContext()).load(BuildConfig.HOST + template.templateUrl).into(binding.imgCard);
     }
 
     @Override
@@ -432,7 +434,6 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
         } else {
             imageWidth = (int) (frameHeight * 2 / 3);
             imageHeight = (int) (frameHeight * 2 / 3);
-            ;
         }
         WelfareUtil.startCrop(this, imageUri, mImageUri, imageWidth, imageHeight);
     }
@@ -497,6 +498,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
                 jsonSticker.put("degree", sticker.getDegree());
                 jsonStickers.put(jsonSticker);
             }
+
             jsonObject.put("stickerListString", jsonStickers.toString());
 
             if (canSendPhoto) {
