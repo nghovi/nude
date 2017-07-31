@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 
 import trente.asia.thankscard.R;
 import trente.asia.thankscard.databinding.FragmentSelectUserBinding;
@@ -88,6 +89,7 @@ public class SelectUserFragment extends AbstractTCFragment implements UserAdapte
 					}
 				}
 			});
+			getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 		}
 		return mRootView;
 	}
@@ -149,6 +151,7 @@ public class SelectUserFragment extends AbstractTCFragment implements UserAdapte
 	public void onDestroy(){
 		super.onDestroy();
 		callback = null;
+		getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 	}
 
 	private void log(String msg){
