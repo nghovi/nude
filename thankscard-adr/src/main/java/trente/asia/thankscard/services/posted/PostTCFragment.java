@@ -358,6 +358,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
             binding.edtMessage.setText(message);
             for (StickerViewPost sticker : stickers) {
                 binding.lnrBody.removeView(sticker);
+                binding.rltMsg.removeView(sticker);
             }
         }
         stickers.clear();
