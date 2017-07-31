@@ -54,10 +54,7 @@ public class SelectDeptFragment extends AbstractTCFragment implements Department
 
 				@Override
 				public void onClick(View view){
-					if(callback != null){
-						callback.onSelectDeptDone(department);
-						getFragmentManager().popBackStack();
-					}
+
 				}
 			});
 
@@ -138,6 +135,10 @@ public class SelectDeptFragment extends AbstractTCFragment implements Department
 	@Override
 	public void onSelectDepartment(DeptModel deptModel){
 		this.department = deptModel;
+		if(callback != null){
+			callback.onSelectDeptDone(department);
+			getFragmentManager().popBackStack();
+		}
 	}
 
 	public interface OnSelectDeptListener{

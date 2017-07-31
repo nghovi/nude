@@ -54,10 +54,7 @@ public class SelectUserFragment extends AbstractTCFragment implements UserAdapte
 
 				@Override
 				public void onClick(View view){
-					if(callback != null){
-						callback.onSelectUserDone(user);
-						getFragmentManager().popBackStack();
-					}
+
 				}
 			});
 
@@ -138,6 +135,10 @@ public class SelectUserFragment extends AbstractTCFragment implements UserAdapte
 	@Override
 	public void onSelectUser(UserModel userModel) {
 		this.user = userModel;
+		if(callback != null){
+			callback.onSelectUserDone(user);
+			getFragmentManager().popBackStack();
+		}
 	}
 
 	public interface OnSelectUserListener {
