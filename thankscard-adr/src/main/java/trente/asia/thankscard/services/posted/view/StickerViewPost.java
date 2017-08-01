@@ -13,7 +13,9 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.graphics.Region;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -23,7 +25,9 @@ import android.widget.RelativeLayout;
 
 import trente.asia.thankscard.R;
 import trente.asia.thankscard.commons.defines.TcConst;
+import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.pref.PreferencesSystemUtil;
+import trente.asia.welfare.adr.utils.WelfareUtil;
 
 /**
  * Created by on 11/14/2016.
@@ -60,16 +64,19 @@ public class StickerViewPost extends AppCompatImageView{
 	private Matrix						matrix			= new Matrix();
 	private DashPathEffect				dashPathEffect	= new DashPathEffect(new float[]{6, 4}, 0);
 	private OnStickerListener			callback;
+	private PreferencesSystemUtil		preference;
+	private Rect						rectBound		= new Rect();
 
-	public static final int				MAX_DIMENSION	= 300;
-	public static final int				ROTATE_CONSTANT	= 30;
-	public static final int				INIT_X			= 300, INIT_Y = 300;
+	public static final int				MAX_DIMENSION	= WelfareUtil.dpToPx(100);
+	public static final int				ROTATE_CONSTANT	= WelfareUtil.dpToPx(10);
+	public static final int				INIT_X			= WelfareUtil.dpToPx(10), INIT_Y = WelfareUtil.dpToPx(10);
 
 	public StickerViewPost(Context context){
 		super(context);
-		PreferencesSystemUtil preference = new PreferencesSystemUtil(context);
+		preference = new PreferencesSystemUtil(context);
 		this.frameWidth = Float.valueOf(preference.get(TcConst.PREF_FRAME_WIDTH));
 		this.frameHeight = Float.valueOf(preference.get(TcConst.PREF_FRAME_HEIGHT));
+
 	}
 
 	public String getKey(){
@@ -254,7 +261,7 @@ public class StickerViewPost extends AppCompatImageView{
 		}
 		matrix.reset();
 		// translate pic
-		matrix.setTranslate(translateX, translateY);
+		matrix.postTranslate(translateX, translateY);
 
 		rotatePoint[0] = initRotatePoint.x;
 		rotatePoint[1] = initRotatePoint.y;
@@ -278,15 +285,25 @@ public class StickerViewPost extends AppCompatImageView{
 		if(!drawBorder){
 			return;
 		}
+
 		// draw dash frame
 		paint.setStyle(Paint.Style.STROKE);
 		paint.setStrokeWidth(2);
 		paint.setColor(Color.CYAN);
 		paint.setPathEffect(dashPathEffect);
 		canvas.save();
+		if(Build.VERSION.SDK_INT < Build.VERSION_CODES.N){
+			int yFromTop = Integer.parseInt(preference.get(TcConst.PREF_Y_FROM_TOP));
+			matrix.postTranslate(0, yFromTop);
+			canvas.getClipBounds(rectBound);
+			log("rectBound.bottom = " + rectBound.bottom);
+			log("yFromTop = " + yFromTop);
+			canvas.clipRect(rectBound.left, rectBound.top, rectBound.right, rectBound.bottom + yFromTop, Region.Op.REPLACE);
+		}
 		canvas.setMatrix(matrix);
 		canvas.drawRect(rectBorder, paint);
 		canvas.restore();
+
 		// draw rotate, delete, scale button
 		canvas.drawBitmap(rotateBitmap, (int)rotatePoint[0] - ROTATE_CONSTANT, (int)rotatePoint[1] - ROTATE_CONSTANT, paint);
 		canvas.drawBitmap(scaleBitmap, (int)scalePoint[0] - ROTATE_CONSTANT, (int)scalePoint[1] - ROTATE_CONSTANT, paint);
