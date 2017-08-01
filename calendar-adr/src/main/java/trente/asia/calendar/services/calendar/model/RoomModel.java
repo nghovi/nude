@@ -5,7 +5,9 @@ package trente.asia.calendar.services.calendar.model;
  */
 
 @com.bluelinelabs.logansquare.annotation.JsonObject(fieldDetectionPolicy = com.bluelinelabs.logansquare.annotation.JsonObject.FieldDetectionPolicy.NONPRIVATE_FIELDS)
-public class RoomModel {
-    public String key;
-    public String name;
+public class RoomModel{
+
+	public String	key;
+	public String	roomName;
+	public String	roomNote;
 }

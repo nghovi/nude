@@ -76,45 +76,23 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 		super.initView();
 		inflater = LayoutInflater.from(activity);
 
-		UserFacilityView userFacilityView = (UserFacilityView)getView().findViewById(R.id.user_facility_view);
-		userFacilityView.initChildren(new UserFacilityView.OnTabClickListener() {
-
-			@Override
-			public void onBtnUserClicked(){
-				gotoUserFilterFragment();
-			}
-
-			@Override
-			public void onBtnFacilityClicked(){
-				gotoRoomFilterFragment();
-			}
-		});
-
 		lnrTodoSection = (LinearLayout)getView().findViewById(R.id.lnr_todos);
 		lnrTodos = (LinearLayout)getView().findViewById(R.id.lnr_todo_container);
 		lnrTodoSection.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v){
-				if(isExpanded){
-					collapse(lnrTodoSection);
-					isExpanded = false;
-				}else{
-					expand(lnrTodoSection);
-					isExpanded = true;
+				if(!CCCollectionUtil.isEmpty(todos)){
+					if(isExpanded){
+						collapse(lnrTodoSection);
+						isExpanded = false;
+					}else{
+						expand(lnrTodoSection);
+						isExpanded = true;
+					}
 				}
 			}
 		});
-	}
-
-	private void gotoRoomFilterFragment(){
-		RoomFilterFragment roomFilterFragment = new RoomFilterFragment();
-		((AbstractClFragment)getParentFragment()).gotoFragment(roomFilterFragment);
-	}
-
-	private void gotoUserFilterFragment(){
-		UserFilterFragment userFilterFragment = new UserFilterFragment();
-		((AbstractClFragment)getParentFragment()).gotoFragment(userFilterFragment);
 	}
 
 	@Override

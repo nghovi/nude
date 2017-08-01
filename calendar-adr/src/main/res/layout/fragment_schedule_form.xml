@@ -112,34 +112,6 @@
 
             <View style="@style/cs_common_divider" />
 
-            <LinearLayout
-                android:id="@+id/lnr_id_calendar"
-                style="@style/wf_common_item_linear2"
-                android:background="@drawable/state_common_selectable_row">
-
-                <TextView
-                    style="@style/wl_common_text"
-                    android:layout_width="wrap_content"
-                    android:text="@string/cl_schedule_form_item_calendar" />
-
-                <trente.asia.android.view.ChiaseTextView
-                    android:id="@+id/txt_id_calendar"
-                    style="@style/wl_common_edit_text2"
-                    android:layout_marginLeft="@dimen/margin_10dp"
-                    android:layout_weight="1"
-                    android:hint="@string/chiase_common_please_select"
-                    custom:mName="calendarId" />
-
-                <ImageView
-                    android:id="@+id/img_arrow_right_calendar"
-                    style="@style/cs_common_wrap"
-                    android:layout_gravity="center_vertical"
-                    android:paddingLeft="@dimen/margin_6dp"
-                    android:src="@drawable/wf_row_arrow_right" />
-            </LinearLayout>
-
-            <View style="@style/cs_common_divider" />
-
             <LinearLayout style="@style/wf_common_item_linear2">
 
                 <TextView
@@ -153,6 +125,24 @@
                     android:layout_marginLeft="@dimen/margin_10dp"
                     android:hint="@string/chiase_common_please_input"
                     custom:mName="scheduleName" />
+            </LinearLayout>
+
+            <View style="@style/cs_common_divider" />
+
+            <LinearLayout
+                android:id="@+id/lnr_id_scope"
+                style="@style/wf_common_item_linear2">
+
+                <TextView
+                    style="@style/wl_common_text"
+                    android:layout_width="wrap_content"
+                    android:text="@string/cl_schedule_form_item_scope" />
+
+                <trente.asia.android.view.ChiaseTextView
+                    android:id="@+id/txt_id_scope"
+                    style="@style/wl_common_edit_text2"
+                    android:layout_marginLeft="@dimen/margin_10dp"
+                    custom:mName="scheduleScope" />
             </LinearLayout>
 
             <View style="@style/cs_common_divider" />

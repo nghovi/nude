@@ -1,0 +1,31 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/cs_common_match_wrap"
+    android:orientation="horizontal">
+
+
+    <TextView
+        android:id="@+id/txt_item_daily_schedule_start_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/margin_4dp"
+        android:text="09:00" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/margin_10dp">
+
+        <View style="@style/cs_common_divider" />
+
+
+        <LinearLayout
+            android:id="@+id/lnr_schedule_all_day_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"></LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

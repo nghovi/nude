@@ -30,6 +30,7 @@ public class ScheduleDetailFragment extends AbstractScheduleFragment{
 
 	private Date		selectedDate;
 	private TextView	txtJoinUser;
+	private TextView txtScheduleScope;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -42,8 +43,6 @@ public class ScheduleDetailFragment extends AbstractScheduleFragment{
 				getFragmentManager().popBackStack();
 			}else if(CCConst.YES.equals(isUpdate)){
 				schedule.key = CCStringUtil.toString(((WelfareActivity)activity).dataMap.get(ClConst.ACTION_SCHEDULE_UPDATE_NEW_KEY));
-				// Not clear here in case of user want to back to list screen
-				// ((WelfareActivity)activity).dataMap.clear();
 			}
 		}
 		return mRootView;
@@ -55,6 +54,7 @@ public class ScheduleDetailFragment extends AbstractScheduleFragment{
 		initHeader(R.drawable.wf_back_white, getString(R.string.fragment_schedule_detail_title), null);
 
 		txtScheduleName = (TextView)getView().findViewById(R.id.txt_id_schedule_name);
+		txtScheduleScope = (TextView)getView().findViewById(R.id.txt_id_schedule_scope);
 		txtScheduleUrl = (TextView)getView().findViewById(R.id.txt_id_schedule_url);
 		txtScheduleNote = (TextView)getView().findViewById(R.id.txt_id_schedule_note);
 		txtJoinUser = (TextView)getView().findViewById(R.id.txt_join_user);
@@ -73,6 +73,7 @@ public class ScheduleDetailFragment extends AbstractScheduleFragment{
 		super.onLoadScheduleDetailSuccess(response);
 
 		txtScheduleName.setText(schedule.scheduleName);
+		txtScheduleScope.setText(schedule.scheduleScope);
 		txtScheduleNote.setText(schedule.scheduleNote);
 		if(!CCStringUtil.isEmpty(schedule.scheduleUrl)){
 			txtScheduleUrl.setText(schedule.scheduleUrl);

@@ -1,34 +1,16 @@
-<LinearLayout style="@style/wf_common_match"
-              xmlns:android="http://schemas.android.com/apk/res/android">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/wf_common_match">
+
+    <include
+        android:id="@+id/user_facility_view"
+        layout="@layout/view_user_facility_tabs"
+        android:visibility="visible" />
+
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical">
-
-        <!--<include layout="@layout/view_horizontal_user_list"/>-->
-        <trente.asia.calendar.commons.views.UserListLinearLayout
-            android:id="@+id/lnr_fragment_pager_container_user_list"
-            style="@style/cs_common_match_wrap"
-            android:background="@color/wf_app_color_base">
-        </trente.asia.calendar.commons.views.UserListLinearLayout>
-
-        <!--android:background="@drawable/state_common_selectable_row"-->
-
-        <LinearLayout
-            android:id="@+id/lnr_calendar_container"
-            style="@style/cs_common_match_wrap"
-            android:background="@color/wf_app_color_base"
-            android:orientation="vertical"/>
-
-        <com.github.ksoichiro.android.observablescrollview.ObservableListView
-            android:id="@+id/scr_calendar_day"
-            android:background="@color/cl_cell_bg_color"
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-    </LinearLayout>
-
+        android:id="@+id/lnr_calendar_container"
+        style="@style/cs_common_match_wrap"
+        android:background="@color/wf_app_color_base"
+        android:orientation="vertical" />
 
 </LinearLayout>

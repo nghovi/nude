@@ -94,4 +94,6 @@
     <string name="select_from_group">グループから選択</string>
     <string name="select_user">Select user</string>
     <string name="select_group">Select group</string>
+    <string name="cl_schedule_form_item_scope">公開設定</string>
+    <string name="two_things_todo">%s$1 thing(s) To Do</string>
 </resources>

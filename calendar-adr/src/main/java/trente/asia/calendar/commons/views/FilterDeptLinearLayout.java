@@ -106,7 +106,7 @@ public class FilterDeptLinearLayout extends LinearLayout{
 
 		if(!CCCollectionUtil.isEmpty(rooms)){
 			for(RoomModel roomModel : rooms){
-				addItem(roomModel.name, cbxAll, checkSelectedRoom(roomModel, selectedRooms), null);
+				addItem(roomModel.roomName, cbxAll, checkSelectedRoom(roomModel, selectedRooms), null);
 			}
 		}
 

@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.zip.Inflater;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,14 +28,17 @@ import trente.asia.android.model.DayModel;
 import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
+import trente.asia.calendar.commons.fragments.AbstractClFragment;
 import trente.asia.calendar.commons.fragments.ClPageFragment;
 import trente.asia.calendar.commons.utils.ClUtil;
+import trente.asia.calendar.commons.views.UserFacilityView;
 import trente.asia.calendar.services.calendar.model.CalendarModel;
 import trente.asia.calendar.services.calendar.model.CategoryModel;
 import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.model.WorkOffer;
 import trente.asia.calendar.services.calendar.view.WeeklyScheduleListAdapter;
+import trente.asia.calendar.services.todo.model.Todo;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.models.UserModel;
@@ -62,23 +66,52 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 	protected String				dayStr;
 	private String					scheduleStrings;
 	protected boolean				isChangedData		= true;
+	protected List<Todo>			todos;
+	protected LayoutInflater		inflater;
 
 	abstract protected List<Date> getAllDate();
 
-	abstract protected void clearOldData();
+	protected void clearOldData(){
+	};
 
 	@Override
 	protected void initView(){
 		super.initView();
+
+		UserFacilityView userFacilityView = (UserFacilityView)getView().findViewById(R.id.user_facility_view);
+		userFacilityView.initChildren(new UserFacilityView.OnTabClickListener() {
+
+			@Override
+			public void onBtnUserClicked(){
+				gotoUserFilterFragment();
+			}
+
+			@Override
+			public void onBtnFacilityClicked(){
+				gotoRoomFilterFragment();
+			}
+		});
 
 		if(pageSharingHolder.isLoadingSchedules == false){
 			lnrCalendarContainer = (LinearLayout)getView().findViewById(R.id.lnr_calendar_container);
 			dates = getAllDate();
 			initCalendarView();
 		}
+
+		inflater = LayoutInflater.from(activity);
 	}
 
-	private void initCalendarView(){
+	protected void gotoRoomFilterFragment(){
+		RoomFilterFragment roomFilterFragment = new RoomFilterFragment();
+		((AbstractClFragment)getParentFragment()).gotoFragment(roomFilterFragment);
+	}
+
+	protected void gotoUserFilterFragment(){
+		UserFilterFragment userFilterFragment = new UserFilterFragment();
+		((AbstractClFragment)getParentFragment()).gotoFragment(userFilterFragment);
+	}
+
+	protected void initCalendarView(){
 		initCalendarHeader();
 		initDayViews();
 	}
@@ -179,6 +212,7 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 			lstWorkOffer = LoganSquare.parseList(response.optString("workOfferList"), WorkOffer.class);
 			lstBirthdayUser = LoganSquare.parseList(response.optString("birthdayList"), UserModel.class);
 			lstCalendarUser = LoganSquare.parseList(response.optString("calendarUsers"), UserModel.class);
+			todos = LoganSquare.parseList(response.optString("todos"), Todo.class);
 			if(refreshDialogData && !newScheduleStrings.equals(scheduleStrings)){
 				isChangedData = true;
 			}
@@ -190,7 +224,7 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 		updateSchedules(lstSchedule, lstCategory);
 	}
 
-	public static void updateSchedules(List<ScheduleModel> schedules, List<CategoryModel> categories){
+	protected void updateSchedules(List<ScheduleModel> schedules, List<CategoryModel> categories){
 		Map<String, CategoryModel> categoryMap = ClUtil.convertCategory2Map(categories);
 		for(ScheduleModel schedule : schedules){
 			schedule.categoryModel = categoryMap.get(schedule.categoryId);
@@ -222,6 +256,8 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 		return ContextCompat.getColor(activity, R.color.wf_app_color_base);
 	}
 
-	abstract int getCalendarHeaderItem();
+	protected int getCalendarHeaderItem(){
+		return 0;
+	};
 
 }

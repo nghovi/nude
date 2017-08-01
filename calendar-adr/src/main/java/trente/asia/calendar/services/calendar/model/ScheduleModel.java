@@ -49,6 +49,7 @@ public class ScheduleModel{
 	public String			repeatInterval;
 	public Boolean			isWarning;
 	public UserModel		owner;
+	public String			scheduleScope;
 
 	public ScheduleModel(){
 
