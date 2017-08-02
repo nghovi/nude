@@ -35,6 +35,7 @@ public class TcConst{
 	public static final String	PREF_POINT_BRONZE						= "PREF_POINT_BRONZE";
 	public static final String	PREF_POINT_SILVER						= "PREF_POINT_SILVER";
 	public static final String	PREF_POINT_GOLD							= "PREF_POINT_GOLD";
+	public static final String	PREF_POINT_TOTAL						= "PREF_POINT_TOTAL";
 
 	public static final String	MESSAGE_STAMP_LAST_UPDATE_DATE			= "MESSAGE_STAMP_LAST_UPDATE_DATE";
 	public static final String	API_MESSAGE_STAMP_CATEGORY_LIST			= "/api/system/stamp/category/list";

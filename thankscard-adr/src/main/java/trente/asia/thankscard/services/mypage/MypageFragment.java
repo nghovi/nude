@@ -308,6 +308,9 @@ public class MypageFragment extends AbstractTCFragment{
 		int pointSilver = Integer.parseInt(prefAccUtil.get(TcConst.PREF_POINT_SILVER));
 		int pointGold = Integer.parseInt(prefAccUtil.get(TcConst.PREF_POINT_GOLD));
 
+		prefAccUtil.set(TcConst.PREF_POINT_TOTAL, String.valueOf(totalPoint));
+		log(totalPoint + "");
+
 		if(totalPoint < pointBronze){
 			imageView.setImageResource(R.drawable.tc_rank_regular);
 			txtRank.setText(R.string.tc_rank_regular);

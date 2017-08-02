@@ -19,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -157,6 +158,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 		binding.lnrSelectSticker.setOnClickListener(this);
 		binding.lnrSelectPhoto.setOnClickListener(this);
 		binding.mainLayout.setOnClickListener(this);
+        validateButtons();
 		binding.edtMessage.addTextChangedListener(new TextWatcher() {
 
 			@Override
@@ -201,6 +203,24 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 			}
 		});
 	}
+
+    private void validateButtons(){
+        int pointBronze = Integer.parseInt(prefAccUtil.get(TcConst.PREF_POINT_BRONZE));
+        int pointSilver = Integer.parseInt(prefAccUtil.get(TcConst.PREF_POINT_SILVER));
+        int pointGold = Integer.parseInt(prefAccUtil.get(TcConst.PREF_POINT_GOLD));
+        int totalPoint = Integer.parseInt(prefAccUtil.get(TcConst.PREF_POINT_TOTAL));
+
+        if (totalPoint < pointBronze) {
+            binding.lnrSelectSticker.setVisibility(View.INVISIBLE);
+            binding.lnrSelectPhoto.setVisibility(View.INVISIBLE);
+        } else if (totalPoint < pointSilver) {
+            binding.lnrSelectSticker.setVisibility(View.VISIBLE);
+            binding.lnrSelectPhoto.setVisibility(View.INVISIBLE);
+        } else {
+            binding.lnrSelectSticker.setVisibility(View.VISIBLE);
+            binding.lnrSelectPhoto.setVisibility(View.VISIBLE);
+        }
+    }
 
 	@Override
 	protected void initData(){
