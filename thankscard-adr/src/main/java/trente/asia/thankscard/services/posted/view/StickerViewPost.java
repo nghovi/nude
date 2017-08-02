@@ -1,4 +1,4 @@
-package trente.asia.thankscard.services.posted.model;
+package trente.asia.thankscard.services.posted.view;
 
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
@@ -13,7 +13,9 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.graphics.Region;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -21,22 +23,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
-import java.io.File;
-
 import trente.asia.thankscard.R;
+import trente.asia.thankscard.commons.defines.TcConst;
+import trente.asia.welfare.adr.define.WelfareConst;
+import trente.asia.welfare.adr.pref.PreferencesSystemUtil;
+import trente.asia.welfare.adr.utils.WelfareUtil;
 
 /**
  * Created by on 11/14/2016.
  */
 
-public class StickerModel extends AppCompatImageView{
+public class StickerViewPost extends AppCompatImageView{
 
-	public int							key;
+	public String						key;
 	public float						rotation		= 0;
 	public float						scaleValue		= 1f;
 	public int							translateX		= 0;
 	public int							translateY		= 0;
-	public static String STICKER_PATH = "http://www.unixstickers.com/image/data/stickers/gruntjs/Grunt.sh.png";
+	private float						frameWidth		= 0;
+	private float						frameHeight		= 0;
 
 	private Bitmap						bitmapSticker, mainBitmap, rotateBitmap, scaleBitmap, deleteBitmap;
 	private Paint						paint			= new Paint();
@@ -59,16 +64,42 @@ public class StickerModel extends AppCompatImageView{
 	private Matrix						matrix			= new Matrix();
 	private DashPathEffect				dashPathEffect	= new DashPathEffect(new float[]{6, 4}, 0);
 	private OnStickerListener			callback;
+	private PreferencesSystemUtil		preference;
+	private Rect						rectBound		= new Rect();
 
-	public static final int				MAX_DIMENSION	= 300;
-	public static final int				ROTATE_CONSTANT	= 30;
-	public static final int				INIT_X			= 300, INIT_Y = 300;
+	public static final int				MAX_DIMENSION	= WelfareUtil.dpToPx(100);
+	public static final int				ROTATE_CONSTANT	= WelfareUtil.dpToPx(10);
+	public static final int				INIT_X			= WelfareUtil.dpToPx(10), INIT_Y = WelfareUtil.dpToPx(10);
 
-	public StickerModel(Context context){
+	public StickerViewPost(Context context){
 		super(context);
+		preference = new PreferencesSystemUtil(context);
+		this.frameWidth = Float.valueOf(preference.get(TcConst.PREF_FRAME_WIDTH));
+		this.frameHeight = Float.valueOf(preference.get(TcConst.PREF_FRAME_HEIGHT));
+
 	}
 
-	public void setStickerPath(String stickerPath) {
+	public String getKey(){
+		return key;
+	}
+
+	public String getLocationX(){
+		return String.valueOf((centerPoint[0] + params.leftMargin) / frameWidth);
+	}
+
+	public String getLocationY(){
+		return String.valueOf((centerPoint[1] + params.topMargin) / frameHeight);
+	}
+
+	public String getScale(){
+		return String.valueOf(heightScale / frameHeight);
+	}
+
+	public String getDegree(){
+		return String.valueOf(rotation);
+	}
+
+	public void setStickerPath(String stickerPath){
 		Picasso.with(getContext()).load(stickerPath).into(new Target() {
 
 			@Override
@@ -89,7 +120,7 @@ public class StickerModel extends AppCompatImageView{
 		});
 	}
 
-	public void setImagePath(String path) {
+	public void setImagePath(String path){
 		bitmapSticker = BitmapFactory.decodeFile(path);
 		init();
 	}
@@ -134,8 +165,8 @@ public class StickerModel extends AppCompatImageView{
 	}
 
 	private void setCompactLayout(){
-		translateX = (int)(maxDimensionLayout - widthScale) / 2;
-		translateY = (int)(maxDimensionLayout - heightScale) / 2;
+		translateX = (maxDimensionLayout - width) / 2;
+		translateY = (maxDimensionLayout - height) / 2;
 		params.width = maxDimensionLayout;
 		params.height = maxDimensionLayout;
 		params.leftMargin = x - translateX;
@@ -254,15 +285,25 @@ public class StickerModel extends AppCompatImageView{
 		if(!drawBorder){
 			return;
 		}
+
 		// draw dash frame
 		paint.setStyle(Paint.Style.STROKE);
 		paint.setStrokeWidth(2);
 		paint.setColor(Color.CYAN);
 		paint.setPathEffect(dashPathEffect);
 		canvas.save();
+		if(Build.VERSION.SDK_INT < Build.VERSION_CODES.N){
+			int yFromTop = Integer.parseInt(preference.get(TcConst.PREF_Y_FROM_TOP));
+			matrix.postTranslate(0, yFromTop);
+			canvas.getClipBounds(rectBound);
+			log("rectBound.bottom = " + rectBound.bottom);
+			log("yFromTop = " + yFromTop);
+			canvas.clipRect(rectBound.left, rectBound.top, rectBound.right, rectBound.bottom + yFromTop, Region.Op.REPLACE);
+		}
 		canvas.setMatrix(matrix);
 		canvas.drawRect(rectBorder, paint);
 		canvas.restore();
+
 		// draw rotate, delete, scale button
 		canvas.drawBitmap(rotateBitmap, (int)rotatePoint[0] - ROTATE_CONSTANT, (int)rotatePoint[1] - ROTATE_CONSTANT, paint);
 		canvas.drawBitmap(scaleBitmap, (int)scalePoint[0] - ROTATE_CONSTANT, (int)scalePoint[1] - ROTATE_CONSTANT, paint);
@@ -330,12 +371,12 @@ public class StickerModel extends AppCompatImageView{
 				if(!isTouch){
 					if(touch == 4){
 						deleteSticker();
-					} else {
+					}else{
 						if(callback != null){
-							if (drawBorder) {
-								callback.onStickerClick(oldX, oldY, StickerModel.this);
-							} else {
-								callback.onStickerClick(params.leftMargin + oldX, params.topMargin + oldY, StickerModel.this);
+							if(drawBorder){
+								callback.onStickerClick(oldX, oldY, StickerViewPost.this);
+							}else{
+								callback.onStickerClick(params.leftMargin + oldX, params.topMargin + oldY, StickerViewPost.this);
 							}
 						}
 						performClick();
@@ -377,9 +418,9 @@ public class StickerModel extends AppCompatImageView{
 
 	public interface OnStickerListener{
 
-		void onDeleteStickerClick(StickerModel sticker);
+		void onDeleteStickerClick(StickerViewPost sticker);
 
-		void onStickerClick(float x, float y, StickerModel sticker);
+		void onStickerClick(float x, float y, StickerViewPost sticker);
 	}
 
 	private void log(String msg){

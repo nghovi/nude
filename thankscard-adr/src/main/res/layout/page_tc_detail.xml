@@ -1,17 +1,22 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:gravity="center_vertical|center_horizontal"
-              android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center_vertical|center_horizontal"
+    android:orientation="vertical">
 
-
-    <RelativeLayout
+    <android.support.percent.PercentRelativeLayout
+        android:id="@+id/layout_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="vertical"
+        android:background="@color/chiase_white"
         android:elevation="1dp">
-
+        <trente.asia.thankscard.services.posted.view.PhotoViewDetail
+            android:id="@+id/layout_photo"
+            android:layout_height="match_parent"
+            app:layout_widthPercent="70%"/>
 
         <ImageView
             android:id="@+id/img_item_thanks_card_frame"
@@ -28,15 +33,13 @@
 
         <LinearLayout
             android:id="@+id/lnr_thanks_card_frame_container"
-            android:layout_width="match_parent"
+            app:layout_widthPercent="50%"
             android:layout_height="wrap_content"
             android:baselineAligned="false"
             android:orientation="vertical"
-            android:paddingBottom="@dimen/margin_30dp"
-            android:paddingLeft="@dimen/margin_70dp"
-            android:paddingRight="@dimen/margin_70dp"
-            android:paddingTop="@dimen/margin_30dp"
-            android:layout_centerInParent="true">
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/margin_40dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -91,7 +94,9 @@
 
         </LinearLayout>
 
-    </RelativeLayout>
+
+
+    </android.support.percent.PercentRelativeLayout>
 
 
 </LinearLayout>

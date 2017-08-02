@@ -1,55 +1,87 @@
-package trente.asia.thankscard.services.posted.model;
+package trente.asia.thankscard.services.posted.view;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.util.Log;
 
 import trente.asia.thankscard.R;
+import trente.asia.thankscard.commons.defines.TcConst;
+import trente.asia.welfare.adr.pref.PreferencesSystemUtil;
 
 /**
  * Created by tien on 7/17/2017.
  */
 
-public class ImageModel extends AppCompatImageView{
+public class PhotoViewPost extends AppCompatImageView{
 
 	private Matrix	matrix		= new Matrix();
 	private Paint	paint		= new Paint();
 	private float	x			= 0;
 	private float	y			= 0;
-	private Bitmap	bitmap;
+	private Bitmap	bitmap, originBitmap;
 	private int		width, height;
 	private float[]	centerPoint	= new float[2];
 	private float	scale		= 1f;
 	private float	saveScale	= 1f;
+	private float	frameWidth;
+	private float	frameHeight;
 
-	public ImageModel(Context context){
+	public PhotoViewPost(Context context){
 		super(context);
 	}
 
-	public ImageModel(Context context, @Nullable AttributeSet attrs){
+	public PhotoViewPost(Context context, @Nullable AttributeSet attrs){
 		super(context, attrs);
+		PreferencesSystemUtil preference = new PreferencesSystemUtil(context);
+		this.frameWidth = Float.valueOf(preference.get(TcConst.PREF_FRAME_WIDTH));
+		this.frameHeight = Float.valueOf(preference.get(TcConst.PREF_FRAME_HEIGHT));
 	}
 
-	public void setImage(String imagePath){
-		bitmap = BitmapFactory.decodeFile(imagePath);
+	public String getPhotoLocationX(){
+		return String.valueOf(centerPoint[0] / frameWidth);
+	}
+
+	public String getPhotoLocationY(){
+		return String.valueOf(centerPoint[1] / frameHeight);
+	}
+
+	public String getPhotoScale(){
+		return String.valueOf(height * scale / frameHeight);
+	}
+
+	public void setImage(String imagePath, String position){
+		originBitmap = BitmapFactory.decodeFile(imagePath);
+		bitmap = Bitmap.createScaledBitmap(originBitmap, (int) (frameHeight - 50), (int) ((frameHeight - 50) * originBitmap.getHeight() / originBitmap.getWidth()), false);
 		width = bitmap.getWidth();
 		height = bitmap.getHeight();
+		x = frameWidth / 4 - width / 2;
+		if(TcConst.POSITION_CENTER.equals(position) || TcConst.POSITION_LEFT.equals(position)){
+			y = frameHeight / 2 - height / 2;
+		}else if(TcConst.POSITION_TOP.equals(position)){
+			y = 50;
+		}else if(TcConst.POSITION_BOTTOM.equals(position)){
+			y = frameHeight - height - 50;
+		}
+		scale = 1f;
+		saveScale = 1f;
 		invalidate();
 	}
 
-	public void clearImage() {
+	public void clearImage(){
 		bitmap = null;
 		invalidate();
 	}
 
-	public boolean hasImage() {
+	public boolean hasImage(){
 		return bitmap != null;
 	}
 

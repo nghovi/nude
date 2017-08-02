@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
 
 import asia.chiase.core.util.CCDateUtil;
@@ -26,6 +27,7 @@ import trente.asia.thankscard.BuildConfig;
 import trente.asia.thankscard.R;
 import trente.asia.thankscard.commons.defines.TcConst;
 import trente.asia.thankscard.services.common.model.HistoryModel;
+import trente.asia.thankscard.services.posted.PostTCFragment;
 import trente.asia.thankscard.services.posted.ThanksCardEditFragment;
 import trente.asia.thankscard.services.received.ReceiveTCListFragment;
 import trente.asia.thankscard.utils.TCUtil;
@@ -33,6 +35,7 @@ import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.models.DeptModel;
 import trente.asia.welfare.adr.models.UserModel;
+import trente.asia.welfare.adr.pref.PreferencesSystemUtil;
 import trente.asia.welfare.adr.utils.WelfareUtil;
 import trente.asia.welfare.adr.utils.WfPicassoHelper;
 
@@ -143,7 +146,8 @@ public class TCDetailFragment extends AbstractPagerFragment{
 
 				@Override
 				public void onClick(View v){
-					gotoPostedEditFragment(historyModel);
+//					gotoPostedEditFragment(historyModel);
+					gotoFragment(new PostTCFragment());
 				}
 			});
 		}else{
@@ -164,7 +168,8 @@ public class TCDetailFragment extends AbstractPagerFragment{
 			imgSeal.setVisibility(View.INVISIBLE);
 		}
 		txtSenderName.setText(historyModel.posterName);
-		Picasso.with(getContext()).load(BuildConfig.HOST + historyModel.posterAvatarPath).fit().into(senderAvatar);
+
+		Glide.with(getContext()).load(BuildConfig.HOST + historyModel.posterAvatarPath).into(senderAvatar);
 	}
 
 	private void log(String msg) {
@@ -197,7 +202,6 @@ public class TCDetailFragment extends AbstractPagerFragment{
 			txtDate.setVisibility(View.INVISIBLE);
 			txtTo.setVisibility(View.INVISIBLE);
 			txtFrom.setVisibility(View.INVISIBLE);
-
 		}else{
 			txtDate.setText(context.getResources().getString(R.string.fragment_tc_detail_date, postDateFormat));
 			txtTo.setText(context.getResources().getString(R.string.fragment_tc_detail_to, to));

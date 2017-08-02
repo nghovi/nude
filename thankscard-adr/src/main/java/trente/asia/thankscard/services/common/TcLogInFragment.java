@@ -4,15 +4,23 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 
+import java.util.List;
+
+import asia.chiase.core.util.CCJsonUtil;
+import io.realm.Realm;
 import trente.asia.thankscard.BuildConfig;
 import trente.asia.thankscard.R;
 import trente.asia.thankscard.commons.defines.TcConst;
 import trente.asia.thankscard.services.mypage.MypageFragment;
+import trente.asia.thankscard.services.mypage.model.StampCategoryModel;
+import trente.asia.thankscard.services.mypage.model.StampModel;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.services.user.LoginFragment;
@@ -22,10 +30,12 @@ import trente.asia.welfare.adr.services.user.LoginFragment;
  */
 public class TcLogInFragment extends LoginFragment{
 
+	private Realm mRealm;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
-
+		mRealm = Realm.getDefaultInstance();
 		host = BuildConfig.HOST;
 	}
 
@@ -46,12 +56,13 @@ public class TcLogInFragment extends LoginFragment{
 			prefAccUtil.set(TcConst.PREF_POINT_SILVER, response.getJSONObject("myselfInfo").optString("POINT_SILVER"));
 			prefAccUtil.set(TcConst.PREF_POINT_BRONZE, response.getJSONObject("myselfInfo").optString("POINT_BRONZE"));
 			log(response.optJSONObject("myselfInfo").toString());
-		}catch (JSONException ex){
+		}catch(JSONException ex){
 			ex.printStackTrace();
 		}
 
 		if(WfUrlConst.WF_ACC_0003.equals(url)){
 			emptyBackStack();
+//			saveStamps(response);
 			gotoFragment(new MypageFragment());
 		}
 	}
@@ -72,7 +83,47 @@ public class TcLogInFragment extends LoginFragment{
 		return WelfareConst.SERVICE_CD_TC;
 	}
 
-	private void log(String msg) {
+	private void saveStamps(JSONObject response){
+		List<StampCategoryModel> stampCategories = CCJsonUtil.convertToModelList(response.optString("stampCategories"), StampCategoryModel.class);
+		String lastUpdateDate = response.optString("lastUpdateDate");
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+		// preferences.edit().putString(TcConst.MESSAGE_STAMP_LAST_UPDATE_DATE, lastUpdateDate).apply();
+
+		mRealm.beginTransaction();
+		for(StampCategoryModel category : stampCategories){
+			if(category.deleteFlag){
+				StampCategoryModel.deleteStampCategory(mRealm, category.key);
+			}else{
+				StampCategoryModel wfmStampCategory = StampCategoryModel.getCategory(mRealm, category.key);
+				if(wfmStampCategory == null){
+					mRealm.copyToRealm(category);
+				}else{
+					wfmStampCategory.updateStampCategory(category);
+					for(StampModel stamp : category.stamps){
+						if(stamp.deleteFlag){
+							StampModel.deleteStamp(mRealm, stamp.key);
+						}else{
+							StampModel wfmStamp = StampModel.getStamp(mRealm, stamp.key);
+							if(wfmStamp == null){
+								wfmStampCategory.stamps.add(stamp);
+							}else{
+								wfmStamp.updateStamp(wfmStamp);
+							}
+						}
+					}
+				}
+			}
+		}
+		mRealm.commitTransaction();
+	}
+
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		mRealm.close();
+	}
+
+	private void log(String msg){
 		Log.e("TcLoginFragment", msg);
 	}
 }

@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,10 +55,7 @@ public class SelectDeptFragment extends AbstractTCFragment implements Department
 
 				@Override
 				public void onClick(View view){
-					if(callback != null){
-						callback.onSelectDeptDone(department);
-						getFragmentManager().popBackStack();
-					}
+
 				}
 			});
 
@@ -91,6 +89,7 @@ public class SelectDeptFragment extends AbstractTCFragment implements Department
 					}
 				}
 			});
+			getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 		}
 		return mRootView;
 	}
@@ -138,10 +137,13 @@ public class SelectDeptFragment extends AbstractTCFragment implements Department
 	@Override
 	public void onSelectDepartment(DeptModel deptModel){
 		this.department = deptModel;
+		if(callback != null){
+			callback.onSelectDeptDone(department);
+			getFragmentManager().popBackStack();
+		}
 	}
 
 	public interface OnSelectDeptListener{
-
 		void onSelectDeptDone(DeptModel deptModel);
 	}
 
@@ -149,6 +151,7 @@ public class SelectDeptFragment extends AbstractTCFragment implements Department
 	public void onDestroy(){
 		super.onDestroy();
 		callback = null;
+		getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 	}
 
 	private void log(String msg){

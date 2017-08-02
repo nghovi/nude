@@ -163,4 +163,5 @@
     <string name="tc_select_photo">Gallery</string>
     <string name="tc_choose_picture">Are you want to choose another picture?</string>
     <string name="tc_change_to_normal_card">Photo and sticker will be removed. Are you sure?</string>
+    <string name="tc_limit_sticker">You can only have 50 stickers</string>
 </resources>

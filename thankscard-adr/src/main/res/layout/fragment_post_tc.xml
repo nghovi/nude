@@ -86,30 +86,19 @@
             <View style="@style/cs_common_divider" />
 
             <RelativeLayout
+                android:id="@+id/main_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <LinearLayout
+                <trente.asia.thankscard.services.posted.view.PhotoViewPost
+                    android:id="@+id/layout_photo"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_alignBottom="@+id/img_card"
                     android:layout_alignEnd="@+id/img_card"
                     android:layout_alignStart="@+id/img_card"
                     android:layout_alignTop="@+id/img_card"
-                    android:background="@color/chiase_white"
-                    android:orientation="horizontal">
-
-                    <trente.asia.thankscard.services.posted.model.ImageModel
-                        android:id="@+id/layout_photo"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1" />
-
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1" />
-                </LinearLayout>
+                    android:background="@color/chiase_white"/>
 
                 <ImageView
                     android:id="@+id/img_card"
@@ -135,6 +124,7 @@
                         android:layout_marginEnd="@dimen/margin_60dp"
                         android:layout_marginStart="@dimen/margin_60dp"
                         android:layout_marginTop="@dimen/margin_60dp"
+                        android:background="#00000000"
                         android:hint="@string/fragment_post_edit_hint"
                         android:maxLength="75"
                         android:maxLines="6"
@@ -162,8 +152,8 @@
                     <RelativeLayout
                         android:id="@+id/rlt_msg_photo"
                         android:layout_height="match_parent"
-                        app:layout_widthPercent="50%"
-                        android:layout_toEndOf="@+id/touch_pad">
+                        android:layout_toEndOf="@+id/touch_pad"
+                        app:layout_widthPercent="50%">
 
                         <EditText
                             android:id="@+id/edt_message_photo"
@@ -173,6 +163,7 @@
                             android:layout_marginEnd="@dimen/margin_20dp"
                             android:layout_marginStart="@dimen/margin_20dp"
                             android:layout_marginTop="@dimen/margin_20dp"
+                            android:background="#00000000"
                             android:hint="@string/fragment_post_edit_hint"
                             android:maxLength="75"
                             android:maxLines="6"
@@ -280,5 +271,27 @@
                 android:paddingStart="@dimen/margin_8dp"
                 android:text="@string/chiase_common_send" />
         </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_sticker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/wf_login_background_color"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/list_stamp_categories"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/normal_stamp_category_background"
+                android:minHeight="40dp" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/list_stamps"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="180dp" />
+        </LinearLayout>
     </LinearLayout>
 </layout>

@@ -14,7 +14,7 @@ import trente.asia.thankscard.BuildConfig;
  * Created by tien on 6/7/2017.
  */
 
-public class StickerModel extends RealmObject{
+public class StampModel extends RealmObject{
 
 	public String	key;
 
@@ -28,7 +28,7 @@ public class StickerModel extends RealmObject{
     @Ignore
 	public boolean	deleteFlag;
 
-	public StickerModel(){
+	public StampModel(){
 		super();
 	}
 
@@ -37,18 +37,18 @@ public class StickerModel extends RealmObject{
 		Picasso.with(imageView.getContext()).load(BuildConfig.HOST + url).fit().into(imageView);
 	}
 
-	public static StickerModel getStamp(String stampId){
+	public static StampModel getStamp(String stampId){
 		Realm realm = Realm.getDefaultInstance();
-		StickerModel stickerModel = realm.where(StickerModel.class).equalTo("key", stampId).findFirst();
+		StampModel stampModel = realm.where(StampModel.class).equalTo("key", stampId).findFirst();
 		realm.close();
-		return stickerModel;
+		return stampModel;
 	}
 
-	public static StickerModel getStamp(Realm realm, String stampId){
-		return realm.where(StickerModel.class).equalTo("key", stampId).findFirst();
+	public static StampModel getStamp(Realm realm, String stampId){
+		return realm.where(StampModel.class).equalTo("key", stampId).findFirst();
 	}
 
-	public void updateStamp(StickerModel stamp){
+	public void updateStamp(StampModel stamp){
 		this.stampName = stamp.stampName;
 		this.key = stamp.key;
 		this.keyword = stamp.keyword;
@@ -57,7 +57,7 @@ public class StickerModel extends RealmObject{
 	}
 
 	public static void deleteStamp(Realm realm, String stampId){
-		StickerModel wfmStampModel = realm.where(StickerModel.class).equalTo("key", stampId).findFirst();
+		StampModel wfmStampModel = realm.where(StampModel.class).equalTo("key", stampId).findFirst();
 		if(wfmStampModel != null){
 			wfmStampModel.deleteFromRealm();
 		}

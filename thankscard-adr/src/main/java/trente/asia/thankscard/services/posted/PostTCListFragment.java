@@ -53,7 +53,6 @@ public class PostTCListFragment extends AbstractTCListFragment{
 		JSONObject jsonObject = new JSONObject();
 		try{
 			jsonObject.put("targetMonth", targetMonth);
-//			jsonObject.put("categoryId", categoryId);
 		}catch(JSONException ex){
 			ex.printStackTrace();
 		}

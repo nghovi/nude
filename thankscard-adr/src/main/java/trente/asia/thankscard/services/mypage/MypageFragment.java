@@ -33,8 +33,8 @@ import trente.asia.thankscard.fragments.AbstractTCFragment;
 import trente.asia.thankscard.fragments.dialogs.RankStageDialog;
 import trente.asia.thankscard.services.mypage.model.MypageModel;
 import trente.asia.thankscard.services.mypage.model.NoticeModel;
-import trente.asia.thankscard.services.mypage.model.StickerCategoryModel;
-import trente.asia.thankscard.services.mypage.model.StickerModel;
+import trente.asia.thankscard.services.mypage.model.StampCategoryModel;
+import trente.asia.thankscard.services.mypage.model.StampModel;
 import trente.asia.thankscard.services.mypage.view.NoticeListAdapter;
 import trente.asia.thankscard.services.posted.PostTCFragment;
 import trente.asia.thankscard.services.posted.ThanksCardEditFragment;
@@ -168,7 +168,8 @@ public class MypageFragment extends AbstractTCFragment{
 
 			@Override
 			public void onClick(DialogInterface dialog, int which){
-				gotoPostEdit(notice);
+//				gotoPostEdit(notice);
+				gotoFragment(new PostTCFragment());
 			}
 		};
 		showAlertDialogWithOption(getString(R.string.fragment_mypage_alert_title), notice.noticeMessage, getString(R.string.fragment_mypage_alert_post), getString(android.R.string.cancel), listener, null);
@@ -222,27 +223,26 @@ public class MypageFragment extends AbstractTCFragment{
 	}
 
 	private void saveStamps(JSONObject response){
-		List<StickerCategoryModel> stampCategories = CCJsonUtil.convertToModelList(response.optString("stampCategories"), StickerCategoryModel.class);
+		List<StampCategoryModel> stampCategories = CCJsonUtil.convertToModelList(response.optString("stampCategories"), StampCategoryModel.class);
 		String lastUpdateDate = response.optString("lastUpdateDate");
-		log("categories = " + stampCategories.size());
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
 //		preferences.edit().putString(TcConst.MESSAGE_STAMP_LAST_UPDATE_DATE, lastUpdateDate).apply();
 
 		mRealm.beginTransaction();
-		for(StickerCategoryModel category : stampCategories){
+		for(StampCategoryModel category : stampCategories){
 			if(category.deleteFlag){
-				StickerCategoryModel.deleteStampCategory(mRealm, category.key);
+				StampCategoryModel.deleteStampCategory(mRealm, category.key);
 			}else{
-				StickerCategoryModel wfmStampCategory = StickerCategoryModel.getCategory(mRealm, category.key);
+				StampCategoryModel wfmStampCategory = StampCategoryModel.getCategory(mRealm, category.key);
 				if(wfmStampCategory == null){
 					mRealm.copyToRealm(category);
 				}else{
 					wfmStampCategory.updateStampCategory(category);
-					for(StickerModel stamp : category.stamps){
+					for(StampModel stamp : category.stamps){
 						if(stamp.deleteFlag){
-							StickerModel.deleteStamp(mRealm, stamp.key);
+							StampModel.deleteStamp(mRealm, stamp.key);
 						}else{
-							StickerModel wfmStamp = StickerModel.getStamp(mRealm, stamp.key);
+							StampModel wfmStamp = StampModel.getStamp(mRealm, stamp.key);
 							if(wfmStamp == null){
 								wfmStampCategory.stamps.add(stamp);
 							}else{
@@ -254,7 +254,6 @@ public class MypageFragment extends AbstractTCFragment{
 			}
 		}
 		mRealm.commitTransaction();
-
 	}
 
 	private void requestRankStageInfo(){

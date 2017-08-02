@@ -15,7 +15,7 @@ import trente.asia.thankscard.BuildConfig;
  * Created by tien on 6/7/2017.
  */
 
-public class StickerCategoryModel extends RealmObject{
+public class StampCategoryModel extends RealmObject{
 
 	public String				key;
 
@@ -23,11 +23,11 @@ public class StickerCategoryModel extends RealmObject{
 
 	public String				categoryPath;
 
-	public RealmList<StickerModel> stamps;
+	public RealmList<StampModel> stamps;
 	@Ignore
 	public boolean				deleteFlag;
 
-	public StickerCategoryModel(){
+	public StampCategoryModel(){
 		super();
 	}
 
@@ -36,20 +36,20 @@ public class StickerCategoryModel extends RealmObject{
 		Picasso.with(imageView.getContext()).load(BuildConfig.HOST + url).fit().into(imageView);
 	}
 
-	public void updateStampCategory(StickerCategoryModel category){
+	public void updateStampCategory(StampCategoryModel category){
 		this.key = category.key;
 		this.categoryName = category.categoryName;
 		this.categoryPath = category.categoryPath;
 	}
 
-	public static StickerCategoryModel getCategory(Realm realm, String categoryId){
-		return realm.where(StickerCategoryModel.class).equalTo("key", categoryId).findFirst();
+	public static StampCategoryModel getCategory(Realm realm, String categoryId){
+		return realm.where(StampCategoryModel.class).equalTo("key", categoryId).findFirst();
 	}
 
 	public static void deleteStampCategory(Realm realm, String categoryId){
-		StickerCategoryModel stickerCategoryModel = realm.where(StickerCategoryModel.class).equalTo("key", categoryId).findFirst();
-		if(stickerCategoryModel != null){
-			stickerCategoryModel.deleteFromRealm();
+		StampCategoryModel stampCategoryModel = realm.where(StampCategoryModel.class).equalTo("key", categoryId).findFirst();
+		if(stampCategoryModel != null){
+			stampCategoryModel.deleteFromRealm();
 		}
 	}
 }
