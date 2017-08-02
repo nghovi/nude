@@ -186,10 +186,8 @@ public class KpiCalendarAdapter extends BaseAdapter{
 	public void updateLayout(Map<String, String> statusMap){
 		for(int i = 0; i < dayString.size(); i++){
 			String dayStatus = statusMap.get(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, dayString.get(i).getTime()));
-			if(!CCStringUtil.isEmpty(dayStatus)){
-				View cell = viewMap.get(i);
-				updateCellLayout(cell, dayStatus);
-			}
+			View cell = viewMap.get(i);
+			updateCellLayout(cell, dayStatus);
 		}
 	}
 
@@ -197,9 +195,11 @@ public class KpiCalendarAdapter extends BaseAdapter{
 		ImageView kpiStatus = (ImageView)v.findViewById(R.id.item_calendar_img_status);
 		kpiStatus.setVisibility(View.VISIBLE);
 		if(ActionPlan.STATUS_OK.equals(dayStatus)){
-			kpiStatus.setImageResource(R.drawable.wf_check);
+			kpiStatus.setImageResource(R.drawable.ic_circle);
 		}else if(ActionPlan.STATUS_NG.equals(dayStatus)){
-			// kpiStatus.setImageResource(R.drawable.wf_check);
+			kpiStatus.setImageResource(R.drawable.ic_cross);
+		}else{
+			kpiStatus.setVisibility(View.INVISIBLE);
 		}
 	}
 
@@ -211,6 +211,14 @@ public class KpiCalendarAdapter extends BaseAdapter{
 			updateBackground(cell, selectedPosition, 0);
 		}
 		selectedPosition = position;
+	}
+
+	public void deselectCell(){
+		if(selectedPosition != -1){
+			View cell = viewMap.get(selectedPosition);
+			updateBackground(cell, selectedPosition, 0);
+			selectedPosition = -1;
+		}
 	}
 
 	public int getSelectedPosition(){

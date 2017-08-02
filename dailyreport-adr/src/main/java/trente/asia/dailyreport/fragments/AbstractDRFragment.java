@@ -141,7 +141,7 @@ public abstract class AbstractDRFragment extends WelfareFragment{
 			imgFooterItem.setImageResource(R.drawable.dr_footer_kpi);
 			break;
 		case R.id.lnr_view_common_footer_ap:
-			imgFooterItem.setImageResource(R.drawable.dr_footer_activity);
+			imgFooterItem.setImageResource(R.drawable.dr_footer_ap);
 			break;
 		case R.id.lnr_view_common_footer_setting:
 			imgFooterItem.setImageResource(R.drawable.dr_footer_setting);

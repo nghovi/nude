@@ -69,6 +69,7 @@ public class GroupActualListFragment extends AbstractDRFragment implements Group
 			public void onDateSet(DatePicker view, int year, int month, int dayOfMonth){
 				String startDateStr = year + "/" + CCFormatUtil.formatZero(month + 1) + "/" + CCFormatUtil.formatZero(dayOfMonth);
 				txtSelectedDate.setText(startDateStr);
+				loadKpiGroups();
 			}
 		}, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
 		getView().findViewById(R.id.lnr_fragment_kpi_date).setOnClickListener(new View.OnClickListener() {

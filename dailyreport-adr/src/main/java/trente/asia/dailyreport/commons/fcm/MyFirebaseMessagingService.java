@@ -69,7 +69,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService{
 		NotificationCompat.Builder notificationBuilder = (NotificationCompat.Builder)new NotificationCompat.Builder(this).setSmallIcon(R.drawable.pn_icon).setContentTitle(getString(R.string.app_name)).setContentText(content).setAutoCancel(true).setSound(defaultSoundUri).setContentIntent(pendingIntent);
 
 		NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-		notificationManager.notify(WelfareConst.NOTIFICATION_ID, notificationBuilder.build());
+		notificationManager.notify(requestID, notificationBuilder.build());
 	}
 
 }

@@ -1,11 +1,47 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/chiase_white">
+    android:layout_height="wrap_content"
+    android:background="@color/chiase_white"
+    android:baselineAligned="false"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/margin_10dp"
+        android:paddingRight="@dimen/margin_10dp"
+        android:paddingTop="@dimen/margin_10dp">
+
+        <TextView
+            android:id="@+id/txt_kpi_chart_unit"
+            android:layout_width="@dimen/margin_100dp"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:textSize="11sp" />
+
+        <TextView
+            android:id="@+id/txt_kpi_chart_result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center_horizontal|top"
+            android:textColor="@color/chiase_red"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="@dimen/margin_100dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:gravity="right"
+            android:text="@string/achievement_rate"
+            android:textSize="11sp" />
+    </LinearLayout>
 
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/chart"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="320dp"
+        android:layout_weight="1" />
 
 </LinearLayout>

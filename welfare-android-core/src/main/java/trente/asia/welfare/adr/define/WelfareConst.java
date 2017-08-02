@@ -156,10 +156,10 @@ public class WelfareConst{
 		public static final String	DR_NOTI_NEW_REPORT				= "DR_NOTI_NEW_REPORT";
 		public static final String	DR_NOTI_COMMENT_REPORT			= "DR_NOTI_COMMENT_REPORT";
 		public static final String	DR_NOTI_LIKE_REPORT				= "DR_NOTI_LIKE_REPORT";
-		public static final String	DR_NOTICE_CHECKPOINT			= "DR_NOTI_CHECKPOINT";
-		public static final String	DR_NOTICE_MEMBER_SUCCESS		= "DR_NOTICE_MEMBER_SUCCESS";
-		public static final String	DR_NOTICE_MEMBER_NOT_SUCCESS	= "DR_NOTICE_MEMBER_NOT_SUCCESS";
-		public static final String	DR_NOTICE_GROUP_GOAL_ACHIEVED	= "DR_NOTICE_GROUP_GOAL_ACHIEVED";
+		public static final String DR_NOTI_CHECKPOINT = "DR_NOTI_CHECKPOINT";
+		public static final String DR_NOTI_COMPLETE_PROGRESS = "DR_NOTI_COMPLETE_PROGRESS";
+		public static final String DR_NOTI_UNCOMPLETE_PROGRESS = "DR_NOTI_UNCOMPLETE_PROGRESS";
+		public static final String DR_NOTI_COMPLETE_GROUP_GOAL = "DR_NOTI_COMPLETE_GROUP_GOAL";
 
 		public static final String	TC_NOTI_NEW_NOTICE				= "TC_NOTI_NEW_NOTICE";
 		public static final String	TC_NOTI_BIRTHDAY				= "TC_NOTI_BIRTHDAY";

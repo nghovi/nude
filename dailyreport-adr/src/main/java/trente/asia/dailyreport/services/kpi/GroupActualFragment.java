@@ -10,7 +10,9 @@ import org.json.JSONObject;
 import android.app.DatePickerDialog;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.DatePicker;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -19,6 +21,7 @@ import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
+import trente.asia.android.activity.ChiaseActivity;
 import trente.asia.dailyreport.DRConst;
 import trente.asia.dailyreport.R;
 import trente.asia.dailyreport.fragments.AbstractDRFragment;
@@ -45,6 +48,7 @@ public class GroupActualFragment extends AbstractDRFragment{
 	LineChart					lineChart;
 	private String				groupKpiKey;
 	private Date				selectedDate;
+	private LinearLayout		lnrChartContainer;
 
 	@Override
 	public int getFragmentLayoutId(){
@@ -111,7 +115,9 @@ public class GroupActualFragment extends AbstractDRFragment{
 			}
 		});
 
-		lineChart = (LineChart)getView().findViewById(R.id.chart);
+		lnrChartContainer = (LinearLayout)getView().findViewById(R.id.lnr_chart_container);
+
+		// lineChart = (LineChart)getView().findViewById(R.id.chart);
 	}
 
 	private void loadGroupDetail(String groupKpiKey){
@@ -126,6 +132,19 @@ public class GroupActualFragment extends AbstractDRFragment{
 		super.requestLoad(DRConst.API_KPI_GROUP, jsonObject, true);
 	}
 
+	protected void onClickBackBtn(){
+		if(getFragmentManager().getBackStackEntryCount() <= 1){
+			emptyBackStack();
+			UserActualFragment userActualFragment = new UserActualFragment();
+			userActualFragment.setGroupId(groupKpi.key);
+			userActualFragment.setTargetDate(txtSelectedDate.getText().toString());
+			gotoFragment(userActualFragment);
+		}else{
+			((ChiaseActivity)activity).isInitData = true;
+			getFragmentManager().popBackStack();
+		}
+	}
+
 	@Override
 	protected void successLoad(JSONObject response, String url){
 		if(getView() != null){
@@ -133,10 +152,10 @@ public class GroupActualFragment extends AbstractDRFragment{
 			txtGroupName.setText(groupKpi.name);
 			String periodString = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, CCDateUtil.makeDateCustom(groupKpi.startDate, WelfareConst.WF_DATE_TIME)) + " ~ " + CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, CCDateUtil.makeDateCustom(groupKpi.endDate, WelfareConst.WF_DATE_TIME));
 			txtPeriod.setText(periodString);
-			txtGoal.setText(CCFormatUtil.formatAmount(groupKpi.goal) + " " + groupKpi.unit);
-			txtActualTotal.setText(CCFormatUtil.formatAmount(groupKpi.achievement) + " " + groupKpi.unit);
+			txtGoal.setText(CCFormatUtil.formatAmount(groupKpi.goal) + " " + groupKpi.goalUnit);
+			txtActualTotal.setText(CCFormatUtil.formatAmount(groupKpi.actual) + " " + groupKpi.goalUnit);
 			txtAchievementRate.setText(CCFormatUtil.formatAmount(groupKpi.achievementRate) + "%");
-			txtToGoal.setText(CCFormatUtil.formatAmount(Integer.parseInt(groupKpi.goal) - Integer.parseInt(groupKpi.achievement)) + " " + groupKpi.unit);
+			txtToGoal.setText(CCFormatUtil.formatAmount(Integer.parseInt(groupKpi.toGoal)) + " " + groupKpi.goalUnit);
 
 			Date groupStartDate = CCDateUtil.makeDateCustom(groupKpi.startDate, WelfareConst.WF_DATE_TIME);
 			Date groupEndDate = CCDateUtil.makeDateCustom(groupKpi.endDate, WelfareConst.WF_DATE_TIME);
@@ -144,7 +163,20 @@ public class GroupActualFragment extends AbstractDRFragment{
 			datePickerDialog.getDatePicker().setMaxDate(groupEndDate.getTime());
 			//// TODO: 7/14/17 setMinDate not work right away
 			// datePickerDialog.getDatePicker().forceLayout();
-			UserActualFragment.buildChart(activity, lineChart, groupKpi.checkPoints, groupKpi);
+			//// TODO: 7/17/17 create field for chart_unit
+			lnrChartContainer.removeAllViews();
+			LinearLayout chartView = (LinearLayout)LayoutInflater.from(activity).inflate(R.layout.kpi_chart, null);
+			lineChart = (LineChart)chartView.findViewById(R.id.chart);
+			((TextView)chartView.findViewById(R.id.txt_kpi_chart_unit)).setText(groupKpi.goalUnit);
+			String status = null;
+			if(Integer.parseInt(groupKpi.actual) >= Integer.valueOf(groupKpi.goal)){
+				status = getString(R.string.achieve_dialog_title);
+			}else{
+				status = getString(R.string.fragmen_group_actual_needed_amount2, CCFormatUtil.formatAmount(groupKpi.toGoal)) + groupKpi.goalUnit;
+			}
+			((TextView)chartView.findViewById(R.id.txt_kpi_chart_result)).setText(status);
+			UserActualFragment.buildChart(activity, lineChart, groupKpi.checkPoints, groupKpi, null);
+			lnrChartContainer.addView(chartView);
 		}
 	}
 

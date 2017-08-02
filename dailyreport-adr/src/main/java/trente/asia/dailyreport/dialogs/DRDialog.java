@@ -24,6 +24,7 @@ import trente.asia.android.view.ChiaseDialog;
 import trente.asia.dailyreport.R;
 import trente.asia.dailyreport.services.report.model.ReportModel;
 import trente.asia.dailyreport.services.report.view.DRLikeListAdapter;
+import trente.asia.welfare.adr.dialog.WfDialog;
 import trente.asia.welfare.adr.utils.WelfareUtil;
 import trente.asia.welfare.adr.view.WfSpinner;
 
@@ -32,7 +33,7 @@ import trente.asia.welfare.adr.view.WfSpinner;
  *
  * @author TrungND
  */
-public class DRDialog extends ChiaseDialog{
+public class DRDialog extends WfDialog{
 
 	private static final int	MAX_CHARACTER_COUNT	= 9999;
 	private static final int	MAX_CHARACTER_SALE	= 9999999;
@@ -41,11 +42,6 @@ public class DRDialog extends ChiaseDialog{
 
 	public DRDialog(Context context){
 		super(context);
-		this.mContext = context;
-	}
-
-	public DRDialog(Context context, int theme){
-		super(context, theme);
 		this.mContext = context;
 	}
 

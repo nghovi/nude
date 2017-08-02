@@ -64,15 +64,15 @@ public class GroupActualListAdapter extends ArrayAdapter<GroupKpi>{
 		viewHolder.txtGroupName.setText(groupKpi.name);
 		String periodString = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, CCDateUtil.makeDateCustom(groupKpi.startDate, WelfareConst.WF_DATE_TIME)) + " ~ " + CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, CCDateUtil.makeDateCustom(groupKpi.endDate, WelfareConst.WF_DATE_TIME));
 		viewHolder.txtPeriod.setText(periodString);
-		viewHolder.txtGoal.setText(CCFormatUtil.formatAmount(groupKpi.goal) + " " + groupKpi.unit);
-		viewHolder.txtTodayPerformance.setText(CCFormatUtil.formatAmount(groupKpi.todayActual) + " " + groupKpi.unit);
-		viewHolder.txtOverallPerformance.setText(CCFormatUtil.formatAmount(groupKpi.achievement) + " " + groupKpi.unit);
+		viewHolder.txtGoal.setText(CCFormatUtil.formatAmount(groupKpi.goal) + " " + groupKpi.goalUnit);
+		viewHolder.txtTodayPerformance.setText(CCFormatUtil.formatAmount(groupKpi.todayActualGroup) + " " + groupKpi.goalUnit);
+		viewHolder.txtOverallPerformance.setText(CCFormatUtil.formatAmount(groupKpi.actual) + " " + groupKpi.goalUnit);
 		viewHolder.txtAchievementRate.setText(CCFormatUtil.formatAmount(groupKpi.achievementRate) + "%");
 		int toGoal = Integer.parseInt(groupKpi.toGoal);
-		if(toGoal < 0){ // achieved
-			viewHolder.txtResult.setText("->" + context.getResources().getString(R.string.achieve_dialog_title));
+		if(toGoal <= 0){ // achieved
+			viewHolder.txtResult.setText("→" + context.getResources().getString(R.string.achieve_dialog_title));
 		}else{
-			viewHolder.txtResult.setText("->" + context.getResources().getString(R.string.fragmen_group_actual_needed_amount2, toGoal + ""));
+			viewHolder.txtResult.setText("→" + context.getResources().getString(R.string.fragmen_group_actual_needed_amount2, CCFormatUtil.formatAmount(toGoal) + groupKpi.goalUnit));
 		}
 
 		viewHolder.imgChart.setOnClickListener(new View.OnClickListener() {

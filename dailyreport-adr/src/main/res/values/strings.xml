@@ -66,32 +66,43 @@
     <string name="dr_item">Item</string>
 
     <!--Notifications-->
+    <string name="FM_DR_001">%1$s made new daily report</string>
+    <string name="FM_DR_002">%1$s like your report</string>
+    <string name="FM_DR_003">%1$s comment on your report</string>
+    <string name="FM_DR_004">Today is checkpoint day. Please input/confirm your performance.</string>
+    <string name="FM_DR_005">%1$s has achieved their goal.</string>
+    <string name="FM_DR_006">%1$s has not achieved their goal.</string>
+    <string name="FM_DR_007">Group goal has been achieved!</string>
+
     <string name="header_calendar_this_week">This week</string>
     <string name="goal_period">Goal period</string>
     <string name="personal_goal">Personal goal</string>
-    <string name="total_performance">Total actual results</string>
+    <string name="total_performance">Total performance</string>
     <string name="achievement_rate">Achievement rate</string>
-    <string name="today_performance">Today\'s actual result</string>
+    <string name="today_performance">Today\'s performance</string>
     <string name="footer_itemkpi">KPI</string>
     <string name="fragment_kpi_title">Actual result input</string>
     <string name="fragment_actual_plan_title">Personal action plan</string>
     <string name="fragment_group_actual_title">Group’s performance</string>
-    <string name="fragment_group_actual_list_title">GroupActualList</string>
+    <string name="fragment_group_actual_list_title">KPI</string>
     <string name="group_actual_list_goal">Group goal list</string>
     <string name="fragment_group_actual_group_goal">Group goal</string>
     <string name="fragmen_group_actual_needed_amount">Amount you need to reach the goal</string>
+    <string name="fragmen_group_actual_needed_amount2">Amount you need to reach the goal: %1$s</string>
     <string name="achieve_dialog_title">Achieved!</string>
-    <string name="achieve_dialog_content">Congratulations!!\\nYou have achieved your personal goal.\\nWonderfull!!\\nContinue the good work!</string>
+    <string name="achieve_dialog_content">Congratulations!!\nYou have achieved your personal goal.\nWonderful!!\nContinue the good work!</string>
     <string name="achieve_warning_dialog_title">Today is checkpoint day</string>
-    <string name="achieve_warning_dialog_content">You have not achieved KPI.\\nPlease rethink your action plans.</string>
+    <string name="achieve_warning_dialog_content">You have not achieved KPI.\nPlease rethink your action plans.</string>
     <string name="today_goal">Today\'s goal</string>
     <string name="supplement_memo">Supplement memo</string>
     <string name="performance_in_month">Performance in %1$s</string>
     <string name="achievement_rate_in_month">Achievement rate in %1$s</string>
     <string name="user_has_no_kpi_setup">Your KPI is not set</string>
-    <string name="fragment_kpi_title_tassei">Personal achievement</string>
-    <string name="fragment_kpi_title_jisseki">Personal performance</string>
+    <string name="performance_input">Performance input</string>
+    <string name="personal_performance">Personal performance</string>
     <string name="overall_performance">Overall performance</string>
     <string name="action_plan_empty">Your action plan is not set</string>
     <string name="text_period">(Period)</string>
+    <string name="choose_the_day">Please select date</string>
+    <string name="action_plan_please_input">Please input your performance</string>
 </resources>

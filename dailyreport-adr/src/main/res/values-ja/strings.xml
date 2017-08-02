@@ -7,7 +7,7 @@
     <!-- footer -->
     <string name="footer_item1">日報</string>
     <string name="footer_item2">みんなの日報</string>
-    <string name="footer_item3">アクティビティ</string>
+    <string name="footer_item3">AP</string>
     <string name="footer_item4">設定</string>
     <string name="fragment_report_edit_change_template_confirm">このテンプレートを変更しますか？</string>
     <string name="fragment_other_title">みんなの日報</string>
@@ -65,6 +65,14 @@
     <string name="dr_item">目標</string>
 
     <!--Notifications-->
+    <string name="FM_DR_001">%1$sさんが新しい日報を作成しました</string>
+    <string name="FM_DR_002">%1$s新しいいいね！があります</string>
+    <string name="FM_DR_003">%1$s新しいコメントがあります</string>
+    <string name="FM_DR_004">本日は進捗確認日です。実績の入力・確認をしましょう。</string>
+    <string name="FM_DR_005">%1$s さんが目標を達成しました。</string>
+    <string name="FM_DR_006">%1$s さんが目標を達成しません。</string>
+    <string name="FM_DR_007">グループ目標を達成しました！</string>
+
     <string name="header_calendar_this_week">今週</string>
     <string name="goal_period">目標期限</string>
     <string name="personal_goal">個人目標</string>
@@ -74,8 +82,8 @@
     <string name="footer_itemkpi">KPI</string>
     <string name="fragment_kpi_title">実績入力</string>
     <string name="fragment_actual_plan_title">個人アクションプラン</string>
-    <string name="fragment_group_actual_title">Group Actual</string>
-    <string name="fragment_group_actual_list_title">GroupActualList</string>
+    <string name="fragment_group_actual_title">グループ成績</string>
+    <string name="fragment_group_actual_list_title">KPI</string>
     <string name="group_actual_list_goal">グループ目標一覧</string>
     <string name="fragment_group_actual_group_goal">グループ目標</string>
     <string name="fragmen_group_actual_needed_amount">達成まであと</string>
@@ -89,9 +97,11 @@
     <string name="performance_in_month">%1$s月の実績</string>
     <string name="achievement_rate_in_month">%1$s月の達成率</string>
     <string name="user_has_no_kpi_setup">KPIが設定されていません</string>
-    <string name="fragment_kpi_title_tassei">個人成績</string>
-    <string name="fragment_kpi_title_jisseki">個人実績</string>
+    <string name="performance_input">個人実績</string>
+    <string name="personal_performance">実績入力</string>
     <string name="overall_performance">累計実績</string>
     <string name="action_plan_empty">アクションプランが設定されていません</string>
     <string name="text_period">(期間)</string>
+    <string name="choose_the_day">日付を選択してください</string>
+    <string name="action_plan_please_input">実績を入力してください</string>
 </resources>

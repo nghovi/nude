@@ -33,7 +33,7 @@
             android:layout_height="16dp"
             android:layout_centerInParent="true"
             android:layout_margin="12dp"
-            android:src="@drawable/ic_action_remove"
+            android:src="@drawable/ic_cross"
             android:visibility="visible" />
 
     </RelativeLayout>

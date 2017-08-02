@@ -23,7 +23,8 @@
             android:id="@+id/lnr_header"
             style="@style/wf_common_linear"
             android:gravity="center_horizontal|center_vertical"
-            android:paddingBottom="@dimen/wf_margin_16">
+            android:paddingBottom="@dimen/wf_margin_10"
+            android:paddingTop="@dimen/wf_margin_10">
 
             <TextView
                 android:id="@+id/txt_fragment_kpi_date"
@@ -39,10 +40,10 @@
 
 
         <ScrollView
-            android:id="@+id/src_id_calendar_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fillViewport="true">
+            android:fillViewport="true"
+            android:isScrollContainer="false">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -107,6 +108,7 @@
 
             </LinearLayout>
         </ScrollView>
+
 
     </LinearLayout>
 
