@@ -119,11 +119,11 @@ public class MypageFragment extends AbstractTCFragment{
 		String lastUpdateDate = preferences.getString(TcConst.MESSAGE_STAMP_LAST_UPDATE_DATE, null);
 		JSONObject jsonObject = new JSONObject();
 		if(lastUpdateDate != null){
-			try{
-				jsonObject.put("lastUpdateDate", lastUpdateDate);
-			}catch(JSONException e){
-				e.printStackTrace();
-			}
+//			try{
+//				jsonObject.put("lastUpdateDate", lastUpdateDate);
+//			}catch(JSONException e){
+//				e.printStackTrace();
+//			}
 		}
 		requestLoad(TcConst.API_MESSAGE_STAMP_CATEGORY_LIST, jsonObject, true);
 	}

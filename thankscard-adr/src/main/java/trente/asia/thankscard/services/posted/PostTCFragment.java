@@ -116,7 +116,6 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 		if(mRootView == null){
 			binding = DataBindingUtil.inflate(inflater, R.layout.fragment_post_tc, container, false);
 			mRootView = binding.getRoot();
-
 		}
 		return mRootView;
 	}
