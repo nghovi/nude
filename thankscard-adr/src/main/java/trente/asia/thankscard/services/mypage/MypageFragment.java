@@ -320,7 +320,7 @@ public class MypageFragment extends AbstractTCFragment{
 		}else if(totalPoint >= pointSilver && totalPoint < pointGold){
 			imageView.setImageResource(R.drawable.tc_rank_silver);
 			txtRank.setText(R.string.tc_rank_silver);
-		}else if(totalPoint > pointGold){
+		}else {
 			imageView.setImageResource(R.drawable.tc_rank_gold);
 			txtRank.setText(R.string.tc_rank_gold);
 		}
