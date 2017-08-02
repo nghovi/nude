@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.support.annotation.Nullable;
@@ -26,7 +27,7 @@ public class PhotoViewPost extends AppCompatImageView{
 	private Paint	paint		= new Paint();
 	private float	x			= 0;
 	private float	y			= 0;
-	private Bitmap	bitmap;
+	private Bitmap	bitmap, originBitmap;
 	private int		width, height;
 	private float[]	centerPoint	= new float[2];
 	private float	scale		= 1f;
@@ -58,15 +59,16 @@ public class PhotoViewPost extends AppCompatImageView{
 	}
 
 	public void setImage(String imagePath, String position){
-		bitmap = BitmapFactory.decodeFile(imagePath);
+		originBitmap = BitmapFactory.decodeFile(imagePath);
+		bitmap = Bitmap.createScaledBitmap(originBitmap, (int) (frameHeight - 50), (int) ((frameHeight - 50) * originBitmap.getHeight() / originBitmap.getWidth()), false);
 		width = bitmap.getWidth();
 		height = bitmap.getHeight();
 		x = frameWidth / 4 - width / 2;
-		if (TcConst.POSITION_CENTER.equals(position) || TcConst.POSITION_LEFT.equals(position)) {
+		if(TcConst.POSITION_CENTER.equals(position) || TcConst.POSITION_LEFT.equals(position)){
 			y = frameHeight / 2 - height / 2;
-		} else if (TcConst.POSITION_TOP.equals(position)){
+		}else if(TcConst.POSITION_TOP.equals(position)){
 			y = 50;
-		} else if (TcConst.POSITION_BOTTOM.equals(position)){
+		}else if(TcConst.POSITION_BOTTOM.equals(position)){
 			y = frameHeight - height - 50;
 		}
 		scale = 1f;

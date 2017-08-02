@@ -16,7 +16,7 @@
         <trente.asia.thankscard.services.posted.view.PhotoViewDetail
             android:id="@+id/layout_photo"
             android:layout_height="match_parent"
-            app:layout_widthPercent="50%"/>
+            app:layout_widthPercent="70%"/>
 
         <ImageView
             android:id="@+id/img_item_thanks_card_frame"

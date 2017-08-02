@@ -90,27 +90,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <LinearLayout
+                <trente.asia.thankscard.services.posted.view.PhotoViewPost
+                    android:id="@+id/layout_photo"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_alignBottom="@+id/img_card"
                     android:layout_alignEnd="@+id/img_card"
                     android:layout_alignStart="@+id/img_card"
                     android:layout_alignTop="@+id/img_card"
-                    android:background="@color/chiase_white"
-                    android:orientation="horizontal">
-
-                    <trente.asia.thankscard.services.posted.view.PhotoViewPost
-                        android:id="@+id/layout_photo"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1" />
-
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1" />
-                </LinearLayout>
+                    android:background="@color/chiase_white"/>
 
                 <ImageView
                     android:id="@+id/img_card"
@@ -136,12 +124,12 @@
                         android:layout_marginEnd="@dimen/margin_60dp"
                         android:layout_marginStart="@dimen/margin_60dp"
                         android:layout_marginTop="@dimen/margin_60dp"
+                        android:background="#00000000"
                         android:hint="@string/fragment_post_edit_hint"
                         android:maxLength="75"
                         android:maxLines="6"
                         android:paddingLeft="@dimen/margin_20dp"
-                        android:paddingRight="@dimen/margin_20dp"
-                        android:background="#00000000"/>
+                        android:paddingRight="@dimen/margin_20dp" />
 
                 </RelativeLayout>
 
@@ -175,12 +163,12 @@
                             android:layout_marginEnd="@dimen/margin_20dp"
                             android:layout_marginStart="@dimen/margin_20dp"
                             android:layout_marginTop="@dimen/margin_20dp"
+                            android:background="#00000000"
                             android:hint="@string/fragment_post_edit_hint"
                             android:maxLength="75"
                             android:maxLines="6"
                             android:paddingLeft="@dimen/margin_20dp"
-                            android:paddingRight="@dimen/margin_20dp"
-                            android:background="#00000000"/>
+                            android:paddingRight="@dimen/margin_20dp" />
                     </RelativeLayout>
                 </android.support.percent.PercentRelativeLayout>
             </RelativeLayout>
@@ -288,20 +276,22 @@
             android:id="@+id/layout_sticker"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:background="@color/wf_login_background_color"
+            android:orientation="vertical"
             android:visibility="gone">
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/list_stamp_categories"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="40dp"
-                android:background="@drawable/normal_stamp_category_background"/>
+                android:background="@drawable/normal_stamp_category_background"
+                android:minHeight="40dp" />
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/list_stamps"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="180dp"/>
+                android:minHeight="180dp" />
         </LinearLayout>
     </LinearLayout>
 </layout>
