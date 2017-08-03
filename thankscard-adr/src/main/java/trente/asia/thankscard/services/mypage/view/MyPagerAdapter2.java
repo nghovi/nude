@@ -121,7 +121,7 @@ public class MyPagerAdapter2 extends PagerAdapter{
 		viewHolder.txtDate.setText(mContext.getResources().getString(R.string.fragment_tc_detail_date, postDateFormat));
 		viewHolder.txtTo.setText(mContext.getResources().getString(R.string.fragment_tc_detail_to, model.receiverName));
 		viewHolder.txtFrom.setText(mContext.getResources().getString(R.string.fragment_tc_detail_from, model.posterName));
-		viewHolder.txtFrom.setVisibility(View.INVISIBLE);
+		viewHolder.txtFrom.setVisibility(View.GONE);
 
 		viewHolder.txtMessage.setText(model.message);
 		viewHolder.txtMessage.setMovementMethod(new ScrollingMovementMethod());
@@ -161,7 +161,7 @@ public class MyPagerAdapter2 extends PagerAdapter{
 		params.addRule(RelativeLayout.CENTER_IN_PARENT);
 		params.width = ViewGroup.LayoutParams.MATCH_PARENT;
 		params.getPercentLayoutInfo().widthPercent = 1f;
-		params.setMargins(WelfareUtil.dpToPx(30), WelfareUtil.dpToPx(20), WelfareUtil.dpToPx(30), WelfareUtil.dpToPx(20));
+		params.setMargins(WelfareUtil.dpToPx(50), WelfareUtil.dpToPx(40), WelfareUtil.dpToPx(50), WelfareUtil.dpToPx(40));
 	}
 
 	private void log(String msg){
