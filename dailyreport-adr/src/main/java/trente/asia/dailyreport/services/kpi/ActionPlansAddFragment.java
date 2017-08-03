@@ -196,6 +196,11 @@ public class ActionPlansAddFragment extends AbstractDRFragment implements DRCale
 	private void onGetActionsSuccess(JSONObject response){
 		imgHeaderLeftIcon.setVisibility(View.INVISIBLE);
 		groupKpiList = CCJsonUtil.convertToModelList(response.optString("groups"), GroupKpi.class);
+		int selectedGroupPosition = getSelectedGroupPosition();
+		drGroupHeader.buildLayout(groupKpiList, selectedGroupPosition, false);
+		selectedGroup = drGroupHeader.getSelectedGroup();
+		statusMap = buildStatusMap();
+		updateCalendarView(statusMap);
 		if(showStatusOnly){
 			imgHeaderRightIcon.setVisibility(View.INVISIBLE);
 			lnrActionPlanSection.setVisibility(View.GONE);
@@ -204,14 +209,8 @@ public class ActionPlansAddFragment extends AbstractDRFragment implements DRCale
 			txtNoAction.setText(getString(R.string.choose_the_day));
 			txtNoAction.setVisibility(View.VISIBLE);
 			kpiCalendarView = ((CalendarFragment)adapter.getItem(mPager.getCurrentItem())).getKpiCalendarView();
-			// kpiCalendarView.refreshKpiStatus();
 			kpiCalendarView.unselectDay();
 		}else{
-			int selectedGroupPosition = getSelectedGroupPosition();
-			drGroupHeader.buildLayout(groupKpiList, selectedGroupPosition, false);
-			selectedGroup = drGroupHeader.getSelectedGroup();
-			statusMap = buildStatusMap();
-			updateCalendarView(statusMap);
 			if(CCCollectionUtil.isEmpty(groupKpiList)){
 				imgHeaderLeftIcon.setVisibility(View.INVISIBLE);
 				imgHeaderRightIcon.setVisibility(View.INVISIBLE);
