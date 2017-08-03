@@ -202,7 +202,7 @@ public class ActionPlansAddFragment extends AbstractDRFragment implements DRCale
 
 		if(showStatusOnly){
 			drGroupHeader.buildLayout(groupKpiList, selectedGroupPosition, false);
-			statusMap = buildStatusMap(drGroupHeader.getSelectedGroup());
+			statusMap = buildStatusMap(selectedGroup);
 			updateCalendarView(statusMap);
 			imgHeaderRightIcon.setVisibility(View.INVISIBLE);
 			lnrActionPlanSection.setVisibility(View.GONE);
