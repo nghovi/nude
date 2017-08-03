@@ -34,11 +34,10 @@
         <LinearLayout
             android:id="@+id/lnr_thanks_card_frame_container"
             app:layout_widthPercent="50%"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:baselineAligned="false"
             android:orientation="vertical"
             android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
             android:padding="@dimen/margin_40dp">
 
             <LinearLayout
@@ -77,7 +76,7 @@
                 android:layout_marginLeft="@dimen/margin_10dp"
                 android:layout_marginRight="@dimen/margin_10dp"
                 android:layout_weight="1"
-                android:maxLines="4"
+                android:maxLines="6"
                 android:nestedScrollingEnabled="false"
                 android:scrollbars="vertical"/>
 
