@@ -272,6 +272,31 @@ public class CCDateUtil{
 		return cal;
 	}
 
+	/**
+	 * <strong>makeCalendar</strong><br>
+	 * <br>
+	 *
+	 * @param year
+	 * @param month
+	 * @param day
+	 * @return
+	 */
+	public static Calendar makeCalendarWithDateOnly(Date date){
+
+		Calendar cal = Calendar.getInstance();
+		try{
+			cal.setTime(date);
+			cal.set(Calendar.HOUR, 0);
+			cal.set(Calendar.MINUTE, 0);
+			cal.set(Calendar.SECOND, 0);
+			cal.set(Calendar.MILLISECOND, 0);
+		}catch(Exception ex){
+			new CCException(ex);
+			return null;
+		}
+		return cal;
+	}
+
 	public static Calendar makeCalendarToday(){
 		Calendar cal = Calendar.getInstance();
 		try{

@@ -20,7 +20,7 @@ import trente.asia.android.model.DayModel;
  */
 public class CsDateUtil{
 
-	public static final String	CS_DATE_TIME_1	= "EEE";
+	public static final String CS_DATE_TIME_1 = "EEE";
 
 	public static Date getFirstDateOfCurrentMonth(){
 		Calendar calendar = Calendar.getInstance();

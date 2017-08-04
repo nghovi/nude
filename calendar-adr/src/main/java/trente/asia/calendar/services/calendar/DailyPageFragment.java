@@ -59,8 +59,14 @@ public class DailyPageFragment extends SchedulesPageFragment{
 		lnrListSchedules = (LinearLayout)getView().findViewById(R.id.lnr_fragment_daily_page_schedules_time);
 	}
 
-	protected void initCalendarView(){
-		// no calendar view
+	@Override
+	protected void initCalendarHeader(){
+
+	}
+
+	@Override
+	protected void initDayViews(){
+
 	}
 
 	@Override

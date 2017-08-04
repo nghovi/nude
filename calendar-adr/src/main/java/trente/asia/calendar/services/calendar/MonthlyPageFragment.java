@@ -30,6 +30,7 @@ import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.define.CsConst;
+import trente.asia.android.model.DayModel;
 import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
@@ -93,6 +94,35 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 				}
 			}
 		});
+	}
+
+	@Override
+	protected void initCalendarHeader(){
+		LayoutInflater mInflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		View titleView = mInflater.inflate(getCalendarHeaderItem(), null);
+		LinearLayout lnrRowTitle = (LinearLayout)titleView.findViewById(R.id.lnr_id_row_title);
+		int firstDay = Calendar.SUNDAY;
+		if(!CCStringUtil.isEmpty(prefAccUtil.getSetting().CL_START_DAY_IN_WEEK)){
+			firstDay = Integer.parseInt(prefAccUtil.getSetting().CL_START_DAY_IN_WEEK);
+		}
+		List<DayModel> dayModels = CsDateUtil.getAllDay4Week(firstDay);
+		for(DayModel dayModel : dayModels){
+			View titleItem = mInflater.inflate(R.layout.monthly_calendar_title_item, null);
+			LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
+			titleItem.setLayoutParams(layoutParams);
+			TextView txtTitleItem = (TextView)titleItem.findViewById(R.id.monthly_calendar_title_day_label);
+			titleItem.findViewById(R.id.lnr_title_background).setBackgroundColor(getHeaderBgColor());
+			if(Calendar.SUNDAY == dayModel.dayOfWeek){
+				txtTitleItem.setTextColor(Color.RED);
+			}else if(Calendar.SATURDAY == dayModel.dayOfWeek){
+				txtTitleItem.setTextColor(Color.BLUE);
+			}else{
+				txtTitleItem.setTextColor(getNormalDayColor());
+			}
+			txtTitleItem.setText(CCStringUtil.toUpperCase(dayModel.day));
+			lnrRowTitle.addView(titleItem);
+		}
+		lnrCalendarContainer.addView(titleView);
 	}
 
 	@Override

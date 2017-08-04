@@ -9,8 +9,77 @@
 
     <LinearLayout
         android:id="@+id/lnr_calendar_container"
-        style="@style/cs_common_match_wrap"
-        android:background="@color/wf_app_color_base"
-        android:orientation="vertical" />
+        style="@style/cs_common_match"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/lnr_weekly_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"></LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:id="@+id/rlt_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:id="@+id/lnr_vertical_line_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/chiase_white"
+                        android:orientation="horizontal"
+                        android:visibility="visible">
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentTop="true"
+                        android:orientation="vertical">
+
+
+                        <LinearLayout
+                            android:id="@+id/lnr_part1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                        </LinearLayout>
+
+                        <View
+                            style="@style/cs_common_divider"
+                            android:background="@color/chiase_red" />
+
+                        <LinearLayout
+                            android:id="@+id/lnr_part2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBottom="@+id/lnr_part1"
+                            android:orientation="vertical"></LinearLayout>
+
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+
+        </ScrollView>
+
+
+    </LinearLayout>
 
 </LinearLayout>
