@@ -311,7 +311,11 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 			}
 			break;
 		case R.id.lnr_select_sticker:
-			showLayoutSticker();
+		    if (showLayoutSticker) {
+                closeLayoutSticker();
+            } else {
+                showLayoutSticker();
+            }
 			break;
 		case R.id.lnr_select_photo:
 			showLayoutCards(photoTemplates);
