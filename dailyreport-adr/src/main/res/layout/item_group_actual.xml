@@ -15,8 +15,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Group name"
-            android:textColor="@color/chiase_black"
-            android:textStyle="bold" />
+            android:textColor="@color/chiase_black" />
 
         <ImageView
             android:id="@+id/img_item_group_actual_chart"

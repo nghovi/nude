@@ -7,8 +7,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="2017/06/21"
-        android:textColor="@color/chiase_black"
-        android:textStyle="bold" />
+        android:textColor="@color/chiase_black" />
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -32,8 +32,8 @@
     <string name="dlr_add_comment">コメントする</string>
     <string name="dlr_like">いいね！</string>
 
-    <string name="dlr_send">終了して送信</string>
-    <string name="dlr_save">ドラフトとして保存</string>
+    <string name="dlr_send">送信する</string>
+    <string name="dlr_save">保存</string>
     <string name="dlr_plan">予定</string>
     <string name="dlr_actual">実績</string>
     <string name="dlr_content">日報</string>
