@@ -187,7 +187,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/tc_icon_receive" />
+                    android:src="@drawable/tc_ic_frame" />
 
                 <TextView
                     android:layout_width="wrap_content"
