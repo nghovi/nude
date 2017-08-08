@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.net.Uri;
@@ -174,8 +175,14 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 			public void afterTextChanged(Editable editable){
 				if(!canSendPhoto){
 					message = editable.toString();
-					binding.txtCount.setText(String.valueOf(MAX_LETTER - message.length()));
+                    int textCount = MAX_LETTER - message.length();
+					binding.txtCount.setText(String.valueOf(textCount));
 					binding.edtMessagePhoto.setText(message);
+                    if (textCount < 0) {
+                        binding.txtCount.setTextColor(Color.RED);
+                    } else {
+                        binding.txtCount.setTextColor(Color.BLACK);
+                    }
 				}
 			}
 		});
@@ -196,8 +203,14 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 			public void afterTextChanged(Editable editable){
 				if(canSendPhoto){
 					message = editable.toString();
-					binding.txtCount.setText(String.valueOf(MAX_LETTER - message.length()));
+                    int textCount = MAX_LETTER - message.length();
+                    binding.txtCount.setText(String.valueOf(textCount));
 					binding.edtMessage.setText(message);
+                    if (textCount < 0) {
+                        binding.txtCount.setTextColor(Color.RED);
+                    } else {
+                        binding.txtCount.setTextColor(Color.BLACK);
+                    }
 				}
 			}
 		});

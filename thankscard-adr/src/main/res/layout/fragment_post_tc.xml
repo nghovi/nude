@@ -123,13 +123,10 @@
                         android:layout_marginBottom="@dimen/margin_60dp"
                         android:layout_marginEnd="@dimen/margin_60dp"
                         android:layout_marginStart="@dimen/margin_60dp"
-                        android:layout_marginTop="@dimen/margin_60dp"
                         android:background="#00000000"
-                        android:hint="@string/fragment_post_edit_hint"
-                        android:maxLength="75"
-                        android:maxLines="6"
-                        android:paddingLeft="@dimen/margin_20dp"
-                        android:paddingRight="@dimen/margin_20dp" />
+                        android:layout_marginTop="@dimen/margin_60dp"
+                        android:paddingTop="@dimen/margin_40dp"
+                        android:gravity="top"/>
 
                 </RelativeLayout>
 
@@ -163,12 +160,9 @@
                             android:layout_marginEnd="@dimen/margin_20dp"
                             android:layout_marginStart="@dimen/margin_20dp"
                             android:layout_marginTop="@dimen/margin_20dp"
-                            android:background="#00000000"
-                            android:hint="@string/fragment_post_edit_hint"
-                            android:maxLength="75"
-                            android:maxLines="6"
-                            android:paddingLeft="@dimen/margin_20dp"
-                            android:paddingRight="@dimen/margin_20dp" />
+                            android:gravity="top"
+                            android:paddingTop="@dimen/margin_40dp"
+                            android:background="#00000000"/>
                     </RelativeLayout>
                 </android.support.percent.PercentRelativeLayout>
             </RelativeLayout>
