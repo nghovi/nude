@@ -2,31 +2,25 @@ package trente.asia.calendar.services.calendar;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.zip.Inflater;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.bluelinelabs.logansquare.LoganSquare;
 
-import android.content.Context;
-import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.android.model.DayModel;
 import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
@@ -197,6 +191,9 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 			scheduleStrings = newScheduleStrings;
 			pageSharingHolder.isLoadingSchedules = false;
 
+			lstSchedule = filterByRoom();
+			lstBirthdayUser = filterByUser();
+
 			// add holiday,
 			if(!CCCollectionUtil.isEmpty(lstHoliday)){
 				for(HolidayModel holidayModel : lstHoliday){
@@ -240,6 +237,39 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 			e.printStackTrace();
 		}
 		updateSchedules(lstSchedule, lstCategory);
+	}
+
+	private List<UserModel> filterByUser(){
+		List<UserModel> result = new ArrayList<>();
+		String targetUserData = prefAccUtil.get(ClConst.PREF_ACTIVE_USER_LIST);
+		List<String> targetUserIds = CCStringUtil.isEmpty(targetUserData) ? null : Arrays.asList(targetUserData.split(","));
+		if(!CCCollectionUtil.isEmpty(targetUserIds)){
+			for(UserModel userModel : lstBirthdayUser){
+				if(targetUserIds.contains(userModel.key)){
+					result.add(userModel);
+				}
+			}
+		}else{
+			return lstBirthdayUser;
+		}
+		return result;
+	}
+
+	private List<ScheduleModel> filterByRoom(){
+		List<ScheduleModel> result = new ArrayList<>();
+		String targetRoomData = prefAccUtil.get(ClConst.PREF_ACTIVE_ROOM);
+
+		List<String> targetRoomListId = CCStringUtil.isEmpty(targetRoomData) ? null : Arrays.asList(targetRoomData.split(","));
+		if(!CCCollectionUtil.isEmpty(targetRoomListId)){
+			for(ScheduleModel scheduleModel : lstSchedule){
+				if(targetRoomListId.contains(scheduleModel.roomId) && !CCStringUtil.isEmpty(scheduleModel.roomId)){
+					result.add(scheduleModel);
+				}
+			}
+		}else{
+			return lstSchedule;
+		}
+		return result;
 	}
 
 	protected void updateSchedules(List<ScheduleModel> schedules, List<CategoryModel> categories){

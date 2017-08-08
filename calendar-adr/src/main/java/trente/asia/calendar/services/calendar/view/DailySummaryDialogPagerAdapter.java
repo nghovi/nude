@@ -44,7 +44,7 @@ public class DailySummaryDialogPagerAdapter extends PagerAdapter{
 	private List<WorkOffer>											lstWorkOffer;
 	private DailySummaryDialog.OnAddBtnClickedListener				onAddBtnClickedListener;
 	private WeeklyScheduleListAdapter.OnScheduleItemClickListener	listener;
-	Map<Date, Map<Integer, List<ScheduleModel>>>					daySchedulesMap;
+	Map<Date, List<ScheduleModel>>									daySchedulesMap;
 	Map<Date, List<WorkOffer>>										dayOfferMap;
 	Map<Date, List<UserModel>>										dayBirthdayUsersMap;
 

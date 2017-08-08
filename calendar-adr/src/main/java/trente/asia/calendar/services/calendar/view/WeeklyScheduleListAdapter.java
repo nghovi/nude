@@ -42,17 +42,13 @@ import trente.asia.welfare.adr.view.SelectableRoundedImageView;
 public class WeeklyScheduleListAdapter extends ArrayAdapter<CalendarDayModel>{
 
 	private List<CalendarDayModel>		calendarDayModels;
-	private List<HolidayModel>			holidayModels	= new ArrayList<>();
+	private List<HolidayModel>			holidayModels			= new ArrayList<>();
 	Context								context;
 	int									layoutId;
 	LayoutInflater						layoutInflater;
 	private OnScheduleItemClickListener	onScheduleItemClickListener;
 
-	public void setScheduleItemLayoutId(int scheduleItemLayoutId){
-		this.scheduleItemLayoutId = scheduleItemLayoutId;
-	}
-
-	private int	scheduleItemLayoutId	= R.layout.item_schedule;
+	private int							scheduleItemLayoutId	= R.layout.item_schedule;
 
 	public interface OnScheduleItemClickListener{
 
@@ -182,15 +178,8 @@ public class WeeklyScheduleListAdapter extends ArrayAdapter<CalendarDayModel>{
 		txtScheduleTime.setText(time);
 
 		TextView txtScheduleName = (TextView)lnrSchedulesContainer.findViewById(R.id.txt_item_schedule_name);
-//		if(!CCStringUtil.isEmpty(schedule.categoryId)){
-//			int categoryColor = Color.parseColor(WelfareFormatUtil.formatColor(schedule.categoryModel.categoryColor));
-//			txtScheduleName.setTextColor(categoryColor);
-//			txtScheduleTime.setTextColor(categoryColor);
-//		}
 		txtScheduleName.setText(schedule.scheduleName);
 
-		SelectableRoundedImageView imgCalendar = (SelectableRoundedImageView)lnrSchedulesContainer.findViewById(R.id.img_item_schedule_calendar);
-//		WfPicassoHelper.loadImage(context, BuildConfig.HOST + schedule.calendar.imagePath, imgCalendar, null);
 		lnrSchedulesContainer.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -204,37 +193,6 @@ public class WeeklyScheduleListAdapter extends ArrayAdapter<CalendarDayModel>{
 	public static View buildScheduleItem(final Context context, LayoutInflater layoutInflater, final ScheduleModel schedule, final OnScheduleItemClickListener onScheduleItemClickListener, final Date selectedDate){
 		LinearLayout lnrSchedulesContainer = (LinearLayout)layoutInflater.inflate(R.layout.item_schedule, null);
 		buildScheduleItemCommon(context, lnrSchedulesContainer, schedule, onScheduleItemClickListener, selectedDate);
-		ImageView imgDup = (ImageView)lnrSchedulesContainer.findViewById(R.id.img_item_schedule_dup);
-		if(CCBooleanUtil.checkBoolean(schedule.isWarning)){
-			imgDup.setVisibility(View.VISIBLE);
-		}else{
-			imgDup.setVisibility(View.GONE);
-		}
-
-		ImageView imgRepeat = (ImageView)lnrSchedulesContainer.findViewById(R.id.img_item_schedule_repeat);
-		if(ScheduleModel.isRepeat(schedule)){
-			imgRepeat.setVisibility(View.VISIBLE);
-		}else{
-			imgRepeat.setVisibility(View.GONE);
-		}
-
-		// final List<UserModel> joinedUser = ClUtil.getJoinedUserModels(schedule, schedule.calendar.calendarUsers);
-		ImageView imgOwner = (ImageView)lnrSchedulesContainer.findViewById(R.id.img_id_owner);
-		if(!CCStringUtil.isEmpty(schedule.owner.avatarPath)){
-			WfPicassoHelper.loadImage(context, BuildConfig.HOST + schedule.owner.avatarPath, imgOwner, null);
-		}
-		final UserListLinearLayout userListLinearLayout = (UserListLinearLayout)lnrSchedulesContainer.findViewById(R.id.lnr_id_container_join_user_list);
-		userListLinearLayout.setGravityLeft(true);
-
-		final List<UserModel> joinedUserList = schedule.scheduleJoinUsers;
-		userListLinearLayout.post(new Runnable() {
-
-			@Override
-			public void run(){
-				userListLinearLayout.show(joinedUserList, (int)context.getResources().getDimension(R.dimen.margin_24dp));
-			}
-		});
-
 		lnrSchedulesContainer.setFocusable(true);
 		return lnrSchedulesContainer;
 	}
@@ -243,17 +201,5 @@ public class WeeklyScheduleListAdapter extends ArrayAdapter<CalendarDayModel>{
 
 		public TextView		txtDay;
 		public LinearLayout	lnrEventList;
-	}
-
-	public Integer findPosition4Code(String date){
-		int position = -1;
-		for(int i = 0; i < this.calendarDayModels.size(); i++){
-			CalendarDayModel calendarDayModel = calendarDayModels.get(i);
-			if(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, calendarDayModel.date).equals(date)){
-				position = i;
-				break;
-			}
-		}
-		return position;
 	}
 }

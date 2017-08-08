@@ -24,6 +24,7 @@ import android.widget.TextView;
 
 import com.bluelinelabs.logansquare.LoganSquare;
 
+import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
@@ -36,6 +37,7 @@ import trente.asia.calendar.commons.utils.ClUtil;
 import trente.asia.calendar.commons.views.FilterUserLinearLayout;
 import trente.asia.calendar.commons.views.UserListLinearLayout;
 import trente.asia.calendar.services.todo.model.Todo;
+import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.models.DeptModel;
 import trente.asia.welfare.adr.models.GroupModel;
@@ -116,6 +118,7 @@ public class UserFilterFragment extends AbstractClFragment{
 		List<UserModel> lstSelectedUser = setSelectedUserList();
 		PreferencesAccountUtil prefAccUtil = new PreferencesAccountUtil(activity);
 		prefAccUtil.set(ClConst.PREF_ACTIVE_USER_LIST, ClUtil.convertUserList2String(lstSelectedUser));
+		((WelfareActivity)activity).dataMap.put(ClConst.ACTION_SCHEDULE_UPDATE, CCConst.YES);
 		onClickBackBtn();
 	}
 

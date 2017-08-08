@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
+import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.activity.ChiaseActivity;
@@ -164,6 +165,7 @@ public class GroupFilterFragment extends AbstractClFragment{
 		PreferencesAccountUtil prefAccUtil = new PreferencesAccountUtil(activity);
 		prefAccUtil.set(ClConst.PREF_ACTIVE_USER_LIST, ClUtil.convertUserList2String(lstSelectedUser));
 		((ChiaseActivity)activity).isInitData = true;
+		((WelfareActivity)activity).dataMap.put(ClConst.ACTION_SCHEDULE_UPDATE, CCConst.YES);
 		getFragmentManager().popBackStack();
 		getFragmentManager().popBackStack();
 

@@ -18,6 +18,7 @@ import com.bluelinelabs.logansquare.LoganSquare;
 
 import org.json.JSONObject;
 
+import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.activity.ChiaseActivity;
@@ -28,6 +29,7 @@ import trente.asia.calendar.commons.fragments.AbstractClFragment;
 import trente.asia.calendar.commons.utils.ClUtil;
 import trente.asia.calendar.commons.views.FilterDeptLinearLayout;
 import trente.asia.calendar.services.calendar.model.RoomModel;
+import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.models.DeptModel;
 import trente.asia.welfare.adr.models.GroupModel;
 import trente.asia.welfare.adr.models.UserModel;
@@ -135,6 +137,7 @@ public class RoomFilterFragment extends AbstractClFragment{
 
 		PreferencesAccountUtil prefAccUtil = new PreferencesAccountUtil(activity);
 		prefAccUtil.set(ClConst.PREF_ACTIVE_ROOM, ClUtil.convertRoomList2String(selectedRooms));
+		((WelfareActivity)activity).dataMap.put(ClConst.ACTION_SCHEDULE_UPDATE, CCConst.YES);
 		onClickBackBtn();
 	}
 

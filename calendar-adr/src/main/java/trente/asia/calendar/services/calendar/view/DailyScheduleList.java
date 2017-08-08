@@ -40,15 +40,12 @@ import trente.asia.welfare.adr.view.SelectableRoundedImageView;
 public class DailyScheduleList extends LinearLayout{
 
 	private static final String										TIME_NOON				= "12:00";
-	private static final Integer									SCHEDULES_ALL_DAY		= 1;
-	private static final Integer									SCHEDULES_MORNING		= 2;
-	private static final Integer									SCHEDULES_AFTERNOON		= 3;
 	private static final int										MARGIN_LEFT_RIGHT		= WelfareUtil.dpToPx(16);
 	private static final int										MARGIN_TEXT_TOP_BOTTOM	= WelfareUtil.dpToPx(4);
 	private static final int										MARGIN_TOP_BOTTOM		= WelfareUtil.dpToPx(4);
 
-	private Map<Integer, List<ScheduleModel>>						schedulesMap;
-	Map<Date, Map<Integer, List<ScheduleModel>>>					daySchedulesMap;
+	private List<ScheduleModel>										mSchedules;
+	Map<Date, List<ScheduleModel>>									daySchedulesMap;
 	Map<Date, List<WorkOffer>>										dayOfferMap;
 	Map<Date, List<UserModel>>										dayBirthdayUsersMap;
 	private LayoutInflater											inflater;
@@ -79,24 +76,23 @@ public class DailyScheduleList extends LinearLayout{
 
 	public void showFor(Date selectedDate){
 		this.selectedDate = CCDateUtil.makeDate(selectedDate);
-		schedulesMap = daySchedulesMap.get(this.selectedDate);
-		buildTimelySchedules(R.id.lnr_daily_schedule_list_all_day, R.string.daily_page_all_day, schedulesMap.get(SCHEDULES_ALL_DAY));
-		buildTimelySchedules(R.id.lnr_daily_schedule_list_morning, R.string.daily_page_morning, schedulesMap.get(SCHEDULES_MORNING));
-		buildTimelySchedules(R.id.lnr_daily_schedule_list_afternoon, R.string.daily_page_afternoon, schedulesMap.get(SCHEDULES_AFTERNOON));
+		mSchedules = daySchedulesMap.get(this.selectedDate);
+		buildTimelySchedules(R.id.lnr_daily_schedule_list_all_day, R.string.schedule, mSchedules);
 		buildEvents(holidayModels, offers, userModels);
 	}
 
-	public void initData(List<Date> dates, List<ScheduleModel> lstSchedule, List<HolidayModel> holidayModels, List<WorkOffer> offers, List<UserModel> userModels){
-		this.lstSchedule = lstSchedule;
-		this.holidayModels = holidayModels;
-		this.offers = offers;
-		this.userModels = userModels;
-		dayOfferMap = buildDayOfferMap(dates, this.offers);
-		dayBirthdayUsersMap = buildDayBirthdayUserMap(dates, this.userModels);
-		daySchedulesMap = buildDaySchedulesMap(dates, this.lstSchedule);
-	}
+	// public void initData(List<Date> dates, List<ScheduleModel> lstSchedule, List<HolidayModel> holidayModels, List<WorkOffer> offers,
+	// List<UserModel> userModels){
+	// this.lstSchedule = lstSchedule;
+	// this.holidayModels = holidayModels;
+	// this.offers = offers;
+	// this.userModels = userModels;
+	// dayOfferMap = buildDayOfferMap(dates, this.offers);
+	// dayBirthdayUsersMap = buildDayBirthdayUserMap(dates, this.userModels);
+	// daySchedulesMap = buildDaySchedulesMap(dates, this.lstSchedule);
+	// }
 
-	public void initDataWithMap(Map<Date, List<UserModel>> dayBirthdayUsersMap, Map<Date, List<WorkOffer>> dayOfferMap, Map<Date, Map<Integer, List<ScheduleModel>>> daySchedulesMap, List<ScheduleModel> lstSchedule, List<HolidayModel> holidayModels, List<WorkOffer> offers, List<UserModel> userModels){
+	public void initDataWithMap(Map<Date, List<UserModel>> dayBirthdayUsersMap, Map<Date, List<WorkOffer>> dayOfferMap, Map<Date, List<ScheduleModel>> daySchedulesMap, List<ScheduleModel> lstSchedule, List<HolidayModel> holidayModels, List<WorkOffer> offers, List<UserModel> userModels){
 		this.lstSchedule = lstSchedule;
 		this.holidayModels = holidayModels;
 		this.offers = offers;
@@ -127,12 +123,12 @@ public class DailyScheduleList extends LinearLayout{
 
 	}
 
-	public static Map<Date, Map<Integer, List<ScheduleModel>>> buildDaySchedulesMap(List<Date> dates, List<ScheduleModel> lstSchedule){
-		Map<Date, Map<Integer, List<ScheduleModel>>> result = new HashMap<>();
+	public static Map<Date, List<ScheduleModel>> buildDaySchedulesMap(List<Date> dates, List<ScheduleModel> lstSchedule){
+		Map<Date, List<ScheduleModel>> result = new HashMap<>();
 		for(Date date : dates){
 			Date dateOnly = CCDateUtil.makeDate(date);
-			Map<Integer, List<ScheduleModel>> dayMap = getDisplayedSchedulesMaps(dateOnly, lstSchedule);
-			result.put(dateOnly, dayMap);
+			List<ScheduleModel> scheduleModels = getDisplayedSchedules(dateOnly, lstSchedule);
+			result.put(dateOnly, scheduleModels);
 		}
 		return result;
 	}
@@ -303,26 +299,15 @@ public class DailyScheduleList extends LinearLayout{
 		hasDisplayedItem = true;
 	}
 
-	public static Map<Integer, List<ScheduleModel>> getDisplayedSchedulesMaps(Date date, List<ScheduleModel> lstSchedule){
-		Map<Integer, List<ScheduleModel>> result = new HashMap<>();
-		result.put(SCHEDULES_ALL_DAY, new ArrayList<ScheduleModel>());
-		result.put(SCHEDULES_MORNING, new ArrayList<ScheduleModel>());
-		result.put(SCHEDULES_AFTERNOON, new ArrayList<ScheduleModel>());
+	public static List<ScheduleModel> getDisplayedSchedules(Date date, List<ScheduleModel> lstSchedule){
+		List<ScheduleModel> scheduleModels = new ArrayList<>();
 		for(ScheduleModel scheduleModel : lstSchedule){
 			if(!CCStringUtil.isEmpty(scheduleModel.key) && isScheduleOf(scheduleModel, date)){
-				if(CCBooleanUtil.checkBoolean(scheduleModel.isAllDay)){
-					result.get(SCHEDULES_ALL_DAY).add(scheduleModel);
-				}else if(isBeforeNoon(scheduleModel.startTime)){
-					result.get(SCHEDULES_MORNING).add(scheduleModel);
-				}else{
-					result.get(SCHEDULES_AFTERNOON).add(scheduleModel);
-				}
+				scheduleModels.add(scheduleModel);
 			}
 		}
-		sortByTime(result.get(SCHEDULES_ALL_DAY));
-		sortByTime(result.get(SCHEDULES_MORNING));
-		sortByTime(result.get(SCHEDULES_AFTERNOON));
-		return result;
+		sortByTime(scheduleModels);
+		return scheduleModels;
 	}
 
 	public static void sortByTime(List<ScheduleModel> scheduleModels){

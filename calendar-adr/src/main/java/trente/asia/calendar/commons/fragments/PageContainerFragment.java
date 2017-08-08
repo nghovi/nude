@@ -67,6 +67,11 @@ public abstract class PageContainerFragment extends AbstractClFragment{
 	}
 
 	@Override
+	public void initData() {
+		super.initData();
+	}
+
+	@Override
 	protected void initView(){
 		super.initView();
 		initHeader(null, "", R.drawable.cl_action_add);
