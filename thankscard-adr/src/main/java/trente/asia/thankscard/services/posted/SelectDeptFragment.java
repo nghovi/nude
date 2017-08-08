@@ -80,7 +80,7 @@ public class SelectDeptFragment extends AbstractTCFragment implements Department
 
 				@Override
 				public void afterTextChanged(Editable editable){
-					if(editable.length() > 2){
+					if(editable.length() > 0){
 						showSearchList(editable.toString().toLowerCase());
 					}else{
 						if (adapter != null) {
