@@ -16,6 +16,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import io.realm.Realm;
@@ -126,7 +128,7 @@ public class MyPagerAdapter2 extends PagerAdapter{
 		viewHolder.txtMessage.setText(model.message);
 		viewHolder.txtMessage.setMovementMethod(new ScrollingMovementMethod());
 		if(model.template != null){
-			WfPicassoHelper.loadImage2(mContext, BuildConfig.HOST, viewHolder.imgTemplate, model.template.templateUrl);
+			Glide.with(mContext).load(BuildConfig.HOST + model.template.templateUrl).into(viewHolder.imgTemplate);
 		}
 
 		if(hideMessage){

@@ -15,7 +15,6 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.Region;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.Log;
@@ -26,7 +25,6 @@ import android.widget.RelativeLayout;
 
 import trente.asia.thankscard.R;
 import trente.asia.thankscard.commons.defines.TcConst;
-import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.pref.PreferencesSystemUtil;
 import trente.asia.welfare.adr.utils.WelfareUtil;
 
@@ -306,7 +304,7 @@ public class StickerViewPost extends AppCompatImageView{
 		float	oldX, oldY, moveX, moveY;
 		double	startAngle, currentAngle;
 		int		touch	= 0;
-		float	delta	= 10;
+		float	slop	= WelfareUtil.dpToPx(2);
 		boolean	isTouch;
 
 		@Override
@@ -317,7 +315,7 @@ public class StickerViewPost extends AppCompatImageView{
 				oldX = motionEvent.getX();
 				oldY = motionEvent.getY();
 				startAngle = getAngle(oldX, oldY);
-				int eps = 75;
+				int eps = WelfareUtil.dpToPx(25);
 				if(oldX < scalePoint[0] + eps && oldX > scalePoint[0] - eps && oldY < scalePoint[1] + eps && oldY > scalePoint[1] - eps){
 					touch = 1;
 				}else if(oldX < centerPoint[0] + eps && oldX > centerPoint[0] - eps && oldY < centerPoint[1] + eps && oldY > centerPoint[1] - eps){
@@ -335,7 +333,7 @@ public class StickerViewPost extends AppCompatImageView{
 			case MotionEvent.ACTION_MOVE:
 				moveX = motionEvent.getX() - oldX;
 				moveY = motionEvent.getY() - oldY;
-				if(Math.abs(moveX) >= delta && Math.abs(moveY) >= delta){
+				if(Math.abs(moveX) >= slop && Math.abs(moveY) >= slop){
 					isTouch = true;
 				}
 

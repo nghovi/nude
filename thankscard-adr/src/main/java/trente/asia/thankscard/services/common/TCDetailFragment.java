@@ -104,7 +104,6 @@ public class TCDetailFragment extends AbstractPagerFragment{
 	private void loadHistory(){
 		JSONObject jsonObject = new JSONObject();
 		try{
-			jsonObject.put("categoryId", currentHistory.categoryId);
 			jsonObject.put("targetMonth", CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_YYYY_MM, Calendar.getInstance().getTime()));
 		}catch(JSONException e){
 			e.printStackTrace();

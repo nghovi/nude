@@ -259,15 +259,6 @@ public abstract class AbstractTCListFragment extends AbstractTCFragment implemen
 			btnPost.setEnabled(false);
 		}
 		templates = CCJsonUtil.convertToModelList(response.optString("templates"), Template.class);
-		for (HistoryModel history : mLstHistory) {
-			if (!history.stickers.isEmpty()) {
-				for (ApiStickerModel stickerModel : history.stickers) {
-					log(stickerModel.locationX);
-					log(stickerModel.degree);
-					log(stickerModel.stickerId);
-				}
-			}
-		}
 
 		// appendUserNames();
 		appendDepartmentDeptAll();

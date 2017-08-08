@@ -53,7 +53,6 @@ public class StickerViewDetail extends AppCompatImageView{
         Picasso.with(getContext()).load(BuildConfig.HOST + stickerPath).into(new Target() {
             @Override
             public void onBitmapLoaded(Bitmap bitmapSticker, Picasso.LoadedFrom from) {
-                log("onBitmapLoaded");
                 bitmap = bitmapSticker;
                 width = bitmap.getWidth();
                 height = bitmap.getHeight();
