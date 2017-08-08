@@ -35,7 +35,7 @@ public class ScheduleModel{
 	public String			calendarId;
 	public String			roomId;
 	public String			joinUsers;
-	public CalendarModel	calendar;
+	// public CalendarModel calendar;
 
 	public String			scheduleType;
 	public String			categoryId;
@@ -98,11 +98,11 @@ public class ScheduleModel{
 	}
 
 	public String getScheduleColor(){
-		if(!CCStringUtil.isEmpty(this.calendarId)){
-			if(categoryModel != null){
-				return WelfareFormatUtil.formatColor(categoryModel.categoryColor);
-			}
-		}
+		// if(!CCStringUtil.isEmpty(this.calendarId)){
+		// if(categoryModel != null){
+		// return WelfareFormatUtil.formatColor(categoryModel.categoryColor);
+		// }
+		// }
 		if(ClConst.SCHEDULE_TYPE_HOLIDAY.equals(scheduleType)){
 			return WelfareFormatUtil.formatColor(ClConst.SCHEDULE_COLOR_HOLIDAY);
 		}else if(ClConst.SCHEDULE_TYPE_BIRTHDAY.equals(scheduleType)){

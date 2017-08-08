@@ -65,9 +65,9 @@ public class DailySummaryScheduleAdapter extends ArrayAdapter<ScheduleModel>{
 		String endTime = CCFormatUtil.formatTime(WelfareUtil.makeDate(model.endDate));
 		holder.txtScheduleTime.setText(WelfareFormatUtil.connect2String(startTime, endTime, "-"));
 
-		if(!CCStringUtil.isEmpty(model.calendar.imagePath)){
-			WfPicassoHelper.loadImage(mContext, BuildConfig.HOST + model.calendar.imagePath, holder.imgCalendar, null);
-		}
+		// if(!CCStringUtil.isEmpty(model.calendar.imagePath)){
+		// WfPicassoHelper.loadImage(mContext, BuildConfig.HOST + model.calendar.imagePath, holder.imgCalendar, null);
+		// }
 
 		return convertView;
 	}

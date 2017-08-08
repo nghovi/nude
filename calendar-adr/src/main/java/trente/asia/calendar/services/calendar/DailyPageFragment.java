@@ -1,6 +1,8 @@
 package trente.asia.calendar.services.calendar;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -10,6 +12,7 @@ import com.github.ksoichiro.android.observablescrollview.ObservableScrollView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,9 +42,10 @@ import static trente.asia.calendar.services.calendar.SchedulesPageListViewFragme
  */
 public class DailyPageFragment extends SchedulesPageFragment{
 
-	private LinearLayout	lnrScheduleAllDays;
-	private TextView		txtTodoInfo;
-	private LinearLayout	lnrListSchedules;
+	private LinearLayout						lnrScheduleAllDays;
+	private TextView							txtTodoInfo;
+	private LinearLayout						lnrListSchedules;
+	private Map<String, List<ScheduleModel>>	startTimeSchedulesMap;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -57,6 +61,14 @@ public class DailyPageFragment extends SchedulesPageFragment{
 		txtTodoInfo = (TextView)getView().findViewById(R.id.txt_todo_things);
 		lnrScheduleAllDays = (LinearLayout)getView().findViewById(R.id.lnr_schedule_all_day_container);
 		lnrListSchedules = (LinearLayout)getView().findViewById(R.id.lnr_fragment_daily_page_schedules_time);
+		Calendar c = CCDateUtil.makeCalendarToday();
+		startTimeSchedulesMap = new HashMap<>();
+		for(int i = 0; i < 24; i++){
+			String startTime = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_HH_MM, c.getTime());
+			startTimeSchedulesMap.put(startTime, new ArrayList<ScheduleModel>());
+			c.add(Calendar.HOUR, 1);
+		}
+
 	}
 
 	@Override
@@ -76,20 +88,26 @@ public class DailyPageFragment extends SchedulesPageFragment{
 		}
 
 		lnrScheduleAllDays.removeAllViews();
-		Map<String, List<ScheduleModel>> scheduleModelMap = new HashMap<>();
 		List<ScheduleModel> allDaySchedules = new ArrayList<>();
+
+		for(ScheduleModel scheduleModel : schedules){
+			if(!scheduleModel.isAllDay){
+				String keyMap = scheduleModel.startTime.split(":")[0] + ":00";
+				startTimeSchedulesMap.get(keyMap).add(scheduleModel);
+			}
+		}
+
 		for(ScheduleModel scheduleModel : schedules){
 			if(scheduleModel.isAllDay){
 				allDaySchedules.add(scheduleModel);
-				TextView textView = new TextView(activity);
-				textView.setText(scheduleModel.scheduleName);
+				TextView textView = WeeklyPageFragment.makeTextView(activity, scheduleModel.scheduleName, 0, 0, LinearLayout.LayoutParams.MATCH_PARENT, WeeklyPageFragment.getColor(scheduleModel), 0);
 				lnrScheduleAllDays.addView(textView);
 			}else{
-				List<ScheduleModel> scheduleModels = scheduleModelMap.get(scheduleModel.startTime);
+				List<ScheduleModel> scheduleModels = startTimeSchedulesMap.get(scheduleModel.startTime);
 				if(CCCollectionUtil.isEmpty(scheduleModels)){
 					scheduleModels = new ArrayList<>();
 					scheduleModels.add(scheduleModel);
-					scheduleModelMap.put(scheduleModel.startTime, scheduleModels);
+					startTimeSchedulesMap.put(scheduleModel.startTime, scheduleModels);
 				}else{
 					scheduleModels.add(scheduleModel);
 				}
@@ -97,9 +115,13 @@ public class DailyPageFragment extends SchedulesPageFragment{
 		}
 
 		lnrListSchedules.removeAllViews();
-		for(String startTime : scheduleModelMap.keySet()){
-			List<ScheduleModel> scheduleModels = scheduleModelMap.get(startTime);
-			addStartTimeRow(startTime, scheduleModels);
+
+		List<String> keys = new ArrayList<>(startTimeSchedulesMap.keySet());
+		Collections.sort(keys);
+
+		for(String key : keys){
+			List<ScheduleModel> scheduleModels = startTimeSchedulesMap.get(key);
+			addStartTimeRow(key, scheduleModels);
 		}
 	}
 

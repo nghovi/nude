@@ -50,13 +50,15 @@
                         android:orientation="vertical">
 
 
-                        <LinearLayout
-                            android:id="@+id/lnr_part1"
+                        <RelativeLayout
+                            android:id="@+id/rlt_part1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                            android:layout_marginBottom="@dimen/margin_10dp"
+                            android:orientation="vertical"
+                            android:paddingTop="@dimen/margin_10dp">
 
-                        </LinearLayout>
+                        </RelativeLayout>
 
                         <View
                             style="@style/cs_common_divider"
@@ -67,6 +69,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_alignBottom="@+id/lnr_part1"
+                            android:layout_marginTop="@dimen/margin_10dp"
                             android:orientation="vertical"></LinearLayout>
 
                     </LinearLayout>

@@ -27,30 +27,10 @@
                 android:id="@+id/lnr_schedule_all_day_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"></LinearLayout>
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/margin_16dp"></LinearLayout>
 
         </LinearLayout>
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingTop="@dimen/margin_10dp"
-        android:visibility="gone">
-
-        <TextView
-            android:id="@+id/txt_item_daily_schedule__time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/margin_4dp"
-            android:text="10:00" />
-
-        <View style="@style/cs_common_divider" />
-
 
     </LinearLayout>
 

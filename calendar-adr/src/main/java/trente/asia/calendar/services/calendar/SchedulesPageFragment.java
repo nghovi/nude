@@ -1,6 +1,7 @@
 package trente.asia.calendar.services.calendar;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -21,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCStringUtil;
@@ -28,10 +30,12 @@ import trente.asia.android.model.DayModel;
 import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
+import trente.asia.calendar.commons.dialogs.DailySummaryDialog;
 import trente.asia.calendar.commons.fragments.AbstractClFragment;
 import trente.asia.calendar.commons.fragments.ClPageFragment;
 import trente.asia.calendar.commons.utils.ClUtil;
 import trente.asia.calendar.commons.views.UserFacilityView;
+import trente.asia.calendar.services.calendar.listener.DailyScheduleClickListener;
 import trente.asia.calendar.services.calendar.model.CalendarModel;
 import trente.asia.calendar.services.calendar.model.CategoryModel;
 import trente.asia.calendar.services.calendar.model.HolidayModel;
@@ -49,12 +53,12 @@ import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
  *
  * @author TrungND
  */
-public abstract class SchedulesPageFragment extends ClPageFragment implements WeeklyScheduleListAdapter.OnScheduleItemClickListener{
+public abstract class SchedulesPageFragment extends ClPageFragment implements WeeklyScheduleListAdapter.OnScheduleItemClickListener,DailyScheduleClickListener{
 
 	protected List<Date>			dates;
 
 	protected LinearLayout			lnrCalendarContainer;
-	protected List<ScheduleModel>	lstSchedule;
+	protected List<ScheduleModel>	lstSchedule			= new ArrayList<>();
 	protected List<HolidayModel>	lstHoliday;
 
 	protected List<CalendarModel>	lstCalendar;
@@ -68,6 +72,7 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 	protected boolean				isChangedData		= true;
 	protected List<Todo>			todos;
 	protected LayoutInflater		inflater;
+	protected DailySummaryDialog	dialogDailySummary;
 
 	abstract protected List<Date> getAllDate();
 
@@ -191,6 +196,46 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 			}
 			scheduleStrings = newScheduleStrings;
 			pageSharingHolder.isLoadingSchedules = false;
+
+			// add holiday,
+			if(!CCCollectionUtil.isEmpty(lstHoliday)){
+				for(HolidayModel holidayModel : lstHoliday){
+					ScheduleModel scheduleModel = new ScheduleModel(holidayModel);
+					// scheduleModel.scheduleName = getString(R.string.cl_schedule_holiday_name, scheduleModel.scheduleName);
+					lstSchedule.add(scheduleModel);
+				}
+			}
+
+			// add birthday
+			if(!CCCollectionUtil.isEmpty(lstBirthdayUser)){
+				for(UserModel birthday : lstBirthdayUser){
+					ScheduleModel scheduleModel = new ScheduleModel(birthday);
+					// scheduleModel.scheduleName = getString(R.string.cl_schedule_birth_day_name, scheduleModel.scheduleName);
+					lstSchedule.add(scheduleModel);
+				}
+			}
+
+			// add work offer
+			if(!CCCollectionUtil.isEmpty(lstWorkOffer)){
+				for(WorkOffer workOffer : lstWorkOffer){
+					ScheduleModel scheduleModel = new ScheduleModel(workOffer);
+					scheduleModel.scheduleName = getString(R.string.cl_schedule_offer_name, scheduleModel.scheduleName);
+					lstSchedule.add(scheduleModel);
+				}
+			}
+
+			// make daily summary dialog
+			if(dialogDailySummary == null){
+				dialogDailySummary = new DailySummaryDialog(activity, this, this, dates);
+				dialogDailySummary.setData(lstSchedule, lstBirthdayUser, lstHoliday, lstWorkOffer);
+			}
+
+			if(refreshDialogData && isChangedData){
+				//// TODO: 4/27/2017 more check change data
+				dialogDailySummary.setData(lstSchedule, lstBirthdayUser, lstHoliday, lstWorkOffer);
+				isChangedData = false;
+			}
+
 		}catch(IOException e){
 			e.printStackTrace();
 		}
@@ -214,6 +259,16 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 		fragment.setSchedule(schedule);
 		fragment.setSelectedDate(selectedDate);
 		activity.addFragment(fragment);
+	}
+
+	@Override
+	public void onDailyScheduleClickListener(String day){
+		if(dialogDailySummary != null && !dialogDailySummary.isShowing()){
+			dayStr = day;
+			dialogDailySummary.show(CCDateUtil.makeDateCustom(dayStr, WelfareConst.WF_DATE_TIME_DATE));
+			refreshDialogData = true;
+			loadScheduleList();
+		}
 	}
 
 	@Override

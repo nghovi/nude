@@ -182,15 +182,15 @@ public class WeeklyScheduleListAdapter extends ArrayAdapter<CalendarDayModel>{
 		txtScheduleTime.setText(time);
 
 		TextView txtScheduleName = (TextView)lnrSchedulesContainer.findViewById(R.id.txt_item_schedule_name);
-		if(!CCStringUtil.isEmpty(schedule.categoryId)){
-			int categoryColor = Color.parseColor(WelfareFormatUtil.formatColor(schedule.categoryModel.categoryColor));
-			txtScheduleName.setTextColor(categoryColor);
-			txtScheduleTime.setTextColor(categoryColor);
-		}
+//		if(!CCStringUtil.isEmpty(schedule.categoryId)){
+//			int categoryColor = Color.parseColor(WelfareFormatUtil.formatColor(schedule.categoryModel.categoryColor));
+//			txtScheduleName.setTextColor(categoryColor);
+//			txtScheduleTime.setTextColor(categoryColor);
+//		}
 		txtScheduleName.setText(schedule.scheduleName);
 
 		SelectableRoundedImageView imgCalendar = (SelectableRoundedImageView)lnrSchedulesContainer.findViewById(R.id.img_item_schedule_calendar);
-		WfPicassoHelper.loadImage(context, BuildConfig.HOST + schedule.calendar.imagePath, imgCalendar, null);
+//		WfPicassoHelper.loadImage(context, BuildConfig.HOST + schedule.calendar.imagePath, imgCalendar, null);
 		lnrSchedulesContainer.setOnClickListener(new View.OnClickListener() {
 
 			@Override

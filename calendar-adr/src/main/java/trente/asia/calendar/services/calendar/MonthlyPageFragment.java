@@ -58,12 +58,11 @@ import trente.asia.welfare.adr.utils.WelfareUtil;
  *
  * @author TrungND
  */
-public class MonthlyPageFragment extends SchedulesPageFragment implements DailyScheduleClickListener{
+public class MonthlyPageFragment extends SchedulesPageFragment{
 
 	private List<MonthlyCalendarDayView>	lstCalendarDay	= new ArrayList<>();
 	private List<MonthlyCalendarRowView>	lstCalendarRow	= new ArrayList<>();
 
-	private DailySummaryDialog				dialogDailySummary;
 	private LinearLayout					lnrTodoSection;
 	private LinearLayout					lnrTodos;
 	private boolean							isExpanded		= false;
@@ -376,38 +375,6 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 	protected void onLoadSchedulesSuccess(JSONObject response){
 		super.onLoadSchedulesSuccess(response);
 		clearOldData();
-
-		if(lstSchedule == null){
-			lstSchedule = new ArrayList<>();
-		}
-
-		// add holiday,
-		if(!CCCollectionUtil.isEmpty(lstHoliday)){
-			for(HolidayModel holidayModel : lstHoliday){
-				ScheduleModel scheduleModel = new ScheduleModel(holidayModel);
-				// scheduleModel.scheduleName = getString(R.string.cl_schedule_holiday_name, scheduleModel.scheduleName);
-				lstSchedule.add(scheduleModel);
-			}
-		}
-
-		// add birthday
-		if(!CCCollectionUtil.isEmpty(lstBirthdayUser)){
-			for(UserModel birthday : lstBirthdayUser){
-				ScheduleModel scheduleModel = new ScheduleModel(birthday);
-				// scheduleModel.scheduleName = getString(R.string.cl_schedule_birth_day_name, scheduleModel.scheduleName);
-				lstSchedule.add(scheduleModel);
-			}
-		}
-
-		// add work offer
-		if(!CCCollectionUtil.isEmpty(lstWorkOffer)){
-			for(WorkOffer workOffer : lstWorkOffer){
-				ScheduleModel scheduleModel = new ScheduleModel(workOffer);
-				scheduleModel.scheduleName = getString(R.string.cl_schedule_offer_name, scheduleModel.scheduleName);
-				lstSchedule.add(scheduleModel);
-			}
-		}
-
 		if(!CCCollectionUtil.isEmpty(lstSchedule)){
 			Collections.sort(lstSchedule, new ScheduleComparator());
 			for(ScheduleModel model : lstSchedule){
@@ -442,18 +409,6 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 			dayView.showSchedules();
 		}
 
-		// make daily summary dialog
-		if(dialogDailySummary == null){
-			dialogDailySummary = new DailySummaryDialog(activity, this, this, dates);
-			dialogDailySummary.setData(lstSchedule, lstBirthdayUser, lstHoliday, lstWorkOffer);
-		}
-
-		if(refreshDialogData && isChangedData){
-			//// TODO: 4/27/2017 more check change data
-			dialogDailySummary.setData(lstSchedule, lstBirthdayUser, lstHoliday, lstWorkOffer);
-			isChangedData = false;
-		}
-
 		List<Todo> todos = CCJsonUtil.convertToModelList(response.optString("todoList"), Todo.class);
 		buildTodoList(todos);
 	}
@@ -468,16 +423,6 @@ public class MonthlyPageFragment extends SchedulesPageFragment implements DailyS
 			rowView.removeAllData();
 		}
 		// lstScheduleWithoutHoliday.clear();
-	}
-
-	@Override
-	public void onDailyScheduleClickListener(String day){
-		if(dialogDailySummary != null && !dialogDailySummary.isShowing()){
-			dayStr = day;
-			dialogDailySummary.show(CCDateUtil.makeDateCustom(dayStr, WelfareConst.WF_DATE_TIME_DATE));
-			refreshDialogData = true;
-			loadScheduleList();
-		}
 	}
 
 	@Override

@@ -7,55 +7,68 @@
         layout="@layout/view_user_facility_tabs"
         android:visibility="visible" />
 
-    <LinearLayout
-        android:id="@+id/lnr_calendar_container"
-        style="@style/cs_common_match_wrap"
-        android:layout_marginBottom="@dimen/margin_10dp"
-        android:orientation="horizontal"
-        android:paddingLeft="@dimen/margin_16dp"
-        android:paddingRight="@dimen/margin_16dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/margin_16dp"
-            android:text="@string/chiase_common_today" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/txt_todo_things"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/two_things_todo" />
+            <LinearLayout
+                android:id="@+id/lnr_calendar_container"
+                style="@style/cs_common_match_wrap"
+                android:layout_marginBottom="@dimen/margin_10dp"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/margin_16dp"
+                android:paddingRight="@dimen/margin_16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/margin_16dp"
+                    android:text="@string/chiase_common_today" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/txt_todo_things"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/two_things_todo" />
+
+                    <LinearLayout
+                        android:id="@+id/lnr_schedule_all_day_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"></LinearLayout>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/cl_icon_birthday" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <View style="@style/cs_common_divider" />
 
             <LinearLayout
-                android:id="@+id/lnr_schedule_all_day_container"
+                android:id="@+id/lnr_fragment_daily_page_schedules_time"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"></LinearLayout>
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/margin_16dp"
+                android:paddingRight="@dimen/margin_16dp"
+                android:paddingTop="@dimen/margin_10dp"></LinearLayout>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/cl_icon_birthday" />
         </LinearLayout>
-
-    </LinearLayout>
-
-    <View style="@style/cs_common_divider" />
-
-    <LinearLayout
-        android:id="@+id/lnr_fragment_daily_page_schedules_time"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingLeft="@dimen/margin_16dp"
-        android:paddingRight="@dimen/margin_16dp"
-        android:paddingTop="@dimen/margin_10dp"></LinearLayout>
+    </ScrollView>
 
 
 </LinearLayout>
