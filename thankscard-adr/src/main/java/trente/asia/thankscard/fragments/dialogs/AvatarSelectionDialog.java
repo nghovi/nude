@@ -41,12 +41,12 @@ public class AvatarSelectionDialog extends TCDialog implements View.OnClickListe
 	}
 
 	@Override
-	int getDialogLayoutId(){
+	public int getDialogLayoutId(){
 		return R.layout.dialog_avatar_handlers;
 	}
 
 	@Override
-	void buildDialogLayout(View rootView){
+    public void buildDialogLayout(View rootView){
 		TextView txtCamera = (TextView)rootView.findViewById(R.id.txt_dialog_avatar_handlers_camera);
 		txtCamera.setOnClickListener(this);
 		TextView txtGallery = (TextView)rootView.findViewById(R.id.txt_dialog_avatar_handlers_gallery);

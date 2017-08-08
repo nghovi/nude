@@ -42,10 +42,12 @@ import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.dailyreport.DRConst;
 import trente.asia.dailyreport.R;
+import trente.asia.dailyreport.dialogs.DRDialog;
 import trente.asia.dailyreport.fragments.AbstractDRFragment;
 import trente.asia.dailyreport.services.kpi.model.GroupKpi;
 import trente.asia.dailyreport.services.kpi.model.Personal;
 import trente.asia.dailyreport.services.kpi.model.Progress;
+import trente.asia.dailyreport.services.util.KpiUtil;
 import trente.asia.dailyreport.view.DRGroupHeader;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
@@ -56,28 +58,28 @@ import trente.asia.welfare.adr.dialog.WfDialog;
  */
 public class UserActualFragment extends AbstractDRFragment{
 
-	private static final int			LABEL_COUNT	= 25;
-	private static Map<Float, String>	formattedValuesMap;
-	private DatePickerDialog			datePickerDialog;
-	private TextView					txtSelectedDate;
-	private DRGroupHeader				drGroupHeader;
-	private WfDialog					wfDialog;
-	private List<GroupKpi>				groupKpiList;
-	LineChart							lineChart;
-	private LinearLayout				lnrInfo;
-	private GroupKpi					selectedGroup;
-	private TextView					txtPeriod;
-	private TextView					txtGoal;
-	private TextView					txtActualTotal;
-	private TextView					txtAchievementRate;
-	private EditText					edtActualToday;
-	private Personal					personal;
-	private ScrollView					scrollView;
-	private TextView					txtUnit;
-	private int							selectedGroupPosition;
-	private LinearLayout				lnrChartContainer;
-	private String						groupId;
-	private String						targetDate;
+	private static final int	POINT_PER_PAGE	= 6;
+	private DatePickerDialog	datePickerDialog;
+	private TextView			txtSelectedDate;
+	private DRGroupHeader		drGroupHeader;
+	private WfDialog			wfDialog;
+	private List<GroupKpi>		groupKpiList;
+	LineChart					lineChart;
+	private LinearLayout		lnrInfo;
+	private GroupKpi			selectedGroup;
+	private TextView			txtPeriod;
+	private TextView			txtGoal;
+	private TextView			txtActualTotal;
+	private TextView			txtAchievementRate;
+	private EditText			edtActualToday;
+	private Personal			personal;
+	private ScrollView			scrollView;
+	private TextView			txtUnit;
+	private int					selectedGroupPosition;
+	private LinearLayout		lnrChartContainer;
+	private String				groupId;
+	private String				targetDate;
+	private DRDialog			drDialog;
 
 	@Override
 	public int getFragmentLayoutId(){
@@ -186,35 +188,22 @@ public class UserActualFragment extends AbstractDRFragment{
 		lnrChartContainer = (LinearLayout)getView().findViewById(R.id.lnr_chart_container);
 	}
 
-	public static void buildChart(Context context, LineChart lineChart, List<Progress> progressList, GroupKpi group, Personal personal){
+	public static void buildChart(Context context, LineChart lineChart, final List<Progress> progressList, GroupKpi group, Personal personal){
 		if(!CCCollectionUtil.isEmpty(progressList)){
 			Progress progressFirst = new Progress();
 			progressFirst.checkPointDate = group.startDate;
 			progressFirst.achievementOver = "0";
 			progressList.add(0, progressFirst);
-			formattedValuesMap = new HashMap<>();
 			List<Entry> entries = new ArrayList<Entry>();
 			Progress maxProgress = progressList.get(progressList.size() - 1);
 
-			Date lastCheckPointDate = CCDateUtil.makeDateCustom(maxProgress.checkPointDate, WelfareConst.WF_DATE_TIME_DATE);
-			Date firstCheckPointDate = CCDateUtil.makeDateCustom(progressList.get(0).checkPointDate, WelfareConst.WF_DATE_TIME_DATE);
-			long maxDistanceDay = (lastCheckPointDate.getTime() - firstCheckPointDate.getTime()) / (24 * 60 * 60 * 1000);
-
-			int pageNum = progressList.size() / 7 + 1;
-			float maxVisibleRange = maxDistanceDay / pageNum;
-			float labelDistance = Math.round(maxVisibleRange / LABEL_COUNT);
-
+			int i = 0;
 			for(Progress progress : progressList){
-				Date checkPointDate = CCDateUtil.makeDateCustom(progress.checkPointDate, WelfareConst.WF_DATE_TIME_DATE);
-				float xDay = (checkPointDate.getTime() - firstCheckPointDate.getTime()) / (24 * 60 * 60 * 1000);
-
-				int labelAxisValue = (int)((Math.round(xDay / labelDistance)) * labelDistance);
-				formattedValuesMap.put((float)labelAxisValue, progress.checkPointDate.split(" ")[0]);
-				Entry t = new Entry(xDay, Float.valueOf(progress.achievementOver));
+				Entry t = new Entry(i, Float.valueOf(progress.achievementOver));
 				entries.add(t);
+				i++;
 			}
 			LineDataSet dataSet = new LineDataSet(entries, ""); // add entries to dataset
-			//// TODO: 7/17/17 comment out
 			dataSet.setDrawValues(false);
 			dataSet.setColor(Color.BLUE);
 			dataSet.setLineWidth(1f);
@@ -227,24 +216,24 @@ public class UserActualFragment extends AbstractDRFragment{
 			lineData.addDataSet(dataSet);
 
 			lineChart.setData(lineData);
-			// lineChart.setVisibleYRangeMaximum(200f, YAxis.AxisDependency.LEFT);
-			// lineChart.setVisibleYRangeMaximum(200f, YAxis.AxisDependency.RIGHT);
-
 			IAxisValueFormatter formatter = new IAxisValueFormatter() {
 
 				@Override
 				public String getFormattedValue(float value, AxisBase axis){
-					// return String.valueOf(value);
-					String dateStr = formattedValuesMap.get(value);
-					return CCStringUtil.isEmpty(dateStr) ? "" : dateStr;
-				}
+					int index = (int)value;
+					if(index < progressList.size()){
+						Progress progress = progressList.get((int)value);
+						return CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, CCDateUtil.makeDateCustom(progress.checkPointDate, WelfareConst.WF_DATE_TIME_DATE));
+					}
+					return "";
 
+				}
 			};
 
 			XAxis xAxis = lineChart.getXAxis();
 			xAxis.setEnabled(true);
 			xAxis.setGranularityEnabled(false);
-			xAxis.setLabelCount(LABEL_COUNT, false);
+			// xAxis.setLabelCount(LABEL_COUNT, false);
 			xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
 			xAxis.setTextSize(10f);
 			xAxis.setTextColor(Color.BLACK);
@@ -252,13 +241,13 @@ public class UserActualFragment extends AbstractDRFragment{
 			xAxis.setDrawGridLines(false);
 			xAxis.setGranularity(1f); // minimum axis-step (interval) is 1
 			xAxis.setValueFormatter(formatter);
-			// xAxis.setAvoidFirstLastClipping(true);
+			xAxis.setAvoidFirstLastClipping(true);
 			xAxis.setLabelRotationAngle(-50f);
 			xAxis.setTextSize(7);
-			xAxis.setAxisMaximum(maxDistanceDay + labelDistance);
+			// xAxis.setAxisMaximum(progressList.size() + 0.5f);
 
 			int goal = Integer.valueOf(personal == null ? group.goal : personal.goal);
-			float maxYValue = Math.max(Float.valueOf(maxProgress.achievementOver) * 1.12f, goal * 1.62f);
+			float maxYValue = Math.max(Float.valueOf(maxProgress.achievementOver) * 1.25f, goal * 1.8f);
 
 			YAxis yAxisLeft = lineChart.getAxisLeft();
 			yAxisLeft.setDrawAxisLine(false);
@@ -356,7 +345,8 @@ public class UserActualFragment extends AbstractDRFragment{
 			Description description = new Description();
 			description.setText(context.getResources().getString(R.string.text_period));
 			lineChart.setDescription(description);
-			lineChart.setVisibleXRangeMaximum(maxVisibleRange);
+			float maxRange = progressList.size() >= POINT_PER_PAGE ? POINT_PER_PAGE + 0.2f : progressList.size();
+			lineChart.setVisibleXRangeMaximum(maxRange);
 			//// TODO: 7/17/17 scroll to X
 			// lineChart.moveViewToX(////);
 			Legend legend = lineChart.getLegend();
@@ -394,6 +384,9 @@ public class UserActualFragment extends AbstractDRFragment{
 	private void onClickSaveButton(){
 		String dateStr = txtSelectedDate.getText().toString();
 		String todayActual = edtActualToday.getText().toString().replaceAll("[^\\d.]", "");
+
+		todayActual = CCStringUtil.isEmpty(todayActual) ? "0" : todayActual;
+
 		JSONObject jsonObject = new JSONObject();
 		try{
 			jsonObject.put("targetDate", dateStr);
@@ -404,6 +397,15 @@ public class UserActualFragment extends AbstractDRFragment{
 			e.printStackTrace();
 		}
 		requestUpdate(DRConst.API_KPI_PERSONAL_UPDATE, jsonObject, true);
+
+	}
+
+	private void showValidationDialog(String message){
+		if(drDialog == null){
+			drDialog = new DRDialog(activity);
+			drDialog.setDialogConfirm(message, getString(R.string.chiase_common_ok), null, null, null);
+		}
+		drDialog.show();
 	}
 
 	@Override
@@ -452,6 +454,7 @@ public class UserActualFragment extends AbstractDRFragment{
 	}
 
 	private void showEmptyActualMessage(){
+		updateHeader(getString(R.string.performance_input));
 		getView().findViewById(R.id.lnr_fragment_action_plan_main).setVisibility(View.GONE);
 		getView().findViewById(R.id.txt_fragment_action_plan_empty).setVisibility(View.VISIBLE);
 	}
@@ -471,6 +474,8 @@ public class UserActualFragment extends AbstractDRFragment{
 		String status = null;
 		if(Integer.parseInt(personal.progressList.get(personal.progressList.size() - 1).achievementOver) >= Integer.valueOf(personal.goal)){
 			status = getString(R.string.achieve_dialog_title);
+		}else{
+			status = getString(R.string.fragmen_group_actual_needed_amount2, CCFormatUtil.formatAmount(Integer.valueOf(personal.goal) - Integer.valueOf(personal.achievement))) + personal.group.goalUnit;
 		}
 		((TextView)chartView.findViewById(R.id.txt_kpi_chart_result)).setText(status);
 		buildChart(activity, lineChart, personal.progressList, selectedGroup, personal);
@@ -517,7 +522,7 @@ public class UserActualFragment extends AbstractDRFragment{
 	}
 
 	public int getSelectedGroupPosition(){
-		if(selectedGroup == null){
+		if(selectedGroup == null && CCStringUtil.isEmpty(groupId)){
 			return 0;
 		}
 

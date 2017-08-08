@@ -10,29 +10,30 @@ import trente.asia.welfare.adr.models.UserModel;
  * Created by hviet on 6/22/17.
  */
 
-public class GroupKpi{
+public class GroupKpi {
 
-	public String				name;
-	public String				todayActual		= "0";
-	public String				goal			= "0";
-	// public String unit = "VND";
-	public String				condition;
-	public String				note;
-	public String				startDate;
-	public String				endDate;
-	public String				ownerId;
-	public String				ownerName;
-	public String				ownerDeptId;
-	public String				key;
-	public List<UserModel>		kpiMembers;
-	public String				achievement		= "0";
-	public String				achievementRate	= "0";
-	public String				companyId;
-	public String				toGoal			= "0";
-	public List<ApiObjectModel>	statusList;
-	public List<Progress>		checkPoints;
-	public String				actual;
-	public String				goalUnit;
-	public String				todayActualGroup;
-	public String				dayNote;
+    public String name;
+    public String todayActual = "0";
+    public String goal = "0";
+    // public String unit = "VND";
+    public String condition;
+    public String note;
+    public String startDate;
+    public String endDate;
+    public String ownerId;
+    public String ownerName;
+    public String ownerDeptId;
+    public String key;
+    public List<UserModel> kpiMembers;
+    public String achievement = "0";
+    public String achievementRate = "0";
+    public String companyId;
+    public String toGoal = "0";
+    public List<ApiObjectModel> statusList;
+    public List<Progress> checkPoints;
+    public String actual;
+    public String unit;
+    public String goalUnit;
+    public String todayActualGroup;
+    public String dayNote;
 }

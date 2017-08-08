@@ -12,6 +12,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.SwitchCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -198,7 +199,6 @@ public class TCAccountInfoFragment extends AbstractTCFragment implements AvatarS
 			Uri uri = null;
 			if(data != null){
 				uri = data.getData();
-
 				long date = System.currentTimeMillis();
 				String filename = WelfareConst.FilesName.CAMERA_TEMP_FILE_NAME + String.valueOf(date) + WelfareConst.FilesName.CAMERA_TEMP_FILE_EXT;
 				String desPath = TCUtil.getFilesFolderPath() + filename;
@@ -227,14 +227,18 @@ public class TCAccountInfoFragment extends AbstractTCFragment implements AvatarS
 		}
 	}
 
+	private void log(String msg) {
+		Log.e("TcAccount", msg);
+	}
+
 	private void cropImage(Uri imageUri){
 		long date = System.currentTimeMillis();
 		String filename = WelfareConst.FilesName.CAMERA_TEMP_FILE_NAME + String.valueOf(date) + WelfareConst.FilesName.CAMERA_TEMP_FILE_EXT;
 		String filePath = TCUtil.getFilesFolderPath() + "/" + filename;
 		File imageFile = new File(filePath);
-		try{
+		try {
 			imageFile.createNewFile();
-		}catch(IOException ex){
+		} catch(IOException ex) {
 			ex.printStackTrace();
 		}
 

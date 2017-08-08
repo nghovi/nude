@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import asia.chiase.core.util.CCStringUtil;
+import io.realm.Realm;
 import trente.asia.thankscard.R;
 import trente.asia.thankscard.services.common.TCDetailFragment;
 import trente.asia.thankscard.services.common.TcLogInFragment;

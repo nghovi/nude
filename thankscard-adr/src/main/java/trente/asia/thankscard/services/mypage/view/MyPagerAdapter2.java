@@ -121,7 +121,6 @@ public class MyPagerAdapter2 extends PagerAdapter{
 			viewHolder.txtMessage.setVisibility(View.VISIBLE);
 			viewHolder.imgSecret.setVisibility(View.INVISIBLE);
 		}
-		log("instantiateItem");
 		container.addView(view);
 
 		return view;

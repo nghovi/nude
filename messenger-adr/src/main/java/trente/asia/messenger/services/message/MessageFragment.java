@@ -612,6 +612,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 
 	private void saveStamps(JSONObject response){
 		List<WFMStampCategoryModel> stampCategories = CCJsonUtil.convertToModelList(response.optString("stampCategories"), WFMStampCategoryModel.class);
+		log("stampCategories = " + stampCategories.size());
 		String lastUpdateDate = response.optString("lastUpdateDate");
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
 		preferences.edit().putString(MsConst.MESSAGE_STAMP_LAST_UPDATE_DATE, lastUpdateDate).apply();

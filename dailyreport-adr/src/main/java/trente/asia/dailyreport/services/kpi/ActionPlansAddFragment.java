@@ -1,5 +1,6 @@
 package trente.asia.dailyreport.services.kpi;
 
+import java.security.acl.Group;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -46,11 +47,13 @@ import trente.asia.dailyreport.services.kpi.view.KpiCalendarView;
 import trente.asia.dailyreport.services.report.ReportEditFragment;
 import trente.asia.dailyreport.services.report.model.ReportModel;
 import trente.asia.dailyreport.services.report.view.DRCalendarView;
+import trente.asia.dailyreport.services.util.KpiUtil;
 import trente.asia.dailyreport.utils.DRUtil;
 import trente.asia.dailyreport.view.DRGroupHeader;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.models.ApiObjectModel;
+import trente.asia.welfare.adr.models.GroupModel;
 
 /**
  * Created by viet on 2/15/2016.
@@ -104,6 +107,7 @@ public class ActionPlansAddFragment extends AbstractDRFragment implements DRCale
 		super.initHeader(R.drawable.wf_back_white, getString(R.string.fragment_actual_plan_title), null);
 		inflater = LayoutInflater.from(activity);
 		imgHeaderLeftIcon = (ImageView)activity.findViewById(trente.asia.welfare.adr.R.id.img_id_header_left_icon);
+		imgHeaderLeftIcon.setVisibility(View.INVISIBLE);
 		imgHeaderRightIcon = (ImageView)activity.findViewById(trente.asia.welfare.adr.R.id.img_id_header_right_icon);
 		selectedDate = Calendar.getInstance().getTime();
 		txtDate = (TextView)getView().findViewById(R.id.txt_fragment_kpi_date);
@@ -114,7 +118,7 @@ public class ActionPlansAddFragment extends AbstractDRFragment implements DRCale
 			@Override
 			public void onGroupChange(GroupKpi newGroup){
 				selectedGroup = newGroup;
-				statusMap = buildStatusMap();
+				statusMap = buildStatusMap(selectedGroup);
 				updateCalendarView(statusMap);
 				filteredActionPlans = filterByGroup();
 				String actionStatus = statusMap.get(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, selectedDate));
@@ -155,11 +159,14 @@ public class ActionPlansAddFragment extends AbstractDRFragment implements DRCale
 
 			@Override
 			public void onPageSelected(int position){
-				Calendar c = ((CalendarFragment)adapter.getItem(mPager.getCurrentItem())).getCalendar();
+				imgHeaderLeftIcon.setVisibility(View.INVISIBLE);
+				Calendar c = ((CalendarFragment)adapter.getItem(position)).getKpiCalendarView().getSelectedDate();
+				selectedDate = c.getTime();
+				txtDate.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, selectedDate));
 				lnrActionPlanSection.setVisibility(View.GONE);
 				txtNoAction.setVisibility(View.GONE);
 				boolean showStatusOnly = Calendar.getInstance().get(Calendar.MONTH) != c.get(Calendar.MONTH);
-				loadActionPlans(c.getTime(), showStatusOnly);
+				loadActionPlans(selectedDate, showStatusOnly);
 			}
 
 			@Override
@@ -189,8 +196,14 @@ public class ActionPlansAddFragment extends AbstractDRFragment implements DRCale
 	}
 
 	private void onGetActionsSuccess(JSONObject response){
+		imgHeaderLeftIcon.setVisibility(View.INVISIBLE);
 		groupKpiList = CCJsonUtil.convertToModelList(response.optString("groups"), GroupKpi.class);
+		int selectedGroupPosition = getSelectedGroupPosition();
+
 		if(showStatusOnly){
+			drGroupHeader.buildLayout(groupKpiList, selectedGroupPosition, false);
+			statusMap = buildStatusMap(selectedGroup);
+			updateCalendarView(statusMap);
 			imgHeaderRightIcon.setVisibility(View.INVISIBLE);
 			lnrActionPlanSection.setVisibility(View.GONE);
 			lnrGroupHeader.setVisibility(View.GONE);
@@ -199,14 +212,9 @@ public class ActionPlansAddFragment extends AbstractDRFragment implements DRCale
 			txtNoAction.setVisibility(View.VISIBLE);
 			kpiCalendarView = ((CalendarFragment)adapter.getItem(mPager.getCurrentItem())).getKpiCalendarView();
 			kpiCalendarView.unselectDay();
-
 		}else{
-			int selectedGroupPosition = getSelectedGroupPosition();
-			drGroupHeader.buildLayout(groupKpiList, selectedGroupPosition, false);
-			selectedGroup = drGroupHeader.getSelectedGroup();
-			statusMap = buildStatusMap();
-			updateCalendarView(statusMap);
 			if(CCCollectionUtil.isEmpty(groupKpiList)){
+				imgHeaderLeftIcon.setVisibility(View.INVISIBLE);
 				imgHeaderRightIcon.setVisibility(View.INVISIBLE);
 				lnrActionPlanSection.setVisibility(View.GONE);
 				lnrGroupHeader.setVisibility(View.GONE);
@@ -214,6 +222,11 @@ public class ActionPlansAddFragment extends AbstractDRFragment implements DRCale
 				txtNoAction.setText(getString(R.string.action_plan_empty));
 				txtNoAction.setVisibility(View.VISIBLE);
 			}else{
+				drGroupHeader.buildLayout(groupKpiList, selectedGroupPosition, false);
+				selectedGroup = drGroupHeader.getSelectedGroup();
+				statusMap = buildStatusMap(selectedGroup);
+				updateCalendarView(statusMap);
+
 				actionPlanList = CCJsonUtil.convertToModelList(response.optString("actions"), ActionPlan.class);
 				filteredActionPlans = filterByGroup();
 				boolean editMode = CCStringUtil.isEmpty(statusMap.get(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, selectedDate)));
@@ -246,11 +259,11 @@ public class ActionPlansAddFragment extends AbstractDRFragment implements DRCale
 		return result;
 	}
 
-	private Map<String, String> buildStatusMap(){
+	private Map<String, String> buildStatusMap(GroupKpi groupKpi){
 		Map<String, String> result = new HashMap<>();
 
-		if(selectedGroup != null && !CCCollectionUtil.isEmpty(selectedGroup.statusList)){
-			for(ApiObjectModel status : selectedGroup.statusList){
+		if(groupKpi != null && !CCCollectionUtil.isEmpty(groupKpi.statusList)){
+			for(ApiObjectModel status : groupKpi.statusList){
 				String dayStatus = result.get(status.key);
 				if(CCStringUtil.isEmpty(dayStatus) || !dayStatus.equals(ActionPlan.STATUS_NG)){
 					dayStatus = status.value;
@@ -359,17 +372,24 @@ public class ActionPlansAddFragment extends AbstractDRFragment implements DRCale
 	private boolean checkValidData(){
 		for(EditText edtActionValue : edtActionValues){
 			if(CCStringUtil.isEmpty(edtActionValue.getText().toString())){
-				showValidationDialog();
+				showValidationDialog(getString(R.string.action_plan_please_input));
 				return false;
 			}
+
+			if(!KpiUtil.isCheckSize("", edtActionValue.getText().toString())){
+				showValidationDialog(getString(R.string.action_num_over_max, KpiUtil.getMax("")));
+				return false;
+			}
+
 		}
+
 		return true;
 	}
 
-	private void showValidationDialog(){
+	private void showValidationDialog(String message){
 		if(drDialog == null){
 			drDialog = new DRDialog(activity);
-			drDialog.setDialogConfirm(getString(R.string.action_plan_please_input), getString(R.string.chiase_common_ok), null, null, null);
+			drDialog.setDialogConfirm(message, getString(R.string.chiase_common_ok), null, null, null);
 		}
 		drDialog.show();
 	}
@@ -416,7 +436,7 @@ public class ActionPlansAddFragment extends AbstractDRFragment implements DRCale
 			txtTodayGoal.setText(CCFormatUtil.formatAmount(actionPlan.planValue) + actionPlan.unit);
 
 			TextView txtPerformance = (TextView)cellView.findViewById(R.id.txt_item_actual_plan_today_performance);
-			txtPerformance.setText(actionPlan.actual + actionPlan.unit);
+			txtPerformance.setText(CCFormatUtil.formatAmount(actionPlan.actual) + actionPlan.unit);
 
 			String language = locale.getLanguage();
 			String monthStr = CCFormatUtil.formatDateCustom("M", selectedDate);
@@ -428,7 +448,7 @@ public class ActionPlansAddFragment extends AbstractDRFragment implements DRCale
 			txtPerformanceMonthLabel.setText(getString(R.string.performance_in_month, monthStr));
 
 			TextView txtPerformanceMonth = (TextView)cellView.findViewById(R.id.txt_item_actual_plan_performance_month);
-			txtPerformanceMonth.setText(actionPlan.achievementMonth + actionPlan.unit);
+			txtPerformanceMonth.setText(CCFormatUtil.formatAmount(actionPlan.achievementMonth) + actionPlan.unit);
 
 			TextView txtRateLabel = (TextView)cellView.findViewById(R.id.txt_item_actual_plan_month_rate_label);
 			txtRateLabel.setText(getString(R.string.achievement_rate_in_month, monthStr));

@@ -163,7 +163,6 @@ public class TCDetailFragment extends AbstractPagerFragment{
 			adapter.showMessage();
 			imgSeal.setVisibility(View.INVISIBLE);
 		}
-		log("buildLayoutSender");
 		txtSenderName.setText(historyModel.posterName);
 		Picasso.with(getContext()).load(BuildConfig.HOST + historyModel.posterAvatarPath).fit().into(senderAvatar);
 	}

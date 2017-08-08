@@ -25,7 +25,7 @@ public abstract class TCDialog extends DialogFragment{
 		super.onActivityCreated(savedInstanceState);
 	}
 
-	abstract int getDialogLayoutId();
+	public abstract int getDialogLayoutId();
 
 	/**
 	 * living on the fringes of the society
@@ -53,5 +53,5 @@ public abstract class TCDialog extends DialogFragment{
 		}
 	}
 
-	abstract void buildDialogLayout(View rootView);
+	public abstract void buildDialogLayout(View rootView);
 }
