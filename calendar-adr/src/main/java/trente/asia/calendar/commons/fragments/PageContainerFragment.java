@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCFormatUtil;
@@ -15,8 +16,11 @@ import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.views.ClFragmentPagerAdapter;
 import trente.asia.calendar.commons.views.PageSharingHolder;
+import trente.asia.calendar.commons.views.UserFacilityView;
+import trente.asia.calendar.services.calendar.RoomFilterFragment;
 import trente.asia.calendar.services.calendar.ScheduleFormFragment;
 import trente.asia.calendar.services.calendar.SchedulesPageFragment;
+import trente.asia.calendar.services.calendar.UserFilterFragment;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
 
@@ -33,6 +37,7 @@ public abstract class PageContainerFragment extends AbstractClFragment{
 
 	protected final int					INITIAL_POSITION	= Integer.MAX_VALUE / 2;
 	protected final Date				TODAY				= Calendar.getInstance().getTime();
+	protected TextView					txtToday;
 
 	@Override
 	public void onResume(){
@@ -67,7 +72,7 @@ public abstract class PageContainerFragment extends AbstractClFragment{
 	}
 
 	@Override
-	public void initData() {
+	public void initData(){
 		super.initData();
 	}
 
@@ -82,6 +87,22 @@ public abstract class PageContainerFragment extends AbstractClFragment{
 				gotoScheduleForm();
 			}
 		});
+
+		UserFacilityView userFacilityView = (UserFacilityView)getView().findViewById(R.id.user_facility_view);
+		userFacilityView.initChildren(new UserFacilityView.OnTabClickListener() {
+
+			@Override
+			public void onBtnUserClicked(){
+				gotoUserFilterFragment();
+			}
+
+			@Override
+			public void onBtnFacilityClicked(){
+				gotoRoomFilterFragment();
+			}
+		});
+
+		txtToday = (TextView)getView().findViewById(R.id.txt_today);
 		holder = new PageSharingHolder();
 		holder.selectedPagePosition = INITIAL_POSITION;
 
@@ -113,6 +134,16 @@ public abstract class PageContainerFragment extends AbstractClFragment{
 				fragment.loadData();
 			}
 		});
+	}
+
+	protected void gotoRoomFilterFragment(){
+		RoomFilterFragment roomFilterFragment = new RoomFilterFragment();
+		gotoFragment(roomFilterFragment);
+	}
+
+	protected void gotoUserFilterFragment(){
+		UserFilterFragment userFilterFragment = new UserFilterFragment();
+		gotoFragment(userFilterFragment);
 	}
 
 	private void gotoScheduleForm(){

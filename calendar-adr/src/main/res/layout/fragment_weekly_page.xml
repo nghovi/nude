@@ -1,12 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/wf_common_match">
 
-    <include
-        android:id="@+id/user_facility_view"
-        layout="@layout/view_user_facility_tabs"
-        android:visibility="visible" />
-
-
     <LinearLayout
         android:id="@+id/lnr_calendar_container"
         style="@style/cs_common_match"

@@ -4,14 +4,10 @@
 
     <include layout="@layout/view_common_header" />
 
-    <trente.asia.calendar.commons.views.UserListLinearLayout
-        android:id="@+id/lnr_fragment_pager_container_user_list"
-        style="@style/cs_common_match_wrap"
-        android:layout_height="@dimen/margin_30dp"
-        android:layout_marginBottom="@dimen/margin_10dp"
-        android:layout_marginTop="@dimen/margin_10dp"
-        android:background="@color/cl_cell_bg_color"
-        android:visibility="gone" />
+    <include
+        android:id="@+id/user_facility_view"
+        layout="@layout/view_user_facility_tabs"
+        android:visibility="visible" />
 
     <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/view_id_pager"

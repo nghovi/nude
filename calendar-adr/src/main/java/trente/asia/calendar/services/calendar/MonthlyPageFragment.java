@@ -34,22 +34,14 @@ import trente.asia.android.model.DayModel;
 import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
-import trente.asia.calendar.commons.dialogs.DailySummaryDialog;
 import trente.asia.calendar.commons.dialogs.TodoDialog;
-import trente.asia.calendar.commons.fragments.AbstractClFragment;
 import trente.asia.calendar.commons.utils.ClUtil;
-import trente.asia.calendar.commons.views.UserFacilityView;
-import trente.asia.calendar.services.calendar.listener.DailyScheduleClickListener;
-import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
-import trente.asia.calendar.services.calendar.model.WorkOffer;
 import trente.asia.calendar.services.calendar.view.MonthlyCalendarDayView;
 import trente.asia.calendar.services.calendar.view.MonthlyCalendarRowView;
 import trente.asia.calendar.services.todo.model.Todo;
-import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.dialog.WfDialog;
-import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 import trente.asia.welfare.adr.utils.WelfareUtil;
 
@@ -315,9 +307,10 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 		}
 	}
 
-	public static void expand(final View v){
+	public void expand(final View v){
 		v.measure(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-		final int targetHeight = WelfareUtil.dpToPx(44 * 4);
+		int rowNum = Math.min(todos.size() + 1, 4);
+		final int targetHeight = WelfareUtil.dpToPx(44 * rowNum);
 
 		// Older versions of android (pre API 21) cancel animations for views with a height of 0.
 		// v.getLayoutParams().height = 1;

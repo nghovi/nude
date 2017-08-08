@@ -1,5 +1,7 @@
 package trente.asia.calendar.services.calendar;
 
+import android.view.View;
+
 import java.util.Date;
 
 import trente.asia.android.util.CsDateUtil;
@@ -14,6 +16,18 @@ import trente.asia.calendar.services.calendar.view.WeeklySchedulesPagerAdapter;
  * @author TrungND
  */
 public class WeeklyFragment extends PageContainerFragment{
+
+	@Override
+	protected void initView(){
+		super.initView();
+		txtToday.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v){
+				onClickFooterItemWeekly();
+			}
+		});
+	}
 
 	@Override
 	public int getFooterItemId(){

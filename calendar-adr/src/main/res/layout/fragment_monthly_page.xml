@@ -2,12 +2,6 @@
     style="@style/cs_common_match_wrap"
     android:orientation="vertical">
 
-
-    <include
-        android:id="@+id/user_facility_view"
-        layout="@layout/view_user_facility_tabs"
-        android:visibility="visible" />
-
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         style="@style/cs_common_match"
         android:layout_weight="1"

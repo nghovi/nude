@@ -24,7 +24,7 @@
 
 
             <LinearLayout
-                android:id="@+id/lnr_schedule_all_day_container"
+                android:id="@+id/lnr_schedule_list_item_daily"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"

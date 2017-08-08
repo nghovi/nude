@@ -4,6 +4,33 @@
 
     <include layout="@layout/view_common_header" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <include
+                android:id="@+id/user_facility_view"
+                layout="@layout/view_user_facility_tabs"
+                android:visibility="visible" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/txt_today"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/margin_16dp"
+            android:gravity="right"
+            android:text="@string/chiase_common_today" />
+
+    </LinearLayout>
+
     <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/view_id_pager"
         android:layout_width="match_parent"

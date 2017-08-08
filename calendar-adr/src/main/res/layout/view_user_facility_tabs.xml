@@ -1,5 +1,5 @@
 <trente.asia.calendar.commons.views.UserFacilityView xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/cs_common_match_wrap"
+    style="@style/cs_common_wrap"
     android:gravity="center_vertical"
     android:orientation="horizontal"
     android:paddingBottom="@dimen/margin_10dp"

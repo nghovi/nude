@@ -1,5 +1,7 @@
 package trente.asia.calendar.services.calendar;
 
+import android.view.View;
+
 import java.util.Date;
 
 import asia.chiase.core.util.CCFormatUtil;
@@ -16,6 +18,18 @@ import trente.asia.welfare.adr.define.WelfareConst;
  * @author VietNH
  */
 public class DailyFragment extends PageContainerFragment{
+
+	@Override
+	protected void initView(){
+		super.initView();
+		txtToday.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v){
+				onClickFooterItemDaily();
+			}
+		});
+	}
 
 	@Override
 	public int getFooterItemId(){

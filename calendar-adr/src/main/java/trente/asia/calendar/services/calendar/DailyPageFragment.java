@@ -8,32 +8,23 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.github.ksoichiro.android.observablescrollview.ObservableScrollView;
-import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
-import com.github.ksoichiro.android.observablescrollview.ScrollState;
-
-import android.graphics.Color;
+import android.app.MediaRouteButton;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
-import asia.chiase.core.util.CCStringUtil;
 import trente.asia.calendar.R;
-import trente.asia.calendar.commons.dialogs.ClDialog;
-import trente.asia.calendar.commons.utils.ClUtil;
-import trente.asia.calendar.services.calendar.listener.DailyScheduleClickListener;
 import trente.asia.calendar.services.calendar.model.CategoryModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
-import trente.asia.calendar.services.calendar.view.DailyScheduleList;
 import trente.asia.welfare.adr.define.WelfareConst;
-
-import static trente.asia.calendar.services.calendar.SchedulesPageListViewFragment.REFRESH_API_TIME_MS;
 
 /**
  * DailyPageFragment
@@ -46,6 +37,7 @@ public class DailyPageFragment extends SchedulesPageFragment{
 	private TextView							txtTodoInfo;
 	private LinearLayout						lnrListSchedules;
 	private Map<String, List<ScheduleModel>>	startTimeSchedulesMap;
+	private ImageView							imgBirthdayIcon;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -59,8 +51,16 @@ public class DailyPageFragment extends SchedulesPageFragment{
 	protected void initView(){
 		super.initView();
 		txtTodoInfo = (TextView)getView().findViewById(R.id.txt_todo_things);
+		imgBirthdayIcon = (ImageView)getView().findViewById(R.id.img_birthday_daily_page);
 		lnrScheduleAllDays = (LinearLayout)getView().findViewById(R.id.lnr_schedule_all_day_container);
 		lnrListSchedules = (LinearLayout)getView().findViewById(R.id.lnr_fragment_daily_page_schedules_time);
+		lnrListSchedules.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v){
+				onDailyScheduleClickListener(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, selectedDate));
+			}
+		});
 		Calendar c = CCDateUtil.makeCalendarToday();
 		startTimeSchedulesMap = new HashMap<>();
 		for(int i = 0; i < 24; i++){
@@ -84,11 +84,19 @@ public class DailyPageFragment extends SchedulesPageFragment{
 	@Override
 	protected void updateSchedules(List<ScheduleModel> schedules, List<CategoryModel> categories){
 		if(!CCCollectionUtil.isEmpty(todos)){
+			txtTodoInfo.setVisibility(View.VISIBLE);
 			txtTodoInfo.setText(getString(R.string.two_things_todo, String.valueOf(todos.size())));
+		}
+
+		if(!CCCollectionUtil.isEmpty(lstBirthdayUser)){
+			imgBirthdayIcon.setVisibility(View.VISIBLE);
 		}
 
 		lnrScheduleAllDays.removeAllViews();
 		List<ScheduleModel> allDaySchedules = new ArrayList<>();
+		for(String key : startTimeSchedulesMap.keySet()){
+			startTimeSchedulesMap.put(key, new ArrayList<ScheduleModel>());
+		}
 
 		for(ScheduleModel scheduleModel : schedules){
 			if(!scheduleModel.isAllDay){
@@ -128,7 +136,7 @@ public class DailyPageFragment extends SchedulesPageFragment{
 	private void addStartTimeRow(String startTime, List<ScheduleModel> scheduleModels){
 		View cell = inflater.inflate(R.layout.item_daily_schedule, null);
 		((TextView)cell.findViewById(R.id.txt_item_daily_schedule_start_time)).setText(startTime);
-		LinearLayout lnrSchedules = (LinearLayout)cell.findViewById(R.id.lnr_schedule_all_day_container);
+		LinearLayout lnrSchedules = (LinearLayout)cell.findViewById(R.id.lnr_schedule_list_item_daily);
 		for(ScheduleModel scheduleModel : scheduleModels){
 			TextView textView = new TextView(activity);
 			textView.setText(scheduleModel.scheduleName);
@@ -139,7 +147,9 @@ public class DailyPageFragment extends SchedulesPageFragment{
 
 	@Override
 	protected List<Date> getAllDate(){
-		return getAllDateForMonth(prefAccUtil, selectedDate);
+		List<Date> result = new ArrayList<>();
+		result.add(selectedDate);
+		return result;
 	}
 
 	@Override

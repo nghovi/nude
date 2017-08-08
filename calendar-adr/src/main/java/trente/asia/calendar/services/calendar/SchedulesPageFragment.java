@@ -25,10 +25,8 @@ import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.dialogs.DailySummaryDialog;
-import trente.asia.calendar.commons.fragments.AbstractClFragment;
 import trente.asia.calendar.commons.fragments.ClPageFragment;
 import trente.asia.calendar.commons.utils.ClUtil;
-import trente.asia.calendar.commons.views.UserFacilityView;
 import trente.asia.calendar.services.calendar.listener.DailyScheduleClickListener;
 import trente.asia.calendar.services.calendar.model.CalendarModel;
 import trente.asia.calendar.services.calendar.model.CategoryModel;
@@ -77,20 +75,6 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 	protected void initView(){
 		super.initView();
 
-		UserFacilityView userFacilityView = (UserFacilityView)getView().findViewById(R.id.user_facility_view);
-		userFacilityView.initChildren(new UserFacilityView.OnTabClickListener() {
-
-			@Override
-			public void onBtnUserClicked(){
-				gotoUserFilterFragment();
-			}
-
-			@Override
-			public void onBtnFacilityClicked(){
-				gotoRoomFilterFragment();
-			}
-		});
-
 		if(pageSharingHolder.isLoadingSchedules == false){
 			lnrCalendarContainer = (LinearLayout)getView().findViewById(R.id.lnr_calendar_container);
 			dates = getAllDate();
@@ -98,16 +82,6 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 		}
 
 		inflater = LayoutInflater.from(activity);
-	}
-
-	protected void gotoRoomFilterFragment(){
-		RoomFilterFragment roomFilterFragment = new RoomFilterFragment();
-		((AbstractClFragment)getParentFragment()).gotoFragment(roomFilterFragment);
-	}
-
-	protected void gotoUserFilterFragment(){
-		UserFilterFragment userFilterFragment = new UserFilterFragment();
-		((AbstractClFragment)getParentFragment()).gotoFragment(userFilterFragment);
 	}
 
 	protected void initCalendarView(){
@@ -136,7 +110,7 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 		JSONObject jsonObject = new JSONObject();
 		try{
 			jsonObject.put("targetUserList", targetUserList);
-			jsonObject.put("calendars", prefAccUtil.get(ClConst.SELECTED_CALENDAR_STRING));
+			// jsonObject.put("calendars", prefAccUtil.get(ClConst.SELECTED_CALENDAR_STRING));
 
 			jsonObject.put("startDateString", CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, startDate));
 			jsonObject.put("endDateString", CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, endDate));
@@ -184,7 +158,7 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 			lstWorkOffer = LoganSquare.parseList(response.optString("workOfferList"), WorkOffer.class);
 			lstBirthdayUser = LoganSquare.parseList(response.optString("birthdayList"), UserModel.class);
 			lstCalendarUser = LoganSquare.parseList(response.optString("calendarUsers"), UserModel.class);
-			todos = LoganSquare.parseList(response.optString("todos"), Todo.class);
+			todos = LoganSquare.parseList(response.optString("todoList"), Todo.class);
 			if(refreshDialogData && !newScheduleStrings.equals(scheduleStrings)){
 				isChangedData = true;
 			}

@@ -2,10 +2,6 @@
     style="@style/cs_common_match_wrap"
     android:orientation="vertical">
 
-    <include
-        android:id="@+id/user_facility_view"
-        layout="@layout/view_user_facility_tabs"
-        android:visibility="visible" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -25,11 +21,6 @@
                 android:paddingLeft="@dimen/margin_16dp"
                 android:paddingRight="@dimen/margin_16dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/margin_16dp"
-                    android:text="@string/chiase_common_today" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -40,7 +31,8 @@
                         android:id="@+id/txt_todo_things"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/two_things_todo" />
+                        android:text="@string/two_things_todo"
+                        android:visibility="gone" />
 
                     <LinearLayout
                         android:id="@+id/lnr_schedule_all_day_container"
@@ -49,9 +41,11 @@
                         android:orientation="vertical"></LinearLayout>
 
                     <ImageView
+                        android:id="@+id/img_birthday_daily_page"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/cl_icon_birthday" />
+                        android:src="@drawable/cl_icon_birthday"
+                        android:visibility="gone" />
                 </LinearLayout>
 
             </LinearLayout>
