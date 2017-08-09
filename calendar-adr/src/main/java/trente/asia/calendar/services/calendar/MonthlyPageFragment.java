@@ -123,6 +123,9 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 			if(dlgTodoDetail != null && dlgTodoDetail.isShowing()){
 				dlgTodoDetail.dismiss();
 			}
+			if(dlgDeleteConfirm != null && dlgDeleteConfirm.isShowing()){
+				dlgDeleteConfirm.dismiss();
+			}
 			View cell = lnrTodoSection.findViewWithTag(selectedTodo.key);
 			removeTodo(selectedTodo);
 			lnrTodos.removeView(cell);
