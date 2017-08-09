@@ -53,7 +53,7 @@
     <string name="fragment_tc_detail_from">From: %1$s</string>
     <string name="fragment_tc_detail_title_pos">投稿詳細</string>
     <string name="fragment_tc_detail_title_receive">受取詳細</string>
-    <string name="fragment_tc_detail_send_post">このユーザにメッセージを送る</string>
+    <string name="fragment_tc_detail_send_post">このユーザーにメッセージを送る</string>
     <string name="fragment_tc_detail_like">Like</string>
     <string name="fragment_tc_detail_dislike">Dislike</string>
 
@@ -146,4 +146,13 @@
     <string name="tc_2_rank">%1$s位</string>
     <string name="tc_3_rank">%1$s位</string>
     <string name="tc_4_more_rank">%1$s位</string>
+    <string name="tc_select_card">カード</string>
+    <string name="tc_select_dept">部署選択</string>
+    <string name="tc_select_photo">写真付きカード</string>
+    <string name="tc_select_sticker">シール</string>
+    <string name="tc_select_user">ユーザー選択</string>
+    <string name="tc_search">検索</string>
+    <string name="tc_choose_picture">写真を選択する</string>
+    <string name="tc_change_to_normal_card">編集内容を破棄しますか</string>
+    <string name="tc_limit_sticker">シールは50個までです。</string>
 </resources>
