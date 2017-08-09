@@ -3,4 +3,5 @@
     <dimen name="wf_margin_16">16dp</dimen>
     <dimen name="wf_margin_10">10dp</dimen>
     <dimen name="wf_margin_10_half">5dp</dimen>
+    <dimen name="margin_176dp">176dp</dimen>
 </resources>

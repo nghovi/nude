@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import org.json.JSONException;
@@ -76,7 +77,7 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 			public void onClick(View v){
 				if(!CCCollectionUtil.isEmpty(todos)){
 					if(isExpanded){
-						collapse(lnrTodoSection);
+						collapse(lnrTodoSection, false);
 						isExpanded = false;
 					}else{
 						expand(lnrTodoSection);
@@ -123,17 +124,38 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 				dlgTodoDetail.dismiss();
 			}
 			View cell = lnrTodoSection.findViewWithTag(selectedTodo.key);
-			lnrTodoSection.removeView(cell);
+			removeTodo(selectedTodo);
+			lnrTodos.removeView(cell);
+			collapse(lnrTodoSection, true);
 		}else{
 			super.successUpdate(response, url);
 		}
 	}
 
+	private void removeTodo(Todo selectedTodo){
+		Iterator<Todo> it = todos.iterator();
+		while(it.hasNext()){
+			Todo todo = it.next();
+			if(todo.key.equals(selectedTodo.key)){
+				it.remove();
+			}
+		}
+	}
+
 	public void buildTodoList(List<Todo> todos){
+		if(CCCollectionUtil.isEmpty(todos)){
+			lnrTodoSection.setVisibility(View.GONE);
+			return;
+		}else{
+			lnrTodoSection.setVisibility(View.VISIBLE);
+		}
 		Date today = Calendar.getInstance().getTime();
 		for(int i = 0; i < todos.size(); i++){
 			final Todo todo = todos.get(i);
 			View cell = inflater.inflate(R.layout.item_todo_unfinished_month, null);
+			//// TODO: 8/9/17 why inflate don't keep height in xml file ?
+			LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, WelfareUtil.dpToPx(44));
+			cell.setLayoutParams(lp);
 			cell.setOnClickListener(new View.OnClickListener() {
 
 				@Override
@@ -301,7 +323,6 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 				dayView.dayOfTheWeek = index % CsConst.DAY_NUMBER_A_WEEK;
 				lstCalendarDay.add(dayView);
 				rowView.lstCalendarDay.add(dayView);
-
 				lnrRowContent.addView(dayView);
 			}
 		}
@@ -334,34 +355,44 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 		v.startAnimation(a);
 	}
 
-	public static void collapse(final View v){
+	public void collapse(final View v, boolean collapsePart){
 		final int initialHeight = v.getMeasuredHeight();
-
 		final int firstChildHeight = ((LinearLayout)v).getChildAt(0).getMeasuredHeight();
 
-		Animation a = new Animation() {
+		if(collapsePart){
+			if(todos.size() == 0){
+				lnrTodoSection.setVisibility(View.GONE);
+			}else{
+				v.getLayoutParams().height = firstChildHeight * (Math.min(4, todos.size() + 1));
+				v.requestLayout();
+			}
+		}else{
 
-			@Override
-			protected void applyTransformation(float interpolatedTime, Transformation t){
-				if(interpolatedTime == 1){
-					// v.setVisibility(VTodoiew.GONE);
-					v.getLayoutParams().height = firstChildHeight;
-					v.requestLayout();
-				}else{
-					v.getLayoutParams().height = initialHeight - (int)(initialHeight * interpolatedTime);
-					v.requestLayout();
+			Animation a = new Animation() {
+
+				@Override
+				protected void applyTransformation(float interpolatedTime, Transformation t){
+					if(interpolatedTime == 1){
+						// v.setVisibility(VTodoiew.GONE);
+						v.getLayoutParams().height = firstChildHeight;
+						v.requestLayout();
+					}else{
+						v.getLayoutParams().height = initialHeight - (int)(initialHeight * interpolatedTime);
+						v.requestLayout();
+					}
 				}
-			}
 
-			@Override
-			public boolean willChangeBounds(){
-				return true;
-			}
-		};
+				@Override
+				public boolean willChangeBounds(){
+					return true;
+				}
+			};
 
-		// 1dp/ms
-		a.setDuration((int)(initialHeight / v.getContext().getResources().getDisplayMetrics().density));
-		v.startAnimation(a);
+			// 1dp/ms
+			a.setDuration((int)(initialHeight / v.getContext().getResources().getDisplayMetrics().density));
+			v.startAnimation(a);
+		}
+
 	}
 
 	@Override

@@ -94,7 +94,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 		for(UserModel userModel : lstBirthdayUser){
 			Calendar c2 = CCDateUtil.makeCalendarWithDateOnly(CCDateUtil.makeDateCustom(userModel.dateBirth, WelfareConst.WF_DATE_TIME));
 			int dayDistance = c2.get(Calendar.DAY_OF_YEAR) - c1.get(Calendar.DAY_OF_YEAR);
-			int leftMargin = cellWidth * (1 + dayDistance);
+			int leftMargin = cellWidth * (1 + dayDistance) + (cellWidth - CELL_HEIGHT) / 2;
 			int topMargin = getNextTopMargin(dayDistance, dayDistance);
 			ImageView imageViewBirthday = new ImageView(activity);
 			imageViewBirthday.setImageResource(R.drawable.cl_icon_birthday);
@@ -139,8 +139,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 				int leftMargin = cellWidth * (1 + dayDistance);
 
 				int topMargin = getNextTopMargin(dayDistance, dayDistance + cellNumber - 1);
-				TextView textView = makeTextView(activity, schedule.scheduleName, leftMargin, topMargin, maxWidth, getColor(schedule), 0);
-				textView.setTextColor(Color.parseColor(schedule.getScheduleColor()));
+				TextView textView = makeTextView(activity, schedule.scheduleName, leftMargin, topMargin, maxWidth, getColor(schedule), Color.parseColor(schedule.getScheduleColor()));
 				rltPart1.addView(textView);
 			}
 
@@ -227,17 +226,26 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 		List<String> keys = new ArrayList<>(startTimeSchedulesMap.keySet());
 		Collections.sort(keys);
 
+		Map<Integer, Integer> leftMarginScheduleNumMap = new HashMap<>();
+
 		for(String key : keys){
 			View cell = inflater.inflate(R.layout.item_weekly_schedule, null);
 			((TextView)cell.findViewById(R.id.txt_item_daily_schedule_start_time)).setText(key);
 			RelativeLayout rltSchedules = (RelativeLayout)cell.findViewById(R.id.rlt_schedule_weekly_container);
 
-			int i = 0;
 			for(final ScheduleModel schedule : startTimeSchedulesMap.get(key)){
 				Calendar c2 = CCDateUtil.makeCalendarWithDateOnly(CCDateUtil.makeDateCustom(schedule.startDate, WelfareConst.WF_DATE_TIME));
 				int dayDistance = c2.get(Calendar.DAY_OF_YEAR) - c1.get(Calendar.DAY_OF_YEAR);
 				int leftMargin = cellWidth * (1 + dayDistance);
-				int topMargin = (i++) * CELL_HEIGHT;
+				int topMargin = 0;
+				int leftMarginScheduleNum = 0;
+				if(leftMarginScheduleNumMap.containsKey(leftMargin)){
+					leftMarginScheduleNum = leftMarginScheduleNumMap.get(leftMargin);
+					topMargin = leftMarginScheduleNum * CELL_HEIGHT;
+				}
+
+				leftMarginScheduleNumMap.put(leftMargin, leftMarginScheduleNum + 1);
+
 				TextView textView = makeTextView(activity, schedule.scheduleName, leftMargin, topMargin, cellWidth, getColor(schedule), Color.RED);
 				textView.setTextColor(Color.parseColor(schedule.getScheduleColor()));
 				textView.setOnClickListener(new View.OnClickListener() {

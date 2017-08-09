@@ -22,13 +22,13 @@
         android:layout_gravity="bottom"
         android:background="@drawable/shape_gray_border"
         android:orientation="vertical"
-
-        android:visibility="visible">
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
+            android:layout_height="@dimen/margin_44dp"
+            android:background="@drawable/wf_background_gray_border"
+            android:gravity="center"
             android:orientation="horizontal"
             android:paddingLeft="@dimen/margin_16dp"
             android:paddingRight="@dimen/margin_16dp">
@@ -42,9 +42,9 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:padding="@dimen/margin_10dp"
-                android:src="@drawable/wf_file" />
+                android:layout_gravity="right|center_vertical"
+                android:src="@drawable/wf_file"
+                android:visibility="visible" />
         </LinearLayout>
 
         <ScrollView
@@ -54,7 +54,7 @@
             <LinearLayout
                 android:id="@+id/lnr_todo_container"
                 android:layout_width="match_parent"
-                android:layout_height="176dp"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"></LinearLayout>
 
         </ScrollView>
