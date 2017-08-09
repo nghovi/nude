@@ -65,7 +65,7 @@
     <string name="fragment_post_edit_hint"></string>
     <string name="fragment_post_edit_alert_dlg_title">エラー</string>
     <string name="fragment_post_edit_dept">部署</string>
-    <string name="fragment_post_edit_user">ユーザ</string>
+    <string name="fragment_post_edit_user">ユーザー</string>
     <string name="fragment_post_edit_category">カテゴリ</string>
     <string name="txt_fragment_post_edit_message">メッセージ</string>
     <string name="fragment_post_edit_alert_dlg_message1">ユーザを選択してください</string>
