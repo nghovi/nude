@@ -8,12 +8,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import android.app.MediaRouteButton;
-import android.media.Image;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.Transformation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -33,11 +33,15 @@ import trente.asia.welfare.adr.define.WelfareConst;
  */
 public class DailyPageFragment extends SchedulesPageFragment{
 
+	private static final int					MAX_ROW				= 3;
+	private static final int					TEXT_VIEW_HEIGHT	= 62;
 	private LinearLayout						lnrScheduleAllDays;
 	private TextView							txtTodoInfo;
 	private LinearLayout						lnrListSchedules;
 	private Map<String, List<ScheduleModel>>	startTimeSchedulesMap;
 	private ImageView							imgBirthdayIcon;
+	private ImageView							imgExpand;
+	private TextView							txtMore;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -68,7 +72,76 @@ public class DailyPageFragment extends SchedulesPageFragment{
 			startTimeSchedulesMap.put(startTime, new ArrayList<ScheduleModel>());
 			c.add(Calendar.HOUR, 1);
 		}
+		txtMore = (TextView)getView().findViewById(R.id.txt_more_to_come);
+		imgExpand = (ImageView)getView().findViewById(R.id.ic_icon_expand);
+		imgExpand.setOnClickListener(new View.OnClickListener() {
 
+			@Override
+			public void onClick(View v){
+				if(isExpanded){
+					collapse(lnrScheduleAllDays, MAX_ROW * TEXT_VIEW_HEIGHT);
+					txtMore.setVisibility(View.VISIBLE);
+					isExpanded = false;
+					imgExpand.setImageResource(R.drawable.wf_file);
+				}else{
+					imgExpand.setImageResource(R.drawable.cl_action_save);
+					expand(lnrScheduleAllDays);
+					txtMore.setVisibility(View.GONE);
+					isExpanded = true;
+				}
+			}
+		});
+
+	}
+
+	public void expand(final View v){
+		v.measure(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+		final int targetHeight = v.getMeasuredHeight();
+		v.setVisibility(View.VISIBLE);
+		Animation a = new Animation() {
+
+			@Override
+			protected void applyTransformation(float interpolatedTime, Transformation t){
+				v.getLayoutParams().height = interpolatedTime == 1 ? targetHeight : (int)(targetHeight * interpolatedTime);
+				v.requestLayout();
+			}
+
+			@Override
+			public boolean willChangeBounds(){
+				return true;
+			}
+		};
+
+		// 1dp/ms
+		a.setDuration((int)(targetHeight / v.getContext().getResources().getDisplayMetrics().density));
+		v.startAnimation(a);
+	}
+
+	public void collapse(final View v, final int targetHeight){
+		final int initialHeight = v.getMeasuredHeight();
+
+		Animation a = new Animation() {
+
+			@Override
+			protected void applyTransformation(float interpolatedTime, Transformation t){
+				if(interpolatedTime == 1){
+					v.getLayoutParams().height = targetHeight;
+					v.requestLayout();
+				}else{
+					v.getLayoutParams().height = initialHeight - (int)(initialHeight * interpolatedTime);
+					v.requestLayout();
+				}
+			}
+
+			@Override
+			public boolean willChangeBounds(){
+				return true;
+			}
+		};
+
+		// 1dp/ms
+		a.setDuration((int)(initialHeight / v.getContext().getResources().getDisplayMetrics().density));
+		v.startAnimation(a);
 	}
 
 	@Override
@@ -123,6 +196,14 @@ public class DailyPageFragment extends SchedulesPageFragment{
 		}
 
 		lnrListSchedules.removeAllViews();
+
+		if(startTimeSchedulesMap.keySet().size() <= MAX_ROW){
+			txtMore.setVisibility(View.GONE);
+			imgExpand.setVisibility(View.GONE);
+		}else{
+			lnrScheduleAllDays.getLayoutParams().height = MAX_ROW * TEXT_VIEW_HEIGHT;
+			lnrScheduleAllDays.requestLayout();
+		}
 
 		List<String> keys = new ArrayList<>(startTimeSchedulesMap.keySet());
 		Collections.sort(keys);

@@ -53,12 +53,12 @@ import trente.asia.welfare.adr.utils.WelfareUtil;
  */
 public class MonthlyPageFragment extends SchedulesPageFragment{
 
+	private static final int				MAX_ROW			= 3;
 	private List<MonthlyCalendarDayView>	lstCalendarDay	= new ArrayList<>();
 	private List<MonthlyCalendarRowView>	lstCalendarRow	= new ArrayList<>();
 
 	private LinearLayout					lnrTodoSection;
 	private LinearLayout					lnrTodos;
-	private boolean							isExpanded		= false;
 	private LayoutInflater					inflater;
 	private Todo							selectedTodo;
 	private TodoDialog						dlgTodoDetail;
@@ -333,7 +333,7 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 
 	public void expand(final View v){
 		v.measure(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-		int rowNum = Math.min(todos.size() + 1, 4);
+		int rowNum = Math.min(todos.size() + 1, MAX_ROW + 1);
 		final int targetHeight = WelfareUtil.dpToPx(44 * rowNum);
 
 		// Older versions of android (pre API 21) cancel animations for views with a height of 0.
@@ -366,7 +366,7 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 			if(todos.size() == 0){
 				lnrTodoSection.setVisibility(View.GONE);
 			}else{
-				v.getLayoutParams().height = firstChildHeight * (Math.min(4, todos.size() + 1));
+				v.getLayoutParams().height = firstChildHeight * (Math.min(MAX_ROW + 1, todos.size() + 1));
 				v.requestLayout();
 			}
 		}else{

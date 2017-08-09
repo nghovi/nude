@@ -82,7 +82,7 @@
     <string name="cl_footer_todo">Todo</string>
     <string name="todo_title">To Do</string>
     <string name="content">Content</string>
-    <string name="sure_to_delete">Are you sure to delete this todo?</string>
+    <string name="sure_to_delete">To Doを削除します。よろしいですか。</string>
     <string name="show_finished_task">完了済みタスクの表示</string>
     <string name="deadline">期限</string>
     <string name="hide_unfinished_task">Hide finished tasks</string>

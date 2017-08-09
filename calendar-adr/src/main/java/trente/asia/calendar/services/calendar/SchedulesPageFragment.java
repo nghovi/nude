@@ -65,6 +65,7 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 	protected List<Todo>			todos;
 	protected LayoutInflater		inflater;
 	protected DailySummaryDialog	dialogDailySummary;
+	protected boolean				isExpanded			= false;
 
 	abstract protected List<Date> getAllDate();
 

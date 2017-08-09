@@ -36,15 +36,15 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingRight="@dimen/margin_16dp"
             android:layout_weight="1"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:paddingRight="@dimen/margin_16dp">
 
             <RadioButton
-                android:id="@+id/radio"
-                android:checked="true"
+                android:id="@+id/item_todo_finished_radio"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:checked="true" />
 
 
             <RelativeLayout
@@ -61,13 +61,16 @@
                     android:layout_width="wrap_content"
                     android:layout_marginLeft="@dimen/margin_10dp"
                     android:layout_weight="1"
-                    android:gravity="center_vertical" />
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:lines="1"
+                    android:maxLines="1" />
 
                 <TextView
                     android:id="@+id/txt_item_todo_date"
-                    android:layout_alignParentEnd="true"
                     style="@style/wl_common_text"
                     android:layout_width="wrap_content"
+                    android:layout_alignParentEnd="true"
                     android:layout_marginLeft="@dimen/margin_10dp"
                     android:gravity="center_vertical" />
 

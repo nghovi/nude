@@ -91,7 +91,7 @@ public class TodoListFragment extends AbstractClFragment{
 	}
 
 	protected void successLoad(JSONObject response, String url){
-		try {
+		try{
 			todoList = LoganSquare.parseList(response.optString("todoList"), Todo.class);
 			if(CCCollectionUtil.isEmpty(todoList)){
 				getView().findViewById(R.id.txt_todo_empty).setVisibility(View.VISIBLE);
@@ -101,7 +101,7 @@ public class TodoListFragment extends AbstractClFragment{
 				getView().findViewById(R.id.scr_todo).setVisibility(View.VISIBLE);
 				buildTodos();
 			}
-		} catch (IOException e) {
+		}catch(IOException e){
 			e.printStackTrace();
 		}
 	}
@@ -109,8 +109,17 @@ public class TodoListFragment extends AbstractClFragment{
 	private void buildTodos(){
 		lnrFinished.removeAllViews();
 		lnrUnfinished.removeAllViews();
+		boolean hasFinishedTodo = false;
 		for(Todo todo : todoList){
 			buildTodoItem(todo);
+			if(todo.isFinish){
+				hasFinishedTodo = true;
+			}
+		}
+		if(hasFinishedTodo){
+			btnShowFinished.setVisibility(View.VISIBLE);
+		}else{
+			btnShowFinished.setVisibility(View.GONE);
 		}
 	}
 
@@ -169,7 +178,7 @@ public class TodoListFragment extends AbstractClFragment{
 
 			TextView txtDate = (TextView)cell.findViewById(R.id.txt_item_todo_date);
 			TextView txtTitle = (TextView)cell.findViewById(R.id.txt_item_todo_title);
-			RadioButton radioButton = (RadioButton)cell.findViewById(R.id.radio);
+			RadioButton radioButton = (RadioButton)cell.findViewById(R.id.item_todo_finished_radio);
 			radioButton.setOnClickListener(new View.OnClickListener() {
 
 				@Override
@@ -192,7 +201,7 @@ public class TodoListFragment extends AbstractClFragment{
 			}else{
 				Date date = CCDateUtil.makeDateCustom(todo.limitDate, WelfareConst.WF_DATE_TIME);
 				if(CCDateUtil.compareDate(today, date, false) >= 0){
-					txtDate.setTextColor(Color.RED);
+					// txtDate.setTextColor(Color.RED);
 				}
 				if(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, today).equals(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, date))){
 					txtDate.setText(getString(R.string.chiase_common_today));

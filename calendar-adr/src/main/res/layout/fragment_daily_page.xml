@@ -3,54 +3,79 @@
     android:orientation="vertical">
 
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:id="@+id/lnr_calendar_container"
+            style="@style/cs_common_match_wrap"
+            android:layout_marginBottom="@dimen/margin_10dp"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/margin_16dp"
+            android:paddingRight="@dimen/margin_16dp">
 
             <LinearLayout
-                android:id="@+id/lnr_calendar_container"
-                style="@style/cs_common_match_wrap"
-                android:layout_marginBottom="@dimen/margin_10dp"
-                android:orientation="horizontal"
-                android:paddingLeft="@dimen/margin_16dp"
-                android:paddingRight="@dimen/margin_16dp">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <ImageView
+                    android:id="@+id/ic_icon_expand"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_gravity="bottom|left"
+                    android:src="@drawable/wf_file" />
 
-                    <TextView
-                        android:id="@+id/txt_todo_things"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/two_things_todo"
-                        android:visibility="gone" />
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
                     <LinearLayout
-                        android:id="@+id/lnr_schedule_all_day_container"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"></LinearLayout>
+                        android:orientation="vertical">
 
-                    <ImageView
-                        android:id="@+id/img_birthday_daily_page"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/cl_icon_birthday"
-                        android:visibility="gone" />
-                </LinearLayout>
+                        <TextView
+                            android:id="@+id/txt_todo_things"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/two_things_todo"
+                            android:visibility="gone" />
 
+                        <ImageView
+                            android:id="@+id/img_birthday_daily_page"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/cl_icon_birthday"
+                            android:visibility="gone" />
+
+                        <LinearLayout
+                            android:id="@+id/lnr_schedule_all_day_container"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"></LinearLayout>
+
+                        <TextView
+                            android:id="@+id/txt_more_to_come"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="+2" />
+                    </LinearLayout>
+
+                </ScrollView>
             </LinearLayout>
 
-            <View style="@style/cs_common_divider" />
+
+        </LinearLayout>
+
+        <View style="@style/cs_common_divider" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
 
             <LinearLayout
                 android:id="@+id/lnr_fragment_daily_page_schedules_time"
@@ -61,8 +86,10 @@
                 android:paddingRight="@dimen/margin_16dp"
                 android:paddingTop="@dimen/margin_10dp"></LinearLayout>
 
-        </LinearLayout>
-    </ScrollView>
+        </ScrollView>
+
+
+    </LinearLayout>
 
 
 </LinearLayout>
