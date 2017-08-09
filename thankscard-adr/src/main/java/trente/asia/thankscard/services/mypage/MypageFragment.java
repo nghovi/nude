@@ -144,11 +144,11 @@ public class MypageFragment extends AbstractTCFragment{
 	}
 
 	private void showRankStageDialog(){
-		if(rankStageDialog == null){
-			rankStageDialog = new RankStageDialog();
-			rankStageDialog.setRankStagesInfo(rankStages, mypageModel.pointTotal);
-		}
-		rankStageDialog.show(getFragmentManager(), null);
+			if(rankStageDialog == null){
+				rankStageDialog = new RankStageDialog();
+				rankStageDialog.setRankStagesInfo(rankStages, mypageModel.pointTotal);
+			}
+			rankStageDialog.show(getFragmentManager(), null);
 	}
 
 	private void builNoticeList(){
