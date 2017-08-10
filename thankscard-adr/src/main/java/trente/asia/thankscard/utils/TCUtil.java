@@ -74,7 +74,11 @@ public class TCUtil{
 	}
 
 	public static void loadImageWithGlide(String url, ImageView imageView) {
-		String urlWithoutSpace = url.replace(" ", "%20");
+
+		String urlWithoutSpace = "";
+		if (url != null) {
+			urlWithoutSpace = url.replace(" ", "%20");
+		}
 		Glide.with(imageView.getContext()).load(BuildConfig.HOST + urlWithoutSpace).into(imageView);
 	}
 }
