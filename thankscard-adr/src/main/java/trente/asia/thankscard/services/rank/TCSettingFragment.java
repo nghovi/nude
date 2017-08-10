@@ -11,10 +11,12 @@ import android.widget.Toast;
 
 import com.google.android.gms.vision.text.Line;
 
+import io.realm.Realm;
 import trente.asia.thankscard.R;
 import trente.asia.thankscard.activities.MainActivity;
 import trente.asia.thankscard.commons.defines.TcConst;
 import trente.asia.thankscard.fragments.AbstractTCFragment;
+import trente.asia.thankscard.services.mypage.model.StampCategoryModel;
 import trente.asia.thankscard.services.setting.TcContactUsFragment;
 import trente.asia.thankscard.services.setting.TcStageInformationFragment;
 import trente.asia.welfare.adr.activity.WelfareActivity;
@@ -134,6 +136,11 @@ public class TCSettingFragment extends AbstractTCFragment implements View.OnClic
 		if(WfUrlConst.WF_ACC_0004.equals(url)){
 			Toast.makeText(activity, "Signed out successfully", Toast.LENGTH_LONG).show();
 			gotoSignIn();
+			Realm realm = Realm.getDefaultInstance();
+			realm.beginTransaction();
+			realm.where(StampCategoryModel.class).findAll().deleteAllFromRealm();
+			realm.commitTransaction();
+			realm.close();
 		}else{
 			super.successUpdate(response, url);
 		}
