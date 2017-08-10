@@ -250,7 +250,7 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 			jsonObject.put("name", todo.name);
 			jsonObject.put("note", todo.note);
 			jsonObject.put("isFinish", true);
-			jsonObject.put("limitDate", CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, Calendar.getInstance().getTime()));
+			jsonObject.put("limitDate", CCStringUtil.isEmpty(todo.limitDate) ? todo.limitDate : todo.limitDate.split(":")[0]);
 		}catch(JSONException e){
 			e.printStackTrace();
 		}

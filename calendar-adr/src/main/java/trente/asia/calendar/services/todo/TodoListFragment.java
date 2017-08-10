@@ -13,13 +13,16 @@ import com.daimajia.swipe.SwipeLayout;
 
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import asia.chiase.core.util.CCCollectionUtil;
@@ -52,6 +55,7 @@ public class TodoListFragment extends AbstractClFragment{
 	private SwipeLayout		swipeLayout;
 	private Date			today;
 	private Todo			selectedTodo;
+	private ScrollView		scrollView;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -67,6 +71,7 @@ public class TodoListFragment extends AbstractClFragment{
 		today = Calendar.getInstance().getTime();
 		initHeader(null, getString(R.string.todo_title), R.drawable.cl_action_add);
 		getView().findViewById(R.id.img_id_header_right_icon).setOnClickListener(this);
+		scrollView = (ScrollView)getView().findViewById(R.id.scr_todo);
 		lnrUnfinished = (LinearLayout)getView().findViewById(R.id.lnr_unfinished_todo_containter);
 		lnrFinished = (LinearLayout)getView().findViewById(R.id.lnr_finished_todo_containter);
 		btnShowFinished = (Button)getView().findViewById(R.id.btn_fragment_todo_list_show_finished);
@@ -95,10 +100,10 @@ public class TodoListFragment extends AbstractClFragment{
 			todoList = LoganSquare.parseList(response.optString("todoList"), Todo.class);
 			if(CCCollectionUtil.isEmpty(todoList)){
 				getView().findViewById(R.id.txt_todo_empty).setVisibility(View.VISIBLE);
-				getView().findViewById(R.id.scr_todo).setVisibility(View.GONE);
+				scrollView.setVisibility(View.GONE);
 			}else{
 				getView().findViewById(R.id.txt_todo_empty).setVisibility(View.GONE);
-				getView().findViewById(R.id.scr_todo).setVisibility(View.VISIBLE);
+				scrollView.setVisibility(View.VISIBLE);
 				buildTodos();
 			}
 		}catch(IOException e){
@@ -308,7 +313,7 @@ public class TodoListFragment extends AbstractClFragment{
 			jsonObject.put("name", todo.name);
 			jsonObject.put("note", todo.note);
 			jsonObject.put("isFinish", isFinish);
-			jsonObject.put("limitDate", CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, Calendar.getInstance().getTime()));
+			jsonObject.put("limitDate", CCStringUtil.isEmpty(todo.limitDate) ? todo.limitDate : todo.limitDate.split(":")[0]);
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
@@ -380,9 +385,34 @@ public class TodoListFragment extends AbstractClFragment{
 			btnShowFinished.setText(getString(R.string.show_finished_task));
 			lnrFinished.setVisibility(View.GONE);
 		}else{
+			scrollView.requestChildFocus(btnShowFinished, btnShowFinished);
 			btnShowFinished.setText(getString(R.string.hide_unfinished_task));
 			lnrFinished.setVisibility(View.VISIBLE);
+			scrollView.post(new Runnable() {
+
+				@Override
+				public void run(){
+					// scrollView.fullScroll(View.FOCUS_DOWN);
+					scrollToView(scrollView, btnShowFinished);
+				}
+			});
 		}
+	}
+
+	private void scrollToView(final ScrollView scrollViewParent, final View view){
+		Point childOffset = new Point();
+		getDeepChildOffset(scrollViewParent, view.getParent(), view, childOffset);
+		scrollViewParent.scrollTo(0, childOffset.y - 32);
+	}
+
+	private void getDeepChildOffset(final ViewGroup mainParent, final ViewParent parent, final View child, final Point accumulatedOffset){
+		ViewGroup parentGroup = (ViewGroup)parent;
+		accumulatedOffset.x += child.getLeft();
+		accumulatedOffset.y += child.getTop();
+		if(parentGroup.equals(mainParent)){
+			return;
+		}
+		getDeepChildOffset(mainParent, parentGroup.getParent(), parentGroup, accumulatedOffset);
 	}
 
 	@Override
