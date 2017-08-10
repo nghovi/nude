@@ -44,27 +44,14 @@ public class MyPagerAdapter2 extends PagerAdapter{
 	private boolean				hideMessage;
 
 	public class HistoryViewHolder{
-
-		public TextView			txtTo;
-		public TextView			txtFrom;
-		public TextView			txtDate;
-
-		public TextView			txtMessage;
 		public ImageView		imgTemplate;
 		public ImageView		imgSecret;
-		public LinearLayout		lnrMessage;
 		public PhotoViewDetail photoViewDetail;
 		public RelativeLayout	layoutCard;
 
 		public HistoryViewHolder(View view){
-			txtTo = (TextView)view.findViewById(R.id.txt_tc_detail_to);
-			txtFrom = (TextView)view.findViewById(R.id.txt_tc_detail_from);
-			txtDate = (TextView)view.findViewById(R.id.txt_tc_detail_date);
-
-			txtMessage = (TextView)view.findViewById(R.id.txt_tc_detail_message);
 			imgTemplate = (ImageView)view.findViewById(R.id.img_item_thanks_card_frame);
 			imgSecret = (ImageView)view.findViewById(R.id.img_secret);
-			lnrMessage = (LinearLayout)view.findViewById(R.id.lnr_thanks_card_frame_container);
 			photoViewDetail = (PhotoViewDetail)view.findViewById(R.id.layout_photo);
 			layoutCard = (RelativeLayout) view.findViewById(R.id.layout_card);
 		}
@@ -118,53 +105,32 @@ public class MyPagerAdapter2 extends PagerAdapter{
 		HistoryViewHolder viewHolder = new HistoryViewHolder(view);
 		HistoryModel model = lstHistory.get(position);
 
-		Date postDate = CCDateUtil.makeDateCustom(model.postDate, WelfareConst.WF_DATE_TIME);
-		String postDateFormat = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, postDate);
-		viewHolder.txtDate.setText(mContext.getResources().getString(R.string.fragment_tc_detail_date, postDateFormat));
-		viewHolder.txtTo.setText(mContext.getResources().getString(R.string.fragment_tc_detail_to, model.receiverName));
-		viewHolder.txtFrom.setText(mContext.getResources().getString(R.string.fragment_tc_detail_from, model.posterName));
-		viewHolder.txtFrom.setVisibility(View.GONE);
-
-		viewHolder.txtMessage.setText(model.message);
-		viewHolder.txtMessage.setMovementMethod(new ScrollingMovementMethod());
 		if(model.template != null){
 			Glide.with(mContext).load(BuildConfig.HOST + model.template.templateUrl).into(viewHolder.imgTemplate);
 		}
 
 		if(hideMessage){
-			viewHolder.txtMessage.setVisibility(View.INVISIBLE);
 			viewHolder.imgSecret.setVisibility(View.VISIBLE);
 		}else{
-			viewHolder.txtMessage.setVisibility(View.VISIBLE);
 			viewHolder.imgSecret.setVisibility(View.INVISIBLE);
 		}
 		container.addView(view);
 
 		if("NM".equals(model.templateType)){
-			setLayoutMessageCenter(viewHolder.lnrMessage);
+
 		}else{
 			if(model.attachment != null && model.attachment.fileUrl != null){
 				viewHolder.photoViewDetail.restoreImage(model.attachment.fileUrl, Float.valueOf(model.photoLocationX),
 						Float.valueOf(model.photoLocationY), Float.valueOf(model.photoScale));
 			}
 		}
-		for (ApiStickerModel sticker : model.stickers) {
-			StampModel stamp = StampModel.getStamp(Realm.getDefaultInstance(), sticker.stickerId);
-			StickerViewDetail stickerViewDetail = new StickerViewDetail(mContext);
-			viewHolder.layoutCard.addView(stickerViewDetail);
-			stickerViewDetail.restoreSticker(stamp.stampPath, Float.valueOf(sticker.locationX), Float.valueOf(sticker.locationY),
-					Float.valueOf(sticker.scale), Float.valueOf(sticker.degree));
-		}
+
+
+
 		return view;
 	}
 
-	private void setLayoutMessageCenter(LinearLayout lnrMessage){
-		PercentRelativeLayout.LayoutParams params = (PercentRelativeLayout.LayoutParams)lnrMessage.getLayoutParams();
-		params.addRule(RelativeLayout.CENTER_IN_PARENT);
-		params.width = ViewGroup.LayoutParams.MATCH_PARENT;
-		params.getPercentLayoutInfo().widthPercent = 1f;
-		params.setMargins(WelfareUtil.dpToPx(50), WelfareUtil.dpToPx(40), WelfareUtil.dpToPx(50), WelfareUtil.dpToPx(40));
-	}
+
 
 	private void log(String msg){
 		Log.e("MyPager", msg);

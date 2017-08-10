@@ -10,11 +10,14 @@ import org.json.JSONObject;
 import android.content.Context;
 import android.media.Image;
 import android.os.Bundle;
+import android.support.percent.PercentRelativeLayout;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -23,12 +26,16 @@ import com.squareup.picasso.Picasso;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
+import io.realm.Realm;
 import trente.asia.thankscard.BuildConfig;
 import trente.asia.thankscard.R;
 import trente.asia.thankscard.commons.defines.TcConst;
 import trente.asia.thankscard.services.common.model.HistoryModel;
+import trente.asia.thankscard.services.mypage.model.StampModel;
 import trente.asia.thankscard.services.posted.PostTCFragment;
 import trente.asia.thankscard.services.posted.ThanksCardEditFragment;
+import trente.asia.thankscard.services.posted.model.ApiStickerModel;
+import trente.asia.thankscard.services.posted.view.StickerViewDetail;
 import trente.asia.thankscard.services.received.ReceiveTCListFragment;
 import trente.asia.thankscard.utils.TCUtil;
 import trente.asia.welfare.adr.activity.WelfareActivity;
@@ -46,10 +53,6 @@ public class TCDetailFragment extends AbstractPagerFragment{
 
 	public static final String	DETAIL_TC_TITLE			= "DETAIL_TC_TITLE";
 	public static final String	DETAIL_TC_DEFAULT_POS	= "DETAIL_TC_DEFAULT_POS";
-	private TextView			txtLikeCount;
-	private TextView			txtLikeText;
-	private ImageView			imgLike;
-	private LinearLayout		lnrLike;
 
 	private List<HistoryModel>	lstHistory;
 	private HistoryModel		currentHistory;
@@ -127,6 +130,54 @@ public class TCDetailFragment extends AbstractPagerFragment{
 	protected void onPageHistorySelected(int position){
 		currentHistory = this.lstHistory.get(position);
 		buildLayoutSender(currentHistory);
+		buildTextMessage(currentHistory);
+		restoreStickers(currentHistory.stickers);
+	}
+
+	private void buildTextMessage(HistoryModel historyModel) {
+		LinearLayout lnrMessage = (LinearLayout) getView().findViewById(R.id.lnr_message);
+		TextView textMessage = (TextView) getView().findViewById(R.id.text_message);
+		TextView textDate = (TextView) getView().findViewById(R.id.txt_tc_detail_date);
+		TextView textTo = (TextView) getView().findViewById(R.id.txt_tc_detail_to);
+		textMessage.setText(historyModel.message);
+		Date postDate = CCDateUtil.makeDateCustom(historyModel.postDate, WelfareConst.WF_DATE_TIME);
+		String postDateFormat = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, postDate);
+		textDate.setText(postDateFormat);
+		textTo.setText(getString(R.string.fragment_tc_detail_to, historyModel.receiverName));
+
+		if ("NM".equals(historyModel.templateType)) {
+			setLayoutMessageCenter(lnrMessage);
+		} else {
+			setLayoutMessageRight(lnrMessage);
+		}
+	}
+
+	private void setLayoutMessageCenter(LinearLayout lnrMessage){
+		PercentRelativeLayout.LayoutParams params = new PercentRelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+		params.addRule(RelativeLayout.CENTER_HORIZONTAL);
+		params.width = ViewGroup.LayoutParams.MATCH_PARENT;
+		params.getPercentLayoutInfo().widthPercent = 1f;
+		params.setMargins(WelfareUtil.dpToPx(70), WelfareUtil.dpToPx(76), WelfareUtil.dpToPx(60), WelfareUtil.dpToPx(60));
+		lnrMessage.setLayoutParams(params);
+	}
+
+	private void setLayoutMessageRight(LinearLayout lnrMessage) {
+		PercentRelativeLayout.LayoutParams params = new PercentRelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+		params.addRule(RelativeLayout.ALIGN_PARENT_END);
+		params.getPercentLayoutInfo().widthPercent = 0.5f;
+		params.setMargins(WelfareUtil.dpToPx(20), WelfareUtil.dpToPx(36), 0, 0);
+		lnrMessage.setLayoutParams(params);
+	}
+
+	private void restoreStickers(List<ApiStickerModel> stickers) {
+		rltStickers.removeAllViews();
+		for (ApiStickerModel sticker : stickers) {
+			StampModel stamp = StampModel.getStamp(Realm.getDefaultInstance(), sticker.stickerId);
+			StickerViewDetail stickerViewDetail = new StickerViewDetail(getContext());
+			rltStickers.addView(stickerViewDetail);
+			stickerViewDetail.restoreSticker(stamp.stampPath, Float.valueOf(sticker.locationX), Float.valueOf(sticker.locationY),
+					Float.valueOf(sticker.scale), Float.valueOf(sticker.degree));
+		}
 	}
 
 	public void buildBodyLayout(){
@@ -248,10 +299,5 @@ public class TCDetailFragment extends AbstractPagerFragment{
 	@Override
 	public void onDestroy(){
 		super.onDestroy();
-		imgLike = null;
-		txtLikeText = null;
-		txtLikeCount = null;
-		lnrLike = null;
 	}
-
 }

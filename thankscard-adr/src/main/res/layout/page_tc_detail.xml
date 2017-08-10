@@ -31,68 +31,7 @@
             android:layout_centerInParent="true"
             android:src="@drawable/tc_ic_secret"/>
 
-        <LinearLayout
-            android:id="@+id/lnr_thanks_card_frame_container"
-            app:layout_widthPercent="50%"
-            android:layout_height="match_parent"
-            android:baselineAligned="false"
-            android:orientation="vertical"
-            android:layout_alignParentEnd="true"
-            android:paddingTop="@dimen/margin_20dp"
-            android:paddingBottom="@dimen/margin_20dp"
-            android:paddingStart="@dimen/margin_20dp"
-            android:paddingEnd="@dimen/margin_20dp"
-            android:layout_alignTop="@+id/img_item_thanks_card_frame"
-            android:layout_alignBottom="@+id/img_item_thanks_card_frame">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/txt_tc_detail_date"
-                    style="@style/tc_text_black_12"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:text="@string/fragment_tc_detail_date"/>
-
-                <TextView
-                    android:id="@+id/txt_tc_detail_to"
-                    style="@style/tc_text_black_12"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:layout_marginBottom="@dimen/margin_10dp"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:text="@string/fragment_tc_detail_to"/>
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/txt_tc_detail_message"
-                style="@style/tc_text_black_bold"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:nestedScrollingEnabled="false"
-                android:scrollbars="vertical"/>
-
-            <TextView
-                android:id="@+id/txt_tc_detail_from"
-                style="@style/tc_text_black_12"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginTop="@dimen/margin_15dp"
-                android:ellipsize="end"
-                android:singleLine="true"
-                android:text="@string/fragment_tc_detail_from"/>
-
-        </LinearLayout>
     </android.support.percent.PercentRelativeLayout>
 
 
