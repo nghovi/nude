@@ -293,7 +293,7 @@ public class StickerViewPost extends AppCompatImageView{
 		// draw dash frame
 		paint.setStyle(Paint.Style.STROKE);
 		paint.setStrokeWidth(2);
-		paint.setColor(Color.CYAN);
+		paint.setColor(Color.parseColor("#5B5B5B"));
 		paint.setPathEffect(dashPathEffect);
 		canvas.save();
 		if(Build.VERSION.SDK_INT < Build.VERSION_CODES.N){
