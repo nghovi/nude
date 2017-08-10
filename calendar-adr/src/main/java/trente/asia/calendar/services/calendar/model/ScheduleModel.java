@@ -30,13 +30,10 @@ public class ScheduleModel{
 	public String			endDate;
 	public String			startTime;
 	public String			endTime;
-
 	public String			key;
 	public String			calendarId;
 	public String			roomId;
 	public String			joinUsers;
-	// public CalendarModel calendar;
-
 	public String			scheduleType;
 	public String			categoryId;
 	public CategoryModel	categoryModel;
@@ -50,6 +47,7 @@ public class ScheduleModel{
 	public Boolean			isWarning;
 	public UserModel		owner;
 	public String			scheduleScope;
+	public String			scheduleColor	= "#FF0000";
 
 	public ScheduleModel(){
 
@@ -98,11 +96,6 @@ public class ScheduleModel{
 	}
 
 	public String getScheduleColor(){
-		// if(!CCStringUtil.isEmpty(this.calendarId)){
-		// if(categoryModel != null){
-		// return WelfareFormatUtil.formatColor(categoryModel.categoryColor);
-		// }
-		// }
 		if(ClConst.SCHEDULE_TYPE_HOLIDAY.equals(scheduleType)){
 			return WelfareFormatUtil.formatColor(ClConst.SCHEDULE_COLOR_HOLIDAY);
 		}else if(ClConst.SCHEDULE_TYPE_BIRTHDAY.equals(scheduleType)){
@@ -111,10 +104,41 @@ public class ScheduleModel{
 			return WelfareFormatUtil.formatColor(ClConst.SCHEDULE_COLOR_OFFER);
 		}
 
-		return WelfareFormatUtil.formatColor(ClConst.SCHEDULE_COLOR_NORMAL);
+		return scheduleColor;
 	}
 
 	public static boolean isRepeat(ScheduleModel schedule){
 		return schedule != null && !CCStringUtil.isEmpty(schedule.repeatType) && !ClConst.SCHEDULE_REPEAT_TYPE_NONE.equals(schedule.repeatType);
+	}
+
+	public static ScheduleModel clone(ScheduleModel scheduleModel, UserModel userModel){
+		ScheduleModel cloned = new ScheduleModel();
+		cloned.scheduleColor = userModel.userColor;
+
+		cloned.scheduleName = scheduleModel.scheduleName;
+		cloned.scheduleNote = scheduleModel.scheduleNote;
+		cloned.scheduleUrl = scheduleModel.scheduleUrl;
+		cloned.startDate = scheduleModel.startDate;
+		cloned.endDate = scheduleModel.endDate;
+		cloned.startTime = scheduleModel.startTime;
+		cloned.endTime = scheduleModel.endTime;
+		cloned.key = scheduleModel.key;
+		cloned.calendarId = scheduleModel.calendarId;
+		cloned.roomId = scheduleModel.roomId;
+		cloned.joinUsers = scheduleModel.joinUsers;
+		cloned.scheduleType = scheduleModel.scheduleType;
+		cloned.categoryId = scheduleModel.categoryId;
+		cloned.categoryModel = scheduleModel.categoryModel;
+		cloned.isAllDay = scheduleModel.isAllDay;
+		cloned.scheduleJoinUsers = scheduleModel.scheduleJoinUsers;
+		cloned.repeatType = scheduleModel.repeatType;
+		cloned.repeatLimitType = scheduleModel.repeatLimitType;
+		cloned.repeatData = scheduleModel.repeatData;
+		cloned.repeatEnd = scheduleModel.repeatEnd;
+		cloned.repeatInterval = scheduleModel.repeatInterval;
+		cloned.isWarning = scheduleModel.isWarning;
+		cloned.owner = scheduleModel.owner;
+		cloned.scheduleScope = scheduleModel.scheduleScope;
+		return cloned;
 	}
 }

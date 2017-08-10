@@ -15,7 +15,9 @@ import com.bluelinelabs.logansquare.LoganSquare;
 
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
@@ -66,6 +68,10 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 	protected LayoutInflater		inflater;
 	protected DailySummaryDialog	dialogDailySummary;
 	protected boolean				isExpanded			= false;
+	protected TextView				txtMore;
+	protected ImageView				imgExpand;
+
+	protected static final int		MAX_ROW				= 3;
 
 	abstract protected List<Date> getAllDate();
 
@@ -83,6 +89,9 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 		}
 
 		inflater = LayoutInflater.from(activity);
+
+		txtMore = (TextView)getView().findViewById(R.id.txt_more_to_come);
+		imgExpand = (ImageView)getView().findViewById(R.id.ic_icon_expand);
 	}
 
 	protected void initCalendarView(){
@@ -252,6 +261,17 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 		for(ScheduleModel schedule : schedules){
 			schedule.categoryModel = categoryMap.get(schedule.categoryId);
 		}
+	}
+
+	protected List<ScheduleModel> multiplyWithUsers(List<ScheduleModel> origins){
+		List<ScheduleModel> result = new ArrayList<>();
+		for(ScheduleModel scheduleModel : origins){
+			for(UserModel userModel : scheduleModel.scheduleJoinUsers){
+				ScheduleModel cloned = ScheduleModel.clone(scheduleModel, userModel);
+				result.add(cloned);
+			}
+		}
+		return result;
 	}
 
 	@Override

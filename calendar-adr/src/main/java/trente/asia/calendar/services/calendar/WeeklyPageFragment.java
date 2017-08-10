@@ -20,6 +20,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.Transformation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -38,6 +40,7 @@ import trente.asia.calendar.services.calendar.model.WorkOffer;
 import trente.asia.calendar.services.todo.model.Todo;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.models.UserModel;
+import trente.asia.welfare.adr.utils.WelfareUtil;
 
 /**
  * WeeklyPageFragment
@@ -46,12 +49,13 @@ import trente.asia.welfare.adr.models.UserModel;
  */
 public class WeeklyPageFragment extends SchedulesPageFragment{
 
-	private static final Integer		CELL_HEIGHT	= 62;
+	public static final Integer			CELL_HEIGHT		= 62;
 	protected LinearLayout				lnrHeader;
 	private RelativeLayout				rltContent;
 	private RelativeLayout				rltPart1;
 	private LinearLayout				lnrPart2;
 	private Map<Integer, List<Integer>>	columnTopMarginsMap;
+	private int							maxTopMargin	= 0;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -61,19 +65,71 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 		return mRootView;
 	}
 
+	public void expand(final View v){
+		v.measure(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+		final int targetHeight = v.getMeasuredHeight();
+		v.setVisibility(View.VISIBLE);
+		Animation a = new Animation() {
+
+			@Override
+			protected void applyTransformation(float interpolatedTime, Transformation t){
+				v.getLayoutParams().height = interpolatedTime == 1 ? targetHeight : (int)(targetHeight * interpolatedTime);
+				v.requestLayout();
+			}
+
+			@Override
+			public boolean willChangeBounds(){
+				return true;
+			}
+		};
+
+		// 1dp/ms
+		a.setDuration((int)(targetHeight / v.getContext().getResources().getDisplayMetrics().density));
+		v.startAnimation(a);
+	}
+
+	public void collapse(final View v, final int targetHeight){
+		final int initialHeight = v.getMeasuredHeight();
+
+		Animation a = new Animation() {
+
+			@Override
+			protected void applyTransformation(float interpolatedTime, Transformation t){
+				if(interpolatedTime == 1){
+					v.getLayoutParams().height = targetHeight;
+					v.requestLayout();
+				}else{
+					v.getLayoutParams().height = initialHeight - (int)(initialHeight * interpolatedTime);
+					v.requestLayout();
+				}
+			}
+
+			@Override
+			public boolean willChangeBounds(){
+				return true;
+			}
+		};
+
+		// 1dp/ms
+		a.setDuration((int)(initialHeight / v.getContext().getResources().getDisplayMetrics().density));
+		v.startAnimation(a);
+	}
+
 	@Override
 	protected void updateSchedules(List<ScheduleModel> schedules, List<CategoryModel> categories){
 		super.updateSchedules(schedules, categories);
-		buildPart1();
+		schedules = multiplyWithUsers(schedules);
+		buildPart1(schedules);
 		buildPart2(schedules);
-
 	}
 
-	private void buildPart1(){
+	private void buildPart1(List<ScheduleModel> schedules){
 		rltPart1.removeAllViews();
 		int cellWidth = lnrHeader.getMeasuredWidth() / 8;
 		Calendar c1 = CCDateUtil.makeCalendarWithDateOnly(dates.get(0));
 		columnTopMarginsMap = new HashMap<>();
+
+		int topMargin = 0;
 
 		// todo
 		for(Todo todo : todos){
@@ -83,8 +139,8 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 
 				if(!columnTopMarginsMap.keySet().contains(dayDistance)){
 					int leftMargin = cellWidth * (1 + dayDistance);
-					int topMargin = getNextTopMargin(dayDistance, dayDistance);
-					TextView textView = makeTextView(activity, getString(R.string.cl_footer_todo), leftMargin, topMargin, cellWidth, Color.GRAY, 0);
+					topMargin = getNextTopMargin(dayDistance, dayDistance);
+					TextView textView = makeTextView(activity, getString(R.string.cl_footer_todo), leftMargin, topMargin, cellWidth, Color.GRAY, 0, Gravity.CENTER);
 					rltPart1.addView(textView);
 				}
 			}
@@ -95,7 +151,8 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 			Calendar c2 = CCDateUtil.makeCalendarWithDateOnly(CCDateUtil.makeDateCustom(userModel.dateBirth, WelfareConst.WF_DATE_TIME));
 			int dayDistance = c2.get(Calendar.DAY_OF_YEAR) - c1.get(Calendar.DAY_OF_YEAR);
 			int leftMargin = cellWidth * (1 + dayDistance) + (cellWidth - CELL_HEIGHT) / 2;
-			int topMargin = getNextTopMargin(dayDistance, dayDistance);
+			topMargin = getNextTopMargin(dayDistance, dayDistance);
+
 			ImageView imageViewBirthday = new ImageView(activity);
 			imageViewBirthday.setImageResource(R.drawable.cl_icon_birthday);
 			LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(CELL_HEIGHT, CELL_HEIGHT);
@@ -109,8 +166,8 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 			Calendar c2 = CCDateUtil.makeCalendarWithDateOnly(CCDateUtil.makeDateCustom(holidayModel.startDate, WelfareConst.WF_DATE_TIME));
 			int dayDistance = c2.get(Calendar.DAY_OF_YEAR) - c1.get(Calendar.DAY_OF_YEAR);
 			int leftMargin = cellWidth * (1 + dayDistance);
-			int topMargin = getNextTopMargin(dayDistance, dayDistance);
-			TextView textView = makeTextView(activity, holidayModel.holidayName, leftMargin, topMargin, cellWidth, Color.WHITE, Color.RED);
+			topMargin = getNextTopMargin(dayDistance, dayDistance);
+			TextView textView = makeTextView(activity, holidayModel.holidayName, leftMargin, topMargin, cellWidth, Color.WHITE, Color.RED, Gravity.CENTER);
 			rltPart1.addView(textView);
 		}
 
@@ -119,13 +176,13 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 			Calendar c2 = CCDateUtil.makeCalendarWithDateOnly(CCDateUtil.makeDateCustom(workOffer.startDate, WelfareConst.WF_DATE_TIME));
 			int dayDistance = c2.get(Calendar.DAY_OF_YEAR) - c1.get(Calendar.DAY_OF_YEAR);
 			int leftMargin = cellWidth * (1 + dayDistance);
-			int topMargin = getNextTopMargin(dayDistance, dayDistance);
-			TextView textView = makeTextView(activity, workOffer.offerTypeName, leftMargin, topMargin, cellWidth, Color.BLACK, Color.WHITE);
+			topMargin = getNextTopMargin(dayDistance, dayDistance);
+			TextView textView = makeTextView(activity, workOffer.offerTypeName, leftMargin, topMargin, cellWidth, Color.BLACK, Color.WHITE, Gravity.CENTER);
 			rltPart1.addView(textView);
 		}
 
 		// all day schedules
-		for(ScheduleModel schedule : lstSchedule){
+		for(ScheduleModel schedule : schedules){
 
 			if(schedule.isAllDay){
 				Calendar cStart = CCDateUtil.makeCalendarWithDateOnly(CCDateUtil.makeDateCustom(schedule.startDate, WelfareConst.WF_DATE_TIME));
@@ -138,11 +195,24 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 				int maxWidth = cellWidth * cellNumber;
 				int leftMargin = cellWidth * (1 + dayDistance);
 
-				int topMargin = getNextTopMargin(dayDistance, dayDistance + cellNumber - 1);
-				TextView textView = makeTextView(activity, schedule.scheduleName, leftMargin, topMargin, maxWidth, getColor(schedule), Color.parseColor(schedule.getScheduleColor()));
+				topMargin = getNextTopMargin(dayDistance, dayDistance + cellNumber - 1);
+				TextView textView = makeTextView(activity, schedule.scheduleName, leftMargin, topMargin, maxWidth, getColor(schedule), 0, Gravity.CENTER);
 				rltPart1.addView(textView);
 			}
 
+		}
+
+		int moreNumber = maxTopMargin / CELL_HEIGHT + 1 - MAX_ROW;
+
+		if(moreNumber <= 0){
+			txtMore.setVisibility(View.GONE);
+			imgExpand.setVisibility(View.GONE);
+		}else if(!isExpanded){
+			imgExpand.setVisibility(View.VISIBLE);
+			txtMore.setVisibility(View.VISIBLE);
+			txtMore.setText("+" + moreNumber);
+			rltPart1.getLayoutParams().height = MAX_ROW * WeeklyPageFragment.CELL_HEIGHT + WelfareUtil.dpToPx(10);
+			rltPart1.requestLayout();
 		}
 	}
 
@@ -178,20 +248,25 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 			}
 		}
 
+		maxTopMargin = Math.max(maxTopMargin, result);
+
 		return result;
 	}
 
-	public static TextView makeTextView(Context activity, String text, int leftMargin, int topMargin, int maxWidth, int bgColor, int textColor){
+	public static TextView makeTextView(Context activity, String text, int leftMargin, int topMargin, int maxWidth, int bgColor, int textColor, int gravity){
 		TextView textView = new TextView(activity);
-		textView.setMaxWidth(maxWidth);
 		textView.setMaxLines(1);
-		// textView.setTextColor(Color.parseColor(schedule.getScheduleColor()));
 		textView.setEllipsize(TextUtils.TruncateAt.END);
-		textView.setGravity(Gravity.CENTER);
 		textView.setTextSize(13);
-		textView.setBackground(ContextCompat.getDrawable(activity, R.drawable.wf_background_round_border_white));
-		GradientDrawable bgShape = (GradientDrawable)textView.getBackground();
-		bgShape.setColor(bgColor);
+
+		textView.setMaxWidth(maxWidth);
+		textView.setGravity(gravity);
+
+		if(bgColor != 0){
+			textView.setBackground(ContextCompat.getDrawable(activity, R.drawable.wf_background_round_border_white));
+			GradientDrawable bgShape = (GradientDrawable)textView.getBackground();
+			bgShape.setColor(bgColor);
+		}
 		if(textColor != 0){
 			textView.setTextColor(textColor);
 		}
@@ -246,8 +321,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 
 				leftMarginScheduleNumMap.put(leftMargin, leftMarginScheduleNum + 1);
 
-				TextView textView = makeTextView(activity, schedule.scheduleName, leftMargin, topMargin, cellWidth, getColor(schedule), Color.RED);
-				textView.setTextColor(Color.parseColor(schedule.getScheduleColor()));
+				TextView textView = makeTextView(activity, schedule.scheduleName, leftMargin, topMargin, cellWidth, 0, getColor(schedule), Gravity.LEFT);
 				textView.setOnClickListener(new View.OnClickListener() {
 
 					@Override
@@ -262,8 +336,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 	}
 
 	public static int getColor(ScheduleModel scheduleModel){
-		return Color.RED;
-		// return Color.parseColor(scheduleModel.getScheduleColor());
+		return Color.parseColor(scheduleModel.getScheduleColor());
 	}
 
 	protected void initCalendarView(){
@@ -344,6 +417,25 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 		rltContent = (RelativeLayout)getView().findViewById(R.id.rlt_content);
 		rltPart1 = (RelativeLayout)getView().findViewById(R.id.rlt_part1);
 		lnrPart2 = (LinearLayout)getView().findViewById(R.id.lnr_part2);
+
+		imgExpand = (ImageView)getView().findViewById(R.id.ic_icon_expand);
+		imgExpand.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v){
+				if(isExpanded){
+					collapse(rltPart1, MAX_ROW * WeeklyPageFragment.CELL_HEIGHT + WelfareUtil.dpToPx(10));
+					txtMore.setVisibility(View.VISIBLE);
+					isExpanded = false;
+					imgExpand.setImageResource(R.drawable.wf_file);
+				}else{
+					imgExpand.setImageResource(R.drawable.cl_icon_birthday);
+					expand(rltPart1);
+					txtMore.setVisibility(View.GONE);
+					isExpanded = true;
+				}
+			}
+		});
 	}
 
 	@Override

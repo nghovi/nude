@@ -18,23 +18,22 @@ import io.realm.annotations.Ignore;
 @com.bluelinelabs.logansquare.annotation.JsonObject(fieldDetectionPolicy = com.bluelinelabs.logansquare.annotation.JsonObject.FieldDetectionPolicy.NONPRIVATE_FIELDS)
 public class UserModel extends BitmapModel implements Serializable{
 
-	public String				key;
-	public String				userName;
-	public String				userAccount;
-	public String				userMail;
-	public String				userNameKana;
+	public String		key;
+	public String		userName;
+	public String		userAccount;
+	public String		userMail;
+	public String		userNameKana;
 
-	public String				adminFlag;
-	public String				loginUserId;
-	public String				avatarPath;
-	public DeptModel			dept;
-	public String				companyId;
-	public String				pathProfile;
-	public String				token;
-	public String				language	= "en";
-	public String				timezone	= "Asia/Ho_Chi_Minh";
-	public String				dateBirth;
-	public Map<String, String>	userInfoMap	= new LinkedHashMap<String, String>();
+	public String		adminFlag;
+	public String		loginUserId;
+	public String		avatarPath;
+	public DeptModel	dept;
+	public String		companyId;
+	public String		pathProfile;
+	public String		token;
+	public String		language	= "en";
+	public String		dateBirth;
+	public String		userColor	= "#FF0000";
 
 	public UserModel(){
 

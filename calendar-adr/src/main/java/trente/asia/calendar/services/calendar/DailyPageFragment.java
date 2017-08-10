@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,15 +34,11 @@ import trente.asia.welfare.adr.define.WelfareConst;
  */
 public class DailyPageFragment extends SchedulesPageFragment{
 
-	private static final int					MAX_ROW				= 3;
-	private static final int					TEXT_VIEW_HEIGHT	= 62;
 	private LinearLayout						lnrScheduleAllDays;
 	private TextView							txtTodoInfo;
 	private LinearLayout						lnrListSchedules;
 	private Map<String, List<ScheduleModel>>	startTimeSchedulesMap;
 	private ImageView							imgBirthdayIcon;
-	private ImageView							imgExpand;
-	private TextView							txtMore;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -72,19 +69,18 @@ public class DailyPageFragment extends SchedulesPageFragment{
 			startTimeSchedulesMap.put(startTime, new ArrayList<ScheduleModel>());
 			c.add(Calendar.HOUR, 1);
 		}
-		txtMore = (TextView)getView().findViewById(R.id.txt_more_to_come);
-		imgExpand = (ImageView)getView().findViewById(R.id.ic_icon_expand);
+
 		imgExpand.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v){
 				if(isExpanded){
-					collapse(lnrScheduleAllDays, MAX_ROW * TEXT_VIEW_HEIGHT);
+					collapse(lnrScheduleAllDays, MAX_ROW * WeeklyPageFragment.CELL_HEIGHT);
 					txtMore.setVisibility(View.VISIBLE);
 					isExpanded = false;
 					imgExpand.setImageResource(R.drawable.wf_file);
 				}else{
-					imgExpand.setImageResource(R.drawable.cl_action_save);
+					imgExpand.setImageResource(R.drawable.cl_icon_birthday);
 					expand(lnrScheduleAllDays);
 					txtMore.setVisibility(View.GONE);
 					isExpanded = true;
@@ -156,6 +152,8 @@ public class DailyPageFragment extends SchedulesPageFragment{
 
 	@Override
 	protected void updateSchedules(List<ScheduleModel> schedules, List<CategoryModel> categories){
+		super.updateSchedules(schedules, categories);
+		schedules = multiplyWithUsers(schedules);
 		if(!CCCollectionUtil.isEmpty(todos)){
 			txtTodoInfo.setVisibility(View.VISIBLE);
 			txtTodoInfo.setText(getString(R.string.two_things_todo, String.valueOf(todos.size())));
@@ -181,7 +179,7 @@ public class DailyPageFragment extends SchedulesPageFragment{
 		for(ScheduleModel scheduleModel : schedules){
 			if(scheduleModel.isAllDay){
 				allDaySchedules.add(scheduleModel);
-				TextView textView = WeeklyPageFragment.makeTextView(activity, scheduleModel.scheduleName, 0, 0, LinearLayout.LayoutParams.MATCH_PARENT, WeeklyPageFragment.getColor(scheduleModel), 0);
+				TextView textView = WeeklyPageFragment.makeTextView(activity, scheduleModel.scheduleName, 0, 0, LinearLayout.LayoutParams.MATCH_PARENT, WeeklyPageFragment.getColor(scheduleModel), 0, Gravity.CENTER);
 				lnrScheduleAllDays.addView(textView);
 			}else{
 				List<ScheduleModel> scheduleModels = startTimeSchedulesMap.get(scheduleModel.startTime);
@@ -197,11 +195,16 @@ public class DailyPageFragment extends SchedulesPageFragment{
 
 		lnrListSchedules.removeAllViews();
 
-		if(startTimeSchedulesMap.keySet().size() <= MAX_ROW){
+		int moreNumber = lnrScheduleAllDays.getChildCount() - MAX_ROW;
+
+		if(moreNumber <= 0){
 			txtMore.setVisibility(View.GONE);
 			imgExpand.setVisibility(View.GONE);
-		}else{
-			lnrScheduleAllDays.getLayoutParams().height = MAX_ROW * TEXT_VIEW_HEIGHT;
+		}else if(!isExpanded){
+			imgExpand.setVisibility(View.VISIBLE);
+			txtMore.setVisibility(View.VISIBLE);
+			txtMore.setText("+" + moreNumber);
+			lnrScheduleAllDays.getLayoutParams().height = MAX_ROW * WeeklyPageFragment.CELL_HEIGHT;
 			lnrScheduleAllDays.requestLayout();
 		}
 
@@ -221,6 +224,7 @@ public class DailyPageFragment extends SchedulesPageFragment{
 		for(ScheduleModel scheduleModel : scheduleModels){
 			TextView textView = new TextView(activity);
 			textView.setText(scheduleModel.scheduleName);
+			textView.setTextColor(WeeklyPageFragment.getColor(scheduleModel));
 			lnrSchedules.addView(textView);
 		}
 		lnrListSchedules.addView(cell);
