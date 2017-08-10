@@ -1,8 +1,7 @@
 package trente.asia.thankscard.services.posted.view;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.SimpleTarget;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -15,6 +14,7 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.Region;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.Log;
@@ -99,12 +99,21 @@ public class StickerViewPost extends AppCompatImageView{
 	}
 
 	public void setStickerPath(String stickerPath){
-		Glide.with(getContext()).load(stickerPath).asBitmap().into(new SimpleTarget<Bitmap>() {
+		Picasso.with(getContext()).load(stickerPath).into(new Target() {
+			@Override
+			public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+				bitmapSticker = bitmap;
+				init();
+			}
 
 			@Override
-			public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation){
-				bitmapSticker = resource;
-				init();
+			public void onBitmapFailed(Drawable errorDrawable) {
+
+			}
+
+			@Override
+			public void onPrepareLoad(Drawable placeHolderDrawable) {
+
 			}
 		});
 	}
@@ -149,6 +158,12 @@ public class StickerViewPost extends AppCompatImageView{
 	}
 
 	public void unselectSticker(){
+		if (params == null) {
+			if (callback != null) {
+				callback.onDeleteStickerClick(this);
+			}
+			return;
+		}
 		setCompactLayout();
 		drawBorder = false;
 	}

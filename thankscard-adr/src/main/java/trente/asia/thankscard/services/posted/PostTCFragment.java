@@ -296,7 +296,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 	}
 
 	private void buildTemplate(){
-		Glide.with(getContext()).load(BuildConfig.HOST + template.templateUrl).into(binding.imgCard);
+		TCUtil.loadImageWithGlide(template.templateUrl, binding.imgCard);
 	}
 
 	@Override

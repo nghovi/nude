@@ -28,6 +28,7 @@ import trente.asia.thankscard.services.mypage.model.StampModel;
 import trente.asia.thankscard.services.posted.model.ApiStickerModel;
 import trente.asia.thankscard.services.posted.view.PhotoViewDetail;
 import trente.asia.thankscard.services.posted.view.StickerViewDetail;
+import trente.asia.thankscard.utils.TCUtil;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.utils.WelfareUtil;
 import trente.asia.welfare.adr.utils.WfPicassoHelper;
@@ -106,7 +107,7 @@ public class MyPagerAdapter2 extends PagerAdapter{
 		HistoryModel model = lstHistory.get(position);
 
 		if(model.template != null){
-			Glide.with(mContext).load(BuildConfig.HOST + model.template.templateUrl).into(viewHolder.imgTemplate);
+			TCUtil.loadImageWithGlide(model.template.templateUrl, viewHolder.imgTemplate);
 		}
 
 		if(hideMessage){
