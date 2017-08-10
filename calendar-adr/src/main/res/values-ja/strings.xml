@@ -46,9 +46,9 @@
     <string name="cl_schedule_repeat_type_weekly">毎週</string>
     <string name="cl_schedule_repeat_type_monthly">毎月</string>
 
-    <string name="cl_schedule_repeat_weekly_message">毎週的に繰り返し%1$s</string>
-    <string name="cl_schedule_repeat_monthly_message">毎月的に繰り返し</string>
-    <string name="cl_schedule_repeat_yearly_message">毎年的に繰り返し</string>
+    <string name="cl_schedule_repeat_weekly_message">毎週%1$s</string>
+    <string name="cl_schedule_repeat_monthly_message">毎月</string>
+    <string name="cl_schedule_repeat_yearly_message">毎年</string>
     <string name="cl_schedule_repeat_until_message">, まで %1$s.</string>
     <string name="cl_schedule_repeat_for_message">, あと %1$s 回。</string>
     <string name="cl_schedule_repeat_for_one_message">, あと 1 回。.</string>
