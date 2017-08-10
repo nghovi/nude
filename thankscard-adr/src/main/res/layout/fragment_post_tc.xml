@@ -178,7 +178,7 @@
 
             <LinearLayout
                 android:id="@+id/lnr_select_card"
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/margin_70dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/state_common_selectable_row"
                 android:gravity="center_horizontal"
@@ -199,9 +199,8 @@
 
             <LinearLayout
                 android:id="@+id/lnr_select_sticker"
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/margin_70dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_32dp"
                 android:layout_toEndOf="@+id/lnr_select_card"
                 android:background="@drawable/state_common_selectable_row"
                 android:gravity="center_horizontal"
@@ -222,9 +221,8 @@
 
             <LinearLayout
                 android:id="@+id/lnr_select_photo"
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/margin_70dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_32dp"
                 android:layout_toEndOf="@+id/lnr_select_sticker"
                 android:background="@drawable/state_common_selectable_row"
                 android:gravity="center_horizontal"
