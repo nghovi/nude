@@ -33,6 +33,18 @@ public class MonthlyFragment extends PageContainerFragment{
 	}
 
 	@Override
+	protected void initView(){
+		super.initView();
+		txtToday.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v){
+				onClickFooterItemMonthly();
+			}
+		});
+	}
+
+	@Override
 	protected Date getActiveDate(int position){
 		return CsDateUtil.addMonth(TODAY, position - INITIAL_POSITION);
 	}

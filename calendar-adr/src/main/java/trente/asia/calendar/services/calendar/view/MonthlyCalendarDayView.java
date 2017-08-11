@@ -8,6 +8,7 @@ import java.util.List;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
@@ -164,7 +165,7 @@ public class MonthlyCalendarDayView extends LinearLayout{
 	}
 
 	public int getActivePeriodNum(){
-		while(usedMargins.contains(maxMarginTop +  ClConst.TEXT_VIEW_HEIGHT)) {
+		while(usedMargins.contains(maxMarginTop + ClConst.TEXT_VIEW_HEIGHT)){
 			maxMarginTop += ClConst.TEXT_VIEW_HEIGHT;
 		}
 		return maxMarginTop;
@@ -173,6 +174,7 @@ public class MonthlyCalendarDayView extends LinearLayout{
 	private void setLayoutHoliday(ScheduleModel scheduleModel){
 		txtHoliday.setVisibility(View.VISIBLE);
 		txtHoliday.setTextColor(Color.RED);
+		txtHoliday.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.wf_background_gray_border));
 		txtHoliday.setText(scheduleModel.scheduleName);
 		if(!isToday){
 			txtDayLabel.setTextColor(Color.RED);

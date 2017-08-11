@@ -61,13 +61,13 @@ public abstract class ClPageFragment extends AbstractClFragment implements Daily
 
 	@Override
 	public void onAddBtnClick(Date date){
-		String selectedCalendarString = prefAccUtil.get(ClConst.SELECTED_CALENDAR_STRING);
-		if(!CCStringUtil.isEmpty(selectedCalendarString)){
-			gotoScheduleFormFragment(date);
-		}else{
-			alertDialog.setMessage(getString(R.string.cl_common_validate_no_calendar_msg));
-			alertDialog.show();
-		}
+		// String selectedCalendarString = prefAccUtil.get(ClConst.SELECTED_CALENDAR_STRING);
+		// if(!CCStringUtil.isEmpty(selectedCalendarString)){
+		gotoScheduleFormFragment(date);
+		// }else{
+		// alertDialog.setMessage(getString(R.string.cl_common_validate_no_calendar_msg));
+		// alertDialog.show();
+		// }
 	}
 
 	private void gotoScheduleFormFragment(Date date){

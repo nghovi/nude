@@ -25,6 +25,7 @@ import asia.chiase.core.util.CCFormatUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.services.calendar.model.CategoryModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
+import trente.asia.calendar.services.todo.TodoListFragment;
 import trente.asia.welfare.adr.define.WelfareConst;
 
 /**
@@ -75,7 +76,7 @@ public class DailyPageFragment extends SchedulesPageFragment{
 			@Override
 			public void onClick(View v){
 				if(isExpanded){
-					collapse(lnrScheduleAllDays, MAX_ROW * WeeklyPageFragment.CELL_HEIGHT);
+					collapse(lnrScheduleAllDays, MAX_ROW * WeeklyPageFragment.CELL_HEIGHT_PIXEL);
 					txtMore.setVisibility(View.VISIBLE);
 					isExpanded = false;
 					imgExpand.setImageResource(R.drawable.wf_file);
@@ -204,7 +205,7 @@ public class DailyPageFragment extends SchedulesPageFragment{
 			imgExpand.setVisibility(View.VISIBLE);
 			txtMore.setVisibility(View.VISIBLE);
 			txtMore.setText("+" + moreNumber);
-			lnrScheduleAllDays.getLayoutParams().height = MAX_ROW * WeeklyPageFragment.CELL_HEIGHT;
+			lnrScheduleAllDays.getLayoutParams().height = MAX_ROW * WeeklyPageFragment.CELL_HEIGHT_PIXEL;
 			lnrScheduleAllDays.requestLayout();
 		}
 
@@ -215,6 +216,15 @@ public class DailyPageFragment extends SchedulesPageFragment{
 			List<ScheduleModel> scheduleModels = startTimeSchedulesMap.get(key);
 			addStartTimeRow(key, scheduleModels);
 		}
+
+		scrollView.post(new Runnable() {
+
+			@Override
+			public void run(){
+				TodoListFragment.scrollToView(scrollView, thisHourView, 2);
+			}
+		});
+
 	}
 
 	private void addStartTimeRow(String startTime, List<ScheduleModel> scheduleModels){
@@ -226,6 +236,9 @@ public class DailyPageFragment extends SchedulesPageFragment{
 			textView.setText(scheduleModel.scheduleName);
 			textView.setTextColor(WeeklyPageFragment.getColor(scheduleModel));
 			lnrSchedules.addView(textView);
+		}
+		if(startTime.equals(currentHour)){
+			thisHourView = cell;
 		}
 		lnrListSchedules.addView(cell);
 	}

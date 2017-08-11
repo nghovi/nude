@@ -13,48 +13,49 @@
             android:gravity="center"
             android:orientation="horizontal"></LinearLayout>
 
-        <ScrollView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fillViewport="true">
+            android:layout_height="wrap_content">
 
-            <LinearLayout
+            <RelativeLayout
+                android:id="@+id/rlt_content"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
 
-                <RelativeLayout
-                    android:id="@+id/rlt_content"
+                <LinearLayout
+                    android:id="@+id/lnr_vertical_line_container"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:background="@color/chiase_white"
+                    android:orientation="horizontal"
+                    android:visibility="visible">
 
-                    <LinearLayout
-                        android:id="@+id/lnr_vertical_line_container"
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentTop="true"
+                    android:orientation="vertical">
+
+
+                    <RelativeLayout
+                        android:id="@+id/rlt_part1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/margin_10dp"
+                        android:orientation="vertical"
+                        android:paddingTop="@dimen/margin_10dp"></RelativeLayout>
+
+                    <View
+                        style="@style/cs_common_divider"
+                        android:background="@color/chiase_red" />
+
+                    <ScrollView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@color/chiase_white"
-                        android:orientation="horizontal"
-                        android:visibility="visible">
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentTop="true"
-                        android:orientation="vertical">
-
-
-                        <RelativeLayout
-                            android:id="@+id/rlt_part1"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/margin_10dp"
-                            android:orientation="vertical"
-                            android:paddingTop="@dimen/margin_10dp"></RelativeLayout>
-
-                        <View
-                            style="@style/cs_common_divider"
-                            android:background="@color/chiase_red" />
+                        android:id="@+id/src_fragment_daily_page"
+                        android:fillViewport="true">
 
                         <LinearLayout
                             android:id="@+id/lnr_part2"
@@ -64,31 +65,30 @@
                             android:layout_marginTop="@dimen/margin_10dp"
                             android:orientation="vertical"></LinearLayout>
 
-                    </LinearLayout>
+                    </ScrollView>
 
-                    <RelativeLayout
-                        android:id="@+id/rlt_expand"
-                        android:layout_width="match_parent"
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rlt_expand"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_10dp"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:id="@+id/ic_icon_expand"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/margin_10dp"
-                        android:gravity="center_vertical">
-
-                        <ImageView
-                            android:id="@+id/ic_icon_expand"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="bottom|left"
-                            android:src="@drawable/wf_file"
-                            android:visibility="visible" />
-                    </RelativeLayout>
-
-
+                        android:layout_gravity="bottom|left"
+                        android:src="@drawable/wf_file"
+                        android:visibility="visible" />
                 </RelativeLayout>
 
-            </LinearLayout>
 
+            </RelativeLayout>
 
-        </ScrollView>
+        </LinearLayout>
 
 
     </LinearLayout>

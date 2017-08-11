@@ -99,4 +99,5 @@
     <string name="cl_schedule_form_item_scope">Public setting</string>
     <string name="two_things_todo">%1$s thing(s) To Do</string>
     <string name="schedule">Schedule</string>
+    <string name="show_today">今日を表示</string>
 </resources>

@@ -52,6 +52,7 @@ public class DailySummaryDialog extends CLOutboundDismissDialog{
 
 		mViewPager = (ViewPager)findViewById(R.id.viewpager_dialog_daily_summary);
 		this.listener = listener;
+		this.onAddBtnClickedListener = onAddBtnClickedListener;
 
 		Window window = this.getWindow();
 		window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);

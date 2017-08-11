@@ -37,6 +37,7 @@ import trente.asia.calendar.services.todo.model.Todo;
 import trente.asia.calendar.services.todo.view.TodoListAdapter;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.dialog.WfDialog;
+import trente.asia.welfare.adr.utils.WelfareUtil;
 
 /**
  * TodoListFragment
@@ -393,19 +394,19 @@ public class TodoListFragment extends AbstractClFragment{
 				@Override
 				public void run(){
 					// scrollView.fullScroll(View.FOCUS_DOWN);
-					scrollToView(scrollView, btnShowFinished);
+					scrollToView(scrollView, btnShowFinished, -16);
 				}
 			});
 		}
 	}
 
-	private void scrollToView(final ScrollView scrollViewParent, final View view){
+	public static void scrollToView(final ScrollView scrollViewParent, final View view, int offSetDp){
 		Point childOffset = new Point();
 		getDeepChildOffset(scrollViewParent, view.getParent(), view, childOffset);
-		scrollViewParent.scrollTo(0, childOffset.y - 32);
+		scrollViewParent.smoothScrollTo(0, childOffset.y + WelfareUtil.dpToPx(offSetDp));
 	}
 
-	private void getDeepChildOffset(final ViewGroup mainParent, final ViewParent parent, final View child, final Point accumulatedOffset){
+	public static void getDeepChildOffset(final ViewGroup mainParent, final ViewParent parent, final View child, final Point accumulatedOffset){
 		ViewGroup parentGroup = (ViewGroup)parent;
 		accumulatedOffset.x += child.getLeft();
 		accumulatedOffset.y += child.getTop();
