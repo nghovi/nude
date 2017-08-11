@@ -94,14 +94,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/margin_10dp"
-                        android:text="@string/supplement_memo" />
+                        android:text="@string/supplement_memo"
+                        android:textColor="@color/chiase_black"/>
 
                     <trente.asia.android.view.ChiaseEditText
                         android:id="@+id/edt_supplement_memo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="left|top"
-                        android:lines="4" />
+                        android:minLines="2" />
 
                 </LinearLayout>
 

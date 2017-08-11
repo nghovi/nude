@@ -1,6 +1,7 @@
 package trente.asia.dailyreport.services.kpi.view;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
@@ -46,6 +47,10 @@ public class KpiCalendarView extends RelativeLayout{
 		super(context, attrs, defStyleAttr, defStyleRes);
 	}
 
+	public Calendar getSelectedDate(){
+		return adapter.getSelectedDate();
+	}
+
 	public void setCalendar(Calendar calendar){
 		Locale.setDefault(Locale.US);
 		gregorianCalendar = (GregorianCalendar)GregorianCalendar.getInstance();
@@ -82,6 +87,10 @@ public class KpiCalendarView extends RelativeLayout{
 
 	public void unselectDay(){
 		adapter.deselectCell();
+	}
+
+	public void refreshKpiStatus() {
+		adapter.refreshKpiStatus();
 	}
 
 	public interface OnDayClickedListener{

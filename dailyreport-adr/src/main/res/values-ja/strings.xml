@@ -32,8 +32,8 @@
     <string name="dlr_add_comment">コメントする</string>
     <string name="dlr_like">いいね！</string>
 
-    <string name="dlr_send">終了して送信</string>
-    <string name="dlr_save">ドラフトとして保存</string>
+    <string name="dlr_send">送信する</string>
+    <string name="dlr_save">保存</string>
     <string name="dlr_plan">予定</string>
     <string name="dlr_actual">実績</string>
     <string name="dlr_content">日報</string>
@@ -90,18 +90,19 @@
     <string name="fragmen_group_actual_needed_amount2">達成まであと%1$s</string>
     <string name="achieve_dialog_title">達成!!</string>
     <string name="achieve_dialog_content">おめでとうございます。 \n個人目標を達成しました。\n素晴らしい！！ \nこの調子でいきましょう！</string>
-    <string name="achieve_warning_dialog_title">本日は進捗確認日です</string>
+    <string name="achieve_warning_dialog_title">本日は進捗確認日です。</string>
     <string name="achieve_warning_dialog_content">KPIを達成していません\nアクションプランの見直しを考えましょう。</string>
     <string name="today_goal">本日の目標</string>
     <string name="supplement_memo">補足メモ</string>
     <string name="performance_in_month">%1$s月の実績</string>
     <string name="achievement_rate_in_month">%1$s月の達成率</string>
     <string name="user_has_no_kpi_setup">KPIが設定されていません</string>
-    <string name="performance_input">個人実績</string>
-    <string name="personal_performance">実績入力</string>
+    <string name="performance_input">実績入力</string>
+    <string name="personal_performance">個人実績</string>
     <string name="overall_performance">累計実績</string>
     <string name="action_plan_empty">アクションプランが設定されていません</string>
     <string name="text_period">(期間)</string>
     <string name="choose_the_day">日付を選択してください</string>
     <string name="action_plan_please_input">実績を入力してください</string>
+    <string name="action_num_over_max">入力値の最大は%1$sです。</string>
 </resources>
