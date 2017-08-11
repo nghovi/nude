@@ -48,34 +48,9 @@
                             android:id="@+id/rlt_part1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:paddingTop="@dimen/margin_10dp">
-
-
-                        </RelativeLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
                             android:layout_marginBottom="@dimen/margin_10dp"
-                            android:gravity="center_vertical">
-
-                            <ImageView
-                                android:id="@+id/ic_icon_expand"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="bottom|left"
-                                android:src="@drawable/wf_file"
-                                android:visibility="gone" />
-
-                            <TextView
-                                android:id="@+id/txt_more_to_come"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:text="+2"
-                                android:visibility="gone" />
-                        </LinearLayout>
+                            android:orientation="vertical"
+                            android:paddingTop="@dimen/margin_10dp"></RelativeLayout>
 
                         <View
                             style="@style/cs_common_divider"
@@ -90,6 +65,22 @@
                             android:orientation="vertical"></LinearLayout>
 
                     </LinearLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/rlt_expand"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/margin_10dp"
+                        android:gravity="center_vertical">
+
+                        <ImageView
+                            android:id="@+id/ic_icon_expand"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom|left"
+                            android:src="@drawable/wf_file"
+                            android:visibility="visible" />
+                    </RelativeLayout>
 
 
                 </RelativeLayout>

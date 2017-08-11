@@ -51,7 +51,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 
 	public static final Integer			CELL_HEIGHT		= 62;
 	protected LinearLayout				lnrHeader;
-	private RelativeLayout				rltContent;
+	private RelativeLayout				rltExpand;
 	private RelativeLayout				rltPart1;
 	private LinearLayout				lnrPart2;
 	private Map<Integer, List<Integer>>	columnTopMarginsMap;
@@ -202,16 +202,44 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 
 		}
 
-		int moreNumber = maxTopMargin / CELL_HEIGHT + 1 - MAX_ROW;
+		int moreNumber = maxTopMargin / CELL_HEIGHT - MAX_ROW;
 
 		if(moreNumber <= 0){
-			txtMore.setVisibility(View.GONE);
-			imgExpand.setVisibility(View.GONE);
+			// txtMore.setVisibility(View.GONE);
+			rltExpand.setVisibility(View.GONE);
 		}else if(!isExpanded){
+			moveLnrExpand(MAX_ROW * CELL_HEIGHT + WelfareUtil.dpToPx(10));
+			int maxTopMarginAllowed = MAX_ROW * CELL_HEIGHT;
+			for(int key : columnTopMarginsMap.keySet()){
+				List<Integer> usedTopMargins = columnTopMarginsMap.get(key);
+				int more = 0;
+				if(!CCStringUtil.isEmpty(usedTopMargins)){
+					for(int margin : usedTopMargins){
+						more = margin >= maxTopMarginAllowed ? more + 1 : more;
+					}
+				}
+				if(more > 0){
+					TextView textView = new TextView(activity);
+					textView.setMaxLines(1);
+					textView.setEllipsize(TextUtils.TruncateAt.END);
+					textView.setTextSize(13);
+					textView.setMaxWidth(cellWidth);
+					textView.setGravity(Gravity.CENTER);
+					textView.setBackgroundColor(Color.WHITE);
+					// textView.setBackground(ContextCompat.getDrawable(activity, R.drawable.wf_background_gray_border_white));
+					textView.setText("+" + more);
+					LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(cellWidth, LinearLayout.LayoutParams.WRAP_CONTENT);
+					lp.setMargins((key + 1) * cellWidth, 0, 0, 0);
+					textView.setLayoutParams(lp);
+
+					rltExpand.addView(textView);
+				}
+			}
+
 			imgExpand.setVisibility(View.VISIBLE);
-			txtMore.setVisibility(View.VISIBLE);
-			txtMore.setText("+" + moreNumber);
-			rltPart1.getLayoutParams().height = MAX_ROW * WeeklyPageFragment.CELL_HEIGHT + WelfareUtil.dpToPx(10);
+			// txtMore.setVisibility(View.VISIBLE);
+			// txtMore.setText("+" + moreNumber);
+			rltPart1.getLayoutParams().height = (MAX_ROW + 1) * WeeklyPageFragment.CELL_HEIGHT + WelfareUtil.dpToPx(10);
 			rltPart1.requestLayout();
 		}
 	}
@@ -414,9 +442,9 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 	@Override
 	protected void initView(){
 		super.initView();
-		rltContent = (RelativeLayout)getView().findViewById(R.id.rlt_content);
 		rltPart1 = (RelativeLayout)getView().findViewById(R.id.rlt_part1);
 		lnrPart2 = (LinearLayout)getView().findViewById(R.id.lnr_part2);
+		rltExpand = (RelativeLayout)getView().findViewById(R.id.rlt_expand);
 
 		imgExpand = (ImageView)getView().findViewById(R.id.ic_icon_expand);
 		imgExpand.setOnClickListener(new View.OnClickListener() {
@@ -424,18 +452,37 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 			@Override
 			public void onClick(View v){
 				if(isExpanded){
-					collapse(rltPart1, MAX_ROW * WeeklyPageFragment.CELL_HEIGHT + WelfareUtil.dpToPx(10));
-					txtMore.setVisibility(View.VISIBLE);
+					collapse(rltPart1, (MAX_ROW + 1) * WeeklyPageFragment.CELL_HEIGHT + WelfareUtil.dpToPx(10));
+
+					moveLnrExpand(MAX_ROW * CELL_HEIGHT + WelfareUtil.dpToPx(10));
+					for(int i = 1; i < rltExpand.getChildCount(); i++){
+						rltExpand.getChildAt(i).setVisibility(View.VISIBLE);
+					}
+
+					// txtMore.setVisibility(View.GONE);
+					//
+					// txtMore.setVisibility(View.VISIBLE);
 					isExpanded = false;
 					imgExpand.setImageResource(R.drawable.wf_file);
 				}else{
 					imgExpand.setImageResource(R.drawable.cl_icon_birthday);
 					expand(rltPart1);
-					txtMore.setVisibility(View.GONE);
+					for(int i = 1; i < rltExpand.getChildCount(); i++){
+						rltExpand.getChildAt(i).setVisibility(View.GONE);
+					}
+					moveLnrExpand(maxTopMargin + WelfareUtil.dpToPx(10));
+
+					// txtMore.setVisibility(View.GONE);
 					isExpanded = true;
 				}
 			}
 		});
+	}
+
+	private void moveLnrExpand(int topMargin){
+		RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+		lp.setMargins(0, topMargin, 0, 0);
+		rltExpand.setLayoutParams(lp);
 	}
 
 	@Override

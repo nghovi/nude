@@ -5,6 +5,9 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,12 +58,14 @@ public class FilterUserLinearLayout extends LinearLayout{
 
 	private class ViewHolder{
 
+		public LinearLayout				lnrAvatar;
 		public ImageView				imgAvatar;
 		public TextView					txtUserName;
 		public CheckableLinearLayout	lnrItem;
 		public ImageView				imgCheck;
 
 		public ViewHolder(View view){
+			lnrAvatar = (LinearLayout)view.findViewById(R.id.lnr_avatar_container);
 			imgAvatar = (ImageView)view.findViewById(R.id.img_id_avatar);
 			txtUserName = (TextView)view.findViewById(R.id.txt_id_user_name);
 			lnrItem = (CheckableLinearLayout)view.findViewById(R.id.lnr_id_item);
@@ -81,6 +86,7 @@ public class FilterUserLinearLayout extends LinearLayout{
 	}
 
 	public void addUserList(List<UserModel> lstUser, List<UserModel> lstSelectedUser, final CheckBox cbxAll){
+		this.mContext = getContext();
 		this.lstUser = lstUser;
 		this.lstSelectedUser = lstSelectedUser;
 		lstCheckable = new ArrayList<>();
@@ -93,7 +99,13 @@ public class FilterUserLinearLayout extends LinearLayout{
 				View userView = mInflater.inflate(R.layout.adapter_dialog_user_item, null);
 
 				final ViewHolder holder = new ViewHolder(userView);
+
 				holder.txtUserName.setText(userModel.userName);
+
+				holder.lnrAvatar.setBackground(ContextCompat.getDrawable(mContext, R.drawable.wf_background_round_border_white));
+				GradientDrawable bgShape = (GradientDrawable)holder.lnrAvatar.getBackground();
+				bgShape.setColor(Color.parseColor(userModel.userColor));
+
 				if(userModel.bitmap != null){
 					holder.imgAvatar.setImageBitmap(userModel.bitmap);
 				}else{

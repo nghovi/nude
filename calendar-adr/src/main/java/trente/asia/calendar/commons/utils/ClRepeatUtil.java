@@ -65,14 +65,14 @@ public class ClRepeatUtil{
 					}
 				}
 			}
-//            else if(ClConst.SCHEDULE_REPEAT_LIMIT_AFTER.equals(scheduleModel.repeatLimitType)){
-//				List<String> lstActiveDate = ClRepeatUtil.getDateList4RepeatTimes(scheduleModel);
-//				for(MonthlyCalendarDayView dayView : lstView){
-//					if(lstActiveDate.contains(dayView.day)){
-//						lstCalendarDay.add(dayView);
-//					}
-//				}
-//			}
+			// else if(ClConst.SCHEDULE_REPEAT_LIMIT_AFTER.equals(scheduleModel.repeatLimitType)){
+			// List<String> lstActiveDate = ClRepeatUtil.getDateList4RepeatTimes(scheduleModel);
+			// for(MonthlyCalendarDayView dayView : lstView){
+			// if(lstActiveDate.contains(dayView.day)){
+			// lstCalendarDay.add(dayView);
+			// }
+			// }
+			// }
 
 			break;
 		case ClConst.SCHEDULE_REPEAT_TYPE_MONTHLY:
@@ -99,14 +99,14 @@ public class ClRepeatUtil{
 					}
 				}
 			}
-//            else if(ClConst.SCHEDULE_REPEAT_LIMIT_AFTER.equals(scheduleModel.repeatLimitType)){
-//				List<String> lstActiveDate = ClRepeatUtil.getDateList4RepeatTimes(scheduleModel);
-//				for(MonthlyCalendarDayView dayView : lstView){
-//					if(lstActiveDate.contains(dayView.day)){
-//						lstCalendarDay.add(dayView);
-//					}
-//				}
-//			}
+			// else if(ClConst.SCHEDULE_REPEAT_LIMIT_AFTER.equals(scheduleModel.repeatLimitType)){
+			// List<String> lstActiveDate = ClRepeatUtil.getDateList4RepeatTimes(scheduleModel);
+			// for(MonthlyCalendarDayView dayView : lstView){
+			// if(lstActiveDate.contains(dayView.day)){
+			// lstCalendarDay.add(dayView);
+			// }
+			// }
+			// }
 			break;
 
 		default:
@@ -191,8 +191,8 @@ public class ClRepeatUtil{
 
 		if(ClConst.SCHEDULE_REPEAT_LIMIT_FOREVER.equals(repeatModel.repeatLimitType)){
 		}else if(ClConst.SCHEDULE_REPEAT_LIMIT_UNTIL.equals(repeatModel.repeatLimitType)){
-			Date repeatEndDate = WelfareUtil.makeDate(repeatModel.repeatEnd);
-			builder.append(context.getString(R.string.cl_schedule_repeat_until_message, WelfareFormatUtil.formatDate(repeatEndDate)));
+			// Date repeatEndDate = WelfareUtil.makeDate(repeatModel.repeatEnd);
+			// builder.append(context.getString(R.string.cl_schedule_repeat_until_message, WelfareFormatUtil.formatDate(repeatEndDate)));
 		}else{
 			if(CsConst.ONE.equals(repeatModel.repeatInterval)){
 				builder.append(context.getString(R.string.cl_schedule_repeat_for_one_message));

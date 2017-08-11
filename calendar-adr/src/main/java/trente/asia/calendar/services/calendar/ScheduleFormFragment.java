@@ -29,6 +29,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -101,20 +102,25 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 			initHeader(R.drawable.wf_back_white, getString(R.string.fragment_schedule_form_title), R.drawable.cl_action_save);
 		}
 
-		repeatDialog = new ClScheduleRepeatDialog(activity, txtRepeat);
+		repeatDialog = new ClScheduleRepeatDialog(activity, txtRepeat, txtRepeatUntil);
 		repeatDialog.setOnChangeRepeatTypeListener(new ClScheduleRepeatDialog.OnChangeRepeatTypeListener() {
 
 			@Override
 			public void onChange(boolean isRepeated){
 				if(isRepeated){
+					lnrRepeatUntil.setVisibility(View.VISIBLE);
 					if(swtAllDay.isChecked()){
 						lnrEndDate.setVisibility(View.GONE);
 					}else{
 						txtEndDate.setVisibility(View.INVISIBLE);
 					}
-				}else if(swtAllDay.isChecked()){
-					lnrEndDate.setVisibility(View.VISIBLE);
-					txtEndDate.setVisibility(View.VISIBLE);
+				}else{
+					lnrRepeatUntil.setVisibility(View.GONE);
+					if(swtAllDay.isChecked()){
+						lnrRepeatUntil.setVisibility(View.GONE);
+						lnrEndDate.setVisibility(View.VISIBLE);
+						txtEndDate.setVisibility(View.VISIBLE);
+					}
 				}
 			}
 		});
@@ -352,6 +358,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 		if(!ScheduleModel.isRepeat(schedule)){
 			txtStartDate.setOnClickListener(this);
 			txtEndDate.setOnClickListener(this);
+			lnrRepeatUntil.setVisibility(View.GONE);
 		}
 	}
 
@@ -471,7 +478,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 			if(schedule != null && !CCStringUtil.isEmpty(schedule.key)){
 				jsonObject.put("key", schedule.key);
 			}
-			jsonObject.put("listUsers", lnrUserList.formatUserList());
+			jsonObject.put("joinUsers", lnrUserList.formatUserList());
 			jsonObject.put("isAllDay", swtAllDay.isChecked());
 
 			ScheduleRepeatModel scheduleRepeatModel = repeatDialog.getRepeatModel();

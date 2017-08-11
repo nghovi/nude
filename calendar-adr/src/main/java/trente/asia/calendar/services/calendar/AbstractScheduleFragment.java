@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import asia.chiase.core.util.CCBooleanUtil;
 import asia.chiase.core.util.CCFormatUtil;
@@ -66,6 +67,8 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 	protected LinearLayout				lnrEndDate;
 	protected ClFilterUserListDialog	filterDialog;
 	protected List<UserModel>			users;
+	protected LinearLayout				lnrRepeatUntil;
+	protected TextView					txtRepeatUntil;
 
 	@Override
 	protected void initView(){
@@ -87,6 +90,8 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 		lnrEndDate = (LinearLayout)getView().findViewById(R.id.lnr_id_end_date);
 		txtStartTime = (ChiaseTextView)getView().findViewById(R.id.txt_id_start_time);
 		txtEndTime = (ChiaseTextView)getView().findViewById(R.id.txt_id_end_time);
+		lnrRepeatUntil = (LinearLayout)getView().findViewById(R.id.lnr_id_repeat_until);
+		txtRepeatUntil = (TextView)getView().findViewById(R.id.txt_repeat_until);
 	}
 
 	@Override

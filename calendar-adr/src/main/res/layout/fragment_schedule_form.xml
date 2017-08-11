@@ -118,6 +118,27 @@
 
             <View style="@style/cs_common_divider" />
 
+
+            <LinearLayout
+                android:id="@+id/lnr_id_repeat_until"
+                style="@style/wf_common_item_linear2"
+                android:background="@drawable/state_common_selectable_row">
+
+                <TextView
+                    style="@style/wl_common_text"
+                    android:layout_width="wrap_content"
+                    android:text="@string/cl_schedule_repeat_limit_until" />
+
+                <trente.asia.android.view.ChiaseTextView
+                    android:id="@+id/txt_repeat_until"
+                    style="@style/wl_common_edit_text2"
+                    android:layout_marginLeft="@dimen/margin_10dp"
+                    android:layout_weight="1"
+                    android:text="@string/chiase_common_none" />
+            </LinearLayout>
+
+            <View style="@style/cs_common_divider" />
+
             <LinearLayout
                 style="@style/wf_common_item_linear"
                 android:orientation="vertical">

@@ -38,6 +38,7 @@ import trente.asia.welfare.adr.utils.WelfareUtil;
  */
 public class ClScheduleRepeatDialog extends CLOutboundDismissDialog{
 
+	private final TextView				txtUntil;
 	private Context						mContext;
 	private TextView					txtRepeat;
 	private Spinner						spnRepeatType;
@@ -68,14 +69,14 @@ public class ClScheduleRepeatDialog extends CLOutboundDismissDialog{
 		this.onChangeRepeatTypeListener = onChangeRepeatTypeListener;
 	}
 
-	OnChangeRepeatTypeListener	onChangeRepeatTypeListener;
+	OnChangeRepeatTypeListener onChangeRepeatTypeListener;
 
-	public ClScheduleRepeatDialog(Context context, TextView txtRepeat){
+	public ClScheduleRepeatDialog(Context context, TextView txtRepeat, TextView txtUntil){
 		super(context);
 		this.setContentView(R.layout.dialog_common_schedule_repeat);
 		this.mContext = context;
 		this.txtRepeat = txtRepeat;
-
+		this.txtUntil = txtUntil;
 		this.initialization();
 	}
 
@@ -157,11 +158,21 @@ public class ClScheduleRepeatDialog extends CLOutboundDismissDialog{
 			@Override
 			public void onClick(View v){
 
+				boolean isRepeat = swtRepeat.isChecked();
+
 				if(onChangeRepeatTypeListener != null){
-					onChangeRepeatTypeListener.onChange(swtRepeat.isChecked());
+					onChangeRepeatTypeListener.onChange(isRepeat);
 				}
-				ClScheduleRepeatDialog.this.dismiss();
+				if(isRepeat){
+					if(ClConst.SCHEDULE_REPEAT_LIMIT_FOREVER.equals(repeatModel.repeatLimitType) || CCStringUtil.isEmpty(repeatModel.repeatLimitType)){
+						txtUntil.setText(mContext.getString(R.string.cl_schedule_repeat_limit_forever));
+					}else{
+						txtUntil.setText(repeatModel.repeatEnd);
+					}
+				}
 				txtRepeat.setText(getRepeatValue());
+				ClScheduleRepeatDialog.this.dismiss();
+
 			}
 		});
 	}
