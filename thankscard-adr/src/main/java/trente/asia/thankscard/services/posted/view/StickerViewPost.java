@@ -300,8 +300,6 @@ public class StickerViewPost extends AppCompatImageView{
 			int yFromTop = Integer.parseInt(preference.get(TcConst.PREF_Y_FROM_TOP));
 			matrix.postTranslate(0, yFromTop);
 			canvas.getClipBounds(rectBound);
-			log("rectBound.bottom = " + rectBound.bottom);
-			log("yFromTop = " + yFromTop);
 			canvas.clipRect(rectBound.left, rectBound.top, rectBound.right, rectBound.bottom + yFromTop, Region.Op.REPLACE);
 		}
 		canvas.setMatrix(matrix);

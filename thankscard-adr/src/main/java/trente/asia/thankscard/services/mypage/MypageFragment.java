@@ -9,6 +9,7 @@ import org.json.JSONObject;
 
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -41,6 +42,7 @@ import trente.asia.thankscard.services.posted.ThanksCardEditFragment;
 import trente.asia.thankscard.services.rank.model.RankStage;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.models.DeptModel;
+import trente.asia.welfare.adr.pref.PreferencesSystemUtil;
 import trente.asia.welfare.adr.utils.WelfareUtil;
 import trente.asia.welfare.adr.utils.WfPicassoHelper;
 
@@ -69,6 +71,14 @@ public class MypageFragment extends AbstractTCFragment{
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		mRealm = Realm.getDefaultInstance();
+		PreferencesSystemUtil preference = new PreferencesSystemUtil(getContext());
+		int screenWidth = Integer.parseInt(preference.get(TcConst.PREF_FRAME_WIDTH));
+		int normalMessageWidth = screenWidth - WelfareUtil.dpToPx(140);
+		int photoMessageWidth = screenWidth / 2 - WelfareUtil.dpToPx(20);
+		int normalTextSize = normalMessageWidth / 13;
+		int photoTextSize = photoMessageWidth / 13;
+		preference.set(TcConst.PREF_NORMAL_TEXT_SIZE, String.valueOf(normalTextSize));
+		preference.set(TcConst.PREF_PHOTO_TEXT_SIZE, String.valueOf(photoTextSize));
 	}
 
 	public boolean hasBackBtn(){
@@ -119,11 +129,11 @@ public class MypageFragment extends AbstractTCFragment{
 		String lastUpdateDate = preferences.getString(TcConst.MESSAGE_STAMP_LAST_UPDATE_DATE, null);
 		JSONObject jsonObject = new JSONObject();
 		if(lastUpdateDate != null){
-//			try{
-//				jsonObject.put("lastUpdateDate", lastUpdateDate);
-//			}catch(JSONException e){
-//				e.printStackTrace();
-//			}
+			try{
+				jsonObject.put("lastUpdateDate", lastUpdateDate);
+			}catch(JSONException e){
+				e.printStackTrace();
+			}
 		}
 		requestLoad(TcConst.API_MESSAGE_STAMP_CATEGORY_LIST, jsonObject, true);
 	}
@@ -226,7 +236,7 @@ public class MypageFragment extends AbstractTCFragment{
 		List<StampCategoryModel> stampCategories = CCJsonUtil.convertToModelList(response.optString("stampCategories"), StampCategoryModel.class);
 		String lastUpdateDate = response.optString("lastUpdateDate");
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-//		preferences.edit().putString(TcConst.MESSAGE_STAMP_LAST_UPDATE_DATE, lastUpdateDate).apply();
+		preferences.edit().putString(TcConst.MESSAGE_STAMP_LAST_UPDATE_DATE, lastUpdateDate).apply();
 
 		mRealm.beginTransaction();
 		for(StampCategoryModel category : stampCategories){
@@ -309,7 +319,6 @@ public class MypageFragment extends AbstractTCFragment{
 		int pointGold = Integer.parseInt(prefAccUtil.get(TcConst.PREF_POINT_GOLD));
 
 		prefAccUtil.set(TcConst.PREF_POINT_TOTAL, String.valueOf(totalPoint));
-		log(totalPoint + "");
 
 		if(totalPoint < pointBronze){
 			imageView.setImageResource(R.drawable.tc_rank_regular);

@@ -16,6 +16,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -159,6 +160,13 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 		binding.lnrSelectPhoto.setOnClickListener(this);
 		binding.mainLayout.setOnClickListener(this);
         validateButtons();
+
+		int normalTextSize = Integer.parseInt(preference.get(TcConst.PREF_NORMAL_TEXT_SIZE));
+		int photoTextSize = Integer.parseInt(preference.get(TcConst.PREF_PHOTO_TEXT_SIZE));
+		log("size: " + normalTextSize + " : " + photoTextSize);
+		binding.edtMessagePhoto.setTextSize(TypedValue.COMPLEX_UNIT_PX, photoTextSize);
+		binding.edtMessage.setTextSize(TypedValue.COMPLEX_UNIT_PX, normalTextSize);
+
 		binding.edtMessage.addTextChangedListener(new TextWatcher() {
 
 			@Override
@@ -415,6 +423,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 	}
 
 	private void changeLayoutCard(){
+
 		buildTemplate();
 		if(canSendPhoto){
 			binding.lnrBody.setVisibility(View.VISIBLE);
@@ -422,6 +431,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 			binding.touchPad.setCallback(this);
 			binding.edtMessagePhoto.setText(message);
 			binding.edtMessagePhoto.setSelection(message.length());
+
 			for(StickerViewPost sticker : stickers){
 				binding.rltMsg.removeView(sticker);
 				binding.lnrBody.removeView(sticker);
@@ -431,6 +441,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 			binding.rltMsg.setVisibility(View.VISIBLE);
 			binding.layoutPhoto.clearImage();
 			binding.edtMessage.setText(message);
+
 			for(StickerViewPost sticker : stickers){
 				binding.lnrBody.removeView(sticker);
 				binding.rltMsg.removeView(sticker);
