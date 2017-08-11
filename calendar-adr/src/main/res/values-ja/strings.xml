@@ -39,7 +39,7 @@
 
     <string name="cl_filter_user_dialog_title">ユーザーフィルター</string>
     <string name="cl_join_user_dialog_title">参加ユーザー</string>
-    <string name="cl_schedule_repeat_dialog_title">繰り返しスケジュール</string>
+    <string name="cl_schedule_repeat_dialog_title">繰り返し</string>
     <string name="cl_schedule_repeat_dialog_times">回</string>
 
 
@@ -96,5 +96,5 @@
     <string name="select_group">グループ選択</string>
     <string name="cl_schedule_form_item_scope">公開設定</string>
     <string name="two_things_todo">%s$1 thing(s) To Do</string>
-    <string name="schedule">Schedule</string>
+    <string name="schedule">予定</string>
 </resources>
