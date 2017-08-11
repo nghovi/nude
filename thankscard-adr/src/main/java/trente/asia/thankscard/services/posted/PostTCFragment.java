@@ -238,16 +238,16 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
         int pointGold = Integer.parseInt(prefAccUtil.get(TcConst.PREF_POINT_GOLD));
         int totalPoint = Integer.parseInt(prefAccUtil.get(TcConst.PREF_POINT_TOTAL));
 
-        if (totalPoint < pointBronze) {
-            binding.lnrSelectSticker.setVisibility(View.INVISIBLE);
-            binding.lnrSelectPhoto.setVisibility(View.INVISIBLE);
-        } else if (totalPoint < pointSilver) {
-            binding.lnrSelectSticker.setVisibility(View.VISIBLE);
-            binding.lnrSelectPhoto.setVisibility(View.INVISIBLE);
-        } else {
-            binding.lnrSelectSticker.setVisibility(View.VISIBLE);
-            binding.lnrSelectPhoto.setVisibility(View.VISIBLE);
-        }
+//        if (totalPoint < pointBronze) {
+//            binding.lnrSelectSticker.setVisibility(View.INVISIBLE);
+//            binding.lnrSelectPhoto.setVisibility(View.INVISIBLE);
+//        } else if (totalPoint < pointSilver) {
+//            binding.lnrSelectSticker.setVisibility(View.VISIBLE);
+//            binding.lnrSelectPhoto.setVisibility(View.INVISIBLE);
+//        } else {
+//            binding.lnrSelectSticker.setVisibility(View.VISIBLE);
+//            binding.lnrSelectPhoto.setVisibility(View.VISIBLE);
+//        }
     }
 
 	@Override

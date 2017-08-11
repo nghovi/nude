@@ -154,11 +154,11 @@ public class MypageFragment extends AbstractTCFragment{
 	}
 
 	private void showRankStageDialog(){
-			if(rankStageDialog == null){
-				rankStageDialog = new RankStageDialog();
-				rankStageDialog.setRankStagesInfo(rankStages, mypageModel.pointTotal);
-			}
-			rankStageDialog.show(getFragmentManager(), null);
+		if(rankStageDialog == null){
+			rankStageDialog = new RankStageDialog();
+			rankStageDialog.setRankStagesInfo(rankStages, mypageModel.pointTotal);
+		}
+		rankStageDialog.show(getFragmentManager(), null);
 	}
 
 	private void builNoticeList(){
@@ -178,7 +178,7 @@ public class MypageFragment extends AbstractTCFragment{
 
 			@Override
 			public void onClick(DialogInterface dialog, int which){
-//				gotoPostEdit(notice);
+				// gotoPostEdit(notice);
 				gotoFragment(new PostTCFragment());
 			}
 		};
@@ -228,37 +228,30 @@ public class MypageFragment extends AbstractTCFragment{
 		}
 	}
 
-	private void log(String msg) {
+	private void log(String msg){
 		Log.e("MypageFragment", msg);
 	}
 
 	private void saveStamps(JSONObject response){
 		List<StampCategoryModel> stampCategories = CCJsonUtil.convertToModelList(response.optString("stampCategories"), StampCategoryModel.class);
+		log("categories number = " + stampCategories.size());
 		String lastUpdateDate = response.optString("lastUpdateDate");
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
 		preferences.edit().putString(TcConst.MESSAGE_STAMP_LAST_UPDATE_DATE, lastUpdateDate).apply();
 
 		mRealm.beginTransaction();
 		for(StampCategoryModel category : stampCategories){
+			log("category name: " + category.categoryName);
 			if(category.deleteFlag){
 				StampCategoryModel.deleteStampCategory(mRealm, category.key);
 			}else{
-				StampCategoryModel wfmStampCategory = StampCategoryModel.getCategory(mRealm, category.key);
-				if(wfmStampCategory == null){
-					mRealm.copyToRealm(category);
-				}else{
-					wfmStampCategory.updateStampCategory(category);
-					for(StampModel stamp : category.stamps){
-						if(stamp.deleteFlag){
-							StampModel.deleteStamp(mRealm, stamp.key);
-						}else{
-							StampModel wfmStamp = StampModel.getStamp(mRealm, stamp.key);
-							if(wfmStamp == null){
-								wfmStampCategory.stamps.add(stamp);
-							}else{
-								wfmStamp.updateStamp(wfmStamp);
-							}
-						}
+				mRealm.copyToRealmOrUpdate(category);
+				for(StampModel stamp : category.stamps){
+					log("stamp name: " + stamp.stampName);
+					if(stamp.deleteFlag){
+						StampModel.deleteStamp(mRealm, stamp.key);
+					}else{
+						mRealm.copyToRealmOrUpdate(stamp);
 					}
 				}
 			}
@@ -329,7 +322,7 @@ public class MypageFragment extends AbstractTCFragment{
 		}else if(totalPoint >= pointSilver && totalPoint < pointGold){
 			imageView.setImageResource(R.drawable.tc_rank_silver);
 			txtRank.setText(R.string.tc_rank_silver);
-		}else {
+		}else{
 			imageView.setImageResource(R.drawable.tc_rank_gold);
 			txtRank.setText(R.string.tc_rank_gold);
 		}
