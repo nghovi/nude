@@ -163,7 +163,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 
 		int normalTextSize = Integer.parseInt(preference.get(TcConst.PREF_NORMAL_TEXT_SIZE));
 		int photoTextSize = Integer.parseInt(preference.get(TcConst.PREF_PHOTO_TEXT_SIZE));
-		log("size: " + normalTextSize + " : " + photoTextSize);
+
 		binding.edtMessagePhoto.setTextSize(TypedValue.COMPLEX_UNIT_PX, photoTextSize);
 		binding.edtMessage.setTextSize(TypedValue.COMPLEX_UNIT_PX, normalTextSize);
 
@@ -230,16 +230,16 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
         int pointGold = Integer.parseInt(prefAccUtil.get(TcConst.PREF_POINT_GOLD));
         int totalPoint = Integer.parseInt(prefAccUtil.get(TcConst.PREF_POINT_TOTAL));
 
-        if (totalPoint < pointBronze) {
-            binding.lnrSelectSticker.setVisibility(View.INVISIBLE);
-            binding.lnrSelectPhoto.setVisibility(View.INVISIBLE);
-        } else if (totalPoint < pointSilver) {
-            binding.lnrSelectSticker.setVisibility(View.VISIBLE);
-            binding.lnrSelectPhoto.setVisibility(View.INVISIBLE);
-        } else {
-            binding.lnrSelectSticker.setVisibility(View.VISIBLE);
-            binding.lnrSelectPhoto.setVisibility(View.VISIBLE);
-        }
+//        if (totalPoint < pointBronze) {
+//            binding.lnrSelectSticker.setVisibility(View.INVISIBLE);
+//            binding.lnrSelectPhoto.setVisibility(View.INVISIBLE);
+//        } else if (totalPoint < pointSilver) {
+//            binding.lnrSelectSticker.setVisibility(View.VISIBLE);
+//            binding.lnrSelectPhoto.setVisibility(View.INVISIBLE);
+//        } else {
+//            binding.lnrSelectSticker.setVisibility(View.VISIBLE);
+//            binding.lnrSelectPhoto.setVisibility(View.VISIBLE);
+//        }
     }
 
 	@Override
