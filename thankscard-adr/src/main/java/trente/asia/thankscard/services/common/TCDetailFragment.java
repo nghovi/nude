@@ -206,7 +206,10 @@ public class TCDetailFragment extends AbstractPagerFragment{
 				@Override
 				public void onClick(View v){
 					// gotoPostedEditFragment(historyModel);
-					gotoFragment(new PostTCFragment());
+					PostTCFragment postTCFragment = new PostTCFragment();
+					postTCFragment.setSelectedDepartment(WelfareUtil.getDept4UserId(depts, historyModel.posterId));
+					postTCFragment.setSelectedUser(new UserModel(historyModel.posterId, historyModel.posterName));
+					gotoFragment(postTCFragment);
 				}
 			});
 		}else{

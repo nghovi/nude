@@ -167,6 +167,14 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 		binding.edtMessagePhoto.setTextSize(TypedValue.COMPLEX_UNIT_PX, photoTextSize);
 		binding.edtMessage.setTextSize(TypedValue.COMPLEX_UNIT_PX, normalTextSize);
 
+		if (department != null) {
+			binding.deptName.setText(department.deptName);
+		}
+
+		if (member != null) {
+			binding.userName.setText(member.userName);
+		}
+
 		binding.edtMessage.addTextChangedListener(new TextWatcher() {
 
 			@Override
@@ -230,16 +238,16 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
         int pointGold = Integer.parseInt(prefAccUtil.get(TcConst.PREF_POINT_GOLD));
         int totalPoint = Integer.parseInt(prefAccUtil.get(TcConst.PREF_POINT_TOTAL));
 
-//        if (totalPoint < pointBronze) {
-//            binding.lnrSelectSticker.setVisibility(View.INVISIBLE);
-//            binding.lnrSelectPhoto.setVisibility(View.INVISIBLE);
-//        } else if (totalPoint < pointSilver) {
-//            binding.lnrSelectSticker.setVisibility(View.VISIBLE);
-//            binding.lnrSelectPhoto.setVisibility(View.INVISIBLE);
-//        } else {
-//            binding.lnrSelectSticker.setVisibility(View.VISIBLE);
-//            binding.lnrSelectPhoto.setVisibility(View.VISIBLE);
-//        }
+        if (totalPoint < pointBronze) {
+            binding.lnrSelectSticker.setVisibility(View.INVISIBLE);
+            binding.lnrSelectPhoto.setVisibility(View.INVISIBLE);
+        } else if (totalPoint < pointSilver) {
+            binding.lnrSelectSticker.setVisibility(View.VISIBLE);
+            binding.lnrSelectPhoto.setVisibility(View.INVISIBLE);
+        } else {
+            binding.lnrSelectSticker.setVisibility(View.VISIBLE);
+            binding.lnrSelectPhoto.setVisibility(View.VISIBLE);
+        }
     }
 
 	@Override
@@ -249,6 +257,14 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 		requestTemplate();
 		buildTemplate();
 		buildLayoutSticker();
+	}
+
+	public void setSelectedDepartment(DeptModel department) {
+		this.department = department;
+	}
+
+	public void setSelectedUser(UserModel user) {
+		this.member = user;
 	}
 
 	private void buildLayoutSticker(){
@@ -284,14 +300,22 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 			requestTemplateSuccess(response);
 		}else if(WfUrlConst.WF_ACC_INFO_DETAIL.equals(url)){
 			departments = CCJsonUtil.convertToModelList(response.optString("depts"), DeptModel.class);
-			department = new DeptModel(CCConst.NONE, getString(R.string.chiase_common_none));
-			departments.add(0, department);
+			DeptModel noneDepartment = new DeptModel(CCConst.NONE, getString(R.string.chiase_common_none));
+			departments.add(0, noneDepartment);
 			for(DeptModel dept : departments){
 				if(CCCollectionUtil.isEmpty(dept.members)){
 					dept.members = new ArrayList<>();
 				}
-				member = new UserModel(CCConst.NONE, getString(R.string.chiase_common_none));
-				dept.members.add(0, member);
+				UserModel noneMember = new UserModel(CCConst.NONE, getString(R.string.chiase_common_none));
+				dept.members.add(0, noneMember);
+			}
+
+			if (department == null) {
+				department = noneDepartment;
+			}
+
+			if (member == null) {
+				member = department.members.get(0);
 			}
 		}else{
 			super.successLoad(response, url);
