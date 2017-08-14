@@ -9,9 +9,13 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.os.Environment;
 import android.util.TypedValue;
+import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
 
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
+import trente.asia.thankscard.BuildConfig;
 import trente.asia.thankscard.commons.defines.TcConst;
 import trente.asia.thankscard.services.common.model.HistoryModel;
 
@@ -67,5 +71,14 @@ public class TCUtil{
 			}
 		}
 		return position;
+	}
+
+	public static void loadImageWithGlide(String url, ImageView imageView) {
+
+		String urlWithoutSpace = "";
+		if (url != null) {
+			urlWithoutSpace = url.replace(" ", "%20");
+		}
+		Glide.with(imageView.getContext()).load(BuildConfig.HOST + urlWithoutSpace).into(imageView);
 	}
 }

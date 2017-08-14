@@ -6,6 +6,9 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewConfiguration;
+
+import trente.asia.welfare.adr.utils.WelfareUtil;
 
 /**
  * Created by tien on 7/17/2017.
@@ -24,7 +27,7 @@ public class TouchPad extends View {
         float oldX, oldY;
         int mode = NONE;
         float oldDistance;
-        float slop = 10;
+        float slop = WelfareUtil.dpToPx(2);
         @Override
         public boolean onTouch(View v, MotionEvent event) {
             if (callback == null) {

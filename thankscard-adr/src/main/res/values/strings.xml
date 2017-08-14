@@ -150,7 +150,7 @@
     <string name="tc_confirm_msg">Do you want to send message to %1$s?</string>
     <string name="tc_secret_mode">Send on secret mode</string>
     <string name="tc_ok">OK</string>
-    <string name="tc_select_card">Select card</string>
+    <string name="tc_select_card">Card</string>
     <string name="tc_select_dept">Select department</string>
     <string name="tc_select_user">Select user</string>
     <string name="tc_search">Search</string>
@@ -160,8 +160,8 @@
     <string name="tc_3_rank">%1$srd</string>
     <string name="tc_4_more_rank">%1$sth</string>
     <string name="tc_select_sticker">Sticker</string>
-    <string name="tc_select_photo">Gallery</string>
-    <string name="tc_choose_picture">Are you want to choose another picture?</string>
+    <string name="tc_select_photo">Photo card</string>
+    <string name="tc_choose_picture">Do you want to change photo?</string>
     <string name="tc_change_to_normal_card">Photo and sticker will be removed. Are you sure?</string>
     <string name="tc_limit_sticker">You can only have 50 stickers</string>
 </resources>

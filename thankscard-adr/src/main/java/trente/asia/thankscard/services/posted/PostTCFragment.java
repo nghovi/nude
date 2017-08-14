@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.net.Uri;
@@ -15,10 +16,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -115,7 +118,6 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 		if(mRootView == null){
 			binding = DataBindingUtil.inflate(inflater, R.layout.fragment_post_tc, container, false);
 			mRootView = binding.getRoot();
-
 		}
 		return mRootView;
 	}
@@ -157,6 +159,22 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 		binding.lnrSelectSticker.setOnClickListener(this);
 		binding.lnrSelectPhoto.setOnClickListener(this);
 		binding.mainLayout.setOnClickListener(this);
+        validateButtons();
+
+		int normalTextSize = Integer.parseInt(preference.get(TcConst.PREF_NORMAL_TEXT_SIZE));
+		int photoTextSize = Integer.parseInt(preference.get(TcConst.PREF_PHOTO_TEXT_SIZE));
+
+		binding.edtMessagePhoto.setTextSize(TypedValue.COMPLEX_UNIT_PX, photoTextSize);
+		binding.edtMessage.setTextSize(TypedValue.COMPLEX_UNIT_PX, normalTextSize);
+
+		if (department != null) {
+			binding.deptName.setText(department.deptName);
+		}
+
+		if (member != null) {
+			binding.userName.setText(member.userName);
+		}
+
 		binding.edtMessage.addTextChangedListener(new TextWatcher() {
 
 			@Override
@@ -173,8 +191,14 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 			public void afterTextChanged(Editable editable){
 				if(!canSendPhoto){
 					message = editable.toString();
-					binding.txtCount.setText(String.valueOf(MAX_LETTER - message.length()));
+                    int textCount = MAX_LETTER - message.length();
+					binding.txtCount.setText(String.valueOf(textCount));
 					binding.edtMessagePhoto.setText(message);
+                    if (textCount < 0) {
+                        binding.txtCount.setTextColor(Color.RED);
+                    } else {
+                        binding.txtCount.setTextColor(Color.BLACK);
+                    }
 				}
 			}
 		});
@@ -195,12 +219,36 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 			public void afterTextChanged(Editable editable){
 				if(canSendPhoto){
 					message = editable.toString();
-					binding.txtCount.setText(String.valueOf(MAX_LETTER - message.length()));
+                    int textCount = MAX_LETTER - message.length();
+                    binding.txtCount.setText(String.valueOf(textCount));
 					binding.edtMessage.setText(message);
+                    if (textCount < 0) {
+                        binding.txtCount.setTextColor(Color.RED);
+                    } else {
+                        binding.txtCount.setTextColor(Color.BLACK);
+                    }
 				}
 			}
 		});
 	}
+
+    private void validateButtons(){
+        int pointBronze = Integer.parseInt(prefAccUtil.get(TcConst.PREF_POINT_BRONZE));
+        int pointSilver = Integer.parseInt(prefAccUtil.get(TcConst.PREF_POINT_SILVER));
+        int pointGold = Integer.parseInt(prefAccUtil.get(TcConst.PREF_POINT_GOLD));
+        int totalPoint = Integer.parseInt(prefAccUtil.get(TcConst.PREF_POINT_TOTAL));
+
+//        if (totalPoint < pointBronze) {
+//            binding.lnrSelectSticker.setVisibility(View.INVISIBLE);
+//            binding.lnrSelectPhoto.setVisibility(View.INVISIBLE);
+//        } else if (totalPoint < pointSilver) {
+//            binding.lnrSelectSticker.setVisibility(View.VISIBLE);
+//            binding.lnrSelectPhoto.setVisibility(View.INVISIBLE);
+//        } else {
+//            binding.lnrSelectSticker.setVisibility(View.VISIBLE);
+//            binding.lnrSelectPhoto.setVisibility(View.VISIBLE);
+//        }
+    }
 
 	@Override
 	protected void initData(){
@@ -209,6 +257,14 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 		requestTemplate();
 		buildTemplate();
 		buildLayoutSticker();
+	}
+
+	public void setSelectedDepartment(DeptModel department) {
+		this.department = department;
+	}
+
+	public void setSelectedUser(UserModel user) {
+		this.member = user;
 	}
 
 	private void buildLayoutSticker(){
@@ -244,14 +300,22 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 			requestTemplateSuccess(response);
 		}else if(WfUrlConst.WF_ACC_INFO_DETAIL.equals(url)){
 			departments = CCJsonUtil.convertToModelList(response.optString("depts"), DeptModel.class);
-			department = new DeptModel(CCConst.NONE, getString(R.string.chiase_common_none));
-			departments.add(0, department);
+			DeptModel noneDepartment = new DeptModel(CCConst.NONE, getString(R.string.chiase_common_none));
+			departments.add(0, noneDepartment);
 			for(DeptModel dept : departments){
 				if(CCCollectionUtil.isEmpty(dept.members)){
 					dept.members = new ArrayList<>();
 				}
-				member = new UserModel(CCConst.NONE, getString(R.string.chiase_common_none));
-				dept.members.add(0, member);
+				UserModel noneMember = new UserModel(CCConst.NONE, getString(R.string.chiase_common_none));
+				dept.members.add(0, noneMember);
+			}
+
+			if (department == null) {
+				department = noneDepartment;
+			}
+
+			if (member == null) {
+				member = department.members.get(0);
 			}
 		}else{
 			super.successLoad(response, url);
@@ -264,7 +328,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 	}
 
 	private void buildTemplate(){
-		Glide.with(getContext()).load(BuildConfig.HOST + template.templateUrl).into(binding.imgCard);
+		TCUtil.loadImageWithGlide(template.templateUrl, binding.imgCard);
 	}
 
 	@Override
@@ -292,7 +356,11 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 			}
 			break;
 		case R.id.lnr_select_sticker:
-			showLayoutSticker();
+		    if (showLayoutSticker) {
+                closeLayoutSticker();
+            } else {
+                showLayoutSticker();
+            }
 			break;
 		case R.id.lnr_select_photo:
 			showLayoutCards(photoTemplates);
@@ -379,6 +447,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 	}
 
 	private void changeLayoutCard(){
+
 		buildTemplate();
 		if(canSendPhoto){
 			binding.lnrBody.setVisibility(View.VISIBLE);
@@ -386,6 +455,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 			binding.touchPad.setCallback(this);
 			binding.edtMessagePhoto.setText(message);
 			binding.edtMessagePhoto.setSelection(message.length());
+
 			for(StickerViewPost sticker : stickers){
 				binding.rltMsg.removeView(sticker);
 				binding.lnrBody.removeView(sticker);
@@ -395,6 +465,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 			binding.rltMsg.setVisibility(View.VISIBLE);
 			binding.layoutPhoto.clearImage();
 			binding.edtMessage.setText(message);
+
 			for(StickerViewPost sticker : stickers){
 				binding.lnrBody.removeView(sticker);
 				binding.rltMsg.removeView(sticker);

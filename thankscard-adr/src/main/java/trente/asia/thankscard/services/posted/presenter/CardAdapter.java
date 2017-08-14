@@ -6,12 +6,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 import trente.asia.thankscard.BuildConfig;
 import trente.asia.thankscard.R;
 import trente.asia.thankscard.databinding.ItemCardBinding;
 import trente.asia.thankscard.services.common.model.Template;
+import trente.asia.thankscard.utils.TCUtil;
 import trente.asia.welfare.adr.utils.WfPicassoHelper;
 
 /**
@@ -34,7 +37,7 @@ public class CardAdapter extends RecyclerView.Adapter<ViewHolder> {
     public void onBindViewHolder(ViewHolder holder, int position) {
         ItemCardBinding binding = (ItemCardBinding) holder.getBinding();
         final Template card = cards.get(position);
-        WfPicassoHelper.loadImageFit(context, BuildConfig.HOST + card.templateUrl, binding.imgCard, null);
+        TCUtil.loadImageWithGlide(card.templateUrl, binding.imgCard);
         binding.imgCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

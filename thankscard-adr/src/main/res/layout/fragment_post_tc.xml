@@ -11,8 +11,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <RelativeLayout
@@ -88,7 +87,7 @@
             <RelativeLayout
                 android:id="@+id/main_layout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <trente.asia.thankscard.services.posted.view.PhotoViewPost
                     android:id="@+id/layout_photo"
@@ -104,7 +103,6 @@
                     android:id="@+id/img_card"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
                     android:adjustViewBounds="true" />
 
                 <RelativeLayout
@@ -123,13 +121,12 @@
                         android:layout_marginBottom="@dimen/margin_60dp"
                         android:layout_marginEnd="@dimen/margin_60dp"
                         android:layout_marginStart="@dimen/margin_60dp"
-                        android:layout_marginTop="@dimen/margin_60dp"
                         android:background="#00000000"
-                        android:hint="@string/fragment_post_edit_hint"
-                        android:maxLength="75"
-                        android:maxLines="6"
-                        android:paddingLeft="@dimen/margin_20dp"
-                        android:paddingRight="@dimen/margin_20dp" />
+                        android:layout_marginTop="@dimen/margin_60dp"
+                        android:paddingTop="@dimen/margin_40dp"
+                        android:maxLines="5"
+                        style="@style/tc_text_black_bold"
+                        android:gravity="top"/>
 
                 </RelativeLayout>
 
@@ -159,16 +156,15 @@
                             android:id="@+id/edt_message_photo"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_marginBottom="@dimen/margin_20dp"
-                            android:layout_marginEnd="@dimen/margin_20dp"
-                            android:layout_marginStart="@dimen/margin_20dp"
-                            android:layout_marginTop="@dimen/margin_20dp"
-                            android:background="#00000000"
-                            android:hint="@string/fragment_post_edit_hint"
-                            android:maxLength="75"
-                            android:maxLines="6"
-                            android:paddingLeft="@dimen/margin_20dp"
-                            android:paddingRight="@dimen/margin_20dp" />
+                            android:layout_marginBottom="@dimen/margin_10dp"
+                            android:layout_marginEnd="@dimen/margin_10dp"
+                            android:layout_marginStart="@dimen/margin_10dp"
+                            android:layout_marginTop="@dimen/margin_10dp"
+                            android:maxLines="5"
+                            android:gravity="top"
+                            android:paddingTop="@dimen/margin_40dp"
+                            style="@style/tc_text_black_bold"
+                            android:background="#00000000"/>
                     </RelativeLayout>
                 </android.support.percent.PercentRelativeLayout>
             </RelativeLayout>
@@ -181,72 +177,79 @@
             android:layout_height="wrap_content"
             android:background="@color/chiase_white"
             android:padding="@dimen/margin_8dp">
-
             <LinearLayout
-                android:id="@+id/lnr_select_card"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/state_common_selectable_row"
-                android:gravity="center_horizontal"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@+id/txt_count"
+                android:layout_marginEnd="@dimen/margin_16dp"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:id="@+id/lnr_select_card"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/tc_icon_receive" />
+                    android:background="@drawable/state_common_selectable_row"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/tc_ic_frame" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tc_select_card"
+                        android:textColor="@color/chiase_black"
+                        android:textSize="10sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/lnr_select_sticker"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:text="@string/tc_select_card"
-                    android:textColor="@color/chiase_black"
-                    android:textSize="12sp" />
-            </LinearLayout>
+                    android:background="@drawable/state_common_selectable_row"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/lnr_select_sticker"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_32dp"
-                android:layout_toEndOf="@+id/lnr_select_card"
-                android:background="@drawable/state_common_selectable_row"
-                android:gravity="center_horizontal"
-                android:orientation="vertical">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/tc_ic_sticker" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tc_select_sticker"
+                        android:textColor="@color/chiase_black"
+                        android:textSize="10sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/lnr_select_photo"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/tc_ic_sticker" />
+                    android:background="@drawable/state_common_selectable_row"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/tc_select_sticker"
-                    android:textColor="@color/chiase_black"
-                    android:textSize="12sp" />
-            </LinearLayout>
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/tc_ic_camera" />
 
-            <LinearLayout
-                android:id="@+id/lnr_select_photo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_32dp"
-                android:layout_toEndOf="@+id/lnr_select_sticker"
-                android:background="@drawable/state_common_selectable_row"
-                android:gravity="center_horizontal"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/tc_ic_camera" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/tc_select_photo"
-                    android:textColor="@color/chiase_black"
-                    android:textSize="12sp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tc_select_photo"
+                        android:textColor="@color/chiase_black"
+                        android:textSize="10sp" />
+                </LinearLayout>
             </LinearLayout>
 
             <TextView
@@ -254,7 +257,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginEnd="@dimen/margin_16dp"
+                android:layout_marginEnd="@dimen/margin_8dp"
                 android:layout_toStartOf="@+id/btn_send"
                 android:text="75"
                 android:textColor="@color/chiase_black"
@@ -267,8 +270,6 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:background="@drawable/round_shape_btn_send"
-                android:paddingEnd="@dimen/margin_8dp"
-                android:paddingStart="@dimen/margin_8dp"
                 android:text="@string/chiase_common_send" />
         </RelativeLayout>
 

@@ -6,6 +6,7 @@ import java.util.List;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 
 import trente.asia.thankscard.R;
 import trente.asia.thankscard.fragments.AbstractTCFragment;
@@ -21,6 +22,7 @@ public abstract class AbstractPagerFragment extends AbstractTCFragment{
 	protected ViewPager			viewPager;
 	Button						btnBack;
 	Button						btnNext;
+	RelativeLayout				rltStickers;
 
 	@Override
 	public boolean hasBackBtn(){
@@ -60,7 +62,7 @@ public abstract class AbstractPagerFragment extends AbstractTCFragment{
 	protected void buildDirectButton(){
 		btnNext = (Button)getView().findViewById(R.id.btn_view_common_pager_next);
 		btnBack = (Button)getView().findViewById(R.id.btn_view_common_pager_back);
-
+		rltStickers = (RelativeLayout)getView().findViewById(R.id.rlt_stickers);
 		btnBack.setOnClickListener(new View.OnClickListener() {
 
 			@Override

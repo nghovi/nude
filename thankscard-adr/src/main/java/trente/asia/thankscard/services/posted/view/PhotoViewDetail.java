@@ -43,7 +43,7 @@ public class PhotoViewDetail extends AppCompatImageView {
     }
 
     public void restoreImage(String imagePath, final float locationX, final float locationY, final float scale) {
-        Picasso.with(getContext()).load(BuildConfig.HOST + imagePath).into(new Target() {
+        Picasso.with(getContext()).load(BuildConfig.HOST + imagePath).resize(0, (int) frameHeight).into(new Target() {
             @Override
             public void onBitmapLoaded(Bitmap bitmapLoad, Picasso.LoadedFrom from) {
                 bitmap = bitmapLoad;

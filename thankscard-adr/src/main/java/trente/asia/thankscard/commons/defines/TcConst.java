@@ -35,6 +35,7 @@ public class TcConst{
 	public static final String	PREF_POINT_BRONZE						= "PREF_POINT_BRONZE";
 	public static final String	PREF_POINT_SILVER						= "PREF_POINT_SILVER";
 	public static final String	PREF_POINT_GOLD							= "PREF_POINT_GOLD";
+	public static final String	PREF_POINT_TOTAL						= "PREF_POINT_TOTAL";
 
 	public static final String	MESSAGE_STAMP_LAST_UPDATE_DATE			= "MESSAGE_STAMP_LAST_UPDATE_DATE";
 	public static final String	API_MESSAGE_STAMP_CATEGORY_LIST			= "/api/system/stamp/category/list";
@@ -47,4 +48,6 @@ public class TcConst{
 	public static final String	POSITION_CENTER							= "CENTER";
 	public static final String	POSITION_BOTTOM							= "BOTTOM";
 	public static final String	POSITION_LEFT							= "LEFT";
+	public static final String	PREF_NORMAL_TEXT_SIZE					= "PREF_NORMAL_TEXT_SIZE";
+	public static final String	PREF_PHOTO_TEXT_SIZE					= "PREF_PHOTO_TEXT_SIZE";
 }

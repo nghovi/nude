@@ -9,6 +9,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.AppCompatImageView;
+import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
@@ -64,7 +65,7 @@ public class StickerViewDetail extends AppCompatImageView{
 
             @Override
             public void onBitmapFailed(Drawable errorDrawable) {
-
+                log("onBitmapFailed");
             }
 
             @Override
@@ -90,4 +91,8 @@ public class StickerViewDetail extends AppCompatImageView{
 
         canvas.drawBitmap(bitmap, matrix, paint);
 	}
+
+	private void log(String msg) {
+        Log.e("StickerViewDetail", msg);
+    }
 }

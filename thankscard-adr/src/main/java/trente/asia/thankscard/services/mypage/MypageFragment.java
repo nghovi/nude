@@ -9,6 +9,7 @@ import org.json.JSONObject;
 
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -41,6 +42,7 @@ import trente.asia.thankscard.services.posted.ThanksCardEditFragment;
 import trente.asia.thankscard.services.rank.model.RankStage;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.models.DeptModel;
+import trente.asia.welfare.adr.pref.PreferencesSystemUtil;
 import trente.asia.welfare.adr.utils.WelfareUtil;
 import trente.asia.welfare.adr.utils.WfPicassoHelper;
 
@@ -69,6 +71,14 @@ public class MypageFragment extends AbstractTCFragment{
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		mRealm = Realm.getDefaultInstance();
+		PreferencesSystemUtil preference = new PreferencesSystemUtil(getContext());
+		int screenWidth = Integer.parseInt(preference.get(TcConst.PREF_FRAME_WIDTH));
+		int normalMessageWidth = screenWidth - WelfareUtil.dpToPx(140);
+		int photoMessageWidth = screenWidth / 2 - WelfareUtil.dpToPx(20);
+		int normalTextSize = normalMessageWidth / 13;
+		int photoTextSize = photoMessageWidth / 13;
+		preference.set(TcConst.PREF_NORMAL_TEXT_SIZE, String.valueOf(normalTextSize));
+		preference.set(TcConst.PREF_PHOTO_TEXT_SIZE, String.valueOf(photoTextSize));
 	}
 
 	public boolean hasBackBtn(){
@@ -168,7 +178,7 @@ public class MypageFragment extends AbstractTCFragment{
 
 			@Override
 			public void onClick(DialogInterface dialog, int which){
-//				gotoPostEdit(notice);
+				// gotoPostEdit(notice);
 				gotoFragment(new PostTCFragment());
 			}
 		};
@@ -218,37 +228,30 @@ public class MypageFragment extends AbstractTCFragment{
 		}
 	}
 
-	private void log(String msg) {
+	private void log(String msg){
 		Log.e("MypageFragment", msg);
 	}
 
 	private void saveStamps(JSONObject response){
 		List<StampCategoryModel> stampCategories = CCJsonUtil.convertToModelList(response.optString("stampCategories"), StampCategoryModel.class);
+		log("categories number = " + stampCategories.size());
 		String lastUpdateDate = response.optString("lastUpdateDate");
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-//		preferences.edit().putString(TcConst.MESSAGE_STAMP_LAST_UPDATE_DATE, lastUpdateDate).apply();
+		preferences.edit().putString(TcConst.MESSAGE_STAMP_LAST_UPDATE_DATE, lastUpdateDate).apply();
 
 		mRealm.beginTransaction();
 		for(StampCategoryModel category : stampCategories){
+			log("category name: " + category.categoryName);
 			if(category.deleteFlag){
 				StampCategoryModel.deleteStampCategory(mRealm, category.key);
 			}else{
-				StampCategoryModel wfmStampCategory = StampCategoryModel.getCategory(mRealm, category.key);
-				if(wfmStampCategory == null){
-					mRealm.copyToRealm(category);
-				}else{
-					wfmStampCategory.updateStampCategory(category);
-					for(StampModel stamp : category.stamps){
-						if(stamp.deleteFlag){
-							StampModel.deleteStamp(mRealm, stamp.key);
-						}else{
-							StampModel wfmStamp = StampModel.getStamp(mRealm, stamp.key);
-							if(wfmStamp == null){
-								wfmStampCategory.stamps.add(stamp);
-							}else{
-								wfmStamp.updateStamp(wfmStamp);
-							}
-						}
+				mRealm.copyToRealmOrUpdate(category);
+				for(StampModel stamp : category.stamps){
+					log("stamp name: " + stamp.stampName);
+					if(stamp.deleteFlag){
+						StampModel.deleteStamp(mRealm, stamp.key);
+					}else{
+						mRealm.copyToRealmOrUpdate(stamp);
 					}
 				}
 			}
@@ -308,6 +311,8 @@ public class MypageFragment extends AbstractTCFragment{
 		int pointSilver = Integer.parseInt(prefAccUtil.get(TcConst.PREF_POINT_SILVER));
 		int pointGold = Integer.parseInt(prefAccUtil.get(TcConst.PREF_POINT_GOLD));
 
+		prefAccUtil.set(TcConst.PREF_POINT_TOTAL, String.valueOf(totalPoint));
+
 		if(totalPoint < pointBronze){
 			imageView.setImageResource(R.drawable.tc_rank_regular);
 			txtRank.setText(R.string.tc_rank_regular);
@@ -317,7 +322,7 @@ public class MypageFragment extends AbstractTCFragment{
 		}else if(totalPoint >= pointSilver && totalPoint < pointGold){
 			imageView.setImageResource(R.drawable.tc_rank_silver);
 			txtRank.setText(R.string.tc_rank_silver);
-		}else if(totalPoint > pointGold){
+		}else{
 			imageView.setImageResource(R.drawable.tc_rank_gold);
 			txtRank.setText(R.string.tc_rank_gold);
 		}

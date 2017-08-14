@@ -1,5 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/wf_common_match">
 
     <include layout="@layout/view_common_header_strip" />
@@ -63,7 +64,7 @@
 
                 </LinearLayout>
 
-                <RelativeLayout
+                <android.support.percent.PercentRelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:visibility="visible">
@@ -74,6 +75,61 @@
                         android:layout_height="wrap_content"
                         android:visibility="visible"
                         android:layout_marginTop="@dimen/margin_16dp"/>
+
+                    <LinearLayout
+                        android:id="@+id/lnr_message"
+                        app:layout_widthPercent="50%"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginStart="@dimen/margin_10dp"
+                            android:layout_marginEnd="@dimen/margin_10dp">
+
+                            <TextView
+                                android:id="@+id/txt_tc_detail_date"
+                                style="@style/tc_text_black_12"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="left"
+                                android:ellipsize="end"
+                                android:singleLine="true"
+                                android:text="@string/fragment_tc_detail_date"/>
+
+                            <TextView
+                                android:id="@+id/txt_tc_detail_to"
+                                style="@style/tc_text_black_12"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="left"
+                                android:layout_marginBottom="@dimen/margin_10dp"
+                                android:ellipsize="end"
+                                android:singleLine="true"
+                                android:text="@string/fragment_tc_detail_to"/>
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/text_message"
+                            style="@style/tc_text_black_bold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/margin_10dp"
+                            android:layout_marginEnd="@dimen/margin_10dp" />
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/rlt_stickers"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@+id/pager"
+                        android:layout_alignBottom="@+id/pager"
+                        android:layout_alignStart="@+id/pager"
+                        android:layout_alignEnd="@+id/pager">
+
+                    </RelativeLayout>
 
                     <ImageView
                         android:id="@+id/img_seal"
@@ -132,7 +188,7 @@
                             android:textColor="@color/tc_item_indicator_background" />
                     </RelativeLayout>
 
-                </RelativeLayout>
+                </android.support.percent.PercentRelativeLayout>
 
 
             </LinearLayout>
