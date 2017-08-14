@@ -34,7 +34,7 @@ import trente.asia.welfare.adr.define.WelfareConst;
 public abstract class AbstractTCFragment extends WelfareFragment{
 
 	// public static UserModel loginUser = new UserModel();
-	protected MonthYearPickerDialog	monthYearPickerDialog;
+	protected MonthYearPickerDialog monthYearPickerDialog;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState){
@@ -123,11 +123,7 @@ public abstract class AbstractTCFragment extends WelfareFragment{
 				public void onClick(View v){
 					TCSettingFragment tcSettingFragment = new TCSettingFragment();
 					Bundle args = new Bundle();
-					if (getFragmentLayoutId() == R.layout.fragment_post_tc) {
-						args.putInt(TcConst.ACTIVE_FOOTER_ITEM_ID, R.id.lnr_view_common_footer_posted);
-					} else {
-						args.putInt(TcConst.ACTIVE_FOOTER_ITEM_ID, getFooterItemId());
-					}
+					args.putInt(TcConst.ACTIVE_FOOTER_ITEM_ID, getFooterItemId());
 					tcSettingFragment.setArguments(args);
 					gotoFragment(tcSettingFragment);
 				}

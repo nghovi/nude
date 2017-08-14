@@ -22,7 +22,6 @@
             android:textSize="12sp"
             android:textColor="@color/chiase_black"
             android:gravity="center"
-            android:text="@string/tc_rank_text"
             android:layout_marginEnd="@dimen/margin_20dp"
             android:layout_centerVertical="true"/>
 

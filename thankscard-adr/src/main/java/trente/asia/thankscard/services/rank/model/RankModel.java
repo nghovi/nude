@@ -9,19 +9,21 @@ public class RankModel{
 
 	public String	userName;
 
-	public Integer	cnt;
+	public int	cnt;
 
-	public Integer	number;
+	public int	number;
 
-	public Integer	point;
+	public int	point;
 
-	public Integer	rank;
+	public int	rank;
 
 	public String	avatarPath;
 
 	public boolean	isTitle;
 
 	public String	title;
+
+	public int	yearPoint;
 
 	public RankModel(){
 
