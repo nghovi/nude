@@ -111,7 +111,7 @@ public class RankingListAdapter extends ArrayAdapter<RankModel>{
 				holder.imgMedal.setImageResource(R.drawable.tc_ranking_medal4);
 			}else if(model.cnt < pointSilver){
 				holder.imgMedal.setImageResource(R.drawable.tc_ranking_medal3);
-			}else if(model.cnt < pointSilver){
+			}else if(model.cnt < pointGold){
 				holder.imgMedal.setImageResource(R.drawable.tc_ranking_medal2);
 			}else{
 				holder.imgMedal.setImageResource(R.drawable.tc_ranking_medal1);

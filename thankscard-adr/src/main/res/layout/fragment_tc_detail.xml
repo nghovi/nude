@@ -79,9 +79,9 @@
                         <trente.asia.thankscard.services.posted.view.PhotoViewDetail
                             android:id="@+id/layout_photo"
                             android:layout_height="wrap_content"
-                            app:layout_widthPercent="70%"
+                            android:layout_alignBottom="@+id/img_card"
                             android:layout_alignTop="@+id/img_card"
-                            android:layout_alignBottom="@+id/img_card"/>
+                            app:layout_widthPercent="70%" />
 
                         <ImageView
                             android:id="@+id/img_card"
@@ -145,10 +145,10 @@
                         android:id="@+id/rlt_stickers"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignStart="@+id/rlt_card"
-                        android:layout_alignTop="@+id/rlt_card"
+                        android:layout_alignBottom="@id/rlt_card"
                         android:layout_alignEnd="@id/rlt_card"
-                        android:layout_alignBottom="@id/rlt_card"/>
+                        android:layout_alignStart="@+id/rlt_card"
+                        android:layout_alignTop="@+id/rlt_card" />
 
                     <ImageView
                         android:id="@+id/img_seal"
@@ -169,8 +169,17 @@
                         android:paddingBottom="@dimen/margin_8dp"
                         android:paddingTop="@dimen/margin_8dp">
 
+                        <ImageView
+                            android:id="@+id/stage_icon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/margin_16dp"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/tc_ranking_medal4" />
+
                         <trente.asia.welfare.adr.view.SelectableRoundedImageView
                             android:id="@+id/img_sender_avatar"
+                            android:layout_toEndOf="@id/stage_icon"
                             android:layout_width="@dimen/margin_32dp"
                             android:layout_height="@dimen/margin_32dp"
                             android:scaleType="fitXY"
@@ -212,5 +221,6 @@
 
         </LinearLayout>
     </RelativeLayout>
+
     <include layout="@layout/view_common_footer" />
 </LinearLayout>
