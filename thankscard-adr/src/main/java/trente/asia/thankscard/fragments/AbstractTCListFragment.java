@@ -395,6 +395,7 @@ public abstract class AbstractTCListFragment extends AbstractTCFragment implemen
 		TCDetailFragment tcDetailFragment = new TCDetailFragment();
 		tcDetailFragment.setLstHistory(lstHistory);
 		tcDetailFragment.setDepts(deptModels);
+		tcDetailFragment.setCurrentHistory(selectedHistory);
 		tcDetailFragment.setArguments(args);
 		gotoFragment(tcDetailFragment);
 	}

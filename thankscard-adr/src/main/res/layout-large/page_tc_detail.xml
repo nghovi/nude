@@ -14,7 +14,7 @@
 
 
         <ImageView
-            android:id="@+id/img_item_thanks_card_frame"
+            android:id="@+id/img_card"
             android:adjustViewBounds="true"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

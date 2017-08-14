@@ -18,11 +18,11 @@ import trente.asia.thankscard.services.mypage.view.MyPagerAdapter2;
  */
 public abstract class AbstractPagerFragment extends AbstractTCFragment{
 
-	protected MyPagerAdapter2	adapter;
-	protected ViewPager			viewPager;
-	Button						btnBack;
-	Button						btnNext;
-	RelativeLayout				rltStickers;
+	Button				btnBack;
+	Button				btnNext;
+	RelativeLayout		rltStickers;
+	List<HistoryModel>	lstHistory;
+	int					defaultPos	= 0;
 
 	@Override
 	public boolean hasBackBtn(){
@@ -50,8 +50,6 @@ public abstract class AbstractPagerFragment extends AbstractTCFragment{
 	// abstract protected PageFragment.OnPageLayoutBuilder getPageLayoutBuilder();
 
 	final void buildPager(){
-		viewPager = (ViewPager)getView().findViewById(R.id.pager);
-		// setOnPageSelectedListener();
 		buildDirectButton();
 	}
 
@@ -67,75 +65,35 @@ public abstract class AbstractPagerFragment extends AbstractTCFragment{
 
 			@Override
 			public void onClick(View v){
-				viewPager.setCurrentItem(viewPager.getCurrentItem() - 1);
+				onPageHistorySelected(--defaultPos);
+				buildEnabledButtons();
 			}
 		});
 		btnNext.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v){
-				viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
+				onPageHistorySelected(++defaultPos);
+				buildEnabledButtons();
 			}
 		});
 	}
 
-	protected void loadPagerLayout(final List<HistoryModel> lstHistory, int defaultPos, boolean isMultiplePages){
-		adapter = createMyPagerAdapter(lstHistory);
-		viewPager.setAdapter(adapter);
-		if(isMultiplePages){
-			if(defaultPos == 0){
-				btnBack.setEnabled(false);
-				// setImageButtonEnabled(getContext(), false, btnBack, R.drawable.btn_prev_on);
-			}
-			if(defaultPos == adapter.getCount() - 1){
-				btnNext.setEnabled(false);
-				// setImageButtonEnabled(getContext(), false, btnNext, R.drawable.btn_prev_on);
-			}
-			viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-
-				@Override
-				public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels){
-
-				}
-
-				@Override
-				public void onPageSelected(int position){
-					if(position == 0){
-						btnBack.setEnabled(false);
-						// setImageButtonEnabled(getContext(), false, btnBack, R.drawable.btn_prev_on);
-					}else{
-						btnBack.setEnabled(true);
-						// setImageButtonEnabled(getContext(), true, btnBack, R.drawable.btn_prev_on);
-					}
-					if(viewPager.getCurrentItem() == adapter.getCount() - 1){
-						btnNext.setEnabled(false);
-						// setImageButtonEnabled(getContext(), false, btnNext, R.drawable.btn_prev_on);
-					}else{
-						btnNext.setEnabled(true);
-						// setImageButtonEnabled(getContext(), true, btnNext, R.drawable.btn_prev_on);
-					}
-					onPageHistorySelected(position);
-				}
-
-				@Override
-				public void onPageScrollStateChanged(int state){
-
-				}
-			});
-			viewPager.setCurrentItem(defaultPos);
+	public void buildEnabledButtons(){
+		if (defaultPos == 0) {
+			btnBack.setEnabled(false);
+		} else {
+			btnBack.setEnabled(true);
 		}
-		// call for the first page
-		if(viewPager.getCurrentItem() == 0){
-			onPageHistorySelected(0);
+
+		if (defaultPos == lstHistory.size() - 1) {
+			btnNext.setEnabled(false);
+		} else {
+			btnNext.setEnabled(true);
 		}
 	}
 
 	abstract protected void onPageHistorySelected(int position);
-
-	final private MyPagerAdapter2 createMyPagerAdapter(List<HistoryModel> lstHistory){
-		MyPagerAdapter2 adapter2 = new MyPagerAdapter2(activity, lstHistory);
-		return adapter2;
-	}
 
 	final protected List<PageFragment.PageModelContainer> wrapToPageModels(List<Object> realModels){
 		List<PageFragment.PageModelContainer> pageModels = new ArrayList<>();
@@ -154,8 +112,6 @@ public abstract class AbstractPagerFragment extends AbstractTCFragment{
 	@Override
 	public void onDestroy(){
 		super.onDestroy();
-		viewPager = null;
-		adapter = null;
 		btnBack = null;
 		btnNext = null;
 	}

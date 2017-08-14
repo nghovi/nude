@@ -1,37 +1,20 @@
 package trente.asia.thankscard.services.mypage.view;
 
-import java.util.Date;
 import java.util.List;
 
 import android.content.Context;
-import android.support.percent.PercentRelativeLayout;
 import android.support.v4.view.PagerAdapter;
-import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-
-import asia.chiase.core.util.CCDateUtil;
-import asia.chiase.core.util.CCFormatUtil;
-import io.realm.Realm;
-import trente.asia.thankscard.BuildConfig;
 import trente.asia.thankscard.R;
 import trente.asia.thankscard.services.common.model.HistoryModel;
-import trente.asia.thankscard.services.mypage.model.StampModel;
-import trente.asia.thankscard.services.posted.model.ApiStickerModel;
 import trente.asia.thankscard.services.posted.view.PhotoViewDetail;
-import trente.asia.thankscard.services.posted.view.StickerViewDetail;
 import trente.asia.thankscard.utils.TCUtil;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.utils.WelfareUtil;
-import trente.asia.welfare.adr.utils.WfPicassoHelper;
 
 /**
  * MyPagerAdapter2
@@ -51,7 +34,7 @@ public class MyPagerAdapter2 extends PagerAdapter{
 		public RelativeLayout	layoutCard;
 
 		public HistoryViewHolder(View view){
-			imgTemplate = (ImageView)view.findViewById(R.id.img_item_thanks_card_frame);
+			imgTemplate = (ImageView)view.findViewById(R.id.img_card);
 			imgSecret = (ImageView)view.findViewById(R.id.img_secret);
 			photoViewDetail = (PhotoViewDetail)view.findViewById(R.id.layout_photo);
 			layoutCard = (RelativeLayout) view.findViewById(R.id.layout_card);
