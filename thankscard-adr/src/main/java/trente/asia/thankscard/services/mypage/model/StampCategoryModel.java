@@ -5,6 +5,8 @@ import com.squareup.picasso.Picasso;
 import android.databinding.BindingAdapter;
 import android.widget.ImageView;
 
+import java.util.List;
+
 import io.realm.Realm;
 import io.realm.RealmList;
 import io.realm.RealmObject;
@@ -17,16 +19,21 @@ import trente.asia.thankscard.BuildConfig;
  */
 
 public class StampCategoryModel extends RealmObject{
+
 	@PrimaryKey
-	public String				key;
+	public String					key;
 
-	public String				categoryName;
+	public String					categoryName;
 
-	public String				categoryPath;
+	public String					categoryPath;
 
-	public RealmList<StampModel> stamps;
+	public RealmList<StampModel>	stamps;
+
+	public String					services;
 	@Ignore
-	public boolean				deleteFlag;
+	public List<String>				listService;
+	@Ignore
+	public boolean					deleteFlag;
 
 	public StampCategoryModel(){
 		super();

@@ -80,29 +80,29 @@ import trente.asia.welfare.adr.utils.WelfareUtil;
 
 public class PostTCFragment extends AbstractTCFragment implements View.OnClickListener,SelectDeptFragment.OnSelectDeptListener,SelectUserFragment.OnSelectUserListener,SelectCardFragment.OnSelectCardListener,StickerViewPost.OnStickerListener,TouchPad.OnTouchPadListener,StampCategoryAdapter.OnStampCategoryAdapterListener,StampAdapter.OnStampAdapterListener{
 
-	public final int							MAX_LETTER		= 75;
+	public final int					MAX_LETTER		= 75;
 
-	private List<Template>						templates;
-	private List<Template>						photoTemplates;
-	private FragmentPostTcBinding				binding;
-	private Template							template;
-	private List<DeptModel>						departments;
-	private DeptModel							department;
-	private UserModel							member;
-	private String								message;
-	private List<StickerViewPost>				stickers		= new ArrayList<>();
-	private Uri									mImageUri;
-	private String								mImagePath;
-	private boolean								canSendPhoto	= false;
-	private RealmResults<StampCategoryModel>	stampCategories;
-	private StampAdapter						stampAdapter;
-	private Realm								mRealm;
-	private float								frameWidth;
-	private float								frameHeight;
-	private boolean								showLayoutSticker;
-	private PreferencesSystemUtil				preference;
-	private Timer								timer			= new Timer();
-	private Handler								handler			= new Handler();
+	private List<Template>				templates;
+	private List<Template>				photoTemplates;
+	private FragmentPostTcBinding		binding;
+	private Template					template;
+	private List<DeptModel>				departments;
+	private DeptModel					department;
+	private UserModel					member;
+	private String						message;
+	private List<StickerViewPost>		stickers		= new ArrayList<>();
+	private Uri							mImageUri;
+	private String						mImagePath;
+	private boolean						canSendPhoto	= false;
+	private List<StampCategoryModel>	stampCategories	= new ArrayList<>();
+	private StampAdapter				stampAdapter;
+	private Realm						mRealm;
+	private float						frameWidth;
+	private float						frameHeight;
+	private boolean						showLayoutSticker;
+	private PreferencesSystemUtil		preference;
+	private Timer						timer			= new Timer();
+	private Handler						handler			= new Handler();
 
 	@Override
 	public void onCreate(Bundle savedInstanceState){
@@ -159,7 +159,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 		binding.lnrSelectSticker.setOnClickListener(this);
 		binding.lnrSelectPhoto.setOnClickListener(this);
 		binding.mainLayout.setOnClickListener(this);
-        validateButtons();
+		validateButtons();
 
 		int normalTextSize = Integer.parseInt(preference.get(TcConst.PREF_NORMAL_TEXT_SIZE));
 		int photoTextSize = Integer.parseInt(preference.get(TcConst.PREF_PHOTO_TEXT_SIZE));
@@ -167,11 +167,11 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 		binding.edtMessagePhoto.setTextSize(TypedValue.COMPLEX_UNIT_PX, photoTextSize);
 		binding.edtMessage.setTextSize(TypedValue.COMPLEX_UNIT_PX, normalTextSize);
 
-		if (department != null) {
+		if(department != null){
 			binding.deptName.setText(department.deptName);
 		}
 
-		if (member != null) {
+		if(member != null){
 			binding.userName.setText(member.userName);
 		}
 
@@ -191,14 +191,14 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 			public void afterTextChanged(Editable editable){
 				if(!canSendPhoto){
 					message = editable.toString();
-                    int textCount = MAX_LETTER - message.length();
+					int textCount = MAX_LETTER - message.length();
 					binding.txtCount.setText(String.valueOf(textCount));
 					binding.edtMessagePhoto.setText(message);
-                    if (textCount < 0) {
-                        binding.txtCount.setTextColor(Color.RED);
-                    } else {
-                        binding.txtCount.setTextColor(Color.BLACK);
-                    }
+					if(textCount < 0){
+						binding.txtCount.setTextColor(Color.RED);
+					}else{
+						binding.txtCount.setTextColor(Color.BLACK);
+					}
 				}
 			}
 		});
@@ -219,36 +219,36 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 			public void afterTextChanged(Editable editable){
 				if(canSendPhoto){
 					message = editable.toString();
-                    int textCount = MAX_LETTER - message.length();
-                    binding.txtCount.setText(String.valueOf(textCount));
+					int textCount = MAX_LETTER - message.length();
+					binding.txtCount.setText(String.valueOf(textCount));
 					binding.edtMessage.setText(message);
-                    if (textCount < 0) {
-                        binding.txtCount.setTextColor(Color.RED);
-                    } else {
-                        binding.txtCount.setTextColor(Color.BLACK);
-                    }
+					if(textCount < 0){
+						binding.txtCount.setTextColor(Color.RED);
+					}else{
+						binding.txtCount.setTextColor(Color.BLACK);
+					}
 				}
 			}
 		});
 	}
 
-    private void validateButtons(){
-        int pointBronze = Integer.parseInt(prefAccUtil.get(TcConst.PREF_POINT_BRONZE));
-        int pointSilver = Integer.parseInt(prefAccUtil.get(TcConst.PREF_POINT_SILVER));
-        int pointGold = Integer.parseInt(prefAccUtil.get(TcConst.PREF_POINT_GOLD));
-        int totalPoint = Integer.parseInt(prefAccUtil.get(TcConst.PREF_POINT_TOTAL));
+	private void validateButtons(){
+		int pointBronze = Integer.parseInt(prefAccUtil.get(TcConst.PREF_POINT_BRONZE));
+		int pointSilver = Integer.parseInt(prefAccUtil.get(TcConst.PREF_POINT_SILVER));
+		int pointGold = Integer.parseInt(prefAccUtil.get(TcConst.PREF_POINT_GOLD));
+		int totalPoint = Integer.parseInt(prefAccUtil.get(TcConst.PREF_POINT_TOTAL));
 
-        if (totalPoint < pointBronze) {
-            binding.lnrSelectSticker.setVisibility(View.INVISIBLE);
-            binding.lnrSelectPhoto.setVisibility(View.INVISIBLE);
-        } else if (totalPoint < pointSilver) {
-            binding.lnrSelectSticker.setVisibility(View.VISIBLE);
-            binding.lnrSelectPhoto.setVisibility(View.INVISIBLE);
-        } else {
-            binding.lnrSelectSticker.setVisibility(View.VISIBLE);
-            binding.lnrSelectPhoto.setVisibility(View.VISIBLE);
-        }
-    }
+		if(totalPoint < pointBronze){
+			binding.lnrSelectSticker.setVisibility(View.INVISIBLE);
+			binding.lnrSelectPhoto.setVisibility(View.INVISIBLE);
+		}else if(totalPoint < pointSilver){
+			binding.lnrSelectSticker.setVisibility(View.VISIBLE);
+			binding.lnrSelectPhoto.setVisibility(View.INVISIBLE);
+		}else{
+			binding.lnrSelectSticker.setVisibility(View.VISIBLE);
+			binding.lnrSelectPhoto.setVisibility(View.VISIBLE);
+		}
+	}
 
 	@Override
 	protected void initData(){
@@ -259,16 +259,37 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 		buildLayoutSticker();
 	}
 
-	public void setSelectedDepartment(DeptModel department) {
+	public void setSelectedDepartment(DeptModel department){
 		this.department = department;
 	}
 
-	public void setSelectedUser(UserModel user) {
+	public void setSelectedUser(UserModel user){
 		this.member = user;
 	}
 
 	private void buildLayoutSticker(){
-		stampCategories = mRealm.where(StampCategoryModel.class).findAll();
+		int pointBronze = Integer.parseInt(prefAccUtil.get(TcConst.PREF_POINT_BRONZE));
+		int pointSilver = Integer.parseInt(prefAccUtil.get(TcConst.PREF_POINT_SILVER));
+		int pointGold = Integer.parseInt(prefAccUtil.get(TcConst.PREF_POINT_GOLD));
+		int totalPoint = Integer.parseInt(prefAccUtil.get(TcConst.PREF_POINT_TOTAL));
+
+		String serviceCode = "TC-B";
+		if (totalPoint < pointBronze) {
+			return;
+		} else if (totalPoint < pointSilver){
+			serviceCode = "TC-B";
+		} else if (totalPoint < pointGold) {
+			serviceCode = "TC-S";
+		} else {
+			serviceCode = "TC-G";
+		}
+
+		RealmResults<StampCategoryModel> categories = mRealm.where(StampCategoryModel.class).findAll();
+		for (StampCategoryModel category : categories) {
+			if (category.services.contains(serviceCode)) {
+				stampCategories.add(category);
+			}
+		}
 
 		StampCategoryAdapter categoryAdapter = new StampCategoryAdapter(this);
 		categoryAdapter.setStampCategories(stampCategories);
@@ -310,11 +331,11 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 				dept.members.add(0, noneMember);
 			}
 
-			if (department == null) {
+			if(department == null){
 				department = noneDepartment;
 			}
 
-			if (member == null) {
+			if(member == null){
 				member = department.members.get(0);
 			}
 		}else{
@@ -356,11 +377,11 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 			}
 			break;
 		case R.id.lnr_select_sticker:
-		    if (showLayoutSticker) {
-                closeLayoutSticker();
-            } else {
-                showLayoutSticker();
-            }
+			if(showLayoutSticker){
+				closeLayoutSticker();
+			}else{
+				showLayoutSticker();
+			}
 			break;
 		case R.id.lnr_select_photo:
 			showLayoutCards(photoTemplates);
@@ -406,8 +427,9 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 			@Override
 			public void run(){
 				handler.post(new Runnable() {
+
 					@Override
-					public void run() {
+					public void run(){
 						int[] location = new int[2];
 						binding.imgCard.getLocationOnScreen(location);
 						preference.set(TcConst.PREF_Y_FROM_TOP, String.valueOf(location[1]));

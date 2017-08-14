@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.List;
+
 import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
 import trente.asia.thankscard.BR;
@@ -20,7 +22,7 @@ import trente.asia.thankscard.services.mypage.model.StampCategoryModel;
 public class StampCategoryAdapter extends RecyclerView.Adapter<ViewHolder>
 		implements RealmChangeListener<RealmResults<StampCategoryModel>> {
 
-	private RealmResults<StampCategoryModel> stampCategories;
+	private List<StampCategoryModel> stampCategories;
 	private Context							context;
 	private OnStampCategoryAdapterListener	callback;
 	private int								selectedStampCategory	= 0;
@@ -60,9 +62,8 @@ public class StampCategoryAdapter extends RecyclerView.Adapter<ViewHolder>
 		return stampCategories == null ? 0 : stampCategories.size();
 	}
 
-	public void setStampCategories(RealmResults<StampCategoryModel> stampCategories) {
+	public void setStampCategories(List<StampCategoryModel> stampCategories) {
 		this.stampCategories = stampCategories;
-		this.stampCategories.addChangeListener(this);
 		notifyDataSetChanged();
 	}
 
