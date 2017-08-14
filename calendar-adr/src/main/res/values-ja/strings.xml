@@ -98,7 +98,7 @@
     <string name="two_things_todo">%s$1 thing(s) To Do</string>
     <string name="schedule">予定</string>
     <string name="show_today">今日を表示</string>
-    <string name="public_str">Public</string>
-    <string name="private_str">Private</string>
-    <string name="complete_private">Complete private</string>
+    <string name="public_str">公開</string>
+    <string name="private_str">非公開</string>
+    <string name="complete_private">完全非公開</string>
 </resources>
