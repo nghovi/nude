@@ -42,7 +42,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/margin_48dp"
-                        android:src="@drawable/tc_rank_gold" />
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/tc_ranking_medal1" />
 
                     <TextView
                         android:id="@+id/txt_rank_gold"
@@ -87,7 +88,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/margin_48dp"
-                        android:src="@drawable/tc_rank_silver" />
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/tc_ranking_medal2" />
 
                     <TextView
                         android:id="@+id/txt_rank_silver"
@@ -132,7 +134,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/margin_48dp"
-                        android:src="@drawable/tc_rank_bronze" />
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/tc_ranking_medal3" />
 
                     <TextView
                         android:id="@+id/txt_rank_bronze"
@@ -177,7 +180,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/margin_48dp"
-                        android:src="@drawable/tc_rank_regular" />
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/tc_ranking_medal4" />
 
                     <TextView
                         android:id="@+id/txt_rank_regular"
