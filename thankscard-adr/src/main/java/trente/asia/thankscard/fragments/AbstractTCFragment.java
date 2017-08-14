@@ -123,7 +123,11 @@ public abstract class AbstractTCFragment extends WelfareFragment{
 				public void onClick(View v){
 					TCSettingFragment tcSettingFragment = new TCSettingFragment();
 					Bundle args = new Bundle();
-					args.putInt(TcConst.ACTIVE_FOOTER_ITEM_ID, getFooterItemId());
+					if (getFragmentLayoutId() == R.layout.fragment_post_tc) {
+						args.putInt(TcConst.ACTIVE_FOOTER_ITEM_ID, R.id.lnr_view_common_footer_posted);
+					} else {
+						args.putInt(TcConst.ACTIVE_FOOTER_ITEM_ID, getFooterItemId());
+					}
 					tcSettingFragment.setArguments(args);
 					gotoFragment(tcSettingFragment);
 				}

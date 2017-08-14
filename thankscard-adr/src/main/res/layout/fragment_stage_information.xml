@@ -39,8 +39,8 @@
 
                     <ImageView
                         android:id="@+id/img_rank_gold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/margin_50dp"
+                        android:layout_height="@dimen/margin_50dp"
                         android:layout_marginEnd="@dimen/margin_48dp"
                         android:layout_centerVertical="true"
                         android:src="@drawable/tc_ranking_medal1" />
@@ -85,8 +85,8 @@
 
                     <ImageView
                         android:id="@+id/img_rank_silver"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/margin_50dp"
+                        android:layout_height="@dimen/margin_50dp"
                         android:layout_marginEnd="@dimen/margin_48dp"
                         android:layout_centerVertical="true"
                         android:src="@drawable/tc_ranking_medal2" />
@@ -131,8 +131,8 @@
 
                     <ImageView
                         android:id="@+id/img_rank_bronze"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/margin_50dp"
+                        android:layout_height="@dimen/margin_50dp"
                         android:layout_marginEnd="@dimen/margin_48dp"
                         android:layout_centerVertical="true"
                         android:src="@drawable/tc_ranking_medal3" />
@@ -177,8 +177,8 @@
 
                     <ImageView
                         android:id="@+id/img_rank_regular"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/margin_50dp"
+                        android:layout_height="@dimen/margin_50dp"
                         android:layout_marginEnd="@dimen/margin_48dp"
                         android:layout_centerVertical="true"
                         android:src="@drawable/tc_ranking_medal4" />
