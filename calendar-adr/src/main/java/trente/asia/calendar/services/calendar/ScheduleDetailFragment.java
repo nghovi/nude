@@ -1,6 +1,7 @@
 package trente.asia.calendar.services.calendar;
 
 import java.util.Date;
+import java.util.Map;
 
 import org.json.JSONObject;
 
@@ -27,10 +28,8 @@ public class ScheduleDetailFragment extends AbstractScheduleFragment{
 	private TextView	txtScheduleName;
 	private TextView	txtScheduleUrl;
 	private TextView	txtScheduleNote;
-
 	private Date		selectedDate;
 	private TextView	txtJoinUser;
-	private TextView txtScheduleScope;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -54,7 +53,6 @@ public class ScheduleDetailFragment extends AbstractScheduleFragment{
 		initHeader(R.drawable.wf_back_white, getString(R.string.fragment_schedule_detail_title), null);
 
 		txtScheduleName = (TextView)getView().findViewById(R.id.txt_id_schedule_name);
-		txtScheduleScope = (TextView)getView().findViewById(R.id.txt_id_schedule_scope);
 		txtScheduleUrl = (TextView)getView().findViewById(R.id.txt_id_schedule_url);
 		txtScheduleNote = (TextView)getView().findViewById(R.id.txt_id_schedule_note);
 		txtJoinUser = (TextView)getView().findViewById(R.id.txt_join_user);
@@ -73,7 +71,10 @@ public class ScheduleDetailFragment extends AbstractScheduleFragment{
 		super.onLoadScheduleDetailSuccess(response);
 
 		txtScheduleName.setText(schedule.scheduleName);
-		txtScheduleScope.setText(schedule.scheduleScope);
+		Map<String, String> scopes = getPublicityMap();
+		if(scopes.containsKey(schedule.scheduleType)){
+			txtScope.setText(scopes.get(schedule.scheduleType));
+		}
 		txtScheduleNote.setText(schedule.scheduleNote);
 		if(!CCStringUtil.isEmpty(schedule.scheduleUrl)){
 			txtScheduleUrl.setText(schedule.scheduleUrl);

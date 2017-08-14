@@ -3,7 +3,9 @@ package trente.asia.calendar.services.calendar;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -139,6 +141,8 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 			e.printStackTrace();
 		}
 
+		Map<String, String> scopes = getPublicityMap();
+
 		if(!CCStringUtil.isEmpty(schedule.key)){
 			txtRoom.setText(WelfareUtil.findApiObject4Id(rooms, schedule.roomId).value);
 			txtRoom.setValue(schedule.roomId);
@@ -150,6 +154,9 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 				txtCategory.setValue(schedule.categoryId);
 				txtCategory.setTextColor(Color.parseColor(WelfareFormatUtil.formatColor(categoryModel.categoryColor)));
 			}
+
+			txtScope.setText(scopes.get(schedule.scheduleType));
+			txtScope.setValue(schedule.scheduleType);
 
 			showJoinUserList();
 
@@ -174,6 +181,8 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 			txtCategory.setText(categories.get(0).categoryName);
 			txtCategory.setValue(categories.get(0).key);
 			txtCategory.setTextColor(Color.parseColor(WelfareFormatUtil.formatColor(categories.get(0).categoryColor)));
+			txtScope.setValue(ClConst.SCHEDULE_TYPE_PUB);
+			txtScope.setText(scopes.get(ClConst.SCHEDULE_TYPE_PUB));
 		}
 
 		lnrEndDate.setVisibility(View.VISIBLE);
@@ -237,6 +246,15 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 		default:
 			break;
 		}
+	}
+
+	public Map<String, String> getPublicityMap(){
+		Map<String, String> scopes = new HashMap<>();
+		scopes.put(ClConst.SCHEDULE_TYPE_PUB, getString(R.string.public_str));
+		scopes.put(ClConst.SCHEDULE_TYPE_PRI, getString(R.string.private_str));
+		scopes.put(ClConst.SCHEDULE_TYPE_PRI_COM, getString(R.string.complete_private));
+		;
+		return scopes;
 	}
 
 	@Override
