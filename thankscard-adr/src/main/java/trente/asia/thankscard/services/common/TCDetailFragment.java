@@ -208,6 +208,7 @@ public class TCDetailFragment extends AbstractPagerFragment{
 		ImageView imgSeal = (ImageView)getView().findViewById(R.id.img_seal);
 		TextView textMessage = (TextView)getView().findViewById(R.id.text_message);
 		ImageView imgSecret = (ImageView) getView().findViewById(R.id.img_secret);
+		ImageView imgStage = (ImageView) getView().findViewById(R.id.stage_icon);
 
 		if(myself.key.equals(historyModel.receiverId) && getTitle() == R.string.fragment_tc_detail_title_receive){
 			txtSend.setVisibility(View.VISIBLE);
@@ -244,6 +245,20 @@ public class TCDetailFragment extends AbstractPagerFragment{
 		txtSenderName.setText(historyModel.posterName);
 
 		Glide.with(getContext()).load(BuildConfig.HOST + historyModel.posterAvatarPath).into(senderAvatar);
+
+		int pointBronze = Integer.parseInt(prefAccUtil.get(TcConst.PREF_POINT_BRONZE));
+		int pointSilver = Integer.parseInt(prefAccUtil.get(TcConst.PREF_POINT_SILVER));
+		int pointGold = Integer.parseInt(prefAccUtil.get(TcConst.PREF_POINT_GOLD));
+
+		if (historyModel.posterTotalPoint < pointBronze) {
+			imgStage.setImageResource(R.drawable.tc_ranking_medal4);
+		} else if (historyModel.posterTotalPoint < pointSilver) {
+			imgStage.setImageResource(R.drawable.tc_ranking_medal3);
+		} else if (historyModel.posterTotalPoint < pointGold) {
+			imgStage.setImageResource(R.drawable.tc_ranking_medal2);
+		} else {
+			imgStage.setImageResource(R.drawable.tc_ranking_medal1);
+		}
 	}
 
 	private void log(String msg){

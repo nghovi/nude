@@ -32,6 +32,7 @@ public class HistoryModel{
 	public String					photoLocationY;
 	public String					photoScale;
 	public AttachmentModel			attachment;
+	public int						posterTotalPoint;
 
 	public void setTemplate(Template template){
 		this.template = template;

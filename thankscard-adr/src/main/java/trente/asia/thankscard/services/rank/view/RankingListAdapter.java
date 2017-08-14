@@ -17,6 +17,7 @@ import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.thankscard.BuildConfig;
 import trente.asia.thankscard.R;
+import trente.asia.thankscard.commons.defines.TcConst;
 import trente.asia.thankscard.services.rank.model.RankModel;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
@@ -41,6 +42,7 @@ public class RankingListAdapter extends ArrayAdapter<RankModel>{
 		public ImageView	imgAvatar;
 		public TextView		txtUserName;
 		public TextView		txtPoint;
+		public TextView		txtRank;
 
 		public RankingViewHolder(View view, boolean isTitle){
 			if(isTitle){
@@ -51,6 +53,7 @@ public class RankingListAdapter extends ArrayAdapter<RankModel>{
 				imgAvatar = (ImageView)view.findViewById(R.id.img_id_avatar);
 				txtUserName = (TextView)view.findViewById(R.id.txt_id_user_name);
 				txtPoint = (TextView)view.findViewById(R.id.txt_id_point);
+				txtRank = (TextView) view.findViewById(R.id.txt_rank);
 			}
 		}
 	}
@@ -90,17 +93,30 @@ public class RankingListAdapter extends ArrayAdapter<RankModel>{
 				WfPicassoHelper.loadImage(mContext, BuildConfig.HOST + model.avatarPath, holder.imgAvatar, null);
 			}
 			holder.txtPoint.setText(mContext.getString(R.string.tc_common_point, String.valueOf(model.cnt)));
-			if(model.rank.equals(1)){
-			}else if(model.rank.equals(2)){
-				holder.imgMedal.setImageResource(R.drawable.tc_ranking_medal2);
-			}else if(model.rank.equals(3)){
-				holder.imgMedal.setImageResource(R.drawable.tc_ranking_medal3);
-			}else{
+			if (model.rank == 0) {
+				holder.txtRank.setText("--");
+			} else {
+				holder.txtRank.setText(mContext.getString(R.string.tc_rank_text, model.rank));
+			}
+
+			PreferencesAccountUtil prefAccUtil = new PreferencesAccountUtil(mContext);
+			int pointBronze = Integer.parseInt(prefAccUtil.get(TcConst.PREF_POINT_BRONZE));
+			int pointSilver = Integer.parseInt(prefAccUtil.get(TcConst.PREF_POINT_SILVER));
+			int pointGold = Integer.parseInt(prefAccUtil.get(TcConst.PREF_POINT_GOLD));
+
+			if (model.cnt == 0) {
 				holder.imgMedal.setVisibility(View.GONE);
 				holder.txtRanking.setVisibility(View.VISIBLE);
+			} else if(model.cnt < pointBronze){
+				holder.imgMedal.setImageResource(R.drawable.tc_ranking_medal4);
+			}else if(model.cnt < pointSilver){
+				holder.imgMedal.setImageResource(R.drawable.tc_ranking_medal3);
+			}else if(model.cnt < pointGold){
+				holder.imgMedal.setImageResource(R.drawable.tc_ranking_medal2);
+			}else{
+				holder.imgMedal.setImageResource(R.drawable.tc_ranking_medal1);
 			}
 		}
-
 		return convertView;
 	}
 

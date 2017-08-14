@@ -234,20 +234,21 @@ public class MypageFragment extends AbstractTCFragment{
 
 	private void saveStamps(JSONObject response){
 		List<StampCategoryModel> stampCategories = CCJsonUtil.convertToModelList(response.optString("stampCategories"), StampCategoryModel.class);
-		log("categories number = " + stampCategories.size());
 		String lastUpdateDate = response.optString("lastUpdateDate");
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
 		preferences.edit().putString(TcConst.MESSAGE_STAMP_LAST_UPDATE_DATE, lastUpdateDate).apply();
 
 		mRealm.beginTransaction();
 		for(StampCategoryModel category : stampCategories){
-			log("category name: " + category.categoryName);
+			category.services = "";
+			for (String service : category.listService) {
+				category.services += service + ", ";
+			}
 			if(category.deleteFlag){
 				StampCategoryModel.deleteStampCategory(mRealm, category.key);
 			}else{
 				mRealm.copyToRealmOrUpdate(category);
 				for(StampModel stamp : category.stamps){
-					log("stamp name: " + stamp.stampName);
 					if(stamp.deleteFlag){
 						StampModel.deleteStamp(mRealm, stamp.key);
 					}else{
