@@ -1,6 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:custom="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     style="@style/wf_common_match">
 
     <include layout="@layout/view_common_header_strip" />
@@ -28,8 +28,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/wf_margin_16"
-                    android:layout_marginTop="@dimen/margin_16dp"
                     android:layout_marginEnd="@dimen/margin_16dp"
+                    android:layout_marginTop="@dimen/margin_16dp"
                     android:gravity="center_vertical|right"
                     android:orientation="horizontal">
 
@@ -51,10 +51,10 @@
                     android:layout_height="wrap_content"
                     android:background="@color/wf_app_color_base"
                     android:orientation="horizontal"
-                    android:paddingTop="@dimen/margin_5dp"
                     android:paddingBottom="@dimen/margin_5dp"
+                    android:paddingEnd="@dimen/margin_16dp"
                     android:paddingStart="@dimen/margin_16dp"
-                    android:paddingEnd="@dimen/margin_16dp">
+                    android:paddingTop="@dimen/margin_5dp">
 
                     <TextView
                         android:layout_width="match_parent"
@@ -69,25 +69,46 @@
                     android:layout_height="wrap_content"
                     android:visibility="visible">
 
-                    <trente.asia.thankscard.services.common.TCViewPager
-                        android:id="@+id/pager"
+                    <android.support.percent.PercentRelativeLayout
+                        android:id="@+id/rlt_card"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:visibility="visible"
-                        android:layout_marginTop="@dimen/margin_16dp"/>
+                        android:layout_marginTop="@dimen/margin_16dp"
+                        android:background="@color/chiase_white">
+
+                        <trente.asia.thankscard.services.posted.view.PhotoViewDetail
+                            android:id="@+id/layout_photo"
+                            android:layout_height="wrap_content"
+                            app:layout_widthPercent="70%"
+                            android:layout_alignTop="@+id/img_card"
+                            android:layout_alignBottom="@+id/img_card"/>
+
+                        <ImageView
+                            android:id="@+id/img_card"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:adjustViewBounds="true" />
+
+                        <ImageView
+                            android:id="@+id/img_secret"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:src="@drawable/tc_ic_secret" />
+                    </android.support.percent.PercentRelativeLayout>
 
                     <LinearLayout
                         android:id="@+id/lnr_message"
-                        app:layout_widthPercent="50%"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        app:layout_widthPercent="50%">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
+                            android:layout_marginEnd="@dimen/margin_10dp"
                             android:layout_marginStart="@dimen/margin_10dp"
-                            android:layout_marginEnd="@dimen/margin_10dp">
+                            android:orientation="vertical">
 
                             <TextView
                                 android:id="@+id/txt_tc_detail_date"
@@ -97,7 +118,7 @@
                                 android:layout_gravity="left"
                                 android:ellipsize="end"
                                 android:singleLine="true"
-                                android:text="@string/fragment_tc_detail_date"/>
+                                android:text="@string/fragment_tc_detail_date" />
 
                             <TextView
                                 android:id="@+id/txt_tc_detail_to"
@@ -108,7 +129,7 @@
                                 android:layout_marginBottom="@dimen/margin_10dp"
                                 android:ellipsize="end"
                                 android:singleLine="true"
-                                android:text="@string/fragment_tc_detail_to"/>
+                                android:text="@string/fragment_tc_detail_to" />
                         </LinearLayout>
 
                         <TextView
@@ -116,39 +137,37 @@
                             style="@style/tc_text_black_bold"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/margin_10dp"
-                            android:layout_marginEnd="@dimen/margin_10dp" />
+                            android:layout_marginEnd="@dimen/margin_10dp"
+                            android:layout_marginStart="@dimen/margin_10dp" />
                     </LinearLayout>
 
                     <RelativeLayout
                         android:id="@+id/rlt_stickers"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignTop="@+id/pager"
-                        android:layout_alignBottom="@+id/pager"
-                        android:layout_alignStart="@+id/pager"
-                        android:layout_alignEnd="@+id/pager">
-
-                    </RelativeLayout>
+                        android:layout_alignStart="@+id/rlt_card"
+                        android:layout_alignTop="@+id/rlt_card"
+                        android:layout_alignEnd="@id/rlt_card"
+                        android:layout_alignBottom="@id/rlt_card"/>
 
                     <ImageView
                         android:id="@+id/img_seal"
                         android:layout_width="@dimen/margin_60dp"
                         android:layout_height="@dimen/margin_60dp"
-                        android:src="@drawable/tc_ic_seal"
                         android:layout_alignParentEnd="true"
                         android:layout_marginEnd="@dimen/margin_16dp"
-                        android:layout_marginTop="@dimen/margin_5dp"/>
+                        android:layout_marginTop="@dimen/margin_5dp"
+                        android:src="@drawable/tc_ic_seal" />
 
                     <RelativeLayout
                         android:id="@+id/layout_user"
-                        android:layout_below="@+id/pager"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_below="@+id/rlt_card"
+                        android:layout_marginStart="@dimen/margin_16dp"
                         android:gravity="center_vertical"
                         android:paddingBottom="@dimen/margin_8dp"
-                        android:paddingTop="@dimen/margin_8dp"
-                        android:layout_marginStart="@dimen/margin_16dp">
+                        android:paddingTop="@dimen/margin_8dp">
 
                         <trente.asia.welfare.adr.view.SelectableRoundedImageView
                             android:id="@+id/img_sender_avatar"
@@ -162,44 +181,36 @@
                             android:id="@+id/txt_from"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_toEndOf="@+id/img_sender_avatar"
                             android:layout_marginStart="@dimen/margin_8dp"
+                            android:layout_toEndOf="@+id/img_sender_avatar"
                             android:text="@string/fragment_card_detail_from"
-                            android:textSize="12sp"
-                            android:textColor="@color/chiase_black"/>
+                            android:textColor="@color/chiase_black"
+                            android:textSize="12sp" />
 
                         <TextView
                             android:id="@+id/txt_sender_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/txt_from"
-                            android:layout_toEndOf="@+id/img_sender_avatar"
                             android:layout_marginStart="@dimen/margin_8dp"
-                            android:textSize="14sp"
-                            android:textColor="@color/chiase_black"/>
+                            android:layout_toEndOf="@+id/img_sender_avatar"
+                            android:textColor="@color/chiase_black"
+                            android:textSize="14sp" />
 
                         <TextView
                             android:id="@+id/txt_fragment_tc_detail_send"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
-                            android:text="@string/fragment_tc_detail_send_post"
                             android:layout_marginEnd="@dimen/margin_16dp"
+                            android:text="@string/fragment_tc_detail_send_post"
                             android:textColor="@color/tc_item_indicator_background" />
                     </RelativeLayout>
 
                 </android.support.percent.PercentRelativeLayout>
-
-
             </LinearLayout>
 
         </LinearLayout>
-
-
     </RelativeLayout>
-
-
     <include layout="@layout/view_common_footer" />
-
-
 </LinearLayout>

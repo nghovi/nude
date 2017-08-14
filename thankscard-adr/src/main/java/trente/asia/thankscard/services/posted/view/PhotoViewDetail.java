@@ -67,10 +67,16 @@ public class PhotoViewDetail extends AppCompatImageView {
         });
     }
 
+    public void clearImage(){
+        bitmap = null;
+        invalidate();
+    }
+
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         if (bitmap == null) {
+            canvas.drawARGB(255, 255, 255, 255);
             return;
         }
         matrix.reset();

@@ -22,7 +22,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.squareup.picasso.Picasso;
 
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
@@ -36,6 +35,7 @@ import trente.asia.thankscard.services.mypage.model.StampModel;
 import trente.asia.thankscard.services.posted.PostTCFragment;
 import trente.asia.thankscard.services.posted.ThanksCardEditFragment;
 import trente.asia.thankscard.services.posted.model.ApiStickerModel;
+import trente.asia.thankscard.services.posted.view.PhotoViewDetail;
 import trente.asia.thankscard.services.posted.view.StickerViewDetail;
 import trente.asia.thankscard.services.received.ReceiveTCListFragment;
 import trente.asia.thankscard.utils.TCUtil;
@@ -55,10 +55,9 @@ public class TCDetailFragment extends AbstractPagerFragment{
 	public static final String	DETAIL_TC_TITLE			= "DETAIL_TC_TITLE";
 	public static final String	DETAIL_TC_DEFAULT_POS	= "DETAIL_TC_DEFAULT_POS";
 
-	private List<HistoryModel>	lstHistory;
 	private HistoryModel		currentHistory;
 	private List<DeptModel>		depts;
-	private int					defaultPos				= 0;
+
 	private int					normalTextSize;
 	private int					photoTextSize;
 
@@ -126,7 +125,8 @@ public class TCDetailFragment extends AbstractPagerFragment{
 			lstHistory = CCJsonUtil.convertToModelList(response.optString("histories"), HistoryModel.class);
 			depts = CCJsonUtil.convertToModelList(response.optString("depts"), DeptModel.class);
 			defaultPos = TCUtil.findHistory4Key(lstHistory, currentHistory.key);
-			loadPagerLayout(lstHistory, defaultPos, true);
+			onPageHistorySelected(defaultPos);
+			buildEnabledButtons();
 		}else{
 			super.successLoad(response, url);
 		}
@@ -145,6 +145,9 @@ public class TCDetailFragment extends AbstractPagerFragment{
 		TextView textMessage = (TextView)getView().findViewById(R.id.text_message);
 		TextView textDate = (TextView)getView().findViewById(R.id.txt_tc_detail_date);
 		TextView textTo = (TextView)getView().findViewById(R.id.txt_tc_detail_to);
+		ImageView imgCard = (ImageView) getView().findViewById(R.id.img_card);
+		PhotoViewDetail photoView = (PhotoViewDetail) getView().findViewById(R.id.layout_photo);
+		TCUtil.loadImageWithGlide(historyModel.template.templateUrl, imgCard);
 		textMessage.setText(historyModel.message);
 		log("message: " + historyModel.message);
 		Date postDate = CCDateUtil.makeDateCustom(historyModel.postDate, WelfareConst.WF_DATE_TIME);
@@ -158,6 +161,12 @@ public class TCDetailFragment extends AbstractPagerFragment{
 		}else{
 			setLayoutMessageRight(lnrMessage);
 			textMessage.setTextSize(TypedValue.COMPLEX_UNIT_PX, photoTextSize);
+			if(historyModel.attachment != null && historyModel.attachment.fileUrl != null){
+				photoView.restoreImage(historyModel.attachment.fileUrl, Float.valueOf(historyModel.photoLocationX),
+						Float.valueOf(historyModel.photoLocationY), Float.valueOf(historyModel.photoScale));
+			} else {
+				photoView.clearImage();
+			}
 		}
 	}
 
@@ -198,6 +207,7 @@ public class TCDetailFragment extends AbstractPagerFragment{
 		ImageView senderAvatar = (ImageView)getView().findViewById(R.id.img_sender_avatar);
 		ImageView imgSeal = (ImageView)getView().findViewById(R.id.img_seal);
 		TextView textMessage = (TextView)getView().findViewById(R.id.text_message);
+		ImageView imgSecret = (ImageView) getView().findViewById(R.id.img_secret);
 
 		if(myself.key.equals(historyModel.receiverId) && getTitle() == R.string.fragment_tc_detail_title_receive){
 			txtSend.setVisibility(View.VISIBLE);
@@ -218,18 +228,18 @@ public class TCDetailFragment extends AbstractPagerFragment{
 
 		if(historyModel.isSecret){
 			if(myself.key.equals(historyModel.receiverId) || myself.key.equals(historyModel.posterId)){
-				adapter.showMessage();
 				imgSeal.setVisibility(View.VISIBLE);
 				textMessage.setVisibility(View.VISIBLE);
+				imgSecret.setVisibility(View.INVISIBLE);
 			}else{
-				adapter.hideMessage();
 				imgSeal.setVisibility(View.INVISIBLE);
 				textMessage.setVisibility(View.INVISIBLE);
+				imgSecret.setVisibility(View.VISIBLE);
 			}
 		}else{
-			adapter.showMessage();
 			imgSeal.setVisibility(View.INVISIBLE);
 			textMessage.setVisibility(View.VISIBLE);
+			imgSecret.setVisibility(View.INVISIBLE);
 		}
 		txtSenderName.setText(historyModel.posterName);
 
@@ -281,7 +291,7 @@ public class TCDetailFragment extends AbstractPagerFragment{
 			LinearLayout lnrFrameBackground = (LinearLayout)lnrFrame.findViewById(R.id.lnr_thanks_card_frame_container);
 			// TCUtil.picassaLoadBackgroundImage(context, lnrFrameBackground,
 			// thanksCard.getTemplate().url);
-			ImageView templateImage = (ImageView)lnrFrame.findViewById(R.id.img_item_thanks_card_frame);
+			ImageView templateImage = (ImageView)lnrFrame.findViewById(R.id.img_card);
 			templateImage.setScaleType(ImageView.ScaleType.FIT_XY);
 			WfPicassoHelper.loadImage2(context, BuildConfig.HOST, templateImage, historyModel.template.templateUrl);
 		}
@@ -292,7 +302,8 @@ public class TCDetailFragment extends AbstractPagerFragment{
 		if(!isClickNotification){
 			Bundle args = getArguments();
 			defaultPos = args != null ? args.getInt(DETAIL_TC_DEFAULT_POS, 0) : 0;
-			loadPagerLayout(lstHistory, defaultPos, true);
+			buildEnabledButtons();
+			onPageHistorySelected(defaultPos);
 		}
 	}
 
