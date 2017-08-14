@@ -163,6 +163,7 @@ public class ClScheduleRepeatDialog extends CLOutboundDismissDialog{
 				if(onChangeRepeatTypeListener != null){
 					onChangeRepeatTypeListener.onChange(isRepeat);
 				}
+				txtRepeat.setText(getRepeatValue());
 				if(isRepeat){
 					if(ClConst.SCHEDULE_REPEAT_LIMIT_FOREVER.equals(repeatModel.repeatLimitType) || CCStringUtil.isEmpty(repeatModel.repeatLimitType)){
 						txtUntil.setText(mContext.getString(R.string.cl_schedule_repeat_limit_forever));
@@ -170,7 +171,6 @@ public class ClScheduleRepeatDialog extends CLOutboundDismissDialog{
 						txtUntil.setText(repeatModel.repeatEnd);
 					}
 				}
-				txtRepeat.setText(getRepeatValue());
 				ClScheduleRepeatDialog.this.dismiss();
 
 			}
