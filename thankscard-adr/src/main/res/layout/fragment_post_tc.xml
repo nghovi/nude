@@ -294,5 +294,6 @@
                 android:layout_height="wrap_content"
                 android:minHeight="180dp" />
         </LinearLayout>
+
     </LinearLayout>
 </layout>
