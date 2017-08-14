@@ -24,6 +24,7 @@ import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
+import trente.asia.android.view.ChiaseEditText;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.fragments.AbstractClFragment;
@@ -40,7 +41,7 @@ public class TodoDetailFragment extends AbstractClFragment{
 	private Todo				todo;
 	private EditText			edtTitle;
 	private EditText			edtContent;
-	private TextView			txtDeadline;
+	private ChiaseEditText		txtDeadline;
 	private DatePickerDialog	datePickerDialog;
 
 	@Override
@@ -53,7 +54,7 @@ public class TodoDetailFragment extends AbstractClFragment{
 
 	@Override
 	protected void initData(){
-		if (todo != null) {
+		if(todo != null){
 			loadTodoDetail();
 		}
 	}
@@ -86,7 +87,7 @@ public class TodoDetailFragment extends AbstractClFragment{
 		super.initView();
 		edtTitle = (EditText)getView().findViewById(R.id.txt_fragment_todo_detail_title);
 		edtContent = (EditText)getView().findViewById(R.id.txt_fragment_todo_detail_content);
-		txtDeadline = (TextView)getView().findViewById(R.id.txt_deadline);
+		txtDeadline = (ChiaseEditText)getView().findViewById(R.id.txt_deadline);
 		if(todo != null && todo.isFinish == true){
 			initHeader(R.drawable.wf_back_white, getString(R.string.todo_title), null);
 			edtTitle.setEnabled(false);
@@ -94,6 +95,7 @@ public class TodoDetailFragment extends AbstractClFragment{
 		}else{
 			getView().findViewById(R.id.img_id_header_right_icon).setOnClickListener(this);
 			initHeader(R.drawable.wf_back_white, getString(R.string.todo_title), R.drawable.cl_action_save);
+			txtDeadline.setOnClickListener(this);
 			getView().findViewById(R.id.lnr_deadline).setOnClickListener(this);
 		}
 
@@ -107,7 +109,7 @@ public class TodoDetailFragment extends AbstractClFragment{
 			@Override
 			public void onDateSet(DatePicker view, int year, int month, int dayOfMonth){
 				String startDateStr = year + "/" + CCFormatUtil.formatZero(month + 1) + "/" + CCFormatUtil.formatZero(dayOfMonth);
-				txtDeadline.setTextColor(Color.BLACK);
+				// txtDeadline.setTextColor(Color.BLACK);
 				txtDeadline.setText(startDateStr);
 			}
 		}, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
@@ -122,12 +124,12 @@ public class TodoDetailFragment extends AbstractClFragment{
 	}
 
 	private void buildLayout(JSONObject response){
-		try {
+		try{
 			todo = LoganSquare.parse(response.optString("detail"), Todo.class);
 			if(todo != null){
 				edtTitle.setText(todo.name);
 				edtContent.setText(todo.note);
-				txtDeadline.setTextColor(Color.BLACK);
+				// txtDeadline.setTextColor(Color.BLACK);
 				if(CCStringUtil.isEmpty(todo.limitDate)){
 					txtDeadline.setText(getString(R.string.no_deadline));
 				}else{
@@ -135,7 +137,7 @@ public class TodoDetailFragment extends AbstractClFragment{
 				}
 			}else{
 			}
-		} catch (IOException e) {
+		}catch(IOException e){
 			e.printStackTrace();
 		}
 	}
@@ -152,6 +154,7 @@ public class TodoDetailFragment extends AbstractClFragment{
 			onClickSaveIcon();
 			break;
 		case R.id.lnr_deadline:
+		case R.id.txt_deadline:
 			datePickerDialog.show();
 			break;
 		default:

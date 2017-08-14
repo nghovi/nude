@@ -86,7 +86,6 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 				}
 			}
 		});
-        int a = 5/0;
 	}
 
 	@Override
