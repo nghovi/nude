@@ -10,15 +10,15 @@ import trente.asia.welfare.adr.models.DeptModel;
  */
 public class MypageModel{
 
-	public Integer				pointPost;
-	public Integer				pointReceive;
-	public Integer				pointTotal;
+	public int					pointPost;
+	public int					pointReceive;
+	public int					pointTotal;
 
-	public Integer				seqPost;
-	public Integer				seqRecieve;
-	public Integer				stageNo;
-	public Integer				archivePost;
-	public Integer				archiveReceive;
+	public int					seqPost;
+	public int					seqRecieve;
+	public int					stageNo;
+	public int					archivePost;
+	public int					archiveReceive;
 
 	public List<DeptModel>		depts;
 	public List<Template>		templates;

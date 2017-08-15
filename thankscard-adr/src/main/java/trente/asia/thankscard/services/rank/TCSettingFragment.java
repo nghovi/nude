@@ -69,6 +69,10 @@ public class TCSettingFragment extends AbstractTCFragment implements View.OnClic
 		lnrSignOut.setOnClickListener(this);
 		lnrContactUs.setOnClickListener(this);
 		lnrStageInformation.setOnClickListener(this);
+
+		if (getFooterItemId() == 0) {
+			getView().findViewById(R.id.footer).setVisibility(View.INVISIBLE);
+		}
 	}
 
 	@Override

@@ -164,5 +164,4 @@
     <string name="tc_choose_picture">Do you want to change photo?</string>
     <string name="tc_change_to_normal_card">Photo and sticker will be removed. Are you sure?</string>
     <string name="tc_limit_sticker">You can only have 50 stickers</string>
-    <string name="tc_rank_text">%1$d位</string>
 </resources>

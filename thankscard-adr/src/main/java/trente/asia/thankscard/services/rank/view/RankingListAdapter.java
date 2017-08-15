@@ -95,8 +95,12 @@ public class RankingListAdapter extends ArrayAdapter<RankModel>{
 			holder.txtPoint.setText(mContext.getString(R.string.tc_common_point, String.valueOf(model.cnt)));
 			if (model.rank == 0) {
 				holder.txtRank.setText("--");
+			} else if (model.rank == 1){
+				holder.txtRank.setText(mContext.getString(R.string.tc_1_rank, model.rank + ""));
+			} else if (model.rank == 2){
+				holder.txtRank.setText(mContext.getString(R.string.tc_2_rank, model.rank + ""));
 			} else {
-				holder.txtRank.setText(mContext.getString(R.string.tc_rank_text, model.rank));
+				holder.txtRank.setText(mContext.getString(R.string.tc_3_rank, model.rank + ""));
 			}
 
 			PreferencesAccountUtil prefAccUtil = new PreferencesAccountUtil(mContext);
@@ -104,14 +108,14 @@ public class RankingListAdapter extends ArrayAdapter<RankModel>{
 			int pointSilver = Integer.parseInt(prefAccUtil.get(TcConst.PREF_POINT_SILVER));
 			int pointGold = Integer.parseInt(prefAccUtil.get(TcConst.PREF_POINT_GOLD));
 
-			if (model.cnt == 0) {
+			if (model.yearPoint == 0) {
 				holder.imgMedal.setVisibility(View.GONE);
 				holder.txtRanking.setVisibility(View.VISIBLE);
-			} else if(model.cnt < pointBronze){
+			} else if(model.yearPoint < pointBronze){
 				holder.imgMedal.setImageResource(R.drawable.tc_ranking_medal4);
-			}else if(model.cnt < pointSilver){
+			}else if(model.yearPoint < pointSilver){
 				holder.imgMedal.setImageResource(R.drawable.tc_ranking_medal3);
-			}else if(model.cnt < pointGold){
+			}else if(model.yearPoint < pointGold){
 				holder.imgMedal.setImageResource(R.drawable.tc_ranking_medal2);
 			}else{
 				holder.imgMedal.setImageResource(R.drawable.tc_ranking_medal1);
