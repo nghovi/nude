@@ -53,7 +53,7 @@ import trente.asia.welfare.adr.utils.WelfareUtil;
  */
 public class MonthlyPageFragment extends SchedulesPageFragment{
 
-	private static final int				MAX_ROW			= 3;
+	private static final int				MAX_ROW			= 4;
 	private List<MonthlyCalendarDayView>	lstCalendarDay	= new ArrayList<>();
 	private List<MonthlyCalendarRowView>	lstCalendarRow	= new ArrayList<>();
 

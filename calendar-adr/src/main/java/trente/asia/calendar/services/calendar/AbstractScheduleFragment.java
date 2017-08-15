@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -249,11 +250,10 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 	}
 
 	public Map<String, String> getPublicityMap(){
-		Map<String, String> scopes = new HashMap<>();
+		Map<String, String> scopes = new LinkedHashMap<>();
 		scopes.put(ClConst.SCHEDULE_TYPE_PUB, getString(R.string.public_str));
 		scopes.put(ClConst.SCHEDULE_TYPE_PRI, getString(R.string.private_str));
 		scopes.put(ClConst.SCHEDULE_TYPE_PRI_COM, getString(R.string.complete_private));
-		;
 		return scopes;
 	}
 

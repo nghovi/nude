@@ -41,7 +41,8 @@
                 android:layout_marginLeft="@dimen/margin_32dp"
                 android:layout_marginRight="@dimen/margin_32dp"
                 android:layout_marginTop="16dp"
-                android:text="@string/show_finished_task" />
+                android:text="@string/show_finished_task"
+                android:visibility="gone" />
 
             <LinearLayout
                 android:id="@+id/lnr_finished_todo_containter"

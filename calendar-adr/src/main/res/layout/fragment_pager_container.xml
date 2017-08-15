@@ -24,9 +24,11 @@
         <TextView
             android:id="@+id/txt_today"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/margin_16dp"
-            android:gravity="right"
+            android:layout_height="match_parent"
+            android:background="@drawable/cl_state_common_selectable_row"
+            android:gravity="right|center_vertical"
+            android:paddingLeft="@dimen/margin_16dp"
+            android:paddingRight="@dimen/margin_16dp"
             android:text="@string/chiase_common_today" />
 
     </LinearLayout>
