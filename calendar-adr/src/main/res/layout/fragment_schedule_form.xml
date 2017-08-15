@@ -140,17 +140,6 @@
             <View style="@style/cs_common_divider" />
 
             <LinearLayout
-                style="@style/wf_common_item_linear"
-                android:orientation="vertical">
-
-                <TextView
-                    style="@style/wl_common_text"
-                    android:text="@string/cl_schedule_form_schedule_info_title" />
-            </LinearLayout>
-
-            <View style="@style/cs_common_divider" />
-
-            <LinearLayout
                 android:id="@+id/lnr_id_scope"
                 style="@style/wf_common_item_linear2">
 

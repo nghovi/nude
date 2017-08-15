@@ -73,8 +73,8 @@
             <View style="@style/cs_common_divider" />
 
             <LinearLayout
-                style="@style/wf_common_item_linear"
-                android:background="@color/chiase_white">
+                style="@style/wf_common_item_linear2"
+                android:orientation="horizontal">
 
                 <TextView
                     style="@style/wl_common_text"
@@ -83,20 +83,9 @@
 
                 <trente.asia.android.view.ChiaseTextView
                     android:id="@+id/txt_id_repeat"
-                    style="@style/wl_common_text"
-                    android:layout_weight="1"
+                    style="@style/wl_common_edit_text2"
+                    android:layout_marginLeft="@dimen/margin_10dp"
                     android:text="@string/chiase_common_none" />
-            </LinearLayout>
-
-            <View style="@style/cs_common_divider" />
-
-            <LinearLayout
-                style="@style/wf_common_item_linear"
-                android:orientation="vertical">
-
-                <TextView
-                    style="@style/wl_common_text"
-                    android:text="@string/cl_schedule_form_schedule_info_title" />
             </LinearLayout>
 
             <View style="@style/cs_common_divider" />

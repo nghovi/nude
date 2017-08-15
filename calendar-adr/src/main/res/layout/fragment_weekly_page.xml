@@ -52,6 +52,7 @@
                         android:background="@color/chiase_red" />
 
                     <ScrollView
+                        android:layout_marginTop="@dimen/margin_10dp"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:id="@+id/src_fragment_daily_page"
@@ -62,7 +63,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_alignBottom="@+id/lnr_part1"
-                            android:layout_marginTop="@dimen/margin_10dp"
                             android:orientation="vertical"></LinearLayout>
 
                     </ScrollView>
