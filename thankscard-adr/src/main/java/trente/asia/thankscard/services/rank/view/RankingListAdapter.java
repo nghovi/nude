@@ -6,6 +6,7 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -109,8 +110,12 @@ public class RankingListAdapter extends ArrayAdapter<RankModel>{
 			int pointGold = Integer.parseInt(prefAccUtil.get(TcConst.PREF_POINT_GOLD));
 
 			if (model.yearPoint == 0) {
-				holder.imgMedal.setVisibility(View.GONE);
-				holder.txtRanking.setVisibility(View.VISIBLE);
+				if ("--".equals(model.userName)) {
+					holder.imgMedal.setVisibility(View.GONE);
+					holder.txtRanking.setVisibility(View.VISIBLE);
+				} else {
+					holder.imgMedal.setImageResource(R.drawable.tc_ranking_medal4);
+				}
 			} else if(model.yearPoint < pointBronze){
 				holder.imgMedal.setImageResource(R.drawable.tc_ranking_medal4);
 			}else if(model.yearPoint < pointSilver){
@@ -129,4 +134,8 @@ public class RankingListAdapter extends ArrayAdapter<RankModel>{
 //		RankModel model = getItem(position);
 //		return !(model.isTitle || CCStringUtil.isEmpty(model.userId) || CCConst.NONE.equals(model.userId));
 //	}
+
+	private void log(String msg) {
+		Log.e("RankingListAdapter", msg);
+	}
 }
