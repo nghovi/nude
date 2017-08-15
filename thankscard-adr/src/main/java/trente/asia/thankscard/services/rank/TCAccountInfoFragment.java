@@ -87,6 +87,9 @@ public class TCAccountInfoFragment extends AbstractTCFragment implements AvatarS
 		// buildPushSwitch();
 		buildSwitch();
 		mIsOverJellyBean = AndroidUtil.isBuildOver(18);
+		if (getFooterItemId() == 0) {
+			getView().findViewById(R.id.footer).setVisibility(View.GONE);
+		}
 	}
 
 	private void buildAccountInfo(){

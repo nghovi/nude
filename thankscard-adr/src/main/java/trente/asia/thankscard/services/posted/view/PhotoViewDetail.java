@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 import android.util.FloatProperty;
+import android.util.Log;
 
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
@@ -16,6 +17,7 @@ import com.squareup.picasso.Target;
 import trente.asia.thankscard.BuildConfig;
 import trente.asia.thankscard.commons.defines.TcConst;
 import trente.asia.welfare.adr.pref.PreferencesSystemUtil;
+import trente.asia.welfare.adr.utils.WelfareUtil;
 
 /**
  * Created by tien on 7/26/2017.
@@ -46,12 +48,41 @@ public class PhotoViewDetail extends AppCompatImageView {
         Picasso.with(getContext()).load(BuildConfig.HOST + imagePath).resize(0, (int) frameHeight).into(new Target() {
             @Override
             public void onBitmapLoaded(Bitmap bitmapLoad, Picasso.LoadedFrom from) {
+                log("restoreImage");
                 bitmap = bitmapLoad;
                 width = bitmap.getWidth();
                 height = bitmap.getHeight();
                 translateX = locationX * frameWidth - width / 2;
                 translateY = locationY * frameHeight - height / 2;
                 scaleRatio = scale * frameHeight / height;
+                invalidate();
+            }
+
+            @Override
+            public void onBitmapFailed(Drawable errorDrawable) {
+
+            }
+
+            @Override
+            public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+            }
+        });
+    }
+
+    public void restoreImageInList(String imagePath, final float locationX, final float locationY, final float scale) {
+        Picasso.with(getContext()).load(BuildConfig.HOST + imagePath).resize(0, (int) frameHeight).into(new Target() {
+            @Override
+            public void onBitmapLoaded(Bitmap bitmapLoad, Picasso.LoadedFrom from) {
+                log("restoreImageInList");
+                bitmap = bitmapLoad;
+                width = bitmap.getWidth();
+                height = bitmap.getHeight();
+                int actualHeight = WelfareUtil.dpToPx(80);
+                translateX = (locationX * frameWidth - width / 2) * actualHeight / frameHeight;
+                translateY = (locationY * frameHeight - height / 2) * actualHeight / frameHeight;
+                log(translateX + " : " + translateY);
+                scaleRatio = (scale * frameHeight / height) * actualHeight / frameHeight;
                 invalidate();
             }
 
@@ -87,5 +118,9 @@ public class PhotoViewDetail extends AppCompatImageView {
         matrix.postScale(scaleRatio, scaleRatio, centerPoint[0], centerPoint[1]);
 
         canvas.drawBitmap(bitmap, matrix, paint);
+    }
+
+    private void log(String msg) {
+        Log.e("PhotoViewDetail", msg);
     }
 }

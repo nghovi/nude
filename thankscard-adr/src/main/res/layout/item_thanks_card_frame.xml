@@ -6,13 +6,16 @@
               android:orientation="vertical">
 
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="120dp"
                     android:layout_height="80dp"
-                    android:gravity="center_vertical|center_horizontal"
                     android:orientation="vertical"
-                    custome:ignore="UselessParent">
-
+                    custome:ignore="UselessParent"
+                    android:background="#fff">
+        <trente.asia.thankscard.services.posted.view.PhotoViewDetail
+            android:id="@+id/photo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
         <ImageView
             android:id="@+id/img_card"
@@ -28,11 +31,11 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
-            android:background="@color/chiase_white"
             android:baselineAligned="false"
-            android:gravity="center_vertical|left"
+            android:gravity="center_vertical|start"
             android:orientation="vertical"
-            android:paddingLeft="10dp">
+            android:paddingStart="20dp"
+            android:paddingEnd="@dimen/margin_0dp">
 
             <TextView
                 android:id="@+id/txt_tc_detail_date"
@@ -57,7 +60,7 @@
                 android:text="@string/fragment_tc_detail_from"/>
         </LinearLayout>
 
-    </RelativeLayout>
+    </android.support.percent.PercentRelativeLayout>
 
 
 </LinearLayout>

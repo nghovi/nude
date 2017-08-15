@@ -102,7 +102,11 @@ public class TCSettingFragment extends AbstractTCFragment implements View.OnClic
 			showSignOutConfirmDialog();
 			break;
 		case R.id.lnr_contact_us:
-			gotoFragment(new TcContactUsFragment());
+			TcContactUsFragment contactUsFragment = new TcContactUsFragment();
+			bundle = new Bundle();
+			bundle.putInt(TcConst.ACTIVE_FOOTER_ITEM_ID, getFooterItemId());
+			contactUsFragment.setArguments(bundle);
+			((WelfareActivity)activity).addFragment(contactUsFragment);
 			break;
 		case R.id.txt_stage_infor:
 			gotoFragment(new TcStageInformationFragment());
