@@ -1,5 +1,6 @@
 package trente.asia.thankscard.services.rank;
 
+import android.view.View;
 import android.webkit.WebView;
 import android.widget.TextView;
 
@@ -45,6 +46,10 @@ public class TCAboutFragment extends AbstractTCFragment{
 
 		WebView webView = (WebView)getView().findViewById(R.id.webview_fragment_about);
 		webView.loadUrl("file:///android_asset/license_info.html");
+
+		if (getFooterItemId() == 0) {
+			getView().findViewById(R.id.footer).setVisibility(View.GONE);
+		}
 	}
 
 }

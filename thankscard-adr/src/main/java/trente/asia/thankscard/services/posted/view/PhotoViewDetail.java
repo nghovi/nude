@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 import android.util.FloatProperty;
+import android.util.Log;
 
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
@@ -16,6 +17,7 @@ import com.squareup.picasso.Target;
 import trente.asia.thankscard.BuildConfig;
 import trente.asia.thankscard.commons.defines.TcConst;
 import trente.asia.welfare.adr.pref.PreferencesSystemUtil;
+import trente.asia.welfare.adr.utils.WelfareUtil;
 
 /**
  * Created by tien on 7/26/2017.
@@ -43,7 +45,7 @@ public class PhotoViewDetail extends AppCompatImageView {
     }
 
     public void restoreImage(String imagePath, final float locationX, final float locationY, final float scale) {
-        Picasso.with(getContext()).load(BuildConfig.HOST + imagePath).resize(0, (int) frameHeight).into(new Target() {
+        Target target = new Target() {
             @Override
             public void onBitmapLoaded(Bitmap bitmapLoad, Picasso.LoadedFrom from) {
                 bitmap = bitmapLoad;
@@ -51,20 +53,22 @@ public class PhotoViewDetail extends AppCompatImageView {
                 height = bitmap.getHeight();
                 translateX = locationX * frameWidth - width / 2;
                 translateY = locationY * frameHeight - height / 2;
-                scaleRatio = scale * frameHeight / height;
+                scaleRatio = scale * frameWidth / width;
                 invalidate();
             }
 
             @Override
             public void onBitmapFailed(Drawable errorDrawable) {
-
+                log("onBitmapFailed");
             }
 
             @Override
             public void onPrepareLoad(Drawable placeHolderDrawable) {
 
             }
-        });
+        };
+        Picasso.with(getContext()).load(BuildConfig.HOST + imagePath).resize(0, (int) frameHeight).into(target);
+        this.setTag(target);
     }
 
     public void clearImage(){
@@ -87,5 +91,9 @@ public class PhotoViewDetail extends AppCompatImageView {
         matrix.postScale(scaleRatio, scaleRatio, centerPoint[0], centerPoint[1]);
 
         canvas.drawBitmap(bitmap, matrix, paint);
+    }
+
+    private void log(String msg) {
+        Log.e("PhotoViewDetail", msg);
     }
 }

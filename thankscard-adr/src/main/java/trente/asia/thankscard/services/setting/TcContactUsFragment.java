@@ -16,6 +16,7 @@ import android.widget.TextView;
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.thankscard.R;
+import trente.asia.thankscard.commons.defines.TcConst;
 import trente.asia.thankscard.fragments.AbstractTCFragment;
 import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.models.ApiObjectModel;
@@ -58,7 +59,7 @@ public class TcContactUsFragment extends AbstractTCFragment implements View.OnCl
 
 	@Override
 	public int getFooterItemId(){
-		return R.id.lnr_view_common_footer_mypage;
+		return getArguments().getInt(TcConst.ACTIVE_FOOTER_ITEM_ID, 0);
 	}
 
 	@Override
@@ -91,6 +92,10 @@ public class TcContactUsFragment extends AbstractTCFragment implements View.OnCl
 			}
 		});
 		btnSend.setOnClickListener(this);
+
+		if (getFooterItemId() == 0) {
+			getView().findViewById(R.id.footer).setVisibility(View.GONE);
+		}
 	}
 
 	private void initSpinner(List<String> lstType, List<String> lstServiceName){

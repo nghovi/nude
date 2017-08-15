@@ -55,7 +55,7 @@ public class PhotoViewPost extends AppCompatImageView{
 	}
 
 	public String getPhotoScale(){
-		return String.valueOf(height * scale / frameHeight);
+		return String.valueOf(width * scale / frameWidth);
 	}
 
 	public void setImage(String imagePath, String position){
