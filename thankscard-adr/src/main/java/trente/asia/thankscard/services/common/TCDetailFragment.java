@@ -150,7 +150,6 @@ public class TCDetailFragment extends AbstractPagerFragment{
 		PhotoViewDetail photoView = (PhotoViewDetail) getView().findViewById(R.id.layout_photo);
 		TCUtil.loadImageWithGlide(historyModel.template.templateUrl, imgCard);
 		textMessage.setText(historyModel.message);
-		log("message: " + historyModel.message);
 		Date postDate = CCDateUtil.makeDateCustom(historyModel.postDate, WelfareConst.WF_DATE_TIME);
 		String postDateFormat = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, postDate);
 		textDate.setText(postDateFormat);
@@ -163,6 +162,7 @@ public class TCDetailFragment extends AbstractPagerFragment{
 			setLayoutMessageRight(lnrMessage);
 			textMessage.setTextSize(TypedValue.COMPLEX_UNIT_PX, photoTextSize);
 			if(historyModel.attachment != null && historyModel.attachment.fileUrl != null){
+				log("photoView");
 				photoView.restoreImage(historyModel.attachment.fileUrl, Float.valueOf(historyModel.photoLocationX),
 						Float.valueOf(historyModel.photoLocationY), Float.valueOf(historyModel.photoScale));
 			} else {
@@ -303,6 +303,7 @@ public class TCDetailFragment extends AbstractPagerFragment{
 			txtMessageDetail.setText(historyModel.message);
 			txtMessageDetail.setMovementMethod(new ScrollingMovementMethod());
 		}
+
 		if(historyModel.template != null){
 			LinearLayout lnrFrameBackground = (LinearLayout)lnrFrame.findViewById(R.id.lnr_thanks_card_frame_container);
 			ImageView templateImage = (ImageView)lnrFrame.findViewById(R.id.img_card);

@@ -45,7 +45,7 @@ public class PhotoViewDetail extends AppCompatImageView {
     }
 
     public void restoreImage(String imagePath, final float locationX, final float locationY, final float scale) {
-        Picasso.with(getContext()).load(BuildConfig.HOST + imagePath).resize(0, (int) frameHeight).into(new Target() {
+        Target target = new Target() {
             @Override
             public void onBitmapLoaded(Bitmap bitmapLoad, Picasso.LoadedFrom from) {
                 log("restoreImage");
@@ -60,42 +60,16 @@ public class PhotoViewDetail extends AppCompatImageView {
 
             @Override
             public void onBitmapFailed(Drawable errorDrawable) {
-
+                log("onBitmapFailed");
             }
 
             @Override
             public void onPrepareLoad(Drawable placeHolderDrawable) {
 
             }
-        });
-    }
-
-    public void restoreImageInList(String imagePath, final float locationX, final float locationY, final float scale) {
-        Picasso.with(getContext()).load(BuildConfig.HOST + imagePath).resize(0, (int) frameHeight).into(new Target() {
-            @Override
-            public void onBitmapLoaded(Bitmap bitmapLoad, Picasso.LoadedFrom from) {
-                log("restoreImageInList");
-                bitmap = bitmapLoad;
-                width = bitmap.getWidth();
-                height = bitmap.getHeight();
-                int actualHeight = WelfareUtil.dpToPx(80);
-                translateX = (locationX * frameWidth - width / 2) * actualHeight / frameHeight;
-                translateY = (locationY * frameHeight - height / 2) * actualHeight / frameHeight;
-                log(translateX + " : " + translateY);
-                scaleRatio = (scale * frameHeight / height) * actualHeight / frameHeight;
-                invalidate();
-            }
-
-            @Override
-            public void onBitmapFailed(Drawable errorDrawable) {
-
-            }
-
-            @Override
-            public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-            }
-        });
+        };
+        Picasso.with(getContext()).load(BuildConfig.HOST + imagePath).resize(0, (int) frameHeight).into(target);
+        this.setTag(target);
     }
 
     public void clearImage(){
