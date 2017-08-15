@@ -8,6 +8,7 @@ import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.icu.text.SimpleDateFormat;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -34,6 +35,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -152,12 +154,17 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 
 	@Override
 	public void buildBodyLayout(){
-		int indexMonth = myself.dateBirth.indexOf("/") + 1;
-		int userBirthMonth = Integer.parseInt(myself.dateBirth.substring(indexMonth, indexMonth + 2));
-		int userBirthDay = Integer.parseInt(myself.dateBirth.substring(indexMonth + 3, indexMonth + 5));
 		Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
-		if ((userBirthMonth == calendar.get(Calendar.MONTH)  + 1) && (userBirthDay == calendar.get(Calendar.DAY_OF_MONTH))) {
-			isBirthday = true;
+		int thisYear = calendar.get(Calendar.YEAR);
+		String birthday = thisYear + myself.dateBirth.substring(4);
+		try{
+			Date date = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss").parse(birthday);
+			long difference = (System.currentTimeMillis() - date.getTime()) / 1000L;
+			if (difference > 0 && difference < 30L * 24L * 3600L) {
+				isBirthday = true;
+			}
+		}catch(ParseException e){
+			e.printStackTrace();
 		}
 
 		template = new Template();

@@ -1,5 +1,6 @@
 package trente.asia.thankscard.services.mypage;
 
+import java.text.ParseException;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -10,6 +11,7 @@ import org.json.JSONObject;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Paint;
+import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -116,6 +118,8 @@ public class MypageFragment extends AbstractTCFragment{
 
 		buildUserInfoLayout();
 		builNoticeList();
+
+
 	}
 
 	@Override
@@ -241,7 +245,7 @@ public class MypageFragment extends AbstractTCFragment{
 		mRealm.beginTransaction();
 		for(StampCategoryModel category : stampCategories){
 			category.services = "";
-			for (String service : category.listService) {
+			for(String service : category.listService){
 				category.services += service + ", ";
 			}
 			if(category.deleteFlag){

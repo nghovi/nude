@@ -14,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.text.ParseException;
+
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.thankscard.BuildConfig;
 import trente.asia.thankscard.R;
