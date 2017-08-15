@@ -226,6 +226,9 @@ public class StickerViewPost extends AppCompatImageView{
 			}else{
 				widthScale -= moveX;
 			}
+			if (widthScale < 50) {
+				widthScale = 50;
+			}
 			scaleValue = widthScale / width;
 			heightScale = scaleValue * height;
 		}else{
@@ -233,6 +236,9 @@ public class StickerViewPost extends AppCompatImageView{
 				heightScale += moveY;
 			}else{
 				heightScale -= moveY;
+			}
+			if (heightScale < 50) {
+				heightScale = 50;
 			}
 			scaleValue = heightScale / height;
 			widthScale = scaleValue * width;
