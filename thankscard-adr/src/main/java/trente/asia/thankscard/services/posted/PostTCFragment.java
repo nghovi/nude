@@ -241,9 +241,6 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 		if(totalPoint < pointBronze){
 			binding.lnrSelectSticker.setVisibility(View.INVISIBLE);
 			binding.lnrSelectPhoto.setVisibility(View.INVISIBLE);
-		}else if(totalPoint < pointSilver){
-			binding.lnrSelectSticker.setVisibility(View.VISIBLE);
-			binding.lnrSelectPhoto.setVisibility(View.INVISIBLE);
 		}else{
 			binding.lnrSelectSticker.setVisibility(View.VISIBLE);
 			binding.lnrSelectPhoto.setVisibility(View.VISIBLE);
