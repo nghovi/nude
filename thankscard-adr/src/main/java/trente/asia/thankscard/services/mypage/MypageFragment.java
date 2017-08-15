@@ -75,8 +75,8 @@ public class MypageFragment extends AbstractTCFragment{
 		int screenWidth = Integer.parseInt(preference.get(TcConst.PREF_FRAME_WIDTH));
 		int normalMessageWidth = screenWidth - WelfareUtil.dpToPx(140);
 		int photoMessageWidth = screenWidth / 2 - WelfareUtil.dpToPx(20);
-		int normalTextSize = normalMessageWidth / 13;
-		int photoTextSize = photoMessageWidth / 13;
+		int normalTextSize = normalMessageWidth / 15;
+		int photoTextSize = photoMessageWidth / 15;
 		preference.set(TcConst.PREF_NORMAL_TEXT_SIZE, String.valueOf(normalTextSize));
 		preference.set(TcConst.PREF_PHOTO_TEXT_SIZE, String.valueOf(photoTextSize));
 	}
