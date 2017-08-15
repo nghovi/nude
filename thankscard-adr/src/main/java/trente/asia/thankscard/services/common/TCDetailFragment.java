@@ -162,7 +162,7 @@ public class TCDetailFragment extends AbstractPagerFragment{
 			setLayoutMessageRight(lnrMessage);
 			textMessage.setTextSize(TypedValue.COMPLEX_UNIT_PX, photoTextSize);
 			if(historyModel.attachment != null && historyModel.attachment.fileUrl != null){
-				log("photoView");
+				photoView.clearImage();
 				photoView.restoreImage(historyModel.attachment.fileUrl, Float.valueOf(historyModel.photoLocationX),
 						Float.valueOf(historyModel.photoLocationY), Float.valueOf(historyModel.photoScale));
 			} else {
