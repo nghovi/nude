@@ -91,7 +91,7 @@ public class StickerViewPost extends AppCompatImageView{
 	}
 
 	public String getScale(){
-		return String.valueOf(heightScale / frameHeight);
+		return String.valueOf(widthScale / frameWidth);
 	}
 
 	public String getDegree(){
@@ -245,6 +245,19 @@ public class StickerViewPost extends AppCompatImageView{
 	public void moveImage(int moveX, int moveY){
 		x += moveX;
 		y += moveY;
+		if (x < - width / 2) {
+			x = - width / 2;
+		}
+		if (x > frameWidth - width / 2) {
+			x = (int) frameWidth - width / 2;
+		}
+		if (y < - height / 2) {
+			y = - height / 2;
+		}
+		if (y > frameHeight - height / 2) {
+			y = (int) frameHeight - height / 2;
+		}
+
 		translateX = x;
 		translateY = y;
 		invalidate();

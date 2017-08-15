@@ -58,7 +58,7 @@ public class StickerViewDetail extends AppCompatImageView{
                 height = bitmap.getHeight();
                 translateX = locationX * frameWidth - width / 2;
                 translateY = locationY * frameHeight - height / 2;
-                scale = scaleImage * frameHeight / height;
+                scale = scaleImage * frameWidth / width;
                 rotation = degree;
                 invalidate();
             }

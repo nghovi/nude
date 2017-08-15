@@ -48,13 +48,12 @@ public class PhotoViewDetail extends AppCompatImageView {
         Target target = new Target() {
             @Override
             public void onBitmapLoaded(Bitmap bitmapLoad, Picasso.LoadedFrom from) {
-                log("restoreImage");
                 bitmap = bitmapLoad;
                 width = bitmap.getWidth();
                 height = bitmap.getHeight();
                 translateX = locationX * frameWidth - width / 2;
                 translateY = locationY * frameHeight - height / 2;
-                scaleRatio = scale * frameHeight / height;
+                scaleRatio = scale * frameWidth / width;
                 invalidate();
             }
 
