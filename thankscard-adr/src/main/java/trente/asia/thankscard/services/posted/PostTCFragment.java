@@ -807,7 +807,6 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 
 	@Override
 	public void onStampClick(StampModel stamp){
-		closeLayoutSticker();
 		if(stickers.size() >= 50){
 			showLimitStickerDialog();
 		}else{
