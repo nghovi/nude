@@ -37,6 +37,7 @@ import trente.asia.calendar.commons.utils.ClUtil;
 import trente.asia.calendar.commons.views.UserListLinearLayout;
 import trente.asia.calendar.services.calendar.model.CalendarModel;
 import trente.asia.calendar.services.calendar.model.CategoryModel;
+import trente.asia.calendar.services.calendar.model.RoomModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.models.ApiObjectModel;
@@ -55,7 +56,7 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 	protected List<ApiObjectModel>		calendarHolders;
 	protected UserListLinearLayout		lnrUserList;
 
-	protected List<ApiObjectModel>		rooms;
+	protected List<RoomModel>			rooms;
 	protected ChiaseTextView			txtRoom;
 	protected ChiaseTextView			txtScope;
 	protected ChiaseTextView			txtStartTime;
@@ -124,7 +125,7 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 	protected void onLoadScheduleDetailSuccess(JSONObject response){
 		try{
 			schedule = LoganSquare.parse(response.optString("schedule"), ScheduleModel.class);
-			rooms = LoganSquare.parseList(response.optString("rooms"), ApiObjectModel.class);
+			rooms = LoganSquare.parseList(response.optString("rooms"), RoomModel.class);
 			users = LoganSquare.parseList(response.optString("users"), UserModel.class);
 			categories = LoganSquare.parseList(response.optString("categories"), CategoryModel.class);
 			if(getView() != null) inflateWithData(txtRoom, txtCategory, rooms, categories, schedule);
@@ -133,7 +134,7 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 		}
 	}
 
-	protected void inflateWithData(ChiaseTextView txtRoom, ChiaseTextView txtCategory, List<ApiObjectModel> rooms, List<CategoryModel> categories, ScheduleModel schedule){
+	protected void inflateWithData(ChiaseTextView txtRoom, ChiaseTextView txtCategory, List<RoomModel> rooms, List<CategoryModel> categories, ScheduleModel schedule){
 
 		try{
 			Gson gson = new Gson();
@@ -145,7 +146,7 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 		Map<String, String> scopes = getPublicityMap();
 
 		if(!CCStringUtil.isEmpty(schedule.key)){
-			txtRoom.setText(WelfareUtil.findApiObject4Id(rooms, schedule.roomId).value);
+			txtRoom.setText(getRoomName(rooms, schedule.roomId));
 			txtRoom.setValue(schedule.roomId);
 			swtAllDay.setChecked(CCBooleanUtil.checkBoolean(schedule.isAllDay));
 
@@ -177,7 +178,7 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 				txtRepeat.setText(getString(R.string.chiase_common_none));
 			}
 		}else{
-			txtRoom.setText(rooms.get(0).value);
+			txtRoom.setText(rooms.get(0).roomName);
 			txtRoom.setValue(rooms.get(0).key);
 			txtCategory.setText(categories.get(0).categoryName);
 			txtCategory.setValue(categories.get(0).key);
@@ -200,6 +201,15 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 			txtEndTime.setVisibility(View.VISIBLE);
 			txtEndDate.setVisibility(View.INVISIBLE);
 		}
+	}
+
+	public static String getRoomName(List<RoomModel> rooms, String roomId){
+		for(RoomModel roomModel : rooms){
+			if(roomModel.key.equals(roomId)){
+				return roomModel.roomName;
+			}
+		}
+		return "";
 	}
 
 	protected void showJoinUserList(){

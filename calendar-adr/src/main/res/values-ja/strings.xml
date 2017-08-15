@@ -101,4 +101,5 @@
     <string name="public_str">公開</string>
     <string name="private_str">非公開</string>
     <string name="complete_private">完全非公開</string>
+    <string name="schedule_mystery">非表示</string>
 </resources>

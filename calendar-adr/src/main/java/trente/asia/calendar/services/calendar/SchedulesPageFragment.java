@@ -185,7 +185,8 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 			pageSharingHolder.isLoadingSchedules = false;
 
 			lstSchedule = filterByRoom();
-			lstBirthdayUser = filterByUser();
+			lstSchedule = filterByPublicity();
+			// lstBirthdayUser = filterByUser();
 
 			// add holiday,
 			if(!CCCollectionUtil.isEmpty(lstHoliday)){
@@ -265,6 +266,33 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 		return result;
 	}
 
+	private List<ScheduleModel> filterByPublicity(){
+		List<ScheduleModel> result = new ArrayList<>();
+
+		for(ScheduleModel scheduleModel : lstSchedule){
+			if(ClConst.SCHEDULE_TYPE_PUB.equals(scheduleModel.scheduleType) || containUser(scheduleModel, myself.key)){
+				result.add(scheduleModel);
+			}else if(ClConst.SCHEDULE_TYPE_PRI.equals(scheduleModel.scheduleType)){
+				scheduleModel.scheduleName = getString(R.string.schedule_mystery);
+				result.add(scheduleModel);
+			}
+		}
+		return result;
+	}
+
+	private boolean containUser(ScheduleModel scheduleModel, String key){
+		if(CCStringUtil.isEmpty(scheduleModel.scheduleJoinUsers)){
+			return false;
+		}else{
+			for(UserModel userModel : scheduleModel.scheduleJoinUsers){
+				if(userModel.key.equals(key)){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	protected void updateSchedules(List<ScheduleModel> schedules, List<CategoryModel> categories){
 		Map<String, CategoryModel> categoryMap = ClUtil.convertCategory2Map(categories);
 		for(ScheduleModel schedule : schedules){
@@ -275,9 +303,11 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 	protected List<ScheduleModel> multiplyWithUsers(List<ScheduleModel> origins){
 		List<ScheduleModel> result = new ArrayList<>();
 		for(ScheduleModel scheduleModel : origins){
-			for(UserModel userModel : scheduleModel.scheduleJoinUsers){
-				ScheduleModel cloned = ScheduleModel.clone(scheduleModel, userModel);
-				result.add(cloned);
+			if(!CCCollectionUtil.isEmpty(scheduleModel.scheduleJoinUsers)){
+				for(UserModel userModel : scheduleModel.scheduleJoinUsers){
+					ScheduleModel cloned = ScheduleModel.clone(scheduleModel, userModel);
+					result.add(cloned);
+				}
 			}
 		}
 		return result;

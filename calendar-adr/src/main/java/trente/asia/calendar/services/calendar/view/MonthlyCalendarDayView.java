@@ -116,9 +116,7 @@ public class MonthlyCalendarDayView extends LinearLayout{
 	}
 
 	private void showSchedule(ScheduleModel scheduleModel){
-		if(ClConst.SCHEDULE_TYPE_HOLIDAY.equals(scheduleModel.scheduleType)){
-			setLayoutHoliday(scheduleModel);
-		}else if(ClConst.SCHEDULE_TYPE_BIRTHDAY.equals(scheduleModel.scheduleType)){
+		if(ClConst.SCHEDULE_TYPE_BIRTHDAY.equals(scheduleModel.scheduleType)){
 			setLayoutBirthday(scheduleModel);
 		}else{
 			lstSchedule.add(scheduleModel);
@@ -133,6 +131,9 @@ public class MonthlyCalendarDayView extends LinearLayout{
 			TextView txtSchedule = MonthlyCalendarRowView.createTextView(getContext(), width, 0, scheduleModel, marginTop - ClConst.TEXT_VIEW_HEIGHT + WelfareUtil.dpToPx(2));
 			lnrRowContent.addView(txtSchedule);
 			txtSchedules.add(txtSchedule);
+			if(ClConst.SCHEDULE_TYPE_HOLIDAY.equals(scheduleModel.scheduleType)){
+				txtSchedule.setTextColor(Color.RED);
+			}
 		}
 	}
 
