@@ -35,9 +35,11 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -103,6 +105,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 	private PreferencesSystemUtil		preference;
 	private Timer						timer			= new Timer();
 	private Handler						handler			= new Handler();
+	private boolean						isBirthday		= false;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState){
@@ -149,6 +152,14 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 
 	@Override
 	public void buildBodyLayout(){
+		int indexMonth = myself.dateBirth.indexOf("/") + 1;
+		int userBirthMonth = Integer.parseInt(myself.dateBirth.substring(indexMonth, indexMonth + 2));
+		int userBirthDay = Integer.parseInt(myself.dateBirth.substring(indexMonth + 3, indexMonth + 5));
+		Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
+		if ((userBirthMonth == calendar.get(Calendar.MONTH)  + 1) && (userBirthDay == calendar.get(Calendar.DAY_OF_MONTH))) {
+			isBirthday = true;
+		}
+
 		template = new Template();
 		template.templateId = prefAccUtil.get(TcConst.PREF_TEMPLATE_ID);
 		template.templateUrl = prefAccUtil.get(TcConst.PREF_TEMPLATE_PATH);
@@ -238,7 +249,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 		int pointGold = Integer.parseInt(prefAccUtil.get(TcConst.PREF_POINT_GOLD));
 		int totalPoint = Integer.parseInt(prefAccUtil.get(TcConst.PREF_POINT_TOTAL));
 
-		if(totalPoint < pointBronze){
+		if(totalPoint < pointBronze && !isBirthday){
 			binding.lnrSelectSticker.setVisibility(View.INVISIBLE);
 			binding.lnrSelectPhoto.setVisibility(View.INVISIBLE);
 		}else{
@@ -271,19 +282,19 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 		int totalPoint = Integer.parseInt(prefAccUtil.get(TcConst.PREF_POINT_TOTAL));
 
 		String serviceCode = "TC-B";
-		if (totalPoint < pointBronze) {
+		if(totalPoint < pointBronze){
 			return;
-		} else if (totalPoint < pointSilver){
+		}else if(totalPoint < pointSilver){
 			serviceCode = "TC-B";
-		} else if (totalPoint < pointGold) {
+		}else if(totalPoint < pointGold){
 			serviceCode = "TC-S";
-		} else {
+		}else{
 			serviceCode = "TC-G";
 		}
 
 		RealmResults<StampCategoryModel> categories = mRealm.where(StampCategoryModel.class).findAll();
-		for (StampCategoryModel category : categories) {
-			if (category.services.contains(serviceCode)) {
+		for(StampCategoryModel category : categories){
+			if(!isBirthday && category.services.contains(serviceCode) || (isBirthday && (category.services.contains("TC-B") || category.services.contains("TC-S") || category.services.contains("TC-G")))){
 				stampCategories.add(category);
 			}
 		}
