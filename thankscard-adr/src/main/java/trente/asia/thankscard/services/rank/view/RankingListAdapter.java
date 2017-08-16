@@ -94,7 +94,7 @@ public class RankingListAdapter extends ArrayAdapter<RankModel>{
 				WfPicassoHelper.loadImage(mContext, BuildConfig.HOST + model.avatarPath, holder.imgAvatar, null);
 			}
 			holder.txtPoint.setText(mContext.getString(R.string.tc_common_point, String.valueOf(model.cnt)));
-			if (model.rank == 0) {
+			if (model.rank == 0 || model.cnt == 0) {
 				holder.txtRank.setText("--");
 			} else if (model.rank == 1){
 				holder.txtRank.setText(mContext.getString(R.string.tc_1_rank, model.rank + ""));
