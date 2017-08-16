@@ -588,17 +588,18 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 	}
 
 	private void checkNewCard(){
-		if(CCConst.NONE.equals(member.key)){
-			showAlertDialog(getString(R.string.fragment_post_edit_alert_dlg_title), getString(R.string.fragment_post_edit_alert_dlg_message1), getString(android.R.string.ok), null);
-		}
+//		if(CCConst.NONE.equals(member.key)){
+//			showAlertDialog(getString(R.string.fragment_post_edit_alert_dlg_title), getString(R.string.fragment_post_edit_alert_dlg_message1), getString(android.R.string.ok), null);
+//		}
 //		else if(CCStringUtil.isEmpty(message) || hasTooManyLetters(message)){
 //			showAlertDialog(getString(R.string.fragment_post_edit_alert_dlg_title), getString(R.string.fragment_post_edit_alert_dlg_message2, String.valueOf(MAX_LETTER)), getString(android.R.string.ok), null);
 //		}
-		else if(this.template == null){
-			showAlertDialog(getString(R.string.fragment_post_edit_alert_dlg_title), getString(R.string.fragment_post_edit_alert_dlg_message3), getString(android.R.string.ok), null);
-		}else{
-			showConfirmDialog();
-		}
+//		else if(this.template == null){
+//			showAlertDialog(getString(R.string.fragment_post_edit_alert_dlg_title), getString(R.string.fragment_post_edit_alert_dlg_message3), getString(android.R.string.ok), null);
+//		}else{
+//
+//		}
+		showConfirmDialog();
 	}
 
 	private boolean hasTooManyLetters(String message){

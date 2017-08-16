@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -18,25 +19,21 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCNumberUtil;
 import asia.chiase.core.util.CCStringUtil;
-import io.realm.RealmList;
 import trente.asia.messenger.BuildConfig;
 import trente.asia.messenger.R;
 import trente.asia.messenger.services.message.listener.ItemMsgClickListener;
-import trente.asia.messenger.services.message.model.MessageContentModel;
-import trente.asia.messenger.services.message.model.RealmCommentModel;
 import trente.asia.messenger.services.message.model.RealmMessageModel;
 import trente.asia.messenger.services.message.model.RealmUserModel;
 import trente.asia.messenger.services.message.model.WFMStampModel;
 import trente.asia.welfare.adr.activity.WelfareFragment;
 import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.models.CommentModel;
 import trente.asia.welfare.adr.models.UserModel;
+import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
 import trente.asia.welfare.adr.utils.WelfareUtil;
 import trente.asia.welfare.adr.utils.WfPicassoHelper;
 
@@ -48,33 +45,36 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 	private final WelfareFragment.OnAvatarClickListener	onAvatarClickListener;
 	private Context										mContext;
 	private List<RealmMessageModel>						mLstMessage;
-	public ItemMsgClickListener							itemMsgClickListener;
+	private ItemMsgClickListener						itemMsgClickListener;
 
 	private List<String>								lstDate	= new ArrayList<>();
 	private List<Integer>								lstKey	= new ArrayList<>();
+	private UserModel									myself;
 
-	public class MessageViewHolder extends RecyclerView.ViewHolder{
+	class MessageViewHolder extends RecyclerView.ViewHolder{
 
-		public ImageView	imgAvatar;
-		public TextView		txtUserName;
-		public TextView		txtMessageDate;
-		public TextView		txtContent;
-		public ImageView	imgViewContent;
+		private ImageView		imgAvatar;
+		private TextView		txtUserName;
+		private TextView		txtMessageDate;
+		private TextView		txtContent;
+		private ImageView		imgViewContent;
 
-		public TextView		txtLocation;
-		public TextView		txtDate;
+		private TextView		txtLocation;
+		private TextView		txtDate;
 
-		public TextView		txtCommentNumber;
-		public TextView		txtFileName;
-		public LinearLayout	lnrTargetUser;
+		private TextView		txtCommentNumber;
+		private TextView		txtFileName;
+		private LinearLayout	lnrTargetUser;
 
-		public ProgressBar	pgrLoading;
-		public TextView		txtNumCheck;
-		public LinearLayout	lnrCheck;
-		public ImageView	imgIcon;
-		public LinearLayout lnrMessage;
+		private ProgressBar		pgrLoading;
+		private TextView		txtNumCheck;
+		private LinearLayout	lnrCheck;
+		private ImageView		imgIcon;
+		private LinearLayout	lnrMessage;
+		private RelativeLayout	rltMedia;
+		private LinearLayout	lnrStamp;
 
-		public MessageViewHolder(View itemView, int viewType){
+		private MessageViewHolder(View itemView, int viewType){
 			super(itemView);
 			if(viewType == R.layout.item_messages_date){
 				txtDate = (TextView)itemView.findViewById(R.id.txt_id_date);
@@ -86,6 +86,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 					lnrTargetUser = (LinearLayout)itemView.findViewById(R.id.lnr_id_target_user);
 				}else{
 					imgIcon = (ImageView)itemView.findViewById(R.id.img_id_icon);
+					lnrStamp = ()
 				}
 
 				imgAvatar = (ImageView)itemView.findViewById(R.id.img_avatar_msg);
@@ -94,7 +95,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 				txtMessageDate = (TextView)itemView.findViewById(R.id.txt_message_date);
 				txtNumCheck = (TextView)itemView.findViewById(R.id.txt_numb_check);
 				lnrCheck = (LinearLayout)itemView.findViewById(R.id.lnr_id_check);
-				lnrMessage = (LinearLayout) itemView.findViewById(R.id.lnr_message);
+				lnrMessage = (LinearLayout)itemView.findViewById(R.id.lnr_message);
 
 				if(viewType == R.layout.item_messages_location){
 					txtLocation = (TextView)itemView.findViewById(R.id.txt_id_location);
@@ -105,6 +106,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 				}else if(viewType == R.layout.item_messages_photo || viewType == R.layout.item_messages_movie){
 					txtContent = (TextView)itemView.findViewById(R.id.txt_id_content);
 					pgrLoading = (ProgressBar)itemView.findViewById(R.id.pgr_id_loading);
+					rltMedia = (RelativeLayout)itemView.findViewById(R.id.rlt_media);
 				}
 			}
 		}
@@ -154,6 +156,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 		}
 		this.itemMsgClickListener = itemMsgClickListener;
 		this.onAvatarClickListener = listener;
+		myself = new PreferencesAccountUtil(mContext).getUserPref();
 	}
 
 	@Override
@@ -177,6 +180,11 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 			}else if(WelfareConst.ITEM_FILE_TYPE_FILE.equals(contentModel.messageType)){
 				viewHolder.txtFileName.setText(contentModel.attachment.fileName);
 			}else if(WelfareConst.ITEM_FILE_TYPE_PHOTO.equals(contentModel.messageType) || WelfareConst.ITEM_FILE_TYPE_MOVIE.equals(contentModel.messageType)){
+				if(contentModel.messageSender.key == Integer.parseInt(myself.key)){
+					viewHolder.rltMedia.setBackgroundResource(R.drawable.message_frame_blue);
+				}else{
+					viewHolder.rltMedia.setBackgroundResource(R.drawable.message_frame);
+				}
 				if(contentModel.bitmapModel.bitmap != null){
 					viewHolder.imgViewContent.setImageBitmap(contentModel.bitmapModel.bitmap);
 				}else{
@@ -205,6 +213,12 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 				}
 			}else{
 				viewHolder.txtContent.setText(contentModel.messageContent);
+
+				if(contentModel.messageSender.key == Integer.parseInt(myself.key)){
+					viewHolder.lnrMessage.setBackgroundResource(R.drawable.message_frame_blue);
+				}else{
+					viewHolder.lnrMessage.setBackgroundResource(R.drawable.message_frame);
+				}
 			}
 			Date messageDate = CCDateUtil.makeDateCustom(contentModel.messageDate, WelfareConst.WF_DATE_TIME);
 			String messageDateFormat = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_HH_MM, messageDate);
@@ -373,7 +387,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 		this.notifyDataSetChanged();
 	}
 
-	private void log(String msg) {
+	private void log(String msg){
 		Log.e("MessageAdapter", msg);
 	}
 

@@ -45,7 +45,7 @@
                 <TextView
                     android:id="@+id/txt_id_file_name"
                     style="@style/wl_common_text"
-                    android:layout_marginLeft="@dimen/margin_10dp"
+                    android:layout_marginStart="@dimen/margin_10dp"
                     android:textColor="@color/chiase_white"/>
             </LinearLayout>
 
