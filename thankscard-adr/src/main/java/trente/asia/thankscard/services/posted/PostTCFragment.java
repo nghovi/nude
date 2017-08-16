@@ -289,7 +289,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 		int totalPoint = Integer.parseInt(prefAccUtil.get(TcConst.PREF_POINT_TOTAL));
 
 		String serviceCode = "TC-B";
-		if(totalPoint < pointBronze){
+		if(totalPoint < pointBronze && !isBirthday){
 			return;
 		}else if(totalPoint < pointSilver){
 			serviceCode = "TC-B";
@@ -301,7 +301,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 
 		RealmResults<StampCategoryModel> categories = mRealm.where(StampCategoryModel.class).findAll();
 		for(StampCategoryModel category : categories){
-			if(!isBirthday && category.services.contains(serviceCode) || (isBirthday && (category.services.contains("TC-B") || category.services.contains("TC-S") || category.services.contains("TC-G")))){
+			if((!isBirthday && category.services.contains(serviceCode)) || (isBirthday && (category.services.contains("TC-B") || category.services.contains("TC-S") || category.services.contains("TC-G")))){
 				stampCategories.add(category);
 			}
 		}
@@ -590,9 +590,11 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 	private void checkNewCard(){
 		if(CCConst.NONE.equals(member.key)){
 			showAlertDialog(getString(R.string.fragment_post_edit_alert_dlg_title), getString(R.string.fragment_post_edit_alert_dlg_message1), getString(android.R.string.ok), null);
-		}else if(CCStringUtil.isEmpty(message) || hasTooManyLetters(message)){
-			showAlertDialog(getString(R.string.fragment_post_edit_alert_dlg_title), getString(R.string.fragment_post_edit_alert_dlg_message2, String.valueOf(MAX_LETTER)), getString(android.R.string.ok), null);
-		}else if(this.template == null){
+		}
+//		else if(CCStringUtil.isEmpty(message) || hasTooManyLetters(message)){
+//			showAlertDialog(getString(R.string.fragment_post_edit_alert_dlg_title), getString(R.string.fragment_post_edit_alert_dlg_message2, String.valueOf(MAX_LETTER)), getString(android.R.string.ok), null);
+//		}
+		else if(this.template == null){
 			showAlertDialog(getString(R.string.fragment_post_edit_alert_dlg_title), getString(R.string.fragment_post_edit_alert_dlg_message3), getString(android.R.string.ok), null);
 		}else{
 			showConfirmDialog();

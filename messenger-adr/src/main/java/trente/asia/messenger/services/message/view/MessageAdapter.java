@@ -72,6 +72,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 		public TextView		txtNumCheck;
 		public LinearLayout	lnrCheck;
 		public ImageView	imgIcon;
+		public LinearLayout lnrMessage;
 
 		public MessageViewHolder(View itemView, int viewType){
 			super(itemView);
@@ -93,6 +94,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 				txtMessageDate = (TextView)itemView.findViewById(R.id.txt_message_date);
 				txtNumCheck = (TextView)itemView.findViewById(R.id.txt_numb_check);
 				lnrCheck = (LinearLayout)itemView.findViewById(R.id.lnr_id_check);
+				lnrMessage = (LinearLayout) itemView.findViewById(R.id.lnr_message);
 
 				if(viewType == R.layout.item_messages_location){
 					txtLocation = (TextView)itemView.findViewById(R.id.txt_id_location);
@@ -205,7 +207,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 				viewHolder.txtContent.setText(contentModel.messageContent);
 			}
 			Date messageDate = CCDateUtil.makeDateCustom(contentModel.messageDate, WelfareConst.WF_DATE_TIME);
-			String messageDateFormat = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE_HH_MM, messageDate);
+			String messageDateFormat = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_HH_MM, messageDate);
 			viewHolder.txtUserName.setText(contentModel.messageSender.userName);
 			viewHolder.txtMessageDate.setText(messageDateFormat);
 			viewHolder.imgAvatar.setOnClickListener(new View.OnClickListener() {
