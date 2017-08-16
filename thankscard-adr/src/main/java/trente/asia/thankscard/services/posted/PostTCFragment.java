@@ -635,8 +635,11 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 
 			UserModel userModel = prefAccUtil.getUserPref();
 			jsonObject.put("posterId", userModel.key);
-
-			jsonObject.put("receiverId", member.key);
+			if (CCConst.NONE.equals(member.key)) {
+				jsonObject.put("receiverId", null);
+			} else {
+				jsonObject.put("receiverId", member.key);
+			}
 			jsonObject.put("message", binding.edtMessage.getText().toString());
 			jsonObject.put("isSecret", isSecret);
 

@@ -93,8 +93,6 @@ public class BoardListFragment extends AbstractMsgFragment implements View.OnCli
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id){
 				RealmBoardModel boardModel = mAdapter.getItem(position);
-                log(boardModel.boardName);
-				log("position = " + position);
 				activeBoardId = boardModel.key;
 				prefAccUtil.set(MsConst.PREF_ACTIVE_BOARD_ID, activeBoardId + "");
 				lsvBoard.setItemChecked(position, true);
