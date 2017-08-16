@@ -28,10 +28,13 @@
             <include layout="@layout/common_messages_to_user"/>
 
             <RelativeLayout
+                android:id="@+id/rlt_media"
                 android:layout_width="@dimen/margin_150dp"
                 android:layout_height="@dimen/margin_150dp"
                 android:layout_marginBottom="@dimen/margin_6dp"
                 android:layout_marginTop="@dimen/margin_6dp"
+                android:padding="@dimen/margin_10dp"
+                android:elevation="@dimen/margin_2dp"
                 android:gravity="center">
 
                 <ImageView

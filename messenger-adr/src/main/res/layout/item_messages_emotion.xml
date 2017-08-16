@@ -45,8 +45,10 @@
 
             <LinearLayout
                 style="@style/cs_common_wrap"
+                android:id="@+id/lnr_stamp"
                 android:layout_marginBottom="@dimen/margin_6dp"
                 android:layout_marginTop="@dimen/margin_6dp"
+                android:padding="@dimen/margin_10dp"
                 android:gravity="center">
 
                 <ImageView
