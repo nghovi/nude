@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.io.LineNumberReader;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -86,7 +87,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 					lnrTargetUser = (LinearLayout)itemView.findViewById(R.id.lnr_id_target_user);
 				}else{
 					imgIcon = (ImageView)itemView.findViewById(R.id.img_id_icon);
-					lnrStamp = ()
+					lnrStamp = (LinearLayout) itemView.findViewById(R.id.lnr_stamp);
 				}
 
 				imgAvatar = (ImageView)itemView.findViewById(R.id.img_avatar_msg);
@@ -173,8 +174,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 			viewHolder.txtDate.setText(contentModel.messageDate);
 		}else{
 			viewHolder.bind(viewHolder, contentModel, itemMsgClickListener);
-			// viewHolder.imgAvatar.setImageDrawable(null);
-			// WfPicassoHelper.cancelLoadImage(mContext, viewHolder.imgAvatar);
+
 			if(WelfareConst.ITEM_TEXT_TYPE_LOC.equals(contentModel.messageType)){
 				viewHolder.txtLocation.setText(contentModel.messageContent);
 			}else if(WelfareConst.ITEM_FILE_TYPE_FILE.equals(contentModel.messageType)){
@@ -210,6 +210,11 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 				WFMStampModel stamp = WFMStampModel.getStamp(contentModel.messageContent);
 				if(stamp != null){
 					Picasso.with(mContext).load(BuildConfig.HOST + stamp.stampPath).resize(WelfareUtil.dpToPx(80), WelfareUtil.dpToPx(80)).into(viewHolder.imgIcon);
+				}
+				if(contentModel.messageSender.key == Integer.parseInt(myself.key)){
+					viewHolder.lnrStamp.setBackgroundResource(R.drawable.message_frame_blue);
+				}else{
+					viewHolder.lnrStamp.setBackgroundResource(R.drawable.message_frame);
 				}
 			}else{
 				viewHolder.txtContent.setText(contentModel.messageContent);
