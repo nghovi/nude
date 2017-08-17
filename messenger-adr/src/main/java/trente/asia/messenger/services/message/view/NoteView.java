@@ -60,7 +60,7 @@ public class NoteView extends LinearLayout{
 				if(isEditMode){
 					edtNote.setText(noteContent);
 				}
-				changeMode(!isEditMode);
+//				changeMode(!isEditMode);
 			}
 		});
 	}
