@@ -156,11 +156,18 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 	public void buildBodyLayout(){
 		Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
 		int thisYear = calendar.get(Calendar.YEAR);
-		String birthday = thisYear + myself.dateBirth.substring(4);
 		try{
+			String birthday = thisYear + myself.dateBirth.substring(4);
 			Date date = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss").parse(birthday);
 			long difference = (System.currentTimeMillis() - date.getTime()) / 1000L;
-			if (difference > 0 && difference < 30L * 24L * 3600L) {
+			if (difference > 0 && difference < 31L * 24L * 3600L) {
+				isBirthday = true;
+			}
+
+			birthday = (thisYear - 1) + myself.dateBirth.substring(4);
+			date = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss").parse(birthday);
+			difference = (System.currentTimeMillis() - date.getTime()) / 1000L;
+			if (difference > 0 && difference < 31L * 24L * 3600L) {
 				isBirthday = true;
 			}
 		}catch(ParseException e){
