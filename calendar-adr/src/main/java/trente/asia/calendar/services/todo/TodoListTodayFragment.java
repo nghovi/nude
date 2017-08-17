@@ -262,7 +262,7 @@ public class TodoListTodayFragment extends AbstractClFragment{
 
 	@Override
 	public int getFooterItemId(){
-		return footerItemId;
+		return 0;
 	}
 
 	@Override
@@ -282,10 +282,6 @@ public class TodoListTodayFragment extends AbstractClFragment{
 			dlgDeleteConfirm.dismiss();
 		}
 		loadTodoList();
-	}
-
-	public void setFooterItemId(int footerItemId){
-		this.footerItemId = footerItemId;
 	}
 
 	public void setSelectedDate(Date selectedDate){

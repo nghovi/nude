@@ -40,8 +40,5 @@
 
     </ScrollView>
 
-
-    <include layout="@layout/view_common_footer" />
-
 </LinearLayout>
 

@@ -95,7 +95,7 @@
     <string name="select_user">ユーザー選択</string>
     <string name="select_group">グループ選択</string>
     <string name="cl_schedule_form_item_scope">公開設定</string>
-    <string name="two_things_todo">%1$s thing(s) To Do</string>
+    <string name="two_things_todo">To Do %1$s件 →</string>
     <string name="schedule">予定</string>
     <string name="show_today">今日を表示</string>
     <string name="public_str">公開</string>

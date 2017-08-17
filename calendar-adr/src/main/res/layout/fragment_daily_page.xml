@@ -49,6 +49,7 @@
                             android:id="@+id/img_birthday_daily_page"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center"
                             android:src="@drawable/cl_icon_birthday"
                             android:visibility="gone" />
 

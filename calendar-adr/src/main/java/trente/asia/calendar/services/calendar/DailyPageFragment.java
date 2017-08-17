@@ -102,7 +102,6 @@ public class DailyPageFragment extends SchedulesPageFragment{
 
 	private void gotoTodoListTodayFragment(Date selectedDate){
 		TodoListTodayFragment todoListTodayFragment = new TodoListTodayFragment();
-		todoListTodayFragment.setFooterItemId(R.id.lnr_view_footer_daily);
 		todoListTodayFragment.setSelectedDate(selectedDate);
 		((ChiaseFragment)getParentFragment()).gotoFragment(todoListTodayFragment);
 	}

@@ -254,7 +254,6 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 
 	private void gotoTodoListTodayFragment(Calendar c2){
 		TodoListTodayFragment todoListTodayFragment = new TodoListTodayFragment();
-		todoListTodayFragment.setFooterItemId(R.id.lnr_view_footer_weekly);
 		todoListTodayFragment.setSelectedDate(c2.getTime());
 		((ChiaseFragment)getParentFragment()).gotoFragment(todoListTodayFragment);
 	}
