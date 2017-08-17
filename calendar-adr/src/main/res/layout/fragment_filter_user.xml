@@ -52,9 +52,5 @@
             android:orientation="vertical" />
     </ScrollView>
 
-    <View style="@style/cs_common_divider" />
-
-
-    <include layout="@layout/view_common_footer" />
 
 </LinearLayout>

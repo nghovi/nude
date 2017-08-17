@@ -136,7 +136,7 @@ public class UserFilterFragment extends AbstractClFragment{
 
 	@Override
 	public int getFooterItemId(){
-		return R.id.lnr_view_footer_monthly;
+		return 0;
 	}
 
 	@Override

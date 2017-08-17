@@ -97,11 +97,12 @@
     <string name="select_user">Select user</string>
     <string name="select_group">Select group</string>
     <string name="cl_schedule_form_item_scope">公開設定</string>
-    <string name="two_things_todo">%s$1 thing(s) To Do</string>
+    <string name="two_things_todo">%1$s thing(s) To Do</string>
     <string name="schedule">Schedule</string>
     <string name="show_today">今日を表示</string>
     <string name="public_str">Public</string>
     <string name="private_str">Private</string>
     <string name="complete_private">Complete private</string>
     <string name="schedule_mystery">非表示</string>
+    <string name="today_empty_todo">There is no Todo for today</string>
 </resources>

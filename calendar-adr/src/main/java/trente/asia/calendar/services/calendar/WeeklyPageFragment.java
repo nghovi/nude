@@ -31,6 +31,7 @@ import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCStringUtil;
+import trente.asia.android.activity.ChiaseFragment;
 import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.services.calendar.model.CategoryModel;
@@ -38,6 +39,7 @@ import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.model.WorkOffer;
 import trente.asia.calendar.services.todo.TodoListFragment;
+import trente.asia.calendar.services.todo.TodoListTodayFragment;
 import trente.asia.calendar.services.todo.model.Todo;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.models.UserModel;
@@ -135,13 +137,20 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 		// todo
 		for(Todo todo : todos){
 			if(!CCStringUtil.isEmpty(todo.limitDate)){
-				Calendar c2 = CCDateUtil.makeCalendarWithDateOnly(CCDateUtil.makeDateCustom(todo.limitDate, WelfareConst.WF_DATE_TIME));
+				final Calendar c2 = CCDateUtil.makeCalendarWithDateOnly(CCDateUtil.makeDateCustom(todo.limitDate, WelfareConst.WF_DATE_TIME));
 				int dayDistance = c2.get(Calendar.DAY_OF_YEAR) - c1.get(Calendar.DAY_OF_YEAR);
 
 				if(!columnTopMarginsMap.keySet().contains(dayDistance)){
 					int leftMargin = cellWidth * (1 + dayDistance);
 					topMargin = getNextTopMargin(dayDistance, dayDistance);
 					TextView textView = makeTextView(activity, getString(R.string.cl_footer_todo), leftMargin, topMargin, cellWidth, Color.GRAY, 0, Gravity.CENTER);
+					textView.setOnClickListener(new View.OnClickListener() {
+
+						@Override
+						public void onClick(View v){
+							gotoTodoListTodayFragment(c2);
+						}
+					});
 					rltPart1.addView(textView);
 				}
 			}
@@ -241,6 +250,13 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 			rltPart1.getLayoutParams().height = (MAX_ROW + 1) * WeeklyPageFragment.CELL_HEIGHT_PIXEL + WelfareUtil.dpToPx(10);
 			rltPart1.requestLayout();
 		}
+	}
+
+	private void gotoTodoListTodayFragment(Calendar c2){
+		TodoListTodayFragment todoListTodayFragment = new TodoListTodayFragment();
+		todoListTodayFragment.setFooterItemId(R.id.lnr_view_footer_weekly);
+		todoListTodayFragment.setSelectedDate(c2.getTime());
+		((ChiaseFragment)getParentFragment()).gotoFragment(todoListTodayFragment);
 	}
 
 	private int getNextTopMargin(int keyStart, int keyEnd){

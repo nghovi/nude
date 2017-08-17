@@ -24,9 +24,9 @@
                     android:id="@+id/ic_icon_expand"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
                     android:layout_gravity="bottom|left"
-                    android:src="@drawable/wf_file" />
+                    android:src="@drawable/wf_file"
+                    android:visibility="gone" />
 
                 <ScrollView
                     android:layout_width="match_parent"
@@ -41,6 +41,7 @@
                             android:id="@+id/txt_todo_things"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:gravity="center"
                             android:text="@string/two_things_todo"
                             android:visibility="gone" />
 
@@ -61,9 +62,9 @@
                             android:id="@+id/txt_more_to_come"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:visibility="gone"
                             android:gravity="center"
-                            android:text="+2" />
+                            android:text="+2"
+                            android:visibility="gone" />
                     </LinearLayout>
 
                 </ScrollView>
@@ -75,9 +76,9 @@
         <View style="@style/cs_common_divider" />
 
         <ScrollView
+            android:id="@+id/src_fragment_daily_page"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/src_fragment_daily_page"
             android:fillViewport="true">
 
             <LinearLayout

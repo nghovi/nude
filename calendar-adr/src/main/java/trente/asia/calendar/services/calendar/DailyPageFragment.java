@@ -22,10 +22,12 @@ import android.widget.TextView;
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
+import trente.asia.android.activity.ChiaseFragment;
 import trente.asia.calendar.R;
 import trente.asia.calendar.services.calendar.model.CategoryModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.todo.TodoListFragment;
+import trente.asia.calendar.services.todo.TodoListTodayFragment;
 import trente.asia.welfare.adr.define.WelfareConst;
 
 /**
@@ -53,6 +55,13 @@ public class DailyPageFragment extends SchedulesPageFragment{
 	protected void initView(){
 		super.initView();
 		txtTodoInfo = (TextView)getView().findViewById(R.id.txt_todo_things);
+		txtTodoInfo.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v){
+				gotoTodoListTodayFragment(selectedDate);
+			}
+		});
 		imgBirthdayIcon = (ImageView)getView().findViewById(R.id.img_birthday_daily_page);
 		lnrScheduleAllDays = (LinearLayout)getView().findViewById(R.id.lnr_schedule_all_day_container);
 		lnrListSchedules = (LinearLayout)getView().findViewById(R.id.lnr_fragment_daily_page_schedules_time);
@@ -89,6 +98,13 @@ public class DailyPageFragment extends SchedulesPageFragment{
 			}
 		});
 
+	}
+
+	private void gotoTodoListTodayFragment(Date selectedDate){
+		TodoListTodayFragment todoListTodayFragment = new TodoListTodayFragment();
+		todoListTodayFragment.setFooterItemId(R.id.lnr_view_footer_daily);
+		todoListTodayFragment.setSelectedDate(selectedDate);
+		((ChiaseFragment)getParentFragment()).gotoFragment(todoListTodayFragment);
 	}
 
 	public void expand(final View v){

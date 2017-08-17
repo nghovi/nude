@@ -1,6 +1,7 @@
 package trente.asia.calendar.services.calendar;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import org.json.JSONObject;
@@ -17,6 +18,7 @@ import asia.chiase.core.util.CCStringUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.welfare.adr.activity.WelfareActivity;
+import trente.asia.welfare.adr.models.UserModel;
 
 /**
  * ScheduleDetailFragment
@@ -62,8 +64,20 @@ public class ScheduleDetailFragment extends AbstractScheduleFragment{
 	protected void showJoinUserList(){
 		if(lnrUserList != null){
 			lnrUserList.showAll(schedule.scheduleJoinUsers, (int)getResources().getDimension(R.dimen.margin_30dp));
+			lnrUserList.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					gotoUserListFragment(schedule.scheduleJoinUsers);
+				}
+			});
 			txtJoinUser.setText(getString(R.string.cl_schedule_form_item_join_user) + " (" + schedule.scheduleJoinUsers.size() + ")");
 		}
+	}
+
+	private void gotoUserListFragment(List<UserModel> scheduleJoinUsers) {
+		UserListFragment userListFragment = new UserListFragment();
+		userListFragment.setUsers(scheduleJoinUsers);
+		gotoFragment(userListFragment);
 	}
 
 	@Override
