@@ -22,7 +22,7 @@
 
     <string name="msg_msg_detail_photo_title">Photo detail</string>
 
-    <string name="msg_board_note_title">Board note</string>
+    <string name="msg_board_note_title">Note list</string>
     <string name="msg_board_note_member_title">Member list</string>
 
     <string name="msg_user_list_search_contact">Search contacts</string>
@@ -41,4 +41,8 @@
     <string name="msg_add_member">Add to chat</string>
     <string name="msg_check_all">Check all</string>
     <string name="msg_select_department">Select department</string>
+    <string name="msg_note_list_like">Like</string>
+    <string name="msg_note_list_add_comment">Add comment</string>
+    <string name="msg_note_detail">Note detail</string>
+    <string name="msg_note_edit">Edit note</string>
 </resources>

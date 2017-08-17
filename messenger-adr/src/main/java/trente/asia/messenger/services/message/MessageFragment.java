@@ -87,6 +87,7 @@ import trente.asia.messenger.services.message.view.MemberListView;
 import trente.asia.messenger.services.message.view.MembersAdapter;
 import trente.asia.messenger.services.message.view.MessageAdapter;
 import trente.asia.messenger.services.message.view.MessageView;
+import trente.asia.messenger.services.message.view.NoteAdapter;
 import trente.asia.messenger.services.message.view.NoteView;
 import trente.asia.messenger.services.message.view.RecommendStampAdapter;
 import trente.asia.messenger.services.message.view.StampAdapter;
@@ -112,7 +113,12 @@ import trente.asia.welfare.adr.view.WfSlideMenuLayout;
  * @author TrungND
  */
 
-public class MessageFragment extends AbstractMsgFragment implements View.OnClickListener,ItemMsgClickListener,GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener,StampCategoryAdapter.OnStampCategoryAdapterListener,StampAdapter.OnStampAdapterListener,UserListFragment.OnAddUserSuccessListener,MessageView.OnTextChangedListener,RecommendStampAdapter.OnRecommendStampAdapterListener,NetworkChangeReceiver.OnNetworkChangeListener{
+public class MessageFragment extends AbstractMsgFragment implements View.OnClickListener,
+		ItemMsgClickListener,GoogleApiClient.ConnectionCallbacks,
+		GoogleApiClient.OnConnectionFailedListener,StampCategoryAdapter.OnStampCategoryAdapterListener,
+		StampAdapter.OnStampAdapterListener,UserListFragment.OnAddUserSuccessListener,
+		MessageView.OnTextChangedListener,RecommendStampAdapter.OnRecommendStampAdapterListener,
+		NetworkChangeReceiver.OnNetworkChangeListener, NoteAdapter.OnNoteAdapterListener{
 
 	private ImageView									mImgLeftHeader;
 	private WfSlideMenuLayout							mSlideMenuLayout;
@@ -381,7 +387,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 		messageView.setOnTextChangedListener(this);
 		messageView.revMessage.listener = onScrollToTopListener;
 		noteView = (NoteView)inflater.inflate(R.layout.board_pager_note, null);
-		noteView.initialization();
+		noteView.initiate(this);
 		memberView = (MemberListView)inflater.inflate(R.layout.board_pager_member, null);
 		memberView.initialization();
 
@@ -401,7 +407,6 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 		mViewForMenuBehind.setOnClickListener(this);
 		messageView.lnrLike.setOnClickListener(this);
 		lnrRightHeader.setOnClickListener(this);
-		noteView.btnSave.setOnClickListener(this);
 		mDlgProfile = new WfProfileDialog(activity);
 		mDlgProfile.setDialogProfileDetail(50, 50);
 
@@ -657,7 +662,6 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 	@Override
 	public void onResume(){
 		super.onResume();
-		log("onResume");
 		((WelfareActivity)activity).setOnActivityResultListener(onActivityResultListener);
 
 		if(mSlideMenuLayout.isMenuShown()){
@@ -751,17 +755,6 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 		requestUpdate(MsConst.API_MESSAGE_NOTE_COPY, jsonObject, false);
 	}
 
-	private void updateNote(){
-		JSONObject jsonObject = new JSONObject();
-		try{
-			jsonObject.put("key", activeBoard.key);
-			jsonObject.put("boardNote", noteView.edtNote.getText());
-		}catch(JSONException ex){
-			ex.printStackTrace();
-		}
-		requestUpdate(MsConst.API_MESSAGE_NOTE_UPDATE, jsonObject, false);
-	}
-
 	@Override
 	protected void successUpdate(JSONObject response, String url){
 		if(MsConst.API_MESSAGE_UPDATE.equals(url)){
@@ -796,7 +789,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 			mRealm.where(RealmMessageModel.class).equalTo("key", key).findFirst().deleteFromRealm();
 			mRealm.commitTransaction();
 		}else if(MsConst.API_MESSAGE_NOTE_UPDATE.equals(url)){
-			noteView.changeMode(false);
+
 		}else{
 			super.successUpdate(response, url);
 		}
@@ -848,9 +841,6 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 			gotoFragment(fragment);
 			break;
 
-		case R.id.btn_id_save:
-			updateNote();
-			break;
 		case R.id.btn_cancel:
 			binding.layoutStamp.getRoot().setVisibility(View.GONE);
 			mViewForMenuBehind.setVisibility(View.GONE);
@@ -972,8 +962,6 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 	}
 
 	private void updateNoteData(){
-		noteView.edtNote.setText(CCStringUtil.toString(activeBoard.boardNote));
-		noteView.changeMode(false);
 		if(!CCCollectionUtil.isEmpty(activeBoard.memberList)){
 			memberView.updateMemberList(activeBoard.memberList);
 			List<RealmUserModel> userListWithoutMe = new ArrayList<>();
@@ -1205,5 +1193,10 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 		}else{
 			stopTimer();
 		}
+	}
+
+	@Override
+	public void onNoteClick(int position) {
+		gotoFragment(new NoteDetailFragment());
 	}
 }

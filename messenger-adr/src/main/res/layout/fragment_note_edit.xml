@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/wf_login_background_color">
+        <include layout="@layout/view_common_header"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin_16dp"
+            android:text="@string/msg_note_edit"
+            android:textSize="16sp"
+            android:textColor="@color/chiase_black"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="This is note"
+            android:textColor="@color/chiase_black"
+            android:textSize="14sp"
+            android:padding="@dimen/margin_16dp"
+            android:layout_margin="@dimen/margin_1dp"
+            android:gravity="top"
+            android:background="@drawable/edit_note_frame"/>
+        <Button
+            android:id="@+id/btn_delete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_16dp"
+            android:layout_marginBottom="@dimen/margin_16dp"
+            android:layout_marginStart="@dimen/margin_40dp"
+            android:layout_marginEnd="@dimen/margin_40dp"
+            android:text="@string/chiase_common_delete"
+            android:background="@drawable/btn_delete_background"/>
+    </LinearLayout>
+</layout>
