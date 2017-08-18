@@ -203,7 +203,7 @@ public class TodoListFragment extends AbstractClFragment{
 			// }
 			// });
 			if(CCStringUtil.isEmpty(todo.limitDate)){
-				txtTitle.setText(getString(R.string.no_deadline));
+				txtDate.setText(getString(R.string.no_deadline));
 			}else{
 				Date date = CCDateUtil.makeDateCustom(todo.limitDate, WelfareConst.WF_DATE_TIME);
 				if(CCDateUtil.compareDate(today, date, false) >= 0){
@@ -288,7 +288,7 @@ public class TodoListFragment extends AbstractClFragment{
 			// }
 			// });
 			if(CCStringUtil.isEmpty(todo.limitDate)){
-				txtTitle.setText(getString(R.string.no_deadline));
+				txtDate.setText(getString(R.string.no_deadline));
 			}else{
 				Date date = CCDateUtil.makeDateCustom(todo.limitDate, WelfareConst.WF_DATE_TIME);
 				if(CCDateUtil.compareDate(today, date, false) >= 0){

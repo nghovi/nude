@@ -8,6 +8,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import trente.asia.calendar.R;
+import trente.asia.calendar.commons.defines.ClConst;
 
 /**
  * Created by hviet on 7/25/17.
@@ -17,6 +18,16 @@ public class UserFacilityView extends LinearLayout{
 
 	private ImageButton	btnUser;
 	private ImageButton	btnFacility;
+
+	public void updateButtonBackground(String filterType){
+		if(filterType.equals(ClConst.PREF_FILTER_TYPE_USER)){
+			btnUser.setBackgroundResource(R.drawable.cl_tab_user_on);
+			btnFacility.setBackgroundResource(R.drawable.cl_tab_facility_off);
+		}else{
+			btnUser.setBackgroundResource(R.drawable.cl_tab_user_off);
+			btnFacility.setBackgroundResource(R.drawable.cl_tab_facility_on);
+		}
+	}
 
 	public interface OnTabClickListener{
 

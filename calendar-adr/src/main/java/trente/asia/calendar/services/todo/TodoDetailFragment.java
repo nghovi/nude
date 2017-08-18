@@ -90,8 +90,8 @@ public class TodoDetailFragment extends AbstractClFragment{
 		txtDeadline = (ChiaseEditText)getView().findViewById(R.id.txt_deadline);
 		if(todo != null && todo.isFinish == true){
 			initHeader(R.drawable.wf_back_white, getString(R.string.todo_title), null);
-			edtTitle.setEnabled(false);
-			edtContent.setEnabled(false);
+			edtTitle.setFocusable(false);
+			edtContent.setFocusable(false);
 		}else{
 			getView().findViewById(R.id.img_id_header_right_icon).setOnClickListener(this);
 			initHeader(R.drawable.wf_back_white, getString(R.string.todo_title), R.drawable.cl_action_save);
@@ -164,6 +164,9 @@ public class TodoDetailFragment extends AbstractClFragment{
 
 	private void onClickSaveIcon(){
 		String limitDate = txtDeadline.getText().toString();
+		if(limitDate.equals(getString(R.string.no_deadline))){
+			limitDate = null;
+		}
 		JSONObject jsonObject = new JSONObject();
 		try{
 			String key = todo != null ? todo.key : null;

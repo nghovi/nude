@@ -38,6 +38,7 @@ public abstract class PageContainerFragment extends AbstractClFragment{
 	protected final int					INITIAL_POSITION	= Integer.MAX_VALUE / 2;
 	protected final Date				TODAY				= Calendar.getInstance().getTime();
 	protected TextView					txtToday;
+	private UserFacilityView			userFacilityView;
 
 	@Override
 	public void onResume(){
@@ -49,6 +50,8 @@ public abstract class PageContainerFragment extends AbstractClFragment{
 			SchedulesPageFragment fragment = (SchedulesPageFragment)mPagerAdapter.getItem(holder.selectedPagePosition);
 			fragment.loadScheduleList();
 		}
+		String filterType = prefAccUtil.get(ClConst.PREF_FILTER_TYPE);
+		userFacilityView.updateButtonBackground(filterType);
 	}
 
 	@Override
@@ -88,7 +91,7 @@ public abstract class PageContainerFragment extends AbstractClFragment{
 			}
 		});
 
-		UserFacilityView userFacilityView = (UserFacilityView)getView().findViewById(R.id.user_facility_view);
+		userFacilityView = (UserFacilityView)getView().findViewById(R.id.user_facility_view);
 		userFacilityView.initChildren(new UserFacilityView.OnTabClickListener() {
 
 			@Override
