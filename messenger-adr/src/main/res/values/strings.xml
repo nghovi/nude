@@ -45,4 +45,7 @@
     <string name="msg_note_list_add_comment">Add comment</string>
     <string name="msg_note_detail">Note detail</string>
     <string name="msg_note_edit">Edit note</string>
+    <string name="msg_like_list">Users like this note</string>
+    <string name="msg_like_list_title">Like List</string>
+    <string name="msg_new_note">New note</string>
 </resources>

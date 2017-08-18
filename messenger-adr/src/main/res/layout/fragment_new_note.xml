@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/wf_login_background_color">
+        <include layout="@layout/view_common_header" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin_16dp"
+            android:textSize="14sp"
+            android:textColor="@color/chiase_black"
+            android:text="@string/msg_new_note"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/margin_16dp"
+            android:layout_margin="@dimen/margin_1dp"
+            android:background="@drawable/edit_note_frame"
+            android:gravity="top"
+            android:text="This is note.\nPlease insert here"/>
+    </LinearLayout>
+</layout>

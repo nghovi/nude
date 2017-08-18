@@ -36,6 +36,7 @@ public class NoteDetailFragment extends AbstractMsgFragment implements View.OnCl
         binding.rlvComment.setAdapter(new CommentAdapter());
         binding.rlvComment.setLayoutManager(new LinearLayoutManager(getContext()));
         getView().findViewById(R.id.img_id_header_right_icon).setOnClickListener(this);
+        binding.txtLikeCount.setOnClickListener(this);
     }
 
     @Override
@@ -43,6 +44,9 @@ public class NoteDetailFragment extends AbstractMsgFragment implements View.OnCl
         switch (view.getId()) {
             case R.id.img_id_header_right_icon:
                 gotoFragment(new NoteEditFragment());
+                break;
+            case R.id.txt_like_count:
+                gotoFragment(new LikeListFragment());
                 break;
         }
     }
