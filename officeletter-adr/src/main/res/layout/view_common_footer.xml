@@ -1,0 +1,133 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:id="@+id/footer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/wf_app_color_base"
+        android:baselineAligned="false"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/margin_5dp"
+        android:paddingBottom="@dimen/margin_5dp">
+
+        <LinearLayout
+            android:id="@+id/lnr_view_common_footer_document"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:src="@drawable/ol_document"/>
+
+            <TextView
+                style="@style/tc_text_footer_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/footer_item1"
+                android:visibility="visible"
+                android:textColor="@color/ol_footer_color"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lnr_view_common_footer_salary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:src="@drawable/ol_salary"/>
+
+            <TextView
+                style="@style/tc_text_footer_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/footer_item2"
+                android:textColor="@color/ol_footer_color"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/lnr_view_common_footer_wiki"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:src="@drawable/ol_wiki"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/footer_item3"
+                android:textColor="@color/ol_footer_color"
+                android:textSize="12sp"
+                android:visibility="visible"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lnr_view_common_footer_history"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:src="@drawable/ol_history"/>
+
+            <TextView
+                style="@style/tc_text_footer_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/footer_item4"
+                android:textColor="@color/ol_footer_color"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lnr_view_common_footer_setting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:src="@drawable/ol_setting"/>
+
+            <TextView
+                style="@style/tc_text_footer_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/footer_item5"
+                android:textColor="@color/ol_footer_color"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</merge>

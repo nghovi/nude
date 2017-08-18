@@ -164,7 +164,6 @@ public abstract class AbstractTCFragment extends WelfareFragment{
 			getView().findViewById(R.id.lnr_view_common_footer_ranking).setOnClickListener(listener);
 			setSelectedFooterItem(footerItemId);
 			TextView txtFooterItem = (TextView)((LinearLayout)getView().findViewById(footerItemId)).getChildAt(1);
-			// txtFooterItem.setcom
 			txtFooterItem.setTextColor(getResources().getColor(R.color.chiase_white));
 		}
 	}

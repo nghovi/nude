@@ -18,6 +18,7 @@ public class WelfareConst{
 	public static final String		SERVICE_CD_CL					= "CL";
 	public static final String		SERVICE_CD_FUKURI				= "FKR";
 	public static final String		SERVICE_CD_AC					= "AC";
+	public static final String		SERVICE_CD_OL					= "OL";
 
 	public static final String		MYSELF_PARAM					= "myself";
 	public static final String		REGISTRATION_ID_PARAM			= "deviceRegistrationId";
