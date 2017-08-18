@@ -189,23 +189,10 @@ public class DailyPageFragment extends SchedulesPageFragment{
 			if(!scheduleModel.isAllDay){
 				String keyMap = scheduleModel.startTime.split(":")[0] + ":00";
 				startTimeSchedulesMap.get(keyMap).add(scheduleModel);
-			}
-		}
-
-		for(ScheduleModel scheduleModel : schedules){
-			if(scheduleModel.isAllDay){
+			}else{
 				allDaySchedules.add(scheduleModel);
 				TextView textView = WeeklyPageFragment.makeTextView(activity, scheduleModel.scheduleName, 0, 0, LinearLayout.LayoutParams.MATCH_PARENT, WeeklyPageFragment.getColor(scheduleModel), 0, Gravity.CENTER);
 				lnrScheduleAllDays.addView(textView);
-			}else{
-				List<ScheduleModel> scheduleModels = startTimeSchedulesMap.get(scheduleModel.startTime);
-				if(CCCollectionUtil.isEmpty(scheduleModels)){
-					scheduleModels = new ArrayList<>();
-					scheduleModels.add(scheduleModel);
-					startTimeSchedulesMap.put(scheduleModel.startTime, scheduleModels);
-				}else{
-					scheduleModels.add(scheduleModel);
-				}
 			}
 		}
 
@@ -216,6 +203,8 @@ public class DailyPageFragment extends SchedulesPageFragment{
 		if(moreNumber <= 0){
 			txtMore.setVisibility(View.GONE);
 			imgExpand.setVisibility(View.GONE);
+			lnrScheduleAllDays.getLayoutParams().height = lnrScheduleAllDays.getChildCount() * WeeklyPageFragment.CELL_HEIGHT_PIXEL;
+			lnrScheduleAllDays.requestLayout();
 		}else if(!isExpanded){
 			imgExpand.setVisibility(View.VISIBLE);
 			txtMore.setVisibility(View.VISIBLE);

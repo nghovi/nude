@@ -18,6 +18,9 @@ public class ClConst{
 	public static final String	SELECTED_CALENDAR_STRING					= "SELECTED_CALENDAR_STRING";
 	public static final String	PREF_ACTIVE_DATE							= "PREF_ACTIVE_DATE";
 	public static final String	PREF_ACTIVE_USER_LIST						= "PREF_ACTIVE_USER_LIST";
+	public static final String	PREF_FILTER_TYPE							= "PREF_FILTER_TYPE";
+	public static final String	PREF_FILTER_TYPE_ROOM						= "ROOM";
+	public static final String	PREF_FILTER_TYPE_USER						= "USER";
 
 	public static final String	SCHEDULE_REPEAT_TYPE_WEEKLY					= "WL";
 	public static final String	SCHEDULE_REPEAT_TYPE_MONTHLY				= "ML";

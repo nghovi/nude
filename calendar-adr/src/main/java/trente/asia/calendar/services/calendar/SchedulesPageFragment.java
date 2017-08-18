@@ -125,12 +125,28 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 	}
 
 	public static JSONObject buildJsonObjForScheduleListRequest(PreferencesAccountUtil prefAccUtil, Date startDate, Date endDate){
-		String targetUserList = prefAccUtil.get(ClConst.PREF_ACTIVE_USER_LIST);
+
+		String targetUserList = null;
+		String searchText = null;
+		String filterType = prefAccUtil.get(ClConst.PREF_FILTER_TYPE);
+		if(filterType.equals(ClConst.PREF_FILTER_TYPE_USER)){
+			searchText = "-1";
+			targetUserList = prefAccUtil.get(ClConst.PREF_ACTIVE_USER_LIST);
+			if(CCStringUtil.isEmpty(targetUserList)){
+				targetUserList = "-1";
+			}
+		}else{
+			targetUserList = "-1";
+			searchText = prefAccUtil.get(ClConst.PREF_ACTIVE_ROOM);
+			if(CCStringUtil.isEmpty(targetUserList)){
+				searchText = "-1";
+			}
+		}
+
 		JSONObject jsonObject = new JSONObject();
 		try{
 			jsonObject.put("targetUserList", targetUserList);
-			// jsonObject.put("calendars", prefAccUtil.get(ClConst.SELECTED_CALENDAR_STRING));
-
+			jsonObject.put("searchText", searchText);
 			jsonObject.put("startDateString", CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, startDate));
 			jsonObject.put("endDateString", CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, endDate));
 
@@ -184,9 +200,7 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 			scheduleStrings = newScheduleStrings;
 			pageSharingHolder.isLoadingSchedules = false;
 
-			lstSchedule = filterByRoom();
 			lstSchedule = filterByPublicity();
-			// lstBirthdayUser = filterByUser();
 
 			// add holiday,
 			if(!CCCollectionUtil.isEmpty(lstHoliday)){
@@ -245,23 +259,6 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 			}
 		}else{
 			return lstBirthdayUser;
-		}
-		return result;
-	}
-
-	private List<ScheduleModel> filterByRoom(){
-		List<ScheduleModel> result = new ArrayList<>();
-		String targetRoomData = prefAccUtil.get(ClConst.PREF_ACTIVE_ROOM);
-
-		List<String> targetRoomListId = CCStringUtil.isEmpty(targetRoomData) ? null : Arrays.asList(targetRoomData.split(","));
-		if(!CCCollectionUtil.isEmpty(targetRoomListId)){
-			for(ScheduleModel scheduleModel : lstSchedule){
-				if(targetRoomListId.contains(scheduleModel.roomId) && !CCStringUtil.isEmpty(scheduleModel.roomId)){
-					result.add(scheduleModel);
-				}
-			}
-		}else{
-			return lstSchedule;
 		}
 		return result;
 	}

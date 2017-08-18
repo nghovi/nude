@@ -134,6 +134,8 @@ public abstract class PageContainerFragment extends AbstractClFragment{
 				fragment.loadData();
 			}
 		});
+
+		prefAccUtil.set(ClConst.PREF_FILTER_TYPE, ClConst.PREF_FILTER_TYPE_USER);
 	}
 
 	protected void gotoRoomFilterFragment(){

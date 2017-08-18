@@ -58,23 +58,18 @@ public class ScheduleDetailFragment extends AbstractScheduleFragment{
 		txtScheduleUrl = (TextView)getView().findViewById(R.id.txt_id_schedule_url);
 		txtScheduleNote = (TextView)getView().findViewById(R.id.txt_id_schedule_note);
 		txtJoinUser = (TextView)getView().findViewById(R.id.txt_join_user);
+		getView().findViewById(R.id.lnr_id_join_user_list).setOnClickListener(this);
 	}
 
 	@Override
 	protected void showJoinUserList(){
 		if(lnrUserList != null){
 			lnrUserList.showAll(schedule.scheduleJoinUsers, (int)getResources().getDimension(R.dimen.margin_30dp));
-			lnrUserList.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					gotoUserListFragment(schedule.scheduleJoinUsers);
-				}
-			});
 			txtJoinUser.setText(getString(R.string.cl_schedule_form_item_join_user) + " (" + schedule.scheduleJoinUsers.size() + ")");
 		}
 	}
 
-	private void gotoUserListFragment(List<UserModel> scheduleJoinUsers) {
+	private void gotoUserListFragment(List<UserModel> scheduleJoinUsers){
 		UserListFragment userListFragment = new UserListFragment();
 		userListFragment.setUsers(scheduleJoinUsers);
 		gotoFragment(userListFragment);
@@ -96,12 +91,12 @@ public class ScheduleDetailFragment extends AbstractScheduleFragment{
 		}
 
 		// check user is owner
-		if(myself != null && schedule.owner != null && myself.key.equals(schedule.owner.key)){
+//		if(myself != null && schedule.owner != null && myself.key.equals(schedule.owner.key)){
 			ImageView imgRightIcon = (ImageView)getView().findViewById(R.id.img_id_header_right_icon);
 			imgRightIcon.setImageResource(R.drawable.cl_action_edit);
 			imgRightIcon.setVisibility(View.VISIBLE);
 			imgRightIcon.setOnClickListener(this);
-		}
+//		}
 	}
 
 	@Override
@@ -118,9 +113,9 @@ public class ScheduleDetailFragment extends AbstractScheduleFragment{
 		case R.id.lnr_id_schedule_url:
 			gotoBrowser(schedule.scheduleUrl);
 			break;
-		// case R.id.lnr_id_join_user_list:
-		// filterDialog.show();
-		// break;
+		case R.id.lnr_id_join_user_list:
+			gotoUserListFragment(schedule.scheduleJoinUsers);
+			break;
 		default:
 			break;
 		}

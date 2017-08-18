@@ -47,8 +47,7 @@ import trente.asia.welfare.adr.utils.WelfareUtil;
 public class TodoListTodayFragment extends AbstractClFragment{
 
 	private LinearLayout	lnrUnfinished;
-	private LinearLayout	lnrFinished;
-	private TodoListAdapter	adapter;
+//	private LinearLayout	lnrFinished;
 	private List<Todo>		todoList;
 	private WfDialog		dlgDeleteConfirm;
 	private LayoutInflater	inflater;
@@ -75,7 +74,7 @@ public class TodoListTodayFragment extends AbstractClFragment{
 		getView().findViewById(R.id.img_id_header_right_icon).setOnClickListener(this);
 		scrollView = (ScrollView)getView().findViewById(R.id.scr_todo);
 		lnrUnfinished = (LinearLayout)getView().findViewById(R.id.lnr_unfinished_todo_containter);
-		lnrFinished = (LinearLayout)getView().findViewById(R.id.lnr_finished_todo_containter);
+//		lnrFinished = (LinearLayout)getView().findViewById(R.id.lnr_finished_todo_containter);
 		inflater = LayoutInflater.from(activity);
 	}
 
@@ -118,7 +117,7 @@ public class TodoListTodayFragment extends AbstractClFragment{
 	}
 
 	private void buildTodos(){
-		lnrFinished.removeAllViews();
+//		lnrFinished.removeAllViews();
 		lnrUnfinished.removeAllViews();
 		for(Todo todo : todoList){
 			buildTodoItem(todo);

@@ -136,6 +136,7 @@ public class RoomFilterFragment extends AbstractClFragment{
 		}
 
 		PreferencesAccountUtil prefAccUtil = new PreferencesAccountUtil(activity);
+		prefAccUtil.set(ClConst.PREF_FILTER_TYPE, ClConst.PREF_FILTER_TYPE_ROOM);
 		prefAccUtil.set(ClConst.PREF_ACTIVE_ROOM, ClUtil.convertRoomList2String(selectedRooms));
 		((WelfareActivity)activity).dataMap.put(ClConst.ACTION_SCHEDULE_UPDATE, CCConst.YES);
 		onClickBackBtn();

@@ -190,17 +190,17 @@
             <View style="@style/cs_common_divider" />
 
             <LinearLayout
+                android:id="@+id/lnr_id_join_user_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/chiase_white"
+                android:background="@drawable/state_common_selectable_row"
                 android:gravity="center_horizontal">
 
                 <HorizontalScrollView
-                    android:id="@+id/lnr_id_join_user_list"
                     style="@style/wf_common_item_linear2"
                     android:layout_width="wrap_content"
-                    android:layout_gravity="center_horizontal"
                     android:background="@drawable/state_common_selectable_row"
+                    android:layout_gravity="center_horizontal"
                     android:minHeight="@dimen/margin_30dp">
 
                     <trente.asia.calendar.commons.views.UserListLinearLayout

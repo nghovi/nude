@@ -154,9 +154,11 @@ public class GroupFilterFragment extends AbstractClFragment{
 			CheckableLinearLayout checkableLinearLayout = mLnrFilterDept.lstCheckable.get(index);
 			if(checkableLinearLayout.isChecked()){
 				List<UserModel> userModels = (List<UserModel>)checkableLinearLayout.getTag();
-				for(UserModel user : userModels){
-					if(!FilterDeptLinearLayout.checkSelectedUser(user, lstSelectedUser)){
-						lstSelectedUser.add(user);
+				if(!CCCollectionUtil.isEmpty(userModels)){
+					for(UserModel user : userModels){
+						if(!FilterDeptLinearLayout.checkSelectedUser(user, lstSelectedUser)){
+							lstSelectedUser.add(user);
+						}
 					}
 				}
 			}
