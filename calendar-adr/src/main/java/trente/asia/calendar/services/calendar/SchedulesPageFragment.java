@@ -15,6 +15,7 @@ import com.bluelinelabs.logansquare.LoganSquare;
 
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -76,7 +77,7 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 	protected View					thisHourView;
 	protected String				currentHour;
 
-	protected static final int		MAX_ROW				= 3;
+	protected static final int		MAX_ROW				= 2;
 
 	abstract protected List<Date> getAllDate();
 

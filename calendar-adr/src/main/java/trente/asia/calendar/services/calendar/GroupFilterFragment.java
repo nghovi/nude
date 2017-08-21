@@ -165,6 +165,7 @@ public class GroupFilterFragment extends AbstractClFragment{
 		}
 
 		PreferencesAccountUtil prefAccUtil = new PreferencesAccountUtil(activity);
+		prefAccUtil.set(ClConst.PREF_FILTER_TYPE, ClConst.PREF_FILTER_TYPE_USER);
 		prefAccUtil.set(ClConst.PREF_ACTIVE_USER_LIST, ClUtil.convertUserList2String(lstSelectedUser));
 		((ChiaseActivity)activity).isInitData = true;
 		((WelfareActivity)activity).dataMap.put(ClConst.ACTION_SCHEDULE_UPDATE, CCConst.YES);

@@ -369,6 +369,9 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 			txtStartDate.setOnClickListener(this);
 			txtEndDate.setOnClickListener(this);
 			lnrRepeatUntil.setVisibility(View.GONE);
+		}else{
+			lnrRepeatUntil.setVisibility(View.VISIBLE);
+			txtRepeatUntil.setText(schedule.repeatEnd.split(":")[0]);
 		}
 	}
 

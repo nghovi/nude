@@ -17,6 +17,7 @@ import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
+import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.models.UserModel;
 
@@ -91,12 +92,19 @@ public class ScheduleDetailFragment extends AbstractScheduleFragment{
 		}
 
 		// check user is owner
-//		if(myself != null && schedule.owner != null && myself.key.equals(schedule.owner.key)){
-			ImageView imgRightIcon = (ImageView)getView().findViewById(R.id.img_id_header_right_icon);
-			imgRightIcon.setImageResource(R.drawable.cl_action_edit);
-			imgRightIcon.setVisibility(View.VISIBLE);
-			imgRightIcon.setOnClickListener(this);
-//		}
+		// if(myself != null && schedule.owner != null && myself.key.equals(schedule.owner.key)){
+		ImageView imgRightIcon = (ImageView)getView().findViewById(R.id.img_id_header_right_icon);
+		imgRightIcon.setImageResource(R.drawable.cl_action_edit);
+		imgRightIcon.setVisibility(View.VISIBLE);
+		imgRightIcon.setOnClickListener(this);
+		// }
+
+		if(!ScheduleModel.isRepeat(schedule)){
+			lnrRepeatUntil.setVisibility(View.GONE);
+		}else{
+			lnrRepeatUntil.setVisibility(View.VISIBLE);
+			txtRepeatUntil.setText(schedule.repeatEnd.split(":")[0]);
+		}
 	}
 
 	@Override

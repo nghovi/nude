@@ -75,11 +75,11 @@ public class TodoDetailFragment extends AbstractClFragment{
 	}
 
 	protected void successUpdate(JSONObject response, String url){
-		if(todo == null || todo.key == null){
-			onClickBackBtn();
-		}else{
-			loadTodoDetail();
-		}
+		// if(todo == null || todo.key == null){
+		onClickBackBtn();
+		// }else{
+		// loadTodoDetail();
+		// }
 	}
 
 	@Override

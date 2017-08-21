@@ -73,6 +73,10 @@ public class RoomFilterFragment extends AbstractClFragment{
 		super.successLoad(response, url);
 		try{
 			rooms = LoganSquare.parseList(response.optString("rooms"), RoomModel.class);
+			String selectedRoomIds = prefAccUtil.get(ClConst.PREF_ACTIVE_ROOM);
+			if("0".equals(selectedRoomIds)){
+				prefAccUtil.set(ClConst.PREF_ACTIVE_ROOM, ClUtil.convertRoomList2String(rooms));
+			}
 			List<RoomModel> selectedRooms = getSelectedRooms(rooms);
 			this.mLnrFilterDept.fillInRoomData(rooms, selectedRooms, null);
 
@@ -126,7 +130,7 @@ public class RoomFilterFragment extends AbstractClFragment{
 		return result;
 	}
 
-	public void saveActiveUserList(){
+	public void saveFilteredRoomIds(){
 		List<RoomModel> selectedRooms = new ArrayList<>();
 		for(int index = 0; index < mLnrFilterDept.lstCheckable.size(); index++){
 			CheckableLinearLayout checkableLinearLayout = mLnrFilterDept.lstCheckable.get(index);
@@ -165,7 +169,7 @@ public class RoomFilterFragment extends AbstractClFragment{
 	}
 
 	private void onClickSaveIcon(){
-		saveActiveUserList();
+		saveFilteredRoomIds();
 	}
 
 	public void setGroups(List<GroupModel> groups){

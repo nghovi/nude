@@ -85,17 +85,19 @@ public class FilterDeptLinearLayout extends LinearLayout{
 			}
 		}
 
+		if(!CCCollectionUtil.isEmpty(deptModels)){
+			for(DeptModel deptModel : deptModels){
+				addItem(deptModel.deptName, cbxAll, checkSelectedDept(deptModel, selectedDepts), deptModel.members);
+			}
+		}
+
 		if(!CCCollectionUtil.isEmpty(groupModels)){
 			for(GroupModel group : groupModels){
 				addItem(group.groupName, cbxAll, checkSelectedGroup(group, selectedGroups), group.listUsers);
 			}
 		}
 
-		if(!CCCollectionUtil.isEmpty(deptModels)){
-			for(DeptModel deptModel : deptModels){
-				addItem(deptModel.deptName, cbxAll, checkSelectedDept(deptModel, selectedDepts), deptModel.members);
-			}
-		}
+
 		judgeCheckAll(cbxAll);
 	}
 
