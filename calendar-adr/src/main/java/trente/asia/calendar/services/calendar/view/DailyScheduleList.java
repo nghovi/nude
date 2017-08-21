@@ -149,8 +149,8 @@ public class DailyScheduleList extends LinearLayout{
 			}
 
 			for(WorkOffer offer : workOffers){
-				LinearLayout birthdayItem = buildOfferItem(getContext(), inflater, offer, R.layout.item_work_offer);
-				lnrEvents.addView(birthdayItem);
+				LinearLayout offerItem = buildOfferItem(getContext(), inflater, offer, R.layout.item_work_offer);
+				lnrEvents.addView(offerItem);
 				hasDisplayedItem = true;
 			}
 
