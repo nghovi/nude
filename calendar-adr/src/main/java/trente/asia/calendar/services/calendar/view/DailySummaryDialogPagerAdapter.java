@@ -99,7 +99,7 @@ public class DailySummaryDialogPagerAdapter extends PagerAdapter{
 			}
 		});
 
-		txtHeader.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_CL_FULL, selectedDate));
+		txtHeader.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, selectedDate));
 		dailyScheduleListView.hasDisplayedItem = false;
 		dailyScheduleListView.initDataWithMap(this.dayBirthdayUsersMap, this.dayOfferMap, this.daySchedulesMap, lstSchedule, lstHoliday, lstWorkOffer, lstBirthdayUser);
 		dailyScheduleListView.showFor(selectedDate);
