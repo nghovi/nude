@@ -148,18 +148,17 @@ public class DailyScheduleList extends LinearLayout{
 				hasDisplayedItem = true;
 			}
 
-			for(UserModel user : birthdayUsers){
-				LinearLayout birthdayItem = buildBirthdayItem(getContext(), inflater, user, R.layout.item_birthday);
-				lnrEvents.addView(birthdayItem);
-				hasDisplayedItem = true;
-			}
-
 			for(WorkOffer offer : workOffers){
 				LinearLayout birthdayItem = buildOfferItem(getContext(), inflater, offer, R.layout.item_work_offer);
 				lnrEvents.addView(birthdayItem);
 				hasDisplayedItem = true;
 			}
 
+			for(UserModel user : birthdayUsers){
+				LinearLayout birthdayItem = buildBirthdayItem(getContext(), inflater, user, R.layout.item_birthday);
+				lnrEvents.addView(birthdayItem);
+				hasDisplayedItem = true;
+			}
 		}else{
 			lnrEvents.setVisibility(View.GONE);
 		}
