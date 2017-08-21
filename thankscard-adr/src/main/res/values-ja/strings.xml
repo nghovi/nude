@@ -155,4 +155,6 @@
     <string name="tc_choose_picture">写真を選択する</string>
     <string name="tc_change_to_normal_card">編集内容を破棄しますか</string>
     <string name="tc_limit_sticker">シールは50個までです。</string>
+    <string name="tc_cannot_use_stickers">シールはブロンズステージから使えます。</string>
+    <string name="tc_cannot_use_photo">写真はシルバーステージから使えます。</string>
 </resources>

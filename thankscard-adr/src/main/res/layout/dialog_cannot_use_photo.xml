@@ -11,30 +11,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:text="@string/tc_cannot_use_stickers"
+            android:text="@string/tc_cannot_use_photo"
             android:layout_marginTop="@dimen/margin_32dp"
             android:layout_marginBottom="@dimen/margin_32dp"
             android:textColor="@color/chiase_black"
             android:textSize="16sp"
             android:maxLines="2"/>
         <TextView
-            android:id="@+id/btn_cancel"
-            android:layout_below="@+id/messege"
-            app:layout_widthPercent="50%"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/margin_16dp"
-            android:gravity="center_horizontal"
-            android:text="@string/wf_cancel"
-            android:textColor="@color/chiase_black"
-            android:textSize="16sp"/>
-        <TextView
             android:id="@+id/btn_ok"
-            android:layout_toEndOf="@+id/btn_cancel"
             android:layout_below="@+id/messege"
-            app:layout_widthPercent="50%"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/margin_16dp"
-            android:gravity="center_horizontal"
+            android:layout_centerHorizontal="true"
             android:text="@string/tc_ok"
             android:textColor="@color/chiase_black"
             android:textSize="16sp"/>

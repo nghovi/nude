@@ -6,8 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
-import android.graphics.Rect;
-import android.graphics.RectF;
 import android.icu.text.SimpleDateFormat;
 import android.net.Uri;
 import android.os.Bundle;
@@ -22,12 +20,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
-
-import com.bumptech.glide.Glide;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -49,7 +42,6 @@ import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
-import asia.chiase.core.util.CCStringUtil;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import trente.asia.android.util.AndroidUtil;
@@ -62,6 +54,8 @@ import trente.asia.thankscard.fragments.dialogs.PostConfirmDialog;
 import trente.asia.thankscard.services.common.model.Template;
 import trente.asia.thankscard.services.mypage.model.StampCategoryModel;
 import trente.asia.thankscard.services.mypage.model.StampModel;
+import trente.asia.thankscard.services.posted.view.CannotUsePhotoDialog;
+import trente.asia.thankscard.services.posted.view.CannotUseStickersDialog;
 import trente.asia.thankscard.services.posted.view.StickerViewPost;
 import trente.asia.thankscard.services.posted.presenter.StampAdapter;
 import trente.asia.thankscard.services.posted.presenter.StampCategoryAdapter;
@@ -108,6 +102,8 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 	private Timer						timer			= new Timer();
 	private Handler						handler			= new Handler();
 	private boolean						isBirthday		= false;
+	private boolean						canUseStickers	= false;
+	private boolean						canUsePhoto		= false;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState){
@@ -160,14 +156,14 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 			String birthday = thisYear + myself.dateBirth.substring(4);
 			Date date = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss").parse(birthday);
 			long difference = (System.currentTimeMillis() - date.getTime()) / 1000L;
-			if (difference > 0 && difference < 31L * 24L * 3600L) {
+			if(difference > 0 && difference < 31L * 24L * 3600L){
 				isBirthday = true;
 			}
 
 			birthday = (thisYear - 1) + myself.dateBirth.substring(4);
 			date = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss").parse(birthday);
 			difference = (System.currentTimeMillis() - date.getTime()) / 1000L;
-			if (difference > 0 && difference < 31L * 24L * 3600L) {
+			if(difference > 0 && difference < 31L * 24L * 3600L){
 				isBirthday = true;
 			}
 		}catch(ParseException e){
@@ -263,12 +259,20 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 		int pointGold = Integer.parseInt(prefAccUtil.get(TcConst.PREF_POINT_GOLD));
 		int totalPoint = Integer.parseInt(prefAccUtil.get(TcConst.PREF_POINT_TOTAL));
 
-		if(totalPoint < pointBronze && !isBirthday){
-			binding.lnrSelectSticker.setVisibility(View.INVISIBLE);
-			binding.lnrSelectPhoto.setVisibility(View.INVISIBLE);
+		if(isBirthday){
+			canUsePhoto = true;
+			canUseStickers = true;
 		}else{
-			binding.lnrSelectSticker.setVisibility(View.VISIBLE);
-			binding.lnrSelectPhoto.setVisibility(View.VISIBLE);
+			if(totalPoint < pointBronze){
+				canUseStickers = false;
+				canUsePhoto = false;
+			}else if(totalPoint < pointSilver){
+				canUseStickers = true;
+				canUsePhoto = false;
+			}else{
+				canUsePhoto = true;
+				canUseStickers = true;
+			}
 		}
 	}
 
@@ -399,14 +403,22 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 			}
 			break;
 		case R.id.lnr_select_sticker:
-			if(showLayoutSticker){
-				closeLayoutSticker();
-			}else{
-				showLayoutSticker();
+			if(canUseStickers){
+				if(showLayoutSticker){
+					closeLayoutSticker();
+				}else{
+					showLayoutSticker();
+				}
+			} else {
+				new CannotUseStickersDialog().show(getFragmentManager(), null);
 			}
 			break;
 		case R.id.lnr_select_photo:
-			showLayoutCards(photoTemplates);
+			if (canUsePhoto) {
+				showLayoutCards(photoTemplates);
+			} else {
+				new CannotUsePhotoDialog().show(getFragmentManager(), null);
+			}
 			break;
 		case R.id.btn_send:
 			checkNewCard();
@@ -595,17 +607,20 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 	}
 
 	private void checkNewCard(){
-//		if(CCConst.NONE.equals(member.key)){
-//			showAlertDialog(getString(R.string.fragment_post_edit_alert_dlg_title), getString(R.string.fragment_post_edit_alert_dlg_message1), getString(android.R.string.ok), null);
-//		}
-//		else if(CCStringUtil.isEmpty(message) || hasTooManyLetters(message)){
-//			showAlertDialog(getString(R.string.fragment_post_edit_alert_dlg_title), getString(R.string.fragment_post_edit_alert_dlg_message2, String.valueOf(MAX_LETTER)), getString(android.R.string.ok), null);
-//		}
-//		else if(this.template == null){
-//			showAlertDialog(getString(R.string.fragment_post_edit_alert_dlg_title), getString(R.string.fragment_post_edit_alert_dlg_message3), getString(android.R.string.ok), null);
-//		}else{
-//
-//		}
+		// if(CCConst.NONE.equals(member.key)){
+		// showAlertDialog(getString(R.string.fragment_post_edit_alert_dlg_title), getString(R.string.fragment_post_edit_alert_dlg_message1),
+		// getString(android.R.string.ok), null);
+		// }
+		// else if(CCStringUtil.isEmpty(message) || hasTooManyLetters(message)){
+		// showAlertDialog(getString(R.string.fragment_post_edit_alert_dlg_title), getString(R.string.fragment_post_edit_alert_dlg_message2,
+		// String.valueOf(MAX_LETTER)), getString(android.R.string.ok), null);
+		// }
+		// else if(this.template == null){
+		// showAlertDialog(getString(R.string.fragment_post_edit_alert_dlg_title), getString(R.string.fragment_post_edit_alert_dlg_message3),
+		// getString(android.R.string.ok), null);
+		// }else{
+		//
+		// }
 		showConfirmDialog();
 	}
 
@@ -642,9 +657,9 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 
 			UserModel userModel = prefAccUtil.getUserPref();
 			jsonObject.put("posterId", userModel.key);
-			if (CCConst.NONE.equals(member.key)) {
+			if(CCConst.NONE.equals(member.key)){
 				jsonObject.put("receiverId", null);
-			} else {
+			}else{
 				jsonObject.put("receiverId", member.key);
 			}
 			jsonObject.put("message", binding.edtMessage.getText().toString());
