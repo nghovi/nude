@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import asia.trente.officeletter.BuildConfig;
 import asia.trente.officeletter.R;
 import asia.trente.officeletter.services.document.DocumentListFragment;
 import asia.trente.officeletter.services.history.HistoryListFragment;
@@ -16,12 +17,24 @@ import asia.trente.officeletter.services.salary.SalaryListFragment;
 import asia.trente.officeletter.services.setting.SettingFragment;
 import asia.trente.officeletter.services.wiki.WikiListFragment;
 import trente.asia.welfare.adr.activity.WelfareFragment;
+import trente.asia.welfare.adr.define.WelfareConst;
 
 /**
  * Created by tien on 8/18/2017.
  */
 
 public abstract class AbstractOLFragment extends WelfareFragment{
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        host = BuildConfig.HOST;
+    }
+
+    @Override
+    protected String getServiceCd() {
+        return WelfareConst.SERVICE_CD_OL;
+    }
 
     @Nullable
     @Override

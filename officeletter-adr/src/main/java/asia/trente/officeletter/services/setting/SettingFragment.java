@@ -62,12 +62,16 @@ public class SettingFragment extends AbstractOLFragment implements View.OnClickL
                 gotoFragment(new AccountInfoFragment());
                 break;
             case R.id.lnr_about_app:
+                gotoFragment(new AboutFragment());
                 break;
             case R.id.lnr_contact_us:
+                gotoFragment(new ContactUsFragment());
                 break;
             case R.id.lnr_term:
+                gotoBrowserWithLang(WelfareConst.ACCOUNT_TERM_URL);
                 break;
             case R.id.lnr_policy:
+                gotoBrowser(WelfareConst.ACCOUNT_POLICY_URL);
                 break;
             case R.id.lnr_signout:
                 showSignOutConfirmDialog();
@@ -124,6 +128,4 @@ public class SettingFragment extends AbstractOLFragment implements View.OnClickL
         super.gotoSignIn();
         gotoFragment(new OLLogInFragment());
     }
-
-
 }

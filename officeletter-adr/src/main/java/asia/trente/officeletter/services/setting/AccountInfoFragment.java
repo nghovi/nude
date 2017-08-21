@@ -54,6 +54,8 @@ public class AccountInfoFragment extends AbstractOLFragment implements AvatarSel
 	private Uri						mImageUri;
 	private boolean					mIsOverJellyBean;
 
+
+
 	@Override
 	public int getFragmentLayoutId(){
 		return R.layout.fragment_accinfo;
@@ -67,6 +69,7 @@ public class AccountInfoFragment extends AbstractOLFragment implements AvatarSel
 	@Override
 	protected void initView() {
 		super.initView();
+		initHeader(R.drawable.wf_back_white, getString(R.string.wf_account_info_title), null);
 		buildBodyLayout();
 	}
 
