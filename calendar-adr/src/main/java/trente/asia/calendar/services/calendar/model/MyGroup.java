@@ -1,14 +1,11 @@
 package trente.asia.calendar.services.calendar.model;
 
+import trente.asia.welfare.adr.models.GroupModel;
+
 /**
- * Created by hviet on 7/26/17.
+ * Created by hviet on 8/21/17.
  */
 
 @com.bluelinelabs.logansquare.annotation.JsonObject(fieldDetectionPolicy = com.bluelinelabs.logansquare.annotation.JsonObject.FieldDetectionPolicy.NONPRIVATE_FIELDS)
-public class RoomModel{
-
-	public String	key;
-	public String	roomName;
-	public String	roomNote;
-	public String	roomColor	= "#FFFFFF";
+public class MyGroup extends GroupModel{
 }

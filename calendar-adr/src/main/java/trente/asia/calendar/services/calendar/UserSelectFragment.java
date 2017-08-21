@@ -9,14 +9,12 @@ import org.json.JSONObject;
 import com.bluelinelabs.logansquare.LoganSquare;
 
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
+import android.widget.CheckBox;
 
-import asia.chiase.core.define.CCConst;
+import asia.chiase.core.util.CCCollectionUtil;
 import trente.asia.android.view.layout.CheckableLinearLayout;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
@@ -24,7 +22,6 @@ import trente.asia.calendar.commons.fragments.AbstractClFragment;
 import trente.asia.calendar.commons.utils.ClUtil;
 import trente.asia.calendar.commons.views.FilterUserLinearLayout;
 import trente.asia.calendar.services.calendar.model.MyGroup;
-import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.models.DeptModel;
 import trente.asia.welfare.adr.models.GroupModel;
 import trente.asia.welfare.adr.models.UserModel;
@@ -35,18 +32,24 @@ import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
  *
  * @author VietNH
  */
-public class UserFilterFragment extends AbstractClFragment{
+public class UserSelectFragment extends AbstractClFragment{
 
 	private FilterUserLinearLayout	mLnrFilterUser;
 	private List<UserModel>			users;
 	private List<GroupModel>		groups;
 	private List<DeptModel>			depts;
 	private List<MyGroup>			myGroups;
+	private List<UserModel>			joinUsers;
+	private CheckBox				mCbxAll;
+	public List<DeptModel>			selectedDepts;
+	public List<GroupModel>			selectedGroups;
+	public List<MyGroup>			selectedMyGroups;
+	public ScheduleFormFragment		formFragment;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 		if(mRootView == null){
-			mRootView = inflater.inflate(R.layout.fragment_filter_user, container, false);
+			mRootView = inflater.inflate(R.layout.fragment_select_user, container, false);
 		}
 		return mRootView;
 	}
@@ -68,8 +71,9 @@ public class UserFilterFragment extends AbstractClFragment{
 			groups = LoganSquare.parseList(response.optString("groups"), GroupModel.class);
 			myGroups = LoganSquare.parseList(response.optString("myGroups"), MyGroup.class);
 			depts = LoganSquare.parseList(response.optString("depts"), DeptModel.class);
-			List<UserModel> selectedUsers = ClUtil.getTargetUserList(users, prefAccUtil.get(ClConst.PREF_ACTIVE_USER_LIST));
-			this.mLnrFilterUser.addUserList(users, selectedUsers, null);
+			// List<UserModel> selectedUsers = ClUtil.getTargetUserList(users, prefAccUtil.get(ClConst.PREF_ACTIVE_USER_LIST));
+			this.mLnrFilterUser.enableSimpleAvatar(true);
+			this.mLnrFilterUser.addUserList(users, joinUsers, mCbxAll);
 		}catch(IOException e){
 			e.printStackTrace();
 		}
@@ -82,36 +86,39 @@ public class UserFilterFragment extends AbstractClFragment{
 		getView().findViewById(R.id.img_id_header_right_icon).setOnClickListener(this);
 		getView().findViewById(R.id.lnr_select_group).setOnClickListener(this);
 		mLnrFilterUser = (FilterUserLinearLayout)getView().findViewById(R.id.lnr_id_user);
-		((EditText)getView().findViewById(R.id.edt_filter_search)).addTextChangedListener(new TextWatcher() {
+		mCbxAll = (CheckBox)getView().findViewById(R.id.cbx_id_all);
+		mCbxAll.setOnClickListener(new View.OnClickListener() {
 
 			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count, int after){
-
-			}
-
-			@Override
-			public void onTextChanged(CharSequence s, int start, int before, int count){
-
-			}
-
-			@Override
-			public void afterTextChanged(Editable s){
-				mLnrFilterUser.search(s.toString());
+			public void onClick(View v){
+				clickCheckbox();
 			}
 		});
+		resetSelectedGroups();
+	}
+
+	private void clickCheckbox(){
+		boolean isChecked = mCbxAll.isChecked();
+		for(CheckableLinearLayout checkableLinearLayout : mLnrFilterUser.lstCheckable){
+			checkableLinearLayout.setChecked(isChecked);
+		}
 	}
 
 	// // TODO: 7/26/17 save selected user into pref is not good esp when there are a lot of user
-	public void saveActiveUserList(){
-		List<UserModel> lstSelectedUser = setSelectedUserList();
+	public void saveSelectUserList(){
+		List<UserModel> lstSelectedUser = getSelectedUserList();
 		PreferencesAccountUtil prefAccUtil = new PreferencesAccountUtil(activity);
-		prefAccUtil.set(ClConst.PREF_ACTIVE_USER_LIST, ClUtil.convertUserList2String(lstSelectedUser));
-		prefAccUtil.set(ClConst.PREF_FILTER_TYPE, ClConst.PREF_FILTER_TYPE_USER);
-		((WelfareActivity)activity).dataMap.put(ClConst.ACTION_SCHEDULE_UPDATE, CCConst.YES);
-		onClickBackBtn();
+		prefAccUtil.set(ClConst.PREF_SELECT_USER_LIST, ClUtil.convertUserList2String(lstSelectedUser));
+		formFragment.updateJoinUsers(lstSelectedUser);
+		onClickBackBtnWithoutRefresh();
 	}
 
-	private List<UserModel> setSelectedUserList(){
+	@Override
+	protected void onClickBackBtn(){
+		onClickBackBtnWithoutRefresh();
+	}
+
+	private List<UserModel> getSelectedUserList(){
 		List<UserModel> lstSelectedUser = new ArrayList<>();
 		for(int index = 0; index < mLnrFilterUser.lstCheckable.size(); index++){
 			CheckableLinearLayout checkableLinearLayout = mLnrFilterUser.lstCheckable.get(index);
@@ -135,25 +142,52 @@ public class UserFilterFragment extends AbstractClFragment{
 			onClickSaveIcon();
 			break;
 		case R.id.lnr_select_group:
-			gotoGroupFilterFragment();
+			gotoGroupSelectFragment();
 		default:
 			break;
 		}
 	}
 
-	private void gotoGroupFilterFragment(){
-		GroupFilterFragment groupFilterFragment = new GroupFilterFragment();
-		groupFilterFragment.setGroups(groups);
-		groupFilterFragment.setDepts(depts);
-		groupFilterFragment.setMyGroups(myGroups);
-		groupFilterFragment.setUsers(users);
-		List<UserModel> lstSelectedUser = setSelectedUserList();
-		groupFilterFragment.setSelectedUsers(lstSelectedUser);
-		gotoFragment(groupFilterFragment);
+	private void gotoGroupSelectFragment(){
+		GroupSelectFragment groupSelectFragment = new GroupSelectFragment();
+		groupSelectFragment.setGroups(groups);
+		groupSelectFragment.setDepts(depts);
+		groupSelectFragment.setMyGroups(myGroups);
+		groupSelectFragment.setUsers(users);
+		// groupSelectFragment.setSelectedGroups(selectedGroups, selectedDepts, selectedMyGroups);
+		groupSelectFragment.setUserFragment(this);
+		List<UserModel> lstSelectedUser = getSelectedUserList();
+		// groupSelectFragment.setSelectedUsers(lstSelectedUser);
+		gotoFragment(groupSelectFragment);
 	}
 
 	private void onClickSaveIcon(){
-		saveActiveUserList();
+		saveSelectUserList();
 	}
 
+	public void setJoinUsers(List<UserModel> joinUsers){
+		this.joinUsers = joinUsers;
+	}
+
+	public void addJoinUsers(List<UserModel> additionalUsers){
+		List<UserModel> lstSelectedUser = getSelectedUserList();
+		if(!CCCollectionUtil.isEmpty(additionalUsers)){
+			for(UserModel userModel : additionalUsers){
+				if(!UserModel.contain(lstSelectedUser, userModel)){
+					lstSelectedUser.add(userModel);
+				}
+			}
+			this.mLnrFilterUser.addUserList(users, lstSelectedUser, mCbxAll);
+		}
+	}
+
+	public void resetSelectedGroups(){
+		selectedDepts = new ArrayList<>();
+		selectedGroups = new ArrayList<>();
+		selectedMyGroups = new ArrayList<>();
+	}
+
+	public void setFormFragment(ScheduleFormFragment scheduleFormFragment){
+		this.formFragment = scheduleFormFragment;
+	}
 }

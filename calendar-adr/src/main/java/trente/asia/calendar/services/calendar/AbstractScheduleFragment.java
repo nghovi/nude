@@ -69,7 +69,7 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 	protected ChiaseTextView			txtCategory;
 	protected SwitchCompat				swtAllDay;
 	protected LinearLayout				lnrEndDate;
-	protected ClFilterUserListDialog	filterDialog;
+//	protected ClFilterUserListDialog	filterDialog;
 	protected List<UserModel>			users;
 	protected LinearLayout				lnrRepeatUntil;
 	protected TextView					txtRepeatUntil;

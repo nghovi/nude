@@ -5,6 +5,9 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,9 +18,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import asia.chiase.core.util.CCCollectionUtil;
+import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.listener.CsOnCheckedChangeListener;
 import trente.asia.android.view.layout.CheckableLinearLayout;
 import trente.asia.calendar.R;
+import trente.asia.calendar.services.calendar.GroupSelectFragment;
+import trente.asia.calendar.services.calendar.model.MyGroup;
 import trente.asia.calendar.services.calendar.model.RoomModel;
 import trente.asia.welfare.adr.models.DeptModel;
 import trente.asia.welfare.adr.models.GroupModel;
@@ -32,7 +38,18 @@ import trente.asia.welfare.adr.models.UserModel;
 public class FilterDeptLinearLayout extends LinearLayout{
 
 	public List<CheckableLinearLayout>	lstCheckable;
-	private List<String>				names	= new ArrayList<>();
+	private List<String>				names			= new ArrayList<>();
+	private OnDeptSelectedListener		onDeptSelectedListenter;
+	private boolean						isSimpleAvatar	= false;
+
+	public void enableSimpleAvatar(boolean enable){
+		isSimpleAvatar = enable;
+	}
+
+	public interface OnDeptSelectedListener{
+
+		public void onSelectDept(List<UserModel> userModels, Object object);
+	}
 
 	public void search(String s){
 		int i = 0;
@@ -47,14 +64,20 @@ public class FilterDeptLinearLayout extends LinearLayout{
 		}
 	}
 
+	public void setOnDeptSelectedListenter(OnDeptSelectedListener onDeptSelectedListenter){
+		this.onDeptSelectedListenter = onDeptSelectedListenter;
+	}
+
 	private class ViewHolder{
 
 		private final ImageView			imgAvatar;
+		private final LinearLayout		lnrAvatar;
 		public TextView					txtName;
 		public CheckableLinearLayout	lnrItem;
 		public ImageView				imgCheck;
 
 		public ViewHolder(View view){
+			lnrAvatar = (LinearLayout)view.findViewById(R.id.lnr_avatar_container);
 			imgAvatar = (ImageView)view.findViewById(R.id.img_id_avatar);
 			txtName = (TextView)view.findViewById(R.id.txt_id_user_name);
 			lnrItem = (CheckableLinearLayout)view.findViewById(R.id.lnr_id_item);
@@ -74,29 +97,28 @@ public class FilterDeptLinearLayout extends LinearLayout{
 		super(context, attrs, defStyle);
 	}
 
-	public void fillInData(List<GroupModel> mygroups, List<GroupModel> selectedMyGroups, List<GroupModel> groupModels, List<GroupModel> selectedGroups, List<DeptModel> deptModels, List<DeptModel> selectedDepts, final CheckBox cbxAll){
+	public void fillInData(List<MyGroup> mygroups, List<MyGroup> selectedMyGroups, List<GroupModel> groupModels, List<GroupModel> selectedGroups, List<DeptModel> deptModels, List<DeptModel> selectedDepts, final CheckBox cbxAll){
 
 		lstCheckable = new ArrayList<>();
 		this.removeAllViews();
 
 		if(!CCCollectionUtil.isEmpty(mygroups)){
-			for(GroupModel myGroup : mygroups){
-				addItem(myGroup.groupName, cbxAll, checkSelectedGroup(myGroup, selectedMyGroups), myGroup.listUsers);
+			for(MyGroup myGroup : mygroups){
+				addItem(myGroup.groupName, cbxAll, checkSelectedMyGroup(myGroup, selectedMyGroups), myGroup.listUsers, null, myGroup);
 			}
 		}
 
 		if(!CCCollectionUtil.isEmpty(deptModels)){
 			for(DeptModel deptModel : deptModels){
-				addItem(deptModel.deptName, cbxAll, checkSelectedDept(deptModel, selectedDepts), deptModel.members);
+				addItem(deptModel.deptName, cbxAll, checkSelectedDept(deptModel, selectedDepts), deptModel.members, null, deptModel);
 			}
 		}
 
 		if(!CCCollectionUtil.isEmpty(groupModels)){
 			for(GroupModel group : groupModels){
-				addItem(group.groupName, cbxAll, checkSelectedGroup(group, selectedGroups), group.listUsers);
+				addItem(group.groupName, cbxAll, checkSelectedGroup(group, selectedGroups), group.listUsers, null, group);
 			}
 		}
-
 
 		judgeCheckAll(cbxAll);
 	}
@@ -108,7 +130,7 @@ public class FilterDeptLinearLayout extends LinearLayout{
 
 		if(!CCCollectionUtil.isEmpty(rooms)){
 			for(RoomModel roomModel : rooms){
-				addItem(roomModel.roomName, cbxAll, checkSelectedRoom(roomModel, selectedRooms), null);
+				addItem(roomModel.roomName, cbxAll, checkSelectedRoom(roomModel, selectedRooms), null, roomModel.roomColor, roomModel);
 			}
 		}
 
@@ -142,6 +164,15 @@ public class FilterDeptLinearLayout extends LinearLayout{
 		return false;
 	}
 
+	public static boolean checkSelectedMyGroup(MyGroup group, List<MyGroup> groups){
+		for(MyGroup groupModel : groups){
+			if(group.key.equals(groupModel.key)){
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public static boolean checkSelectedUser(UserModel userModel, List<UserModel> userModels){
 		for(UserModel user : userModels){
 			if(user.key.equals(userModel.key)){
@@ -152,13 +183,19 @@ public class FilterDeptLinearLayout extends LinearLayout{
 	}
 
 	// WelfareUtil.containUserInList(this.lstSelectedUser, userModel)
-	private void addItem(String name, final CheckBox cbxAll, boolean alreadySelected, List<UserModel> userModels){
+	private void addItem(String name, final CheckBox cbxAll, boolean alreadySelected, final List<UserModel> userModels, String colorCode, final Object object){
 		LayoutInflater mInflater = (LayoutInflater)this.getContext().getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 		View userView = mInflater.inflate(R.layout.adapter_dialog_user_item, null);
 
 		final ViewHolder holder = new ViewHolder(userView);
 		holder.imgAvatar.setVisibility(View.GONE);
 		holder.txtName.setText(name);
+
+		if(!CCStringUtil.isEmpty(colorCode) && isSimpleAvatar == false){
+			holder.lnrAvatar.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.wf_background_round_border_white));
+			GradientDrawable bgShape = (GradientDrawable)holder.lnrAvatar.getBackground();
+			bgShape.setColor(Color.parseColor(colorCode));
+		}
 
 		if(alreadySelected){
 			holder.lnrItem.setChecked(true);
@@ -174,6 +211,9 @@ public class FilterDeptLinearLayout extends LinearLayout{
 			public void onClick(View v){
 				boolean isChecked = holder.lnrItem.isChecked();
 				holder.lnrItem.setChecked(!isChecked);
+				if(onDeptSelectedListenter != null){
+					onDeptSelectedListenter.onSelectDept(userModels, object);
+				}
 			}
 		});
 		holder.lnrItem.setOnCheckedChangeListener(new CsOnCheckedChangeListener() {

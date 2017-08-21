@@ -56,6 +56,7 @@ import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.models.ApiObjectModel;
+import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 import trente.asia.welfare.adr.utils.WelfareUtil;
 
@@ -84,6 +85,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 	private final String				SCHEDULE_EDIT_MODE		= "E";
 	private final String				SCHEDULE_DELETE_MODE	= "D";
 	private String						editMode;
+	private List<UserModel>				joinUsers;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -324,18 +326,6 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 				}
 			}
 		});
-
-		if(!CCCollectionUtil.isEmpty(users)){
-			filterDialog.updateUserList(users);
-		}
-
-		// Collections.sort(calendarHolders, new Comparator<ApiObjectModel>() {
-		// @Override
-		// public int compare(ApiObjectModel o1, ApiObjectModel o2) {
-		// return o1.value.compareToIgnoreCase(o2.value);
-		// }
-		// });
-		Map<String, String> calendarMap = WelfareFormatUtil.convertList2Map(calendarHolders);
 	}
 
 	private Map<String, String> getRoomMap(List<RoomModel> rooms){
@@ -354,9 +344,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 	@Override
 	protected void onLoadScheduleDetailSuccess(JSONObject response){
 		super.onLoadScheduleDetailSuccess(response);
-		filterDialog = new ClFilterUserListDialog(activity, lnrUserList, getString(R.string.cl_join_user_dialog_title));
-		filterDialog.findViewById(R.id.img_id_done).setOnClickListener(this);
-
+		joinUsers = schedule.scheduleJoinUsers;
 		buildDatePickerDialogs(schedule);
 
 		if(schedule != null && !CCStringUtil.isEmpty(schedule.key)){
@@ -416,12 +404,12 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 		case R.id.lnr_id_repeat:
 			repeatDialog.show();
 			break;
-		case R.id.img_id_done:
-			filterDialog.dismiss();
-			filterDialog.saveActiveUserList();
-			break;
+		// case R.id.img_id_done:
+		// filterDialog.dismiss();
+		// filterDialog.saveSelectUserList();
+		// break;
 		case R.id.lnr_id_join_user_list:
-			filterDialog.show();
+			gotoSelectUserFragment();
 			break;
 		case R.id.lnr_id_only_this:
 			editModeDialog.dismiss();
@@ -467,6 +455,18 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 		default:
 			break;
 		}
+	}
+
+	private void gotoSelectUserFragment(){
+		UserSelectFragment userSelectFragment = new UserSelectFragment();
+		userSelectFragment.setJoinUsers(joinUsers);
+		userSelectFragment.setFormFragment(this);
+		gotoFragment(userSelectFragment);
+	}
+
+	public void updateJoinUsers(List<UserModel> lstSelectedUser){
+		joinUsers = lstSelectedUser;
+		lnrUserList.show(joinUsers, WelfareUtil.dpToPx(30));
 	}
 
 	public static class ChangeCalendarConfirmDialog extends DialogFragment{

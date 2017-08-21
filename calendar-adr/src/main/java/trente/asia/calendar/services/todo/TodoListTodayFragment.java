@@ -26,15 +26,18 @@ import android.widget.RadioButton;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCStringUtil;
+import trente.asia.android.activity.ChiaseActivity;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.fragments.AbstractClFragment;
 import trente.asia.calendar.services.todo.model.Todo;
 import trente.asia.calendar.services.todo.view.TodoListAdapter;
+import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.dialog.WfDialog;
 import trente.asia.welfare.adr.utils.WelfareUtil;
@@ -47,7 +50,7 @@ import trente.asia.welfare.adr.utils.WelfareUtil;
 public class TodoListTodayFragment extends AbstractClFragment{
 
 	private LinearLayout	lnrUnfinished;
-//	private LinearLayout	lnrFinished;
+	// private LinearLayout lnrFinished;
 	private List<Todo>		todoList;
 	private WfDialog		dlgDeleteConfirm;
 	private LayoutInflater	inflater;
@@ -57,6 +60,7 @@ public class TodoListTodayFragment extends AbstractClFragment{
 	private Todo			selectedTodo;
 	private int				footerItemId;
 	private Date			selectedDate;
+	private boolean			needRefreshIfBack	= false;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -74,8 +78,16 @@ public class TodoListTodayFragment extends AbstractClFragment{
 		getView().findViewById(R.id.img_id_header_right_icon).setOnClickListener(this);
 		scrollView = (ScrollView)getView().findViewById(R.id.scr_todo);
 		lnrUnfinished = (LinearLayout)getView().findViewById(R.id.lnr_unfinished_todo_containter);
-//		lnrFinished = (LinearLayout)getView().findViewById(R.id.lnr_finished_todo_containter);
+		// lnrFinished = (LinearLayout)getView().findViewById(R.id.lnr_finished_todo_containter);
 		inflater = LayoutInflater.from(activity);
+	}
+
+	@Override
+	protected void onClickBackBtn(){
+		if(needRefreshIfBack){
+			((WelfareActivity)activity).dataMap.put(ClConst.ACTION_SCHEDULE_UPDATE, CCConst.YES);
+		}
+		super.onClickBackBtn();
 	}
 
 	@Override
@@ -117,7 +129,7 @@ public class TodoListTodayFragment extends AbstractClFragment{
 	}
 
 	private void buildTodos(){
-//		lnrFinished.removeAllViews();
+		// lnrFinished.removeAllViews();
 		lnrUnfinished.removeAllViews();
 		for(Todo todo : todoList){
 			buildTodoItem(todo);
@@ -281,6 +293,7 @@ public class TodoListTodayFragment extends AbstractClFragment{
 			dlgDeleteConfirm.dismiss();
 		}
 		loadTodoList();
+		needRefreshIfBack = true;
 	}
 
 	public void setSelectedDate(Date selectedDate){

@@ -5,23 +5,21 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.json.JSONObject;
+
+import com.bluelinelabs.logansquare.LoganSquare;
+
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.EditText;
-
-import com.bluelinelabs.logansquare.LoganSquare;
-
-import org.json.JSONObject;
 
 import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.android.activity.ChiaseActivity;
 import trente.asia.android.view.layout.CheckableLinearLayout;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;

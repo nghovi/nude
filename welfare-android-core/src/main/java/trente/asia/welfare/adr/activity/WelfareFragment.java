@@ -279,6 +279,14 @@ public abstract class WelfareFragment extends ChiaseFragment implements WelfareA
 		}
 	}
 
+	protected void onClickBackBtnWithoutRefresh(){
+		if(getFragmentManager().getBackStackEntryCount() <= 1){
+			((WelfareActivity)activity).setDoubleBackPressedToFinish();
+		}else{
+			getFragmentManager().popBackStack();
+		}
+	}
+
 	@Override
 	protected void initParams(JSONObject jsonObject){
 		super.initParams(jsonObject);

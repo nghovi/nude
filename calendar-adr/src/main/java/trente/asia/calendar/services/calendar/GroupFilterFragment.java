@@ -22,6 +22,7 @@ import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.fragments.AbstractClFragment;
 import trente.asia.calendar.commons.utils.ClUtil;
 import trente.asia.calendar.commons.views.FilterDeptLinearLayout;
+import trente.asia.calendar.services.calendar.model.MyGroup;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.models.DeptModel;
 import trente.asia.welfare.adr.models.GroupModel;
@@ -40,7 +41,7 @@ public class GroupFilterFragment extends AbstractClFragment{
 	private List<UserModel>			mSelectedUsers;
 	private List<GroupModel>		groups;
 	private List<DeptModel>			depts;
-	private List<GroupModel>		myGroups;
+	private List<MyGroup>			myGroups;
 	private List<UserModel>			users;
 	private List<UserModel>			selectedUsers;
 
@@ -85,7 +86,7 @@ public class GroupFilterFragment extends AbstractClFragment{
 			}
 		});
 
-		List<GroupModel> selectedMyGroups = getSelectedGroups(selectedUsers, myGroups);
+		List<MyGroup> selectedMyGroups = getSelectedMyGroups(selectedUsers, myGroups);
 		List<GroupModel> selectedGroups = getSelectedGroups(selectedUsers, groups);
 		List<DeptModel> selectedDepts = getSelectedDepts(selectedUsers);
 		this.mLnrFilterDept.fillInData(myGroups, selectedMyGroups, groups, selectedGroups, depts, selectedDepts, mCbxAll);
@@ -116,6 +117,7 @@ public class GroupFilterFragment extends AbstractClFragment{
 		return result;
 	}
 
+	//// TODO: 8/21/17 duplicate code
 	private List<GroupModel> getSelectedGroups(List<UserModel> selectedUsers, List<GroupModel> groupModels){
 
 		List<GroupModel> result = new ArrayList<>();
@@ -134,6 +136,31 @@ public class GroupFilterFragment extends AbstractClFragment{
 				}
 				if(isSelected){
 					result.add(groupModel);
+				}
+			}
+		}
+
+		return result;
+	}
+
+	private List<MyGroup> getSelectedMyGroups(List<UserModel> selectedUsers, List<MyGroup> MyGroups){
+
+		List<MyGroup> result = new ArrayList<>();
+		if(!CCCollectionUtil.isEmpty(selectedUsers)){
+			for(MyGroup MyGroup : MyGroups){
+				boolean isSelected = true;
+				if(CCCollectionUtil.isEmpty(MyGroup.listUsers)){
+					isSelected = false;
+				}else{
+					for(UserModel userModel : MyGroup.listUsers){
+						if(!FilterDeptLinearLayout.checkSelectedUser(userModel, selectedUsers)){
+							isSelected = false;
+							break;
+						}
+					}
+				}
+				if(isSelected){
+					result.add(MyGroup);
 				}
 			}
 		}
@@ -208,7 +235,7 @@ public class GroupFilterFragment extends AbstractClFragment{
 		this.depts = depts;
 	}
 
-	public void setMyGroups(List<GroupModel> myGroups){
+	public void setMyGroups(List<MyGroup> myGroups){
 		this.myGroups = myGroups;
 	}
 

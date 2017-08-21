@@ -42,6 +42,7 @@ public class FilterUserLinearLayout extends LinearLayout{
 	public List<CheckableLinearLayout>	lstCheckable;
 	private CheckBox					mCbxAll;
 	private List<UserModel>				lstUser;
+	private boolean						isSimpleAvatar	= false;
 
 	public void search(String s){
 		int i = 0;
@@ -54,6 +55,10 @@ public class FilterUserLinearLayout extends LinearLayout{
 			}
 			i++;
 		}
+	}
+
+	public void enableSimpleAvatar(boolean enable){
+		isSimpleAvatar = enable;
 	}
 
 	private class ViewHolder{
@@ -102,9 +107,11 @@ public class FilterUserLinearLayout extends LinearLayout{
 
 				holder.txtUserName.setText(userModel.userName);
 
-				holder.lnrAvatar.setBackground(ContextCompat.getDrawable(mContext, R.drawable.wf_background_round_border_white));
-				GradientDrawable bgShape = (GradientDrawable)holder.lnrAvatar.getBackground();
-				bgShape.setColor(Color.parseColor(userModel.userColor));
+				if(!isSimpleAvatar){
+					holder.lnrAvatar.setBackground(ContextCompat.getDrawable(mContext, R.drawable.wf_background_round_border_white));
+					GradientDrawable bgShape = (GradientDrawable)holder.lnrAvatar.getBackground();
+					bgShape.setColor(Color.parseColor(userModel.userColor));
+				}
 
 				if(userModel.bitmap != null){
 					holder.imgAvatar.setImageBitmap(userModel.bitmap);
