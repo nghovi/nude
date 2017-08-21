@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import asia.chiase.core.define.CCConst;
+import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
@@ -103,7 +104,11 @@ public class ScheduleDetailFragment extends AbstractScheduleFragment{
 			lnrRepeatUntil.setVisibility(View.GONE);
 		}else{
 			lnrRepeatUntil.setVisibility(View.VISIBLE);
-			txtRepeatUntil.setText(schedule.repeatEnd.split(":")[0]);
+			if(CCStringUtil.isEmpty(schedule.repeatEnd)){
+				txtRepeatUntil.setText(getString(R.string.cl_schedule_repeat_limit_forever));
+			}else{
+				txtRepeatUntil.setText(schedule.repeatEnd.split(" ")[0]);
+			}
 		}
 	}
 

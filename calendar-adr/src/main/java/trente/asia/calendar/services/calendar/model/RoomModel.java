@@ -10,5 +10,7 @@ public class RoomModel{
 	public String	key;
 	public String	roomName;
 	public String	roomNote;
-	public String	roomColor	= "#FFFFFF";
+	public String	color		= "#FFFFFF";
+	public String	textColor	= "#000000";
+
 }

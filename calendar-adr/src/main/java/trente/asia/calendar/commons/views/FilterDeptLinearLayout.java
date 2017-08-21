@@ -22,7 +22,6 @@ import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.listener.CsOnCheckedChangeListener;
 import trente.asia.android.view.layout.CheckableLinearLayout;
 import trente.asia.calendar.R;
-import trente.asia.calendar.services.calendar.GroupSelectFragment;
 import trente.asia.calendar.services.calendar.model.MyGroup;
 import trente.asia.calendar.services.calendar.model.RoomModel;
 import trente.asia.welfare.adr.models.DeptModel;
@@ -130,7 +129,7 @@ public class FilterDeptLinearLayout extends LinearLayout{
 
 		if(!CCCollectionUtil.isEmpty(rooms)){
 			for(RoomModel roomModel : rooms){
-				addItem(roomModel.roomName, cbxAll, checkSelectedRoom(roomModel, selectedRooms), null, roomModel.roomColor, roomModel);
+				addItem(roomModel.roomName, cbxAll, checkSelectedRoom(roomModel, selectedRooms), null, roomModel.color, roomModel);
 			}
 		}
 

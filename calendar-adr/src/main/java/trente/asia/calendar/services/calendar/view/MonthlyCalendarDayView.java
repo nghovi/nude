@@ -67,6 +67,7 @@ public class MonthlyCalendarDayView extends LinearLayout{
 	public void initialization(Date itemDate, DailyScheduleClickListener listener, boolean isWithoutMonth){
 		LayoutParams params = new LayoutParams(0, LayoutParams.MATCH_PARENT, 1);
 		this.setLayoutParams(params);
+		this.setMinimumHeight(WelfareUtil.dpToPx(48));
 		this.day = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, itemDate);
 		this.mListener = listener;
 
