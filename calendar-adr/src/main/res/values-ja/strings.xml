@@ -61,7 +61,7 @@
     <string name="daily_page_afternoon">午後</string>
     <string name="happy_birthday">お誕生日</string>
     <string name="birthday_title">誕生日</string>
-    <string name="daily_schedules_event_title">休暇</string>
+    <string name="daily_schedules_event_title">イベント</string>
     <string name="offer_title">勤怠申請</string>
     <string name="no_schedule">スケジュールがありません</string>
 
@@ -103,5 +103,5 @@
     <string name="complete_private">完全非公開</string>
     <string name="schedule_mystery">非表示</string>
     <string name="today_empty_todo">There is no Todo for today</string>
-    <string name="holiday">Holiday</string>
+    <string name="holiday">休暇</string>
 </resources>
