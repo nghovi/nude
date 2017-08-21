@@ -1,47 +1,47 @@
-<trente.asia.calendar.services.calendar.view.DailyScheduleList
+<trente.asia.calendar.services.calendar.view.DailyScheduleList xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/lnr_view_daily_schedules"
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:descendantFocusability="blocksDescendants"
     android:background="@color/cl_cell_bg_color"
+    android:descendantFocusability="blocksDescendants"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/lnr_daily_schedules_list_event"
-        android:background="@color/cl_cell_bg_color"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-    >
-        <View style="@style/cs_common_divider"/>
-    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/lnr_daily_schedule_list_all_day"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-    >
-        <View style="@style/cs_common_divider"/>
+        android:orientation="vertical">
+
+        <View style="@style/cs_common_divider" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lnr_daily_schedules_list_event"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/cl_cell_bg_color"
+        android:orientation="vertical">
+
+        <View style="@style/cs_common_divider" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/lnr_daily_schedule_list_morning"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-    >
-        <View style="@style/cs_common_divider"/>
+        android:orientation="vertical">
+
+        <View style="@style/cs_common_divider" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/lnr_daily_schedule_list_afternoon"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-    >
-        <View style="@style/cs_common_divider"/>
+        android:orientation="vertical">
+
+        <View style="@style/cs_common_divider" />
     </LinearLayout>
 
 </trente.asia.calendar.services.calendar.view.DailyScheduleList>

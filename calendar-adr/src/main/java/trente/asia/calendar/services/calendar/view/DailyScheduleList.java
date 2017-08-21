@@ -258,6 +258,8 @@ public class DailyScheduleList extends LinearLayout{
 		LinearLayout birthdayItem = (LinearLayout)inflater.inflate(layoutId, null);
 		SelectableRoundedImageView imgUser = (SelectableRoundedImageView)birthdayItem.findViewById(R.id.img_item_birthday_user);
 		WfPicassoHelper.loadImage(context, BuildConfig.HOST + userModel.avatarPath, imgUser, null);
+		TextView txtUser = (TextView)birthdayItem.findViewById(R.id.txt_item_birthday_username);
+		txtUser.setText(userModel.userName);
 		return birthdayItem;
 	}
 

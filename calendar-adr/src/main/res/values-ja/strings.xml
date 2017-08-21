@@ -103,4 +103,5 @@
     <string name="complete_private">完全非公開</string>
     <string name="schedule_mystery">非表示</string>
     <string name="today_empty_todo">There is no Todo for today</string>
+    <string name="holiday">Holiday</string>
 </resources>
