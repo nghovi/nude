@@ -165,7 +165,7 @@ public abstract class PageContainerFragment extends AbstractClFragment{
 
 	protected void setActiveDate(int position){
 		Date activeDate = getActiveDate(position);
-		String title = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_MMMM_YY, activeDate);
+		String title = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_YYYY_MM, activeDate);
 		updateHeader(title);
 	}
 
