@@ -174,7 +174,7 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 				txtTitle.setText(getString(R.string.no_deadline));
 			}else{
 				Date date = CCDateUtil.makeDateCustom(todo.limitDate, WelfareConst.WF_DATE_TIME);
-				if(CCDateUtil.compareDate(date, today, false) >= 0){
+				if(CCDateUtil.compareDate(date, today, false) <= 0){
 					txtDate.setTextColor(Color.RED);
 				}
 				if(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, today).equals(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, date))){
