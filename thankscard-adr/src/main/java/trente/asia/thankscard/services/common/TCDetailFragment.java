@@ -138,7 +138,6 @@ public class TCDetailFragment extends AbstractPagerFragment{
 		currentHistory = this.lstHistory.get(position);
 		buildLayoutSender(currentHistory);
 		buildTextMessage(currentHistory);
-		restoreStickers(currentHistory.stickers);
 	}
 
 	private void buildTextMessage(HistoryModel historyModel){
@@ -155,19 +154,27 @@ public class TCDetailFragment extends AbstractPagerFragment{
 		textDate.setText(postDateFormat);
 		textTo.setText(getString(R.string.fragment_tc_detail_to, historyModel.receiverName));
 
+		boolean isSecret = false;
+		if(historyModel.isSecret && !myself.key.equals(historyModel.receiverId) && !myself.key.equals(historyModel.posterId)) {
+				isSecret = true;
+		}
+
 		if("NM".equals(historyModel.templateType)){
 			setLayoutMessageCenter(lnrMessage);
 			textMessage.setTextSize(TypedValue.COMPLEX_UNIT_PX, normalTextSize);
 		}else{
 			setLayoutMessageRight(lnrMessage);
 			textMessage.setTextSize(TypedValue.COMPLEX_UNIT_PX, photoTextSize);
-			if(historyModel.attachment != null && historyModel.attachment.fileUrl != null){
-				photoView.clearImage();
+			photoView.clearImage();
+			if(historyModel.attachment != null && historyModel.attachment.fileUrl != null && !isSecret){
 				photoView.restoreImage(historyModel.attachment.fileUrl, Float.valueOf(historyModel.photoLocationX),
 						Float.valueOf(historyModel.photoLocationY), Float.valueOf(historyModel.photoScale));
-			} else {
-				photoView.clearImage();
 			}
+		}
+
+		rltStickers.removeAllViews();
+		if (!isSecret) {
+			restoreStickers(currentHistory.stickers);
 		}
 	}
 
@@ -189,7 +196,6 @@ public class TCDetailFragment extends AbstractPagerFragment{
 	}
 
 	private void restoreStickers(List<ApiStickerModel> stickers){
-		rltStickers.removeAllViews();
 		for(ApiStickerModel sticker : stickers){
 			StampModel stamp = StampModel.getStamp(Realm.getDefaultInstance(), sticker.stickerId);
 			StickerViewDetail stickerViewDetail = new StickerViewDetail(getContext());
