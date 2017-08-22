@@ -320,10 +320,10 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 
 			@Override
 			public void onClicked(String selectedKey, boolean isSelected){
-				CategoryModel categoryModel = ClUtil.findCategory4Id(categories, selectedKey);
-				if(categoryModel != null && !CCStringUtil.isEmpty(categoryModel.categoryColor)){
-					txtCategory.setTextColor(Color.parseColor(WelfareFormatUtil.formatColor(categoryModel.categoryColor)));
-				}
+				// CategoryModel categoryModel = ClUtil.findCategory4Id(categories, selectedKey);
+				// if(categoryModel != null && !CCStringUtil.isEmpty(categoryModel.categoryColor)){
+				// txtCategory.setTextColor(Color.parseColor(WelfareFormatUtil.formatColor(categoryModel.categoryColor)));
+				// }
 			}
 		});
 	}

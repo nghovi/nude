@@ -46,7 +46,7 @@ public class ScheduleModel{
 	public String			repeatInterval;
 	public Boolean			isWarning;
 	public UserModel		owner;
-	public String			scheduleColor	= "#FF0000";
+	public String			scheduleColor = "#FF0000";
 
 	public ScheduleModel(){
 
@@ -112,7 +112,7 @@ public class ScheduleModel{
 
 	public static ScheduleModel clone(ScheduleModel scheduleModel, UserModel userModel){
 		ScheduleModel cloned = new ScheduleModel();
-		cloned.scheduleColor = userModel.userColor;
+		cloned.scheduleColor = userModel.color;
 
 		cloned.scheduleName = scheduleModel.scheduleName;
 		cloned.scheduleNote = scheduleModel.scheduleNote;

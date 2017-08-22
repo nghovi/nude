@@ -152,7 +152,6 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 		}else{
 			lnrTodoSection.setVisibility(View.VISIBLE);
 		}
-		Date today = Calendar.getInstance().getTime();
 		for(int i = 0; i < todos.size(); i++){
 			final Todo todo = todos.get(i);
 			View cell = inflater.inflate(R.layout.item_todo_unfinished_month, null);
@@ -331,7 +330,12 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 		}
 	}
 
-	public void expand(final View v){
+    @Override
+    protected String getExecType() {
+        return "M";
+    }
+
+    public void expand(final View v){
 		v.measure(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 		int rowNum = Math.min(todos.size() + 1, MAX_ROW + 1);
 		final int targetHeight = WelfareUtil.dpToPx(44 * rowNum);

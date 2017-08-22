@@ -12,6 +12,7 @@ import java.util.Map;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -269,23 +270,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 			rltPart1.requestLayout();
 		}
 
-		scrollViewPart1.setOnTouchListener(new View.OnTouchListener() {
-
-			@Override
-			public boolean onTouch(View v, MotionEvent event){
-				if(event.getAction() == MotionEvent.ACTION_DOWN){
-					// your code MotionEvent e = event;
-					float x = event.getAxisValue(MotionEvent.AXIS_X);
-					float y = cellWidth;
-					int column = (int)(x / y);
-					if(column - 1 >= 0 && column - 1 < dates.size()){
-						onDailyScheduleClickListener(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, dates.get(column - 1)));
-					}
-				}
-				return false;
-			}
-
-		});
+		setOnTouchListener(scrollViewPart1, cellWidth);
 	}
 
 	private void gotoTodoListTodayFragment(Calendar c2){
@@ -334,7 +319,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 	public static TextView makeTextView(Context activity, String text, int leftMargin, int topMargin, int maxWidth, int bgColor, int textColor, int gravity){
 		TextView textView = new TextView(activity);
 		textView.setMaxLines(1);
-		textView.setEllipsize(TextUtils.TruncateAt.END);
+		// textView.setEllipsize(TextUtils.TruncateAt.END);
 		textView.setTextSize(13);
 
 		textView.setMaxWidth(maxWidth);
@@ -399,7 +384,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 
 				leftMarginScheduleNumMap.put(leftMargin, leftMarginScheduleNum + 1);
 
-				TextView textView = makeTextView(activity, schedule.scheduleName, leftMargin, topMargin, cellWidth, 0, getColor(schedule), Gravity.LEFT);
+				TextView textView = makeTextView(activity, schedule.scheduleName, leftMargin + 1, topMargin, cellWidth, 0, getColor(schedule), Gravity.LEFT);
 				// textView.setOnClickListener(new View.OnClickListener() {
 				//
 				// @Override
@@ -415,9 +400,13 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 			}
 		}
 
+		setOnTouchListener(scrollView, cellWidth);
 		scrollToFavouritePost();
 
-		lnrPart2.setOnTouchListener(new View.OnTouchListener() {
+	}
+
+	private void setOnTouchListener(ScrollView scrollview, final int cellWidth){
+		scrollview.setOnTouchListener(new View.OnTouchListener() {
 
 			@Override
 			public boolean onTouch(View v, MotionEvent event){
@@ -429,7 +418,6 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 				case MotionEvent.ACTION_CANCEL:
 				case MotionEvent.ACTION_UP:
 					if(shouldClick){
-						// your code MotionEvent e = event;
 						float x = event.getAxisValue(MotionEvent.AXIS_X);
 						float y = cellWidth;
 						int column = (int)(x / y);
@@ -437,10 +425,6 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 							onDailyScheduleClickListener(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, dates.get(column - 1)));
 						}
 					}
-					break;
-				case MotionEvent.ACTION_POINTER_DOWN:
-					break;
-				case MotionEvent.ACTION_POINTER_UP:
 					break;
 				case MotionEvent.ACTION_MOVE:
 					shouldClick = false;
@@ -475,15 +459,15 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 	protected void initCalendarHeader(){
 		lnrHeader = (LinearLayout)getView().findViewById(R.id.lnr_weekly_header);
 		lnrHeader.removeAllViews();
-		addCell("", "", 0);
+		addCell("", "", 0, today);
 		Calendar c = Calendar.getInstance();
 		for(Date date : dates){
 			c.setTime(date);
-			addCell(String.valueOf(c.get(Calendar.DAY_OF_MONTH)), CCStringUtil.toUpperCase(CCFormatUtil.formatDateCustom(CS_DATE_TIME_1, date)), c.get(Calendar.DAY_OF_WEEK));
+			addCell(String.valueOf(c.get(Calendar.DAY_OF_MONTH)), CCStringUtil.toUpperCase(CCFormatUtil.formatDateCustom(CS_DATE_TIME_1, date)), c.get(Calendar.DAY_OF_WEEK), date);
 		}
 	}
 
-	private void addCell(String number, String day, int dayOfWeek){
+	private void addCell(String number, String day, int dayOfWeek, Date date){
 		LinearLayout lnrDay = new LinearLayout(activity);
 		LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 		layoutParams.weight = 1;
@@ -498,6 +482,11 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 		TextView txtTitleItem = new TextView(activity);
 		txtTitleItem.setGravity(Gravity.CENTER);
 		txtTitleItem.setText(day);
+
+		if(CCDateUtil.compareDate(date, today, false) == 0){
+			txtTitleItem.setTypeface(null, Typeface.BOLD);
+			txtDayNumber.setTypeface(null, Typeface.BOLD);
+		}
 
 		if(Calendar.SUNDAY == dayOfWeek){
 			txtTitleItem.setTextColor(Color.RED);
@@ -542,6 +531,11 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 			lnrVerticalLineContainer.addView(lnrDay);
 		}
 
+	}
+
+	@Override
+	protected String getExecType(){
+		return "W";
 	}
 
 	private void gotoDailySummaryDialog(int finalI){

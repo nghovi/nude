@@ -154,7 +154,7 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 			if(categoryModel != null){
 				txtCategory.setText(categoryModel.categoryName);
 				txtCategory.setValue(schedule.categoryId);
-				txtCategory.setTextColor(Color.parseColor(WelfareFormatUtil.formatColor(categoryModel.categoryColor)));
+//				txtCategory.setTextColor(Color.parseColor(WelfareFormatUtil.formatColor(categoryModel.categoryColor)));
 			}
 
 			txtScope.setText(scopes.get(schedule.scheduleType));
@@ -182,7 +182,7 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 			txtRoom.setValue(rooms.get(0).key);
 			txtCategory.setText(categories.get(0).categoryName);
 			txtCategory.setValue(categories.get(0).key);
-			txtCategory.setTextColor(Color.parseColor(WelfareFormatUtil.formatColor(categories.get(0).categoryColor)));
+//			txtCategory.setTextColor(Color.parseColor(WelfareFormatUtil.formatColor(categories.get(0).categoryColor)));
 			txtScope.setValue(ClConst.SCHEDULE_TYPE_PUB);
 			txtScope.setText(scopes.get(ClConst.SCHEDULE_TYPE_PUB));
 		}

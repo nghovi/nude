@@ -78,6 +78,7 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 	protected String				currentHour;
 
 	protected static final int		MAX_ROW				= 2;
+	protected Date					today;
 
 	abstract protected List<Date> getAllDate();
 
@@ -87,6 +88,8 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 	@Override
 	protected void initView(){
 		super.initView();
+
+		today = Calendar.getInstance().getTime();
 
 		if(pageSharingHolder.isLoadingSchedules == false){
 			lnrCalendarContainer = (LinearLayout)getView().findViewById(R.id.lnr_calendar_container);
@@ -125,7 +128,7 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 		return buildJsonObjForScheduleListRequest(prefAccUtil, dates.get(0), dates.get(dates.size() - 1));
 	}
 
-	public static JSONObject buildJsonObjForScheduleListRequest(PreferencesAccountUtil prefAccUtil, Date startDate, Date endDate){
+	public JSONObject buildJsonObjForScheduleListRequest(PreferencesAccountUtil prefAccUtil, Date startDate, Date endDate){
 
 		String targetUserList = null;
 		String searchText = null;
@@ -150,12 +153,15 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 			jsonObject.put("searchText", searchText);
 			jsonObject.put("startDateString", CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, startDate));
 			jsonObject.put("endDateString", CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, endDate));
+			jsonObject.put("execType", getExecType());
 
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
 		return jsonObject;
 	}
+
+	abstract protected String getExecType();
 
 	@Override
 	protected void successLoad(JSONObject response, String url){

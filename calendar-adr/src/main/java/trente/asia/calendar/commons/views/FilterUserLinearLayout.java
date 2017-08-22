@@ -110,7 +110,7 @@ public class FilterUserLinearLayout extends LinearLayout{
 				if(!isSimpleAvatar){
 					holder.lnrAvatar.setBackground(ContextCompat.getDrawable(mContext, R.drawable.wf_background_round_border_white));
 					GradientDrawable bgShape = (GradientDrawable)holder.lnrAvatar.getBackground();
-					bgShape.setColor(Color.parseColor(userModel.userColor));
+					bgShape.setColor(Color.parseColor(userModel.color));
 				}
 
 				if(userModel.bitmap != null){
