@@ -117,8 +117,8 @@ public class TodoDetailFragment extends AbstractClFragment{
 
 			@Override
 			public void onCancel(DialogInterface dialog){
-				// txtDeadline.setTextColor(Color.GRAY);
-				// txtDeadline.setText(getString(R.string.deadline));
+				txtDeadline.setTextColor(Color.GRAY);
+				txtDeadline.setText(getString(R.string.deadline));
 			}
 		});
 	}
