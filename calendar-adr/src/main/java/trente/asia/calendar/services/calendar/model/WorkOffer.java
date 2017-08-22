@@ -25,7 +25,7 @@ public class WorkOffer{
 	public WorkOffer(){
 	}
 
-	public String	userColor;
+	public String	userColor = "#FFFFFF";
 	public String	userId;
 	public String	userName;
 	public String	offerType;
