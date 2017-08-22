@@ -8,4 +8,5 @@
     <string name="ol_document_list">Document list</string>
     <string name="dialog_avatar_handlers_camera">Camera</string>
     <string name="dialog_avatar_handlers_gallery">Gallery</string>
+    <string name="ol_show_sub">Show sub</string>
 </resources>

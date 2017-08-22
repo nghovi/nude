@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/lnr_group_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@color/wf_login_background_color"
+            android:padding="@dimen/margin_16dp">
+            <TextView
+                android:id="@+id/group_name"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textColor="@color/chiase_black"
+                android:textSize="14sp" />
+            <CheckBox
+                android:id="@+id/checkbox_show_sub"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_8dp"
+                android:textColor="@color/chiase_black"
+                android:textSize="14sp"
+                android:text="@string/ol_show_sub"/>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/rlt_item_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin_16dp"
+            android:background="@color/chiase_white">
+            <TextView
+                android:id="@+id/item_name"
+                android:layout_toStartOf="@+id/item_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/chiase_black"
+                android:layout_alignParentStart="true"
+                android:textSize="14sp"/>
+            <TextView
+                android:id="@+id/item_sub"
+                android:layout_below="@+id/item_name"
+                android:layout_toStartOf="@+id/item_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="@dimen/margin_8dp"
+                android:layout_marginTop="@dimen/margin_5dp"
+                android:textColor="@color/chiase_black"
+                android:textSize="14sp"/>
+            <TextView
+                android:id="@+id/item_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:textColor="@color/chiase_black"
+                android:textSize="14sp"/>
+        </RelativeLayout>
+        <View style="@style/cs_common_divider"/>
+    </LinearLayout>
+</layout>
