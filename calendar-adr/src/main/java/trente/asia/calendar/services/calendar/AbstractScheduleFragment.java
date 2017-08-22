@@ -52,27 +52,27 @@ import trente.asia.welfare.adr.utils.WelfareUtil;
  */
 public class AbstractScheduleFragment extends AbstractClFragment{
 
-	protected ScheduleModel				schedule;
-	protected List<ApiObjectModel>		calendarHolders;
-	protected UserListLinearLayout		lnrUserList;
+	protected ScheduleModel			schedule;
+	protected List<ApiObjectModel>	calendarHolders;
+	protected UserListLinearLayout	lnrUserList;
 
-	protected List<RoomModel>			rooms;
-	protected ChiaseTextView			txtRoom;
-	protected ChiaseTextView			txtScope;
-	protected ChiaseTextView			txtStartTime;
-	protected ChiaseTextView			txtEndTime;
-	protected ChiaseTextView			txtStartDate;
-	protected ChiaseTextView			txtEndDate;
-	protected ChiaseTextView			txtRepeat;
+	protected List<RoomModel>		rooms;
+	protected ChiaseTextView		txtRoom;
+	protected ChiaseTextView		txtScope;
+	protected ChiaseTextView		txtStartTime;
+	protected ChiaseTextView		txtEndTime;
+	protected ChiaseTextView		txtStartDate;
+	protected ChiaseTextView		txtEndDate;
+	protected ChiaseTextView		txtRepeat;
 
-	protected List<CategoryModel>		categories;
-	protected ChiaseTextView			txtCategory;
-	protected SwitchCompat				swtAllDay;
-	protected LinearLayout				lnrEndDate;
-//	protected ClFilterUserListDialog	filterDialog;
-	protected List<UserModel>			users;
-	protected LinearLayout				lnrRepeatUntil;
-	protected TextView					txtRepeatUntil;
+	protected List<CategoryModel>	categories;
+	protected ChiaseTextView		txtCategory;
+	protected SwitchCompat			swtAllDay;
+	protected LinearLayout			lnrEndDate;
+	// protected ClFilterUserListDialog filterDialog;
+	protected List<UserModel>		users;
+	protected LinearLayout			lnrRepeatUntil;
+	protected TextView				txtRepeatUntil;
 
 	@Override
 	protected void initView(){
@@ -96,6 +96,7 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 		txtEndTime = (ChiaseTextView)getView().findViewById(R.id.txt_id_end_time);
 		lnrRepeatUntil = (LinearLayout)getView().findViewById(R.id.lnr_id_repeat_until);
 		txtRepeatUntil = (TextView)getView().findViewById(R.id.txt_repeat_until);
+		lnrUserList.setOnClickListener(this);
 	}
 
 	@Override
@@ -154,7 +155,7 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 			if(categoryModel != null){
 				txtCategory.setText(categoryModel.categoryName);
 				txtCategory.setValue(schedule.categoryId);
-//				txtCategory.setTextColor(Color.parseColor(WelfareFormatUtil.formatColor(categoryModel.categoryColor)));
+				// txtCategory.setTextColor(Color.parseColor(WelfareFormatUtil.formatColor(categoryModel.categoryColor)));
 			}
 
 			txtScope.setText(scopes.get(schedule.scheduleType));
@@ -182,7 +183,7 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 			txtRoom.setValue(rooms.get(0).key);
 			txtCategory.setText(categories.get(0).categoryName);
 			txtCategory.setValue(categories.get(0).key);
-//			txtCategory.setTextColor(Color.parseColor(WelfareFormatUtil.formatColor(categories.get(0).categoryColor)));
+			// txtCategory.setTextColor(Color.parseColor(WelfareFormatUtil.formatColor(categories.get(0).categoryColor)));
 			txtScope.setValue(ClConst.SCHEDULE_TYPE_PUB);
 			txtScope.setText(scopes.get(ClConst.SCHEDULE_TYPE_PUB));
 		}
