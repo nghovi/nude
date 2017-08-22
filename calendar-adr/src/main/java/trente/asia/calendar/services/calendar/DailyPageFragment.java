@@ -168,6 +168,11 @@ public class DailyPageFragment extends SchedulesPageFragment{
 	}
 
 	@Override
+	protected String getExecType() {
+		return "D";
+	}
+
+	@Override
 	protected void updateSchedules(List<ScheduleModel> schedules, List<CategoryModel> categories){
 		super.updateSchedules(schedules, categories);
 		schedules = multiplyWithUsers(schedules);

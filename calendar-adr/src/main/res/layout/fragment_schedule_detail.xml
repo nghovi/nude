@@ -20,6 +20,24 @@
                 <TextView
                     style="@style/wl_common_text"
                     android:layout_width="wrap_content"
+                    android:text="@string/cl_schedule_form_item_name" />
+
+                <trente.asia.android.view.ChiaseTextView
+                    android:id="@+id/txt_id_schedule_name"
+                    style="@style/wl_common_edit_text2"
+                    android:layout_marginLeft="@dimen/margin_10dp"
+                    android:layout_weight="1"
+                    custom:mName="scheduleName" />
+            </LinearLayout>
+
+            <View style="@style/cs_common_divider" />
+
+
+            <LinearLayout style="@style/wf_common_item_linear2">
+
+                <TextView
+                    style="@style/wl_common_text"
+                    android:layout_width="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/cl_schedule_form_all_day" />
 
@@ -107,23 +125,6 @@
                     android:layout_marginLeft="@dimen/margin_10dp"
                     android:layout_weight="1"
                     android:text="@string/chiase_common_none" />
-            </LinearLayout>
-
-            <View style="@style/cs_common_divider" />
-
-            <LinearLayout style="@style/wf_common_item_linear2">
-
-                <TextView
-                    style="@style/wl_common_text"
-                    android:layout_width="wrap_content"
-                    android:text="@string/cl_schedule_form_item_name" />
-
-                <trente.asia.android.view.ChiaseTextView
-                    android:id="@+id/txt_id_schedule_name"
-                    style="@style/wl_common_edit_text2"
-                    android:layout_marginLeft="@dimen/margin_10dp"
-                    android:layout_weight="1"
-                    custom:mName="scheduleName" />
             </LinearLayout>
 
             <View style="@style/cs_common_divider" />

@@ -33,7 +33,7 @@ public class UserModel extends BitmapModel implements Serializable{
 	public String		token;
 	public String		language	= "en";
 	public String		dateBirth;
-	public String		userColor	= "#FF0000";
+	public String		color		= "#FF0000";
 
 	public UserModel(){
 
