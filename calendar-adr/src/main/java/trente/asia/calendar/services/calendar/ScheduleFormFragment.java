@@ -360,7 +360,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 		}else{
 			lnrRepeatUntil.setVisibility(View.VISIBLE);
 			if(!CCStringUtil.isEmpty(schedule.repeatEnd)){
-				txtRepeatUntil.setText(schedule.repeatEnd.split(":")[0]);
+				txtRepeatUntil.setText(schedule.repeatEnd.split(" ")[0]);
 			}else{
 				txtRepeatUntil.setText(getString(R.string.cl_schedule_repeat_limit_forever));
 			}
