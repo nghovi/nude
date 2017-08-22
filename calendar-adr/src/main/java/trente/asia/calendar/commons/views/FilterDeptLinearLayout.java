@@ -187,7 +187,7 @@ public class FilterDeptLinearLayout extends LinearLayout{
 		View userView = mInflater.inflate(R.layout.adapter_dialog_user_item, null);
 
 		final ViewHolder holder = new ViewHolder(userView);
-		holder.imgAvatar.setVisibility(View.GONE);
+		holder.imgAvatar.setVisibility(View.INVISIBLE);
 		holder.txtName.setText(name);
 
 		if(!CCStringUtil.isEmpty(colorCode) && isSimpleAvatar == false){
