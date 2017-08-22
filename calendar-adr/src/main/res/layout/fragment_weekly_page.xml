@@ -39,23 +39,53 @@
                     android:orientation="vertical">
 
 
-                    <RelativeLayout
-                        android:id="@+id/rlt_part1"
+                    <ScrollView
+                        android:id="@+id/scroll_part1"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/margin_10dp"
-                        android:orientation="vertical"
-                        android:paddingTop="@dimen/margin_10dp"></RelativeLayout>
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/margin_10dp"
+                            android:orientation="vertical">
+
+                            <RelativeLayout
+                                android:id="@+id/rlt_part1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:paddingTop="@dimen/margin_10dp"></RelativeLayout>
+
+                            <RelativeLayout
+                                android:id="@+id/rlt_expand"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical">
+
+                                <ImageView
+                                    android:id="@+id/ic_icon_expand"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="bottom|left"
+                                    android:src="@drawable/wf_file"
+                                    android:visibility="visible" />
+                            </RelativeLayout>
+
+                        </LinearLayout>
+
+
+                    </ScrollView>
 
                     <View
                         style="@style/cs_common_divider"
                         android:background="@color/chiase_red" />
 
                     <ScrollView
-                        android:layout_marginTop="@dimen/margin_10dp"
+                        android:id="@+id/src_fragment_daily_page"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:id="@+id/src_fragment_daily_page"
+                        android:layout_marginTop="@dimen/margin_10dp"
                         android:fillViewport="true">
 
                         <LinearLayout
@@ -68,22 +98,6 @@
                     </ScrollView>
 
                 </LinearLayout>
-
-                <RelativeLayout
-                    android:id="@+id/rlt_expand"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/margin_10dp"
-                    android:gravity="center_vertical">
-
-                    <ImageView
-                        android:id="@+id/ic_icon_expand"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom|left"
-                        android:src="@drawable/wf_file"
-                        android:visibility="visible" />
-                </RelativeLayout>
 
 
             </RelativeLayout>

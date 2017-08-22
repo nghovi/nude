@@ -240,12 +240,12 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 				//// TODO: 4/27/2017 more check change data
 				dialogDailySummary.setData(lstSchedule, lstBirthdayUser, lstHoliday, lstWorkOffer);
 				isChangedData = false;
+			}else{
+				updateSchedules(lstSchedule, lstCategory);
 			}
-
 		}catch(IOException e){
 			e.printStackTrace();
 		}
-		updateSchedules(lstSchedule, lstCategory);
 	}
 
 	private List<UserModel> filterByUser(){
