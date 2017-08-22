@@ -127,6 +127,7 @@ public class DailyPageFragment extends SchedulesPageFragment{
 		// 1dp/ms
 		a.setDuration((int)(targetHeight / v.getContext().getResources().getDisplayMetrics().density));
 		v.startAnimation(a);
+		scrollToFavouritePost();
 	}
 
 	public void collapse(final View v, final int targetHeight){
@@ -221,6 +222,11 @@ public class DailyPageFragment extends SchedulesPageFragment{
 			addStartTimeRow(key, scheduleModels);
 		}
 
+		scrollToFavouritePost();
+
+	}
+
+	private void scrollToFavouritePost() {
 		scrollView.post(new Runnable() {
 
 			@Override
@@ -228,7 +234,6 @@ public class DailyPageFragment extends SchedulesPageFragment{
 				TodoListFragment.scrollToView(scrollView, thisHourView, 2);
 			}
 		});
-
 	}
 
 	private void addStartTimeRow(String startTime, List<ScheduleModel> scheduleModels){

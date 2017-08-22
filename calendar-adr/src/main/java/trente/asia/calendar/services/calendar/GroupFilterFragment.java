@@ -90,6 +90,12 @@ public class GroupFilterFragment extends AbstractClFragment{
 		List<GroupModel> selectedGroups = getSelectedGroups(selectedUsers, groups);
 		List<DeptModel> selectedDepts = getSelectedDepts(selectedUsers);
 		this.mLnrFilterDept.fillInData(myGroups, selectedMyGroups, groups, selectedGroups, depts, selectedDepts, mCbxAll);
+		mLnrFilterDept.setOnDeptSelectedListenter(new FilterDeptLinearLayout.OnDeptSelectedListener() {
+			@Override
+			public void onSelectDept(List<UserModel> userModels, Object object) {
+
+			}
+		});
 
 	}
 
