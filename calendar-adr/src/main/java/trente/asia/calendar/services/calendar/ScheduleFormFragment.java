@@ -413,6 +413,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 		// filterDialog.saveSelectUserList();
 		// break;
 		case R.id.lnr_id_join_user_list:
+		case R.id.lnr_id_container_join_user_list:
 			gotoSelectUserFragment();
 			break;
 		case R.id.lnr_id_only_this:

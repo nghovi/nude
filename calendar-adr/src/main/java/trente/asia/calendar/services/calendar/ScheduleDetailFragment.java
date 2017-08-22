@@ -127,6 +127,7 @@ public class ScheduleDetailFragment extends AbstractScheduleFragment{
 			gotoBrowser(schedule.scheduleUrl);
 			break;
 		case R.id.lnr_id_join_user_list:
+		case R.id.lnr_id_container_join_user_list:
 			gotoUserListFragment(schedule.scheduleJoinUsers);
 			break;
 		default:
