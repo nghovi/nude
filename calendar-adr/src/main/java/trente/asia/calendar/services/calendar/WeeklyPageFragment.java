@@ -58,13 +58,14 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 
 	public static final Integer			CELL_HEIGHT_PIXEL	= WelfareUtil.dpToPx(18);
 	protected LinearLayout				lnrHeader;
-	private RelativeLayout				rltExpand;
+	private RelativeLayout				rltExpandBar;
 	private RelativeLayout				rltPart1;
 	private LinearLayout				lnrPart2;
 	private Map<Integer, List<Integer>>	columnTopMarginsMap;
 	private int							maxTopMargin		= 0;
 	private ScrollView					scrollViewPart1;
 	private boolean						shouldClick;
+	private LinearLayout				lnrVerticalLineContainer;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -171,19 +172,24 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 			}
 		}
 
+		Map<String, Boolean> birthdayIconMap = new HashMap<>();
 		// birthday
 		for(UserModel userModel : lstBirthdayUser){
-			Calendar c2 = CCDateUtil.makeCalendarWithDateOnly(CCDateUtil.makeDateCustom(userModel.dateBirth, WelfareConst.WF_DATE_TIME));
-			int dayDistance = c2.get(Calendar.DAY_OF_YEAR) - c1.get(Calendar.DAY_OF_YEAR);
-			int leftMargin = cellWidth * (1 + dayDistance) + (cellWidth - CELL_HEIGHT_PIXEL) / 2;
-			topMargin = getNextTopMargin(dayDistance, dayDistance);
+			String keyDate = userModel.dateBirth.split(" ")[0];
+			if(!birthdayIconMap.containsKey(keyDate)){
+				Calendar c2 = CCDateUtil.makeCalendarWithDateOnly(CCDateUtil.makeDateCustom(userModel.dateBirth, WelfareConst.WF_DATE_TIME));
+				int dayDistance = c2.get(Calendar.DAY_OF_YEAR) - c1.get(Calendar.DAY_OF_YEAR);
+				int leftMargin = cellWidth * (1 + dayDistance) + (cellWidth - CELL_HEIGHT_PIXEL) / 2;
+				topMargin = getNextTopMargin(dayDistance, dayDistance);
 
-			ImageView imageViewBirthday = new ImageView(activity);
-			imageViewBirthday.setImageResource(R.drawable.cl_icon_birthday);
-			LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(CELL_HEIGHT_PIXEL, CELL_HEIGHT_PIXEL);
-			lp.setMargins(leftMargin, topMargin, 0, 0);
-			imageViewBirthday.setLayoutParams(lp);
-			rltPart1.addView(imageViewBirthday);
+				ImageView imageViewBirthday = new ImageView(activity);
+				imageViewBirthday.setImageResource(R.drawable.cl_icon_birthday);
+				LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(CELL_HEIGHT_PIXEL, CELL_HEIGHT_PIXEL);
+				lp.setMargins(leftMargin, topMargin, 0, 0);
+				imageViewBirthday.setLayoutParams(lp);
+				rltPart1.addView(imageViewBirthday);
+				birthdayIconMap.put(keyDate, true);
+			}
 		}
 
 		// holiday
@@ -202,7 +208,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 			int dayDistance = c2.get(Calendar.DAY_OF_YEAR) - c1.get(Calendar.DAY_OF_YEAR);
 			int leftMargin = cellWidth * (1 + dayDistance);
 			topMargin = getNextTopMargin(dayDistance, dayDistance);
-			TextView textView = makeTextView(activity, workOffer.offerTypeName, leftMargin, topMargin, cellWidth, Color.BLACK, Color.WHITE, Gravity.CENTER);
+			TextView textView = makeTextView(activity, workOffer.offerTypeName, leftMargin, topMargin, cellWidth, Color.parseColor(workOffer.userColor), 0, Gravity.CENTER);
 			rltPart1.addView(textView);
 		}
 
@@ -234,11 +240,16 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 			rltPart1.getLayoutParams().height = (rowNum + 1) * WeeklyPageFragment.CELL_HEIGHT_PIXEL + WelfareUtil.dpToPx(10);
 			rltPart1.requestLayout();
 			// txtMore.setVisibility(View.GONE);
-			rltExpand.setVisibility(View.GONE);
+			rltExpandBar.setVisibility(View.GONE);
 		}else{
 			isExpanded = false;
 			// moveLnrExpand(MAX_ROW * CELL_HEIGHT_PIXEL + WelfareUtil.dpToPx(10));
 			int maxTopMarginAllowed = MAX_ROW * CELL_HEIGHT_PIXEL;
+
+			while(rltExpandBar.getChildAt(1) != null){
+				rltExpandBar.removeViewAt(1);
+			}
+
 			for(int key : columnTopMarginsMap.keySet()){
 				List<Integer> usedTopMargins = columnTopMarginsMap.get(key);
 				int more = 0;
@@ -261,12 +272,12 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 					lp.setMargins((key + 1) * cellWidth, 0, 0, 0);
 					textView.setLayoutParams(lp);
 
-					rltExpand.addView(textView);
+					rltExpandBar.addView(textView);
 				}
 			}
 
 			imgExpand.setVisibility(View.VISIBLE);
-			rltPart1.getLayoutParams().height = (MAX_ROW + 1) * WeeklyPageFragment.CELL_HEIGHT_PIXEL + WelfareUtil.dpToPx(10);
+			rltPart1.getLayoutParams().height = MAX_ROW * WeeklyPageFragment.CELL_HEIGHT_PIXEL + WelfareUtil.dpToPx(10);
 			rltPart1.requestLayout();
 		}
 
@@ -405,7 +416,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 
 	}
 
-	private void setOnTouchListener(ScrollView scrollview, final int cellWidth){
+	private void setOnTouchListener(View scrollview, final int cellWidth){
 		scrollview.setOnTouchListener(new View.OnTouchListener() {
 
 			@Override
@@ -427,6 +438,9 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 					}
 					break;
 				case MotionEvent.ACTION_MOVE:
+					shouldClick = false;
+					break;
+				default:
 					shouldClick = false;
 					break;
 				}
@@ -507,7 +521,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 
 	@Override
 	protected void initDayViews(){
-		LinearLayout lnrVerticalLineContainer = (LinearLayout)getView().findViewById(R.id.lnr_vertical_line_container);
+		lnrVerticalLineContainer = (LinearLayout)getView().findViewById(R.id.lnr_vertical_line_container);
 		// lnrVerticalLineContainer.setOnClickListener(new View.OnClickListener() {
 		//
 		// @Override
@@ -551,7 +565,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 		scrollViewPart1 = (ScrollView)getView().findViewById(R.id.scroll_part1);
 		rltPart1 = (RelativeLayout)getView().findViewById(R.id.rlt_part1);
 		lnrPart2 = (LinearLayout)getView().findViewById(R.id.lnr_part2);
-		rltExpand = (RelativeLayout)getView().findViewById(R.id.rlt_expand);
+		rltExpandBar = (RelativeLayout)getView().findViewById(R.id.rlt_expand);
 
 		imgExpand = (ImageView)getView().findViewById(R.id.ic_icon_expand);
 		imgExpand.setOnClickListener(new View.OnClickListener() {
@@ -559,12 +573,12 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 			@Override
 			public void onClick(View v){
 				if(isExpanded){
-					collapse(rltPart1, (MAX_ROW + 1) * WeeklyPageFragment.CELL_HEIGHT_PIXEL + WelfareUtil.dpToPx(10));
+					collapse(rltPart1, MAX_ROW * WeeklyPageFragment.CELL_HEIGHT_PIXEL + WelfareUtil.dpToPx(10));
+					for(int i = 1; i < rltExpandBar.getChildCount(); i++){
+						rltExpandBar.getChildAt(i).setVisibility(View.VISIBLE);
+					}
 
 					// moveLnrExpand(MAX_ROW * CELL_HEIGHT_PIXEL + WelfareUtil.dpToPx(10));
-					for(int i = 1; i < rltExpand.getChildCount(); i++){
-						rltExpand.getChildAt(i).setVisibility(View.VISIBLE);
-					}
 
 					// txtMore.setVisibility(View.GONE);
 					//
@@ -574,8 +588,8 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 				}else{
 					imgExpand.setImageResource(R.drawable.cl_icon_birthday);
 					expand(rltPart1);
-					for(int i = 1; i < rltExpand.getChildCount(); i++){
-						rltExpand.getChildAt(i).setVisibility(View.GONE);
+					for(int i = 1; i < rltExpandBar.getChildCount(); i++){
+						rltExpandBar.getChildAt(i).setVisibility(View.GONE);
 					}
 					// moveLnrExpand(maxTopMargin + WelfareUtil.dpToPx(10));
 
@@ -589,7 +603,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 	// private void moveLnrExpand(int topMargin){
 	// RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 	// lp.setMargins(0, topMargin, 0, 0);
-	//// rltExpand.setLayoutParams(lp);
+	//// rltExpandBar.setLayoutParams(lp);
 	// }
 
 	@Override
