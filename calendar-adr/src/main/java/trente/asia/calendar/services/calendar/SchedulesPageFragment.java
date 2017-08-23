@@ -232,7 +232,7 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 				for(WorkOffer workOffer : lstWorkOffer){
 					ScheduleModel scheduleModel = new ScheduleModel(workOffer);
 					scheduleModel.scheduleName = getString(R.string.cl_schedule_offer_name, scheduleModel.scheduleName);
-					lstSchedule.add(scheduleModel);
+					lstSchedule.add(0, scheduleModel);
 				}
 			}
 
@@ -246,9 +246,10 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 				//// TODO: 4/27/2017 more check change data
 				dialogDailySummary.setData(lstSchedule, lstBirthdayUser, lstHoliday, lstWorkOffer);
 				isChangedData = false;
-			}else{
-				updateSchedules(lstSchedule, lstCategory);
 			}
+
+			updateSchedules(lstSchedule, lstCategory);
+
 		}catch(IOException e){
 			e.printStackTrace();
 		}

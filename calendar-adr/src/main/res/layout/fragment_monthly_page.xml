@@ -2,6 +2,12 @@
     style="@style/cs_common_match_wrap"
     android:orientation="vertical">
 
+    <LinearLayout
+        android:id="@+id/lnr_calendar_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"></LinearLayout>
+
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         style="@style/cs_common_match"
         android:layout_weight="1"
@@ -40,10 +46,11 @@
                 android:text="@string/this_month_todo" />
 
             <ImageView
+                android:id="@+id/img_fragment_monthly_todo_expand_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right|center_vertical"
-                android:src="@drawable/wf_file"
+                android:src="@drawable/upt"
                 android:visibility="visible" />
         </LinearLayout>
 

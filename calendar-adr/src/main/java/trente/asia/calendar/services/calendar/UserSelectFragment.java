@@ -126,7 +126,6 @@ public class UserSelectFragment extends AbstractClFragment{
 		PreferencesAccountUtil prefAccUtil = new PreferencesAccountUtil(activity);
 		prefAccUtil.set(ClConst.PREF_SELECT_USER_LIST, ClUtil.convertUserList2String(selectedUsers));
 		formFragment.updateJoinUsers(selectedUsers);
-		onClickBackBtnWithoutRefresh();
 	}
 
 	@Override

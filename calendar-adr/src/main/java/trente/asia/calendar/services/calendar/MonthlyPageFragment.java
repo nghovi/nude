@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -63,11 +64,14 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 	private Todo							selectedTodo;
 	private TodoDialog						dlgTodoDetail;
 	private WfDialog						dlgDeleteConfirm;
+	private ImageView						expIcon;
 
 	@Override
 	protected void initView(){
 		super.initView();
 		inflater = LayoutInflater.from(activity);
+
+		expIcon = (ImageView)getView().findViewById(R.id.img_fragment_monthly_todo_expand_icon);
 
 		lnrTodoSection = (LinearLayout)getView().findViewById(R.id.lnr_todos);
 		lnrTodos = (LinearLayout)getView().findViewById(R.id.lnr_todo_container);
@@ -77,9 +81,11 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 			public void onClick(View v){
 				if(!CCCollectionUtil.isEmpty(todos)){
 					if(isExpanded){
+						expIcon.setImageResource(R.drawable.upt);
 						collapse(lnrTodoSection, false);
 						isExpanded = false;
 					}else{
+						expIcon.setImageResource(R.drawable.downt);
 						expand(lnrTodoSection);
 						isExpanded = true;
 					}
@@ -114,7 +120,7 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 			txtTitleItem.setText(CCStringUtil.toUpperCase(dayModel.day));
 			lnrRowTitle.addView(titleItem);
 		}
-		lnrCalendarContainer.addView(titleView);
+		((LinearLayout)getView().findViewById(R.id.lnr_calendar_header)).addView(titleView);
 	}
 
 	@Override
@@ -330,12 +336,12 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 		}
 	}
 
-    @Override
-    protected String getExecType() {
-        return "M";
-    }
+	@Override
+	protected String getExecType(){
+		return "M";
+	}
 
-    public void expand(final View v){
+	public void expand(final View v){
 		v.measure(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 		int rowNum = Math.min(todos.size() + 1, MAX_ROW + 1);
 		final int targetHeight = WelfareUtil.dpToPx(44 * rowNum);

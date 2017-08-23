@@ -67,14 +67,9 @@ public class DailyPageFragment extends SchedulesPageFragment{
 		});
 		imgBirthdayIcon = (ImageView)getView().findViewById(R.id.img_birthday_daily_page);
 		lnrScheduleAllDays = (LinearLayout)getView().findViewById(R.id.lnr_schedule_all_day_container);
+		lnrScheduleAllDays.setOnClickListener(this);
 		lnrListSchedules = (LinearLayout)getView().findViewById(R.id.lnr_fragment_daily_page_schedules_time);
-		lnrListSchedules.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v){
-				onDailyScheduleClickListener(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, selectedDate));
-			}
-		});
+		lnrListSchedules.setOnClickListener(this);
 		Calendar c = CCDateUtil.makeCalendarToday();
 		startTimeSchedulesMap = new HashMap<>();
 		for(int i = 0; i < 24; i++){
@@ -88,12 +83,12 @@ public class DailyPageFragment extends SchedulesPageFragment{
 			@Override
 			public void onClick(View v){
 				if(isExpanded){
-					collapse(lnrScheduleAllDays, MAX_ROW * WeeklyPageFragment.CELL_HEIGHT_PIXEL);
+					collapse(lnrScheduleAllDays, MAX_ROW * WeeklyPageFragment.CELL_HEIGHT_PIXEL - 1);
 					txtMore.setVisibility(View.VISIBLE);
 					isExpanded = false;
-					imgExpand.setImageResource(R.drawable.wf_file);
+					imgExpand.setImageResource(R.drawable.down);
 				}else{
-					imgExpand.setImageResource(R.drawable.cl_icon_birthday);
+					imgExpand.setImageResource(R.drawable.up);
 					expand(lnrScheduleAllDays);
 					txtMore.setVisibility(View.GONE);
 					isExpanded = true;
@@ -158,6 +153,7 @@ public class DailyPageFragment extends SchedulesPageFragment{
 		// 1dp/ms
 		a.setDuration((int)(initialHeight / v.getContext().getResources().getDisplayMetrics().density));
 		v.startAnimation(a);
+		scrollToFavouritePost();
 	}
 
 	@Override
@@ -182,6 +178,8 @@ public class DailyPageFragment extends SchedulesPageFragment{
 		if(!CCCollectionUtil.isEmpty(todos)){
 			txtTodoInfo.setVisibility(View.VISIBLE);
 			txtTodoInfo.setText(getString(R.string.two_things_todo, String.valueOf(todos.size())));
+		}else{
+			txtTodoInfo.setVisibility(View.GONE);
 		}
 
 		if(!CCCollectionUtil.isEmpty(lstBirthdayUser)){
@@ -231,7 +229,7 @@ public class DailyPageFragment extends SchedulesPageFragment{
 			imgExpand.setVisibility(View.VISIBLE);
 			txtMore.setVisibility(View.VISIBLE);
 			txtMore.setText("+" + moreNumber);
-			lnrScheduleAllDays.getLayoutParams().height = MAX_ROW * WeeklyPageFragment.CELL_HEIGHT_PIXEL;
+			lnrScheduleAllDays.getLayoutParams().height = MAX_ROW * WeeklyPageFragment.CELL_HEIGHT_PIXEL - 1;
 			lnrScheduleAllDays.requestLayout();
 		}
 
@@ -282,6 +280,13 @@ public class DailyPageFragment extends SchedulesPageFragment{
 
 	@Override
 	public void onClick(View v){
-
+		switch(v.getId()){
+		case R.id.lnr_fragment_daily_page_schedules_time:
+		case R.id.lnr_schedule_all_day_container:
+			onDailyScheduleClickListener(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, selectedDate));
+			break;
+		default:
+			break;
+		}
 	}
 }

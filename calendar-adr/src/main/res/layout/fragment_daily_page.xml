@@ -25,7 +25,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|left"
-                    android:src="@drawable/wf_file"
+                    android:src="@drawable/down"
                     android:visibility="gone" />
 
                 <ScrollView
