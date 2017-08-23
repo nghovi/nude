@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -34,6 +35,7 @@ import trente.asia.messenger.services.message.model.BoardModel;
 import trente.asia.messenger.services.message.model.RealmBoardModel;
 import trente.asia.messenger.services.message.view.BoardAdapter;
 import trente.asia.messenger.services.user.MsgSettingFragment;
+import trente.asia.messenger.services.user.UserListFragment;
 import trente.asia.messenger.services.user.listener.OnAddedContactListener;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.dialog.WfProfileDialog;
@@ -53,6 +55,7 @@ public class BoardListFragment extends AbstractMsgFragment implements View.OnCli
 	private TextView					txtUserName;
 	private TextView					txtUserMail;
 	private ChiaseCheckableImageView	btnSetting;
+	private LinearLayout				lnrAddToChat;
 
 	private String						mAvatarPath					= "";
 	private OnChangedBoardListener		onChangedBoardListener;
@@ -106,6 +109,8 @@ public class BoardListFragment extends AbstractMsgFragment implements View.OnCli
 		txtUserName = (TextView)getView().findViewById(R.id.txt_loginUserName);
 		txtUserMail = (TextView)getView().findViewById(R.id.txt_loginUserMail);
 		btnSetting = (ChiaseCheckableImageView)getView().findViewById(R.id.btn_setting);
+		lnrAddToChat = (LinearLayout)getView().findViewById(R.id.lnr_add_to_chat);
+		lnrAddToChat.setOnClickListener(this);
 		btnSetting.setOnClickListener(this);
 		mDlgProfile = new WfProfileDialog(activity);
 		mDlgProfile.setDialogProfileDetail(50, 50);
@@ -125,9 +130,9 @@ public class BoardListFragment extends AbstractMsgFragment implements View.OnCli
 		});
 	}
 
-	private void log(String msg) {
-        Log.e("BoardList", msg);
-    }
+	private void log(String msg){
+		Log.e("BoardList", msg);
+	}
 
 	@Override
 	protected void initData(){
@@ -164,7 +169,7 @@ public class BoardListFragment extends AbstractMsgFragment implements View.OnCli
 						break;
 					}
 				}
-			} else {
+			}else{
 				lsvBoard.setItemChecked(0, true);
 				activeBoardId = boards.get(0).key;
 				prefAccUtil.set(MsConst.PREF_ACTIVE_BOARD_ID, activeBoardId + "");
@@ -201,13 +206,16 @@ public class BoardListFragment extends AbstractMsgFragment implements View.OnCli
 		case R.id.btn_setting:
 			gotoFragment(new MsgSettingFragment());
 			break;
+		case R.id.lnr_add_to_chat:
+			gotoFragment(new UserListFragment());
+			break;
 		default:
 			break;
 		}
 	}
 
 	public void onAddedContactListener(RealmBoardModel boardModel){
-		if (mAdapter != null) {
+		if(mAdapter != null){
 			mAdapter.add(boardModel, 0);
 		}
 		lsvBoard.setItemChecked(0, true);

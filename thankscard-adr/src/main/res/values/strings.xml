@@ -164,4 +164,6 @@
     <string name="tc_choose_picture">Do you want to change photo?</string>
     <string name="tc_change_to_normal_card">Photo and sticker will be removed. Are you sure?</string>
     <string name="tc_limit_sticker">You can only have 50 stickers</string>
+    <string name="tc_cannot_use_stickers">This function is for Bronze!</string>
+    <string name="tc_cannot_use_photo">This function is for Silver!</string>
 </resources>

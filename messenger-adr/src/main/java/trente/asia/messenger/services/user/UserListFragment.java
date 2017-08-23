@@ -1,6 +1,7 @@
 package trente.asia.messenger.services.user;
 
 import java.io.IOException;
+import java.io.LineNumberReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import asia.chiase.core.util.CCCollectionUtil;
@@ -38,13 +40,14 @@ import trente.asia.welfare.adr.models.UserModel;
  *
  * @author TrungND
  */
-public class UserListFragment extends AbstractMsgFragment implements OnAddUserListener {
+public class UserListFragment extends AbstractMsgFragment implements OnAddUserListener, View.OnClickListener {
 
     private ListView mLsvUser;
     private EditText mEdtSearch;
     private UserListAdapter mAdapter;
     private WfProfileDialog mDlgProfile;
     private BoardListFragment boardFragment;
+    private LinearLayout lnrSelectDept;
 
     public void setOnAddUserSuccessListener(OnAddUserSuccessListener onAddUserSuccessListener) {
         this.onAddUserSuccessListener = onAddUserSuccessListener;
@@ -71,6 +74,9 @@ public class UserListFragment extends AbstractMsgFragment implements OnAddUserLi
 
         mLsvUser = (ListView) getView().findViewById(R.id.lsv_id_user);
         mEdtSearch = (EditText) getView().findViewById(R.id.edt_id_search);
+        lnrSelectDept = (LinearLayout) getView().findViewById(R.id.lnr_select_dept);
+
+        lnrSelectDept.setOnClickListener(this);
 
         mEdtSearch.addTextChangedListener(new TextWatcher() {
 
@@ -166,6 +172,15 @@ public class UserListFragment extends AbstractMsgFragment implements OnAddUserLi
             }
         } else {
             super.successUpdate(response, url);
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.lnr_select_dept:
+                gotoFragment(new SelectDeptFragment());
+                break;
         }
     }
 

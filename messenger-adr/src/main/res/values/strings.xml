@@ -38,5 +38,7 @@
 
     <string name="msg_common_error_ms002">This file is deleted.</string>
     <string name="msg_text_seen">Seen</string>
-    <string name="msg_text_"
+    <string name="msg_add_member">Add to chat</string>
+    <string name="msg_check_all">Check all</string>
+    <string name="msg_select_department">Select department</string>
 </resources>
