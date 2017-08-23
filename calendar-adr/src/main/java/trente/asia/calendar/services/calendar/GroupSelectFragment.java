@@ -1,6 +1,5 @@
 package trente.asia.calendar.services.calendar;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import android.os.Bundle;
@@ -18,7 +17,7 @@ import trente.asia.welfare.adr.models.GroupModel;
 import trente.asia.welfare.adr.models.UserModel;
 
 /**
- * fragment_filter_user.xml
+ * GroupSelectFragment
  *
  * @author VietNH
  */
@@ -28,8 +27,6 @@ public class GroupSelectFragment extends AbstractClFragment implements FilterDep
 	private List<GroupModel>		groups;
 	private List<DeptModel>			depts;
 	private List<MyGroup>			myGroups;
-	// private List<UserModel> selectedUsers;
-	private List<UserModel>			users;
 	private UserSelectFragment		userFragment;
 
 	@Override
@@ -45,88 +42,34 @@ public class GroupSelectFragment extends AbstractClFragment implements FilterDep
 		super.initView();
 		initHeader(R.drawable.wf_back_white, getString(R.string.select_group), null);
 		mLnrFilterDept = (FilterDeptLinearLayout)getView().findViewById(R.id.lnr_id_filter_dept);
-		// List<GroupModel> selectedMyGroups = getSelectedGroups(selectedUsers, myGroups);
-		// List<GroupModel> selectedGroups = getSelectedGroups(selectedUsers, groups);
-		// List<DeptModel> selectedDepts = getSelectedDepts(selectedUsers);
 		this.mLnrFilterDept.enableSimpleAvatar(true);
 		this.mLnrFilterDept.fillInData(myGroups, userFragment.selectedMyGroups, groups, userFragment.selectedGroups, depts, userFragment.selectedDepts, null);
 		this.mLnrFilterDept.setOnDeptSelectedListenter(this);
 	}
 
-	private List<DeptModel> getSelectedDepts(List<UserModel> selectedUsers){
-		List<DeptModel> result = new ArrayList<>();
-		if(!CCCollectionUtil.isEmpty(selectedUsers)){
-			for(DeptModel deptModel : depts){
-				boolean isSelected = true;
-				if(CCCollectionUtil.isEmpty(deptModel.members)){
-					isSelected = false;
-				}else{
-					for(UserModel userModel : deptModel.members){
-						if(!FilterDeptLinearLayout.checkSelectedUser(userModel, selectedUsers)){
-							isSelected = false;
-							break;
-						}
-					}
-				}
-				if(isSelected){
-					result.add(deptModel);
-				}
-			}
-		}
-
-		return result;
-	}
-
-	private List<GroupModel> getSelectedGroups(List<UserModel> selectedUsers, List<GroupModel> groupModels){
-
-		List<GroupModel> result = new ArrayList<>();
-		if(!CCCollectionUtil.isEmpty(selectedUsers)){
-			for(GroupModel groupModel : groupModels){
-				boolean isSelected = true;
-				if(CCCollectionUtil.isEmpty(groupModel.listUsers)){
-					isSelected = false;
-				}else{
-					for(UserModel userModel : groupModel.listUsers){
-						if(!FilterDeptLinearLayout.checkSelectedUser(userModel, selectedUsers)){
-							isSelected = false;
-							break;
-						}
-					}
-				}
-				if(isSelected){
-					result.add(groupModel);
-				}
-			}
-		}
-
-		return result;
-	}
-
 	public void saveActiveUserList(List<UserModel> userModels, Object object){
 		if(!CCCollectionUtil.isEmpty(userModels)){
-			// List<UserModel> lstSelectedUser = new ArrayList<>();
-			// lstSelectedUser.addAll(userModels);
-
-			// PreferencesAccountUtil prefAccUtil = new PreferencesAccountUtil(activity);
-			// List<UserModel> selectedUsers = ClUtil.getTargetUserList(users, prefAccUtil.get(ClConst.PREF_SELECT_USER_LIST));
-			//
-			// for(UserModel userModel : lstSelectedUser){
-			// if(!UserModel.contain(selectedUsers, userModel)){
-			// selectedUsers.add(userModel);
-			// }
-			// }
-
+			boolean isAll = false;
+			String groupName = "";
 			userFragment.resetSelectedGroups();
 			if(object.getClass().toString().equals(MyGroup.class.toString())){
-				userFragment.selectedMyGroups.add((MyGroup)object);
+				MyGroup myGroup = (MyGroup)object;
+				userFragment.selectedMyGroups.add(myGroup);
+				if(myGroup.key.equals("-1")){
+					isAll = true;
+				}
+				groupName = myGroup.groupName;
 			}else if(object.getClass().toString().equals(GroupModel.class.toString())){
-				userFragment.selectedGroups.add((GroupModel)object);
+				GroupModel groupModel = (GroupModel)object;
+				userFragment.selectedGroups.add(groupModel);
+				groupName = groupModel.groupName;
 			}else if(object.getClass().toString().equals(DeptModel.class.toString())){
-				userFragment.selectedDepts.add((DeptModel)object);
+				DeptModel deptModel = (DeptModel)object;
+				userFragment.selectedDepts.add(deptModel);
+				groupName = deptModel.deptName;
 			}
 
-			// prefAccUtil.set(ClConst.PREF_SELECT_USER_LIST, ClUtil.convertUserList2String(selectedUsers));
-			userFragment.addJoinUsers(userModels);
+			userFragment.addJoinUsers(userModels, groupName, isAll);
 		}
 		onClickBackBtnWithoutRefresh();
 	}
@@ -167,14 +110,6 @@ public class GroupSelectFragment extends AbstractClFragment implements FilterDep
 		this.myGroups = myGroups;
 	}
 
-	public void setUsers(List<UserModel> users){
-		this.users = users;
-	}
-
-	// public void setSelectedUsers(List<UserModel> selectedUsers){
-	// this.selectedUsers = selectedUsers;
-	// }
-
 	@Override
 	public void onSelectDept(List<UserModel> userModels, Object object){
 		saveActiveUserList(userModels, object);
@@ -184,9 +119,4 @@ public class GroupSelectFragment extends AbstractClFragment implements FilterDep
 		this.userFragment = userFragment;
 	}
 
-	// public void setSelectedGroups(List<GroupModel> selectedGroups, List<DeptModel> selectedDepts, List<GroupModel> selectedMyGroups) {
-	// this.selectedGroups = selectedGroups;
-	// this.selectedMyGroup = selectedMyGroups;
-	// this.selectedDepts = selectedDepts;
-	// }
 }

@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -25,7 +26,9 @@ import asia.chiase.core.util.CCFormatUtil;
 import trente.asia.android.activity.ChiaseFragment;
 import trente.asia.calendar.R;
 import trente.asia.calendar.services.calendar.model.CategoryModel;
+import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
+import trente.asia.calendar.services.calendar.model.WorkOffer;
 import trente.asia.calendar.services.todo.TodoListFragment;
 import trente.asia.calendar.services.todo.TodoListTodayFragment;
 import trente.asia.welfare.adr.define.WelfareConst;
@@ -64,14 +67,9 @@ public class DailyPageFragment extends SchedulesPageFragment{
 		});
 		imgBirthdayIcon = (ImageView)getView().findViewById(R.id.img_birthday_daily_page);
 		lnrScheduleAllDays = (LinearLayout)getView().findViewById(R.id.lnr_schedule_all_day_container);
+		lnrScheduleAllDays.setOnClickListener(this);
 		lnrListSchedules = (LinearLayout)getView().findViewById(R.id.lnr_fragment_daily_page_schedules_time);
-		lnrListSchedules.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v){
-				onDailyScheduleClickListener(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, selectedDate));
-			}
-		});
+		lnrListSchedules.setOnClickListener(this);
 		Calendar c = CCDateUtil.makeCalendarToday();
 		startTimeSchedulesMap = new HashMap<>();
 		for(int i = 0; i < 24; i++){
@@ -85,12 +83,12 @@ public class DailyPageFragment extends SchedulesPageFragment{
 			@Override
 			public void onClick(View v){
 				if(isExpanded){
-					collapse(lnrScheduleAllDays, MAX_ROW * WeeklyPageFragment.CELL_HEIGHT_PIXEL);
+					collapse(lnrScheduleAllDays, MAX_ROW * WeeklyPageFragment.CELL_HEIGHT_PIXEL - 1);
 					txtMore.setVisibility(View.VISIBLE);
 					isExpanded = false;
-					imgExpand.setImageResource(R.drawable.wf_file);
+					imgExpand.setImageResource(R.drawable.down);
 				}else{
-					imgExpand.setImageResource(R.drawable.cl_icon_birthday);
+					imgExpand.setImageResource(R.drawable.up);
 					expand(lnrScheduleAllDays);
 					txtMore.setVisibility(View.GONE);
 					isExpanded = true;
@@ -155,6 +153,7 @@ public class DailyPageFragment extends SchedulesPageFragment{
 		// 1dp/ms
 		a.setDuration((int)(initialHeight / v.getContext().getResources().getDisplayMetrics().density));
 		v.startAnimation(a);
+		scrollToFavouritePost();
 	}
 
 	@Override
@@ -168,7 +167,7 @@ public class DailyPageFragment extends SchedulesPageFragment{
 	}
 
 	@Override
-	protected String getExecType() {
+	protected String getExecType(){
 		return "D";
 	}
 
@@ -179,6 +178,8 @@ public class DailyPageFragment extends SchedulesPageFragment{
 		if(!CCCollectionUtil.isEmpty(todos)){
 			txtTodoInfo.setVisibility(View.VISIBLE);
 			txtTodoInfo.setText(getString(R.string.two_things_todo, String.valueOf(todos.size())));
+		}else{
+			txtTodoInfo.setVisibility(View.GONE);
 		}
 
 		if(!CCCollectionUtil.isEmpty(lstBirthdayUser)){
@@ -186,6 +187,19 @@ public class DailyPageFragment extends SchedulesPageFragment{
 		}
 
 		lnrScheduleAllDays.removeAllViews();
+
+		// holiday
+		for(HolidayModel holidayModel : lstHoliday){
+			TextView textView = WeeklyPageFragment.makeTextView(activity, holidayModel.holidayName, 0, 0, LinearLayout.LayoutParams.MATCH_PARENT, Color.WHITE, Color.RED, Gravity.CENTER);
+			lnrScheduleAllDays.addView(textView);
+		}
+
+		// offer
+		for(WorkOffer workOffer : lstWorkOffer){
+			TextView textView = WeeklyPageFragment.makeTextView(activity, workOffer.offerTypeName, 0, 0, LinearLayout.LayoutParams.MATCH_PARENT, Color.parseColor(workOffer.userColor), 0, Gravity.CENTER);
+			lnrScheduleAllDays.addView(textView);
+		}
+
 		List<ScheduleModel> allDaySchedules = new ArrayList<>();
 		for(String key : startTimeSchedulesMap.keySet()){
 			startTimeSchedulesMap.put(key, new ArrayList<ScheduleModel>());
@@ -215,7 +229,7 @@ public class DailyPageFragment extends SchedulesPageFragment{
 			imgExpand.setVisibility(View.VISIBLE);
 			txtMore.setVisibility(View.VISIBLE);
 			txtMore.setText("+" + moreNumber);
-			lnrScheduleAllDays.getLayoutParams().height = MAX_ROW * WeeklyPageFragment.CELL_HEIGHT_PIXEL;
+			lnrScheduleAllDays.getLayoutParams().height = MAX_ROW * WeeklyPageFragment.CELL_HEIGHT_PIXEL - 1;
 			lnrScheduleAllDays.requestLayout();
 		}
 
@@ -231,7 +245,7 @@ public class DailyPageFragment extends SchedulesPageFragment{
 
 	}
 
-	private void scrollToFavouritePost() {
+	private void scrollToFavouritePost(){
 		scrollView.post(new Runnable() {
 
 			@Override
@@ -266,6 +280,13 @@ public class DailyPageFragment extends SchedulesPageFragment{
 
 	@Override
 	public void onClick(View v){
-
+		switch(v.getId()){
+		case R.id.lnr_fragment_daily_page_schedules_time:
+		case R.id.lnr_schedule_all_day_container:
+			onDailyScheduleClickListener(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, selectedDate));
+			break;
+		default:
+			break;
+		}
 	}
 }

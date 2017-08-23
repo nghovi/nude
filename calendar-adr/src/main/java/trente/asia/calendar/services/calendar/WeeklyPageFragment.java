@@ -67,6 +67,10 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 	private boolean						shouldClick;
 	private LinearLayout				lnrVerticalLineContainer;
 
+	private float						mDownX;
+	private float						mDownY;
+	private final float					SCROLL_THRESHOLD	= 1;
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 		if(mRootView == null){
@@ -124,6 +128,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 		// 1dp/ms
 		a.setDuration((int)(initialHeight / v.getContext().getResources().getDisplayMetrics().density));
 		v.startAnimation(a);
+		scrollToFavouritePost();
 	}
 
 	@Override
@@ -131,14 +136,6 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 		super.updateSchedules(schedules, categories);
 		schedules = multiplyWithUsers(schedules);
 		buildPart1(schedules);
-		//// TODO: 8/18/17
-		// rltPart1.setOnTouchListener(new View.OnTouchListener() {
-		//
-		// @Override
-		// public boolean onTouch(View v, MotionEvent event){
-		// return true;
-		// }
-		// });
 		buildPart2(schedules);
 	}
 
@@ -147,6 +144,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 		final int cellWidth = lnrHeader.getMeasuredWidth() / 8;
 		Calendar c1 = CCDateUtil.makeCalendarWithDateOnly(dates.get(0));
 		columnTopMarginsMap = new HashMap<>();
+		int oldMaxTopMargin = maxTopMargin;
 		maxTopMargin = 0;
 		int topMargin = 0;
 
@@ -237,19 +235,14 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 
 		if(moreNumber <= 0){
 			isExpanded = true;
-			rltPart1.getLayoutParams().height = (rowNum + 1) * WeeklyPageFragment.CELL_HEIGHT_PIXEL + WelfareUtil.dpToPx(10);
+			rltPart1.getLayoutParams().height = rowNum * WeeklyPageFragment.CELL_HEIGHT_PIXEL + WelfareUtil.dpToPx(10);
 			rltPart1.requestLayout();
-			// txtMore.setVisibility(View.GONE);
 			rltExpandBar.setVisibility(View.GONE);
-		}else{
-			isExpanded = false;
-			// moveLnrExpand(MAX_ROW * CELL_HEIGHT_PIXEL + WelfareUtil.dpToPx(10));
+		}else if(!isExpanded || maxTopMargin != oldMaxTopMargin){
 			int maxTopMarginAllowed = MAX_ROW * CELL_HEIGHT_PIXEL;
-
 			while(rltExpandBar.getChildAt(1) != null){
 				rltExpandBar.removeViewAt(1);
 			}
-
 			for(int key : columnTopMarginsMap.keySet()){
 				List<Integer> usedTopMargins = columnTopMarginsMap.get(key);
 				int more = 0;
@@ -263,12 +256,12 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 					textView.setMaxLines(1);
 					textView.setEllipsize(TextUtils.TruncateAt.END);
 					textView.setTextSize(13);
-					textView.setMaxWidth(cellWidth);
+					textView.setMaxWidth(cellWidth - 2);
 					textView.setGravity(Gravity.CENTER);
-					textView.setBackgroundColor(Color.WHITE);
+					// textView.setBackgroundColor(Color.WHITE);
 					// textView.setBackground(ContextCompat.getDrawable(activity, R.drawable.wf_background_gray_border_white));
 					textView.setText("+" + more);
-					LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(cellWidth, LinearLayout.LayoutParams.WRAP_CONTENT);
+					LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(cellWidth - 2, LinearLayout.LayoutParams.WRAP_CONTENT);
 					lp.setMargins((key + 1) * cellWidth, 0, 0, 0);
 					textView.setLayoutParams(lp);
 
@@ -375,12 +368,12 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 		List<String> keys = new ArrayList<>(startTimeSchedulesMap.keySet());
 		Collections.sort(keys);
 
-		Map<Integer, Integer> leftMarginScheduleNumMap = new HashMap<>();
-
 		for(String key : keys){
 			View cell = inflater.inflate(R.layout.item_weekly_schedule, null);
 			((TextView)cell.findViewById(R.id.txt_item_daily_schedule_start_time)).setText(key);
 			RelativeLayout rltSchedules = (RelativeLayout)cell.findViewById(R.id.rlt_schedule_weekly_container);
+
+			Map<Integer, Integer> leftMarginScheduleNumMap = new HashMap<>();
 
 			for(final ScheduleModel schedule : startTimeSchedulesMap.get(key)){
 				Calendar c2 = CCDateUtil.makeCalendarWithDateOnly(CCDateUtil.makeDateCustom(schedule.startDate, WelfareConst.WF_DATE_TIME));
@@ -413,7 +406,6 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 
 		setOnTouchListener(scrollView, cellWidth);
 		scrollToFavouritePost();
-
 	}
 
 	private void setOnTouchListener(View scrollview, final int cellWidth){
@@ -424,8 +416,15 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 
 				switch(event.getAction() & MotionEvent.ACTION_MASK){
 				case MotionEvent.ACTION_DOWN:
+					mDownX = event.getX();
+					mDownY = event.getY();
 					shouldClick = true;
-					return true;
+					break;
+				case MotionEvent.ACTION_MOVE:
+					if(shouldClick && (Math.abs(mDownX - event.getX()) > SCROLL_THRESHOLD || Math.abs(mDownY - event.getY()) > SCROLL_THRESHOLD)){
+						shouldClick = false;
+					}
+					break;
 				case MotionEvent.ACTION_CANCEL:
 				case MotionEvent.ACTION_UP:
 					if(shouldClick){
@@ -435,13 +434,10 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 						if(column - 1 >= 0 && column - 1 < dates.size()){
 							onDailyScheduleClickListener(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, dates.get(column - 1)));
 						}
+						return true;
 					}
 					break;
-				case MotionEvent.ACTION_MOVE:
-					shouldClick = false;
-					break;
 				default:
-					shouldClick = false;
 					break;
 				}
 
@@ -534,7 +530,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 			View verticalBar = new View(activity);
 			LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(1, LinearLayout.LayoutParams.MATCH_PARENT);
 			verticalBar.setLayoutParams(layoutParams);
-			verticalBar.setBackgroundColor(Color.BLUE);
+			verticalBar.setBackgroundColor(Color.BLACK);
 
 			LinearLayout lnrDay = new LinearLayout(activity);
 			LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -584,9 +580,9 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 					//
 					// txtMore.setVisibility(View.VISIBLE);
 					isExpanded = false;
-					imgExpand.setImageResource(R.drawable.wf_file);
+					imgExpand.setImageResource(R.drawable.down);
 				}else{
-					imgExpand.setImageResource(R.drawable.cl_icon_birthday);
+					imgExpand.setImageResource(R.drawable.up);
 					expand(rltPart1);
 					for(int i = 1; i < rltExpandBar.getChildCount(); i++){
 						rltExpandBar.getChildAt(i).setVisibility(View.GONE);

@@ -3,9 +3,11 @@ package trente.asia.calendar.services.calendar;
 import java.util.Date;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import asia.chiase.core.util.CCFormatUtil;
@@ -30,6 +32,26 @@ public class MonthlyFragment extends PageContainerFragment{
 			mRootView = inflater.inflate(R.layout.fragment_monthly, container, false);
 		}
 		return mRootView;
+	}
+
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState){
+		super.onActivityCreated(savedInstanceState);
+		final LinearLayout itemMonth = (LinearLayout)getView().findViewById(R.id.lnr_view_footer_monthly);
+		itemMonth.setOnClickListener(null);
+		final Handler handler = new Handler();
+		handler.postDelayed(new Runnable() {
+
+			@Override
+			public void run(){
+				// Do something after 100ms
+				if(itemMonth != null){
+					if(getView() != null){
+						buildFooter();
+					}
+				}
+			}
+		}, 3000);
 	}
 
 	@Override

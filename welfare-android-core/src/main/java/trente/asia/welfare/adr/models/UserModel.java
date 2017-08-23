@@ -2,6 +2,7 @@ package trente.asia.welfare.adr.models;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -166,5 +167,21 @@ public class UserModel extends BitmapModel implements Serializable{
 			}
 		}
 		return false;
+	}
+
+	public static void removeUser(List<UserModel> userModels, UserModel deletedUser){
+		Iterator<UserModel> iu = userModels.iterator();
+		while(iu.hasNext()){
+			UserModel userModel = iu.next();
+			if(userModel.key.equals(deletedUser.key)){
+				iu.remove();
+			}
+		}
+	}
+
+	public static void addUserIfNotExist(List<UserModel> userModels, UserModel additionalUser){
+		if(!UserModel.contain(userModels, additionalUser)){
+			userModels.add(additionalUser);
+		}
 	}
 }

@@ -92,6 +92,7 @@
 
             <LinearLayout
                 style="@style/wf_common_item_linear2"
+                android:gravity="top"
                 android:orientation="horizontal">
 
                 <TextView
@@ -101,9 +102,11 @@
 
                 <trente.asia.android.view.ChiaseTextView
                     android:id="@+id/txt_id_repeat"
-                    style="@style/wl_common_edit_text2"
+                    style="@style/wl_common_text"
                     android:layout_marginLeft="@dimen/margin_10dp"
-                    android:text="@string/chiase_common_none" />
+                    android:gravity="right"
+                    android:text="@string/chiase_common_none"
+                    android:textAlignment="textEnd" />
             </LinearLayout>
 
             <View style="@style/cs_common_divider" />
@@ -221,8 +224,8 @@
                 <HorizontalScrollView
                     style="@style/wf_common_item_linear2"
                     android:layout_width="wrap_content"
-                    android:background="@drawable/state_common_selectable_row"
                     android:layout_gravity="center_horizontal"
+                    android:background="@drawable/state_common_selectable_row"
                     android:minHeight="@dimen/margin_30dp">
 
                     <trente.asia.calendar.commons.views.UserListLinearLayout

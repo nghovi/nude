@@ -8,10 +8,11 @@
     <trente.asia.android.view.layout.CheckableLinearLayout
         android:id="@+id/lnr_id_item"
         style="@style/cs_common_match_wrap"
-        android:layout_marginTop="@dimen/margin_10dp"
         android:background="@drawable/state_common_selectable_row3"
         android:gravity="center_vertical"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/margin_10dp"
+        android:paddingTop="@dimen/margin_10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -54,10 +55,8 @@
         </LinearLayout>
 
 
-        <View
-            style="@style/cs_common_divider"
-            android:layout_marginTop="@dimen/margin_10dp" />
-
     </trente.asia.android.view.layout.CheckableLinearLayout>
+
+    <View style="@style/cs_common_divider" />
 
 </LinearLayout>
