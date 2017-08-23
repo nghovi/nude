@@ -40,6 +40,8 @@ import java.util.TimerTask;
 
 import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCCollectionUtil;
+import asia.chiase.core.util.CCDataUtil;
+import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import io.realm.Realm;
@@ -152,22 +154,19 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 	public void buildBodyLayout(){
 		Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
 		int thisYear = calendar.get(Calendar.YEAR);
-		try{
-			String birthday = thisYear + myself.dateBirth.substring(4);
-			Date date = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss").parse(birthday);
-			long difference = (System.currentTimeMillis() - date.getTime()) / 1000L;
-			if(difference > 0 && difference < 31L * 24L * 3600L){
-				isBirthday = true;
-			}
 
-			birthday = (thisYear - 1) + myself.dateBirth.substring(4);
-			date = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss").parse(birthday);
-			difference = (System.currentTimeMillis() - date.getTime()) / 1000L;
-			if(difference > 0 && difference < 31L * 24L * 3600L){
-				isBirthday = true;
-			}
-		}catch(ParseException e){
-			e.printStackTrace();
+		String birthday = thisYear + myself.dateBirth.substring(4);
+		Date date = CCDateUtil.makeDateCustom(birthday, "yyyy/MM/dd hh:mm:ss");
+		long difference = (System.currentTimeMillis() - date.getTime()) / 1000L;
+		if(difference > 0 && difference < 31L * 24L * 3600L){
+			isBirthday = true;
+		}
+
+		birthday = (thisYear - 1) + myself.dateBirth.substring(4);
+		date = CCDateUtil.makeDateCustom(birthday, "yyyy/MM/dd hh:mm:ss");
+		difference = (System.currentTimeMillis() - date.getTime()) / 1000L;
+		if(difference > 0 && difference < 31L * 24L * 3600L){
+			isBirthday = true;
 		}
 
 		template = new Template();
@@ -409,14 +408,14 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 				}else{
 					showLayoutSticker();
 				}
-			} else {
+			}else{
 				new CannotUseStickersDialog().show(getFragmentManager(), null);
 			}
 			break;
 		case R.id.lnr_select_photo:
-			if (canUsePhoto) {
+			if(canUsePhoto){
 				showLayoutCards(photoTemplates);
-			} else {
+			}else{
 				new CannotUsePhotoDialog().show(getFragmentManager(), null);
 			}
 			break;
