@@ -5,17 +5,27 @@
 
     <include layout="@layout/view_common_header" />
 
+    <TextView
+        style="@style/wl_common_text"
+        android:layout_width="wrap_content"
+        android:paddingBottom="@dimen/margin_10dp"
+        android:paddingLeft="@dimen/margin_16dp"
+        android:paddingRight="@dimen/margin_16dp"
+        android:paddingTop="@dimen/margin_10dp"
+        android:text="@string/filter" />
+
     <LinearLayout
         android:id="@+id/lnr_select_group"
         style="@style/wf_common_item_linear2"
-        android:background="@drawable/cl_state_common_selectable_row"
+        android:background="@drawable/state_common_selectable_row"
         android:gravity="center_vertical">
 
         <TextView
+            android:id="@+id/txt_fragment_select_user"
             style="@style/wl_common_text"
             android:layout_width="wrap_content"
             android:layout_weight="1"
-            android:text="@string/select_from_group" />
+            android:text="@string/chiase_common_all" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -29,7 +39,8 @@
         android:gravity="left"
         android:paddingBottom="@dimen/margin_10dp"
         android:paddingLeft="@dimen/margin_16dp"
-        android:paddingRight="@dimen/margin_16dp">
+        android:paddingRight="@dimen/margin_16dp"
+        android:paddingTop="@dimen/margin_10dp">
 
         <TextView
             style="@style/wl_common_text"
@@ -37,7 +48,7 @@
             android:text="@string/chiase_common_all" />
 
         <CheckBox
-            android:id="@+id/cbx_id_all"
+            android:id="@+id/cbx_id_all_select_user"
             style="@style/wl_common_text2"
             android:layout_width="wrap_content"
             android:layout_marginLeft="@dimen/margin_10dp" />

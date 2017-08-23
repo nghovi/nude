@@ -14,7 +14,6 @@ import android.widget.EditText;
 
 import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCCollectionUtil;
-import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.activity.ChiaseActivity;
 import trente.asia.android.view.layout.CheckableLinearLayout;
 import trente.asia.calendar.R;
@@ -30,7 +29,7 @@ import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
 
 /**
- * fragment_filter_user.xml
+ * GroupFilterFragment
  *
  * @author VietNH
  */
@@ -91,8 +90,9 @@ public class GroupFilterFragment extends AbstractClFragment{
 		List<DeptModel> selectedDepts = getSelectedDepts(selectedUsers);
 		this.mLnrFilterDept.fillInData(myGroups, selectedMyGroups, groups, selectedGroups, depts, selectedDepts, mCbxAll);
 		mLnrFilterDept.setOnDeptSelectedListenter(new FilterDeptLinearLayout.OnDeptSelectedListener() {
+
 			@Override
-			public void onSelectDept(List<UserModel> userModels, Object object) {
+			public void onSelectDept(List<UserModel> userModels, Object object){
 
 			}
 		});

@@ -192,8 +192,9 @@ public class ClScheduleRepeatDialog extends CLOutboundDismissDialog{
 		}else if(ClConst.SCHEDULE_REPEAT_LIMIT_UNTIL.equals(model.key)){
 			lnrLimitUtil.setVisibility(View.VISIBLE);
 			lnrLimitAfter.setVisibility(View.GONE);
-			// calendarLimit = Calendar.getInstance();
-			txtLimitUtil.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, calendarLimit.getTime()));
+			Calendar cal = Calendar.getInstance();
+			cal.set(Calendar.DATE, cal.getActualMaximum(Calendar.DATE));
+			txtLimitUtil.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, cal.getTime()));
 		}else{
 			lnrLimitUtil.setVisibility(View.GONE);
 			lnrLimitAfter.setVisibility(View.VISIBLE);

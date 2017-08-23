@@ -1,11 +1,8 @@
 package trente.asia.calendar.services.calendar;
 
-import static trente.asia.welfare.adr.utils.WelfareFormatUtil.convertList2Map;
-
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +16,6 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
@@ -45,12 +41,10 @@ import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.dialogs.CLOutboundDismissListDialog;
 import trente.asia.calendar.commons.dialogs.ClDialog;
-import trente.asia.calendar.commons.dialogs.ClFilterUserListDialog;
 import trente.asia.calendar.commons.dialogs.ClScheduleRepeatDialog;
 import trente.asia.calendar.commons.model.ScheduleRepeatModel;
 import trente.asia.calendar.commons.utils.ClRepeatUtil;
 import trente.asia.calendar.commons.utils.ClUtil;
-import trente.asia.calendar.services.calendar.model.CategoryModel;
 import trente.asia.calendar.services.calendar.model.RoomModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.welfare.adr.activity.WelfareActivity;
@@ -345,6 +339,11 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 	protected void onLoadScheduleDetailSuccess(JSONObject response){
 		super.onLoadScheduleDetailSuccess(response);
 		joinUsers = schedule.scheduleJoinUsers;
+		if(CCCollectionUtil.isEmpty(joinUsers)){
+			joinUsers.add(myself);
+		}
+		updateJoinUsers(joinUsers);
+
 		buildDatePickerDialogs(schedule);
 
 		if(schedule != null && !CCStringUtil.isEmpty(schedule.key)){
