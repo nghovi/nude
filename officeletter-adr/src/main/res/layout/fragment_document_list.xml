@@ -1,14 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical" android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/wf_login_background_color"
+        android:orientation="vertical">
+
         <include layout="@layout/view_common_header" />
-        <TextView
-            android:layout_width="wrap_content"
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="Document"/>
-        <include layout="@layout/view_common_footer"/>
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/margin_16dp"
+                android:text="@string/ol_document_list" />
+
+            <TextView
+                android:id="@+id/txt_filter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#cccccc"
+                android:padding="@dimen/margin_16dp"
+                android:text="Period: None - None" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rlv_document"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+        <include layout="@layout/view_common_footer" />
     </LinearLayout>
 </layout>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/wf_login_background_color">
+        <include layout="@layout/view_common_header"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/margin_16dp"
+                android:textSize="16sp"
+                android:textColor="@color/chiase_black"
+                android:text="@string/ol_filter_condition"/>
+            <LinearLayout
+                android:id="@+id/lnr_start_month"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/state_common_selectable_row"
+                android:orientation="horizontal"
+                android:padding="@dimen/margin_16dp">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/chiase_black"
+                    android:textSize="14sp"
+                    android:text="@string/ol_start_month"/>
+                <TextView
+                    android:id="@+id/start_month"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2017.05"
+                    android:textSize="14sp"
+                    android:textColor="@color/chiase_black"/>
+            </LinearLayout>
+            <View style="@style/cs_common_divider"/>
+            <LinearLayout
+                android:id="@+id/lnr_end_month"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/state_common_selectable_row"
+                android:orientation="horizontal"
+                android:padding="@dimen/margin_16dp">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/chiase_black"
+                    android:textSize="14sp"
+                    android:text="@string/ol_end_month"/>
+                <TextView
+                    android:id="@+id/end_month"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="None"
+                    android:textSize="14sp"
+                    android:textColor="@color/chiase_black"/>
+            </LinearLayout>
+            <Button
+                android:id="@+id/btn_clear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/chiase_white"
+                android:text="@string/ol_clear"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/margin_16dp"/>
+        </LinearLayout>
+    </LinearLayout>
+</layout>

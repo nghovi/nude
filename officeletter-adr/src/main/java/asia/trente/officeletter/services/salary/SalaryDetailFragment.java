@@ -32,7 +32,6 @@ import trente.asia.android.util.AndroidUtil;
 import trente.asia.android.util.DownloadFileManager;
 import trente.asia.android.util.OpenDownloadedFile;
 import trente.asia.android.view.ChiaseDownloadFileDialog;
-import trente.asia.welfare.adr.define.WelfareConst;
 
 /**
  * Created by tien on 8/22/2017.

@@ -47,6 +47,7 @@ import java.util.TimerTask;
 
 import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCCollectionUtil;
+import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
@@ -156,22 +157,20 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 	public void buildBodyLayout(){
 		Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
 		int thisYear = calendar.get(Calendar.YEAR);
-		try{
-			String birthday = thisYear + myself.dateBirth.substring(4);
-			Date date = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss").parse(birthday);
-			long difference = (System.currentTimeMillis() - date.getTime()) / 1000L;
-			if (difference > 0 && difference < 31L * 24L * 3600L) {
-				isBirthday = true;
-			}
 
-			birthday = (thisYear - 1) + myself.dateBirth.substring(4);
-			date = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss").parse(birthday);
-			difference = (System.currentTimeMillis() - date.getTime()) / 1000L;
-			if (difference > 0 && difference < 31L * 24L * 3600L) {
-				isBirthday = true;
-			}
-		}catch(ParseException e){
-			e.printStackTrace();
+		String birthday = thisYear + myself.dateBirth.substring(4);
+		Date date = CCDateUtil.makeDateCustom(birthday, "yyyy/MM/dd hh:mm:ss");
+
+		long difference = (System.currentTimeMillis() - date.getTime()) / 1000L;
+		if(difference > 0 && difference < 31L * 24L * 3600L){
+			isBirthday = true;
+		}
+
+		birthday = (thisYear - 1) + myself.dateBirth.substring(4);
+		date = CCDateUtil.makeDateCustom(birthday, "yyyy/MM/dd hh:mm:ss");
+		difference = (System.currentTimeMillis() - date.getTime()) / 1000L;
+		if(difference > 0 && difference < 31L * 24L * 3600L){
+			isBirthday = true;
 		}
 
 		template = new Template();
@@ -595,17 +594,20 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 	}
 
 	private void checkNewCard(){
-//		if(CCConst.NONE.equals(member.key)){
-//			showAlertDialog(getString(R.string.fragment_post_edit_alert_dlg_title), getString(R.string.fragment_post_edit_alert_dlg_message1), getString(android.R.string.ok), null);
-//		}
-//		else if(CCStringUtil.isEmpty(message) || hasTooManyLetters(message)){
-//			showAlertDialog(getString(R.string.fragment_post_edit_alert_dlg_title), getString(R.string.fragment_post_edit_alert_dlg_message2, String.valueOf(MAX_LETTER)), getString(android.R.string.ok), null);
-//		}
-//		else if(this.template == null){
-//			showAlertDialog(getString(R.string.fragment_post_edit_alert_dlg_title), getString(R.string.fragment_post_edit_alert_dlg_message3), getString(android.R.string.ok), null);
-//		}else{
-//
-//		}
+		// if(CCConst.NONE.equals(member.key)){
+		// showAlertDialog(getString(R.string.fragment_post_edit_alert_dlg_title), getString(R.string.fragment_post_edit_alert_dlg_message1),
+		// getString(android.R.string.ok), null);
+		// }
+		// else if(CCStringUtil.isEmpty(message) || hasTooManyLetters(message)){
+		// showAlertDialog(getString(R.string.fragment_post_edit_alert_dlg_title), getString(R.string.fragment_post_edit_alert_dlg_message2,
+		// String.valueOf(MAX_LETTER)), getString(android.R.string.ok), null);
+		// }
+		// else if(this.template == null){
+		// showAlertDialog(getString(R.string.fragment_post_edit_alert_dlg_title), getString(R.string.fragment_post_edit_alert_dlg_message3),
+		// getString(android.R.string.ok), null);
+		// }else{
+		//
+		// }
 		showConfirmDialog();
 	}
 
@@ -642,9 +644,9 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 
 			UserModel userModel = prefAccUtil.getUserPref();
 			jsonObject.put("posterId", userModel.key);
-			if (CCConst.NONE.equals(member.key)) {
+			if(CCConst.NONE.equals(member.key)){
 				jsonObject.put("receiverId", null);
-			} else {
+			}else{
 				jsonObject.put("receiverId", member.key);
 			}
 			jsonObject.put("message", binding.edtMessage.getText().toString());
