@@ -149,16 +149,16 @@ public class GroupFilterFragment extends AbstractClFragment{
 		return result;
 	}
 
-	private List<MyGroup> getSelectedMyGroups(List<UserModel> selectedUsers, List<MyGroup> MyGroups){
+	private List<MyGroup> getSelectedMyGroups(List<UserModel> selectedUsers, List<MyGroup> myGroups){
 
 		List<MyGroup> result = new ArrayList<>();
 		if(!CCCollectionUtil.isEmpty(selectedUsers)){
-			for(MyGroup MyGroup : MyGroups){
+			for(MyGroup myGroup : myGroups){
 				boolean isSelected = true;
-				if(CCCollectionUtil.isEmpty(MyGroup.listUsers)){
+				if(CCCollectionUtil.isEmpty(myGroup.listGroupUser)){
 					isSelected = false;
 				}else{
-					for(UserModel userModel : MyGroup.listUsers){
+					for(UserModel userModel : myGroup.listGroupUser){
 						if(!FilterDeptLinearLayout.checkSelectedUser(userModel, selectedUsers)){
 							isSelected = false;
 							break;
@@ -166,7 +166,7 @@ public class GroupFilterFragment extends AbstractClFragment{
 					}
 				}
 				if(isSelected){
-					result.add(MyGroup);
+					result.add(myGroup);
 				}
 			}
 		}

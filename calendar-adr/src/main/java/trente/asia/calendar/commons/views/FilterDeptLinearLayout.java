@@ -103,7 +103,7 @@ public class FilterDeptLinearLayout extends LinearLayout{
 
 		if(!CCCollectionUtil.isEmpty(mygroups)){
 			for(MyGroup myGroup : mygroups){
-				addItem(myGroup.groupName, cbxAll, checkSelectedMyGroup(myGroup, selectedMyGroups), myGroup.listUsers, null, myGroup);
+				addItem(myGroup.groupName, cbxAll, checkSelectedMyGroup(myGroup, selectedMyGroups), myGroup.listGroupUser, null, myGroup);
 			}
 		}
 

@@ -50,8 +50,10 @@ public abstract class PageContainerFragment extends AbstractClFragment{
 			SchedulesPageFragment fragment = (SchedulesPageFragment)mPagerAdapter.getItem(holder.selectedPagePosition);
 			fragment.loadScheduleList();
 		}
-		String filterType = prefAccUtil.get(ClConst.PREF_FILTER_TYPE);
-		userFacilityView.updateButtonBackground(filterType);
+		if(prefAccUtil != null){
+			String filterType = prefAccUtil.get(ClConst.PREF_FILTER_TYPE);
+			userFacilityView.updateButtonBackground(filterType);
+		}
 	}
 
 	@Override

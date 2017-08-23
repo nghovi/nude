@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -25,7 +26,9 @@ import asia.chiase.core.util.CCFormatUtil;
 import trente.asia.android.activity.ChiaseFragment;
 import trente.asia.calendar.R;
 import trente.asia.calendar.services.calendar.model.CategoryModel;
+import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
+import trente.asia.calendar.services.calendar.model.WorkOffer;
 import trente.asia.calendar.services.todo.TodoListFragment;
 import trente.asia.calendar.services.todo.TodoListTodayFragment;
 import trente.asia.welfare.adr.define.WelfareConst;
@@ -168,7 +171,7 @@ public class DailyPageFragment extends SchedulesPageFragment{
 	}
 
 	@Override
-	protected String getExecType() {
+	protected String getExecType(){
 		return "D";
 	}
 
@@ -186,6 +189,19 @@ public class DailyPageFragment extends SchedulesPageFragment{
 		}
 
 		lnrScheduleAllDays.removeAllViews();
+
+		// holiday
+		for(HolidayModel holidayModel : lstHoliday){
+			TextView textView = WeeklyPageFragment.makeTextView(activity, holidayModel.holidayName, 0, 0, LinearLayout.LayoutParams.MATCH_PARENT, Color.WHITE, Color.RED, Gravity.CENTER);
+			lnrScheduleAllDays.addView(textView);
+		}
+
+		// offer
+		for(WorkOffer workOffer : lstWorkOffer){
+			TextView textView = WeeklyPageFragment.makeTextView(activity, workOffer.offerTypeName, 0, 0, LinearLayout.LayoutParams.MATCH_PARENT, Color.parseColor(workOffer.userColor), 0, Gravity.CENTER);
+			lnrScheduleAllDays.addView(textView);
+		}
+
 		List<ScheduleModel> allDaySchedules = new ArrayList<>();
 		for(String key : startTimeSchedulesMap.keySet()){
 			startTimeSchedulesMap.put(key, new ArrayList<ScheduleModel>());
@@ -231,7 +247,7 @@ public class DailyPageFragment extends SchedulesPageFragment{
 
 	}
 
-	private void scrollToFavouritePost() {
+	private void scrollToFavouritePost(){
 		scrollView.post(new Runnable() {
 
 			@Override

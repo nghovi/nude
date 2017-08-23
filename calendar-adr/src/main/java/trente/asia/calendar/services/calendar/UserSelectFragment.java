@@ -85,7 +85,7 @@ public class UserSelectFragment extends AbstractClFragment{
 
 	private void appendGroupAll(){
 		MyGroup groupAll = new MyGroup();
-		groupAll.listUsers = users;
+		groupAll.listGroupUser = users;
 		groupAll.key = "-1";
 		groupAll.groupName = getString(R.string.chiase_common_all);
 		myGroups.add(0, groupAll);
