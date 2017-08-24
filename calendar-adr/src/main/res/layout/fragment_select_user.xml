@@ -14,6 +14,8 @@
         android:paddingTop="@dimen/margin_10dp"
         android:text="@string/filter" />
 
+    <View style="@style/cs_common_divider"/>
+
     <LinearLayout
         android:id="@+id/lnr_select_group"
         style="@style/wf_common_item_linear2"
@@ -32,6 +34,8 @@
             android:layout_height="wrap_content"
             android:src="@drawable/wf_row_arrow_right" />
     </LinearLayout>
+
+    <View style="@style/cs_common_divider"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -53,6 +57,9 @@
             android:layout_width="wrap_content"
             android:layout_marginLeft="@dimen/margin_10dp" />
     </LinearLayout>
+
+    <View style="@style/cs_common_divider"/>
+
 
     <ScrollView
         style="@style/cs_common_match_wrap"

@@ -90,6 +90,11 @@ public class ScheduleModel{
 		if(startDate == null || endDate == null){
 			return false;
 		}
+
+		if(ClConst.SCHEDULE_TYPE_WORK_OFFER.equals(scheduleType)){
+			return true;
+		}
+
 		String startDateFormat = WelfareFormatUtil.removeTime4Date(startDate);
 		String endDateFormat = WelfareFormatUtil.removeTime4Date(endDate);
 		return !startDateFormat.equals(endDateFormat);

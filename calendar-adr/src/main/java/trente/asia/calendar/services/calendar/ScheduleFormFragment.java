@@ -198,7 +198,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 			endTimeStr = addAnHour(startTimeStr);
 		}
 
-		repeatDialog.setStartDate(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, startDate));
+		repeatDialog.setStartDateStr(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, startDate));
 		if(ClRepeatUtil.isRepeat(schedule.repeatType)){
 			// set repeat dialog values
 			ScheduleRepeatModel repeatModel = new ScheduleRepeatModel(schedule);
@@ -220,7 +220,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 				String startDateStr = year + "/" + CCFormatUtil.formatZero(month + 1) + "/" + CCFormatUtil.formatZero(dayOfMonth);
 				txtStartDate.setText(startDateStr);
 				txtStartDate.setValue(startDateStr);
-				repeatDialog.setStartDate(startDateStr);
+				repeatDialog.setStartDateStr(startDateStr);
 				repeatDialog.initDefaultValue();
 				Date startDate = CCDateUtil.makeDateCustom(startDateStr, WelfareConst.WF_DATE_TIME_DATE);
 				Date endDate = CCDateUtil.makeDateCustom(txtEndDate.getText().toString(), WelfareConst.WF_DATE_TIME_DATE);

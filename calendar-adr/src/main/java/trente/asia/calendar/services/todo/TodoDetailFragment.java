@@ -121,6 +121,8 @@ public class TodoDetailFragment extends AbstractClFragment{
 				txtDeadline.setText(getString(R.string.deadline));
 			}
 		});
+
+		datePickerDialog.setCanceledOnTouchOutside(false);
 	}
 
 	private void buildLayout(JSONObject response){

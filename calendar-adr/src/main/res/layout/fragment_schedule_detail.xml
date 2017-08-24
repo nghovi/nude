@@ -57,7 +57,7 @@
                     style="@style/wl_common_text"
                     android:layout_width="wrap_content"
                     android:layout_weight="1"
-                    custom:mName="startDate" />
+                    custom:mName="startDateStr" />
 
                 <trente.asia.android.view.ChiaseTextView
                     android:id="@+id/txt_id_start_time"

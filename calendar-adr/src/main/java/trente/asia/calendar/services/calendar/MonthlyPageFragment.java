@@ -36,14 +36,18 @@ import trente.asia.android.model.DayModel;
 import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
+import trente.asia.calendar.commons.dialogs.DailySummaryDialog;
 import trente.asia.calendar.commons.dialogs.TodoDialog;
 import trente.asia.calendar.commons.utils.ClUtil;
+import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
+import trente.asia.calendar.services.calendar.model.WorkOffer;
 import trente.asia.calendar.services.calendar.view.MonthlyCalendarDayView;
 import trente.asia.calendar.services.calendar.view.MonthlyCalendarRowView;
 import trente.asia.calendar.services.todo.model.Todo;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.dialog.WfDialog;
+import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 import trente.asia.welfare.adr.utils.WelfareUtil;
 
@@ -267,29 +271,31 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 		return R.layout.monthly_calendar_title;
 	}
 
-	public class ScheduleComparator implements Comparator<ScheduleModel>{
+	public static Comparator<ScheduleModel> getScheduleComparator(){
+		return new Comparator<ScheduleModel>() {
 
-		@Override
-		public int compare(ScheduleModel schedule1, ScheduleModel schedule2){
-			String startDate1 = WelfareFormatUtil.removeTime4Date(schedule1.startDate);
-			String endDate1 = WelfareFormatUtil.removeTime4Date(schedule1.endDate);
+			@Override
+			public int compare(ScheduleModel schedule1, ScheduleModel schedule2){
+				String startDate1 = WelfareFormatUtil.removeTime4Date(schedule1.startDate);
+				String endDate1 = WelfareFormatUtil.removeTime4Date(schedule1.endDate);
 
-			String startDate2 = WelfareFormatUtil.removeTime4Date(schedule2.startDate);
-			String endDate2 = WelfareFormatUtil.removeTime4Date(schedule2.endDate);
+				String startDate2 = WelfareFormatUtil.removeTime4Date(schedule2.startDate);
+				String endDate2 = WelfareFormatUtil.removeTime4Date(schedule2.endDate);
 
-			boolean diff1 = startDate1.equals(endDate1);
-			boolean diff2 = startDate2.equals(endDate2);
+				boolean diff1 = startDate1.equals(endDate1);
+				boolean diff2 = startDate2.equals(endDate2);
 
-			if(!diff1 && diff2) return -1;
-			if(diff1 && !diff2) return 1;
+				if(!diff1 && diff2) return -1;
+				if(diff1 && !diff2) return 1;
 
-			boolean isAll1 = CCBooleanUtil.checkBoolean(schedule1.isAllDay);
-			boolean isAll2 = CCBooleanUtil.checkBoolean(schedule2.isAllDay);
+				boolean isAll1 = CCBooleanUtil.checkBoolean(schedule1.isAllDay);
+				boolean isAll2 = CCBooleanUtil.checkBoolean(schedule2.isAllDay);
 
-			if(isAll1 && !isAll2) return -1;
-			if(!isAll1 && isAll2) return 1;
-			return 0;
-		}
+				if(isAll1 && !isAll2) return -1;
+				if(!isAll1 && isAll2) return 1;
+				return schedule1.scheduleName.compareTo(schedule2.scheduleName);
+			}
+		};
 	}
 
 	@Override
@@ -411,9 +417,39 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 	@Override
 	protected void onLoadSchedulesSuccess(JSONObject response){
 		super.onLoadSchedulesSuccess(response);
+
+		// add holiday,
+		if(!CCCollectionUtil.isEmpty(lstHoliday)){
+			for(HolidayModel holidayModel : lstHoliday){
+				ScheduleModel scheduleModel = new ScheduleModel(holidayModel);
+				// scheduleModel.scheduleName = getString(R.string.cl_schedule_holiday_name, scheduleModel.scheduleName);
+				lstSchedule.add(scheduleModel);
+			}
+		}
+
+		// add birthday
+		if(!CCCollectionUtil.isEmpty(lstBirthdayUser)){
+			for(UserModel birthday : lstBirthdayUser){
+				ScheduleModel scheduleModel = new ScheduleModel(birthday);
+				// scheduleModel.scheduleName = getString(R.string.cl_schedule_birth_day_name, scheduleModel.scheduleName);
+				lstSchedule.add(scheduleModel);
+			}
+		}
+
+		// add work offer
+		if(!CCCollectionUtil.isEmpty(lstWorkOffer)){
+			for(WorkOffer workOffer : lstWorkOffer){
+				ScheduleModel scheduleModel = new ScheduleModel(workOffer);
+				scheduleModel.scheduleName = getString(R.string.cl_schedule_offer_name, scheduleModel.scheduleName);
+				lstSchedule.add(0, scheduleModel);
+			}
+		}
+
 		clearOldData();
 		if(!CCCollectionUtil.isEmpty(lstSchedule)){
-			Collections.sort(lstSchedule, new ScheduleComparator());
+
+			Collections.sort(lstSchedule, getScheduleComparator());
+
 			for(ScheduleModel model : lstSchedule){
 				Date startDate = WelfareFormatUtil.makeDate(WelfareFormatUtil.removeTime4Date(model.startDate));
 				Date endDate = WelfareFormatUtil.makeDate(WelfareFormatUtil.removeTime4Date(model.endDate));

@@ -209,38 +209,12 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 
 			lstSchedule = filterByPublicity();
 
-			// add holiday,
-			if(!CCCollectionUtil.isEmpty(lstHoliday)){
-				for(HolidayModel holidayModel : lstHoliday){
-					ScheduleModel scheduleModel = new ScheduleModel(holidayModel);
-					// scheduleModel.scheduleName = getString(R.string.cl_schedule_holiday_name, scheduleModel.scheduleName);
-					lstSchedule.add(scheduleModel);
-				}
-			}
 
-			// add birthday
-			if(!CCCollectionUtil.isEmpty(lstBirthdayUser)){
-				for(UserModel birthday : lstBirthdayUser){
-					ScheduleModel scheduleModel = new ScheduleModel(birthday);
-					// scheduleModel.scheduleName = getString(R.string.cl_schedule_birth_day_name, scheduleModel.scheduleName);
-					lstSchedule.add(scheduleModel);
-				}
-			}
-
-			// add work offer
-			if(!CCCollectionUtil.isEmpty(lstWorkOffer)){
-				for(WorkOffer workOffer : lstWorkOffer){
-					ScheduleModel scheduleModel = new ScheduleModel(workOffer);
-					scheduleModel.scheduleName = getString(R.string.cl_schedule_offer_name, scheduleModel.scheduleName);
-					lstSchedule.add(0, scheduleModel);
-				}
-			}
-
-			// make daily summary dialog
-			if(dialogDailySummary == null){
-				dialogDailySummary = new DailySummaryDialog(activity, this, this, dates);
-				dialogDailySummary.setData(lstSchedule, lstBirthdayUser, lstHoliday, lstWorkOffer);
-			}
+            // make daily summary dialog
+            if(dialogDailySummary == null){
+                dialogDailySummary = new DailySummaryDialog(activity, this, this, dates);
+                dialogDailySummary.setData(lstSchedule, lstBirthdayUser, lstHoliday, lstWorkOffer);
+            }
 
 			if(refreshDialogData && isChangedData){
 				//// TODO: 4/27/2017 more check change data

@@ -3,6 +3,7 @@ package trente.asia.calendar.services.calendar;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -173,17 +174,27 @@ public class DailyPageFragment extends SchedulesPageFragment{
 
 	@Override
 	protected void updateSchedules(List<ScheduleModel> schedules, List<CategoryModel> categories){
+		Collections.sort(schedules, new Comparator<ScheduleModel>() {
+
+			@Override
+			public int compare(ScheduleModel o1, ScheduleModel o2){
+				return o1.scheduleName.compareTo(o2.scheduleName);
+			}
+		});
+		int numRow = 0;
 		super.updateSchedules(schedules, categories);
 		schedules = multiplyWithUsers(schedules);
 		if(!CCCollectionUtil.isEmpty(todos)){
 			txtTodoInfo.setVisibility(View.VISIBLE);
 			txtTodoInfo.setText(getString(R.string.two_things_todo, String.valueOf(todos.size())));
+			numRow += 1;
 		}else{
 			txtTodoInfo.setVisibility(View.GONE);
 		}
 
 		if(!CCCollectionUtil.isEmpty(lstBirthdayUser)){
 			imgBirthdayIcon.setVisibility(View.VISIBLE);
+			numRow += 1;
 		}
 
 		lnrScheduleAllDays.removeAllViews();
@@ -218,7 +229,7 @@ public class DailyPageFragment extends SchedulesPageFragment{
 
 		lnrListSchedules.removeAllViews();
 
-		int moreNumber = lnrScheduleAllDays.getChildCount() - MAX_ROW;
+		int moreNumber = lnrScheduleAllDays.getChildCount() + numRow - MAX_ROW;
 
 		if(moreNumber <= 0){
 			txtMore.setVisibility(View.GONE);

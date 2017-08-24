@@ -46,27 +46,27 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/margin_10dp"
                             android:orientation="vertical">
 
                             <RelativeLayout
                                 android:id="@+id/rlt_part1"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                android:paddingTop="@dimen/margin_10dp"></RelativeLayout>
+                                android:orientation="vertical"></RelativeLayout>
 
                             <RelativeLayout
                                 android:id="@+id/rlt_expand"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:gravity="center_vertical">
+                                android:gravity="center_vertical"
+                                android:visibility="visible">
 
                                 <ImageView
                                     android:id="@+id/ic_icon_expand"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="bottom|left"
+                                    android:layout_marginBottom="@dimen/margin_10dp"
                                     android:paddingLeft="@dimen/margin_10dp"
                                     android:paddingRight="@dimen/margin_10dp"
                                     android:src="@drawable/down"
@@ -86,7 +86,6 @@
                         android:id="@+id/src_fragment_daily_page"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginTop="@dimen/margin_10dp"
                         android:fillViewport="true">
 
                         <LinearLayout

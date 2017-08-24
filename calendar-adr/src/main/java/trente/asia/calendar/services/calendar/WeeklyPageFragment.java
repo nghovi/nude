@@ -5,6 +5,7 @@ import static trente.asia.android.util.CsDateUtil.CS_DATE_TIME_1;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -31,6 +32,8 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.apache.commons.collections.CollectionUtils;
+
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
@@ -38,10 +41,12 @@ import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.activity.ChiaseFragment;
 import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.R;
+import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.services.calendar.model.CategoryModel;
 import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.model.WorkOffer;
+import trente.asia.calendar.services.calendar.view.MonthlyCalendarRowView;
 import trente.asia.calendar.services.todo.TodoListFragment;
 import trente.asia.calendar.services.todo.TodoListTodayFragment;
 import trente.asia.calendar.services.todo.model.Todo;
@@ -69,7 +74,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 
 	private float						mDownX;
 	private float						mDownY;
-	private final float					SCROLL_THRESHOLD	= 1;
+	private final float					SCROLL_THRESHOLD	= 10;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -134,9 +139,30 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 	@Override
 	protected void updateSchedules(List<ScheduleModel> schedules, List<CategoryModel> categories){
 		super.updateSchedules(schedules, categories);
+		sortSchedules(schedules);
 		schedules = multiplyWithUsers(schedules);
 		buildPart1(schedules);
 		buildPart2(schedules);
+	}
+
+	private void sortSchedules(List<ScheduleModel> schedules){
+		final Comparator<ScheduleModel> periodComparator = MonthlyCalendarRowView.getPeriodScheduleComparator(dates.get(0), dates.get(dates.size() - 1));
+		final Comparator<ScheduleModel> normalComparator = MonthlyPageFragment.getScheduleComparator();
+		Collections.sort(schedules, new Comparator<ScheduleModel>() {
+
+			@Override
+			public int compare(ScheduleModel o1, ScheduleModel o2){
+				if(o1.isPeriodSchedule() && !o2.isPeriodSchedule()){
+					return -1;
+				}else if(!o1.isPeriodSchedule() && o2.isPeriodSchedule()){
+					return 1;
+				}else if(o1.isPeriodSchedule() && o2.isPeriodSchedule()){
+					return periodComparator.compare(o1, o2);
+				}
+				return normalComparator.compare(o1, o2);
+			}
+		});
+
 	}
 
 	private void buildPart1(List<ScheduleModel> schedules){
@@ -147,6 +173,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 		int oldMaxTopMargin = maxTopMargin;
 		maxTopMargin = 0;
 		int topMargin = 0;
+		int itemNum = 0;
 
 		// todo
 		for(Todo todo : todos){
@@ -166,6 +193,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 						}
 					});
 					rltPart1.addView(textView);
+					itemNum++;
 				}
 			}
 		}
@@ -187,6 +215,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 				imageViewBirthday.setLayoutParams(lp);
 				rltPart1.addView(imageViewBirthday);
 				birthdayIconMap.put(keyDate, true);
+				itemNum++;
 			}
 		}
 
@@ -198,6 +227,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 			topMargin = getNextTopMargin(dayDistance, dayDistance);
 			TextView textView = makeTextView(activity, holidayModel.holidayName, leftMargin, topMargin, cellWidth, Color.WHITE, Color.RED, Gravity.CENTER);
 			rltPart1.addView(textView);
+			itemNum++;
 		}
 
 		// offer
@@ -208,6 +238,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 			topMargin = getNextTopMargin(dayDistance, dayDistance);
 			TextView textView = makeTextView(activity, workOffer.offerTypeName, leftMargin, topMargin, cellWidth, Color.parseColor(workOffer.userColor), 0, Gravity.CENTER);
 			rltPart1.addView(textView);
+			itemNum++;
 		}
 
 		// all day schedules
@@ -227,6 +258,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 				topMargin = getNextTopMargin(dayDistance, dayDistance + cellNumber - 1);
 				TextView textView = makeTextView(activity, schedule.scheduleName, leftMargin, topMargin, maxWidth, getColor(schedule), 0, Gravity.CENTER);
 				rltPart1.addView(textView);
+				itemNum++;
 			}
 
 		}
@@ -235,7 +267,13 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 
 		if(moreNumber <= 0){
 			isExpanded = true;
-			rltPart1.getLayoutParams().height = rowNum * WeeklyPageFragment.CELL_HEIGHT_PIXEL + WelfareUtil.dpToPx(10);
+			int height = 0;
+			if(rowNum == 0){
+				height = Math.min(1, itemNum) * WeeklyPageFragment.CELL_HEIGHT_PIXEL;
+			}else{
+				height = (rowNum + 1) * WeeklyPageFragment.CELL_HEIGHT_PIXEL;
+			}
+			rltPart1.getLayoutParams().height = height;
 			rltPart1.requestLayout();
 			rltExpandBar.setVisibility(View.GONE);
 		}else if(!isExpanded || maxTopMargin != oldMaxTopMargin){
@@ -270,7 +308,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 			}
 
 			imgExpand.setVisibility(View.VISIBLE);
-			rltPart1.getLayoutParams().height = MAX_ROW * WeeklyPageFragment.CELL_HEIGHT_PIXEL + WelfareUtil.dpToPx(10);
+			rltPart1.getLayoutParams().height = MAX_ROW * WeeklyPageFragment.CELL_HEIGHT_PIXEL;
 			rltPart1.requestLayout();
 		}
 
@@ -569,7 +607,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 			@Override
 			public void onClick(View v){
 				if(isExpanded){
-					collapse(rltPart1, MAX_ROW * WeeklyPageFragment.CELL_HEIGHT_PIXEL + WelfareUtil.dpToPx(10));
+					collapse(rltPart1, MAX_ROW * WeeklyPageFragment.CELL_HEIGHT_PIXEL);
 					for(int i = 1; i < rltExpandBar.getChildCount(); i++){
 						rltExpandBar.getChildAt(i).setVisibility(View.VISIBLE);
 					}
