@@ -18,4 +18,6 @@
     <string name="ol_password_confirm">Password confirm</string>
     <string name="ol_password_hint">Hint: %1s</string>
     <string name="ol_confirm">Confirm</string>
+    <string name="ol_wiki_list">Wiki list</string>
+    <string name="ol_wiki_content">Wiki content</string>
 </resources>

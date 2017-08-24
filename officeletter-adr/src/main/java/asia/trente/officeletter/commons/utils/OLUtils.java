@@ -7,8 +7,7 @@ import android.util.Log;
 import java.io.File;
 
 import asia.trente.officeletter.commons.defines.OLConst;
-import asia.trente.officeletter.services.document.DocumentDetailFragment;
-import asia.trente.officeletter.services.document.interfaces.OnDownloadListener;
+import asia.trente.officeletter.services.document.listener.OnDownloadListener;
 import trente.asia.android.util.AndroidUtil;
 import trente.asia.android.util.DownloadFileManager;
 import trente.asia.android.util.OpenDownloadedFile;

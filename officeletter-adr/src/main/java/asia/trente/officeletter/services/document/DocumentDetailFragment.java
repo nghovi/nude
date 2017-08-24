@@ -1,10 +1,7 @@
 package asia.trente.officeletter.services.document;
 
-import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,7 +15,7 @@ import asia.trente.officeletter.commons.defines.OLConst;
 import asia.trente.officeletter.commons.fragment.AbstractOLFragment;
 import asia.trente.officeletter.commons.utils.OLUtils;
 import asia.trente.officeletter.databinding.FragmentDocumentDetailBinding;
-import asia.trente.officeletter.services.document.interfaces.OnDownloadListener;
+import asia.trente.officeletter.services.document.listener.OnDownloadListener;
 import asia.trente.officeletter.services.document.model.DocumentModel;
 
 /**

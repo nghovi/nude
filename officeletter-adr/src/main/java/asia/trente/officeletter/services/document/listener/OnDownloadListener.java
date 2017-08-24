@@ -1,4 +1,4 @@
-package asia.trente.officeletter.services.document.interfaces;
+package asia.trente.officeletter.services.document.listener;
 
 /**
  * Created by tien on 8/24/2017.
