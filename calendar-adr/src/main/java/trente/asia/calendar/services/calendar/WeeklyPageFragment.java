@@ -75,6 +75,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 	private float						mDownX;
 	private float						mDownY;
 	private final float					SCROLL_THRESHOLD	= 10;
+	private boolean						firstTime			= true;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -276,7 +277,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 			rltPart1.getLayoutParams().height = height;
 			rltPart1.requestLayout();
 			rltExpandBar.setVisibility(View.GONE);
-		}else if(!isExpanded || maxTopMargin != oldMaxTopMargin){
+		}else{
 			int maxTopMarginAllowed = MAX_ROW * CELL_HEIGHT_PIXEL;
 			while(rltExpandBar.getChildAt(1) != null){
 				rltExpandBar.removeViewAt(1);
@@ -302,17 +303,44 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 					LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(cellWidth - 2, LinearLayout.LayoutParams.WRAP_CONTENT);
 					lp.setMargins((key + 1) * cellWidth, 0, 0, 0);
 					textView.setLayoutParams(lp);
-
 					rltExpandBar.addView(textView);
 				}
 			}
 
-			imgExpand.setVisibility(View.VISIBLE);
-			rltPart1.getLayoutParams().height = MAX_ROW * WeeklyPageFragment.CELL_HEIGHT_PIXEL;
-			rltPart1.requestLayout();
+			if(firstTime){
+				imgExpand.setVisibility(View.VISIBLE);
+				for(int i = 1; i < rltExpandBar.getChildCount(); i++){
+					rltExpandBar.getChildAt(i).setVisibility(View.VISIBLE);
+				}
+				rltPart1.getLayoutParams().height = MAX_ROW * WeeklyPageFragment.CELL_HEIGHT_PIXEL;
+				rltPart1.requestLayout();
+			}else if(oldMaxTopMargin != maxTopMargin){
+				if(isExpanded){
+					for(int i = 1; i < rltExpandBar.getChildCount(); i++){
+						rltExpandBar.getChildAt(i).setVisibility(View.GONE);
+					}
+					rltPart1.measure(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+					rltPart1.requestLayout();
+					imgExpand.setVisibility(View.VISIBLE);
+				}else{
+					rltExpandBar.setVisibility(View.VISIBLE);
+					for(int i = 1; i < rltExpandBar.getChildCount(); i++){
+						rltExpandBar.getChildAt(i).setVisibility(View.VISIBLE);
+					}
+				}
+			}else{
+				for(int i = 1; i < rltExpandBar.getChildCount(); i++){
+					if(isExpanded){
+						rltExpandBar.getChildAt(i).setVisibility(View.GONE);
+					}else{
+						rltExpandBar.getChildAt(i).setVisibility(View.VISIBLE);
+					}
+				}
+			}
 		}
 
 		setOnTouchListener(scrollViewPart1, cellWidth);
+		firstTime = false;
 	}
 
 	private void gotoTodoListTodayFragment(Calendar c2){

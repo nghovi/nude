@@ -5,6 +5,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <TextView
@@ -14,23 +15,23 @@
             android:layout_marginRight="@dimen/margin_4dp"
             android:text="09:00" />
 
+        <View style="@style/cs_common_divider" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:orientation="vertical">
+
         <LinearLayout
+            android:layout_marginLeft="@dimen/margin_40dp"
+            android:id="@+id/lnr_schedule_list_item_daily"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingTop="@dimen/margin_10dp">
-
-            <View style="@style/cs_common_divider" />
-
-
-            <LinearLayout
-                android:id="@+id/lnr_schedule_list_item_daily"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingLeft="@dimen/margin_16dp"></LinearLayout>
-
-        </LinearLayout>
+            android:paddingLeft="@dimen/margin_16dp"></LinearLayout>
 
     </LinearLayout>
 

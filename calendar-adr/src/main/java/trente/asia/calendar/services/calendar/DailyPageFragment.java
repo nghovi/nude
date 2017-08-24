@@ -46,6 +46,9 @@ public class DailyPageFragment extends SchedulesPageFragment{
 	private LinearLayout						lnrListSchedules;
 	private Map<String, List<ScheduleModel>>	startTimeSchedulesMap;
 	private ImageView							imgBirthdayIcon;
+	private int									moreNumber;
+	private boolean								firstTime	= true;
+	private int									numRow;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -84,7 +87,7 @@ public class DailyPageFragment extends SchedulesPageFragment{
 			@Override
 			public void onClick(View v){
 				if(isExpanded){
-					collapse(lnrScheduleAllDays, MAX_ROW * WeeklyPageFragment.CELL_HEIGHT_PIXEL - 1);
+					collapse(lnrScheduleAllDays, (MAX_ROW - numRow) * WeeklyPageFragment.CELL_HEIGHT_PIXEL - 1);
 					txtMore.setVisibility(View.VISIBLE);
 					isExpanded = false;
 					imgExpand.setImageResource(R.drawable.down);
@@ -107,7 +110,7 @@ public class DailyPageFragment extends SchedulesPageFragment{
 
 	public void expand(final View v){
 		v.measure(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-		final int targetHeight = v.getMeasuredHeight();
+		final int targetHeight = ((LinearLayout)v).getChildCount() * WeeklyPageFragment.CELL_HEIGHT_PIXEL - 1;
 		v.setVisibility(View.VISIBLE);
 		Animation a = new Animation() {
 
@@ -181,7 +184,8 @@ public class DailyPageFragment extends SchedulesPageFragment{
 				return o1.scheduleName.compareTo(o2.scheduleName);
 			}
 		});
-		int numRow = 0;
+		numRow = 0;
+		int oldMoreNumber = moreNumber;
 		super.updateSchedules(schedules, categories);
 		schedules = multiplyWithUsers(schedules);
 		if(!CCCollectionUtil.isEmpty(todos)){
@@ -229,19 +233,30 @@ public class DailyPageFragment extends SchedulesPageFragment{
 
 		lnrListSchedules.removeAllViews();
 
-		int moreNumber = lnrScheduleAllDays.getChildCount() + numRow - MAX_ROW;
+		int childCount = lnrScheduleAllDays.getChildCount();
+		moreNumber = (childCount + numRow) - MAX_ROW;
 
 		if(moreNumber <= 0){
 			txtMore.setVisibility(View.GONE);
 			imgExpand.setVisibility(View.GONE);
-			lnrScheduleAllDays.getLayoutParams().height = lnrScheduleAllDays.getChildCount() * WeeklyPageFragment.CELL_HEIGHT_PIXEL;
+			lnrScheduleAllDays.getLayoutParams().height = childCount * WeeklyPageFragment.CELL_HEIGHT_PIXEL;
 			lnrScheduleAllDays.requestLayout();
-		}else if(!isExpanded){
-			imgExpand.setVisibility(View.VISIBLE);
-			txtMore.setVisibility(View.VISIBLE);
+		}else{
 			txtMore.setText("+" + moreNumber);
-			lnrScheduleAllDays.getLayoutParams().height = MAX_ROW * WeeklyPageFragment.CELL_HEIGHT_PIXEL - 1;
-			lnrScheduleAllDays.requestLayout();
+			if(firstTime){
+				lnrScheduleAllDays.getLayoutParams().height = (MAX_ROW - numRow) * WeeklyPageFragment.CELL_HEIGHT_PIXEL;
+				lnrScheduleAllDays.requestLayout();
+				txtMore.setVisibility(View.VISIBLE);
+				imgExpand.setVisibility(View.VISIBLE);
+			}else if(oldMoreNumber != moreNumber){
+				if(isExpanded){
+					txtMore.setVisibility(View.GONE);
+					lnrScheduleAllDays.getLayoutParams().height = childCount * WeeklyPageFragment.CELL_HEIGHT_PIXEL;
+					lnrScheduleAllDays.requestLayout();
+				}else{
+					txtMore.setVisibility(View.VISIBLE);
+				}
+			}
 		}
 
 		List<String> keys = new ArrayList<>(startTimeSchedulesMap.keySet());
@@ -252,6 +267,7 @@ public class DailyPageFragment extends SchedulesPageFragment{
 			addStartTimeRow(key, scheduleModels);
 		}
 
+		firstTime = false;
 		scrollToFavouritePost();
 
 	}
@@ -274,6 +290,7 @@ public class DailyPageFragment extends SchedulesPageFragment{
 			TextView textView = new TextView(activity);
 			textView.setText(scheduleModel.scheduleName);
 			textView.setTextColor(WeeklyPageFragment.getColor(scheduleModel));
+			textView.setGravity(Gravity.CENTER_VERTICAL);
 			lnrSchedules.addView(textView);
 		}
 		if(startTime.equals(currentHour)){

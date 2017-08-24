@@ -293,6 +293,13 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 
 				if(isAll1 && !isAll2) return -1;
 				if(!isAll1 && isAll2) return 1;
+
+				Integer timeStart1 = CCDateUtil.convertTime2Min(schedule1.startTime);
+				Integer timeStart2 = CCDateUtil.convertTime2Min(schedule2.startTime);
+				if(timeStart1 != timeStart2){
+					return timeStart1.compareTo(timeStart2);
+				}
+
 				return schedule1.scheduleName.compareTo(schedule2.scheduleName);
 			}
 		};
