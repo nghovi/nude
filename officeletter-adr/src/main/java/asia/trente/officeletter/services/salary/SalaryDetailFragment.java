@@ -1,5 +1,6 @@
 package asia.trente.officeletter.services.salary;
 
+import android.app.Activity;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -116,77 +117,12 @@ public class SalaryDetailFragment extends AbstractOLFragment implements View.OnC
 	public void onClick(View v){
 		switch(v.getId()){
 		case R.id.img_id_header_right_icon:
-			downloadFile();
+			OLUtils.downloadFile(activity, salaryModel.attachment.fileName, host + salaryModel.attachment.fileUrl);
 			break;
 		}
 	}
 
-	private void downloadFile(){
-		if(AndroidUtil.verifyStoragePermissions(activity)){
-			String filename = salaryModel.attachment.fileName;
-			String fileUrl = host + salaryModel.attachment.fileUrl;
-			String filePath = OLUtils.getFilesFolderPath() + "/" + filename;
-			File file = new File(filePath);
 
-			if(file.exists()){
-				OpenDownloadedFile.downloadedFileDialog(file, activity);
-			}else{
-				final ChiaseDownloadFileDialog dialog = ChiaseDownloadFileDialog.startDialog(activity);
-				DownloadFileManager.downloadFile(activity, fileUrl, file, new DownloadFileManager.OnDownloadListener() {
-
-					@Override
-					public void onStart(){
-						Log.d("LOG", "START UPLOADING");
-					}
-
-					@Override
-					public void onSetMax(final int max){
-						activity.runOnUiThread(new Runnable() {
-
-							@Override
-							public void run(){
-								dialog.setMax(max);
-							}
-						});
-					}
-
-					@Override
-					public void onProgress(final int current){
-						activity.runOnUiThread(new Runnable() {
-
-							@Override
-							public void run(){
-								dialog.setCurrent(current);
-							}
-						});
-					}
-
-					@Override
-					public void onFinishDownload(){
-						activity.runOnUiThread(new Runnable() {
-
-							@Override
-							public void run(){
-								// dialog.fileDownloaded();
-							}
-						});
-					}
-
-					@Override
-					public void onResponse(boolean isSuccess, final String path){
-						activity.runOnUiThread(new Runnable() {
-
-							@Override
-							public void run(){
-								dialog.dismiss();
-								OpenDownloadedFile.downloadedFileDialog(new File(path), activity);
-							}
-						});
-					}
-				});
-			}
-		}
-	}
 
 	private void log(String msg){
 		Log.e("SalaryDetailFragment", msg);

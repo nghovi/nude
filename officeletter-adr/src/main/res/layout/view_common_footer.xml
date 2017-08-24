@@ -84,29 +84,6 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/lnr_view_common_footer_history"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:visibility="visible">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="24dp"
-                android:src="@drawable/ol_history"/>
-
-            <TextView
-                style="@style/tc_text_footer_item"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/footer_item4"
-                android:textColor="@color/ol_footer_color"/>
-        </LinearLayout>
-
-        <LinearLayout
             android:id="@+id/lnr_view_common_footer_setting"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

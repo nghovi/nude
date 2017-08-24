@@ -33,8 +33,11 @@ public class SalaryListFragment extends AbstractListFragment implements SalaryAd
 
 	private FragmentSalaryListBinding	binding;
 	private SalaryAdapter				adapter	= new SalaryAdapter();
+	private MonthModel					selectedSalary;
 
-	@Nullable @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
+	@Nullable
+	@Override
+	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
 		if(mRootView == null){
 			mRootView = inflater.inflate(R.layout.fragment_salary_list, container, false);
 			binding = DataBindingUtil.bind(mRootView);
@@ -93,9 +96,15 @@ public class SalaryListFragment extends AbstractListFragment implements SalaryAd
 	}
 
 	@Override
-	public void onSalaryClick(int salaryId){
+	public void onSalaryClick(MonthModel salary){
+		selectedSalary = salary;
+		showConfirmPassDialog(salary.passwordHint, "SAL", salary.salaryId);
+	}
+
+	@Override
+	public void successPassword(){
 		SalaryDetailFragment salaryDetailFragment = new SalaryDetailFragment();
-		salaryDetailFragment.setSalaryId(salaryId);
+		salaryDetailFragment.setSalaryId(selectedSalary.salaryId);
 		gotoFragment(salaryDetailFragment);
 	}
 }

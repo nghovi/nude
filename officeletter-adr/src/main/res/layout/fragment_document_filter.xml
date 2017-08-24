@@ -68,7 +68,10 @@
                 android:textColor="@color/chiase_white"
                 android:text="@string/ol_clear"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/margin_16dp"/>
+                android:layout_marginTop="@dimen/margin_16dp"
+                android:paddingStart="@dimen/margin_32dp"
+                android:paddingEnd="@dimen/margin_32dp"
+                android:background="@drawable/btn_backrground"/>
         </LinearLayout>
     </LinearLayout>
 </layout>

@@ -34,6 +34,7 @@ public class DocumentListFragment extends AbstractListFragment implements Docume
     private DocumentAdapter adapter = new DocumentAdapter();
     private String searchStart;
     private String searchEnd;
+    private DocumentModel selectedDocument;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,9 +57,10 @@ public class DocumentListFragment extends AbstractListFragment implements Docume
     protected void initView() {
         super.initView();
         initHeader(null, myself.userName, R.drawable.ic_filter);
+        adapter.setCallback(this);
         binding.rlvDocument.setAdapter(adapter);
         binding.rlvDocument.setLayoutManager(new LinearLayoutManager(getContext()));
-        binding.txtFilter.setText(getString(R.string.ol_filter), );
+        binding.txtFilter.setText(String.format(getString(R.string.ol_filter), searchStart, searchEnd));
         getView().findViewById(R.id.img_id_header_right_icon).setOnClickListener(this);
     }
 
@@ -76,8 +78,8 @@ public class DocumentListFragment extends AbstractListFragment implements Docume
     private void loadDocumentList() {
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("searchStart", searchStart);
-            jsonObject.put("searchEnd", searchEnd);
+            jsonObject.put("searchStart", getString(R.string.chiase_common_none).equals(searchStart) ? null : searchStart.replace(".", "/"));
+            jsonObject.put("searchEnd", getString(R.string.chiase_common_none).equals(searchEnd) ? null : searchEnd.replace(".", "/"));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -100,7 +102,23 @@ public class DocumentListFragment extends AbstractListFragment implements Docume
 
     @Override
     public void onDocumentClick(DocumentModel documentModel) {
-        log(documentModel.document.documentTitle);
+        selectedDocument = documentModel;
+        if (documentModel.passwordHint != null) {
+            showConfirmPassDialog(documentModel.passwordHint, "DOC", documentModel.document.key);
+        } else {
+            gotoDocumentDetail();
+        }
+    }
+
+    @Override
+    public void successPassword() {
+        gotoDocumentDetail();
+    }
+
+    private void gotoDocumentDetail() {
+        DocumentDetailFragment fragment = new DocumentDetailFragment();
+        fragment.setDocumentModel(selectedDocument);
+        gotoFragment(fragment);
     }
 
     private void log(String msg) {
@@ -123,18 +141,7 @@ public class DocumentListFragment extends AbstractListFragment implements Docume
     public void onDocumentFilterDone(String startMonth, String endMonth) {
         searchStart = startMonth;
         searchEnd = endMonth;
-        String filter = "";
-        if (searchStart == null) {
-            filter += getString(R.string.chiase_common_none);
-        } else {
-            filter += searchStart;
-        }
-        filter += " - ";
-        if (searchEnd == null) {
-            filter += getString(R.string.chiase_common_none);
-        } else {
-            filter += searchEnd;
-        }
-        binding.txtFilter.setText();
+        initData();
+        binding.txtFilter.setText(String.format(getString(R.string.ol_filter), searchStart, searchEnd));
     }
 }

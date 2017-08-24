@@ -12,7 +12,6 @@ import android.widget.TextView;
 import asia.trente.officeletter.BuildConfig;
 import asia.trente.officeletter.R;
 import asia.trente.officeletter.services.document.DocumentListFragment;
-import asia.trente.officeletter.services.history.HistoryListFragment;
 import asia.trente.officeletter.services.salary.SalaryListFragment;
 import asia.trente.officeletter.services.setting.SettingFragment;
 import asia.trente.officeletter.services.wiki.WikiListFragment;
@@ -73,9 +72,6 @@ public abstract class AbstractOLFragment extends WelfareFragment{
                         case R.id.lnr_view_common_footer_wiki:
                             gotoFragment(new WikiListFragment());
                             break;
-                        case R.id.lnr_view_common_footer_history:
-                            gotoFragment(new HistoryListFragment());
-                            break;
                         case R.id.lnr_view_common_footer_setting:
                             gotoFragment(new SettingFragment());
                             break;
@@ -87,7 +83,6 @@ public abstract class AbstractOLFragment extends WelfareFragment{
             getView().findViewById(R.id.lnr_view_common_footer_document).setOnClickListener(listener);
             getView().findViewById(R.id.lnr_view_common_footer_salary).setOnClickListener(listener);
             getView().findViewById(R.id.lnr_view_common_footer_wiki).setOnClickListener(listener);
-            getView().findViewById(R.id.lnr_view_common_footer_history).setOnClickListener(listener);
             getView().findViewById(R.id.lnr_view_common_footer_setting).setOnClickListener(listener);
             setSelectedFooterItem(footerItemId);
         }
@@ -104,9 +99,6 @@ public abstract class AbstractOLFragment extends WelfareFragment{
                 break;
             case R.id.lnr_view_common_footer_wiki:
                 imgFooterItem.setImageResource(R.drawable.ol_footer_wiki);
-                break;
-            case R.id.lnr_view_common_footer_history:
-                imgFooterItem.setImageResource(R.drawable.ol_footer_history);
                 break;
             case R.id.lnr_view_common_footer_setting:
                 imgFooterItem.setImageResource(R.drawable.ol_footer_setting);

@@ -14,5 +14,8 @@
     <string name="ol_end_month">End month</string>
     <string name="ol_clear">Clear</string>
     <string name="ol_document_filter">Document filter</string>
-    <string name="ol_filter">Period: %1s - %2s</string>
+    <string name="ol_filter" formatted="false">Period: %1s - %2s</string>
+    <string name="ol_password_confirm">Password confirm</string>
+    <string name="ol_password_hint">Hint: %1s</string>
+    <string name="ol_confirm">Confirm</string>
 </resources>

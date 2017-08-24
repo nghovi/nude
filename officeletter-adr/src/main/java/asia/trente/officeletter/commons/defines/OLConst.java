@@ -7,7 +7,7 @@ package asia.trente.officeletter.commons.defines;
 public class OLConst{
 
 	public static final String	APP_FOLDER				= "Welfare/OfficeLetter";
-
+	public static final String	PDF_TEMP_NAME			= "temp_name.pdf";
 	/**
 	 * API
 	 */

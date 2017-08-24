@@ -13,6 +13,7 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import asia.trente.officeletter.R;
+import asia.trente.officeletter.commons.activities.MainActivity;
 import asia.trente.officeletter.commons.fragment.AbstractOLFragment;
 import asia.trente.officeletter.databinding.FragmentDocumentFilterBinding;
 import asia.trente.officeletter.services.document.view.MonthYearPickerDialog;
@@ -76,14 +77,16 @@ public class DocumentFilterFragment extends AbstractOLFragment implements View.O
 	public void onClick(View v){
 		switch(v.getId()){
 		case R.id.img_id_header_right_icon:
-			getFragmentManager().popBackStack();
 			if(callback != null){
 				callback.onDocumentFilterDone(startMonth, endMonth);
 			}
+			getFragmentManager().popBackStack();
 			break;
 		case R.id.btn_clear:
 			binding.startMonth.setText(R.string.chiase_common_none);
 			binding.endMonth.setText(R.string.chiase_common_none);
+			startMonth = getString(R.string.chiase_common_none);
+			endMonth = getString(R.string.chiase_common_none);
 			break;
 		case R.id.lnr_start_month:
 			monthYearPickerDialog.setmSelectedTime(getYear(startMonth), getMonth(startMonth));
@@ -105,14 +108,14 @@ public class DocumentFilterFragment extends AbstractOLFragment implements View.O
 	}
 
 	private int getYear(String time){
-		if(time == null){
+		if(time == null || getString(R.string.chiase_common_none).equals(time)){
 			return Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR);
 		}
 		return Integer.parseInt(time.substring(0, 4));
 	}
 
 	private int getMonth(String time){
-		if(time == null){
+		if(time == null || getString(R.string.chiase_common_none).equals(time)){
 			return Calendar.getInstance(Locale.getDefault()).get(Calendar.MONTH) + 1;
 		}
 		return Integer.parseInt(time.substring(5, 7));
@@ -120,18 +123,17 @@ public class DocumentFilterFragment extends AbstractOLFragment implements View.O
 
 	@Override
 	public void onDateSet(DatePicker view, int year, int month, int dayOfMonth){
-		String monthText = year + month < 10 ? "0" + month : "" + month;
+		String monthText = year + "." + (month < 10 ? "0" + month : "" + month);
 		if(isStartMonth){
 			binding.startMonth.setText(monthText);
 			startMonth = monthText;
 		}else{
-			binding.endMonth.setText(year + "." + monthText);
+			binding.endMonth.setText(monthText);
 			endMonth = monthText;
 		}
 	}
 
 	public interface OnDocumentFilterListener{
-
 		void onDocumentFilterDone(String startMonth, String endMonth);
 	}
 

@@ -13,6 +13,7 @@ import asia.trente.officeletter.R;
 import asia.trente.officeletter.commons.holder.ViewHolder;
 import asia.trente.officeletter.databinding.ItemSalaryBinding;
 import asia.trente.officeletter.services.salary.model.MonthModel;
+import asia.trente.officeletter.services.salary.model.SalaryModel;
 
 /**
  * Created by tien on 8/21/2017.
@@ -50,7 +51,7 @@ public class SalaryAdapter extends RecyclerView.Adapter<ViewHolder> {
                 @Override
                 public void onClick(View v) {
                     if (callback != null) {
-                        callback.onSalaryClick(monthModel.salaryId);
+                        callback.onSalaryClick(monthModel);
                     }
                 }
             });
@@ -63,6 +64,6 @@ public class SalaryAdapter extends RecyclerView.Adapter<ViewHolder> {
     }
 
     public interface OnSalaryAdapterListener {
-        void onSalaryClick(int salaryId);
+        void onSalaryClick(MonthModel salary);
     }
 }

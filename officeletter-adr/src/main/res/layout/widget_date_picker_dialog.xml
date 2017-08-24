@@ -21,8 +21,7 @@
         <asia.trente.officeletter.services.document.view.ThemedNumberPicker
             android:id="@+id/picker_month"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            >
+            android:layout_height="wrap_content">
 
         </asia.trente.officeletter.services.document.view.ThemedNumberPicker>
 
