@@ -79,7 +79,6 @@ public abstract class LoginFragment extends WelfareFragment implements View.OnCl
 			mEdtUserName.setText(preferencesSystemUtil.get(PreferencesSystemUtil.KEY_PREF_USER_NAME));
 			mCbxRemember.setChecked(true);
 		}
-
 	}
 
 	@Override

@@ -47,6 +47,8 @@ public class SalaryAdapter extends RecyclerView.Adapter<ViewHolder> {
             binding.lnrSalary.setBackgroundColor(ContextCompat.getColor(binding.lnrSalary.getContext(), R.color.wf_login_background_color));
             binding.imgArrowRight.setVisibility(View.INVISIBLE);
         } else {
+            binding.lnrSalary.setBackgroundResource(R.drawable.state_common_selectable_row);
+            binding.imgArrowRight.setVisibility(View.VISIBLE);
             binding.lnrSalary.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

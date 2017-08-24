@@ -11,6 +11,8 @@
     <color name="wf_app_button_color_off">#809B9BBB</color>
     <color name="wf_app_button_color_on">#9B9BBB</color>
     <color name="wf_login_background_color">#d6d6e5</color>
+    <color name="wf_login_button_color_on">#A5A6C6</color>
+    <color name="wf_login_button_color_off">#7FA5A6C6</color>
 
-    <color name="ol_footer_color">#9E9E9E</color>
+    <color name="ol_footer_color">#7fffffff</color>
 </resources>

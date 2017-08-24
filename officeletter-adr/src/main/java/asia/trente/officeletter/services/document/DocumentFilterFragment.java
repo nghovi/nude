@@ -58,7 +58,7 @@ public class DocumentFilterFragment extends AbstractOLFragment implements View.O
 	@Override
 	protected void initView(){
 		super.initView();
-		initHeader(R.drawable.wf_back_white, getString(R.string.ol_document_filter), R.drawable.cs_row_check);
+		initHeader(R.drawable.wf_back_white, getString(R.string.ol_document_filter), R.drawable.ic_check);
 		getView().findViewById(R.id.img_id_header_right_icon).setOnClickListener(this);
 		binding.btnClear.setOnClickListener(this);
 		binding.lnrStartMonth.setOnClickListener(this);

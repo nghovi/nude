@@ -33,10 +33,6 @@ public class OLLogInFragment extends LoginFragment{
 	protected void initView(){
 		super.initView();
 		mImgLogo.setImageResource(R.drawable.ol_logo);
-		LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) mImgLogo.getLayoutParams();
-		params.width = WelfareUtil.dpToPx(50);
-		params.height = WelfareUtil.dpToPx(50);
-		params.gravity = Gravity.CENTER_HORIZONTAL;
 	}
 
 	@Override

@@ -23,7 +23,8 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="24dp"
-                android:src="@drawable/ol_document"/>
+                android:alpha="0.5"
+                android:src="@drawable/ic_document"/>
 
             <TextView
                 style="@style/tc_text_footer_item"
@@ -47,7 +48,8 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="24dp"
-                android:src="@drawable/ol_salary"/>
+                android:alpha="0.5"
+                android:src="@drawable/ic_salary"/>
 
             <TextView
                 style="@style/tc_text_footer_item"
@@ -71,7 +73,8 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="24dp"
-                android:src="@drawable/ol_wiki"/>
+                android:alpha="0.5"
+                android:src="@drawable/ic_wiki"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -95,7 +98,8 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="24dp"
-                android:src="@drawable/ol_setting"/>
+                android:alpha="0.5"
+                android:src="@drawable/ic_setting"/>
 
             <TextView
                 style="@style/tc_text_footer_item"

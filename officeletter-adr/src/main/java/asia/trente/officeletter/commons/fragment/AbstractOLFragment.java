@@ -1,5 +1,6 @@
 package asia.trente.officeletter.commons.fragment;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -90,25 +91,9 @@ public abstract class AbstractOLFragment extends WelfareFragment{
 
     private void setSelectedFooterItem(int footerItemId){
         ImageView imgFooterItem = (ImageView)((LinearLayout)getView().findViewById(footerItemId)).getChildAt(0);
-        switch(footerItemId){
-            case R.id.lnr_view_common_footer_document:
-                imgFooterItem.setImageResource(R.drawable.ol_footer_letter);
-                break;
-            case R.id.lnr_view_common_footer_salary:
-                imgFooterItem.setImageResource(R.drawable.ol_footer_salary);
-                break;
-            case R.id.lnr_view_common_footer_wiki:
-                imgFooterItem.setImageResource(R.drawable.ol_footer_wiki);
-                break;
-            case R.id.lnr_view_common_footer_setting:
-                imgFooterItem.setImageResource(R.drawable.ol_footer_setting);
-                break;
-            default:
-                break;
-        }
-
+        imgFooterItem.setAlpha(1f);
         TextView txtFooterItem = (TextView)((LinearLayout)getView().findViewById(footerItemId)).getChildAt(1);
-        txtFooterItem.setTextColor(getResources().getColor(R.color.chiase_white));
+        txtFooterItem.setTextColor(Color.WHITE);
     }
 
     protected abstract int getFooterItemId();
