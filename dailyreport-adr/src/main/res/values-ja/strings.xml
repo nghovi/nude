@@ -7,7 +7,7 @@
     <!-- footer -->
     <string name="footer_item1">日報</string>
     <string name="footer_item2">みんなの日報</string>
-    <string name="footer_item3">AP</string>
+    <string name="footer_item3">行動計画</string>
     <string name="footer_item4">設定</string>
     <string name="fragment_report_edit_change_template_confirm">このテンプレートを変更しますか？</string>
     <string name="fragment_other_title">みんなの日報</string>
