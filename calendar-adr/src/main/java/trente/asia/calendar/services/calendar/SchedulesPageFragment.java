@@ -78,7 +78,7 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 	protected View					thisHourView;
 	protected String				currentHour;
 
-	protected static final int		MAX_ROW				= 2;
+	protected static final int		MAX_ROW				= 3;
 	protected Date					today;
 	private List<RoomModel>			rooms;
 

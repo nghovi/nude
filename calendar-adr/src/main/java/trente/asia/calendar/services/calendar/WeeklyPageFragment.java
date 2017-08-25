@@ -74,7 +74,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 
 	private float						mDownX;
 	private float						mDownY;
-	private final float					SCROLL_THRESHOLD	= 10;
+	private final float					SCROLL_THRESHOLD	= 2;
 	private boolean						firstTime			= true;
 
 	@Override
@@ -301,7 +301,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 					textView.setGravity(Gravity.CENTER);
 					// textView.setBackgroundColor(Color.WHITE);
 					// textView.setBackground(ContextCompat.getDrawable(activity, R.drawable.wf_background_gray_border_white));
-					textView.setText("+" + more);
+					textView.setText("+" + (more + 1));
 					RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(cellWidth - 2, RelativeLayout.LayoutParams.WRAP_CONTENT);
 					rlp.setMargins((key + 1) * cellWidth, 0, 0, 0);
 					textView.setLayoutParams(rlp);
@@ -346,7 +346,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 		for(int i = 1; i < rltExpandBar.getChildCount(); i++){
 			rltExpandBar.getChildAt(i).setVisibility(View.VISIBLE);
 		}
-		rltPart1.getLayoutParams().height = MAX_ROW * WeeklyPageFragment.CELL_HEIGHT_PIXEL;
+		rltPart1.getLayoutParams().height = (MAX_ROW - 1) * WeeklyPageFragment.CELL_HEIGHT_PIXEL;
 		rltPart1.requestLayout();
 	}
 
@@ -635,7 +635,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 			@Override
 			public void onClick(View v){
 				if(isExpanded){
-					collapse(rltPart1, MAX_ROW * WeeklyPageFragment.CELL_HEIGHT_PIXEL);
+					collapse(rltPart1, (MAX_ROW - 1) * WeeklyPageFragment.CELL_HEIGHT_PIXEL);
 					for(int i = 1; i < rltExpandBar.getChildCount(); i++){
 						rltExpandBar.getChildAt(i).setVisibility(View.VISIBLE);
 					}

@@ -87,7 +87,7 @@ public class DailyPageFragment extends SchedulesPageFragment{
 			@Override
 			public void onClick(View v){
 				if(isExpanded){
-					collapse(lnrScheduleAllDays, Math.max(0, (MAX_ROW - numRow) * WeeklyPageFragment.CELL_HEIGHT_PIXEL - 1));
+					collapse(lnrScheduleAllDays, Math.max(0, (MAX_ROW - numRow - 1) * WeeklyPageFragment.CELL_HEIGHT_PIXEL - 1));
 					txtMore.setVisibility(View.VISIBLE);
 					isExpanded = false;
 					imgExpand.setImageResource(R.drawable.down);
@@ -236,7 +236,7 @@ public class DailyPageFragment extends SchedulesPageFragment{
 			lnrScheduleAllDays.getLayoutParams().height = Math.max(0, childCount * WeeklyPageFragment.CELL_HEIGHT_PIXEL - 1);
 			lnrScheduleAllDays.requestLayout();
 		}else{
-			txtMore.setText("+" + moreNumber);
+			txtMore.setText("+" + (moreNumber + 1));
 			if(firstTime){
 				showCollapse();
 			}else if(oldMoreNumber != moreNumber){
@@ -265,7 +265,7 @@ public class DailyPageFragment extends SchedulesPageFragment{
 	}
 
 	private void showCollapse(){
-		lnrScheduleAllDays.getLayoutParams().height = Math.max(0, (MAX_ROW - numRow) * WeeklyPageFragment.CELL_HEIGHT_PIXEL - 1);
+		lnrScheduleAllDays.getLayoutParams().height = Math.max(0, (MAX_ROW - numRow - 1) * WeeklyPageFragment.CELL_HEIGHT_PIXEL - 1);
 		lnrScheduleAllDays.requestLayout();
 		txtMore.setVisibility(View.VISIBLE);
 		imgExpand.setVisibility(View.VISIBLE);

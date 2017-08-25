@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -103,7 +104,7 @@ public class DailyScheduleList extends LinearLayout{
 	}
 
 	public static Map<Date, List<WorkOffer>> buildDayOfferMap(List<Date> dates, List<WorkOffer> workOffers){
-		Map<Date, List<WorkOffer>> result = new HashMap<>();
+		Map<Date, List<WorkOffer>> result = new LinkedHashMap<>();
 		for(Date date : dates){
 			Date dateOnly = CCDateUtil.makeDate(date);
 			List<WorkOffer> dayWorkOffers = getSortedWorkOffersByDate(workOffers, date);
@@ -183,7 +184,7 @@ public class DailyScheduleList extends LinearLayout{
 				result.add(offer);
 			}
 		}
-		sortOffersByType(result);
+		// sortOffersByType(result);
 		return result;
 	}
 

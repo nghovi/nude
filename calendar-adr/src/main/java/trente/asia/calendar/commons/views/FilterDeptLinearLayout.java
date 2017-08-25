@@ -191,6 +191,7 @@ public class FilterDeptLinearLayout extends LinearLayout{
 		holder.txtName.setText(name);
 
 		if(!CCStringUtil.isEmpty(colorCode) && isSimpleAvatar == false){
+			holder.lnrAvatar.setVisibility(View.VISIBLE);
 			holder.lnrAvatar.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.wf_background_round_border_white));
 			GradientDrawable bgShape = (GradientDrawable)holder.lnrAvatar.getBackground();
 			bgShape.setColor(Color.parseColor(colorCode));
