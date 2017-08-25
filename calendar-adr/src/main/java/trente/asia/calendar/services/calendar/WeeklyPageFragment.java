@@ -462,13 +462,6 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 				leftMarginScheduleNumMap.put(leftMargin, leftMarginScheduleNum + 1);
 
 				TextView textView = makeTextView(activity, schedule.scheduleName, leftMargin + 1, topMargin, cellWidth, 0, getColor(schedule), Gravity.LEFT);
-				// textView.setOnClickListener(new View.OnClickListener() {
-				//
-				// @Override
-				// public void onClick(View v){
-				// onDailyScheduleClickListener(schedule.startDate.split(" ")[0]);
-				// }
-				// });
 				rltSchedules.addView(textView);
 			}
 			lnrPart2.addView(cell);

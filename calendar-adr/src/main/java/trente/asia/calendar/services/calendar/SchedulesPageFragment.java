@@ -300,9 +300,8 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 			}
 		}else{
 			for(ScheduleModel scheduleModel : origins){
-				RoomModel roomModel = RoomModel.get(rooms, scheduleModel.roomId);
-				if(roomModel != null){
-					scheduleModel.scheduleColor = roomModel.color;
+				if(!CCStringUtil.isEmpty(scheduleModel.roomModel.color)){
+					scheduleModel.scheduleColor = scheduleModel.roomModel.color;
 				}
 				result.add(scheduleModel);
 			}

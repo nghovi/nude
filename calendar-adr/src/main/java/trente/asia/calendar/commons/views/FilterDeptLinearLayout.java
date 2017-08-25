@@ -244,8 +244,8 @@ public class FilterDeptLinearLayout extends LinearLayout{
 			for(CheckableLinearLayout checkableLinearLayout : this.lstCheckable){
 				List<UserModel> users = (List<UserModel>)checkableLinearLayout.getTag();
 				boolean match = true;
-				for(UserModel userModel : userModels){
-					if(!UserModel.contain(users, userModel)){
+				for(UserModel userModel : users){
+					if(!UserModel.contain(userModels, userModel)){
 						match = false;
 						break;
 					}
@@ -255,19 +255,19 @@ public class FilterDeptLinearLayout extends LinearLayout{
 				}
 			}
 		}else{
-			for(CheckableLinearLayout checkableLinearLayout : this.lstCheckable){
-				List<UserModel> users = (List<UserModel>)checkableLinearLayout.getTag();
-				boolean match = false;
-				for(UserModel userModel : userModels){
-					if(UserModel.contain(users, userModel)){
-						match = true;
-						break;
-					}
-				}
-				if(match){
-					checkableLinearLayout.setChecked(false);
-				}
-			}
+			// for(CheckableLinearLayout checkableLinearLayout : this.lstCheckable){
+			// List<UserModel> users = (List<UserModel>)checkableLinearLayout.getTag();
+			// boolean match = false;
+			// for(UserModel userModel : userModels){
+			// if(UserModel.contain(users, userModel)){
+			// match = true;
+			// break;
+			// }
+			// }
+			// if(match){
+			// checkableLinearLayout.setChecked(false);
+			// }
+			// }
 		}
 	}
 

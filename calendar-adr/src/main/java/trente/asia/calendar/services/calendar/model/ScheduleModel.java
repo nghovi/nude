@@ -44,6 +44,7 @@ public class ScheduleModel{
 	public String			repeatData;
 	public String			repeatEnd;
 	public String			repeatInterval;
+	public RoomModel		roomModel;
 	public Boolean			isWarning;
 	public UserModel		owner;
 	public String			scheduleColor	= "#FF0000";
