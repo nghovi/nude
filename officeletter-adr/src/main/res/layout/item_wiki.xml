@@ -17,7 +17,10 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:textSize="14sp"
-                android:textColor="@color/chiase_black"/>
+                android:textColor="@color/chiase_black"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:layout_marginEnd="@dimen/margin_16dp"/>
             <TextView
                 android:id="@+id/wiki_date"
                 android:layout_toStartOf="@+id/img_arrow_right"
