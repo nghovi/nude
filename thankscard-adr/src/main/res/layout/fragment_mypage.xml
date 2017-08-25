@@ -69,7 +69,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
-                        android:text="@string/fragment_mypage_rank_post"
                         android:textSize="18sp" />
 
                     <TextView
@@ -78,7 +77,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
-                        android:text="@string/fragment_mypage_rank_next_post"
                         android:textSize="14sp" />
 
 
@@ -88,7 +86,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:text="@string/fragment_mypage_rank_receive"
                         android:textSize="18sp" />
 
                     <TextView
@@ -97,7 +94,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
-                        android:text="@string/fragment_mypage_rank_next_receive"
                         android:textSize="14sp" />
                 </LinearLayout>
 
@@ -110,12 +106,12 @@
                         android:id="@+id/img_fragment_mypage_rank_stage"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/tc_rank_regular" />
+                        android:minWidth="@dimen/margin_72dp"
+                        android:minHeight="@dimen/margin_72dp"/>
                     <TextView
                         android:id="@+id/txt_rank"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/tc_rank_regular"
                         android:textSize="14sp"
                         android:textColor="@color/chiase_black"/>
                 </LinearLayout>
