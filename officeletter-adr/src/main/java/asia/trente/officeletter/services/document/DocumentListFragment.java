@@ -15,7 +15,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import asia.trente.officeletter.R;
 import asia.trente.officeletter.commons.defines.OLConst;
@@ -39,7 +41,8 @@ public class DocumentListFragment extends AbstractListFragment implements Docume
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        searchStart = getString(R.string.chiase_common_none);
+        Calendar calendar = Calendar.getInstance(Locale.getDefault());
+        searchStart = calendar.get(Calendar.YEAR) + "/01";
         searchEnd = getString(R.string.chiase_common_none);
     }
 
