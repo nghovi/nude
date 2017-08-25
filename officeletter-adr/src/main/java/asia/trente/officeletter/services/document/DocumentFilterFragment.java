@@ -90,16 +90,12 @@ public class DocumentFilterFragment extends AbstractOLFragment implements View.O
 			break;
 		case R.id.lnr_start_month:
 			monthYearPickerDialog.setmSelectedTime(getYear(startMonth), getMonth(startMonth));
-			monthYearPickerDialog.setMaxMonth(getMonth(endMonth));
-			monthYearPickerDialog.setMaxYear(getYear(endMonth));
 			monthYearPickerDialog.setListener(this);
 			monthYearPickerDialog.show(getFragmentManager(), null);
 			isStartMonth = true;
 			break;
 		case R.id.lnr_end_month:
 			monthYearPickerDialog.setmSelectedTime(getYear(endMonth), getMonth(endMonth));
-			monthYearPickerDialog.setMaxMonth(12);
-			monthYearPickerDialog.setMaxYear(getYear(null));
 			monthYearPickerDialog.setListener(this);
 			monthYearPickerDialog.show(getFragmentManager(), null);
 			isStartMonth = false;

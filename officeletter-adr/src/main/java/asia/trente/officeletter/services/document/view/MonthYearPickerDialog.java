@@ -69,7 +69,7 @@ public class MonthYearPickerDialog extends DialogFragment{
 		if(minYear > 0){
 			yearPicker.setMinValue(minYear);
 		}
-		yearPicker.setMaxValue(maxYear > 0 ? maxYear : cal.get(Calendar.YEAR) + 1);
+		yearPicker.setMaxValue(maxYear > 0 ? maxYear : 2100);
 		yearPicker.setWrapSelectorWheel(false);
 		yearPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
 
