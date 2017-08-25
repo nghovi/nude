@@ -34,6 +34,7 @@ public class OLUtils{
 			File file = new File(activity.getFilesDir(), OLConst.PDF_TEMP_NAME);
 			final ProgressDialog dialog = new ProgressDialog(activity);
 			dialog.setMessage(activity.getString(R.string.ol_loading));
+			dialog.setCanceledOnTouchOutside(false);
 			dialog.show();
 
 			DownloadFileManager.downloadFile(activity, fileUrl, file, new DownloadFileManager.OnDownloadListener() {
