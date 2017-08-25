@@ -1,5 +1,8 @@
 package asia.trente.officeletter.services.document;
 
+import java.util.Calendar;
+import java.util.Locale;
+
 import android.app.DatePickerDialog;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -9,11 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 
-import java.util.Calendar;
-import java.util.Locale;
-
 import asia.trente.officeletter.R;
-import asia.trente.officeletter.commons.activities.MainActivity;
 import asia.trente.officeletter.commons.fragment.AbstractOLFragment;
 import asia.trente.officeletter.databinding.FragmentDocumentFilterBinding;
 import asia.trente.officeletter.services.document.view.MonthYearPickerDialog;
