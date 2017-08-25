@@ -86,7 +86,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 	}
 
 	public void expand(final View v){
-		v.measure(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+		v.measure(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
 		final int targetHeight = v.getMeasuredHeight();
 		v.setVisibility(View.VISIBLE);
 		Animation a = new Animation() {
@@ -211,9 +211,9 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 
 				ImageView imageViewBirthday = new ImageView(activity);
 				imageViewBirthday.setImageResource(R.drawable.cl_icon_birthday);
-				LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(CELL_HEIGHT_PIXEL, CELL_HEIGHT_PIXEL);
-				lp.setMargins(leftMargin, topMargin, 0, 0);
-				imageViewBirthday.setLayoutParams(lp);
+				RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(CELL_HEIGHT_PIXEL, CELL_HEIGHT_PIXEL);
+				rlp.setMargins(leftMargin, topMargin, 0, 0);
+				imageViewBirthday.setLayoutParams(rlp);
 				rltPart1.addView(imageViewBirthday);
 				birthdayIconMap.put(keyDate, true);
 				itemNum++;
@@ -264,16 +264,15 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 
 		}
 		int rowNum = maxTopMargin / CELL_HEIGHT_PIXEL;
+		if(rowNum == 0){
+			rowNum = Math.min(1, itemNum);
+		}else{
+			rowNum = rowNum + 1;
+		}
 		int moreNumber = rowNum - MAX_ROW;
 
 		if(moreNumber <= 0){
-			isExpanded = true;
-			int height = 0;
-			if(rowNum == 0){
-				height = Math.min(1, itemNum) * WeeklyPageFragment.CELL_HEIGHT_PIXEL;
-			}else{
-				height = (rowNum + 1) * WeeklyPageFragment.CELL_HEIGHT_PIXEL;
-			}
+			int height = rowNum * WeeklyPageFragment.CELL_HEIGHT_PIXEL;
 			rltPart1.getLayoutParams().height = height;
 			rltPart1.requestLayout();
 			rltExpandBar.setVisibility(View.GONE);
@@ -300,33 +299,27 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 					// textView.setBackgroundColor(Color.WHITE);
 					// textView.setBackground(ContextCompat.getDrawable(activity, R.drawable.wf_background_gray_border_white));
 					textView.setText("+" + more);
-					LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(cellWidth - 2, LinearLayout.LayoutParams.WRAP_CONTENT);
-					lp.setMargins((key + 1) * cellWidth, 0, 0, 0);
-					textView.setLayoutParams(lp);
+					RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(cellWidth - 2, RelativeLayout.LayoutParams.WRAP_CONTENT);
+					rlp.setMargins((key + 1) * cellWidth, 0, 0, 0);
+					textView.setLayoutParams(rlp);
 					rltExpandBar.addView(textView);
 				}
 			}
 
 			if(firstTime){
-				imgExpand.setVisibility(View.VISIBLE);
-				for(int i = 1; i < rltExpandBar.getChildCount(); i++){
-					rltExpandBar.getChildAt(i).setVisibility(View.VISIBLE);
-				}
-				rltPart1.getLayoutParams().height = MAX_ROW * WeeklyPageFragment.CELL_HEIGHT_PIXEL;
-				rltPart1.requestLayout();
+				showCollapse();
 			}else if(oldMaxTopMargin != maxTopMargin){
 				if(isExpanded){
+					rltExpandBar.setVisibility(View.VISIBLE);
+					imgExpand.setVisibility(View.VISIBLE);
 					for(int i = 1; i < rltExpandBar.getChildCount(); i++){
 						rltExpandBar.getChildAt(i).setVisibility(View.GONE);
 					}
-					rltPart1.measure(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+					rltPart1.measure(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
+					rltPart1.getLayoutParams().height = rltPart1.getMeasuredHeight();
 					rltPart1.requestLayout();
-					imgExpand.setVisibility(View.VISIBLE);
 				}else{
-					rltExpandBar.setVisibility(View.VISIBLE);
-					for(int i = 1; i < rltExpandBar.getChildCount(); i++){
-						rltExpandBar.getChildAt(i).setVisibility(View.VISIBLE);
-					}
+					showCollapse();
 				}
 			}else{
 				for(int i = 1; i < rltExpandBar.getChildCount(); i++){
@@ -341,6 +334,16 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 
 		setOnTouchListener(scrollViewPart1, cellWidth);
 		firstTime = false;
+	}
+
+	private void showCollapse(){
+		rltExpandBar.setVisibility(View.VISIBLE);
+		imgExpand.setVisibility(View.VISIBLE);
+		for(int i = 1; i < rltExpandBar.getChildCount(); i++){
+			rltExpandBar.getChildAt(i).setVisibility(View.VISIBLE);
+		}
+		rltPart1.getLayoutParams().height = MAX_ROW * WeeklyPageFragment.CELL_HEIGHT_PIXEL;
+		rltPart1.requestLayout();
 	}
 
 	private void gotoTodoListTodayFragment(Calendar c2){
@@ -403,9 +406,9 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 		if(textColor != 0){
 			textView.setTextColor(textColor);
 		}
-		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(maxWidth, LinearLayout.LayoutParams.WRAP_CONTENT);
-		lp.setMargins(leftMargin, topMargin, 0, 0);
-		textView.setLayoutParams(lp);
+		RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(maxWidth, RelativeLayout.LayoutParams.WRAP_CONTENT);
+		rlp.setMargins(leftMargin, topMargin, 0, 0);
+		textView.setLayoutParams(rlp);
 		textView.setText(text);
 		return textView;
 	}
@@ -639,12 +642,6 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 					for(int i = 1; i < rltExpandBar.getChildCount(); i++){
 						rltExpandBar.getChildAt(i).setVisibility(View.VISIBLE);
 					}
-
-					// moveLnrExpand(MAX_ROW * CELL_HEIGHT_PIXEL + WelfareUtil.dpToPx(10));
-
-					// txtMore.setVisibility(View.GONE);
-					//
-					// txtMore.setVisibility(View.VISIBLE);
 					isExpanded = false;
 					imgExpand.setImageResource(R.drawable.down);
 				}else{
@@ -653,20 +650,11 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 					for(int i = 1; i < rltExpandBar.getChildCount(); i++){
 						rltExpandBar.getChildAt(i).setVisibility(View.GONE);
 					}
-					// moveLnrExpand(maxTopMargin + WelfareUtil.dpToPx(10));
-
-					// txtMore.setVisibility(View.GONE);
 					isExpanded = true;
 				}
 			}
 		});
 	}
-
-	// private void moveLnrExpand(int topMargin){
-	// RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-	// lp.setMargins(0, topMargin, 0, 0);
-	//// rltExpandBar.setLayoutParams(lp);
-	// }
 
 	@Override
 	protected List<Date> getAllDate(){

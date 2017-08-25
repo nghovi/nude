@@ -87,7 +87,7 @@ public class DailyPageFragment extends SchedulesPageFragment{
 			@Override
 			public void onClick(View v){
 				if(isExpanded){
-					collapse(lnrScheduleAllDays, (MAX_ROW - numRow) * WeeklyPageFragment.CELL_HEIGHT_PIXEL - 1);
+					collapse(lnrScheduleAllDays, Math.max(0, (MAX_ROW - numRow) * WeeklyPageFragment.CELL_HEIGHT_PIXEL - 1));
 					txtMore.setVisibility(View.VISIBLE);
 					isExpanded = false;
 					imgExpand.setImageResource(R.drawable.down);
@@ -110,7 +110,7 @@ public class DailyPageFragment extends SchedulesPageFragment{
 
 	public void expand(final View v){
 		v.measure(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-		final int targetHeight = ((LinearLayout)v).getChildCount() * WeeklyPageFragment.CELL_HEIGHT_PIXEL - 1;
+		final int targetHeight = Math.max(0, ((LinearLayout)v).getChildCount() * WeeklyPageFragment.CELL_HEIGHT_PIXEL - 1);
 		v.setVisibility(View.VISIBLE);
 		Animation a = new Animation() {
 
@@ -239,22 +239,19 @@ public class DailyPageFragment extends SchedulesPageFragment{
 		if(moreNumber <= 0){
 			txtMore.setVisibility(View.GONE);
 			imgExpand.setVisibility(View.GONE);
-			lnrScheduleAllDays.getLayoutParams().height = childCount * WeeklyPageFragment.CELL_HEIGHT_PIXEL;
+			lnrScheduleAllDays.getLayoutParams().height = Math.max(0, childCount * WeeklyPageFragment.CELL_HEIGHT_PIXEL - 1);
 			lnrScheduleAllDays.requestLayout();
 		}else{
 			txtMore.setText("+" + moreNumber);
 			if(firstTime){
-				lnrScheduleAllDays.getLayoutParams().height = (MAX_ROW - numRow) * WeeklyPageFragment.CELL_HEIGHT_PIXEL;
-				lnrScheduleAllDays.requestLayout();
-				txtMore.setVisibility(View.VISIBLE);
-				imgExpand.setVisibility(View.VISIBLE);
+				showCollapse();
 			}else if(oldMoreNumber != moreNumber){
 				if(isExpanded){
 					txtMore.setVisibility(View.GONE);
-					lnrScheduleAllDays.getLayoutParams().height = childCount * WeeklyPageFragment.CELL_HEIGHT_PIXEL;
+					lnrScheduleAllDays.getLayoutParams().height = Math.max(0, childCount * WeeklyPageFragment.CELL_HEIGHT_PIXEL - 1);
 					lnrScheduleAllDays.requestLayout();
 				}else{
-					txtMore.setVisibility(View.VISIBLE);
+					showCollapse();
 				}
 			}
 		}
@@ -270,6 +267,13 @@ public class DailyPageFragment extends SchedulesPageFragment{
 		firstTime = false;
 		scrollToFavouritePost();
 
+	}
+
+	private void showCollapse(){
+		lnrScheduleAllDays.getLayoutParams().height = Math.max(0, (MAX_ROW - numRow) * WeeklyPageFragment.CELL_HEIGHT_PIXEL - 1);
+		lnrScheduleAllDays.requestLayout();
+		txtMore.setVisibility(View.VISIBLE);
+		imgExpand.setVisibility(View.VISIBLE);
 	}
 
 	private void scrollToFavouritePost(){
