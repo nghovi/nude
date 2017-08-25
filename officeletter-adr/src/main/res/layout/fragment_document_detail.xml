@@ -6,7 +6,8 @@
         <include layout="@layout/view_common_header_doc_detail"/>
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/wf_login_background_color">
             <com.github.barteksc.pdfviewer.PDFView
                 android:id="@+id/pdf_viewer"
                 android:layout_width="match_parent"
