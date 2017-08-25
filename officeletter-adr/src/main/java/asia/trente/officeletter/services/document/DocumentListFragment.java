@@ -1,5 +1,15 @@
 package asia.trente.officeletter.services.document;
 
+import java.io.IOException;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Locale;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.bluelinelabs.logansquare.LoganSquare;
+
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,16 +18,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.bluelinelabs.logansquare.LoganSquare;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Locale;
 
 import asia.trente.officeletter.R;
 import asia.trente.officeletter.commons.defines.OLConst;
