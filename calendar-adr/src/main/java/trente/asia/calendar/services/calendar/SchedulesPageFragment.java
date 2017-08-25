@@ -36,6 +36,7 @@ import trente.asia.calendar.services.calendar.listener.DailyScheduleClickListene
 import trente.asia.calendar.services.calendar.model.CalendarModel;
 import trente.asia.calendar.services.calendar.model.CategoryModel;
 import trente.asia.calendar.services.calendar.model.HolidayModel;
+import trente.asia.calendar.services.calendar.model.RoomModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.model.WorkOffer;
 import trente.asia.calendar.services.calendar.view.WeeklyScheduleListAdapter;
@@ -79,6 +80,7 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 
 	protected static final int		MAX_ROW				= 2;
 	protected Date					today;
+	private List<RoomModel>			rooms;
 
 	abstract protected List<Date> getAllDate();
 
@@ -142,7 +144,7 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 		}else{
 			targetUserList = "-1";
 			searchText = prefAccUtil.get(ClConst.PREF_ACTIVE_ROOM);
-			if(CCStringUtil.isEmpty(targetUserList)){
+			if(CCStringUtil.isEmpty(searchText)){
 				searchText = "-1";
 			}
 		}
@@ -200,6 +202,8 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 			lstWorkOffer = LoganSquare.parseList(response.optString("workOfferList"), WorkOffer.class);
 			lstBirthdayUser = LoganSquare.parseList(response.optString("birthdayList"), UserModel.class);
 			lstCalendarUser = LoganSquare.parseList(response.optString("calendarUsers"), UserModel.class);
+			rooms = LoganSquare.parseList(response.optString("rooms"), RoomModel.class);
+
 			todos = LoganSquare.parseList(response.optString("todoList"), Todo.class);
 			if(refreshDialogData && !newScheduleStrings.equals(scheduleStrings)){
 				isChangedData = true;
@@ -209,12 +213,11 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 
 			lstSchedule = filterByPublicity();
 
-
-            // make daily summary dialog
-            if(dialogDailySummary == null){
-                dialogDailySummary = new DailySummaryDialog(activity, this, this, dates);
-                dialogDailySummary.setData(lstSchedule, lstBirthdayUser, lstHoliday, lstWorkOffer);
-            }
+			// make daily summary dialog
+			if(dialogDailySummary == null){
+				dialogDailySummary = new DailySummaryDialog(activity, this, this, dates);
+				dialogDailySummary.setData(lstSchedule, lstBirthdayUser, lstHoliday, lstWorkOffer);
+			}
 
 			if(refreshDialogData && isChangedData){
 				//// TODO: 4/27/2017 more check change data
@@ -281,14 +284,30 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 
 	protected List<ScheduleModel> multiplyWithUsers(List<ScheduleModel> origins){
 		List<ScheduleModel> result = new ArrayList<>();
-		for(ScheduleModel scheduleModel : origins){
-			if(!CCCollectionUtil.isEmpty(scheduleModel.scheduleJoinUsers)){
-				for(UserModel userModel : scheduleModel.scheduleJoinUsers){
-					ScheduleModel cloned = ScheduleModel.clone(scheduleModel, userModel);
-					result.add(cloned);
+		String filterType = prefAccUtil.get(ClConst.PREF_FILTER_TYPE);
+		if(filterType.equals(ClConst.PREF_FILTER_TYPE_USER)){
+			String targetUserList = prefAccUtil.get(ClConst.PREF_ACTIVE_USER_LIST);
+			List<String> targetUserListId = Arrays.asList(targetUserList.split(","));
+			for(ScheduleModel scheduleModel : origins){
+				if(!CCCollectionUtil.isEmpty(scheduleModel.scheduleJoinUsers)){
+					for(UserModel userModel : scheduleModel.scheduleJoinUsers){
+						if(targetUserListId.contains(userModel.key)){
+							ScheduleModel cloned = ScheduleModel.clone(scheduleModel, userModel);
+							result.add(cloned);
+						}
+					}
 				}
 			}
+		}else{
+			for(ScheduleModel scheduleModel : origins){
+				RoomModel roomModel = RoomModel.get(rooms, scheduleModel.roomId);
+				if(roomModel != null){
+					scheduleModel.scheduleColor = roomModel.color;
+				}
+				result.add(scheduleModel);
+			}
 		}
+
 		return result;
 	}
 

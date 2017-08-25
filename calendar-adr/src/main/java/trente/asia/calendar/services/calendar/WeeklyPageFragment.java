@@ -140,30 +140,33 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 	@Override
 	protected void updateSchedules(List<ScheduleModel> schedules, List<CategoryModel> categories){
 		super.updateSchedules(schedules, categories);
-		sortSchedules(schedules);
+		sortSchedules(schedules, dates.get(0), dates.get(dates.size() - 1), true);
 		schedules = multiplyWithUsers(schedules);
 		buildPart1(schedules);
 		buildPart2(schedules);
 	}
 
-	private void sortSchedules(List<ScheduleModel> schedules){
-		final Comparator<ScheduleModel> periodComparator = MonthlyCalendarRowView.getPeriodScheduleComparator(dates.get(0), dates.get(dates.size() - 1));
-		final Comparator<ScheduleModel> normalComparator = MonthlyPageFragment.getScheduleComparator();
-		Collections.sort(schedules, new Comparator<ScheduleModel>() {
+	public static void sortSchedules(List<ScheduleModel> schedules, Date dateStart, Date dateEnd, boolean checkAllDayTime){
+		final Comparator<ScheduleModel> normalComparator = MonthlyPageFragment.getScheduleComparator(checkAllDayTime);
+		if(!checkAllDayTime){
+			Collections.sort(schedules, normalComparator);
+		}else{
+			final Comparator<ScheduleModel> periodComparator = MonthlyCalendarRowView.getPeriodScheduleComparator(dateStart, dateEnd);
+			Collections.sort(schedules, new Comparator<ScheduleModel>() {
 
-			@Override
-			public int compare(ScheduleModel o1, ScheduleModel o2){
-				if(o1.isPeriodSchedule() && !o2.isPeriodSchedule()){
-					return -1;
-				}else if(!o1.isPeriodSchedule() && o2.isPeriodSchedule()){
-					return 1;
-				}else if(o1.isPeriodSchedule() && o2.isPeriodSchedule()){
-					return periodComparator.compare(o1, o2);
+				@Override
+				public int compare(ScheduleModel o1, ScheduleModel o2){
+					if(o1.isPeriodSchedule() && !o2.isPeriodSchedule()){
+						return -1;
+					}else if(!o1.isPeriodSchedule() && o2.isPeriodSchedule()){
+						return 1;
+					}else if(o1.isPeriodSchedule() && o2.isPeriodSchedule()){
+						return periodComparator.compare(o1, o2);
+					}
+					return normalComparator.compare(o1, o2);
 				}
-				return normalComparator.compare(o1, o2);
-			}
-		});
-
+			});
+		}
 	}
 
 	private void buildPart1(List<ScheduleModel> schedules){

@@ -1,5 +1,7 @@
 package trente.asia.calendar.commons.dialogs;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -9,6 +11,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import trente.asia.calendar.R;
+import trente.asia.calendar.services.calendar.WeeklyPageFragment;
 import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.model.WorkOffer;
@@ -63,6 +66,16 @@ public class DailySummaryDialog extends CLOutboundDismissDialog{
 		this.lstBirthdayUser = lstBirthdayUser;
 		this.lstHoliday = lstHoliday;
 		this.lstWorkOffer = lstWorkOffer;
+
+		WeeklyPageFragment.sortSchedules(lstSchedule, dates.get(0), dates.get(dates.size() - 1), false);
+		Collections.sort(lstWorkOffer, new Comparator<WorkOffer>() {
+
+			@Override
+			public int compare(WorkOffer o1, WorkOffer o2){
+				return o1.offerTypeName.compareTo(o2.offerTypeName);
+			}
+		});
+
 		mPagerAdapter = new DailySummaryDialogPagerAdapter(this, mContext, dates);
 		mPagerAdapter.setData(this.lstSchedule, this.lstBirthdayUser, this.lstHoliday, this.lstWorkOffer, this.onAddBtnClickedListener, this.listener, this);
 		mViewPager.setAdapter(mPagerAdapter);

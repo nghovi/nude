@@ -1,5 +1,7 @@
 package trente.asia.calendar.services.calendar.model;
 
+import java.util.List;
+
 /**
  * Created by hviet on 7/26/17.
  */
@@ -13,4 +15,12 @@ public class RoomModel{
 	public String	color		= "#FFFFFF";
 	public String	textColor	= "#000000";
 
+	public static RoomModel get(List<RoomModel> rooms, String roomId){
+		for(RoomModel roomModel : rooms){
+			if(roomModel.key.equals(roomId)){
+				return roomModel;
+			}
+		}
+		return null;
+	}
 }

@@ -271,28 +271,33 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 		return R.layout.monthly_calendar_title;
 	}
 
-	public static Comparator<ScheduleModel> getScheduleComparator(){
+	public static Comparator<ScheduleModel> getScheduleComparator(final boolean checkAllDayTime){
 		return new Comparator<ScheduleModel>() {
 
 			@Override
 			public int compare(ScheduleModel schedule1, ScheduleModel schedule2){
-				String startDate1 = WelfareFormatUtil.removeTime4Date(schedule1.startDate);
-				String endDate1 = WelfareFormatUtil.removeTime4Date(schedule1.endDate);
+				if(checkAllDayTime){
+					String startDate1 = WelfareFormatUtil.removeTime4Date(schedule1.startDate);
+					String endDate1 = WelfareFormatUtil.removeTime4Date(schedule1.endDate);
 
-				String startDate2 = WelfareFormatUtil.removeTime4Date(schedule2.startDate);
-				String endDate2 = WelfareFormatUtil.removeTime4Date(schedule2.endDate);
+					String startDate2 = WelfareFormatUtil.removeTime4Date(schedule2.startDate);
+					String endDate2 = WelfareFormatUtil.removeTime4Date(schedule2.endDate);
 
-				boolean diff1 = startDate1.equals(endDate1);
-				boolean diff2 = startDate2.equals(endDate2);
+					boolean diff1 = startDate1.equals(endDate1);
+					boolean diff2 = startDate2.equals(endDate2);
 
-				if(!diff1 && diff2) return -1;
-				if(diff1 && !diff2) return 1;
+					if(!diff1 && diff2) return -1;
+					if(diff1 && !diff2) return 1;
+				}
 
 				boolean isAll1 = CCBooleanUtil.checkBoolean(schedule1.isAllDay);
 				boolean isAll2 = CCBooleanUtil.checkBoolean(schedule2.isAllDay);
 
 				if(isAll1 && !isAll2) return -1;
 				if(!isAll1 && isAll2) return 1;
+				if(isAll1 && isAll2 && !checkAllDayTime){
+					return schedule1.scheduleName.compareTo(schedule2.scheduleName);
+				}
 
 				Integer timeStart1 = CCDateUtil.convertTime2Min(schedule1.startTime);
 				Integer timeStart2 = CCDateUtil.convertTime2Min(schedule2.startTime);
@@ -455,7 +460,7 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 		clearOldData();
 		if(!CCCollectionUtil.isEmpty(lstSchedule)){
 
-			Collections.sort(lstSchedule, getScheduleComparator());
+			Collections.sort(lstSchedule, getScheduleComparator(true));
 
 			for(ScheduleModel model : lstSchedule){
 				Date startDate = WelfareFormatUtil.makeDate(WelfareFormatUtil.removeTime4Date(model.startDate));

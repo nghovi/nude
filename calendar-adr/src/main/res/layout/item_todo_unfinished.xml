@@ -43,6 +43,7 @@
             <RadioButton
                 android:id="@+id/radio"
                 style="@style/ClRadioButton"
+                android:layout_marginLeft="@dimen/margin_10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="false" />

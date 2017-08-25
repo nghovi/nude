@@ -177,13 +177,7 @@ public class DailyPageFragment extends SchedulesPageFragment{
 
 	@Override
 	protected void updateSchedules(List<ScheduleModel> schedules, List<CategoryModel> categories){
-		Collections.sort(schedules, new Comparator<ScheduleModel>() {
-
-			@Override
-			public int compare(ScheduleModel o1, ScheduleModel o2){
-				return o1.scheduleName.compareTo(o2.scheduleName);
-			}
-		});
+		WeeklyPageFragment.sortSchedules(schedules, dates.get(0), dates.get(dates.size() - 1), false);
 		numRow = 0;
 		int oldMoreNumber = moreNumber;
 		super.updateSchedules(schedules, categories);
