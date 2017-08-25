@@ -43,6 +43,8 @@ public class DocumentAdapter extends RecyclerView.Adapter<ViewHolder> {
         binding.docDate.setText(deliveryDate.replace("/", "."));
         if (documentModel.passwordHint == null) {
             binding.imgLock.setVisibility(View.INVISIBLE);
+        } else {
+            binding.imgLock.setVisibility(View.VISIBLE);
         }
         binding.rltDocument.setOnClickListener(new View.OnClickListener() {
             @Override

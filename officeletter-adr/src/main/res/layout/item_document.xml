@@ -16,6 +16,8 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/chiase_black"
                 android:layout_alignParentStart="true"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:textSize="14sp"/>
             <TextView
                 android:id="@+id/doc_date"
