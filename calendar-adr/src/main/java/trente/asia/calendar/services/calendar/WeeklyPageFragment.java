@@ -74,7 +74,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 
 	private float						mDownX;
 	private float						mDownY;
-	private final float					SCROLL_THRESHOLD	= 2;
+	private final float					SCROLL_THRESHOLD	= 5;
 	private boolean						firstTime			= true;
 
 	@Override

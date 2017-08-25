@@ -12,7 +12,7 @@ public class RoomModel{
 	public String	key;
 	public String	roomName;
 	public String	roomNote;
-	public String	color		= "#FFFFFF";
+	public String	color		= "#000000";
 	public String	textColor	= "#000000";
 
 	public static RoomModel get(List<RoomModel> rooms, String roomId){
