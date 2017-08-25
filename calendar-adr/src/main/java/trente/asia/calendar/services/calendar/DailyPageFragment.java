@@ -250,6 +250,7 @@ public class DailyPageFragment extends SchedulesPageFragment{
 					txtMore.setVisibility(View.GONE);
 					lnrScheduleAllDays.getLayoutParams().height = Math.max(0, childCount * WeeklyPageFragment.CELL_HEIGHT_PIXEL - 1);
 					lnrScheduleAllDays.requestLayout();
+					imgExpand.setVisibility(View.VISIBLE);
 				}else{
 					showCollapse();
 				}

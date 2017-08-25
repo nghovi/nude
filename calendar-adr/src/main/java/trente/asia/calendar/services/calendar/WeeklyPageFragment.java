@@ -315,8 +315,9 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 					for(int i = 1; i < rltExpandBar.getChildCount(); i++){
 						rltExpandBar.getChildAt(i).setVisibility(View.GONE);
 					}
-					rltPart1.measure(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
-					rltPart1.getLayoutParams().height = rltPart1.getMeasuredHeight();
+					// rltPart1.measure(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+					// rltPart1.getLayoutParams().height = rltPart1.getMeasuredHeight();
+					rltPart1.getLayoutParams().height = rowNum * WeeklyPageFragment.CELL_HEIGHT_PIXEL;
 					rltPart1.requestLayout();
 				}else{
 					showCollapse();

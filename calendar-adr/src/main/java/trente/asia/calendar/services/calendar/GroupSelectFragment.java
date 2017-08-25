@@ -111,7 +111,7 @@ public class GroupSelectFragment extends AbstractClFragment implements FilterDep
 	}
 
 	@Override
-	public void onSelectDept(List<UserModel> userModels, Object object){
+	public void onSelectDept(List<UserModel> userModels, Object object, boolean isChecked){
 		saveActiveUserList(userModels, object);
 	}
 

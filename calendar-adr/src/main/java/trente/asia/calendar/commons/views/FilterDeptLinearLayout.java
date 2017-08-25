@@ -47,7 +47,7 @@ public class FilterDeptLinearLayout extends LinearLayout{
 
 	public interface OnDeptSelectedListener{
 
-		public void onSelectDept(List<UserModel> userModels, Object object);
+		public void onSelectDept(List<UserModel> userModels, Object object, boolean isChecked);
 	}
 
 	public void search(String s){
@@ -187,13 +187,15 @@ public class FilterDeptLinearLayout extends LinearLayout{
 		View userView = mInflater.inflate(R.layout.adapter_dialog_user_item, null);
 
 		final ViewHolder holder = new ViewHolder(userView);
-		holder.imgAvatar.setVisibility(View.INVISIBLE);
+		holder.imgAvatar.setVisibility(View.GONE);
 		holder.txtName.setText(name);
 
 		if(!CCStringUtil.isEmpty(colorCode) && isSimpleAvatar == false){
 			holder.lnrAvatar.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.wf_background_round_border_white));
 			GradientDrawable bgShape = (GradientDrawable)holder.lnrAvatar.getBackground();
 			bgShape.setColor(Color.parseColor(colorCode));
+		}else if(CCStringUtil.isEmpty(colorCode)){
+			holder.lnrAvatar.setVisibility(View.GONE);
 		}
 
 		if(alreadySelected){
@@ -211,10 +213,11 @@ public class FilterDeptLinearLayout extends LinearLayout{
 				boolean isChecked = holder.lnrItem.isChecked();
 				holder.lnrItem.setChecked(!isChecked);
 				if(onDeptSelectedListenter != null){
-					onDeptSelectedListenter.onSelectDept(userModels, object);
+					onDeptSelectedListenter.onSelectDept(userModels, object, !isChecked);
 				}
 			}
 		});
+
 		holder.lnrItem.setOnCheckedChangeListener(new CsOnCheckedChangeListener() {
 
 			@Override
@@ -234,6 +237,38 @@ public class FilterDeptLinearLayout extends LinearLayout{
 		this.lstCheckable.add(holder.lnrItem);
 		this.names.add(name);
 		this.addView(userView);
+	}
+
+	public void updateChecked(boolean isChecked, List<UserModel> userModels){
+		if(isChecked){
+			for(CheckableLinearLayout checkableLinearLayout : this.lstCheckable){
+				List<UserModel> users = (List<UserModel>)checkableLinearLayout.getTag();
+				boolean match = true;
+				for(UserModel userModel : userModels){
+					if(!UserModel.contain(users, userModel)){
+						match = false;
+						break;
+					}
+				}
+				if(match){
+					checkableLinearLayout.setChecked(true);
+				}
+			}
+		}else{
+			for(CheckableLinearLayout checkableLinearLayout : this.lstCheckable){
+				List<UserModel> users = (List<UserModel>)checkableLinearLayout.getTag();
+				boolean match = false;
+				for(UserModel userModel : userModels){
+					if(UserModel.contain(users, userModel)){
+						match = true;
+						break;
+					}
+				}
+				if(match){
+					checkableLinearLayout.setChecked(false);
+				}
+			}
+		}
 	}
 
 	private void judgeCheckAll(CheckBox checkBox){

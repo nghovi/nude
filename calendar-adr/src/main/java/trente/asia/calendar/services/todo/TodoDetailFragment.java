@@ -166,7 +166,7 @@ public class TodoDetailFragment extends AbstractClFragment{
 
 	private void onClickSaveIcon(){
 		String limitDate = txtDeadline.getText().toString();
-		if(limitDate.equals(getString(R.string.no_deadline))){
+		if(!limitDate.contains("/")){
 			limitDate = null;
 		}
 		JSONObject jsonObject = new JSONObject();

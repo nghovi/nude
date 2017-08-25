@@ -92,8 +92,8 @@ public class GroupFilterFragment extends AbstractClFragment{
 		mLnrFilterDept.setOnDeptSelectedListenter(new FilterDeptLinearLayout.OnDeptSelectedListener() {
 
 			@Override
-			public void onSelectDept(List<UserModel> userModels, Object object){
-
+			public void onSelectDept(List<UserModel> userModels, Object object, boolean isChecked){
+				mLnrFilterDept.updateChecked(isChecked, userModels);
 			}
 		});
 

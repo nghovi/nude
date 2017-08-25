@@ -41,6 +41,7 @@
             android:paddingRight="@dimen/margin_16dp">
 
             <RadioButton
+                style="@style/ClRadioButton"
                 android:id="@+id/item_todo_finished_radio"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
