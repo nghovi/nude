@@ -1,5 +1,7 @@
 package asia.trente.officeletter.services.wiki;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -50,6 +52,7 @@ public class WikiDetailFragment extends AbstractOLFragment {
     @Override
     protected void initView() {
         super.initView();
+        initHeader(R.drawable.wf_back_white, "", null);
         loadWikiDetail();
     }
 
@@ -68,9 +71,22 @@ public class WikiDetailFragment extends AbstractOLFragment {
         if (OLConst.API_OL_WIKI_DETAIL.equals(url)) {
             try {
                 WikiModel wikiModel = LoganSquare.parse(response.optString("wiki"), WikiModel.class);
-                initHeader(R.drawable.wf_back_white, wikiModel.wikiTitle, null);
-                binding.webview.getSettings().setJavaScriptEnabled(true);
-                binding.webview.loadDataWithBaseURL("", wikiModel.wikiContent, "text/html", "UTF-8", "");
+                if (wikiModel == null) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    builder.setMessage(R.string.ol_message_file_not_found);
+                    builder.setPositiveButton(R.string.chiase_common_ok, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    builder.create().show();
+                } else {
+                    initHeader(R.drawable.wf_back_white, wikiModel.wikiTitle, null);
+                    binding.webview.getSettings().setJavaScriptEnabled(true);
+                    binding.webview.loadDataWithBaseURL("", wikiModel.wikiContent, "text/html", "UTF-8", "");
+                }
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
