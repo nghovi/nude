@@ -9,6 +9,8 @@ import android.widget.CompoundButton;
 
 import java.util.List;
 
+import asia.chiase.core.util.CCFormatNumberUtil;
+import asia.chiase.core.util.CCFormatUtil;
 import asia.trente.officeletter.R;
 import asia.trente.officeletter.commons.holder.ViewHolder;
 import asia.trente.officeletter.databinding.ItemGroupSalaryBinding;
@@ -56,7 +58,14 @@ public class ItemValueAdapter extends RecyclerView.Adapter<ViewHolder> {
             binding.lnrGroupValue.setVisibility(View.GONE);
             binding.itemName.setText(itemValue.itemName);
             binding.itemSub.setText(itemValue.itemSub);
-            binding.itemValue.setText(itemValue.value);
+            String value = itemValue.value;
+            if ("NUM".equals(itemValue.itemType)) {
+                value = CCFormatUtil.formatAmount(itemValue.value);
+            }
+            if ("DBL".equals(itemValue.itemType)) {
+                value = CCFormatUtil.formatDouble(Double.parseDouble(itemValue.value));
+            }
+            binding.itemValue.setText(value);
             binding.itemSub.setVisibility(itemValue.showSub ? View.VISIBLE : View.GONE);
         }
     }

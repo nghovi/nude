@@ -202,6 +202,22 @@ public class CCFormatUtil{
 			return formatter.format(data);
 		}catch(Exception ex){
 			new CCException(ex);
+			ex.printStackTrace();
+			return "";
+		}
+	}
+
+	public static String formatDouble(Double data){
+
+		try{
+			if(data == null){
+				return "";
+			}
+
+			DecimalFormat formatter = new DecimalFormat("#,###.##");
+			return formatter.format(data);
+		}catch(Exception ex){
+			ex.printStackTrace();
 			return "";
 		}
 	}
