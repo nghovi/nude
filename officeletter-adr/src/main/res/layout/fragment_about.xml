@@ -24,7 +24,6 @@
         <LinearLayout
             style="@style/cs_common_match"
             android:layout_marginTop="@dimen/margin_16dp"
-            android:layout_weight="1"
             android:orientation="vertical">
 
             <WebView
@@ -32,7 +31,5 @@
                 style="@style/cs_common_match"/>
         </LinearLayout>
     </LinearLayout>
-
-    <include layout="@layout/view_common_footer"/>
 
 </LinearLayout>

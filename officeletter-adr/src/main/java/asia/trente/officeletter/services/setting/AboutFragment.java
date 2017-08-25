@@ -20,7 +20,7 @@ public class AboutFragment extends AbstractOLFragment{
 
 	@Override
 	public int getFooterItemId(){
-		return R.id.lnr_view_common_footer_setting;
+		return 0;
 	}
 
 	@Override
@@ -36,10 +36,6 @@ public class AboutFragment extends AbstractOLFragment{
 
 		WebView webView = (WebView)getView().findViewById(R.id.webview_fragment_about);
 		webView.loadUrl("file:///android_asset/license_info.html");
-
-		if (getFooterItemId() == 0) {
-			getView().findViewById(R.id.footer).setVisibility(View.GONE);
-		}
 	}
 
 }

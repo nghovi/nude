@@ -30,10 +30,7 @@
 
     <TextView
         style="@style/cs_common_wrap"
-        android:layout_marginBottom="@dimen/margin_10dp"
-        android:layout_marginTop="@dimen/margin_32dp"
-        android:paddingLeft="@dimen/margin_16dp"
-        android:paddingRight="@dimen/margin_16dp"
+        android:padding="@dimen/margin_16dp"
         android:text="@string/wf_about_app"
         android:textStyle="bold"/>
 

@@ -48,7 +48,7 @@ public class ContactUsFragment extends AbstractOLFragment implements View.OnClic
 
 	@Override
 	public int getFooterItemId(){
-		return R.id.lnr_view_common_footer_setting;
+		return 0;
 	}
 
 	@Override
@@ -82,10 +82,6 @@ public class ContactUsFragment extends AbstractOLFragment implements View.OnClic
 			}
 		});
 		btnSend.setOnClickListener(this);
-
-		if (getFooterItemId() == 0) {
-			getView().findViewById(R.id.footer).setVisibility(View.GONE);
-		}
 	}
 
 	private void initSpinner(List<String> lstType, List<String> lstServiceName){

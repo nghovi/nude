@@ -63,7 +63,7 @@ public class AccountInfoFragment extends AbstractOLFragment implements AvatarSel
 
 	@Override
 	public int getFooterItemId(){
-		return R.id.lnr_view_common_footer_setting;
+		return 0;
 	}
 
 	@Override
@@ -77,9 +77,6 @@ public class AccountInfoFragment extends AbstractOLFragment implements AvatarSel
 		buildAccountInfo();
 		buildSwitch();
 		mIsOverJellyBean = AndroidUtil.isBuildOver(18);
-		if (getFooterItemId() == 0) {
-			getView().findViewById(R.id.footer).setVisibility(View.GONE);
-		}
 	}
 
 	private void buildAccountInfo(){

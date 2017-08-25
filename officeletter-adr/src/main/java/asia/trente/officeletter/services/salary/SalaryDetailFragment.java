@@ -61,7 +61,7 @@ public class SalaryDetailFragment extends AbstractOLFragment implements View.OnC
 
 	@Override
 	protected int getFooterItemId(){
-		return R.id.lnr_view_common_footer_salary;
+		return 0;
 	}
 
 	@Override
