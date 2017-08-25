@@ -240,13 +240,14 @@ public class FilterDeptLinearLayout extends LinearLayout{
 		this.addView(userView);
 	}
 
-	public void updateChecked(boolean isChecked, List<UserModel> userModels){
+	public void updateChecked(boolean isChecked, List<UserModel> additionalUserModels){
+		List<UserModel> selectingUsers = getSelectingUsers(additionalUserModels);
 		if(isChecked){
 			for(CheckableLinearLayout checkableLinearLayout : this.lstCheckable){
 				List<UserModel> users = (List<UserModel>)checkableLinearLayout.getTag();
 				boolean match = true;
 				for(UserModel userModel : users){
-					if(!UserModel.contain(userModels, userModel)){
+					if(!UserModel.contain(selectingUsers, userModel)){
 						match = false;
 						break;
 					}
@@ -259,7 +260,7 @@ public class FilterDeptLinearLayout extends LinearLayout{
 			// for(CheckableLinearLayout checkableLinearLayout : this.lstCheckable){
 			// List<UserModel> users = (List<UserModel>)checkableLinearLayout.getTag();
 			// boolean match = false;
-			// for(UserModel userModel : userModels){
+			// for(UserModel userModel : selectingUsers){
 			// if(UserModel.contain(users, userModel)){
 			// match = true;
 			// break;
@@ -270,6 +271,22 @@ public class FilterDeptLinearLayout extends LinearLayout{
 			// }
 			// }
 		}
+	}
+
+	private List<UserModel> getSelectingUsers(List<UserModel> additionalUserModels){
+		List<UserModel> results = new ArrayList<>();
+		results.addAll(additionalUserModels);
+		for(CheckableLinearLayout checkableLinearLayout : this.lstCheckable){
+			if(checkableLinearLayout.isChecked()){
+				List<UserModel> users = (List<UserModel>)checkableLinearLayout.getTag();
+				for(UserModel userModel : users){
+					if(!UserModel.contain(results, userModel)){
+						results.add(userModel);
+					}
+				}
+			}
+		}
+		return results;
 	}
 
 	private void judgeCheckAll(CheckBox checkBox){
