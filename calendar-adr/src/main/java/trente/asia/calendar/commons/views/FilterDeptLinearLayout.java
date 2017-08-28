@@ -244,32 +244,36 @@ public class FilterDeptLinearLayout extends LinearLayout{
 		List<UserModel> selectingUsers = getSelectingUsers(additionalUserModels);
 		if(isChecked){
 			for(CheckableLinearLayout checkableLinearLayout : this.lstCheckable){
-				List<UserModel> users = (List<UserModel>)checkableLinearLayout.getTag();
-				boolean match = true;
-				for(UserModel userModel : users){
-					if(!UserModel.contain(selectingUsers, userModel)){
-						match = false;
-						break;
+				if(checkableLinearLayout.isChecked() == false){
+					List<UserModel> users = (List<UserModel>)checkableLinearLayout.getTag();
+					boolean match = true;
+					for(UserModel userModel : users){
+						if(!UserModel.contain(selectingUsers, userModel)){
+							match = false;
+							break;
+						}
 					}
-				}
-				if(match){
-					checkableLinearLayout.setChecked(true);
+					if(match){
+						checkableLinearLayout.setChecked(true);
+					}
 				}
 			}
 		}else{
-			// for(CheckableLinearLayout checkableLinearLayout : this.lstCheckable){
-			// List<UserModel> users = (List<UserModel>)checkableLinearLayout.getTag();
-			// boolean match = false;
-			// for(UserModel userModel : selectingUsers){
-			// if(UserModel.contain(users, userModel)){
-			// match = true;
-			// break;
-			// }
-			// }
-			// if(match){
-			// checkableLinearLayout.setChecked(false);
-			// }
-			// }
+			for(CheckableLinearLayout checkableLinearLayout : this.lstCheckable){
+				if(checkableLinearLayout.isChecked()){
+					List<UserModel> users = (List<UserModel>)checkableLinearLayout.getTag();
+					boolean containUnselectedUser = false;
+					for(UserModel userModel : users){
+						if(UserModel.contain(additionalUserModels, userModel)){
+							containUnselectedUser = true;
+							break;
+						}
+					}
+					if(containUnselectedUser){
+						checkableLinearLayout.setChecked(false);
+					}
+				}
+			}
 		}
 	}
 

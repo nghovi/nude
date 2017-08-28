@@ -2,7 +2,6 @@
     xmlns:swipe="http://schemas.android.com/apk/res-auto"
     android:id="@+id/swipe"
     style="@style/cs_common_match_wrap"
-    android:background="@color/chiase_white"
     swipe:leftEdgeSwipeOffset="0dp"
     swipe:rightEdgeSwipeOffset="0dp">
     android:paddingRight="@dimen/margin_16dp"
@@ -19,7 +18,7 @@
             style="@style/wl_common_text"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="@color/chiase_white"
+            android:background="@color/wf_login_background_color"
             android:gravity="center"
             android:paddingLeft="@dimen/margin_10dp"
             android:paddingRight="@dimen/margin_10dp"
@@ -43,9 +42,9 @@
             <RadioButton
                 android:id="@+id/radio"
                 style="@style/ClRadioButton"
-                android:layout_marginLeft="@dimen/margin_10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_10dp"
                 android:checked="false" />
 
             <TextView
