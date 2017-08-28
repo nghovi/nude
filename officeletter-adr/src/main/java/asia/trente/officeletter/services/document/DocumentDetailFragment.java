@@ -8,7 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bluelinelabs.logansquare.LoganSquare;
+import com.github.barteksc.pdfviewer.util.Util;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
+import java.io.IOException;
 
 import asia.trente.officeletter.R;
 import asia.trente.officeletter.commons.defines.OLConst;
@@ -50,10 +57,43 @@ public class DocumentDetailFragment extends AbstractOLFragment implements View.O
     protected void initView() {
         super.initView();
         initHeader(R.drawable.wf_back_white, documentModel.document.documentTitle, R.drawable.ic_download);
-        getView().findViewById(R.id.img_id_header_right_icon).setOnClickListener(this);
-        getView().findViewById(R.id.img_id_header_information).setOnClickListener(this);
-        OLUtils.downloadFilePrivate(activity, host + documentModel.document.attachment.fileUrl, this);
-        binding.pdfNote.setText(documentModel.document.documentMessage);
+    }
+
+    @Override
+    protected void initData() {
+        super.initData();
+        loadDocumentDetail();
+    }
+
+    private void loadDocumentDetail() {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("key", documentModel.key);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        requestLoad(OLConst.API_OL_DOCUMENT_DETAIL, jsonObject, true);
+    }
+
+    @Override
+    protected void successLoad(JSONObject response, String url) {
+        if (OLConst.API_OL_DOCUMENT_DETAIL.equals(url)) {
+            try {
+                documentModel = LoganSquare.parse(response.optString("document"), DocumentModel.class);
+                if ("DNE".equals(documentModel.deliveryStatus)) {
+                    OLUtils.downloadFilePrivate(activity, host + documentModel.document.attachment.fileUrl, this);
+                    binding.pdfNote.setText(documentModel.document.documentMessage);
+                    getView().findViewById(R.id.img_id_header_right_icon).setOnClickListener(this);
+                    getView().findViewById(R.id.img_id_header_information).setOnClickListener(this);
+                } else {
+                    OLUtils.showAlertDialog(getContext(), R.string.ol_message_file_not_found);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            super.successLoad(response, url);
+        }
     }
 
     @Override

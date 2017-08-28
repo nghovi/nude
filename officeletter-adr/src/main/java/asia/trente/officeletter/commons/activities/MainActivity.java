@@ -28,8 +28,6 @@ public class MainActivity extends WelfareActivity{
             addFragment(new OLLogInFragment());
         }else{
             addFragment(new DocumentListFragment());
-            log("document");
-            log(userModel.key);
         }
     }
 

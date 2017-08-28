@@ -19,6 +19,7 @@ import java.io.IOException;
 import asia.trente.officeletter.R;
 import asia.trente.officeletter.commons.defines.OLConst;
 import asia.trente.officeletter.commons.fragment.AbstractOLFragment;
+import asia.trente.officeletter.commons.utils.OLUtils;
 import asia.trente.officeletter.databinding.FragmentWikiDetailBinding;
 import asia.trente.officeletter.services.wiki.model.WikiModel;
 
@@ -72,15 +73,7 @@ public class WikiDetailFragment extends AbstractOLFragment {
             try {
                 WikiModel wikiModel = LoganSquare.parse(response.optString("wiki"), WikiModel.class);
                 if (wikiModel == null) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                    builder.setMessage(R.string.ol_message_file_not_found);
-                    builder.setPositiveButton(R.string.chiase_common_ok, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    });
-                    builder.create().show();
+                    OLUtils.showAlertDialog(getContext(), R.string.ol_message_file_not_found);
                 } else {
                     initHeader(R.drawable.wf_back_white, wikiModel.wikiTitle, null);
                     binding.webview.getSettings().setJavaScriptEnabled(true);

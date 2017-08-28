@@ -1,7 +1,10 @@
 package asia.trente.officeletter.commons.utils;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Environment;
 import android.util.Log;
 
@@ -20,6 +23,18 @@ import trente.asia.android.view.ChiaseDownloadFileDialog;
  */
 
 public class OLUtils{
+
+	public static void showAlertDialog(Context context, int messageId) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(context);
+		builder.setMessage(messageId);
+		builder.setPositiveButton(R.string.chiase_common_ok, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+			}
+		});
+		builder.create().show();
+	}
 
 	public static String getFilesFolderPath(){
 		File folder = new File(Environment.getExternalStorageDirectory(), OLConst.APP_FOLDER);

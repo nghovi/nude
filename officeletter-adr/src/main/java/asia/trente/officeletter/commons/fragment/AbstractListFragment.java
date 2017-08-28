@@ -3,6 +3,7 @@ package asia.trente.officeletter.commons.fragment;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.databinding.DataBindingUtil;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -11,6 +12,7 @@ import org.json.JSONObject;
 
 import asia.trente.officeletter.R;
 import asia.trente.officeletter.commons.defines.OLConst;
+import asia.trente.officeletter.commons.utils.OLUtils;
 import asia.trente.officeletter.databinding.DialogConfirmPasswordBinding;
 
 /**
@@ -18,6 +20,8 @@ import asia.trente.officeletter.databinding.DialogConfirmPasswordBinding;
  */
 
 public abstract class AbstractListFragment extends AbstractOLFragment {
+    public static final String MSG_PASSWORD_NOT_MATCH_EN = "Password does not match";
+    public static final String MSG_PASSWORD_NOT_MATCH_JP = "パスワードが一致しません";
     public void showConfirmPassDialog(String passwordHint, final String letterType, final int key) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_confirm_password, null);
@@ -64,5 +68,21 @@ public abstract class AbstractListFragment extends AbstractOLFragment {
         }
     }
 
+    @Override
+    protected void commonNotSuccess(JSONObject response) {
+        String msg = response.optString("messages");
+        log(msg);
+        if (msg != null && (msg.contains(MSG_PASSWORD_NOT_MATCH_EN) || msg.contains(MSG_PASSWORD_NOT_MATCH_JP))) {
+            super.commonNotSuccess(response);
+        } else {
+            OLUtils.showAlertDialog(getContext(), R.string.ol_message_file_not_found);
+        }
+
+    }
+
     public void successPassword() {}
+
+    private void log(String msg) {
+        Log.e("AbstractList", msg);
+    }
 }

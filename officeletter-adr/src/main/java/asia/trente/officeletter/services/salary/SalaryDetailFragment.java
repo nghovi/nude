@@ -122,8 +122,6 @@ public class SalaryDetailFragment extends AbstractOLFragment implements View.OnC
 		}
 	}
 
-
-
 	private void log(String msg){
 		Log.e("SalaryDetailFragment", msg);
 	}
