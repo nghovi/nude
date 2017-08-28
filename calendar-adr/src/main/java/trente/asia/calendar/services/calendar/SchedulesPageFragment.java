@@ -15,7 +15,6 @@ import com.bluelinelabs.logansquare.LoganSquare;
 
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -135,13 +134,16 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 		String targetUserList = null;
 		String searchText = null;
 		String filterType = prefAccUtil.get(ClConst.PREF_FILTER_TYPE);
+		String searchType = null;
 		if(filterType.equals(ClConst.PREF_FILTER_TYPE_USER)){
+			searchType = "USER";
 			searchText = "-1";
 			targetUserList = prefAccUtil.get(ClConst.PREF_ACTIVE_USER_LIST);
 			if(CCStringUtil.isEmpty(targetUserList)){
 				targetUserList = "-1";
 			}
 		}else{
+			searchType = "FACI";
 			targetUserList = "-1";
 			searchText = prefAccUtil.get(ClConst.PREF_ACTIVE_ROOM);
 			if(CCStringUtil.isEmpty(searchText)){
@@ -153,10 +155,10 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 		try{
 			jsonObject.put("targetUserList", targetUserList);
 			jsonObject.put("searchText", searchText);
+			jsonObject.put("searchType", searchType);
 			jsonObject.put("startDateString", CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, startDate));
 			jsonObject.put("endDateString", CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, endDate));
 			jsonObject.put("execType", getExecType());
-
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
