@@ -1,0 +1,30 @@
+diff --git a/dailyreport-adr/src/main/java/trente/asia/dailyreport/services/kpi/ActionPlansAddFragment.java b/dailyreport-adr/src/main/java/trente/asia/dailyreport/services/kpi/ActionPlansAddFragment.java
+index b1add98..7d1d6f6 100644
+--- a/dailyreport-adr/src/main/java/trente/asia/dailyreport/services/kpi/ActionPlansAddFragment.java
++++ b/dailyreport-adr/src/main/java/trente/asia/dailyreport/services/kpi/ActionPlansAddFragment.java
+@@ -190,6 +190,11 @@ public class ActionPlansAddFragment extends AbstractDRFragment implements DRCale
+ 
+ 	private void onGetActionsSuccess(JSONObject response){
+ 		groupKpiList = CCJsonUtil.convertToModelList(response.optString("groups"), GroupKpi.class);
++		int selectedGroupPosition = getSelectedGroupPosition();
++		drGroupHeader.buildLayout(groupKpiList, selectedGroupPosition, false);
++		selectedGroup = drGroupHeader.getSelectedGroup();
++		statusMap = buildStatusMap();
++
+ 		if(showStatusOnly){
+ 			imgHeaderRightIcon.setVisibility(View.INVISIBLE);
+ 			lnrActionPlanSection.setVisibility(View.GONE);
+@@ -199,12 +204,8 @@ public class ActionPlansAddFragment extends AbstractDRFragment implements DRCale
+ 			txtNoAction.setVisibility(View.VISIBLE);
+ 			kpiCalendarView = ((CalendarFragment)adapter.getItem(mPager.getCurrentItem())).getKpiCalendarView();
+ 			kpiCalendarView.unselectDay();
+-
++			updateCalendarView(statusMap);
+ 		}else{
+-			int selectedGroupPosition = getSelectedGroupPosition();
+-			drGroupHeader.buildLayout(groupKpiList, selectedGroupPosition, false);
+-			selectedGroup = drGroupHeader.getSelectedGroup();
+-			statusMap = buildStatusMap();
+ 			updateCalendarView(statusMap);
+ 			if(CCCollectionUtil.isEmpty(groupKpiList)){
+ 				imgHeaderRightIcon.setVisibility(View.INVISIBLE);

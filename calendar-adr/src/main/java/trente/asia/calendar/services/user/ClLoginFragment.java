@@ -50,6 +50,8 @@ public class ClLoginFragment extends LoginFragment{
 				prefAccUtil.set(ClConst.SELECTED_CALENDAR_STRING, response.optString("myCalendar"));
 				myself = LoganSquare.parse(response.optString("myself"), UserModel.class);
 				prefAccUtil.set(ClConst.PREF_ACTIVE_USER_LIST, myself.key);
+				prefAccUtil.set(ClConst.PREF_FILTER_TYPE, ClConst.PREF_FILTER_TYPE_USER);
+				prefAccUtil.set(ClConst.PREF_ACTIVE_ROOM, "0");
 				SettingModel settingModel = LoganSquare.parse(response.optString("setting"), SettingModel.class);
 				prefAccUtil.saveSetting(settingModel);
 				emptyBackStack();

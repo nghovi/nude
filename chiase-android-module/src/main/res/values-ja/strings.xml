@@ -52,7 +52,7 @@
     <string name="chiase_about_app_version">バージョン %1$s</string>
     <string name="chiase_setting_title">設定</string>
     <string name="system_error_msg"> 接続エラー。</string>
-
+    <string name="chiase_common_search">検索</string>
 
 
 </resources>

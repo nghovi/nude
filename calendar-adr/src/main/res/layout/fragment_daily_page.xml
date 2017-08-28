@@ -1,31 +1,102 @@
-<LinearLayout
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/cs_common_match_wrap"
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical">
 
-    <!--<include layout="@layout/view_day_shift_time"/>-->
-    <!--<include layout="@layout/view_horizontal_user_list"/>-->
-    <trente.asia.calendar.commons.views.UserListLinearLayout
-        android:id="@+id/lnr_fragment_pager_container_user_list"
-        style="@style/cs_common_match_wrap"
-        android:background="@color/wf_app_color_base">
-    </trente.asia.calendar.commons.views.UserListLinearLayout>
 
     <LinearLayout
-        android:id="@+id/lnr_calendar_container"
-        style="@style/cs_common_match_wrap"
-        android:background="@color/wf_app_color_base"
-        android:orientation="vertical"/>
-
-    <com.github.ksoichiro.android.observablescrollview.ObservableScrollView
-        android:id="@+id/scr_calendar_day"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:background="@color/cl_cell_bg_color"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <include layout="@layout/view_daily_schedules"/>
+        <LinearLayout
+            android:id="@+id/lnr_calendar_container"
+            style="@style/cs_common_match_wrap"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/margin_16dp"
+            android:paddingRight="@dimen/margin_16dp">
 
-    </com.github.ksoichiro.android.observablescrollview.ObservableScrollView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/ic_icon_expand"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|left"
+                    android:layout_marginBottom="@dimen/margin_10dp"
+                    android:src="@drawable/down"
+                    android:visibility="gone" />
+
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/margin_10dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txt_todo_things"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="@string/two_things_todo"
+                            android:textSize="13sp"
+                            android:visibility="gone" />
+
+                        <ImageView
+                            android:id="@+id/img_birthday_daily_page"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/margin_18dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/cl_icon_birthday"
+                            android:visibility="gone" />
+
+                        <LinearLayout
+                            android:id="@+id/lnr_schedule_all_day_container"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"></LinearLayout>
+
+                        <TextView
+                            android:id="@+id/txt_more_to_come"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="+2"
+                            android:visibility="gone" />
+                    </LinearLayout>
+
+                </ScrollView>
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <View style="@style/cs_common_divider" />
+
+        <ScrollView
+            android:id="@+id/src_fragment_daily_page"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:id="@+id/lnr_fragment_daily_page_schedules_time"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/margin_16dp"
+                android:paddingRight="@dimen/margin_16dp"
+                android:paddingTop="@dimen/margin_10dp"></LinearLayout>
+
+        </ScrollView>
+
+
+    </LinearLayout>
+
 
 </LinearLayout>

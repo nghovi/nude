@@ -73,12 +73,38 @@
     <string name="FM_CL_001">[%1$s] %2$s đã tham gia vào lịch trình : %3$s
     </string>
     <string name="FM_CL_002">[%1$s] %2$s đã sửa lịch trình : %3$s</string>
-    <string name="FM_CL_003">Hôm nay bạn có %1$s lịch trình.</string>
-    <string name="FM_CL_004">Hôm nay bạn có 1 lịch trình.</string>
+    <string name="FM_CL_003">Today’s schedule: %1$s item(s) Today’s To Do: %2$s item(s)</string>
+    <string name="FM_CL_004">Tomorrow’s schedule: %1$s item(s) Tomorrow’s To Do: %2$s item(s)</string>
 
     <string name="cl_schedule_holiday_name">[H]%1$s</string>
     <string name="cl_schedule_birth_day_name">[B]%1$s</string>
     <string name="cl_schedule_offer_name">[O]%1$s</string>
     <string name="my_calendar">Lịch của tôi</string>
     <string name="check_all">Chọn tất cả</string>
+    <string name="cl_footer_todo">Todo</string>
+    <string name="todo_title">To Do</string>
+    <string name="content">Content</string>
+    <string name="sure_to_delete">Are you sure to delete this todo?</string>
+    <string name="show_finished_task">Show finished tasks</string>
+    <string name="deadline">Deadline</string>
+    <string name="hide_unfinished_task">Hide finished tasks</string>
+    <string name="title">Title</string>
+    <string name="note">Note</string>
+    <string name="no_deadline">期限なし</string>
+    <string name="tap_button_to_add">Tap ＋ button to add task</string>
+    <string name="this_month_todo">This month todo</string>
+    <string name="select_from_group">Select from group</string>
+    <string name="select_user">Select user</string>
+    <string name="select_group">Select group</string>
+    <string name="cl_schedule_form_item_scope">公開設定</string>
+    <string name="two_things_todo">%1$s thing(s) To Do</string>
+    <string name="schedule">Schedule</string>
+    <string name="show_today">今日を表示</string>
+    <string name="public_str">Public</string>
+    <string name="private_str">Private</string>
+    <string name="complete_private">Complete private</string>
+    <string name="schedule_mystery">非表示</string>
+    <string name="today_empty_todo">There is no Todo for today</string>
+    <string name="holiday">Holiday</string>
+    <string name="filter">Filter</string>
 </resources>

@@ -1,0 +1,86 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/wf_common_match"
+    android:orientation="vertical">
+
+    <include layout="@layout/view_common_header" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <trente.asia.android.view.ChiaseEditText
+                android:id="@+id/txt_fragment_todo_detail_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:hint="@string/title"
+                android:paddingBottom="@dimen/margin_10dp"
+                android:paddingLeft="@dimen/margin_16dp"
+                android:paddingRight="@dimen/margin_16dp"
+                android:paddingTop="@dimen/margin_10dp" />
+
+            <View style="@style/cs_common_divider" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/lnr_deadline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/margin_10dp"
+                android:paddingLeft="@dimen/margin_16dp"
+                android:paddingRight="@dimen/margin_16dp"
+                android:paddingTop="@dimen/margin_10dp">
+
+                <trente.asia.android.view.ChiaseEditText
+                    android:id="@+id/txt_deadline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:hint="@string/deadline"
+                    android:background="@android:color/transparent"/>
+
+            </LinearLayout>
+
+
+            <View style="@style/cs_common_divider" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <trente.asia.android.view.ChiaseEditText
+                android:id="@+id/txt_fragment_todo_detail_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:gravity="top|left"
+                android:hint="@string/note"
+                android:lines="10"
+                android:paddingBottom="@dimen/margin_10dp"
+                android:paddingLeft="@dimen/margin_16dp"
+                android:paddingRight="@dimen/margin_16dp"
+                android:paddingTop="@dimen/margin_10dp" />
+
+            <View style="@style/cs_common_divider" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

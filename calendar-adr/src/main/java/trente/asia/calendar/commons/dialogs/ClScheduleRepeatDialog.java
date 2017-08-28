@@ -38,6 +38,7 @@ import trente.asia.welfare.adr.utils.WelfareUtil;
  */
 public class ClScheduleRepeatDialog extends CLOutboundDismissDialog{
 
+	private final TextView				txtUntil;
 	private Context						mContext;
 	private TextView					txtRepeat;
 	private Spinner						spnRepeatType;
@@ -55,7 +56,7 @@ public class ClScheduleRepeatDialog extends CLOutboundDismissDialog{
 	private EditText					edtLimitTimes;
 
 	private ScheduleRepeatModel			repeatModel		= new ScheduleRepeatModel();
-	private String						startDate;
+	private String						startDateStr;
 	private List<ChiaseSpinnerModel>	lstRepeatType;
 	private List<ChiaseSpinnerModel>	lstRepeatLimit;
 
@@ -68,14 +69,14 @@ public class ClScheduleRepeatDialog extends CLOutboundDismissDialog{
 		this.onChangeRepeatTypeListener = onChangeRepeatTypeListener;
 	}
 
-	OnChangeRepeatTypeListener	onChangeRepeatTypeListener;
+	OnChangeRepeatTypeListener onChangeRepeatTypeListener;
 
-	public ClScheduleRepeatDialog(Context context, TextView txtRepeat){
+	public ClScheduleRepeatDialog(Context context, TextView txtRepeat, TextView txtUntil){
 		super(context);
 		this.setContentView(R.layout.dialog_common_schedule_repeat);
 		this.mContext = context;
 		this.txtRepeat = txtRepeat;
-
+		this.txtUntil = txtUntil;
 		this.initialization();
 	}
 
@@ -157,11 +158,21 @@ public class ClScheduleRepeatDialog extends CLOutboundDismissDialog{
 			@Override
 			public void onClick(View v){
 
+				boolean isRepeat = swtRepeat.isChecked();
+
 				if(onChangeRepeatTypeListener != null){
-					onChangeRepeatTypeListener.onChange(swtRepeat.isChecked());
+					onChangeRepeatTypeListener.onChange(isRepeat);
+				}
+				txtRepeat.setText(getRepeatValue());
+				if(isRepeat){
+					if(ClConst.SCHEDULE_REPEAT_LIMIT_FOREVER.equals(repeatModel.repeatLimitType) || CCStringUtil.isEmpty(repeatModel.repeatLimitType)){
+						txtUntil.setText(mContext.getString(R.string.cl_schedule_repeat_limit_forever));
+					}else{
+						txtUntil.setText(repeatModel.repeatEnd);
+					}
 				}
 				ClScheduleRepeatDialog.this.dismiss();
-				txtRepeat.setText(getRepeatValue());
+
 			}
 		});
 	}
@@ -181,8 +192,13 @@ public class ClScheduleRepeatDialog extends CLOutboundDismissDialog{
 		}else if(ClConst.SCHEDULE_REPEAT_LIMIT_UNTIL.equals(model.key)){
 			lnrLimitUtil.setVisibility(View.VISIBLE);
 			lnrLimitAfter.setVisibility(View.GONE);
-			// calendarLimit = Calendar.getInstance();
-			txtLimitUtil.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, calendarLimit.getTime()));
+			Calendar cal = Calendar.getInstance();
+			if(!CCStringUtil.isEmpty(startDateStr)){
+				Date start = CCDateUtil.makeDateCustom(startDateStr, WelfareConst.WF_DATE_TIME_DATE);
+				cal.setTime(start);
+			}
+			cal.set(Calendar.DATE, cal.getActualMaximum(Calendar.DATE));
+			txtLimitUtil.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, cal.getTime()));
 		}else{
 			lnrLimitUtil.setVisibility(View.GONE);
 			lnrLimitAfter.setVisibility(View.VISIBLE);
@@ -193,10 +209,10 @@ public class ClScheduleRepeatDialog extends CLOutboundDismissDialog{
 		if(ClRepeatUtil.isRepeat(repeatModel.repeatType) && ClConst.SCHEDULE_REPEAT_TYPE_WEEKLY.equals(repeatModel.repeatType)){
 			lnrRepeatWeeklyDay.initDefaultValue(repeatModel.repeatData);
 		}else{
-			if(!CCStringUtil.isEmpty(startDate)){
-				Calendar startCalendar = CCDateUtil.makeCalendar(WelfareFormatUtil.makeDate(startDate));
+			if(!CCStringUtil.isEmpty(startDateStr)){
+				Calendar startCalendar = CCDateUtil.makeCalendar(WelfareFormatUtil.makeDate(startDateStr));
 				String repeatData = String.valueOf(startCalendar.get(Calendar.DAY_OF_WEEK));
-				lnrRepeatWeeklyDay.setStartDate(startDate);
+				lnrRepeatWeeklyDay.setStartDate(startDateStr);
 				lnrRepeatWeeklyDay.initDefaultValue(repeatData);
 			}
 		}
@@ -236,8 +252,8 @@ public class ClScheduleRepeatDialog extends CLOutboundDismissDialog{
 		return ClRepeatUtil.getRepeatDescription(repeatModel, mContext);
 	}
 
-	public void setStartDate(String startDate){
-		this.startDate = startDate;
+	public void setStartDateStr(String startDateStr){
+		this.startDateStr = startDateStr;
 		// this.initDefaultValue();
 	}
 
