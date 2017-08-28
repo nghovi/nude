@@ -172,15 +172,6 @@ public class FilterDeptLinearLayout extends LinearLayout{
 		return false;
 	}
 
-	public static boolean checkSelectedUser(UserModel userModel, List<UserModel> userModels){
-		for(UserModel user : userModels){
-			if(user.key.equals(userModel.key)){
-				return true;
-			}
-		}
-		return false;
-	}
-
 	// WelfareUtil.containUserInList(this.lstSelectedUser, userModel)
 	private void addItem(String name, final CheckBox cbxAll, boolean alreadySelected, final List<UserModel> userModels, String colorCode, final Object object){
 		LayoutInflater mInflater = (LayoutInflater)this.getContext().getSystemService(Activity.LAYOUT_INFLATER_SERVICE);

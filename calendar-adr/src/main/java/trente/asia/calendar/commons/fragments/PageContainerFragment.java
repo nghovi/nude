@@ -39,6 +39,7 @@ public abstract class PageContainerFragment extends AbstractClFragment{
 	protected final Date				TODAY				= Calendar.getInstance().getTime();
 	protected TextView					txtToday;
 	private UserFacilityView			userFacilityView;
+	private int							pagerScrollingState;
 
 	@Override
 	public void onResume(){
@@ -124,6 +125,7 @@ public abstract class PageContainerFragment extends AbstractClFragment{
 		mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
 			public void onPageScrollStateChanged(int state){
+				pagerScrollingState = state;
 			}
 
 			public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels){
@@ -139,6 +141,10 @@ public abstract class PageContainerFragment extends AbstractClFragment{
 				fragment.loadData();
 			}
 		});
+	}
+
+	public int getScrollingState(){
+		return pagerScrollingState;
 	}
 
 	protected void gotoRoomFilterFragment(){

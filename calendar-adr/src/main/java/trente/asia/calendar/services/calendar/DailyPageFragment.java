@@ -220,6 +220,9 @@ public class DailyPageFragment extends SchedulesPageFragment{
 				startTimeSchedulesMap.get(keyMap).add(scheduleModel);
 			}else{
 				allDaySchedules.add(scheduleModel);
+				if("#000000".equals(scheduleModel.getScheduleColor())){
+					scheduleModel.scheduleColor = "#FFFFFF";
+				}
 				TextView textView = WeeklyPageFragment.makeTextView(activity, scheduleModel.scheduleName, 0, 0, LinearLayout.LayoutParams.MATCH_PARENT, WeeklyPageFragment.getColor(scheduleModel), 0, Gravity.CENTER);
 				lnrScheduleAllDays.addView(textView);
 			}

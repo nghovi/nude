@@ -1,6 +1,7 @@
 package trente.asia.calendar.services.calendar;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import android.os.Bundle;
@@ -43,6 +44,7 @@ public class GroupFilterFragment extends AbstractClFragment{
 	private List<MyGroup>			myGroups;
 	private List<UserModel>			users;
 	private List<UserModel>			selectedUsers;
+	private List<UserModel>			nowUserModels;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -93,9 +95,19 @@ public class GroupFilterFragment extends AbstractClFragment{
 
 			@Override
 			public void onSelectDept(List<UserModel> userModels, Object object, boolean isChecked){
+				if(!isChecked){
+					Iterator<UserModel> userModelIterator = nowUserModels.iterator();
+					while(userModelIterator.hasNext()){
+						UserModel userModel = userModelIterator.next();
+						if(UserModel.contain(userModels, userModel)){
+							userModelIterator.remove();
+						}
+					}
+				}
 				mLnrFilterDept.updateChecked(isChecked, userModels);
 			}
 		});
+		nowUserModels = ClUtil.getTargetUserList(users, prefAccUtil.get(ClConst.PREF_ACTIVE_USER_LIST));
 
 	}
 
@@ -108,7 +120,7 @@ public class GroupFilterFragment extends AbstractClFragment{
 					isSelected = false;
 				}else{
 					for(UserModel userModel : deptModel.members){
-						if(!FilterDeptLinearLayout.checkSelectedUser(userModel, selectedUsers)){
+						if(!UserModel.contain(selectedUsers, userModel)){
 							isSelected = false;
 							break;
 						}
@@ -134,7 +146,7 @@ public class GroupFilterFragment extends AbstractClFragment{
 					isSelected = false;
 				}else{
 					for(UserModel userModel : groupModel.listUsers){
-						if(!FilterDeptLinearLayout.checkSelectedUser(userModel, selectedUsers)){
+						if(!UserModel.contain(selectedUsers, userModel)){
 							isSelected = false;
 							break;
 						}
@@ -159,7 +171,7 @@ public class GroupFilterFragment extends AbstractClFragment{
 					isSelected = false;
 				}else{
 					for(UserModel userModel : myGroup.listGroupUser){
-						if(!FilterDeptLinearLayout.checkSelectedUser(userModel, selectedUsers)){
+						if(!UserModel.contain(selectedUsers, userModel)){
 							isSelected = false;
 							break;
 						}
@@ -179,19 +191,21 @@ public class GroupFilterFragment extends AbstractClFragment{
 		for(CheckableLinearLayout checkableLinearLayout : mLnrFilterDept.lstCheckable){
 			checkableLinearLayout.setChecked(isChecked);
 		}
+		if(!isChecked){
+			nowUserModels = new ArrayList<>();
+		}
 	}
 
 	public void saveActiveUserList(){
-		List<UserModel> lstSelectedUser = new ArrayList<>();
+		boolean unCheckAll = true;
 		for(int index = 0; index < mLnrFilterDept.lstCheckable.size(); index++){
 			CheckableLinearLayout checkableLinearLayout = mLnrFilterDept.lstCheckable.get(index);
 			if(checkableLinearLayout.isChecked()){
+				unCheckAll = false;
 				List<UserModel> userModels = (List<UserModel>)checkableLinearLayout.getTag();
 				if(!CCCollectionUtil.isEmpty(userModels)){
 					for(UserModel user : userModels){
-						if(!FilterDeptLinearLayout.checkSelectedUser(user, lstSelectedUser)){
-							lstSelectedUser.add(user);
-						}
+						UserModel.addUserIfNotExist(nowUserModels, user);
 					}
 				}
 			}
@@ -199,7 +213,7 @@ public class GroupFilterFragment extends AbstractClFragment{
 
 		PreferencesAccountUtil prefAccUtil = new PreferencesAccountUtil(activity);
 		prefAccUtil.set(ClConst.PREF_FILTER_TYPE, ClConst.PREF_FILTER_TYPE_USER);
-		prefAccUtil.set(ClConst.PREF_ACTIVE_USER_LIST, ClUtil.convertUserList2String(lstSelectedUser));
+		prefAccUtil.set(ClConst.PREF_ACTIVE_USER_LIST, ClUtil.convertUserList2String(nowUserModels));
 		((ChiaseActivity)activity).isInitData = true;
 		((WelfareActivity)activity).dataMap.put(ClConst.ACTION_SCHEDULE_UPDATE, CCConst.YES);
 		getFragmentManager().popBackStack();

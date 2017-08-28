@@ -115,9 +115,11 @@ public class UserFilterFragment extends AbstractClFragment{
 		List<UserModel> lstSelectedUser = new ArrayList<>();
 		for(int index = 0; index < mLnrFilterUser.lstCheckable.size(); index++){
 			CheckableLinearLayout checkableLinearLayout = mLnrFilterUser.lstCheckable.get(index);
+			UserModel userModel = users.get(index);
 			if(checkableLinearLayout.isChecked()){
-				UserModel userModel = users.get(index);
 				lstSelectedUser.add(userModel);
+			}else{
+				UserModel.removeUser(lstSelectedUser, userModel);
 			}
 		}
 		return lstSelectedUser;

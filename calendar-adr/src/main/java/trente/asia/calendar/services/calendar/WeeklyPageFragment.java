@@ -17,6 +17,7 @@ import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -42,6 +43,7 @@ import trente.asia.android.activity.ChiaseFragment;
 import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
+import trente.asia.calendar.commons.fragments.PageContainerFragment;
 import trente.asia.calendar.services.calendar.model.CategoryModel;
 import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
@@ -260,6 +262,9 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 				int leftMargin = cellWidth * (1 + dayDistance);
 
 				topMargin = getNextTopMargin(dayDistance, dayDistance + cellNumber - 1);
+				if("#000000".equals(schedule.getScheduleColor())){
+					schedule.scheduleColor = "#FFFFFF";
+				}
 				TextView textView = makeTextView(activity, schedule.scheduleName, leftMargin, topMargin, maxWidth, getColor(schedule), 0, Gravity.CENTER);
 				rltPart1.addView(textView);
 				itemNum++;
@@ -493,7 +498,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 					break;
 				case MotionEvent.ACTION_CANCEL:
 				case MotionEvent.ACTION_UP:
-					if(shouldClick){
+					if(shouldClick && ((PageContainerFragment)getParentFragment()).getScrollingState() != ViewPager.SCROLL_STATE_DRAGGING){
 						float x = event.getAxisValue(MotionEvent.AXIS_X);
 						float y = cellWidth;
 						int column = (int)(x / y);
