@@ -415,7 +415,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 		if(textColor != 0){
 			textView.setTextColor(textColor);
 		}
-		RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(maxWidth, RelativeLayout.LayoutParams.WRAP_CONTENT);
+		RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(maxWidth, CELL_HEIGHT_PIXEL);
 		rlp.setMargins(leftMargin, topMargin, 0, 0);
 		textView.setLayoutParams(rlp);
 		textView.setText(text);

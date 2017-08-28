@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import asia.chiase.core.define.CCConst;
+import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.view.layout.CheckableLinearLayout;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
@@ -42,6 +43,7 @@ public class UserFilterFragment extends AbstractClFragment{
 	private List<GroupModel>		groups;
 	private List<DeptModel>			depts;
 	private List<MyGroup>			myGroups;
+	private EditText				edtSearch;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -63,6 +65,9 @@ public class UserFilterFragment extends AbstractClFragment{
 
 	protected void successLoad(JSONObject response, String url){
 		super.successLoad(response, url);
+		if(!CCStringUtil.isEmpty(edtSearch.getText().toString())){
+			edtSearch.setText("");
+		}
 		try{
 			users = LoganSquare.parseList(response.optString("users"), UserModel.class);
 			groups = LoganSquare.parseList(response.optString("groups"), GroupModel.class);
@@ -82,7 +87,8 @@ public class UserFilterFragment extends AbstractClFragment{
 		getView().findViewById(R.id.img_id_header_right_icon).setOnClickListener(this);
 		getView().findViewById(R.id.lnr_select_group).setOnClickListener(this);
 		mLnrFilterUser = (FilterUserLinearLayout)getView().findViewById(R.id.lnr_id_user);
-		((EditText)getView().findViewById(R.id.edt_filter_search)).addTextChangedListener(new TextWatcher() {
+		edtSearch = (EditText)getView().findViewById(R.id.edt_filter_search);
+		edtSearch.addTextChangedListener(new TextWatcher() {
 
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count, int after){
