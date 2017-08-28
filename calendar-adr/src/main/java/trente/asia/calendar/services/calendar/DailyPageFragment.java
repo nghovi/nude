@@ -87,7 +87,7 @@ public class DailyPageFragment extends SchedulesPageFragment{
 			@Override
 			public void onClick(View v){
 				if(isExpanded){
-					collapse(lnrScheduleAllDays, Math.max(0, (MAX_ROW - numRow - 1) * WeeklyPageFragment.CELL_HEIGHT_PIXEL - 1));
+					collapse(lnrScheduleAllDays, Math.max(0, (MAX_ROW - numRow - 1) * WeeklyPageFragment.CELL_HEIGHT_PIXEL));
 					txtMore.setVisibility(View.VISIBLE);
 					isExpanded = false;
 					imgExpand.setImageResource(R.drawable.down);
@@ -110,7 +110,7 @@ public class DailyPageFragment extends SchedulesPageFragment{
 
 	public void expand(final View v){
 		v.measure(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-		final int targetHeight = Math.max(0, ((LinearLayout)v).getChildCount() * WeeklyPageFragment.CELL_HEIGHT_PIXEL - 1);
+		final int targetHeight = Math.max(0, ((LinearLayout)v).getChildCount() * WeeklyPageFragment.CELL_HEIGHT_PIXEL);
 		v.setVisibility(View.VISIBLE);
 		Animation a = new Animation() {
 
@@ -220,9 +220,6 @@ public class DailyPageFragment extends SchedulesPageFragment{
 				startTimeSchedulesMap.get(keyMap).add(scheduleModel);
 			}else{
 				allDaySchedules.add(scheduleModel);
-				if("#000000".equals(scheduleModel.getScheduleColor())){
-					scheduleModel.scheduleColor = "#FFFFFF";
-				}
 				TextView textView = WeeklyPageFragment.makeTextView(activity, scheduleModel.scheduleName, 0, 0, LinearLayout.LayoutParams.MATCH_PARENT, WeeklyPageFragment.getColor(scheduleModel), 0, Gravity.CENTER);
 				lnrScheduleAllDays.addView(textView);
 			}
@@ -236,7 +233,7 @@ public class DailyPageFragment extends SchedulesPageFragment{
 		if(moreNumber <= 0){
 			txtMore.setVisibility(View.GONE);
 			imgExpand.setVisibility(View.GONE);
-			lnrScheduleAllDays.getLayoutParams().height = Math.max(0, childCount * WeeklyPageFragment.CELL_HEIGHT_PIXEL - 1);
+			lnrScheduleAllDays.getLayoutParams().height = Math.max(0, childCount * WeeklyPageFragment.CELL_HEIGHT_PIXEL);
 			lnrScheduleAllDays.requestLayout();
 		}else{
 			txtMore.setText("+" + (moreNumber + 1));
@@ -245,7 +242,7 @@ public class DailyPageFragment extends SchedulesPageFragment{
 			}else if(oldMoreNumber != moreNumber){
 				if(isExpanded){
 					txtMore.setVisibility(View.GONE);
-					lnrScheduleAllDays.getLayoutParams().height = Math.max(0, childCount * WeeklyPageFragment.CELL_HEIGHT_PIXEL - 1);
+					lnrScheduleAllDays.getLayoutParams().height = Math.max(0, childCount * WeeklyPageFragment.CELL_HEIGHT_PIXEL);
 					lnrScheduleAllDays.requestLayout();
 					imgExpand.setVisibility(View.VISIBLE);
 				}else{
@@ -268,7 +265,7 @@ public class DailyPageFragment extends SchedulesPageFragment{
 	}
 
 	private void showCollapse(){
-		lnrScheduleAllDays.getLayoutParams().height = Math.max(0, (MAX_ROW - numRow - 1) * WeeklyPageFragment.CELL_HEIGHT_PIXEL - 1);
+		lnrScheduleAllDays.getLayoutParams().height = Math.max(0, (MAX_ROW - numRow - 1) * WeeklyPageFragment.CELL_HEIGHT_PIXEL);
 		lnrScheduleAllDays.requestLayout();
 		txtMore.setVisibility(View.VISIBLE);
 		imgExpand.setVisibility(View.VISIBLE);
@@ -291,7 +288,11 @@ public class DailyPageFragment extends SchedulesPageFragment{
 		for(ScheduleModel scheduleModel : scheduleModels){
 			TextView textView = new TextView(activity);
 			textView.setText(scheduleModel.scheduleName);
-			textView.setTextColor(WeeklyPageFragment.getColor(scheduleModel));
+			int color = WeeklyPageFragment.getColor(scheduleModel);
+			if("#FFFFFF".equals(scheduleModel.getScheduleColor())){
+				color = Color.parseColor("#000000");
+			}
+			textView.setTextColor(color);
 			textView.setGravity(Gravity.CENTER_VERTICAL);
 			lnrSchedules.addView(textView);
 		}

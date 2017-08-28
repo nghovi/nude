@@ -262,9 +262,6 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 				int leftMargin = cellWidth * (1 + dayDistance);
 
 				topMargin = getNextTopMargin(dayDistance, dayDistance + cellNumber - 1);
-				if("#000000".equals(schedule.getScheduleColor())){
-					schedule.scheduleColor = "#FFFFFF";
-				}
 				TextView textView = makeTextView(activity, schedule.scheduleName, leftMargin, topMargin, maxWidth, getColor(schedule), 0, Gravity.CENTER);
 				rltPart1.addView(textView);
 				itemNum++;
@@ -466,7 +463,12 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 
 				leftMarginScheduleNumMap.put(leftMargin, leftMarginScheduleNum + 1);
 
-				TextView textView = makeTextView(activity, schedule.scheduleName, leftMargin + 1, topMargin, cellWidth, 0, getColor(schedule), Gravity.LEFT);
+				int color = WeeklyPageFragment.getColor(schedule);
+				if("#FFFFFF".equals(schedule.getScheduleColor())){
+					color = Color.parseColor("#000000");
+				}
+
+				TextView textView = makeTextView(activity, schedule.scheduleName, leftMargin + 1, topMargin, cellWidth, 0, color, Gravity.LEFT);
 				rltSchedules.addView(textView);
 			}
 			lnrPart2.addView(cell);
@@ -569,16 +571,16 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 			txtDayNumber.setTypeface(null, Typeface.BOLD);
 		}
 
-		if(Calendar.SUNDAY == dayOfWeek){
-			txtTitleItem.setTextColor(Color.RED);
-			txtDayNumber.setTextColor(Color.RED);
-		}else if(Calendar.SATURDAY == dayOfWeek){
-			txtTitleItem.setTextColor(Color.BLUE);
-			txtDayNumber.setTextColor(Color.BLUE);
-		}else{
-			txtTitleItem.setTextColor(getNormalDayColor());
-			txtDayNumber.setTextColor(getNormalDayColor());
-		}
+		// if(Calendar.SUNDAY == dayOfWeek){
+		// txtTitleItem.setTextColor(Color.RED);
+		// txtDayNumber.setTextColor(Color.RED);
+		// }else if(Calendar.SATURDAY == dayOfWeek){
+		// txtTitleItem.setTextColor(Color.BLUE);
+		// txtDayNumber.setTextColor(Color.BLUE);
+		// }else{
+		// txtTitleItem.setTextColor(getNormalDayColor());
+		// txtDayNumber.setTextColor(getNormalDayColor());
+		// }
 
 		lnrDay.addView(txtDayNumber);
 		lnrDay.addView(txtTitleItem);
