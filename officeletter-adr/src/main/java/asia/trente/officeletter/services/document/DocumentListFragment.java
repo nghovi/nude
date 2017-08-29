@@ -25,6 +25,8 @@ import asia.trente.officeletter.commons.fragment.AbstractListFragment;
 import asia.trente.officeletter.databinding.FragmentDocumentListBinding;
 import asia.trente.officeletter.services.document.adapter.DocumentAdapter;
 import asia.trente.officeletter.services.document.model.DocumentModel;
+import trente.asia.welfare.adr.define.WelfareConst;
+import trente.asia.welfare.adr.pref.PreferencesSystemUtil;
 
 /**
  * Created by tien on 8/18/2017.
@@ -44,6 +46,7 @@ public class DocumentListFragment extends AbstractListFragment implements Docume
         Calendar calendar = Calendar.getInstance(Locale.getDefault());
         searchStart = calendar.get(Calendar.YEAR) + "/01";
         searchEnd = getString(R.string.chiase_common_none);
+        log(new PreferencesSystemUtil(getContext()).get(WelfareConst.REGISTRATION_ID_PARAM));
     }
 
     @Nullable
