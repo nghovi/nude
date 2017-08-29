@@ -158,12 +158,12 @@ public abstract class WelfareFragment extends ChiaseFragment implements WelfareA
 		}else{
 			loadingDialog.continueShowing = false;
 			dismissLoad();
-			commonNotSuccess(response);
+			commonNotSuccess(response, url);
 		}
 	}
 
 
-    protected void commonNotSuccess(JSONObject response) {
+    protected void commonNotSuccess(JSONObject response, String url) {
         String returnCd = response.optString(CsConst.RETURN_CODE_PARAM);
         if (WfErrorConst.ERR_CODE_INVALID_ACCOUNT.equals(returnCd)) {
 
@@ -223,7 +223,7 @@ public abstract class WelfareFragment extends ChiaseFragment implements WelfareA
 		}else{
 			loadingDialog.continueShowing = false;
 			dismissLoad();
-			commonNotSuccess(response);
+			commonNotSuccess(response, url);
 		}
 	}
 
@@ -253,7 +253,7 @@ public abstract class WelfareFragment extends ChiaseFragment implements WelfareA
 		}else{
 			loadingDialog.continueShowing = false;
 			dismissLoad();
-			commonNotSuccess(response);
+			commonNotSuccess(response, url);
 		}
 	}
 
