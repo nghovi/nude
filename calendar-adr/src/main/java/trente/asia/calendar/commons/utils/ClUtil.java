@@ -62,19 +62,19 @@ public class ClUtil{
 		return lstCalendarDay;
 	}
 
-    public static MonthlyCalendarDayView findView4Day(List<MonthlyCalendarDayView> lstView, Date startDate, Date endDate){
-        if(CCCollectionUtil.isEmpty(lstView)){
-            return null;
-        }
+	public static MonthlyCalendarDayView findView4Day(List<MonthlyCalendarDayView> lstView, Date startDate, Date endDate){
+		if(CCCollectionUtil.isEmpty(lstView)){
+			return null;
+		}
 
-        for(MonthlyCalendarDayView dayView : lstView){
-            Date dateView = WelfareFormatUtil.makeDate(dayView.day);
-            if(belongPeriod(dateView, startDate, endDate)){
-                return dayView;
-            }
-        }
-        return null;
-    }
+		for(MonthlyCalendarDayView dayView : lstView){
+			Date dateView = WelfareFormatUtil.makeDate(dayView.day);
+			if(belongPeriod(dateView, startDate, endDate)){
+				return dayView;
+			}
+		}
+		return null;
+	}
 
 	/**
 	 * date belong min, max period
@@ -94,19 +94,19 @@ public class ClUtil{
 		return false;
 	}
 
-    /**
-     * date belong min, max period
-     */
-    public static boolean belongPeriod(Date date, Date minDate, Date maxDate){
-        if(date == null || minDate == null || maxDate == null){
-            return false;
-        }
+	/**
+	 * date belong min, max period
+	 */
+	public static boolean belongPeriod(Date date, Date minDate, Date maxDate){
+		if(date == null || minDate == null || maxDate == null){
+			return false;
+		}
 
-        if(date.compareTo(minDate) >= 0 && date.compareTo(maxDate) <= 0){
-            return true;
-        }
-        return false;
-    }
+		if(CCDateUtil.compareDate(date, minDate, false) >= 0 && CCDateUtil.compareDate(date, maxDate, false) <= 0){
+			return true;
+		}
+		return false;
+	}
 
 	/**
 	 * convertUserList2String
@@ -161,7 +161,7 @@ public class ClUtil{
 	 * getTargetUserList
 	 */
 	public static List<UserModel> getTargetUserList(List<UserModel> lstUser, String targetUserData){
-        List<UserModel> lstTargetUser = new ArrayList<>();
+		List<UserModel> lstTargetUser = new ArrayList<>();
 		if(CCStringUtil.isEmpty(targetUserData) || CCCollectionUtil.isEmpty(lstUser)){
 			return lstTargetUser;
 		}
@@ -204,16 +204,16 @@ public class ClUtil{
 		return map;
 	}
 
-    /**
-     * <strong>convert category list to Map</strong><br>
-     *
-     * @return
-     */
-    public static Map<String, CategoryModel> convertCategory2Map(List<CategoryModel> lstCategory){
-        Map<String, CategoryModel> categoryMap = new HashMap<>();
-        for(CategoryModel categoryModel : lstCategory){
-            categoryMap.put(categoryModel.key, categoryModel);
-        }
-        return categoryMap;
-    }
+	/**
+	 * <strong>convert category list to Map</strong><br>
+	 *
+	 * @return
+	 */
+	public static Map<String, CategoryModel> convertCategory2Map(List<CategoryModel> lstCategory){
+		Map<String, CategoryModel> categoryMap = new HashMap<>();
+		for(CategoryModel categoryModel : lstCategory){
+			categoryMap.put(categoryModel.key, categoryModel);
+		}
+		return categoryMap;
+	}
 }

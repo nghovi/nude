@@ -107,4 +107,6 @@
     <string name="filter">絞り込み</string>
     <string name="show_current_month">今月を表示</string>
     <string name="select_facility">施設選択</string>
+    <string name="comma">、</string>
+    <string name="day">曜</string>
 </resources>

@@ -174,7 +174,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 	private void buildPart1(List<ScheduleModel> schedules){
 		rltPart1.removeAllViews();
 		final int cellWidth = lnrHeader.getMeasuredWidth() / 8;
-		Calendar c1 = CCDateUtil.makeCalendarWithDateOnly(dates.get(0));
+		Calendar cStartWeek = CCDateUtil.makeCalendarWithDateOnly(dates.get(0));
 		columnTopMarginsMap = new HashMap<>();
 		int oldMaxTopMargin = maxTopMargin;
 		maxTopMargin = 0;
@@ -185,7 +185,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 		for(Todo todo : todos){
 			if(!CCStringUtil.isEmpty(todo.limitDate)){
 				final Calendar c2 = CCDateUtil.makeCalendarWithDateOnly(CCDateUtil.makeDateCustom(todo.limitDate, WelfareConst.WF_DATE_TIME));
-				int dayDistance = c2.get(Calendar.DAY_OF_YEAR) - c1.get(Calendar.DAY_OF_YEAR);
+				int dayDistance = c2.get(Calendar.DAY_OF_YEAR) - cStartWeek.get(Calendar.DAY_OF_YEAR);
 
 				if(!columnTopMarginsMap.keySet().contains(dayDistance)){
 					int leftMargin = cellWidth * (1 + dayDistance);
@@ -210,7 +210,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 			String keyDate = userModel.dateBirth.split(" ")[0];
 			if(!birthdayIconMap.containsKey(keyDate)){
 				Calendar c2 = CCDateUtil.makeCalendarWithDateOnly(CCDateUtil.makeDateCustom(userModel.dateBirth, WelfareConst.WF_DATE_TIME));
-				int dayDistance = c2.get(Calendar.DAY_OF_YEAR) - c1.get(Calendar.DAY_OF_YEAR);
+				int dayDistance = c2.get(Calendar.DAY_OF_YEAR) - cStartWeek.get(Calendar.DAY_OF_YEAR);
 				int leftMargin = cellWidth * (1 + dayDistance) + (cellWidth - CELL_HEIGHT_PIXEL) / 2;
 				topMargin = getNextTopMargin(dayDistance, dayDistance);
 
@@ -228,7 +228,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 		// holiday
 		for(HolidayModel holidayModel : lstHoliday){
 			Calendar c2 = CCDateUtil.makeCalendarWithDateOnly(CCDateUtil.makeDateCustom(holidayModel.startDate, WelfareConst.WF_DATE_TIME));
-			int dayDistance = c2.get(Calendar.DAY_OF_YEAR) - c1.get(Calendar.DAY_OF_YEAR);
+			int dayDistance = c2.get(Calendar.DAY_OF_YEAR) - cStartWeek.get(Calendar.DAY_OF_YEAR);
 			int leftMargin = cellWidth * (1 + dayDistance);
 			topMargin = getNextTopMargin(dayDistance, dayDistance);
 			TextView textView = makeTextView(activity, holidayModel.holidayName, leftMargin, topMargin, cellWidth, Color.WHITE, Color.RED, Gravity.CENTER);
@@ -239,7 +239,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 		// offer
 		for(WorkOffer workOffer : lstWorkOffer){
 			Calendar c2 = CCDateUtil.makeCalendarWithDateOnly(CCDateUtil.makeDateCustom(workOffer.startDate, WelfareConst.WF_DATE_TIME));
-			int dayDistance = c2.get(Calendar.DAY_OF_YEAR) - c1.get(Calendar.DAY_OF_YEAR);
+			int dayDistance = c2.get(Calendar.DAY_OF_YEAR) - cStartWeek.get(Calendar.DAY_OF_YEAR);
 			int leftMargin = cellWidth * (1 + dayDistance);
 			topMargin = getNextTopMargin(dayDistance, dayDistance);
 			TextView textView = makeTextView(activity, workOffer.offerTypeName, leftMargin, topMargin, cellWidth, Color.parseColor(workOffer.userColor), 0, Gravity.CENTER);
@@ -251,13 +251,12 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 		for(ScheduleModel schedule : schedules){
 
 			if(schedule.isAllDay){
-				Calendar cStart = CCDateUtil.makeCalendarWithDateOnly(CCDateUtil.makeDateCustom(schedule.startDate, WelfareConst.WF_DATE_TIME));
-				Calendar cEnd = CCDateUtil.makeCalendarWithDateOnly(CCDateUtil.makeDateCustom(schedule.endDate, WelfareConst.WF_DATE_TIME));
+				Calendar cStart = CCDateUtil.makeCalendarWithDateOnly(schedule.startDateObj);
+				Calendar cEnd = CCDateUtil.makeCalendarWithDateOnly(schedule.endDateObj);
 
-				int dayDistance = cStart.get(Calendar.DAY_OF_YEAR) - c1.get(Calendar.DAY_OF_YEAR);
-				dayDistance = dayDistance < 0 ? 0 : dayDistance;
-				int dayNumber = cEnd.get(Calendar.DAY_OF_YEAR) - cStart.get(Calendar.DAY_OF_YEAR) + 1;
-				int cellNumber = dayNumber > 7 - dayDistance ? 7 - dayDistance : dayNumber;
+				int dayDistance = Math.max(0, cStart.get(Calendar.DAY_OF_YEAR) - cStartWeek.get(Calendar.DAY_OF_YEAR));
+				int dayDistanceEnd = Math.min(7, cEnd.get(Calendar.DAY_OF_YEAR) - cStartWeek.get(Calendar.DAY_OF_YEAR));
+				int cellNumber = dayDistanceEnd - dayDistance + 1;
 				int maxWidth = cellWidth * cellNumber;
 				int leftMargin = cellWidth * (1 + dayDistance);
 
@@ -266,7 +265,6 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 				rltPart1.addView(textView);
 				itemNum++;
 			}
-
 		}
 		int rowNum = maxTopMargin / CELL_HEIGHT_PIXEL;
 		if(rowNum == 0){
@@ -451,7 +449,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 			Map<Integer, Integer> leftMarginScheduleNumMap = new HashMap<>();
 
 			for(final ScheduleModel schedule : startTimeSchedulesMap.get(key)){
-				Calendar c2 = CCDateUtil.makeCalendarWithDateOnly(CCDateUtil.makeDateCustom(schedule.startDate, WelfareConst.WF_DATE_TIME));
+				Calendar c2 = CCDateUtil.makeCalendarWithDateOnly(schedule.startDateObj);
 				int dayDistance = c2.get(Calendar.DAY_OF_YEAR) - c1.get(Calendar.DAY_OF_YEAR);
 				int leftMargin = cellWidth * (1 + dayDistance);
 				int topMargin = 0;
