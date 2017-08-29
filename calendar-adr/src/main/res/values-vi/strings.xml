@@ -107,4 +107,6 @@
     <string name="today_empty_todo">There is no Todo for today</string>
     <string name="holiday">Holiday</string>
     <string name="filter">Filter</string>
+    <string name="show_current_month">今月を表示</string>
+    <string name="select_facility">施設選択</string>
 </resources>

@@ -86,7 +86,7 @@ public class RoomFilterFragment extends AbstractClFragment{
 	@Override
 	public void initView(){
 		super.initView();
-		initHeader(R.drawable.wf_back_white, getString(R.string.select_group), R.drawable.cl_action_save);
+		initHeader(R.drawable.wf_back_white, getString(R.string.select_facility), R.drawable.cl_action_save);
 		getView().findViewById(R.id.img_id_header_right_icon).setOnClickListener(this);
 		mLnrFilterDept = (FilterDeptLinearLayout)getView().findViewById(R.id.lnr_id_filter_dept);
 
