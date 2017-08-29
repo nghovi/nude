@@ -1,6 +1,7 @@
 package trente.asia.calendar.services.calendar.model;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import com.bluelinelabs.logansquare.annotation.JsonObject;
@@ -48,6 +49,8 @@ public class ScheduleModel{
 	public Boolean			isWarning;
 	public UserModel		owner;
 	public String			scheduleColor	= "#FF0000";
+	public Date				startDateObj;
+	public Date				endDateObj;
 
 	public ScheduleModel(){
 
@@ -59,6 +62,7 @@ public class ScheduleModel{
 		this.endDate = holidayModel.endDate;
 		this.isAllDay = true;
 		this.scheduleType = ClConst.SCHEDULE_TYPE_HOLIDAY;
+		this.makeDateObjects();
 	}
 
 	public ScheduleModel(UserModel userModel){
@@ -70,6 +74,7 @@ public class ScheduleModel{
 		this.endDate = this.startDate;
 		this.isAllDay = true;
 		this.scheduleType = ClConst.SCHEDULE_TYPE_BIRTHDAY;
+		this.makeDateObjects();
 	}
 
 	public ScheduleModel(WorkOffer workOffer){
@@ -85,6 +90,7 @@ public class ScheduleModel{
 		// }
 		this.isAllDay = true;
 		this.scheduleType = ClConst.SCHEDULE_TYPE_WORK_OFFER;
+		this.makeDateObjects();
 	}
 
 	public boolean isPeriodSchedule(){
@@ -144,6 +150,13 @@ public class ScheduleModel{
 		cloned.repeatInterval = scheduleModel.repeatInterval;
 		cloned.isWarning = scheduleModel.isWarning;
 		cloned.owner = scheduleModel.owner;
+		cloned.startDateObj = scheduleModel.startDateObj;
+		cloned.endDateObj = scheduleModel.endDateObj;
 		return cloned;
+	}
+
+	public void makeDateObjects(){
+		startDateObj = CCDateUtil.makeDateCustom(startDate, WelfareConst.WF_DATE_TIME);
+		endDateObj = CCDateUtil.makeDateCustom(endDate, WelfareConst.WF_DATE_TIME);
 	}
 }

@@ -18,12 +18,10 @@ import android.widget.TextView;
 import asia.chiase.core.util.CCBooleanUtil;
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
-import asia.chiase.core.util.CCStringUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.utils.ClUtil;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
-import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 import trente.asia.welfare.adr.utils.WelfareUtil;
 
 /**
@@ -94,11 +92,11 @@ public class MonthlyCalendarRowView extends RelativeLayout{
 					return compareOffer(schedule1, schedule2);
 				}
 
-				Date startDate1 = WelfareUtil.makeDate(schedule1.startDate);
-				Date startDate2 = WelfareUtil.makeDate(schedule2.startDate);
+				Date startDate1 = schedule1.startDateObj;
+				Date startDate2 = schedule2.startDateObj;
 
-				Date endDate1 = WelfareUtil.makeDate(schedule1.endDate);
-				Date endDate2 = WelfareUtil.makeDate(schedule2.endDate);
+				Date endDate1 = schedule1.endDateObj;
+				Date endDate2 = schedule2.endDateObj;
 
 				startDate1 = CCDateUtil.compareDate(startDate1, startDate, false) <= 0 ? startDate : startDate1;
 				startDate2 = CCDateUtil.compareDate(startDate2, startDate, false) <= 0 ? startDate : startDate2;
@@ -159,9 +157,9 @@ public class MonthlyCalendarRowView extends RelativeLayout{
 	private void showSchedule(ScheduleModel scheduleModel, int i){
 		double itemWidth = this.getWidth() / 7.0;
 
-		Date startDate = WelfareFormatUtil.makeDate(WelfareFormatUtil.removeTime4Date(scheduleModel.startDate));
-		Date endDate = WelfareFormatUtil.makeDate(WelfareFormatUtil.removeTime4Date(scheduleModel.endDate));
-		List<MonthlyCalendarDayView> lstActiveCalendarDay = ClUtil.findListView4Day(lstCalendarDay, startDate, endDate);
+		// Date startDate = WelfareFormatUtil.makeDate(WelfareFormatUtil.removeTime4Date(scheduleModel.startDate));
+		// Date endDate = WelfareFormatUtil.makeDate(WelfareFormatUtil.removeTime4Date(scheduleModel.endDate));
+		List<MonthlyCalendarDayView> lstActiveCalendarDay = ClUtil.findListView4Day(lstCalendarDay, scheduleModel.startDateObj, scheduleModel.endDateObj);
 		List<MonthlyCalendarDayView> lstPassiveCalendarDay = getPassiveCalendarDays(lstCalendarDay, lstActiveCalendarDay);
 		int marginTop = ClUtil.getMaxInList(lstActiveCalendarDay) + ClConst.TEXT_VIEW_HEIGHT;
 

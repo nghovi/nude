@@ -20,7 +20,6 @@ import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.view.MonthlyCalendarDayView;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
-import trente.asia.welfare.adr.utils.WelfareUtil;
 import trente.asia.welfare.adr.utils.WfDateUtil;
 
 /**
@@ -42,14 +41,14 @@ public class ClRepeatUtil{
 			return lstCalendarDay;
 		}
 
-		Date dateStart = WelfareFormatUtil.makeDate(scheduleModel.startDate);
+		// Date dateStart = WelfareFormatUtil.makeDate(scheduleModel.startDate);
 		switch(CCStringUtil.checkNull(scheduleModel.repeatType)){
 		case ClConst.SCHEDULE_REPEAT_TYPE_WEEKLY:
 			List<String> lstRepeatData = Arrays.asList(scheduleModel.repeatData.split(","));
 			if(ClConst.SCHEDULE_REPEAT_LIMIT_FOREVER.equals(scheduleModel.repeatLimitType)){
 				for(MonthlyCalendarDayView dayView : lstView){
 					Date dateView = WelfareFormatUtil.makeDate(dayView.day);
-					if(WfDateUtil.diffDate(dateView, dateStart) >= 0){
+					if(WfDateUtil.diffDate(dateView, scheduleModel.startDateObj) >= 0){
 						if(lstRepeatData.contains(String.valueOf(CCDateUtil.makeCalendar(dateView).get(Calendar.DAY_OF_WEEK)))){
 							lstCalendarDay.add(dayView);
 						}
@@ -79,9 +78,9 @@ public class ClRepeatUtil{
 			if(ClConst.SCHEDULE_REPEAT_LIMIT_FOREVER.equals(scheduleModel.repeatLimitType)){
 				for(MonthlyCalendarDayView dayView : lstView){
 					Date dateView = WelfareFormatUtil.makeDate(dayView.day);
-					if(WfDateUtil.diffDate(dateView, dateStart) >= 0){
+					if(WfDateUtil.diffDate(dateView, scheduleModel.startDateObj) >= 0){
 						int dayOfMonth = CCDateUtil.makeCalendar(dateView).get(Calendar.DAY_OF_MONTH);
-						int dayOfMonthStart = CCDateUtil.makeCalendar(dateStart).get(Calendar.DAY_OF_MONTH);
+						int dayOfMonthStart = CCDateUtil.makeCalendar(scheduleModel.startDateObj).get(Calendar.DAY_OF_MONTH);
 						if(dayOfMonth == dayOfMonthStart){
 							lstCalendarDay.add(dayView);
 						}
@@ -92,7 +91,7 @@ public class ClRepeatUtil{
 					Date dateView = WelfareFormatUtil.makeDate(dayView.day);
 					if(ClUtil.belongPeriod(dateView, scheduleModel.startDate, scheduleModel.repeatEnd)){
 						int dayOfMonth = CCDateUtil.makeCalendar(dateView).get(Calendar.DAY_OF_MONTH);
-						int dayOfMonthStart = CCDateUtil.makeCalendar(dateStart).get(Calendar.DAY_OF_MONTH);
+						int dayOfMonthStart = CCDateUtil.makeCalendar(scheduleModel.startDateObj).get(Calendar.DAY_OF_MONTH);
 						if(dayOfMonth == dayOfMonthStart){
 							lstCalendarDay.add(dayView);
 						}
@@ -124,8 +123,8 @@ public class ClRepeatUtil{
 		List<String> lstDate = new ArrayList<>();
 		int indexSchedule = 0;
 
-		Date startDate = WelfareUtil.makeDate(scheduleModel.startDate);
-		Calendar startCalendar = CCDateUtil.makeCalendar(startDate);
+		// Date startDate = WelfareUtil.makeDate(scheduleModel.startDate);
+		Calendar startCalendar = CCDateUtil.makeCalendar(scheduleModel.startDateObj);
 		List<String> lstDayOfWeek = Arrays.asList(scheduleModel.repeatData.split(","));
 
 		if(ClConst.SCHEDULE_REPEAT_TYPE_WEEKLY.equals(scheduleModel.repeatType)){
@@ -183,7 +182,7 @@ public class ClRepeatUtil{
 			if(CCStringUtil.isEmpty(repeatModel.repeatData)){
 				builder.append(context.getString(R.string.chiase_common_none));
 			}else{
-				builder.append(context.getString(R.string.cl_schedule_repeat_weekly_message, getRepeatDays4Data(repeatModel.repeatData)));
+				builder.append(context.getString(R.string.cl_schedule_repeat_weekly_message, getRepeatDays4Data(context, repeatModel.repeatData)));
 			}
 		}else if(ClConst.SCHEDULE_REPEAT_TYPE_MONTHLY.equals(repeatModel.repeatType)){
 			builder.append(context.getString(R.string.cl_schedule_repeat_monthly_message));
@@ -204,14 +203,14 @@ public class ClRepeatUtil{
 		return builder.toString();
 	}
 
-	public static String getRepeatDays4Data(String repeatData){
+	public static String getRepeatDays4Data(Context context, String repeatData){
 		StringBuilder builder = new StringBuilder();
 		Calendar calendar = Calendar.getInstance();
 		if(!CCStringUtil.isEmpty(repeatData)){
 			String[] repeatDays = repeatData.split(",");
 			for(String repeatDay : repeatDays){
 				calendar.set(Calendar.DAY_OF_WEEK, Integer.valueOf(repeatDay));
-				builder.append(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_WEEK_DAY, calendar.getTime()) + ", ");
+				builder.append(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_WEEK_DAY_SHORT, calendar.getTime()) + context.getString(R.string.day) + context.getString(R.string.comma) + " ");
 			}
 		}
 		if(builder.length() > 0){

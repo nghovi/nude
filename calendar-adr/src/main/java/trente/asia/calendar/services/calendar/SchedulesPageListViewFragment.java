@@ -112,9 +112,9 @@ public abstract class SchedulesPageListViewFragment extends SchedulesPageFragmen
 		Calendar calendar = Calendar.getInstance();
 
 		for(ScheduleModel scheduleModel : schedules){
-			Date startDate = WelfareUtil.makeDate(scheduleModel.startDate);
+			Date startDate = scheduleModel.startDateObj;
 			if(scheduleModel.isPeriodSchedule()){
-				Date endDate = WelfareUtil.makeDate(scheduleModel.endDate);
+				Date endDate = scheduleModel.endDateObj;
 				Date endDisplayed = dates.get(dates.size() - 1);
 				Date limit = endDate.compareTo(endDisplayed) <= 0 ? endDate : endDisplayed;
 				while(CCDateUtil.compareDate(startDate, limit, false) <= 0){

@@ -63,7 +63,7 @@ public class WelfareFormatUtil{
 	}
 
     /**
-     * make date with server format: yyyy/MM/dd HH:mm:ss
+     * make date with server format: yyyy/MM/dd
      *
      * @param data
      * @return
@@ -79,7 +79,7 @@ public class WelfareFormatUtil{
      * @param date
      * @return
      */
-    public static String formatDate(Date date){
+    public static String 	formatDate(Date date){
         String data = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, date);
         return data;
     }

@@ -314,7 +314,7 @@ public class DailyPageFragment extends SchedulesPageFragment{
 		switch(v.getId()){
 		case R.id.lnr_fragment_daily_page_schedules_time:
 		case R.id.lnr_schedule_all_day_container:
-			onDailyScheduleClickListener(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, selectedDate));
+			onDailyScheduleClickListener(selectedDate);
 			break;
 		default:
 			break;

@@ -50,6 +50,7 @@ public class WelfareConst{
 	public static final String		WF_DATE_TIME_DD					= "dd";
 	public static final String		WF_DATE_TIME_MMMM_YY			= "MMMM, yyyy";
 	public static final String		WF_DATE_TIME_WEEK_DAY			= "EEEE";
+	public static final String		WF_DATE_TIME_WEEK_DAY_SHORT		= "EEE";
 	public static final String		WF_DATE_TIME_CL_FULL			= "EEEE, MMMM dd, yyyy";
 	public static final String		WF_DATE_TIME_CODE				= "yyyyMMdd";
 
