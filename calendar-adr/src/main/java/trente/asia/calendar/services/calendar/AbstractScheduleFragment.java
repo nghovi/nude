@@ -3,7 +3,10 @@ package trente.asia.calendar.services.calendar;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -17,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import asia.chiase.core.util.CCBooleanUtil;
 import asia.chiase.core.util.CCFormatUtil;
@@ -33,6 +37,7 @@ import trente.asia.calendar.commons.utils.ClUtil;
 import trente.asia.calendar.commons.views.UserListLinearLayout;
 import trente.asia.calendar.services.calendar.model.CalendarModel;
 import trente.asia.calendar.services.calendar.model.CategoryModel;
+import trente.asia.calendar.services.calendar.model.RoomModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.models.ApiObjectModel;
@@ -47,25 +52,27 @@ import trente.asia.welfare.adr.utils.WelfareUtil;
  */
 public class AbstractScheduleFragment extends AbstractClFragment{
 
-	protected ScheduleModel				schedule;
-	protected List<CalendarModel>		calendars;
-	protected List<ApiObjectModel>		calendarHolders;
-	protected UserListLinearLayout		lnrUserList;
+	protected ScheduleModel			schedule;
+	protected List<ApiObjectModel>	calendarHolders;
+	protected UserListLinearLayout	lnrUserList;
 
-	protected List<ApiObjectModel>		rooms;
-	protected ChiaseTextView			txtRoom;
-	protected ChiaseTextView			txtStartTime;
-	protected ChiaseTextView			txtEndTime;
-	protected ChiaseTextView			txtStartDate;
-	protected ChiaseTextView			txtEndDate;
-	protected ChiaseTextView			txtCalendar;
-	protected ChiaseTextView			txtRepeat;
+	protected List<RoomModel>		rooms;
+	protected ChiaseTextView		txtRoom;
+	protected ChiaseTextView		txtScope;
+	protected ChiaseTextView		txtStartTime;
+	protected ChiaseTextView		txtEndTime;
+	protected ChiaseTextView		txtStartDate;
+	protected ChiaseTextView		txtEndDate;
+	protected ChiaseTextView		txtRepeat;
 
-	protected List<CategoryModel>		categories;
-	protected ChiaseTextView			txtCategory;
-	protected SwitchCompat				swtAllDay;
-	protected LinearLayout				lnrEndDate;
-	protected ClFilterUserListDialog	filterDialog;
+	protected List<CategoryModel>	categories;
+	protected ChiaseTextView		txtCategory;
+	protected SwitchCompat			swtAllDay;
+	protected LinearLayout			lnrEndDate;
+	// protected ClFilterUserListDialog filterDialog;
+	protected List<UserModel>		users;
+	protected LinearLayout			lnrRepeatUntil;
+	protected TextView				txtRepeatUntil;
 
 	@Override
 	protected void initView(){
@@ -76,7 +83,7 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 		imgRightIcon.setOnClickListener(this);
 
 		txtRoom = (ChiaseTextView)getView().findViewById(R.id.txt_id_meeting_room);
-		txtCalendar = (ChiaseTextView)getView().findViewById(R.id.txt_id_calendar);
+		txtScope = (ChiaseTextView)getView().findViewById(R.id.txt_id_scope);
 		txtCategory = (ChiaseTextView)getView().findViewById(R.id.txt_id_category);
 		lnrUserList = (UserListLinearLayout)getView().findViewById(R.id.lnr_id_container_join_user_list);
 		swtAllDay = (SwitchCompat)getView().findViewById(R.id.swt_id_all_day);
@@ -87,6 +94,9 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 		lnrEndDate = (LinearLayout)getView().findViewById(R.id.lnr_id_end_date);
 		txtStartTime = (ChiaseTextView)getView().findViewById(R.id.txt_id_start_time);
 		txtEndTime = (ChiaseTextView)getView().findViewById(R.id.txt_id_end_time);
+		lnrRepeatUntil = (LinearLayout)getView().findViewById(R.id.lnr_id_repeat_until);
+		txtRepeatUntil = (TextView)getView().findViewById(R.id.txt_repeat_until);
+		lnrUserList.setOnClickListener(this);
 	}
 
 	@Override
@@ -116,17 +126,16 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 	protected void onLoadScheduleDetailSuccess(JSONObject response){
 		try{
 			schedule = LoganSquare.parse(response.optString("schedule"), ScheduleModel.class);
-			rooms = LoganSquare.parseList(response.optString("rooms"), ApiObjectModel.class);
-			calendars = LoganSquare.parseList(response.optString("calendars"), CalendarModel.class);
-			calendarHolders = getCalendarHolders(calendars);
+			rooms = LoganSquare.parseList(response.optString("rooms"), RoomModel.class);
+			users = LoganSquare.parseList(response.optString("users"), UserModel.class);
 			categories = LoganSquare.parseList(response.optString("categories"), CategoryModel.class);
-			if(getView() != null) inflateWithData(txtRoom, txtCalendar, txtCategory, rooms, calendars, categories, schedule);
+			if(getView() != null) inflateWithData(txtRoom, txtCategory, rooms, categories, schedule);
 		}catch(IOException e){
 			e.printStackTrace();
 		}
 	}
 
-	protected void inflateWithData(ChiaseTextView txtRoom, ChiaseTextView txtCalendar, ChiaseTextView txtCategory, List<ApiObjectModel> rooms, List<CalendarModel> calendars, List<CategoryModel> categories, ScheduleModel schedule){
+	protected void inflateWithData(ChiaseTextView txtRoom, ChiaseTextView txtCategory, List<RoomModel> rooms, List<CategoryModel> categories, ScheduleModel schedule){
 
 		try{
 			Gson gson = new Gson();
@@ -135,19 +144,22 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 			e.printStackTrace();
 		}
 
+		Map<String, String> scopes = getPublicityMap();
+
 		if(!CCStringUtil.isEmpty(schedule.key)){
-			txtRoom.setText(WelfareUtil.findApiObject4Id(rooms, schedule.roomId).value);
+			txtRoom.setText(getRoomName(rooms, schedule.roomId));
 			txtRoom.setValue(schedule.roomId);
-			txtCalendar.setText(schedule.calendar.calendarName);
-			txtCalendar.setValue(schedule.calendar.key);
 			swtAllDay.setChecked(CCBooleanUtil.checkBoolean(schedule.isAllDay));
 
 			CategoryModel categoryModel = ClUtil.findCategory4Id(categories, schedule.categoryId);
 			if(categoryModel != null){
 				txtCategory.setText(categoryModel.categoryName);
 				txtCategory.setValue(schedule.categoryId);
-				txtCategory.setTextColor(Color.parseColor(WelfareFormatUtil.formatColor(categoryModel.categoryColor)));
+				// txtCategory.setTextColor(Color.parseColor(WelfareFormatUtil.formatColor(categoryModel.categoryColor)));
 			}
+
+			txtScope.setText(scopes.get(schedule.scheduleType));
+			txtScope.setValue(schedule.scheduleType);
 
 			showJoinUserList();
 
@@ -167,13 +179,13 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 				txtRepeat.setText(getString(R.string.chiase_common_none));
 			}
 		}else{
-			txtCalendar.setText(calendars.get(0).calendarName);
-			txtCalendar.setValue(calendars.get(0).key);
-			txtRoom.setText(rooms.get(0).value);
+			txtRoom.setText(rooms.get(0).roomName);
 			txtRoom.setValue(rooms.get(0).key);
 			txtCategory.setText(categories.get(0).categoryName);
 			txtCategory.setValue(categories.get(0).key);
-			txtCategory.setTextColor(Color.parseColor(WelfareFormatUtil.formatColor(categories.get(0).categoryColor)));
+			// txtCategory.setTextColor(Color.parseColor(WelfareFormatUtil.formatColor(categories.get(0).categoryColor)));
+			txtScope.setValue(ClConst.SCHEDULE_TYPE_PUB);
+			txtScope.setText(scopes.get(ClConst.SCHEDULE_TYPE_PUB));
 		}
 
 		lnrEndDate.setVisibility(View.VISIBLE);
@@ -192,13 +204,22 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 		}
 	}
 
-    protected void showJoinUserList() {
-        if(lnrUserList != null){
-            lnrUserList.show(schedule.scheduleJoinUsers, (int)getResources().getDimension(R.dimen.margin_30dp));
-        }
-    }
+	public static String getRoomName(List<RoomModel> rooms, String roomId){
+		for(RoomModel roomModel : rooms){
+			if(roomModel.key.equals(roomId)){
+				return roomModel.roomName;
+			}
+		}
+		return "";
+	}
 
-    protected List<ApiObjectModel> getCalendarHolders(List<CalendarModel> calendars){
+	protected void showJoinUserList(){
+		if(lnrUserList != null){
+			lnrUserList.show(schedule.scheduleJoinUsers, (int)getResources().getDimension(R.dimen.margin_30dp));
+		}
+	}
+
+	protected List<ApiObjectModel> getCalendarHolders(List<CalendarModel> calendars){
 		List<ApiObjectModel> apiObjectModels = new ArrayList<>();
 		for(CalendarModel calendarModel : calendars){
 			ApiObjectModel apiObjectModel = new ApiObjectModel(calendarModel.key, calendarModel.calendarName);
@@ -223,16 +244,6 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 		return new ArrayList<>();
 	}
 
-	protected void onChangeCalendar(String calendarId){
-		List<UserModel> lstCalendar = new ArrayList<>();
-		lstCalendar.add(myself);
-		lnrUserList.show(lstCalendar, (int)getResources().getDimension(R.dimen.margin_30dp));
-		// List<UserModel> calendarUsers = getAllCalendarUsers(calendars, calendarId);
-		// if(!CCCollectionUtil.isEmpty(calendarUsers)){
-		// lnrUserList.show(calendarUsers, (int)getResources().getDimension(R.dimen.margin_30dp));
-		// }
-	}
-
 	@Override
 	public int getFooterItemId(){
 		return 0;
@@ -247,6 +258,14 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 		default:
 			break;
 		}
+	}
+
+	public Map<String, String> getPublicityMap(){
+		Map<String, String> scopes = new LinkedHashMap<>();
+		scopes.put(ClConst.SCHEDULE_TYPE_PUB, getString(R.string.public_str));
+		scopes.put(ClConst.SCHEDULE_TYPE_PRI, getString(R.string.private_str));
+		scopes.put(ClConst.SCHEDULE_TYPE_PRI_COM, getString(R.string.complete_private));
+		return scopes;
 	}
 
 	@Override

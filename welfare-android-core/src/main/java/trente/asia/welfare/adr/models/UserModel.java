@@ -2,6 +2,7 @@ package trente.asia.welfare.adr.models;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,23 +19,22 @@ import io.realm.annotations.Ignore;
 @com.bluelinelabs.logansquare.annotation.JsonObject(fieldDetectionPolicy = com.bluelinelabs.logansquare.annotation.JsonObject.FieldDetectionPolicy.NONPRIVATE_FIELDS)
 public class UserModel extends BitmapModel implements Serializable{
 
-	public String				key;
-	public String				userName;
-	public String				userAccount;
-	public String				userMail;
-	public String				userNameKana;
+	public String		key;
+	public String		userName;
+	public String		userAccount;
+	public String		userMail;
+	public String		userNameKana;
 
-	public String				adminFlag;
-	public String				loginUserId;
-	public String				avatarPath;
-	public DeptModel			dept;
-	public String				companyId;
-	public String				pathProfile;
-	public String				token;
-	public String				language	= "en";
-	public String				timezone	= "Asia/Ho_Chi_Minh";
-	public String				dateBirth;
-	public Map<String, String>	userInfoMap	= new LinkedHashMap<String, String>();
+	public String		adminFlag;
+	public String		loginUserId;
+	public String		avatarPath;
+	public DeptModel	dept;
+	public String		companyId;
+	public String		pathProfile;
+	public String		token;
+	public String		language	= "en";
+	public String		dateBirth;
+	public String		color		= "#FF0000";
 
 	public UserModel(){
 
@@ -167,5 +167,21 @@ public class UserModel extends BitmapModel implements Serializable{
 			}
 		}
 		return false;
+	}
+
+	public static void removeUser(List<UserModel> userModels, UserModel deletedUser){
+		Iterator<UserModel> iu = userModels.iterator();
+		while(iu.hasNext()){
+			UserModel userModel = iu.next();
+			if(userModel.key.equals(deletedUser.key)){
+				iu.remove();
+			}
+		}
+	}
+
+	public static void addUserIfNotExist(List<UserModel> userModels, UserModel additionalUser){
+		if(!UserModel.contain(userModels, additionalUser)){
+			userModels.add(additionalUser);
+		}
 	}
 }

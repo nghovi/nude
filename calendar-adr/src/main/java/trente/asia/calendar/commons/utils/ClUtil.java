@@ -16,6 +16,7 @@ import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.services.calendar.model.CategoryModel;
+import trente.asia.calendar.services.calendar.model.RoomModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.view.MonthlyCalendarDayView;
 import trente.asia.welfare.adr.models.UserModel;
@@ -115,6 +116,16 @@ public class ClUtil{
 		if(!CCCollectionUtil.isEmpty(lstUser)){
 			for(UserModel userModel : lstUser){
 				builder.append(userModel.key + ",");
+			}
+		}
+		return builder.toString();
+	}
+
+	public static String convertRoomList2String(List<RoomModel> rooms){
+		StringBuilder builder = new StringBuilder();
+		if(!CCCollectionUtil.isEmpty(rooms)){
+			for(RoomModel roomModel : rooms){
+				builder.append(roomModel.key + ",");
 			}
 		}
 		return builder.toString();

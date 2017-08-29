@@ -21,7 +21,7 @@ public class DailySchedulesPagerAdapter extends SchedulesPagerAdapter{
 
 	@Override
 	protected Date choseSelectedDate(int position){
-		return CsDateUtil.addMonth(TODAY, position - initialPosition);
+		return CsDateUtil.addDate(TODAY, position - initialPosition);
 	}
 
 	@Override

@@ -18,7 +18,6 @@ import trente.asia.calendar.commons.fragments.ClPageFragment;
 public abstract class ClFragmentPagerAdapter extends android.support.v4.app.FragmentPagerAdapter{
 
 	protected final Date					TODAY		= Calendar.getInstance().getTime();
-	protected NavigationHeader				navigationHeader;
 	protected PageSharingHolder				pageSharingHolder;
 	protected int							initialPosition;
 
@@ -52,10 +51,6 @@ public abstract class ClFragmentPagerAdapter extends android.support.v4.app.Frag
 	@Override
 	public int getCount(){
 		return Integer.MAX_VALUE;
-	}
-
-	public void setNavigationHeader(NavigationHeader navigationHeader){
-		this.navigationHeader = navigationHeader;
 	}
 
 	public void setPageSharingHolder(PageSharingHolder pageSharingHolder){

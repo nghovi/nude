@@ -1,5 +1,7 @@
 package trente.asia.calendar.commons.dialogs;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -9,7 +11,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import trente.asia.calendar.R;
-import trente.asia.calendar.commons.views.NavigationHeader;
+import trente.asia.calendar.services.calendar.WeeklyPageFragment;
 import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.model.WorkOffer;
@@ -25,7 +27,6 @@ import trente.asia.welfare.adr.models.UserModel;
 public class DailySummaryDialog extends CLOutboundDismissDialog{
 
 	private final Context												mContext;
-	private final NavigationHeader.OnAddBtnClickedListener				onAddBtnClickedListener;
 	private final WeeklyScheduleListAdapter.OnScheduleItemClickListener	listener;
 
 	private final List<Date>											dates;
@@ -37,10 +38,15 @@ public class DailySummaryDialog extends CLOutboundDismissDialog{
 	private List<HolidayModel>											lstHoliday;
 	private List<WorkOffer>												lstWorkOffer;
 
+	private Date														selectedDate;
+	private OnAddBtnClickedListener										onAddBtnClickedListener;
 
-	private Date selectedDate;
+	public interface OnAddBtnClickedListener{
 
-	public DailySummaryDialog(Context context, final WeeklyScheduleListAdapter.OnScheduleItemClickListener listener, final NavigationHeader.OnAddBtnClickedListener onAddBtnClickedListener, List<Date> dates){
+		public void onAddBtnClick(Date selectedDate);
+	}
+
+	public DailySummaryDialog(Context context, final WeeklyScheduleListAdapter.OnScheduleItemClickListener listener, final OnAddBtnClickedListener onAddBtnClickedListener, List<Date> dates){
 		super(context);
 
 		this.setContentView(R.layout.dialog_daily_summary);
@@ -60,10 +66,20 @@ public class DailySummaryDialog extends CLOutboundDismissDialog{
 		this.lstBirthdayUser = lstBirthdayUser;
 		this.lstHoliday = lstHoliday;
 		this.lstWorkOffer = lstWorkOffer;
+
+		WeeklyPageFragment.sortSchedules(lstSchedule, dates.get(0), dates.get(dates.size() - 1), false);
+		Collections.sort(lstWorkOffer, new Comparator<WorkOffer>() {
+
+			@Override
+			public int compare(WorkOffer o1, WorkOffer o2){
+				return o1.offerTypeName.compareTo(o2.offerTypeName);
+			}
+		});
+
 		mPagerAdapter = new DailySummaryDialogPagerAdapter(this, mContext, dates);
 		mPagerAdapter.setData(this.lstSchedule, this.lstBirthdayUser, this.lstHoliday, this.lstWorkOffer, this.onAddBtnClickedListener, this.listener, this);
 		mViewPager.setAdapter(mPagerAdapter);
-		if (selectedDate != null) {
+		if(selectedDate != null){
 			int currentItemPosition = mPagerAdapter.getPositionByDate(selectedDate);
 			mViewPager.setCurrentItem(currentItemPosition, false);
 		}

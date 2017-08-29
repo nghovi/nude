@@ -1,10 +1,14 @@
 package trente.asia.calendar.commons.views;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,20 +37,39 @@ import trente.asia.welfare.adr.utils.WfPicassoHelper;
 public class FilterUserLinearLayout extends LinearLayout{
 
 	private Context						mContext;
-	// private List<UserModel> lstUser;
-	private List<UserModel>				lstSelectedUser;
-
+	public List<UserModel>				lstSelectedUser;
 	public List<CheckableLinearLayout>	lstCheckable;
 	private CheckBox					mCbxAll;
+	public List<UserModel>				lstUser;
+	private boolean						isSimpleAvatar	= false;
+
+	public void search(String s){
+		int i = 0;
+		for(CheckableLinearLayout checkableLinearLayout : lstCheckable){
+			UserModel userModel = lstUser.get(i);
+			if(!userModel.userName.contains(s)){
+				checkableLinearLayout.setVisibility(View.GONE);
+			}else{
+				checkableLinearLayout.setVisibility(View.VISIBLE);
+			}
+			i++;
+		}
+	}
+
+	public void enableSimpleAvatar(boolean enable){
+		isSimpleAvatar = enable;
+	}
 
 	private class ViewHolder{
 
+		public LinearLayout				lnrAvatar;
 		public ImageView				imgAvatar;
 		public TextView					txtUserName;
 		public CheckableLinearLayout	lnrItem;
 		public ImageView				imgCheck;
 
 		public ViewHolder(View view){
+			lnrAvatar = (LinearLayout)view.findViewById(R.id.lnr_avatar_container);
 			imgAvatar = (ImageView)view.findViewById(R.id.img_id_avatar);
 			txtUserName = (TextView)view.findViewById(R.id.txt_id_user_name);
 			lnrItem = (CheckableLinearLayout)view.findViewById(R.id.lnr_id_item);
@@ -66,20 +89,29 @@ public class FilterUserLinearLayout extends LinearLayout{
 		super(context, attrs, defStyle);
 	}
 
-	public void addUserList(List<UserModel> lstUser, List<UserModel> lstSelectedUser, final CheckBox cbxAll){
-		// this.lstUser = lstUser;
+	public void addUserList(List<UserModel> lstUser, final List<UserModel> lstSelectedUser, final CheckBox cbxAll){
+		this.mContext = getContext();
+		this.lstUser = lstUser;
 		this.lstSelectedUser = lstSelectedUser;
 		lstCheckable = new ArrayList<>();
 		this.mCbxAll = cbxAll;
 		this.removeAllViews();
 
 		if(!CCCollectionUtil.isEmpty(lstUser)){
-			for(UserModel userModel : lstUser){
+			for(final UserModel userModel : lstUser){
 				LayoutInflater mInflater = (LayoutInflater)this.getContext().getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 				View userView = mInflater.inflate(R.layout.adapter_dialog_user_item, null);
 
 				final ViewHolder holder = new ViewHolder(userView);
+
 				holder.txtUserName.setText(userModel.userName);
+
+				if(!isSimpleAvatar){
+					holder.lnrAvatar.setBackground(ContextCompat.getDrawable(mContext, R.drawable.wf_background_round_border_white));
+					GradientDrawable bgShape = (GradientDrawable)holder.lnrAvatar.getBackground();
+					bgShape.setColor(Color.parseColor(userModel.color));
+				}
+
 				if(userModel.bitmap != null){
 					holder.imgAvatar.setImageBitmap(userModel.bitmap);
 				}else{
@@ -88,7 +120,7 @@ public class FilterUserLinearLayout extends LinearLayout{
 					}
 				}
 
-				if(WelfareUtil.containUserInList(this.lstSelectedUser, userModel)){
+				if(UserModel.contain(this.lstSelectedUser, userModel)){
 					holder.lnrItem.setChecked(true);
 					holder.imgCheck.setVisibility(View.VISIBLE);
 				}else{
@@ -110,10 +142,14 @@ public class FilterUserLinearLayout extends LinearLayout{
 					public void onCheckedChanged(Checkable view, boolean isChecked){
 						if(isChecked){
 							holder.imgCheck.setVisibility(View.VISIBLE);
+							UserModel.addUserIfNotExist(lstSelectedUser, userModel);
 							judgeCheckAll();
 						}else{
 							holder.imgCheck.setVisibility(View.INVISIBLE);
-							cbxAll.setChecked(false);
+							UserModel.removeUser(lstSelectedUser, userModel);
+							if(mCbxAll != null){
+								mCbxAll.setChecked(false);
+							}
 						}
 					}
 				});
@@ -129,8 +165,17 @@ public class FilterUserLinearLayout extends LinearLayout{
 		for(CheckableLinearLayout checkableLinearLayout : lstCheckable){
 			if(!checkableLinearLayout.isChecked()){
 				isChecked = false;
+				break;
 			}
 		}
-		mCbxAll.setChecked(isChecked);
+		if(mCbxAll != null){
+			final boolean finalIsChecked = isChecked;
+			mCbxAll.post(new Runnable() {
+				@Override
+				public void run() {
+					mCbxAll.setChecked(finalIsChecked);
+				}
+			});
+		}
 	}
 }

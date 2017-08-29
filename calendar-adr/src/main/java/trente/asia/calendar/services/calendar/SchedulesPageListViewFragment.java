@@ -25,7 +25,6 @@ import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.model.WorkOffer;
 import trente.asia.calendar.services.calendar.view.CalendarDayView;
-import trente.asia.calendar.services.calendar.view.DailyScheduleList;
 import trente.asia.calendar.services.calendar.view.WeeklyCalendarHeaderRowView;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.models.UserModel;
@@ -96,7 +95,6 @@ public abstract class SchedulesPageListViewFragment extends SchedulesPageFragmen
 			updateObservableScrollableView();
 			isChangedData = false;
 		}
-		updateHeaderTitles();
 	}
 
 	@Override

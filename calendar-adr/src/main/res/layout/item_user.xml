@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    style="@style/cs_common_match_wrap"
+    android:orientation="horizontal"
+    android:paddingBottom="@dimen/margin_16dp"
+    android:paddingLeft="@dimen/margin_16dp"
+    android:paddingRight="@dimen/margin_16dp"
+    android:paddingTop="@dimen/margin_16dp">
+
+
+    <trente.asia.welfare.adr.view.SelectableRoundedImageView
+        android:id="@+id/img_id_avatar"
+        android:layout_width="@dimen/margin_25dp"
+        android:layout_height="@dimen/margin_25dp"
+        android:layout_marginRight="@dimen/margin_10dp"
+        android:focusable="false"
+        android:scaleType="fitXY"
+        custom:sriv_oval="true" />
+
+    <TextView
+        android:id="@+id/txt_id_user_name"
+        style="@style/wl_common_text"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:focusable="false" />
+
+</LinearLayout>

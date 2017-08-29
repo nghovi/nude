@@ -1,6 +1,8 @@
 package trente.asia.calendar.services.calendar;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 import org.json.JSONObject;
 
@@ -12,10 +14,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import asia.chiase.core.define.CCConst;
+import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
+import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.welfare.adr.activity.WelfareActivity;
+import trente.asia.welfare.adr.models.UserModel;
 
 /**
  * ScheduleDetailFragment
@@ -27,7 +32,6 @@ public class ScheduleDetailFragment extends AbstractScheduleFragment{
 	private TextView	txtScheduleName;
 	private TextView	txtScheduleUrl;
 	private TextView	txtScheduleNote;
-
 	private Date		selectedDate;
 	private TextView	txtJoinUser;
 
@@ -42,8 +46,6 @@ public class ScheduleDetailFragment extends AbstractScheduleFragment{
 				getFragmentManager().popBackStack();
 			}else if(CCConst.YES.equals(isUpdate)){
 				schedule.key = CCStringUtil.toString(((WelfareActivity)activity).dataMap.get(ClConst.ACTION_SCHEDULE_UPDATE_NEW_KEY));
-				// Not clear here in case of user want to back to list screen
-				// ((WelfareActivity)activity).dataMap.clear();
 			}
 		}
 		return mRootView;
@@ -58,6 +60,7 @@ public class ScheduleDetailFragment extends AbstractScheduleFragment{
 		txtScheduleUrl = (TextView)getView().findViewById(R.id.txt_id_schedule_url);
 		txtScheduleNote = (TextView)getView().findViewById(R.id.txt_id_schedule_note);
 		txtJoinUser = (TextView)getView().findViewById(R.id.txt_join_user);
+		getView().findViewById(R.id.lnr_id_join_user_list).setOnClickListener(this);
 	}
 
 	@Override
@@ -68,11 +71,21 @@ public class ScheduleDetailFragment extends AbstractScheduleFragment{
 		}
 	}
 
+	private void gotoUserListFragment(List<UserModel> scheduleJoinUsers){
+		UserListFragment userListFragment = new UserListFragment();
+		userListFragment.setUsers(scheduleJoinUsers);
+		gotoFragment(userListFragment);
+	}
+
 	@Override
 	protected void onLoadScheduleDetailSuccess(JSONObject response){
 		super.onLoadScheduleDetailSuccess(response);
 
 		txtScheduleName.setText(schedule.scheduleName);
+		Map<String, String> scopes = getPublicityMap();
+		if(scopes.containsKey(schedule.scheduleType)){
+			txtScope.setText(scopes.get(schedule.scheduleType));
+		}
 		txtScheduleNote.setText(schedule.scheduleNote);
 		if(!CCStringUtil.isEmpty(schedule.scheduleUrl)){
 			txtScheduleUrl.setText(schedule.scheduleUrl);
@@ -80,11 +93,22 @@ public class ScheduleDetailFragment extends AbstractScheduleFragment{
 		}
 
 		// check user is owner
-		if(myself != null && schedule.owner != null && myself.key.equals(schedule.owner.key)){
-			ImageView imgRightIcon = (ImageView)getView().findViewById(R.id.img_id_header_right_icon);
-			imgRightIcon.setImageResource(R.drawable.cl_action_edit);
-			imgRightIcon.setVisibility(View.VISIBLE);
-			imgRightIcon.setOnClickListener(this);
+		// if(myself != null && schedule.owner != null && myself.key.equals(schedule.owner.key)){
+		ImageView imgRightIcon = (ImageView)getView().findViewById(R.id.img_id_header_right_icon);
+		imgRightIcon.setImageResource(R.drawable.cl_action_edit);
+		imgRightIcon.setVisibility(View.VISIBLE);
+		imgRightIcon.setOnClickListener(this);
+		// }
+
+		if(!ScheduleModel.isRepeat(schedule)){
+			lnrRepeatUntil.setVisibility(View.GONE);
+		}else{
+			lnrRepeatUntil.setVisibility(View.VISIBLE);
+			if(CCStringUtil.isEmpty(schedule.repeatEnd)){
+				txtRepeatUntil.setText(getString(R.string.cl_schedule_repeat_limit_forever));
+			}else{
+				txtRepeatUntil.setText(schedule.repeatEnd.split(" ")[0]);
+			}
 		}
 	}
 
@@ -102,9 +126,10 @@ public class ScheduleDetailFragment extends AbstractScheduleFragment{
 		case R.id.lnr_id_schedule_url:
 			gotoBrowser(schedule.scheduleUrl);
 			break;
-		// case R.id.lnr_id_join_user_list:
-		// filterDialog.show();
-		// break;
+		case R.id.lnr_id_join_user_list:
+		case R.id.lnr_id_container_join_user_list:
+			gotoUserListFragment(schedule.scheduleJoinUsers);
+			break;
 		default:
 			break;
 		}

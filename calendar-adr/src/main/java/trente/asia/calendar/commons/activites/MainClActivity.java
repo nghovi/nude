@@ -6,6 +6,7 @@ import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.calendar.R;
+import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.services.calendar.MonthlyFragment;
 import trente.asia.calendar.services.calendar.ScheduleDetailFragment;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
@@ -24,6 +25,8 @@ public class MainClActivity extends WelfareActivity{
 
 		PreferencesAccountUtil prefAccUtil = new PreferencesAccountUtil(this);
 		UserModel userModel = prefAccUtil.getUserPref();
+		prefAccUtil.set(ClConst.PREF_FILTER_TYPE, ClConst.PREF_FILTER_TYPE_USER);
+		prefAccUtil.set(ClConst.PREF_ACTIVE_ROOM, "0");
 
 		if(!CCStringUtil.isEmpty(userModel.key)){
 			Bundle mExtras = getIntent().getExtras();

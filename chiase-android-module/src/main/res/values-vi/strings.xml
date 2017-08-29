@@ -49,7 +49,7 @@
     <string name="chiase_about_app_version">Phiên bản %1$s</string>
     <string name="chiase_setting_title">Cài đặt</string>
     <string name="system_error_msg">Lỗi kết nối</string>
-
+    <string name="chiase_common_search">Search</string>
 
 
 </resources>

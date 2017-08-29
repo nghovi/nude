@@ -4,23 +4,25 @@ import java.util.Calendar;
 import java.util.Date;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import asia.chiase.core.define.CCConst;
+import asia.chiase.core.util.CCFormatUtil;
 import trente.asia.calendar.R;
+import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.views.ClFragmentPagerAdapter;
-import trente.asia.calendar.commons.views.NavigationHeader;
 import trente.asia.calendar.commons.views.PageSharingHolder;
-import trente.asia.calendar.commons.views.UserListLinearLayout;
-import trente.asia.calendar.services.calendar.CalendarListFragment;
-import trente.asia.calendar.services.calendar.listener.OnChangeCalendarListener;
-import trente.asia.welfare.adr.view.LinearLayoutOnInterceptTouch;
-import trente.asia.welfare.adr.view.WfSlideMenuLayout;
+import trente.asia.calendar.commons.views.UserFacilityView;
+import trente.asia.calendar.services.calendar.RoomFilterFragment;
+import trente.asia.calendar.services.calendar.ScheduleFormFragment;
+import trente.asia.calendar.services.calendar.SchedulesPageFragment;
+import trente.asia.calendar.services.calendar.UserFilterFragment;
+import trente.asia.welfare.adr.activity.WelfareActivity;
+import trente.asia.welfare.adr.define.WelfareConst;
 
 /**
  * PageContainerFragment
@@ -30,30 +32,42 @@ import trente.asia.welfare.adr.view.WfSlideMenuLayout;
 public abstract class PageContainerFragment extends AbstractClFragment{
 
 	protected PageSharingHolder			holder;
-	protected UserListLinearLayout		lnrUserList;
 	protected ViewPager					mViewPager;
-	protected WfSlideMenuLayout			mSlideMenuLayout;
 	protected ClFragmentPagerAdapter	mPagerAdapter;
 
-	protected final int					INITIAL_POSITION			= Integer.MAX_VALUE / 2;
-	protected final Date				TODAY						= Calendar.getInstance().getTime();
+	protected final int					INITIAL_POSITION	= Integer.MAX_VALUE / 2;
+	protected final Date				TODAY				= Calendar.getInstance().getTime();
+	protected TextView					txtToday;
+	private UserFacilityView			userFacilityView;
+	private int							pagerScrollingState;
 
-	protected NavigationHeader			navigationHeader;
-	protected OnChangeCalendarListener	onChangeCalendarListener	= new OnChangeCalendarListener() {
+	@Override
+	public void onResume(){
+		super.onResume();
+		boolean isUpdate = CCConst.YES.equals(((WelfareActivity)activity).dataMap.get(ClConst.ACTION_SCHEDULE_UPDATE));
+		boolean isDelete = CCConst.YES.equals(((WelfareActivity)activity).dataMap.get(ClConst.ACTION_SCHEDULE_DELETE));
+		if(isUpdate || isDelete){
+			((WelfareActivity)activity).dataMap.clear();
+			SchedulesPageFragment fragment = (SchedulesPageFragment)mPagerAdapter.getItem(holder.selectedPagePosition);
+			fragment.loadScheduleList();
+		}
+		if(prefAccUtil != null){
+			String filterType = prefAccUtil.get(ClConst.PREF_FILTER_TYPE);
+			userFacilityView.updateButtonBackground(filterType);
+		}
+	}
 
-																		@Override
-																		public void onChangeCalendarListener(String subTitle, boolean isRefresh){
-																			TextView txtHeaderSubtitle = (TextView)PageContainerFragment.this.getView().findViewById(R.id.txt_id_header_title_sub);
-																			txtHeaderSubtitle.setText(subTitle);
-
-																			if(isRefresh){
-																				holder.isRefreshUserList = true;
-																				ClPageFragment fragment = (ClPageFragment)mPagerAdapter.getItem(holder.selectedPagePosition);
-																				fragment.calendarChangedLoadData();
-																			}
-																		}
-																	};
-	private int							mProgress;
+	@Override
+	public void onClick(View v){
+		switch(v.getId()){
+		case R.id.img_id_done:
+			SchedulesPageFragment schedulesPageFragment = (SchedulesPageFragment)mPagerAdapter.getItem(holder.selectedPagePosition);
+			schedulesPageFragment.loadScheduleList();
+			break;
+		default:
+			break;
+		}
+	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -64,18 +78,38 @@ public abstract class PageContainerFragment extends AbstractClFragment{
 	}
 
 	@Override
+	public void initData(){
+		super.initData();
+	}
+
+	@Override
 	protected void initView(){
 		super.initView();
-		navigationHeader = (NavigationHeader)getView().findViewById(R.id.lnr_navigation_header);
-		lnrUserList = (UserListLinearLayout)activity.findViewById(R.id.lnr_fragment_pager_container_user_list);
-		if(!isShowUserList()){
-			lnrUserList.setVisibility(View.GONE);
-		}
-		mSlideMenuLayout = (WfSlideMenuLayout)getView().findViewById(R.id.drawer_layout);
-		mSlideMenuLayout.setOutsideLayout((LinearLayoutOnInterceptTouch) getView().findViewById(R.id.main_layout));
-		navigationHeader.slideMenu = mSlideMenuLayout;
+		initHeader(null, "", R.drawable.cl_action_add);
+		getView().findViewById(R.id.img_id_header_right_icon).setOnClickListener(new View.OnClickListener() {
 
-		holder = new PageSharingHolder(navigationHeader, lnrUserList, this);
+			@Override
+			public void onClick(View v){
+				gotoScheduleForm();
+			}
+		});
+
+		userFacilityView = (UserFacilityView)getView().findViewById(R.id.user_facility_view);
+		userFacilityView.initChildren(new UserFacilityView.OnTabClickListener() {
+
+			@Override
+			public void onBtnUserClicked(){
+				gotoUserFilterFragment();
+			}
+
+			@Override
+			public void onBtnFacilityClicked(){
+				gotoRoomFilterFragment();
+			}
+		});
+
+		txtToday = (TextView)getView().findViewById(R.id.txt_today);
+		holder = new PageSharingHolder();
 		holder.selectedPagePosition = INITIAL_POSITION;
 
 		mViewPager = (ViewPager)getView().findViewById(R.id.view_id_pager);
@@ -91,6 +125,7 @@ public abstract class PageContainerFragment extends AbstractClFragment{
 		mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
 			public void onPageScrollStateChanged(int state){
+				pagerScrollingState = state;
 			}
 
 			public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels){
@@ -106,12 +141,27 @@ public abstract class PageContainerFragment extends AbstractClFragment{
 				fragment.loadData();
 			}
 		});
+	}
 
-		FragmentManager fragmentManager = getFragmentManager();
-		FragmentTransaction transaction = fragmentManager.beginTransaction();
-		CalendarListFragment calendarListFragment = new CalendarListFragment();
-		calendarListFragment.setOnChangeCalendarListener(onChangeCalendarListener);
-		transaction.replace(R.id.slice_menu_board, calendarListFragment).commit();
+	public int getScrollingState(){
+		return pagerScrollingState;
+	}
+
+	protected void gotoRoomFilterFragment(){
+		RoomFilterFragment roomFilterFragment = new RoomFilterFragment();
+		gotoFragment(roomFilterFragment);
+	}
+
+	protected void gotoUserFilterFragment(){
+		UserFilterFragment userFilterFragment = new UserFilterFragment();
+		gotoFragment(userFilterFragment);
+	}
+
+	private void gotoScheduleForm(){
+		ScheduleFormFragment scheduleFormFragment = new ScheduleFormFragment();
+		Date date = holder.getClickedDate();
+		scheduleFormFragment.setSelectedDate(date);
+		gotoFragment(scheduleFormFragment);
 	}
 
 	protected void setWizardProgress(int progress){
@@ -122,29 +172,18 @@ public abstract class PageContainerFragment extends AbstractClFragment{
 	}
 
 	protected void setActiveDate(int position){
-
+		Date activeDate = getActiveDate(position);
+		String title = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_YYYY_MM, activeDate);
+		updateHeader(title);
 	}
 
-	protected abstract boolean isShowUserList();
+	protected abstract Date getActiveDate(int position);
 
 	protected abstract ClFragmentPagerAdapter initPagerAdapter();
 
 	@Override
-	public void onResume(){
-		super.onResume();
-
-		if(mSlideMenuLayout != null && mSlideMenuLayout.isMenuShown()){
-			mSlideMenuLayout.toggleMenu();
-		}
-	}
-
-	@Override
 	public int getFooterItemId(){
 		return 0;
-	}
-
-	@Override
-	public void onClick(View v){
 	}
 
 	@Override

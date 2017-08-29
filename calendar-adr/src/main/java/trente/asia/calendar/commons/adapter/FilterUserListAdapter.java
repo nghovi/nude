@@ -89,7 +89,7 @@ public class FilterUserListAdapter extends ArrayAdapter<UserModel>{
 			}
 		}
 
-		if(WelfareUtil.containUserInList(this.mLstShowUser, userModel)){
+		if(UserModel.contain(this.mLstShowUser, userModel)){
 			(((ListView)parent)).setItemChecked(position, true);
 			holder.lnrItem.setChecked(true);
 			holder.imgCheck.setVisibility(View.VISIBLE);
@@ -105,10 +105,10 @@ public class FilterUserListAdapter extends ArrayAdapter<UserModel>{
 			public void onCheckedChanged(Checkable view, boolean isChecked){
 				if(isChecked){
 					holder.imgCheck.setVisibility(View.VISIBLE);
-					WelfareUtil.addInList(mLstShowUser, userModel);
+					UserModel.addUserIfNotExist(mLstShowUser, userModel);
 				}else{
 					holder.imgCheck.setVisibility(View.INVISIBLE);
-					WelfareUtil.removeInList(mLstShowUser, userModel);
+					UserModel.removeUser(mLstShowUser, userModel);
 				}
 			}
 		});

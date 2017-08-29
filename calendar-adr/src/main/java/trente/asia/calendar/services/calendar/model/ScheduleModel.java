@@ -30,13 +30,10 @@ public class ScheduleModel{
 	public String			endDate;
 	public String			startTime;
 	public String			endTime;
-
 	public String			key;
 	public String			calendarId;
 	public String			roomId;
 	public String			joinUsers;
-	public CalendarModel	calendar;
-
 	public String			scheduleType;
 	public String			categoryId;
 	public CategoryModel	categoryModel;
@@ -47,8 +44,10 @@ public class ScheduleModel{
 	public String			repeatData;
 	public String			repeatEnd;
 	public String			repeatInterval;
+	public RoomModel		roomModel;
 	public Boolean			isWarning;
 	public UserModel		owner;
+	public String			scheduleColor	= "#FF0000";
 
 	public ScheduleModel(){
 
@@ -77,13 +76,14 @@ public class ScheduleModel{
 		this.scheduleName = workOffer.offerTypeName;
 		this.startDate = workOffer.startDate;
 		this.endDate = workOffer.endDate;
-		boolean isPaidVacationAll = ClConst.WORKING_OFFER_TYPE_PAID_VACATION_ALL.equals(workOffer.offerType);
-		boolean isSpecialHoliday = ClConst.WORKING_OFFER_TYPE_SPECIAL_HOLIDAY.equals(workOffer.offerType);
-		boolean isCompensatoryHoliday = ClConst.WORKING_OFFER_TYPE_COMPENSATORY_HOLIDAY.equals(workOffer.offerType);
-		boolean isAbsent = ClConst.WORKING_OFFER_TYPE_ABSENT.equals(workOffer.offerType);
-		if(isPaidVacationAll || isSpecialHoliday || isCompensatoryHoliday || isAbsent){
-			this.isAllDay = true;
-		}
+		// boolean isPaidVacationAll = ClConst.WORKING_OFFER_TYPE_PAID_VACATION_ALL.equals(workOffer.offerType);
+		// boolean isSpecialHoliday = ClConst.WORKING_OFFER_TYPE_SPECIAL_HOLIDAY.equals(workOffer.offerType);
+		// boolean isCompensatoryHoliday = ClConst.WORKING_OFFER_TYPE_COMPENSATORY_HOLIDAY.equals(workOffer.offerType);
+		// boolean isAbsent = ClConst.WORKING_OFFER_TYPE_ABSENT.equals(workOffer.offerType);
+		// if(isPaidVacationAll || isSpecialHoliday || isCompensatoryHoliday || isAbsent){
+		// this.isAllDay = true;
+		// }
+		this.isAllDay = true;
 		this.scheduleType = ClConst.SCHEDULE_TYPE_WORK_OFFER;
 	}
 
@@ -91,17 +91,17 @@ public class ScheduleModel{
 		if(startDate == null || endDate == null){
 			return false;
 		}
+
+		if(ClConst.SCHEDULE_TYPE_WORK_OFFER.equals(scheduleType)){
+			return true;
+		}
+
 		String startDateFormat = WelfareFormatUtil.removeTime4Date(startDate);
 		String endDateFormat = WelfareFormatUtil.removeTime4Date(endDate);
 		return !startDateFormat.equals(endDateFormat);
 	}
 
 	public String getScheduleColor(){
-		if(!CCStringUtil.isEmpty(this.calendarId)){
-			if(categoryModel != null){
-				return WelfareFormatUtil.formatColor(categoryModel.categoryColor);
-			}
-		}
 		if(ClConst.SCHEDULE_TYPE_HOLIDAY.equals(scheduleType)){
 			return WelfareFormatUtil.formatColor(ClConst.SCHEDULE_COLOR_HOLIDAY);
 		}else if(ClConst.SCHEDULE_TYPE_BIRTHDAY.equals(scheduleType)){
@@ -110,10 +110,40 @@ public class ScheduleModel{
 			return WelfareFormatUtil.formatColor(ClConst.SCHEDULE_COLOR_OFFER);
 		}
 
-		return WelfareFormatUtil.formatColor(ClConst.SCHEDULE_COLOR_NORMAL);
+		return scheduleColor;
 	}
 
 	public static boolean isRepeat(ScheduleModel schedule){
 		return schedule != null && !CCStringUtil.isEmpty(schedule.repeatType) && !ClConst.SCHEDULE_REPEAT_TYPE_NONE.equals(schedule.repeatType);
+	}
+
+	public static ScheduleModel clone(ScheduleModel scheduleModel, UserModel userModel){
+		ScheduleModel cloned = new ScheduleModel();
+		cloned.scheduleColor = userModel.color;
+
+		cloned.scheduleName = scheduleModel.scheduleName;
+		cloned.scheduleNote = scheduleModel.scheduleNote;
+		cloned.scheduleUrl = scheduleModel.scheduleUrl;
+		cloned.startDate = scheduleModel.startDate;
+		cloned.endDate = scheduleModel.endDate;
+		cloned.startTime = scheduleModel.startTime;
+		cloned.endTime = scheduleModel.endTime;
+		cloned.key = scheduleModel.key;
+		cloned.calendarId = scheduleModel.calendarId;
+		cloned.roomId = scheduleModel.roomId;
+		cloned.joinUsers = scheduleModel.joinUsers;
+		cloned.scheduleType = scheduleModel.scheduleType;
+		cloned.categoryId = scheduleModel.categoryId;
+		cloned.categoryModel = scheduleModel.categoryModel;
+		cloned.isAllDay = scheduleModel.isAllDay;
+		cloned.scheduleJoinUsers = scheduleModel.scheduleJoinUsers;
+		cloned.repeatType = scheduleModel.repeatType;
+		cloned.repeatLimitType = scheduleModel.repeatLimitType;
+		cloned.repeatData = scheduleModel.repeatData;
+		cloned.repeatEnd = scheduleModel.repeatEnd;
+		cloned.repeatInterval = scheduleModel.repeatInterval;
+		cloned.isWarning = scheduleModel.isWarning;
+		cloned.owner = scheduleModel.owner;
+		return cloned;
 	}
 }

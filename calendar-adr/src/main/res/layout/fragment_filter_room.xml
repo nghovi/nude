@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/wf_common_match"
+    android:orientation="vertical">
+
+    <include layout="@layout/view_common_header" />
+
+    <trente.asia.android.view.ChiaseEditText
+        android:id="@+id/edt_filter_search_room"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_10dp"
+        android:layout_marginLeft="@dimen/margin_16dp"
+        android:layout_marginRight="@dimen/margin_16dp"
+        android:layout_marginTop="@dimen/margin_10dp"
+        android:background="@drawable/wf_background_gray_border_white_padding_round"
+        android:gravity="center"
+        android:hint="@string/chiase_common_search"
+        android:imeOptions="actionSearch"
+        android:inputType="text"
+        android:lines="1"
+        android:paddingLeft="@dimen/margin_10dp" />
+
+    <ScrollView
+        style="@style/cs_common_match_wrap"
+        android:layout_weight="1">
+
+        <trente.asia.calendar.commons.views.FilterDeptLinearLayout
+            android:id="@+id/lnr_id_filter_dept"
+            style="@style/cs_common_match_wrap"
+            android:orientation="vertical" />
+    </ScrollView>
+
+
+</LinearLayout>

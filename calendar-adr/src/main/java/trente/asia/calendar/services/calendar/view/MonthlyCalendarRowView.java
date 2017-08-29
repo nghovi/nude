@@ -9,6 +9,7 @@ import java.util.List;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.widget.RelativeLayout;
@@ -79,43 +80,60 @@ public class MonthlyCalendarRowView extends RelativeLayout{
 		schedules.add(scheduleModel);
 	}
 
+	public static Comparator<ScheduleModel> getPeriodScheduleComparator(final Date startDate, final Date endDate){
+		return new Comparator<ScheduleModel>() {
+
+			@Override
+			public int compare(ScheduleModel schedule1, ScheduleModel schedule2){
+
+				if(ClConst.SCHEDULE_TYPE_WORK_OFFER.equals(schedule1.scheduleType) && !ClConst.SCHEDULE_TYPE_WORK_OFFER.equals(schedule2.scheduleType)){
+					return -1;
+				}else if(ClConst.SCHEDULE_TYPE_WORK_OFFER.equals(schedule2.scheduleType) && !ClConst.SCHEDULE_TYPE_WORK_OFFER.equals(schedule1.scheduleType)){
+					return 1;
+				}else if(ClConst.SCHEDULE_TYPE_WORK_OFFER.equals(schedule1.scheduleType) && ClConst.SCHEDULE_TYPE_WORK_OFFER.equals(schedule2.scheduleType)){
+					return compareOffer(schedule1, schedule2);
+				}
+
+				Date startDate1 = WelfareUtil.makeDate(schedule1.startDate);
+				Date startDate2 = WelfareUtil.makeDate(schedule2.startDate);
+
+				Date endDate1 = WelfareUtil.makeDate(schedule1.endDate);
+				Date endDate2 = WelfareUtil.makeDate(schedule2.endDate);
+
+				startDate1 = CCDateUtil.compareDate(startDate1, startDate, false) <= 0 ? startDate : startDate1;
+				startDate2 = CCDateUtil.compareDate(startDate2, startDate, false) <= 0 ? startDate : startDate2;
+
+				endDate1 = CCDateUtil.compareDate(endDate1, endDate, false) >= 0 ? endDate : endDate1;
+				endDate2 = CCDateUtil.compareDate(endDate2, endDate, false) >= 0 ? endDate : endDate2;
+
+				long startDate1Long = CCDateUtil.makeDate(startDate1).getTime();
+				long startDate2Long = CCDateUtil.makeDate(startDate2).getTime();
+
+				long period1 = CCDateUtil.makeDate(endDate1).getTime() - startDate1Long;
+				long period2 = CCDateUtil.makeDate(endDate2).getTime() - startDate2Long;
+
+				int startCompareResult = Long.compare(startDate1Long, startDate2Long);
+
+				if(startCompareResult == 0){
+					int lengthCompareResult = Long.compare(period2, period1);
+					if(lengthCompareResult == 0){
+						return schedule1.scheduleName.compareTo(schedule2.scheduleName);
+					}
+					return lengthCompareResult;
+				}
+				return startCompareResult;
+			}
+		};
+	}
+
 	private void sortSchedules(){
 		if(!CCCollectionUtil.isEmpty(schedules)){
-			Collections.sort(schedules, new Comparator<ScheduleModel>() {
-
-				@Override
-				public int compare(ScheduleModel schedule1, ScheduleModel schedule2){
-					Date startDate1 = WelfareUtil.makeDate(schedule1.startDate);
-					Date startDate2 = WelfareUtil.makeDate(schedule2.startDate);
-
-					Date endDate1 = WelfareUtil.makeDate(schedule1.endDate);
-					Date endDate2 = WelfareUtil.makeDate(schedule2.endDate);
-
-					startDate1 = CCDateUtil.compareDate(startDate1, startDate, false) <= 0 ? startDate : startDate1;
-					startDate2 = CCDateUtil.compareDate(startDate2, startDate, false) <= 0 ? startDate : startDate2;
-
-					endDate1 = CCDateUtil.compareDate(endDate1, endDate, false) >= 0 ? endDate : endDate1;
-					endDate2 = CCDateUtil.compareDate(endDate2, endDate, false) >= 0 ? endDate : endDate2;
-
-					long startDate1Long = CCDateUtil.makeDate(startDate1).getTime();
-					long startDate2Long = CCDateUtil.makeDate(startDate2).getTime();
-
-					long period1 = CCDateUtil.makeDate(endDate1).getTime() - startDate1Long;
-					long period2 = CCDateUtil.makeDate(endDate2).getTime() - startDate2Long;
-
-					int startCompareResult = Long.compare(startDate1Long, startDate2Long);
-
-					if(startCompareResult == 0){
-						int lengthCompareResult = Long.compare(period2, period1);
-						if(lengthCompareResult == 0){
-							return schedule1.scheduleName.compareTo(schedule2.scheduleName);
-						}
-						return lengthCompareResult;
-					}
-					return startCompareResult;
-				}
-			});
+			Collections.sort(schedules, getPeriodScheduleComparator(startDate, endDate));
 		}
+	}
+
+	public static int compareOffer(ScheduleModel schedule1, ScheduleModel schedule2){
+		return schedule1.scheduleName.compareTo(schedule2.scheduleName);
 	}
 
 	private List<MonthlyCalendarDayView> getPassiveCalendarDays(List<MonthlyCalendarDayView>
@@ -136,21 +154,6 @@ public class MonthlyCalendarRowView extends RelativeLayout{
 			ScheduleModel scheduleModel = schedules.get(i);
 			showSchedule(scheduleModel, i);
 		}
-
-		// int maxSchedule = 0;
-		// for(MonthlyCalendarDayView dayView : lstCalendarDay){
-		// if(dayView.getActivePeriodNum() > maxSchedule){
-		// maxSchedule = dayView.getActivePeriodNum();
-		// }
-		// }
-		// refresh layout
-		// for(MonthlyCalendarDayView dayView : lstCalendarDay){
-		// LinearLayout.LayoutParams layoutParamsDay = new LinearLayout
-		// .LayoutParams(0, (int)getResources().getDimension(R.dimen
-		// .margin_40dp) +
-		// maxSchedule * ClConst.TEXT_VIEW_HEIGHT, 1);
-		// dayView.setLayoutParams(layoutParamsDay);
-		// }
 	}
 
 	private void showSchedule(ScheduleModel scheduleModel, int i){
@@ -174,9 +177,8 @@ public class MonthlyCalendarRowView extends RelativeLayout{
 
 		int numCol = (theLastCalendarDay.dayOfTheWeek - theFirstCalendarDay.dayOfTheWeek + 1);
 		int width = (int)(itemWidth * (numCol >= 7 ? 7 : numCol));
-		// width = numCol >= 7 ? width - WelfareUtil.dpToPx(1) : width;
-		width = width - WelfareUtil.dpToPx(1);
-		int marginLeft = (int)(itemWidth * theFirstCalendarDay.dayOfTheWeek) + 1;
+		// width = width - WelfareUtil.dpToPx(1);
+		int marginLeft = (int)(itemWidth * theFirstCalendarDay.dayOfTheWeek);
 		int marginTopAfter = marginTop + WelfareUtil.dpToPx(5);
 
 		TextView txtSchedule = createTextView(getContext(), width, marginLeft, scheduleModel, marginTopAfter);
@@ -187,35 +189,16 @@ public class MonthlyCalendarRowView extends RelativeLayout{
 
 	public static TextView createTextView(Context context, int width, int marginLeft, ScheduleModel scheduleModel, int marginTop){
 		LayoutParams layoutParams = new LayoutParams(width, ClConst.TEXT_VIEW_HEIGHT);
-		layoutParams.setMargins(marginLeft - WelfareUtil.dpToPx(1), marginTop, 0, 0);
+		layoutParams.setMargins(marginLeft - WelfareUtil.dpToPx(0), marginTop, 0, 0);
 		TextView txtSchedule = new TextView(context);
 		txtSchedule.setMaxLines(1);
 		txtSchedule.setLayoutParams(layoutParams);
-		txtSchedule.setPadding(WelfareUtil.dpToPx(1), 0, 0, 0);
 		txtSchedule.setGravity(Gravity.CENTER_VERTICAL);
-		txtSchedule.setTextColor(Color.WHITE);
-
-		String scheduleColor = scheduleModel.getScheduleColor();
-		if(scheduleModel.isPeriodSchedule()){
-			if(!CCStringUtil.isEmpty(scheduleColor)){
-				txtSchedule.setBackgroundColor(Color.parseColor(scheduleColor));
-			}else{
-				txtSchedule.setBackgroundColor(Color.RED);
-			}
-		}else{
-			if(CCBooleanUtil.checkBoolean(scheduleModel.isAllDay)){
-				txtSchedule.setTextColor(Color.WHITE);
-				if(!CCStringUtil.isEmpty(scheduleColor)){
-					txtSchedule.setBackgroundColor(Color.parseColor(scheduleColor));
-				}else{
-					txtSchedule.setBackgroundColor(Color.RED);
-				}
-			}else{
-				if(!CCStringUtil.isEmpty(scheduleColor)){
-					txtSchedule.setTextColor(Color.parseColor(scheduleColor));
-				}
-			}
+		txtSchedule.setTextColor(Color.BLACK);
+		if(CCBooleanUtil.checkBoolean(scheduleModel.isAllDay) || scheduleModel.isPeriodSchedule()){
+			txtSchedule.setBackground(ContextCompat.getDrawable(context, R.drawable.wf_background_black_border));
 		}
+		txtSchedule.setPadding(WelfareUtil.dpToPx(2), 0, 0, 0);
 
 		txtSchedule.setTextSize(TEXT_SIZE);
 		txtSchedule.setText(scheduleModel.scheduleName);
