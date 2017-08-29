@@ -80,7 +80,7 @@ public class DocumentDetailFragment extends AbstractOLFragment implements View.O
         if (OLConst.API_OL_DOCUMENT_DETAIL.equals(url)) {
             try {
                 documentModel = LoganSquare.parse(response.optString("document"), DocumentModel.class);
-                if ("DNE".equals(documentModel.deliveryStatus)) {
+                if (documentModel != null && "DNE".equals(documentModel.deliveryStatus)) {
                     OLUtils.downloadFilePrivate(activity, host + documentModel.document.attachment.fileUrl, this);
                     binding.pdfNote.setText(documentModel.document.documentMessage);
                     getView().findViewById(R.id.img_id_header_right_icon).setOnClickListener(this);

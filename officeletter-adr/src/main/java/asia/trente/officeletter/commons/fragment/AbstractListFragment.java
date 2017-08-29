@@ -76,8 +76,8 @@ public abstract class AbstractListFragment extends AbstractOLFragment {
             super.commonNotSuccess(response);
         } else {
             OLUtils.showAlertDialog(getContext(), R.string.ol_message_file_not_found);
+            initData();
         }
-
     }
 
     public void successPassword() {}
