@@ -3,7 +3,6 @@
     <string name="footer_item1">Document</string>
     <string name="footer_item2">Salary</string>
     <string name="footer_item3">Wiki</string>
-    <string name="footer_item4">History</string>
     <string name="footer_item5">Setting</string>
     <string name="ol_document_list">Document list</string>
     <string name="dialog_avatar_handlers_camera">Camera</string>

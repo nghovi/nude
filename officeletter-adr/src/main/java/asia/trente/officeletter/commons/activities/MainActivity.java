@@ -9,7 +9,10 @@ import asia.chiase.core.util.CCStringUtil;
 import asia.trente.officeletter.R;
 import asia.trente.officeletter.commons.fragment.OLLogInFragment;
 import asia.trente.officeletter.services.document.DocumentListFragment;
+import asia.trente.officeletter.services.document.model.ItemDocumentModel;
+import asia.trente.officeletter.services.salary.SalaryListFragment;
 import trente.asia.welfare.adr.activity.WelfareActivity;
+import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
 
@@ -27,7 +30,26 @@ public class MainActivity extends WelfareActivity{
         if(CCStringUtil.isEmpty(userModel.key)){
             addFragment(new OLLogInFragment());
         }else{
-            addFragment(new DocumentListFragment());
+            Bundle bundle = getIntent().getExtras();
+            if (bundle == null) {
+                addFragment(new DocumentListFragment());
+            } else {
+                showFragment(bundle);
+            }
+        }
+    }
+
+    private void showFragment(Bundle bundle) {
+        String key = bundle.getString(WelfareConst.NotificationReceived.USER_INFO_NOTI_KEY);
+        String type = bundle.getString(WelfareConst.NotificationReceived.USER_INFO_NOTI_TYPE);
+        if (WelfareConst.NotificationType.OL_DELIVERY_DOC.equals(type)) {
+            DocumentListFragment fragment = new DocumentListFragment();
+            fragment.setDocumentId(Integer.parseInt(key));
+            addFragment(fragment);
+        } else {
+            SalaryListFragment fragment = new SalaryListFragment();
+            fragment.setSalaryId(Integer.parseInt(key));
+            addFragment(fragment);
         }
     }
 

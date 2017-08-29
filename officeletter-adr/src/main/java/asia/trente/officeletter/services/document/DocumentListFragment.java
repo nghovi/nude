@@ -39,6 +39,11 @@ public class DocumentListFragment extends AbstractListFragment implements Docume
     private String searchStart;
     private String searchEnd;
     private DocumentModel selectedDocument;
+    private int documentId = 0;
+
+    public void setDocumentId(int documentId) {
+        this.documentId = documentId;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,7 +51,6 @@ public class DocumentListFragment extends AbstractListFragment implements Docume
         Calendar calendar = Calendar.getInstance(Locale.getDefault());
         searchStart = calendar.get(Calendar.YEAR) + "/01";
         searchEnd = getString(R.string.chiase_common_none);
-        log(new PreferencesSystemUtil(getContext()).get(WelfareConst.REGISTRATION_ID_PARAM));
     }
 
     @Nullable
@@ -98,6 +102,15 @@ public class DocumentListFragment extends AbstractListFragment implements Docume
             try {
                 List<DocumentModel> documents = LoganSquare.parseList(response.optString("documents"), DocumentModel.class);
                 adapter.setDocuments(documents);
+                if (documentId != 0) {
+                    for (DocumentModel documentModel : documents) {
+                        if (documentModel.document.key == documentId) {
+                            onDocumentClick(documentModel);
+                            documentId = 0;
+                            break;
+                        }
+                    }
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }

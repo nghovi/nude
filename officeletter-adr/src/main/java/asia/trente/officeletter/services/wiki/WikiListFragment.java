@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import com.bluelinelabs.logansquare.LoganSquare;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -59,6 +60,11 @@ public class WikiListFragment extends AbstractListFragment implements OnWikiAdap
 
     private void loadWikiList() {
         JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("execType", "PUBLIC");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         requestLoad(OLConst.API_OL_WIKI_LIST, jsonObject, true);
     }
 

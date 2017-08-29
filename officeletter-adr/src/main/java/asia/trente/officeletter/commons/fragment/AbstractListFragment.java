@@ -69,15 +69,18 @@ public abstract class AbstractListFragment extends AbstractOLFragment {
     }
 
     @Override
-    protected void commonNotSuccess(JSONObject response) {
+    protected void commonNotSuccess(JSONObject response, String url) {
         String msg = response.optString("messages");
-        log(msg);
-        if (msg != null && (msg.contains(MSG_PASSWORD_NOT_MATCH_EN) || msg.contains(MSG_PASSWORD_NOT_MATCH_JP))) {
-            super.commonNotSuccess(response);
+        if (OLConst.API_OL_PASSWORD_CONFIRM.equals(url)) {
+            if (msg != null && (msg.contains(MSG_PASSWORD_NOT_MATCH_EN) || msg.contains(MSG_PASSWORD_NOT_MATCH_JP))) {
+                super.commonNotSuccess(response, url);
+            } else {
+                OLUtils.showAlertDialog(getContext(), R.string.ol_message_file_not_found);
+                initData();
+            }
         } else {
-            OLUtils.showAlertDialog(getContext(), R.string.ol_message_file_not_found);
+            super.commonNotSuccess(response, url);
         }
-
     }
 
     public void successPassword() {}
