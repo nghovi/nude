@@ -54,7 +54,7 @@
     <string name="cl_schedule_repeat_for_one_message">, あと 1 回。.</string>
 
     <string name="cl_schedule_repeat_limit_forever">終了日を設定しない</string>
-    <string name="cl_schedule_repeat_limit_until">繰り返し完了日</string>
+    <string name="cl_schedule_repeat_limit_until">終了日</string>
 
     <string name="daily_page_all_day">終日</string>
     <string name="daily_page_morning">午前</string>
