@@ -151,27 +151,29 @@ public class WelfareConst{
 
 	public static final class NotificationType{
 
-		public static final String	MS_NOTI_NEW_MESSAGE				= "MS_NOTI_NEW_MESSAGE";
-		public static final String	MS_NOTI_NEW_COMMENT				= "MS_NOTI_NEW_COMMENT";
+		public static final String	MS_NOTI_NEW_MESSAGE			= "MS_NOTI_NEW_MESSAGE";
+		public static final String	MS_NOTI_NEW_COMMENT			= "MS_NOTI_NEW_COMMENT";
 
-		public static final String	DR_NOTI_NEW_REPORT				= "DR_NOTI_NEW_REPORT";
-		public static final String	DR_NOTI_COMMENT_REPORT			= "DR_NOTI_COMMENT_REPORT";
-		public static final String	DR_NOTI_LIKE_REPORT				= "DR_NOTI_LIKE_REPORT";
-		public static final String DR_NOTI_CHECKPOINT = "DR_NOTI_CHECKPOINT";
-		public static final String DR_NOTI_COMPLETE_PROGRESS = "DR_NOTI_COMPLETE_PROGRESS";
-		public static final String DR_NOTI_UNCOMPLETE_PROGRESS = "DR_NOTI_UNCOMPLETE_PROGRESS";
-		public static final String DR_NOTI_COMPLETE_GROUP_GOAL = "DR_NOTI_COMPLETE_GROUP_GOAL";
+		public static final String	DR_NOTI_NEW_REPORT			= "DR_NOTI_NEW_REPORT";
+		public static final String	DR_NOTI_COMMENT_REPORT		= "DR_NOTI_COMMENT_REPORT";
+		public static final String	DR_NOTI_LIKE_REPORT			= "DR_NOTI_LIKE_REPORT";
+		public static final String	DR_NOTI_CHECKPOINT			= "DR_NOTI_CHECKPOINT";
+		public static final String	DR_NOTI_COMPLETE_PROGRESS	= "DR_NOTI_COMPLETE_PROGRESS";
+		public static final String	DR_NOTI_UNCOMPLETE_PROGRESS	= "DR_NOTI_UNCOMPLETE_PROGRESS";
+		public static final String	DR_NOTI_COMPLETE_GROUP_GOAL	= "DR_NOTI_COMPLETE_GROUP_GOAL";
 
-		public static final String	TC_NOTI_NEW_NOTICE				= "TC_NOTI_NEW_NOTICE";
-		public static final String	TC_NOTI_BIRTHDAY				= "TC_NOTI_BIRTHDAY";
-		public static final String	TC_NOTI_RECEIVE_CARD			= "TC_NOTI_RECEIVE_CARD";
+		public static final String	TC_NOTI_NEW_NOTICE			= "TC_NOTI_NEW_NOTICE";
+		public static final String	TC_NOTI_BIRTHDAY			= "TC_NOTI_BIRTHDAY";
+		public static final String	TC_NOTI_RECEIVE_CARD		= "TC_NOTI_RECEIVE_CARD";
 
-		public static final String	SW_NOTI_NEW_NOTICE				= "SW_NOTI_NEW_NOTICE";
-		public static final String	SW_NOTI_CHECK_IN				= "SW_NOTI_CHECK_IN";
-		public static final String	SW_NOTI_OVER_TIME				= "SW_NOTI_OVER_TIME";
-		public static final String	SW_NOTI_OFFER					= "SW_NOTI_OFFER";
+		public static final String	SW_NOTI_NEW_NOTICE			= "SW_NOTI_NEW_NOTICE";
+		public static final String	SW_NOTI_CHECK_IN			= "SW_NOTI_CHECK_IN";
+		public static final String	SW_NOTI_OVER_TIME			= "SW_NOTI_OVER_TIME";
+		public static final String	SW_NOTI_OFFER				= "SW_NOTI_OFFER";
 
-		public static final String	CL_NOTI_NEW_SCHEDULE			= "CL_NOTI_NEW_SCHEDULE";
+		public static final String	CL_NOTI_NEW_SCHEDULE		= "CL_NOTI_NEW_SCHEDULE";
+		public static final String	OL_DELIVERY_DOC				= "OL_DELIVERY_DOC";
+		public static final String	OL_DELIVERY_SALARY			= "OL_DELIVERY_SALARY";
 	}
 
 	public static final class NotificationReceived{

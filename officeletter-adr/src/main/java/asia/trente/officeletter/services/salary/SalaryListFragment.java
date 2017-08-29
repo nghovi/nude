@@ -34,6 +34,11 @@ public class SalaryListFragment extends AbstractListFragment implements SalaryAd
 	private FragmentSalaryListBinding	binding;
 	private SalaryAdapter				adapter	= new SalaryAdapter();
 	private MonthModel					selectedSalary;
+	private int							salaryId = 0;
+
+	public void setSalaryId(int salaryId) {
+		this.salaryId = salaryId;
+	}
 
 	@Nullable
 	@Override
@@ -83,6 +88,15 @@ public class SalaryListFragment extends AbstractListFragment implements SalaryAd
 					}
 				}
 				adapter.setMonths(months);
+				if (salaryId != 0) {
+					for (MonthModel monthModel : months) {
+						if (monthModel.salaryId == salaryId) {
+							onSalaryClick(monthModel);
+							salaryId = 0;
+							break;
+						}
+					}
+				}
 			}catch(IOException e){
 				e.printStackTrace();
 			}
