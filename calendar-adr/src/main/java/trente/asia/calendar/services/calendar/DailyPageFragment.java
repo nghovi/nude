@@ -193,6 +193,8 @@ public class DailyPageFragment extends SchedulesPageFragment{
 		if(!CCCollectionUtil.isEmpty(lstBirthdayUser)){
 			imgBirthdayIcon.setVisibility(View.VISIBLE);
 			numRow += 1;
+		}else{
+			imgBirthdayIcon.setVisibility(View.GONE);
 		}
 
 		lnrScheduleAllDays.removeAllViews();

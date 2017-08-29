@@ -179,9 +179,9 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 	}
 
 	@Override
-	protected void commonNotSuccess(JSONObject response){
+	protected void commonNotSuccess(JSONObject response, String url){
 		pageSharingHolder.isLoadingSchedules = false;
-		super.commonNotSuccess(response);
+		super.commonNotSuccess(response, url);
 	}
 
 	public static List<Date> getAllDateForMonth(PreferencesAccountUtil prefAccUtil, Date selectedDate){

@@ -31,9 +31,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import org.apache.commons.collections.CollectionUtils;
 
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
@@ -42,7 +39,6 @@ import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.activity.ChiaseFragment;
 import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.R;
-import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.fragments.PageContainerFragment;
 import trente.asia.calendar.services.calendar.model.CategoryModel;
 import trente.asia.calendar.services.calendar.model.HolidayModel;
@@ -238,11 +234,17 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 
 		// offer
 		for(WorkOffer workOffer : lstWorkOffer){
-			Calendar c2 = CCDateUtil.makeCalendarWithDateOnly(CCDateUtil.makeDateCustom(workOffer.startDate, WelfareConst.WF_DATE_TIME));
-			int dayDistance = c2.get(Calendar.DAY_OF_YEAR) - cStartWeek.get(Calendar.DAY_OF_YEAR);
+			Calendar cStart = CCDateUtil.makeCalendarWithDateOnly(CCDateUtil.makeDateCustom(workOffer.startDate, WelfareConst.WF_DATE_TIME));
+			Calendar cEnd = CCDateUtil.makeCalendarWithDateOnly(CCDateUtil.makeDateCustom(workOffer.endDate, WelfareConst.WF_DATE_TIME));
+
+			int dayDistance = Math.max(0, cStart.get(Calendar.DAY_OF_YEAR) - cStartWeek.get(Calendar.DAY_OF_YEAR));
+			int dayDistanceEnd = Math.min(7, cEnd.get(Calendar.DAY_OF_YEAR) - cStartWeek.get(Calendar.DAY_OF_YEAR));
+			int cellNumber = dayDistanceEnd - dayDistance + 1;
+
 			int leftMargin = cellWidth * (1 + dayDistance);
-			topMargin = getNextTopMargin(dayDistance, dayDistance);
-			TextView textView = makeTextView(activity, workOffer.offerTypeName, leftMargin, topMargin, cellWidth, Color.parseColor(workOffer.userColor), 0, Gravity.CENTER);
+			topMargin = getNextTopMargin(dayDistance, dayDistance + cellNumber - 1);
+
+			TextView textView = makeTextView(activity, workOffer.offerTypeName, leftMargin, topMargin, cellWidth * cellNumber, Color.parseColor(workOffer.userColor), 0, Gravity.CENTER);
 			rltPart1.addView(textView);
 			itemNum++;
 		}

@@ -163,9 +163,6 @@ public class MonthlyCalendarDayView extends LinearLayout {
         periodNum++;
         usedMargins.add(marginTop);
         lstSchedule.add(scheduleModel);
-//        if (ClConst.SCHEDULE_TYPE_HOLIDAY.equals(scheduleModel.scheduleType)) {
-//            setLayoutHoliday(scheduleModel);
-//        }
     }
 
     public void addPassivePeriod(ScheduleModel scheduleModel, int marginTop) {
