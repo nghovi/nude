@@ -171,4 +171,7 @@ public class HttpDelegate{
 
 	}
 
+	private void log(String msg) {
+		Log.e("HttpDelegate", msg);
+	}
 }

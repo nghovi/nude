@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:id="@+id/rlt_document"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin_16dp"
+            android:background="@drawable/state_common_selectable_row">
+            <TextView
+                android:id="@+id/doc_name"
+                android:layout_toStartOf="@+id/img_lock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/chiase_black"
+                android:layout_alignParentStart="true"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:textSize="14sp"/>
+            <TextView
+                android:id="@+id/doc_date"
+                android:layout_toStartOf="@+id/img_lock"
+                android:layout_below="@id/doc_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/chiase_black"
+                android:textSize="12sp"
+                android:layout_alignParentStart="true"/>
+            <ImageView
+                android:id="@+id/img_lock"
+                android:layout_toStartOf="@+id/img_arrow_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_lock"
+                android:layout_marginEnd="@dimen/margin_16dp"/>
+            <ImageView
+                android:id="@+id/img_arrow_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:src="@drawable/wf_row_arrow_right"
+                android:layout_alignParentEnd="true"/>
+        </RelativeLayout>
+        <View style="@style/cs_common_divider"/>
+    </LinearLayout>
+</layout>

@@ -66,14 +66,11 @@ public class MsgRecyclerView extends RecyclerView{
 //			 this.scrollToPosition(this.getAdapter().getItemCount() - 1);
 			this.getLayoutManager().smoothScrollToPosition(this, null, this.getAdapter().getItemCount() - 1);
 			this.lastVisibleItem = this.getAdapter().getItemCount() - 1;
-			log("scrollRecyclerToBottom = " + lastVisibleItem);
 		}
 	}
 
 	public void isScrollToBottom(){
 		isScrollToBottom = lastVisibleItem == (this.getAdapter().getItemCount() - 1);
-		log("isScrollToBottom = " + lastVisibleItem);
-		log("isScrollToBottom getItemCount = " + (this.getAdapter().getItemCount() - 1));
 	}
 
 	private void log(String msg) {

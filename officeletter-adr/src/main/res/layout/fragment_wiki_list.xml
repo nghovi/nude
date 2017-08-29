@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <include layout="@layout/view_common_header" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:background="@color/wf_login_background_color">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/ol_wiki_list"
+                android:padding="@dimen/margin_16dp"
+                android:textSize="16sp"
+                android:textColor="@color/chiase_black"/>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rlv_wiki"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
+        <include layout="@layout/view_common_footer"/>
+    </LinearLayout>
+</layout>

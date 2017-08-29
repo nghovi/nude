@@ -79,7 +79,6 @@ public abstract class LoginFragment extends WelfareFragment implements View.OnCl
 			mEdtUserName.setText(preferencesSystemUtil.get(PreferencesSystemUtil.KEY_PREF_USER_NAME));
 			mCbxRemember.setChecked(true);
 		}
-
 	}
 
 	@Override
@@ -111,7 +110,6 @@ public abstract class LoginFragment extends WelfareFragment implements View.OnCl
 		if(WfUrlConst.WF_ACC_0003.equals(url)){
 			UserModel userModel = CCJsonUtil.convertToModel(response.optString("myself"), UserModel.class);
 			prefAccUtil.saveUserPref(userModel);
-			Log.e("LoginFragment", "response = " + response.toString());
 
 			// check remember logic
 			PreferencesSystemUtil preferencesSystemUtil = new PreferencesSystemUtil(activity);

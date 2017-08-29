@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               style="@style/cs_common_match"
-              android:layout_marginTop="@dimen/margin_16dp"
               android:layout_weight="1"
+              android:background="@color/wf_login_background_color"
               android:orientation="vertical">
 
 
     <TextView
         style="@style/cs_common_wrap"
-        android:layout_marginBottom="@dimen/margin_10dp"
-        android:paddingLeft="@dimen/margin_16dp"
-        android:paddingRight="@dimen/margin_16dp"
+        android:padding="@dimen/margin_16dp"
         android:text="@string/wf_account_info_title"
         android:textStyle="bold"/>
 
@@ -21,10 +19,7 @@
         style="@style/cs_common_match_wrap"
         android:background="@drawable/state_common_selectable_row"
         android:gravity="center_vertical"
-        android:paddingBottom="@dimen/margin_10dp"
-        android:paddingLeft="@dimen/margin_16dp"
-        android:paddingRight="@dimen/margin_16dp"
-        android:paddingTop="@dimen/margin_10dp">
+        android:padding="@dimen/margin_16dp">
 
         <TextView
             style="@style/wl_common_text"
@@ -35,10 +30,7 @@
 
     <TextView
         style="@style/cs_common_wrap"
-        android:layout_marginBottom="@dimen/margin_10dp"
-        android:layout_marginTop="@dimen/margin_32dp"
-        android:paddingLeft="@dimen/margin_16dp"
-        android:paddingRight="@dimen/margin_16dp"
+        android:padding="@dimen/margin_16dp"
         android:text="@string/wf_about_app"
         android:textStyle="bold"/>
 
@@ -49,10 +41,7 @@
         style="@style/cs_common_match_wrap"
         android:background="@drawable/state_common_selectable_row"
         android:gravity="center_vertical"
-        android:paddingBottom="@dimen/margin_10dp"
-        android:paddingLeft="@dimen/margin_16dp"
-        android:paddingRight="@dimen/margin_16dp"
-        android:paddingTop="@dimen/margin_10dp">
+        android:padding="@dimen/margin_16dp">
 
         <TextView
             style="@style/wl_common_text"
@@ -66,10 +55,7 @@
         style="@style/cs_common_match_wrap"
         android:background="@drawable/state_common_selectable_row"
         android:gravity="center_vertical"
-        android:paddingBottom="@dimen/margin_10dp"
-        android:paddingLeft="@dimen/margin_16dp"
-        android:paddingRight="@dimen/margin_16dp"
-        android:paddingTop="@dimen/margin_10dp">
+        android:padding="@dimen/margin_16dp">
 
         <TextView
             style="@style/wl_common_text"
@@ -83,10 +69,7 @@
         style="@style/cs_common_match_wrap"
         android:background="@drawable/state_common_selectable_row"
         android:gravity="center_vertical"
-        android:paddingBottom="@dimen/margin_10dp"
-        android:paddingLeft="@dimen/margin_16dp"
-        android:paddingRight="@dimen/margin_16dp"
-        android:paddingTop="@dimen/margin_10dp">
+        android:padding="@dimen/margin_16dp">
 
         <TextView
             style="@style/wl_common_text"
@@ -100,10 +83,7 @@
         style="@style/cs_common_match_wrap"
         android:background="@drawable/state_common_selectable_row"
         android:gravity="center_vertical"
-        android:paddingBottom="@dimen/margin_10dp"
-        android:paddingLeft="@dimen/margin_16dp"
-        android:paddingRight="@dimen/margin_16dp"
-        android:paddingTop="@dimen/margin_10dp">
+        android:padding="@dimen/margin_16dp">
 
         <TextView
             style="@style/wl_common_text"
@@ -117,10 +97,7 @@
         style="@style/cs_common_match_wrap"
         android:background="@drawable/state_common_selectable_row"
         android:gravity="center_vertical"
-        android:paddingBottom="@dimen/margin_10dp"
-        android:paddingLeft="@dimen/margin_16dp"
-        android:paddingRight="@dimen/margin_16dp"
-        android:paddingTop="@dimen/margin_10dp">
+        android:padding="@dimen/margin_16dp">
 
         <TextView
             style="@style/wl_common_text"

@@ -12,12 +12,12 @@
     <string name="wf_common_invalid_permission">You don\'t have permission
     </string>
 
-    <string name="wlf_account_name">Account Name</string>
+    <string name="wlf_account_name">Account name</string>
     <string name="wlf_pass_word">Password</string>
     <string name="wlf_sign_in">Sign in</string>
     <string name="wlf_sign_out">Sign out</string>
     <string name="wlf_update_info">Update</string>
-    <string name="wf_account_info_title">Account Information</string>
+    <string name="wf_account_info_title">Account information</string>
     <string name="wf_sign_in_remember">Remember me</string>
     <string name="wf_common_signin_user_id">Account name</string>
     <string name="wf_common_signin_password">Password</string>
@@ -25,22 +25,22 @@
     <string name="wf_signout_confirm">Are you sure to sign out?</string>
 
     <string name="wf_forget_password">Forgot password</string>
-    <string name="wf_update_info">Update Information</string>
+    <string name="wf_update_info">Update information</string>
     <string name="wf_error">Error</string>
-    <string name="wf_network_lost">Network Lost</string>
-    <string name="wf_user_name">User Name</string>
-    <string name="wf_user_name_kana">User Name Kana</string>
-    <string name="wf_change_profile">Change Profile</string>
+    <string name="wf_network_lost">Network lost</string>
+    <string name="wf_user_name">User name</string>
+    <string name="wf_user_name_kana">User name kana</string>
+    <string name="wf_change_profile">Change profile</string>
 
-    <string name="wf_push_notification">Push Notification</string>
-    <string name="wf_password_change_title">Change Password</string>
+    <string name="wf_push_notification">Push notification</string>
+    <string name="wf_password_change_title">Change password</string>
     <string name="wf_old_password">Current password</string>
-    <string name="wf_new_password">New Password</string>
-    <string name="wf_confirm_password">Confirm Password</string>
+    <string name="wf_new_password">New password</string>
+    <string name="wf_confirm_password">Confirm password</string>
 
     <string name="wf_email">Email</string>
     <string name="wf_name">Name</string>
-    <string name="wf_select_attach_file">Take new or Select from Gallery</string>
+    <string name="wf_select_attach_file">Take new or select from gallery</string>
     <string name="wf_file">File</string>
     <string name="wf_camera">Camera</string>
     <string name="wf_gallery">Gallery</string>
@@ -48,15 +48,15 @@
     <string name="wf_video">Video</string>
     <string name="wf_cancel">Cancel</string>
     <string name="wf_done">Done</string>
-    <string name="wf_about_app">About App</string>
+    <string name="wf_about_app">About app</string>
     <string name="wf_setting_contact_us">Contact us</string>
-    <string name="wf_pricacy_policy">Privacy Policy</string>
-    <string name="wf_term_service">Term of Service</string>
+    <string name="wf_pricacy_policy">Privacy policy</string>
+    <string name="wf_term_service">Term of service</string>
     <string name="wf_pricacy_policy2">
-        <u>Privacy Policy</u>
+        <u>Privacy policy</u>
     </string>
     <string name="wf_term_service2">
-        <u>Term of Service</u>
+        <u>Term of service</u>
     </string>
     <string name="wf_select">Select</string>
     <string name="wf_about_version">Version %1$s</string>
@@ -79,13 +79,13 @@
     <string name="wf_shift_working_service_name">ShiftWorking</string>
     <string name="wf_fukuri_service_name">FUKURI全般</string>
 
-    <string name="wf_contact_us_problem_item">Bug Report</string>
-    <string name="wf_contact_us_improve_item">Improvement Suggestion</string>
+    <string name="wf_contact_us_problem_item">Bug report</string>
+    <string name="wf_contact_us_improve_item">Improvement suggestion</string>
     <string name="wf_contact_us_content_title">Content</string>
     <string name="wf_contact_us_service_title">Service name</string>
     <string name="wf_contact_us_detail_content_title">Detail content</string>
     <string name="wf_contact_us_select_item">Select</string>
-    <string name="wf_change_notice_success">Push Notification setting has been changed.</string>
+    <string name="wf_change_notice_success">Push notification setting has been changed.</string>
     <string name="change_avatar_success">Your avatar has been changed successfully!</string>
     <string name="wf_password_change_success">Your password has been changed successfully!</string>
 </resources>

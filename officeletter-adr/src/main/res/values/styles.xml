@@ -1,0 +1,29 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+    <style name="tc_text_footer_item">
+        <item name="android:textColor">@color/chiase_white</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="tc_text_white_bold">
+        <item name="android:textColor">@color/chiase_white</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="core_line_divider_thick">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">@dimen/margin_1dp</item>
+        <item name="android:background">@color/chiase_white</item>
+    </style>
+    <style name="NumberPickerTextColorStyle">
+        <item name="android:textColorPrimary">@color/chiase_white</item>
+    </style>
+</resources>

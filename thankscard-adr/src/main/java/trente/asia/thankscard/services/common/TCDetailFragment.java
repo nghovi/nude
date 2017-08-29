@@ -198,6 +198,7 @@ public class TCDetailFragment extends AbstractPagerFragment{
 	private void restoreStickers(List<ApiStickerModel> stickers){
 		for(ApiStickerModel sticker : stickers){
 			StampModel stamp = StampModel.getStamp(Realm.getDefaultInstance(), sticker.stickerId);
+			log("sticker id = " + sticker.stickerId);
 			StickerViewDetail stickerViewDetail = new StickerViewDetail(getContext());
 			rltStickers.addView(stickerViewDetail);
 			stickerViewDetail.restoreSticker(stamp.stampPath, Float.valueOf(sticker.locationX), Float.valueOf(sticker.locationY), Float.valueOf(sticker.scale), Float.valueOf(sticker.degree));

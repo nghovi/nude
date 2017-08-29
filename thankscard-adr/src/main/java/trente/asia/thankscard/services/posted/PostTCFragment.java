@@ -40,7 +40,6 @@ import java.util.TimerTask;
 
 import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCCollectionUtil;
-import asia.chiase.core.util.CCDataUtil;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
@@ -157,6 +156,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 
 		String birthday = thisYear + myself.dateBirth.substring(4);
 		Date date = CCDateUtil.makeDateCustom(birthday, "yyyy/MM/dd hh:mm:ss");
+
 		long difference = (System.currentTimeMillis() - date.getTime()) / 1000L;
 		if(difference > 0 && difference < 31L * 24L * 3600L){
 			isBirthday = true;

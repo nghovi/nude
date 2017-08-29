@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="horizontal" android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/margin_16dp"
+        android:gravity="center_vertical">
+        <trente.asia.welfare.adr.view.SelectableRoundedImageView
+            android:layout_width="@dimen/margin_40dp"
+            android:layout_height="@dimen/margin_40dp"
+            android:src="@drawable/ic_folder"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/chiase_black"
+            android:textSize="14sp"
+            android:text="User name"
+            android:layout_marginStart="@dimen/margin_16dp"/>
+    </LinearLayout>
+</layout>

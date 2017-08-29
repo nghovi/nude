@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Office Letter</string>
+    <string name="footer_item1">Document</string>
+    <string name="footer_item2">Salary</string>
+    <string name="footer_item3">Wiki</string>
+    <string name="footer_item4">History</string>
+    <string name="footer_item5">Setting</string>
+    <string name="ol_document_list">Document list</string>
+    <string name="dialog_avatar_handlers_camera">Camera</string>
+    <string name="dialog_avatar_handlers_gallery">Gallery</string>
+    <string name="ol_show_sub">Show sub</string>
+    <string name="ol_filter_condition">Filter condition</string>
+    <string name="ol_start_month">Start month</string>
+    <string name="ol_end_month">End month</string>
+    <string name="ol_clear">Clear</string>
+    <string name="ol_document_filter">Document filter</string>
+    <string name="ol_filter" formatted="false">Period: %1s - %2s</string>
+    <string name="ol_password_confirm">Password confirm</string>
+    <string name="ol_password_hint">Hint: %1s</string>
+    <string name="ol_confirm">Confirm</string>
+    <string name="ol_wiki_list">Wiki list</string>
+    <string name="ol_wiki_content">Wiki content</string>
+    <string name="ol_loading">Loading&#8230;</string>
+    <string name="ol_message_file_not_found">Target data is not find or already may be changed.</string>
+    <string name="ol_password_not_match">パスワードが一致しません</string>
+</resources>
