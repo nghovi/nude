@@ -11,15 +11,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import asia.chiase.core.util.CCFormatUtil;
-import asia.chiase.core.util.CCStringUtil;
-import trente.asia.calendar.BuildConfig;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.views.UserListLinearLayout;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
-import trente.asia.welfare.adr.utils.WelfareUtil;
-import trente.asia.welfare.adr.utils.WfPicassoHelper;
 
 /**
  * DailySummaryScheduleAdapter.
@@ -54,16 +49,14 @@ public class DailySummaryScheduleAdapter extends ArrayAdapter<ScheduleModel>{
 
 	public View getView(final int position, View convertView, final ViewGroup parent){
 
-		final ScheduleModel model = this.lstSchedule.get(position);
+		final ScheduleModel schedule = this.lstSchedule.get(position);
 		LayoutInflater mInflater = (LayoutInflater)mContext.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 		convertView = mInflater.inflate(R.layout.view_daily_summary_item, null);
 
 		DailySummaryScheduleViewHolder holder = new DailySummaryScheduleViewHolder(convertView);
 
-		holder.txtScheduleName.setText(model.scheduleName);
-		String startTime = CCFormatUtil.formatTime(WelfareUtil.makeDate(model.startDate));
-		String endTime = CCFormatUtil.formatTime(WelfareUtil.makeDate(model.endDate));
-		holder.txtScheduleTime.setText(WelfareFormatUtil.connect2String(startTime, endTime, "-"));
+		holder.txtScheduleName.setText(schedule.scheduleName);
+		holder.txtScheduleTime.setText(WelfareFormatUtil.connect2String(schedule.startTime, schedule.endTime, "-"));
 
 		// if(!CCStringUtil.isEmpty(model.calendar.imagePath)){
 		// WfPicassoHelper.loadImage(mContext, BuildConfig.HOST + model.calendar.imagePath, holder.imgCalendar, null);

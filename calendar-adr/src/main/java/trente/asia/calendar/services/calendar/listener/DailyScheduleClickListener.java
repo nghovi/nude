@@ -1,6 +1,6 @@
 package trente.asia.calendar.services.calendar.listener;
 
-import trente.asia.android.model.DayModel;
+import java.util.Date;
 
 /**
  * DailyScheduleClickListener
@@ -9,5 +9,5 @@ import trente.asia.android.model.DayModel;
  */
 public interface DailyScheduleClickListener{
 
-	public void onDailyScheduleClickListener(String day);
+	public void onDailyScheduleClickListener(Date date);
 }

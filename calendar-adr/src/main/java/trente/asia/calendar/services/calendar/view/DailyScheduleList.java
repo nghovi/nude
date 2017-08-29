@@ -329,8 +329,6 @@ public class DailyScheduleList extends LinearLayout{
 	}
 
 	public static boolean isScheduleOf(ScheduleModel scheduleModel, Date date){
-		Date startDate = WelfareUtil.makeDate(scheduleModel.startDate);
-		Date endDate = WelfareUtil.makeDate(scheduleModel.endDate);
-		return CCDateUtil.compareDate(startDate, date, false) <= 0 && CCDateUtil.compareDate(date, endDate, false) <= 0;
+		return CCDateUtil.compareDate(scheduleModel.startDateObj, date, false) <= 0 && CCDateUtil.compareDate(date, scheduleModel.endDateObj, false) <= 0;
 	}
 }

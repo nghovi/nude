@@ -38,6 +38,7 @@ public class MonthlyCalendarDayView extends LinearLayout{
 	private DailyScheduleClickListener	mListener;
 
 	public String						day;
+	public Date							date;
 	public int							dayOfTheWeek;
 	public List<ScheduleModel>			lstSchedule		= new ArrayList<>();
 	private int							periodNum;
@@ -69,6 +70,7 @@ public class MonthlyCalendarDayView extends LinearLayout{
 		this.setLayoutParams(params);
 		this.setMinimumHeight(WelfareUtil.dpToPx(48));
 		this.day = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, itemDate);
+		this.date = itemDate;
 		this.mListener = listener;
 
 		this.setOnClickListener(new OnClickListener() {
@@ -76,7 +78,7 @@ public class MonthlyCalendarDayView extends LinearLayout{
 			@Override
 			public void onClick(View v){
 				if(mListener != null){
-					mListener.onDailyScheduleClickListener(day);
+					mListener.onDailyScheduleClickListener(date);
 				}
 			}
 		});

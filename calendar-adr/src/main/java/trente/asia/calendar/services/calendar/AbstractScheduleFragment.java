@@ -105,7 +105,7 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 		try{
 			if(schedule != null){
 				jsonObject.put("key", schedule.key);
-				jsonObject.put("searchDateString", CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, WelfareUtil.makeDate(schedule.startDate)));
+				jsonObject.put("searchDateString", schedule.startDate.split(" ")[0]);
 			}
 			jsonObject.put("calendars", prefAccUtil.get(ClConst.SELECTED_CALENDAR_STRING));
 		}catch(JSONException e){
@@ -129,6 +129,9 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 			rooms = LoganSquare.parseList(response.optString("rooms"), RoomModel.class);
 			users = LoganSquare.parseList(response.optString("users"), UserModel.class);
 			categories = LoganSquare.parseList(response.optString("categories"), CategoryModel.class);
+
+			schedule.makeDateObjects();
+
 			if(getView() != null) inflateWithData(txtRoom, txtCategory, rooms, categories, schedule);
 		}catch(IOException e){
 			e.printStackTrace();
@@ -164,11 +167,9 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 			showJoinUserList();
 
 			// set time
-			Date startDate = WelfareUtil.makeDate(schedule.startDate);
-			Date endDate = WelfareUtil.makeDate(schedule.endDate);
-			txtStartDate.setText(WelfareFormatUtil.formatDate(startDate));
+			txtStartDate.setText(schedule.startDate.split(" ")[0]);
 			txtStartTime.setText(schedule.startTime);
-			txtEndDate.setText(WelfareFormatUtil.formatDate(endDate));
+			txtEndDate.setText(schedule.endDate.split(" ")[0]);
 			txtEndTime.setText(schedule.endTime);
 
 			// show repeat data

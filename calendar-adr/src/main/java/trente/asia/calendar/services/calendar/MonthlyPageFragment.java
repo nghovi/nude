@@ -462,25 +462,23 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 
 			Collections.sort(lstSchedule, getScheduleComparator(true));
 
-			for(ScheduleModel model : lstSchedule){
-				Date startDate = WelfareFormatUtil.makeDate(WelfareFormatUtil.removeTime4Date(model.startDate));
-				Date endDate = WelfareFormatUtil.makeDate(WelfareFormatUtil.removeTime4Date(model.endDate));
-				if(model.isPeriodSchedule()){
+			for(ScheduleModel schedule : lstSchedule){
+				if(schedule.isPeriodSchedule()){
 					for(MonthlyCalendarRowView rowView : lstCalendarRow){
-						Date minDate = WelfareFormatUtil.makeDate(rowView.lstCalendarDay.get(0).day);
-						Date maxDate = WelfareFormatUtil.makeDate(rowView.lstCalendarDay.get(rowView.lstCalendarDay.size() - 1).day);
-						boolean isStartBelongPeriod = ClUtil.belongPeriod(startDate, minDate, maxDate);
-						boolean isEndBelongPeriod = ClUtil.belongPeriod(endDate, minDate, maxDate);
-						boolean isOverPeriod = startDate.compareTo(minDate) < 0 && endDate.compareTo(maxDate) > 0;
+						Date minDate = rowView.lstCalendarDay.get(0).date;
+						Date maxDate = rowView.lstCalendarDay.get(rowView.lstCalendarDay.size() - 1).date;
+						boolean isStartBelongPeriod = ClUtil.belongPeriod(schedule.startDateObj, minDate, maxDate);
+						boolean isEndBelongPeriod = ClUtil.belongPeriod(schedule.endDateObj, minDate, maxDate);
+						boolean isOverPeriod = schedule.startDateObj.compareTo(minDate) < 0 && schedule.endDateObj.compareTo(maxDate) > 0;
 
 						if(isStartBelongPeriod || isEndBelongPeriod || isOverPeriod){
-							rowView.addSchedule(model);
+							rowView.addSchedule(schedule);
 						}
 					}
 				}else{
-					MonthlyCalendarDayView activeCalendarDay = ClUtil.findView4Day(lstCalendarDay, startDate, endDate);
+					MonthlyCalendarDayView activeCalendarDay = ClUtil.findView4Day(lstCalendarDay, schedule.startDateObj, schedule.endDateObj);
 					if(activeCalendarDay != null){
-						activeCalendarDay.addSchedule(model);
+						activeCalendarDay.addSchedule(schedule);
 					}
 				}
 			}

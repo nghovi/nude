@@ -505,7 +505,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 						float y = cellWidth;
 						int column = (int)(x / y);
 						if(column - 1 >= 0 && column - 1 < dates.size()){
-							onDailyScheduleClickListener(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, dates.get(column - 1)));
+							onDailyScheduleClickListener(dates.get(column - 1));
 						}
 						return true;
 					}
@@ -623,8 +623,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 
 	private void gotoDailySummaryDialog(int finalI){
 		if(1 <= finalI && finalI <= 8){
-			String dayStr = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, dates.get(finalI - 1));
-			onDailyScheduleClickListener(dayStr);
+			onDailyScheduleClickListener(dates.get(finalI - 1));
 		}
 	}
 

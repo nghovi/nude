@@ -64,7 +64,6 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 	protected List<UserModel>		lstBirthdayUser;
 	protected List<WorkOffer>		lstWorkOffer;
 	protected boolean				refreshDialogData	= false;
-	protected String				dayStr;
 	private String					scheduleStrings;
 	protected boolean				isChangedData		= true;
 	protected List<Todo>			todos;
@@ -205,15 +204,19 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 			lstBirthdayUser = LoganSquare.parseList(response.optString("birthdayList"), UserModel.class);
 			lstCalendarUser = LoganSquare.parseList(response.optString("calendarUsers"), UserModel.class);
 			rooms = LoganSquare.parseList(response.optString("rooms"), RoomModel.class);
-
 			todos = LoganSquare.parseList(response.optString("todoList"), Todo.class);
+
+			// Make date objects for schedules
+			for(ScheduleModel scheduleModel : lstSchedule){
+				scheduleModel.makeDateObjects();
+			}
+			lstSchedule = filterByPublicity();
+
 			if(refreshDialogData && !newScheduleStrings.equals(scheduleStrings)){
 				isChangedData = true;
 			}
 			scheduleStrings = newScheduleStrings;
 			pageSharingHolder.isLoadingSchedules = false;
-
-			lstSchedule = filterByPublicity();
 
 			// make daily summary dialog
 			if(dialogDailySummary == null){
@@ -325,10 +328,9 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 	}
 
 	@Override
-	public void onDailyScheduleClickListener(String day){
+	public void onDailyScheduleClickListener(Date date){
 		if(dialogDailySummary != null && !dialogDailySummary.isShowing()){
-			dayStr = day;
-			dialogDailySummary.show(CCDateUtil.makeDateCustom(dayStr, WelfareConst.WF_DATE_TIME_DATE));
+			dialogDailySummary.show(date);
 			refreshDialogData = true;
 			loadScheduleList();
 		}

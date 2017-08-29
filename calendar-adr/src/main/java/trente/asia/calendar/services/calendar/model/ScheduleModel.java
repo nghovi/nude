@@ -1,6 +1,7 @@
 package trente.asia.calendar.services.calendar.model;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import com.bluelinelabs.logansquare.annotation.JsonObject;
@@ -48,6 +49,8 @@ public class ScheduleModel{
 	public Boolean			isWarning;
 	public UserModel		owner;
 	public String			scheduleColor	= "#FF0000";
+	public Date				startDateObj;
+	public Date				endDateObj;
 
 	public ScheduleModel(){
 
@@ -145,5 +148,10 @@ public class ScheduleModel{
 		cloned.isWarning = scheduleModel.isWarning;
 		cloned.owner = scheduleModel.owner;
 		return cloned;
+	}
+
+	public void makeDateObjects(){
+		startDateObj = CCDateUtil.makeDateCustom(startDate, WelfareConst.WF_DATE_TIME);
+		endDateObj = CCDateUtil.makeDateCustom(endDate, WelfareConst.WF_DATE_TIME);
 	}
 }
