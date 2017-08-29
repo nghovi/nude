@@ -24,6 +24,7 @@ import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.calendar.BuildConfig;
 import trente.asia.calendar.R;
+import trente.asia.calendar.commons.utils.ClUtil;
 import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.model.WorkOffer;
@@ -180,7 +181,7 @@ public class DailyScheduleList extends LinearLayout{
 	public static List<WorkOffer> getSortedWorkOffersByDate(List<WorkOffer> offers, Date date){
 		List<WorkOffer> result = new ArrayList<>();
 		for(WorkOffer offer : offers){
-			if(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, date).equals(offer.startDateString)){
+			if(ClUtil.belongPeriod(date, offer.startDate, offer.endDate)){
 				result.add(offer);
 			}
 		}

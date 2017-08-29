@@ -2,6 +2,11 @@ package trente.asia.calendar.services.calendar.model;
 
 import com.bluelinelabs.logansquare.annotation.JsonObject;
 
+import java.util.Date;
+
+import asia.chiase.core.util.CCDateUtil;
+import trente.asia.welfare.adr.define.WelfareConst;
+
 /**
  * HolidayModel
  *
@@ -25,7 +30,7 @@ public class WorkOffer{
 	public WorkOffer(){
 	}
 
-	public String	userColor = "#FFFFFF";
+	public String	userColor	= "#FFFFFF";
 	public String	userId;
 	public String	userName;
 	public String	offerType;
@@ -50,5 +55,12 @@ public class WorkOffer{
 
 	public String	startDate;
 	public String	endDate;
+	public Date		startDateObj;
+	public Date		endDateObj;
+
+	public void makeDateObjects(){
+		startDateObj = CCDateUtil.makeDateCustom(startDate, WelfareConst.WF_DATE_TIME);
+		endDateObj = CCDateUtil.makeDateCustom(endDate, WelfareConst.WF_DATE_TIME);
+	}
 
 }

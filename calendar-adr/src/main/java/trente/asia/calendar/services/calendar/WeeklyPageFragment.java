@@ -569,16 +569,16 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 			txtDayNumber.setTypeface(null, Typeface.BOLD);
 		}
 
-		// if(Calendar.SUNDAY == dayOfWeek){
-		// txtTitleItem.setTextColor(Color.RED);
-		// txtDayNumber.setTextColor(Color.RED);
-		// }else if(Calendar.SATURDAY == dayOfWeek){
-		// txtTitleItem.setTextColor(Color.BLUE);
-		// txtDayNumber.setTextColor(Color.BLUE);
-		// }else{
-		// txtTitleItem.setTextColor(getNormalDayColor());
-		// txtDayNumber.setTextColor(getNormalDayColor());
-		// }
+		if(Calendar.SUNDAY == dayOfWeek){
+			txtTitleItem.setTextColor(Color.RED);
+			// txtDayNumber.setTextColor(Color.RED);
+		}else if(Calendar.SATURDAY == dayOfWeek){
+			txtTitleItem.setTextColor(Color.BLUE);
+			// txtDayNumber.setTextColor(Color.BLUE);
+		}else{
+			txtTitleItem.setTextColor(getNormalDayColor());
+			// txtDayNumber.setTextColor(getNormalDayColor());
+		}
 
 		lnrDay.addView(txtDayNumber);
 		lnrDay.addView(txtTitleItem);
