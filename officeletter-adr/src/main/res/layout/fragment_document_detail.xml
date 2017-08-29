@@ -14,12 +14,14 @@
                 android:layout_height="match_parent"/>
             <TextView
                 android:id="@+id/pdf_note"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:background="#66cccccc"
                 android:padding="@dimen/margin_16dp"
+                android:layout_margin="@dimen/margin_32dp"
+                android:scrollbars="vertical"
                 android:gravity="top"
-                android:layout_alignParentBottom="true"
+                android:layout_centerInParent="true"
                 android:textColor="@color/chiase_black"
                 android:textSize="16sp"
                 android:visibility="gone"/>
