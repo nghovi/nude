@@ -40,7 +40,7 @@ public class GroupSelectFragment extends AbstractClFragment implements FilterDep
 	@Override
 	public void initView(){
 		super.initView();
-		initHeader(R.drawable.wf_back_white, getString(R.string.select_group), null);
+		initHeader(R.drawable.wf_back_white, getString(R.string.choose_group), null);
 		mLnrFilterDept = (FilterDeptLinearLayout)getView().findViewById(R.id.lnr_id_filter_dept);
 		this.mLnrFilterDept.enableSimpleAvatar(true);
 		this.mLnrFilterDept.fillInData(myGroups, userFragment.selectedMyGroups, groups, userFragment.selectedGroups, depts, userFragment.selectedDepts, null);

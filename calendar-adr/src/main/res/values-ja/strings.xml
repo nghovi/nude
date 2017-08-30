@@ -109,4 +109,7 @@
     <string name="select_facility">施設選択</string>
     <string name="comma">、</string>
     <string name="day">曜</string>
+    <string name="select_user_all">すべて選択</string>
+    <string name="choose_user">参加ユーザー</string>
+    <string name="choose_group">部門選択</string>
 </resources>

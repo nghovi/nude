@@ -111,4 +111,7 @@
     <string name="select_facility">Select facility</string>
     <string name="comma">,</string>
     <string name="day"></string>
+    <string name="select_user_all">Select all</string>
+    <string name="choose_user">Join user</string>
+    <string name="choose_group">Select department</string>
 </resources>

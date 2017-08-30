@@ -49,7 +49,7 @@
         <TextView
             style="@style/wl_common_text"
             android:layout_width="wrap_content"
-            android:text="@string/chiase_common_all" />
+            android:text="@string/select_user_all" />
 
         <CheckBox
             android:id="@+id/cbx_id_all_select_user"
