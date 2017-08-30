@@ -45,7 +45,6 @@ import trente.asia.calendar.services.todo.model.Todo;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.dialog.WfDialog;
 import trente.asia.welfare.adr.models.UserModel;
-import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 import trente.asia.welfare.adr.utils.WelfareUtil;
 
 /**
@@ -251,7 +250,7 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 			jsonObject.put("name", todo.name);
 			jsonObject.put("note", todo.note);
 			jsonObject.put("isFinish", true);
-			jsonObject.put("limitDateStr", todo.limitDate == null ? null : CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, todo.limitDate));
+			jsonObject.put("limitDate", todo.limitDate == null ? null : CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, todo.limitDate));
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
@@ -269,11 +268,11 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 			@Override
 			public int compare(ScheduleModel schedule1, ScheduleModel schedule2){
 				if(checkAllDayTime){
-					String startDate1 = WelfareFormatUtil.removeTime4Date(schedule1.startDate);
-					String endDate1 = WelfareFormatUtil.removeTime4Date(schedule1.endDate);
+					String startDate1 = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, schedule1.startDate);
+					String endDate1 = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, schedule1.endDate);
 
-					String startDate2 = WelfareFormatUtil.removeTime4Date(schedule2.startDate);
-					String endDate2 = WelfareFormatUtil.removeTime4Date(schedule2.endDate);
+					String startDate2 = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, schedule2.startDate);
+					String endDate2 = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, schedule2.endDate);
 
 					boolean diff1 = startDate1.equals(endDate1);
 					boolean diff2 = startDate2.equals(endDate2);
@@ -456,16 +455,16 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 				for(MonthlyCalendarRowView rowView : lstCalendarRow){
 					Date minDate = rowView.lstCalendarDay.get(0).date;
 					Date maxDate = rowView.lstCalendarDay.get(rowView.lstCalendarDay.size() - 1).date;
-					boolean isStartBelongPeriod = ClUtil.belongPeriod(schedule.startDateObj, minDate, maxDate);
-					boolean isEndBelongPeriod = ClUtil.belongPeriod(schedule.endDateObj, minDate, maxDate);
-					boolean isOverPeriod = schedule.startDateObj.compareTo(minDate) < 0 && schedule.endDateObj.compareTo(maxDate) > 0;
+					boolean isStartBelongPeriod = ClUtil.belongPeriod(schedule.startDate, minDate, maxDate);
+					boolean isEndBelongPeriod = ClUtil.belongPeriod(schedule.endDate, minDate, maxDate);
+					boolean isOverPeriod = schedule.startDate.compareTo(minDate) < 0 && schedule.endDate.compareTo(maxDate) > 0;
 
 					if(isStartBelongPeriod || isEndBelongPeriod || isOverPeriod){
 						rowView.addSchedule(schedule);
 					}
 				}
 			}else{
-				MonthlyCalendarDayView activeCalendarDay = ClUtil.findView4Day(lstCalendarDay, schedule.startDateObj, schedule.endDateObj);
+				MonthlyCalendarDayView activeCalendarDay = ClUtil.findView4Day(lstCalendarDay, schedule.startDate, schedule.endDate);
 				if(activeCalendarDay != null){
 					activeCalendarDay.addSchedule(schedule);
 				}

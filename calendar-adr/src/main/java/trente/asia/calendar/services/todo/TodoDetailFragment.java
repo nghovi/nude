@@ -165,7 +165,7 @@ public class TodoDetailFragment extends AbstractClFragment{
 			jsonObject.put("key", key);
 			jsonObject.put("name", edtTitle.getText().toString());
 			jsonObject.put("note", edtContent.getText().toString());
-			jsonObject.put("limitDateStr", limitDate);
+			jsonObject.put("limitDate", limitDate);
 		}catch(JSONException e){
 			e.printStackTrace();
 		}

@@ -17,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import asia.chiase.core.util.CCBooleanUtil;
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
@@ -218,7 +217,7 @@ public class DailyScheduleList extends LinearLayout{
 		TextView txtDate = (TextView)offerItemView.findViewById(R.id.txt_item_offer_date);
 		TextView txtType = (TextView)offerItemView.findViewById(R.id.txt_item_offer_type);
 		TextView txtStatus = (TextView)offerItemView.findViewById(R.id.txt_item_offer_status);
-		TextView txtNote = (TextView)offerItemView.findViewById(R.id.txt_item_offer_note);
+		// TextView txtNote = (TextView)offerItemView.findViewById(R.id.txt_item_offer_note);
 
 		WfPicassoHelper.loadImageWithDefaultIcon(context, BuildConfig.HOST, imgAvatar, offer.userAvatarPath, R.drawable.wf_profile);
 		txtUsername.setText(offer.userName);
@@ -247,7 +246,7 @@ public class DailyScheduleList extends LinearLayout{
 	public static List<UserModel> getSortedBirthdayUsersByDate(List<UserModel> userModels, Date date){
 		List<UserModel> result = new ArrayList<>();
 		for(UserModel userModel : userModels){
-			if(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_MM_DD, date).equals(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_MM_DD, CCDateUtil.makeDateCustom(userModel.dateBirth, WelfareConst.WF_DATE_TIME)))){
+			if(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_MM_DD, date).equals(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_MM_DD, userModel.dateBirth))){
 				result.add(userModel);
 			}
 		}
@@ -330,6 +329,6 @@ public class DailyScheduleList extends LinearLayout{
 	}
 
 	public static boolean isScheduleOf(ScheduleModel scheduleModel, Date date){
-		return CCDateUtil.compareDate(scheduleModel.startDateObj, date, false) <= 0 && CCDateUtil.compareDate(date, scheduleModel.endDateObj, false) <= 0;
+		return CCDateUtil.compareDate(scheduleModel.startDate, date, false) <= 0 && CCDateUtil.compareDate(date, scheduleModel.endDate, false) <= 0;
 	}
 }

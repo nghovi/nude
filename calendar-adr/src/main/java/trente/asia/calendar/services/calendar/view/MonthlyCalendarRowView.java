@@ -100,11 +100,11 @@ public class MonthlyCalendarRowView extends RelativeLayout{
 					return compareOffer(schedule1, schedule2);
 				}
 
-				Date startDate1 = schedule1.startDateObj;
-				Date startDate2 = schedule2.startDateObj;
+				Date startDate1 = schedule1.startDate;
+				Date startDate2 = schedule2.startDate;
 
-				Date endDate1 = schedule1.endDateObj;
-				Date endDate2 = schedule2.endDateObj;
+				Date endDate1 = schedule1.endDate;
+				Date endDate2 = schedule2.endDate;
 
 				startDate1 = CCDateUtil.compareDate(startDate1, startDate, false) <= 0 ? startDate : startDate1;
 				startDate2 = CCDateUtil.compareDate(startDate2, startDate, false) <= 0 ? startDate : startDate2;
@@ -168,7 +168,7 @@ public class MonthlyCalendarRowView extends RelativeLayout{
 
 		// Date startDate = WelfareFormatUtil.makeDate(WelfareFormatUtil.removeTime4Date(scheduleModel.startDate));
 		// Date endDate = WelfareFormatUtil.makeDate(WelfareFormatUtil.removeTime4Date(scheduleModel.endDate));
-		List<MonthlyCalendarDayView> lstActiveCalendarDay = ClUtil.findListView4Day(lstCalendarDay, scheduleModel.startDateObj, scheduleModel.endDateObj);
+		List<MonthlyCalendarDayView> lstActiveCalendarDay = ClUtil.findListView4Day(lstCalendarDay, scheduleModel.startDate, scheduleModel.endDate);
 		List<MonthlyCalendarDayView> lstPassiveCalendarDay = getPassiveCalendarDays(lstCalendarDay, lstActiveCalendarDay);
 		int marginTop = ClUtil.getMaxInList(lstActiveCalendarDay) + ClConst.TEXT_VIEW_HEIGHT;
 

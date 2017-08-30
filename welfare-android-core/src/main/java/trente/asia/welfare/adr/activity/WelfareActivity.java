@@ -1,18 +1,25 @@
 package trente.asia.welfare.adr.activity;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import com.bluelinelabs.logansquare.LoganSquare;
+import com.bluelinelabs.logansquare.typeconverters.DateTypeConverter;
+
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.widget.Toast;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import trente.asia.android.activity.ChiaseActivity;
 import trente.asia.welfare.adr.R;
+import trente.asia.welfare.adr.define.WelfareConst;
 
 /**
  * WelfareActivity
@@ -21,8 +28,14 @@ import trente.asia.welfare.adr.R;
  */
 public class WelfareActivity extends ChiaseActivity{
 
-	public boolean isClearRegistrationId = false;
-    public Map<String, Object> dataMap = new HashMap<String, Object>();
+	@Override
+	protected void onCreate(Bundle savedInstanceState){
+		super.onCreate(savedInstanceState);
+		LoganSquare.registerTypeConverter(Date.class, new WelfareTimeConverter());
+	}
+
+	public boolean				isClearRegistrationId	= false;
+	public Map<String, Object>	dataMap					= new HashMap<String, Object>();
 
 	////////////// Device Back Button/////////////////////////////////////////////////////////////
 	public interface OnDeviceBackButtonClickListener{
@@ -114,5 +127,19 @@ public class WelfareActivity extends ChiaseActivity{
 		if(onActivityResultListener != null){
 			onActivityResultListener.onActivityResult(requestCode, resultCode, data);
 		}
+	}
+
+	public static class WelfareTimeConverter extends DateTypeConverter{
+
+		private DateFormat mDateFormat;
+
+		public WelfareTimeConverter(){
+			mDateFormat = new SimpleDateFormat(WelfareConst.WF_DATE_TIME);
+		}
+
+		public DateFormat getDateFormat(){
+			return mDateFormat;
+		}
+
 	}
 }

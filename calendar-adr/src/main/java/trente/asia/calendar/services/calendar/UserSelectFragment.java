@@ -89,6 +89,7 @@ public class UserSelectFragment extends AbstractClFragment{
 		groupAll.key = "-1";
 		groupAll.groupName = getString(R.string.chiase_common_all);
 		myGroups.add(0, groupAll);
+		selectedMyGroups.add(groupAll);
 	}
 
 	@Override

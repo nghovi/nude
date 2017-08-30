@@ -211,7 +211,7 @@ public class TodoListTodayFragment extends AbstractClFragment{
 			jsonObject.put("name", todo.name);
 			jsonObject.put("note", todo.note);
 			jsonObject.put("isFinish", isFinish);
-			jsonObject.put("limitDateStr", todo.limitDate == null ? null : CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, todo.limitDate));
+			jsonObject.put("limitDate", todo.limitDate == null ? null : CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, todo.limitDate));
 		}catch(JSONException e){
 			e.printStackTrace();
 		}

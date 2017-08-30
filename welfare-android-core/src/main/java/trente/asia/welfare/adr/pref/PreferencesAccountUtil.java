@@ -1,12 +1,20 @@
 package trente.asia.welfare.adr.pref;
 
+import java.lang.reflect.Type;
 import java.util.Date;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 
 import android.content.Context;
 
-import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.util.CAPreferences;
 import trente.asia.welfare.adr.models.SettingModel;
 import trente.asia.welfare.adr.models.UserModel;
@@ -49,7 +57,7 @@ public class PreferencesAccountUtil{
 	 * @param user
 	 */
 	public void saveUserPref(UserModel user){
-		Gson gson = new Gson();
+		Gson gson = getGson();
 		String json = gson.toJson(user);
 		pref.set(KEY_PREF_USER, json);
 	}
@@ -62,10 +70,30 @@ public class PreferencesAccountUtil{
 	public UserModel getUserPref(){
 		String json = pref.get(KEY_PREF_USER);
 		UserModel userCS = null;
-		Gson gson = new Gson();
+		Gson gson = getGson();
 		userCS = gson.fromJson(json, UserModel.class);
 		if(userCS == null) userCS = new UserModel();
 		return userCS;
+	}
+
+	private Gson getGson(){
+		JsonSerializer<Date> ser = new JsonSerializer<Date>() {
+
+			@Override
+			public JsonElement serialize(Date src, Type typeOfSrc, JsonSerializationContext context){
+				return src == null ? null : new JsonPrimitive(src.getTime());
+			}
+		};
+
+		JsonDeserializer<Date> deser = new JsonDeserializer<Date>() {
+
+			@Override
+			public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException{
+				return json == null ? null : new Date(json.getAsLong());
+			}
+		};
+
+		return new GsonBuilder().registerTypeAdapter(Date.class, ser).registerTypeAdapter(Date.class, deser).create();
 	}
 
 	/**

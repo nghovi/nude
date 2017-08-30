@@ -21,6 +21,7 @@ import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.models.UserModel;
+import trente.asia.welfare.adr.utils.WelfareUtil;
 
 /**
  * ScheduleDetailFragment
@@ -107,7 +108,7 @@ public class ScheduleDetailFragment extends AbstractScheduleFragment{
 			if(CCStringUtil.isEmpty(schedule.repeatEnd)){
 				txtRepeatUntil.setText(getString(R.string.cl_schedule_repeat_limit_forever));
 			}else{
-				txtRepeatUntil.setText(schedule.repeatEnd.split(" ")[0]);
+				txtRepeatUntil.setText(WelfareUtil.getDateString(schedule.repeatEnd));
 			}
 		}
 	}

@@ -168,16 +168,20 @@ public class WelfareUtil{
 	public static String getYearMonthStr(int year, int monthOfYear){
 		return year + "/" + getDisplayNum(monthOfYear);
 	}
+	//
+	// /**
+	// * make date with server format: yyyy/MM/dd HH:mm:ss
+	// *
+	// * @param data
+	// * @return
+	// */
+	// public static Date makeDate(String data){
+	// Date date = CCDateUtil.makeDateCustom(data, WelfareConst.WF_DATE_TIME);
+	// return date;
+	// }
 
-	/**
-	 * make date with server format: yyyy/MM/dd HH:mm:ss
-	 *
-	 * @param data
-	 * @return
-	 */
-	public static Date makeDate(String data){
-		Date date = CCDateUtil.makeDateCustom(data, WelfareConst.WF_DATE_TIME);
-		return date;
+	public static String getDateString(Date date){
+		return CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, date);
 	}
 
 	public static Date makeMonthWithFirstDate(){
