@@ -15,6 +15,8 @@ import com.google.gson.JsonSerializer;
 
 import android.content.Context;
 
+import asia.chiase.core.util.CCDateUtil;
+import asia.chiase.core.util.CCFormatUtil;
 import trente.asia.android.util.CAPreferences;
 import trente.asia.welfare.adr.models.SettingModel;
 import trente.asia.welfare.adr.models.UserModel;
@@ -89,7 +91,15 @@ public class PreferencesAccountUtil{
 
 			@Override
 			public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException{
-				return json == null ? null : new Date(json.getAsLong());
+				if (json == null) {
+					return null;
+				}
+
+				if (json.getAsString().contains("/")) {
+					return CCDateUtil.makeDateCustom(json.getAsString(), "yyyy/MM/dd hh:mm:ss");
+				} else {
+					return new Date(json.getAsLong());
+				}
 			}
 		};
 

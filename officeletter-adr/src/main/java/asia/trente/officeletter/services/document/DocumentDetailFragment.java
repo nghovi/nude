@@ -3,6 +3,7 @@ package asia.trente.officeletter.services.document;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,6 +58,7 @@ public class DocumentDetailFragment extends AbstractOLFragment implements View.O
     protected void initView() {
         super.initView();
         initHeader(R.drawable.wf_back_white, documentModel.document.documentTitle, R.drawable.ic_download);
+        binding.pdfNote.setMovementMethod(new ScrollingMovementMethod());
     }
 
     @Override

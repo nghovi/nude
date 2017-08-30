@@ -14,6 +14,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -153,8 +154,8 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 	public void buildBodyLayout(){
 		Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
 		int thisYear = calendar.get(Calendar.YEAR);
-
-		String birthday = thisYear + myself.dateBirth.substring(4);
+		String dateBirth = DateFormat.format("yyyy/MM/dd hh:mm:ss", myself.dateBirth).toString();
+		String birthday = thisYear + dateBirth.substring(4);
 		Date date = CCDateUtil.makeDateCustom(birthday, "yyyy/MM/dd hh:mm:ss");
 
 		long difference = (System.currentTimeMillis() - date.getTime()) / 1000L;
@@ -162,7 +163,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 			isBirthday = true;
 		}
 
-		birthday = (thisYear - 1) + myself.dateBirth.substring(4);
+		birthday = (thisYear - 1) + dateBirth.substring(4);
 		date = CCDateUtil.makeDateCustom(birthday, "yyyy/MM/dd hh:mm:ss");
 		difference = (System.currentTimeMillis() - date.getTime()) / 1000L;
 		if(difference > 0 && difference < 31L * 24L * 3600L){
