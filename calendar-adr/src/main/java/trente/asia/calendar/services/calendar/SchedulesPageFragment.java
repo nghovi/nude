@@ -1,5 +1,7 @@
 package trente.asia.calendar.services.calendar;
 
+import static trente.asia.calendar.services.calendar.MonthlyPageFragment.getScheduleComparator;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -46,12 +48,10 @@ import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
 
-import static trente.asia.calendar.services.calendar.MonthlyPageFragment.getScheduleComparator;
-
 /**
  * SchedulesPageFragment
  *
- * @author TrungND
+ * @author VietNH
  */
 public abstract class SchedulesPageFragment extends ClPageFragment implements WeeklyScheduleListAdapter.OnScheduleItemClickListener,DailyScheduleClickListener{
 
@@ -209,18 +209,9 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 			rooms = LoganSquare.parseList(response.optString("rooms"), RoomModel.class);
 			todos = LoganSquare.parseList(response.optString("todoList"), Todo.class);
 
-			// Make date objects for schedules
-			for(ScheduleModel scheduleModel : lstSchedule){
-				scheduleModel.makeDateObjects();
-			}
-
 			lstSchedule = filterByPublicity();
 
 			Collections.sort(lstSchedule, getScheduleComparator(true));
-
-			for(WorkOffer workOffer : lstWorkOffer){
-				workOffer.makeDateObjects();
-			}
 
 			if(refreshDialogData && !newScheduleStrings.equals(scheduleStrings)){
 				isChangedData = true;

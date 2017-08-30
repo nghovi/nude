@@ -2,8 +2,6 @@ package trente.asia.calendar.services.calendar;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +12,6 @@ import org.json.JSONObject;
 import com.bluelinelabs.logansquare.LoganSquare;
 import com.google.gson.Gson;
 
-import android.graphics.Color;
 import android.support.v7.widget.SwitchCompat;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,15 +20,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import asia.chiase.core.util.CCBooleanUtil;
-import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.view.ChiaseTextView;
 import trente.asia.android.view.util.CAObjectSerializeUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
-import trente.asia.calendar.commons.dialogs.ClFilterUserListDialog;
 import trente.asia.calendar.commons.fragments.AbstractClFragment;
-import trente.asia.calendar.commons.model.ScheduleRepeatModel;
 import trente.asia.calendar.commons.utils.ClRepeatUtil;
 import trente.asia.calendar.commons.utils.ClUtil;
 import trente.asia.calendar.commons.views.UserListLinearLayout;
@@ -39,10 +33,8 @@ import trente.asia.calendar.services.calendar.model.CalendarModel;
 import trente.asia.calendar.services.calendar.model.CategoryModel;
 import trente.asia.calendar.services.calendar.model.RoomModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
-import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.models.ApiObjectModel;
 import trente.asia.welfare.adr.models.UserModel;
-import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 import trente.asia.welfare.adr.utils.WelfareUtil;
 
 /**
@@ -53,7 +45,6 @@ import trente.asia.welfare.adr.utils.WelfareUtil;
 public class AbstractScheduleFragment extends AbstractClFragment{
 
 	protected ScheduleModel			schedule;
-	protected List<ApiObjectModel>	calendarHolders;
 	protected UserListLinearLayout	lnrUserList;
 
 	protected List<RoomModel>		rooms;
@@ -105,7 +96,7 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 		try{
 			if(schedule != null){
 				jsonObject.put("key", schedule.key);
-				jsonObject.put("searchDateString", schedule.startDate.split(" ")[0]);
+				jsonObject.put("searchDateString", WelfareUtil.getDateString(schedule.startDate));
 			}
 			jsonObject.put("calendars", prefAccUtil.get(ClConst.SELECTED_CALENDAR_STRING));
 		}catch(JSONException e){
@@ -129,9 +120,6 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 			rooms = LoganSquare.parseList(response.optString("rooms"), RoomModel.class);
 			users = LoganSquare.parseList(response.optString("users"), UserModel.class);
 			categories = LoganSquare.parseList(response.optString("categories"), CategoryModel.class);
-
-			schedule.makeDateObjects();
-
 			if(getView() != null) inflateWithData(txtRoom, txtCategory, rooms, categories, schedule);
 		}catch(IOException e){
 			e.printStackTrace();
@@ -167,15 +155,14 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 			showJoinUserList();
 
 			// set time
-			txtStartDate.setText(schedule.startDate.split(" ")[0]);
+			txtStartDate.setText(WelfareUtil.getDateString(schedule.startDate));
 			txtStartTime.setText(schedule.startTime);
-			txtEndDate.setText(schedule.endDate.split(" ")[0]);
+			txtEndDate.setText(WelfareUtil.getDateString(schedule.endDate));
 			txtEndTime.setText(schedule.endTime);
 
 			// show repeat data
 			if(ClRepeatUtil.isRepeat(schedule.repeatType)){
-				ScheduleRepeatModel repeatModel = new ScheduleRepeatModel(schedule);
-				txtRepeat.setText(ClRepeatUtil.getRepeatDescription(repeatModel, activity));
+				txtRepeat.setText(ClRepeatUtil.getRepeatDescription(schedule, activity));
 			}else{
 				txtRepeat.setText(getString(R.string.chiase_common_none));
 			}

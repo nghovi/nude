@@ -15,7 +15,6 @@ import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.define.CsConst;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
-import trente.asia.calendar.commons.model.ScheduleRepeatModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.view.MonthlyCalendarDayView;
 import trente.asia.welfare.adr.define.WelfareConst;
@@ -48,7 +47,7 @@ public class ClRepeatUtil{
 			if(ClConst.SCHEDULE_REPEAT_LIMIT_FOREVER.equals(scheduleModel.repeatLimitType)){
 				for(MonthlyCalendarDayView dayView : lstView){
 					Date dateView = WelfareFormatUtil.makeDate(dayView.day);
-					if(WfDateUtil.diffDate(dateView, scheduleModel.startDateObj) >= 0){
+					if(WfDateUtil.diffDate(dateView, scheduleModel.startDate) >= 0){
 						if(lstRepeatData.contains(String.valueOf(CCDateUtil.makeCalendar(dateView).get(Calendar.DAY_OF_WEEK)))){
 							lstCalendarDay.add(dayView);
 						}
@@ -78,9 +77,9 @@ public class ClRepeatUtil{
 			if(ClConst.SCHEDULE_REPEAT_LIMIT_FOREVER.equals(scheduleModel.repeatLimitType)){
 				for(MonthlyCalendarDayView dayView : lstView){
 					Date dateView = WelfareFormatUtil.makeDate(dayView.day);
-					if(WfDateUtil.diffDate(dateView, scheduleModel.startDateObj) >= 0){
+					if(WfDateUtil.diffDate(dateView, scheduleModel.startDate) >= 0){
 						int dayOfMonth = CCDateUtil.makeCalendar(dateView).get(Calendar.DAY_OF_MONTH);
-						int dayOfMonthStart = CCDateUtil.makeCalendar(scheduleModel.startDateObj).get(Calendar.DAY_OF_MONTH);
+						int dayOfMonthStart = CCDateUtil.makeCalendar(scheduleModel.startDate).get(Calendar.DAY_OF_MONTH);
 						if(dayOfMonth == dayOfMonthStart){
 							lstCalendarDay.add(dayView);
 						}
@@ -91,7 +90,7 @@ public class ClRepeatUtil{
 					Date dateView = WelfareFormatUtil.makeDate(dayView.day);
 					if(ClUtil.belongPeriod(dateView, scheduleModel.startDate, scheduleModel.repeatEnd)){
 						int dayOfMonth = CCDateUtil.makeCalendar(dateView).get(Calendar.DAY_OF_MONTH);
-						int dayOfMonthStart = CCDateUtil.makeCalendar(scheduleModel.startDateObj).get(Calendar.DAY_OF_MONTH);
+						int dayOfMonthStart = CCDateUtil.makeCalendar(scheduleModel.startDate).get(Calendar.DAY_OF_MONTH);
 						if(dayOfMonth == dayOfMonthStart){
 							lstCalendarDay.add(dayView);
 						}
@@ -124,7 +123,7 @@ public class ClRepeatUtil{
 		int indexSchedule = 0;
 
 		// Date startDate = WelfareUtil.makeDate(scheduleModel.startDate);
-		Calendar startCalendar = CCDateUtil.makeCalendar(scheduleModel.startDateObj);
+		Calendar startCalendar = CCDateUtil.makeCalendar(scheduleModel.startDate);
 		List<String> lstDayOfWeek = Arrays.asList(scheduleModel.repeatData.split(","));
 
 		if(ClConst.SCHEDULE_REPEAT_TYPE_WEEKLY.equals(scheduleModel.repeatType)){
@@ -170,7 +169,7 @@ public class ClRepeatUtil{
 	/**
 	 * get repeat description
 	 */
-	public static String getRepeatDescription(ScheduleRepeatModel repeatModel, Context context){
+	public static String getRepeatDescription(ScheduleModel repeatModel, Context context){
 		StringBuilder builder = new StringBuilder();
 
 		if(!isRepeat(repeatModel.repeatType)){
@@ -210,7 +209,7 @@ public class ClRepeatUtil{
 			String[] repeatDays = repeatData.split(",");
 			for(String repeatDay : repeatDays){
 				calendar.set(Calendar.DAY_OF_WEEK, Integer.valueOf(repeatDay));
-				builder.append(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_WEEK_DAY_SHORT, calendar.getTime()) + context.getString(R.string.day) + context.getString(R.string.comma) + " ");
+				builder.append(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_WEEK_DAY_SHORT, calendar.getTime()) + context.getString(R.string.comma) + " ");
 			}
 		}
 		if(builder.length() > 0){

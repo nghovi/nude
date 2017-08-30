@@ -1,6 +1,7 @@
 package trente.asia.android.activity;
 
 import java.io.IOException;
+import java.util.Date;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -8,6 +9,8 @@ import org.json.JSONObject;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+
+import com.bluelinelabs.logansquare.LoganSquare;
 
 import asia.chiase.core.util.CCStringUtil;
 import okhttp3.OkHttpClient;

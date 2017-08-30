@@ -15,6 +15,6 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
-#-keep class com.bluelinelabs.logansquare.** { *; }
-#-keep @com.bluelinelabs.logansquare.annotation.JsonObject class *
-#-keep class **$$JsonObjectMapper { *; }
+-keep class com.bluelinelabs.logansquare.** { *; }
+-keep @com.bluelinelabs.logansquare.annotation.JsonObject class *
+-keep class **$$JsonObjectMapper { *; }

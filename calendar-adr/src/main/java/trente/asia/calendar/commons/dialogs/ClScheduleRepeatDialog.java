@@ -24,12 +24,11 @@ import trente.asia.android.view.adapter.ChiaseSpinnerAdapter;
 import trente.asia.android.view.model.ChiaseSpinnerModel;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
-import trente.asia.calendar.commons.model.ScheduleRepeatModel;
 import trente.asia.calendar.commons.utils.ClRepeatUtil;
 import trente.asia.calendar.commons.views.RepeatWeeklyDayLinearLayout;
+import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
-import trente.asia.welfare.adr.utils.WelfareUtil;
 
 /**
  * ClScheduleRepeatDialog
@@ -55,7 +54,7 @@ public class ClScheduleRepeatDialog extends CLOutboundDismissDialog{
 	private SwitchCompat				swtRepeat;
 	private EditText					edtLimitTimes;
 
-	private ScheduleRepeatModel			repeatModel		= new ScheduleRepeatModel();
+	private ScheduleModel				repeatModel		= new ScheduleModel();
 	private String						startDateStr;
 	private List<ChiaseSpinnerModel>	lstRepeatType;
 	private List<ChiaseSpinnerModel>	lstRepeatLimit;
@@ -168,7 +167,7 @@ public class ClScheduleRepeatDialog extends CLOutboundDismissDialog{
 					if(ClConst.SCHEDULE_REPEAT_LIMIT_FOREVER.equals(repeatModel.repeatLimitType) || CCStringUtil.isEmpty(repeatModel.repeatLimitType)){
 						txtUntil.setText(mContext.getString(R.string.cl_schedule_repeat_limit_forever));
 					}else{
-						txtUntil.setText(repeatModel.repeatEnd);
+						txtUntil.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, repeatModel.repeatEnd));
 					}
 				}
 				ClScheduleRepeatDialog.this.dismiss();
@@ -239,7 +238,7 @@ public class ClScheduleRepeatDialog extends CLOutboundDismissDialog{
 		repeatModel.repeatLimitType = repeatLimit.key;
 		if(ClConst.SCHEDULE_REPEAT_LIMIT_FOREVER.equals(repeatLimit.key)){
 		}else if(ClConst.SCHEDULE_REPEAT_LIMIT_UNTIL.equals(repeatLimit.key)){
-			repeatModel.repeatEnd = txtLimitUtil.getText().toString();
+			repeatModel.repeatEnd = CCDateUtil.makeDateCustom(txtLimitUtil.getText().toString(), WelfareConst.WF_DATE_TIME_DATE);
 		}else{
 			String timesValue = edtLimitTimes.getText().toString();
 			if(CCStringUtil.isEmpty(timesValue)){
@@ -254,10 +253,9 @@ public class ClScheduleRepeatDialog extends CLOutboundDismissDialog{
 
 	public void setStartDateStr(String startDateStr){
 		this.startDateStr = startDateStr;
-		// this.initDefaultValue();
 	}
 
-	public void setRepeatModel(ScheduleRepeatModel repeatModel){
+	public void setRepeatModel(ScheduleModel repeatModel){
 		this.repeatModel = repeatModel;
 		this.spnRepeatType.setSelection(CsUtil.findPosition4Spinner(lstRepeatType, repeatModel.repeatType));
 		this.initDefaultValue();
@@ -265,16 +263,14 @@ public class ClScheduleRepeatDialog extends CLOutboundDismissDialog{
 		this.spnRepeatLimit.setSelection(CsUtil.findPosition4Spinner(lstRepeatLimit, repeatModel.repeatLimitType));
 		if(ClConst.SCHEDULE_REPEAT_LIMIT_FOREVER.equals(repeatModel.repeatLimitType)){
 		}else if(ClConst.SCHEDULE_REPEAT_LIMIT_UNTIL.equals(repeatModel.repeatLimitType)){
-			Date repeatEndDate = WelfareUtil.makeDate(repeatModel.repeatEnd);
-			calendarLimit = CCDateUtil.makeCalendar(repeatEndDate);
+			calendarLimit = CCDateUtil.makeCalendar(repeatModel.repeatEnd);
 			datePickerDialogLimit.getDatePicker().updateDate(calendarLimit.get(Calendar.YEAR), calendarLimit.get(Calendar.MONTH), calendarLimit.get(Calendar.DAY_OF_MONTH));
-			// txtLimitUtil.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, repeatEndDate));
 		}else{
 			edtLimitTimes.setText(repeatModel.repeatInterval);
 		}
 	}
 
-	public ScheduleRepeatModel getRepeatModel(){
+	public ScheduleModel getRepeatModel(){
 		return repeatModel;
 	}
 }

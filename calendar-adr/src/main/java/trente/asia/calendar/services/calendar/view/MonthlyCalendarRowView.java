@@ -100,33 +100,34 @@ public class MonthlyCalendarRowView extends RelativeLayout{
 					return compareOffer(schedule1, schedule2);
 				}
 
-				Date startDate1 = schedule1.startDateObj;
-				Date startDate2 = schedule2.startDateObj;
+				Date startDate1 = schedule1.startDate;
+				Date startDate2 = schedule2.startDate;
 
-				Date endDate1 = schedule1.endDateObj;
-				Date endDate2 = schedule2.endDateObj;
+				Date endDate1 = schedule1.endDate;
+				Date endDate2 = schedule2.endDate;
 
 				startDate1 = CCDateUtil.compareDate(startDate1, startDate, false) <= 0 ? startDate : startDate1;
 				startDate2 = CCDateUtil.compareDate(startDate2, startDate, false) <= 0 ? startDate : startDate2;
 
-				endDate1 = CCDateUtil.compareDate(endDate1, endDate, false) >= 0 ? endDate : endDate1;
-				endDate2 = CCDateUtil.compareDate(endDate2, endDate, false) >= 0 ? endDate : endDate2;
-
-				long startDate1Long = CCDateUtil.makeDate(startDate1).getTime();
-				long startDate2Long = CCDateUtil.makeDate(startDate2).getTime();
-
-				long period1 = CCDateUtil.makeDate(endDate1).getTime() - startDate1Long;
-				long period2 = CCDateUtil.makeDate(endDate2).getTime() - startDate2Long;
-
-				int startCompareResult = Long.compare(startDate1Long, startDate2Long);
+				int startCompareResult = CCDateUtil.compareDate(startDate1, startDate2, false);
 
 				if(startCompareResult == 0){
+					endDate1 = CCDateUtil.compareDate(endDate1, endDate, false) >= 0 ? endDate : endDate1;
+					endDate2 = CCDateUtil.compareDate(endDate2, endDate, false) >= 0 ? endDate : endDate2;
+
+					long startDate1Long = CCDateUtil.makeDate(startDate1).getTime();
+					long startDate2Long = CCDateUtil.makeDate(startDate2).getTime();
+
+					long period1 = CCDateUtil.makeDate(endDate1).getTime() - startDate1Long;
+					long period2 = CCDateUtil.makeDate(endDate2).getTime() - startDate2Long;
+
 					int lengthCompareResult = Long.compare(period2, period1);
 					if(lengthCompareResult == 0){
 						return schedule1.scheduleName.compareTo(schedule2.scheduleName);
 					}
 					return lengthCompareResult;
 				}
+
 				return startCompareResult;
 			}
 		};
@@ -167,7 +168,7 @@ public class MonthlyCalendarRowView extends RelativeLayout{
 
 		// Date startDate = WelfareFormatUtil.makeDate(WelfareFormatUtil.removeTime4Date(scheduleModel.startDate));
 		// Date endDate = WelfareFormatUtil.makeDate(WelfareFormatUtil.removeTime4Date(scheduleModel.endDate));
-		List<MonthlyCalendarDayView> lstActiveCalendarDay = ClUtil.findListView4Day(lstCalendarDay, scheduleModel.startDateObj, scheduleModel.endDateObj);
+		List<MonthlyCalendarDayView> lstActiveCalendarDay = ClUtil.findListView4Day(lstCalendarDay, scheduleModel.startDate, scheduleModel.endDate);
 		List<MonthlyCalendarDayView> lstPassiveCalendarDay = getPassiveCalendarDays(lstCalendarDay, lstActiveCalendarDay);
 		int marginTop = ClUtil.getMaxInList(lstActiveCalendarDay) + ClConst.TEXT_VIEW_HEIGHT;
 

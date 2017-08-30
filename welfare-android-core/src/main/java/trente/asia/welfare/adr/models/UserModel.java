@@ -2,13 +2,14 @@ package trente.asia.welfare.adr.models;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
+
+import com.bluelinelabs.logansquare.annotation.JsonField;
 
 import asia.chiase.core.util.CCCollectionUtil;
-import io.realm.annotations.Ignore;
+import trente.asia.welfare.adr.activity.WelfareActivity;
 
 /**
  * UserModel
@@ -33,7 +34,8 @@ public class UserModel extends BitmapModel implements Serializable{
 	public String		pathProfile;
 	public String		token;
 	public String		language	= "en";
-	public String		dateBirth;
+	@JsonField(typeConverter = WelfareActivity.WelfareTimeConverter.class)
+	public Date			dateBirth;
 	public String		color		= "#FF0000";
 
 	public UserModel(){

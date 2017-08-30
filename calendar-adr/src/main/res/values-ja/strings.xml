@@ -70,8 +70,8 @@
     <string name="coming_soon">近日公開</string>
     <string name="FM_CL_001">%1$s %2$s さんが %3$sスケジュールを作成しました</string>
     <string name="FM_CL_002">%1$s %2$s さんが %3$sスケジュールを編集しました</string>
-    <string name="FM_CL_003">Today’s schedule: %1$s item(s) Today’s To Do: %2$s item(s)</string>
-    <string name="FM_CL_004">Tomorrow’s schedule: %1$s item(s) Tomorrow’s To Do: %2$s item(s)</string>
+    <string name="FM_CL_003">Today\’s schedule: %1$s item(s) Today\’s To Do: %2$s item(s)</string>
+    <string name="FM_CL_004">Tomorrow\’s schedule: %1$s item(s) Tomorrow\’s To Do: %2$s item(s)</string>
 
 
     <string name="cl_schedule_holiday_name">[H]%1$s</string>
@@ -109,4 +109,7 @@
     <string name="select_facility">施設選択</string>
     <string name="comma">、</string>
     <string name="day">曜</string>
+    <string name="select_user_all">すべて選択</string>
+    <string name="choose_user">参加ユーザー</string>
+    <string name="choose_group">部門選択</string>
 </resources>

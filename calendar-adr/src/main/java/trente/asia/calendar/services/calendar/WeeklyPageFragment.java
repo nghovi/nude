@@ -55,7 +55,7 @@ import trente.asia.welfare.adr.utils.WelfareUtil;
 /**
  * WeeklyPageFragment
  *
- * @author TrungND
+ * @author VietNH
  */
 public class WeeklyPageFragment extends SchedulesPageFragment{
 
@@ -179,33 +179,31 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 
 		// todo
 		for(Todo todo : todos){
-			if(!CCStringUtil.isEmpty(todo.limitDate)){
-				final Calendar c2 = CCDateUtil.makeCalendarWithDateOnly(CCDateUtil.makeDateCustom(todo.limitDate, WelfareConst.WF_DATE_TIME));
-				int dayDistance = c2.get(Calendar.DAY_OF_YEAR) - cStartWeek.get(Calendar.DAY_OF_YEAR);
+			final Calendar c2 = CCDateUtil.makeCalendarWithDateOnly(todo.limitDate);
+			int dayDistance = c2.get(Calendar.DAY_OF_YEAR) - cStartWeek.get(Calendar.DAY_OF_YEAR);
 
-				if(!columnTopMarginsMap.keySet().contains(dayDistance)){
-					int leftMargin = cellWidth * (1 + dayDistance);
-					topMargin = getNextTopMargin(dayDistance, dayDistance);
-					TextView textView = makeTextView(activity, getString(R.string.cl_footer_todo), leftMargin, topMargin, cellWidth, Color.GRAY, 0, Gravity.CENTER);
-					textView.setOnClickListener(new View.OnClickListener() {
+			if(!columnTopMarginsMap.keySet().contains(dayDistance)){
+				int leftMargin = cellWidth * (1 + dayDistance);
+				topMargin = getNextTopMargin(dayDistance, dayDistance);
+				TextView textView = makeTextView(activity, getString(R.string.cl_footer_todo), leftMargin, topMargin, cellWidth, Color.GRAY, 0, Gravity.CENTER);
+				textView.setOnClickListener(new View.OnClickListener() {
 
-						@Override
-						public void onClick(View v){
-							gotoTodoListTodayFragment(c2);
-						}
-					});
-					rltPart1.addView(textView);
-					itemNum++;
-				}
+					@Override
+					public void onClick(View v){
+						gotoTodoListTodayFragment(c2);
+					}
+				});
+				rltPart1.addView(textView);
+				itemNum++;
 			}
 		}
 
 		Map<String, Boolean> birthdayIconMap = new HashMap<>();
 		// birthday
 		for(UserModel userModel : lstBirthdayUser){
-			String keyDate = userModel.dateBirth.split(" ")[0];
+			String keyDate = WelfareUtil.getDateString(userModel.dateBirth);
 			if(!birthdayIconMap.containsKey(keyDate)){
-				Calendar c2 = CCDateUtil.makeCalendarWithDateOnly(CCDateUtil.makeDateCustom(userModel.dateBirth, WelfareConst.WF_DATE_TIME));
+				Calendar c2 = CCDateUtil.makeCalendarWithDateOnly(userModel.dateBirth);
 				int dayDistance = c2.get(Calendar.DAY_OF_YEAR) - cStartWeek.get(Calendar.DAY_OF_YEAR);
 				int leftMargin = cellWidth * (1 + dayDistance) + (cellWidth - CELL_HEIGHT_PIXEL) / 2;
 				topMargin = getNextTopMargin(dayDistance, dayDistance);
@@ -223,7 +221,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 
 		// holiday
 		for(HolidayModel holidayModel : lstHoliday){
-			Calendar c2 = CCDateUtil.makeCalendarWithDateOnly(CCDateUtil.makeDateCustom(holidayModel.startDate, WelfareConst.WF_DATE_TIME));
+			Calendar c2 = CCDateUtil.makeCalendarWithDateOnly(holidayModel.startDate);
 			int dayDistance = c2.get(Calendar.DAY_OF_YEAR) - cStartWeek.get(Calendar.DAY_OF_YEAR);
 			int leftMargin = cellWidth * (1 + dayDistance);
 			topMargin = getNextTopMargin(dayDistance, dayDistance);
@@ -234,8 +232,8 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 
 		// offer
 		for(WorkOffer workOffer : lstWorkOffer){
-			Calendar cStart = CCDateUtil.makeCalendarWithDateOnly(CCDateUtil.makeDateCustom(workOffer.startDate, WelfareConst.WF_DATE_TIME));
-			Calendar cEnd = CCDateUtil.makeCalendarWithDateOnly(CCDateUtil.makeDateCustom(workOffer.endDate, WelfareConst.WF_DATE_TIME));
+			Calendar cStart = CCDateUtil.makeCalendarWithDateOnly(workOffer.startDate);
+			Calendar cEnd = CCDateUtil.makeCalendarWithDateOnly(workOffer.endDate);
 
 			int dayDistance = Math.max(0, cStart.get(Calendar.DAY_OF_YEAR) - cStartWeek.get(Calendar.DAY_OF_YEAR));
 			int dayDistanceEnd = Math.min(7, cEnd.get(Calendar.DAY_OF_YEAR) - cStartWeek.get(Calendar.DAY_OF_YEAR));
@@ -253,8 +251,8 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 		for(ScheduleModel schedule : schedules){
 
 			if(schedule.isAllDay){
-				Calendar cStart = CCDateUtil.makeCalendarWithDateOnly(schedule.startDateObj);
-				Calendar cEnd = CCDateUtil.makeCalendarWithDateOnly(schedule.endDateObj);
+				Calendar cStart = CCDateUtil.makeCalendarWithDateOnly(schedule.startDate);
+				Calendar cEnd = CCDateUtil.makeCalendarWithDateOnly(schedule.endDate);
 
 				int dayDistance = Math.max(0, cStart.get(Calendar.DAY_OF_YEAR) - cStartWeek.get(Calendar.DAY_OF_YEAR));
 				int dayDistanceEnd = Math.min(7, cEnd.get(Calendar.DAY_OF_YEAR) - cStartWeek.get(Calendar.DAY_OF_YEAR));
@@ -282,7 +280,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 			rltPart1.requestLayout();
 			rltExpandBar.setVisibility(View.GONE);
 		}else{
-			int maxTopMarginAllowed = MAX_ROW * CELL_HEIGHT_PIXEL;
+			int maxTopMarginAllowed = (MAX_ROW - 1) * CELL_HEIGHT_PIXEL;
 			while(rltExpandBar.getChildAt(1) != null){
 				rltExpandBar.removeViewAt(1);
 			}
@@ -303,7 +301,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 					textView.setGravity(Gravity.CENTER);
 					// textView.setBackgroundColor(Color.WHITE);
 					// textView.setBackground(ContextCompat.getDrawable(activity, R.drawable.wf_background_gray_border_white));
-					textView.setText("+" + (more + 1));
+					textView.setText("+" + more);
 					RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(cellWidth - 2, RelativeLayout.LayoutParams.WRAP_CONTENT);
 					rlp.setMargins((key + 1) * cellWidth, 0, 0, 0);
 					textView.setLayoutParams(rlp);
@@ -451,7 +449,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 			Map<Integer, Integer> leftMarginScheduleNumMap = new HashMap<>();
 
 			for(final ScheduleModel schedule : startTimeSchedulesMap.get(key)){
-				Calendar c2 = CCDateUtil.makeCalendarWithDateOnly(schedule.startDateObj);
+				Calendar c2 = CCDateUtil.makeCalendarWithDateOnly(schedule.startDate);
 				int dayDistance = c2.get(Calendar.DAY_OF_YEAR) - c1.get(Calendar.DAY_OF_YEAR);
 				int leftMargin = cellWidth * (1 + dayDistance);
 				int topMargin = 0;

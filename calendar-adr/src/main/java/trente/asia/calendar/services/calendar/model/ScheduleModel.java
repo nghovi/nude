@@ -1,19 +1,18 @@
 package trente.asia.calendar.services.calendar.model;
 
+import com.bluelinelabs.logansquare.annotation.JsonField;
+import com.bluelinelabs.logansquare.annotation.JsonObject;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import com.bluelinelabs.logansquare.annotation.JsonObject;
-
 import asia.chiase.core.util.CCDateUtil;
-import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.calendar.commons.defines.ClConst;
-import trente.asia.welfare.adr.define.WelfareConst;
+import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
-import trente.asia.welfare.adr.utils.WelfareUtil;
 
 /**
  * ScheduleModel
@@ -27,8 +26,10 @@ public class ScheduleModel{
 	public String			scheduleName;
 	public String			scheduleNote;
 	public String			scheduleUrl;
-	public String			startDate;
-	public String			endDate;
+	@JsonField(typeConverter = WelfareActivity.WelfareTimeConverter.class)
+	public Date				startDate;
+	@JsonField(typeConverter = WelfareActivity.WelfareTimeConverter.class)
+	public Date				endDate;
 	public String			startTime;
 	public String			endTime;
 	public String			key;
@@ -43,14 +44,13 @@ public class ScheduleModel{
 	public String			repeatType;
 	public String			repeatLimitType;
 	public String			repeatData;
-	public String			repeatEnd;
+	@JsonField(typeConverter = WelfareActivity.WelfareTimeConverter.class)
+	public Date				repeatEnd;
 	public String			repeatInterval;
 	public RoomModel		roomModel;
 	public Boolean			isWarning;
 	public UserModel		owner;
 	public String			scheduleColor	= "#FF0000";
-	public Date				startDateObj;
-	public Date				endDateObj;
 
 	public ScheduleModel(){
 
@@ -62,19 +62,17 @@ public class ScheduleModel{
 		this.endDate = holidayModel.endDate;
 		this.isAllDay = true;
 		this.scheduleType = ClConst.SCHEDULE_TYPE_HOLIDAY;
-		this.makeDateObjects();
 	}
 
 	public ScheduleModel(UserModel userModel){
 		this.scheduleName = userModel.userName;
 		Calendar calendar = Calendar.getInstance();
-		Calendar birthdayCalendar = CCDateUtil.makeCalendar(WelfareUtil.makeDate(userModel.dateBirth));
+		Calendar birthdayCalendar = CCDateUtil.makeCalendar(userModel.dateBirth);
 		Calendar scheduleCalendar = CCDateUtil.makeCalendar(calendar.get(Calendar.YEAR), birthdayCalendar.get(Calendar.MONTH) + 1, birthdayCalendar.get(Calendar.DAY_OF_MONTH));
-		this.startDate = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME, scheduleCalendar.getTime());
+		this.startDate = scheduleCalendar.getTime();
 		this.endDate = this.startDate;
 		this.isAllDay = true;
 		this.scheduleType = ClConst.SCHEDULE_TYPE_BIRTHDAY;
-		this.makeDateObjects();
 	}
 
 	public ScheduleModel(WorkOffer workOffer){
@@ -90,7 +88,6 @@ public class ScheduleModel{
 		// }
 		this.isAllDay = true;
 		this.scheduleType = ClConst.SCHEDULE_TYPE_WORK_OFFER;
-		this.makeDateObjects();
 	}
 
 	public boolean isPeriodSchedule(){
@@ -102,9 +99,7 @@ public class ScheduleModel{
 			return true;
 		}
 
-		String startDateFormat = WelfareFormatUtil.removeTime4Date(startDate);
-		String endDateFormat = WelfareFormatUtil.removeTime4Date(endDate);
-		return !startDateFormat.equals(endDateFormat);
+		return CCDateUtil.compareDate(startDate, endDate, false) != 0;
 	}
 
 	public String getScheduleColor(){
@@ -150,13 +145,6 @@ public class ScheduleModel{
 		cloned.repeatInterval = scheduleModel.repeatInterval;
 		cloned.isWarning = scheduleModel.isWarning;
 		cloned.owner = scheduleModel.owner;
-		cloned.startDateObj = scheduleModel.startDateObj;
-		cloned.endDateObj = scheduleModel.endDateObj;
 		return cloned;
-	}
-
-	public void makeDateObjects(){
-		startDateObj = CCDateUtil.makeDateCustom(startDate, WelfareConst.WF_DATE_TIME);
-		endDateObj = CCDateUtil.makeDateCustom(endDate, WelfareConst.WF_DATE_TIME);
 	}
 }

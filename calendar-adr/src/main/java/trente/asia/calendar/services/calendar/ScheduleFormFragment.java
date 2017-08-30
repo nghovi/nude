@@ -42,7 +42,6 @@ import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.dialogs.CLOutboundDismissListDialog;
 import trente.asia.calendar.commons.dialogs.ClDialog;
 import trente.asia.calendar.commons.dialogs.ClScheduleRepeatDialog;
-import trente.asia.calendar.commons.model.ScheduleRepeatModel;
 import trente.asia.calendar.commons.utils.ClRepeatUtil;
 import trente.asia.calendar.commons.utils.ClUtil;
 import trente.asia.calendar.services.calendar.model.RoomModel;
@@ -184,9 +183,9 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 		String endTimeStr;
 
 		if(schedule != null && !CCStringUtil.isEmpty(schedule.key) && (!schedule.isAllDay || schedule.isPeriodSchedule())){
-			startDate = WelfareUtil.makeDate(schedule.startDate);
+			startDate = schedule.startDate;
 			startDate = CCDateUtil.makeDateTime(startDate, schedule.startTime);
-			endDate = WelfareUtil.makeDate(schedule.endDate);
+			endDate = schedule.endDate;
 			endDate = CCDateUtil.makeDateTime(endDate, schedule.endTime);
 			startTimeStr = schedule.startTime;
 			endTimeStr = schedule.endTime;
@@ -201,8 +200,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 		repeatDialog.setStartDateStr(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, startDate));
 		if(ClRepeatUtil.isRepeat(schedule.repeatType)){
 			// set repeat dialog values
-			ScheduleRepeatModel repeatModel = new ScheduleRepeatModel(schedule);
-			repeatDialog.setRepeatModel(repeatModel);
+			repeatDialog.setRepeatModel(schedule);
 		}else{
 			repeatDialog.initDefaultValue();
 		}
@@ -359,7 +357,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 		}else{
 			lnrRepeatUntil.setVisibility(View.VISIBLE);
 			if(!CCStringUtil.isEmpty(schedule.repeatEnd)){
-				txtRepeatUntil.setText(schedule.repeatEnd.split(" ")[0]);
+				txtRepeatUntil.setText(WelfareUtil.getDateString(schedule.repeatEnd));
 			}else{
 				txtRepeatUntil.setText(getString(R.string.cl_schedule_repeat_limit_forever));
 			}
@@ -498,7 +496,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 			jsonObject.put("joinUsers", lnrUserList.formatUserList());
 			jsonObject.put("isAllDay", swtAllDay.isChecked());
 
-			ScheduleRepeatModel scheduleRepeatModel = repeatDialog.getRepeatModel();
+			ScheduleModel scheduleRepeatModel = repeatDialog.getRepeatModel();
 			jsonObject.put("repeatType", scheduleRepeatModel.repeatType);
 			if(ClRepeatUtil.isRepeat(scheduleRepeatModel.repeatType)){
 				if(ClConst.SCHEDULE_REPEAT_TYPE_WEEKLY.equals(scheduleRepeatModel.repeatType)){

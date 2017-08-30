@@ -1,11 +1,11 @@
 package trente.asia.calendar.services.calendar.model;
 
+import com.bluelinelabs.logansquare.annotation.JsonField;
 import com.bluelinelabs.logansquare.annotation.JsonObject;
 
 import java.util.Date;
 
-import asia.chiase.core.util.CCDateUtil;
-import trente.asia.welfare.adr.define.WelfareConst;
+import trente.asia.calendar.commons.activites.MainClActivity;
 
 /**
  * HolidayModel
@@ -53,14 +53,11 @@ public class WorkOffer{
 	public String	note;
 	public String	companyId;
 
-	public String	startDate;
-	public String	endDate;
+	@JsonField(typeConverter = MainClActivity.WelfareTimeConverter.class)
+	public Date		startDate;
+	@JsonField(typeConverter = MainClActivity.WelfareTimeConverter.class)
+	public Date		endDate;
 	public Date		startDateObj;
 	public Date		endDateObj;
-
-	public void makeDateObjects(){
-		startDateObj = CCDateUtil.makeDateCustom(startDate, WelfareConst.WF_DATE_TIME);
-		endDateObj = CCDateUtil.makeDateCustom(endDate, WelfareConst.WF_DATE_TIME);
-	}
 
 }

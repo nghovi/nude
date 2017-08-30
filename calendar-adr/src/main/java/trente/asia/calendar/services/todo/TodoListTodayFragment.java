@@ -14,13 +14,10 @@ import com.daimajia.swipe.SwipeLayout;
 
 import android.content.DialogInterface;
 import android.graphics.Color;
-import android.graphics.Point;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.ScrollView;
@@ -30,17 +27,13 @@ import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
-import asia.chiase.core.util.CCStringUtil;
-import trente.asia.android.activity.ChiaseActivity;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.fragments.AbstractClFragment;
 import trente.asia.calendar.services.todo.model.Todo;
-import trente.asia.calendar.services.todo.view.TodoListAdapter;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.dialog.WfDialog;
-import trente.asia.welfare.adr.utils.WelfareUtil;
 
 /**
  * TodoListFragment
@@ -119,9 +112,8 @@ public class TodoListTodayFragment extends AbstractClFragment{
 
 	private List<Todo> filterForToday(List<Todo> todoList){
 		List<Todo> todayTodos = new ArrayList<>();
-		String todayString = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, selectedDate);
 		for(Todo todo : todoList){
-			if(todo.isFinish == false && !CCStringUtil.isEmpty(todo.limitDate) && todayString.equals(todo.limitDate.split(" ")[0])){
+			if(todo.isFinish == false && todo.limitDate != null && CCDateUtil.compareDate(today, todo.limitDate, false) == 0){
 				todayTodos.add(todo);
 			}
 		}
@@ -198,18 +190,13 @@ public class TodoListTodayFragment extends AbstractClFragment{
 			}
 		});
 
-		if(CCStringUtil.isEmpty(todo.limitDate)){
-			txtTitle.setText(getString(R.string.no_deadline));
+		if(CCDateUtil.compareDate(today, todo.limitDate, false) >= 0){
+			txtDate.setTextColor(Color.RED);
+		}
+		if(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, today).equals(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, todo.limitDate))){
+			txtDate.setText(getString(R.string.chiase_common_today));
 		}else{
-			Date date = CCDateUtil.makeDateCustom(todo.limitDate, WelfareConst.WF_DATE_TIME);
-			if(CCDateUtil.compareDate(today, date, false) >= 0){
-				txtDate.setTextColor(Color.RED);
-			}
-			if(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, today).equals(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, date))){
-				txtDate.setText(getString(R.string.chiase_common_today));
-			}else{
-				txtDate.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_MM_DD, date));
-			}
+			txtDate.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_MM_DD, todo.limitDate));
 		}
 		txtTitle.setText(todo.name);
 		cell.setTag(lnrUnfinished.getChildCount());
@@ -224,7 +211,7 @@ public class TodoListTodayFragment extends AbstractClFragment{
 			jsonObject.put("name", todo.name);
 			jsonObject.put("note", todo.note);
 			jsonObject.put("isFinish", isFinish);
-			jsonObject.put("limitDate", CCStringUtil.isEmpty(todo.limitDate) ? todo.limitDate : todo.limitDate.split(":")[0]);
+			jsonObject.put("limitDate", todo.limitDate == null ? null : CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, todo.limitDate));
 		}catch(JSONException e){
 			e.printStackTrace();
 		}

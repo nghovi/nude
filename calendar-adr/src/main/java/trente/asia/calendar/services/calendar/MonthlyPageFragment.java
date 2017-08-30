@@ -28,7 +28,6 @@ import asia.chiase.core.util.CCBooleanUtil;
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
-import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.define.CsConst;
 import trente.asia.android.model.DayModel;
@@ -46,7 +45,6 @@ import trente.asia.calendar.services.todo.model.Todo;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.dialog.WfDialog;
 import trente.asia.welfare.adr.models.UserModel;
-import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 import trente.asia.welfare.adr.utils.WelfareUtil;
 
 /**
@@ -177,18 +175,13 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 			TextView txtTitle = (TextView)cell.findViewById(R.id.txt_item_todo_title);
 			txtTitle.setText(todo.name);
 
-			if(CCStringUtil.isEmpty(todo.limitDate)){
-				txtTitle.setText(getString(R.string.no_deadline));
+			if(CCDateUtil.compareDate(todo.limitDate, today, false) <= 0){
+				txtDate.setTextColor(Color.RED);
+			}
+			if(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, today).equals(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, todo.limitDate))){
+				txtDate.setText(getString(R.string.chiase_common_today));
 			}else{
-				Date date = CCDateUtil.makeDateCustom(todo.limitDate, WelfareConst.WF_DATE_TIME);
-				if(CCDateUtil.compareDate(date, today, false) <= 0){
-					txtDate.setTextColor(Color.RED);
-				}
-				if(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, today).equals(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, date))){
-					txtDate.setText(getString(R.string.chiase_common_today));
-				}else{
-					txtDate.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_MM_DD, date));
-				}
+				txtDate.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_MM_DD, todo.limitDate));
 			}
 			RadioButton radioButton = (RadioButton)cell.findViewById(R.id.radio);
 			radioButton.setOnClickListener(new View.OnClickListener() {
@@ -257,7 +250,7 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 			jsonObject.put("name", todo.name);
 			jsonObject.put("note", todo.note);
 			jsonObject.put("isFinish", true);
-			jsonObject.put("limitDate", CCStringUtil.isEmpty(todo.limitDate) ? todo.limitDate : todo.limitDate.split(":")[0]);
+			jsonObject.put("limitDate", todo.limitDate == null ? null : CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, todo.limitDate));
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
@@ -275,11 +268,11 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 			@Override
 			public int compare(ScheduleModel schedule1, ScheduleModel schedule2){
 				if(checkAllDayTime){
-					String startDate1 = WelfareFormatUtil.removeTime4Date(schedule1.startDate);
-					String endDate1 = WelfareFormatUtil.removeTime4Date(schedule1.endDate);
+					String startDate1 = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, schedule1.startDate);
+					String endDate1 = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, schedule1.endDate);
 
-					String startDate2 = WelfareFormatUtil.removeTime4Date(schedule2.startDate);
-					String endDate2 = WelfareFormatUtil.removeTime4Date(schedule2.endDate);
+					String startDate2 = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, schedule2.startDate);
+					String endDate2 = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, schedule2.endDate);
 
 					boolean diff1 = startDate1.equals(endDate1);
 					boolean diff2 = startDate2.equals(endDate2);
@@ -462,16 +455,16 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 				for(MonthlyCalendarRowView rowView : lstCalendarRow){
 					Date minDate = rowView.lstCalendarDay.get(0).date;
 					Date maxDate = rowView.lstCalendarDay.get(rowView.lstCalendarDay.size() - 1).date;
-					boolean isStartBelongPeriod = ClUtil.belongPeriod(schedule.startDateObj, minDate, maxDate);
-					boolean isEndBelongPeriod = ClUtil.belongPeriod(schedule.endDateObj, minDate, maxDate);
-					boolean isOverPeriod = schedule.startDateObj.compareTo(minDate) < 0 && schedule.endDateObj.compareTo(maxDate) > 0;
+					boolean isStartBelongPeriod = ClUtil.belongPeriod(schedule.startDate, minDate, maxDate);
+					boolean isEndBelongPeriod = ClUtil.belongPeriod(schedule.endDate, minDate, maxDate);
+					boolean isOverPeriod = schedule.startDate.compareTo(minDate) < 0 && schedule.endDate.compareTo(maxDate) > 0;
 
 					if(isStartBelongPeriod || isEndBelongPeriod || isOverPeriod){
 						rowView.addSchedule(schedule);
 					}
 				}
 			}else{
-				MonthlyCalendarDayView activeCalendarDay = ClUtil.findView4Day(lstCalendarDay, schedule.startDateObj, schedule.endDateObj);
+				MonthlyCalendarDayView activeCalendarDay = ClUtil.findView4Day(lstCalendarDay, schedule.startDate, schedule.endDate);
 				if(activeCalendarDay != null){
 					activeCalendarDay.addSchedule(schedule);
 				}
@@ -486,7 +479,6 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 			dayView.showSchedules();
 		}
 
-		List<Todo> todos = CCJsonUtil.convertToModelList(response.optString("todoList"), Todo.class);
 		buildTodoList(todos);
 	}
 

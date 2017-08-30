@@ -1,9 +1,12 @@
 package trente.asia.calendar.commons.activites;
 
+import java.util.Date;
+
+import com.bluelinelabs.logansquare.LoganSquare;
+
 import android.os.Bundle;
 
 import asia.chiase.core.util.CCDateUtil;
-import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
@@ -47,7 +50,7 @@ public class MainClActivity extends WelfareActivity{
 			String dateStr = mExtras.getString(WelfareConst.NotificationReceived.USER_INFO_NOTI_PARENT_KEY);
 			ScheduleDetailFragment scheduleDetailFragment = new ScheduleDetailFragment();
 			ScheduleModel scheduleModel = new ScheduleModel();
-			scheduleModel.startDate = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME, CCDateUtil.makeDateCustom(dateStr, WelfareConst.WF_DATE_TIME_DATE));
+			scheduleModel.startDate = CCDateUtil.makeDateCustom(dateStr, WelfareConst.WF_DATE_TIME_DATE);
 			scheduleModel.endDate = scheduleModel.startDate;
 			scheduleModel.key = key;
 			scheduleDetailFragment.setSchedule(scheduleModel);

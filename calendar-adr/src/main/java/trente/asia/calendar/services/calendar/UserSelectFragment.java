@@ -89,12 +89,13 @@ public class UserSelectFragment extends AbstractClFragment{
 		groupAll.key = "-1";
 		groupAll.groupName = getString(R.string.chiase_common_all);
 		myGroups.add(0, groupAll);
+		selectedMyGroups.add(groupAll);
 	}
 
 	@Override
 	public void initView(){
 		super.initView();
-		initHeader(R.drawable.wf_back_white, getString(R.string.select_user), null);
+		initHeader(R.drawable.wf_back_white, getString(R.string.choose_user), null);
 		getView().findViewById(R.id.img_id_header_right_icon).setOnClickListener(this);
 		getView().findViewById(R.id.lnr_select_group).setOnClickListener(this);
 		mLnrFilterUser = (FilterUserLinearLayout)getView().findViewById(R.id.lnr_id_user);

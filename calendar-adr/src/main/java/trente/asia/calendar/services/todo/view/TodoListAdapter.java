@@ -2,6 +2,8 @@ package trente.asia.calendar.services.todo.view;
 
 import java.util.List;
 
+import com.daimajia.swipe.adapters.BaseSwipeAdapter;
+
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,9 +13,6 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
-import com.daimajia.swipe.adapters.BaseSwipeAdapter;
-
-import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.services.todo.model.Todo;
@@ -26,8 +25,6 @@ public class TodoListAdapter extends BaseSwipeAdapter{
 
 	private List<Todo>					todos;
 	Context								context;
-	int									layoutId;
-	LayoutInflater						layoutInflater;
 	private OnTodoItemActionListener	onTodoItemActionListener;
 
 	public interface OnTodoItemActionListener{
@@ -80,7 +77,7 @@ public class TodoListAdapter extends BaseSwipeAdapter{
 			}
 		});
 
-		viewHolder.txtDate.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, CCDateUtil.makeDateCustom(todo.limitDate, WelfareConst.WF_DATE_TIME)));
+		viewHolder.txtDate.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, todo.limitDate));
 		viewHolder.txtTitle.setText(todo.name);
 	}
 

@@ -1,15 +1,16 @@
 package trente.asia.calendar.services.calendar.model;
 
-import com.bluelinelabs.logansquare.annotation.JsonObject;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
+import com.bluelinelabs.logansquare.annotation.JsonField;
+import com.bluelinelabs.logansquare.annotation.JsonObject;
+
 import asia.chiase.core.util.CCDateUtil;
-import trente.asia.welfare.adr.define.WelfareConst;
+import trente.asia.calendar.commons.activites.MainClActivity;
 
 /**
  * HolidayModel
@@ -21,8 +22,10 @@ import trente.asia.welfare.adr.define.WelfareConst;
 public class HolidayModel{
 
 	public String	holidayName;
-	public String	startDate;
-	public String	endDate;
+	@JsonField(typeConverter = MainClActivity.WelfareTimeConverter.class)
+	public Date		startDate;
+	@JsonField(typeConverter = MainClActivity.WelfareTimeConverter.class)
+	public Date		endDate;
 	public String	imgPath;
 
 	public HolidayModel(){
@@ -32,9 +35,7 @@ public class HolidayModel{
 	public static List<HolidayModel> getHolidayModels(Date date, List<HolidayModel> holidayModels){
 		List<HolidayModel> results = new ArrayList<>();
 		for(HolidayModel holidayModel : holidayModels){
-			Date startDate = CCDateUtil.makeDateCustom(holidayModel.startDate, WelfareConst.WF_DATE_TIME_DATE);
-			Date endDate = CCDateUtil.makeDateCustom(holidayModel.endDate, WelfareConst.WF_DATE_TIME_DATE);
-			if(CCDateUtil.compareDate(startDate, date, false) <= 0 && CCDateUtil.compareDate(date, endDate, false) <= 0){
+			if(CCDateUtil.compareDate(holidayModel.startDate, date, false) <= 0 && CCDateUtil.compareDate(date, holidayModel.endDate, false) <= 0){
 				results.add(holidayModel);
 			}
 		}
