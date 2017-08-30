@@ -68,8 +68,8 @@
     <!--Notifications-->
     <string name="fragment_summary_title">要約</string>
     <string name="coming_soon">近日公開</string>
-    <string name="FM_CL_001">%1$s %2$s さんが %3$sスケジュールを作成しました</string>
-    <string name="FM_CL_002">%1$s %2$s さんが %3$sスケジュールを編集しました</string>
+    <string name="FM_CL_001">%1$sさんが%2$sスケジュールを作成しました</string>
+    <string name="FM_CL_002">%1$sさんが%2$sスケジュールを編集しました</string>
     <string name="FM_CL_003">Today\’s schedule: %1$s item(s) Today\’s To Do: %2$s item(s)</string>
     <string name="FM_CL_004">Tomorrow\’s schedule: %1$s item(s) Tomorrow\’s To Do: %2$s item(s)</string>
 
