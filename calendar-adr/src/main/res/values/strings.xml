@@ -71,8 +71,8 @@
     <!--Notifications-->
     <string name="fragment_summary_title">Summary</string>
     <string name="coming_soon">Coming soon</string>
-    <string name="FM_CL_001">[%1$s] %2$s has entered a schedule : %3$s</string>
-    <string name="FM_CL_002">[%1$s] %2$s edited a schedule : %3$s</string>
+    <string name="FM_CL_001">%1$s has entered a schedule : %2$s </string>
+    <string name="FM_CL_002">%1$s edited a schedule: %2$s</string>
     <string name="FM_CL_003">Today\’s schedule: %1$s item(s) Today\’s To Do: %2$s item(s)</string>
     <string name="FM_CL_004">Tomorrow\’s schedule: %1$s item(s) Tomorrow\’s To Do: %2$s item(s)</string>
 
