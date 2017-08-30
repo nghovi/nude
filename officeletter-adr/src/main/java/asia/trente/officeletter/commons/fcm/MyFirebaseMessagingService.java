@@ -16,6 +16,7 @@ import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
 import asia.trente.officeletter.R;
 import asia.trente.officeletter.commons.activities.MainActivity;
+import asia.trente.officeletter.commons.defines.OLConst;
 import trente.asia.android.util.CsMsgUtil;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.models.FcmNotificationModel;
@@ -68,8 +69,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService{
 		PendingIntent pendingIntent = PendingIntent.getActivity(this, requestID, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 
 		String content = "";
-		if(!CCStringUtil.isEmpty(model.body_loc_key)){
-			content = CsMsgUtil.message(this, model.title, model.body_loc_args);
+		if (WelfareConst.NotificationType.OL_DELIVERY_DOC.equals(noticeType)) {
+			content = getString(R.string.ol_notification_document);
+		} else {
+			content = getString(R.string.ol_notification_salary);
 		}
 		Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 		NotificationCompat.Builder notificationBuilder = (NotificationCompat.Builder)new NotificationCompat.Builder(this).setSmallIcon(R.drawable.pn_icon).setContentTitle(getString(R.string.app_name)).setContentText(content).setAutoCancel(true).setSound(defaultSoundUri).setContentIntent(pendingIntent);
