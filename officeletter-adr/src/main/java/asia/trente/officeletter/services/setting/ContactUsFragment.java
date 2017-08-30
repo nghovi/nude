@@ -8,6 +8,7 @@ import org.json.JSONObject;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -101,7 +102,12 @@ public class ContactUsFragment extends AbstractOLFragment implements View.OnClic
 
 			@Override
 			public void onItemSelected(int selectedPosition){
-				serviceType = services.get(selectedPosition).key;
+				if (selectedPosition == 0) {
+					serviceType = null;
+				} else {
+					serviceType = services.get(selectedPosition - 1).key;
+				}
+
 			}
 		}, true);
 	}

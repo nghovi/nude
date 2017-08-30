@@ -10,7 +10,7 @@
     <string name="ol_show_sub">別名表示</string>
     <string name="ol_filter_condition">絞り込み</string>
     <string name="ol_start_month">開始月</string>
-    <string name="ol_end_month">終了月</string>
+    <string name="ol_end_month">終了月</string>`
     <string name="ol_clear">クリア</string>
     <string name="ol_document_filter">書類フィルター</string>
     <string name="ol_password_confirm">パスワード確認</string>
