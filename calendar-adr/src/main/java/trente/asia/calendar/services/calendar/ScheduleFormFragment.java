@@ -205,9 +205,9 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 			repeatDialog.initDefaultValue();
 		}
 
-		WelfareFormatUtil.setChiaseTextView(txtStartDate, WelfareFormatUtil.formatDate(startDate));
+		WelfareFormatUtil.setChiaseTextView(txtStartDate, WelfareUtil.getDateString(startDate));
 		WelfareFormatUtil.setChiaseTextView(txtStartTime, startTimeStr);
-		WelfareFormatUtil.setChiaseTextView(txtEndDate, WelfareFormatUtil.formatDate(endDate));
+		WelfareFormatUtil.setChiaseTextView(txtEndDate, WelfareUtil.getDateString(endDate));
 		WelfareFormatUtil.setChiaseTextView(txtEndTime, endTimeStr);
 
 		calendar.setTime(startDate);
@@ -505,7 +505,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 
 				jsonObject.put("repeatLimitType", scheduleRepeatModel.repeatLimitType);
 				if(ClConst.SCHEDULE_REPEAT_LIMIT_UNTIL.equals(scheduleRepeatModel.repeatLimitType)){
-					jsonObject.put("repeatEnd", scheduleRepeatModel.repeatEnd);
+					jsonObject.put("repeatEnd", WelfareUtil.getDateString(scheduleRepeatModel.repeatEnd));
 				}
 				// else if(ClConst.SCHEDULE_REPEAT_LIMIT_AFTER.equals(scheduleRepeatModel.repeatLimitType)){
 				// jsonObject.put("repeatInterval", scheduleRepeatModel.repeatInterval);
@@ -515,7 +515,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 
 			if(!CCStringUtil.isEmpty(modifyType)){
 				jsonObject.put("modifyType", modifyType);
-				jsonObject.put("targetDate", WelfareFormatUtil.formatDate(selectedDate));
+				jsonObject.put("targetDate", WelfareUtil.getDateString(selectedDate));
 			}
 		}catch(JSONException e){
 			e.printStackTrace();
@@ -529,7 +529,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 			jsonObject.put("key", schedule.key);
 			if(!CCStringUtil.isEmpty(modifyType)){
 				jsonObject.put("modifyType", modifyType);
-				jsonObject.put("targetDate", WelfareFormatUtil.formatDate(selectedDate));
+				jsonObject.put("targetDate", WelfareUtil.getDateString(selectedDate));
 			}
 		}catch(JSONException e){
 			e.printStackTrace();

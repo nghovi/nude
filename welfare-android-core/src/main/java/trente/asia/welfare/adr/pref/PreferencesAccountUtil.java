@@ -16,11 +16,12 @@ import com.google.gson.JsonSerializer;
 import android.content.Context;
 
 import asia.chiase.core.util.CCDateUtil;
-import asia.chiase.core.util.CCFormatUtil;
 import trente.asia.android.util.CAPreferences;
+import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.models.SettingModel;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
+import trente.asia.welfare.adr.utils.WelfareUtil;
 
 /**
  * Created by TuVD on 8/6/2015.
@@ -53,6 +54,8 @@ public class PreferencesAccountUtil{
 		return pref.get(key);
 	}
 
+	private Gson gson;
+
 	/**
 	 * Save Object User to Prefers.
 	 *
@@ -79,6 +82,10 @@ public class PreferencesAccountUtil{
 	}
 
 	private Gson getGson(){
+		if(gson != null){
+			return gson;
+		}
+
 		JsonSerializer<Date> ser = new JsonSerializer<Date>() {
 
 			@Override
@@ -91,19 +98,20 @@ public class PreferencesAccountUtil{
 
 			@Override
 			public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException{
-				if (json == null) {
+				if(json == null){
 					return null;
 				}
 
-				if (json.getAsString().contains("/")) {
-					return CCDateUtil.makeDateCustom(json.getAsString(), "yyyy/MM/dd hh:mm:ss");
-				} else {
+				if(json.getAsString().contains("/")){
+					return CCDateUtil.makeDateCustom(json.getAsString(), WelfareConst.WF_DATE_TIME);
+				}else{
 					return new Date(json.getAsLong());
 				}
 			}
 		};
 
-		return new GsonBuilder().registerTypeAdapter(Date.class, ser).registerTypeAdapter(Date.class, deser).create();
+		gson = new GsonBuilder().registerTypeAdapter(Date.class, ser).registerTypeAdapter(Date.class, deser).create();
+		return gson;
 	}
 
 	/**
@@ -162,7 +170,7 @@ public class PreferencesAccountUtil{
 	 * @param activeDate
 	 */
 	public void saveActiveDate(Date activeDate){
-		pref.set(KEY_PREF_ACTIVE_DATE, WelfareFormatUtil.formatDate(activeDate));
+		pref.set(KEY_PREF_ACTIVE_DATE, WelfareUtil.getDateString(activeDate));
 	}
 
 	/**

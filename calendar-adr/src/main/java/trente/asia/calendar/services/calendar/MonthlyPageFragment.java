@@ -268,11 +268,11 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 			@Override
 			public int compare(ScheduleModel schedule1, ScheduleModel schedule2){
 				if(checkAllDayTime){
-					String startDate1 = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, schedule1.startDate);
-					String endDate1 = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, schedule1.endDate);
+					String startDate1 = WelfareUtil.getDateString(schedule1.startDate);
+					String endDate1 = WelfareUtil.getDateString(schedule1.endDate);
 
-					String startDate2 = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, schedule2.startDate);
-					String endDate2 = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, schedule2.endDate);
+					String startDate2 = WelfareUtil.getDateString(schedule2.startDate);
+					String endDate2 = WelfareUtil.getDateString(schedule2.endDate);
 
 					boolean diff1 = startDate1.equals(endDate1);
 					boolean diff2 = startDate2.equals(endDate2);

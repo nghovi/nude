@@ -19,6 +19,7 @@ import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.view.MonthlyCalendarDayView;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
+import trente.asia.welfare.adr.utils.WelfareUtil;
 import trente.asia.welfare.adr.utils.WfDateUtil;
 
 /**
@@ -131,13 +132,13 @@ public class ClRepeatUtil{
 			while(indexSchedule <= Integer.valueOf(scheduleModel.repeatInterval)){
 				indexCircle = getIndexCircle(lstDayOfWeek.size(), indexCircle);
 				setNextDayOfWeek(startCalendar, Integer.valueOf(lstDayOfWeek.get(indexCircle)));
-				lstDate.add(WelfareFormatUtil.formatDate(startCalendar.getTime()));
+				lstDate.add(WelfareUtil.getDateString(startCalendar.getTime()));
 				indexSchedule++;
 			}
 		}else if(ClConst.SCHEDULE_REPEAT_TYPE_MONTHLY.equals(scheduleModel.repeatType)){
 			while(indexSchedule <= Integer.valueOf(scheduleModel.repeatInterval)){
 				startCalendar.add(Calendar.MONTH, 1);
-				lstDate.add(WelfareFormatUtil.formatDate(startCalendar.getTime()));
+				lstDate.add(WelfareUtil.getDateString(startCalendar.getTime()));
 				indexSchedule++;
 			}
 		}
