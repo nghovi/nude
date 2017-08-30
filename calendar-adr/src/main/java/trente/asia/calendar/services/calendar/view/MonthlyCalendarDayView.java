@@ -137,9 +137,9 @@ public class MonthlyCalendarDayView extends LinearLayout {
             TextView txtSchedule = MonthlyCalendarRowView.createTextView(getContext(), width, 0, scheduleModel, marginTop - ClConst.TEXT_VIEW_HEIGHT + WelfareUtil.dpToPx(2));
             lnrRowContent.addView(txtSchedule);
             txtSchedules.add(txtSchedule);
-            if (ClConst.SCHEDULE_TYPE_HOLIDAY.equals(scheduleModel.scheduleType)) {
-                txtSchedule.setTextColor(Color.RED);
-            }
+//            if (ClConst.SCHEDULE_TYPE_HOLIDAY.equals(scheduleModel.scheduleType)) {
+//                txtSchedule.setTextColor(Color.RED);
+//            }
         }
     }
 
@@ -163,9 +163,6 @@ public class MonthlyCalendarDayView extends LinearLayout {
         periodNum++;
         usedMargins.add(marginTop);
         lstSchedule.add(scheduleModel);
-        if (ClConst.SCHEDULE_TYPE_HOLIDAY.equals(scheduleModel.scheduleType)) {
-            setLayoutHoliday(scheduleModel);
-        }
     }
 
     public void addPassivePeriod(ScheduleModel scheduleModel, int marginTop) {
@@ -179,17 +176,17 @@ public class MonthlyCalendarDayView extends LinearLayout {
         return maxMarginTop;
     }
 
-    private void setLayoutHoliday(ScheduleModel scheduleModel) {
-        txtHoliday.setVisibility(View.VISIBLE);
-        txtHoliday.setTextColor(Color.RED);
-        txtHoliday.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.wf_background_gray_border));
-        txtHoliday.setText(scheduleModel.scheduleName);
-        if (!isToday) {
-            txtDayLabel.setTextColor(Color.RED);
-        } else {
-            txtDayLabel.setTextColor(Color.WHITE);
-        }
-    }
+//    private void setLayoutHoliday(ScheduleModel scheduleModel) {
+//        txtHoliday.setVisibility(View.VISIBLE);
+//        txtHoliday.setTextColor(Color.RED);
+//        txtHoliday.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.wf_background_gray_border));
+//        txtHoliday.setText(scheduleModel.scheduleName);
+//        if (!isToday) {
+//            txtDayLabel.setTextColor(Color.RED);
+//        } else {
+//            txtDayLabel.setTextColor(Color.WHITE);
+//        }
+//    }
 
     public void setLayoutBirthday(ScheduleModel scheduleModel) {
         imgBirthday.setVisibility(View.VISIBLE);

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -44,6 +45,8 @@ import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
+
+import static trente.asia.calendar.services.calendar.MonthlyPageFragment.getScheduleComparator;
 
 /**
  * SchedulesPageFragment
@@ -176,9 +179,9 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 	}
 
 	@Override
-	protected void commonNotSuccess(JSONObject response){
+	protected void commonNotSuccess(JSONObject response, String url){
 		pageSharingHolder.isLoadingSchedules = false;
-		super.commonNotSuccess(response);
+		super.commonNotSuccess(response, url);
 	}
 
 	public static List<Date> getAllDateForMonth(PreferencesAccountUtil prefAccUtil, Date selectedDate){
@@ -210,7 +213,14 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 			for(ScheduleModel scheduleModel : lstSchedule){
 				scheduleModel.makeDateObjects();
 			}
+
 			lstSchedule = filterByPublicity();
+
+			Collections.sort(lstSchedule, getScheduleComparator(true));
+
+			for(WorkOffer workOffer : lstWorkOffer){
+				workOffer.makeDateObjects();
+			}
 
 			if(refreshDialogData && !newScheduleStrings.equals(scheduleStrings)){
 				isChangedData = true;
@@ -267,14 +277,10 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 		return result;
 	}
 
-	private boolean containUser(ScheduleModel scheduleModel, String key){
-		if(CCStringUtil.isEmpty(scheduleModel.scheduleJoinUsers)){
-			return false;
-		}else{
-			for(UserModel userModel : scheduleModel.scheduleJoinUsers){
-				if(userModel.key.equals(key)){
-					return true;
-				}
+	private boolean containUser(ScheduleModel scheduleModel, String userKey){
+		for(UserModel userModel : scheduleModel.scheduleJoinUsers){
+			if(userModel.key.equals(userKey)){
+				return true;
 			}
 		}
 		return false;
@@ -294,12 +300,10 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 			String targetUserList = prefAccUtil.get(ClConst.PREF_ACTIVE_USER_LIST);
 			List<String> targetUserListId = Arrays.asList(targetUserList.split(","));
 			for(ScheduleModel scheduleModel : origins){
-				if(!CCCollectionUtil.isEmpty(scheduleModel.scheduleJoinUsers)){
-					for(UserModel userModel : scheduleModel.scheduleJoinUsers){
-						if(targetUserListId.contains(userModel.key)){
-							ScheduleModel cloned = ScheduleModel.clone(scheduleModel, userModel);
-							result.add(cloned);
-						}
+				for(UserModel userModel : scheduleModel.scheduleJoinUsers){
+					if(targetUserListId.contains(userModel.key)){
+						ScheduleModel cloned = ScheduleModel.clone(scheduleModel, userModel);
+						result.add(cloned);
 					}
 				}
 			}

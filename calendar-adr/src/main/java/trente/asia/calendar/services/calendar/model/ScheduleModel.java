@@ -98,7 +98,7 @@ public class ScheduleModel{
 			return false;
 		}
 
-		if(ClConst.SCHEDULE_TYPE_WORK_OFFER.equals(scheduleType)){
+		if(ClConst.SCHEDULE_TYPE_WORK_OFFER.equals(scheduleType) || ClConst.SCHEDULE_TYPE_HOLIDAY.equals(scheduleType)){
 			return true;
 		}
 

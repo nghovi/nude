@@ -2,7 +2,6 @@ package trente.asia.calendar.services.calendar;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
@@ -36,7 +35,6 @@ import trente.asia.android.model.DayModel;
 import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
-import trente.asia.calendar.commons.dialogs.DailySummaryDialog;
 import trente.asia.calendar.commons.dialogs.TodoDialog;
 import trente.asia.calendar.commons.utils.ClUtil;
 import trente.asia.calendar.services.calendar.model.HolidayModel;
@@ -458,28 +456,24 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 		}
 
 		clearOldData();
-		if(!CCCollectionUtil.isEmpty(lstSchedule)){
 
-			Collections.sort(lstSchedule, getScheduleComparator(true));
+		for(ScheduleModel schedule : lstSchedule){
+			if(schedule.isPeriodSchedule()){
+				for(MonthlyCalendarRowView rowView : lstCalendarRow){
+					Date minDate = rowView.lstCalendarDay.get(0).date;
+					Date maxDate = rowView.lstCalendarDay.get(rowView.lstCalendarDay.size() - 1).date;
+					boolean isStartBelongPeriod = ClUtil.belongPeriod(schedule.startDateObj, minDate, maxDate);
+					boolean isEndBelongPeriod = ClUtil.belongPeriod(schedule.endDateObj, minDate, maxDate);
+					boolean isOverPeriod = schedule.startDateObj.compareTo(minDate) < 0 && schedule.endDateObj.compareTo(maxDate) > 0;
 
-			for(ScheduleModel schedule : lstSchedule){
-				if(schedule.isPeriodSchedule()){
-					for(MonthlyCalendarRowView rowView : lstCalendarRow){
-						Date minDate = rowView.lstCalendarDay.get(0).date;
-						Date maxDate = rowView.lstCalendarDay.get(rowView.lstCalendarDay.size() - 1).date;
-						boolean isStartBelongPeriod = ClUtil.belongPeriod(schedule.startDateObj, minDate, maxDate);
-						boolean isEndBelongPeriod = ClUtil.belongPeriod(schedule.endDateObj, minDate, maxDate);
-						boolean isOverPeriod = schedule.startDateObj.compareTo(minDate) < 0 && schedule.endDateObj.compareTo(maxDate) > 0;
-
-						if(isStartBelongPeriod || isEndBelongPeriod || isOverPeriod){
-							rowView.addSchedule(schedule);
-						}
+					if(isStartBelongPeriod || isEndBelongPeriod || isOverPeriod){
+						rowView.addSchedule(schedule);
 					}
-				}else{
-					MonthlyCalendarDayView activeCalendarDay = ClUtil.findView4Day(lstCalendarDay, schedule.startDateObj, schedule.endDateObj);
-					if(activeCalendarDay != null){
-						activeCalendarDay.addSchedule(schedule);
-					}
+				}
+			}else{
+				MonthlyCalendarDayView activeCalendarDay = ClUtil.findView4Day(lstCalendarDay, schedule.startDateObj, schedule.endDateObj);
+				if(activeCalendarDay != null){
+					activeCalendarDay.addSchedule(schedule);
 				}
 			}
 		}
