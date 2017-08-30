@@ -210,7 +210,7 @@ public class ClRepeatUtil{
 			String[] repeatDays = repeatData.split(",");
 			for(String repeatDay : repeatDays){
 				calendar.set(Calendar.DAY_OF_WEEK, Integer.valueOf(repeatDay));
-				builder.append(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_WEEK_DAY_SHORT, calendar.getTime()) + context.getString(R.string.day) + context.getString(R.string.comma) + " ");
+				builder.append(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_WEEK_DAY_SHORT, calendar.getTime()) + context.getString(R.string.comma) + " ");
 			}
 		}
 		if(builder.length() > 0){

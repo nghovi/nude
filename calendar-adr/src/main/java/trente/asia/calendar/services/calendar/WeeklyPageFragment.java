@@ -179,24 +179,22 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 
 		// todo
 		for(Todo todo : todos){
-			if(!CCStringUtil.isEmpty(todo.limitDate)){
-				final Calendar c2 = CCDateUtil.makeCalendarWithDateOnly(CCDateUtil.makeDateCustom(todo.limitDate, WelfareConst.WF_DATE_TIME));
-				int dayDistance = c2.get(Calendar.DAY_OF_YEAR) - cStartWeek.get(Calendar.DAY_OF_YEAR);
+			final Calendar c2 = CCDateUtil.makeCalendarWithDateOnly(todo.limitDate);
+			int dayDistance = c2.get(Calendar.DAY_OF_YEAR) - cStartWeek.get(Calendar.DAY_OF_YEAR);
 
-				if(!columnTopMarginsMap.keySet().contains(dayDistance)){
-					int leftMargin = cellWidth * (1 + dayDistance);
-					topMargin = getNextTopMargin(dayDistance, dayDistance);
-					TextView textView = makeTextView(activity, getString(R.string.cl_footer_todo), leftMargin, topMargin, cellWidth, Color.GRAY, 0, Gravity.CENTER);
-					textView.setOnClickListener(new View.OnClickListener() {
+			if(!columnTopMarginsMap.keySet().contains(dayDistance)){
+				int leftMargin = cellWidth * (1 + dayDistance);
+				topMargin = getNextTopMargin(dayDistance, dayDistance);
+				TextView textView = makeTextView(activity, getString(R.string.cl_footer_todo), leftMargin, topMargin, cellWidth, Color.GRAY, 0, Gravity.CENTER);
+				textView.setOnClickListener(new View.OnClickListener() {
 
-						@Override
-						public void onClick(View v){
-							gotoTodoListTodayFragment(c2);
-						}
-					});
-					rltPart1.addView(textView);
-					itemNum++;
-				}
+					@Override
+					public void onClick(View v){
+						gotoTodoListTodayFragment(c2);
+					}
+				});
+				rltPart1.addView(textView);
+				itemNum++;
 			}
 		}
 
@@ -282,7 +280,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 			rltPart1.requestLayout();
 			rltExpandBar.setVisibility(View.GONE);
 		}else{
-			int maxTopMarginAllowed = MAX_ROW * CELL_HEIGHT_PIXEL;
+			int maxTopMarginAllowed = (MAX_ROW - 1) * CELL_HEIGHT_PIXEL;
 			while(rltExpandBar.getChildAt(1) != null){
 				rltExpandBar.removeViewAt(1);
 			}
@@ -303,7 +301,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 					textView.setGravity(Gravity.CENTER);
 					// textView.setBackgroundColor(Color.WHITE);
 					// textView.setBackground(ContextCompat.getDrawable(activity, R.drawable.wf_background_gray_border_white));
-					textView.setText("+" + (more + 1));
+					textView.setText("+" + more);
 					RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(cellWidth - 2, RelativeLayout.LayoutParams.WRAP_CONTENT);
 					rlp.setMargins((key + 1) * cellWidth, 0, 0, 0);
 					textView.setLayoutParams(rlp);

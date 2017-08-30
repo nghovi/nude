@@ -11,11 +11,9 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import asia.chiase.core.util.CCDateUtil;
-import asia.chiase.core.util.CCFormatUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.services.todo.model.Todo;
 import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.utils.WelfareUtil;
 
 /**
  * TodoDialog
@@ -38,9 +36,8 @@ public class TodoDialog extends ClDialog{
 
 		((TextView)findViewById(R.id.txt_item_todo_title)).setText(todo.name);
 		((TextView)findViewById(R.id.txt_dlg_todo_content)).setText(todo.note);
-		Date date = CCDateUtil.makeDateCustom(todo.limitDate, WelfareConst.WF_DATE_TIME);
 		Calendar c = Calendar.getInstance();
-		c.setTime(date);
+		c.setTime(todo.limitDate);
 		String lang = Locale.getDefault().getLanguage();
 		String dayStr = String.valueOf(c.get(Calendar.DAY_OF_MONTH));
 		if(lang.equals("ja")){

@@ -28,7 +28,6 @@ import asia.chiase.core.util.CCBooleanUtil;
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
-import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.define.CsConst;
 import trente.asia.android.model.DayModel;
@@ -177,18 +176,13 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 			TextView txtTitle = (TextView)cell.findViewById(R.id.txt_item_todo_title);
 			txtTitle.setText(todo.name);
 
-			if(CCStringUtil.isEmpty(todo.limitDate)){
-				txtTitle.setText(getString(R.string.no_deadline));
+			if(CCDateUtil.compareDate(todo.limitDate, today, false) <= 0){
+				txtDate.setTextColor(Color.RED);
+			}
+			if(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, today).equals(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, todo.limitDate))){
+				txtDate.setText(getString(R.string.chiase_common_today));
 			}else{
-				Date date = CCDateUtil.makeDateCustom(todo.limitDate, WelfareConst.WF_DATE_TIME);
-				if(CCDateUtil.compareDate(date, today, false) <= 0){
-					txtDate.setTextColor(Color.RED);
-				}
-				if(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, today).equals(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, date))){
-					txtDate.setText(getString(R.string.chiase_common_today));
-				}else{
-					txtDate.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_MM_DD, date));
-				}
+				txtDate.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_MM_DD, todo.limitDate));
 			}
 			RadioButton radioButton = (RadioButton)cell.findViewById(R.id.radio);
 			radioButton.setOnClickListener(new View.OnClickListener() {
@@ -257,7 +251,7 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 			jsonObject.put("name", todo.name);
 			jsonObject.put("note", todo.note);
 			jsonObject.put("isFinish", true);
-			jsonObject.put("limitDate", CCStringUtil.isEmpty(todo.limitDate) ? todo.limitDate : todo.limitDate.split(":")[0]);
+			jsonObject.put("limitDateStr", todo.limitDate == null ? null : CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, todo.limitDate));
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
@@ -486,7 +480,6 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 			dayView.showSchedules();
 		}
 
-		List<Todo> todos = CCJsonUtil.convertToModelList(response.optString("todoList"), Todo.class);
 		buildTodoList(todos);
 	}
 

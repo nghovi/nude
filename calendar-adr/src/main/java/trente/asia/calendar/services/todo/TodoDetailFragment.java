@@ -1,7 +1,12 @@
 package trente.asia.calendar.services.todo;
 
+import java.io.IOException;
+import java.util.Calendar;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import com.bluelinelabs.logansquare.LoganSquare;
 
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
@@ -12,18 +17,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TextView;
 
-import com.bluelinelabs.logansquare.LoganSquare;
-
-import java.io.IOException;
-import java.util.Calendar;
-import java.util.Date;
-
-import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
-import asia.chiase.core.util.CCJsonUtil;
-import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.view.ChiaseEditText;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
@@ -32,7 +27,7 @@ import trente.asia.calendar.services.todo.model.Todo;
 import trente.asia.welfare.adr.define.WelfareConst;
 
 /**
- * TodoListFragment
+ * TodoDetailFragment
  *
  * @author VietNH
  */
@@ -75,11 +70,7 @@ public class TodoDetailFragment extends AbstractClFragment{
 	}
 
 	protected void successUpdate(JSONObject response, String url){
-		// if(todo == null || todo.key == null){
 		onClickBackBtn();
-		// }else{
-		// loadTodoDetail();
-		// }
 	}
 
 	@Override
@@ -100,9 +91,8 @@ public class TodoDetailFragment extends AbstractClFragment{
 		}
 
 		Calendar calendar = Calendar.getInstance();
-		if(todo != null && !CCStringUtil.isEmpty(todo.limitDate)){
-			Date date = CCDateUtil.makeDateCustom(todo.limitDate, WelfareConst.WF_DATE_TIME_DATE);
-			calendar.setTime(date);
+		if(todo != null && todo.limitDate != null){
+			calendar.setTime(todo.limitDate);
 		}
 		datePickerDialog = new DatePickerDialog(activity, new DatePickerDialog.OnDateSetListener() {
 
@@ -132,10 +122,10 @@ public class TodoDetailFragment extends AbstractClFragment{
 				edtTitle.setText(todo.name);
 				edtContent.setText(todo.note);
 				// txtDeadline.setTextColor(Color.BLACK);
-				if(CCStringUtil.isEmpty(todo.limitDate)){
+				if(todo.limitDate == null){
 					txtDeadline.setText(getString(R.string.no_deadline));
 				}else{
-					txtDeadline.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, CCDateUtil.makeDateCustom(todo.limitDate, WelfareConst.WF_DATE_TIME)));
+					txtDeadline.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, todo.limitDate));
 				}
 			}else{
 			}
@@ -175,7 +165,7 @@ public class TodoDetailFragment extends AbstractClFragment{
 			jsonObject.put("key", key);
 			jsonObject.put("name", edtTitle.getText().toString());
 			jsonObject.put("note", edtContent.getText().toString());
-			jsonObject.put("limitDate", limitDate);
+			jsonObject.put("limitDateStr", limitDate);
 		}catch(JSONException e){
 			e.printStackTrace();
 		}

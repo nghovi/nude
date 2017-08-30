@@ -109,24 +109,25 @@ public class MonthlyCalendarRowView extends RelativeLayout{
 				startDate1 = CCDateUtil.compareDate(startDate1, startDate, false) <= 0 ? startDate : startDate1;
 				startDate2 = CCDateUtil.compareDate(startDate2, startDate, false) <= 0 ? startDate : startDate2;
 
-				endDate1 = CCDateUtil.compareDate(endDate1, endDate, false) >= 0 ? endDate : endDate1;
-				endDate2 = CCDateUtil.compareDate(endDate2, endDate, false) >= 0 ? endDate : endDate2;
-
-				long startDate1Long = CCDateUtil.makeDate(startDate1).getTime();
-				long startDate2Long = CCDateUtil.makeDate(startDate2).getTime();
-
-				long period1 = CCDateUtil.makeDate(endDate1).getTime() - startDate1Long;
-				long period2 = CCDateUtil.makeDate(endDate2).getTime() - startDate2Long;
-
-				int startCompareResult = Long.compare(startDate1Long, startDate2Long);
+				int startCompareResult = CCDateUtil.compareDate(startDate1, startDate2, false);
 
 				if(startCompareResult == 0){
+					endDate1 = CCDateUtil.compareDate(endDate1, endDate, false) >= 0 ? endDate : endDate1;
+					endDate2 = CCDateUtil.compareDate(endDate2, endDate, false) >= 0 ? endDate : endDate2;
+
+					long startDate1Long = CCDateUtil.makeDate(startDate1).getTime();
+					long startDate2Long = CCDateUtil.makeDate(startDate2).getTime();
+
+					long period1 = CCDateUtil.makeDate(endDate1).getTime() - startDate1Long;
+					long period2 = CCDateUtil.makeDate(endDate2).getTime() - startDate2Long;
+
 					int lengthCompareResult = Long.compare(period2, period1);
 					if(lengthCompareResult == 0){
 						return schedule1.scheduleName.compareTo(schedule2.scheduleName);
 					}
 					return lengthCompareResult;
 				}
+
 				return startCompareResult;
 			}
 		};

@@ -2,6 +2,13 @@ package trente.asia.calendar.commons.activites;
 
 import android.os.Bundle;
 
+import com.bluelinelabs.logansquare.LoganSquare;
+import com.bluelinelabs.logansquare.typeconverters.DateTypeConverter;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCStringUtil;
@@ -23,6 +30,8 @@ public class MainClActivity extends WelfareActivity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
+		LoganSquare.registerTypeConverter(Date.class, new WelfareTimeConverter());
+
 		PreferencesAccountUtil prefAccUtil = new PreferencesAccountUtil(this);
 		UserModel userModel = prefAccUtil.getUserPref();
 		prefAccUtil.set(ClConst.PREF_FILTER_TYPE, ClConst.PREF_FILTER_TYPE_USER);
@@ -38,6 +47,20 @@ public class MainClActivity extends WelfareActivity{
 		}else{
 			addFragment(new ClLoginFragment());
 		}
+	}
+
+	public static class WelfareTimeConverter extends DateTypeConverter{
+
+		private DateFormat mDateFormat;
+
+		public WelfareTimeConverter(){
+			mDateFormat = new SimpleDateFormat(WelfareConst.WF_DATE_TIME);
+		}
+
+		public DateFormat getDateFormat(){
+			return mDateFormat;
+		}
+
 	}
 
 	private void showFragment(Bundle mExtras){

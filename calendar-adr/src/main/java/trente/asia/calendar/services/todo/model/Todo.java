@@ -1,6 +1,10 @@
 package trente.asia.calendar.services.todo.model;
 
-import com.bluelinelabs.logansquare.annotation.JsonObject;
+import java.util.Date;
+
+import com.bluelinelabs.logansquare.annotation.JsonField;
+
+import trente.asia.calendar.commons.activites.MainClActivity;
 
 /**
  * Created by hviet on 7/20/17.
@@ -13,5 +17,6 @@ public class Todo{
 	public String	name;
 	public String	note;
 	public Boolean	isFinish	= false;
-	public String	limitDate;
+	@JsonField(typeConverter = MainClActivity.WelfareTimeConverter.class)
+	public Date		limitDate;
 }
