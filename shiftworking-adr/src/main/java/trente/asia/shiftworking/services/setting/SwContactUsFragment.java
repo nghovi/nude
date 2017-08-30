@@ -105,7 +105,7 @@ public class SwContactUsFragment extends AbstractSwFragment implements View.OnCl
 
 			@Override
 			public void onItemSelected(int selectedPosition){
-				serviceType = services.get(selectedPosition).key;
+				serviceType = selectedPosition == 0 ? null : services.get(selectedPosition - 1).key;
 			}
 		}, true);
 	}
