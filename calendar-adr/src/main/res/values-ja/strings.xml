@@ -72,6 +72,10 @@
     <string name="FM_CL_002">%1$sさんが%2$sスケジュールを編集しました</string>
     <string name="FM_CL_003">Today\’s schedule: %1$s item(s) Today\’s To Do: %2$s item(s)</string>
     <string name="FM_CL_004">Tomorrow\’s schedule: %1$s item(s) Tomorrow\’s To Do: %2$s item(s)</string>
+    <string name="FM_CL_0031">Today\’s schedule: %1$s item(s)</string>
+    <string name="FM_CL_0032">Today\’s To Do: %2$s item(s)</string>
+    <string name="FM_CL_0041">Tomorrow\’s schedule: %1$s item(s)</string>
+    <string name="FM_CL_0042">Tomorrow\’s To Do: %2$s item(s)</string>
 
 
     <string name="cl_schedule_holiday_name">[H]%1$s</string>
