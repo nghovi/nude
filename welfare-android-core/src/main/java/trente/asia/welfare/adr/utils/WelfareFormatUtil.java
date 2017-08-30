@@ -62,53 +62,54 @@ public class WelfareFormatUtil{
 		return map;
 	}
 
-    /**
-     * make date with server format: yyyy/MM/dd
-     *
-     * @param data
-     * @return
-     */
-    public static Date makeDate(String data){
-        Date date = CCDateUtil.makeDateCustom(data, WelfareConst.WF_DATE_TIME_DATE);
-        return date;
-    }
+	/**
+	 * make date with server format: yyyy/MM/dd
+	 *
+	 * @param data
+	 * @return
+	 */
+	public static Date makeDate(String data){
+		Date date = CCDateUtil.makeDateCustom(data, WelfareConst.WF_DATE_TIME_DATE);
+		return date;
+	}
 
-    /**
-     * format date with server format: yyyy/MM/dd HH:mm:ss
-     *
-     * @param date
-     * @return
-     */
-    public static String 	formatDate(Date date){
-        String data = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, date);
-        return data;
-    }
+	// @@@@Move to WelfareUtil
+	// /**
+	// * format date with server format: yyyy/MM/dd HH:mm:ss
+	// *
+	// * @param date
+	// * @return
+	// */
+	// public static String formatDate(Date date){
+	// String data = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, date);
+	// return data;
+	// }
 
-    /**
-     * add # character at prefix
-     *
-     * @param color
-     * @return
-     */
-    public static String formatColor(String color){
-        String formatColor = "#" + color;
-        return formatColor;
-    }
+	/**
+	 * add # character at prefix
+	 *
+	 * @param color
+	 * @return
+	 */
+	public static String formatColor(String color){
+		String formatColor = "#" + color;
+		return formatColor;
+	}
 
-    /**
-     * set data, value for chiase textview
-     *
-     * @return
-     */
-    public static void setChiaseTextView(ChiaseTextView textView, String data){
-        textView.setText(data);
-        textView.setValue(data);
-    }
+	/**
+	 * set data, value for chiase textview
+	 *
+	 * @return
+	 */
+	public static void setChiaseTextView(ChiaseTextView textView, String data){
+		textView.setText(data);
+		textView.setValue(data);
+	}
 
-    public static String removeTime4Date(String date){
-        if(CCStringUtil.isEmpty(date)){
-            return "";
-        }
-        return date.substring(0, 10);
-    }
+	public static String removeTime4Date(String date){
+		if(CCStringUtil.isEmpty(date)){
+			return "";
+		}
+		return date.substring(0, 10);
+	}
 }

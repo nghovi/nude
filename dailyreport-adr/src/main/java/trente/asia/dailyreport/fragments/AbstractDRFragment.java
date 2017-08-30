@@ -72,13 +72,13 @@ public abstract class AbstractDRFragment extends WelfareFragment{
 	public abstract void buildBodyLayout();
 
 	@Override
-	protected void commonNotSuccess(JSONObject response){
+	protected void commonNotSuccess(JSONObject response, String url){
 		String returnCd = response.optString(CsConst.RETURN_CODE_PARAM);
 		if(WfErrorConst.DR_ERR_CODE_DEPT_CHANGED.equals(returnCd)){
 			emptyBackStack();
 			gotoFragment(new MyReportFragment());
 		}else{
-			super.commonNotSuccess(response);
+			super.commonNotSuccess(response, url);
 		}
 	}
 
