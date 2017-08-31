@@ -68,7 +68,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService{
 		int requestID = (int)System.currentTimeMillis();
 		PendingIntent pendingIntent = PendingIntent.getActivity(this, requestID, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 
-		String content = "";
+		String content;
 		if (WelfareConst.NotificationType.OL_DELIVERY_DOC.equals(noticeType)) {
 			content = getString(R.string.ol_notification_document);
 		} else {
