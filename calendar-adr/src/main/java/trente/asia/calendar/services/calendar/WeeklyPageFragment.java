@@ -154,11 +154,11 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 
 				@Override
 				public int compare(ScheduleModel o1, ScheduleModel o2){
-					if(o1.isPeriodSchedule() && !o2.isPeriodSchedule()){
+					if(o1.isPeriod && !o2.isPeriod){
 						return -1;
-					}else if(!o1.isPeriodSchedule() && o2.isPeriodSchedule()){
+					}else if(!o1.isPeriod && o2.isPeriod){
 						return 1;
-					}else if(o1.isPeriodSchedule() && o2.isPeriodSchedule()){
+					}else if(o1.isPeriod && o2.isPeriod){
 						return periodComparator.compare(o1, o2);
 					}
 					return normalComparator.compare(o1, o2);

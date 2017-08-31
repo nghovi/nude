@@ -41,27 +41,6 @@ public class ClUtil{
 		return folder.getAbsolutePath();
 	}
 
-	/**
-	 * find calendar dayStr
-	 *
-	 * @return MonthlyCalendarDayView
-	 */
-
-	public static List<MonthlyCalendarDayView> findListView4Day(List<MonthlyCalendarDayView> lstView, Date startDate, Date endDate){
-		List<MonthlyCalendarDayView> lstCalendarDay = new ArrayList<>();
-		if(CCCollectionUtil.isEmpty(lstView)){
-			return lstCalendarDay;
-		}
-
-		for(MonthlyCalendarDayView dayView : lstView){
-			Date dateView = WelfareFormatUtil.makeDate(dayView.day);
-			if(belongPeriod(dateView, startDate, endDate)){
-				lstCalendarDay.add(dayView);
-			}
-		}
-		return lstCalendarDay;
-	}
-
 	public static MonthlyCalendarDayView findView4Day(List<MonthlyCalendarDayView> lstView, Date startDate, Date endDate){
 		if(CCCollectionUtil.isEmpty(lstView)){
 			return null;
@@ -76,23 +55,6 @@ public class ClUtil{
 		return null;
 	}
 
-	/**
-	 * date belong min, max period
-	 */
-	public static boolean belongPeriod(Date date, String min, String max){
-		if(date == null || min == null || max == null){
-			return false;
-		}
-
-		Date minDate = CCDateUtil.makeDate(WelfareFormatUtil.makeDate(min));
-		Date maxDate = CCDateUtil.makeDate(WelfareFormatUtil.makeDate(max));
-		Date activeDate = CCDateUtil.makeDate(date);
-
-		if(activeDate.compareTo(minDate) >= 0 && activeDate.compareTo(maxDate) <= 0){
-			return true;
-		}
-		return false;
-	}
 
 	/**
 	 * date belong min, max period

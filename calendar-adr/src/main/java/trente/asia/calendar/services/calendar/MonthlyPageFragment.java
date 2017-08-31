@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -13,7 +15,6 @@ import org.json.JSONObject;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +25,6 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
-import asia.chiase.core.util.CCBooleanUtil;
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
@@ -54,17 +54,18 @@ import trente.asia.welfare.adr.utils.WelfareUtil;
  */
 public class MonthlyPageFragment extends SchedulesPageFragment{
 
-	private static final int				MAX_ROW			= 4;
-	private List<MonthlyCalendarDayView>	lstCalendarDay	= new ArrayList<>();
-	private List<MonthlyCalendarRowView>	lstCalendarRow	= new ArrayList<>();
+	private static final int					MAX_ROW			= 4;
+	private List<MonthlyCalendarDayView>		lstCalendarDay	= new ArrayList<>();
+	private List<MonthlyCalendarRowView>		lstCalendarRow	= new ArrayList<>();
 
-	private LinearLayout					lnrTodoSection;
-	private LinearLayout					lnrTodos;
-	private LayoutInflater					inflater;
-	private Todo							selectedTodo;
-	private TodoDialog						dlgTodoDetail;
-	private WfDialog						dlgDeleteConfirm;
-	private ImageView						expIcon;
+	private LinearLayout						lnrTodoSection;
+	private LinearLayout						lnrTodos;
+	private LayoutInflater						inflater;
+	private Todo								selectedTodo;
+	private TodoDialog							dlgTodoDetail;
+	private WfDialog							dlgDeleteConfirm;
+	private ImageView							expIcon;
+	private Map<String, MonthlyCalendarDayView>	dateDayViewMap	= new HashMap<>();
 
 	@Override
 	protected void initView(){
@@ -96,31 +97,29 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 
 	@Override
 	protected void initCalendarHeader(){
-		LayoutInflater mInflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		View titleView = mInflater.inflate(getCalendarHeaderItem(), null);
-		LinearLayout lnrRowTitle = (LinearLayout)titleView.findViewById(R.id.lnr_id_row_title);
+		LinearLayout lnrHeader = (LinearLayout)getView().findViewById(R.id.lnr_calendar_header);
 		int firstDay = Calendar.SUNDAY;
 		if(!CCStringUtil.isEmpty(prefAccUtil.getSetting().CL_START_DAY_IN_WEEK)){
 			firstDay = Integer.parseInt(prefAccUtil.getSetting().CL_START_DAY_IN_WEEK);
 		}
 		List<DayModel> dayModels = CsDateUtil.getAllDay4Week(firstDay);
 		for(DayModel dayModel : dayModels){
-			View titleItem = mInflater.inflate(R.layout.monthly_calendar_title_item, null);
+
+			TextView txtDay = new TextView(activity);
 			LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
-			titleItem.setLayoutParams(layoutParams);
-			TextView txtTitleItem = (TextView)titleItem.findViewById(R.id.monthly_calendar_title_day_label);
-			titleItem.findViewById(R.id.lnr_title_background).setBackgroundColor(getHeaderBgColor());
+			txtDay.setLayoutParams(layoutParams);
+			txtDay.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+
 			if(Calendar.SUNDAY == dayModel.dayOfWeek){
-				txtTitleItem.setTextColor(Color.RED);
+				txtDay.setTextColor(Color.RED);
 			}else if(Calendar.SATURDAY == dayModel.dayOfWeek){
-				txtTitleItem.setTextColor(Color.BLUE);
+				txtDay.setTextColor(Color.BLUE);
 			}else{
-				txtTitleItem.setTextColor(getNormalDayColor());
+				txtDay.setTextColor(getNormalDayColor());
 			}
-			txtTitleItem.setText(CCStringUtil.toUpperCase(dayModel.day));
-			lnrRowTitle.addView(titleItem);
+			txtDay.setText(CCStringUtil.toUpperCase(dayModel.day));
+			lnrHeader.addView(txtDay);
 		}
-		((LinearLayout)getView().findViewById(R.id.lnr_calendar_header)).addView(titleView);
 	}
 
 	@Override
@@ -257,11 +256,6 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 		requestUpdate(ClConst.API_TODO_UPDATE, jsonObject, true);
 	}
 
-	@Override
-	public int getCalendarHeaderItem(){
-		return R.layout.monthly_calendar_title;
-	}
-
 	public static Comparator<ScheduleModel> getScheduleComparator(final boolean checkAllDayTime){
 		return new Comparator<ScheduleModel>() {
 
@@ -281,12 +275,12 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 					if(diff1 && !diff2) return 1;
 				}
 
-				boolean isAll1 = CCBooleanUtil.checkBoolean(schedule1.isAllDay);
-				boolean isAll2 = CCBooleanUtil.checkBoolean(schedule2.isAllDay);
+				// boolean isAll1 = CCBooleanUtil.checkBoolean(schedule1.isAllDay);
+				// boolean isAll2 = CCBooleanUtil.checkBoolean(schedule2.isAllDay);
 
-				if(isAll1 && !isAll2) return -1;
-				if(!isAll1 && isAll2) return 1;
-				if(isAll1 && isAll2 && !checkAllDayTime){
+				if(schedule1.isAllDay && !schedule2.isAllDay) return -1;
+				if(!schedule1.isAllDay && schedule2.isAllDay) return 1;
+				if(schedule1.isAllDay && schedule2.isAllDay && !checkAllDayTime){
 					return schedule1.scheduleName.compareTo(schedule2.scheduleName);
 				}
 
@@ -324,24 +318,26 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 		LayoutInflater mInflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		MonthlyCalendarRowView rowView = null;
 		LinearLayout lnrRowContent = null;
-		if(!CCCollectionUtil.isEmpty(dates)){
-			for(int index = 0; index < dates.size(); index++){
-				Date itemDate = dates.get(index);
-				if(index % CsConst.DAY_NUMBER_A_WEEK == 0){
-					rowView = (MonthlyCalendarRowView)mInflater.inflate(R.layout.monthly_calendar_row, null);
-					rowView.setStartDate(itemDate);
-					lnrRowContent = (LinearLayout)rowView.findViewById(R.id.lnr_id_row_content);
-					lnrCalendarContainer.addView(rowView);
-					lstCalendarRow.add(rowView);
-				}
+		Calendar cSelected = CCDateUtil.makeCalendar(selectedDate);
+		for(int index = 0; index < dates.size(); index++){
+			Date itemDate = dates.get(index);
+			Calendar cItemDate = CCDateUtil.makeCalendar(itemDate);
 
-				MonthlyCalendarDayView dayView = (MonthlyCalendarDayView)mInflater.inflate(R.layout.monthly_calendar_row_item, null);
-				dayView.initialization(itemDate, this, CsDateUtil.isDiffMonth(itemDate, selectedDate));
-				dayView.dayOfTheWeek = index % CsConst.DAY_NUMBER_A_WEEK;
-				lstCalendarDay.add(dayView);
-				rowView.lstCalendarDay.add(dayView);
-				lnrRowContent.addView(dayView);
+			if(index % CsConst.DAY_NUMBER_A_WEEK == 0){
+				rowView = (MonthlyCalendarRowView)mInflater.inflate(R.layout.monthly_calendar_row, null);
+				rowView.setStartDate(itemDate);
+				lnrRowContent = (LinearLayout)rowView.findViewById(R.id.lnr_id_row_content);
+				lnrCalendarContainer.addView(rowView);
+				lstCalendarRow.add(rowView);
 			}
+
+			MonthlyCalendarDayView dayView = (MonthlyCalendarDayView)mInflater.inflate(R.layout.monthly_calendar_row_item, null);
+			dayView.initialization(itemDate, this, cSelected.get(Calendar.MONTH) != cItemDate.get(Calendar.MONTH));
+			dayView.dayOfTheWeek = index % CsConst.DAY_NUMBER_A_WEEK;
+			lstCalendarDay.add(dayView);
+			dateDayViewMap.put(WelfareUtil.getDateString(itemDate), dayView);
+			rowView.lstCalendarDay.add(dayView);
+			lnrRowContent.addView(dayView);
 		}
 	}
 
@@ -419,6 +415,9 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 
 	@Override
 	protected void onLoadSchedulesSuccess(JSONObject response){
+//		if(pageSharingHolder.selectedPagePosition == pagePosition)
+//
+//			log("onLoad schedule success!!!");
 		super.onLoadSchedulesSuccess(response);
 
 		// add holiday,
@@ -443,15 +442,16 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 		if(!CCCollectionUtil.isEmpty(lstWorkOffer)){
 			for(WorkOffer workOffer : lstWorkOffer){
 				ScheduleModel scheduleModel = new ScheduleModel(workOffer);
-				scheduleModel.scheduleName = getString(R.string.cl_schedule_offer_name, scheduleModel.scheduleName);
+				// scheduleModel.scheduleName = scheduleModel.scheduleName;
 				lstSchedule.add(0, scheduleModel);
 			}
 		}
 
 		clearOldData();
+//		if(pageSharingHolder.selectedPagePosition == pagePosition) log("done for clear data");
 
 		for(ScheduleModel schedule : lstSchedule){
-			if(schedule.isPeriodSchedule()){
+			if(schedule.isPeriod){
 				for(MonthlyCalendarRowView rowView : lstCalendarRow){
 					Date minDate = rowView.lstCalendarDay.get(0).date;
 					Date maxDate = rowView.lstCalendarDay.get(rowView.lstCalendarDay.size() - 1).date;
@@ -464,10 +464,11 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 					}
 				}
 			}else{
-				MonthlyCalendarDayView activeCalendarDay = ClUtil.findView4Day(lstCalendarDay, schedule.startDate, schedule.endDate);
-				if(activeCalendarDay != null){
-					activeCalendarDay.addSchedule(schedule);
-				}
+				dateDayViewMap.get(WelfareUtil.getDateString(schedule.startDate)).addSchedule(schedule);
+				// MonthlyCalendarDayView activeCalendarDay = ClUtil.findView4Day(lstCalendarDay, schedule.startDate, schedule.endDate);
+				// if(activeCalendarDay != null){
+				// activeCalendarDay.addSchedule(schedule);
+				// }
 			}
 		}
 
@@ -478,8 +479,12 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 		for(MonthlyCalendarDayView dayView : lstCalendarDay){
 			dayView.showSchedules();
 		}
-
+//		if(pageSharingHolder.selectedPagePosition == pagePosition) log("done for schedule");
 		buildTodoList(todos);
+		// if(pageSharingHolder.selectedPagePosition == pagePosition)
+		//
+		// log("done for todo");
+
 	}
 
 	@Override
@@ -492,11 +497,6 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 			rowView.removeAllData();
 		}
 		// lstScheduleWithoutHoliday.clear();
-	}
-
-	@Override
-	protected int getHeaderBgColor(){
-		return ContextCompat.getColor(activity, R.color.cl_cell_bg_color);
 	}
 
 	@Override

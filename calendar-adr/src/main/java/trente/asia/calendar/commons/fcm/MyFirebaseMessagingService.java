@@ -14,6 +14,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
+import android.widget.RemoteViews;
 
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.util.CsMsgUtil;
@@ -84,8 +85,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService{
 				// }
 				content = CsMsgUtil.message(this, keyString, args);
 			}
+
+			RemoteViews contentView = new RemoteViews(getPackageName(), R.layout.item_push_notification);
+			contentView.setImageViewResource(R.id.image, R.drawable.pn_icon);
+			contentView.setTextViewText(R.id.title, getString(R.string.app_name));
+			contentView.setTextViewText(R.id.text, content);
+
 			Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-			NotificationCompat.Builder notificationBuilder = (NotificationCompat.Builder)new NotificationCompat.Builder(this).setSmallIcon(R.drawable.pn_icon).setContentTitle(getString(R.string.app_name)).setContentText(content).setAutoCancel(true).setSound(defaultSoundUri).setContentIntent(pendingIntent);
+			NotificationCompat.Builder notificationBuilder = (NotificationCompat.Builder)new NotificationCompat.Builder(this).setSmallIcon(R.drawable.pn_icon).setContent(contentView).setAutoCancel(true).setSound(defaultSoundUri).setContentIntent(pendingIntent);
 
 			NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
 			notificationManager.notify(WelfareConst.NOTIFICATION_ID, notificationBuilder.build());

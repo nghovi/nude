@@ -1,40 +1,28 @@
 package trente.asia.calendar.services.calendar.view;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import asia.chiase.core.util.CCBooleanUtil;
 import asia.chiase.core.util.CCCollectionUtil;
-import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
-import asia.chiase.core.util.CCStringUtil;
-import trente.asia.calendar.BuildConfig;
 import trente.asia.calendar.R;
-import trente.asia.calendar.commons.defines.ClConst;
-import trente.asia.calendar.commons.views.UserListLinearLayout;
 import trente.asia.calendar.services.calendar.model.CalendarDayModel;
 import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.model.WorkOffer;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.models.UserModel;
-import trente.asia.welfare.adr.utils.WelfareFormatUtil;
-import trente.asia.welfare.adr.utils.WfPicassoHelper;
-import trente.asia.welfare.adr.view.SelectableRoundedImageView;
 
 /**
  * Created by viet on 5/13/2016.
@@ -123,7 +111,7 @@ public class WeeklyScheduleListAdapter extends ArrayAdapter<CalendarDayModel>{
 	}
 
 	private void buildScheduleList(ViewHolder viewHolder, CalendarDayModel calendarDay){
-		sortSchedulesByType(calendarDay.schedules);
+		// sortSchedulesByType(calendarDay.schedules);
 		for(final ScheduleModel schedule : calendarDay.schedules){
 			View lnrSchedulesContainer = buildWeeklyScheduleItem(getContext(), layoutInflater, schedule, onScheduleItemClickListener, calendarDay.date);
 			viewHolder.lnrEventList.addView(lnrSchedulesContainer);
@@ -137,29 +125,29 @@ public class WeeklyScheduleListAdapter extends ArrayAdapter<CalendarDayModel>{
 		return buildScheduleItemSummary(context, layoutInflater, schedule, onScheduleItemClickListener, selectedDate);
 	}
 
-	private void sortSchedulesByType(List<ScheduleModel> schedules){
-		Collections.sort(schedules, new Comparator<ScheduleModel>() {
+	// private void sortSchedulesByType(List<ScheduleModel> schedules){
+	// Collections.sort(schedules, new Comparator<ScheduleModel>() {
+	//
+	// @Override
+	// public int compare(ScheduleModel o1, ScheduleModel o2){
+	// Integer o1TypeOrder = getScheduleOrderByType(o1);
+	// Integer o2TypeOrder = getScheduleOrderByType(o2);
+	// if(o1TypeOrder != o2TypeOrder){
+	// return o1TypeOrder.compareTo(o2TypeOrder);
+	// }
+	// return CCDateUtil.convertHour2Min(o1.startTime).compareTo(CCDateUtil.convertHour2Min(o2.startTime));
+	// }
+	// });
+	// }
 
-			@Override
-			public int compare(ScheduleModel o1, ScheduleModel o2){
-				Integer o1TypeOrder = getScheduleOrderByType(o1);
-				Integer o2TypeOrder = getScheduleOrderByType(o2);
-				if(o1TypeOrder != o2TypeOrder){
-					return o1TypeOrder.compareTo(o2TypeOrder);
-				}
-				return CCDateUtil.convertHour2Min(o1.startTime).compareTo(CCDateUtil.convertHour2Min(o2.startTime));
-			}
-		});
-	}
-
-	private int getScheduleOrderByType(ScheduleModel scheduleModel){
-		if(scheduleModel.isPeriodSchedule() && scheduleModel.isAllDay){
-			return 1;
-		}else if(scheduleModel.isAllDay){
-			return 2;
-		}
-		return 3;
-	}
+	// private int getScheduleOrderByType(ScheduleModel scheduleModel){
+	// if(scheduleModel.isPeriodSchedule() && scheduleModel.isAllDay){
+	// return 1;
+	// }else if(scheduleModel.isAllDay){
+	// return 2;
+	// }
+	// return 3;
+	// }
 
 	public View buildScheduleItemSummary(final Context context, LayoutInflater layoutInflater, final ScheduleModel schedule, OnScheduleItemClickListener onScheduleItemClickListener, Date selectedDate){
 		LinearLayout lnrSchedulesContainer = (LinearLayout)layoutInflater.inflate(R.layout.item_schedule_summary, null);

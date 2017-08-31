@@ -106,6 +106,7 @@ public abstract class AbstractClFragment extends WelfareFragment implements View
 	}
 
 	public void onClickFooterItemMonthly(){
+		// log("start");
 		emptyBackStack();
 		gotoFragment(new MonthlyFragment());
 	}

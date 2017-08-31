@@ -1,12 +1,9 @@
 package trente.asia.calendar.services.calendar;
 
-import static trente.asia.calendar.services.calendar.MonthlyPageFragment.getScheduleComparator;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -122,6 +119,7 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 	public void loadScheduleList(){
 		// if(pageSharingHolder.selectedPagePosition != pagePosition || (pageSharingHolder.selectedPagePosition ={
 		// pageSharingHolder.isLoadingSchedules = true;
+		// if(pageSharingHolder.selectedPagePosition == pagePosition) log("start load schedule list");
 		JSONObject jsonObject = prepareJsonObject();
 		requestLoad(ClConst.API_SCHEDULE_LIST, jsonObject, false);
 		// }
@@ -211,7 +209,15 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 
 			lstSchedule = filterByPublicity();
 
-			Collections.sort(lstSchedule, getScheduleComparator(true));
+			ScheduleModel.determinePeriod(lstSchedule);
+
+			// if(pageSharingHolder.selectedPagePosition == pagePosition)
+			//
+			// log("finish parsing:");
+
+			// if(pageSharingHolder.selectedPagePosition == pagePosition)
+			//
+			// log("finish 1st step sort");
 
 			if(refreshDialogData && !newScheduleStrings.equals(scheduleStrings)){
 				isChangedData = true;
@@ -222,12 +228,25 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 			// make daily summary dialog
 			if(dialogDailySummary == null){
 				dialogDailySummary = new DailySummaryDialog(activity, this, this, dates);
-				dialogDailySummary.setData(lstSchedule, lstBirthdayUser, lstHoliday, lstWorkOffer);
+				mRootView.post(new Runnable() {
+
+					@Override
+					public void run(){
+						dialogDailySummary.setData(lstSchedule, lstBirthdayUser, lstHoliday, lstWorkOffer);
+					}
+				});
+
 			}
 
 			if(refreshDialogData && isChangedData){
 				//// TODO: 4/27/2017 more check change data
-				dialogDailySummary.setData(lstSchedule, lstBirthdayUser, lstHoliday, lstWorkOffer);
+				mRootView.post(new Runnable() {
+
+					@Override
+					public void run(){
+						dialogDailySummary.setData(lstSchedule, lstBirthdayUser, lstHoliday, lstWorkOffer);
+					}
+				});
 				isChangedData = false;
 			}
 
@@ -339,13 +358,5 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 	protected int getNormalDayColor(){
 		return ContextCompat.getColor(activity, R.color.wf_common_color_text);
 	}
-
-	protected int getHeaderBgColor(){
-		return ContextCompat.getColor(activity, R.color.wf_app_color_base);
-	}
-
-	protected int getCalendarHeaderItem(){
-		return 0;
-	};
 
 }

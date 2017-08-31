@@ -51,6 +51,7 @@ public class ScheduleModel{
 	public Boolean			isWarning;
 	public UserModel		owner;
 	public String			scheduleColor	= "#FF0000";
+	public boolean			isPeriod;
 
 	public ScheduleModel(){
 
@@ -61,6 +62,7 @@ public class ScheduleModel{
 		this.startDate = holidayModel.startDate;
 		this.endDate = holidayModel.endDate;
 		this.isAllDay = true;
+		this.isPeriod = true;
 		this.scheduleType = ClConst.SCHEDULE_TYPE_HOLIDAY;
 	}
 
@@ -87,19 +89,26 @@ public class ScheduleModel{
 		// this.isAllDay = true;
 		// }
 		this.isAllDay = true;
+		this.isPeriod = true;
 		this.scheduleType = ClConst.SCHEDULE_TYPE_WORK_OFFER;
 	}
 
-	public boolean isPeriodSchedule(){
-		if(startDate == null || endDate == null){
-			return false;
+	public static void determinePeriod(List<ScheduleModel> scheduleModels){
+		for(ScheduleModel scheduleModel : scheduleModels){
+			scheduleModel.determinePeriodSchedule();
 		}
+	}
 
-		if(ClConst.SCHEDULE_TYPE_WORK_OFFER.equals(scheduleType) || ClConst.SCHEDULE_TYPE_HOLIDAY.equals(scheduleType)){
-			return true;
-		}
+	public void determinePeriodSchedule(){
+		// if(startDate == null || endDate == null){
+		// isPeriod = false;
+		// }
+		//
+		// if(ClConst.SCHEDULE_TYPE_WORK_OFFER.equals(scheduleType) || ClConst.SCHEDULE_TYPE_HOLIDAY.equals(scheduleType)){
+		// isPeriod = true;
+		// }
 
-		return CCDateUtil.compareDate(startDate, endDate, false) != 0;
+		isPeriod = CCDateUtil.compareDate(startDate, endDate, false) != 0;
 	}
 
 	public String getScheduleColor(){

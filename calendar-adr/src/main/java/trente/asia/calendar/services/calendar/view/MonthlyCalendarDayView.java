@@ -25,6 +25,8 @@ import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.utils.WelfareUtil;
 
+import static trente.asia.calendar.services.calendar.MonthlyPageFragment.getScheduleComparator;
+
 /**
  * MonthlyCalendarDayView
  *
@@ -53,7 +55,6 @@ public class MonthlyCalendarDayView extends LinearLayout {
     public MonthlyCalendarDayView(Context context) {
         super(context);
         this.mContext = context;
-
     }
 
     public MonthlyCalendarDayView(Context context, AttributeSet attrs) {
@@ -116,6 +117,7 @@ public class MonthlyCalendarDayView extends LinearLayout {
 
     public void showSchedules() {
         Collections.sort(usedMargins);
+         Collections.sort(lstSchedule, getScheduleComparator(false));
         for (ScheduleModel scheduleModel : schedules) {
             showSchedule(scheduleModel);
         }

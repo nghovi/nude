@@ -182,7 +182,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 		String startTimeStr;
 		String endTimeStr;
 
-		if(schedule != null && !CCStringUtil.isEmpty(schedule.key) && (!schedule.isAllDay || schedule.isPeriodSchedule())){
+		if(schedule != null && !CCStringUtil.isEmpty(schedule.key) && (!schedule.isAllDay || schedule.isPeriod)){
 			startDate = schedule.startDate;
 			startDate = CCDateUtil.makeDateTime(startDate, schedule.startTime);
 			endDate = schedule.endDate;
