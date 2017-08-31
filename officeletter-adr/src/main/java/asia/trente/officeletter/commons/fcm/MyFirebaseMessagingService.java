@@ -31,7 +31,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService{
 	private final String	TAG	= "MessagingService";
 	private String			mNoticeType;
 	private String			mKey;
-
+	@Override
 	public void onMessageReceived(RemoteMessage remoteMessage){
 
 		Log.i(TAG, "============Start notification=============");
@@ -57,9 +57,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService{
 	}
 
 	private void sendNotification(String notification, String noticeType, String key){
-
 		FcmNotificationModel model = CCJsonUtil.convertToModel(notification, FcmNotificationModel.class);
-
 		Intent intent = new Intent(this, MainActivity.class);
 		intent.putExtra(WelfareConst.NotificationReceived.USER_INFO_NOTI_TYPE, noticeType);
 		intent.putExtra(WelfareConst.NotificationReceived.USER_INFO_NOTI_KEY, key);
@@ -68,11 +66,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService{
 		int requestID = (int)System.currentTimeMillis();
 		PendingIntent pendingIntent = PendingIntent.getActivity(this, requestID, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 
-		String content;
-		if (WelfareConst.NotificationType.OL_DELIVERY_DOC.equals(noticeType)) {
-			content = getString(R.string.ol_notification_document);
-		} else {
-			content = getString(R.string.ol_notification_salary);
+		String content = "";
+		if(!CCStringUtil.isEmpty(model.body_loc_key)){
+			content = CsMsgUtil.message(this, model.body_loc_key, model.body_loc_args);
 		}
 		Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 		NotificationCompat.Builder notificationBuilder = (NotificationCompat.Builder)new NotificationCompat.Builder(this).setSmallIcon(R.drawable.pn_icon).setContentTitle(getString(R.string.app_name)).setContentText(content).setAutoCancel(true).setSound(defaultSoundUri).setContentIntent(pendingIntent);

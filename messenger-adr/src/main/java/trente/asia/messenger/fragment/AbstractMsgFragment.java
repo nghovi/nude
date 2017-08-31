@@ -64,7 +64,7 @@ public class AbstractMsgFragment extends WelfareFragment{
 	}
 
 	@Override
-	protected void commonNotSuccess(JSONObject response){
+	protected void commonNotSuccess(JSONObject response, String url){
 		String returnCd = response.optString(CsConst.RETURN_CODE_PARAM);
 		if(WfErrorConst.MS_ERR_CODE_DEPT_CHANGED.equals(returnCd) || WfErrorConst.MS_ERR_CODE_CONTENT_DELETED.equals(returnCd)){
 			if(WfErrorConst.MS_ERR_CODE_CONTENT_DELETED.equals(returnCd)){
@@ -74,7 +74,7 @@ public class AbstractMsgFragment extends WelfareFragment{
 			emptyBackStack();
 			gotoFragment(new MessageFragment());
 		}else{
-			super.commonNotSuccess(response);
+			super.commonNotSuccess(response, url);
 		}
 	}
 

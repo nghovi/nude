@@ -15,7 +15,12 @@
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/wf_app_color_base" />
 
-        <activity android:name=".commons.activities.MainActivity" />
+        <activity android:name=".commons.activities.MainActivity">
+            <intent-filter>
+                <action android:name="OPEN_ACTIVITY_1"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
         <activity android:name=".commons.activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
