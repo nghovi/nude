@@ -1,11 +1,11 @@
 package trente.asia.calendar.services.calendar.model;
 
-import com.bluelinelabs.logansquare.annotation.JsonField;
-import com.bluelinelabs.logansquare.annotation.JsonObject;
-
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import com.bluelinelabs.logansquare.annotation.JsonField;
+import com.bluelinelabs.logansquare.annotation.JsonObject;
 
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCStringUtil;
@@ -41,7 +41,7 @@ public class ScheduleModel{
 	public CategoryModel	categoryModel;
 	public Boolean			isAllDay;
 	public List<UserModel>	scheduleJoinUsers;
-	public String			repeatType;
+	public String			repeatType		= ClConst.SCHEDULE_REPEAT_TYPE_NONE;
 	public String			repeatLimitType;
 	public String			repeatData;
 	@JsonField(typeConverter = WelfareActivity.WelfareTimeConverter.class)

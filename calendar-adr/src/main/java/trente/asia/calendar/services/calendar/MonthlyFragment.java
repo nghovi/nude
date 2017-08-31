@@ -37,21 +37,21 @@ public class MonthlyFragment extends PageContainerFragment{
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState){
 		super.onActivityCreated(savedInstanceState);
-		final LinearLayout itemMonth = (LinearLayout)getView().findViewById(R.id.lnr_view_footer_monthly);
-		itemMonth.setOnClickListener(null);
-		final Handler handler = new Handler();
-		handler.postDelayed(new Runnable() {
-
-			@Override
-			public void run(){
-				// Do something after 100ms
-				if(itemMonth != null){
-					if(getView() != null){
-						buildFooter();
-					}
-				}
-			}
-		}, 3000);
+//		final LinearLayout itemMonth = (LinearLayout)getView().findViewById(R.id.lnr_view_footer_monthly);
+//		itemMonth.setOnClickListener(null);
+//		final Handler handler = new Handler();
+//		handler.postDelayed(new Runnable() {
+//
+//			@Override
+//			public void run(){
+//				// Do something after 100ms
+//				if(itemMonth != null){
+//					if(getView() != null){
+//						buildFooter();
+//					}
+//				}
+//			}
+//		}, 3000);
 	}
 
 	@Override

@@ -66,8 +66,23 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService{
 			PendingIntent pendingIntent = PendingIntent.getActivity(this, requestID, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 
 			String content = "";
-			if(!CCStringUtil.isEmpty(model.body_loc_key)){
-				content = CsMsgUtil.message(this, model.body_loc_key, model.body_loc_args);
+			String keyString = model.body_loc_key;
+			String[] args = model.body_loc_args;
+			if(!CCStringUtil.isEmpty(keyString)){
+				// if("FM_CL_003".equals(keyString) || "FM_CL_004".equals(keyString)){
+				// int scheduleNum = Integer.parseInt(args[0]);
+				// int todoNum = Integer.parseInt(args[1]);
+				// if(scheduleNum == 0){
+				// keyString = keyString + "2";
+				// args = new String[]{args[1]};
+				// }
+				// if(todoNum == 0){
+				// keyString = keyString + "1";
+				// args = new String[]{args[0]};
+				// }
+				//
+				// }
+				content = CsMsgUtil.message(this, keyString, args);
 			}
 			Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 			NotificationCompat.Builder notificationBuilder = (NotificationCompat.Builder)new NotificationCompat.Builder(this).setSmallIcon(R.drawable.pn_icon).setContentTitle(getString(R.string.app_name)).setContentText(content).setAutoCancel(true).setSound(defaultSoundUri).setContentIntent(pendingIntent);
