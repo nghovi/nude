@@ -1048,12 +1048,13 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 		activeBoardId = activeBoard.key;
 	}
 
-	protected void commonNotSuccess(JSONObject response){
+	@Override
+	protected void commonNotSuccess(JSONObject response, String url){
 		String returnCd = response.optString(CsConst.RETURN_CODE_PARAM);
 		if(WfErrorConst.ERR_CODE_CONNECTION_ERROR.equals(returnCd)){
 
 		}else{
-			super.commonNotSuccess(response);
+			super.commonNotSuccess(response, url);
 		}
 		messageView.imgSend.setEnabled(true);
 	}

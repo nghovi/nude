@@ -22,6 +22,6 @@
     <string name="ol_loading">Loading&#8230;</string>
     <string name="ol_message_file_not_found">Target data is not find or already may be changed.</string>
     <string name="ol_password_not_match">Password does not match</string>
-    <string name="ol_notification_document">You received new document</string>
-    <string name="ol_notification_salary">You received new salary detail</string>
+    <string name="FM_OL_001">You received new document</string>
+    <string name="FM_OL_002">You received new salary detail</string>
 </resources>
