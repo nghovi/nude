@@ -6,7 +6,8 @@
         android:id="@+id/lnr_calendar_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"></LinearLayout>
+        android:layout_marginBottom="@dimen/margin_10dp"
+        android:orientation="horizontal"></LinearLayout>
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         style="@style/cs_common_match"

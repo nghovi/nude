@@ -76,9 +76,9 @@
     <string name="FM_CL_003">Today\’s schedule: %1$s item(s) \nToday\’s To Do: %2$s item(s)</string>
     <string name="FM_CL_004">Tomorrow\’s schedule: %1$s item(s) \nTomorrow\’s To Do: %2$s item(s)</string>
     <string name="FM_CL_0031">Today\’s schedule: %1$s item(s)</string>
-    <string name="FM_CL_0032">Today\’s To Do: %2$s item(s)</string>
+    <string name="FM_CL_0032">Today\’s To Do: %1$s item(s)</string>
     <string name="FM_CL_0041">Tomorrow\’s schedule: %1$s item(s)</string>
-    <string name="FM_CL_0042">Tomorrow\’s To Do: %2$s item(s)</string>
+    <string name="FM_CL_0042">Tomorrow\’s To Do: %1$s item(s)</string>
 
 
 

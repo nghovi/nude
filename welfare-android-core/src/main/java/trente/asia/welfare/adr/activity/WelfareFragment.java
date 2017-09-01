@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -55,6 +56,18 @@ public abstract class WelfareFragment extends ChiaseFragment implements WelfareA
 	protected Integer					lnrContentId;
 	public static final int				MARGIN_LEFT_RIGHT_PX	= WelfareUtil.dpToPx(16);
 	public static final int				MARGIN_TEXT_TOP_BOTTOM	= WelfareUtil.dpToPx(4);
+
+	public static long					currentTime				= 0;
+
+	public void benchmark(String msg){
+		if(currentTime == 0){
+			Log.e("WELFARE", getClass().getSimpleName() + " " + msg + " time lapse ========: 0");
+			currentTime = System.currentTimeMillis();
+		}else{
+			Log.e("WELFARE", getClass().getSimpleName() + " " + msg + " time lapse ========: " + (System.currentTimeMillis() - currentTime));
+			currentTime = System.currentTimeMillis();
+		}
+	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState){
@@ -162,27 +175,26 @@ public abstract class WelfareFragment extends ChiaseFragment implements WelfareA
 		}
 	}
 
+	protected void commonNotSuccess(JSONObject response, String url){
+		String returnCd = response.optString(CsConst.RETURN_CODE_PARAM);
+		if(WfErrorConst.ERR_CODE_INVALID_ACCOUNT.equals(returnCd)){
 
-    protected void commonNotSuccess(JSONObject response, String url) {
-        String returnCd = response.optString(CsConst.RETURN_CODE_PARAM);
-        if (WfErrorConst.ERR_CODE_INVALID_ACCOUNT.equals(returnCd)) {
+			String msg = response.optString(CsConst.MESSAGES);
+			Toast.makeText(getContext(), msg, Toast.LENGTH_LONG).show();
 
-            String msg = response.optString(CsConst.MESSAGES);
-            Toast.makeText(getContext(), msg, Toast.LENGTH_LONG).show();
-
-            gotoSignIn();
-        } else if (WfErrorConst.ERR_CODE_INVALID_VERSION_AND_UPDATE.equals(returnCd)) {
-            // show dialog
-            WfDialog dlgUpgrade = new WfDialog(activity);
-            dlgUpgrade.setDialogUpgradeVersion();
-            dlgUpgrade.show();
-            gotoSignIn();
-        } else {
-            String msg = response.optString(CsConst.MESSAGES);
-            alertDialog.setMessage(Html.fromHtml(msg).toString());
-            alertDialog.show();
-        }
-    }
+			gotoSignIn();
+		}else if(WfErrorConst.ERR_CODE_INVALID_VERSION_AND_UPDATE.equals(returnCd)){
+			// show dialog
+			WfDialog dlgUpgrade = new WfDialog(activity);
+			dlgUpgrade.setDialogUpgradeVersion();
+			dlgUpgrade.show();
+			gotoSignIn();
+		}else{
+			String msg = response.optString(CsConst.MESSAGES);
+			alertDialog.setMessage(Html.fromHtml(msg).toString());
+			alertDialog.show();
+		}
+	}
 
 	protected void cancelNotification(Context context){
 		String notificationService = Context.NOTIFICATION_SERVICE;

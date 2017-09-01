@@ -15,7 +15,6 @@ import android.view.Gravity;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import asia.chiase.core.util.CCBooleanUtil;
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
 import trente.asia.calendar.R;
@@ -134,9 +133,7 @@ public class MonthlyCalendarRowView extends RelativeLayout{
 	}
 
 	private void sortSchedules(){
-		if(!CCCollectionUtil.isEmpty(schedules)){
-			Collections.sort(schedules, getPeriodScheduleComparator(startDate, endDate));
-		}
+		Collections.sort(schedules, getPeriodScheduleComparator(startDate, endDate));
 	}
 
 	public static int compareOffer(ScheduleModel schedule1, ScheduleModel schedule2){
@@ -168,8 +165,18 @@ public class MonthlyCalendarRowView extends RelativeLayout{
 
 		// Date startDate = WelfareFormatUtil.makeDate(WelfareFormatUtil.removeTime4Date(scheduleModel.startDate));
 		// Date endDate = WelfareFormatUtil.makeDate(WelfareFormatUtil.removeTime4Date(scheduleModel.endDate));
-		List<MonthlyCalendarDayView> lstActiveCalendarDay = ClUtil.findListView4Day(lstCalendarDay, scheduleModel.startDate, scheduleModel.endDate);
-		List<MonthlyCalendarDayView> lstPassiveCalendarDay = getPassiveCalendarDays(lstCalendarDay, lstActiveCalendarDay);
+
+		List<MonthlyCalendarDayView> lstActiveCalendarDay = new ArrayList<>();
+		List<MonthlyCalendarDayView> lstPassiveCalendarDay = new ArrayList<>();
+
+		for(MonthlyCalendarDayView dayView : lstCalendarDay){
+			if(ClUtil.belongPeriod(dayView.date, scheduleModel.startDate, scheduleModel.endDate)){
+				lstActiveCalendarDay.add(dayView);
+			}else{
+				lstPassiveCalendarDay.add(dayView);
+			}
+		}
+
 		int marginTop = ClUtil.getMaxInList(lstActiveCalendarDay) + ClConst.TEXT_VIEW_HEIGHT;
 
 		for(MonthlyCalendarDayView dayView : lstActiveCalendarDay){
@@ -180,10 +187,10 @@ public class MonthlyCalendarRowView extends RelativeLayout{
 			dayView.addPassivePeriod(scheduleModel, marginTop * schedules.size());
 		}
 		MonthlyCalendarDayView theFirstCalendarDay = lstActiveCalendarDay.get(0);
-		MonthlyCalendarDayView theLastCalendarDay = lstActiveCalendarDay.get(lstActiveCalendarDay.size() - 1);
+		// MonthlyCalendarDayView theLastCalendarDay = lstActiveCalendarDay.get(lstActiveCalendarDay.size() - 1);
 
-		int numCol = (theLastCalendarDay.dayOfTheWeek - theFirstCalendarDay.dayOfTheWeek + 1);
-		int width = (int)(itemWidth * (numCol >= 7 ? 7 : numCol));
+		int numCol = lstActiveCalendarDay.size();
+		int width = (int)(itemWidth * numCol);
 		// width = width - WelfareUtil.dpToPx(1);
 		int marginLeft = (int)(itemWidth * theFirstCalendarDay.dayOfTheWeek);
 		int marginTopAfter = marginTop + WelfareUtil.dpToPx(5);
@@ -206,7 +213,7 @@ public class MonthlyCalendarRowView extends RelativeLayout{
 		txtSchedule.setLayoutParams(layoutParams);
 		txtSchedule.setGravity(Gravity.CENTER_VERTICAL);
 		txtSchedule.setTextColor(Color.BLACK);
-		if(CCBooleanUtil.checkBoolean(scheduleModel.isAllDay) || scheduleModel.isPeriodSchedule()){
+		if(scheduleModel.isAllDay || scheduleModel.isPeriod){
 			txtSchedule.setBackground(ContextCompat.getDrawable(context, R.drawable.wf_background_black_border));
 		}
 		txtSchedule.setPadding(WelfareUtil.dpToPx(2), 0, 0, 0);

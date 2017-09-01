@@ -61,6 +61,7 @@ public abstract class AbstractClFragment extends WelfareFragment implements View
 				public void onClick(View view){
 					switch(view.getId()){
 					case R.id.lnr_view_footer_monthly:
+						benchmark("onClicked");
 						onClickFooterItemMonthly();
 						break;
 					case R.id.lnr_view_footer_weekly:
