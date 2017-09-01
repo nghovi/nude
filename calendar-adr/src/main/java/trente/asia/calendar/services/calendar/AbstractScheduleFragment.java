@@ -117,7 +117,9 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 	protected void onLoadScheduleDetailSuccess(JSONObject response){
 		try{
 			schedule = LoganSquare.parse(response.optString("schedule"), ScheduleModel.class);
-			schedule.determinePeriodSchedule();
+			if(!CCStringUtil.isEmpty(schedule.key)){
+				schedule.determinePeriodSchedule();
+			}
 			rooms = LoganSquare.parseList(response.optString("rooms"), RoomModel.class);
 			users = LoganSquare.parseList(response.optString("users"), UserModel.class);
 			categories = LoganSquare.parseList(response.optString("categories"), CategoryModel.class);
