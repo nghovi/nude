@@ -85,7 +85,7 @@ public class MonthlyCalendarDayView extends LinearLayout {
             }
         });
 
-        txtHoliday = (TextView) this.findViewById(R.id.txt_id_row_holiday);
+//        txtHoliday = (TextView) this.findViewById(R.id.txt_id_row_holiday);
 
         txtDayLabel = (TextView) this.findViewById(R.id.txt_id_day_label);
         txtDayLabel.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DD, itemDate));

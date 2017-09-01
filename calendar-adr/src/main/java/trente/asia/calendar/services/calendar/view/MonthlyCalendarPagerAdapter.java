@@ -8,11 +8,9 @@ import asia.chiase.core.util.CCDateUtil;
 import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.commons.fragments.ClPageFragment;
 import trente.asia.calendar.services.calendar.MonthlyPageFragment;
-import trente.asia.calendar.services.calendar.SchedulesPageFragment;
-import trente.asia.calendar.services.calendar.listener.OnChangeCalendarUserListener;
 
 /**
- * BoardPagerAdapter
+ * MonthlyCalendarPagerAdapter
  *
  * @author TrungND
  */

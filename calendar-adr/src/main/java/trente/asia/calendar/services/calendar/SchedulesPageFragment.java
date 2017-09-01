@@ -83,7 +83,7 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 	abstract protected List<Date> getAllDate();
 
 	protected void clearOldData(){
-	};
+	}
 
 	@Override
 	protected void initView(){
@@ -91,13 +91,13 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 
 		today = Calendar.getInstance().getTime();
 
-		if(pageSharingHolder.isLoadingSchedules == false){
+		inflater = LayoutInflater.from(activity);
+
+		if(pageSharingHolder != null && pageSharingHolder.isLoadingSchedules == false){
 			lnrCalendarContainer = (LinearLayout)getView().findViewById(R.id.lnr_calendar_container);
 			dates = getAllDate();
 			initCalendarView();
 		}
-
-		inflater = LayoutInflater.from(activity);
 
 		txtMore = (TextView)getView().findViewById(R.id.txt_more_to_come);
 		imgExpand = (ImageView)getView().findViewById(R.id.ic_icon_expand);
@@ -352,11 +352,18 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 
 	@Override
 	protected void loadData(){
-		loadScheduleList();
+		 loadScheduleList();
 	}
 
 	protected int getNormalDayColor(){
 		return ContextCompat.getColor(activity, R.color.wf_common_color_text);
+	}
+
+	@Override
+	public void benchmark(String msg){
+		if(pageSharingHolder.selectedPagePosition == pagePosition){
+			super.benchmark(msg);
+		}
 	}
 
 }

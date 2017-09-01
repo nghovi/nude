@@ -59,15 +59,15 @@ public abstract class WelfareFragment extends ChiaseFragment implements WelfareA
 
 	public static long					currentTime				= 0;
 
-//	public void log(String msg){
-//		if(currentTime == 0){
-//			Log.e("MYLOG", getClass().getSimpleName() + " " + msg + " time lapse ========: 0");
-//			currentTime = System.currentTimeMillis();
-//		}else{
-//			Log.e("MYLOG", getClass().getSimpleName() + " " + msg + " time lapse ========: " + (System.currentTimeMillis() - currentTime));
-//			currentTime = System.currentTimeMillis();
-//		}
-//	}
+	public void benchmark(String msg){
+		if(currentTime == 0){
+			Log.e("WELFARE", getClass().getSimpleName() + " " + msg + " time lapse ========: 0");
+			currentTime = System.currentTimeMillis();
+		}else{
+			Log.e("WELFARE", getClass().getSimpleName() + " " + msg + " time lapse ========: " + (System.currentTimeMillis() - currentTime));
+			currentTime = System.currentTimeMillis();
+		}
+	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState){

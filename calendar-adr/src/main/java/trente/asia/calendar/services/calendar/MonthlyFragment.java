@@ -3,21 +3,15 @@ package trente.asia.calendar.services.calendar;
 import java.util.Date;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import asia.chiase.core.util.CCFormatUtil;
 import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.R;
-import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.fragments.PageContainerFragment;
 import trente.asia.calendar.commons.views.ClFragmentPagerAdapter;
 import trente.asia.calendar.services.calendar.view.MonthlyCalendarPagerAdapter;
-import trente.asia.welfare.adr.define.WelfareConst;
 
 /**
  * MonthlyFragment
@@ -29,30 +23,30 @@ public class MonthlyFragment extends PageContainerFragment{
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 		if(mRootView == null){
-			mRootView = inflater.inflate(R.layout.fragment_monthly, container, false);
+			mRootView = inflater.inflate(R.layout.fragment_pager_container, container, false);
 		}
 		return mRootView;
 	}
 
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState){
-		super.onActivityCreated(savedInstanceState);
-//		final LinearLayout itemMonth = (LinearLayout)getView().findViewById(R.id.lnr_view_footer_monthly);
-//		itemMonth.setOnClickListener(null);
-//		final Handler handler = new Handler();
-//		handler.postDelayed(new Runnable() {
-//
-//			@Override
-//			public void run(){
-//				// Do something after 100ms
-//				if(itemMonth != null){
-//					if(getView() != null){
-//						buildFooter();
-//					}
-//				}
-//			}
-//		}, 3000);
-	}
+	// @Override
+	// public void onActivityCreated(Bundle savedInstanceState){
+	// super.onActivityCreated(savedInstanceState);
+	// final LinearLayout itemMonth = (LinearLayout)getView().findViewById(R.id.lnr_view_footer_monthly);
+	// itemMonth.setOnClickListener(null);
+	// final Handler handler = new Handler();
+	// handler.postDelayed(new Runnable() {
+	//
+	// @Override
+	// public void run(){
+	// // Do something after 100ms
+	// if(itemMonth != null){
+	// if(getView() != null){
+	// buildFooter();
+	// }
+	// }
+	// }
+	// }, 3000);
+	// }
 
 	@Override
 	protected void initView(){
