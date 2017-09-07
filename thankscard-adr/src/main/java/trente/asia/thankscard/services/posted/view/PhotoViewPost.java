@@ -60,17 +60,18 @@ public class PhotoViewPost extends AppCompatImageView{
 
 	public void setImage(String imagePath, String position){
 		originBitmap = BitmapFactory.decodeFile(imagePath);
-		bitmap = Bitmap.createScaledBitmap(originBitmap, (int) (frameHeight - 50), (int) ((frameHeight - 50) * originBitmap.getHeight() / originBitmap.getWidth()), false);
+		bitmap = Bitmap.createScaledBitmap(originBitmap, (int) frameWidth, (int) (frameWidth * originBitmap.getHeight() / originBitmap.getWidth()), false);
 		width = bitmap.getWidth();
 		height = bitmap.getHeight();
-		x = frameWidth / 4 - width / 2;
-		if(TcConst.POSITION_CENTER.equals(position) || TcConst.POSITION_LEFT.equals(position)){
-			y = frameHeight / 2 - height / 2;
-		}else if(TcConst.POSITION_TOP.equals(position)){
-			y = 50;
-		}else if(TcConst.POSITION_BOTTOM.equals(position)){
-			y = frameHeight - height - 50;
-		}
+		x = 0;
+//		if(TcConst.POSITION_CENTER.equals(position) || TcConst.POSITION_LEFT.equals(position)){
+//			y = frameHeight / 2 - height / 2;
+//		}else if(TcConst.POSITION_TOP.equals(position)){
+//			y = 50;
+//		}else if(TcConst.POSITION_BOTTOM.equals(position)){
+//			y = frameHeight - height - 50;
+//		}
+		y = 0;
 		scale = 1f;
 		saveScale = 1f;
 		invalidate();

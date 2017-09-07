@@ -76,12 +76,11 @@
                         android:layout_marginTop="@dimen/margin_16dp"
                         android:background="@color/chiase_white">
 
-                        <trente.asia.thankscard.services.posted.view.PhotoViewDetail
+                        <ImageView
                             android:id="@+id/layout_photo"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_alignBottom="@+id/img_card"
-                            android:layout_alignTop="@+id/img_card"
-                            app:layout_widthPercent="70%" />
+                            android:scaleType="fitXY"/>
 
                         <ImageView
                             android:id="@+id/img_card"

@@ -3,7 +3,6 @@ package trente.asia.thankscard.services.posted;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +13,7 @@ import trente.asia.thankscard.R;
 import trente.asia.thankscard.databinding.FragmentSelectCardBinding;
 import trente.asia.thankscard.fragments.AbstractTCFragment;
 import trente.asia.thankscard.services.common.model.Template;
-import trente.asia.thankscard.services.posted.presenter.CardAdapter;
+import trente.asia.thankscard.services.posted.adapter.CardAdapter;
 
 /**
  * Created by tien on 7/13/2017.

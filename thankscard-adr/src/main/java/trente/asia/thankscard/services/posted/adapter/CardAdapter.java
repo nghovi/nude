@@ -1,4 +1,4 @@
-package trente.asia.thankscard.services.posted.presenter;
+package trente.asia.thankscard.services.posted.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -6,16 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.bumptech.glide.Glide;
-
 import java.util.List;
 
-import trente.asia.thankscard.BuildConfig;
 import trente.asia.thankscard.R;
 import trente.asia.thankscard.databinding.ItemCardBinding;
 import trente.asia.thankscard.services.common.model.Template;
 import trente.asia.thankscard.utils.TCUtil;
-import trente.asia.welfare.adr.utils.WfPicassoHelper;
 
 /**
  * Created by tien on 7/13/2017.

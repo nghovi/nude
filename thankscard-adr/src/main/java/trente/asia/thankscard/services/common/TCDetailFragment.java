@@ -146,7 +146,7 @@ public class TCDetailFragment extends AbstractPagerFragment{
 		TextView textDate = (TextView)getView().findViewById(R.id.txt_tc_detail_date);
 		TextView textTo = (TextView)getView().findViewById(R.id.txt_tc_detail_to);
 		ImageView imgCard = (ImageView) getView().findViewById(R.id.img_card);
-		PhotoViewDetail photoView = (PhotoViewDetail) getView().findViewById(R.id.layout_photo);
+		ImageView photoView = (ImageView) getView().findViewById(R.id.layout_photo);
 		TCUtil.loadImageWithGlide(historyModel.template.templateUrl, imgCard);
 		textMessage.setText(historyModel.message);
 		Date postDate = CCDateUtil.makeDateCustom(historyModel.postDate, WelfareConst.WF_DATE_TIME);
@@ -159,16 +159,16 @@ public class TCDetailFragment extends AbstractPagerFragment{
 				isSecret = true;
 		}
 
+		photoView.setImageBitmap(null);
+
 		if("NM".equals(historyModel.templateType)){
 			setLayoutMessageCenter(lnrMessage);
 			textMessage.setTextSize(TypedValue.COMPLEX_UNIT_PX, normalTextSize);
 		}else{
 			setLayoutMessageRight(lnrMessage);
 			textMessage.setTextSize(TypedValue.COMPLEX_UNIT_PX, photoTextSize);
-			photoView.clearImage();
 			if(historyModel.attachment != null && historyModel.attachment.fileUrl != null && !isSecret){
-				photoView.restoreImage(historyModel.attachment.fileUrl, Float.valueOf(historyModel.photoLocationX),
-						Float.valueOf(historyModel.photoLocationY), Float.valueOf(historyModel.photoScale));
+				WfPicassoHelper.loadImage(getContext(), BuildConfig.HOST + historyModel.attachment.fileUrl, photoView, null);
 			}
 		}
 

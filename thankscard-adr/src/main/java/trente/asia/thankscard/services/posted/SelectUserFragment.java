@@ -17,7 +17,7 @@ import android.view.WindowManager;
 import trente.asia.thankscard.R;
 import trente.asia.thankscard.databinding.FragmentSelectUserBinding;
 import trente.asia.thankscard.fragments.AbstractTCFragment;
-import trente.asia.thankscard.services.posted.presenter.UserAdapter;
+import trente.asia.thankscard.services.posted.adapter.UserAdapter;
 import trente.asia.welfare.adr.models.UserModel;
 
 /**

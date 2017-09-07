@@ -1,4 +1,4 @@
-package trente.asia.thankscard.services.posted.presenter;
+package trente.asia.thankscard.services.posted.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

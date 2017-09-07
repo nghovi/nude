@@ -5,8 +5,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.icu.text.SimpleDateFormat;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -28,8 +29,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.IOException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -56,15 +55,13 @@ import trente.asia.thankscard.fragments.dialogs.PostConfirmDialog;
 import trente.asia.thankscard.services.common.model.Template;
 import trente.asia.thankscard.services.mypage.model.StampCategoryModel;
 import trente.asia.thankscard.services.mypage.model.StampModel;
-import trente.asia.thankscard.services.posted.view.CannotUsePhotoDialog;
+import trente.asia.thankscard.services.posted.listener.OnCroppingListener;
 import trente.asia.thankscard.services.posted.view.CannotUseStickersDialog;
 import trente.asia.thankscard.services.posted.view.StickerViewPost;
-import trente.asia.thankscard.services.posted.presenter.StampAdapter;
-import trente.asia.thankscard.services.posted.presenter.StampCategoryAdapter;
+import trente.asia.thankscard.services.posted.adapter.StampAdapter;
+import trente.asia.thankscard.services.posted.adapter.StampCategoryAdapter;
 import trente.asia.thankscard.services.posted.view.ChangeToNormalCardDialog;
-import trente.asia.thankscard.services.posted.view.ChoosePictureDialog;
 import trente.asia.thankscard.services.posted.view.LimitStickerDialog;
-import trente.asia.thankscard.services.posted.view.TouchPad;
 import trente.asia.thankscard.utils.TCUtil;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
@@ -73,12 +70,17 @@ import trente.asia.welfare.adr.models.DeptModel;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.pref.PreferencesSystemUtil;
 import trente.asia.welfare.adr.utils.WelfareUtil;
+import trente.asia.welfare.adr.utils.WfPicassoHelper;
 
 /**
  * Created by tien on 7/12/2017.
  */
 
-public class PostTCFragment extends AbstractTCFragment implements View.OnClickListener,SelectDeptFragment.OnSelectDeptListener,SelectUserFragment.OnSelectUserListener,SelectCardFragment.OnSelectCardListener,StickerViewPost.OnStickerListener,TouchPad.OnTouchPadListener,StampCategoryAdapter.OnStampCategoryAdapterListener,StampAdapter.OnStampAdapterListener{
+public class PostTCFragment extends AbstractTCFragment
+		implements View.OnClickListener,SelectDeptFragment.OnSelectDeptListener,
+		SelectUserFragment.OnSelectUserListener,SelectCardFragment.OnSelectCardListener,
+		StickerViewPost.OnStickerListener, StampCategoryAdapter.OnStampCategoryAdapterListener,
+		StampAdapter.OnStampAdapterListener, OnCroppingListener{
 
 	public final int					MAX_LETTER		= 75;
 
@@ -396,11 +398,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 			}
 			break;
 		case R.id.lnr_select_card:
-			if(canSendPhoto && (binding.layoutPhoto.hasImage() || !stickers.isEmpty())){
-				showDialogChangeToNormalCard();
-			}else{
-				showLayoutCards(templates);
-			}
+			showLayoutCards(photoTemplates);
 			break;
 		case R.id.lnr_select_sticker:
 			if(canUseStickers){
@@ -414,11 +412,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 			}
 			break;
 		case R.id.lnr_select_photo:
-			if(canUsePhoto){
-				showLayoutCards(photoTemplates);
-			}else{
-				new CannotUsePhotoDialog().show(getFragmentManager(), null);
-			}
+			chooseImage();
 			break;
 		case R.id.btn_send:
 			checkNewCard();
@@ -503,12 +497,10 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 	}
 
 	private void changeLayoutCard(){
-
 		buildTemplate();
 		if(canSendPhoto){
 			binding.lnrBody.setVisibility(View.VISIBLE);
 			binding.rltMsg.setVisibility(View.GONE);
-			binding.touchPad.setCallback(this);
 			binding.edtMessagePhoto.setText(message);
 			binding.edtMessagePhoto.setSelection(message.length());
 
@@ -519,7 +511,6 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 		}else{
 			binding.lnrBody.setVisibility(View.GONE);
 			binding.rltMsg.setVisibility(View.VISIBLE);
-			binding.layoutPhoto.clearImage();
 			binding.edtMessage.setText(message);
 
 			for(StickerViewPost sticker : stickers){
@@ -571,39 +562,15 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 				String filename = WelfareConst.FilesName.CAMERA_TEMP_FILE_NAME + String.valueOf(date) + WelfareConst.FilesName.CAMERA_TEMP_FILE_EXT;
 				String desPath = TCUtil.getFilesFolderPath() + filename;
 				mImagePath = WelfareUtil.getImagePath(activity, uri, true, desPath);
-				Uri uri1 = AndroidUtil.getUriFromFileInternal(activity, new File(mImagePath));
-				cropImage(uri1);
+				CroppingFragment croppingFragment = new CroppingFragment();
+				croppingFragment.setImagePath(mImagePath);
+				croppingFragment.setCallback(this);
+				gotoFragment(croppingFragment);
 			}else{
 				Toast.makeText(activity, "Gallery is error", Toast.LENGTH_LONG).show();
 			}
 			break;
-		case WelfareConst.RequestCode.PHOTO_CROP:
-			binding.layoutPhoto.setImage(mImageUri.getPath(), template.templateType);
-			break;
 		}
-	}
-
-	private void cropImage(Uri imageUri){
-		long date = System.currentTimeMillis();
-		String filename = WelfareConst.FilesName.CAMERA_TEMP_FILE_NAME + String.valueOf(date) + WelfareConst.FilesName.CAMERA_TEMP_FILE_EXT;
-		String filePath = TCUtil.getFilesFolderPath() + "/" + filename;
-		File imageFile = new File(filePath);
-		try{
-			imageFile.createNewFile();
-		}catch(IOException ex){
-			ex.printStackTrace();
-		}
-		mImageUri = Uri.fromFile(imageFile);
-		int imageWidth;
-		int imageHeight;
-		if(TcConst.POSITION_LEFT.equals(template.templateType)){
-			imageWidth = (int)(frameWidth / 2 - 50);
-			imageHeight = (int)(frameHeight - 50);
-		}else{
-			imageWidth = (int)(frameHeight * 2 / 3);
-			imageHeight = (int)(frameHeight * 2 / 3);
-		}
-		WelfareUtil.startCrop(this, imageUri, mImageUri, imageWidth, imageHeight);
 	}
 
 	private void checkNewCard(){
@@ -622,10 +589,6 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 		//
 		// }
 		showConfirmDialog();
-	}
-
-	private boolean hasTooManyLetters(String message){
-		return message.length() > MAX_LETTER;
 	}
 
 	private void showConfirmDialog(){
@@ -680,9 +643,9 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 
 			if(canSendPhoto){
 				jsonObject.put("templateType", "PH");
-				jsonObject.put("photoLocationX", binding.layoutPhoto.getPhotoLocationX());
-				jsonObject.put("photoLocationY", binding.layoutPhoto.getPhotoLocationY());
-				jsonObject.put("photoScale", binding.layoutPhoto.getPhotoScale());
+				jsonObject.put("photoLocationX", "0");
+				jsonObject.put("photoLocationY", "0");
+				jsonObject.put("photoScale", "1");
 			}else{
 				jsonObject.put("templateType", "NM");
 			}
@@ -690,9 +653,10 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 			ex.printStackTrace();
 		}
 
-		if(canSendPhoto && mImageUri != null){
+		if(canSendPhoto){
 			HashMap<String, File> photo = new HashMap<>();
-			photo.put("photoFile", new File(mImageUri.getPath()));
+			photo.put("photoFile", new File(mImagePath));
+			log(mImagePath);
 			requestUpload(TcConst.API_POST_NEW_CARD, jsonObject, photo, true);
 		}else{
 			requestUpdate(TcConst.API_POST_NEW_CARD, jsonObject, true);
@@ -796,45 +760,6 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 	}
 
 	@Override
-	public void onTouchMove(float moveX, float moveY){
-		binding.layoutPhoto.move(moveX, moveY);
-	}
-
-	@Override
-	public void onTouchScale(float scale){
-		binding.layoutPhoto.scale(scale);
-	}
-
-	@Override
-	public void onTouchScaleEnd(){
-		binding.layoutPhoto.endScale();
-	}
-
-	@Override
-	public void onTouchPadClick(){
-		if(binding.layoutPhoto.hasImage()){
-			final ChoosePictureDialog dialog = new ChoosePictureDialog();
-			dialog.setListeners(new View.OnClickListener() {
-
-				@Override
-				public void onClick(View view){
-					chooseImage();
-					dialog.dismiss();
-				}
-			}, new View.OnClickListener() {
-
-				@Override
-				public void onClick(View view){
-					dialog.dismiss();
-				}
-			});
-			dialog.show(getFragmentManager(), null);
-		}else{
-			chooseImage();
-		}
-	}
-
-	@Override
 	public void onDestroy(){
 		super.onDestroy();
 		mRealm.close();
@@ -873,5 +798,11 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 		}else{
 			super.onClickBackBtn();
 		}
+	}
+
+	@Override
+	public void onCroppingCompleted(String imagePath) {
+		binding.layoutPhoto.setImageBitmap(BitmapFactory.decodeFile(imagePath));
+		mImagePath = imagePath;
 	}
 }

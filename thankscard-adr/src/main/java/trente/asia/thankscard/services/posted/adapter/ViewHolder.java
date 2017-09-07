@@ -1,4 +1,4 @@
-package trente.asia.thankscard.services.posted.presenter;
+package trente.asia.thankscard.services.posted.adapter;
 
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;

@@ -17,7 +17,7 @@ import java.util.List;
 import trente.asia.thankscard.R;
 import trente.asia.thankscard.databinding.FragmentSelectDeptBinding;
 import trente.asia.thankscard.fragments.AbstractTCFragment;
-import trente.asia.thankscard.services.posted.presenter.DepartmentAdapter;
+import trente.asia.thankscard.services.posted.adapter.DepartmentAdapter;
 import trente.asia.welfare.adr.models.DeptModel;
 
 /**

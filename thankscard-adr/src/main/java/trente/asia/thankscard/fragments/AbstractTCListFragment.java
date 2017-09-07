@@ -234,7 +234,6 @@ public abstract class AbstractTCListFragment extends AbstractTCFragment implemen
 
 	private void requestCardHistoryInfo(){
 		JSONObject param = getHistoryParam();
-
 		requestLoad(getConstApi(), param, true);
 	}
 
