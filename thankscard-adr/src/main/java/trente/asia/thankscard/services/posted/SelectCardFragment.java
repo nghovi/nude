@@ -2,6 +2,7 @@ package trente.asia.thankscard.services.posted;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +20,7 @@ import trente.asia.thankscard.services.posted.adapter.CardAdapter;
  * Created by tien on 7/13/2017.
  */
 
-public class SelectCardFragment extends AbstractTCFragment implements CardAdapter.OnCardAdapterListener{
+public class SelectCardFragment extends AbstractTCFragment implements CardAdapter.OnCardAdapterListener, View.OnClickListener{
     private FragmentSelectCardBinding binding;
     private List<Template> cards;
     private OnSelectCardListener callback;
@@ -70,6 +71,9 @@ public class SelectCardFragment extends AbstractTCFragment implements CardAdapte
                 getFragmentManager().popBackStack();
             }
         });
+        binding.tabNormal.setOnClickListener(this);
+        binding.tabPhoto.setOnClickListener(this);
+        binding.tabAnimation.setOnClickListener(this);
     }
 
     public void setCallback(OnSelectCardListener callback) {
@@ -86,6 +90,21 @@ public class SelectCardFragment extends AbstractTCFragment implements CardAdapte
         if (callback != null) {
             callback.onSelectCardDone(card);
             getFragmentManager().popBackStack();
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.tab_normal:
+                binding.tabBottom.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.tc_normal_card_tab));
+                break;
+            case R.id.tab_photo:
+                binding.tabBottom.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.tc_photo_card_tab));
+                break;
+            case R.id.tab_animation:
+                binding.tabBottom.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.tc_animation_card_tab));
+                break;
         }
     }
 

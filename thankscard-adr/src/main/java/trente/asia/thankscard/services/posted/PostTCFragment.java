@@ -214,7 +214,7 @@ public class PostTCFragment extends AbstractTCFragment
 			public void afterTextChanged(Editable editable){
 				if(!canSendPhoto){
 					message = editable.toString();
-					int textCount = MAX_LETTER - message.length();
+					int textCount = MAX_LETTER - message.getBytes().length;
 					binding.txtCount.setText(String.valueOf(textCount));
 					binding.edtMessagePhoto.setText(message);
 					if(textCount < 0){
@@ -242,7 +242,7 @@ public class PostTCFragment extends AbstractTCFragment
 			public void afterTextChanged(Editable editable){
 				if(canSendPhoto){
 					message = editable.toString();
-					int textCount = MAX_LETTER - message.length();
+					int textCount = MAX_LETTER - message.getBytes().length;
 					binding.txtCount.setText(String.valueOf(textCount));
 					binding.edtMessage.setText(message);
 					if(textCount < 0){
