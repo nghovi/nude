@@ -248,15 +248,6 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 			}
 		});
 
-		binding.edtMessage.setOnKeyListener(new View.OnKeyListener() {
-
-			@Override
-			public boolean onKey(View view, int i, KeyEvent keyEvent){
-				keyEvent.getKeyCode();
-				return false;
-			}
-		});
-
 		binding.edtMessagePhoto.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 
 			@Override
@@ -590,7 +581,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 
 	private void showConfirmDialog(){
 		final PostConfirmDialog dialog = new PostConfirmDialog();
-		dialog.setReceiverName(member.userName);
+		dialog.setReceiverName(member == null ? "null" : member.userName);
 		dialog.show(getFragmentManager(), null);
 		dialog.setListeners(new View.OnClickListener() {
 
