@@ -18,9 +18,11 @@ import android.text.TextWatcher;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
@@ -234,11 +236,46 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 			}
 		});
 
+		binding.edtMessage.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+
+			@Override
+			public void onFocusChange(View view, boolean hasFocus){
+				if(hasFocus){
+					binding.edtMessage.setBackgroundResource(R.drawable.edt_message_bgr);
+				}else{
+					binding.edtMessage.setBackgroundColor(Color.TRANSPARENT);
+				}
+			}
+		});
+
+		binding.edtMessage.setOnKeyListener(new View.OnKeyListener() {
+
+			@Override
+			public boolean onKey(View view, int i, KeyEvent keyEvent){
+				keyEvent.getKeyCode();
+				return false;
+			}
+		});
+
+		binding.edtMessagePhoto.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+
+			@Override
+			public void onFocusChange(View view, boolean hasFocus){
+				if(hasFocus){
+					binding.edtMessagePhoto.setBackgroundResource(R.drawable.edt_message_bgr);
+				}else{
+					binding.edtMessagePhoto.setBackgroundColor(Color.TRANSPARENT);
+				}
+			}
+		});
+
 		String date = DateFormat.format("yyyy/MM/dd", System.currentTimeMillis()).toString();
 		binding.txtDateNormal.setText(date);
 		binding.txtReceiverNormal.setText(getString(R.string.fragment_tc_detail_to, ""));
 		binding.txtDatePhoto.setText(date);
 		binding.txtReceiverPhoto.setText(getString(R.string.fragment_tc_detail_to, ""));
+
+		setListenerToRootView();
 	}
 
 	private void validateButtons(){
@@ -580,7 +617,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 
 			UserModel userModel = prefAccUtil.getUserPref();
 			jsonObject.put("posterId", userModel.key);
-			if(CCConst.NONE.equals(member.key)){
+			if(member == null){
 				jsonObject.put("receiverId", null);
 			}else{
 				jsonObject.put("receiverId", member.key);
@@ -659,7 +696,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 	public void onSelectDeptDone(DeptModel deptModel){
 		this.department = deptModel;
 		binding.deptName.setText(department.deptName);
-		if (member == null || !department.members.contains(member)) {
+		if(member == null || !department.members.contains(member)){
 			binding.userName.setText(getString(R.string.tc_unselected));
 			binding.txtReceiverNormal.setText(getString(R.string.fragment_tc_detail_to, ""));
 			binding.txtReceiverPhoto.setText(getString(R.string.fragment_tc_detail_to, ""));
@@ -773,5 +810,20 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 	public void onCroppingCompleted(String imagePath){
 		binding.layoutPhoto.setImageBitmap(BitmapFactory.decodeFile(imagePath));
 		mImagePath = imagePath;
+	}
+
+	public void setListenerToRootView() {
+		final View activityRootView = activity.getWindow().getDecorView().findViewById(android.R.id.content);
+		activityRootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+			@Override
+			public void onGlobalLayout() {
+				int heightDiff = activityRootView.getRootView().getHeight() - activityRootView.getHeight();
+				if (heightDiff <= 100) {
+					binding.edtMessage.clearFocus();
+					binding.edtMessagePhoto.clearFocus();
+					log("keyboard hidden");
+				}
+			}
+		});
 	}
 }
