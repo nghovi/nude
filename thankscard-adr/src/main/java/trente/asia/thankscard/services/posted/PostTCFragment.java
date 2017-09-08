@@ -76,16 +76,13 @@ import trente.asia.welfare.adr.utils.WfPicassoHelper;
  * Created by tien on 7/12/2017.
  */
 
-public class PostTCFragment extends AbstractTCFragment
-		implements View.OnClickListener,SelectDeptFragment.OnSelectDeptListener,
-		SelectUserFragment.OnSelectUserListener,SelectCardFragment.OnSelectCardListener,
-		StickerViewPost.OnStickerListener, StampCategoryAdapter.OnStampCategoryAdapterListener,
-		StampAdapter.OnStampAdapterListener, OnCroppingListener{
+public class PostTCFragment extends AbstractTCFragment implements View.OnClickListener,SelectDeptFragment.OnSelectDeptListener,SelectUserFragment.OnSelectUserListener,SelectCardFragment.OnSelectCardListener,StickerViewPost.OnStickerListener,StampCategoryAdapter.OnStampCategoryAdapterListener,StampAdapter.OnStampAdapterListener,OnCroppingListener{
 
 	public final int					MAX_LETTER		= 75;
 
 	private List<Template>				templates;
 	private List<Template>				photoTemplates;
+	private List<Template>				animationTemplates;
 	private FragmentPostTcBinding		binding;
 	private Template					template;
 	private List<DeptModel>				departments;
@@ -116,6 +113,7 @@ public class PostTCFragment extends AbstractTCFragment
 		preference = new PreferencesSystemUtil(getContext());
 		frameWidth = Float.valueOf(preference.get(TcConst.PREF_FRAME_WIDTH));
 		frameHeight = Float.valueOf(preference.get(TcConst.PREF_FRAME_HEIGHT));
+		isBirthday = Boolean.parseBoolean(preference.get(TcConst.IS_BIRTHDAY));
 	}
 
 	@Override
@@ -154,24 +152,6 @@ public class PostTCFragment extends AbstractTCFragment
 
 	@Override
 	public void buildBodyLayout(){
-		Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
-		int thisYear = calendar.get(Calendar.YEAR);
-		String dateBirth = DateFormat.format("yyyy/MM/dd hh:mm:ss", myself.dateBirth).toString();
-		String birthday = thisYear + dateBirth.substring(4);
-		Date date = CCDateUtil.makeDateCustom(birthday, "yyyy/MM/dd hh:mm:ss");
-
-		long difference = (System.currentTimeMillis() - date.getTime()) / 1000L;
-		if(difference > 0 && difference < 31L * 24L * 3600L){
-			isBirthday = true;
-		}
-
-		birthday = (thisYear - 1) + dateBirth.substring(4);
-		date = CCDateUtil.makeDateCustom(birthday, "yyyy/MM/dd hh:mm:ss");
-		difference = (System.currentTimeMillis() - date.getTime()) / 1000L;
-		if(difference > 0 && difference < 31L * 24L * 3600L){
-			isBirthday = true;
-		}
-
 		template = new Template();
 		template.templateId = prefAccUtil.get(TcConst.PREF_TEMPLATE_ID);
 		template.templateUrl = prefAccUtil.get(TcConst.PREF_TEMPLATE_PATH);
@@ -349,23 +329,12 @@ public class PostTCFragment extends AbstractTCFragment
 			requestTemplateSuccess(response);
 		}else if(WfUrlConst.WF_ACC_INFO_DETAIL.equals(url)){
 			departments = CCJsonUtil.convertToModelList(response.optString("depts"), DeptModel.class);
-			DeptModel noneDepartment = new DeptModel(CCConst.NONE, getString(R.string.chiase_common_none));
-			departments.add(0, noneDepartment);
+			DeptModel allDepartment = new DeptModel(CCConst.ALL, getString(R.string.chiase_common_all));
+			allDepartment.members = new ArrayList<>();
 			for(DeptModel dept : departments){
-				if(CCCollectionUtil.isEmpty(dept.members)){
-					dept.members = new ArrayList<>();
-				}
-				UserModel noneMember = new UserModel(CCConst.NONE, getString(R.string.chiase_common_none));
-				dept.members.add(0, noneMember);
+				allDepartment.members.addAll(dept.members);
 			}
-
-			if(department == null){
-				department = noneDepartment;
-			}
-
-			if(member == null){
-				member = department.members.get(0);
-			}
+			departments.add(0, allDepartment);
 		}else{
 			super.successLoad(response, url);
 		}
@@ -374,6 +343,7 @@ public class PostTCFragment extends AbstractTCFragment
 	private void requestTemplateSuccess(JSONObject response){
 		templates = CCJsonUtil.convertToModelList(response.optString("templates"), Template.class);
 		photoTemplates = CCJsonUtil.convertToModelList(response.optString("photos"), Template.class);
+		animationTemplates = CCJsonUtil.convertToModelList(response.optString("animations"), Template.class);
 	}
 
 	private void buildTemplate(){
@@ -390,15 +360,13 @@ public class PostTCFragment extends AbstractTCFragment
 			fragment.setCallback(this);
 			break;
 		case R.id.rlt_select_user:
-			if(!WelfareConst.NONE.equals(department.key)){
-				SelectUserFragment userFragment = new SelectUserFragment();
-				userFragment.setCallback(this);
-				userFragment.setDepartments(department.members, member);
-				gotoFragment(userFragment);
-			}
+			SelectUserFragment userFragment = new SelectUserFragment();
+			userFragment.setCallback(this);
+			userFragment.setDepartments(department.members, member);
+			gotoFragment(userFragment);
 			break;
 		case R.id.lnr_select_card:
-			showLayoutCards(photoTemplates);
+			showLayoutCards(templates, photoTemplates, animationTemplates);
 			break;
 		case R.id.lnr_select_sticker:
 			if(canUseStickers){
@@ -470,9 +438,9 @@ public class PostTCFragment extends AbstractTCFragment
 		}, 50);
 	}
 
-	private void showLayoutCards(List<Template> templates){
+	private void showLayoutCards(List<Template> templates, List<Template> photo, List<Template> animations){
 		SelectCardFragment cardFragment = new SelectCardFragment();
-		cardFragment.setCards(templates);
+		cardFragment.setCards(templates, photo, animations);
 		cardFragment.setCallback(this);
 		gotoFragment(cardFragment);
 	}
@@ -483,7 +451,7 @@ public class PostTCFragment extends AbstractTCFragment
 
 			@Override
 			public void onClick(View view){
-				showLayoutCards(templates);
+				showLayoutCards(templates, photoTemplates, animationTemplates);
 				dialog.dismiss();
 			}
 		}, new View.OnClickListener() {
@@ -555,7 +523,7 @@ public class PostTCFragment extends AbstractTCFragment
 		}
 		switch(requestCode){
 		case WelfareConst.RequestCode.GALLERY:
-			Uri uri = null;
+			Uri uri;
 			if(data != null){
 				uri = data.getData();
 				long date = System.currentTimeMillis();
@@ -574,20 +542,6 @@ public class PostTCFragment extends AbstractTCFragment
 	}
 
 	private void checkNewCard(){
-		// if(CCConst.NONE.equals(member.key)){
-		// showAlertDialog(getString(R.string.fragment_post_edit_alert_dlg_title), getString(R.string.fragment_post_edit_alert_dlg_message1),
-		// getString(android.R.string.ok), null);
-		// }
-		// else if(CCStringUtil.isEmpty(message) || hasTooManyLetters(message)){
-		// showAlertDialog(getString(R.string.fragment_post_edit_alert_dlg_title), getString(R.string.fragment_post_edit_alert_dlg_message2,
-		// String.valueOf(MAX_LETTER)), getString(android.R.string.ok), null);
-		// }
-		// else if(this.template == null){
-		// showAlertDialog(getString(R.string.fragment_post_edit_alert_dlg_title), getString(R.string.fragment_post_edit_alert_dlg_message3),
-		// getString(android.R.string.ok), null);
-		// }else{
-		//
-		// }
 		showConfirmDialog();
 	}
 
@@ -656,7 +610,6 @@ public class PostTCFragment extends AbstractTCFragment
 		if(canSendPhoto){
 			HashMap<String, File> photo = new HashMap<>();
 			photo.put("photoFile", new File(mImagePath));
-			log(mImagePath);
 			requestUpload(TcConst.API_POST_NEW_CARD, jsonObject, photo, true);
 		}else{
 			requestUpdate(TcConst.API_POST_NEW_CARD, jsonObject, true);
@@ -700,8 +653,9 @@ public class PostTCFragment extends AbstractTCFragment
 	public void onSelectDeptDone(DeptModel deptModel){
 		this.department = deptModel;
 		binding.deptName.setText(department.deptName);
-		member = department.members.get(0);
-		binding.userName.setText(member.userName);
+		if (member == null || !department.members.contains(member)) {
+			binding.userName.setText(getString(R.string.tc_unselected));
+		}
 	}
 
 	private void log(String msg){
@@ -723,6 +677,11 @@ public class PostTCFragment extends AbstractTCFragment
 	public void onSelectCardDone(Template card){
 		this.template = card;
 		this.canSendPhoto = card.templateType != null;
+		if(canSendPhoto){
+			binding.lnrSelectPhoto.setVisibility(View.VISIBLE);
+		}else{
+			binding.lnrSelectPhoto.setVisibility(View.INVISIBLE);
+		}
 		changeLayoutCard();
 	}
 
@@ -801,7 +760,7 @@ public class PostTCFragment extends AbstractTCFragment
 	}
 
 	@Override
-	public void onCroppingCompleted(String imagePath) {
+	public void onCroppingCompleted(String imagePath){
 		binding.layoutPhoto.setImageBitmap(BitmapFactory.decodeFile(imagePath));
 		mImagePath = imagePath;
 	}

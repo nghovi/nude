@@ -1,9 +1,11 @@
 package trente.asia.thankscard.services.mypage;
 
 import java.text.ParseException;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -14,6 +16,7 @@ import android.graphics.Paint;
 import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -24,6 +27,7 @@ import android.widget.TextView;
 
 import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCCollectionUtil;
+import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCNumberUtil;
@@ -81,6 +85,29 @@ public class MypageFragment extends AbstractTCFragment{
 		int photoTextSize = photoMessageWidth / 15;
 		preference.set(TcConst.PREF_NORMAL_TEXT_SIZE, String.valueOf(normalTextSize));
 		preference.set(TcConst.PREF_PHOTO_TEXT_SIZE, String.valueOf(photoTextSize));
+		checkBirthday(preference);
+	}
+
+	private void checkBirthday(PreferencesSystemUtil preference) {
+		boolean isBirthday = false;
+		Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
+		int thisYear = calendar.get(Calendar.YEAR);
+		String dateBirth = DateFormat.format("yyyy/MM/dd hh:mm:ss", myself.dateBirth).toString();
+		String birthday = thisYear + dateBirth.substring(4);
+		Date date = CCDateUtil.makeDateCustom(birthday, "yyyy/MM/dd hh:mm:ss");
+
+		long difference = (System.currentTimeMillis() - date.getTime()) / 1000L;
+		if(difference > 0 && difference < 31L * 24L * 3600L){
+			isBirthday = true;
+		}
+
+		birthday = (thisYear - 1) + dateBirth.substring(4);
+		date = CCDateUtil.makeDateCustom(birthday, "yyyy/MM/dd hh:mm:ss");
+		difference = (System.currentTimeMillis() - date.getTime()) / 1000L;
+		if(difference > 0 && difference < 31L * 24L * 3600L){
+			isBirthday = true;
+		}
+		preference.set(TcConst.IS_BIRTHDAY, isBirthday + "");
 	}
 
 	public boolean hasBackBtn(){

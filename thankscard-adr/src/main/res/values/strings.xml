@@ -166,7 +166,9 @@
     <string name="tc_limit_sticker">You can only have 50 stickers</string>
     <string name="tc_cannot_use_stickers">This function is for Bronze!</string>
     <string name="tc_cannot_use_photo">This function is for Silver!</string>
+    <string name="tc_cannot_user_animation">This function is for Gold!</string>
     <string name="tc_normal_card_tab">Normal</string>
     <string name="tc_photo_card_tab">Picture</string>
     <string name="tc_animation_card_tab">Animation</string>
+    <string name="tc_unselected">Unselected</string>
 </resources>

@@ -35,7 +35,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/margin_16dp"
                     android:layout_toStartOf="@+id/right_img_dept"
-                    android:text="@string/chiase_common_none"
+                    android:text="@string/chiase_common_all"
                     android:textColor="@color/chiase_black"
                     android:textSize="16sp" />
 
@@ -70,7 +70,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/margin_16dp"
                     android:layout_toStartOf="@+id/right_img_user"
-                    android:text="@string/chiase_common_none"
+                    android:text="@string/tc_unselected"
                     android:textColor="@color/chiase_black"
                     android:textSize="16sp" />
 
@@ -235,7 +235,8 @@
                     android:layout_weight="1"
                     android:background="@drawable/state_common_selectable_row"
                     android:gravity="center_horizontal"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="invisible">
 
                     <ImageView
                         android:layout_width="wrap_content"

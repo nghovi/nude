@@ -72,6 +72,8 @@ public abstract class WelfareFragment extends ChiaseFragment implements WelfareA
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
+		prefAccUtil = new PreferencesAccountUtil(activity);
+		myself = prefAccUtil.getUserPref();
 	}
 
 	@Override
@@ -84,8 +86,7 @@ public abstract class WelfareFragment extends ChiaseFragment implements WelfareA
 	protected void initView(){
 		super.initView();
 		((WelfareActivity)activity).setOnActivityResultListener(null);
-		prefAccUtil = new PreferencesAccountUtil(activity);
-		myself = prefAccUtil.getUserPref();
+
 		if(!((WelfareActivity)activity).isClearRegistrationId && CCStringUtil.isEmpty(myself.key)){
 			clearRegistrationId();
 			((WelfareActivity)activity).isClearRegistrationId = true;
