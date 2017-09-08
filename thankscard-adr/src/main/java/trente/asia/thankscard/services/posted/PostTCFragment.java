@@ -34,6 +34,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.TimeZone;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -205,7 +206,6 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 				}
 			}
 		});
-
 		binding.edtMessagePhoto.addTextChangedListener(new TextWatcher() {
 
 			@Override
@@ -233,6 +233,12 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 				}
 			}
 		});
+
+		String date = DateFormat.format("yyyy/MM/dd", System.currentTimeMillis()).toString();
+		binding.txtDateNormal.setText(date);
+		binding.txtReceiverNormal.setText(getString(R.string.fragment_tc_detail_to, ""));
+		binding.txtDatePhoto.setText(date);
+		binding.txtReceiverPhoto.setText(getString(R.string.fragment_tc_detail_to, ""));
 	}
 
 	private void validateButtons(){
@@ -329,12 +335,12 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 			requestTemplateSuccess(response);
 		}else if(WfUrlConst.WF_ACC_INFO_DETAIL.equals(url)){
 			departments = CCJsonUtil.convertToModelList(response.optString("depts"), DeptModel.class);
-			DeptModel allDepartment = new DeptModel(CCConst.ALL, getString(R.string.chiase_common_all));
-			allDepartment.members = new ArrayList<>();
+			department = new DeptModel(CCConst.ALL, getString(R.string.chiase_common_all));
+			department.members = new ArrayList<>();
 			for(DeptModel dept : departments){
-				allDepartment.members.addAll(dept.members);
+				department.members.addAll(dept.members);
 			}
-			departments.add(0, allDepartment);
+			departments.add(0, department);
 		}else{
 			super.successLoad(response, url);
 		}
@@ -655,6 +661,8 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 		binding.deptName.setText(department.deptName);
 		if (member == null || !department.members.contains(member)) {
 			binding.userName.setText(getString(R.string.tc_unselected));
+			binding.txtReceiverNormal.setText(getString(R.string.fragment_tc_detail_to, ""));
+			binding.txtReceiverPhoto.setText(getString(R.string.fragment_tc_detail_to, ""));
 		}
 	}
 
@@ -671,6 +679,8 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 		}else{
 			binding.btnSend.setEnabled(true);
 		}
+		binding.txtReceiverNormal.setText(getString(R.string.fragment_tc_detail_to, userModel.userName));
+		binding.txtReceiverPhoto.setText(getString(R.string.fragment_tc_detail_to, userModel.userName));
 	}
 
 	@Override

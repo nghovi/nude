@@ -116,6 +116,24 @@
                     android:layout_alignStart="@+id/img_card"
                     android:layout_alignTop="@+id/img_card">
 
+                    <TextView
+                        android:id="@+id/txt_date_normal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:textColor="@color/chiase_black"
+                        android:layout_marginTop="@dimen/margin_50dp"
+                        android:layout_marginStart="@dimen/margin_60dp"/>
+
+                    <TextView
+                        android:id="@+id/txt_receiver_normal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/txt_date_normal"
+                        android:textSize="12sp"
+                        android:textColor="@color/chiase_black"
+                        android:layout_marginStart="@dimen/margin_60dp"/>
+
                     <EditText
                         android:id="@+id/edt_message"
                         style="@style/tc_text_black_bold"
@@ -129,7 +147,6 @@
                         android:gravity="top"
                         android:maxLines="5"
                         android:paddingTop="@dimen/margin_40dp" />
-
                 </RelativeLayout>
 
                 <android.support.percent.PercentRelativeLayout
@@ -148,6 +165,23 @@
                         android:layout_height="match_parent"
                         android:layout_alignParentEnd="true"
                         app:layout_widthPercent="50%">
+                        <TextView
+                            android:id="@+id/txt_date_photo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="12sp"
+                            android:textColor="@color/chiase_black"
+                            android:layout_marginTop="@dimen/margin_10dp"
+                            android:layout_marginStart="@dimen/margin_10dp"/>
+
+                        <TextView
+                            android:id="@+id/txt_receiver_photo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/margin_10dp"
+                            android:layout_below="@+id/txt_date_photo"
+                            android:textSize="12sp"
+                            android:textColor="@color/chiase_black"/>
 
                         <EditText
                             android:id="@+id/edt_message_photo"
