@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.util.Util;
 
 import trente.asia.thankscard.R;
 import trente.asia.thankscard.commons.defines.TcConst;
@@ -17,6 +18,7 @@ import trente.asia.thankscard.services.posted.listener.OnCroppingListener;
 import trente.asia.thankscard.services.posted.view.TouchPad;
 import trente.asia.thankscard.utils.TCUtil;
 import trente.asia.welfare.adr.pref.PreferencesSystemUtil;
+import trente.asia.welfare.adr.utils.WelfareUtil;
 
 /**
  * Created by tien on 9/6/2017.
@@ -78,6 +80,8 @@ public class CroppingFragment extends AbstractTCFragment implements TouchPad.OnT
         PreferencesSystemUtil preference = new PreferencesSystemUtil(getContext());
         params.height = (int) Float.parseFloat(preference.get(TcConst.PREF_FRAME_HEIGHT));
         params.width = (int) Float.parseFloat(preference.get(TcConst.PREF_FRAME_WIDTH));
+        log("width = " + params.width);
+        log("height = " + params.height);
         Glide.with(getContext()).load(cardUrl).into(binding.cardPreview);
     }
 
@@ -125,13 +129,22 @@ public class CroppingFragment extends AbstractTCFragment implements TouchPad.OnT
         ImageView imageView = binding.cardPreview;
         int[] location = new int[2];
         imageView.getLocationOnScreen(location);
-        Bitmap newBitmap = Bitmap.createBitmap(bitmap, location[0], location[1], imageView.getWidth(), imageView.getHeight());
+        Bitmap newBitmap = Bitmap.createBitmap(bitmap, location[0], location[1] - getStatusBarHeight(), imageView.getWidth(), imageView.getHeight());
         String imagePath = TCUtil.getFilesFolderPath() + "/" + System.currentTimeMillis() + ".png";
         TCUtil.saveFileToStorage(newBitmap, imagePath);
         if (callback != null) {
             callback.onCroppingCompleted(imagePath);
         }
         getFragmentManager().popBackStack();
+    }
+
+    private int getStatusBarHeight() {
+        int result = 0;
+        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = getResources().getDimensionPixelSize(resourceId);
+        }
+        return result;
     }
 
     @Override

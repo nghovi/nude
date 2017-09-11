@@ -145,8 +145,6 @@ public class MypageFragment extends AbstractTCFragment{
 
 		buildUserInfoLayout();
 		builNoticeList();
-
-
 	}
 
 	@Override
