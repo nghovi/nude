@@ -6,6 +6,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import trente.asia.thankscard.services.posted.adapter.CardAdapter;
 import trente.asia.thankscard.services.posted.view.CannotUseAnimationDialog;
 import trente.asia.thankscard.services.posted.view.CannotUsePhotoDialog;
 import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
+import trente.asia.welfare.adr.pref.PreferencesSystemUtil;
 
 /**
  * Created by tien on 7/13/2017.
@@ -42,7 +44,7 @@ public class SelectCardFragment extends AbstractTCFragment implements CardAdapte
         pointSilver = Integer.parseInt(preference.get(TcConst.PREF_POINT_SILVER));
         pointGold = Integer.parseInt(preference.get(TcConst.PREF_POINT_GOLD));
         pointTotal = Integer.parseInt(preference.get(TcConst.PREF_POINT_TOTAL));
-        isBirtday = Boolean.parseBoolean(preference.get(TcConst.IS_BIRTHDAY));
+        isBirtday = Boolean.parseBoolean(new PreferencesSystemUtil(getContext()).get(TcConst.IS_BIRTHDAY));
     }
 
     @Override
@@ -143,5 +145,9 @@ public class SelectCardFragment extends AbstractTCFragment implements CardAdapte
 
     public interface OnSelectCardListener {
         void onSelectCardDone(Template card);
+    }
+
+    private void log(String msg) {
+        Log.e("SelectCard", msg);
     }
 }
