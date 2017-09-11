@@ -5,7 +5,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/wf_login_background_color"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:id="@+id/content">
 
         <include layout="@layout/view_common_header_strip" />
 
@@ -114,7 +115,8 @@
                     android:layout_alignBottom="@+id/img_card"
                     android:layout_alignEnd="@+id/img_card"
                     android:layout_alignStart="@+id/img_card"
-                    android:layout_alignTop="@+id/img_card">
+                    android:layout_alignTop="@+id/img_card"
+                    android:focusableInTouchMode="true">
 
                     <TextView
                         android:id="@+id/txt_date_normal"
@@ -160,7 +162,8 @@
                     android:layout_alignStart="@+id/img_card"
                     android:layout_alignTop="@+id/img_card"
                     android:orientation="horizontal"
-                    android:visibility="gone">
+                    android:visibility="gone"
+                    android:focusableInTouchMode="true">
 
                     <RelativeLayout
                         android:id="@+id/rlt_msg_photo"

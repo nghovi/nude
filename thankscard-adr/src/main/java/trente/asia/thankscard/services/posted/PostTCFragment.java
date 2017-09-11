@@ -8,6 +8,7 @@ import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -23,6 +24,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
@@ -93,30 +95,25 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 	private UserModel					member;
 	private String						message;
 	private List<StickerViewPost>		stickers		= new ArrayList<>();
-	private Uri							mImageUri;
 	private String						mImagePath;
 	private boolean						canSendPhoto	= false;
 	private List<StampCategoryModel>	stampCategories	= new ArrayList<>();
 	private StampAdapter				stampAdapter;
 	private Realm						mRealm;
-	private float						frameWidth;
-	private float						frameHeight;
 	private boolean						showLayoutSticker;
 	private PreferencesSystemUtil		preference;
 	private Timer						timer			= new Timer();
 	private Handler						handler			= new Handler();
 	private boolean						isBirthday		= false;
 	private boolean						canUseStickers	= false;
-	private boolean						canUsePhoto		= false;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		mRealm = Realm.getDefaultInstance();
 		preference = new PreferencesSystemUtil(getContext());
-		frameWidth = Float.valueOf(preference.get(TcConst.PREF_FRAME_WIDTH));
-		frameHeight = Float.valueOf(preference.get(TcConst.PREF_FRAME_HEIGHT));
 		isBirthday = Boolean.parseBoolean(preference.get(TcConst.IS_BIRTHDAY));
+		activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 	}
 
 	@Override
@@ -272,21 +269,16 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 	private void validateButtons(){
 		int pointBronze = Integer.parseInt(prefAccUtil.get(TcConst.PREF_POINT_BRONZE));
 		int pointSilver = Integer.parseInt(prefAccUtil.get(TcConst.PREF_POINT_SILVER));
-		int pointGold = Integer.parseInt(prefAccUtil.get(TcConst.PREF_POINT_GOLD));
 		int totalPoint = Integer.parseInt(prefAccUtil.get(TcConst.PREF_POINT_TOTAL));
 
 		if(isBirthday){
-			canUsePhoto = true;
 			canUseStickers = true;
 		}else{
 			if(totalPoint < pointBronze){
 				canUseStickers = false;
-				canUsePhoto = false;
 			}else if(totalPoint < pointSilver){
 				canUseStickers = true;
-				canUsePhoto = false;
 			}else{
-				canUsePhoto = true;
 				canUseStickers = true;
 			}
 		}
@@ -758,6 +750,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 
 	@Override
 	public void onDestroy(){
+		activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 		super.onDestroy();
 		mRealm.close();
 	}
@@ -803,16 +796,29 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 		mImagePath = imagePath;
 	}
 
-	public void setListenerToRootView() {
-		final View activityRootView = activity.getWindow().getDecorView().findViewById(android.R.id.content);
+	public void setListenerToRootView(){
+		final View activityRootView = getView().findViewById(R.id.content);
 		activityRootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+			boolean isOpen = false;
 			@Override
-			public void onGlobalLayout() {
+			public void onGlobalLayout(){
 				int heightDiff = activityRootView.getRootView().getHeight() - activityRootView.getHeight();
-				if (heightDiff <= 100) {
+				if (heightDiff > 100) {
+					binding.rltSelectDept.setVisibility(View.GONE);
+					binding.rltSelectUser.setVisibility(View.GONE);
+					if (getView() != null && getView().findViewById(R.id.common_header) != null) {
+						getView().findViewById(R.id.common_header).setVisibility(View.GONE);
+					}
+					isOpen = true;
+				} else if (isOpen){
 					binding.edtMessage.clearFocus();
 					binding.edtMessagePhoto.clearFocus();
-					log("keyboard hidden");
+					binding.rltSelectDept.setVisibility(View.VISIBLE);
+					binding.rltSelectUser.setVisibility(View.VISIBLE);
+					if (getView() != null && getView().findViewById(R.id.common_header) != null) {
+						getView().findViewById(R.id.common_header).setVisibility(View.VISIBLE);
+					}
+					isOpen = false;
 				}
 			}
 		});
