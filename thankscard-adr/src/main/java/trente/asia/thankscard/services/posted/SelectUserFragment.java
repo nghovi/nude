@@ -38,7 +38,6 @@ public class SelectUserFragment extends AbstractTCFragment implements UserAdapte
 	}
 
 	public void setDepartments(List<UserModel> users, UserModel user){
-		adapter.setDepartments(users, user);
 		this.user = user;
 		this.users = users;
 	}
@@ -51,13 +50,6 @@ public class SelectUserFragment extends AbstractTCFragment implements UserAdapte
 			binding.listUsers.setAdapter(adapter);
 			binding.listUsers.setLayoutManager(new LinearLayoutManager(getContext()));
 			adapter.setCallback(this);
-			binding.btnDone.setOnClickListener(new View.OnClickListener() {
-
-				@Override
-				public void onClick(View view){
-
-				}
-			});
 
 			binding.btnCancel.setOnClickListener(new View.OnClickListener() {
 
@@ -131,7 +123,13 @@ public class SelectUserFragment extends AbstractTCFragment implements UserAdapte
 
 	@Override
 	public void buildBodyLayout(){
-
+		for (UserModel userModel : this.users) {
+			if (userModel != null && myself.key.equals(userModel.key)) {
+				this.users.remove(userModel);
+				break;
+			}
+		}
+		adapter.setDepartments(this.users, this.user);
 	}
 
 	@Override

@@ -171,4 +171,5 @@
     <string name="tc_photo_card_tab">Picture</string>
     <string name="tc_animation_card_tab">Animation</string>
     <string name="tc_unselected">Unselected</string>
+    <string name="tc_cropping_title">Cropping Picture</string>
 </resources>
