@@ -683,6 +683,8 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 			binding.userName.setText(getString(R.string.tc_unselected));
 			binding.txtReceiverNormal.setText(getString(R.string.fragment_tc_detail_to, ""));
 			binding.txtReceiverPhoto.setText(getString(R.string.fragment_tc_detail_to, ""));
+			binding.btnSend.setEnabled(false);
+			binding.btnSend.setAlpha(0.5f);
 		}
 	}
 
@@ -701,6 +703,8 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 		}
 		binding.txtReceiverNormal.setText(getString(R.string.fragment_tc_detail_to, userModel.userName));
 		binding.txtReceiverPhoto.setText(getString(R.string.fragment_tc_detail_to, userModel.userName));
+		binding.btnSend.setEnabled(true);
+		binding.btnSend.setAlpha(1);
 	}
 
 	@Override

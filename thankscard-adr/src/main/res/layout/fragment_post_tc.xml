@@ -312,7 +312,9 @@
                 android:layout_centerVertical="true"
                 android:background="@drawable/round_shape_btn_send"
                 android:text="@string/chiase_common_send"
-                android:textColor="@color/chiase_white" />
+                android:textColor="@color/chiase_white"
+                android:enabled="false"
+                android:alpha="0.5"/>
         </RelativeLayout>
 
         <LinearLayout
