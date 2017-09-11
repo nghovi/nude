@@ -685,6 +685,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 			binding.txtReceiverPhoto.setText(getString(R.string.fragment_tc_detail_to, ""));
 			binding.btnSend.setEnabled(false);
 			binding.btnSend.setAlpha(0.5f);
+			member = null;
 		}
 	}
 
