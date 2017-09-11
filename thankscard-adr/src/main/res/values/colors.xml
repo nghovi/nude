@@ -56,4 +56,5 @@
     <color name="tc_normal_card_tab">#f78736</color>
     <color name="tc_photo_card_tab">#65b1f4</color>
     <color name="tc_animation_card_tab">#34ed27</color>
+    <color name="tc_cropping_background">#f2434242</color>
 </resources>

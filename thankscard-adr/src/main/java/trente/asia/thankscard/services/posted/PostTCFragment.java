@@ -557,7 +557,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 				String desPath = TCUtil.getFilesFolderPath() + filename;
 				mImagePath = WelfareUtil.getImagePath(activity, uri, true, desPath);
 				CroppingFragment croppingFragment = new CroppingFragment();
-				croppingFragment.setImagePath(mImagePath);
+				croppingFragment.setImagePath(mImagePath, BuildConfig.HOST + template.layerUrl);
 				croppingFragment.setCallback(this);
 				gotoFragment(croppingFragment);
 			}else{
@@ -707,6 +707,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 	public void onSelectCardDone(Template card){
 		this.template = card;
 		this.canSendPhoto = card.templateType != null;
+		binding.layoutPhoto.setImageBitmap(null);
 		if(canSendPhoto){
 			binding.lnrSelectPhoto.setVisibility(View.VISIBLE);
 		}else{
