@@ -78,11 +78,11 @@ public class MypageFragment extends AbstractTCFragment{
 		super.onCreate(savedInstanceState);
 		mRealm = Realm.getDefaultInstance();
 		PreferencesSystemUtil preference = new PreferencesSystemUtil(getContext());
-		int screenWidth = Integer.parseInt(preference.get(TcConst.PREF_FRAME_WIDTH));
-		int normalMessageWidth = screenWidth - WelfareUtil.dpToPx(140);
-		int photoMessageWidth = screenWidth / 2 - WelfareUtil.dpToPx(20);
-		int normalTextSize = normalMessageWidth / 15;
-		int photoTextSize = photoMessageWidth / 15;
+		float screenWidth = Float.parseFloat(preference.get(TcConst.PREF_FRAME_WIDTH));
+		float normalMessageWidth = screenWidth - WelfareUtil.dpToPx(140);
+		float photoMessageWidth = screenWidth / 2 - WelfareUtil.dpToPx(20);
+		float normalTextSize = normalMessageWidth / 15;
+		float photoTextSize = photoMessageWidth / 15;
 		preference.set(TcConst.PREF_NORMAL_TEXT_SIZE, String.valueOf(normalTextSize));
 		preference.set(TcConst.PREF_PHOTO_TEXT_SIZE, String.valueOf(photoTextSize));
 		checkBirthday(preference);
