@@ -1,6 +1,5 @@
 package trente.asia.thankscard.services.mypage;
 
-import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -12,8 +11,6 @@ import org.json.JSONObject;
 
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.graphics.Paint;
-import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.format.DateFormat;
@@ -81,8 +78,8 @@ public class MypageFragment extends AbstractTCFragment{
 		float screenWidth = Float.parseFloat(preference.get(TcConst.PREF_FRAME_WIDTH));
 		float normalMessageWidth = screenWidth - WelfareUtil.dpToPx(140);
 		float photoMessageWidth = screenWidth / 2 - WelfareUtil.dpToPx(20);
-		float normalTextSize = normalMessageWidth / 15;
-		float photoTextSize = photoMessageWidth / 15;
+		int normalTextSize = (int)(normalMessageWidth / 15);
+		int photoTextSize = (int)(photoMessageWidth / 15);
 		preference.set(TcConst.PREF_NORMAL_TEXT_SIZE, String.valueOf(normalTextSize));
 		preference.set(TcConst.PREF_PHOTO_TEXT_SIZE, String.valueOf(photoTextSize));
 		checkBirthday(preference);

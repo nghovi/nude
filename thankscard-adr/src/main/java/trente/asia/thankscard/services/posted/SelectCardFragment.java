@@ -17,8 +17,9 @@ import trente.asia.thankscard.databinding.FragmentSelectCardBinding;
 import trente.asia.thankscard.fragments.AbstractTCFragment;
 import trente.asia.thankscard.services.common.model.Template;
 import trente.asia.thankscard.services.posted.adapter.CardAdapter;
-import trente.asia.thankscard.services.posted.view.CannotUseAnimationDialog;
-import trente.asia.thankscard.services.posted.view.CannotUsePhotoDialog;
+import trente.asia.thankscard.services.posted.dialog.CannotUseAnimationDialog;
+import trente.asia.thankscard.services.posted.dialog.CannotUsePhotoDialog;
+import trente.asia.thankscard.services.posted.dialog.ChangeToNormalCardDialog;
 import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
 import trente.asia.welfare.adr.pref.PreferencesSystemUtil;
 
@@ -36,6 +37,12 @@ public class SelectCardFragment extends AbstractTCFragment implements CardAdapte
     private int pointGold;
     private int pointTotal;
     private boolean isBirtday;
+    private boolean showConfirmDiaglog = false;
+
+    public void setShowConfirmDiaglog(boolean showConfirmDiaglog) {
+        this.showConfirmDiaglog = showConfirmDiaglog;
+        log("showConfirmDiaglog = " + showConfirmDiaglog);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -111,6 +118,14 @@ public class SelectCardFragment extends AbstractTCFragment implements CardAdapte
 
     @Override
     public void onSelectCard(Template card) {
+        if (showConfirmDiaglog) {
+            showConfirmDialog(card);
+            return;
+        }
+        selectCard(card);
+    }
+
+    private void selectCard(Template card) {
         if (callback != null) {
             callback.onSelectCardDone(card);
             getFragmentManager().popBackStack();
@@ -121,30 +136,67 @@ public class SelectCardFragment extends AbstractTCFragment implements CardAdapte
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tab_normal:
-                binding.listCards.setAdapter(adapterCards);
-                binding.tabBottom.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.tc_normal_card_tab));
+                showListNormalCards();
                 break;
             case R.id.tab_photo:
                 if (!isBirtday && pointTotal < pointSilver) {
                     new CannotUsePhotoDialog().show(getFragmentManager(), null);
                     return;
                 }
-                binding.listCards.setAdapter(adapterPhoto);
-                binding.tabBottom.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.tc_photo_card_tab));
+                showListPhotoCards();
                 break;
             case R.id.tab_animation:
                 if (!isBirtday && pointTotal < pointGold) {
                     new CannotUseAnimationDialog().show(getFragmentManager(), null);
                     return;
                 }
-                binding.listCards.setAdapter(adapterAnimations);
-                binding.tabBottom.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.tc_animation_card_tab));
+                showListAnimationCards();
                 break;
         }
     }
 
+    private void showListAnimationCards() {
+        binding.listCards.setAdapter(adapterAnimations);
+        binding.tabBottom.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.tc_animation_card_tab));
+    }
+
+    private void showListNormalCards() {
+        binding.listCards.setAdapter(adapterCards);
+        binding.tabBottom.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.tc_normal_card_tab));
+    }
+
+    private void showListPhotoCards() {
+        binding.listCards.setAdapter(adapterPhoto);
+        binding.tabBottom.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.tc_photo_card_tab));
+    }
+
+    private void showConfirmDialog(final Template card){
+        final ChangeToNormalCardDialog dialog = new ChangeToNormalCardDialog();
+        dialog.setListeners(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view){
+                selectCard(card);
+                dialog.dismiss();
+            }
+        }, new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view){
+                dialog.dismiss();
+            }
+        });
+        dialog.show(getFragmentManager(), null);
+    }
+
     public interface OnSelectCardListener {
         void onSelectCardDone(Template card);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        callback = null;
     }
 
     private void log(String msg) {
