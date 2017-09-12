@@ -1,6 +1,5 @@
 package trente.asia.thankscard.services.mypage;
 
-import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -12,8 +11,6 @@ import org.json.JSONObject;
 
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.graphics.Paint;
-import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.format.DateFormat;

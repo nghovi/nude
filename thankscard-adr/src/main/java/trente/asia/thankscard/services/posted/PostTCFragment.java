@@ -26,6 +26,7 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -51,6 +52,7 @@ import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import io.realm.Realm;
 import io.realm.RealmResults;
+import io.realm.internal.Util;
 import trente.asia.android.util.AndroidUtil;
 import trente.asia.thankscard.BuildConfig;
 import trente.asia.thankscard.R;
@@ -817,21 +819,18 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 			@Override
 			public void onGlobalLayout(){
 				int heightDiff = activityRootView.getRootView().getHeight() - activityRootView.getHeight();
-				if (heightDiff > 100) {
+				LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) binding.mainLayout.getLayoutParams();
+				if (heightDiff > WelfareUtil.dpToPx(100)) {
 					binding.rltSelectDept.setVisibility(View.GONE);
 					binding.rltSelectUser.setVisibility(View.GONE);
-//					if (getView() != null && getView().findViewById(R.id.common_header) != null) {
-//						getView().findViewById(R.id.common_header).setVisibility(View.GONE);
-//					}
+					params.topMargin = (int) getResources().getDimension(R.dimen.tc_top_margin);
 					isOpen = true;
 				} else if (isOpen){
 					binding.edtMessage.clearFocus();
 					binding.edtMessagePhoto.clearFocus();
 					binding.rltSelectDept.setVisibility(View.VISIBLE);
 					binding.rltSelectUser.setVisibility(View.VISIBLE);
-//					if (getView() != null && getView().findViewById(R.id.common_header) != null) {
-//						getView().findViewById(R.id.common_header).setVisibility(View.VISIBLE);
-//					}
+					params.topMargin = 0;
 					isOpen = false;
 				}
 			}
