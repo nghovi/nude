@@ -501,7 +501,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
     private void showLayoutCards(List<Template> templates, List<Template> photo, List<Template> animations) {
         SelectCardFragment cardFragment = new SelectCardFragment();
         cardFragment.setCards(templates, photo, animations);
-        cardFragment.setShowConfirmDiaglog(canSendPhoto && (hasPhoto || !stickers.isEmpty()));
+        cardFragment.setShowConfirmDiaglog(canSendPhoto);
         cardFragment.setCallback(this);
         gotoFragment(cardFragment);
     }

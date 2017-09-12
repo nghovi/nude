@@ -38,10 +38,10 @@ public class SelectCardFragment extends AbstractTCFragment implements CardAdapte
     private int pointTotal;
     private boolean isBirtday;
     private boolean showConfirmDiaglog = false;
+    private boolean isPhotoCard = false;
 
     public void setShowConfirmDiaglog(boolean showConfirmDiaglog) {
         this.showConfirmDiaglog = showConfirmDiaglog;
-        log("showConfirmDiaglog = " + showConfirmDiaglog);
     }
 
     @Override
@@ -118,7 +118,7 @@ public class SelectCardFragment extends AbstractTCFragment implements CardAdapte
 
     @Override
     public void onSelectCard(Template card) {
-        if (showConfirmDiaglog) {
+        if (showConfirmDiaglog && !isPhotoCard) {
             showConfirmDialog(card);
             return;
         }
@@ -158,16 +158,19 @@ public class SelectCardFragment extends AbstractTCFragment implements CardAdapte
     private void showListAnimationCards() {
         binding.listCards.setAdapter(adapterAnimations);
         binding.tabBottom.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.tc_animation_card_tab));
+        isPhotoCard = false;
     }
 
     private void showListNormalCards() {
         binding.listCards.setAdapter(adapterCards);
         binding.tabBottom.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.tc_normal_card_tab));
+        isPhotoCard = false;
     }
 
     private void showListPhotoCards() {
         binding.listCards.setAdapter(adapterPhoto);
         binding.tabBottom.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.tc_photo_card_tab));
+        isPhotoCard = true;
     }
 
     private void showConfirmDialog(final Template card){

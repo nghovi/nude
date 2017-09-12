@@ -150,7 +150,7 @@
     <string name="tc_confirm_msg">Do you want to send message to %1$s?</string>
     <string name="tc_secret_mode">Send on secret mode</string>
     <string name="tc_ok">OK</string>
-    <string name="tc_select_card">Card</string>
+    <string name="tc_select_card">Select template</string>
     <string name="tc_select_dept">Select department</string>
     <string name="tc_select_user">Select user</string>
     <string name="tc_search">Search</string>
