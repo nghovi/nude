@@ -100,6 +100,9 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
     private boolean isBirthday = false;
     private boolean canUseStickers = false;
     private boolean hasPhoto = false;
+    private View activityRootView;
+    private ViewTreeObserver.OnGlobalLayoutListener onGlobalLayoutListener;
+    private boolean openStickersFromBtn = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -245,6 +248,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
             public void onFocusChange(View view, boolean hasFocus) {
                 if (hasFocus) {
                     binding.edtMessagePhoto.setBackgroundResource(R.drawable.edt_message_bgr);
+                    binding.layoutSticker.setVisibility(View.GONE);
                 } else {
                     binding.edtMessagePhoto.setBackgroundColor(Color.TRANSPARENT);
                 }
@@ -401,6 +405,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
                         closeLayoutSticker();
                     } else {
                         showLayoutSticker();
+
                     }
                 } else {
                     new CannotUseStickersDialog().show(getFragmentManager(), null);
@@ -450,11 +455,14 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
     }
 
     private void showLayoutSticker() {
+        hideSoftKeyboard();
         binding.layoutSticker.setVisibility(View.VISIBLE);
         binding.rltSelectDept.setVisibility(View.GONE);
         binding.rltSelectUser.setVisibility(View.GONE);
         showLayoutSticker = true;
         getYFromTop();
+        openStickersFromBtn = true;
+        log("showLayoutSticker");
     }
 
     private void closeLayoutSticker() {
@@ -809,10 +817,9 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
     }
 
     public void setListenerToRootView() {
-        final View activityRootView = getView().findViewById(R.id.content);
-        activityRootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+        activityRootView = getView().findViewById(R.id.content);
+        onGlobalLayoutListener = new ViewTreeObserver.OnGlobalLayoutListener() {
             boolean isOpen = false;
-
             @Override
             public void onGlobalLayout() {
                 int heightDiff = activityRootView.getRootView().getHeight() - activityRootView.getHeight();
@@ -822,6 +829,13 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
                     binding.rltSelectUser.setVisibility(View.GONE);
                     params.topMargin = (int) getResources().getDimension(R.dimen.tc_top_margin);
                     isOpen = true;
+                    if (showLayoutSticker) {
+                        binding.layoutSticker.setVisibility(View.GONE);
+                        showLayoutSticker = false;
+                    }
+
+                    binding.mainLayout.setLayoutParams(params);
+                    log("open keyboard");
                 } else if (isOpen) {
                     binding.edtMessage.clearFocus();
                     binding.edtMessagePhoto.clearFocus();
@@ -829,8 +843,14 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
                     binding.rltSelectUser.setVisibility(View.VISIBLE);
                     params.topMargin = 0;
                     isOpen = false;
+                    if (openStickersFromBtn) {
+                        showLayoutSticker();
+                        openStickersFromBtn = false;
+                    }
+                    log("close keyboard");
                 }
             }
-        });
+        };
+        activityRootView.getViewTreeObserver().addOnGlobalLayoutListener(onGlobalLayoutListener);
     }
 }
