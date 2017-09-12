@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -158,11 +159,14 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
         binding.mainLayout.setOnClickListener(this);
         validateButtons();
 
-        int normalTextSize = Integer.parseInt(preference.get(TcConst.PREF_NORMAL_TEXT_SIZE));
-        int photoTextSize = Integer.parseInt(preference.get(TcConst.PREF_PHOTO_TEXT_SIZE));
+        float normalTextSize = Float.parseFloat(preference.get(TcConst.PREF_NORMAL_TEXT_SIZE));
+        float photoTextSize = Float.parseFloat(preference.get(TcConst.PREF_PHOTO_TEXT_SIZE));
 
         binding.edtMessagePhoto.setTextSize(TypedValue.COMPLEX_UNIT_PX, photoTextSize);
         binding.edtMessage.setTextSize(TypedValue.COMPLEX_UNIT_PX, normalTextSize);
+        Typeface typeface = Typeface.createFromAsset(getContext().getAssets(), "Arial_BoldMT.ttf");
+        binding.edtMessagePhoto.setTypeface(typeface);
+        binding.edtMessage.setTypeface(typeface);
 
         if (department != null) {
             binding.deptName.setText(department.deptName);
