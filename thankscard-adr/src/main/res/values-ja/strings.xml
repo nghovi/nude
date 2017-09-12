@@ -105,10 +105,10 @@
     <string name="dialog_rank_stage_status_not_ok">未達成</string>
 
     <!-- footer -->
-    <string name="footer_item1">MyPage</string>
-    <string name="footer_item2">Posted</string>
-    <string name="footer_item3">Receive</string>
-    <string name="footer_item4">Ranking</string>
+    <string name="footer_item1">マイページ</string>
+    <string name="footer_item2">投稿</string>
+    <string name="footer_item3">受領</string>
+    <string name="footer_item4">ランキング</string>
     <string name="fragment_tc_detail_liked">Liked</string>
 
     <string name="tc_common_point">%1$spt</string>
