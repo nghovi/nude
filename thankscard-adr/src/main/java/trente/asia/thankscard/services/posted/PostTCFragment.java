@@ -26,6 +26,7 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -264,6 +265,13 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 		binding.txtReceiverPhoto.setText(getString(R.string.fragment_tc_detail_to, ""));
 
 		setListenerToRootView();
+		buildLayoutCard();
+	}
+
+	private void buildLayoutCard() {
+		RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) binding.imgCard.getLayoutParams();
+		params.width = (int) Float.parseFloat(preference.get(TcConst.PREF_FRAME_WIDTH));
+		params.height = (int) Float.parseFloat(preference.get(TcConst.PREF_FRAME_HEIGHT));
 	}
 
 	private void validateButtons(){
@@ -812,18 +820,18 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 				if (heightDiff > 100) {
 					binding.rltSelectDept.setVisibility(View.GONE);
 					binding.rltSelectUser.setVisibility(View.GONE);
-					if (getView() != null && getView().findViewById(R.id.common_header) != null) {
-						getView().findViewById(R.id.common_header).setVisibility(View.GONE);
-					}
+//					if (getView() != null && getView().findViewById(R.id.common_header) != null) {
+//						getView().findViewById(R.id.common_header).setVisibility(View.GONE);
+//					}
 					isOpen = true;
 				} else if (isOpen){
 					binding.edtMessage.clearFocus();
 					binding.edtMessagePhoto.clearFocus();
 					binding.rltSelectDept.setVisibility(View.VISIBLE);
 					binding.rltSelectUser.setVisibility(View.VISIBLE);
-					if (getView() != null && getView().findViewById(R.id.common_header) != null) {
-						getView().findViewById(R.id.common_header).setVisibility(View.VISIBLE);
-					}
+//					if (getView() != null && getView().findViewById(R.id.common_header) != null) {
+//						getView().findViewById(R.id.common_header).setVisibility(View.VISIBLE);
+//					}
 					isOpen = false;
 				}
 			}
