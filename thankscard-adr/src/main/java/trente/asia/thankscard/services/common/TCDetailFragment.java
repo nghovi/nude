@@ -8,6 +8,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.media.Image;
 import android.os.Bundle;
 import android.support.percent.PercentLayoutHelper;
@@ -59,8 +60,8 @@ public class TCDetailFragment extends AbstractPagerFragment{
 	private HistoryModel		currentHistory;
 	private List<DeptModel>		depts;
 
-	private int					normalTextSize;
-	private int					photoTextSize;
+	private float					normalTextSize;
+	private float					photoTextSize;
 
 	public void setDepts(List<DeptModel> depts){
 		this.depts = depts;
@@ -75,8 +76,8 @@ public class TCDetailFragment extends AbstractPagerFragment{
 		super.onCreate(savedInstanceState);
 		((WelfareActivity)activity).setOnDeviceBackButtonClickListener(this);
 		PreferencesSystemUtil preference = new PreferencesSystemUtil(getContext());
-		normalTextSize = Integer.parseInt(preference.get(TcConst.PREF_NORMAL_TEXT_SIZE));
-		photoTextSize = Integer.parseInt(preference.get(TcConst.PREF_PHOTO_TEXT_SIZE));
+		normalTextSize = Float.parseFloat(preference.get(TcConst.PREF_NORMAL_TEXT_SIZE));
+		photoTextSize = Float.parseFloat(preference.get(TcConst.PREF_PHOTO_TEXT_SIZE));
 	}
 
 	@Override
@@ -161,6 +162,8 @@ public class TCDetailFragment extends AbstractPagerFragment{
 
 		photoView.setImageBitmap(null);
 
+		Typeface typeface = Typeface.createFromAsset(getContext().getAssets(), "Arial_BoldMT.ttf");
+		textMessage.setTypeface(typeface);
 		if("NM".equals(historyModel.templateType)){
 			setLayoutMessageCenter(lnrMessage);
 			textMessage.setTextSize(TypedValue.COMPLEX_UNIT_PX, normalTextSize);
