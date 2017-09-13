@@ -158,4 +158,5 @@
     <string name="tc_cannot_use_stickers">シールはブロンズステージから使えます。</string>
     <string name="tc_cannot_use_photo">写真はシルバーステージから使えます。</string>
     <string name="tc_unselected">未選択</string>
+    <string name="tc_card">カード</string>
 </resources>
