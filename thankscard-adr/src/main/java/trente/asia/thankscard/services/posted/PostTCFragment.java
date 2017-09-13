@@ -167,9 +167,9 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 
         binding.edtMessagePhoto.setTextSize(TypedValue.COMPLEX_UNIT_PX, photoTextSize);
         binding.edtMessage.setTextSize(TypedValue.COMPLEX_UNIT_PX, normalTextSize);
-        Typeface typeface = Typeface.createFromAsset(getContext().getAssets(), "Arial_BoldMT.ttf");
-        binding.edtMessagePhoto.setTypeface(typeface);
-        binding.edtMessage.setTypeface(typeface);
+//        Typeface typeface = Typeface.createFromAsset(getContext().getAssets(), "Arial_BoldMT.ttf");
+        binding.edtMessagePhoto.setTypeface(Typeface.MONOSPACE);
+        binding.edtMessage.setTypeface(Typeface.MONOSPACE);
 
         if (department != null) {
             binding.deptName.setText(department.deptName);
