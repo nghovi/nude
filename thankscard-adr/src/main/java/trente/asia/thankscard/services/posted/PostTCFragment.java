@@ -111,7 +111,6 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 		mRealm = Realm.getDefaultInstance();
 		preference = new PreferencesSystemUtil(getContext());
 		isBirthday = Boolean.parseBoolean(preference.get(TcConst.IS_BIRTHDAY));
-		activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 		log("onCreate");
 	}
 
@@ -747,6 +746,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 	public void onResume(){
 		super.onResume();
 		log("onResume");
+		activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 		setListenerToRootView();
 		if(binding != null){
 			if(canSendPhoto && binding.edtMessagePhoto != null){
