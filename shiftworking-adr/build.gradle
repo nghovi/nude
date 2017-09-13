@@ -31,7 +31,7 @@ android {
             applicationId "trente.asia.shiftworking"
             manifestPlaceholders = [appName:"${APP_NAME} DEV"]
             buildConfigField "Boolean", "DEVELOP", "true"
-            buildConfigField "String", "HOST", "\"http://dev.trente.asia:9000\""
+            buildConfigField "String", "HOST", "\"http://192.168.1.124:9003\""
         }
         production {
             applicationId "trente.fukuri.shiftworking"

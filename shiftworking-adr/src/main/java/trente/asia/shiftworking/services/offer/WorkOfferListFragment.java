@@ -158,7 +158,6 @@ public class WorkOfferListFragment extends AbstractSwFragment{
 				}
 			}
 			jsonObject.put("searchDateString", CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_YYYY_MM, monthView.workMonth));
-			Log.e("WorkOfferList", "searchDateString" + CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_YYYY_MM, monthView.workMonth));
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
