@@ -31,7 +31,7 @@
                 android:layout_height="match_parent"
                 android:padding="@dimen/margin_16dp"
                 android:gravity="center"
-                android:text="@string/tc_ok"
+                android:text="@string/tc_done"
                 android:textSize="14sp"
                 android:textColor="@color/chiase_white"/>
         </LinearLayout>
