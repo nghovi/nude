@@ -8,6 +8,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.media.Image;
 import android.os.Bundle;
 import android.support.percent.PercentLayoutHelper;
@@ -59,8 +60,8 @@ public class TCDetailFragment extends AbstractPagerFragment{
 	private HistoryModel		currentHistory;
 	private List<DeptModel>		depts;
 
-	private int					normalTextSize;
-	private int					photoTextSize;
+	private float					normalTextSize;
+	private float					photoTextSize;
 
 	public void setDepts(List<DeptModel> depts){
 		this.depts = depts;
@@ -75,8 +76,8 @@ public class TCDetailFragment extends AbstractPagerFragment{
 		super.onCreate(savedInstanceState);
 		((WelfareActivity)activity).setOnDeviceBackButtonClickListener(this);
 		PreferencesSystemUtil preference = new PreferencesSystemUtil(getContext());
-		normalTextSize = Integer.parseInt(preference.get(TcConst.PREF_NORMAL_TEXT_SIZE));
-		photoTextSize = Integer.parseInt(preference.get(TcConst.PREF_PHOTO_TEXT_SIZE));
+		normalTextSize = Float.parseFloat(preference.get(TcConst.PREF_NORMAL_TEXT_SIZE));
+		photoTextSize = Float.parseFloat(preference.get(TcConst.PREF_PHOTO_TEXT_SIZE));
 	}
 
 	@Override
@@ -146,7 +147,7 @@ public class TCDetailFragment extends AbstractPagerFragment{
 		TextView textDate = (TextView)getView().findViewById(R.id.txt_tc_detail_date);
 		TextView textTo = (TextView)getView().findViewById(R.id.txt_tc_detail_to);
 		ImageView imgCard = (ImageView) getView().findViewById(R.id.img_card);
-		PhotoViewDetail photoView = (PhotoViewDetail) getView().findViewById(R.id.layout_photo);
+		ImageView photoView = (ImageView) getView().findViewById(R.id.layout_photo);
 		TCUtil.loadImageWithGlide(historyModel.template.templateUrl, imgCard);
 		textMessage.setText(historyModel.message);
 		Date postDate = CCDateUtil.makeDateCustom(historyModel.postDate, WelfareConst.WF_DATE_TIME);
@@ -159,16 +160,18 @@ public class TCDetailFragment extends AbstractPagerFragment{
 				isSecret = true;
 		}
 
+		photoView.setImageBitmap(null);
+
+		Typeface typeface = Typeface.createFromAsset(getContext().getAssets(), "Arial_BoldMT.ttf");
+		textMessage.setTypeface(typeface);
 		if("NM".equals(historyModel.templateType)){
 			setLayoutMessageCenter(lnrMessage);
 			textMessage.setTextSize(TypedValue.COMPLEX_UNIT_PX, normalTextSize);
 		}else{
 			setLayoutMessageRight(lnrMessage);
 			textMessage.setTextSize(TypedValue.COMPLEX_UNIT_PX, photoTextSize);
-			photoView.clearImage();
 			if(historyModel.attachment != null && historyModel.attachment.fileUrl != null && !isSecret){
-				photoView.restoreImage(historyModel.attachment.fileUrl, Float.valueOf(historyModel.photoLocationX),
-						Float.valueOf(historyModel.photoLocationY), Float.valueOf(historyModel.photoScale));
+				WfPicassoHelper.loadImage(getContext(), BuildConfig.HOST + historyModel.attachment.fileUrl, photoView, null);
 			}
 		}
 

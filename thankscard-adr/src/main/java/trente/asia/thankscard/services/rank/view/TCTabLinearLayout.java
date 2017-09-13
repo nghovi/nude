@@ -33,7 +33,6 @@ public class TCTabLinearLayout extends LinearLayout{
 	public Map<String, Integer>			categoryColor	= new LinkedHashMap<String, Integer>();
 
 	public interface OnTabSelectedListener{
-
 		public void onTabSelected(String tabName);
 	}
 

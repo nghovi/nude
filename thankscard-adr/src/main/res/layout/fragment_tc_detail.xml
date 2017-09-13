@@ -76,12 +76,11 @@
                         android:layout_marginTop="@dimen/margin_16dp"
                         android:background="@color/chiase_white">
 
-                        <trente.asia.thankscard.services.posted.view.PhotoViewDetail
+                        <ImageView
                             android:id="@+id/layout_photo"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_alignBottom="@+id/img_card"
-                            android:layout_alignTop="@+id/img_card"
-                            app:layout_widthPercent="70%" />
+                            android:scaleType="fitXY"/>
 
                         <ImageView
                             android:id="@+id/img_card"
@@ -115,7 +114,7 @@
                                 style="@style/tc_text_black_12"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="left"
+                                android:layout_gravity="start"
                                 android:ellipsize="end"
                                 android:singleLine="true"
                                 android:text="@string/fragment_tc_detail_date" />
@@ -125,7 +124,7 @@
                                 style="@style/tc_text_black_12"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="left"
+                                android:layout_gravity="start"
                                 android:layout_marginBottom="@dimen/margin_10dp"
                                 android:ellipsize="end"
                                 android:singleLine="true"
@@ -137,8 +136,9 @@
                             style="@style/tc_text_black_bold"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="@dimen/margin_10dp"
-                            android:layout_marginStart="@dimen/margin_10dp" />
+                            android:layout_marginLeft="@dimen/margin_10dp"
+                            android:layout_marginRight="@dimen/margin_10dp"
+                            android:padding="@dimen/margin_0dp"/>
                     </LinearLayout>
 
                     <RelativeLayout

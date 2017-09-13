@@ -1,12 +1,15 @@
 package trente.asia.thankscard.utils;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.os.Environment;
 import android.util.TypedValue;
 import android.widget.ImageView;
@@ -80,5 +83,16 @@ public class TCUtil{
 			urlWithoutSpace = url.replace(" ", "%20");
 		}
 		Glide.with(imageView.getContext()).load(BuildConfig.HOST + urlWithoutSpace).into(imageView);
+	}
+
+	public static void saveFileToStorage(Bitmap bitmap, String imagePath) {
+		try {
+			FileOutputStream os = new FileOutputStream(new File(imagePath));
+			bitmap.compress(Bitmap.CompressFormat.PNG, 100, os);
+			os.flush();
+			os.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

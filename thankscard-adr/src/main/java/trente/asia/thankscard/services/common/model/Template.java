@@ -8,6 +8,7 @@ public class Template{
 	public String	templateId;
 	public String	templateUrl;
 	public String	templateType;
+	public String	layerUrl;
 
 	public Template(){
 	}

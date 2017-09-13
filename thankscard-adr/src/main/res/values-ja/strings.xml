@@ -146,7 +146,7 @@
     <string name="tc_2_rank">%1$s位</string>
     <string name="tc_3_rank">%1$s位</string>
     <string name="tc_4_more_rank">%1$s位</string>
-    <string name="tc_select_card">カード</string>
+    <string name="tc_select_card">テンプレート選択</string>
     <string name="tc_select_dept">部署選択</string>
     <string name="tc_select_photo">写真付きカード</string>
     <string name="tc_select_sticker">シール</string>
@@ -157,4 +157,5 @@
     <string name="tc_limit_sticker">シールは50個までです。</string>
     <string name="tc_cannot_use_stickers">シールはブロンズステージから使えます。</string>
     <string name="tc_cannot_use_photo">写真はシルバーステージから使えます。</string>
+    <string name="tc_unselected">未選択</string>
 </resources>

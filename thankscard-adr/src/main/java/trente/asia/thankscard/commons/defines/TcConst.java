@@ -50,4 +50,5 @@ public class TcConst{
 	public static final String	POSITION_LEFT							= "LEFT";
 	public static final String	PREF_NORMAL_TEXT_SIZE					= "PREF_NORMAL_TEXT_SIZE";
 	public static final String	PREF_PHOTO_TEXT_SIZE					= "PREF_PHOTO_TEXT_SIZE";
+	public static final String	IS_BIRTHDAY								= "IS_BIRTHDAY";
 }

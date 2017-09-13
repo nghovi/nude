@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_48dp"
+            android:orientation="horizontal"
+            android:background="@color/tc_cropping_background">
+            <TextView
+                android:id="@+id/btn_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:padding="@dimen/margin_16dp"
+                android:text="@string/wf_cancel"
+                android:textSize="14sp"
+                android:textColor="@color/chiase_white"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/tc_cropping_title"
+                android:textSize="14sp"
+                android:textColor="@color/chiase_white"/>
+            <TextView
+                android:id="@+id/btn_ok"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:padding="@dimen/margin_16dp"
+                android:gravity="center"
+                android:text="@string/tc_ok"
+                android:textSize="14sp"
+                android:textColor="@color/chiase_white"/>
+        </LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#fff">
+            <trente.asia.thankscard.services.posted.view.PhotoViewPost
+                android:id="@+id/layout_photo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <View
+                    android:id="@+id/gray_view_top"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@color/tc_cropping_background"/>
+                <ImageView
+                    android:id="@+id/card_preview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:scaleType="fitXY"/>
+                <FrameLayout
+                    android:id="@+id/gray_view_bottom"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@color/tc_cropping_background">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:padding="@dimen/margin_8dp"
+                        android:text="@string/tc_crop_tip"
+                        android:textSize="14sp"
+                        android:textColor="@color/chiase_white"/>
+                </FrameLayout>
+            </LinearLayout>
+            <trente.asia.thankscard.services.posted.view.TouchPad
+                android:id="@+id/touch_pad"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </RelativeLayout>
+    </LinearLayout>
+</layout>

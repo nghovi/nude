@@ -38,6 +38,7 @@ public class CCConst{
 	public static final String	YES							= "Y";
 	public static final String	NO							= "N";
 	public static final String	NONE						= "0";
+	public static final String	ALL							= "ALL";
 	public static final Integer	ZERO						= 0;
 
 	public static final String	ENABLED						= "enabled";
