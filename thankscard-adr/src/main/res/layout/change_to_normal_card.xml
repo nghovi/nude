@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/margin_16dp"
             android:gravity="center_horizontal"
-            android:text="@string/tc_ok"
+            android:text="@string/chiase_common_delete"
             android:textColor="@color/chiase_black"
             android:textSize="16sp"/>
     </android.support.percent.PercentRelativeLayout>
