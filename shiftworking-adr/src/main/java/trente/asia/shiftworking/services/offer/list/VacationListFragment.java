@@ -1,4 +1,4 @@
-package trente.asia.shiftworking.services.offer;
+package trente.asia.shiftworking.services.offer.list;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -24,6 +24,9 @@ import asia.chiase.core.util.CCJsonUtil;
 import trente.asia.shiftworking.R;
 import trente.asia.shiftworking.common.defines.SwConst;
 import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
+import trente.asia.shiftworking.services.offer.detail.WorkOfferDetailFragment;
+import trente.asia.shiftworking.services.offer.edit.WorkOfferEditFragment;
+import trente.asia.shiftworking.services.offer.filter.WorkOfferFilterFragment;
 import trente.asia.shiftworking.services.offer.model.WorkOfferModel;
 import trente.asia.shiftworking.services.offer.view.WorkOfferAdapter;
 import trente.asia.shiftworking.services.shiftworking.view.CommonMonthView;
@@ -32,7 +35,7 @@ import trente.asia.welfare.adr.models.ApiObjectModel;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 import trente.asia.welfare.adr.utils.WelfareUtil;
 
-public class WorkOfferListFragment extends AbstractSwFragment{
+public class VacationListFragment extends AbstractSwFragment{
 
 	WorkOfferAdapter				adapter;
 	private List<WorkOfferModel>	offers;
@@ -50,7 +53,8 @@ public class WorkOfferListFragment extends AbstractSwFragment{
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 		if(mRootView == null){
-			mRootView = inflater.inflate(R.layout.fragment_work_offer, container, false);
+			mRootView = inflater.inflate(R.layout.fragment_vacation_list, container, false);
+			log("onCreateView");
 		}
 		return mRootView;
 	}
@@ -58,11 +62,12 @@ public class WorkOfferListFragment extends AbstractSwFragment{
 	@Override
 	protected void initData(){
 		requestOfferList();
+		log("initData");
 	}
 
 	@Override
 	public int getFooterItemId(){
-		return R.id.lnr_view_footer_offer;
+		return 0;
 	}
 
 	@Override
@@ -94,7 +99,6 @@ public class WorkOfferListFragment extends AbstractSwFragment{
 	@Override
 	public void initView(){
 		super.initView();
-		super.initHeader(null, myself.userName, R.drawable.bb_action_add);
 		monthView = (CommonMonthView)getView().findViewById(R.id.view_id_month);
 		monthView.initialization();
 		mLstOffer = (ListView)getView().findViewById(R.id.lst_work_offer);
@@ -120,8 +124,6 @@ public class WorkOfferListFragment extends AbstractSwFragment{
 		monthView.imgNext.setOnClickListener(this);
 		monthView.btnThisMonth.setOnClickListener(this);
 
-		getView().findViewById(R.id.img_id_header_right_icon).setOnClickListener(this);
-
 		txtFilterDesc = (TextView)getView().findViewById(R.id.fragment_work_offer_filter_desc);
 		getView().findViewById(R.id.lnr_id_filter).setOnClickListener(this);
 	}
@@ -138,7 +140,6 @@ public class WorkOfferListFragment extends AbstractSwFragment{
 		JSONObject jsonObject = new JSONObject();
 		try{
 			jsonObject.put("targetUserId", prefAccUtil.getUserPref().key);
-			Log.e("WorkOfferList", "targetUserId" + prefAccUtil.getUserPref().key);
 			if(filters != null){
 				if(filters.containsKey(WorkOfferFilterFragment.DEPT)){
 					jsonObject.put("offerDept", filters.get(WorkOfferFilterFragment.DEPT));
@@ -223,9 +224,6 @@ public class WorkOfferListFragment extends AbstractSwFragment{
 		case R.id.lnr_id_filter:
 			gotoOfferFilterFragment();
 			break;
-		case R.id.img_id_header_right_icon:
-			gotoOfferEditFragment();
-			break;
 		case R.id.btn_id_back:
 			monthView.workMonth = WelfareUtil.addMonth(monthView.workMonth, -1);
 			requestOfferList();
@@ -243,15 +241,20 @@ public class WorkOfferListFragment extends AbstractSwFragment{
 		}
 	}
 
-	private void gotoOfferEditFragment(){
-		WorkOfferEditFragment fragment = new WorkOfferEditFragment();
-		gotoFragment(fragment);
-	}
-
 	private void gotoOfferFilterFragment(){
 		WorkOfferFilterFragment fragment = new WorkOfferFilterFragment();
 		fragment.setOfferTypeStatusMaster(offerTypesMaster, offerStatusMaster);
 		fragment.setFiltersAndDepts(filters, this.offerDepts);
 		gotoFragment(fragment);
+	}
+
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		setmIsNewFragment(true);
+	}
+
+	private void log(String msg) {
+		Log.e("VacationList", msg);
 	}
 }

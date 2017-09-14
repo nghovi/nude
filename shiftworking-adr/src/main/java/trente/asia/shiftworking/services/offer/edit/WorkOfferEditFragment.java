@@ -1,4 +1,4 @@
-package trente.asia.shiftworking.services.offer;
+package trente.asia.shiftworking.services.offer.edit;
 
 import java.util.Calendar;
 import java.util.Date;

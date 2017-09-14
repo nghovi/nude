@@ -67,6 +67,11 @@ public class ChiaseFragment extends Fragment implements HttpCallback{
 	protected Boolean				isDestroy;
 
 	protected View					mRootView;
+
+	public void setmIsNewFragment(boolean mIsNewFragment) {
+		this.mIsNewFragment = mIsNewFragment;
+	}
+
 	private boolean					mIsNewFragment	= true;
 	protected ViewGroup				mFooterView;
 	protected ViewGroup				mHeaderView;

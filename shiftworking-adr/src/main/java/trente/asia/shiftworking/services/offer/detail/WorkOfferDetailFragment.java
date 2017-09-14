@@ -1,4 +1,4 @@
-package trente.asia.shiftworking.services.offer;
+package trente.asia.shiftworking.services.offer.detail;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -32,6 +32,8 @@ import trente.asia.shiftworking.common.activities.MainActivity;
 import trente.asia.shiftworking.common.defines.SwConst;
 import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
 import trente.asia.shiftworking.databinding.FragmentOfferDetailBinding;
+import trente.asia.shiftworking.services.offer.edit.WorkOfferEditFragment;
+import trente.asia.shiftworking.services.offer.list.VacationListFragment;
 import trente.asia.shiftworking.services.offer.model.WorkOfferModel;
 import trente.asia.shiftworking.services.offer.view.ApproveHistoryAdapter;
 import trente.asia.welfare.adr.activity.WelfareActivity;
@@ -292,7 +294,7 @@ public class WorkOfferDetailFragment extends AbstractSwFragment{
 	protected void onClickBackBtn(){
 		if(isClickNotification){
 			emptyBackStack();
-			gotoFragment(new WorkOfferListFragment());
+			gotoFragment(new VacationListFragment());
 		}else{
 			super.onClickBackBtn();
 		}

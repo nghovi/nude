@@ -1,86 +1,88 @@
-<LinearLayout style="@style/wf_common_match"
-              xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <include layout="@layout/view_common_header"/>
-
-
-    <LinearLayout
-        android:id="@+id/lnr_id_content"
-        style="@style/cs_common_match"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:paddingBottom="@dimen/wf_margin_16"
-        android:paddingTop="@dimen/margin_6dp"
-        android:visibility="invisible">
-
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/wf_login_background_color">
+        <include layout="@layout/view_common_header"/>
         <LinearLayout
-            style="@style/cs_common_match_wrap"
-            android:paddingLeft="@dimen/margin_16dp"
-            android:paddingRight="@dimen/margin_16dp">
-
-            <include layout="@layout/view_common_shift_working_month"/>
-        </LinearLayout>
-
-        <ScrollView
-            style="@style/cs_common_match"
-            android:layout_marginTop="@dimen/margin_10dp">
-
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
             <LinearLayout
-                style="@style/cs_common_match"
-                android:orientation="vertical">
-
-                <TextView
-                    style="@style/wl_common_text"
-                    android:text="@string/sw_work_offer_history"
-                    android:paddingLeft="@dimen/margin_16dp"
-                    android:paddingRight="@dimen/margin_16dp"/>
-
-                <trente.asia.android.view.ChiaseListViewNoScroll
-                    android:id="@+id/lst_work_offer"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_10dp"
-                    android:divider="@color/cs_common_divider"
-                    android:dividerHeight="1px"/>
-
-                <TextView
-                    style="@style/wl_common_text"
-                    android:layout_marginTop="@dimen/margin_10dp"
-                    android:text="@string/sw_work_offer_other_history"
-                    android:paddingLeft="@dimen/margin_16dp"
-                    android:paddingRight="@dimen/margin_16dp"/>
-
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
                 <LinearLayout
-                    android:id="@+id/lnr_id_filter"
-                    style="@style/wf_common_item_linear2"
-                    android:layout_marginTop="@dimen/margin_10dp"
-                    android:background="@drawable/state_common_selectable_row">
-
+                    android:id="@+id/tab_vacation"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
                     <TextView
-                        android:id="@+id/fragment_work_offer_filter_desc"
-                        style="@style/wl_common_text"
-                        android:layout_weight="1"
-                        android:text="@string/fragment_offer_filter_other_history_filter"/>
-
-                    <ImageView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/margin_10dp"
-                        android:src="@drawable/sw_icon_filter"/>
+                        android:text="@string/sw_vacation"
+                        style="@style/sw_text_14sp"
+                        android:gravity="center"
+                        android:padding="@dimen/margin_8dp"/>
+                    <View
+                        android:id="@+id/vacation_indicator"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/sw_tab_indicator"
+                        android:background="@color/wf_login_button_color_on"/>
                 </LinearLayout>
 
-                <View style="@style/cs_common_divider"/>
+                <LinearLayout
+                    android:id="@+id/tab_overtime"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/sw_overtime"
+                        style="@style/sw_text_14sp"
+                        android:gravity="center"
+                        android:padding="@dimen/margin_8dp"/>
+                    <View
+                        android:id="@+id/overtime_indicator"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/sw_tab_indicator"
+                        android:alpha="0.5"
+                        android:background="@color/wf_login_button_color_on"/>
+                </LinearLayout>
 
-                <trente.asia.android.view.ChiaseListViewNoScroll
-                    android:id="@+id/lst_fragment_work_offer_other"
-                    style="@style/cs_common_match_wrap"
-                    android:divider="@color/cs_common_divider"
-                    android:dividerHeight="1px"/>
+                <LinearLayout
+                    android:id="@+id/tab_holiday_working"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/sw_holiday_working"
+                        style="@style/sw_text_14sp"
+                        android:gravity="center"
+                        android:padding="@dimen/margin_8dp"/>
+                    <View
+                        android:id="@+id/holiday_working_indicators"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/sw_tab_indicator"
+                        android:alpha="0.5"
+                        android:background="@color/wf_login_button_color_on"/>
+                </LinearLayout>
             </LinearLayout>
-        </ScrollView>
 
+            <android.support.v4.view.ViewPager
+                android:id="@+id/view_pager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
+
+        <include layout="@layout/view_common_footer"/>
     </LinearLayout>
-
-    <include layout="@layout/view_common_footer"/>
-
-</LinearLayout>
+</layout>

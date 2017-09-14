@@ -124,4 +124,7 @@
 
     <string name="fragment_offer_detail_sick_absent">Sick absent</string>
     <string name="fragment_offer_edit_offer_user">Request user</string>
+    <string name="sw_vacation">Vacation</string>
+    <string name="sw_overtime">Overtime</string>
+    <string name="sw_holiday_working">Holiday Working</string>
 </resources>

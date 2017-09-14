@@ -21,7 +21,7 @@ import trente.asia.shiftworking.BuildConfig;
 import trente.asia.shiftworking.R;
 import trente.asia.shiftworking.common.defines.SwConst;
 import trente.asia.shiftworking.services.login.SwLoginFragment;
-import trente.asia.shiftworking.services.offer.WorkOfferDetailFragment;
+import trente.asia.shiftworking.services.offer.detail.WorkOfferDetailFragment;
 import trente.asia.shiftworking.services.worktime.WorkerFragment;
 import trente.asia.shiftworking.services.worktime.WorknoticeFormFragment;
 import trente.asia.shiftworking.services.worktime.WorktimeCheckInFragment;

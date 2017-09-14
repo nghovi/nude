@@ -1,4 +1,4 @@
-package trente.asia.shiftworking.services.offer;
+package trente.asia.shiftworking.services.offer.filter;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
