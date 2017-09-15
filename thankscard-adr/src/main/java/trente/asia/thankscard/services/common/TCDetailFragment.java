@@ -158,8 +158,8 @@ public class TCDetailFragment extends AbstractPagerFragment{
 
 		photoView.setImageBitmap(null);
 
-		Typeface typeface = Typeface.createFromAsset(getContext().getAssets(), "Arial_BoldMT.ttf");
-		textMessage.setTypeface(typeface);
+//		Typeface typeface = Typeface.createFromAsset(getContext().getAssets(), "Arial_BoldMT.ttf");
+		textMessage.setTypeface(Typeface.MONOSPACE);
 		if("NM".equals(historyModel.templateType)){
 			setLayoutMessageCenter(lnrMessage);
 			textMessage.setTextSize(TypedValue.COMPLEX_UNIT_PX, normalTextSize);

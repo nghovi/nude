@@ -150,7 +150,7 @@
                         android:maxLines="5"
                         android:paddingTop="@dimen/margin_10dp"
                         android:paddingStart="@dimen/margin_10dp"
-                        android:paddingEnd="@dimen/margin_0dp"/>
+                        android:paddingEnd="@dimen/margin_10dp"/>
                 </RelativeLayout>
 
                 <android.support.percent.PercentRelativeLayout
