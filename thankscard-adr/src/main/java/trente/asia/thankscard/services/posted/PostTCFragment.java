@@ -121,7 +121,6 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 			binding = DataBindingUtil.inflate(inflater, R.layout.fragment_post_tc, container, false);
 			mRootView = binding.getRoot();
 		}
-		log("onCreateView");
 		return mRootView;
 	}
 
@@ -197,7 +196,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 			public void afterTextChanged(Editable editable){
 				if(!canSendPhoto){
 					message = editable.toString();
-					int textCount = MAX_LETTER - message.getBytes().length;
+					int textCount = MAX_LETTER - (message.getBytes().length / 2);
 					binding.txtCount.setText(String.valueOf(textCount));
 					binding.edtMessagePhoto.setText(message);
 					if(textCount < 0){
@@ -225,7 +224,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 			public void afterTextChanged(Editable editable){
 				if(canSendPhoto){
 					message = editable.toString();
-					int textCount = MAX_LETTER - message.getBytes().length;
+					int textCount = MAX_LETTER - (message.getBytes().length / 2);
 					binding.txtCount.setText(String.valueOf(textCount));
 					binding.edtMessage.setText(message);
 					if(textCount < 0){
@@ -474,7 +473,6 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 		showLayoutSticker = true;
 		getYFromTop();
 		openStickersFromBtn = false;
-		log("showLayoutSticker");
 	}
 
 	private void closeLayoutSticker(){
@@ -750,7 +748,6 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 	@Override
 	public void onResume(){
 		super.onResume();
-		log("onResume");
 		activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 		setListenerToRootView();
 		if(binding != null){
@@ -788,7 +785,6 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 		activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 		super.onDestroy();
 		mRealm.close();
-		log("onDestroy");
 	}
 
 	@Override
@@ -835,8 +831,6 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 
 	public void setListenerToRootView(){
 		activityRootView = getView().findViewById(R.id.content);
-		log("setListenerToRootView");
-		log("onGlobalLayoutListener = " + (onGlobalLayoutListener == null));
 		onGlobalLayoutListener = new ViewTreeObserver.OnGlobalLayoutListener() {
 
 			@Override
@@ -853,7 +847,6 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 						showLayoutSticker = false;
 					}
 					binding.mainLayout.setLayoutParams(params);
-					log("open keyboard");
 				}else if(isOpenKeyBoard){
 					binding.edtMessage.clearFocus();
 					binding.edtMessagePhoto.clearFocus();
@@ -873,7 +866,6 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState){
 		super.onActivityCreated(savedInstanceState);
-		log("onActivityCreated");
 	}
 
 	@Override
