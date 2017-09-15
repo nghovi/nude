@@ -31,7 +31,6 @@ import asia.chiase.core.util.CCNumberUtil;
 import asia.chiase.core.util.CCStringUtil;
 import io.realm.Realm;
 import trente.asia.thankscard.R;
-import trente.asia.thankscard.activities.MainActivity;
 import trente.asia.thankscard.commons.defines.TcConst;
 import trente.asia.thankscard.fragments.AbstractTCFragment;
 import trente.asia.thankscard.fragments.dialogs.RankStageDialog;
@@ -41,7 +40,6 @@ import trente.asia.thankscard.services.mypage.model.StampCategoryModel;
 import trente.asia.thankscard.services.mypage.model.StampModel;
 import trente.asia.thankscard.services.mypage.view.NoticeListAdapter;
 import trente.asia.thankscard.services.posted.PostTCFragment;
-import trente.asia.thankscard.services.posted.ThanksCardEditFragment;
 import trente.asia.thankscard.services.rank.model.RankStage;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.models.DeptModel;
@@ -209,16 +207,6 @@ public class MypageFragment extends AbstractTCFragment{
 			}
 		};
 		showAlertDialogWithOption(getString(R.string.fragment_mypage_alert_title), notice.noticeMessage, getString(R.string.fragment_mypage_alert_post), getString(android.R.string.cancel), listener, null);
-	}
-
-	private void gotoPostEdit(NoticeModel notice){
-		ThanksCardEditFragment thanksCardEditFragment = new ThanksCardEditFragment();
-		thanksCardEditFragment.setTemplate(null);
-		thanksCardEditFragment.setNoticeModel(notice);
-		Bundle args = new Bundle();
-		args.putInt(TcConst.ACTIVE_FOOTER_ITEM_ID, getFooterItemId());
-		thanksCardEditFragment.setArguments(args);
-		((MainActivity)getActivity()).addFragment(thanksCardEditFragment);
 	}
 
 	private void requestMypageInfo(){

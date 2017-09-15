@@ -7,11 +7,11 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.bumptech.glide.Glide;
+
 import android.content.Context;
 import android.graphics.Typeface;
-import android.media.Image;
 import android.os.Bundle;
-import android.support.percent.PercentLayoutHelper;
 import android.support.percent.PercentRelativeLayout;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
@@ -23,8 +23,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
@@ -35,9 +33,7 @@ import trente.asia.thankscard.commons.defines.TcConst;
 import trente.asia.thankscard.services.common.model.HistoryModel;
 import trente.asia.thankscard.services.mypage.model.StampModel;
 import trente.asia.thankscard.services.posted.PostTCFragment;
-import trente.asia.thankscard.services.posted.ThanksCardEditFragment;
 import trente.asia.thankscard.services.posted.model.ApiStickerModel;
-import trente.asia.thankscard.services.posted.view.PhotoViewDetail;
 import trente.asia.thankscard.services.posted.view.StickerViewDetail;
 import trente.asia.thankscard.services.received.ReceiveTCListFragment;
 import trente.asia.thankscard.utils.TCUtil;
@@ -274,19 +270,6 @@ public class TCDetailFragment extends AbstractPagerFragment{
 
 	private void log(String msg){
 		Log.e("TCDetail", msg);
-	}
-
-	private void gotoPostedEditFragment(HistoryModel historyModel){
-		ThanksCardEditFragment thanksCardEditFragment = new ThanksCardEditFragment();
-		Bundle args = new Bundle();
-		args.putInt(TcConst.ACTIVE_FOOTER_ITEM_ID, getFooterItemId());
-		String toUserId = myself.key.equals(historyModel.receiverId) ? historyModel.posterId : historyModel.receiverId;
-		args.putString(ThanksCardEditFragment.MESSAGE, historyModel.message);
-		thanksCardEditFragment.setSelectedDept(WelfareUtil.getDept4UserId(depts, toUserId));
-		thanksCardEditFragment.setSelectedUser(new UserModel(toUserId));
-
-		thanksCardEditFragment.setArguments(args);
-		gotoFragment(thanksCardEditFragment);
 	}
 
 	public static void buildTCFrame(Context context, View lnrFrame, final HistoryModel historyModel, boolean isShowContent){

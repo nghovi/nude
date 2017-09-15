@@ -29,8 +29,6 @@ import trente.asia.thankscard.services.common.model.Category;
 import trente.asia.thankscard.services.common.model.HistoryModel;
 import trente.asia.thankscard.services.common.model.Template;
 import trente.asia.thankscard.services.posted.PostTCFragment;
-import trente.asia.thankscard.services.posted.ThanksCardEditFragment;
-import trente.asia.thankscard.services.posted.model.ApiStickerModel;
 import trente.asia.thankscard.services.rank.view.TCTabLinearLayout;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.models.DeptModel;
@@ -219,14 +217,6 @@ public abstract class AbstractTCListFragment extends AbstractTCFragment implemen
 	}
 
 	private void gotoPostEditFragment(){
-//		ThanksCardEditFragment thanksCardEditFragment = new ThanksCardEditFragment();
-//		thanksCardEditFragment.setTemplates(templates);
-//		thanksCardEditFragment.setDepartments(departments);
-//		thanksCardEditFragment.setCategory(selectedCategory);
-//		Bundle args = new Bundle();
-//		args.putInt(TcConst.ACTIVE_FOOTER_ITEM_ID, getFooterItemId());
-//		thanksCardEditFragment.setArguments(args);
-//		gotoFragment(thanksCardEditFragment);
 		gotoFragment(new PostTCFragment());
 	}
 
