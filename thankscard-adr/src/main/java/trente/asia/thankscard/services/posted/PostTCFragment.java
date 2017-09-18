@@ -196,7 +196,8 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 			public void afterTextChanged(Editable editable){
 				if(!canSendPhoto){
 					message = editable.toString();
-					int textCount = MAX_LETTER - (message.getBytes().length / 2);
+					int textCount = MAX_LETTER - (message.getBytes().length / 3);
+                    log("length = " + message.getBytes().length);
 					binding.txtCount.setText(String.valueOf(textCount));
 					binding.edtMessagePhoto.setText(message);
 					if(textCount < 0){
@@ -224,7 +225,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 			public void afterTextChanged(Editable editable){
 				if(canSendPhoto){
 					message = editable.toString();
-					int textCount = MAX_LETTER - (message.getBytes().length / 2);
+					int textCount = MAX_LETTER - (message.getBytes().length / 3);
 					binding.txtCount.setText(String.valueOf(textCount));
 					binding.edtMessage.setText(message);
 					if(textCount < 0){
