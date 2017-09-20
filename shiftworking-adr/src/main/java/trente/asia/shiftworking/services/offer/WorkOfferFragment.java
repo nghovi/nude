@@ -30,9 +30,7 @@ public class WorkOfferFragment extends AbstractSwFragment implements ViewPager.O
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (mRootView == null) {
             mRootView = inflater.inflate(R.layout.fragment_work_offer, container, false);
-            log("mRootView");
         }
-        log("onCreateView");
         return mRootView;
     }
 
@@ -41,17 +39,14 @@ public class WorkOfferFragment extends AbstractSwFragment implements ViewPager.O
         super.initView();
         initHeader(null, myself.userName, R.drawable.bb_action_add);
         getView().findViewById(R.id.img_id_header_right_icon).setOnClickListener(this);
-        log("initView");
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        log("onActivityCreated");
         if (binding != null) {
             return;
         }
-        log("after binding");
         binding = DataBindingUtil.bind(mRootView);
         WorkOfferFragmentAdapter adapter = new WorkOfferFragmentAdapter(getFragmentManager());
         adapter.addFragment(new VacationListFragment());

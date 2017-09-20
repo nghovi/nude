@@ -98,7 +98,8 @@
     <string name="fragment_offer_filter_offer_type">Offer type</string>
     <string name="fragment_offer_filter_other_history_filter">Filter: %1$s</string>
     <string name="fragment_offer_filter_offer_status">Offer status</string>
-    <string name="fragment_offer_filter_offer_dept">Target department</string>
+    <string name="fragment_offer_filter_offer_user">User</string>
+    <string name="fragment_offer_filter_offer_dept">Department</string>
     <string name="fragment_offer_filter_title">Work offer filter</string>
     <string name="fragment_offer_filter_clear">Clear</string>
     <string name="fragment_offer_filter_update">Update</string>

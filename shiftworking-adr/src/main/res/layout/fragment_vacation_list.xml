@@ -1,80 +1,83 @@
-<LinearLayout style="@style/wf_common_match"
-              xmlns:android="http://schemas.android.com/apk/res/android">
+<layout>
 
-    <LinearLayout
-        android:id="@+id/lnr_id_content"
-        style="@style/cs_common_match"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:paddingBottom="@dimen/wf_margin_16"
-        android:paddingTop="@dimen/margin_6dp"
-        android:visibility="invisible">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/wf_common_match">
 
         <LinearLayout
-            style="@style/cs_common_match_wrap"
-            android:paddingLeft="@dimen/margin_16dp"
-            android:paddingRight="@dimen/margin_16dp">
-
-            <include layout="@layout/view_common_shift_working_month"/>
-        </LinearLayout>
-
-        <ScrollView
+            android:id="@+id/lnr_id_content"
             style="@style/cs_common_match"
-            android:layout_marginTop="@dimen/margin_10dp">
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/wf_margin_16"
+            android:paddingTop="@dimen/margin_6dp"
+            android:visibility="invisible">
 
             <LinearLayout
+                style="@style/cs_common_match_wrap"
+                android:paddingLeft="@dimen/margin_16dp"
+                android:paddingRight="@dimen/margin_16dp">
+
+                <include layout="@layout/view_common_shift_working_month" />
+            </LinearLayout>
+
+            <ScrollView
                 style="@style/cs_common_match"
-                android:orientation="vertical">
-
-                <TextView
-                    style="@style/wl_common_text"
-                    android:text="@string/sw_work_offer_history"
-                    android:paddingLeft="@dimen/margin_16dp"
-                    android:paddingRight="@dimen/margin_16dp"/>
-
-                <trente.asia.android.view.ChiaseListViewNoScroll
-                    android:id="@+id/lst_work_offer"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_10dp"
-                    android:divider="@color/cs_common_divider"
-                    android:dividerHeight="1px"/>
-
-                <TextView
-                    style="@style/wl_common_text"
-                    android:layout_marginTop="@dimen/margin_10dp"
-                    android:text="@string/sw_work_offer_other_history"
-                    android:paddingLeft="@dimen/margin_16dp"
-                    android:paddingRight="@dimen/margin_16dp"/>
+                android:layout_marginTop="@dimen/margin_10dp">
 
                 <LinearLayout
-                    android:id="@+id/lnr_id_filter"
-                    style="@style/wf_common_item_linear2"
-                    android:layout_marginTop="@dimen/margin_10dp"
-                    android:background="@drawable/sw_selectable_row">
+                    style="@style/cs_common_match"
+                    android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/fragment_work_offer_filter_desc"
                         style="@style/wl_common_text"
-                        android:layout_weight="1"
-                        android:text="@string/fragment_offer_filter_other_history_filter"/>
+                        android:paddingLeft="@dimen/margin_16dp"
+                        android:paddingRight="@dimen/margin_16dp"
+                        android:text="@string/sw_work_offer_history" />
 
-                    <ImageView
-                        android:layout_width="wrap_content"
+                    <trente.asia.android.view.ChiaseListViewNoScroll
+                        android:id="@+id/lst_work_offer"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/margin_10dp"
-                        android:src="@drawable/sw_icon_filter"/>
+                        android:layout_marginTop="@dimen/margin_10dp"
+                        android:divider="@color/cs_common_divider"
+                        android:dividerHeight="1px" />
+
+                    <TextView
+                        style="@style/wl_common_text"
+                        android:layout_marginTop="@dimen/margin_10dp"
+                        android:paddingLeft="@dimen/margin_16dp"
+                        android:paddingRight="@dimen/margin_16dp"
+                        android:text="@string/sw_work_offer_other_history" />
+
+                    <LinearLayout
+                        android:id="@+id/lnr_id_filter"
+                        style="@style/wf_common_item_linear2"
+                        android:layout_marginTop="@dimen/margin_10dp"
+                        android:background="@drawable/sw_selectable_row">
+
+                        <TextView
+                            android:id="@+id/txt_filter"
+                            style="@style/wl_common_text"
+                            android:layout_weight="1"
+                            android:text="@string/fragment_offer_filter_other_history_filter" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/margin_10dp"
+                            android:src="@drawable/sw_icon_filter" />
+                    </LinearLayout>
+
+                    <View style="@style/cs_common_divider" />
+
+                    <trente.asia.android.view.ChiaseListViewNoScroll
+                        android:id="@+id/lst_fragment_work_offer_other"
+                        style="@style/cs_common_match_wrap"
+                        android:divider="@color/cs_common_divider"
+                        android:dividerHeight="1px" />
                 </LinearLayout>
+            </ScrollView>
 
-                <View style="@style/cs_common_divider"/>
-
-                <trente.asia.android.view.ChiaseListViewNoScroll
-                    android:id="@+id/lst_fragment_work_offer_other"
-                    style="@style/cs_common_match_wrap"
-                    android:divider="@color/cs_common_divider"
-                    android:dividerHeight="1px"/>
-            </LinearLayout>
-        </ScrollView>
-
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+</layout>
