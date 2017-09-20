@@ -46,7 +46,7 @@ import trente.asia.welfare.adr.utils.WelfareFormatUtil;
  * Created by viet on 11/25/2016.
  */
 
-public class WorkOfferEditFragment extends AbstractSwFragment{
+public class VacationEditFragment extends AbstractSwFragment{
 
 	private ChiaseListDialog			spnType;
 	private DatePickerDialog			datePickerDialogStart;
@@ -116,12 +116,12 @@ public class WorkOfferEditFragment extends AbstractSwFragment{
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
-		requestLoad(SwConst.API_OFFER_DETAIL, jsonObject, true);
+		requestLoad(SwConst.API_VACATION_DETAIL, jsonObject, true);
 	}
 
 	@Override
 	protected void successLoad(JSONObject response, String url){
-		if(SwConst.API_OFFER_DETAIL.equals(url)){
+		if(SwConst.API_VACATION_DETAIL.equals(url)){
 			WorkOfferModelHolder holder = CCJsonUtil.convertToModel(CCStringUtil.toString(response), WorkOfferModelHolder.class);
 			buildDatePickerDialogs(holder.offer);
 			if(!CCStringUtil.isEmpty(activeOfferId)){

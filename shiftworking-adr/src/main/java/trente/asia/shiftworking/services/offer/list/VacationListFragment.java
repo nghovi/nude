@@ -23,12 +23,12 @@ import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import trente.asia.shiftworking.R;
 import trente.asia.shiftworking.common.defines.SwConst;
+import trente.asia.shiftworking.common.dialog.SwTimePicker;
 import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
-import trente.asia.shiftworking.services.offer.detail.WorkOfferDetailFragment;
-import trente.asia.shiftworking.services.offer.edit.WorkOfferEditFragment;
-import trente.asia.shiftworking.services.offer.filter.WorkOfferFilterFragment;
+import trente.asia.shiftworking.services.offer.detail.VacationDetailFragment;
+import trente.asia.shiftworking.services.offer.filter.VacationFilterFragment;
 import trente.asia.shiftworking.services.offer.model.WorkOfferModel;
-import trente.asia.shiftworking.services.offer.view.WorkOfferAdapter;
+import trente.asia.shiftworking.services.offer.adapter.VacationAdapter;
 import trente.asia.shiftworking.services.shiftworking.view.CommonMonthView;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.models.ApiObjectModel;
@@ -37,7 +37,7 @@ import trente.asia.welfare.adr.utils.WelfareUtil;
 
 public class VacationListFragment extends AbstractSwFragment{
 
-	WorkOfferAdapter				adapter;
+	VacationAdapter					adapter;
 	private List<WorkOfferModel>	offers;
 	private ListView				mLstOffer;
 	private CommonMonthView			monthView;
@@ -47,7 +47,7 @@ public class VacationListFragment extends AbstractSwFragment{
 	private Map<String, String>		offerStatusMaster;
 	private Map<String, String>		offerDepts;
 	private List<WorkOfferModel>	otherOffers;
-	private WorkOfferAdapter		adapterOther;
+	private VacationAdapter			adapterOther;
 	private ListView				mLstOfferOther;
 
 	@Override
@@ -75,19 +75,18 @@ public class VacationListFragment extends AbstractSwFragment{
 		super.onActivityCreated(savedInstanceState);
 		if(filters != null){
 			String filterType = getString(R.string.chiase_common_all);
-			if(filters.containsKey(WorkOfferFilterFragment.TYPE)){
-				filterType = offerTypesMaster.get(filters.get(WorkOfferFilterFragment.TYPE));
+			if(filters.containsKey(VacationFilterFragment.TYPE)){
+				filterType = offerTypesMaster.get(filters.get(VacationFilterFragment.TYPE));
 			}
 			String filterStatus = getString(R.string.chiase_common_all);
-			if(filters.containsKey(WorkOfferFilterFragment.STATUS)){
-				filterStatus = offerStatusMaster.get(filters.get(WorkOfferFilterFragment.STATUS));
+			if(filters.containsKey(VacationFilterFragment.STATUS)){
+				filterStatus = offerStatusMaster.get(filters.get(VacationFilterFragment.STATUS));
 			}
 			String filterDept = getString(R.string.chiase_common_all);
-			if(filters.containsKey(WorkOfferFilterFragment.DEPT)){
-				filterDept = offerDepts.get(filters.get(WorkOfferFilterFragment.DEPT));
+			if(filters.containsKey(VacationFilterFragment.DEPT)){
+				filterDept = offerDepts.get(filters.get(VacationFilterFragment.DEPT));
 			}
-			String filterSickAbsent = WorkOfferFilterFragment.sickAbsentFilters
-					.get(filters.get(WorkOfferFilterFragment.SICK_ABSENT));
+			String filterSickAbsent = VacationFilterFragment.sickAbsentFilters.get(filters.get(VacationFilterFragment.SICK_ABSENT));
 			String filtersDesc = filterType + " - " + filterStatus + " - " + filterDept + " - " + filterSickAbsent;
 			txtFilterDesc.setText(getString(R.string.sw_work_offer_list_filter, filtersDesc));
 		}else{
@@ -129,7 +128,7 @@ public class VacationListFragment extends AbstractSwFragment{
 	}
 
 	private void gotoWorkOfferDetail(WorkOfferModel offer, String execType){
-		WorkOfferDetailFragment fragment = new WorkOfferDetailFragment();
+		VacationDetailFragment fragment = new VacationDetailFragment();
 		fragment.setActiveOfferId(offer.key);
 		fragment.setExecType(execType);
 		gotoFragment(fragment);
@@ -141,18 +140,18 @@ public class VacationListFragment extends AbstractSwFragment{
 		try{
 			jsonObject.put("targetUserId", prefAccUtil.getUserPref().key);
 			if(filters != null){
-				if(filters.containsKey(WorkOfferFilterFragment.DEPT)){
-					jsonObject.put("offerDept", filters.get(WorkOfferFilterFragment.DEPT));
+				if(filters.containsKey(VacationFilterFragment.DEPT)){
+					jsonObject.put("offerDept", filters.get(VacationFilterFragment.DEPT));
 				}
-				if(filters.containsKey(WorkOfferFilterFragment.STATUS)){
-					jsonObject.put("offerStatus", filters.get(WorkOfferFilterFragment.STATUS));
+				if(filters.containsKey(VacationFilterFragment.STATUS)){
+					jsonObject.put("offerStatus", filters.get(VacationFilterFragment.STATUS));
 				}
-				if(filters.containsKey(WorkOfferFilterFragment.TYPE)){
-					jsonObject.put("offerType", filters.get(WorkOfferFilterFragment.TYPE));
+				if(filters.containsKey(VacationFilterFragment.TYPE)){
+					jsonObject.put("offerType", filters.get(VacationFilterFragment.TYPE));
 				}
 
-				if(filters.containsKey(WorkOfferFilterFragment.SICK_ABSENT)){
-					String sickAbsentFilter = filters.get(WorkOfferFilterFragment.SICK_ABSENT);
+				if(filters.containsKey(VacationFilterFragment.SICK_ABSENT)){
+					String sickAbsentFilter = filters.get(VacationFilterFragment.SICK_ABSENT);
 					if(sickAbsentFilter != null && !sickAbsentFilter.equals("All")){
 						jsonObject.put("sickAbsent", sickAbsentFilter);
 					}
@@ -162,14 +161,14 @@ public class VacationListFragment extends AbstractSwFragment{
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
-		requestLoad(SwConst.API_OFFER_LIST, jsonObject, true);
+		requestLoad(SwConst.API_VACATION_LIST, jsonObject, true);
 	}
 
 	@Override
 	protected void successLoad(JSONObject response, String url){
-		if(SwConst.API_OFFER_LIST.equals(url)){
-			offers = CCJsonUtil.convertToModelList(response.optString("myOffers"), WorkOfferModel.class);
-			otherOffers = CCJsonUtil.convertToModelList(response.optString("otherOffers"), WorkOfferModel.class);
+		if(SwConst.API_VACATION_LIST.equals(url)){
+			offers = CCJsonUtil.convertToModelList(response.optString("myVacationOffers"), WorkOfferModel.class);
+			otherOffers = CCJsonUtil.convertToModelList(response.optString("otherVacationOffers"), WorkOfferModel.class);
 			offerTypesMaster = buildOfferTypeMaster(activity, response);
 			offerStatusMaster = buildOfferStatusMaster(response);
 			offerDepts = buildOfferDepts(activity, response);
@@ -179,10 +178,10 @@ public class VacationListFragment extends AbstractSwFragment{
 				txtFilterDesc.setText(getString(R.string.sw_work_offer_list_filter, filtersDesc));
 			}
 
-			adapterOther = new WorkOfferAdapter(activity, otherOffers);
+			adapterOther = new VacationAdapter(activity, otherOffers);
 			mLstOfferOther.setAdapter(adapterOther);
 
-			adapter = new WorkOfferAdapter(activity, offers);
+			adapter = new VacationAdapter(activity, offers);
 			mLstOffer.setAdapter(adapter);
 		}else{
 			super.successLoad(response, url);
@@ -201,7 +200,7 @@ public class VacationListFragment extends AbstractSwFragment{
 	}
 
 	public Map<String, String> buildOfferTypeMaster(Context context, JSONObject response){
-		List<ApiObjectModel> lstType = CCJsonUtil.convertToModelList(response.optString("offerTypeList"), ApiObjectModel.class);
+		List<ApiObjectModel> lstType = CCJsonUtil.convertToModelList(response.optString("vacationList"), ApiObjectModel.class);
 		lstType.add(0, new ApiObjectModel(CCConst.NONE, getString(R.string.chiase_common_all)));
 		return WelfareFormatUtil.convertList2Map(lstType);
 	}
@@ -223,6 +222,7 @@ public class VacationListFragment extends AbstractSwFragment{
 		switch(v.getId()){
 		case R.id.lnr_id_filter:
 			gotoOfferFilterFragment();
+
 			break;
 		case R.id.btn_id_back:
 			monthView.workMonth = WelfareUtil.addMonth(monthView.workMonth, -1);
@@ -242,19 +242,19 @@ public class VacationListFragment extends AbstractSwFragment{
 	}
 
 	private void gotoOfferFilterFragment(){
-		WorkOfferFilterFragment fragment = new WorkOfferFilterFragment();
+		VacationFilterFragment fragment = new VacationFilterFragment();
 		fragment.setOfferTypeStatusMaster(offerTypesMaster, offerStatusMaster);
 		fragment.setFiltersAndDepts(filters, this.offerDepts);
 		gotoFragment(fragment);
 	}
 
 	@Override
-	public void onDestroyView() {
+	public void onDestroyView(){
 		super.onDestroyView();
 		setmIsNewFragment(true);
 	}
 
-	private void log(String msg) {
+	private void log(String msg){
 		Log.e("VacationList", msg);
 	}
 }

@@ -65,8 +65,8 @@ public class SwConst{
 	public static final String	API_TRANSIT_DELETE				= "/api/sw/transit/delete";
 	public static final String	API_WORK_USERS					= "/api/sw/work/users";
 	public static final String	API_WORK_HISTORY				= "/api/sw/work/history";
-	public static final String	API_OFFER_LIST					= "/api/sw/offer/list";
-	public static final String	API_OFFER_DETAIL				= "/api/sw/offer/detail";
+	public static final String	API_VACATION_LIST				= "/api/sw/vacation/list";
+	public static final String	API_VACATION_DETAIL				= "/api/sw/vacation/detail";
 	public static final String	API_OFFER_UPDATE				= "/api/sw/offer/update";
 	public static final String	API_OFFER_APPROVE				= "/api/sw/offer/approve";
 	public static final String	API_OFFER_DELETE				= "/api/sw/offer/delete";

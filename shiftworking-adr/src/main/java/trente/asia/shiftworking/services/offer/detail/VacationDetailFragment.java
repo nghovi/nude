@@ -32,15 +32,15 @@ import trente.asia.shiftworking.common.activities.MainActivity;
 import trente.asia.shiftworking.common.defines.SwConst;
 import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
 import trente.asia.shiftworking.databinding.FragmentOfferDetailBinding;
-import trente.asia.shiftworking.services.offer.edit.WorkOfferEditFragment;
+import trente.asia.shiftworking.services.offer.edit.VacationEditFragment;
 import trente.asia.shiftworking.services.offer.list.VacationListFragment;
 import trente.asia.shiftworking.services.offer.model.WorkOfferModel;
-import trente.asia.shiftworking.services.offer.view.ApproveHistoryAdapter;
+import trente.asia.shiftworking.services.offer.adapter.VacationApproveHistoryAdapter;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.models.ApiObjectModel;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 
-public class WorkOfferDetailFragment extends AbstractSwFragment{
+public class VacationDetailFragment extends AbstractSwFragment{
 
 	private WorkOfferModel				offer;
 	private Map<String, String>			targetUserModels	= new HashMap<String, String>();
@@ -100,12 +100,12 @@ public class WorkOfferDetailFragment extends AbstractSwFragment{
 			e.printStackTrace();
 		}
 
-		requestLoad(SwConst.API_OFFER_DETAIL, jsonObject, true);
+		requestLoad(SwConst.API_VACATION_DETAIL, jsonObject, true);
 	}
 
 	@Override
 	protected void successLoad(JSONObject response, String url){
-		if(SwConst.API_OFFER_DETAIL.equals(url)){
+		if(SwConst.API_VACATION_DETAIL.equals(url)){
 			offer = CCJsonUtil.convertToModel(response.optString("offer"), WorkOfferModel.class);
 			setWorkOffer(offer);
 
@@ -224,7 +224,7 @@ public class WorkOfferDetailFragment extends AbstractSwFragment{
 		if(offer.userId.equals(myself.key)){
 			getView().findViewById(R.id.lnr_fragment_offer_detail_approve_history).setVisibility(View.VISIBLE);
 			ChiaseListViewNoScroll lstApproveHistory = (ChiaseListViewNoScroll)getView().findViewById(R.id.lst_fragment_offer_detail_approve_history);
-			ApproveHistoryAdapter adapter = new ApproveHistoryAdapter(activity, offer.listHistories);
+			VacationApproveHistoryAdapter adapter = new VacationApproveHistoryAdapter(activity, offer.listHistories);
 			lstApproveHistory.setAdapter(adapter);
 		}else{
 			getView().findViewById(R.id.lnr_fragment_offer_detail_approve_history).setVisibility(View.GONE);
@@ -248,7 +248,7 @@ public class WorkOfferDetailFragment extends AbstractSwFragment{
 	}
 
 	private void gotoWorkOfferEditFragment(){
-		WorkOfferEditFragment fragment = new WorkOfferEditFragment();
+		VacationEditFragment fragment = new VacationEditFragment();
 		fragment.setActiveOfferId(offer.key);
 		gotoFragment(fragment);
 	}

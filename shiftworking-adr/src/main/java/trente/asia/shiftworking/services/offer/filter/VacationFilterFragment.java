@@ -17,7 +17,7 @@ import trente.asia.shiftworking.R;
 import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
 import trente.asia.shiftworking.databinding.FragmentOfferFilterBinding;
 
-public class WorkOfferFilterFragment extends AbstractSwFragment {
+public class VacationFilterFragment extends AbstractSwFragment {
 
 	public static final String TYPE = "TYPE";
 	public static final String STATUS = "STATUS";

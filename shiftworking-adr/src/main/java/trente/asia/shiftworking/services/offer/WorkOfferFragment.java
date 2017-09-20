@@ -13,7 +13,7 @@ import trente.asia.shiftworking.R;
 import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
 import trente.asia.shiftworking.databinding.FragmentWorkOfferBinding;
 import trente.asia.shiftworking.services.offer.adapter.WorkOfferFragmentAdapter;
-import trente.asia.shiftworking.services.offer.edit.WorkOfferEditFragment;
+import trente.asia.shiftworking.services.offer.edit.VacationEditFragment;
 import trente.asia.shiftworking.services.offer.list.HolidayWorkingListFragment;
 import trente.asia.shiftworking.services.offer.list.OvertimeListFragment;
 import trente.asia.shiftworking.services.offer.list.VacationListFragment;
@@ -88,7 +88,7 @@ public class WorkOfferFragment extends AbstractSwFragment implements ViewPager.O
     }
 
     private void gotoAddVacationFragment(){
-        WorkOfferEditFragment fragment = new WorkOfferEditFragment();
+        VacationEditFragment fragment = new VacationEditFragment();
         gotoFragment(fragment);
     }
 

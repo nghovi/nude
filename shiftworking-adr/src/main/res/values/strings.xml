@@ -127,4 +127,5 @@
     <string name="sw_vacation">Vacation</string>
     <string name="sw_overtime">Overtime</string>
     <string name="sw_holiday_working">Holiday Working</string>
+    <string name="sw_time_picker">Time picker</string>
 </resources>
