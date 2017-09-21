@@ -102,13 +102,13 @@
     <string name="fragment_offer_filter_title">絞り込み</string>
     <string name="fragment_offer_filter_clear">クリア</string>
     <string name="fragment_offer_filter_update">更新</string>
-    <string name="fragment_offer_detail_header">勤務申請詳細</string>
-    <string name="fragment_offer_detail_start_date">申請開始日</string>
+    <string name="fragment_offer_detail_header">申請詳細</string>
+    <string name="fragment_offer_detail_start_date">休暇</string>
     <string name="fragment_offer_detail_start_time">申請開始時間</string>
     <string name="fragment_offer_detail_end_date">申請終了日</string>
     <string name="fragment_offer_detail_end_time">申請終了時間</string>
     <string name="fragment_offer_detail_note">ノート</string>
-    <string name="fragment_offer_detail_approve_history">勤務申請履歴</string>
+    <string name="fragment_offer_detail_offer_status">申請状況</string>
     <string name="fragment_offer_detail_approve_comment">承認コメント</string>
     <string name="fragment_offer_edit_header">勤務申請エントリー</string>
     <string name="sw_work_offer_other_history">みんなの勤務申請履歴</string>
@@ -122,5 +122,16 @@
     <string name="sw_work_offer_list_filter">絞り込み: %1$s</string>
     <string name="dlg_checkin_types_title">Change work type</string>
     <string name="txt_dialog_checkin_types_guide">Choose check in type</string>
-    <string name="fragment_offer_edit_offer_user">Request user</string>
+    <string name="fragment_offer_edit_offer_user">申請者</string>
+    <string name="sw_overtime_offer">残業申請</string>
+    <string name="sw_other_overtime_offer">みんなの残業申請</string>
+    <string name="sw_offer">申請</string>
+    <string name="sw_holiday_working_offer">休出申請</string>
+    <string name="sw_other_holiday_working_offer">みんなの休出申請</string>
+    <string name="fragment_overtime_detail_header">残業申請</string>
+    <string name="fragment_overtime_detail_expected_date">残業希望日</string>
+    <string name="fragment_overtime_detail_expected_time">残業希望時間</string>
+    <string name="fragment_overtime_detail_reason">理由</string>
+    <string name="fragment_overtime_detail_type_early">早出</string>
+    <string name="fragment_overtime_detail_type_overtime">残業</string>
 </resources>

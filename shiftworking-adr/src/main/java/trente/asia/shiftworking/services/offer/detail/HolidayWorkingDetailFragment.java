@@ -32,15 +32,15 @@ import trente.asia.shiftworking.common.activities.MainActivity;
 import trente.asia.shiftworking.common.defines.SwConst;
 import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
 import trente.asia.shiftworking.databinding.FragmentOfferDetailBinding;
+import trente.asia.shiftworking.services.offer.adapter.VacationApproveHistoryAdapter;
 import trente.asia.shiftworking.services.offer.edit.VacationEditFragment;
 import trente.asia.shiftworking.services.offer.list.VacationListFragment;
 import trente.asia.shiftworking.services.offer.model.WorkOfferModel;
-import trente.asia.shiftworking.services.offer.adapter.VacationApproveHistoryAdapter;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.models.ApiObjectModel;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 
-public class VacationDetailFragment extends AbstractSwFragment{
+public class HolidayWorkingDetailFragment extends AbstractSwFragment{
 
 	private WorkOfferModel				offer;
 	private Map<String, String>			targetUserModels	= new HashMap<String, String>();
@@ -100,13 +100,13 @@ public class VacationDetailFragment extends AbstractSwFragment{
 			e.printStackTrace();
 		}
 
-		requestLoad(SwConst.API_VACATION_DETAIL, jsonObject, true);
+		requestLoad(SwConst.API_HOLIDAY_WORKING_DETAIL, jsonObject, true);
 	}
 
 	@Override
 	protected void successLoad(JSONObject response, String url){
-		if(SwConst.API_VACATION_DETAIL.equals(url)){
-			offer = CCJsonUtil.convertToModel(response.optString("offer"), WorkOfferModel.class);
+		if(SwConst.API_HOLIDAY_WORKING_DETAIL.equals(url)){
+			offer = CCJsonUtil.convertToModel(response.optString("holidayWork"), WorkOfferModel.class);
 			setWorkOffer(offer);
 
 			offerPermission = response.optString("permission");
@@ -158,37 +158,11 @@ public class VacationDetailFragment extends AbstractSwFragment{
 			e.printStackTrace();
 		}
 
-		if(!offerModel.userId.equals(myself.key)){
-			getView().findViewById(R.id.lnr_frament_offer_detail_status).setVisibility(View.GONE);
-		}else{
-			getView().findViewById(R.id.lnr_frament_offer_detail_status).setVisibility(View.VISIBLE);
-			((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_offer_status)).setText(offerModel.offerStatusName);
-		}
-
 		((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_offer_user)).setText(offerModel.userName);
 		((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_offer_type)).setText(offerModel.offerTypeName);
 		((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_start_date)).setText(offerModel.startDateString);
 		((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_end_date)).setText(offerModel.endDateString);
 		((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_note)).setText(offerModel.note);
-
-		if(WorkOfferModel.OFFER_TYPE_PAID_VACATION_ALL.equals(offerModel.offerType) || WorkOfferModel.OFFER_TYPE_PAID_VACATION_MORNING.equals(offerModel.offerType) || WorkOfferModel.OFFER_TYPE_PAID_VACATION_AFTERNOON.equals(offerModel.offerType) || WorkOfferModel.OFFER_TYPE_COMPENSATORY_HOLIDAY.equals(offerModel.offerType)){
-			binding.lnrSickAbsent.setVisibility(View.VISIBLE);
-			binding.txtSickAbsent.setText(offerModel.sickAbsent ? "Yes" : "No");
-		}else{
-			binding.lnrSickAbsent.setVisibility(View.INVISIBLE);
-		}
-
-		if(WorkOfferModel.OFFER_TYPE_HOLIDAY_WORKING.equals(offer.offerType) || WorkOfferModel.OFFER_TYPE_OVERTIME.equals(offerModel.offerType) || WorkOfferModel.OFFER_TYPE_SHORT_TIME.equals(offerModel.offerType)){
-			((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_start_time)).setText(offerModel.startTimeString);
-		}else{
-			getView().findViewById(R.id.lnr_start_time).setVisibility(View.GONE);
-		}
-
-		if(WorkOfferModel.OFFER_TYPE_HOLIDAY_WORKING.equals(offer.offerType) || WorkOfferModel.OFFER_TYPE_OVERTIME.equals(offerModel.offerType) || WorkOfferModel.OFFER_TYPE_SHORT_TIME.equals(offerModel.offerType)){
-			((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_end_time)).setText(offerModel.endTimeString);
-		}else{
-			getView().findViewById(R.id.lnr_end_time).setVisibility(View.GONE);
-		}
 	}
 
 	private void buildWorkOfferDetail(){
@@ -210,6 +184,7 @@ public class VacationDetailFragment extends AbstractSwFragment{
 		boolean permissionApprove = SwConst.OFFER_CAN_APPROVE.equals(offerPermission);
 		LinearLayout lnrApproveArea = (LinearLayout)getView().findViewById(R.id.lnr_id_approve_area);
 		if(permissionApprove){
+
 			lnrApproveArea.setVisibility(View.VISIBLE);
 			Button btnReject = (Button)getView().findViewById(R.id.btn_fragment_offer_detail_reject);
 			Button btnApprove = (Button)getView().findViewById(R.id.btn_fragment_offer_detail_approve);

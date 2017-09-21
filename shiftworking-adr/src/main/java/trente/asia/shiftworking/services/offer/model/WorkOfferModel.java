@@ -25,6 +25,7 @@ public class WorkOfferModel{
 	public String				userName;
 	public String				offerType;
 	public String				offerTypeName;
+	public String				overtimeType;
 	public String				startDateString;
 	public String				startTimeString;
 	public String				endDateString;

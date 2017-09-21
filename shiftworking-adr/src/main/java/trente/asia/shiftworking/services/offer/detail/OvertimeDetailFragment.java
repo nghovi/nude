@@ -32,15 +32,16 @@ import trente.asia.shiftworking.common.activities.MainActivity;
 import trente.asia.shiftworking.common.defines.SwConst;
 import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
 import trente.asia.shiftworking.databinding.FragmentOfferDetailBinding;
-import trente.asia.shiftworking.services.offer.edit.VacationEditFragment;
+import trente.asia.shiftworking.databinding.FragmentOvertimeDetailBinding;
+import trente.asia.shiftworking.services.offer.adapter.VacationApproveHistoryAdapter;
+import trente.asia.shiftworking.services.offer.edit.OvertimeEditFragment;
 import trente.asia.shiftworking.services.offer.list.VacationListFragment;
 import trente.asia.shiftworking.services.offer.model.WorkOfferModel;
-import trente.asia.shiftworking.services.offer.adapter.VacationApproveHistoryAdapter;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.models.ApiObjectModel;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 
-public class VacationDetailFragment extends AbstractSwFragment{
+public class OvertimeDetailFragment extends AbstractSwFragment{
 
 	private WorkOfferModel				offer;
 	private Map<String, String>			targetUserModels	= new HashMap<String, String>();
@@ -52,7 +53,7 @@ public class VacationDetailFragment extends AbstractSwFragment{
 	private EditText					edtComment;
 	private String						activeOfferId;
 	private String						execType;
-	private FragmentOfferDetailBinding	binding;
+	private FragmentOvertimeDetailBinding binding;
 
 	public void setActiveOfferId(String activeOfferId){
 		this.activeOfferId = activeOfferId;
@@ -65,7 +66,7 @@ public class VacationDetailFragment extends AbstractSwFragment{
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 		if(mRootView == null){
-			binding = DataBindingUtil.inflate(inflater, R.layout.fragment_offer_detail, container, false);
+			binding = DataBindingUtil.inflate(inflater, R.layout.fragment_overtime_detail, container, false);
 			mRootView = binding.getRoot();
 		}
 		return mRootView;
@@ -100,13 +101,13 @@ public class VacationDetailFragment extends AbstractSwFragment{
 			e.printStackTrace();
 		}
 
-		requestLoad(SwConst.API_VACATION_DETAIL, jsonObject, true);
+		requestLoad(SwConst.API_OVERTIME_DETAIL, jsonObject, true);
 	}
 
 	@Override
 	protected void successLoad(JSONObject response, String url){
-		if(SwConst.API_VACATION_DETAIL.equals(url)){
-			offer = CCJsonUtil.convertToModel(response.optString("offer"), WorkOfferModel.class);
+		if(SwConst.API_OVERTIME_DETAIL.equals(url)){
+			offer = CCJsonUtil.convertToModel(response.optString("overtime"), WorkOfferModel.class);
 			setWorkOffer(offer);
 
 			offerPermission = response.optString("permission");
@@ -158,37 +159,18 @@ public class VacationDetailFragment extends AbstractSwFragment{
 			e.printStackTrace();
 		}
 
-		if(!offerModel.userId.equals(myself.key)){
-			getView().findViewById(R.id.lnr_frament_offer_detail_status).setVisibility(View.GONE);
-		}else{
-			getView().findViewById(R.id.lnr_frament_offer_detail_status).setVisibility(View.VISIBLE);
-			((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_offer_status)).setText(offerModel.offerStatusName);
-		}
 
-		((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_offer_user)).setText(offerModel.userName);
-		((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_offer_type)).setText(offerModel.offerTypeName);
-		((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_start_date)).setText(offerModel.startDateString);
-		((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_end_date)).setText(offerModel.endDateString);
-		((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_note)).setText(offerModel.note);
+		((TextView)getView().findViewById(R.id.txt_fragment_overtime_detail_offer_user)).setText(offerModel.userName);
+        if ("E".equals(offerModel.overtimeType)) {
+            ((TextView) getView().findViewById(R.id.txt_fragment_overtime_detail_offer_type)).setText(getResources().getString(R.string.fragment_overtime_detail_type_early));
+        }else{
+            ((TextView) getView().findViewById(R.id.txt_fragment_overtime_detail_offer_type)).setText(getResources().getString(R.string.fragment_overtime_detail_type_overtime));
+        }
+		((TextView)getView().findViewById(R.id.txt_fragment_overtime_detail_start_date)).setText(offerModel.startDateString);
+		((TextView)getView().findViewById(R.id.txt_fragment_overtime_detail_start_time)).setText(offerModel.startTimeString + "-" + offerModel.endTimeString);
+//		((TextView)getView().findViewById(R.id.txt_fragment_overtime_detail_end_date)).setText(offerModel.endDateString);
+		((TextView)getView().findViewById(R.id.txt_fragment_overtime_detail_reason)).setText(offerModel.note);
 
-		if(WorkOfferModel.OFFER_TYPE_PAID_VACATION_ALL.equals(offerModel.offerType) || WorkOfferModel.OFFER_TYPE_PAID_VACATION_MORNING.equals(offerModel.offerType) || WorkOfferModel.OFFER_TYPE_PAID_VACATION_AFTERNOON.equals(offerModel.offerType) || WorkOfferModel.OFFER_TYPE_COMPENSATORY_HOLIDAY.equals(offerModel.offerType)){
-			binding.lnrSickAbsent.setVisibility(View.VISIBLE);
-			binding.txtSickAbsent.setText(offerModel.sickAbsent ? "Yes" : "No");
-		}else{
-			binding.lnrSickAbsent.setVisibility(View.INVISIBLE);
-		}
-
-		if(WorkOfferModel.OFFER_TYPE_HOLIDAY_WORKING.equals(offer.offerType) || WorkOfferModel.OFFER_TYPE_OVERTIME.equals(offerModel.offerType) || WorkOfferModel.OFFER_TYPE_SHORT_TIME.equals(offerModel.offerType)){
-			((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_start_time)).setText(offerModel.startTimeString);
-		}else{
-			getView().findViewById(R.id.lnr_start_time).setVisibility(View.GONE);
-		}
-
-		if(WorkOfferModel.OFFER_TYPE_HOLIDAY_WORKING.equals(offer.offerType) || WorkOfferModel.OFFER_TYPE_OVERTIME.equals(offerModel.offerType) || WorkOfferModel.OFFER_TYPE_SHORT_TIME.equals(offerModel.offerType)){
-			((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_end_time)).setText(offerModel.endTimeString);
-		}else{
-			getView().findViewById(R.id.lnr_end_time).setVisibility(View.GONE);
-		}
 	}
 
 	private void buildWorkOfferDetail(){
@@ -222,12 +204,12 @@ public class VacationDetailFragment extends AbstractSwFragment{
 
 	private void buildWorkOfferApproveHistory(){
 		if(offer.userId.equals(myself.key)){
-			getView().findViewById(R.id.lnr_fragment_offer_detail_approve_history).setVisibility(View.VISIBLE);
+			getView().findViewById(R.id.lnr_fragment_overtime_detail_offer_status).setVisibility(View.VISIBLE);
 			ChiaseListViewNoScroll lstApproveHistory = (ChiaseListViewNoScroll)getView().findViewById(R.id.lst_fragment_offer_detail_offer_status);
 			VacationApproveHistoryAdapter adapter = new VacationApproveHistoryAdapter(activity, offer.listHistories);
 			lstApproveHistory.setAdapter(adapter);
 		}else{
-			getView().findViewById(R.id.lnr_fragment_offer_detail_approve_history).setVisibility(View.GONE);
+			getView().findViewById(R.id.lnr_fragment_overtime_detail_offer_status).setVisibility(View.GONE);
 		}
 	}
 
@@ -248,7 +230,7 @@ public class VacationDetailFragment extends AbstractSwFragment{
 	}
 
 	private void gotoWorkOfferEditFragment(){
-		VacationEditFragment fragment = new VacationEditFragment();
+		OvertimeEditFragment fragment = new OvertimeEditFragment();
 		fragment.setActiveOfferId(offer.key);
 		gotoFragment(fragment);
 	}

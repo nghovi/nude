@@ -25,25 +25,7 @@
                     android:layout_marginBottom="@dimen/margin_10dp"
                     android:paddingLeft="@dimen/margin_16dp"
                     android:paddingRight="@dimen/margin_16dp"
-                    android:text="@string/fragment_offer_detail_header" />
-
-                <View style="@style/cs_common_divider" />
-
-                <LinearLayout
-                    android:id="@+id/lnr_frament_offer_detail_status"
-                    style="@style/wf_common_item_linear2">
-
-                    <TextView
-                        style="@style/wl_common_text"
-                        android:layout_width="wrap_content"
-                        android:text="@string/fragment_work_offer_edit_offer_status" />
-
-                    <trente.asia.android.view.ChiaseTextView
-                        android:id="@+id/txt_fragment_offer_detail_offer_status"
-                        style="@style/wl_common_edit_text2"
-                        android:layout_marginStart="@dimen/margin_10dp"
-                        custom:mName="offerType" />
-                </LinearLayout>
+                    android:text="@string/fragment_overtime_detail_header" />
 
                 <View style="@style/cs_common_divider" />
 
@@ -55,7 +37,7 @@
                         android:text="@string/fragment_offer_edit_offer_user" />
 
                     <trente.asia.android.view.ChiaseTextView
-                        android:id="@+id/txt_fragment_offer_detail_offer_user"
+                        android:id="@+id/txt_fragment_overtime_detail_offer_user"
                         style="@style/wl_common_edit_text2"
                         android:layout_marginStart="@dimen/margin_10dp"
                         custom:mName="offerUser" />
@@ -71,10 +53,10 @@
                         android:text="@string/fragment_offer_edit_offer_type" />
 
                     <trente.asia.android.view.ChiaseTextView
-                        android:id="@+id/txt_fragment_offer_detail_offer_type"
+                        android:id="@+id/txt_fragment_overtime_detail_offer_type"
                         style="@style/wl_common_edit_text2"
                         android:layout_marginStart="@dimen/margin_10dp"
-                        custom:mName="offerType" />
+                        custom:mName="overtimeType" />
                 </LinearLayout>
 
                 <View style="@style/cs_common_divider" />
@@ -84,10 +66,10 @@
                     <TextView
                         style="@style/wl_common_text"
                         android:layout_width="wrap_content"
-                        android:text="@string/fragment_offer_detail_start_date" />
+                        android:text="@string/fragment_overtime_detail_expected_date" />
 
                     <trente.asia.android.view.ChiaseTextView
-                        android:id="@+id/txt_fragment_offer_detail_start_date"
+                        android:id="@+id/txt_fragment_overtime_detail_start_date"
                         style="@style/wl_common_edit_text2"
                         android:layout_marginStart="@dimen/margin_10dp"
                         custom:mName="startDateString" />
@@ -95,87 +77,20 @@
 
                 <View style="@style/cs_common_divider" />
 
-                <LinearLayout
-                    android:id="@+id/lnr_start_time"
-                    style="@style/cs_common_match_wrap"
-                    android:orientation="vertical">
-
-                    <LinearLayout style="@style/wf_common_item_linear2">
-
-                        <TextView
-                            style="@style/wl_common_text"
-                            android:layout_width="wrap_content"
-                            android:text="@string/fragment_offer_detail_start_time" />
-
-                        <trente.asia.android.view.ChiaseTextView
-                            android:id="@+id/txt_fragment_offer_detail_start_time"
-                            style="@style/wl_common_edit_text2"
-                            android:layout_marginStart="@dimen/margin_10dp"
-                            custom:mName="startTimeString" />
-                    </LinearLayout>
-
-                    <View style="@style/cs_common_divider" />
-                </LinearLayout>
-
                 <LinearLayout style="@style/wf_common_item_linear2">
 
                     <TextView
                         style="@style/wl_common_text"
                         android:layout_width="wrap_content"
-                        android:text="@string/fragment_offer_detail_end_date" />
+                        android:text="@string/fragment_overtime_detail_expected_time" />
 
                     <trente.asia.android.view.ChiaseTextView
-                        android:id="@+id/txt_fragment_offer_detail_end_date"
+                        android:id="@+id/txt_fragment_overtime_detail_start_time"
                         style="@style/wl_common_edit_text2"
                         android:layout_marginStart="@dimen/margin_10dp"
-                        custom:mName="endDateString" />
+                        custom:mName="startTimeString" />
                 </LinearLayout>
 
-                <View style="@style/cs_common_divider" />
-
-                <LinearLayout
-                    android:id="@+id/lnr_end_time"
-                    style="@style/cs_common_match_wrap"
-                    android:orientation="vertical">
-
-                    <LinearLayout style="@style/wf_common_item_linear2">
-
-                        <TextView
-                            style="@style/wl_common_text"
-                            android:layout_width="wrap_content"
-                            android:text="@string/fragment_offer_detail_end_time" />
-
-                        <trente.asia.android.view.ChiaseTextView
-                            android:id="@+id/txt_fragment_offer_detail_end_time"
-                            style="@style/wl_common_edit_text2"
-                            android:layout_marginStart="@dimen/margin_10dp"
-                            custom:mName="endTimeString" />
-                    </LinearLayout>
-
-                    <View style="@style/cs_common_divider" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/lnr_sick_absent"
-                    style="@style/cs_common_match_wrap"
-                    android:orientation="vertical">
-
-                    <LinearLayout style="@style/wf_common_item_linear2">
-
-                        <TextView
-                            style="@style/wl_common_text"
-                            android:layout_width="wrap_content"
-                            android:text="@string/fragment_offer_detail_sick_absent" />
-
-                        <trente.asia.android.view.ChiaseTextView
-                            android:id="@+id/txt_sick_absent"
-                            style="@style/wl_common_edit_text2"
-                            android:layout_marginStart="@dimen/margin_10dp"
-                            android:text="No" />
-                    </LinearLayout>
-
-                    <View style="@style/cs_common_divider" />
-                </LinearLayout>
 
                 <LinearLayout
                     style="@style/cs_common_match"
@@ -188,14 +103,14 @@
                         android:paddingLeft="@dimen/margin_16dp"
                         android:paddingRight="@dimen/margin_16dp"
                         android:paddingTop="@dimen/margin_10dp"
-                        android:text="@string/fragment_offer_detail_note" />
+                        android:text="@string/fragment_overtime_detail_reason" />
 
                     <View style="@style/cs_common_divider" />
 
                     <LinearLayout style="@style/wf_common_item_linear2">
 
                         <trente.asia.android.view.ChiaseTextView
-                            android:id="@+id/txt_fragment_offer_detail_note"
+                            android:id="@+id/txt_fragment_overtime_detail_reason"
                             style="@style/wl_common_text"
                             custom:mName="note" />
                     </LinearLayout>
@@ -204,7 +119,7 @@
                 <View style="@style/cs_common_divider" />
 
                 <LinearLayout
-                    android:id="@+id/lnr_fragment_offer_detail_approve_history"
+                    android:id="@+id/lnr_fragment_overtime_detail_offer_status"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_10dp"
@@ -232,20 +147,22 @@
                     android:orientation="vertical"
                     android:visibility="gone">
 
+                    <TextView
+                        style="@style/wl_common_text"
+                        android:paddingLeft="@dimen/margin_16dp"
+                        android:paddingRight="@dimen/margin_16dp"
+                        android:text="@string/fragment_offer_detail_approve_comment" />
+
                     <View style="@style/cs_common_divider" />
 
                     <LinearLayout
                         style="@style/wf_common_item_linear2"
+                        android:layout_marginTop="@dimen/margin_10dp"
                         android:orientation="vertical">
-
-                        <TextView
-                            style="@style/wl_common_text"
-                            android:text="@string/fragment_offer_detail_approve_comment" />
-
+                        
                         <EditText
                             android:id="@+id/edt_fragment_offer_detail_comment"
                             style="@style/wl_common_edit_text_multi_line2"
-                            android:layout_marginTop="@dimen/margin_10dp"
                             android:hint="@string/fragment_offer_detail_comment_hint" />
 
                     </LinearLayout>

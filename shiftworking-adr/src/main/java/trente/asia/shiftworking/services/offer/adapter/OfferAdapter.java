@@ -21,13 +21,13 @@ import trente.asia.welfare.adr.utils.WfPicassoHelper;
  *
  * @author TrungND
  */
-public class VacationAdapter extends ArrayAdapter<WorkOfferModel>{
+public class OfferAdapter extends ArrayAdapter<WorkOfferModel>{
 
 	private List<WorkOfferModel>		lstHistory;
 	private Context				mContext;
 	private int					layoutId;
 
-	public VacationAdapter(Context context, List<WorkOfferModel> lstHistory){
+	public OfferAdapter(Context context, List<WorkOfferModel> lstHistory){
 		super(context, R.layout.item_offer, lstHistory);
 		this.mContext = context;
 		this.layoutId = R.layout.item_offer;

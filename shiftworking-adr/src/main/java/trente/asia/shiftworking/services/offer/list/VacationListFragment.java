@@ -1,6 +1,5 @@
 package trente.asia.shiftworking.services.offer.list;
 
-import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,14 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -25,26 +22,24 @@ import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import trente.asia.shiftworking.R;
 import trente.asia.shiftworking.common.defines.SwConst;
-import trente.asia.shiftworking.common.dialog.SwTimePicker;
 import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
 import trente.asia.shiftworking.common.interfaces.OnFilterListener;
 import trente.asia.shiftworking.databinding.FragmentVacationListBinding;
 import trente.asia.shiftworking.services.offer.detail.VacationDetailFragment;
 import trente.asia.shiftworking.services.offer.filter.VacationFilterFragment;
 import trente.asia.shiftworking.services.offer.model.WorkOfferModel;
-import trente.asia.shiftworking.services.offer.adapter.VacationAdapter;
+import trente.asia.shiftworking.services.offer.adapter.OfferAdapter;
 import trente.asia.shiftworking.services.shiftworking.view.CommonMonthView;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.models.ApiObjectModel;
 import trente.asia.welfare.adr.models.DeptModel;
 import trente.asia.welfare.adr.models.UserModel;
-import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 import trente.asia.welfare.adr.utils.WelfareUtil;
 
 public class VacationListFragment extends AbstractSwFragment implements OnFilterListener{
 
-	private VacationAdapter				adapter;
+	private OfferAdapter adapter;
 	private List<WorkOfferModel>		offers;
 	private List<WorkOfferModel>		otherOffers;
 	private List<ApiObjectModel>		vacationTypes;
@@ -52,7 +47,7 @@ public class VacationListFragment extends AbstractSwFragment implements OnFilter
 	private ListView					mLstOffer;
 	private CommonMonthView				monthView;
 	private Map<String, String>			filters	= new HashMap<>();
-	private VacationAdapter				adapterOther;
+	private OfferAdapter adapterOther;
 	private ListView					mLstOfferOther;
 	private FragmentVacationListBinding	binding;
 	private String						ALL;
@@ -161,10 +156,10 @@ public class VacationListFragment extends AbstractSwFragment implements OnFilter
 			ApiObjectModel allType = new ApiObjectModel(CCConst.ALL, getString(R.string.chiase_common_all));
 			vacationTypes.add(0, allType);
 
-			adapterOther = new VacationAdapter(activity, otherOffers);
+			adapterOther = new OfferAdapter(activity, otherOffers);
 			mLstOfferOther.setAdapter(adapterOther);
 
-			adapter = new VacationAdapter(activity, offers);
+			adapter = new OfferAdapter(activity, offers);
 			mLstOffer.setAdapter(adapter);
 		}else if(WfUrlConst.WF_ACC_INFO_DETAIL.equals(url)){
 			depts = CCJsonUtil.convertToModelList(response.optString("depts"), DeptModel.class);
