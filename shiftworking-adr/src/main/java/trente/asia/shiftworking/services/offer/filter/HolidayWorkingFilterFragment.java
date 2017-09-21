@@ -1,54 +1,54 @@
 package trente.asia.shiftworking.services.offer.filter;
 
+import java.util.List;
+
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.List;
-import java.util.Map;
-
 import trente.asia.android.activity.ChiaseActivity;
 import trente.asia.shiftworking.R;
 import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
+import trente.asia.shiftworking.common.interfaces.OnDepartmentAdapterListener;
 import trente.asia.shiftworking.common.interfaces.OnFilterListener;
+import trente.asia.shiftworking.common.interfaces.OnTypeAdapterListener;
+import trente.asia.shiftworking.common.interfaces.OnUserAdapterListener;
 import trente.asia.shiftworking.databinding.FragmentOfferFilterBinding;
 import trente.asia.welfare.adr.models.ApiObjectModel;
 import trente.asia.welfare.adr.models.DeptModel;
 import trente.asia.welfare.adr.models.UserModel;
 
-public class HolidayWorkingFilterFragment extends AbstractSwFragment{
-
-	public static final String			TYPE	= "TYPE";
-	public static final String			DEPT	= "DEPT";
-	public static final String			USER	= "USER";
+public class HolidayWorkingFilterFragment extends AbstractSwFragment implements OnDepartmentAdapterListener, OnUserAdapterListener, OnTypeAdapterListener{
 
 	private FragmentOfferFilterBinding	binding;
 
-	private Map<String, String>			filters;
 	private OnFilterListener			callback;
-	private List<ApiObjectModel>		holidayWorkType;
+	private List<ApiObjectModel>		holidayWorkingTypes;
 	private List<DeptModel>				depts;
 
 	private DeptModel					selectedDept;
 	private UserModel					selectedUser;
 	private ApiObjectModel				selectedType;
 
+	public void setSelected(DeptModel dept, UserModel user, ApiObjectModel type) {
+		this.selectedDept = dept;
+		this.selectedUser = user;
+		this.selectedType = type;
+	}
+
 	public void setDepts(List<DeptModel> depts){
 		this.depts = depts;
 	}
 
-	public void setHolidayWorkType(List<ApiObjectModel> holidayWorkType){
-		this.holidayWorkType = holidayWorkType;
+	public void setHolidayWorkingTypes(List<ApiObjectModel> holidayWorkingTypes){
+		this.holidayWorkingTypes = holidayWorkingTypes;
 	}
 
 	public void setCallback(OnFilterListener callback){
 		this.callback = callback;
-	}
-
-	public void setFilters(Map<String, String> filters){
-		this.filters = filters;
 	}
 
 	@Override
@@ -78,37 +78,16 @@ public class HolidayWorkingFilterFragment extends AbstractSwFragment{
 	}
 
 	private void updateSelectedValues() {
-		if (filters.containsKey(HolidayWorkingFilterFragment.DEPT)) {
-			for (DeptModel dept : depts) {
-				if (filters.get(HolidayWorkingFilterFragment.DEPT).equals(dept.key)) {
-					selectedDept = dept;
-					break;
-				}
-			}
-		} else {
+		if (selectedDept == null) {
 			selectedDept = depts.get(0);
 		}
 
-		if (filters.containsKey(HolidayWorkingFilterFragment.USER)) {
-			for (UserModel user : selectedDept.members) {
-				if (filters.get(HolidayWorkingFilterFragment.USER).equals(user.key)) {
-					selectedUser = user;
-					break;
-				}
-			}
-		} else {
+		if (selectedUser == null) {
 			selectedUser = selectedDept.members.get(0);
 		}
 
-		if (filters.containsKey(HolidayWorkingFilterFragment.TYPE)) {
-			for (ApiObjectModel type : holidayWorkType) {
-				if (filters.get(HolidayWorkingFilterFragment.TYPE).equals(type.key)) {
-					selectedType = type;
-					break;
-				}
-			}
-		} else {
-			selectedType = holidayWorkType.get(0);
+		if (selectedType == null) {
+			selectedType = holidayWorkingTypes.get(0);
 		}
 
 		binding.txtOfferDept.setText(selectedDept.deptName);
@@ -125,26 +104,61 @@ public class HolidayWorkingFilterFragment extends AbstractSwFragment{
 	public void onClick(View v){
 		switch(v.getId()){
 		case R.id.btn_fragment_filter_clear:
-			filters.remove(TYPE);
-			filters.remove(DEPT);
-			filters.remove(USER);
+			selectedDept = null;
+			selectedUser = null;
+			selectedType = null;
 			updateSelectedValues();
 			break;
 		case R.id.btn_fragment_filter_update:
 			((ChiaseActivity)activity).isInitData = true;
 			onClickBackBtn();
 			if(callback != null){
-				callback.onFilterCompleted(filters);
+				callback.onFilterCompleted(selectedDept, selectedUser, selectedType);
 			}
 			break;
-		case R.id.lnr_id_offer_type:
+		case R.id.lnr_id_offer_user:
+			SelectUserFragment selectUserFragment = new SelectUserFragment();
+			selectUserFragment.setData(this, selectedDept.members, selectedUser);
+			gotoFragment(selectUserFragment);
 			break;
 		case R.id.lnr_id_offer_dept:
+			SelectDeptFragment fragment = new SelectDeptFragment();
+			fragment.setData(this, depts, selectedDept);
+			gotoFragment(fragment);
 			break;
-		case R.id.lnr_id_offer_user:
+		case R.id.lnr_id_offer_type:
+			SelectTypeFragment selectTypeFragment = new SelectTypeFragment();
+			selectTypeFragment.setData(this, holidayWorkingTypes, selectedType);
+			gotoFragment(selectTypeFragment);
 			break;
 		default:
 			break;
 		}
+	}
+
+	@Override
+	public void onSelectDepartment(DeptModel deptModel) {
+		selectedDept = deptModel;
+		binding.txtOfferDept.setText(selectedDept.deptName);
+		if (!selectedDept.members.contains(selectedUser)) {
+			selectedUser = selectedDept.members.get(0);
+			binding.txtOfferUser.setText(selectedUser.userName);
+		}
+	}
+
+	@Override
+	public void onSelectUser(UserModel user) {
+		selectedUser = user;
+		binding.txtOfferUser.setText(selectedUser.userName);
+	}
+
+	@Override
+	public void onSelectType(ApiObjectModel type) {
+		selectedType = type;
+		binding.txtOfferType.setText(type.value);
+	}
+
+	private void log(String msg) {
+		Log.e("HolidayWorkingFilter", msg);
 	}
 }

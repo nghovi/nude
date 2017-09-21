@@ -1,5 +1,7 @@
 package trente.asia.shiftworking.services.offer.filter;
 
+import java.util.List;
+
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,24 +12,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.List;
-
 import trente.asia.shiftworking.R;
 import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
 import trente.asia.shiftworking.common.interfaces.OnDepartmentAdapterListener;
+import trente.asia.shiftworking.common.interfaces.OnUserAdapterListener;
 import trente.asia.shiftworking.databinding.FragmentSelectDeptBinding;
+import trente.asia.shiftworking.databinding.FragmentSelectUserBinding;
 import trente.asia.shiftworking.services.offer.adapter.DepartmentAdapter;
+import trente.asia.shiftworking.services.offer.adapter.UserAdapter;
 import trente.asia.welfare.adr.models.DeptModel;
+import trente.asia.welfare.adr.models.UserModel;
 
 /**
  * Created by tien on 9/21/2017.
  */
 
-public class SelectDeptFragment extends AbstractSwFragment {
-    private DepartmentAdapter adapter = new DepartmentAdapter();
+public class SelectUserFragment extends AbstractSwFragment {
+    private UserAdapter adapter = new UserAdapter();
 
-    public void setData(OnDepartmentAdapterListener callback, List<DeptModel> depts, DeptModel selectedDept) {
-        adapter.setDepartments(depts, selectedDept);
+    public void setData(OnUserAdapterListener callback, List<UserModel> users, UserModel selectedUser) {
+        adapter.setDepartments(users, selectedUser);
         adapter.setCallback(callback);
     }
 
@@ -35,7 +39,7 @@ public class SelectDeptFragment extends AbstractSwFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (mRootView == null) {
-            mRootView = inflater.inflate(R.layout.fragment_select_dept, container, false);
+            mRootView = inflater.inflate(R.layout.fragment_select_user, container, false);
         }
         return mRootView;
     }
@@ -48,11 +52,11 @@ public class SelectDeptFragment extends AbstractSwFragment {
     @Override
     protected void initView() {
         super.initView();
-        FragmentSelectDeptBinding binding = DataBindingUtil.bind(mRootView);
+        FragmentSelectUserBinding binding = DataBindingUtil.bind(mRootView);
         binding.btnCancel.setOnClickListener(this);
 
-        binding.listDepartments.setAdapter(adapter);
-        binding.listDepartments.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.listUsers.setAdapter(adapter);
+        binding.listUsers.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter.setFragmentManager(getFragmentManager());
 
         binding.edtSearch.addTextChangedListener(new TextWatcher() {

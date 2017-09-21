@@ -25,12 +25,9 @@ import trente.asia.shiftworking.common.defines.SwConst;
 import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
 import trente.asia.shiftworking.common.interfaces.OnFilterListener;
 import trente.asia.shiftworking.databinding.FragmentHolidayWorkingListBinding;
-import trente.asia.shiftworking.databinding.FragmentOvertimeListBinding;
 import trente.asia.shiftworking.services.offer.adapter.OfferAdapter;
 import trente.asia.shiftworking.services.offer.detail.HolidayWorkingDetailFragment;
-import trente.asia.shiftworking.services.offer.detail.OvertimeDetailFragment;
 import trente.asia.shiftworking.services.offer.filter.HolidayWorkingFilterFragment;
-import trente.asia.shiftworking.services.offer.filter.OvertimeFilterFragment;
 import trente.asia.shiftworking.services.offer.model.WorkOfferModel;
 import trente.asia.shiftworking.services.shiftworking.view.CommonMonthView;
 import trente.asia.welfare.adr.define.WelfareConst;
@@ -54,6 +51,9 @@ public class HolidayWorkingListFragment extends AbstractSwFragment implements On
     private ListView					mLstOfferOther;
     private FragmentHolidayWorkingListBinding binding;
     private String						ALL;
+    private DeptModel					selectedDept;
+    private UserModel					selectedUser;
+    private ApiObjectModel				selectedType;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -131,15 +131,15 @@ public class HolidayWorkingListFragment extends AbstractSwFragment implements On
         try{
 
             if(filters != null){
-                if(filters.containsKey(HolidayWorkingFilterFragment.DEPT)){
-                    jsonObject.put("offerDept", filters.get(HolidayWorkingFilterFragment.DEPT));
+                if(selectedDept != null && !CCConst.ALL.equals(selectedDept.key)){
+                    jsonObject.put("offerDept", selectedDept.key);
                 }
-                if(filters.containsKey(HolidayWorkingFilterFragment.TYPE)){
-                    jsonObject.put("offerStatus", filters.get(HolidayWorkingFilterFragment.TYPE));
+                if(selectedType != null && !CCConst.ALL.equals(selectedType.key)){
+                    jsonObject.put("offerStatus", selectedType.key);
                 }
 
-                if(filters.containsKey(HolidayWorkingFilterFragment.USER)){
-                    jsonObject.put("targetUserId", filters.get(HolidayWorkingFilterFragment.USER));
+                if(selectedUser != null && !CCConst.ALL.equals(selectedUser.key)){
+                    jsonObject.put("targetUserId",  selectedUser.key);
                 }
             }
             jsonObject.put("searchDateString", CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_YYYY_MM, monthView.workMonth));
@@ -209,9 +209,9 @@ public class HolidayWorkingListFragment extends AbstractSwFragment implements On
 
     private void gotoOfferFilterFragment(){
         HolidayWorkingFilterFragment fragment = new HolidayWorkingFilterFragment();
-        fragment.setFilters(filters);
+        fragment.setSelected(selectedDept, selectedUser, selectedType);
         fragment.setDepts(depts);
-        fragment.setHolidayWorkType(holidayWorkType);
+        fragment.setHolidayWorkingTypes(holidayWorkType);
         fragment.setCallback(this);
         gotoFragment(fragment);
     }
@@ -227,32 +227,12 @@ public class HolidayWorkingListFragment extends AbstractSwFragment implements On
     }
 
     @Override
-    public void onFilterCompleted(Map<String, String> filters){
-        this.filters = filters;
-
-        String filterText = "";
-        if(filters.containsKey(HolidayWorkingFilterFragment.DEPT)){
-            filterText += filters.get(HolidayWorkingFilterFragment.DEPT);
-        }else{
-            filterText += ALL;
-        }
-
-        filterText += " - ";
-
-        if(filters.containsKey(HolidayWorkingFilterFragment.USER)){
-            filterText += filters.get(HolidayWorkingFilterFragment.USER);
-        }else{
-            filterText += ALL;
-        }
-
-        filterText += " - ";
-
-        if(filters.containsKey(HolidayWorkingFilterFragment.TYPE)){
-            filterText += filters.get(HolidayWorkingFilterFragment.TYPE);
-        }else{
-            filterText += ALL;
-        }
-
-        binding.txtFilter.setText(getString(R.string.sw_work_offer_list_filter, filterText));
+    public void onFilterCompleted(DeptModel dept, UserModel user, ApiObjectModel type) {
+        selectedDept = dept;
+        selectedUser = user;
+        selectedType = type;
+        String filter = dept.deptName + " - " + user.userName + " - " + type.value;
+        binding.txtFilter.setText(getString(R.string.sw_work_offer_list_filter, filter));
+        requestOfferList();
     }
 }
