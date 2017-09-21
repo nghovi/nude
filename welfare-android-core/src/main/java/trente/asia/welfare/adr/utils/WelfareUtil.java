@@ -175,10 +175,10 @@ public class WelfareUtil{
 	// * @param data
 	// * @return
 	// */
-	// public static Date makeDate(String data){
-	// Date date = CCDateUtil.makeDateCustom(data, WelfareConst.WF_DATE_TIME);
-	// return date;
-	// }
+	 public static Date makeDate(String data){
+	 Date date = CCDateUtil.makeDateCustom(data, WelfareConst.WF_DATE_TIME);
+	 return date;
+	 }
 
 	public static String getDateString(Date date){
 		return CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, date);

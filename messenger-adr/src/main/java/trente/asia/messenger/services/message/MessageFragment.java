@@ -371,7 +371,7 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 		super.initView();
 		mImgLeftHeader = (ImageView)getView().findViewById(R.id.img_id_header_left_icon);
 		LinearLayout lnrRightHeader = (LinearLayout)getView().findViewById(R.id.lnr_header_right_icon);
-		mImgRightHeader = (ImageView) getView().findViewById(R.id.img_id_header_right_icon);
+		mImgRightHeader = (ImageView)getView().findViewById(R.id.img_id_header_right_icon);
 		mTxtUnreadMessage = (TextView)getView().findViewById(R.id.txt_id_unread_message);
 
 		LayoutInflater inflater = (LayoutInflater)activity.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
@@ -835,9 +835,9 @@ public class MessageFragment extends AbstractMsgFragment implements View.OnClick
 			break;
 
 		case R.id.lnr_header_right_icon:
-			if (pagerCode == 1) {
+			if(pagerCode == 1){
 				gotoFragment(new NewNoteFragment());
-			} else {
+			}else{
 				UserListFragment fragment = new UserListFragment();
 				fragment.setOnAddUserSuccessListener(this);
 				gotoFragment(fragment);

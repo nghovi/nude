@@ -112,7 +112,6 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 		mRealm = Realm.getDefaultInstance();
 		preference = new PreferencesSystemUtil(getContext());
 		isBirthday = Boolean.parseBoolean(preference.get(TcConst.IS_BIRTHDAY));
-		log("onCreate");
 	}
 
 	@Override
@@ -168,7 +167,6 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 
 		binding.edtMessagePhoto.setTextSize(TypedValue.COMPLEX_UNIT_PX, photoTextSize);
 		binding.edtMessage.setTextSize(TypedValue.COMPLEX_UNIT_PX, normalTextSize);
-//		Typeface typeface = Typeface.createFromAsset(getContext().getAssets(), "Arial_BoldMT.ttf");
 		binding.edtMessagePhoto.setTypeface(Typeface.MONOSPACE);
 		binding.edtMessage.setTypeface(Typeface.MONOSPACE);
 
@@ -197,7 +195,6 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 				if(!canSendPhoto){
 					message = editable.toString();
 					int textCount = MAX_LETTER - (message.getBytes().length / 3);
-                    log("length = " + message.getBytes().length);
 					binding.txtCount.setText(String.valueOf(textCount));
 					binding.edtMessagePhoto.setText(message);
 					if(textCount < 0){
@@ -233,31 +230,6 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 					}else{
 						binding.txtCount.setTextColor(Color.BLACK);
 					}
-				}
-			}
-		});
-
-		binding.edtMessage.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-
-			@Override
-			public void onFocusChange(View view, boolean hasFocus){
-				if(hasFocus){
-					binding.edtMessage.setBackgroundResource(R.drawable.edt_message_bgr);
-				}else{
-					binding.edtMessage.setBackgroundColor(Color.TRANSPARENT);
-				}
-			}
-		});
-
-		binding.edtMessagePhoto.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-
-			@Override
-			public void onFocusChange(View view, boolean hasFocus){
-				if(hasFocus){
-					binding.edtMessagePhoto.setBackgroundResource(R.drawable.edt_message_bgr);
-					binding.layoutSticker.setVisibility(View.GONE);
-				}else{
-					binding.edtMessagePhoto.setBackgroundColor(Color.TRANSPARENT);
 				}
 			}
 		});
@@ -430,7 +402,8 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 			chooseImage();
 			break;
 		case R.id.btn_send:
-			checkNewCard();
+//			checkNewCard();
+			gotoFragment(new PostPreviewFragment());
 			break;
 		case R.id.main_layout:
 			if(showLayoutSticker){

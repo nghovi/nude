@@ -298,21 +298,9 @@ public class TCDetailFragment extends AbstractPagerFragment{
 		}
 
 		if(historyModel.template != null){
-			LinearLayout lnrFrameBackground = (LinearLayout)lnrFrame.findViewById(R.id.lnr_thanks_card_frame_container);
 			ImageView templateImage = (ImageView)lnrFrame.findViewById(R.id.img_card);
 			templateImage.setScaleType(ImageView.ScaleType.FIT_XY);
 			WfPicassoHelper.loadImage2(context, BuildConfig.HOST, templateImage, historyModel.template.templateUrl);
-//			if ("PH".equals(historyModel.templateType)) {
-//				PercentRelativeLayout.LayoutParams params = (PercentRelativeLayout.LayoutParams) lnrFrameBackground.getLayoutParams();
-//				params.getPercentLayoutInfo().widthPercent = 0.5f;
-//				params.addRule(RelativeLayout.ALIGN_PARENT_END);
-//				params.leftMargin = 10;
-//				PhotoViewDetail photoViewDetail = (PhotoViewDetail) lnrFrame.findViewById(R.id.photo);
-//				if(historyModel.attachment != null && historyModel.attachment.fileUrl != null){
-//					photoViewDetail.restoreImageInList(historyModel.attachment.fileUrl, Float.valueOf(historyModel.photoLocationX),
-//							Float.valueOf(historyModel.photoLocationY), Float.valueOf(historyModel.photoScale));
-//				}
-//			}
 		}
 	}
 

@@ -174,4 +174,5 @@
     <string name="tc_card">Card</string>
     <string name="tc_cropping_title" formatted="false">Adjust photo’s size</string>
     <string name="tc_done">Done</string>
+    <string name="tc_preview">Preview</string>
 </resources>
