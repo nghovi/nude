@@ -20,6 +20,7 @@ import trente.asia.shiftworking.common.interfaces.OnFilterListener;
 import trente.asia.shiftworking.databinding.FragmentOfferFilterBinding;
 import trente.asia.welfare.adr.models.ApiObjectModel;
 import trente.asia.welfare.adr.models.DeptModel;
+import trente.asia.welfare.adr.models.UserModel;
 
 public class VacationFilterFragment extends AbstractSwFragment{
 
@@ -27,8 +28,6 @@ public class VacationFilterFragment extends AbstractSwFragment{
 	public static final String			DEPT	= "DEPT";
 	public static final String			USER	= "USER";
 
-	private LinearLayout				lnrType;
-	private LinearLayout				lnrDept;
 	private FragmentOfferFilterBinding	binding;
 
 	private Map<String, String>			filters;
@@ -36,11 +35,15 @@ public class VacationFilterFragment extends AbstractSwFragment{
 	private List<ApiObjectModel>		vacationTypes;
 	private List<DeptModel>				depts;
 
-	public void setDepts(List<DeptModel> depts) {
+	private DeptModel					selectedDept;
+	private UserModel					selectedUser;
+	private ApiObjectModel				selectedType;
+
+	public void setDepts(List<DeptModel> depts){
 		this.depts = depts;
 	}
 
-	public void setVacationTypes(List<ApiObjectModel> vacationTypes) {
+	public void setVacationTypes(List<ApiObjectModel> vacationTypes){
 		this.vacationTypes = vacationTypes;
 	}
 
@@ -70,18 +73,51 @@ public class VacationFilterFragment extends AbstractSwFragment{
 	public void initView(){
 		super.initView();
 		super.initHeader(R.drawable.sw_back_white, getString(R.string.fragment_offer_filter_title), null);
-		lnrType = (LinearLayout)getView().findViewById(R.id.lnr_id_offer_type);
-		lnrDept = (LinearLayout)getView().findViewById(R.id.lnr_id_offer_dept);
-		lnrType.setOnClickListener(this);
-		lnrDept.setOnClickListener(this);
-
-		getView().findViewById(R.id.btn_fragment_filter_clear).setOnClickListener(this);
-		getView().findViewById(R.id.btn_fragment_filter_update).setOnClickListener(this);
-		buildDialog();
+		binding.lnrIdOfferDept.setOnClickListener(this);
+		binding.lnrIdOfferUser.setOnClickListener(this);
+		binding.lnrIdOfferType.setOnClickListener(this);
+		binding.btnFragmentFilterClear.setOnClickListener(this);
+		binding.btnFragmentFilterUpdate.setOnClickListener(this);
+		updateSelectedValues();
 	}
 
-	private void buildDialog(){
+	private void updateSelectedValues() {
+		if (filters.containsKey(VacationFilterFragment.DEPT)) {
+			for (DeptModel dept : depts) {
+				if (filters.get(VacationFilterFragment.DEPT).equals(dept.key)) {
+					selectedDept = dept;
+					break;
+				}
+			}
+		} else {
+			selectedDept = depts.get(0);
+		}
 
+		if (filters.containsKey(VacationFilterFragment.USER)) {
+			for (UserModel user : selectedDept.members) {
+				if (filters.get(VacationFilterFragment.USER).equals(user.key)) {
+					selectedUser = user;
+					break;
+				}
+			}
+		} else {
+			selectedUser = selectedDept.members.get(0);
+		}
+
+		if (filters.containsKey(VacationFilterFragment.TYPE)) {
+			for (ApiObjectModel type : vacationTypes) {
+				if (filters.get(VacationFilterFragment.TYPE).equals(type.key)) {
+					selectedType = type;
+					break;
+				}
+			}
+		} else {
+			selectedType = vacationTypes.get(0);
+		}
+
+		binding.txtOfferDept.setText(selectedDept.deptName);
+		binding.txtOfferUser.setText(selectedUser.userName);
+		binding.txtOfferType.setText(selectedType.value);
 	}
 
 	@Override
@@ -96,10 +132,9 @@ public class VacationFilterFragment extends AbstractSwFragment{
 			filters.remove(TYPE);
 			filters.remove(DEPT);
 			filters.remove(USER);
-			buildDialog();
+			updateSelectedValues();
 			break;
 		case R.id.btn_fragment_filter_update:
-			setFilterValues();
 			((ChiaseActivity)activity).isInitData = true;
 			onClickBackBtn();
 			if(callback != null){
@@ -110,12 +145,10 @@ public class VacationFilterFragment extends AbstractSwFragment{
 			break;
 		case R.id.lnr_id_offer_dept:
 			break;
+		case R.id.lnr_id_offer_user:
+			break;
 		default:
 			break;
 		}
-	}
-
-	private void setFilterValues(){
-
 	}
 }
