@@ -1,6 +1,11 @@
 package trente.asia.shiftworking.services.offer.list;
 
-import android.content.Context;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,37 +14,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
 
 import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import trente.asia.shiftworking.R;
 import trente.asia.shiftworking.common.defines.SwConst;
-import trente.asia.shiftworking.common.dialog.SwTimePicker;
 import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
 import trente.asia.shiftworking.common.interfaces.OnFilterListener;
 import trente.asia.shiftworking.databinding.FragmentVacationListBinding;
+import trente.asia.shiftworking.services.offer.adapter.VacationAdapter;
 import trente.asia.shiftworking.services.offer.detail.VacationDetailFragment;
 import trente.asia.shiftworking.services.offer.filter.VacationFilterFragment;
 import trente.asia.shiftworking.services.offer.model.WorkOfferModel;
-import trente.asia.shiftworking.services.offer.adapter.VacationAdapter;
 import trente.asia.shiftworking.services.shiftworking.view.CommonMonthView;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.define.WfUrlConst;
 import trente.asia.welfare.adr.models.ApiObjectModel;
 import trente.asia.welfare.adr.models.DeptModel;
 import trente.asia.welfare.adr.models.UserModel;
-import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 import trente.asia.welfare.adr.utils.WelfareUtil;
 
 public class VacationListFragment extends AbstractSwFragment implements OnFilterListener{
@@ -51,11 +44,13 @@ public class VacationListFragment extends AbstractSwFragment implements OnFilter
 	private List<DeptModel>				depts;
 	private ListView					mLstOffer;
 	private CommonMonthView				monthView;
-	private Map<String, String>			filters	= new HashMap<>();
 	private VacationAdapter				adapterOther;
 	private ListView					mLstOfferOther;
 	private FragmentVacationListBinding	binding;
 	private String						ALL;
+	private DeptModel					selectedDept;
+	private UserModel					selectedUser;
+	private ApiObjectModel				selectedType;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -131,18 +126,16 @@ public class VacationListFragment extends AbstractSwFragment implements OnFilter
 		monthView.txtMonth.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_YYYY_MM, monthView.workMonth));
 		JSONObject jsonObject = new JSONObject();
 		try{
+			if(selectedDept != null && !CCConst.ALL.equals(selectedDept.key)){
+				jsonObject.put("offerDept", selectedDept.key);
+			}
 
-			if(filters != null){
-				if(filters.containsKey(VacationFilterFragment.DEPT)){
-					jsonObject.put("offerDept", filters.get(VacationFilterFragment.DEPT));
-				}
-				if(filters.containsKey(VacationFilterFragment.TYPE)){
-					jsonObject.put("vacationId", filters.get(VacationFilterFragment.TYPE));
-				}
+			if(selectedUser != null && !CCConst.ALL.equals(selectedUser.key)){
+				jsonObject.put("targetUserId", selectedUser.key);
+			}
 
-				if(filters.containsKey(VacationFilterFragment.USER)){
-					jsonObject.put("targetUserId", filters.get(VacationFilterFragment.USER));
-				}
+			if(selectedType != null && !CCConst.ALL.equals(selectedType.key)){
+				jsonObject.put("vacationId", selectedType.key);
 			}
 			jsonObject.put("searchDateString", CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_YYYY_MM, monthView.workMonth));
 		}catch(JSONException e){
@@ -158,8 +151,11 @@ public class VacationListFragment extends AbstractSwFragment implements OnFilter
 			otherOffers = CCJsonUtil.convertToModelList(response.optString("otherVacationOffers"), WorkOfferModel.class);
 
 			vacationTypes = CCJsonUtil.convertToModelList(response.optString("vacationList"), ApiObjectModel.class);
-			ApiObjectModel allType = new ApiObjectModel(CCConst.ALL, getString(R.string.chiase_common_all));
+			ApiObjectModel allType = new ApiObjectModel(CCConst.ALL, ALL);
 			vacationTypes.add(0, allType);
+			if (vacationTypes == null) {
+				selectedType = vacationTypes.get(0);
+			}
 
 			adapterOther = new VacationAdapter(activity, otherOffers);
 			mLstOfferOther.setAdapter(adapterOther);
@@ -168,14 +164,19 @@ public class VacationListFragment extends AbstractSwFragment implements OnFilter
 			mLstOffer.setAdapter(adapter);
 		}else if(WfUrlConst.WF_ACC_INFO_DETAIL.equals(url)){
 			depts = CCJsonUtil.convertToModelList(response.optString("depts"), DeptModel.class);
-			DeptModel department = new DeptModel(CCConst.ALL, getString(R.string.chiase_common_all));
+			DeptModel department = new DeptModel(CCConst.ALL, ALL);
 			department.members = new ArrayList<>();
+			UserModel user = new UserModel(CCConst.ALL, ALL);
 			for(DeptModel dept : depts){
-				department.members.addAll(dept.members);
-				UserModel user = new UserModel(CCConst.ALL, getString(R.string.chiase_common_all));
-				department.members.add(0, user);
+				for (UserModel member : dept.members) {
+					department.members.add(member);
+				}
+				dept.members.add(0, user);
 			}
+			department.members.add(0, user);
 			depts.add(0, department);
+			selectedDept = depts.get(0);
+			selectedUser = selectedDept.members.get(0);
 		}else{
 			super.successLoad(response, url);
 		}
@@ -211,7 +212,7 @@ public class VacationListFragment extends AbstractSwFragment implements OnFilter
 
 	private void gotoOfferFilterFragment(){
 		VacationFilterFragment fragment = new VacationFilterFragment();
-		fragment.setFilters(filters);
+		fragment.setSelected(selectedDept, selectedUser, selectedType);
 		fragment.setDepts(depts);
 		fragment.setVacationTypes(vacationTypes);
 		fragment.setCallback(this);
@@ -229,32 +230,12 @@ public class VacationListFragment extends AbstractSwFragment implements OnFilter
 	}
 
 	@Override
-	public void onFilterCompleted(Map<String, String> filters){
-		this.filters = filters;
-
-		String filterText = "";
-		if(filters.containsKey(VacationFilterFragment.DEPT)){
-			filterText += filters.get(VacationFilterFragment.DEPT);
-		}else{
-			filterText += ALL;
-		}
-
-		filterText += " - ";
-
-		if(filters.containsKey(VacationFilterFragment.USER)){
-			filterText += filters.get(VacationFilterFragment.USER);
-		}else{
-			filterText += ALL;
-		}
-
-		filterText += " - ";
-
-		if(filters.containsKey(VacationFilterFragment.TYPE)){
-			filterText += filters.get(VacationFilterFragment.TYPE);
-		}else{
-			filterText += ALL;
-		}
-
-		binding.txtFilter.setText(getString(R.string.sw_work_offer_list_filter, filterText));
+	public void onFilterCompleted(DeptModel dept, UserModel user, ApiObjectModel type){
+		selectedDept = dept;
+		selectedUser = user;
+		selectedType = type;
+		String filter = dept.deptName + " - " + user.userName + " - " + type.value;
+		binding.txtFilter.setText(getString(R.string.sw_work_offer_list_filter, filter));
+		requestOfferList();
 	}
 }
