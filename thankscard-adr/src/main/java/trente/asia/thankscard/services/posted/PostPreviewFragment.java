@@ -1,58 +1,83 @@
 package trente.asia.thankscard.services.posted;
 
+import java.io.File;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.content.DialogInterface;
+import android.databinding.DataBindingUtil;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.percent.PercentRelativeLayout;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import io.realm.Realm;
-import trente.asia.thankscard.BuildConfig;
 import trente.asia.thankscard.R;
+import trente.asia.thankscard.activities.MainActivity;
 import trente.asia.thankscard.commons.defines.TcConst;
+import trente.asia.thankscard.databinding.FragmentPostPreviewBinding;
 import trente.asia.thankscard.services.common.AbstractPagerFragment;
-import trente.asia.thankscard.services.common.model.HistoryModel;
+import trente.asia.thankscard.services.common.model.Template;
 import trente.asia.thankscard.services.mypage.model.StampModel;
-import trente.asia.thankscard.services.posted.model.ApiStickerModel;
 import trente.asia.thankscard.services.posted.view.StickerViewDetail;
+import trente.asia.thankscard.services.posted.view.StickerViewPost;
 import trente.asia.thankscard.utils.TCUtil;
 import trente.asia.welfare.adr.activity.WelfareActivity;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.models.DeptModel;
+import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.pref.PreferencesSystemUtil;
 import trente.asia.welfare.adr.utils.WelfareUtil;
-import trente.asia.welfare.adr.utils.WfPicassoHelper;
 
 /**
  * Created by viet on 2/15/2016.
  */
-public class PostPreviewFragment extends AbstractPagerFragment{
+public class PostPreviewFragment extends AbstractPagerFragment implements View.OnClickListener{
 
-	public static final String	DETAIL_TC_TITLE			= "DETAIL_TC_TITLE";
-	public static final String	DETAIL_TC_DEFAULT_POS	= "DETAIL_TC_DEFAULT_POS";
+	private float						normalTextSize;
+	private float						photoTextSize;
+	private Template					template;
+	private UserModel					receiver;
+	private String						message;
+	private List<StickerViewPost>		stickers;
+	private boolean						canSendPhoto;
+	private String						imagePath;
+	private FragmentPostPreviewBinding	binding;
 
-	private HistoryModel		currentHistory;
-	private List<DeptModel>		depts;
-
-	private float				normalTextSize;
-	private float				photoTextSize;
-
-	public void setDepts(List<DeptModel> depts){
-		this.depts = depts;
+	public void setImagePath(String imagePath){
+		this.imagePath = imagePath;
 	}
 
-	public void setCurrentHistory(HistoryModel currentHistory){
-		this.currentHistory = currentHistory;
+	public void setCanSendPhoto(boolean canSendPhoto){
+		this.canSendPhoto = canSendPhoto;
+	}
+
+	public void setStickers(List<StickerViewPost> stickers){
+		this.stickers = stickers;
+	}
+
+	public void setMessage(String message){
+		this.message = message;
+	}
+
+	public void setReceiver(UserModel receiver){
+		this.receiver = receiver;
+	}
+
+	public void setTemplate(Template template){
+		this.template = template;
 	}
 
 	@Override
@@ -80,9 +105,12 @@ public class PostPreviewFragment extends AbstractPagerFragment{
 	}
 
 	@Override
-	protected void initView() {
+	protected void initView(){
 		super.initView();
-		initHeader(null, getString(R.string.tc_preview), null);
+		binding = DataBindingUtil.bind(mRootView);
+		buildTextMessage();
+		binding.btnCancel.setOnClickListener(this);
+		binding.btnDone.setOnClickListener(this);
 	}
 
 	@Override
@@ -94,43 +122,32 @@ public class PostPreviewFragment extends AbstractPagerFragment{
 	protected void onPageHistorySelected(int position){
 	}
 
-	private void buildTextMessage(HistoryModel historyModel){
+	private void buildTextMessage(){
 		LinearLayout lnrMessage = (LinearLayout)getView().findViewById(R.id.lnr_message);
 		TextView textMessage = (TextView)getView().findViewById(R.id.text_message);
 		TextView textDate = (TextView)getView().findViewById(R.id.txt_tc_detail_date);
 		TextView textTo = (TextView)getView().findViewById(R.id.txt_tc_detail_to);
 		ImageView imgCard = (ImageView)getView().findViewById(R.id.img_card);
 		ImageView photoView = (ImageView)getView().findViewById(R.id.layout_photo);
-		TCUtil.loadImageWithGlide(historyModel.template.templateUrl, imgCard);
-		textMessage.setText(historyModel.message);
-		Date postDate = CCDateUtil.makeDateCustom(historyModel.postDate, WelfareConst.WF_DATE_TIME);
-		String postDateFormat = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, postDate);
+		TCUtil.loadImageWithGlide(template.templateUrl, imgCard);
+		textMessage.setText(message);
+		String postDateFormat = CCFormatUtil.formatDate(new Date());
 		textDate.setText(postDateFormat);
-		textTo.setText(getString(R.string.fragment_tc_detail_to, historyModel.receiverName));
-
-		boolean isSecret = false;
-		if(historyModel.isSecret && !myself.key.equals(historyModel.receiverId) && !myself.key.equals(historyModel.posterId)){
-			isSecret = true;
-		}
-
-		photoView.setImageBitmap(null);
-
+		textTo.setText(getString(R.string.fragment_tc_detail_to, receiver.userName));
+		binding.confirmMsg.setText(getString(R.string.tc_confirmation_message, receiver.userName));
 		textMessage.setTypeface(Typeface.MONOSPACE);
-		if("NM".equals(historyModel.templateType)){
+
+		if(!canSendPhoto){
 			setLayoutMessageCenter(lnrMessage);
 			textMessage.setTextSize(TypedValue.COMPLEX_UNIT_PX, normalTextSize);
 		}else{
 			setLayoutMessageRight(lnrMessage);
 			textMessage.setTextSize(TypedValue.COMPLEX_UNIT_PX, photoTextSize);
-			if(historyModel.attachment != null && historyModel.attachment.fileUrl != null && !isSecret){
-				WfPicassoHelper.loadImage(getContext(), BuildConfig.HOST + historyModel.attachment.fileUrl, photoView, null);
+			if(imagePath != null){
+				photoView.setImageBitmap(BitmapFactory.decodeFile(imagePath));
 			}
 		}
-
-		rltStickers.removeAllViews();
-		if(!isSecret){
-			restoreStickers(currentHistory.stickers);
-		}
+		restoreStickers(stickers);
 	}
 
 	private void setLayoutMessageCenter(LinearLayout lnrMessage){
@@ -150,21 +167,105 @@ public class PostPreviewFragment extends AbstractPagerFragment{
 		lnrMessage.setLayoutParams(params);
 	}
 
-	private void restoreStickers(List<ApiStickerModel> stickers){
-		for(ApiStickerModel sticker : stickers){
-			StampModel stamp = StampModel.getStamp(Realm.getDefaultInstance(), sticker.stickerId);
-			log("sticker id = " + sticker.stickerId);
+	private void restoreStickers(List<StickerViewPost> stickers){
+		for(StickerViewPost sticker : stickers){
+			StampModel stamp = StampModel.getStamp(Realm.getDefaultInstance(), sticker.getKey());
 			StickerViewDetail stickerViewDetail = new StickerViewDetail(getContext());
-			rltStickers.addView(stickerViewDetail);
-			stickerViewDetail.restoreSticker(stamp.stampPath, Float.valueOf(sticker.locationX), Float.valueOf(sticker.locationY), Float.valueOf(sticker.scale), Float.valueOf(sticker.degree));
+			binding.rltStickers.addView(stickerViewDetail);
+			stickerViewDetail.restoreSticker(stamp.stampPath, Float.valueOf(sticker.getLocationX()), Float.valueOf(sticker.getLocationY()), Float.valueOf(sticker.getScale()), Float.valueOf(sticker.getDegree()));
 		}
+	}
+
+	private void requestPostNewCard(){
+		JSONObject jsonObject = new JSONObject();
+		try{
+			jsonObject.put("postDate", CCFormatUtil.formatDate(new Date()));
+			jsonObject.put("categoryId", 1);
+			jsonObject.put("templateId", template.templateId);
+
+			UserModel userModel = prefAccUtil.getUserPref();
+			jsonObject.put("posterId", userModel.key);
+			if(receiver == null){
+				jsonObject.put("receiverId", null);
+			}else{
+				jsonObject.put("receiverId", receiver.key);
+			}
+			jsonObject.put("message", message);
+			jsonObject.put("isSecret", binding.checkboxSecret.isChecked());
+
+			JSONArray jsonStickers = new JSONArray();
+			for(StickerViewPost sticker : stickers){
+				JSONObject jsonSticker = new JSONObject();
+				jsonSticker.put("key", sticker.getKey());
+				jsonSticker.put("locationX", sticker.getLocationX());
+				jsonSticker.put("locationY", sticker.getLocationY());
+				jsonSticker.put("scale", sticker.getScale());
+				jsonSticker.put("degree", sticker.getDegree());
+				jsonStickers.put(jsonSticker);
+			}
+
+			jsonObject.put("stickerListString", jsonStickers.toString());
+
+			if(canSendPhoto){
+				jsonObject.put("templateType", "PH");
+				jsonObject.put("photoLocationX", "0");
+				jsonObject.put("photoLocationY", "0");
+				jsonObject.put("photoScale", "1");
+			}else{
+				jsonObject.put("templateType", "NM");
+			}
+		}catch(JSONException ex){
+			ex.printStackTrace();
+		}
+
+		if(canSendPhoto){
+			HashMap<String, File> photo = new HashMap<>();
+			photo.put("photoFile", new File(imagePath));
+			requestUpload(TcConst.API_POST_NEW_CARD, jsonObject, photo, true);
+		}else{
+			requestUpdate(TcConst.API_POST_NEW_CARD, jsonObject, true);
+		}
+	}
+
+	@Override
+	protected void successUpdate(JSONObject response, String url){
+		if(TcConst.API_POST_NEW_CARD.equals(url)){
+			requestPostNewCardSuccess(response);
+		}else{
+			super.successUpdate(response, url);
+		}
+	}
+
+	@Override
+	protected void successUpload(JSONObject response, String url){
+		if(TcConst.API_POST_NEW_CARD.equals(url)){
+			requestPostNewCardSuccess(response);
+		}else{
+			super.successUpload(response, url);
+		}
+	}
+
+	private void requestPostNewCardSuccess(JSONObject response){
+		showAlertDialog(getString(R.string.fragment_posted_confirm_success_title), getString(R.string.fragment_posted_confirm_success_message), getString(android.R.string.ok), new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which){
+				onClickOkButtonAfterShowingSuccessDialog();
+			}
+		});
+	}
+
+	private void onClickOkButtonAfterShowingSuccessDialog(){
+		((MainActivity) activity).loadData = true;
+		getFragmentManager().popBackStack();
+		getFragmentManager().popBackStack();
 	}
 
 	public void buildBodyLayout(){
 	}
 
 	@Override
-	protected void buildPagerHeader() {
+	protected void buildPagerHeader(){
 
 	}
 
@@ -172,12 +273,30 @@ public class PostPreviewFragment extends AbstractPagerFragment{
 		Log.e("TCDetail", msg);
 	}
 
-	public void setLstHistory(List<HistoryModel> lstHistory){
-		this.lstHistory = lstHistory;
+	@Override
+	public boolean hasBackBtn(){
+		return false;
+	}
+
+	@Override
+	public boolean hasSettingBtn(){
+		return false;
 	}
 
 	@Override
 	public void onDestroy(){
 		super.onDestroy();
+	}
+
+	@Override
+	public void onClick(View view) {
+		switch (view.getId()) {
+			case R.id.btn_cancel:
+				getFragmentManager().popBackStack();
+				break;
+			case R.id.btn_done:
+				requestPostNewCard();
+				break;
+		}
 	}
 }

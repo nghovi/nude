@@ -1,11 +1,14 @@
 package trente.asia.thankscard.services.posted;
 
+import android.os.Bundle;
+
 import java.util.List;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import trente.asia.thankscard.R;
+import trente.asia.thankscard.activities.MainActivity;
 import trente.asia.thankscard.commons.defines.TcConst;
 import trente.asia.thankscard.fragments.AbstractTCListFragment;
 import trente.asia.thankscard.services.common.model.HistoryModel;
@@ -67,5 +70,14 @@ public class PostTCListFragment extends AbstractTCListFragment{
 	@Override
 	protected int getDetailTCTitle(){
 		return R.string.fragment_tc_detail_title_pos;
+	}
+
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		if (((MainActivity) activity).loadData) {
+			initData();
+			((MainActivity) activity).loadData = false;
+		}
 	}
 }

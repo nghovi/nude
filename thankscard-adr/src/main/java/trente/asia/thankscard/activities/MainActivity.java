@@ -24,7 +24,7 @@ import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
 import trente.asia.welfare.adr.pref.PreferencesSystemUtil;
 
 public class MainActivity extends WelfareActivity{
-
+	public boolean loadData = false;
 	@Override
 	protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);

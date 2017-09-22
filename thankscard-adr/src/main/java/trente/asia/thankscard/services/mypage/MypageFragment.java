@@ -31,6 +31,7 @@ import asia.chiase.core.util.CCNumberUtil;
 import asia.chiase.core.util.CCStringUtil;
 import io.realm.Realm;
 import trente.asia.thankscard.R;
+import trente.asia.thankscard.activities.MainActivity;
 import trente.asia.thankscard.commons.defines.TcConst;
 import trente.asia.thankscard.fragments.AbstractTCFragment;
 import trente.asia.thankscard.fragments.dialogs.RankStageDialog;
@@ -39,6 +40,7 @@ import trente.asia.thankscard.services.mypage.model.NoticeModel;
 import trente.asia.thankscard.services.mypage.model.StampCategoryModel;
 import trente.asia.thankscard.services.mypage.model.StampModel;
 import trente.asia.thankscard.services.mypage.view.NoticeListAdapter;
+import trente.asia.thankscard.services.posted.PostPreviewFragment;
 import trente.asia.thankscard.services.posted.PostTCFragment;
 import trente.asia.thankscard.services.rank.model.RankStage;
 import trente.asia.welfare.adr.define.WelfareConst;
@@ -76,8 +78,8 @@ public class MypageFragment extends AbstractTCFragment{
 		float screenWidth = Float.parseFloat(preference.get(TcConst.PREF_FRAME_WIDTH));
 		float normalMessageWidth = screenWidth - WelfareUtil.dpToPx(140);
 		float photoMessageWidth = screenWidth / 2 - WelfareUtil.dpToPx(20);
-		float normalTextSize = (float)(normalMessageWidth / 15);
-		float photoTextSize = (float)(photoMessageWidth / 15);
+		float normalTextSize = normalMessageWidth / 15;
+		float photoTextSize = photoMessageWidth / 15;
 		preference.set(TcConst.PREF_NORMAL_TEXT_SIZE, String.valueOf(normalTextSize));
 		preference.set(TcConst.PREF_PHOTO_TEXT_SIZE, String.valueOf(photoTextSize));
 		checkBirthday(preference);
@@ -143,6 +145,15 @@ public class MypageFragment extends AbstractTCFragment{
 	}
 
 	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		if (((MainActivity) activity).loadData) {
+			initData();
+			((MainActivity) activity).loadData = false;
+		}
+	}
+
+	@Override
 	protected void initData(){
 		requestMypageInfo();
 		loadStamps();
@@ -171,7 +182,6 @@ public class MypageFragment extends AbstractTCFragment{
 
 			@Override
 			public void onClick(View v){
-				// gotoPostEdit(null);
 				gotoFragment(new PostTCFragment());
 			}
 		});

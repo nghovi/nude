@@ -403,7 +403,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 			break;
 		case R.id.btn_send:
 //			checkNewCard();
-			gotoFragment(new PostPreviewFragment());
+			showPreviewPost();
 			break;
 		case R.id.main_layout:
 			if(showLayoutSticker){
@@ -414,6 +414,17 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 		default:
 			break;
 		}
+	}
+
+	private void showPreviewPost() {
+		PostPreviewFragment previewFragment = new PostPreviewFragment();
+		previewFragment.setImagePath(mImagePath);
+		previewFragment.setCanSendPhoto(canSendPhoto);
+		previewFragment.setStickers(stickers);
+		previewFragment.setMessage(message);
+		previewFragment.setReceiver(member);
+		previewFragment.setTemplate(template);
+		gotoFragment(previewFragment);
 	}
 
 	private void showDialogChoosePicture(){

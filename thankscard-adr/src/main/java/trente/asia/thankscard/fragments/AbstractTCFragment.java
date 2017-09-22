@@ -6,6 +6,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +22,7 @@ import java.text.ParseException;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.thankscard.BuildConfig;
 import trente.asia.thankscard.R;
+import trente.asia.thankscard.activities.MainActivity;
 import trente.asia.thankscard.commons.defines.TcConst;
 import trente.asia.thankscard.services.common.TcLogInFragment;
 import trente.asia.thankscard.services.mypage.MypageFragment;
@@ -42,6 +46,12 @@ public abstract class AbstractTCFragment extends WelfareFragment{
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		host = BuildConfig.HOST;
+	}
+
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+
 	}
 
 	@Override

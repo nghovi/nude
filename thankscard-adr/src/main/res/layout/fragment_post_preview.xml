@@ -1,103 +1,172 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    style="@style/wf_common_match">
+<layout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        style="@style/wf_common_match">
 
-    <include layout="@layout/view_common_header_strip" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_marginBottom="@dimen/wf_margin_16"
-        android:orientation="vertical">
+        <include layout="@layout/view_common_header_strip" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginBottom="@dimen/wf_margin_16"
             android:orientation="vertical">
 
-            <android.support.percent.PercentRelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="visible">
+                android:orientation="vertical">
 
-                <android.support.percent.PercentRelativeLayout
-                    android:id="@+id/rlt_card"
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_16dp"
                     android:layout_marginTop="@dimen/margin_16dp"
-                    android:background="@color/chiase_white">
+                    android:text="@string/tc_confirmation_title"
+                    style="@style/tc_text_black_14sp"/>
 
-                    <ImageView
-                        android:id="@+id/layout_photo"
+                <TextView
+                    android:id="@+id/confirm_msg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_16dp"
+                    android:layout_marginTop="@dimen/margin_16dp"
+                    android:layout_marginBottom="@dimen/margin_16dp"
+                    android:text="@string/tc_confirmation_message"
+                    style="@style/tc_text_black_14sp"/>
+
+                <android.support.percent.PercentRelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible">
+
+                    <android.support.percent.PercentRelativeLayout
+                        android:id="@+id/rlt_card"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:scaleType="fitXY" />
+                        android:background="@color/chiase_white">
 
-                    <ImageView
-                        android:id="@+id/img_card"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp"
-                        android:adjustViewBounds="true" />
-                </android.support.percent.PercentRelativeLayout>
+                        <ImageView
+                            android:id="@+id/layout_photo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:scaleType="fitXY" />
 
-                <LinearLayout
-                    android:id="@+id/lnr_message"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    app:layout_widthPercent="50%">
+                        <ImageView
+                            android:id="@+id/img_card"
+                            android:layout_width="match_parent"
+                            android:minHeight="200dp"
+                            android:adjustViewBounds="true" />
+                    </android.support.percent.PercentRelativeLayout>
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:id="@+id/lnr_message"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/margin_10dp"
-                        android:layout_marginStart="@dimen/margin_10dp"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        app:layout_widthPercent="50%">
 
-                        <TextView
-                            android:id="@+id/txt_tc_detail_date"
-                            style="@style/tc_text_black_12"
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="start"
-                            android:ellipsize="end"
-                            android:singleLine="true"
-                            android:text="@string/fragment_tc_detail_date" />
+                            android:layout_marginEnd="@dimen/margin_10dp"
+                            android:layout_marginStart="@dimen/margin_10dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/txt_tc_detail_date"
+                                style="@style/tc_text_black_12"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="start"
+                                android:ellipsize="end"
+                                android:singleLine="true"
+                                android:text="@string/fragment_tc_detail_date" />
+
+                            <TextView
+                                android:id="@+id/txt_tc_detail_to"
+                                style="@style/tc_text_black_12"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="start"
+                                android:layout_marginBottom="@dimen/margin_10dp"
+                                android:ellipsize="end"
+                                android:singleLine="true"
+                                android:text="@string/fragment_tc_detail_to" />
+                        </LinearLayout>
 
                         <TextView
-                            android:id="@+id/txt_tc_detail_to"
-                            style="@style/tc_text_black_12"
-                            android:layout_width="wrap_content"
+                            android:id="@+id/text_message"
+                            style="@style/tc_text_black_bold"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="start"
-                            android:layout_marginBottom="@dimen/margin_10dp"
-                            android:ellipsize="end"
-                            android:singleLine="true"
-                            android:text="@string/fragment_tc_detail_to" />
+                            android:layout_margin="@dimen/margin_0dp"
+                            android:paddingEnd="@dimen/margin_10dp"
+                            android:paddingStart="@dimen/margin_10dp" />
                     </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/text_message"
-                        style="@style/tc_text_black_bold"
-                        android:layout_width="match_parent"
+                    <RelativeLayout
+                        android:id="@+id/rlt_stickers"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/margin_0dp"
-                        android:paddingEnd="@dimen/margin_10dp"
-                        android:paddingStart="@dimen/margin_10dp" />
-                </LinearLayout>
+                        android:layout_alignBottom="@id/rlt_card"
+                        android:layout_alignEnd="@id/rlt_card"
+                        android:layout_alignStart="@+id/rlt_card"
+                        android:layout_alignTop="@+id/rlt_card" />
 
-                <RelativeLayout
-                    android:id="@+id/rlt_stickers"
+                </android.support.percent.PercentRelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_16dp"
+                android:layout_marginStart="@dimen/margin_16dp"
+                android:gravity="center_vertical">
+                <CheckBox
+                    android:id="@+id/checkbox_secret"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignBottom="@id/rlt_card"
-                    android:layout_alignEnd="@id/rlt_card"
-                    android:layout_alignStart="@+id/rlt_card"
-                    android:layout_alignTop="@+id/rlt_card" />
+                    android:text="@string/tc_secret_mode"
+                    style="@style/tc_text_black_14sp"
+                    android:layout_marginStart="@dimen/margin_8dp"/>
+            </LinearLayout>
 
-            </android.support.percent.PercentRelativeLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_16dp"
+                android:orientation="horizontal"
+                android:gravity="center">
+                <TextView
+                    android:id="@+id/btn_cancel"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="@string/wf_cancel"
+                    android:paddingTop="@dimen/margin_8dp"
+                    android:paddingBottom="@dimen/margin_8dp"
+                    android:layout_marginStart="@dimen/margin_32dp"
+                    android:background="@color/wf_login_button_color_on"
+                    android:gravity="center"
+                    style="@style/tc_text_white_14sp"/>
+                <TextView
+                    android:id="@+id/btn_done"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/margin_8dp"
+                    android:paddingBottom="@dimen/margin_8dp"
+                    android:text="@string/chiase_common_send"
+                    style="@style/tc_text_white_14sp"
+                    android:background="@color/wf_login_button_color_on"
+                    android:layout_marginStart="@dimen/margin_32dp"
+                    android:layout_marginEnd="@dimen/margin_32dp"
+                    android:gravity="center"/>
+            </LinearLayout>
         </LinearLayout>
 
     </LinearLayout>
-
-</LinearLayout>
+</layout>

@@ -53,10 +53,6 @@ public abstract class AbstractPagerFragment extends AbstractTCFragment{
 		buildDirectButton();
 	}
 
-	// protected void setOnPageSelectedListener(){
-	// this.onPageSelectedListener = null;
-	// }
-
 	protected void buildDirectButton(){
 		btnNext = (Button)getView().findViewById(R.id.btn_view_common_pager_next);
 		btnBack = (Button)getView().findViewById(R.id.btn_view_common_pager_back);
