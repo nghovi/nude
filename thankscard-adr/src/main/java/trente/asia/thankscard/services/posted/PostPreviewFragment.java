@@ -151,7 +151,7 @@ public class PostPreviewFragment extends AbstractPagerFragment implements View.O
 	}
 
 	private void setLayoutMessageCenter(LinearLayout lnrMessage){
-		PercentRelativeLayout.LayoutParams params = new PercentRelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+		PercentRelativeLayout.LayoutParams params = new PercentRelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
 		params.addRule(RelativeLayout.CENTER_HORIZONTAL);
 		params.width = ViewGroup.LayoutParams.MATCH_PARENT;
 		params.getPercentLayoutInfo().widthPercent = 1f;
@@ -160,7 +160,7 @@ public class PostPreviewFragment extends AbstractPagerFragment implements View.O
 	}
 
 	private void setLayoutMessageRight(LinearLayout lnrMessage){
-		PercentRelativeLayout.LayoutParams params = new PercentRelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+		PercentRelativeLayout.LayoutParams params = new PercentRelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
 		params.addRule(RelativeLayout.ALIGN_PARENT_END);
 		params.getPercentLayoutInfo().widthPercent = 0.5f;
 		params.setMargins(0, WelfareUtil.dpToPx(36), 0, 0);
