@@ -182,7 +182,6 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 
 			@Override
 			public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2){
-				log(charSequence.toString());
 			}
 
 			@Override
@@ -192,11 +191,11 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 
 			@Override
 			public void afterTextChanged(Editable editable){
-				log(editable.toString());
 				if(!canSendPhoto){
 					message = editable.toString();
 					int textCount = MAX_LETTER - (message.getBytes().length / 3);
 					binding.txtCount.setText(String.valueOf(textCount));
+
 					binding.edtMessagePhoto.setText(message);
 					if(textCount < 0){
 						binding.txtCount.setTextColor(Color.RED);
@@ -385,9 +384,9 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 					closeLayoutSticker();
 				}else{
 					openStickersFromBtn = true;
-					if (!isOpenKeyBoard) {
+					if(!isOpenKeyBoard){
 						showLayoutSticker();
-					} else {
+					}else{
 						hideSoftKeyboard();
 					}
 				}
@@ -416,7 +415,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 		}
 	}
 
-	private void showPreviewPost() {
+	private void showPreviewPost(){
 		PostPreviewFragment previewFragment = new PostPreviewFragment();
 		previewFragment.setImagePath(mImagePath);
 		previewFragment.setCanSendPhoto(canSendPhoto);
