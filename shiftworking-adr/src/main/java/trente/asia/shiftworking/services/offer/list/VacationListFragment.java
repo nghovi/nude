@@ -22,12 +22,12 @@ import trente.asia.shiftworking.R;
 import trente.asia.shiftworking.common.defines.SwConst;
 import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
 import trente.asia.shiftworking.common.interfaces.OnFilterListener;
+import trente.asia.shiftworking.common.interfaces.OnVacationAdapterListener;
 import trente.asia.shiftworking.databinding.FragmentVacationListBinding;
-import trente.asia.shiftworking.services.offer.adapter.OfferAdapter;
+import trente.asia.shiftworking.services.offer.adapter.VacationAdapter;
 import trente.asia.shiftworking.services.offer.detail.VacationDetailFragment;
 import trente.asia.shiftworking.services.offer.filter.VacationFilterFragment;
 import trente.asia.shiftworking.services.offer.model.VacationModel;
-import trente.asia.shiftworking.services.offer.model.WorkOfferModel;
 import trente.asia.shiftworking.services.shiftworking.view.CommonMonthView;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.define.WfUrlConst;
@@ -36,16 +36,16 @@ import trente.asia.welfare.adr.models.DeptModel;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WelfareUtil;
 
-public class VacationListFragment extends AbstractSwFragment implements OnFilterListener{
+public class VacationListFragment extends AbstractSwFragment implements OnFilterListener, OnVacationAdapterListener{
 
-	private OfferAdapter adapter;
-	private List<VacationModel>		offers;
-	private List<VacationModel>		otherOffers;
+	private VacationAdapter				adapter;
+	private List<VacationModel>			offers;
+	private List<VacationModel>			otherOffers;
 	private List<ApiObjectModel>		vacationTypes;
 	private List<DeptModel>				depts;
 	private ListView					mLstOffer;
 	private CommonMonthView				monthView;
-	private OfferAdapter				adapterOther;
+	private VacationAdapter				adapterOther;
 	private ListView					mLstOfferOther;
 	private FragmentVacationListBinding	binding;
 	private String						ALL;
@@ -84,29 +84,11 @@ public class VacationListFragment extends AbstractSwFragment implements OnFilter
 		super.initView();
 		monthView = (CommonMonthView)getView().findViewById(R.id.view_id_month);
 		monthView.initialization();
-		mLstOffer = (ListView)getView().findViewById(R.id.lst_work_offer);
-		mLstOfferOther = (ListView)getView().findViewById(R.id.lst_fragment_work_offer_other);
-		mLstOffer.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id){
-				VacationModel offer = offers.get(position);
-				gotoWorkOfferDetail(offer, SwConst.SW_OFFER_EXEC_TYPE_VIEW);
-			}
-		});
-		mLstOfferOther.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id){
-				VacationModel offer = otherOffers.get(position);
-				gotoWorkOfferDetail(offer, SwConst.SW_OFFER_EXEC_TYPE_APR);
-			}
-		});
-
 		monthView.imgBack.setOnClickListener(this);
 		monthView.imgNext.setOnClickListener(this);
 		monthView.btnThisMonth.setOnClickListener(this);
-
+		mLstOffer = (ListView)getView().findViewById(R.id.lst_work_offer);
+		mLstOfferOther = (ListView)getView().findViewById(R.id.lst_fragment_work_offer_other);
 		binding.txtFilter.setText(getString(R.string.sw_work_offer_list_filter, ALL + " - " + ALL + " - " + ALL));
 		binding.lnrIdFilter.setOnClickListener(this);
 	}
@@ -154,22 +136,26 @@ public class VacationListFragment extends AbstractSwFragment implements OnFilter
 			vacationTypes = CCJsonUtil.convertToModelList(response.optString("vacationList"), ApiObjectModel.class);
 			ApiObjectModel allType = new ApiObjectModel(CCConst.ALL, ALL);
 			vacationTypes.add(0, allType);
-			if (vacationTypes == null) {
+			if(vacationTypes == null){
 				selectedType = vacationTypes.get(0);
 			}
 
-			adapterOther = new OfferAdapter(activity, otherOffers);
+			adapterOther = new VacationAdapter(activity, otherOffers);
 			mLstOfferOther.setAdapter(adapterOther);
+			adapterOther.setCallback(this);
+			adapterOther.setType(SwConst.SW_OFFER_EXEC_TYPE_APR);
 
-			adapter = new OfferAdapter(activity, offers);
+			adapter = new VacationAdapter(activity, offers);
 			mLstOffer.setAdapter(adapter);
+			adapter.setCallback(this);
+			adapter.setType(SwConst.SW_OFFER_EXEC_TYPE_VIEW);
 		}else if(WfUrlConst.WF_ACC_INFO_DETAIL.equals(url)){
 			depts = CCJsonUtil.convertToModelList(response.optString("depts"), DeptModel.class);
 			DeptModel department = new DeptModel(CCConst.ALL, ALL);
 			department.members = new ArrayList<>();
 			UserModel user = new UserModel(CCConst.ALL, ALL);
 			for(DeptModel dept : depts){
-				for (UserModel member : dept.members) {
+				for(UserModel member : dept.members){
 					department.members.add(member);
 				}
 				dept.members.add(0, user);
@@ -238,5 +224,10 @@ public class VacationListFragment extends AbstractSwFragment implements OnFilter
 		String filter = dept.deptName + " - " + user.userName + " - " + type.value;
 		binding.txtFilter.setText(getString(R.string.sw_work_offer_list_filter, filter));
 		requestOfferList();
+	}
+
+	@Override
+	public void onVationAdapterClick(VacationModel vacation, String type) {
+		gotoWorkOfferDetail(vacation, type);
 	}
 }

@@ -25,7 +25,6 @@ import trente.asia.shiftworking.common.defines.SwConst;
 import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
 import trente.asia.shiftworking.common.interfaces.OnFilterListener;
 import trente.asia.shiftworking.databinding.FragmentOvertimeListBinding;
-import trente.asia.shiftworking.services.offer.adapter.OfferAdapter;
 import trente.asia.shiftworking.services.offer.adapter.OvertimeAdapter;
 import trente.asia.shiftworking.services.offer.detail.OvertimeDetailFragment;
 import trente.asia.shiftworking.services.offer.filter.OvertimeFilterFragment;

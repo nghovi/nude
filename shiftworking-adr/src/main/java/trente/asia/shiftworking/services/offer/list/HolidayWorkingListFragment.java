@@ -26,7 +26,6 @@ import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
 import trente.asia.shiftworking.common.interfaces.OnFilterListener;
 import trente.asia.shiftworking.databinding.FragmentHolidayWorkingListBinding;
 import trente.asia.shiftworking.services.offer.adapter.HolidayWorkingAdapter;
-import trente.asia.shiftworking.services.offer.adapter.OfferAdapter;
 import trente.asia.shiftworking.services.offer.detail.HolidayWorkingDetailFragment;
 import trente.asia.shiftworking.services.offer.filter.HolidayWorkingFilterFragment;
 import trente.asia.shiftworking.services.offer.model.WorkOfferModel;

@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import trente.asia.shiftworking.BuildConfig;
 import trente.asia.shiftworking.R;
+import trente.asia.shiftworking.common.interfaces.OnVacationAdapterListener;
 import trente.asia.shiftworking.services.offer.model.VacationModel;
 import trente.asia.shiftworking.services.offer.model.WorkOfferModel;
 import trente.asia.welfare.adr.utils.WfPicassoHelper;
@@ -22,13 +23,23 @@ import trente.asia.welfare.adr.utils.WfPicassoHelper;
  *
  * @author TrungND
  */
-public class OfferAdapter extends ArrayAdapter<VacationModel>{
+public class VacationAdapter extends ArrayAdapter<VacationModel>{
 
 	private List<VacationModel>		lstHistory;
 	private Context				mContext;
 	private int					layoutId;
+	private OnVacationAdapterListener callback;
+	private String type;
 
-	public OfferAdapter(Context context, List<VacationModel> lstHistory){
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public void setCallback(OnVacationAdapterListener callback) {
+		this.callback = callback;
+	}
+
+	public VacationAdapter(Context context, List<VacationModel> lstHistory){
 		super(context, R.layout.item_offer, lstHistory);
 		this.mContext = context;
 		this.layoutId = R.layout.item_offer;
@@ -48,16 +59,24 @@ public class OfferAdapter extends ArrayAdapter<VacationModel>{
 			viewHolder.txtType = (TextView)convertView.findViewById(R.id.txt_item_offer_type);
 			viewHolder.txtStatus = (TextView)convertView.findViewById(R.id.txt_item_offer_status);
 			convertView.setTag(viewHolder);
+
 		}else{
 			viewHolder = (ViewHolder)convertView.getTag();
 		}
-		VacationModel offer = getItem(position);
+		final VacationModel offer = getItem(position);
 		WfPicassoHelper.loadImageWithDefaultIcon(mContext, BuildConfig.HOST, viewHolder.imgAvatar, offer.userAvatarPath, R.drawable.wf_profile);
 		viewHolder.txtUsername.setText(offer.userName);
 		viewHolder.txtDate.setText(offer.startDateString);
 		viewHolder.txtType.setText(offer.vacationName);
 		viewHolder.txtStatus.setText(offer.offerStatusName);
-
+		convertView.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				if (callback != null) {
+					callback.onVationAdapterClick(offer, type);
+				}
+			}
+		});
 		return convertView;
 	}
 
