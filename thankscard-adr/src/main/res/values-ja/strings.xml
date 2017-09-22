@@ -138,8 +138,8 @@
     <string name="tc_explain_gold">" 特別なカードがもらえます"</string>
     <string name="tc_explain_regular">カードでメッセージを送ることができます。</string>
     <string name="tc_stage_information">ステージ情報</string>
-    <string name="tc_confirm_dialog_title">確認メッセージ</string>
-    <string name="tc_confirm_msg">%1$sさんへ\nメッセージを送りますか？</string>
+    <string name="tc_confirm_dialog_title">送信確認</string>
+    <string name="tc_confirm_msg">%1$sさんへメッセージを送りますか？</string>
     <string name="tc_secret_mode">シークレットモードで送る</string>
     <string name="tc_no_rank">- 位</string>
     <string name="tc_1_rank">%1$s位</string>
