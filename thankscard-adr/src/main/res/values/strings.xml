@@ -175,6 +175,4 @@
     <string name="tc_cropping_title" formatted="false">Adjust photo’s size</string>
     <string name="tc_done">Done</string>
     <string name="tc_preview">Preview</string>
-    <string name="tc_confirmation_title">Confirmation message</string>
-    <string name="tc_confirmation_message">Do you want to send message to %1s ?</string>
 </resources>

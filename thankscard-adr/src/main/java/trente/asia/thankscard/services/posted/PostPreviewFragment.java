@@ -134,7 +134,7 @@ public class PostPreviewFragment extends AbstractPagerFragment implements View.O
 		String postDateFormat = CCFormatUtil.formatDate(new Date());
 		textDate.setText(postDateFormat);
 		textTo.setText(getString(R.string.fragment_tc_detail_to, receiver.userName));
-		binding.confirmMsg.setText(getString(R.string.tc_confirmation_message, receiver.userName));
+		binding.confirmMsg.setText(getString(R.string.tc_confirm_msg, receiver.userName));
 		textMessage.setTypeface(Typeface.MONOSPACE);
 
 		if(!canSendPhoto){

@@ -22,7 +22,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_16dp"
                     android:layout_marginTop="@dimen/margin_16dp"
-                    android:text="@string/tc_confirmation_title"
+                    android:text="@string/tc_confirm_dialog_title"
                     style="@style/tc_text_black_14sp"/>
 
                 <TextView
@@ -32,7 +32,7 @@
                     android:layout_marginStart="@dimen/margin_16dp"
                     android:layout_marginTop="@dimen/margin_16dp"
                     android:layout_marginBottom="@dimen/margin_16dp"
-                    android:text="@string/tc_confirmation_message"
+                    android:text="@string/tc_confirm_msg"
                     style="@style/tc_text_black_14sp"/>
 
                 <android.support.percent.PercentRelativeLayout

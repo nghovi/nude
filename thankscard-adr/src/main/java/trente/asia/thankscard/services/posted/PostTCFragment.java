@@ -182,7 +182,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 
 			@Override
 			public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2){
-
+				log(charSequence.toString());
 			}
 
 			@Override
@@ -192,6 +192,7 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 
 			@Override
 			public void afterTextChanged(Editable editable){
+				log(editable.toString());
 				if(!canSendPhoto){
 					message = editable.toString();
 					int textCount = MAX_LETTER - (message.getBytes().length / 3);
@@ -402,7 +403,6 @@ public class PostTCFragment extends AbstractTCFragment implements View.OnClickLi
 			chooseImage();
 			break;
 		case R.id.btn_send:
-//			checkNewCard();
 			showPreviewPost();
 			break;
 		case R.id.main_layout:

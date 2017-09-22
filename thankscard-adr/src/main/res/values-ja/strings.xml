@@ -165,4 +165,5 @@
     <string name="tc_normal_card_tab">ノーマル</string>
     <string name="tc_photo_card_tab">写真付き</string>
     <string name="tc_done">完了</string>
+    <string name="tc_preview">プレビュー</string>
 </resources>
