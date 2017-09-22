@@ -254,7 +254,7 @@ public class HolidayWorkingDetailFragment extends AbstractSwFragment{
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
-		requestUpdate(SwConst.API_OFFER_APPROVE, jsonObject, true);
+		requestUpdate(SwConst.API_HOLIDAY_WORKING_APPROVE, jsonObject, true);
 	}
 
 	private void onClickBtnReject(){
