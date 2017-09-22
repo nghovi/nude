@@ -78,7 +78,7 @@ public class SwConst {
     public static final String API_HOLIDAY_WORKING_DELETE = "/api/sw/holiday/delete";
     public static final String API_HOLIDAY_WORKING_APPROVE = "/api/sw/holiday/approve";
     public static final String API_OFFER_UPDATE = "/api/sw/offer/update";
-    public static final String API_OFFER_APPROVE = "/api/sw/offer/approve";
+    public static final String API_VACATION_APPROVE = "/api/sw/vacation/approve";
     public static final String API_OFFER_DELETE = "/api/sw/offer/delete";
     public static final String API_UPDATE_CHECKIN_TYPE = "api/sw/checkintype/update";
 }
