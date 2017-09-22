@@ -16,7 +16,6 @@ import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +33,7 @@ import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
 import trente.asia.shiftworking.databinding.FragmentOfferDetailBinding;
 import trente.asia.shiftworking.services.offer.edit.VacationEditFragment;
 import trente.asia.shiftworking.services.offer.list.VacationListFragment;
-import trente.asia.shiftworking.services.offer.model.WorkOfferModel;
+import trente.asia.shiftworking.services.offer.model.VacationModel;
 import trente.asia.shiftworking.services.offer.adapter.VacationApproveHistoryAdapter;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.models.ApiObjectModel;
@@ -42,9 +41,7 @@ import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 
 public class VacationDetailFragment extends AbstractSwFragment{
 
-	private WorkOfferModel				offer;
-	private Map<String, String>			targetUserModels	= new HashMap<String, String>();
-	private Map<String, List<Double>>	groupInfo;
+	private VacationModel				offer;
 	private ImageView					imgEdit;
 	private Map<String, String>			offerStatusMaster;
 	private String						offerPermission;
@@ -106,18 +103,16 @@ public class VacationDetailFragment extends AbstractSwFragment{
 	@Override
 	protected void successLoad(JSONObject response, String url){
 		if(SwConst.API_VACATION_DETAIL.equals(url)){
-			offer = CCJsonUtil.convertToModel(response.optString("offer"), WorkOfferModel.class);
+			offer = CCJsonUtil.convertToModel(response.optString("vacation"), VacationModel.class);
 			setWorkOffer(offer);
 
 			offerPermission = response.optString("permission");
 			offerStatusMaster = buildOfferStatusMaster(response);
 
-			groupInfo = CCJsonUtil.convertToModel(response.optString("groupJoinMap"), Map.class);
 			if(offer == null){
 				((MainActivity)activity).isInitData = true;
 				onClickBackBtn();
 			}else{
-				targetUserModels = CCJsonUtil.convertToModel(response.optString("targetUserModel"), Map.class);
 				buildWorkOfferDetail();
 			}
 		}else{
@@ -149,7 +144,7 @@ public class VacationDetailFragment extends AbstractSwFragment{
 		return WelfareFormatUtil.convertList2Map(lstStatus);
 	}
 
-	private void setWorkOffer(WorkOfferModel offerModel){
+	private void setWorkOffer(VacationModel offerModel){
 		try{
 			LinearLayout lnrContent = (LinearLayout)getView().findViewById(R.id.lnr_id_content);
 			Gson gson = new Gson();
@@ -166,45 +161,18 @@ public class VacationDetailFragment extends AbstractSwFragment{
 		}
 
 		((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_offer_user)).setText(offerModel.userName);
-		((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_offer_type)).setText(offerModel.offerTypeName);
+		((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_offer_type)).setText(offerModel.vacationName);
 		((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_start_date)).setText(offerModel.startDateString);
 		((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_end_date)).setText(offerModel.endDateString);
 		((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_note)).setText(offerModel.note);
 
-		if(WorkOfferModel.OFFER_TYPE_PAID_VACATION_ALL.equals(offerModel.offerType) || WorkOfferModel.OFFER_TYPE_PAID_VACATION_MORNING.equals(offerModel.offerType) || WorkOfferModel.OFFER_TYPE_PAID_VACATION_AFTERNOON.equals(offerModel.offerType) || WorkOfferModel.OFFER_TYPE_COMPENSATORY_HOLIDAY.equals(offerModel.offerType)){
-			binding.lnrSickAbsent.setVisibility(View.VISIBLE);
-			binding.txtSickAbsent.setText(offerModel.sickAbsent ? "Yes" : "No");
-		}else{
-			binding.lnrSickAbsent.setVisibility(View.INVISIBLE);
-		}
-
-		if(WorkOfferModel.OFFER_TYPE_HOLIDAY_WORKING.equals(offer.offerType) || WorkOfferModel.OFFER_TYPE_OVERTIME.equals(offerModel.offerType) || WorkOfferModel.OFFER_TYPE_SHORT_TIME.equals(offerModel.offerType)){
-			((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_start_time)).setText(offerModel.startTimeString);
-		}else{
-			getView().findViewById(R.id.lnr_start_time).setVisibility(View.GONE);
-		}
-
-		if(WorkOfferModel.OFFER_TYPE_HOLIDAY_WORKING.equals(offer.offerType) || WorkOfferModel.OFFER_TYPE_OVERTIME.equals(offerModel.offerType) || WorkOfferModel.OFFER_TYPE_SHORT_TIME.equals(offerModel.offerType)){
-			((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_end_time)).setText(offerModel.endTimeString);
-		}else{
-			getView().findViewById(R.id.lnr_end_time).setVisibility(View.GONE);
-		}
 	}
 
 	private void buildWorkOfferDetail(){
 		judgeEditPermission();
 		judgeAprovePermission();
 		buildWorkOfferApproveHistory();
-		// buildOfferComment();
 	}
-
-	// private void buildOfferComment(){
-	// if(WorkOfferModel.OFFER_STATUS_OFFER.equals(offer.approveResult) && SwConst.OFFER_CAN_APPROVE.equals(offerPermission)){
-	// getView().findViewById(R.id.lnr_fragment_offer_detail_comment).setVisibility(View.VISIBLE);
-	// }else{
-	// getView().findViewById(R.id.lnr_fragment_offer_detail_comment).setVisibility(View.GONE);
-	// }
-	// }
 
 	private void judgeAprovePermission(){
 		boolean permissionApprove = SwConst.OFFER_CAN_APPROVE.equals(offerPermission);
@@ -279,7 +247,7 @@ public class VacationDetailFragment extends AbstractSwFragment{
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
-		requestUpdate(SwConst.API_OFFER_APPROVE, jsonObject, true);
+		requestUpdate(SwConst.API_VACATION_APPROVE, jsonObject, true);
 	}
 
 	private void onClickBtnReject(){
