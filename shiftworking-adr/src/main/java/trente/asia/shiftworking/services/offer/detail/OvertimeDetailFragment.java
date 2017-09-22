@@ -35,6 +35,7 @@ import trente.asia.shiftworking.databinding.FragmentOfferDetailBinding;
 import trente.asia.shiftworking.databinding.FragmentOvertimeDetailBinding;
 import trente.asia.shiftworking.services.offer.adapter.VacationApproveHistoryAdapter;
 import trente.asia.shiftworking.services.offer.edit.OvertimeEditFragment;
+import trente.asia.shiftworking.services.offer.list.OvertimeListFragment;
 import trente.asia.shiftworking.services.offer.list.VacationListFragment;
 import trente.asia.shiftworking.services.offer.model.WorkOfferModel;
 import trente.asia.welfare.adr.activity.WelfareActivity;
@@ -276,7 +277,7 @@ public class OvertimeDetailFragment extends AbstractSwFragment{
 	protected void onClickBackBtn(){
 		if(isClickNotification){
 			emptyBackStack();
-			gotoFragment(new VacationListFragment());
+			gotoFragment(new OvertimeListFragment());
 		}else{
 			super.onClickBackBtn();
 		}

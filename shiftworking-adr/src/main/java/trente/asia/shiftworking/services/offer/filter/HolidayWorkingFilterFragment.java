@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import trente.asia.android.activity.ChiaseActivity;
 import trente.asia.shiftworking.R;
@@ -71,6 +72,7 @@ public class HolidayWorkingFilterFragment extends AbstractSwFragment implements 
 		super.initHeader(R.drawable.sw_back_white, getString(R.string.fragment_offer_filter_title), null);
 		binding.lnrIdOfferDept.setOnClickListener(this);
 		binding.lnrIdOfferUser.setOnClickListener(this);
+		getView().findViewById(R.id.lnr_id_offer_type).setVisibility(View.GONE);
 		binding.lnrIdOfferType.setOnClickListener(this);
 		binding.btnFragmentFilterClear.setOnClickListener(this);
 		binding.btnFragmentFilterUpdate.setOnClickListener(this);

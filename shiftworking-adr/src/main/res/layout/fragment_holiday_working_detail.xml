@@ -25,7 +25,7 @@
                     android:layout_marginBottom="@dimen/margin_10dp"
                     android:paddingLeft="@dimen/margin_16dp"
                     android:paddingRight="@dimen/margin_16dp"
-                    android:text="@string/fragment_overtime_detail_header" />
+                    android:text="@string/fragment_holiday_working_detail_header" />
 
                 <View style="@style/cs_common_divider" />
 
@@ -37,7 +37,7 @@
                         android:text="@string/fragment_offer_edit_offer_user" />
 
                     <trente.asia.android.view.ChiaseTextView
-                        android:id="@+id/txt_fragment_overtime_detail_offer_user"
+                        android:id="@+id/txt_fragment_holiday_working_detail_offer_user"
                         style="@style/wl_common_edit_text2"
                         android:layout_marginStart="@dimen/margin_10dp"
                         custom:mName="offerUser" />
@@ -50,47 +50,16 @@
                     <TextView
                         style="@style/wl_common_text"
                         android:layout_width="wrap_content"
-                        android:text="@string/fragment_offer_edit_offer_type" />
+                        android:text="@string/fragment_holiday_working_detail_expected_date" />
 
                     <trente.asia.android.view.ChiaseTextView
-                        android:id="@+id/txt_fragment_overtime_detail_offer_type"
-                        style="@style/wl_common_edit_text2"
-                        android:layout_marginStart="@dimen/margin_10dp"
-                        custom:mName="overtimeType" />
-                </LinearLayout>
-
-                <View style="@style/cs_common_divider" />
-
-                <LinearLayout style="@style/wf_common_item_linear2">
-
-                    <TextView
-                        style="@style/wl_common_text"
-                        android:layout_width="wrap_content"
-                        android:text="@string/fragment_overtime_detail_expected_date" />
-
-                    <trente.asia.android.view.ChiaseTextView
-                        android:id="@+id/txt_fragment_overtime_detail_start_date"
+                        android:id="@+id/txt_fragment_holiday_working_detail_start_date"
                         style="@style/wl_common_edit_text2"
                         android:layout_marginStart="@dimen/margin_10dp"
                         custom:mName="startDateString" />
                 </LinearLayout>
 
                 <View style="@style/cs_common_divider" />
-
-                <LinearLayout style="@style/wf_common_item_linear2">
-
-                    <TextView
-                        style="@style/wl_common_text"
-                        android:layout_width="wrap_content"
-                        android:text="@string/fragment_overtime_detail_expected_time" />
-
-                    <trente.asia.android.view.ChiaseTextView
-                        android:id="@+id/txt_fragment_overtime_detail_start_time"
-                        style="@style/wl_common_edit_text2"
-                        android:layout_marginStart="@dimen/margin_10dp"
-                        custom:mName="startTimeString" />
-                </LinearLayout>
-
 
                 <LinearLayout
                     style="@style/cs_common_match"
@@ -110,7 +79,7 @@
                     <LinearLayout style="@style/wf_common_item_linear2">
 
                         <trente.asia.android.view.ChiaseTextView
-                            android:id="@+id/txt_fragment_overtime_detail_reason"
+                            android:id="@+id/txt_fragment_holiday_working_detail_reason"
                             style="@style/wl_common_text"
                             custom:mName="note" />
                     </LinearLayout>
@@ -119,7 +88,7 @@
                 <View style="@style/cs_common_divider" />
 
                 <LinearLayout
-                    android:id="@+id/lnr_fragment_overtime_detail_offer_status"
+                    android:id="@+id/lnr_fragment_holiday_working_detail_offer_status"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_10dp"
@@ -159,7 +128,7 @@
                         style="@style/wf_common_item_linear2"
                         android:layout_marginTop="@dimen/margin_10dp"
                         android:orientation="vertical">
-                        
+
                         <EditText
                             android:id="@+id/edt_fragment_offer_detail_comment"
                             style="@style/wl_common_edit_text_multi_line2"

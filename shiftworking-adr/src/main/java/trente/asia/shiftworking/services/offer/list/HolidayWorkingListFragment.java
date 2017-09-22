@@ -42,7 +42,7 @@ public class HolidayWorkingListFragment extends AbstractSwFragment implements On
     private OfferAdapter adapter;
     private List<WorkOfferModel>		offers;
     private List<WorkOfferModel>		otherOffers;
-    private List<ApiObjectModel>		holidayWorkType;
+    private List<ApiObjectModel>		holidayTypes;
     private List<DeptModel>				depts;
     private ListView					mLstOffer;
     private CommonMonthView				monthView;
@@ -109,7 +109,7 @@ public class HolidayWorkingListFragment extends AbstractSwFragment implements On
         monthView.imgNext.setOnClickListener(this);
         monthView.btnThisMonth.setOnClickListener(this);
 
-        binding.txtFilter.setText(getString(R.string.sw_work_offer_list_filter, ALL + " - " + ALL + " - " + ALL));
+        binding.txtFilter.setText(getString(R.string.sw_work_offer_list_filter, ALL + " - " + ALL));
         binding.lnrIdFilter.setOnClickListener(this);
     }
 
@@ -155,9 +155,9 @@ public class HolidayWorkingListFragment extends AbstractSwFragment implements On
             offers = CCJsonUtil.convertToModelList(response.optString("myHolidayWorkOffers"), WorkOfferModel.class);
             otherOffers = CCJsonUtil.convertToModelList(response.optString("otherHolidayWorkOffers"), WorkOfferModel.class);
 
-            holidayWorkType = CCJsonUtil.convertToModelList(response.optString("offerStatusList"), ApiObjectModel.class);
+            holidayTypes = CCJsonUtil.convertToModelList(response.optString("offerStatusList"), ApiObjectModel.class);
             ApiObjectModel allType = new ApiObjectModel(CCConst.ALL, getString(R.string.chiase_common_all));
-            holidayWorkType.add(0, allType);
+            holidayTypes.add(0, allType);
 
             adapterOther = new OfferAdapter(activity, otherOffers);
             mLstOfferOther.setAdapter(adapterOther);
@@ -166,14 +166,19 @@ public class HolidayWorkingListFragment extends AbstractSwFragment implements On
             mLstOffer.setAdapter(adapter);
         }else if(WfUrlConst.WF_ACC_INFO_DETAIL.equals(url)){
             depts = CCJsonUtil.convertToModelList(response.optString("depts"), DeptModel.class);
-            DeptModel department = new DeptModel(CCConst.ALL, getString(R.string.chiase_common_all));
+            DeptModel department = new DeptModel(CCConst.ALL, ALL);
             department.members = new ArrayList<>();
+            UserModel user = new UserModel(CCConst.ALL, ALL);
             for(DeptModel dept : depts){
-                department.members.addAll(dept.members);
-                UserModel user = new UserModel(CCConst.ALL, getString(R.string.chiase_common_all));
-                department.members.add(0, user);
+                for (UserModel member : dept.members) {
+                    department.members.add(member);
+                }
+                dept.members.add(0, user);
             }
+            department.members.add(0, user);
             depts.add(0, department);
+            selectedDept = depts.get(0);
+            selectedUser = selectedDept.members.get(0);
         }else{
             super.successLoad(response, url);
         }
@@ -210,8 +215,8 @@ public class HolidayWorkingListFragment extends AbstractSwFragment implements On
     private void gotoOfferFilterFragment(){
         HolidayWorkingFilterFragment fragment = new HolidayWorkingFilterFragment();
         fragment.setSelected(selectedDept, selectedUser, selectedType);
+        fragment.setHolidayWorkingTypes(holidayTypes);
         fragment.setDepts(depts);
-        fragment.setHolidayWorkingTypes(holidayWorkType);
         fragment.setCallback(this);
         gotoFragment(fragment);
     }
@@ -231,7 +236,7 @@ public class HolidayWorkingListFragment extends AbstractSwFragment implements On
         selectedDept = dept;
         selectedUser = user;
         selectedType = type;
-        String filter = dept.deptName + " - " + user.userName + " - " + type.value;
+        String filter = dept.deptName + " - " + user.userName;
         binding.txtFilter.setText(getString(R.string.sw_work_offer_list_filter, filter));
         requestOfferList();
     }

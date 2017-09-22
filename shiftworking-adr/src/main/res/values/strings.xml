@@ -144,4 +144,6 @@
     <string name="sw_select_user">Select user</string>
     <string name="sw_select_type">Select type</string>
     <string name="sw_search">Search</string>
+    <string name="fragment_holiday_working_detail_header">Holiday working offer detail</string>
+    <string name="fragment_holiday_working_detail_expected_date">Expected date</string>
 </resources>

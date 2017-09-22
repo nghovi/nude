@@ -166,14 +166,19 @@ public class OvertimeListFragment extends AbstractSwFragment implements OnFilter
 			mLstOffer.setAdapter(adapter);
 		}else if(WfUrlConst.WF_ACC_INFO_DETAIL.equals(url)){
 			depts = CCJsonUtil.convertToModelList(response.optString("depts"), DeptModel.class);
-			DeptModel department = new DeptModel(CCConst.ALL, getString(R.string.chiase_common_all));
+			DeptModel department = new DeptModel(CCConst.ALL, ALL);
 			department.members = new ArrayList<>();
+			UserModel user = new UserModel(CCConst.ALL, ALL);
 			for(DeptModel dept : depts){
-				department.members.addAll(dept.members);
-				UserModel user = new UserModel(CCConst.ALL, getString(R.string.chiase_common_all));
-				department.members.add(0, user);
+				for (UserModel member : dept.members) {
+					department.members.add(member);
+				}
+				dept.members.add(0, user);
 			}
+			department.members.add(0, user);
 			depts.add(0, department);
+			selectedDept = depts.get(0);
+			selectedUser = selectedDept.members.get(0);
 		}else{
 			super.successLoad(response, url);
 		}

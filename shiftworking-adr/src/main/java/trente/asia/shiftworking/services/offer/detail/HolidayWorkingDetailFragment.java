@@ -31,9 +31,11 @@ import trente.asia.shiftworking.R;
 import trente.asia.shiftworking.common.activities.MainActivity;
 import trente.asia.shiftworking.common.defines.SwConst;
 import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
+import trente.asia.shiftworking.databinding.FragmentHolidayWorkingDetailBinding;
 import trente.asia.shiftworking.databinding.FragmentOfferDetailBinding;
 import trente.asia.shiftworking.services.offer.adapter.VacationApproveHistoryAdapter;
 import trente.asia.shiftworking.services.offer.edit.VacationEditFragment;
+import trente.asia.shiftworking.services.offer.list.HolidayWorkingListFragment;
 import trente.asia.shiftworking.services.offer.list.VacationListFragment;
 import trente.asia.shiftworking.services.offer.model.WorkOfferModel;
 import trente.asia.welfare.adr.activity.WelfareActivity;
@@ -52,7 +54,7 @@ public class HolidayWorkingDetailFragment extends AbstractSwFragment{
 	private EditText					edtComment;
 	private String						activeOfferId;
 	private String						execType;
-	private FragmentOfferDetailBinding	binding;
+	private FragmentHolidayWorkingDetailBinding binding;
 
 	public void setActiveOfferId(String activeOfferId){
 		this.activeOfferId = activeOfferId;
@@ -65,7 +67,7 @@ public class HolidayWorkingDetailFragment extends AbstractSwFragment{
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 		if(mRootView == null){
-			binding = DataBindingUtil.inflate(inflater, R.layout.fragment_offer_detail, container, false);
+			binding = DataBindingUtil.inflate(inflater, R.layout.fragment_holiday_working_detail, container, false);
 			mRootView = binding.getRoot();
 		}
 		return mRootView;
@@ -158,11 +160,9 @@ public class HolidayWorkingDetailFragment extends AbstractSwFragment{
 			e.printStackTrace();
 		}
 
-		((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_offer_user)).setText(offerModel.userName);
-		((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_offer_type)).setText(offerModel.offerTypeName);
-		((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_start_date)).setText(offerModel.startDateString);
-		((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_end_date)).setText(offerModel.endDateString);
-		((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_note)).setText(offerModel.note);
+		((TextView)getView().findViewById(R.id.txt_fragment_holiday_working_detail_offer_user)).setText(offerModel.userName);
+		((TextView)getView().findViewById(R.id.txt_fragment_holiday_working_detail_start_date)).setText(offerModel.startDateString);
+		((TextView)getView().findViewById(R.id.txt_fragment_holiday_working_detail_reason)).setText(offerModel.note);
 	}
 
 	private void buildWorkOfferDetail(){
@@ -197,12 +197,12 @@ public class HolidayWorkingDetailFragment extends AbstractSwFragment{
 
 	private void buildWorkOfferApproveHistory(){
 		if(offer.userId.equals(myself.key)){
-			getView().findViewById(R.id.lnr_fragment_offer_detail_approve_history).setVisibility(View.VISIBLE);
+			getView().findViewById(R.id.lnr_fragment_holiday_working_detail_offer_status).setVisibility(View.VISIBLE);
 			ChiaseListViewNoScroll lstApproveHistory = (ChiaseListViewNoScroll)getView().findViewById(R.id.lst_fragment_offer_detail_offer_status);
 			VacationApproveHistoryAdapter adapter = new VacationApproveHistoryAdapter(activity, offer.listHistories);
 			lstApproveHistory.setAdapter(adapter);
 		}else{
-			getView().findViewById(R.id.lnr_fragment_offer_detail_approve_history).setVisibility(View.GONE);
+			getView().findViewById(R.id.lnr_fragment_holiday_working_detail_offer_status).setVisibility(View.GONE);
 		}
 	}
 
@@ -269,7 +269,7 @@ public class HolidayWorkingDetailFragment extends AbstractSwFragment{
 	protected void onClickBackBtn(){
 		if(isClickNotification){
 			emptyBackStack();
-			gotoFragment(new VacationListFragment());
+			gotoFragment(new HolidayWorkingListFragment());
 		}else{
 			super.onClickBackBtn();
 		}
