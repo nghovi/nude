@@ -136,4 +136,6 @@
     <string name="fragment_overtime_detail_type_overtime">残業</string>
     <string name="fragment_holiday_working_detail_header">休出申請詳細</string>
     <string name="fragment_holiday_working_detail_expected_date">休出希望日</string>
+    <string name="fragment_overtime_detail_start_time">申請開始時間</string>
+    <string name="fragment_overtime_detail_end_time">申請終了時間</string>
 </resources>
