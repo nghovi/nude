@@ -69,6 +69,8 @@ public class SwConst {
     public static final String API_VACATION_DETAIL = "/api/sw/vacation/detail";
     public static final String API_OVERTIME_LIST = "/api/sw/overtime/list";
     public static final String API_OVERTIME_DETAIL = "/api/sw/overtime/detail";
+    public static final String API_OVERTIME_UPDATE = "/api/sw/overtime/update";
+    public static final String API_OVERTIME_DELETE = "/api/sw/overtime/delete";
     public static final String API_HOLIDAY_WORKING_LIST = "/api/sw/holiday/list";
     public static final String API_HOLIDAY_WORKING_DETAIL = "/api/sw/holiday/detail";
     public static final String API_OFFER_UPDATE = "/api/sw/offer/update";
