@@ -26,6 +26,7 @@ import trente.asia.shiftworking.databinding.FragmentVacationListBinding;
 import trente.asia.shiftworking.services.offer.adapter.OfferAdapter;
 import trente.asia.shiftworking.services.offer.detail.VacationDetailFragment;
 import trente.asia.shiftworking.services.offer.filter.VacationFilterFragment;
+import trente.asia.shiftworking.services.offer.model.VacationModel;
 import trente.asia.shiftworking.services.offer.model.WorkOfferModel;
 import trente.asia.shiftworking.services.shiftworking.view.CommonMonthView;
 import trente.asia.welfare.adr.define.WelfareConst;
@@ -38,8 +39,8 @@ import trente.asia.welfare.adr.utils.WelfareUtil;
 public class VacationListFragment extends AbstractSwFragment implements OnFilterListener{
 
 	private OfferAdapter adapter;
-	private List<WorkOfferModel>		offers;
-	private List<WorkOfferModel>		otherOffers;
+	private List<VacationModel>		offers;
+	private List<VacationModel>		otherOffers;
 	private List<ApiObjectModel>		vacationTypes;
 	private List<DeptModel>				depts;
 	private ListView					mLstOffer;
@@ -89,7 +90,7 @@ public class VacationListFragment extends AbstractSwFragment implements OnFilter
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id){
-				WorkOfferModel offer = offers.get(position);
+				VacationModel offer = offers.get(position);
 				gotoWorkOfferDetail(offer, SwConst.SW_OFFER_EXEC_TYPE_VIEW);
 			}
 		});
@@ -97,7 +98,7 @@ public class VacationListFragment extends AbstractSwFragment implements OnFilter
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id){
-				WorkOfferModel offer = otherOffers.get(position);
+				VacationModel offer = otherOffers.get(position);
 				gotoWorkOfferDetail(offer, SwConst.SW_OFFER_EXEC_TYPE_APR);
 			}
 		});
@@ -110,7 +111,7 @@ public class VacationListFragment extends AbstractSwFragment implements OnFilter
 		binding.lnrIdFilter.setOnClickListener(this);
 	}
 
-	private void gotoWorkOfferDetail(WorkOfferModel offer, String execType){
+	private void gotoWorkOfferDetail(VacationModel offer, String execType){
 		VacationDetailFragment fragment = new VacationDetailFragment();
 		fragment.setActiveOfferId(offer.key);
 		fragment.setExecType(execType);
@@ -147,8 +148,8 @@ public class VacationListFragment extends AbstractSwFragment implements OnFilter
 	@Override
 	protected void successLoad(JSONObject response, String url){
 		if(SwConst.API_VACATION_LIST.equals(url)){
-			offers = CCJsonUtil.convertToModelList(response.optString("myVacationOffers"), WorkOfferModel.class);
-			otherOffers = CCJsonUtil.convertToModelList(response.optString("otherVacationOffers"), WorkOfferModel.class);
+			offers = CCJsonUtil.convertToModelList(response.optString("myVacationOffers"), VacationModel.class);
+			otherOffers = CCJsonUtil.convertToModelList(response.optString("otherVacationOffers"), VacationModel.class);
 
 			vacationTypes = CCJsonUtil.convertToModelList(response.optString("vacationList"), ApiObjectModel.class);
 			ApiObjectModel allType = new ApiObjectModel(CCConst.ALL, ALL);

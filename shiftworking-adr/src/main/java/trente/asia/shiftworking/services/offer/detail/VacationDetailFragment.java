@@ -138,7 +138,6 @@ public class VacationDetailFragment extends AbstractSwFragment{
 	}
 
 	private Map<String, String> buildOfferStatusMaster(JSONObject response){
-		Map<String, String> offerStatusMaster = new LinkedHashMap<>();
 		List<ApiObjectModel> lstStatus = CCJsonUtil.convertToModelList(response.optString("offerStatusList"), ApiObjectModel.class);
 		lstStatus.add(new ApiObjectModel(CCConst.NONE, getString(R.string.chiase_common_all)));
 		return WelfareFormatUtil.convertList2Map(lstStatus);
@@ -153,17 +152,9 @@ public class VacationDetailFragment extends AbstractSwFragment{
 			e.printStackTrace();
 		}
 
-		if(!offerModel.userId.equals(myself.key)){
-			getView().findViewById(R.id.lnr_frament_offer_detail_status).setVisibility(View.GONE);
-		}else{
-			getView().findViewById(R.id.lnr_frament_offer_detail_status).setVisibility(View.VISIBLE);
-			((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_offer_status)).setText(offerModel.offerStatusName);
-		}
-
 		((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_offer_user)).setText(offerModel.userName);
 		((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_offer_type)).setText(offerModel.vacationName);
 		((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_start_date)).setText(offerModel.startDateString);
-		((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_end_date)).setText(offerModel.endDateString);
 		((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_note)).setText(offerModel.note);
 
 	}

@@ -26,6 +26,7 @@ import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
 import trente.asia.shiftworking.common.interfaces.OnFilterListener;
 import trente.asia.shiftworking.databinding.FragmentOvertimeListBinding;
 import trente.asia.shiftworking.services.offer.adapter.OfferAdapter;
+import trente.asia.shiftworking.services.offer.adapter.OvertimeAdapter;
 import trente.asia.shiftworking.services.offer.detail.OvertimeDetailFragment;
 import trente.asia.shiftworking.services.offer.filter.OvertimeFilterFragment;
 import trente.asia.shiftworking.services.offer.model.WorkOfferModel;
@@ -39,7 +40,7 @@ import trente.asia.welfare.adr.utils.WelfareUtil;
 
 public class OvertimeListFragment extends AbstractSwFragment implements OnFilterListener{
 
-	private OfferAdapter				adapter;
+	private OvertimeAdapter				adapter;
 	private List<WorkOfferModel>		offers;
 	private List<WorkOfferModel>		otherOffers;
 	private List<ApiObjectModel>		overtimeTypes;
@@ -47,7 +48,7 @@ public class OvertimeListFragment extends AbstractSwFragment implements OnFilter
 	private ListView					mLstOffer;
 	private CommonMonthView				monthView;
 	private Map<String, String>			filters	= new HashMap<>();
-	private OfferAdapter				adapterOther;
+	private OvertimeAdapter				adapterOther;
 	private ListView					mLstOfferOther;
 	private FragmentOvertimeListBinding	binding;
 	private String						ALL;
@@ -159,10 +160,10 @@ public class OvertimeListFragment extends AbstractSwFragment implements OnFilter
 			ApiObjectModel allType = new ApiObjectModel(CCConst.ALL, getString(R.string.chiase_common_all));
 			overtimeTypes.add(0, allType);
 
-			adapterOther = new OfferAdapter(activity, otherOffers);
+			adapterOther = new OvertimeAdapter(activity, otherOffers);
 			mLstOfferOther.setAdapter(adapterOther);
 
-			adapter = new OfferAdapter(activity, offers);
+			adapter = new OvertimeAdapter(activity, offers);
 			mLstOffer.setAdapter(adapter);
 		}else if(WfUrlConst.WF_ACC_INFO_DETAIL.equals(url)){
 			depts = CCJsonUtil.convertToModelList(response.optString("depts"), DeptModel.class);

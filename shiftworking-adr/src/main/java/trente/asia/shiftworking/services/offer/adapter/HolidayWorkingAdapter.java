@@ -1,7 +1,6 @@
 package trente.asia.shiftworking.services.offer.adapter;
 
 import java.util.List;
-import java.util.Map;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -22,13 +21,13 @@ import trente.asia.welfare.adr.utils.WfPicassoHelper;
  *
  * @author TrungND
  */
-public class OfferAdapter extends ArrayAdapter<VacationModel>{
+public class HolidayWorkingAdapter extends ArrayAdapter<WorkOfferModel>{
 
-	private List<VacationModel>		lstHistory;
+	private List<WorkOfferModel>		lstHistory;
 	private Context				mContext;
 	private int					layoutId;
 
-	public OfferAdapter(Context context, List<VacationModel> lstHistory){
+	public HolidayWorkingAdapter(Context context, List<WorkOfferModel> lstHistory){
 		super(context, R.layout.item_offer, lstHistory);
 		this.mContext = context;
 		this.layoutId = R.layout.item_offer;
@@ -51,11 +50,11 @@ public class OfferAdapter extends ArrayAdapter<VacationModel>{
 		}else{
 			viewHolder = (ViewHolder)convertView.getTag();
 		}
-		VacationModel offer = getItem(position);
+		WorkOfferModel offer = getItem(position);
 		WfPicassoHelper.loadImageWithDefaultIcon(mContext, BuildConfig.HOST, viewHolder.imgAvatar, offer.userAvatarPath, R.drawable.wf_profile);
 		viewHolder.txtUsername.setText(offer.userName);
 		viewHolder.txtDate.setText(offer.startDateString);
-		viewHolder.txtType.setText(offer.vacationName);
+		viewHolder.txtType.setText(offer.offerTypeName);
 		viewHolder.txtStatus.setText(offer.offerStatusName);
 
 		return convertView;

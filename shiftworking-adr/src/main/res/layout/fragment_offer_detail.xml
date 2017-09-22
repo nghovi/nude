@@ -29,24 +29,6 @@
 
                 <View style="@style/cs_common_divider" />
 
-                <LinearLayout
-                    android:id="@+id/lnr_frament_offer_detail_status"
-                    style="@style/wf_common_item_linear2">
-
-                    <TextView
-                        style="@style/wl_common_text"
-                        android:layout_width="wrap_content"
-                        android:text="@string/fragment_work_offer_edit_offer_status" />
-
-                    <trente.asia.android.view.ChiaseTextView
-                        android:id="@+id/txt_fragment_offer_detail_offer_status"
-                        style="@style/wl_common_edit_text2"
-                        android:layout_marginStart="@dimen/margin_10dp"
-                        custom:mName="offerType" />
-                </LinearLayout>
-
-                <View style="@style/cs_common_divider" />
-
                 <LinearLayout style="@style/wf_common_item_linear2">
 
                     <TextView
@@ -96,66 +78,6 @@
                 <View style="@style/cs_common_divider" />
 
                 <LinearLayout
-                    android:id="@+id/lnr_start_time"
-                    style="@style/cs_common_match_wrap"
-                    android:orientation="vertical">
-
-                    <LinearLayout style="@style/wf_common_item_linear2">
-
-                        <TextView
-                            style="@style/wl_common_text"
-                            android:layout_width="wrap_content"
-                            android:text="@string/fragment_offer_detail_start_time" />
-
-                        <trente.asia.android.view.ChiaseTextView
-                            android:id="@+id/txt_fragment_offer_detail_start_time"
-                            style="@style/wl_common_edit_text2"
-                            android:layout_marginStart="@dimen/margin_10dp"
-                            custom:mName="startTimeString" />
-                    </LinearLayout>
-
-                    <View style="@style/cs_common_divider" />
-                </LinearLayout>
-
-                <LinearLayout style="@style/wf_common_item_linear2">
-
-                    <TextView
-                        style="@style/wl_common_text"
-                        android:layout_width="wrap_content"
-                        android:text="@string/fragment_offer_detail_end_date" />
-
-                    <trente.asia.android.view.ChiaseTextView
-                        android:id="@+id/txt_fragment_offer_detail_end_date"
-                        style="@style/wl_common_edit_text2"
-                        android:layout_marginStart="@dimen/margin_10dp"
-                        custom:mName="endDateString" />
-                </LinearLayout>
-
-                <View style="@style/cs_common_divider" />
-
-                <LinearLayout
-                    android:id="@+id/lnr_end_time"
-                    style="@style/cs_common_match_wrap"
-                    android:orientation="vertical">
-
-                    <LinearLayout style="@style/wf_common_item_linear2">
-
-                        <TextView
-                            style="@style/wl_common_text"
-                            android:layout_width="wrap_content"
-                            android:text="@string/fragment_offer_detail_end_time" />
-
-                        <trente.asia.android.view.ChiaseTextView
-                            android:id="@+id/txt_fragment_offer_detail_end_time"
-                            style="@style/wl_common_edit_text2"
-                            android:layout_marginStart="@dimen/margin_10dp"
-                            custom:mName="endTimeString" />
-                    </LinearLayout>
-
-                    <View style="@style/cs_common_divider" />
-                </LinearLayout>
-
-                <LinearLayout
                     android:id="@+id/lnr_sick_absent"
                     style="@style/cs_common_match_wrap"
                     android:orientation="vertical">
@@ -173,6 +95,7 @@
                             android:layout_marginStart="@dimen/margin_10dp"
                             android:text="No" />
                     </LinearLayout>
+
 
                     <View style="@style/cs_common_divider" />
                 </LinearLayout>
