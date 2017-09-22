@@ -260,7 +260,7 @@ public class OvertimeDetailFragment extends AbstractSwFragment{
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
-		requestUpdate(SwConst.API_VACATION_APPROVE, jsonObject, true);
+		requestUpdate(SwConst.API_OVERTIME_APPROVE, jsonObject, true);
 	}
 
 	private void onClickBtnReject(){

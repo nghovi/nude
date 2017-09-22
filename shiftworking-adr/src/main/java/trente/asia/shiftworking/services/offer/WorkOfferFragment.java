@@ -13,6 +13,8 @@ import trente.asia.shiftworking.R;
 import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
 import trente.asia.shiftworking.databinding.FragmentWorkOfferBinding;
 import trente.asia.shiftworking.services.offer.adapter.WorkOfferFragmentAdapter;
+import trente.asia.shiftworking.services.offer.edit.HolidayWorkingEditFragment;
+import trente.asia.shiftworking.services.offer.edit.OvertimeEditFragment;
 import trente.asia.shiftworking.services.offer.edit.VacationEditFragment;
 import trente.asia.shiftworking.services.offer.list.HolidayWorkingListFragment;
 import trente.asia.shiftworking.services.offer.list.OvertimeListFragment;
@@ -77,9 +79,25 @@ public class WorkOfferFragment extends AbstractSwFragment implements ViewPager.O
                 binding.viewPager.setCurrentItem(2);
                 break;
             case R.id.img_id_header_right_icon:
-                gotoAddVacationFragment();
+                if (binding.viewPager.getCurrentItem() == 0) {
+                    gotoAddVacationFragment();
+                }else if (binding.viewPager.getCurrentItem() == 1) {
+                    gotoAddOvertimeFragment();
+                }else if (binding.viewPager.getCurrentItem() == 2) {
+                    gotoAddHolidayWorkingFragment();
+                }
                 break;
         }
+    }
+
+    private void gotoAddHolidayWorkingFragment() {
+        HolidayWorkingEditFragment fragment = new HolidayWorkingEditFragment();
+        gotoFragment(fragment);
+    }
+
+    private void gotoAddOvertimeFragment() {
+        OvertimeEditFragment fragment = new OvertimeEditFragment();
+        gotoFragment(fragment);
     }
 
     private void gotoAddVacationFragment(){

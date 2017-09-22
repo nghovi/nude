@@ -71,11 +71,14 @@ public class SwConst {
     public static final String API_OVERTIME_DETAIL = "/api/sw/overtime/detail";
     public static final String API_OVERTIME_UPDATE = "/api/sw/overtime/update";
     public static final String API_OVERTIME_DELETE = "/api/sw/overtime/delete";
+    public static final String API_OVERTIME_APPROVE = "/api/sw/overtime/approve";
     public static final String API_HOLIDAY_WORKING_LIST = "/api/sw/holiday/list";
     public static final String API_HOLIDAY_WORKING_DETAIL = "/api/sw/holiday/detail";
+    public static final String API_HOLIDAY_WORKING_UPDATE = "/api/sw/holiday/update";
+    public static final String API_HOLIDAY_WORKING_DELETE = "/api/sw/holiday/delete";
+    public static final String API_HOLIDAY_WORKING_APPROVE = "/api/sw/holiday/approve";
     public static final String API_OFFER_UPDATE = "/api/sw/offer/update";
     public static final String API_VACATION_APPROVE = "/api/sw/vacation/approve";
     public static final String API_OFFER_DELETE = "/api/sw/offer/delete";
     public static final String API_UPDATE_CHECKIN_TYPE = "api/sw/checkintype/update";
-
 }
