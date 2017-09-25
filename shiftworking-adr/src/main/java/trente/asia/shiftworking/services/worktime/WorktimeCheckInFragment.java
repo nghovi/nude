@@ -32,6 +32,7 @@ import trente.asia.android.view.ChiaseListDialog;
 import trente.asia.android.view.ChiaseTextView;
 import trente.asia.shiftworking.R;
 import trente.asia.shiftworking.common.defines.SwConst;
+import trente.asia.shiftworking.common.dialog.SwTimePicker;
 import trente.asia.shiftworking.common.fragments.AbstractLocationFragment;
 import trente.asia.shiftworking.services.transit.WorkTransitListFragment;
 import trente.asia.shiftworking.services.worktime.listener.ItemWorkTimeClickListener;
@@ -332,7 +333,6 @@ public class WorktimeCheckInFragment extends AbstractLocationFragment{
 		switch(v.getId()){
 		case R.id.img_id_header_right_icon:
 			WorknoticeOfferFragment fragment = new WorknoticeOfferFragment();
-			// fragment.setActiveProject(activeProject);
 			gotoFragment(fragment);
 			break;
 		case R.id.img_id_header_right_sub_icon:

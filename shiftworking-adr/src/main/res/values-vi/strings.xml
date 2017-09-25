@@ -108,7 +108,7 @@
     <string name="fragment_offer_detail_end_date">Ngày kết thúc</string>
     <string name="fragment_offer_detail_end_time">Thời gian kết thúc</string>
     <string name="fragment_offer_detail_note">Ghi chú</string>
-    <string name="fragment_offer_detail_approve_history">Lịch sử phê duyệt</string>
+    <string name="fragment_offer_detail_offer_status">Lịch sử phê duyệt</string>
     <string name="fragment_offer_detail_approve_comment">Bình luận</string>
     <string name="fragment_offer_edit_header">Nhập đăng ký làm việc</string>
     <string name="sw_work_offer_other_history">Đăng ký của thành viên khác</string>
@@ -123,4 +123,9 @@
     <string name="dlg_checkin_types_title">Change work type</string>
     <string name="txt_dialog_checkin_types_guide">Choose check in type</string>
     <string name="fragment_offer_edit_offer_user">Request user</string>
+    <string name="fragment_overtime_detail_header">Overtime offer detail</string>
+    <string name="fragment_overtime_detail_expected_time">Expected time</string>
+    <string name="fragment_holiday_working_detail_header">Holiday working offer detail</string>
+    <string name="fragment_overtime_detail_start_time">Start time</string>
+    <string name="fragment_overtime_detail_end_time">End time</string>
 </resources>

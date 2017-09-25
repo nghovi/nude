@@ -1,7 +1,6 @@
-package trente.asia.shiftworking.services.offer.view;
+package trente.asia.shiftworking.services.offer.adapter;
 
 import java.util.List;
-import java.util.Map;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,7 +12,8 @@ import android.widget.TextView;
 
 import trente.asia.shiftworking.BuildConfig;
 import trente.asia.shiftworking.R;
-import trente.asia.shiftworking.services.offer.model.WorkOfferModel;
+import trente.asia.shiftworking.common.interfaces.OnOvertimeAdapterListener;
+import trente.asia.shiftworking.services.offer.model.OvertimeModel;
 import trente.asia.welfare.adr.utils.WfPicassoHelper;
 
 /**
@@ -21,13 +21,13 @@ import trente.asia.welfare.adr.utils.WfPicassoHelper;
  *
  * @author TrungND
  */
-public class WorkOfferAdapter extends ArrayAdapter<WorkOfferModel>{
+public class OvertimeAdapter extends ArrayAdapter<OvertimeModel>{
 
-	private List<WorkOfferModel>		lstHistory;
+	private List<OvertimeModel>		lstHistory;
 	private Context				mContext;
 	private int					layoutId;
 
-	public WorkOfferAdapter(Context context, List<WorkOfferModel> lstHistory){
+	public OvertimeAdapter(Context context, List<OvertimeModel> lstHistory){
 		super(context, R.layout.item_offer, lstHistory);
 		this.mContext = context;
 		this.layoutId = R.layout.item_offer;
@@ -50,26 +50,14 @@ public class WorkOfferAdapter extends ArrayAdapter<WorkOfferModel>{
 		}else{
 			viewHolder = (ViewHolder)convertView.getTag();
 		}
-		WorkOfferModel offer = getItem(position);
+		OvertimeModel offer = getItem(position);
 		WfPicassoHelper.loadImageWithDefaultIcon(mContext, BuildConfig.HOST, viewHolder.imgAvatar, offer.userAvatarPath, R.drawable.wf_profile);
 		viewHolder.txtUsername.setText(offer.userName);
 		viewHolder.txtDate.setText(offer.startDateString);
 		viewHolder.txtType.setText(offer.offerTypeName);
 		viewHolder.txtStatus.setText(offer.offerStatusName);
-
 		return convertView;
 	}
-
-	// private int getBackgroundColor(WorkOfferModel offer) {
-	// if (offer.status == WorkOfferModel.OFFER_STATUS_OFFERING) {
-	// return R.color.core_white;
-	// } else if (offer.status == WorkOfferModel.OFFER_STATUS_APPROVING) {
-	// return R.color.chiase_blue;
-	// } else if (offer.status == WorkOfferModel.OFFER_STATUS_DISABLED) {
-	// return R.color.core_silver;
-	// }
-	// return R.color.chiase_filechooser_txt_actived;
-	// }
 
 	private class ViewHolder{
 

@@ -78,4 +78,9 @@
         <item name="android:src">@drawable/wf_row_arrow_right</item>
     </style>
 
+    <style name="sw_text_14sp">
+        <item name="android:textColor">@color/chiase_black</item>
+        <item name="android:textSize">14sp</item>
+    </style>
 </resources>
+

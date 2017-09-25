@@ -1,4 +1,4 @@
-package trente.asia.shiftworking.services.offer.view;
+package trente.asia.shiftworking.services.offer.adapter;
 
 import java.util.List;
 
@@ -23,14 +23,14 @@ import trente.asia.welfare.adr.utils.WfPicassoHelper;
  *
  * @author VietNH
  */
-public class ApproveHistoryAdapter extends ArrayAdapter<ApproveHistory>{
+public class VacationApproveHistoryAdapter extends ArrayAdapter<ApproveHistory>{
 
 	// private List<ApproveHistory> lstHistory;
 	private Context			mContext;
 	private int				layoutId;
 	private LayoutInflater	mInflater;
 
-	public ApproveHistoryAdapter(Context context, List<ApproveHistory> lstHistory){
+	public VacationApproveHistoryAdapter(Context context, List<ApproveHistory> lstHistory){
 		super(context, R.layout.item_approve_history, lstHistory);
 		this.mContext = context;
 		this.layoutId = R.layout.item_approve_history;

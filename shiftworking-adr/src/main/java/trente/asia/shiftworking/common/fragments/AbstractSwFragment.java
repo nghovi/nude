@@ -18,7 +18,7 @@ import trente.asia.shiftworking.common.activities.MainActivity;
 import trente.asia.shiftworking.common.models.SwApiHolder;
 import trente.asia.shiftworking.common.utils.SwUtil;
 import trente.asia.shiftworking.services.login.SwLoginFragment;
-import trente.asia.shiftworking.services.offer.WorkOfferListFragment;
+import trente.asia.shiftworking.services.offer.WorkOfferFragment;
 import trente.asia.shiftworking.services.setting.SwSettingFragment;
 import trente.asia.shiftworking.services.shiftworking.ShiftWorkingFragment;
 import trente.asia.shiftworking.services.worktime.WorkStatusFragment;
@@ -49,7 +49,6 @@ public abstract class AbstractSwFragment extends WelfareFragment implements View
 	@Override
 	protected void initView(){
 		super.initView();
-
         lnrContentId = R.id.lnr_id_content;
         int footerItemId = getFooterItemId();
         if(footerItemId != 0){
@@ -135,7 +134,7 @@ public abstract class AbstractSwFragment extends WelfareFragment implements View
 
 	public void onClickFooterItemOffer(){
 		emptyBackStack();
-		gotoFragment(new WorkOfferListFragment());
+		gotoFragment(new WorkOfferFragment());
 	}
 
 	public void onClickFooterItemWorkStatus(){
