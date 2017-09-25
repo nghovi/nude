@@ -35,7 +35,7 @@ import trente.asia.android.view.util.CAObjectSerializeUtil;
 import trente.asia.shiftworking.R;
 import trente.asia.shiftworking.common.defines.SwConst;
 import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
-import trente.asia.shiftworking.databinding.FragmentOfferEditBinding;
+import trente.asia.shiftworking.databinding.FragmentHolidayWorkingEditBinding;
 import trente.asia.shiftworking.services.offer.model.WorkOfferModel;
 import trente.asia.shiftworking.services.offer.model.WorkOfferModelHolder;
 import trente.asia.welfare.adr.activity.WelfareActivity;
@@ -48,23 +48,23 @@ import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 
 public class HolidayWorkingEditFragment extends AbstractSwFragment{
 
-	private ChiaseListDialog			spnType;
-	private DatePickerDialog			datePickerDialogStart;
-	private DatePickerDialog			datePickerDialogEnd;
-	private TimePickerDialog			timePickerDialogStart;
-	private TimePickerDialog			timePickerDialogEnd;
-	private ChiaseTextView				txtStartTime;
-	private ChiaseTextView				txtEndTime;
+	private ChiaseListDialog					spnType;
+	private DatePickerDialog					datePickerDialogStart;
+	private DatePickerDialog					datePickerDialogEnd;
+	private TimePickerDialog					timePickerDialogStart;
+	private TimePickerDialog					timePickerDialogEnd;
+	private ChiaseTextView						txtStartTime;
+	private ChiaseTextView						txtEndTime;
 
-	private ChiaseTextView				txtStartDate;
-	private ChiaseTextView				txtEndDate;
+	private ChiaseTextView						txtStartDate;
+	private ChiaseTextView						txtEndDate;
 
-	private ChiaseTextView				txtOfferType;
-	private String						activeOfferId;
-	private FragmentOfferEditBinding	binding;
+	private ChiaseTextView						txtOfferType;
+	private String								activeOfferId;
+	private FragmentHolidayWorkingEditBinding	binding;
 
-	private Set<String>					SickAbsentEnabledSet	= new LinkedHashSet<>();
-	private ChiaseTextView				txtUserName;
+	private Set<String>							SickAbsentEnabledSet	= new LinkedHashSet<>();
+	private ChiaseTextView						txtUserName;
 
 	public void setActiveOfferId(String activeOfferId){
 		this.activeOfferId = activeOfferId;
@@ -73,7 +73,7 @@ public class HolidayWorkingEditFragment extends AbstractSwFragment{
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 		if(mRootView == null){
-			binding = DataBindingUtil.inflate(inflater, R.layout.fragment_offer_edit, container, false);
+			binding = DataBindingUtil.inflate(inflater, R.layout.fragment_holiday_working_edit, container, false);
 			mRootView = binding.getRoot();
 		}
 		return mRootView;
@@ -170,12 +170,7 @@ public class HolidayWorkingEditFragment extends AbstractSwFragment{
 			txtStartTime.setText(holder.offer.startTimeString);
 			txtEndDate.setText(CCStringUtil.toString(holder.offer.endDateString));
 			txtEndTime.setText(CCStringUtil.toString(holder.offer.endTimeString));
-			if(SickAbsentEnabledSet.contains(holder.offer.offerType)){
-				binding.lnrSickAbsent.setVisibility(View.VISIBLE);
-				binding.switchSickAbsent.setChecked(holder.offer.sickAbsent);
-			}else{
-				binding.lnrSickAbsent.setVisibility(View.INVISIBLE);
-			}
+
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
@@ -199,11 +194,6 @@ public class HolidayWorkingEditFragment extends AbstractSwFragment{
 			getView().findViewById(R.id.lnr_end_time).setVisibility(View.GONE);
 		}
 
-		if(SickAbsentEnabledSet.contains(selectedType)){
-			binding.lnrSickAbsent.setVisibility(View.VISIBLE);
-		}else{
-			binding.lnrSickAbsent.setVisibility(View.INVISIBLE);
-		}
 	}
 
 	private void buildDatePickerDialogs(WorkOfferModel offerModel){

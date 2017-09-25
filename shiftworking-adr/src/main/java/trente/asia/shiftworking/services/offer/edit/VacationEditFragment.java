@@ -25,7 +25,6 @@ import android.widget.TimePicker;
 
 import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCDateUtil;
-import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCNumberUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.activity.ChiaseActivity;
@@ -35,18 +34,20 @@ import trente.asia.android.view.util.CAObjectSerializeUtil;
 import trente.asia.shiftworking.R;
 import trente.asia.shiftworking.common.defines.SwConst;
 import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
-import trente.asia.shiftworking.databinding.FragmentOfferEditBinding;
+import trente.asia.shiftworking.common.interfaces.OnUserAdapterListener;
+import trente.asia.shiftworking.databinding.FragmentVacationEditBinding;
 import trente.asia.shiftworking.services.offer.model.WorkOfferModel;
 import trente.asia.shiftworking.services.offer.model.WorkOfferModelHolder;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.dialog.WfDialog;
+import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 
 /**
  * Created by viet on 11/25/2016.
  */
 
-public class VacationEditFragment extends AbstractSwFragment{
+public class VacationEditFragment extends AbstractSwFragment implements OnUserAdapterListener{
 
 	private ChiaseListDialog			spnType;
 	private DatePickerDialog			datePickerDialogStart;
@@ -61,10 +62,10 @@ public class VacationEditFragment extends AbstractSwFragment{
 
 	private ChiaseTextView				txtOfferType;
 	private String						activeOfferId;
-	private FragmentOfferEditBinding	binding;
+	private FragmentVacationEditBinding	binding;
 
-	private Set<String>					SickAbsentEnabledSet	= new LinkedHashSet<>();
 	private ChiaseTextView				txtUserName;
+	private UserModel					selectedUser;
 
 	public void setActiveOfferId(String activeOfferId){
 		this.activeOfferId = activeOfferId;
@@ -73,7 +74,7 @@ public class VacationEditFragment extends AbstractSwFragment{
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 		if(mRootView == null){
-			binding = DataBindingUtil.inflate(inflater, R.layout.fragment_offer_edit, container, false);
+			binding = DataBindingUtil.inflate(inflater, R.layout.fragment_vacation_edit, container, false);
 			mRootView = binding.getRoot();
 		}
 		return mRootView;
@@ -98,14 +99,13 @@ public class VacationEditFragment extends AbstractSwFragment{
 		txtStartTime = (ChiaseTextView)getView().findViewById(R.id.txt_fragment_offer_edit_start_time);
 		txtEndTime = (ChiaseTextView)getView().findViewById(R.id.txt_fragment_offer_edit_end_time);
 
-		SickAbsentEnabledSet.add(WorkOfferModel.OFFER_TYPE_PAID_VACATION_ALL);
-		SickAbsentEnabledSet.add(WorkOfferModel.OFFER_TYPE_ABSENT);
-
 		setOnClickListener();
 	}
 
 	@Override
 	protected void initData(){
+		selectedUser = myself;
+		txtUserName.setText(selectedUser.userName);
 		loadOfferForm();
 	}
 
@@ -121,26 +121,13 @@ public class VacationEditFragment extends AbstractSwFragment{
 
 	@Override
 	protected void successLoad(JSONObject response, String url){
-		if(SwConst.API_VACATION_DETAIL.equals(url)){
-			WorkOfferModelHolder holder = CCJsonUtil.convertToModel(CCStringUtil.toString(response), WorkOfferModelHolder.class);
-			buildDatePickerDialogs(holder.offer);
-			if(!CCStringUtil.isEmpty(activeOfferId)){
-				loadWorkOffer(holder);
-			}else{
-				txtUserName.setText(myself.userName);
-			}
-			initDialog(holder);
-		}else{
-			super.successLoad(response, url);
-		}
+
 	}
 
 	private void setOnClickListener(){
-		getView().findViewById(R.id.lnr_id_type).setOnClickListener(this);
-		getView().findViewById(R.id.lnr_start_date).setOnClickListener(this);
-		getView().findViewById(R.id.lnr_start_time).setOnClickListener(this);
-		getView().findViewById(R.id.lnr_end_date).setOnClickListener(this);
-		getView().findViewById(R.id.lnr_end_time).setOnClickListener(this);
+		binding.lnrUser.setOnClickListener(this);
+		binding.lnrStartDate.setOnClickListener(this);
+		binding.lnrEndDate.setOnClickListener(this);
 	}
 
 	private void initDialog(WorkOfferModelHolder holder){
@@ -150,7 +137,6 @@ public class VacationEditFragment extends AbstractSwFragment{
 		}
 
 		spnType = new ChiaseListDialog(activity, getString(R.string.fragment_work_offer_edit_offer_type), WelfareFormatUtil.convertList2Map(holder.offerTypeList), txtOfferType, new ChiaseListDialog.OnItemClicked() {
-
 			@Override
 			public void onClicked(String selectedKey, boolean isSelected){
 				OnOfferTypeChangedUpdateLayout();
@@ -170,12 +156,6 @@ public class VacationEditFragment extends AbstractSwFragment{
 			txtStartTime.setText(holder.offer.startTimeString);
 			txtEndDate.setText(CCStringUtil.toString(holder.offer.endDateString));
 			txtEndTime.setText(CCStringUtil.toString(holder.offer.endTimeString));
-			if(SickAbsentEnabledSet.contains(holder.offer.offerType)){
-				binding.lnrSickAbsent.setVisibility(View.VISIBLE);
-				binding.switchSickAbsent.setChecked(holder.offer.sickAbsent);
-			}else{
-				binding.lnrSickAbsent.setVisibility(View.INVISIBLE);
-			}
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
@@ -190,20 +170,7 @@ public class VacationEditFragment extends AbstractSwFragment{
 	}
 
 	private void OnOfferTypeChangedUpdateLayout(){
-		String selectedType = txtOfferType.getValue();
-		if(WorkOfferModel.OFFER_TYPE_HOLIDAY_WORKING.equals(selectedType) || WorkOfferModel.OFFER_TYPE_OVERTIME.equals(selectedType) || WorkOfferModel.OFFER_TYPE_SHORT_TIME.equals(selectedType)){
-			getView().findViewById(R.id.lnr_start_time).setVisibility(View.VISIBLE);
-			getView().findViewById(R.id.lnr_end_time).setVisibility(View.VISIBLE);
-		}else{
-			getView().findViewById(R.id.lnr_start_time).setVisibility(View.GONE);
-			getView().findViewById(R.id.lnr_end_time).setVisibility(View.GONE);
-		}
 
-		if(SickAbsentEnabledSet.contains(selectedType)){
-			binding.lnrSickAbsent.setVisibility(View.VISIBLE);
-		}else{
-			binding.lnrSickAbsent.setVisibility(View.INVISIBLE);
-		}
 	}
 
 	private void buildDatePickerDialogs(WorkOfferModel offerModel){
@@ -287,7 +254,7 @@ public class VacationEditFragment extends AbstractSwFragment{
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
-		requestUpdate(SwConst.API_OFFER_UPDATE, jsonObject, true);
+		requestUpdate(SwConst.API_VACATION_UPDATE, jsonObject, true);
 	}
 
 	@Override
@@ -323,7 +290,7 @@ public class VacationEditFragment extends AbstractSwFragment{
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
-		requestUpdate(SwConst.API_OFFER_DELETE, jsonObject, true);
+		requestUpdate(SwConst.API_VACATION_DELETE, jsonObject, true);
 	}
 
 	@Override
@@ -338,21 +305,26 @@ public class VacationEditFragment extends AbstractSwFragment{
 		case R.id.lnr_end_date:
 			datePickerDialogEnd.show();
 			break;
-		case R.id.lnr_start_time:
-			timePickerDialogStart.show();
-			break;
-		case R.id.lnr_end_time:
-			timePickerDialogEnd.show();
-			break;
 		case R.id.lnr_id_type:
 			spnType.show();
 			break;
 		case R.id.btn_fragment_offer_detail_delete:
 			onClickBtnDelete();
 			break;
+		case R.id.lnr_user:
+			SelectUserEditFragment fragment = new SelectUserEditFragment();
+			fragment.setSelectedUser(selectedUser);
+			fragment.setCallback(this);
+			gotoFragment(fragment);
+			break;
 		default:
 			break;
 		}
+	}
 
+	@Override
+	public void onSelectUser(UserModel user) {
+		selectedUser = user;
+		txtUserName.setText(selectedUser.userName);
 	}
 }

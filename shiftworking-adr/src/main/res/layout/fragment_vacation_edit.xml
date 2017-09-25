@@ -32,7 +32,8 @@
 
                 <View style="@style/cs_common_divider" />
 
-                <LinearLayout style="@style/wf_common_item_linear2">
+                <LinearLayout style="@style/wf_common_item_linear2"
+                    android:id="@+id/lnr_user">
 
                     <TextView
                         style="@style/wl_common_text"
@@ -42,8 +43,10 @@
                     <trente.asia.android.view.ChiaseTextView
                         android:id="@+id/txt_fragment_offer_detail_offer_user"
                         style="@style/wl_common_edit_text2"
+                        android:layout_weight="1"
                         android:layout_marginStart="@dimen/margin_10dp"
                         custom:mName="offerUser" />
+                    <ImageView style="@style/sw_right_hand_arrow_image" />
                 </LinearLayout>
 
                 <View style="@style/cs_common_divider" />
@@ -96,34 +99,6 @@
                 <View style="@style/cs_common_divider" />
 
                 <LinearLayout
-                    android:id="@+id/lnr_start_time"
-                    style="@style/cs_common_match_wrap"
-                    android:background="@drawable/state_common_selectable_row"
-                    android:orientation="vertical">
-
-                    <LinearLayout style="@style/wf_common_item_linear2">
-
-                        <TextView
-                            style="@style/wl_common_text"
-                            android:layout_width="wrap_content"
-                            android:text="@string/fragment_offer_detail_start_time" />
-
-                        <trente.asia.android.view.ChiaseTextView
-                            android:id="@+id/txt_fragment_offer_edit_start_time"
-                            style="@style/wl_common_edit_text2"
-                            android:layout_marginStart="@dimen/margin_10dp"
-                            android:layout_weight="1"
-                            android:enabled="false"
-                            custom:mName="startTimeString" />
-
-                        <ImageView style="@style/sw_right_hand_arrow_image" />
-
-                    </LinearLayout>
-
-                    <View style="@style/cs_common_divider" />
-                </LinearLayout>
-
-                <LinearLayout
                     android:id="@+id/lnr_end_date"
                     style="@style/wf_common_item_linear2"
                     android:background="@drawable/state_common_selectable_row">
@@ -148,7 +123,7 @@
                 <View style="@style/cs_common_divider" />
 
                 <LinearLayout
-                    android:id="@+id/lnr_end_time"
+                    android:id="@+id/lnr_amount"
                     style="@style/cs_common_match_wrap"
                     android:background="@drawable/state_common_selectable_row"
                     android:orientation="vertical">
