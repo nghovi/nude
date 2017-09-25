@@ -12,7 +12,7 @@ import trente.asia.welfare.adr.models.ApiObjectModel;
 
 public class WorkOfferModelHolder{
 
-	public WorkOfferModel		offer;
+	public OvertimeModel offer;
 	public List<ApiObjectModel>	offerTypeList;
 	public String				permission;
 }

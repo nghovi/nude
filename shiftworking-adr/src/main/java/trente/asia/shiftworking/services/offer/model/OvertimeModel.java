@@ -2,11 +2,13 @@ package trente.asia.shiftworking.services.offer.model;
 
 import java.util.List;
 
+import trente.asia.welfare.adr.models.ApiObjectModel;
+
 /**
  * Created by viet on 11/25/2016.
  */
 
-public class WorkOfferModel{
+public class OvertimeModel {
 
 	public static final String	OFFER_TYPE_OVERTIME					= "OTW";
 	public static final String	OFFER_TYPE_HOLIDAY_WORKING			= "HDW";
@@ -18,7 +20,7 @@ public class WorkOfferModel{
 	public static final String	OFFER_TYPE_COMPENSATORY_HOLIDAY		= "CPH";
 	public static final String	OFFER_TYPE_ABSENT					= "ABS";
 
-	public WorkOfferModel(){
+	public OvertimeModel(){
 	}
 
 	public String				userId;
@@ -45,4 +47,7 @@ public class WorkOfferModel{
 	public String				companyId;
 	public List<ApproveHistory>	listHistories;
 	public boolean				sickAbsent;
+
+	public List<ApiObjectModel>	overtimeTypeList;
+	public String				permission;
 }

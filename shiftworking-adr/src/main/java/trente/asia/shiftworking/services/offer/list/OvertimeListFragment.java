@@ -28,7 +28,7 @@ import trente.asia.shiftworking.databinding.FragmentOvertimeListBinding;
 import trente.asia.shiftworking.services.offer.adapter.OvertimeAdapter;
 import trente.asia.shiftworking.services.offer.detail.OvertimeDetailFragment;
 import trente.asia.shiftworking.services.offer.filter.OvertimeFilterFragment;
-import trente.asia.shiftworking.services.offer.model.WorkOfferModel;
+import trente.asia.shiftworking.services.offer.model.OvertimeModel;
 import trente.asia.shiftworking.services.shiftworking.view.CommonMonthView;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.define.WfUrlConst;
@@ -40,8 +40,8 @@ import trente.asia.welfare.adr.utils.WelfareUtil;
 public class OvertimeListFragment extends AbstractSwFragment implements OnFilterListener{
 
 	private OvertimeAdapter				adapter;
-	private List<WorkOfferModel>		offers;
-	private List<WorkOfferModel>		otherOffers;
+	private List<OvertimeModel>			offers;
+	private List<OvertimeModel>			otherOffers;
 	private List<ApiObjectModel>		overtimeTypes;
 	private List<DeptModel>				depts;
 	private ListView					mLstOffer;
@@ -91,20 +91,19 @@ public class OvertimeListFragment extends AbstractSwFragment implements OnFilter
 		mLstOffer.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id){
-				WorkOfferModel offer = offers.get(position);
+			public void onItemClick(AdapterView<?> adapterView, View view, int position, long l){
+				OvertimeModel offer = offers.get(position);
 				gotoWorkOfferDetail(offer, SwConst.SW_OFFER_EXEC_TYPE_VIEW);
 			}
 		});
 		mLstOfferOther.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id){
-				WorkOfferModel offer = otherOffers.get(position);
-				gotoWorkOfferDetail(offer, SwConst.SW_OFFER_EXEC_TYPE_APR);
+			public void onItemClick(AdapterView<?> adapterView, View view, int position, long l){
+				OvertimeModel offer = otherOffers.get(position);
+				gotoWorkOfferDetail(offer, SwConst.SW_OFFER_EXEC_TYPE_VIEW);
 			}
 		});
-
 		monthView.imgBack.setOnClickListener(this);
 		monthView.imgNext.setOnClickListener(this);
 		monthView.btnThisMonth.setOnClickListener(this);
@@ -113,7 +112,7 @@ public class OvertimeListFragment extends AbstractSwFragment implements OnFilter
 		binding.lnrIdFilter.setOnClickListener(this);
 	}
 
-	private void gotoWorkOfferDetail(WorkOfferModel offer, String execType){
+	private void gotoWorkOfferDetail(OvertimeModel offer, String execType){
 		OvertimeDetailFragment fragment = new OvertimeDetailFragment();
 		fragment.setActiveOfferId(offer.key);
 		fragment.setExecType(execType);
@@ -135,7 +134,7 @@ public class OvertimeListFragment extends AbstractSwFragment implements OnFilter
 					jsonObject.put("offerDept", selectedDept.key);
 				}
 				if(selectedUser != null && !CCConst.ALL.equals(selectedUser.key)){
-					jsonObject.put("targetUserId",  selectedUser.key);
+					jsonObject.put("targetUserId", selectedUser.key);
 				}
 
 				if(selectedType != null && !CCConst.ALL.equals(selectedType.key)){
@@ -152,8 +151,8 @@ public class OvertimeListFragment extends AbstractSwFragment implements OnFilter
 	@Override
 	protected void successLoad(JSONObject response, String url){
 		if(SwConst.API_OVERTIME_LIST.equals(url)){
-			offers = CCJsonUtil.convertToModelList(response.optString("myOvertimeOffers"), WorkOfferModel.class);
-			otherOffers = CCJsonUtil.convertToModelList(response.optString("otherOvertimeOffers"), WorkOfferModel.class);
+			offers = CCJsonUtil.convertToModelList(response.optString("myOvertimeOffers"), OvertimeModel.class);
+			otherOffers = CCJsonUtil.convertToModelList(response.optString("otherOvertimeOffers"), OvertimeModel.class);
 
 			overtimeTypes = CCJsonUtil.convertToModelList(response.optString("offerStatusList"), ApiObjectModel.class);
 			ApiObjectModel allType = new ApiObjectModel(CCConst.ALL, getString(R.string.chiase_common_all));
@@ -170,7 +169,7 @@ public class OvertimeListFragment extends AbstractSwFragment implements OnFilter
 			department.members = new ArrayList<>();
 			UserModel user = new UserModel(CCConst.ALL, ALL);
 			for(DeptModel dept : depts){
-				for (UserModel member : dept.members) {
+				for(UserModel member : dept.members){
 					department.members.add(member);
 				}
 				dept.members.add(0, user);

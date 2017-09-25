@@ -33,16 +33,16 @@ import trente.asia.shiftworking.common.defines.SwConst;
 import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
 import trente.asia.shiftworking.databinding.FragmentHolidayWorkingDetailBinding;
 import trente.asia.shiftworking.services.offer.adapter.VacationApproveHistoryAdapter;
-import trente.asia.shiftworking.services.offer.edit.VacationEditFragment;
+import trente.asia.shiftworking.services.offer.edit.HolidayWorkingEditFragment;
 import trente.asia.shiftworking.services.offer.list.HolidayWorkingListFragment;
-import trente.asia.shiftworking.services.offer.model.WorkOfferModel;
+import trente.asia.shiftworking.services.offer.model.OvertimeModel;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.models.ApiObjectModel;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 
 public class HolidayWorkingDetailFragment extends AbstractSwFragment{
 
-	private WorkOfferModel				offer;
+	private OvertimeModel offer;
 	private Map<String, String>			targetUserModels	= new HashMap<String, String>();
 	private Map<String, List<Double>>	groupInfo;
 	private ImageView					imgEdit;
@@ -106,7 +106,7 @@ public class HolidayWorkingDetailFragment extends AbstractSwFragment{
 	@Override
 	protected void successLoad(JSONObject response, String url){
 		if(SwConst.API_HOLIDAY_WORKING_DETAIL.equals(url)){
-			offer = CCJsonUtil.convertToModel(response.optString("holidayWork"), WorkOfferModel.class);
+			offer = CCJsonUtil.convertToModel(response.optString("holidayWork"), OvertimeModel.class);
 			setWorkOffer(offer);
 
 			offerPermission = response.optString("permission");
@@ -149,7 +149,7 @@ public class HolidayWorkingDetailFragment extends AbstractSwFragment{
 		return WelfareFormatUtil.convertList2Map(lstStatus);
 	}
 
-	private void setWorkOffer(WorkOfferModel offerModel){
+	private void setWorkOffer(OvertimeModel offerModel){
 		try{
 			LinearLayout lnrContent = (LinearLayout)getView().findViewById(R.id.lnr_id_content);
 			Gson gson = new Gson();
@@ -171,7 +171,7 @@ public class HolidayWorkingDetailFragment extends AbstractSwFragment{
 	}
 
 	// private void buildOfferComment(){
-	// if(WorkOfferModel.OFFER_STATUS_OFFER.equals(offer.approveResult) && SwConst.OFFER_CAN_APPROVE.equals(offerPermission)){
+	// if(OvertimeModel.OFFER_STATUS_OFFER.equals(offer.approveResult) && SwConst.OFFER_CAN_APPROVE.equals(offerPermission)){
 	// getView().findViewById(R.id.lnr_fragment_offer_detail_comment).setVisibility(View.VISIBLE);
 	// }else{
 	// getView().findViewById(R.id.lnr_fragment_offer_detail_comment).setVisibility(View.GONE);
@@ -221,7 +221,7 @@ public class HolidayWorkingDetailFragment extends AbstractSwFragment{
 	}
 
 	private void gotoWorkOfferEditFragment(){
-		VacationEditFragment fragment = new VacationEditFragment();
+		HolidayWorkingEditFragment fragment = new HolidayWorkingEditFragment();
 		fragment.setActiveOfferId(offer.key);
 		gotoFragment(fragment);
 	}

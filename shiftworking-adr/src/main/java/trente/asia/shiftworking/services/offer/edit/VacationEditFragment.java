@@ -36,7 +36,7 @@ import trente.asia.shiftworking.R;
 import trente.asia.shiftworking.common.defines.SwConst;
 import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
 import trente.asia.shiftworking.databinding.FragmentOfferEditBinding;
-import trente.asia.shiftworking.services.offer.model.WorkOfferModel;
+import trente.asia.shiftworking.services.offer.model.OvertimeModel;
 import trente.asia.shiftworking.services.offer.model.WorkOfferModelHolder;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.dialog.WfDialog;
@@ -98,8 +98,8 @@ public class VacationEditFragment extends AbstractSwFragment{
 		txtStartTime = (ChiaseTextView)getView().findViewById(R.id.txt_fragment_offer_edit_start_time);
 		txtEndTime = (ChiaseTextView)getView().findViewById(R.id.txt_fragment_offer_edit_end_time);
 
-		SickAbsentEnabledSet.add(WorkOfferModel.OFFER_TYPE_PAID_VACATION_ALL);
-		SickAbsentEnabledSet.add(WorkOfferModel.OFFER_TYPE_ABSENT);
+		SickAbsentEnabledSet.add(OvertimeModel.OFFER_TYPE_PAID_VACATION_ALL);
+		SickAbsentEnabledSet.add(OvertimeModel.OFFER_TYPE_ABSENT);
 
 		setOnClickListener();
 	}
@@ -191,7 +191,7 @@ public class VacationEditFragment extends AbstractSwFragment{
 
 	private void OnOfferTypeChangedUpdateLayout(){
 		String selectedType = txtOfferType.getValue();
-		if(WorkOfferModel.OFFER_TYPE_HOLIDAY_WORKING.equals(selectedType) || WorkOfferModel.OFFER_TYPE_OVERTIME.equals(selectedType) || WorkOfferModel.OFFER_TYPE_SHORT_TIME.equals(selectedType)){
+		if(OvertimeModel.OFFER_TYPE_HOLIDAY_WORKING.equals(selectedType) || OvertimeModel.OFFER_TYPE_OVERTIME.equals(selectedType) || OvertimeModel.OFFER_TYPE_SHORT_TIME.equals(selectedType)){
 			getView().findViewById(R.id.lnr_start_time).setVisibility(View.VISIBLE);
 			getView().findViewById(R.id.lnr_end_time).setVisibility(View.VISIBLE);
 		}else{
@@ -206,7 +206,7 @@ public class VacationEditFragment extends AbstractSwFragment{
 		}
 	}
 
-	private void buildDatePickerDialogs(WorkOfferModel offerModel){
+	private void buildDatePickerDialogs(OvertimeModel offerModel){
 		Calendar calendar = Calendar.getInstance();
 		Date starDate = new Date();
 		Date endDate = new Date();

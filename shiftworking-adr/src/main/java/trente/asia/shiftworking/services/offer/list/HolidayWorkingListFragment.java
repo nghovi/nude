@@ -28,7 +28,7 @@ import trente.asia.shiftworking.databinding.FragmentHolidayWorkingListBinding;
 import trente.asia.shiftworking.services.offer.adapter.HolidayWorkingAdapter;
 import trente.asia.shiftworking.services.offer.detail.HolidayWorkingDetailFragment;
 import trente.asia.shiftworking.services.offer.filter.HolidayWorkingFilterFragment;
-import trente.asia.shiftworking.services.offer.model.WorkOfferModel;
+import trente.asia.shiftworking.services.offer.model.OvertimeModel;
 import trente.asia.shiftworking.services.shiftworking.view.CommonMonthView;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.define.WfUrlConst;
@@ -40,8 +40,8 @@ import trente.asia.welfare.adr.utils.WelfareUtil;
 public class HolidayWorkingListFragment extends AbstractSwFragment implements OnFilterListener{
 
 	private HolidayWorkingAdapter				adapter;
-	private List<WorkOfferModel>				offers;
-	private List<WorkOfferModel>				otherOffers;
+	private List<OvertimeModel>				offers;
+	private List<OvertimeModel>				otherOffers;
 	private List<ApiObjectModel>				holidayTypes;
 	private List<DeptModel>						depts;
 	private ListView							mLstOffer;
@@ -92,7 +92,7 @@ public class HolidayWorkingListFragment extends AbstractSwFragment implements On
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id){
-				WorkOfferModel offer = offers.get(position);
+				OvertimeModel offer = offers.get(position);
 				gotoWorkOfferDetail(offer, SwConst.SW_OFFER_EXEC_TYPE_VIEW);
 			}
 		});
@@ -100,7 +100,7 @@ public class HolidayWorkingListFragment extends AbstractSwFragment implements On
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id){
-				WorkOfferModel offer = otherOffers.get(position);
+				OvertimeModel offer = otherOffers.get(position);
 				gotoWorkOfferDetail(offer, SwConst.SW_OFFER_EXEC_TYPE_APR);
 			}
 		});
@@ -113,7 +113,7 @@ public class HolidayWorkingListFragment extends AbstractSwFragment implements On
 		binding.lnrIdFilter.setOnClickListener(this);
 	}
 
-	private void gotoWorkOfferDetail(WorkOfferModel offer, String execType){
+	private void gotoWorkOfferDetail(OvertimeModel offer, String execType){
 		HolidayWorkingDetailFragment fragment = new HolidayWorkingDetailFragment();
 		fragment.setActiveOfferId(offer.key);
 		fragment.setExecType(execType);
@@ -152,8 +152,8 @@ public class HolidayWorkingListFragment extends AbstractSwFragment implements On
 	@Override
 	protected void successLoad(JSONObject response, String url){
 		if(SwConst.API_HOLIDAY_WORKING_LIST.equals(url)){
-			offers = CCJsonUtil.convertToModelList(response.optString("myHolidayWorkOffers"), WorkOfferModel.class);
-			otherOffers = CCJsonUtil.convertToModelList(response.optString("otherHolidayWorkOffers"), WorkOfferModel.class);
+			offers = CCJsonUtil.convertToModelList(response.optString("myHolidayWorkOffers"), OvertimeModel.class);
+			otherOffers = CCJsonUtil.convertToModelList(response.optString("otherHolidayWorkOffers"), OvertimeModel.class);
 
 			holidayTypes = CCJsonUtil.convertToModelList(response.optString("offerStatusList"), ApiObjectModel.class);
 			ApiObjectModel allType = new ApiObjectModel(CCConst.ALL, getString(R.string.chiase_common_all));
