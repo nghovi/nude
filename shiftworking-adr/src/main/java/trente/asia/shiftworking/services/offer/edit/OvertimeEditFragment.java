@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.google.gson.Gson;
@@ -22,7 +21,6 @@ import org.json.JSONObject;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -41,14 +39,11 @@ import trente.asia.shiftworking.common.defines.SwConst;
 import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
 import trente.asia.shiftworking.databinding.FragmentOvertimeEditBinding;
 import trente.asia.shiftworking.services.offer.list.OvertimeListFragment;
-import trente.asia.shiftworking.services.offer.model.WorkOfferModel;
+import trente.asia.shiftworking.services.offer.model.OvertimeModel;
 import trente.asia.shiftworking.services.offer.model.WorkOfferModelHolder;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.dialog.WfDialog;
-import trente.asia.welfare.adr.models.ApiObjectModel;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
-
-import static trente.asia.welfare.adr.utils.WelfareUtil.getDisplayNum;
 
 /**
  * Created by chi on 9/22/2017.
@@ -56,7 +51,7 @@ import static trente.asia.welfare.adr.utils.WelfareUtil.getDisplayNum;
 
 public class OvertimeEditFragment extends AbstractSwFragment{
 
-	private WorkOfferModel				offer;
+	private OvertimeModel				offer;
 	private ChiaseListDialog			spnType;
 	private Map<String, String>			targetUserModels	= new HashMap<String, String>();
 	private Map<String, List<Double>>	groupInfo;
@@ -126,41 +121,42 @@ public class OvertimeEditFragment extends AbstractSwFragment{
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
+
 		requestLoad(SwConst.API_OVERTIME_DETAIL, jsonObject, true);
 	}
 
 	@Override
 	protected void successLoad(JSONObject response, String url){
 		if(SwConst.API_OVERTIME_DETAIL.equals(url)){
-			WorkOfferModelHolder holder = CCJsonUtil.convertToModel(CCStringUtil.toString(response), WorkOfferModelHolder.class);
-			buildDatePickerDialogs(holder.offer);
+			offer = CCJsonUtil.convertToModel(response.optString("overtime"), OvertimeModel.class);
+			buildDatePickerDialogs(offer);
 			if(!CCStringUtil.isEmpty(activeOfferId)){
-				loadWorkOffer(holder);
+				loadWorkOffer(offer);
 			}else{
 				txtUserName.setText(myself.userName);
 			}
-			initDialog(holder);
+			initDialog(offer);
 		}else{
 			super.successLoad(response, url);
 		}
 	}
 
-	private void loadWorkOffer(WorkOfferModelHolder holder){
+	private void loadWorkOffer(OvertimeModel offer){
 		LinearLayout lnrContent = (LinearLayout)getView().findViewById(R.id.lnr_id_content);
 		try{
 			Gson gson = new Gson();
-			CAObjectSerializeUtil.deserializeObject(lnrContent, new JSONObject(gson.toJson(holder.offer)));
-			txtUserName.setText(holder.offer.userName);
-			txtOfferType.setText(holder.offer.offerTypeName);
-			txtStartDate.setText(holder.offer.startDateString);
-			txtStartTime.setText(holder.offer.startTimeString);
-			txtEndTime.setText(CCStringUtil.toString(holder.offer.endTimeString));
+			CAObjectSerializeUtil.deserializeObject(lnrContent, new JSONObject(gson.toJson(offer)));
+			txtUserName.setText(offer.userName);
+			txtOfferType.setText(offer.overtimeType);
+			txtStartDate.setText(offer.startDateString);
+			txtStartTime.setText(offer.startTimeString);
+			txtEndTime.setText(CCStringUtil.toString(offer.endTimeString));
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
 
 		Button btnDelete = (Button)getView().findViewById(R.id.btn_fragment_offer_detail_delete);
-		if(SwConst.OFFER_CAN_EDIT_DELETE.equals(holder.permission) || SwConst.OFFER_ONLY_DELETE.equals(holder.permission)){
+		if(SwConst.OFFER_CAN_EDIT_DELETE.equals(offer.permission) || SwConst.OFFER_ONLY_DELETE.equals(offer.permission)){
 			btnDelete.setVisibility(View.VISIBLE);
 			btnDelete.setOnClickListener(this);
 		}else{
@@ -168,27 +164,27 @@ public class OvertimeEditFragment extends AbstractSwFragment{
 		}
 	}
 
-	private void initDialog(WorkOfferModelHolder holder){
+	private void initDialog(OvertimeModel offer){
 		if(CCStringUtil.isEmpty(activeOfferId)){
-			txtOfferType.setText(holder.offerTypeList.get(0).value);
-			txtOfferType.setValue(holder.offerTypeList.get(0).key);
+			txtOfferType.setText(offer.overtimeTypeList.get(0).value);
+			txtOfferType.setValue(offer.overtimeTypeList.get(0).key);
 		}
 
-		spnType = new ChiaseListDialog(activity, getString(R.string.fragment_work_offer_edit_offer_type), WelfareFormatUtil.convertList2Map(holder.offerTypeList), txtOfferType, new ChiaseListDialog.OnItemClicked() {
+		spnType = new ChiaseListDialog(activity, getString(R.string.fragment_work_offer_edit_offer_type), WelfareFormatUtil.convertList2Map(offer.overtimeTypeList), txtOfferType, new ChiaseListDialog.OnItemClicked() {
 
 			@Override
 			public void onClicked(String selectedKey, boolean isSelected){
-				OnOfferTypeChangedUpdateLayout();
+				dismissLoad();
 			}
 		});
-		OnOfferTypeChangedUpdateLayout();
+		// OnOfferTypeChangedUpdateLayout();
 	}
 
-	private void OnOfferTypeChangedUpdateLayout(){
-		String selectedType = txtOfferType.getValue();
-	}
+	// private void OnOfferTypeChangedUpdateLayout() {
+	// String selectedType = txtOfferType.getValue();
+	// }
 
-	private void buildDatePickerDialogs(WorkOfferModel offerModel){
+	private void buildDatePickerDialogs(OvertimeModel offerModel){
 		Calendar calendar = Calendar.getInstance();
 		Date starDate = new Date();
 		int startHour = 0, startMinute = 0;

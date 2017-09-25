@@ -36,7 +36,7 @@ import trente.asia.shiftworking.common.defines.SwConst;
 import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
 import trente.asia.shiftworking.common.interfaces.OnUserAdapterListener;
 import trente.asia.shiftworking.databinding.FragmentVacationEditBinding;
-import trente.asia.shiftworking.services.offer.model.WorkOfferModel;
+import trente.asia.shiftworking.services.offer.model.OvertimeModel;
 import trente.asia.shiftworking.services.offer.model.WorkOfferModelHolder;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.dialog.WfDialog;
@@ -98,7 +98,6 @@ public class VacationEditFragment extends AbstractSwFragment implements OnUserAd
 		txtEndDate = (ChiaseTextView)getView().findViewById(R.id.txt_fragment_offer_edit_end_date);
 		txtStartTime = (ChiaseTextView)getView().findViewById(R.id.txt_fragment_offer_edit_start_time);
 		txtEndTime = (ChiaseTextView)getView().findViewById(R.id.txt_fragment_offer_edit_end_time);
-
 		setOnClickListener();
 	}
 
@@ -173,7 +172,7 @@ public class VacationEditFragment extends AbstractSwFragment implements OnUserAd
 
 	}
 
-	private void buildDatePickerDialogs(WorkOfferModel offerModel){
+	private void buildDatePickerDialogs(OvertimeModel offerModel){
 		Calendar calendar = Calendar.getInstance();
 		Date starDate = new Date();
 		Date endDate = new Date();

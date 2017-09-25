@@ -12,8 +12,7 @@ import android.widget.TextView;
 
 import trente.asia.shiftworking.BuildConfig;
 import trente.asia.shiftworking.R;
-import trente.asia.shiftworking.services.offer.model.VacationModel;
-import trente.asia.shiftworking.services.offer.model.WorkOfferModel;
+import trente.asia.shiftworking.services.offer.model.OvertimeModel;
 import trente.asia.welfare.adr.utils.WfPicassoHelper;
 
 /**
@@ -21,13 +20,13 @@ import trente.asia.welfare.adr.utils.WfPicassoHelper;
  *
  * @author TrungND
  */
-public class HolidayWorkingAdapter extends ArrayAdapter<WorkOfferModel>{
+public class HolidayWorkingAdapter extends ArrayAdapter<OvertimeModel>{
 
-	private List<WorkOfferModel>		lstHistory;
+	private List<OvertimeModel>		lstHistory;
 	private Context				mContext;
 	private int					layoutId;
 
-	public HolidayWorkingAdapter(Context context, List<WorkOfferModel> lstHistory){
+	public HolidayWorkingAdapter(Context context, List<OvertimeModel> lstHistory){
 		super(context, R.layout.item_offer, lstHistory);
 		this.mContext = context;
 		this.layoutId = R.layout.item_offer;
@@ -50,7 +49,7 @@ public class HolidayWorkingAdapter extends ArrayAdapter<WorkOfferModel>{
 		}else{
 			viewHolder = (ViewHolder)convertView.getTag();
 		}
-		WorkOfferModel offer = getItem(position);
+		OvertimeModel offer = getItem(position);
 		WfPicassoHelper.loadImageWithDefaultIcon(mContext, BuildConfig.HOST, viewHolder.imgAvatar, offer.userAvatarPath, R.drawable.wf_profile);
 		viewHolder.txtUsername.setText(offer.userName);
 		viewHolder.txtDate.setText(offer.startDateString);

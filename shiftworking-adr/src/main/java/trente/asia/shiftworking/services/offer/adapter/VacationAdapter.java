@@ -1,7 +1,6 @@
 package trente.asia.shiftworking.services.offer.adapter;
 
 import java.util.List;
-import java.util.Map;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -15,7 +14,6 @@ import trente.asia.shiftworking.BuildConfig;
 import trente.asia.shiftworking.R;
 import trente.asia.shiftworking.common.interfaces.OnVacationAdapterListener;
 import trente.asia.shiftworking.services.offer.model.VacationModel;
-import trente.asia.shiftworking.services.offer.model.WorkOfferModel;
 import trente.asia.welfare.adr.utils.WfPicassoHelper;
 
 /**
