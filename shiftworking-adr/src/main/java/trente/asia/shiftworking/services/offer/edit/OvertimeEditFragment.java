@@ -61,10 +61,8 @@ public class OvertimeEditFragment extends AbstractSwFragment implements OnTimePi
 	private Map<String, String>			targetUserModels	= new HashMap<String, String>();
 	private Map<String, List<Double>>	groupInfo;
 	private DatePickerDialog			datePickerDialogStart;
-//	private TimePickerDialog			timePickerDialogStart;
-//	private TimePickerDialog			timePickerDialogEnd;
-SwTimePicker timePickerDialogStart;
-	SwTimePicker timePickerDialogEnd;
+	private SwTimePicker				timePickerDialogStart;
+	private SwTimePicker				timePickerDialogEnd;
 	private ChiaseTextView				txtUserName;
 	private ChiaseTextView				txtStartTime;
 	private ChiaseTextView				txtEndTime;
@@ -110,6 +108,7 @@ SwTimePicker timePickerDialogStart;
 	protected void initData(){
 		loadWorkOfferForm();
 	}
+
 
 	@Override
 	protected void initView(){
@@ -229,24 +228,6 @@ SwTimePicker timePickerDialogStart;
 				txtStartDate.setValue(startDate);
 			}
 		}, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
-
-//		timePickerDialogEnd = new TimePickerDialog(activity, new TimePickerDialog.OnTimeSetListener() {
-//
-//			@Override
-//			public void onTimeSet(TimePicker view, int hourOfDay, int minute){
-//				txtEndTime.setText(getDisplayNum(hourOfDay) + ":" + getDisplayNum(minute));
-//				txtEndTime.setValue(getDisplayNum(hourOfDay) + ":" + getDisplayNum(minute));
-//			}
-//		}, endHour, endMinute, true);
-//
-//		timePickerDialogStart = new TimePickerDialog(activity, new TimePickerDialog.OnTimeSetListener() {
-//
-//			@Override
-//			public void onTimeSet(TimePicker view, int hourOfDay, int minute){
-//				txtStartTime.setText(getDisplayNum(hourOfDay) + ":" + getDisplayNum(minute));
-//				txtStartTime.setValue(getDisplayNum(hourOfDay) + ":" + getDisplayNum(minute));
-//			}
-//		}, startHour, startMinute, true);
 	}
 
 	public String getDisplayNum(int num){

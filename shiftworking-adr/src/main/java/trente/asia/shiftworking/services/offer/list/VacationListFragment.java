@@ -120,6 +120,7 @@ public class VacationListFragment extends AbstractSwFragment implements OnFilter
 			if(selectedType != null && !CCConst.ALL.equals(selectedType.key)){
 				jsonObject.put("vacationId", selectedType.key);
 			}
+
 			jsonObject.put("searchDateString", CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_YYYY_MM, monthView.workMonth));
 		}catch(JSONException e){
 			e.printStackTrace();
