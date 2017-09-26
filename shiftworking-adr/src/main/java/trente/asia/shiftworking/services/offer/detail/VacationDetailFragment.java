@@ -1,5 +1,13 @@
 package trente.asia.shiftworking.services.offer.detail;
 
+import java.util.List;
+import java.util.Map;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.google.gson.Gson;
+
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,15 +19,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
 import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
@@ -30,26 +29,26 @@ import trente.asia.shiftworking.R;
 import trente.asia.shiftworking.common.activities.MainActivity;
 import trente.asia.shiftworking.common.defines.SwConst;
 import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
-import trente.asia.shiftworking.databinding.FragmentOfferDetailBinding;
+import trente.asia.shiftworking.databinding.FragmentVacationDetailBinding;
+import trente.asia.shiftworking.services.offer.adapter.VacationApproveHistoryAdapter;
 import trente.asia.shiftworking.services.offer.edit.VacationEditFragment;
 import trente.asia.shiftworking.services.offer.list.VacationListFragment;
 import trente.asia.shiftworking.services.offer.model.VacationModel;
-import trente.asia.shiftworking.services.offer.adapter.VacationApproveHistoryAdapter;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.models.ApiObjectModel;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 
 public class VacationDetailFragment extends AbstractSwFragment{
 
-	private VacationModel				offer;
-	private ImageView					imgEdit;
-	private Map<String, String>			offerStatusMaster;
-	private String						offerPermission;
+	private VacationModel					offer;
+	private ImageView						imgEdit;
+	private Map<String, String>				offerStatusMaster;
+	private String							offerPermission;
 
-	private EditText					edtComment;
-	private String						activeOfferId;
-	private String						execType;
-	private FragmentOfferDetailBinding	binding;
+	private EditText						edtComment;
+	private String							activeOfferId;
+	private String							execType;
+	private FragmentVacationDetailBinding	binding;
 
 	public void setActiveOfferId(String activeOfferId){
 		this.activeOfferId = activeOfferId;
@@ -62,7 +61,7 @@ public class VacationDetailFragment extends AbstractSwFragment{
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 		if(mRootView == null){
-			binding = DataBindingUtil.inflate(inflater, R.layout.fragment_offer_detail, container, false);
+			binding = DataBindingUtil.inflate(inflater, R.layout.fragment_vacation_detail, container, false);
 			mRootView = binding.getRoot();
 		}
 		return mRootView;
@@ -156,7 +155,7 @@ public class VacationDetailFragment extends AbstractSwFragment{
 		((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_offer_type)).setText(offerModel.vacationName);
 		((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_start_date)).setText(offerModel.startDateString);
 		((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_note)).setText(offerModel.note);
-
+		binding.txtSickAbsent.setText(offerModel.sickAbsent ? getString(R.string.sw_yes) : getString(R.string.sw_no));
 	}
 
 	private void buildWorkOfferDetail(){

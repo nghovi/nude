@@ -148,4 +148,8 @@
     <string name="fragment_holiday_working_detail_expected_date">Expected date</string>
     <string name="fragment_overtime_detail_start_time">Start time</string>
     <string name="fragment_overtime_detail_end_time">End time</string>
+    <string name="sw_amount">Amount</string>
+    <string name="sw_day">%s day</string>
+    <string name="sw_yes">Yes</string>
+    <string name="sw_no">No</string>
 </resources>

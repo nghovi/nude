@@ -108,7 +108,6 @@ public class HolidayWorkingEditFragment extends AbstractSwFragment implements On
 		super.initHeader(R.drawable.sw_back_white, myself.userName, R.drawable.sw_action_save);
 		ImageView imgRightIcon = (ImageView)getView().findViewById(R.id.img_id_header_right_icon);
 		imgRightIcon.setOnClickListener(this);
-
 		txtUserName = (ChiaseTextView)getView().findViewById(R.id.txt_fragment_holiday_working_detail_offer_user);
 		txtStartDate = (ChiaseTextView)getView().findViewById(R.id.txt_fragment_holiday_working_detail_start_date);
 		txtReason = (ChiaseEditText)getView().findViewById((R.id.txt_fragment_holiday_working_detail_reason));
