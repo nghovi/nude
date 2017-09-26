@@ -63,8 +63,7 @@ public class HolidayWorkingEditFragment extends AbstractSwFragment implements On
 	private String								activeOfferId;
 	private FragmentHolidayWorkingEditBinding	binding;
 	private String								execType;
-	private String								permission;
-	private String								userId;
+	private UserModel							selectedUser;
 
 	public void setActiveOfferId(String activeOfferId){
 		this.activeOfferId = activeOfferId;
@@ -99,6 +98,7 @@ public class HolidayWorkingEditFragment extends AbstractSwFragment implements On
 
 	@Override
 	protected void initData(){
+		selectedUser = myself;
 		loadWorkOfferForm();
 	}
 
@@ -132,13 +132,11 @@ public class HolidayWorkingEditFragment extends AbstractSwFragment implements On
 	protected void successLoad(JSONObject response, String url){
 		if(SwConst.API_HOLIDAY_WORKING_DETAIL.equals(url)){
 			offer = CCJsonUtil.convertToModel(response.optString("holidayWork"), HolidayWorkingModel.class);
-			permission = response.optString("permission");
 			buildDatePickerDialogs(offer);
 			if(!CCStringUtil.isEmpty(activeOfferId)){
 				loadWorkOffer(offer);
 			}else{
-				txtUserName.setText(myself.userName);
-				userId = myself.key;
+				txtUserName.setText(selectedUser.userName);
 			}
 		}else{
 			super.successLoad(response, url);
@@ -154,14 +152,6 @@ public class HolidayWorkingEditFragment extends AbstractSwFragment implements On
 			txtStartDate.setText(offer.startDateString);
 		}catch(JSONException e){
 			e.printStackTrace();
-		}
-
-		Button btnDelete = (Button)getView().findViewById(R.id.btn_fragment_offer_detail_delete);
-		if(SwConst.OFFER_CAN_EDIT_DELETE.equals(permission) || SwConst.OFFER_ONLY_DELETE.equals(permission)){
-			btnDelete.setVisibility(View.VISIBLE);
-			btnDelete.setOnClickListener(this);
-		}else{
-			btnDelete.setVisibility(View.GONE);
 		}
 	}
 
@@ -201,7 +191,7 @@ public class HolidayWorkingEditFragment extends AbstractSwFragment implements On
 	private void onClickBtnDone(){
 		JSONObject jsonObject = new JSONObject();
 		try{
-			jsonObject.put("userId", userId);
+			jsonObject.put("userId", selectedUser.getKey());
 			jsonObject.put("key", activeOfferId);
 			jsonObject.put("startDateString", txtStartDate.getText());
 			jsonObject.put("note", txtReason.getText());
@@ -217,34 +207,9 @@ public class HolidayWorkingEditFragment extends AbstractSwFragment implements On
 			((ChiaseActivity)activity).isInitData = true;
 			((WelfareActivity)activity).dataMap.put(SwConst.ACTION_OFFER_UPDATE, CCConst.YES);
 			getFragmentManager().popBackStack();
-		}else if(SwConst.API_HOLIDAY_WORKING_DELETE.equals(url)){
-			((WelfareActivity)activity).dataMap.put(SwConst.ACTION_OFFER_DELETE, CCConst.YES);
-			getFragmentManager().popBackStack();
 		}else{
 			super.successUpdate(response, url);
 		}
-	}
-
-	private void onClickBtnDelete(){
-		final WfDialog dlgConfirmDelete = new WfDialog(activity);
-		dlgConfirmDelete.setDialogTitleButton(getString(R.string.fragment_offer_edit_confirm_delete_msg), getString(android.R.string.ok), getString(android.R.string.cancel), new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v){
-				sendDeleteOfferRequest();
-				dlgConfirmDelete.dismiss();
-			}
-		}).show();
-	}
-
-	private void sendDeleteOfferRequest(){
-		JSONObject jsonObject = new JSONObject();
-		try{
-			jsonObject.put("key", activeOfferId);
-		}catch(JSONException e){
-			e.printStackTrace();
-		}
-		requestUpdate(SwConst.API_HOLIDAY_WORKING_DELETE, jsonObject, true);
 	}
 
 	@Override
@@ -259,9 +224,6 @@ public class HolidayWorkingEditFragment extends AbstractSwFragment implements On
 		case R.id.lnr_user:
 			goToSelectUserEditFragment();
 			break;
-		case R.id.btn_fragment_offer_detail_delete:
-			onClickBtnDelete();
-			break;
 		default:
 			break;
 		}
@@ -269,6 +231,7 @@ public class HolidayWorkingEditFragment extends AbstractSwFragment implements On
 
 	private void goToSelectUserEditFragment(){
 		SelectUserEditFragment fragment = new SelectUserEditFragment();
+		fragment.setSelectedUser(selectedUser);
 		fragment.setCallback(this);
 		gotoFragment(fragment);
 	}
@@ -285,7 +248,7 @@ public class HolidayWorkingEditFragment extends AbstractSwFragment implements On
 
 	@Override
 	public void onSelectUser(UserModel user){
-		txtUserName.setText(user.getUserName());
-		userId = user.getKey();
+		selectedUser = user;
+		txtUserName.setText(selectedUser.getUserName());
 	}
 }

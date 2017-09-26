@@ -81,7 +81,9 @@
                         <trente.asia.android.view.ChiaseTextView
                             android:id="@+id/txt_fragment_holiday_working_detail_reason"
                             style="@style/wl_common_text"
-                            custom:mName="note" />
+                            custom:mName="note"
+                            android:minLines="5"
+                            android:maxLines="5"/>
                     </LinearLayout>
                 </LinearLayout>
 
@@ -108,6 +110,17 @@
                         android:divider="@color/cs_common_divider"
                         android:dividerHeight="1px" />
                 </LinearLayout>
+
+                <View style="@style/cs_common_divider" />
+
+                <Button
+                    android:id="@+id/btn_fragment_offer_detail_delete"
+                    style="@style/cs_common_button_delete"
+                    android:layout_marginLeft="@dimen/margin_26dp"
+                    android:layout_marginRight="@dimen/margin_26dp"
+                    android:layout_marginTop="@dimen/margin_10dp"
+                    android:text="@string/chiase_common_delete"
+                    android:visibility="gone" />
 
                 <LinearLayout
                     android:id="@+id/lnr_id_approve_area"

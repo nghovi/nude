@@ -32,27 +32,30 @@ import trente.asia.shiftworking.common.activities.MainActivity;
 import trente.asia.shiftworking.common.defines.SwConst;
 import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
 import trente.asia.shiftworking.databinding.FragmentHolidayWorkingDetailBinding;
+import trente.asia.shiftworking.services.offer.adapter.HolidayWorkingApproveHistoryAdapter;
 import trente.asia.shiftworking.services.offer.adapter.VacationApproveHistoryAdapter;
 import trente.asia.shiftworking.services.offer.edit.HolidayWorkingEditFragment;
 import trente.asia.shiftworking.services.offer.list.HolidayWorkingListFragment;
+import trente.asia.shiftworking.services.offer.model.ApproveHistory;
 import trente.asia.shiftworking.services.offer.model.OvertimeModel;
 import trente.asia.welfare.adr.activity.WelfareActivity;
+import trente.asia.welfare.adr.dialog.WfDialog;
 import trente.asia.welfare.adr.models.ApiObjectModel;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 
 public class HolidayWorkingDetailFragment extends AbstractSwFragment{
 
-	private OvertimeModel offer;
-	private Map<String, String>			targetUserModels	= new HashMap<String, String>();
-	private Map<String, List<Double>>	groupInfo;
-	private ImageView					imgEdit;
-	private Map<String, String>			offerStatusMaster;
-	private String						offerPermission;
-
-	private EditText					edtComment;
-	private String						activeOfferId;
-	private String						execType;
-	private FragmentHolidayWorkingDetailBinding binding;
+	private OvertimeModel						offer;
+	private Map<String, String>					targetUserModels	= new HashMap<String, String>();
+	private Map<String, List<Double>>			groupInfo;
+	private ImageView							imgEdit;
+	private Map<String, String>					offerStatusMaster;
+	private String								offerPermission;
+	private EditText							edtComment;
+	private String								activeOfferId;
+	private String								execType;
+	private FragmentHolidayWorkingDetailBinding	binding;
+	private ApproveHistory						history;
 
 	public void setActiveOfferId(String activeOfferId){
 		this.activeOfferId = activeOfferId;
@@ -123,6 +126,14 @@ public class HolidayWorkingDetailFragment extends AbstractSwFragment{
 		}else{
 			super.successLoad(response, url);
 		}
+
+		Button btnDelete = (Button)getView().findViewById(R.id.btn_fragment_offer_detail_delete);
+		if(SwConst.OFFER_CAN_EDIT_DELETE.equals(offerPermission) || SwConst.OFFER_ONLY_DELETE.equals(offerPermission)){
+			btnDelete.setVisibility(View.VISIBLE);
+			btnDelete.setOnClickListener(this);
+		}else{
+			btnDelete.setVisibility(View.GONE);
+		}
 	}
 
 	@Override
@@ -181,15 +192,19 @@ public class HolidayWorkingDetailFragment extends AbstractSwFragment{
 	private void judgeAprovePermission(){
 		boolean permissionApprove = SwConst.OFFER_CAN_APPROVE.equals(offerPermission);
 		LinearLayout lnrApproveArea = (LinearLayout)getView().findViewById(R.id.lnr_id_approve_area);
-		if(permissionApprove){
-
-			lnrApproveArea.setVisibility(View.VISIBLE);
-			Button btnReject = (Button)getView().findViewById(R.id.btn_fragment_offer_detail_reject);
-			Button btnApprove = (Button)getView().findViewById(R.id.btn_fragment_offer_detail_approve);
-			btnReject.setOnClickListener(this);
-			btnApprove.setOnClickListener(this);
-		}else{
-			lnrApproveArea.setVisibility(View.GONE);
+		if(offer.listHistories != null){
+			history = offer.listHistories.get(offer.listHistories.size() - 1);
+			if("Rejected".equals(history.historyStatus) || "Done".equals(history.historyStatus)){
+				lnrApproveArea.setVisibility(View.GONE);
+			}else{
+				if(permissionApprove){
+					lnrApproveArea.setVisibility(View.VISIBLE);
+					Button btnReject = (Button)getView().findViewById(R.id.btn_fragment_offer_detail_reject);
+					Button btnApprove = (Button)getView().findViewById(R.id.btn_fragment_offer_detail_approve);
+					btnReject.setOnClickListener(this);
+					btnApprove.setOnClickListener(this);
+				}
+			}
 		}
 	}
 
@@ -197,7 +212,7 @@ public class HolidayWorkingDetailFragment extends AbstractSwFragment{
 		if(offer.userId.equals(myself.key)){
 			getView().findViewById(R.id.lnr_fragment_holiday_working_detail_offer_status).setVisibility(View.VISIBLE);
 			ChiaseListViewNoScroll lstApproveHistory = (ChiaseListViewNoScroll)getView().findViewById(R.id.lst_fragment_offer_detail_offer_status);
-			VacationApproveHistoryAdapter adapter = new VacationApproveHistoryAdapter(activity, offer.listHistories);
+			HolidayWorkingApproveHistoryAdapter adapter = new HolidayWorkingApproveHistoryAdapter(activity, offer.listHistories);
 			lstApproveHistory.setAdapter(adapter);
 		}else{
 			getView().findViewById(R.id.lnr_fragment_holiday_working_detail_offer_status).setVisibility(View.GONE);
@@ -205,19 +220,31 @@ public class HolidayWorkingDetailFragment extends AbstractSwFragment{
 	}
 
 	protected void judgeEditPermission(){
-		if(SwConst.OFFER_CAN_EDIT_DELETE.equals(offerPermission) || SwConst.OFFER_ONLY_DELETE.equals(offerPermission) || SwConst.OFFER_CAN_ONLY_EDIT.equals(offerPermission)){
-			imgEdit.setImageResource(R.drawable.sw_action_edit);
-			imgEdit.setVisibility(View.VISIBLE);
-			imgEdit.setOnClickListener(this);
-		}else{
-			imgEdit.setVisibility(View.INVISIBLE);
+		if(offer.listHistories != null){
+			history = offer.listHistories.get(offer.listHistories.size() - 1);
+			if("Rejected".equals(history.historyStatus) || "Done".equals(history.historyStatus)){
+				imgEdit.setVisibility(View.INVISIBLE);
+			}else{
+				if(SwConst.OFFER_CAN_EDIT_DELETE.equals(offerPermission) || SwConst.OFFER_ONLY_DELETE.equals(offerPermission) || SwConst.OFFER_CAN_ONLY_EDIT.equals(offerPermission)){
+					imgEdit.setImageResource(R.drawable.sw_action_edit);
+					imgEdit.setVisibility(View.VISIBLE);
+					imgEdit.setOnClickListener(this);
+				}
+			}
 		}
 	}
 
 	@Override
 	protected void successUpdate(JSONObject response, String url){
-		((ChiaseActivity)activity).isInitData = true;
-		onClickBackBtn();
+		if(SwConst.API_HOLIDAY_WORKING_APPROVE.equals(url)){
+			((ChiaseActivity)activity).isInitData = true;
+			onClickBackBtn();
+		}else if(SwConst.API_HOLIDAY_WORKING_DELETE.equals(url)){
+			((WelfareActivity)activity).dataMap.put(SwConst.ACTION_OFFER_DELETE, CCConst.YES);
+			getFragmentManager().popBackStack();
+		}else{
+			super.successUpdate(response, url);
+		}
 	}
 
 	private void gotoWorkOfferEditFragment(){
@@ -239,9 +266,34 @@ public class HolidayWorkingDetailFragment extends AbstractSwFragment{
 		case R.id.btn_fragment_offer_detail_reject:
 			onClickBtnReject();
 			break;
+		case R.id.btn_fragment_offer_detail_delete:
+			onClickBtnDelete();
+			break;
 		default:
 			break;
 		}
+	}
+
+	private void onClickBtnDelete() {
+		final WfDialog dlgConfirmDelete = new WfDialog(activity);
+		dlgConfirmDelete.setDialogTitleButton(getString(R.string.fragment_offer_edit_confirm_delete_msg), getString(android.R.string.ok), getString(android.R.string.cancel), new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v){
+				sendDeleteOfferRequest();
+				dlgConfirmDelete.dismiss();
+			}
+		}).show();
+	}
+
+	private void sendDeleteOfferRequest() {
+		JSONObject jsonObject = new JSONObject();
+		try{
+			jsonObject.put("key", activeOfferId);
+		}catch(JSONException e){
+			e.printStackTrace();
+		}
+		requestUpdate(SwConst.API_HOLIDAY_WORKING_DELETE, jsonObject, true);
 	}
 
 	private void sendApproveResult(String approveResult){
