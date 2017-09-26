@@ -145,7 +145,7 @@
                     android:layout_marginRight="@dimen/margin_26dp"
                     android:layout_marginTop="@dimen/margin_10dp"
                     android:text="@string/chiase_common_delete"
-                    android:visibility="gone" />
+                    android:visibility="gone"/>
 
             </LinearLayout>
         </ScrollView>

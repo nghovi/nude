@@ -101,7 +101,7 @@ public class OvertimeListFragment extends AbstractSwFragment implements OnFilter
 			@Override
 			public void onItemClick(AdapterView<?> adapterView, View view, int position, long l){
 				OvertimeModel offer = otherOffers.get(position);
-				gotoWorkOfferDetail(offer, SwConst.SW_OFFER_EXEC_TYPE_VIEW);
+				gotoWorkOfferDetail(offer, SwConst.SW_OFFER_EXEC_TYPE_APR);
 			}
 		});
 		monthView.imgBack.setOnClickListener(this);

@@ -231,6 +231,7 @@ public class OvertimeDetailFragment extends AbstractSwFragment{
 	private void gotoWorkOfferEditFragment(){
 		OvertimeEditFragment fragment = new OvertimeEditFragment();
 		fragment.setActiveOfferId(offer.key);
+		fragment.setExecType(execType);
 		gotoFragment(fragment);
 	}
 
