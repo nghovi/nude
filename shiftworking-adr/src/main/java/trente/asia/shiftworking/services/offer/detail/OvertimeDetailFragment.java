@@ -16,6 +16,7 @@ import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -32,27 +33,31 @@ import trente.asia.shiftworking.common.activities.MainActivity;
 import trente.asia.shiftworking.common.defines.SwConst;
 import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
 import trente.asia.shiftworking.databinding.FragmentOvertimeDetailBinding;
+import trente.asia.shiftworking.services.offer.adapter.OvertimeApproveHistoryAdapter;
 import trente.asia.shiftworking.services.offer.adapter.VacationApproveHistoryAdapter;
 import trente.asia.shiftworking.services.offer.edit.OvertimeEditFragment;
 import trente.asia.shiftworking.services.offer.list.OvertimeListFragment;
+import trente.asia.shiftworking.services.offer.model.ApproveHistory;
 import trente.asia.shiftworking.services.offer.model.OvertimeModel;
 import trente.asia.welfare.adr.activity.WelfareActivity;
+import trente.asia.welfare.adr.dialog.WfDialog;
 import trente.asia.welfare.adr.models.ApiObjectModel;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 
 public class OvertimeDetailFragment extends AbstractSwFragment{
 
-	private OvertimeModel offer;
-	private Map<String, String>			targetUserModels	= new HashMap<String, String>();
-	private Map<String, List<Double>>	groupInfo;
-	private ImageView					imgEdit;
-	private Map<String, String>			offerStatusMaster;
-	private String						offerPermission;
+	private OvertimeModel					offer;
+	private Map<String, String>				targetUserModels	= new HashMap<String, String>();
+	private Map<String, List<Double>>		groupInfo;
+	private ImageView						imgEdit;
+	private Map<String, String>				offerStatusMaster;
+	private String							offerPermission;
 
-	private EditText					edtComment;
-	private String						activeOfferId;
-	private String						execType;
-	private FragmentOvertimeDetailBinding binding;
+	private EditText						edtComment;
+	private String							activeOfferId;
+	private String							execType;
+	private FragmentOvertimeDetailBinding	binding;
+	private ApproveHistory					history;
 
 	public void setActiveOfferId(String activeOfferId){
 		this.activeOfferId = activeOfferId;
@@ -123,6 +128,13 @@ public class OvertimeDetailFragment extends AbstractSwFragment{
 		}else{
 			super.successLoad(response, url);
 		}
+		Button btnDelete = (Button)getView().findViewById(R.id.btn_fragment_offer_detail_delete);
+		if(SwConst.OFFER_CAN_EDIT_DELETE.equals(offerPermission) || SwConst.OFFER_ONLY_DELETE.equals(offerPermission)){
+			btnDelete.setVisibility(View.VISIBLE);
+			btnDelete.setOnClickListener(this);
+		}else{
+			btnDelete.setVisibility(View.GONE);
+		}
 	}
 
 	@Override
@@ -158,16 +170,14 @@ public class OvertimeDetailFragment extends AbstractSwFragment{
 			e.printStackTrace();
 		}
 
-
 		((TextView)getView().findViewById(R.id.txt_fragment_overtime_detail_offer_user)).setText(offerModel.userName);
-        if ("E".equals(offerModel.overtimeType)) {
-            ((TextView) getView().findViewById(R.id.txt_fragment_overtime_detail_offer_type)).setText(getResources().getString(R.string.fragment_overtime_detail_type_early));
-        }else{
-            ((TextView) getView().findViewById(R.id.txt_fragment_overtime_detail_offer_type)).setText(getResources().getString(R.string.fragment_overtime_detail_type_overtime));
-        }
+		if("E".equals(offerModel.overtimeType)){
+			((TextView)getView().findViewById(R.id.txt_fragment_overtime_detail_offer_type)).setText(getResources().getString(R.string.fragment_overtime_detail_type_early));
+		}else{
+			((TextView)getView().findViewById(R.id.txt_fragment_overtime_detail_offer_type)).setText(getResources().getString(R.string.fragment_overtime_detail_type_overtime));
+		}
 		((TextView)getView().findViewById(R.id.txt_fragment_overtime_detail_start_date)).setText(offerModel.startDateString);
 		((TextView)getView().findViewById(R.id.txt_fragment_overtime_detail_start_time)).setText(offerModel.startTimeString + "-" + offerModel.endTimeString);
-//		((TextView)getView().findViewById(R.id.txt_fragment_overtime_detail_end_date)).setText(offerModel.endDateString);
 		((TextView)getView().findViewById(R.id.txt_fragment_overtime_detail_reason)).setText(offerModel.note);
 
 	}
@@ -190,14 +200,19 @@ public class OvertimeDetailFragment extends AbstractSwFragment{
 	private void judgeAprovePermission(){
 		boolean permissionApprove = SwConst.OFFER_CAN_APPROVE.equals(offerPermission);
 		LinearLayout lnrApproveArea = (LinearLayout)getView().findViewById(R.id.lnr_id_approve_area);
-		if(permissionApprove){
-			lnrApproveArea.setVisibility(View.VISIBLE);
-			Button btnReject = (Button)getView().findViewById(R.id.btn_fragment_offer_detail_reject);
-			Button btnApprove = (Button)getView().findViewById(R.id.btn_fragment_offer_detail_approve);
-			btnReject.setOnClickListener(this);
-			btnApprove.setOnClickListener(this);
-		}else{
-			lnrApproveArea.setVisibility(View.GONE);
+		if(offer.listHistories != null){
+			history = offer.listHistories.get(offer.listHistories.size() - 1);
+			if("Rejected".equals(history.historyStatus) || "Done".equals(history.historyStatus)){
+				lnrApproveArea.setVisibility(View.GONE);
+			}else{
+				if(permissionApprove){
+					lnrApproveArea.setVisibility(View.VISIBLE);
+					Button btnReject = (Button)getView().findViewById(R.id.btn_fragment_offer_detail_reject);
+					Button btnApprove = (Button)getView().findViewById(R.id.btn_fragment_offer_detail_approve);
+					btnReject.setOnClickListener(this);
+					btnApprove.setOnClickListener(this);
+				}
+			}
 		}
 	}
 
@@ -205,7 +220,7 @@ public class OvertimeDetailFragment extends AbstractSwFragment{
 		if(offer.userId.equals(myself.key)){
 			getView().findViewById(R.id.lnr_fragment_overtime_detail_offer_status).setVisibility(View.VISIBLE);
 			ChiaseListViewNoScroll lstApproveHistory = (ChiaseListViewNoScroll)getView().findViewById(R.id.lst_fragment_offer_detail_offer_status);
-			VacationApproveHistoryAdapter adapter = new VacationApproveHistoryAdapter(activity, offer.listHistories);
+			OvertimeApproveHistoryAdapter adapter = new OvertimeApproveHistoryAdapter(activity, offer.listHistories);
 			lstApproveHistory.setAdapter(adapter);
 		}else{
 			getView().findViewById(R.id.lnr_fragment_overtime_detail_offer_status).setVisibility(View.GONE);
@@ -213,19 +228,31 @@ public class OvertimeDetailFragment extends AbstractSwFragment{
 	}
 
 	protected void judgeEditPermission(){
-		if(SwConst.OFFER_CAN_EDIT_DELETE.equals(offerPermission) || SwConst.OFFER_ONLY_DELETE.equals(offerPermission) || SwConst.OFFER_CAN_ONLY_EDIT.equals(offerPermission)){
-			imgEdit.setImageResource(R.drawable.sw_action_edit);
-			imgEdit.setVisibility(View.VISIBLE);
-			imgEdit.setOnClickListener(this);
-		}else{
-			imgEdit.setVisibility(View.INVISIBLE);
+		if(offer.listHistories != null){
+			history = offer.listHistories.get(offer.listHistories.size() - 1);
+			if("Rejected".equals(history.historyStatus) || "Done".equals(history.historyStatus)){
+				imgEdit.setVisibility(View.INVISIBLE);
+			}else{
+				if(SwConst.OFFER_CAN_EDIT_DELETE.equals(offerPermission) || SwConst.OFFER_ONLY_DELETE.equals(offerPermission) || SwConst.OFFER_CAN_ONLY_EDIT.equals(offerPermission)){
+					imgEdit.setImageResource(R.drawable.sw_action_edit);
+					imgEdit.setVisibility(View.VISIBLE);
+					imgEdit.setOnClickListener(this);
+				}
+			}
 		}
 	}
 
 	@Override
 	protected void successUpdate(JSONObject response, String url){
-		((ChiaseActivity)activity).isInitData = true;
-		onClickBackBtn();
+		if(SwConst.API_OVERTIME_APPROVE.equals(url)){
+			((ChiaseActivity)activity).isInitData = true;
+			onClickBackBtn();
+		}else if(SwConst.API_OVERTIME_DELETE.equals(url)){
+			((WelfareActivity)activity).dataMap.put(SwConst.ACTION_OFFER_DELETE, CCConst.YES);
+			getFragmentManager().popBackStack();
+		}else{
+			super.successUpdate(response, url);
+		}
 	}
 
 	private void gotoWorkOfferEditFragment(){
@@ -247,9 +274,35 @@ public class OvertimeDetailFragment extends AbstractSwFragment{
 		case R.id.btn_fragment_offer_detail_reject:
 			onClickBtnReject();
 			break;
+		case R.id.btn_fragment_offer_detail_delete:
+			onClickBtnDelete();
+			break;
 		default:
 			break;
 		}
+	}
+
+	private void onClickBtnDelete(){
+		final WfDialog dlgConfirmDelete = new WfDialog(activity);
+		dlgConfirmDelete.setDialogTitleButton(getString(R.string.fragment_offer_edit_confirm_delete_msg), getString(android.R.string.ok), getString(android.R.string.cancel), new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v){
+				sendDeleteOfferRequest();
+				dlgConfirmDelete.dismiss();
+			}
+		}).show();
+
+	}
+
+	private void sendDeleteOfferRequest(){
+		JSONObject jsonObject = new JSONObject();
+		try{
+			jsonObject.put("key", activeOfferId);
+		}catch(JSONException e){
+			e.printStackTrace();
+		}
+		requestUpdate(SwConst.API_OVERTIME_DELETE, jsonObject, true);
 	}
 
 	private void sendApproveResult(String approveResult){

@@ -49,7 +49,7 @@ import trente.asia.welfare.adr.utils.WelfareFormatUtil;
  * Created by chi on 9/22/2017.
  */
 
-public class OvertimeEditFragment extends AbstractSwFragment implements OnTimePickerListener, OnUserAdapterListener{
+public class OvertimeEditFragment extends AbstractSwFragment implements OnTimePickerListener,OnUserAdapterListener{
 
 	private OvertimeModel				offer;
 	private ChiaseListDialog			spnType;
@@ -64,12 +64,12 @@ public class OvertimeEditFragment extends AbstractSwFragment implements OnTimePi
 	private String						activeOfferId;
 	private FragmentOvertimeEditBinding	binding;
 	private String						execType;
-	private String						permission;
 	private List<ApiObjectModel>		typeList;
 	private String						m;
 	private String						h;
 	private boolean						timePickerStart;
-	private String userId;
+	private UserModel					selectedUser;
+
 	public void setActiveOfferId(String activeOfferId){
 		this.activeOfferId = activeOfferId;
 	}
@@ -106,6 +106,7 @@ public class OvertimeEditFragment extends AbstractSwFragment implements OnTimePi
 
 	@Override
 	protected void initData(){
+		selectedUser = myself;
 		loadWorkOfferForm();
 	}
 
@@ -143,13 +144,11 @@ public class OvertimeEditFragment extends AbstractSwFragment implements OnTimePi
 		if(SwConst.API_OVERTIME_DETAIL.equals(url)){
 			offer = CCJsonUtil.convertToModel(response.optString("overtime"), OvertimeModel.class);
 			typeList = CCJsonUtil.convertToModelList(response.optString("overtimeTypeList"), ApiObjectModel.class);
-			permission = response.optString("permission");
 			buildDatePickerDialogs(offer);
 			if(!CCStringUtil.isEmpty(activeOfferId)){
 				loadWorkOffer(offer);
 			}else{
-				txtUserName.setText(myself.userName);
-				userId = myself.key;
+				txtUserName.setText(selectedUser.userName);
 			}
 			initDialog(typeList);
 		}else{
@@ -173,14 +172,6 @@ public class OvertimeEditFragment extends AbstractSwFragment implements OnTimePi
 			txtEndTime.setText(CCStringUtil.toString(offer.endTimeString));
 		}catch(JSONException e){
 			e.printStackTrace();
-		}
-
-		Button btnDelete = (Button)getView().findViewById(R.id.btn_fragment_offer_detail_delete);
-		if(SwConst.OFFER_CAN_EDIT_DELETE.equals(permission) || SwConst.OFFER_ONLY_DELETE.equals(permission)){
-			btnDelete.setVisibility(View.VISIBLE);
-			btnDelete.setOnClickListener(this);
-		}else{
-			btnDelete.setVisibility(View.GONE);
 		}
 	}
 
@@ -239,7 +230,7 @@ public class OvertimeEditFragment extends AbstractSwFragment implements OnTimePi
 	private void onClickBtnDone(){
 		JSONObject jsonObject = new JSONObject();
 		try{
-			jsonObject.put("userId", userId);
+			jsonObject.put("userId", selectedUser.getKey());
 			jsonObject.put("key", activeOfferId);
 			jsonObject.put("startDateString", txtStartDate.getText());
 			jsonObject.put("startTimeString", txtStartTime.getText());
@@ -258,34 +249,9 @@ public class OvertimeEditFragment extends AbstractSwFragment implements OnTimePi
 			((ChiaseActivity)activity).isInitData = true;
 			((WelfareActivity)activity).dataMap.put(SwConst.ACTION_OFFER_UPDATE, CCConst.YES);
 			getFragmentManager().popBackStack();
-		}else if(SwConst.API_OVERTIME_DELETE.equals(url)){
-			((WelfareActivity)activity).dataMap.put(SwConst.ACTION_OFFER_DELETE, CCConst.YES);
-			getFragmentManager().popBackStack();
 		}else{
 			super.successUpdate(response, url);
 		}
-	}
-
-	private void onClickBtnDelete(){
-		final WfDialog dlgConfirmDelete = new WfDialog(activity);
-		dlgConfirmDelete.setDialogTitleButton(getString(R.string.fragment_offer_edit_confirm_delete_msg), getString(android.R.string.ok), getString(android.R.string.cancel), new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v){
-				sendDeleteOfferRequest();
-				dlgConfirmDelete.dismiss();
-			}
-		}).show();
-	}
-
-	private void sendDeleteOfferRequest(){
-		JSONObject jsonObject = new JSONObject();
-		try{
-			jsonObject.put("key", activeOfferId);
-		}catch(JSONException e){
-			e.printStackTrace();
-		}
-		requestUpdate(SwConst.API_OVERTIME_DELETE, jsonObject, true);
 	}
 
 	@Override
@@ -311,16 +277,14 @@ public class OvertimeEditFragment extends AbstractSwFragment implements OnTimePi
 		case R.id.lnr_id_type:
 			spnType.show();
 			break;
-		case R.id.btn_fragment_offer_detail_delete:
-			onClickBtnDelete();
-			break;
 		default:
 			break;
 		}
 	}
 
-	private void goToSelectUserEditFragment() {
+	private void goToSelectUserEditFragment(){
 		SelectUserEditFragment fragment = new SelectUserEditFragment();
+		fragment.setSelectedUser(selectedUser);
 		fragment.setCallback(this);
 		gotoFragment(fragment);
 	}
@@ -362,8 +326,8 @@ public class OvertimeEditFragment extends AbstractSwFragment implements OnTimePi
 	}
 
 	@Override
-	public void onSelectUser(UserModel user) {
-		txtUserName.setText(user.getUserName());
-		userId = user.getKey();
+	public void onSelectUser(UserModel user){
+		selectedUser = user;
+		txtUserName.setText(selectedUser.getUserName());
 	}
 }
