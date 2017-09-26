@@ -46,7 +46,9 @@
                         android:layout_weight="1"
                         android:layout_marginStart="@dimen/margin_10dp"
                         custom:mName="offerUser" />
-                    <ImageView style="@style/sw_right_hand_arrow_image" />
+                    <ImageView
+                        android:id="@+id/user_arrow"
+                        style="@style/sw_right_hand_arrow_image" />
                 </LinearLayout>
 
                 <View style="@style/cs_common_divider" />
@@ -105,8 +107,7 @@
 
                     <TextView
                         style="@style/wl_common_text"
-                        android:layout_width="wrap_content"
-                        android:text="@string/fragment_offer_detail_end_date" />
+                        android:layout_width="wrap_content" />
 
                     <trente.asia.android.view.ChiaseTextView
                         android:id="@+id/txt_fragment_offer_edit_end_date"
@@ -133,10 +134,10 @@
                         <TextView
                             style="@style/wl_common_text"
                             android:layout_width="wrap_content"
-                            android:text="@string/fragment_offer_detail_end_time" />
+                            android:text="@string/sw_amount" />
 
                         <trente.asia.android.view.ChiaseTextView
-                            android:id="@+id/txt_fragment_offer_edit_end_time"
+                            android:id="@+id/txt_amount"
                             style="@style/wl_common_edit_text2"
                             android:layout_marginStart="@dimen/margin_10dp"
                             android:layout_weight="1"
@@ -189,7 +190,7 @@
                     android:orientation="vertical">
 
                     <trente.asia.android.view.ChiaseEditText
-                        android:id="@+id/edt_fragment_offer_edit_note"
+                        android:id="@+id/edt_note"
                         style="@style/wl_common_edit_text_multi_line2"
                         android:layout_marginTop="@dimen/margin_10dp"
                         android:inputType="textMultiLine"

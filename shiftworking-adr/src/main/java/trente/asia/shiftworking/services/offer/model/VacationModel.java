@@ -7,7 +7,9 @@ import java.util.List;
  */
 
 public class VacationModel{
-	public int					vacationId;
+
+	public String				key;
+	public String				vacationId;
 	public String				vacationName;
 	public String				endDate;
 	public String				endDateString;
@@ -19,11 +21,13 @@ public class VacationModel{
 	public String				note;
 	public String				approveUser1;
 	public String				approveResult1;
+	public String				approveResult2;
 	public String				approveUser2;
 	public String				requestDateString;
-	public String				key;
 	public String				execType;
 	public String				offerStatus;
 	public String				offerStatusName;
+	public String				amount;
+	public boolean				sickAbsent;
 	public List<ApproveHistory>	listHistories;
 }

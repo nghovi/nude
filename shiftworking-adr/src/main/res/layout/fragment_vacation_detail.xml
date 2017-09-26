@@ -92,8 +92,7 @@
                         <trente.asia.android.view.ChiaseTextView
                             android:id="@+id/txt_sick_absent"
                             style="@style/wl_common_edit_text2"
-                            android:layout_marginStart="@dimen/margin_10dp"
-                            android:text="No" />
+                            android:layout_marginStart="@dimen/margin_10dp"/>
                     </LinearLayout>
 
 
