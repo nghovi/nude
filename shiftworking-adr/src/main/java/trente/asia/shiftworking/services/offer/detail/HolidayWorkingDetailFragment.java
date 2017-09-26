@@ -223,6 +223,7 @@ public class HolidayWorkingDetailFragment extends AbstractSwFragment{
 	private void gotoWorkOfferEditFragment(){
 		HolidayWorkingEditFragment fragment = new HolidayWorkingEditFragment();
 		fragment.setActiveOfferId(offer.key);
+		fragment.setExecType(execType);
 		gotoFragment(fragment);
 	}
 
