@@ -7,11 +7,11 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.bumptech.glide.Glide;
+
 import android.content.Context;
 import android.graphics.Typeface;
-import android.media.Image;
 import android.os.Bundle;
-import android.support.percent.PercentLayoutHelper;
 import android.support.percent.PercentRelativeLayout;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
@@ -23,8 +23,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
@@ -35,9 +33,7 @@ import trente.asia.thankscard.commons.defines.TcConst;
 import trente.asia.thankscard.services.common.model.HistoryModel;
 import trente.asia.thankscard.services.mypage.model.StampModel;
 import trente.asia.thankscard.services.posted.PostTCFragment;
-import trente.asia.thankscard.services.posted.ThanksCardEditFragment;
 import trente.asia.thankscard.services.posted.model.ApiStickerModel;
-import trente.asia.thankscard.services.posted.view.PhotoViewDetail;
 import trente.asia.thankscard.services.posted.view.StickerViewDetail;
 import trente.asia.thankscard.services.received.ReceiveTCListFragment;
 import trente.asia.thankscard.utils.TCUtil;
@@ -162,8 +158,8 @@ public class TCDetailFragment extends AbstractPagerFragment{
 
 		photoView.setImageBitmap(null);
 
-		Typeface typeface = Typeface.createFromAsset(getContext().getAssets(), "Arial_BoldMT.ttf");
-		textMessage.setTypeface(typeface);
+//		Typeface typeface = Typeface.createFromAsset(getContext().getAssets(), "Arial_BoldMT.ttf");
+		textMessage.setTypeface(Typeface.MONOSPACE);
 		if("NM".equals(historyModel.templateType)){
 			setLayoutMessageCenter(lnrMessage);
 			textMessage.setTextSize(TypedValue.COMPLEX_UNIT_PX, normalTextSize);
@@ -276,19 +272,6 @@ public class TCDetailFragment extends AbstractPagerFragment{
 		Log.e("TCDetail", msg);
 	}
 
-	private void gotoPostedEditFragment(HistoryModel historyModel){
-		ThanksCardEditFragment thanksCardEditFragment = new ThanksCardEditFragment();
-		Bundle args = new Bundle();
-		args.putInt(TcConst.ACTIVE_FOOTER_ITEM_ID, getFooterItemId());
-		String toUserId = myself.key.equals(historyModel.receiverId) ? historyModel.posterId : historyModel.receiverId;
-		args.putString(ThanksCardEditFragment.MESSAGE, historyModel.message);
-		thanksCardEditFragment.setSelectedDept(WelfareUtil.getDept4UserId(depts, toUserId));
-		thanksCardEditFragment.setSelectedUser(new UserModel(toUserId));
-
-		thanksCardEditFragment.setArguments(args);
-		gotoFragment(thanksCardEditFragment);
-	}
-
 	public static void buildTCFrame(Context context, View lnrFrame, final HistoryModel historyModel, boolean isShowContent){
 		Date postDate = CCDateUtil.makeDateCustom(historyModel.postDate, WelfareConst.WF_DATE_TIME);
 		String postDateFormat = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, postDate);
@@ -315,21 +298,9 @@ public class TCDetailFragment extends AbstractPagerFragment{
 		}
 
 		if(historyModel.template != null){
-			LinearLayout lnrFrameBackground = (LinearLayout)lnrFrame.findViewById(R.id.lnr_thanks_card_frame_container);
 			ImageView templateImage = (ImageView)lnrFrame.findViewById(R.id.img_card);
 			templateImage.setScaleType(ImageView.ScaleType.FIT_XY);
 			WfPicassoHelper.loadImage2(context, BuildConfig.HOST, templateImage, historyModel.template.templateUrl);
-//			if ("PH".equals(historyModel.templateType)) {
-//				PercentRelativeLayout.LayoutParams params = (PercentRelativeLayout.LayoutParams) lnrFrameBackground.getLayoutParams();
-//				params.getPercentLayoutInfo().widthPercent = 0.5f;
-//				params.addRule(RelativeLayout.ALIGN_PARENT_END);
-//				params.leftMargin = 10;
-//				PhotoViewDetail photoViewDetail = (PhotoViewDetail) lnrFrame.findViewById(R.id.photo);
-//				if(historyModel.attachment != null && historyModel.attachment.fileUrl != null){
-//					photoViewDetail.restoreImageInList(historyModel.attachment.fileUrl, Float.valueOf(historyModel.photoLocationX),
-//							Float.valueOf(historyModel.photoLocationY), Float.valueOf(historyModel.photoScale));
-//				}
-//			}
 		}
 	}
 

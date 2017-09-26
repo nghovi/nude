@@ -136,9 +136,9 @@
                             style="@style/tc_text_black_bold"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_10dp"
-                            android:layout_marginRight="@dimen/margin_10dp"
-                            android:padding="@dimen/margin_0dp"/>
+                            android:paddingStart="@dimen/margin_10dp"
+                            android:paddingEnd="@dimen/margin_10dp"
+                            android:layout_margin="@dimen/margin_0dp"/>
                     </LinearLayout>
 
                     <RelativeLayout

@@ -131,15 +131,15 @@
     <string name="tc_stage_infor_explain">カードを送ったり、受け取ったりすると、１回につき、１ポイントがもらえます。ポイントを貯めると、ステージが上がり、カードやデコレーションの種類が増えます。ステージを上げ、素敵なカードを送りましょう。</string>
     <string name="tc_rank_gold">ゴールド</string>
     <string name="tc_rank_silver">シルバー</string>
-    <string name="tc_explain_silver">シールの種類が増えます</string>
+    <string name="tc_explain_silver">写真付きカードが使えるようになります</string>
     <string name="tc_rank_bronze">ブロンズ</string>
-    <string name="tc_explain_bronze">カードをデコレーションするための、写真・シールが使えるようになります</string>
+    <string name="tc_explain_bronze">シールが使えるようになります</string>
     <string name="tc_rank_regular">レギュラー</string>
-    <string name="tc_explain_gold">カード、シールの種類が増えます</string>
+    <string name="tc_explain_gold">" 特別なカードがもらえます"</string>
     <string name="tc_explain_regular">カードでメッセージを送ることができます。</string>
     <string name="tc_stage_information">ステージ情報</string>
-    <string name="tc_confirm_dialog_title">確認メッセージ</string>
-    <string name="tc_confirm_msg">%1$sさんへ\nメッセージを送りますか？</string>
+    <string name="tc_confirm_dialog_title">送信確認</string>
+    <string name="tc_confirm_msg">%1$sさんへメッセージを送りますか？</string>
     <string name="tc_secret_mode">シークレットモードで送る</string>
     <string name="tc_no_rank">- 位</string>
     <string name="tc_1_rank">%1$s位</string>
@@ -165,4 +165,5 @@
     <string name="tc_normal_card_tab">ノーマル</string>
     <string name="tc_photo_card_tab">写真付き</string>
     <string name="tc_done">完了</string>
+    <string name="tc_preview">プレビュー</string>
 </resources>

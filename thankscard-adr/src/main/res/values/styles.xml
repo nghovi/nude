@@ -176,4 +176,14 @@
         </item>
         <item name="android:prompt">@string/fragment_tc_detail_date</item>
     </style>
+
+    <style name="tc_text_black_14sp">
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="tc_text_white_14sp">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">14sp</item>
+    </style>
 </resources>

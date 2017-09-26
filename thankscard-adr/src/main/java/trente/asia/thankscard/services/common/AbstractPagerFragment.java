@@ -18,11 +18,11 @@ import trente.asia.thankscard.services.mypage.view.MyPagerAdapter2;
  */
 public abstract class AbstractPagerFragment extends AbstractTCFragment{
 
-	Button				btnBack;
-	Button				btnNext;
-	RelativeLayout		rltStickers;
-	List<HistoryModel>	lstHistory;
-	int					defaultPos	= 0;
+	public Button				btnBack;
+	public Button				btnNext;
+	public RelativeLayout		rltStickers;
+	public List<HistoryModel>	lstHistory;
+	public int					defaultPos	= 0;
 
 	@Override
 	public boolean hasBackBtn(){
@@ -52,10 +52,6 @@ public abstract class AbstractPagerFragment extends AbstractTCFragment{
 	final void buildPager(){
 		buildDirectButton();
 	}
-
-	// protected void setOnPageSelectedListener(){
-	// this.onPageSelectedListener = null;
-	// }
 
 	protected void buildDirectButton(){
 		btnNext = (Button)getView().findViewById(R.id.btn_view_common_pager_next);
