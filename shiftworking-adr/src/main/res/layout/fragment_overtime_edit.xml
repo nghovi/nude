@@ -29,7 +29,8 @@
 
                 <View style="@style/cs_common_divider" />
 
-                <LinearLayout style="@style/wf_common_item_linear2">
+                <LinearLayout style="@style/wf_common_item_linear2"
+                    android:id="@+id/lnr_user">
 
                     <TextView
                         style="@style/wl_common_text"
@@ -40,13 +41,22 @@
                         android:id="@+id/txt_fragment_overtime_detail_offer_user"
                         style="@style/wl_common_edit_text2"
                         android:layout_marginStart="@dimen/margin_10dp"
+                        android:layout_weight="1"
                         custom:mName="offerUser" />
+
+                    <ImageView
+                        android:id="@+id/arrow_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/wf_row_arrow_right"
+                        android:visibility="gone" />
                 </LinearLayout>
 
                 <View style="@style/cs_common_divider" />
 
-                <LinearLayout style="@style/wf_common_item_linear2"
-                    android:id="@+id/lnr_id_type">
+                <LinearLayout
+                    android:id="@+id/lnr_id_type"
+                    style="@style/wf_common_item_linear2">
 
                     <TextView
                         style="@style/wl_common_text"
@@ -62,8 +72,9 @@
 
                 <View style="@style/cs_common_divider" />
 
-                <LinearLayout style="@style/wf_common_item_linear2"
-                    android:id="@+id/lnr_start_date">
+                <LinearLayout
+                    android:id="@+id/lnr_start_date"
+                    style="@style/wf_common_item_linear2">
 
                     <TextView
                         style="@style/wl_common_text"
@@ -79,8 +90,9 @@
 
                 <View style="@style/cs_common_divider" />
 
-                <LinearLayout style="@style/wf_common_item_linear2"
-                    android:id="@+id/lnr_start_time">
+                <LinearLayout
+                    android:id="@+id/lnr_start_time"
+                    style="@style/wf_common_item_linear2">
 
                     <TextView
                         style="@style/wl_common_text"
@@ -96,8 +108,9 @@
 
                 <View style="@style/cs_common_divider" />
 
-                <LinearLayout style="@style/wf_common_item_linear2"
-                    android:id="@+id/lnr_end_time">
+                <LinearLayout
+                    android:id="@+id/lnr_end_time"
+                    style="@style/wf_common_item_linear2">
 
                     <TextView
                         style="@style/wl_common_text"
@@ -145,7 +158,7 @@
                     android:layout_marginRight="@dimen/margin_26dp"
                     android:layout_marginTop="@dimen/margin_10dp"
                     android:text="@string/chiase_common_delete"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
             </LinearLayout>
         </ScrollView>
