@@ -25,117 +25,142 @@ import trente.asia.shiftworking.services.offer.list.VacationListFragment;
  */
 
 public class WorkOfferFragment extends AbstractSwFragment implements ViewPager.OnPageChangeListener{
-    private FragmentWorkOfferBinding binding;
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if (mRootView == null) {
-            mRootView = inflater.inflate(R.layout.fragment_work_offer, container, false);
-        }
-        return mRootView;
-    }
+	private FragmentWorkOfferBinding	binding;
+	private VacationListFragment		vacationListFragment;
+	private OvertimeListFragment		overtimeListFragment;
+	private HolidayWorkingListFragment	holidayWorkingListFragment;
+	private boolean						loadAgain	= false;
 
-    @Override
-    protected void initView() {
-        super.initView();
-        initHeader(null, myself.userName, R.drawable.bb_action_add);
-        getView().findViewById(R.id.img_id_header_right_icon).setOnClickListener(this);
-    }
+	@Nullable
+	@Override
+	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
+		if(mRootView == null){
+			mRootView = inflater.inflate(R.layout.fragment_work_offer, container, false);
+		}
+		return mRootView;
+	}
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        if (binding != null) {
-            return;
-        }
-        binding = DataBindingUtil.bind(mRootView);
-        WorkOfferFragmentAdapter adapter = new WorkOfferFragmentAdapter(getFragmentManager());
-        adapter.addFragment(new VacationListFragment());
-        adapter.addFragment(new OvertimeListFragment());
-        adapter.addFragment(new HolidayWorkingListFragment());
-        binding.viewPager.setAdapter(adapter);
-        binding.viewPager.addOnPageChangeListener(this);
-        binding.tabVacation.setOnClickListener(this);
-        binding.tabOvertime.setOnClickListener(this);
-        binding.tabHolidayWorking.setOnClickListener(this);
-    }
+	@Override
+	protected void initView(){
+		super.initView();
+		initHeader(null, myself.userName, R.drawable.bb_action_add);
+		getView().findViewById(R.id.img_id_header_right_icon).setOnClickListener(this);
+	}
 
-    @Override
-    public int getFooterItemId() {
-        return R.id.lnr_view_footer_offer;
-    }
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState){
+		super.onActivityCreated(savedInstanceState);
+		if(binding != null){
+			return;
+		}
+		binding = DataBindingUtil.bind(mRootView);
+		WorkOfferFragmentAdapter adapter = new WorkOfferFragmentAdapter(getFragmentManager());
+		vacationListFragment = new VacationListFragment();
+		overtimeListFragment = new OvertimeListFragment();
+		holidayWorkingListFragment = new HolidayWorkingListFragment();
+		adapter.addFragment(vacationListFragment);
+		adapter.addFragment(overtimeListFragment);
+		adapter.addFragment(holidayWorkingListFragment);
+		binding.viewPager.setAdapter(adapter);
+		binding.viewPager.addOnPageChangeListener(this);
+		binding.tabVacation.setOnClickListener(this);
+		binding.tabOvertime.setOnClickListener(this);
+		binding.tabHolidayWorking.setOnClickListener(this);
 
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.tab_vacation:
-                binding.viewPager.setCurrentItem(0);
-                break;
-            case R.id.tab_overtime:
-                binding.viewPager.setCurrentItem(1);
-                break;
-            case R.id.tab_holiday_working:
-                binding.viewPager.setCurrentItem(2);
-                break;
-            case R.id.img_id_header_right_icon:
-                if (binding.viewPager.getCurrentItem() == 0) {
-                    gotoAddVacationFragment();
-                }else if (binding.viewPager.getCurrentItem() == 1) {
-                    gotoAddOvertimeFragment();
-                }else if (binding.viewPager.getCurrentItem() == 2) {
-                    gotoAddHolidayWorkingFragment();
-                }
-                break;
-        }
-    }
+	}
 
-    private void gotoAddHolidayWorkingFragment() {
-        HolidayWorkingEditFragment fragment = new HolidayWorkingEditFragment();
-        gotoFragment(fragment);
-    }
+	@Override
+	public void onResume(){
+		super.onResume();
+		if (!loadAgain) {
+			loadAgain = true;
+			return;
+		}
+		if(binding.viewPager.getCurrentItem() == 0){
+			vacationListFragment.requestOfferList();
+		}else if(binding.viewPager.getCurrentItem() == 1){
+			overtimeListFragment.requestOfferList();
+		}else if(binding.viewPager.getCurrentItem() == 2){
+			holidayWorkingListFragment.requestOfferList();
+		}
+	}
 
-    private void gotoAddOvertimeFragment() {
-        OvertimeEditFragment fragment = new OvertimeEditFragment();
-        gotoFragment(fragment);
-    }
+	@Override
+	public int getFooterItemId(){
+		return R.id.lnr_view_footer_offer;
+	}
 
-    private void gotoAddVacationFragment(){
-        VacationEditFragment fragment = new VacationEditFragment();
-        gotoFragment(fragment);
-    }
+	@Override
+	public void onClick(View view){
+		switch(view.getId()){
+		case R.id.tab_vacation:
+			binding.viewPager.setCurrentItem(0);
+			break;
+		case R.id.tab_overtime:
+			binding.viewPager.setCurrentItem(1);
+			break;
+		case R.id.tab_holiday_working:
+			binding.viewPager.setCurrentItem(2);
+			break;
+		case R.id.img_id_header_right_icon:
+			if(binding.viewPager.getCurrentItem() == 0){
+				gotoAddVacationFragment();
+			}else if(binding.viewPager.getCurrentItem() == 1){
+				gotoAddOvertimeFragment();
+			}else if(binding.viewPager.getCurrentItem() == 2){
+				gotoAddHolidayWorkingFragment();
+			}
+			break;
+		}
+	}
 
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+	private void gotoAddHolidayWorkingFragment(){
+		HolidayWorkingEditFragment fragment = new HolidayWorkingEditFragment();
+		gotoFragment(fragment);
+	}
 
-    }
+	private void gotoAddOvertimeFragment(){
+		OvertimeEditFragment fragment = new OvertimeEditFragment();
+		gotoFragment(fragment);
+	}
 
-    @Override
-    public void onPageSelected(int position) {
-        binding.vacationIndicator.setAlpha(.5f);
-        binding.overtimeIndicator.setAlpha(.5f);
-        binding.holidayWorkingIndicators.setAlpha(.5f);
-        switch (position) {
-            case 0:
-                binding.vacationIndicator.setAlpha(1f);
-                break;
-            case 1:
-                binding.overtimeIndicator.setAlpha(1f);
-                break;
-            case 2:
-                binding.holidayWorkingIndicators.setAlpha(1f);
-                break;
-            default:
-                break;
-        }
-    }
+	private void gotoAddVacationFragment(){
+		VacationEditFragment fragment = new VacationEditFragment();
+		gotoFragment(fragment);
+	}
 
-    @Override
-    public void onPageScrollStateChanged(int state) {
+	@Override
+	public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels){
 
-    }
+	}
 
-    private void log(String msg) {
-        Log.e("WorkOffer", msg);
-    }
+	@Override
+	public void onPageSelected(int position){
+		binding.vacationIndicator.setAlpha(.5f);
+		binding.overtimeIndicator.setAlpha(.5f);
+		binding.holidayWorkingIndicators.setAlpha(.5f);
+		switch(position){
+		case 0:
+			binding.vacationIndicator.setAlpha(1f);
+			break;
+		case 1:
+			binding.overtimeIndicator.setAlpha(1f);
+			break;
+		case 2:
+			binding.holidayWorkingIndicators.setAlpha(1f);
+			break;
+		default:
+			break;
+		}
+	}
+
+	@Override
+	public void onPageScrollStateChanged(int state){
+
+	}
+
+	private void log(String msg){
+		Log.e("WorkOffer", msg);
+	}
 }

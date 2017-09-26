@@ -32,7 +32,6 @@ import trente.asia.shiftworking.common.interfaces.OnUserAdapterListener;
 import trente.asia.shiftworking.databinding.FragmentVacationEditBinding;
 import trente.asia.shiftworking.services.offer.model.VacationModel;
 import trente.asia.welfare.adr.activity.WelfareActivity;
-import trente.asia.welfare.adr.dialog.WfDialog;
 import trente.asia.welfare.adr.models.ApiObjectModel;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
@@ -301,34 +300,9 @@ public class VacationEditFragment extends AbstractSwFragment implements OnUserAd
 			((ChiaseActivity)activity).isInitData = true;
 			((WelfareActivity)activity).dataMap.put(SwConst.ACTION_OFFER_UPDATE, CCConst.YES);
 			getFragmentManager().popBackStack();
-		}else if(SwConst.API_OFFER_DELETE.equals(url)){
-			getFragmentManager().popBackStack();
-			((WelfareActivity)activity).dataMap.put(SwConst.ACTION_OFFER_DELETE, CCConst.YES);
-		}else{
+		}else {
 			super.successUpdate(response, url);
 		}
-	}
-
-	private void onClickBtnDelete(){
-		final WfDialog dlgConfirmDelete = new WfDialog(activity);
-		dlgConfirmDelete.setDialogTitleButton(getString(R.string.fragment_offer_edit_confirm_delete_msg), getString(android.R.string.ok), getString(android.R.string.cancel), new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v){
-				sendDeleteOfferRequest();
-				dlgConfirmDelete.dismiss();
-			}
-		}).show();
-	}
-
-	private void sendDeleteOfferRequest(){
-		JSONObject jsonObject = new JSONObject();
-		try{
-			jsonObject.put("key", activeOfferId);
-		}catch(JSONException e){
-			e.printStackTrace();
-		}
-		requestUpdate(SwConst.API_VACATION_DELETE, jsonObject, true);
 	}
 
 	@Override
@@ -346,9 +320,6 @@ public class VacationEditFragment extends AbstractSwFragment implements OnUserAd
 		case R.id.lnr_id_type:
 			spnType.show();
 			break;
-		case R.id.btn_fragment_offer_detail_delete:
-			onClickBtnDelete();
-			break;
 		case R.id.lnr_user:
 			SelectUserEditFragment fragment = new SelectUserEditFragment();
 			fragment.setSelectedUser(selectedUser);
@@ -364,5 +335,10 @@ public class VacationEditFragment extends AbstractSwFragment implements OnUserAd
 	public void onSelectUser(UserModel user){
 		selectedUser = user;
 		txtUserName.setText(selectedUser.userName);
+	}
+
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
 	}
 }

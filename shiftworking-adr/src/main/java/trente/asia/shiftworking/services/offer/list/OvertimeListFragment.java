@@ -124,7 +124,7 @@ public class OvertimeListFragment extends AbstractSwFragment implements OnFilter
 		requestLoad(WfUrlConst.WF_ACC_INFO_DETAIL, param, true);
 	}
 
-	private void requestOfferList(){
+	public void requestOfferList(){
 		monthView.txtMonth.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_YYYY_MM, monthView.workMonth));
 		JSONObject jsonObject = new JSONObject();
 		try{

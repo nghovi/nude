@@ -199,6 +199,16 @@
                             android:text="@string/sw_work_offer_action_approve" />
                     </LinearLayout>
                 </LinearLayout>
+
+                <Button
+                    android:id="@+id/btn_delete"
+                    style="@style/cs_common_button_delete"
+                    android:layout_marginLeft="@dimen/margin_26dp"
+                    android:layout_marginRight="@dimen/margin_26dp"
+                    android:layout_marginTop="@dimen/margin_32dp"
+                    android:text="@string/chiase_common_delete"
+                    android:background="@color/wf_login_button_color_on"
+                    android:visibility="gone" />
             </LinearLayout>
         </ScrollView>
 

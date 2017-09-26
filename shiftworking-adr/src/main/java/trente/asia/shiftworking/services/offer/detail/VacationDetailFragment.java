@@ -35,6 +35,7 @@ import trente.asia.shiftworking.services.offer.edit.VacationEditFragment;
 import trente.asia.shiftworking.services.offer.list.VacationListFragment;
 import trente.asia.shiftworking.services.offer.model.VacationModel;
 import trente.asia.welfare.adr.activity.WelfareActivity;
+import trente.asia.welfare.adr.dialog.WfDialog;
 import trente.asia.welfare.adr.models.ApiObjectModel;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 
@@ -161,6 +162,7 @@ public class VacationDetailFragment extends AbstractSwFragment{
 	private void buildWorkOfferDetail(){
 		judgeEditPermission();
 		judgeAprovePermission();
+		judgeDeletePermission();
 		buildWorkOfferApproveHistory();
 	}
 
@@ -199,10 +201,25 @@ public class VacationDetailFragment extends AbstractSwFragment{
 		}
 	}
 
+	private void judgeDeletePermission() {
+		if (SwConst.OFFER_CAN_EDIT_DELETE.equals(offerPermission) || SwConst.OFFER_ONLY_DELETE.equals(offerPermission)) {
+			binding.btnDelete.setVisibility(View.VISIBLE);
+			binding.btnDelete.setOnClickListener(this);
+		} else {
+			binding.btnDelete.setVisibility(View.GONE);
+		}
+	}
+
 	@Override
 	protected void successUpdate(JSONObject response, String url){
-		((ChiaseActivity)activity).isInitData = true;
-		onClickBackBtn();
+		if(SwConst.API_VACATION_DELETE.equals(url)){
+			getFragmentManager().popBackStack();
+			((WelfareActivity)activity).dataMap.put(SwConst.ACTION_OFFER_DELETE, CCConst.YES);
+		}else{
+			((ChiaseActivity)activity).isInitData = true;
+			onClickBackBtn();
+			super.successUpdate(response, url);
+		}
 	}
 
 	private void gotoWorkOfferEditFragment(){
@@ -223,9 +240,34 @@ public class VacationDetailFragment extends AbstractSwFragment{
 		case R.id.btn_fragment_offer_detail_reject:
 			onClickBtnReject();
 			break;
+		case R.id.btn_delete:
+			onClickBtnDelete();
+			break;
 		default:
 			break;
 		}
+	}
+
+	private void onClickBtnDelete(){
+		final WfDialog dlgConfirmDelete = new WfDialog(activity);
+		dlgConfirmDelete.setDialogTitleButton(getString(R.string.fragment_offer_edit_confirm_delete_msg), getString(android.R.string.ok), getString(android.R.string.cancel), new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v){
+				sendDeleteOfferRequest();
+				dlgConfirmDelete.dismiss();
+			}
+		}).show();
+	}
+
+	private void sendDeleteOfferRequest(){
+		JSONObject jsonObject = new JSONObject();
+		try{
+			jsonObject.put("key", activeOfferId);
+		}catch(JSONException e){
+			e.printStackTrace();
+		}
+		requestUpdate(SwConst.API_VACATION_DELETE, jsonObject, true);
 	}
 
 	private void sendApproveResult(String approveResult){
