@@ -93,10 +93,11 @@
                         <trente.asia.android.view.ChiaseEditText
                             android:id="@+id/txt_fragment_holiday_working_detail_reason"
                             style="@style/wl_common_text"
-                            custom:mName="note"
-                            android:minLines="5"
+                            android:background="@android:color/transparent"
+                            android:gravity="top|left"
                             android:maxLines="5"
-                            android:background="@android:color/transparent"/>
+                            android:minLines="5"
+                            custom:mName="note" />
                     </LinearLayout>
                 </LinearLayout>
 
