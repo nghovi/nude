@@ -37,6 +37,7 @@ import trente.asia.shiftworking.services.offer.adapter.VacationApproveHistoryAda
 import trente.asia.shiftworking.services.offer.edit.HolidayWorkingEditFragment;
 import trente.asia.shiftworking.services.offer.list.HolidayWorkingListFragment;
 import trente.asia.shiftworking.services.offer.model.ApproveHistory;
+import trente.asia.shiftworking.services.offer.model.HolidayWorkingModel;
 import trente.asia.shiftworking.services.offer.model.OvertimeModel;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.dialog.WfDialog;
@@ -45,7 +46,7 @@ import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 
 public class HolidayWorkingDetailFragment extends AbstractSwFragment{
 
-	private OvertimeModel						offer;
+	private HolidayWorkingModel offer;
 	private Map<String, String>					targetUserModels	= new HashMap<String, String>();
 	private Map<String, List<Double>>			groupInfo;
 	private ImageView							imgEdit;
@@ -109,7 +110,7 @@ public class HolidayWorkingDetailFragment extends AbstractSwFragment{
 	@Override
 	protected void successLoad(JSONObject response, String url){
 		if(SwConst.API_HOLIDAY_WORKING_DETAIL.equals(url)){
-			offer = CCJsonUtil.convertToModel(response.optString("holidayWork"), OvertimeModel.class);
+			offer = CCJsonUtil.convertToModel(response.optString("holidayWork"), HolidayWorkingModel.class);
 			setWorkOffer(offer);
 
 			offerPermission = response.optString("permission");
@@ -160,7 +161,7 @@ public class HolidayWorkingDetailFragment extends AbstractSwFragment{
 		return WelfareFormatUtil.convertList2Map(lstStatus);
 	}
 
-	private void setWorkOffer(OvertimeModel offerModel){
+	private void setWorkOffer(HolidayWorkingModel offerModel){
 		try{
 			LinearLayout lnrContent = (LinearLayout)getView().findViewById(R.id.lnr_id_content);
 			Gson gson = new Gson();

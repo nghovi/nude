@@ -24,6 +24,7 @@ import trente.asia.shiftworking.R;
 import trente.asia.shiftworking.common.defines.SwConst;
 import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
 import trente.asia.shiftworking.common.interfaces.OnFilterListener;
+import trente.asia.shiftworking.common.interfaces.OnOvertimeAdapterListener;
 import trente.asia.shiftworking.databinding.FragmentOvertimeListBinding;
 import trente.asia.shiftworking.services.offer.adapter.OvertimeAdapter;
 import trente.asia.shiftworking.services.offer.detail.OvertimeDetailFragment;
@@ -37,7 +38,7 @@ import trente.asia.welfare.adr.models.DeptModel;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WelfareUtil;
 
-public class OvertimeListFragment extends AbstractSwFragment implements OnFilterListener{
+public class OvertimeListFragment extends AbstractSwFragment implements OnFilterListener, OnOvertimeAdapterListener{
 
 	private OvertimeAdapter				adapter;
 	private List<OvertimeModel>			offers;
@@ -88,22 +89,6 @@ public class OvertimeListFragment extends AbstractSwFragment implements OnFilter
 		monthView.initialization();
 		mLstOffer = (ListView)getView().findViewById(R.id.lst_work_offer);
 		mLstOfferOther = (ListView)getView().findViewById(R.id.lst_fragment_work_offer_other);
-		mLstOffer.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> adapterView, View view, int position, long l){
-				OvertimeModel offer = offers.get(position);
-				gotoWorkOfferDetail(offer, SwConst.SW_OFFER_EXEC_TYPE_VIEW);
-			}
-		});
-		mLstOfferOther.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> adapterView, View view, int position, long l){
-				OvertimeModel offer = otherOffers.get(position);
-				gotoWorkOfferDetail(offer, SwConst.SW_OFFER_EXEC_TYPE_APR);
-			}
-		});
 		monthView.imgBack.setOnClickListener(this);
 		monthView.imgNext.setOnClickListener(this);
 		monthView.btnThisMonth.setOnClickListener(this);
@@ -160,9 +145,13 @@ public class OvertimeListFragment extends AbstractSwFragment implements OnFilter
 
 			adapterOther = new OvertimeAdapter(activity, otherOffers);
 			mLstOfferOther.setAdapter(adapterOther);
+			adapterOther.setCallback(this);
+			adapterOther.setType(SwConst.SW_OFFER_EXEC_TYPE_APR);
 
 			adapter = new OvertimeAdapter(activity, offers);
 			mLstOffer.setAdapter(adapter);
+			adapter.setCallback(this);
+			adapter.setType(SwConst.SW_OFFER_EXEC_TYPE_VIEW);
 		}else if(WfUrlConst.WF_ACC_INFO_DETAIL.equals(url)){
 			depts = CCJsonUtil.convertToModelList(response.optString("depts"), DeptModel.class);
 			DeptModel department = new DeptModel(CCConst.ALL, ALL);
@@ -240,4 +229,8 @@ public class OvertimeListFragment extends AbstractSwFragment implements OnFilter
 		requestOfferList();
 	}
 
+	@Override
+	public void onOvertimeAdapterClick(OvertimeModel overtime, String type) {
+		gotoWorkOfferDetail(overtime, type);
+	}
 }

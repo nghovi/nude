@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import trente.asia.shiftworking.BuildConfig;
 import trente.asia.shiftworking.R;
+import trente.asia.shiftworking.common.interfaces.OnHolidayWorkingAdapterListener;
 import trente.asia.shiftworking.common.interfaces.OnOvertimeAdapterListener;
 import trente.asia.shiftworking.services.offer.model.OvertimeModel;
 import trente.asia.welfare.adr.utils.WfPicassoHelper;
@@ -26,7 +27,17 @@ public class OvertimeAdapter extends ArrayAdapter<OvertimeModel>{
 	private List<OvertimeModel>		lstHistory;
 	private Context				mContext;
 	private int					layoutId;
+	private String							type;
+	private OnOvertimeAdapterListener	callback;
 
+
+	public void setType(String type){
+		this.type = type;
+	}
+
+	public void setCallback(OnOvertimeAdapterListener callback){
+		this.callback = callback;
+	}
 	public OvertimeAdapter(Context context, List<OvertimeModel> lstHistory){
 		super(context, R.layout.item_offer, lstHistory);
 		this.mContext = context;
@@ -50,12 +61,20 @@ public class OvertimeAdapter extends ArrayAdapter<OvertimeModel>{
 		}else{
 			viewHolder = (ViewHolder)convertView.getTag();
 		}
-		OvertimeModel offer = getItem(position);
+		final OvertimeModel offer = getItem(position);
 		WfPicassoHelper.loadImageWithDefaultIcon(mContext, BuildConfig.HOST, viewHolder.imgAvatar, offer.userAvatarPath, R.drawable.wf_profile);
 		viewHolder.txtUsername.setText(offer.userName);
 		viewHolder.txtDate.setText(offer.startDateString);
 		viewHolder.txtType.setText(offer.offerTypeName);
 		viewHolder.txtStatus.setText(offer.offerStatusName);
+		convertView.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				if (callback != null) {
+					callback.onOvertimeAdapterClick(offer, type);
+				}
+			}
+		});
 		return convertView;
 	}
 

@@ -12,6 +12,9 @@ import android.widget.TextView;
 
 import trente.asia.shiftworking.BuildConfig;
 import trente.asia.shiftworking.R;
+import trente.asia.shiftworking.common.interfaces.OnHolidayWorkingAdapterListener;
+import trente.asia.shiftworking.common.interfaces.OnVacationAdapterListener;
+import trente.asia.shiftworking.services.offer.model.HolidayWorkingModel;
 import trente.asia.shiftworking.services.offer.model.OvertimeModel;
 import trente.asia.welfare.adr.utils.WfPicassoHelper;
 
@@ -20,13 +23,23 @@ import trente.asia.welfare.adr.utils.WfPicassoHelper;
  *
  * @author TrungND
  */
-public class HolidayWorkingAdapter extends ArrayAdapter<OvertimeModel>{
+public class HolidayWorkingAdapter extends ArrayAdapter<HolidayWorkingModel>{
 
-	private List<OvertimeModel>		lstHistory;
-	private Context				mContext;
-	private int					layoutId;
+	private List<HolidayWorkingModel>		lstHistory;
+	private Context							mContext;
+	private int								layoutId;
+	private String							type;
+	private OnHolidayWorkingAdapterListener	callback;
 
-	public HolidayWorkingAdapter(Context context, List<OvertimeModel> lstHistory){
+	public void setType(String type){
+		this.type = type;
+	}
+
+	public void setCallback(OnHolidayWorkingAdapterListener callback){
+		this.callback = callback;
+	}
+
+	public HolidayWorkingAdapter(Context context, List<HolidayWorkingModel> lstHistory){
 		super(context, R.layout.item_offer, lstHistory);
 		this.mContext = context;
 		this.layoutId = R.layout.item_offer;
@@ -49,12 +62,19 @@ public class HolidayWorkingAdapter extends ArrayAdapter<OvertimeModel>{
 		}else{
 			viewHolder = (ViewHolder)convertView.getTag();
 		}
-		OvertimeModel offer = getItem(position);
+		final HolidayWorkingModel offer = getItem(position);
 		WfPicassoHelper.loadImageWithDefaultIcon(mContext, BuildConfig.HOST, viewHolder.imgAvatar, offer.userAvatarPath, R.drawable.wf_profile);
 		viewHolder.txtUsername.setText(offer.userName);
 		viewHolder.txtDate.setText(offer.startDateString);
-		viewHolder.txtType.setText(offer.offerTypeName);
 		viewHolder.txtStatus.setText(offer.offerStatusName);
+		convertView.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				if (callback != null) {
+					callback.onHolidayWorkingAdapterClick(offer, type);
+				}
+			}
+		});
 
 		return convertView;
 	}
