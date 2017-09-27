@@ -1,6 +1,5 @@
 <LinearLayout style="@style/cs_common_match_wrap"
               xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:custom="http://schemas.android.com/apk/res-auto"
               android:background="@color/chiase_white"
               android:gravity="center_vertical"
               android:orientation="horizontal"
@@ -12,7 +11,6 @@
     <LinearLayout
         android:id="@+id/lnr_item_approve_history_main"
         style="@style/cs_common_match_wrap"
-        android:layout_marginLeft="@dimen/margin_10dp"
         android:orientation="vertical">
 
         <LinearLayout
