@@ -60,11 +60,21 @@
                     app:layout_widthPercent="50%">
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/margin_10dp"
                         android:layout_marginStart="@dimen/margin_10dp"
                         android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txt_tc_detail_date"
+                            style="@style/tc_text_black_12"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:ellipsize="end"
+                            android:singleLine="true"
+                            android:text="@string/fragment_tc_detail_date" />
 
                         <TextView
                             android:id="@+id/txt_tc_detail_to"
@@ -77,16 +87,6 @@
                             android:singleLine="true"
                             android:text="@string/fragment_tc_detail_to" />
                     </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/txt_tc_detail_date"
-                        style="@style/tc_text_black_12"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="start"
-                        android:ellipsize="end"
-                        android:singleLine="true"
-                        android:text="@string/fragment_tc_detail_date" />
 
                     <TextView
                         android:id="@+id/text_message"
