@@ -174,7 +174,7 @@ public class HolidayWorkingDetailFragment extends AbstractSwFragment{
 		((TextView)getView().findViewById(R.id.txt_fragment_holiday_working_detail_offer_user)).setText(offerModel.userName);
 		((TextView)getView().findViewById(R.id.txt_fragment_holiday_working_detail_start_date)).setText(offerModel.startDateString);
 		((TextView)getView().findViewById(R.id.txt_fragment_holiday_working_detail_reason)).setText(offerModel.note);
-		((TextView)getView().findViewById(R.id.txt_fragment_overtime_detail_reason)).setMovementMethod(new ScrollingMovementMethod());
+		((TextView)getView().findViewById(R.id.txt_fragment_holiday_working_detail_reason)).setMovementMethod(new ScrollingMovementMethod());
 	}
 
 	private void buildWorkOfferDetail(){

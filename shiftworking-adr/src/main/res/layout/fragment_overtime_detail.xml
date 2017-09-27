@@ -114,7 +114,8 @@
                             style="@style/wl_common_text"
                             custom:mName="note"
                             android:minLines="5"
-                            android:maxLines="5"/>
+                            android:maxLines="5"
+                            android:scrollbars = "vertical"/>
                     </LinearLayout>
                 </LinearLayout>
 
