@@ -29,8 +29,9 @@
 
                 <View style="@style/cs_common_divider" />
 
-                <LinearLayout style="@style/wf_common_item_linear2"
-                    android:id="@+id/lnr_user">
+                <LinearLayout
+                    android:id="@+id/lnr_user"
+                    style="@style/wf_common_item_linear2">
 
                     <TextView
                         style="@style/wl_common_text"
@@ -145,10 +146,11 @@
                         <trente.asia.android.view.ChiaseEditText
                             android:id="@+id/txt_fragment_overtime_detail_reason"
                             style="@style/wl_common_text"
-                            custom:mName="note"
-                            android:minLines="5"
+                            android:background="@android:color/transparent"
+                            android:gravity="top|left"
                             android:maxLines="5"
-                            android:background="@android:color/transparent"/>
+                            android:minLines="5"
+                            custom:mName="note" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>

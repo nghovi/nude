@@ -65,7 +65,7 @@ public class OvertimeAdapter extends ArrayAdapter<OvertimeModel>{
 		WfPicassoHelper.loadImageWithDefaultIcon(mContext, BuildConfig.HOST, viewHolder.imgAvatar, offer.userAvatarPath, R.drawable.wf_profile);
 		viewHolder.txtUsername.setText(offer.userName);
 		viewHolder.txtDate.setText(offer.startDateString);
-		viewHolder.txtType.setText(offer.offerTypeName);
+		viewHolder.txtType.setText(offer.startTimeString + "-" + offer.endTimeString);
 		viewHolder.txtStatus.setText(offer.offerStatusName);
 		convertView.setOnClickListener(new View.OnClickListener() {
 			@Override

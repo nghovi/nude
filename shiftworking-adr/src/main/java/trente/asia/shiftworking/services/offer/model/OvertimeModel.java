@@ -10,19 +10,6 @@ import trente.asia.welfare.adr.models.ApiObjectModel;
 
 public class OvertimeModel {
 
-	public static final String	OFFER_TYPE_OVERTIME					= "OTW";
-	public static final String	OFFER_TYPE_HOLIDAY_WORKING			= "HDW";
-	public static final String	OFFER_TYPE_SHORT_TIME				= "STO";
-	public static final String	OFFER_TYPE_PAID_VACATION_ALL		= "PVAL";
-	public static final String	OFFER_TYPE_PAID_VACATION_MORNING	= "PVMO";
-	public static final String	OFFER_TYPE_PAID_VACATION_AFTERNOON	= "PVAF";
-	public static final String	OFFER_TYPE_SPECIAL_HOLIDAY			= "SPH";
-	public static final String	OFFER_TYPE_COMPENSATORY_HOLIDAY		= "CPH";
-	public static final String	OFFER_TYPE_ABSENT					= "ABS";
-
-	public OvertimeModel(){
-	}
-
 	public String				userId;
 	public String				userName;
 	public String				offerType;
@@ -46,7 +33,6 @@ public class OvertimeModel {
 	public String				note;
 	public String				companyId;
 	public List<ApproveHistory>	listHistories;
-	public boolean				sickAbsent;
 
 	public List<ApiObjectModel>	overtimeTypeList;
 	public String				permission;

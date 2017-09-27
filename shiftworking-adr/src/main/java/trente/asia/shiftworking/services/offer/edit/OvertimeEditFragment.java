@@ -291,6 +291,7 @@ public class OvertimeEditFragment extends AbstractSwFragment implements OnTimePi
 
 	private void openTimePicker(){
 		timePickerDialog = new SwTimePicker();
+		timePickerDialog.setStartTime(timePickerStart);
 		timePickerDialog.setCallback(this);
 		FragmentManager fm = getFragmentManager();
 		timePickerDialog.show(fm, "dialog");
@@ -318,7 +319,7 @@ public class OvertimeEditFragment extends AbstractSwFragment implements OnTimePi
 		}else{
 			m = String.valueOf(minute);
 		}
-		if(timePickerStart == true){
+		if(timePickerStart){
 			txtStartTime.setText(h + ":" + m);
 		}else{
 			txtEndTime.setText(h + ":" + m);
