@@ -17,45 +17,56 @@ import trente.asia.shiftworking.databinding.DialogTimePickerBinding;
  * Created by tien on 9/20/2017.
  */
 
-public class SwTimePicker extends DialogFragment {
-    private static final int NUM_MAX = 4;
-    private OnTimePickerListener callback;
+public class SwTimePicker extends DialogFragment{
 
-    public void setCallback(OnTimePickerListener callback) {
-        this.callback = callback;
-    }
+	private static final int		NUM_MAX	= 4;
+	private OnTimePickerListener	callback;
+	private boolean					startTime;
 
-    @NonNull
-    @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle(R.string.sw_time_picker);
-        final DialogTimePickerBinding binding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.dialog_time_picker, null, false);
-        builder.setView(binding.getRoot());
-        binding.hourPicker.setMaxValue(47);
-        binding.hourPicker.setMinValue(0);
-        String[] displayValues = new String[NUM_MAX];
-        for (int i = 0; i < NUM_MAX; i++) {
-            displayValues[i] = String.valueOf(i * 15);
-        }
-        binding.minutePicker.setMinValue(0);
-        binding.minutePicker.setMaxValue(NUM_MAX - 1);
-        binding.minutePicker.setDisplayedValues(displayValues);
-        builder.setNegativeButton(R.string.chiase_common_cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-            }
-        });
-        builder.setPositiveButton(R.string.chiase_common_ok, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                if (callback != null) {
-                    callback.onTimePickerCompleted(binding.hourPicker.getValue(), binding.minutePicker.getValue() * 15);
-                }
-            }
-        });
+	public void setStartTime(boolean startTime){
+		this.startTime = startTime;
+	};
 
-        return builder.create();
-    }
+	public void setCallback(OnTimePickerListener callback){
+		this.callback = callback;
+	}
+
+	@NonNull
+	@Override
+	public Dialog onCreateDialog(Bundle savedInstanceState){
+		AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+		builder.setTitle(R.string.sw_time_picker);
+		final DialogTimePickerBinding binding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.dialog_time_picker, null, false);
+		builder.setView(binding.getRoot());
+		if(startTime){
+			binding.hourPicker.setMaxValue(23);
+		}else{
+			binding.hourPicker.setMaxValue(47);
+		}
+		binding.hourPicker.setMinValue(0);
+		String[] displayValues = new String[NUM_MAX];
+		for(int i = 0; i < NUM_MAX; i++){
+			displayValues[i] = String.valueOf(i * 15);
+		}
+		binding.minutePicker.setMinValue(0);
+		binding.minutePicker.setMaxValue(NUM_MAX - 1);
+		binding.minutePicker.setDisplayedValues(displayValues);
+		builder.setNegativeButton(R.string.chiase_common_cancel, new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialogInterface, int i){
+			}
+		});
+		builder.setPositiveButton(R.string.chiase_common_ok, new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialogInterface, int i){
+				if(callback != null){
+					callback.onTimePickerCompleted(binding.hourPicker.getValue(), binding.minutePicker.getValue() * 15);
+				}
+			}
+		});
+
+		return builder.create();
+	}
 }
-
