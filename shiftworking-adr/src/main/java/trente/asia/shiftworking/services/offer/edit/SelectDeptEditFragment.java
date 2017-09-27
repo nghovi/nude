@@ -16,6 +16,7 @@ import trente.asia.shiftworking.R;
 import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
 import trente.asia.shiftworking.common.interfaces.OnDepartmentAdapterListener;
 import trente.asia.shiftworking.databinding.FragmentSelectDeptBinding;
+import trente.asia.shiftworking.databinding.FragmentSelectDeptEditBinding;
 import trente.asia.shiftworking.services.offer.adapter.DepartmentAdapter;
 import trente.asia.welfare.adr.models.DeptModel;
 
@@ -35,7 +36,7 @@ public class SelectDeptEditFragment extends AbstractSwFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (mRootView == null) {
-            mRootView = inflater.inflate(R.layout.fragment_select_dept, container, false);
+            mRootView = inflater.inflate(R.layout.fragment_select_dept_edit, container, false);
         }
         return mRootView;
     }
@@ -48,29 +49,12 @@ public class SelectDeptEditFragment extends AbstractSwFragment {
     @Override
     protected void initView() {
         super.initView();
-        FragmentSelectDeptBinding binding = DataBindingUtil.bind(mRootView);
-        binding.btnCancel.setOnClickListener(this);
+        initHeader(R.drawable.wf_back_white, getString(R.string.sw_select_dept), null);
+        FragmentSelectDeptEditBinding binding = DataBindingUtil.bind(mRootView);
 
         binding.listDepartments.setAdapter(adapter);
         binding.listDepartments.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter.setFragmentManager(getFragmentManager());
-
-        binding.edtSearch.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                adapter.showSearchList(charSequence.toString().toLowerCase());
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
     }
 
     @Override
