@@ -42,14 +42,12 @@ public class HolidayWorkingApproveHistoryAdapter extends ArrayAdapter<ApproveHis
 		ViewHolder viewHolder;
 		convertView = mInflater.inflate(layoutId, null);
 		viewHolder = new ViewHolder();
-		viewHolder.imgAvatar = (ImageView)convertView.findViewById(R.id.img_item_approve_history_avatar);
 		viewHolder.txtUsername = (TextView)convertView.findViewById(R.id.txt_item_approve_history_username);
 		viewHolder.txtComment = (TextView)convertView.findViewById(R.id.txt_item_approve_history_comment);
 		viewHolder.txtResult = (TextView)convertView.findViewById(R.id.txt_item_approve_history_status);
 		viewHolder.txtTime = (TextView)convertView.findViewById(R.id.txt_item_approve_history_time);
 
 		ApproveHistory history = getItem(position);
-		WfPicassoHelper.loadImageWithDefaultIcon(mContext, BuildConfig.HOST, viewHolder.imgAvatar, history.userAvatarPath, R.drawable.wf_profile);
 		viewHolder.txtUsername.setText(history.userName);
 		viewHolder.txtTime.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, CCDateUtil.makeDate(history.historyDate)));
 		viewHolder.txtResult.setText(history.historyStatus);
@@ -63,7 +61,6 @@ public class HolidayWorkingApproveHistoryAdapter extends ArrayAdapter<ApproveHis
 		// TextView txtDate;
 		TextView		txtResult;
 		TextView		txtComment;
-		ImageView		imgAvatar;
 		public TextView	txtTime;
 	}
 }

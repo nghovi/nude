@@ -133,7 +133,6 @@ public class VacationListFragment extends AbstractSwFragment implements OnFilter
 		if(SwConst.API_VACATION_LIST.equals(url)){
 			offers = CCJsonUtil.convertToModelList(response.optString("myVacationOffers"), VacationModel.class);
 			otherOffers = CCJsonUtil.convertToModelList(response.optString("otherVacationOffers"), VacationModel.class);
-
 			vacationTypes = CCJsonUtil.convertToModelList(response.optString("vacationList"), ApiObjectModel.class);
 			ApiObjectModel allType = new ApiObjectModel(CCConst.ALL, ALL);
 			vacationTypes.add(0, allType);
