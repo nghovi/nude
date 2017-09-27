@@ -97,9 +97,9 @@ public class VacationEditFragment extends AbstractSwFragment implements OnUserAd
 	}
 
 	private void setOnClickListener(){
-		if (Boolean.parseBoolean(myself.adminFlag) && CCStringUtil.isEmpty(activeOfferId)) {
+		if(Boolean.parseBoolean(myself.adminFlag) && CCStringUtil.isEmpty(activeOfferId)){
 			binding.lnrUser.setOnClickListener(this);
-		} else {
+		}else{
 			binding.userArrow.setVisibility(View.INVISIBLE);
 		}
 		binding.lnrStartDate.setOnClickListener(this);
@@ -109,21 +109,21 @@ public class VacationEditFragment extends AbstractSwFragment implements OnUserAd
 
 	@Override
 	protected void initData(){
-		if (CCStringUtil.isEmpty(activeOfferId)) {
+		if(CCStringUtil.isEmpty(activeOfferId)){
 			selectedUser = myself;
 			txtUserName.setText(selectedUser.userName);
-		} else {
+		}else{
 			loadVacationDetail();
 		}
 		loadTypeList();
 	}
 
-	private void loadVacationDetail() {
+	private void loadVacationDetail(){
 		JSONObject jsonObject = new JSONObject();
-		try {
+		try{
 			jsonObject.put("key", activeOfferId);
 			jsonObject.put("execType", SwConst.SW_OFFER_EXEC_TYPE_VIEW);
-		} catch (JSONException e) {
+		}catch(JSONException e){
 			e.printStackTrace();
 		}
 		requestLoad(SwConst.API_VACATION_DETAIL, jsonObject, true);
@@ -159,16 +159,16 @@ public class VacationEditFragment extends AbstractSwFragment implements OnUserAd
 		}else if(SwConst.API_VACATION_AMOUNT.equals((url))){
 			amount = response.optString("amount");
 			updateVacationAmount(amount);
-		}else if (SwConst.API_VACATION_DETAIL.equals(url)) {
+		}else if(SwConst.API_VACATION_DETAIL.equals(url)){
 			updateLayout(response);
-		} else {
+		}else{
 			super.successLoad(response, url);
 		}
 	}
 
-	private void updateLayout(JSONObject response) {
+	private void updateLayout(JSONObject response){
 		VacationModel vacation = CCJsonUtil.convertToModel(response.optString("vacation"), VacationModel.class);
-		if (vacation == null) {
+		if(vacation == null){
 			return;
 		}
 		selectedUser = new UserModel(vacation.userId, vacation.userName);
@@ -184,14 +184,14 @@ public class VacationEditFragment extends AbstractSwFragment implements OnUserAd
 
 	private void getVacationTypeList(JSONObject response){
 		vacationTypes = new ArrayList<>();
-		vacationTypes.add(new ApiObjectModel("3", "birthday"));
-		vacationTypes.add(new ApiObjectModel("16", "winter"));
-		vacationTypes.add(new ApiObjectModel("4", "trainning"));
-		// String[] types = response.optString("map").split(",");
-		// for (String type : types) {
-		// int equalIndex = type.indexOf("=");
-		// vacationTypes.add(new ApiObjectModel(type.substring(0, equalIndex), type.substring(equalIndex + 1)));
-		// }
+		String map = response.optString("map");
+		if(!CCStringUtil.isEmpty(map)){
+			String[] types = map.split(",");
+			for(String type : types){
+				int equalIndex = type.indexOf("=");
+				vacationTypes.add(new ApiObjectModel(type.substring(0, equalIndex), type.substring(equalIndex + 1)));
+			}
+		}
 		initTypeListDialog(vacationTypes);
 		buildDatePickerDialogs();
 	}
@@ -213,7 +213,7 @@ public class VacationEditFragment extends AbstractSwFragment implements OnUserAd
 	}
 
 	private void initTypeListDialog(List<ApiObjectModel> vacationTypes){
-		if(CCStringUtil.isEmpty(activeOfferId)){
+		if(CCStringUtil.isEmpty(activeOfferId) && !vacationTypes.isEmpty()){
 			txtOfferType.setText(vacationTypes.get(0).value);
 			txtOfferType.setValue(vacationTypes.get(0).key);
 			OnOfferTypeChangedUpdateLayout();
@@ -300,7 +300,7 @@ public class VacationEditFragment extends AbstractSwFragment implements OnUserAd
 			((ChiaseActivity)activity).isInitData = true;
 			((WelfareActivity)activity).dataMap.put(SwConst.ACTION_OFFER_UPDATE, CCConst.YES);
 			getFragmentManager().popBackStack();
-		}else {
+		}else{
 			super.successUpdate(response, url);
 		}
 	}
@@ -338,7 +338,7 @@ public class VacationEditFragment extends AbstractSwFragment implements OnUserAd
 	}
 
 	@Override
-	public void onDestroyView() {
+	public void onDestroyView(){
 		super.onDestroyView();
 	}
 }
