@@ -335,6 +335,7 @@ public class VacationEditFragment extends AbstractSwFragment implements OnUserAd
 	public void onSelectUser(UserModel user){
 		selectedUser = user;
 		txtUserName.setText(selectedUser.userName);
+		loadTypeList();
 	}
 
 	@Override
