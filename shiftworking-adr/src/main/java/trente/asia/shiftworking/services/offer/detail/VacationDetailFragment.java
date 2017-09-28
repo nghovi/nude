@@ -30,6 +30,7 @@ import trente.asia.shiftworking.common.activities.MainActivity;
 import trente.asia.shiftworking.common.defines.SwConst;
 import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
 import trente.asia.shiftworking.databinding.FragmentVacationDetailBinding;
+import trente.asia.shiftworking.services.offer.WorkOfferFragment;
 import trente.asia.shiftworking.services.offer.adapter.VacationApproveHistoryAdapter;
 import trente.asia.shiftworking.services.offer.edit.VacationEditFragment;
 import trente.asia.shiftworking.services.offer.list.VacationListFragment;
@@ -300,7 +301,7 @@ public class VacationDetailFragment extends AbstractSwFragment{
 	protected void onClickBackBtn(){
 		if(isClickNotification){
 			emptyBackStack();
-			gotoFragment(new VacationListFragment());
+			gotoFragment(new WorkOfferFragment());
 		}else{
 			super.onClickBackBtn();
 		}

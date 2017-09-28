@@ -21,6 +21,8 @@ import trente.asia.shiftworking.BuildConfig;
 import trente.asia.shiftworking.R;
 import trente.asia.shiftworking.common.defines.SwConst;
 import trente.asia.shiftworking.services.login.SwLoginFragment;
+import trente.asia.shiftworking.services.offer.detail.HolidayWorkingDetailFragment;
+import trente.asia.shiftworking.services.offer.detail.OvertimeDetailFragment;
 import trente.asia.shiftworking.services.offer.detail.VacationDetailFragment;
 import trente.asia.shiftworking.services.worktime.WorkerFragment;
 import trente.asia.shiftworking.services.worktime.WorknoticeFormFragment;
@@ -74,13 +76,28 @@ public class MainActivity extends WelfareActivity{
 			fragment.setNoticeModel(noticeModel);
 			fragment.isClickNotification = true;
 			addFragment(fragment);
-        }else if(WelfareConst.NotificationType.SW_NOTI_OFFER.equals(serviceCode)){
+        }else if(WelfareConst.NotificationType.SW_NOTI_OFFER_VACATION.equals(serviceCode)){
             String key = mExtras.getString(WelfareConst.NotificationReceived.USER_INFO_NOTI_KEY);
             VacationDetailFragment offerDetailFragment = new VacationDetailFragment();
             offerDetailFragment.setActiveOfferId(key);
+			offerDetailFragment.setExecType(SwConst.SW_OFFER_EXEC_TYPE_VIEW);
             offerDetailFragment.isClickNotification = true;
             addFragment(offerDetailFragment);
-		}else{
+		}else if(WelfareConst.NotificationType.SW_NOTI_OFFER_OVERTIME.equals(serviceCode)){
+			String key = mExtras.getString(WelfareConst.NotificationReceived.USER_INFO_NOTI_KEY);
+			OvertimeDetailFragment offerDetailFragment = new OvertimeDetailFragment();
+			offerDetailFragment.setActiveOfferId(key);
+			offerDetailFragment.setExecType(SwConst.SW_OFFER_EXEC_TYPE_VIEW);
+			offerDetailFragment.isClickNotification = true;
+			addFragment(offerDetailFragment);
+		} if(WelfareConst.NotificationType.SW_NOTI_OFFER_HOLIDAY_WORK.equals(serviceCode)){
+			String key = mExtras.getString(WelfareConst.NotificationReceived.USER_INFO_NOTI_KEY);
+			HolidayWorkingDetailFragment offerDetailFragment = new HolidayWorkingDetailFragment();
+			offerDetailFragment.setActiveOfferId(key);
+			offerDetailFragment.setExecType(SwConst.SW_OFFER_EXEC_TYPE_VIEW);
+			offerDetailFragment.isClickNotification = true;
+			addFragment(offerDetailFragment);
+		} else {
 			addFragment(new WorktimeCheckInFragment());
 		}
 	}
