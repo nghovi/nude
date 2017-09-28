@@ -43,7 +43,6 @@ public class OvertimeApproveHistoryAdapter extends ArrayAdapter<ApproveHistory>{
 		convertView = mInflater.inflate(layoutId, null);
 		viewHolder = new ViewHolder();
 		viewHolder.txtUsername = (TextView)convertView.findViewById(R.id.txt_item_approve_history_username);
-		viewHolder.txtComment = (TextView)convertView.findViewById(R.id.txt_item_approve_history_comment);
 		viewHolder.txtResult = (TextView)convertView.findViewById(R.id.txt_item_approve_history_status);
 		viewHolder.txtTime = (TextView)convertView.findViewById(R.id.txt_item_approve_history_time);
 
@@ -51,7 +50,6 @@ public class OvertimeApproveHistoryAdapter extends ArrayAdapter<ApproveHistory>{
 		viewHolder.txtUsername.setText(history.userName);
 		viewHolder.txtTime.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, CCDateUtil.makeDate(history.historyDate)));
 		viewHolder.txtResult.setText(history.historyStatus);
-		viewHolder.txtComment.setText(history.historyComment);
 		return convertView;
 	}
 
@@ -59,7 +57,6 @@ public class OvertimeApproveHistoryAdapter extends ArrayAdapter<ApproveHistory>{
 
 		TextView		txtUsername;
 		TextView		txtResult;
-		TextView		txtComment;
 		public TextView	txtTime;
 	}
 }
