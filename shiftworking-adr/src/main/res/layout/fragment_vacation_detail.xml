@@ -77,6 +77,38 @@
 
                 <View style="@style/cs_common_divider" />
 
+                <LinearLayout style="@style/wf_common_item_linear2">
+
+                    <TextView
+                        style="@style/wl_common_text"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"/>
+
+                    <trente.asia.android.view.ChiaseTextView
+                        android:id="@+id/txt_end_date"
+                        style="@style/wl_common_edit_text2"
+                        android:layout_marginStart="@dimen/margin_10dp"
+                        custom:mName="startDateString" />
+                </LinearLayout>
+
+                <View style="@style/cs_common_divider" />
+
+                <LinearLayout style="@style/wf_common_item_linear2">
+
+                    <TextView
+                        style="@style/wl_common_text"
+                        android:layout_width="wrap_content"
+                        android:text="@string/sw_amount" />
+
+                    <trente.asia.android.view.ChiaseTextView
+                        android:id="@+id/txt_amount"
+                        style="@style/wl_common_edit_text2"
+                        android:layout_marginStart="@dimen/margin_10dp"
+                        custom:mName="startDateString" />
+                </LinearLayout>
+
+                <View style="@style/cs_common_divider" />
+
                 <LinearLayout
                     android:id="@+id/lnr_sick_absent"
                     style="@style/cs_common_match_wrap"

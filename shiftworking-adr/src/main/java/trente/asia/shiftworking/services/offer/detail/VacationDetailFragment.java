@@ -157,6 +157,13 @@ public class VacationDetailFragment extends AbstractSwFragment{
 		((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_start_date)).setText(offerModel.startDateString);
 		((TextView)getView().findViewById(R.id.txt_fragment_offer_detail_note)).setText(offerModel.note);
 		binding.txtSickAbsent.setText(offerModel.sickAbsent ? getString(R.string.sw_yes) : getString(R.string.sw_no));
+        binding.txtAmount.setText(offerModel.amountString);
+        if (Float.parseFloat(offerModel.amount) >= 1) {
+            binding.txtEndDate.setText(offerModel.endDateString);
+            binding.txtEndDate.setVisibility(View.VISIBLE);
+        } else {
+            binding.txtEndDate.setVisibility(View.GONE);
+        }
 	}
 
 	private void buildWorkOfferDetail(){
