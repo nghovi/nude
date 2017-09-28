@@ -28,6 +28,7 @@ public class VacationModel{
 	public String				offerStatus;
 	public String				offerStatusName;
 	public String				amount;
+	public String				amountString;
 	public boolean				sickAbsent;
 	public List<ApproveHistory>	listHistories;
 }

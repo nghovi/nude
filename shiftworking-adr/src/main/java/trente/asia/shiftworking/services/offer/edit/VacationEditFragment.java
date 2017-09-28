@@ -158,7 +158,19 @@ public class VacationEditFragment extends AbstractSwFragment implements OnUserAd
 			getVacationTypeList(response);
 		}else if(SwConst.API_VACATION_AMOUNT.equals((url))){
 			amount = response.optString("amount");
-			updateVacationAmount(amount);
+			float amoutUnit = Float.parseFloat(response.optString("vacationTypeAmount"));
+			if (amoutUnit < 1) {
+				txtEndDate.setVisibility(View.GONE);
+			} else {
+				txtEndDate.setVisibility(View.VISIBLE);
+			}
+			if (Float.parseFloat(amount) > 0) {
+				updateVacationAmount(response.optString("amountString"));
+			} else {
+				txtStartDate.setText(txtEndDate.getText());
+				getVacationAmount();
+			}
+
 		}else if(SwConst.API_VACATION_DETAIL.equals(url)){
 			updateLayout(response);
 		}else{
@@ -177,7 +189,7 @@ public class VacationEditFragment extends AbstractSwFragment implements OnUserAd
 		txtOfferType.setValue(vacation.vacationId);
 		txtStartDate.setText(vacation.startDateString);
 		txtEndDate.setText(vacation.endDateString);
-		updateVacationAmount(vacation.amount);
+		updateVacationAmount(vacation.amountString);
 		binding.switchSickAbsent.setChecked(vacation.sickAbsent);
 		binding.edtNote.setText(vacation.note);
 	}
@@ -196,20 +208,8 @@ public class VacationEditFragment extends AbstractSwFragment implements OnUserAd
 		buildDatePickerDialogs();
 	}
 
-	private void updateVacationAmount(String amount){
-		String textAmount;
-		float number = Float.parseFloat(amount);
-		if(number > 1){
-			textAmount = getString(R.string.sw_day, "1") + " x " + (int)number;
-			binding.lnrEndDate.setVisibility(View.VISIBLE);
-		}else if(number == 1){
-			textAmount = getString(R.string.sw_day, "1");
-			binding.lnrEndDate.setVisibility(View.VISIBLE);
-		}else{
-			textAmount = getString(R.string.sw_day, amount);
-			binding.lnrEndDate.setVisibility(View.GONE);
-		}
-		txtAmount.setText(textAmount);
+	private void updateVacationAmount(String amountString){
+		txtAmount.setText(amountString);
 	}
 
 	private void initTypeListDialog(List<ApiObjectModel> vacationTypes){

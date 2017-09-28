@@ -98,7 +98,7 @@ public class SelectUserEditFragment extends AbstractSwFragment implements OnDepa
 	public void onClick(View view){
 		switch (view.getId()) {
 			case R.id.lnr_dept:
-				SelectDeptFragment fragment = new SelectDeptFragment();
+				SelectDeptEditFragment fragment = new SelectDeptEditFragment();
 				fragment.setData(this, depts, selectedDept);
 				gotoFragment(fragment);
 				break;
@@ -109,5 +109,6 @@ public class SelectUserEditFragment extends AbstractSwFragment implements OnDepa
 	public void onSelectDepartment(DeptModel deptModel) {
 		selectedDept = deptModel;
 		adapter.setUsers(deptModel.members);
+        binding.deptName.setText(selectedDept.deptName);
 	}
 }
