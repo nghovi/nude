@@ -82,9 +82,7 @@
                             android:id="@+id/txt_fragment_holiday_working_detail_reason"
                             style="@style/wl_common_text"
                             custom:mName="note"
-                            android:minLines="5"
-                            android:maxLines="5"
-                            android:scrollbars = "vertical"/>
+                            android:minLines="5"/>
                     </LinearLayout>
                 </LinearLayout>
 

@@ -159,4 +159,6 @@
     <string name="sw_yes">Yes</string>
     <string name="sw_no">No</string>
     <string name="sw_filter">Filter</string>
+    <string name="rejected">Rejected</string>
+    <string name="done">Done</string>
 </resources>

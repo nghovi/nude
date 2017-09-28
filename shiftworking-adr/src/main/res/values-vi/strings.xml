@@ -128,4 +128,6 @@
     <string name="fragment_holiday_working_detail_header">Holiday working offer detail</string>
     <string name="fragment_overtime_detail_start_time">Start time</string>
     <string name="fragment_overtime_detail_end_time">End time</string>
+    <string name="rejected">Rejected</string>
+    <string name="done">Done</string>
 </resources>

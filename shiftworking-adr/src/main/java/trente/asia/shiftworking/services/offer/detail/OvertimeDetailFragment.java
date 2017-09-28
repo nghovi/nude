@@ -170,7 +170,7 @@ public class OvertimeDetailFragment extends AbstractSwFragment{
 		((TextView)getView().findViewById(R.id.txt_fragment_overtime_detail_offer_type)).setText(typeListMap.get(offer.overtimeType));
 		((TextView)getView().findViewById(R.id.txt_fragment_overtime_detail_start_date)).setText(offerModel.startDateString);
 		((TextView)getView().findViewById(R.id.txt_fragment_overtime_detail_start_time)).setText(offerModel.startTimeString + "-" + offerModel.endTimeString);
-		((EditText)getView().findViewById(R.id.txt_fragment_overtime_detail_reason)).setText(offerModel.note);
+		((TextView)getView().findViewById(R.id.txt_fragment_overtime_detail_reason)).setText(offerModel.note);
 	}
 
 	private void buildWorkOfferDetail(){
@@ -195,7 +195,7 @@ public class OvertimeDetailFragment extends AbstractSwFragment{
 		LinearLayout lnrApproveArea = (LinearLayout)getView().findViewById(R.id.lnr_id_approve_area);
 		if(offer.listHistories != null){
 			history = offer.listHistories.get(offer.listHistories.size() - 1);
-			if("Rejected".equals(history.historyStatus) || "Done".equals(history.historyStatus)){
+			if(getString(R.string.rejected).equals(history.historyStatus) || getString(R.string.done).equals(history.historyStatus)){
 				lnrApproveArea.setVisibility(View.GONE);
 			}else{
 				if(permissionApprove){
@@ -223,7 +223,7 @@ public class OvertimeDetailFragment extends AbstractSwFragment{
 	protected void judgeEditPermission(){
 		if(offer.listHistories != null){
 			history = offer.listHistories.get(offer.listHistories.size() - 1);
-			if("Rejected".equals(history.historyStatus) || "Done".equals(history.historyStatus)){
+			if(getString(R.string.rejected).equals(history.historyStatus) || getString(R.string.done).equals(history.historyStatus)){
 				imgEdit.setVisibility(View.INVISIBLE);
 			}else{
 				if(SwConst.OFFER_CAN_EDIT_DELETE.equals(offerPermission) || SwConst.OFFER_ONLY_DELETE.equals(offerPermission) || SwConst.OFFER_CAN_ONLY_EDIT.equals(offerPermission)){

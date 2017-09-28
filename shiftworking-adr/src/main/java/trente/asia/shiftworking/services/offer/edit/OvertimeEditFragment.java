@@ -26,6 +26,7 @@ import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDataUtil;
 import asia.chiase.core.util.CCDateUtil;
+import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.activity.ChiaseActivity;
@@ -159,6 +160,7 @@ public class OvertimeEditFragment extends AbstractSwFragment implements OnTimePi
 				txtUserName.setText(selectedUser.userName);
 				txtStartTime.setText("00:00");
 				txtEndTime.setText("00:00");
+				txtStartDate.setText(CCFormatUtil.formatDate(Calendar.getInstance().getTime()));
 			}
 			initDialog(typeList);
 		}else{
@@ -275,14 +277,14 @@ public class OvertimeEditFragment extends AbstractSwFragment implements OnTimePi
 			break;
 		case R.id.lnr_start_time:
 			timePickerStart = true;
-				selectedHour = Integer.parseInt(txtStartTime.getText().toString().split(":")[0]);
-				selectedMinute = Integer.parseInt(txtStartTime.getText().toString().split(":")[1]);
+			selectedHour = Integer.parseInt(txtStartTime.getText().toString().split(":")[0]);
+			selectedMinute = Integer.parseInt(txtStartTime.getText().toString().split(":")[1]);
 			openTimePicker();
 			break;
 		case R.id.lnr_end_time:
 			timePickerStart = false;
-				selectedHour = Integer.parseInt(txtEndTime.getText().toString().split(":")[0]);
-				selectedMinute = Integer.parseInt(txtEndTime.getText().toString().split(":")[1]);
+			selectedHour = Integer.parseInt(txtEndTime.getText().toString().split(":")[0]);
+			selectedMinute = Integer.parseInt(txtEndTime.getText().toString().split(":")[1]);
 			openTimePicker();
 			break;
 		case R.id.lnr_id_type:

@@ -150,4 +150,6 @@
     <string name="FM_SW_008_02">新しい申請があります</string>
     <string name="FM_SW_008_03">休出申請が承認されました</string>
     <string name="FM_SW_008_04">休出承認が却下されました</string>
+    <string name="rejected">却下</string>
+    <string name="done">完了</string>
 </resources>
