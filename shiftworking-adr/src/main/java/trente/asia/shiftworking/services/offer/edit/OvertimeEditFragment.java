@@ -157,6 +157,8 @@ public class OvertimeEditFragment extends AbstractSwFragment implements OnTimePi
 				loadWorkOffer(offer);
 			}else{
 				txtUserName.setText(selectedUser.userName);
+				txtStartTime.setText("00:00");
+				txtEndTime.setText("00:00");
 			}
 			initDialog(typeList);
 		}else{
@@ -273,14 +275,14 @@ public class OvertimeEditFragment extends AbstractSwFragment implements OnTimePi
 			break;
 		case R.id.lnr_start_time:
 			timePickerStart = true;
-			selectedHour = Integer.parseInt(txtStartTime.getText().toString().split(":")[0]);
-			selectedMinute = Integer.parseInt(txtStartTime.getText().toString().split(":")[1]);
+				selectedHour = Integer.parseInt(txtStartTime.getText().toString().split(":")[0]);
+				selectedMinute = Integer.parseInt(txtStartTime.getText().toString().split(":")[1]);
 			openTimePicker();
 			break;
 		case R.id.lnr_end_time:
 			timePickerStart = false;
-			selectedHour = Integer.parseInt(txtEndTime.getText().toString().split(":")[0]);
-			selectedMinute = Integer.parseInt(txtEndTime.getText().toString().split(":")[1]);
+				selectedHour = Integer.parseInt(txtEndTime.getText().toString().split(":")[0]);
+				selectedMinute = Integer.parseInt(txtEndTime.getText().toString().split(":")[1]);
 			openTimePicker();
 			break;
 		case R.id.lnr_id_type:
