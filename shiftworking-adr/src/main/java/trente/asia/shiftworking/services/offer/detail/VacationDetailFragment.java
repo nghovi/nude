@@ -221,7 +221,6 @@ public class VacationDetailFragment extends AbstractSwFragment{
 	protected void successUpdate(JSONObject response, String url){
 		if(SwConst.API_VACATION_DELETE.equals(url)){
 			getFragmentManager().popBackStack();
-			((WelfareActivity)activity).dataMap.put(SwConst.ACTION_OFFER_DELETE, CCConst.YES);
 		}else{
 			((ChiaseActivity)activity).isInitData = true;
 			onClickBackBtn();
