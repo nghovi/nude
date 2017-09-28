@@ -112,10 +112,11 @@ public class VacationEditFragment extends AbstractSwFragment implements OnUserAd
 		if(CCStringUtil.isEmpty(activeOfferId)){
 			selectedUser = myself;
 			txtUserName.setText(selectedUser.userName);
+			loadTypeList();
 		}else{
 			loadVacationDetail();
 		}
-		loadTypeList();
+
 	}
 
 	private void loadVacationDetail(){
