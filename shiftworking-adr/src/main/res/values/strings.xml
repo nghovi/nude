@@ -138,8 +138,6 @@
     <string name="fragment_overtime_detail_expected_date">Expected date</string>
     <string name="fragment_overtime_detail_expected_time">Expected time</string>
     <string name="fragment_overtime_detail_reason">Reason</string>
-    <string name="fragment_overtime_detail_type_early">Early</string>
-    <string name="fragment_overtime_detail_type_overtime">Overtime</string>
     <string name="sw_select_dept">Select department</string>
     <string name="sw_select_user">Select user</string>
     <string name="sw_select_type">Select type</string>

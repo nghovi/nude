@@ -22,7 +22,8 @@ import trente.asia.shiftworking.databinding.DialogTimePickerBinding;
 
 public class SwTimePicker extends DialogFragment{
 
-	private static final int		NUM_MAX	= 4;
+	private static final int		NUM_MAX			= 4;
+	private static final int		TIME_INTERVAL	= 15;
 	private OnTimePickerListener	callback;
 	private boolean					startTime;
 	private int						hour;
@@ -30,7 +31,9 @@ public class SwTimePicker extends DialogFragment{
 
 	public void setStartTime(boolean startTime){
 		this.startTime = startTime;
-	};
+	}
+
+	;
 
 	public void setSelectedHour(int hour){
 		this.hour = hour;
@@ -60,12 +63,12 @@ public class SwTimePicker extends DialogFragment{
 		binding.hourPicker.setValue(hour);
 		String[] displayValues = new String[NUM_MAX];
 		for(int i = 0; i < NUM_MAX; i++){
-			displayValues[i] = String.valueOf(i * 15);
+			displayValues[i] = String.valueOf(i * TIME_INTERVAL);
 		}
 		binding.minutePicker.setMinValue(0);
 		binding.minutePicker.setMaxValue(NUM_MAX - 1);
 		binding.minutePicker.setDisplayedValues(displayValues);
-		binding.minutePicker.setValue(minute/15);
+		binding.minutePicker.setValue(minute / TIME_INTERVAL);
 		builder.setNegativeButton(R.string.chiase_common_cancel, new DialogInterface.OnClickListener() {
 
 			@Override
@@ -77,7 +80,7 @@ public class SwTimePicker extends DialogFragment{
 			@Override
 			public void onClick(DialogInterface dialogInterface, int i){
 				if(callback != null){
-					callback.onTimePickerCompleted(binding.hourPicker.getValue(), binding.minutePicker.getValue() * 15);
+					callback.onTimePickerCompleted(binding.hourPicker.getValue(), binding.minutePicker.getValue() * TIME_INTERVAL);
 				}
 			}
 		});

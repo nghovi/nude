@@ -34,6 +34,4 @@ public class OvertimeModel {
 	public String				companyId;
 	public List<ApproveHistory>	listHistories;
 
-	public List<ApiObjectModel>	overtimeTypeList;
-	public String				permission;
 }

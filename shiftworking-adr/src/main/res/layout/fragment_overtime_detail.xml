@@ -109,13 +109,15 @@
 
                     <LinearLayout style="@style/wf_common_item_linear2">
 
-                        <trente.asia.android.view.ChiaseTextView
+                        <trente.asia.android.view.ChiaseEditText
                             android:id="@+id/txt_fragment_overtime_detail_reason"
                             style="@style/wl_common_text"
-                            custom:mName="note"
-                            android:minLines="5"
+                            android:background="@android:color/transparent"
+                            android:focusable="false"
                             android:maxLines="5"
-                            android:scrollbars = "vertical"/>
+                            android:minLines="5"
+                            android:scrollbars="vertical"
+                            custom:mName="note" />
                     </LinearLayout>
                 </LinearLayout>
 

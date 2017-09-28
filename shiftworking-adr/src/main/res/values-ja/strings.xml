@@ -132,8 +132,6 @@
     <string name="fragment_overtime_detail_expected_date">残業希望日</string>
     <string name="fragment_overtime_detail_expected_time">残業希望時間</string>
     <string name="fragment_overtime_detail_reason">理由</string>
-    <string name="fragment_overtime_detail_type_early">早出</string>
-    <string name="fragment_overtime_detail_type_overtime">残業</string>
     <string name="fragment_holiday_working_detail_header">休出申請詳細</string>
     <string name="fragment_holiday_working_detail_expected_date">休出希望日</string>
     <string name="fragment_overtime_detail_start_time">申請開始時間</string>
