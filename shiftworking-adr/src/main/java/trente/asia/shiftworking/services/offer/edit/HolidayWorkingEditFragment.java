@@ -23,6 +23,7 @@ import java.util.List;
 
 import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCDateUtil;
+import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.activity.ChiaseActivity;
@@ -136,6 +137,7 @@ public class HolidayWorkingEditFragment extends AbstractSwFragment implements On
 				loadWorkOffer(offer);
 			}else{
 				txtUserName.setText(selectedUser.userName);
+				txtStartDate.setText(CCFormatUtil.formatDate(Calendar.getInstance().getTime()));
 			}
 		}else{
 			super.successLoad(response, url);

@@ -49,8 +49,6 @@ import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 public class OvertimeDetailFragment extends AbstractSwFragment{
 
 	private OvertimeModel					offer;
-	private Map<String, String>				targetUserModels	= new HashMap<String, String>();
-	private Map<String, List<Double>>		groupInfo;
 	private ImageView						imgEdit;
 	private Map<String, String>				offerStatusMaster;
 	private String							offerPermission;
@@ -60,6 +58,8 @@ public class OvertimeDetailFragment extends AbstractSwFragment{
 	private String							execType;
 	private FragmentOvertimeDetailBinding	binding;
 	private ApproveHistory					history;
+	public List<ApiObjectModel>				typeList;
+	private Map<String, String>				typeListMap;
 
 	public void setActiveOfferId(String activeOfferId){
 		this.activeOfferId = activeOfferId;
@@ -114,28 +114,22 @@ public class OvertimeDetailFragment extends AbstractSwFragment{
 	protected void successLoad(JSONObject response, String url){
 		if(SwConst.API_OVERTIME_DETAIL.equals(url)){
 			offer = CCJsonUtil.convertToModel(response.optString("overtime"), OvertimeModel.class);
+
+			typeList = CCJsonUtil.convertToModelList(response.optString("overtimeTypeList"), ApiObjectModel.class);
+			typeListMap = WelfareFormatUtil.convertList2Map(typeList);
+			offerPermission = response.optString("permission");
 			setWorkOffer(offer);
 
-			offerPermission = response.optString("permission");
 			offerStatusMaster = buildOfferStatusMaster(response);
 
-			groupInfo = CCJsonUtil.convertToModel(response.optString("groupJoinMap"), Map.class);
 			if(offer == null){
 				((MainActivity)activity).isInitData = true;
 				onClickBackBtn();
 			}else{
-				targetUserModels = CCJsonUtil.convertToModel(response.optString("targetUserModel"), Map.class);
 				buildWorkOfferDetail();
 			}
 		}else{
 			super.successLoad(response, url);
-		}
-		Button btnDelete = (Button)getView().findViewById(R.id.btn_fragment_offer_detail_delete);
-		if(SwConst.OFFER_CAN_EDIT_DELETE.equals(offerPermission) || SwConst.OFFER_ONLY_DELETE.equals(offerPermission)){
-			btnDelete.setVisibility(View.VISIBLE);
-			btnDelete.setOnClickListener(this);
-		}else{
-			btnDelete.setVisibility(View.GONE);
 		}
 	}
 
@@ -173,39 +167,35 @@ public class OvertimeDetailFragment extends AbstractSwFragment{
 		}
 
 		((TextView)getView().findViewById(R.id.txt_fragment_overtime_detail_offer_user)).setText(offerModel.userName);
-		if("E".equals(offerModel.overtimeType)){
-			((TextView)getView().findViewById(R.id.txt_fragment_overtime_detail_offer_type)).setText(getResources().getString(R.string.fragment_overtime_detail_type_early));
-		}else{
-			((TextView)getView().findViewById(R.id.txt_fragment_overtime_detail_offer_type)).setText(getResources().getString(R.string.fragment_overtime_detail_type_overtime));
-		}
+		((TextView)getView().findViewById(R.id.txt_fragment_overtime_detail_offer_type)).setText(typeListMap.get(offer.overtimeType));
 		((TextView)getView().findViewById(R.id.txt_fragment_overtime_detail_start_date)).setText(offerModel.startDateString);
 		((TextView)getView().findViewById(R.id.txt_fragment_overtime_detail_start_time)).setText(offerModel.startTimeString + "-" + offerModel.endTimeString);
 		((TextView)getView().findViewById(R.id.txt_fragment_overtime_detail_reason)).setText(offerModel.note);
-		((TextView)getView().findViewById(R.id.txt_fragment_overtime_detail_reason)).setMovementMethod(new ScrollingMovementMethod());
-
 	}
 
 	private void buildWorkOfferDetail(){
 		judgeEditPermission();
 		judgeAprovePermission();
+		judgeDeletePermission();
 		buildWorkOfferApproveHistory();
-		// buildOfferComment();
 	}
 
-	// private void buildOfferComment(){
-	// if(OvertimeModel.OFFER_STATUS_OFFER.equals(offer.approveResult) && SwConst.OFFER_CAN_APPROVE.equals(offerPermission)){
-	// getView().findViewById(R.id.lnr_fragment_offer_detail_comment).setVisibility(View.VISIBLE);
-	// }else{
-	// getView().findViewById(R.id.lnr_fragment_offer_detail_comment).setVisibility(View.GONE);
-	// }
-	// }
+	private void judgeDeletePermission() {
+		Button btnDelete = (Button)getView().findViewById(R.id.btn_fragment_offer_detail_delete);
+		if(SwConst.OFFER_CAN_EDIT_DELETE.equals(offerPermission) || SwConst.OFFER_ONLY_DELETE.equals(offerPermission)){
+			btnDelete.setVisibility(View.VISIBLE);
+			btnDelete.setOnClickListener(this);
+		}else{
+			btnDelete.setVisibility(View.GONE);
+		}
+	}
 
 	private void judgeAprovePermission(){
 		boolean permissionApprove = SwConst.OFFER_CAN_APPROVE.equals(offerPermission);
 		LinearLayout lnrApproveArea = (LinearLayout)getView().findViewById(R.id.lnr_id_approve_area);
 		if(offer.listHistories != null){
 			history = offer.listHistories.get(offer.listHistories.size() - 1);
-			if("Rejected".equals(history.historyStatus) || "Done".equals(history.historyStatus)){
+			if(getString(R.string.rejected).equals(history.historyStatus) || getString(R.string.done).equals(history.historyStatus)){
 				lnrApproveArea.setVisibility(View.GONE);
 			}else{
 				if(permissionApprove){
@@ -233,7 +223,7 @@ public class OvertimeDetailFragment extends AbstractSwFragment{
 	protected void judgeEditPermission(){
 		if(offer.listHistories != null){
 			history = offer.listHistories.get(offer.listHistories.size() - 1);
-			if("Rejected".equals(history.historyStatus) || "Done".equals(history.historyStatus)){
+			if(getString(R.string.wait2).equals(history.historyStatus) || getString(R.string.done).equals(history.historyStatus)){
 				imgEdit.setVisibility(View.INVISIBLE);
 			}else{
 				if(SwConst.OFFER_CAN_EDIT_DELETE.equals(offerPermission) || SwConst.OFFER_ONLY_DELETE.equals(offerPermission) || SwConst.OFFER_CAN_ONLY_EDIT.equals(offerPermission)){

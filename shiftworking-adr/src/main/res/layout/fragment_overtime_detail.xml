@@ -112,10 +112,10 @@
                         <trente.asia.android.view.ChiaseTextView
                             android:id="@+id/txt_fragment_overtime_detail_reason"
                             style="@style/wl_common_text"
-                            custom:mName="note"
+                            android:background="@android:color/transparent"
+                            android:focusable="false"
                             android:minLines="5"
-                            android:maxLines="5"
-                            android:scrollbars = "vertical"/>
+                            custom:mName="note" />
                     </LinearLayout>
                 </LinearLayout>
 

@@ -20,9 +20,13 @@ import org.json.JSONObject;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import asia.chiase.core.define.CCConst;
+import asia.chiase.core.util.CCCollectionUtil;
+import asia.chiase.core.util.CCDataUtil;
 import asia.chiase.core.util.CCDateUtil;
+import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.activity.ChiaseActivity;
@@ -44,6 +48,7 @@ import trente.asia.welfare.adr.dialog.WfDialog;
 import trente.asia.welfare.adr.models.ApiObjectModel;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
+import trente.asia.welfare.adr.utils.WelfareUtil;
 
 /**
  * Created by chi on 9/22/2017.
@@ -71,6 +76,7 @@ public class OvertimeEditFragment extends AbstractSwFragment implements OnTimePi
 	private UserModel					selectedUser;
 	private int							selectedHour;
 	private int							selectedMinute;
+	private Map<String, String>			typeListMap;
 
 	public void setActiveOfferId(String activeOfferId){
 		this.activeOfferId = activeOfferId;
@@ -146,11 +152,15 @@ public class OvertimeEditFragment extends AbstractSwFragment implements OnTimePi
 		if(SwConst.API_OVERTIME_DETAIL.equals(url)){
 			offer = CCJsonUtil.convertToModel(response.optString("overtime"), OvertimeModel.class);
 			typeList = CCJsonUtil.convertToModelList(response.optString("overtimeTypeList"), ApiObjectModel.class);
+			typeListMap = WelfareFormatUtil.convertList2Map(typeList);
 			buildDatePickerDialogs(offer);
 			if(!CCStringUtil.isEmpty(activeOfferId)){
 				loadWorkOffer(offer);
 			}else{
 				txtUserName.setText(selectedUser.userName);
+				txtStartTime.setText("00:00");
+				txtEndTime.setText("00:00");
+				txtStartDate.setText(CCFormatUtil.formatDate(Calendar.getInstance().getTime()));
 			}
 			initDialog(typeList);
 		}else{
@@ -164,11 +174,7 @@ public class OvertimeEditFragment extends AbstractSwFragment implements OnTimePi
 			Gson gson = new Gson();
 			CAObjectSerializeUtil.deserializeObject(lnrContent, new JSONObject(gson.toJson(offer)));
 			txtUserName.setText(offer.userName);
-			if("E".equals(offer.overtimeType)){
-				txtOfferType.setText("Early");
-			}else{
-				txtOfferType.setText("Overtime");
-			}
+			txtOfferType.setText(typeListMap.get(offer.overtimeType));
 			txtStartDate.setText(offer.startDateString);
 			txtStartTime.setText(offer.startTimeString);
 			txtEndTime.setText(CCStringUtil.toString(offer.endTimeString));

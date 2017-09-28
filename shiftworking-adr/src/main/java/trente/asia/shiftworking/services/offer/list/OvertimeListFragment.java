@@ -139,7 +139,7 @@ public class OvertimeListFragment extends AbstractSwFragment implements OnFilter
 			offers = CCJsonUtil.convertToModelList(response.optString("myOvertimeOffers"), OvertimeModel.class);
 			otherOffers = CCJsonUtil.convertToModelList(response.optString("otherOvertimeOffers"), OvertimeModel.class);
 
-			overtimeTypes = CCJsonUtil.convertToModelList(response.optString("offerStatusList"), ApiObjectModel.class);
+			overtimeTypes = CCJsonUtil.convertToModelList(response.optString("overtimeTypeList"), ApiObjectModel.class);
 			ApiObjectModel allType = new ApiObjectModel(CCConst.ALL, getString(R.string.chiase_common_all));
 			overtimeTypes.add(0, allType);
 

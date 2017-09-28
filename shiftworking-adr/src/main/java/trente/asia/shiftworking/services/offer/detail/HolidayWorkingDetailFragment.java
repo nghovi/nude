@@ -49,8 +49,6 @@ import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 public class HolidayWorkingDetailFragment extends AbstractSwFragment{
 
 	private HolidayWorkingModel offer;
-	private Map<String, String>					targetUserModels	= new HashMap<String, String>();
-	private Map<String, List<Double>>			groupInfo;
 	private ImageView							imgEdit;
 	private Map<String, String>					offerStatusMaster;
 	private String								offerPermission;
@@ -118,12 +116,10 @@ public class HolidayWorkingDetailFragment extends AbstractSwFragment{
 			offerPermission = response.optString("permission");
 			offerStatusMaster = buildOfferStatusMaster(response);
 
-			groupInfo = CCJsonUtil.convertToModel(response.optString("groupJoinMap"), Map.class);
 			if(offer == null){
 				((MainActivity)activity).isInitData = true;
 				onClickBackBtn();
 			}else{
-				targetUserModels = CCJsonUtil.convertToModel(response.optString("targetUserModel"), Map.class);
 				buildWorkOfferDetail();
 			}
 		}else{
@@ -175,30 +171,20 @@ public class HolidayWorkingDetailFragment extends AbstractSwFragment{
 		((TextView)getView().findViewById(R.id.txt_fragment_holiday_working_detail_offer_user)).setText(offerModel.userName);
 		((TextView)getView().findViewById(R.id.txt_fragment_holiday_working_detail_start_date)).setText(offerModel.startDateString);
 		((TextView)getView().findViewById(R.id.txt_fragment_holiday_working_detail_reason)).setText(offerModel.note);
-		((TextView)getView().findViewById(R.id.txt_fragment_holiday_working_detail_reason)).setMovementMethod(new ScrollingMovementMethod());
 	}
 
 	private void buildWorkOfferDetail(){
 		judgeEditPermission();
 		judgeAprovePermission();
 		buildWorkOfferApproveHistory();
-		// buildOfferComment();
 	}
-
-	// private void buildOfferComment(){
-	// if(OvertimeModel.OFFER_STATUS_OFFER.equals(offer.approveResult) && SwConst.OFFER_CAN_APPROVE.equals(offerPermission)){
-	// getView().findViewById(R.id.lnr_fragment_offer_detail_comment).setVisibility(View.VISIBLE);
-	// }else{
-	// getView().findViewById(R.id.lnr_fragment_offer_detail_comment).setVisibility(View.GONE);
-	// }
-	// }
 
 	private void judgeAprovePermission(){
 		boolean permissionApprove = SwConst.OFFER_CAN_APPROVE.equals(offerPermission);
 		LinearLayout lnrApproveArea = (LinearLayout)getView().findViewById(R.id.lnr_id_approve_area);
 		if(offer.listHistories != null){
 			history = offer.listHistories.get(offer.listHistories.size() - 1);
-			if("Rejected".equals(history.historyStatus) || "Done".equals(history.historyStatus)){
+			if(getString(R.string.rejected).equals(history.historyStatus) || getString(R.string.done).equals(history.historyStatus)){
 				lnrApproveArea.setVisibility(View.GONE);
 			}else{
 				if(permissionApprove){
@@ -226,7 +212,7 @@ public class HolidayWorkingDetailFragment extends AbstractSwFragment{
 	protected void judgeEditPermission(){
 		if(offer.listHistories != null){
 			history = offer.listHistories.get(offer.listHistories.size() - 1);
-			if("Rejected".equals(history.historyStatus) || "Done".equals(history.historyStatus)){
+			if(getString(R.string.wait2).equals(history.historyStatus) || getString(R.string.done).equals(history.historyStatus)){
 				imgEdit.setVisibility(View.INVISIBLE);
 			}else{
 				if(SwConst.OFFER_CAN_EDIT_DELETE.equals(offerPermission) || SwConst.OFFER_ONLY_DELETE.equals(offerPermission) || SwConst.OFFER_CAN_ONLY_EDIT.equals(offerPermission)){
