@@ -152,4 +152,5 @@
     <string name="sw_day">%s day</string>
     <string name="sw_yes">Yes</string>
     <string name="sw_no">No</string>
+    <string name="sw_filter">Filter</string>
 </resources>

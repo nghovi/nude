@@ -13,7 +13,7 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/margin_16dp"
             style="@style/sw_text_14sp"
-            android:text="@string/fragment_work_offer_edit_offer_dept"/>
+            android:text="@string/sw_work_offer_list_filter"/>
 
         <View style="@style/cs_common_divider" />
 
