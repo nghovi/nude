@@ -152,4 +152,5 @@
     <string name="FM_SW_008_04">休出承認が却下されました</string>
     <string name="rejected">却下</string>
     <string name="done">完了</string>
+    <string name="wait2">待ち2</string>
 </resources>

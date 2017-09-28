@@ -161,4 +161,5 @@
     <string name="sw_filter">Filter</string>
     <string name="rejected">Rejected</string>
     <string name="done">Done</string>
+    <string name="wait2">Wait2</string>
 </resources>

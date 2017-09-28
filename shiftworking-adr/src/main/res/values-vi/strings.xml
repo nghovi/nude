@@ -130,4 +130,5 @@
     <string name="fragment_overtime_detail_end_time">End time</string>
     <string name="rejected">Rejected</string>
     <string name="done">Done</string>
+    <string name="wait2">Wait2</string>
 </resources>

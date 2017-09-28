@@ -212,7 +212,7 @@ public class HolidayWorkingDetailFragment extends AbstractSwFragment{
 	protected void judgeEditPermission(){
 		if(offer.listHistories != null){
 			history = offer.listHistories.get(offer.listHistories.size() - 1);
-			if(getString(R.string.rejected).equals(history.historyStatus) || getString(R.string.done).equals(history.historyStatus)){
+			if(getString(R.string.wait2).equals(history.historyStatus) || getString(R.string.done).equals(history.historyStatus)){
 				imgEdit.setVisibility(View.INVISIBLE);
 			}else{
 				if(SwConst.OFFER_CAN_EDIT_DELETE.equals(offerPermission) || SwConst.OFFER_ONLY_DELETE.equals(offerPermission) || SwConst.OFFER_CAN_ONLY_EDIT.equals(offerPermission)){
