@@ -69,6 +69,8 @@ public class OvertimeEditFragment extends AbstractSwFragment implements OnTimePi
 	private String						h;
 	private boolean						timePickerStart;
 	private UserModel					selectedUser;
+	private int							selectedHour;
+	private int							selectedMinute;
 
 	public void setActiveOfferId(String activeOfferId){
 		this.activeOfferId = activeOfferId;
@@ -170,6 +172,7 @@ public class OvertimeEditFragment extends AbstractSwFragment implements OnTimePi
 			txtStartDate.setText(offer.startDateString);
 			txtStartTime.setText(offer.startTimeString);
 			txtEndTime.setText(CCStringUtil.toString(offer.endTimeString));
+
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
@@ -268,10 +271,14 @@ public class OvertimeEditFragment extends AbstractSwFragment implements OnTimePi
 			break;
 		case R.id.lnr_start_time:
 			timePickerStart = true;
+			selectedHour = Integer.parseInt(txtStartTime.getText().toString().split(":")[0]);
+			selectedMinute = Integer.parseInt(txtStartTime.getText().toString().split(":")[1]);
 			openTimePicker();
 			break;
 		case R.id.lnr_end_time:
 			timePickerStart = false;
+			selectedHour = Integer.parseInt(txtEndTime.getText().toString().split(":")[0]);
+			selectedMinute = Integer.parseInt(txtEndTime.getText().toString().split(":")[1]);
 			openTimePicker();
 			break;
 		case R.id.lnr_id_type:
@@ -293,6 +300,8 @@ public class OvertimeEditFragment extends AbstractSwFragment implements OnTimePi
 		timePickerDialog = new SwTimePicker();
 		timePickerDialog.setStartTime(timePickerStart);
 		timePickerDialog.setCallback(this);
+		timePickerDialog.setSelectedHour(selectedHour);
+		timePickerDialog.setSelectedMinute(selectedMinute);
 		FragmentManager fm = getFragmentManager();
 		timePickerDialog.show(fm, "dialog");
 	}

@@ -8,6 +8,9 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
+import android.widget.NumberPicker;
+
+import java.io.StringBufferInputStream;
 
 import trente.asia.shiftworking.R;
 import trente.asia.shiftworking.common.interfaces.OnTimePickerListener;
@@ -22,10 +25,20 @@ public class SwTimePicker extends DialogFragment{
 	private static final int		NUM_MAX	= 4;
 	private OnTimePickerListener	callback;
 	private boolean					startTime;
+	private int						hour;
+	private int						minute;
 
 	public void setStartTime(boolean startTime){
 		this.startTime = startTime;
 	};
+
+	public void setSelectedHour(int hour){
+		this.hour = hour;
+	}
+
+	public void setSelectedMinute(int minute){
+		this.minute = minute;
+	}
 
 	public void setCallback(OnTimePickerListener callback){
 		this.callback = callback;
@@ -44,6 +57,7 @@ public class SwTimePicker extends DialogFragment{
 			binding.hourPicker.setMaxValue(47);
 		}
 		binding.hourPicker.setMinValue(0);
+		binding.hourPicker.setValue(hour);
 		String[] displayValues = new String[NUM_MAX];
 		for(int i = 0; i < NUM_MAX; i++){
 			displayValues[i] = String.valueOf(i * 15);
@@ -51,6 +65,7 @@ public class SwTimePicker extends DialogFragment{
 		binding.minutePicker.setMinValue(0);
 		binding.minutePicker.setMaxValue(NUM_MAX - 1);
 		binding.minutePicker.setDisplayedValues(displayValues);
+		binding.minutePicker.setValue(minute/15);
 		builder.setNegativeButton(R.string.chiase_common_cancel, new DialogInterface.OnClickListener() {
 
 			@Override
