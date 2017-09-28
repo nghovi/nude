@@ -138,4 +138,16 @@
     <string name="fragment_overtime_detail_end_time">申請終了時間</string>
     <string name="sw_select_user">申請者</string>
     <string name="sw_filter">絞り込み</string>
+    <string name="FM_SW_006_01">休暇申請が却下されました</string>
+    <string name="FM_SW_006_02">新しい申請があります</string>
+    <string name="FM_SW_006_03">休暇申請が承認されました</string>
+    <string name="FM_SW_006_04">休暇承認が却下されました</string>
+    <string name="FM_SW_007_01">休暇承認が却下されました</string>
+    <string name="FM_SW_007_02">新しい申請があります</string>
+    <string name="FM_SW_007_03">残業申請が承認されました</string>
+    <string name="FM_SW_007_04">残業承認が却下されました</string>
+    <string name="FM_SW_008_01">休出申請が却下されました</string>
+    <string name="FM_SW_008_02">新しい申請があります</string>
+    <string name="FM_SW_008_03">休出申請が承認されました</string>
+    <string name="FM_SW_008_04">休出承認が却下されました</string>
 </resources>

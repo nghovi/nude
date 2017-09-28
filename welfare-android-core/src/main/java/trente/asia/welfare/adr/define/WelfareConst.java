@@ -171,6 +171,9 @@ public class WelfareConst{
 		public static final String	SW_NOTI_CHECK_IN			= "SW_NOTI_CHECK_IN";
 		public static final String	SW_NOTI_OVER_TIME			= "SW_NOTI_OVER_TIME";
 		public static final String	SW_NOTI_OFFER				= "SW_NOTI_OFFER";
+		public static final String	SW_NOTI_OFFER_VACATION		= "SW_NOTI_OFFER_VACATION";
+		public static final String	SW_NOTI_OFFER_OVERTIME		= "SW_NOTI_OFFER_OVERTIME";
+		public static final String	SW_NOTI_OFFER_HOLIDAY_WORK	= "SW_NOTI_OFFER_HOLIDAY_WORK";
 
 		public static final String	CL_NOTI_NEW_SCHEDULE		= "CL_NOTI_NEW_SCHEDULE";
 		public static final String	OL_DELIVERY_DOC				= "OL_DELIVERY_DOC";

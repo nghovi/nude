@@ -67,7 +67,6 @@ public class WorkOfferFragment extends AbstractSwFragment implements ViewPager.O
 		binding.tabVacation.setOnClickListener(this);
 		binding.tabOvertime.setOnClickListener(this);
 		binding.tabHolidayWorking.setOnClickListener(this);
-
 	}
 
 	@Override

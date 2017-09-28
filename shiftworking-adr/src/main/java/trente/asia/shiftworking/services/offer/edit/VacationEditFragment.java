@@ -132,7 +132,7 @@ public class VacationEditFragment extends AbstractSwFragment implements OnUserAd
 	private void loadTypeList(){
 		JSONObject jsonObject = new JSONObject();
 		try{
-			jsonObject.put("key", "557");
+			jsonObject.put("key", selectedUser.key);
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
@@ -159,14 +159,14 @@ public class VacationEditFragment extends AbstractSwFragment implements OnUserAd
 		}else if(SwConst.API_VACATION_AMOUNT.equals((url))){
 			amount = response.optString("amount");
 			float amoutUnit = Float.parseFloat(response.optString("vacationTypeAmount"));
-			if (amoutUnit < 1) {
-				txtEndDate.setVisibility(View.GONE);
-			} else {
-				txtEndDate.setVisibility(View.VISIBLE);
+			if(amoutUnit < 1){
+				binding.lnrEndDate.setVisibility(View.GONE);
+			}else{
+				binding.lnrEndDate.setVisibility(View.VISIBLE);
 			}
-			if (Float.parseFloat(amount) > 0) {
+			if(Float.parseFloat(amount) > 0){
 				updateVacationAmount(response.optString("amountString"));
-			} else {
+			}else{
 				txtStartDate.setText(txtEndDate.getText());
 				getVacationAmount();
 			}
