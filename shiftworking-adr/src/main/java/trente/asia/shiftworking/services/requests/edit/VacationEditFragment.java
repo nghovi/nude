@@ -100,7 +100,7 @@ public class VacationEditFragment extends AbstractSwFragment implements OnUserAd
 		if(Boolean.parseBoolean(myself.adminFlag) && CCStringUtil.isEmpty(activeOfferId)){
 			binding.lnrUser.setOnClickListener(this);
 		}else{
-			binding.userArrow.setVisibility(View.INVISIBLE);
+			binding.userArrow.setVisibility(View.GONE);
 		}
 		binding.lnrStartDate.setOnClickListener(this);
 		binding.lnrEndDate.setOnClickListener(this);
