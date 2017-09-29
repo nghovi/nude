@@ -116,7 +116,6 @@ public class VacationEditFragment extends AbstractSwFragment implements OnUserAd
 		}else{
 			loadVacationDetail();
 		}
-
 	}
 
 	private void loadVacationDetail(){
@@ -194,6 +193,7 @@ public class VacationEditFragment extends AbstractSwFragment implements OnUserAd
 		binding.switchSickAbsent.setChecked(vacationRequest.sickAbsent);
 		binding.edtNote.setText(vacationRequest.note);
 		amount = vacationRequest.amount;
+		loadTypeList();
 	}
 
 	private void getVacationTypeList(JSONObject response){
