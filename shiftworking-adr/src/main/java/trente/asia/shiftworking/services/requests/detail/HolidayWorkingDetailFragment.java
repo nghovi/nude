@@ -225,7 +225,6 @@ public class HolidayWorkingDetailFragment extends AbstractSwFragment{
 			((ChiaseActivity)activity).isInitData = true;
 			onClickBackBtn();
 		}else if(SwConst.API_HOLIDAY_WORKING_DELETE.equals(url)){
-			((WelfareActivity)activity).dataMap.put(SwConst.ACTION_OFFER_DELETE, CCConst.YES);
 			getFragmentManager().popBackStack();
 		}else{
 			super.successUpdate(response, url);
