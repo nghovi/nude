@@ -75,15 +75,15 @@
     <string name="FM_SW_0042">%1$s users: limit overtime</string>
     <string name="FM_SW_005">Your shift work is updated</string>
     <string name="FM_SW_006_01">Your vacation offer is rejected.</string>
-    <string name="FM_SW_006_02">Your vacation have new offer.</string>
+    <string name="FM_SW_006_02">You have new  vacation offer.</string>
     <string name="FM_SW_006_03">Your vacation offer is approved.</string>
     <string name="FM_SW_006_04">Your vacation approve is rejected.</string>
     <string name="FM_SW_007_01">Your overtime offer is rejected.</string>
-    <string name="FM_SW_007_02">Your overtime have new offer.</string>
+    <string name="FM_SW_007_02">You have new  overtime offer.</string>
     <string name="FM_SW_007_03">Your overtime offer is approved.</string>
     <string name="FM_SW_007_04">Your overtime approve is rejected.</string>
     <string name="FM_SW_008_01">Your holiday work offer is rejected.</string>
-    <string name="FM_SW_008_02">Your holiday work have new offer.</string>
+    <string name="FM_SW_008_02">You  have new holiday offer.</string>
     <string name="FM_SW_008_03">Your holiday work offer is approved.</string>
     <string name="FM_SW_008_04">Your holiday work approve is rejected.</string>
 
