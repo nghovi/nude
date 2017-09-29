@@ -3,7 +3,6 @@ package trente.asia.calendar.services.calendar;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -29,7 +28,7 @@ import trente.asia.calendar.R;
 import trente.asia.calendar.services.calendar.model.CategoryModel;
 import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
-import trente.asia.calendar.services.calendar.model.WorkOffer;
+import trente.asia.calendar.services.calendar.model.WorkRequest;
 import trente.asia.calendar.services.todo.TodoListFragment;
 import trente.asia.calendar.services.todo.TodoListTodayFragment;
 import trente.asia.welfare.adr.define.WelfareConst;
@@ -206,8 +205,8 @@ public class DailyPageFragment extends SchedulesPageFragment{
 		}
 
 		// offer
-		for(WorkOffer workOffer : lstWorkOffer){
-			TextView textView = WeeklyPageFragment.makeTextView(activity, workOffer.offerTypeName, 0, 0, LinearLayout.LayoutParams.MATCH_PARENT, Color.parseColor(workOffer.userColor), 0, Gravity.CENTER);
+		for(WorkRequest workRequest : lstWorkRequest){
+			TextView textView = WeeklyPageFragment.makeTextView(activity, workRequest.offerTypeName, 0, 0, LinearLayout.LayoutParams.MATCH_PARENT, Color.parseColor(workRequest.userColor), 0, Gravity.CENTER);
 			lnrScheduleAllDays.addView(textView);
 		}
 

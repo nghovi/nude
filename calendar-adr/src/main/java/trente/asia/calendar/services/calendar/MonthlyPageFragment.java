@@ -37,7 +37,7 @@ import trente.asia.calendar.commons.dialogs.TodoDialog;
 import trente.asia.calendar.commons.utils.ClUtil;
 import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
-import trente.asia.calendar.services.calendar.model.WorkOffer;
+import trente.asia.calendar.services.calendar.model.WorkRequest;
 import trente.asia.calendar.services.calendar.view.MonthlyCalendarDayView;
 import trente.asia.calendar.services.calendar.view.MonthlyCalendarRowView;
 import trente.asia.calendar.services.todo.model.Todo;
@@ -455,9 +455,9 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 		}
 
 		// add work offer
-		if(!CCCollectionUtil.isEmpty(lstWorkOffer)){
-			for(WorkOffer workOffer : lstWorkOffer){
-				ScheduleModel scheduleModel = new ScheduleModel(workOffer);
+		if(!CCCollectionUtil.isEmpty(lstWorkRequest)){
+			for(WorkRequest workRequest : lstWorkRequest){
+				ScheduleModel scheduleModel = new ScheduleModel(workRequest);
 				// scheduleModel.scheduleName = scheduleModel.scheduleName;
 				lstSchedule.add(0, scheduleModel);
 			}

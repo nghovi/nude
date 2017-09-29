@@ -14,7 +14,7 @@ import trente.asia.calendar.R;
 import trente.asia.calendar.services.calendar.WeeklyPageFragment;
 import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
-import trente.asia.calendar.services.calendar.model.WorkOffer;
+import trente.asia.calendar.services.calendar.model.WorkRequest;
 import trente.asia.calendar.services.calendar.view.DailySummaryDialogPagerAdapter;
 import trente.asia.calendar.services.calendar.view.WeeklyScheduleListAdapter;
 import trente.asia.welfare.adr.models.UserModel;
@@ -36,7 +36,7 @@ public class DailySummaryDialog extends CLOutboundDismissDialog{
 	private List<ScheduleModel>											lstSchedule;
 	private List<UserModel>												lstBirthdayUser;
 	private List<HolidayModel>											lstHoliday;
-	private List<WorkOffer>												lstWorkOffer;
+	private List<WorkRequest> lstWorkRequest;
 
 	private Date														selectedDate;
 	private OnAddBtnClickedListener										onAddBtnClickedListener;
@@ -61,23 +61,23 @@ public class DailySummaryDialog extends CLOutboundDismissDialog{
 		window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
 	}
 
-	public void setData(List<ScheduleModel> lstSchedule, List<UserModel> lstBirthdayUser, List<HolidayModel> lstHoliday, List<WorkOffer> lstWorkOffer){
+	public void setData(List<ScheduleModel> lstSchedule, List<UserModel> lstBirthdayUser, List<HolidayModel> lstHoliday, List<WorkRequest> lstWorkRequest){
 		this.lstSchedule = lstSchedule;
 		this.lstBirthdayUser = lstBirthdayUser;
 		this.lstHoliday = lstHoliday;
-		this.lstWorkOffer = lstWorkOffer;
+		this.lstWorkRequest = lstWorkRequest;
 
 		WeeklyPageFragment.sortSchedules(lstSchedule, dates.get(0), dates.get(dates.size() - 1), false);
-		Collections.sort(lstWorkOffer, new Comparator<WorkOffer>() {
+		Collections.sort(lstWorkRequest, new Comparator<WorkRequest>() {
 
 			@Override
-			public int compare(WorkOffer o1, WorkOffer o2){
+			public int compare(WorkRequest o1, WorkRequest o2){
 				return o1.offerTypeName.compareTo(o2.offerTypeName);
 			}
 		});
 
 		mPagerAdapter = new DailySummaryDialogPagerAdapter(this, mContext, dates);
-		mPagerAdapter.setData(this.lstSchedule, this.lstBirthdayUser, this.lstHoliday, this.lstWorkOffer, this.onAddBtnClickedListener, this.listener, this);
+		mPagerAdapter.setData(this.lstSchedule, this.lstBirthdayUser, this.lstHoliday, this.lstWorkRequest, this.onAddBtnClickedListener, this.listener, this);
 		mViewPager.setAdapter(mPagerAdapter);
 		if(selectedDate != null){
 			int currentItemPosition = mPagerAdapter.getPositionByDate(selectedDate);
@@ -92,11 +92,11 @@ public class DailySummaryDialog extends CLOutboundDismissDialog{
 		super.show();
 	}
 
-	public void notifyDataUpdated(List<ScheduleModel> lstSchedule, List<UserModel> lstBirthdayUser, List<HolidayModel> lstHoliday, List<WorkOffer> lstWorkOffer){
+	public void notifyDataUpdated(List<ScheduleModel> lstSchedule, List<UserModel> lstBirthdayUser, List<HolidayModel> lstHoliday, List<WorkRequest> lstWorkRequest){
 		this.lstSchedule = lstSchedule;
 		this.lstBirthdayUser = lstBirthdayUser;
 		this.lstHoliday = lstHoliday;
-		this.lstWorkOffer = lstWorkOffer;
+		this.lstWorkRequest = lstWorkRequest;
 		mPagerAdapter.notifyDataSetChanged();
 	}
 }

@@ -37,12 +37,13 @@ import trente.asia.calendar.services.calendar.model.CategoryModel;
 import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.RoomModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
-import trente.asia.calendar.services.calendar.model.WorkOffer;
+import trente.asia.calendar.services.calendar.model.WorkRequest;
 import trente.asia.calendar.services.calendar.view.WeeklyScheduleListAdapter;
 import trente.asia.calendar.services.todo.model.Todo;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.models.UserModel;
+import trente.asia.welfare.adr.models.VacationRequestModel;
 import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
 
 /**
@@ -62,7 +63,7 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 	protected List<UserModel>		lstCalendarUser;
 	protected List<CategoryModel>	lstCategory;
 	protected List<UserModel>		lstBirthdayUser;
-	protected List<WorkOffer>		lstWorkOffer;
+	protected List<WorkRequest> lstWorkRequest;
 	protected boolean				refreshDialogData	= false;
 	private String					scheduleStrings;
 	protected boolean				isChangedData		= true;
@@ -79,6 +80,7 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 	protected static final int		MAX_ROW				= 3;
 	protected Date					today;
 	private List<RoomModel>			rooms;
+	private List<VacationRequestModel> lstVacationRequest;
 
 	abstract protected List<Date> getAllDate();
 
@@ -201,13 +203,15 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 			lstCalendar = LoganSquare.parseList(response.optString("calendars"), CalendarModel.class);
 			lstHoliday = LoganSquare.parseList(response.optString("holidayList"), HolidayModel.class);
 			lstCategory = LoganSquare.parseList(response.optString("categories"), CategoryModel.class);
-			lstWorkOffer = LoganSquare.parseList(response.optString("workOfferList"), WorkOffer.class);
+			lstWorkRequest = LoganSquare.parseList(response.optString("workOfferList"), WorkRequest.class);
+			lstVacationRequest = LoganSquare.parseList(response.optString("vacationList"), VacationRequestModel.class);
 			lstBirthdayUser = LoganSquare.parseList(response.optString("birthdayList"), UserModel.class);
 			lstCalendarUser = LoganSquare.parseList(response.optString("calendarUsers"), UserModel.class);
 			rooms = LoganSquare.parseList(response.optString("rooms"), RoomModel.class);
 			todos = LoganSquare.parseList(response.optString("todoList"), Todo.class);
 
 			lstSchedule = filterByPublicity();
+			adaptVacationRequestsToWorkOffers();
 
 			ScheduleModel.determinePeriod(lstSchedule);
 
@@ -232,7 +236,7 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 
 					@Override
 					public void run(){
-						dialogDailySummary.setData(lstSchedule, lstBirthdayUser, lstHoliday, lstWorkOffer);
+						dialogDailySummary.setData(lstSchedule, lstBirthdayUser, lstHoliday, lstWorkRequest);
 					}
 				});
 
@@ -244,7 +248,7 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 
 					@Override
 					public void run(){
-						dialogDailySummary.setData(lstSchedule, lstBirthdayUser, lstHoliday, lstWorkOffer);
+						dialogDailySummary.setData(lstSchedule, lstBirthdayUser, lstHoliday, lstWorkRequest);
 					}
 				});
 				isChangedData = false;
@@ -254,6 +258,13 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 
 		}catch(IOException e){
 			e.printStackTrace();
+		}
+	}
+
+	private void adaptVacationRequestsToWorkOffers() {
+		for (VacationRequestModel vacationRequestModel: lstVacationRequest) {
+			WorkRequest workRequest = new WorkRequest(vacationRequestModel);
+			lstWorkRequest.add(workRequest);
 		}
 	}
 

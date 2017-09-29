@@ -20,7 +20,7 @@ import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.dialogs.DailySummaryDialog;
 import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
-import trente.asia.calendar.services.calendar.model.WorkOffer;
+import trente.asia.calendar.services.calendar.model.WorkRequest;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.models.UserModel;
 
@@ -42,11 +42,11 @@ public class DailySummaryDialogPagerAdapter extends PagerAdapter{
 	private List<ScheduleModel>										lstSchedule;
 	private List<UserModel>											lstBirthdayUser;
 	private List<HolidayModel>										lstHoliday;
-	private List<WorkOffer>											lstWorkOffer;
+	private List<WorkRequest> lstWorkRequest;
 	private DailySummaryDialog.OnAddBtnClickedListener				onAddBtnClickedListener;
 	private WeeklyScheduleListAdapter.OnScheduleItemClickListener	listener;
 	Map<Date, List<ScheduleModel>>									daySchedulesMap;
-	Map<Date, List<WorkOffer>>										dayOfferMap;
+	Map<Date, List<WorkRequest>>										dayOfferMap;
 	Map<Date, List<UserModel>>										dayBirthdayUsersMap;
 
 	private DailySummaryDialog										dialog;
@@ -101,7 +101,7 @@ public class DailySummaryDialogPagerAdapter extends PagerAdapter{
 
 		txtHeader.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, selectedDate));
 		dailyScheduleListView.hasDisplayedItem = false;
-		dailyScheduleListView.initDataWithMap(this.dayBirthdayUsersMap, this.dayOfferMap, this.daySchedulesMap, lstSchedule, lstHoliday, lstWorkOffer, lstBirthdayUser);
+		dailyScheduleListView.initDataWithMap(this.dayBirthdayUsersMap, this.dayOfferMap, this.daySchedulesMap, lstSchedule, lstHoliday, lstWorkRequest, lstBirthdayUser);
 		dailyScheduleListView.showFor(selectedDate);
 		if(!dailyScheduleListView.hasDisplayedItem){
 			dailyScheduleListView.setVisibility(View.GONE);
@@ -136,16 +136,16 @@ public class DailySummaryDialogPagerAdapter extends PagerAdapter{
 		return o == view;
 	}
 
-	public void setData(List<ScheduleModel> lstSchedule, List<UserModel> lstBirthdayUser, List<HolidayModel> lstHoliday, List<WorkOffer> lstWorkOffer, DailySummaryDialog.OnAddBtnClickedListener onAddBtnClickedListener, WeeklyScheduleListAdapter.OnScheduleItemClickListener listener, DailySummaryDialog dialog){
+	public void setData(List<ScheduleModel> lstSchedule, List<UserModel> lstBirthdayUser, List<HolidayModel> lstHoliday, List<WorkRequest> lstWorkRequest, DailySummaryDialog.OnAddBtnClickedListener onAddBtnClickedListener, WeeklyScheduleListAdapter.OnScheduleItemClickListener listener, DailySummaryDialog dialog){
 		this.lstSchedule = lstSchedule;
 		this.lstBirthdayUser = lstBirthdayUser;
 		this.lstHoliday = lstHoliday;
-		this.lstWorkOffer = lstWorkOffer;
+		this.lstWorkRequest = lstWorkRequest;
 		this.onAddBtnClickedListener = onAddBtnClickedListener;
 		this.listener = listener;
 		this.dialog = dialog;
 		this.daySchedulesMap = DailyScheduleList.buildDaySchedulesMap(dates, this.lstSchedule);
-		this.dayOfferMap = DailyScheduleList.buildDayOfferMap(dates, lstWorkOffer);
+		this.dayOfferMap = DailyScheduleList.buildDayOfferMap(dates, lstWorkRequest);
 		this.dayBirthdayUsersMap = DailyScheduleList.buildDayBirthdayUserMap(dates, lstBirthdayUser);
 	}
 

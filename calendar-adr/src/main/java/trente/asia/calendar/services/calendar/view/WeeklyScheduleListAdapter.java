@@ -20,7 +20,7 @@ import trente.asia.calendar.R;
 import trente.asia.calendar.services.calendar.model.CalendarDayModel;
 import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
-import trente.asia.calendar.services.calendar.model.WorkOffer;
+import trente.asia.calendar.services.calendar.model.WorkRequest;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.models.UserModel;
 
@@ -78,11 +78,11 @@ public class WeeklyScheduleListAdapter extends ArrayAdapter<CalendarDayModel>{
 	}
 
 	private void buildWorkOffers(ViewHolder viewHolder, CalendarDayModel calendarDay){
-		List<WorkOffer> workOffers = calendarDay.workOffers;
-		if(!CCCollectionUtil.isEmpty(workOffers)){
-			DailyScheduleList.sortOffersByType(workOffers);
-			for(WorkOffer workOffer : workOffers){
-				LinearLayout holidayItem = DailyScheduleList.buildOfferItem(context, layoutInflater, workOffer, R.layout.item_work_offer_weekly);
+		List<WorkRequest> workRequests = calendarDay.workRequests;
+		if(!CCCollectionUtil.isEmpty(workRequests)){
+			DailyScheduleList.sortOffersByType(workRequests);
+			for(WorkRequest workRequest : workRequests){
+				LinearLayout holidayItem = DailyScheduleList.buildOfferItem(context, layoutInflater, workRequest, R.layout.item_work_offer_weekly);
 				viewHolder.lnrEventList.addView(holidayItem);
 			}
 		}
