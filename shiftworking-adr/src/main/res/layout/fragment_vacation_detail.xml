@@ -188,8 +188,6 @@
                     android:orientation="vertical"
                     android:visibility="gone">
 
-                    <View style="@style/cs_common_divider" />
-
                     <LinearLayout
                         style="@style/wf_common_item_linear2"
                         android:orientation="vertical">
@@ -245,9 +243,6 @@
                     android:visibility="gone" />
             </LinearLayout>
         </ScrollView>
-
-        <!--<include layout="@layout/view_common_footer"/>-->
-
 
     </LinearLayout>
 </layout>
