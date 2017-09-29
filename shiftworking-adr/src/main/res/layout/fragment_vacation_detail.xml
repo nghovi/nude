@@ -184,12 +184,12 @@
                 <LinearLayout
                     android:id="@+id/lnr_id_approve_area"
                     style="@style/cs_common_match_wrap"
-                    android:layout_marginTop="@dimen/margin_10dp"
                     android:orientation="vertical"
                     android:visibility="gone">
                     <TextView
                         style="@style/wl_common_text"
-                        android:text="@string/fragment_offer_detail_approve_comment" />
+                        android:text="@string/fragment_offer_detail_approve_comment"
+                        android:padding="@dimen/margin_16dp"/>
                     <LinearLayout
                         style="@style/wf_common_item_linear2"
                         android:orientation="vertical">
