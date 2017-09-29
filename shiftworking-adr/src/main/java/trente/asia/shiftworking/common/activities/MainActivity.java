@@ -90,7 +90,7 @@ public class MainActivity extends WelfareActivity{
 			offerDetailFragment.setExecType(SwConst.SW_OFFER_EXEC_TYPE_VIEW);
 			offerDetailFragment.isClickNotification = true;
 			addFragment(offerDetailFragment);
-		} if(WelfareConst.NotificationType.SW_NOTI_OFFER_HOLIDAY_WORK.equals(serviceCode)){
+		} else if(WelfareConst.NotificationType.SW_NOTI_OFFER_HOLIDAY_WORK.equals(serviceCode)){
 			String key = mExtras.getString(WelfareConst.NotificationReceived.USER_INFO_NOTI_KEY);
 			HolidayWorkingDetailFragment offerDetailFragment = new HolidayWorkingDetailFragment();
 			offerDetailFragment.setActiveOfferId(key);
