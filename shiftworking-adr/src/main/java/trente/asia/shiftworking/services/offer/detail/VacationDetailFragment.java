@@ -161,9 +161,9 @@ public class VacationDetailFragment extends AbstractSwFragment{
         binding.txtAmount.setText(offerModel.amountString);
         if (Float.parseFloat(offerModel.amount) >= 1) {
             binding.txtEndDate.setText(offerModel.endDateString);
-            binding.txtEndDate.setVisibility(View.VISIBLE);
+            binding.lnrEndDate.setVisibility(View.VISIBLE);
         } else {
-            binding.txtEndDate.setVisibility(View.GONE);
+            binding.lnrEndDate.setVisibility(View.GONE);
         }
 	}
 
