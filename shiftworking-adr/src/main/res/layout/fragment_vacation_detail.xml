@@ -189,7 +189,10 @@
                     <TextView
                         style="@style/wl_common_text"
                         android:text="@string/fragment_offer_detail_approve_comment"
-                        android:padding="@dimen/margin_16dp"/>
+                        android:paddingStart="@dimen/margin_16dp"
+                        android:paddingEnd="@dimen/margin_16dp"
+                        android:paddingTop="@dimen/margin_10dp"
+                        android:paddingBottom="@dimen/margin_10dp"/>
                     <LinearLayout
                         style="@style/wf_common_item_linear2"
                         android:orientation="vertical">
