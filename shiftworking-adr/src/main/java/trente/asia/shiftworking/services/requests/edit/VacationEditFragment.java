@@ -193,6 +193,11 @@ public class VacationEditFragment extends AbstractSwFragment implements OnUserAd
 		binding.switchSickAbsent.setChecked(vacationRequest.sickAbsent);
 		binding.edtNote.setText(vacationRequest.note);
 		amount = vacationRequest.amount;
+		if (Float.parseFloat(amount) < 1) {
+			binding.lnrEndDate.setVisibility(View.GONE);
+		} else {
+			binding.lnrEndDate.setVisibility(View.VISIBLE);
+		}
 		loadTypeList();
 	}
 
