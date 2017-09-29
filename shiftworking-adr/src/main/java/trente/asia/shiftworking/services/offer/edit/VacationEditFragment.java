@@ -193,6 +193,7 @@ public class VacationEditFragment extends AbstractSwFragment implements OnUserAd
 		updateVacationAmount(vacation.amountString);
 		binding.switchSickAbsent.setChecked(vacation.sickAbsent);
 		binding.edtNote.setText(vacation.note);
+		amount = vacation.amount;
 	}
 
 	private void getVacationTypeList(JSONObject response){
