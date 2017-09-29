@@ -43,7 +43,7 @@ import trente.asia.calendar.commons.fragments.PageContainerFragment;
 import trente.asia.calendar.services.calendar.model.CategoryModel;
 import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
-import trente.asia.calendar.services.calendar.model.WorkOffer;
+import trente.asia.calendar.services.calendar.model.WorkRequest;
 import trente.asia.calendar.services.calendar.view.MonthlyCalendarRowView;
 import trente.asia.calendar.services.todo.TodoListFragment;
 import trente.asia.calendar.services.todo.TodoListTodayFragment;
@@ -231,9 +231,9 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 		}
 
 		// offer
-		for(WorkOffer workOffer : lstWorkOffer){
-			Calendar cStart = CCDateUtil.makeCalendarWithDateOnly(workOffer.startDate);
-			Calendar cEnd = CCDateUtil.makeCalendarWithDateOnly(workOffer.endDate);
+		for(WorkRequest workRequest : lstWorkRequest){
+			Calendar cStart = CCDateUtil.makeCalendarWithDateOnly(workRequest.startDate);
+			Calendar cEnd = CCDateUtil.makeCalendarWithDateOnly(workRequest.endDate);
 
 			int dayDistance = Math.max(0, cStart.get(Calendar.DAY_OF_YEAR) - cStartWeek.get(Calendar.DAY_OF_YEAR));
 			int dayDistanceEnd = Math.min(7, cEnd.get(Calendar.DAY_OF_YEAR) - cStartWeek.get(Calendar.DAY_OF_YEAR));
@@ -242,7 +242,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 			int leftMargin = cellWidth * (1 + dayDistance);
 			topMargin = getNextTopMargin(dayDistance, dayDistance + cellNumber - 1);
 
-			TextView textView = makeTextView(activity, workOffer.offerTypeName, leftMargin, topMargin, cellWidth * cellNumber, Color.parseColor(workOffer.userColor), 0, Gravity.CENTER);
+			TextView textView = makeTextView(activity, workRequest.offerTypeName, leftMargin, topMargin, cellWidth * cellNumber, Color.parseColor(workRequest.userColor), 0, Gravity.CENTER);
 			rltPart1.addView(textView);
 			itemNum++;
 		}

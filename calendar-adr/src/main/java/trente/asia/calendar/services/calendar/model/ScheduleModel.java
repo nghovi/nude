@@ -77,14 +77,14 @@ public class ScheduleModel{
 		this.scheduleType = ClConst.SCHEDULE_TYPE_BIRTHDAY;
 	}
 
-	public ScheduleModel(WorkOffer workOffer){
-		this.scheduleName = workOffer.offerTypeName;
-		this.startDate = workOffer.startDate;
-		this.endDate = workOffer.endDate;
-		// boolean isPaidVacationAll = ClConst.WORKING_OFFER_TYPE_PAID_VACATION_ALL.equals(workOffer.offerType);
-		// boolean isSpecialHoliday = ClConst.WORKING_OFFER_TYPE_SPECIAL_HOLIDAY.equals(workOffer.offerType);
-		// boolean isCompensatoryHoliday = ClConst.WORKING_OFFER_TYPE_COMPENSATORY_HOLIDAY.equals(workOffer.offerType);
-		// boolean isAbsent = ClConst.WORKING_OFFER_TYPE_ABSENT.equals(workOffer.offerType);
+	public ScheduleModel(WorkRequest workRequest){
+		this.scheduleName = workRequest.offerTypeName;
+		this.startDate = workRequest.startDate;
+		this.endDate = workRequest.endDate;
+		// boolean isPaidVacationAll = ClConst.WORKING_OFFER_TYPE_PAID_VACATION_ALL.equals(workRequest.offerType);
+		// boolean isSpecialHoliday = ClConst.WORKING_OFFER_TYPE_SPECIAL_HOLIDAY.equals(workRequest.offerType);
+		// boolean isCompensatoryHoliday = ClConst.WORKING_OFFER_TYPE_COMPENSATORY_HOLIDAY.equals(workRequest.offerType);
+		// boolean isAbsent = ClConst.WORKING_OFFER_TYPE_ABSENT.equals(workRequest.offerType);
 		// if(isPaidVacationAll || isSpecialHoliday || isCompensatoryHoliday || isAbsent){
 		// this.isAllDay = true;
 		// }

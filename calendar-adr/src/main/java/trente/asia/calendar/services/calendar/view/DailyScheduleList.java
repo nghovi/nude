@@ -26,7 +26,7 @@ import trente.asia.calendar.R;
 import trente.asia.calendar.commons.utils.ClUtil;
 import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
-import trente.asia.calendar.services.calendar.model.WorkOffer;
+import trente.asia.calendar.services.calendar.model.WorkRequest;
 import trente.asia.welfare.adr.activity.WelfareFragment;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.models.UserModel;
@@ -47,7 +47,7 @@ public class DailyScheduleList extends LinearLayout{
 
 	private List<ScheduleModel>										mSchedules;
 	Map<Date, List<ScheduleModel>>									daySchedulesMap;
-	Map<Date, List<WorkOffer>>										dayOfferMap;
+	Map<Date, List<WorkRequest>>										dayOfferMap;
 	Map<Date, List<UserModel>>										dayBirthdayUsersMap;
 	private LayoutInflater											inflater;
 	private List<ScheduleModel>										lstSchedule;
@@ -58,7 +58,7 @@ public class DailyScheduleList extends LinearLayout{
 	public boolean													hasDisplayedItem		= false;
 
 	private List<HolidayModel>										holidayModels;
-	private List<WorkOffer>											offers;
+	private List<WorkRequest>											offers;
 	private List<UserModel>											userModels;
 
 	public DailyScheduleList(Context context){
@@ -82,7 +82,7 @@ public class DailyScheduleList extends LinearLayout{
 		buildEvents(holidayModels, offers, userModels);
 	}
 
-	// public void initData(List<Date> dates, List<ScheduleModel> lstSchedule, List<HolidayModel> holidayModels, List<WorkOffer> offers,
+	// public void initData(List<Date> dates, List<ScheduleModel> lstSchedule, List<HolidayModel> holidayModels, List<WorkRequest> offers,
 	// List<UserModel> userModels){
 	// this.lstSchedule = lstSchedule;
 	// this.holidayModels = holidayModels;
@@ -93,7 +93,7 @@ public class DailyScheduleList extends LinearLayout{
 	// daySchedulesMap = buildDaySchedulesMap(dates, this.lstSchedule);
 	// }
 
-	public void initDataWithMap(Map<Date, List<UserModel>> dayBirthdayUsersMap, Map<Date, List<WorkOffer>> dayOfferMap, Map<Date, List<ScheduleModel>> daySchedulesMap, List<ScheduleModel> lstSchedule, List<HolidayModel> holidayModels, List<WorkOffer> offers, List<UserModel> userModels){
+	public void initDataWithMap(Map<Date, List<UserModel>> dayBirthdayUsersMap, Map<Date, List<WorkRequest>> dayOfferMap, Map<Date, List<ScheduleModel>> daySchedulesMap, List<ScheduleModel> lstSchedule, List<HolidayModel> holidayModels, List<WorkRequest> offers, List<UserModel> userModels){
 		this.lstSchedule = lstSchedule;
 		this.holidayModels = holidayModels;
 		this.offers = offers;
@@ -103,12 +103,12 @@ public class DailyScheduleList extends LinearLayout{
 		this.dayOfferMap = dayOfferMap;
 	}
 
-	public static Map<Date, List<WorkOffer>> buildDayOfferMap(List<Date> dates, List<WorkOffer> workOffers){
-		Map<Date, List<WorkOffer>> result = new LinkedHashMap<>();
+	public static Map<Date, List<WorkRequest>> buildDayOfferMap(List<Date> dates, List<WorkRequest> workRequests){
+		Map<Date, List<WorkRequest>> result = new LinkedHashMap<>();
 		for(Date date : dates){
 			Date dateOnly = CCDateUtil.makeDate(date);
-			List<WorkOffer> dayWorkOffers = getSortedWorkOffersByDate(workOffers, date);
-			result.put(dateOnly, dayWorkOffers);
+			List<WorkRequest> dayWorkRequests = getSortedWorkOffersByDate(workRequests, date);
+			result.put(dateOnly, dayWorkRequests);
 		}
 		return result;
 	}
@@ -134,12 +134,12 @@ public class DailyScheduleList extends LinearLayout{
 		return result;
 	}
 
-	private void buildEvents(List<HolidayModel> holidayModels, List<WorkOffer> offers, List<UserModel> userModels){
+	private void buildEvents(List<HolidayModel> holidayModels, List<WorkRequest> offers, List<UserModel> userModels){
 		lnrEvents.removeAllViews();
 		List<UserModel> birthdayUsers = dayBirthdayUsersMap.get(this.selectedDate);
-		List<WorkOffer> workOffers = dayOfferMap.get(this.selectedDate);
+		List<WorkRequest> workRequests = dayOfferMap.get(this.selectedDate);
 		List<HolidayModel> holidayModelList = HolidayModel.getHolidayModels(this.selectedDate, holidayModels);
-		if(!CCCollectionUtil.isEmpty(holidayModelList) || !CCCollectionUtil.isEmpty(workOffers) || !CCCollectionUtil.isEmpty(birthdayUsers)){
+		if(!CCCollectionUtil.isEmpty(holidayModelList) || !CCCollectionUtil.isEmpty(workRequests) || !CCCollectionUtil.isEmpty(birthdayUsers)){
 			lnrEvents.setVisibility(View.VISIBLE);
 			TextView header = buildTextView(getContext().getString(R.string.daily_schedules_event_title));
 			lnrEvents.addView(header);
@@ -149,7 +149,7 @@ public class DailyScheduleList extends LinearLayout{
 				hasDisplayedItem = true;
 			}
 
-			for(WorkOffer offer : workOffers){
+			for(WorkRequest offer : workRequests){
 				LinearLayout offerItem = buildOfferItem(getContext(), inflater, offer, R.layout.item_work_offer);
 				lnrEvents.addView(offerItem);
 				hasDisplayedItem = true;
@@ -173,13 +173,13 @@ public class DailyScheduleList extends LinearLayout{
 		return itemHoliday;
 	}
 
-	private void buildOffers(List<WorkOffer> offers){
+	private void buildOffers(List<WorkRequest> offers){
 
 	}
 
-	public static List<WorkOffer> getSortedWorkOffersByDate(List<WorkOffer> offers, Date date){
-		List<WorkOffer> result = new ArrayList<>();
-		for(WorkOffer offer : offers){
+	public static List<WorkRequest> getSortedWorkOffersByDate(List<WorkRequest> offers, Date date){
+		List<WorkRequest> result = new ArrayList<>();
+		for(WorkRequest offer : offers){
 			if(ClUtil.belongPeriod(date, offer.startDate, offer.endDate)){
 				result.add(offer);
 			}
@@ -188,29 +188,29 @@ public class DailyScheduleList extends LinearLayout{
 		return result;
 	}
 
-	public static void sortOffersByType(List<WorkOffer> offers){
+	public static void sortOffersByType(List<WorkRequest> offers){
 		final Map<String, Integer> offer_type_order = new HashMap<>();
-		offer_type_order.put(WorkOffer.OFFER_TYPE_PAID_VACATION_ALL, 1);
-		offer_type_order.put(WorkOffer.OFFER_TYPE_PAID_VACATION_MORNING, 2);
-		offer_type_order.put(WorkOffer.OFFER_TYPE_PAID_VACATION_AFTERNOON, 3);
-		offer_type_order.put(WorkOffer.OFFER_TYPE_SPECIAL_HOLIDAY, 4);
-		offer_type_order.put(WorkOffer.OFFER_TYPE_COMPENSATORY_HOLIDAY, 5);
-		offer_type_order.put(WorkOffer.OFFER_TYPE_ABSENT, 6);
-		offer_type_order.put(WorkOffer.OFFER_TYPE_OVERTIME_WORKING, 7);
-		offer_type_order.put(WorkOffer.OFFER_TYPE_OVERTIME, 8);
-		offer_type_order.put(WorkOffer.OFFER_TYPE_HOLIDAY_WORKING, 9);
-		offer_type_order.put(WorkOffer.OFFER_TYPE_SHORT_TIME, 10);
+		offer_type_order.put(WorkRequest.REQUEST_TYPE_PAID_VACATION_ALL, 1);
+		offer_type_order.put(WorkRequest.REQUEST_TYPE_PAID_VACATION_MORNING, 2);
+		offer_type_order.put(WorkRequest.REQUEST_TYPE_PAID_VACATION_AFTERNOON, 3);
+		offer_type_order.put(WorkRequest.REQUEST_TYPE_SPECIAL_HOLIDAY, 4);
+		offer_type_order.put(WorkRequest.REQUEST_TYPE_COMPENSATORY_HOLIDAY, 5);
+		offer_type_order.put(WorkRequest.REQUEST_TYPE_ABSENT, 6);
+		offer_type_order.put(WorkRequest.REQUEST_TYPE_OVERTIME_WORKING, 7);
+		offer_type_order.put(WorkRequest.REQUEST_TYPE_OVERTIME, 8);
+		offer_type_order.put(WorkRequest.REQUEST_TYPE_HOLIDAY_WORKING, 9);
+		offer_type_order.put(WorkRequest.REQUEST_TYPE_SHORT_TIME, 10);
 
-		Collections.sort(offers, new Comparator<WorkOffer>() {
+		Collections.sort(offers, new Comparator<WorkRequest>() {
 
 			@Override
-			public int compare(WorkOffer o1, WorkOffer o2){
+			public int compare(WorkRequest o1, WorkRequest o2){
 				return offer_type_order.get(o1.offerType).compareTo(offer_type_order.get(o2.offerType));
 			}
 		});
 	}
 
-	public static LinearLayout buildOfferItem(Context context, LayoutInflater inflater, WorkOffer offer, int layoutId){
+	public static LinearLayout buildOfferItem(Context context, LayoutInflater inflater, WorkRequest offer, int layoutId){
 		LinearLayout offerItemView = (LinearLayout)inflater.inflate(layoutId, null);
 		ImageView imgAvatar = (ImageView)offerItemView.findViewById(R.id.img_item_offer_avatar);
 		TextView txtUsername = (TextView)offerItemView.findViewById(R.id.txt_item_offer_username);
@@ -222,7 +222,7 @@ public class DailyScheduleList extends LinearLayout{
 		WfPicassoHelper.loadImageWithDefaultIcon(context, BuildConfig.HOST, imgAvatar, offer.userAvatarPath, R.drawable.wf_profile);
 		txtUsername.setText(offer.userName);
 
-		if(WorkOffer.OFFER_TYPE_HOLIDAY_WORKING.equals(offer.offerType) || WorkOffer.OFFER_TYPE_OVERTIME.equals(offer.offerType) || WorkOffer.OFFER_TYPE_SHORT_TIME.equals(offer.offerType)){
+		if(WorkRequest.REQUEST_TYPE_HOLIDAY_WORKING.equals(offer.offerType) || WorkRequest.REQUEST_TYPE_OVERTIME.equals(offer.offerType) || WorkRequest.REQUEST_TYPE_SHORT_TIME.equals(offer.offerType)){
 			txtDate.setText(" - " + offer.startTimeString + " - " + offer.endTimeString);
 		}else{
 			txtDate.setVisibility(View.GONE);
