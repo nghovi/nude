@@ -200,7 +200,7 @@ public class VacationDetailFragment extends AbstractSwFragment{
 	}
 
 	protected void judgeEditPermission(){
-		if(SwConst.OFFER_CAN_EDIT_DELETE.equals(offerPermission) || SwConst.OFFER_ONLY_DELETE.equals(offerPermission) || SwConst.OFFER_CAN_ONLY_EDIT.equals(offerPermission)){
+		if(SwConst.OFFER_CAN_EDIT_DELETE.equals(offerPermission) || SwConst.OFFER_CAN_ONLY_EDIT.equals(offerPermission)){
 			imgEdit.setImageResource(R.drawable.sw_action_edit);
 			imgEdit.setVisibility(View.VISIBLE);
 			imgEdit.setOnClickListener(this);
