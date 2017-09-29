@@ -1,0 +1,313 @@
+package trente.asia.shiftworking.services.requests.detail;
+
+import android.databinding.DataBindingUtil;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.google.gson.Gson;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+import asia.chiase.core.define.CCConst;
+import asia.chiase.core.util.CCJsonUtil;
+import asia.chiase.core.util.CCStringUtil;
+import trente.asia.android.activity.ChiaseActivity;
+import trente.asia.android.view.ChiaseListViewNoScroll;
+import trente.asia.android.view.util.CAObjectSerializeUtil;
+import trente.asia.shiftworking.R;
+import trente.asia.shiftworking.common.activities.MainActivity;
+import trente.asia.shiftworking.common.defines.SwConst;
+import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
+import trente.asia.shiftworking.databinding.FragmentHolidayWorkingDetailBinding;
+import trente.asia.shiftworking.services.requests.WorkRequestFragment;
+import trente.asia.shiftworking.services.requests.adapter.HolidayWorkingApproveHistoryAdapter;
+import trente.asia.shiftworking.services.requests.edit.HolidayWorkingEditFragment;
+import trente.asia.welfare.adr.models.ApproveHistory;
+import trente.asia.shiftworking.services.requests.model.HolidayWorkingModel;
+import trente.asia.welfare.adr.activity.WelfareActivity;
+import trente.asia.welfare.adr.dialog.WfDialog;
+import trente.asia.welfare.adr.models.ApiObjectModel;
+import trente.asia.welfare.adr.utils.WelfareFormatUtil;
+
+public class HolidayWorkingDetailFragment extends AbstractSwFragment{
+
+	private HolidayWorkingModel offer;
+	private ImageView							imgEdit;
+	private Map<String, String>					offerStatusMaster;
+	private String								offerPermission;
+	private EditText							edtComment;
+	private String								activeOfferId;
+	private String								execType;
+	private FragmentHolidayWorkingDetailBinding	binding;
+	private ApproveHistory						history;
+
+	public void setActiveOfferId(String activeOfferId){
+		this.activeOfferId = activeOfferId;
+	}
+
+	public void setExecType(String execType){
+		this.execType = execType;
+	}
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+		if(mRootView == null){
+			binding = DataBindingUtil.inflate(inflater, R.layout.fragment_holiday_working_detail, container, false);
+			mRootView = binding.getRoot();
+		}
+		return mRootView;
+	}
+
+	@Override
+	protected void initView(){
+		super.initView();
+		super.initHeader(R.drawable.sw_back_white, myself.userName, null);
+
+		edtComment = (EditText)getView().findViewById(R.id.edt_fragment_offer_detail_comment);
+		imgEdit = (ImageView)getView().findViewById(R.id.img_id_header_right_icon);
+	}
+
+	@Override
+	public int getFooterItemId(){
+		return 0;
+	}
+
+	@Override
+	protected void initData(){
+		loadWorkOffer();
+	}
+
+	private void loadWorkOffer(){
+
+		JSONObject jsonObject = new JSONObject();
+		try{
+			jsonObject.put("key", activeOfferId);
+			jsonObject.put("execType", execType);
+		}catch(JSONException e){
+			e.printStackTrace();
+		}
+
+		requestLoad(SwConst.API_HOLIDAY_WORKING_DETAIL, jsonObject, true);
+	}
+
+	@Override
+	protected void successLoad(JSONObject response, String url){
+		if(SwConst.API_HOLIDAY_WORKING_DETAIL.equals(url)){
+			offer = CCJsonUtil.convertToModel(response.optString("holidayWork"), HolidayWorkingModel.class);
+			setWorkOffer(offer);
+
+			offerPermission = response.optString("permission");
+			offerStatusMaster = buildOfferStatusMaster(response);
+
+			if(offer == null){
+				((MainActivity)activity).isInitData = true;
+				onClickBackBtn();
+			}else{
+				buildWorkOfferDetail();
+			}
+		}else{
+			super.successLoad(response, url);
+		}
+
+		Button btnDelete = (Button)getView().findViewById(R.id.btn_fragment_offer_detail_delete);
+		if(SwConst.OFFER_CAN_EDIT_DELETE.equals(offerPermission) || SwConst.OFFER_ONLY_DELETE.equals(offerPermission)){
+			btnDelete.setVisibility(View.VISIBLE);
+			btnDelete.setOnClickListener(this);
+		}else{
+			btnDelete.setVisibility(View.GONE);
+		}
+	}
+
+	@Override
+	public void onResume(){
+		super.onResume();
+
+		if(!((WelfareActivity)activity).dataMap.isEmpty()){
+			String isDelete = CCStringUtil.toString(((WelfareActivity)activity).dataMap.get(SwConst.ACTION_OFFER_DELETE));
+			String isUpdate = CCStringUtil.toString(((WelfareActivity)activity).dataMap.get(SwConst.ACTION_OFFER_UPDATE));
+			if(CCConst.YES.equals(isDelete) || CCConst.YES.equals(isUpdate)){
+				((WelfareActivity)activity).dataMap.clear();
+				((WelfareActivity)activity).isInitData = true;
+				if(CCConst.YES.equals(isDelete)){
+					getFragmentManager().popBackStack();
+				}
+			}
+		}
+	}
+
+	private Map<String, String> buildOfferStatusMaster(JSONObject response){
+		Map<String, String> offerStatusMaster = new LinkedHashMap<>();
+		List<ApiObjectModel> lstStatus = CCJsonUtil.convertToModelList(response.optString("offerStatusList"), ApiObjectModel.class);
+		lstStatus.add(new ApiObjectModel(CCConst.NONE, getString(R.string.chiase_common_all)));
+		return WelfareFormatUtil.convertList2Map(lstStatus);
+	}
+
+	private void setWorkOffer(HolidayWorkingModel offerModel){
+		try{
+			LinearLayout lnrContent = (LinearLayout)getView().findViewById(R.id.lnr_id_content);
+			Gson gson = new Gson();
+			CAObjectSerializeUtil.deserializeObject(lnrContent, new JSONObject(gson.toJson(offerModel)));
+		}catch(JSONException e){
+			e.printStackTrace();
+		}
+
+		((TextView)getView().findViewById(R.id.txt_fragment_holiday_working_detail_offer_user)).setText(offerModel.userName);
+		((TextView)getView().findViewById(R.id.txt_fragment_holiday_working_detail_start_date)).setText(offerModel.startDateString);
+		((TextView)getView().findViewById(R.id.txt_fragment_holiday_working_detail_reason)).setText(offerModel.note);
+	}
+
+	private void buildWorkOfferDetail(){
+		judgeEditPermission();
+		judgeAprovePermission();
+		buildWorkOfferApproveHistory();
+	}
+
+	private void judgeAprovePermission(){
+		boolean permissionApprove = SwConst.OFFER_CAN_APPROVE.equals(offerPermission);
+		LinearLayout lnrApproveArea = (LinearLayout)getView().findViewById(R.id.lnr_id_approve_area);
+		if(offer.listHistories != null){
+			history = offer.listHistories.get(offer.listHistories.size() - 1);
+			if(getString(R.string.rejected).equals(history.historyStatus) || getString(R.string.done).equals(history.historyStatus)){
+				lnrApproveArea.setVisibility(View.GONE);
+			}else{
+				if(permissionApprove){
+					lnrApproveArea.setVisibility(View.VISIBLE);
+					Button btnReject = (Button)getView().findViewById(R.id.btn_fragment_offer_detail_reject);
+					Button btnApprove = (Button)getView().findViewById(R.id.btn_fragment_offer_detail_approve);
+					btnReject.setOnClickListener(this);
+					btnApprove.setOnClickListener(this);
+				}
+			}
+		}
+	}
+
+	private void buildWorkOfferApproveHistory(){
+		if(offer.userId.equals(myself.key)){
+			getView().findViewById(R.id.lnr_fragment_holiday_working_detail_offer_status).setVisibility(View.VISIBLE);
+			ChiaseListViewNoScroll lstApproveHistory = (ChiaseListViewNoScroll)getView().findViewById(R.id.lst_fragment_offer_detail_offer_status);
+			HolidayWorkingApproveHistoryAdapter adapter = new HolidayWorkingApproveHistoryAdapter(activity, offer.listHistories);
+			lstApproveHistory.setAdapter(adapter);
+		}else{
+			getView().findViewById(R.id.lnr_fragment_holiday_working_detail_offer_status).setVisibility(View.GONE);
+		}
+	}
+
+	protected void judgeEditPermission(){
+		if(offer.listHistories != null){
+			history = offer.listHistories.get(offer.listHistories.size() - 1);
+			if(getString(R.string.wait2).equals(history.historyStatus) || getString(R.string.done).equals(history.historyStatus)){
+				imgEdit.setVisibility(View.INVISIBLE);
+			}else{
+				if(SwConst.OFFER_CAN_EDIT_DELETE.equals(offerPermission) || SwConst.OFFER_ONLY_DELETE.equals(offerPermission) || SwConst.OFFER_CAN_ONLY_EDIT.equals(offerPermission)){
+					imgEdit.setImageResource(R.drawable.sw_action_edit);
+					imgEdit.setVisibility(View.VISIBLE);
+					imgEdit.setOnClickListener(this);
+				}
+			}
+		}
+	}
+
+	@Override
+	protected void successUpdate(JSONObject response, String url){
+		if(SwConst.API_HOLIDAY_WORKING_APPROVE.equals(url)){
+			((ChiaseActivity)activity).isInitData = true;
+			onClickBackBtn();
+		}else if(SwConst.API_HOLIDAY_WORKING_DELETE.equals(url)){
+			((WelfareActivity)activity).dataMap.put(SwConst.ACTION_OFFER_DELETE, CCConst.YES);
+			getFragmentManager().popBackStack();
+		}else{
+			super.successUpdate(response, url);
+		}
+	}
+
+	private void gotoWorkOfferEditFragment(){
+		HolidayWorkingEditFragment fragment = new HolidayWorkingEditFragment();
+		fragment.setActiveOfferId(offer.key);
+		fragment.setExecType(execType);
+		gotoFragment(fragment);
+	}
+
+	@Override
+	public void onClick(View v){
+		switch(v.getId()){
+		case R.id.img_id_header_right_icon:
+			gotoWorkOfferEditFragment();
+			break;
+		case R.id.btn_fragment_offer_detail_approve:
+			onClickBtnApprove();
+			break;
+		case R.id.btn_fragment_offer_detail_reject:
+			onClickBtnReject();
+			break;
+		case R.id.btn_fragment_offer_detail_delete:
+			onClickBtnDelete();
+			break;
+		default:
+			break;
+		}
+	}
+
+	private void onClickBtnDelete() {
+		final WfDialog dlgConfirmDelete = new WfDialog(activity);
+		dlgConfirmDelete.setDialogTitleButton(getString(R.string.fragment_offer_edit_confirm_delete_msg), getString(android.R.string.ok), getString(android.R.string.cancel), new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v){
+				sendDeleteOfferRequest();
+				dlgConfirmDelete.dismiss();
+			}
+		}).show();
+	}
+
+	private void sendDeleteOfferRequest() {
+		JSONObject jsonObject = new JSONObject();
+		try{
+			jsonObject.put("key", activeOfferId);
+		}catch(JSONException e){
+			e.printStackTrace();
+		}
+		requestUpdate(SwConst.API_HOLIDAY_WORKING_DELETE, jsonObject, true);
+	}
+
+	private void sendApproveResult(String approveResult){
+		JSONObject jsonObject = new JSONObject();
+		try{
+			jsonObject.put("key", offer.key);
+			jsonObject.put("approveComment", edtComment.getText().toString());
+			jsonObject.put("approveResult", approveResult);
+		}catch(JSONException e){
+			e.printStackTrace();
+		}
+		requestUpdate(SwConst.API_HOLIDAY_WORKING_APPROVE, jsonObject, true);
+	}
+
+	private void onClickBtnReject(){
+		sendApproveResult("NG");
+	}
+
+	private void onClickBtnApprove(){
+		sendApproveResult("OK");
+	}
+
+	@Override
+	protected void onClickBackBtn(){
+		if(isClickNotification){
+			emptyBackStack();
+			gotoFragment(new WorkRequestFragment());
+		}else{
+			super.onClickBackBtn();
+		}
+	}
+}

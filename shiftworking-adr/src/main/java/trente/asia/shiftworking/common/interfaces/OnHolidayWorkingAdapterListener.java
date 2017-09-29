@@ -1,7 +1,6 @@
 package trente.asia.shiftworking.common.interfaces;
 
-import trente.asia.shiftworking.services.offer.model.HolidayWorkingModel;
-import trente.asia.shiftworking.services.offer.model.OvertimeModel;
+import trente.asia.shiftworking.services.requests.model.HolidayWorkingModel;
 
 /**
  * Created by tien on 9/22/2017.
