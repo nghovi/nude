@@ -187,15 +187,12 @@
                     android:layout_marginTop="@dimen/margin_10dp"
                     android:orientation="vertical"
                     android:visibility="gone">
-
+                    <TextView
+                        style="@style/wl_common_text"
+                        android:text="@string/fragment_offer_detail_approve_comment" />
                     <LinearLayout
                         style="@style/wf_common_item_linear2"
                         android:orientation="vertical">
-
-                        <TextView
-                            style="@style/wl_common_text"
-                            android:text="@string/fragment_offer_detail_approve_comment" />
-
                         <EditText
                             android:id="@+id/edt_fragment_offer_detail_comment"
                             style="@style/wl_common_edit_text_multi_line2"
