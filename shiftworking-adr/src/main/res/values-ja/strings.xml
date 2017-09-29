@@ -98,24 +98,24 @@
     <string name="fragment_offer_filter_offer_type">申請タイプ</string>
     <string name="fragment_offer_filter_other_history_filter">絞り込み: %1$s</string>
     <string name="fragment_offer_filter_offer_status">申請ステータス</string>
-    <string name="fragment_offer_filter_offer_dept">申請部門</string>
+    <string name="fragment_offer_filter_offer_dept">部門</string>
     <string name="fragment_offer_filter_title">絞り込み</string>
     <string name="fragment_offer_filter_clear">クリア</string>
     <string name="fragment_offer_filter_update">更新</string>
-    <string name="fragment_offer_detail_header">申請詳細</string>
-    <string name="fragment_offer_detail_start_date">休暇</string>
+    <string name="fragment_offer_detail_header">休暇申請詳細</string>
+    <string name="fragment_offer_detail_start_date">申請開始日</string>
     <string name="fragment_offer_detail_start_time">申請開始時間</string>
     <string name="fragment_offer_detail_end_date">申請終了日</string>
     <string name="fragment_offer_detail_end_time">申請終了時間</string>
-    <string name="fragment_offer_detail_note">ノート</string>
+    <string name="fragment_offer_detail_note">理由</string>
     <string name="fragment_offer_detail_offer_status">申請状況</string>
     <string name="fragment_offer_detail_approve_comment">承認コメント</string>
-    <string name="fragment_offer_edit_header">勤務申請エントリー</string>
-    <string name="sw_work_offer_other_history">みんなの勤務申請履歴</string>
+    <string name="fragment_offer_edit_header">休暇申請追加</string>
+    <string name="sw_work_offer_other_history">みんなの休暇申請</string>
     <string name="fragment_work_offer_edit_offer_type">申請タイプ</string>
     <string name="fragment_work_offer_edit_offer_status">申請ステータス</string>
     <string name="fragment_work_offer_edit_offer_dept">申請部門</string>
-    <string name="sw_work_offer_history">勤務申請履歴</string>
+    <string name="sw_work_offer_history">休暇申請</string>
 
     <string name="sw_work_offer_action_approve">承認</string>
     <string name="sw_work_offer_action_reject">却下</string>
@@ -153,4 +153,12 @@
     <string name="rejected">却下</string>
     <string name="done">完了</string>
     <string name="wait2">待ち2</string>
+    <string name="sw_vacation">休暇</string>
+    <string name="sw_overtime">残業</string>
+    <string name="sw_holiday_working">休出</string>
+    <string name="fragment_offer_filter_offer_user">ユーザー</string>
+    <string name="sw_amount">消化量</string>
+    <string name="fragment_offer_detail_sick_absent">病欠</string>
+    <string name="sw_select_dept">部門選択</string>
+    <string name="sw_delete">削除</string>
 </resources>

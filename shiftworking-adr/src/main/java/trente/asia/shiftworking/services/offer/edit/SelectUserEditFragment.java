@@ -57,7 +57,7 @@ public class SelectUserEditFragment extends AbstractSwFragment implements OnDepa
 	@Override
 	protected void initView(){
 		super.initView();
-        initHeader(R.drawable.wf_back_white, getString(R.string.sw_select_user), null);
+        initHeader(R.drawable.wf_back_white, getString(R.string.fragment_offer_edit_offer_user), null);
 		binding = DataBindingUtil.bind(mRootView);
 		adapter.setFragmentManager(getFragmentManager());
 		binding.listUsers.setAdapter(adapter);
