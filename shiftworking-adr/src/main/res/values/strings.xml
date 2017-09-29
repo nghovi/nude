@@ -87,7 +87,7 @@
     <string name="FM_SW_008_03">Your holiday work offer is approved.</string>
     <string name="FM_SW_008_04">Your holiday work approve is rejected.</string>
 
-    <string name="sw_work_offer_history">My offer history</string>
+    <string name="sw_work_offer_history">My vacation offer</string>
 
     <!--Work transit service-->
     <string name="sw_work_transit_entry_title">Work transit entry</string>
@@ -116,11 +116,11 @@
     <string name="fragment_offer_detail_start_time">Offer start time</string>
     <string name="fragment_offer_detail_end_date">Offer end date</string>
     <string name="fragment_offer_detail_end_time">Offer end time</string>
-    <string name="fragment_offer_detail_note">Note</string>
+    <string name="fragment_offer_detail_note">Reason</string>
     <string name="fragment_offer_detail_offer_status">Offer status</string>
     <string name="fragment_offer_detail_approve_comment">Approve comment</string>
-    <string name="fragment_offer_edit_header">Offer information</string>
-    <string name="sw_work_offer_other_history">Other\'s offer history</string>
+    <string name="fragment_offer_edit_header">Vacation offer add</string>
+    <string name="sw_work_offer_other_history">Other vacation offer</string>
     <string name="fragment_work_offer_edit_offer_type">Offer types</string>
     <string name="fragment_work_offer_edit_offer_status">Offer status</string>
     <string name="fragment_work_offer_edit_offer_dept">Departments</string>
@@ -132,7 +132,7 @@
     <string name="txt_dialog_checkin_types_guide">Choose check in type</string>
 
     <string name="fragment_offer_detail_sick_absent">Sick absent</string>
-    <string name="fragment_offer_edit_offer_user">User</string>
+    <string name="fragment_offer_edit_offer_user">Offer user</string>
     <string name="sw_vacation">Vacation</string>
     <string name="sw_overtime">Overtime</string>
     <string name="sw_holiday_working">Holiday Working</string>
@@ -162,4 +162,5 @@
     <string name="rejected">Rejected</string>
     <string name="done">Done</string>
     <string name="wait2">Wait2</string>
+    <string name="sw_delete">Delete</string>
 </resources>

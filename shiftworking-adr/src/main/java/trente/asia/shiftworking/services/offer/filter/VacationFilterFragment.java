@@ -127,9 +127,9 @@ public class VacationFilterFragment extends AbstractSwFragment implements OnDepa
 			gotoFragment(fragment);
 			break;
 		case R.id.lnr_id_offer_type:
-			SelectTypeFragment selectTypeFragment = new SelectTypeFragment();
-			selectTypeFragment.setData(this, vacationTypes, selectedType);
-			gotoFragment(selectTypeFragment);
+//			SelectTypeFragment selectTypeFragment = new SelectTypeFragment();
+//			selectTypeFragment.setData(this, vacationTypes, selectedType);
+//			gotoFragment(selectTypeFragment);
 			break;
 		default:
 			break;
