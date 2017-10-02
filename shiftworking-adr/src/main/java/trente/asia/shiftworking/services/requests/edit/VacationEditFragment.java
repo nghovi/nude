@@ -164,7 +164,7 @@ public class VacationEditFragment extends AbstractSwFragment implements OnUserAd
 			}else{
 				binding.lnrEndDate.setVisibility(View.VISIBLE);
 			}
-			if(Float.parseFloat(amount) > 0){
+			if(Float.parseFloat(amount) >= 0){
 				updateVacationAmount(response.optString("amountString"));
 			}else{
 				txtStartDate.setText(txtEndDate.getText());
