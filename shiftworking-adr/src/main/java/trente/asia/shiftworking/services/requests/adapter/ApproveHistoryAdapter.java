@@ -20,14 +20,14 @@ import trente.asia.welfare.adr.define.WelfareConst;
  *
  * @author VietNH
  */
-public class HolidayWorkingApproveHistoryAdapter extends ArrayAdapter<ApproveHistory>{
+public class ApproveHistoryAdapter extends ArrayAdapter<ApproveHistory>{
 
 	// private List<ApproveHistory> lstHistory;
 	private Context			mContext;
 	private int				layoutId;
 	private LayoutInflater	mInflater;
 
-	public HolidayWorkingApproveHistoryAdapter(Context context, List<ApproveHistory> lstHistory){
+	public ApproveHistoryAdapter(Context context, List<ApproveHistory> lstHistory){
 		super(context, R.layout.item_approve_history, lstHistory);
 		this.mContext = context;
 		this.layoutId = R.layout.item_approve_history;
@@ -42,19 +42,21 @@ public class HolidayWorkingApproveHistoryAdapter extends ArrayAdapter<ApproveHis
 		viewHolder.txtUsername = (TextView)convertView.findViewById(R.id.txt_item_approve_history_username);
 		viewHolder.txtResult = (TextView)convertView.findViewById(R.id.txt_item_approve_history_status);
 		viewHolder.txtTime = (TextView)convertView.findViewById(R.id.txt_item_approve_history_time);
+		viewHolder.txtComment = (TextView) convertView.findViewById(R.id.txt_comment);
 
 		ApproveHistory history = getItem(position);
 		viewHolder.txtUsername.setText(history.userName);
 		viewHolder.txtTime.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, CCDateUtil.makeDate(history.historyDate)));
 		viewHolder.txtResult.setText(history.historyStatus);
+		viewHolder.txtComment.setText(history.historyComment);
 		return convertView;
 	}
 
 	private class ViewHolder{
 
-		TextView		txtUsername;
-		// TextView txtDate;
-		TextView		txtResult;
-		public TextView	txtTime;
+		TextView	txtUsername;
+		TextView	txtResult;
+		TextView	txtTime;
+		TextView	txtComment;
 	}
 }

@@ -32,7 +32,7 @@ import trente.asia.shiftworking.common.defines.SwConst;
 import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
 import trente.asia.shiftworking.databinding.FragmentHolidayWorkingDetailBinding;
 import trente.asia.shiftworking.services.requests.WorkRequestFragment;
-import trente.asia.shiftworking.services.requests.adapter.HolidayWorkingApproveHistoryAdapter;
+import trente.asia.shiftworking.services.requests.adapter.ApproveHistoryAdapter;
 import trente.asia.shiftworking.services.requests.edit.HolidayWorkingEditFragment;
 import trente.asia.welfare.adr.models.ApproveHistory;
 import trente.asia.shiftworking.services.requests.model.HolidayWorkingModel;
@@ -197,7 +197,7 @@ public class HolidayWorkingDetailFragment extends AbstractSwFragment{
 		if(offer.userId.equals(myself.key)){
 			getView().findViewById(R.id.lnr_fragment_holiday_working_detail_offer_status).setVisibility(View.VISIBLE);
 			ChiaseListViewNoScroll lstApproveHistory = (ChiaseListViewNoScroll)getView().findViewById(R.id.lst_fragment_offer_detail_offer_status);
-			HolidayWorkingApproveHistoryAdapter adapter = new HolidayWorkingApproveHistoryAdapter(activity, offer.listHistories);
+            ApproveHistoryAdapter adapter = new ApproveHistoryAdapter(activity, offer.listHistories);
 			lstApproveHistory.setAdapter(adapter);
 		}else{
 			getView().findViewById(R.id.lnr_fragment_holiday_working_detail_offer_status).setVisibility(View.GONE);

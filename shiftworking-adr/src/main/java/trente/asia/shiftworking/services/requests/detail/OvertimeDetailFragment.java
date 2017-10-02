@@ -32,7 +32,7 @@ import trente.asia.shiftworking.common.defines.SwConst;
 import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
 import trente.asia.shiftworking.databinding.FragmentOvertimeDetailBinding;
 import trente.asia.shiftworking.services.requests.WorkRequestFragment;
-import trente.asia.shiftworking.services.requests.adapter.OvertimeApproveHistoryAdapter;
+import trente.asia.shiftworking.services.requests.adapter.ApproveHistoryAdapter;
 import trente.asia.shiftworking.services.requests.edit.OvertimeEditFragment;
 import trente.asia.shiftworking.services.requests.model.OtRequestModel;
 import trente.asia.welfare.adr.activity.WelfareActivity;
@@ -208,7 +208,7 @@ public class OvertimeDetailFragment extends AbstractSwFragment{
 		if(otRequest.userId.equals(myself.key)){
 			getView().findViewById(R.id.lnr_fragment_overtime_detail_offer_status).setVisibility(View.VISIBLE);
 			ChiaseListViewNoScroll lstApproveHistory = (ChiaseListViewNoScroll)getView().findViewById(R.id.lst_fragment_offer_detail_offer_status);
-			OvertimeApproveHistoryAdapter adapter = new OvertimeApproveHistoryAdapter(activity, otRequest.listHistories);
+			ApproveHistoryAdapter adapter = new ApproveHistoryAdapter(activity, otRequest.listHistories);
 			lstApproveHistory.setAdapter(adapter);
 		}else{
 			getView().findViewById(R.id.lnr_fragment_overtime_detail_offer_status).setVisibility(View.GONE);
