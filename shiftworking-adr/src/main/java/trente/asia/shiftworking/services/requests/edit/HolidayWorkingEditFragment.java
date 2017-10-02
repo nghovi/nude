@@ -50,15 +50,10 @@ public class HolidayWorkingEditFragment extends AbstractSwFragment implements On
 	private ChiaseEditText						txtReason;
 	private String								activeOfferId;
 	private FragmentHolidayWorkingEditBinding	binding;
-	private String								execType;
 	private UserModel							selectedUser;
 
 	public void setActiveOfferId(String activeOfferId){
 		this.activeOfferId = activeOfferId;
-	}
-
-	public void setExecType(String execType){
-		this.execType = execType;
 	}
 
 	@Override
@@ -107,7 +102,7 @@ public class HolidayWorkingEditFragment extends AbstractSwFragment implements On
 		JSONObject jsonObject = new JSONObject();
 		try{
 			jsonObject.put("key", activeOfferId);
-			jsonObject.put("execType", execType);
+			jsonObject.put("execType", SwConst.SW_OFFER_EXEC_TYPE_VIEW);
 		}catch(JSONException e){
 			e.printStackTrace();
 		}

@@ -8,7 +8,7 @@ import trente.asia.welfare.adr.models.ApproveHistory;
  * Created by viet on 11/25/2016.
  */
 
-public class OtRequestModel{
+public class OvertimeRequestModel {
 
 	public String				userId;
 	public String				userName;

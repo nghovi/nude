@@ -39,7 +39,7 @@ import trente.asia.shiftworking.common.interfaces.OnTimePickerListener;
 import trente.asia.shiftworking.common.interfaces.OnUserAdapterListener;
 import trente.asia.shiftworking.databinding.FragmentOvertimeEditBinding;
 import trente.asia.shiftworking.services.requests.list.OvertimeListFragment;
-import trente.asia.shiftworking.services.requests.model.OtRequestModel;
+import trente.asia.shiftworking.services.requests.model.OvertimeRequestModel;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.models.ApiObjectModel;
 import trente.asia.welfare.adr.models.UserModel;
@@ -51,7 +51,7 @@ import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 
 public class OvertimeEditFragment extends AbstractSwFragment implements OnTimePickerListener,OnUserAdapterListener{
 
-	private OtRequestModel				otRequest;
+	private OvertimeRequestModel otRequest;
 	private ChiaseListDialog			spnType;
 	private DatePickerDialog			datePickerDialogStart;
 	private SwTimePicker				timePickerDialog;
@@ -77,9 +77,6 @@ public class OvertimeEditFragment extends AbstractSwFragment implements OnTimePi
 		this.activeOfferId = activeOfferId;
 	}
 
-	public void setExecType(String execType){
-		this.execType = execType;
-	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -134,7 +131,7 @@ public class OvertimeEditFragment extends AbstractSwFragment implements OnTimePi
 		JSONObject jsonObject = new JSONObject();
 		try{
 			jsonObject.put("key", activeOfferId);
-			jsonObject.put("execType", execType);
+			jsonObject.put("execType", SwConst.SW_OFFER_EXEC_TYPE_VIEW);
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
@@ -145,7 +142,7 @@ public class OvertimeEditFragment extends AbstractSwFragment implements OnTimePi
 	@Override
 	protected void successLoad(JSONObject response, String url){
 		if(SwConst.API_OVERTIME_DETAIL.equals(url)){
-			otRequest = CCJsonUtil.convertToModel(response.optString("overtime"), OtRequestModel.class);
+			otRequest = CCJsonUtil.convertToModel(response.optString("overtime"), OvertimeRequestModel.class);
 			typeList = CCJsonUtil.convertToModelList(response.optString("overtimeTypeList"), ApiObjectModel.class);
 			typeListMap = WelfareFormatUtil.convertList2Map(typeList);
 			buildDatePickerDialogs(otRequest);
@@ -163,7 +160,7 @@ public class OvertimeEditFragment extends AbstractSwFragment implements OnTimePi
 		}
 	}
 
-	private void loadWorkOffer(OtRequestModel otRequest){
+	private void loadWorkOffer(OvertimeRequestModel otRequest){
 		LinearLayout lnrContent = (LinearLayout)getView().findViewById(R.id.lnr_id_content);
 		try{
 			Gson gson = new Gson();
@@ -198,7 +195,7 @@ public class OvertimeEditFragment extends AbstractSwFragment implements OnTimePi
 		});
 	}
 
-	private void buildDatePickerDialogs(OtRequestModel otRequest){
+	private void buildDatePickerDialogs(OvertimeRequestModel otRequest){
 		Calendar calendar = Calendar.getInstance();
 		Date starDate = new Date();
 

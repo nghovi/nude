@@ -28,7 +28,7 @@ import trente.asia.shiftworking.databinding.FragmentOvertimeListBinding;
 import trente.asia.shiftworking.services.requests.adapter.OvertimeAdapter;
 import trente.asia.shiftworking.services.requests.detail.OvertimeDetailFragment;
 import trente.asia.shiftworking.services.requests.filter.OvertimeFilterFragment;
-import trente.asia.shiftworking.services.requests.model.OtRequestModel;
+import trente.asia.shiftworking.services.requests.model.OvertimeRequestModel;
 import trente.asia.shiftworking.services.shiftworking.view.CommonMonthView;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.define.WfUrlConst;
@@ -40,8 +40,8 @@ import trente.asia.welfare.adr.utils.WelfareUtil;
 public class OvertimeListFragment extends AbstractSwFragment implements OnFilterListener,OnOvertimeAdapterListener{
 
 	private OvertimeAdapter				adapter;
-	private List<OtRequestModel>		otRequests;
-	private List<OtRequestModel>		otherOtRequests;
+	private List<OvertimeRequestModel>		otRequests;
+	private List<OvertimeRequestModel>		otherOtRequests;
 	private List<ApiObjectModel>		overtimeTypes;
 	private List<DeptModel>				depts;
 	private ListView					mLstOffer;
@@ -96,7 +96,7 @@ public class OvertimeListFragment extends AbstractSwFragment implements OnFilter
 		binding.lnrIdFilter.setOnClickListener(this);
 	}
 
-	private void gotoWorkOfferDetail(OtRequestModel offer, String execType){
+	private void gotoWorkOfferDetail(OvertimeRequestModel offer, String execType){
 		OvertimeDetailFragment fragment = new OvertimeDetailFragment();
 		fragment.setActiveOfferId(offer.key);
 		fragment.setExecType(execType);
@@ -135,8 +135,8 @@ public class OvertimeListFragment extends AbstractSwFragment implements OnFilter
 	@Override
 	protected void successLoad(JSONObject response, String url){
 		if(SwConst.API_OVERTIME_LIST.equals(url)){
-			otRequests = CCJsonUtil.convertToModelList(response.optString("myOvertimeOffers"), OtRequestModel.class);
-			otherOtRequests = CCJsonUtil.convertToModelList(response.optString("otherOvertimeOffers"), OtRequestModel.class);
+			otRequests = CCJsonUtil.convertToModelList(response.optString("myOvertimeOffers"), OvertimeRequestModel.class);
+			otherOtRequests = CCJsonUtil.convertToModelList(response.optString("otherOvertimeOffers"), OvertimeRequestModel.class);
 
 			overtimeTypes = CCJsonUtil.convertToModelList(response.optString("overtimeTypeList"), ApiObjectModel.class);
 			ApiObjectModel allType = new ApiObjectModel(CCConst.ALL, getString(R.string.chiase_common_all));
@@ -229,7 +229,7 @@ public class OvertimeListFragment extends AbstractSwFragment implements OnFilter
 	}
 
 	@Override
-	public void onOvertimeAdapterClick(OtRequestModel overtime, String type){
+	public void onOvertimeAdapterClick(OvertimeRequestModel overtime, String type){
 		gotoWorkOfferDetail(overtime, type);
 	}
 }

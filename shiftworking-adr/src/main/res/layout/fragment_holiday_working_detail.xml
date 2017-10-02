@@ -37,7 +37,7 @@
                         android:text="@string/fragment_offer_edit_offer_user" />
 
                     <trente.asia.android.view.ChiaseTextView
-                        android:id="@+id/txt_fragment_holiday_working_detail_offer_user"
+                        android:id="@+id/txt_offer_user"
                         style="@style/wl_common_edit_text2"
                         android:layout_marginStart="@dimen/margin_10dp"
                         custom:mName="offerUser" />
@@ -53,7 +53,7 @@
                         android:text="@string/fragment_holiday_working_detail_expected_date" />
 
                     <trente.asia.android.view.ChiaseTextView
-                        android:id="@+id/txt_fragment_holiday_working_detail_start_date"
+                        android:id="@+id/txt_start_date"
                         style="@style/wl_common_edit_text2"
                         android:layout_marginStart="@dimen/margin_10dp"
                         custom:mName="startDateString" />
@@ -79,7 +79,7 @@
                     <LinearLayout style="@style/wf_common_item_linear2">
 
                         <trente.asia.android.view.ChiaseTextView
-                            android:id="@+id/txt_fragment_holiday_working_detail_reason"
+                            android:id="@+id/txt_reason"
                             style="@style/wl_common_text"
                             custom:mName="note"
                             android:minLines="5"/>
@@ -89,7 +89,7 @@
                 <View style="@style/cs_common_divider" />
 
                 <LinearLayout
-                    android:id="@+id/lnr_fragment_holiday_working_detail_offer_status"
+                    android:id="@+id/lnr_approve_history"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_10dp"
@@ -103,7 +103,7 @@
                         android:text="@string/fragment_offer_detail_offer_status" />
 
                     <trente.asia.android.view.ChiaseListViewNoScroll
-                        android:id="@+id/lst_fragment_offer_detail_offer_status"
+                        android:id="@+id/lst_offer_status"
                         style="@style/cs_common_match_wrap"
                         android:layout_marginTop="@dimen/margin_10dp"
                         android:divider="@color/cs_common_divider"
@@ -113,7 +113,7 @@
                 <View style="@style/cs_common_divider" />
 
                 <Button
-                    android:id="@+id/btn_fragment_offer_detail_delete"
+                    android:id="@+id/btn_delete"
                     style="@style/cs_common_button_delete"
                     android:layout_marginLeft="@dimen/margin_26dp"
                     android:layout_marginRight="@dimen/margin_26dp"
@@ -142,7 +142,7 @@
                         android:orientation="vertical">
 
                         <EditText
-                            android:id="@+id/edt_fragment_offer_detail_comment"
+                            android:id="@+id/edt_comment"
                             style="@style/wl_common_edit_text_multi_line2"
                             android:hint="@string/fragment_offer_detail_comment_hint" />
 
@@ -159,7 +159,7 @@
                         android:paddingRight="@dimen/margin_16dp">
 
                         <Button
-                            android:id="@+id/btn_fragment_offer_detail_reject"
+                            android:id="@+id/btn_reject"
                             style="@style/wl_common_button_small"
                             android:layout_width="@dimen/margin_0dp"
                             android:layout_marginEnd="@dimen/margin_10dp"
@@ -167,7 +167,7 @@
                             android:text="@string/sw_work_offer_action_reject" />
 
                         <Button
-                            android:id="@+id/btn_fragment_offer_detail_approve"
+                            android:id="@+id/btn_approve"
                             style="@style/wl_common_button_small"
                             android:layout_width="@dimen/margin_0dp"
                             android:layout_marginStart="@dimen/margin_10dp"
@@ -177,9 +177,6 @@
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>
-
-        <!--<include layout="@layout/view_common_footer"/>-->
-
 
     </LinearLayout>
 </layout>

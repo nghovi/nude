@@ -1,6 +1,6 @@
 package trente.asia.shiftworking.common.interfaces;
 
-import trente.asia.shiftworking.services.requests.model.OtRequestModel;
+import trente.asia.shiftworking.services.requests.model.OvertimeRequestModel;
 
 /**
  * Created by tien on 9/22/2017.
@@ -8,5 +8,5 @@ import trente.asia.shiftworking.services.requests.model.OtRequestModel;
 
 public interface OnOvertimeAdapterListener{
 
-	void onOvertimeAdapterClick(OtRequestModel otRequest, String type);
+	void onOvertimeAdapterClick(OvertimeRequestModel otRequest, String type);
 }

@@ -37,7 +37,7 @@
                         android:text="@string/fragment_offer_edit_offer_user" />
 
                     <trente.asia.android.view.ChiaseTextView
-                        android:id="@+id/txt_fragment_offer_detail_offer_user"
+                        android:id="@+id/txt_offer_user"
                         style="@style/wl_common_edit_text2"
                         android:layout_marginStart="@dimen/margin_10dp"
                         custom:mName="offerUser" />
@@ -53,7 +53,7 @@
                         android:text="@string/fragment_offer_edit_offer_type" />
 
                     <trente.asia.android.view.ChiaseTextView
-                        android:id="@+id/txt_fragment_offer_detail_offer_type"
+                        android:id="@+id/txt_offer_type"
                         style="@style/wl_common_edit_text2"
                         android:layout_marginStart="@dimen/margin_10dp"
                         custom:mName="offerType" />
@@ -69,7 +69,7 @@
                         android:text="@string/fragment_offer_detail_start_date" />
 
                     <trente.asia.android.view.ChiaseTextView
-                        android:id="@+id/txt_fragment_offer_detail_start_date"
+                        android:id="@+id/txt_start_date"
                         style="@style/wl_common_edit_text2"
                         android:layout_marginStart="@dimen/margin_10dp"
                         custom:mName="startDateString" />
@@ -151,7 +151,7 @@
                     <LinearLayout style="@style/wf_common_item_linear2">
 
                         <trente.asia.android.view.ChiaseTextView
-                            android:id="@+id/txt_fragment_offer_detail_note"
+                            android:id="@+id/txt_reason"
                             style="@style/wl_common_text"
                             custom:mName="note" />
                     </LinearLayout>
@@ -160,7 +160,7 @@
                 <View style="@style/cs_common_divider" />
 
                 <LinearLayout
-                    android:id="@+id/lnr_fragment_offer_detail_approve_history"
+                    android:id="@+id/lnr_approve_history"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_10dp"
@@ -174,7 +174,7 @@
                         android:text="@string/fragment_offer_detail_offer_status" />
 
                     <trente.asia.android.view.ChiaseListViewNoScroll
-                        android:id="@+id/lst_fragment_offer_detail_offer_status"
+                        android:id="@+id/lst_offer_status"
                         style="@style/cs_common_match_wrap"
                         android:layout_marginTop="@dimen/margin_10dp"
                         android:divider="@color/cs_common_divider"
@@ -197,11 +197,10 @@
                         style="@style/wf_common_item_linear2"
                         android:orientation="vertical">
                         <EditText
-                            android:id="@+id/edt_fragment_offer_detail_comment"
+                            android:id="@+id/edt_comment"
                             style="@style/wl_common_edit_text_multi_line2"
                             android:layout_marginTop="@dimen/margin_10dp"
                             android:hint="@string/fragment_offer_detail_comment_hint" />
-
                     </LinearLayout>
 
                     <View style="@style/cs_common_divider" />
@@ -215,7 +214,7 @@
                         android:paddingRight="@dimen/margin_16dp">
 
                         <Button
-                            android:id="@+id/btn_fragment_offer_detail_reject"
+                            android:id="@+id/btn_reject"
                             style="@style/wl_common_button_small"
                             android:layout_width="@dimen/margin_0dp"
                             android:layout_marginEnd="@dimen/margin_10dp"
@@ -223,7 +222,7 @@
                             android:text="@string/sw_work_offer_action_reject" />
 
                         <Button
-                            android:id="@+id/btn_fragment_offer_detail_approve"
+                            android:id="@+id/btn_approve"
                             style="@style/wl_common_button_small"
                             android:layout_width="@dimen/margin_0dp"
                             android:layout_marginStart="@dimen/margin_10dp"

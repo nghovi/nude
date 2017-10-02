@@ -13,7 +13,7 @@ import android.widget.TextView;
 import trente.asia.shiftworking.BuildConfig;
 import trente.asia.shiftworking.R;
 import trente.asia.shiftworking.common.interfaces.OnOvertimeAdapterListener;
-import trente.asia.shiftworking.services.requests.model.OtRequestModel;
+import trente.asia.shiftworking.services.requests.model.OvertimeRequestModel;
 import trente.asia.welfare.adr.utils.WfPicassoHelper;
 
 /**
@@ -21,9 +21,9 @@ import trente.asia.welfare.adr.utils.WfPicassoHelper;
  *
  * @author TrungND
  */
-public class OvertimeAdapter extends ArrayAdapter<OtRequestModel>{
+public class OvertimeAdapter extends ArrayAdapter<OvertimeRequestModel>{
 
-	private List<OtRequestModel>		otRequestModels;
+	private List<OvertimeRequestModel>		otRequestModels;
 	private Context						mContext;
 	private int							layoutId;
 	private String						type;
@@ -37,7 +37,7 @@ public class OvertimeAdapter extends ArrayAdapter<OtRequestModel>{
 		this.callback = callback;
 	}
 
-	public OvertimeAdapter(Context context, List<OtRequestModel> otRequestModels){
+	public OvertimeAdapter(Context context, List<OvertimeRequestModel> otRequestModels){
 		super(context, R.layout.item_offer, otRequestModels);
 		this.mContext = context;
 		this.layoutId = R.layout.item_offer;
@@ -60,7 +60,7 @@ public class OvertimeAdapter extends ArrayAdapter<OtRequestModel>{
 		}else{
 			viewHolder = (ViewHolder)convertView.getTag();
 		}
-		final OtRequestModel otRequest = getItem(position);
+		final OvertimeRequestModel otRequest = getItem(position);
 		WfPicassoHelper.loadImageWithDefaultIcon(mContext, BuildConfig.HOST, viewHolder.imgAvatar, otRequest.userAvatarPath, R.drawable.wf_profile);
 		viewHolder.txtUsername.setText(otRequest.userName);
 		viewHolder.txtDate.setText(otRequest.startDateString);
