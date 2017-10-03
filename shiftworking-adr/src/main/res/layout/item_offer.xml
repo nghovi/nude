@@ -53,8 +53,7 @@
                 android:id="@+id/txt_item_offer_status"
                 style="@style/wl_common_text"
                 android:layout_width="wrap_content"
-                android:layout_marginLeft="@dimen/margin_10dp"
-                android:textStyle="italic"/>
+                android:layout_marginLeft="@dimen/margin_10dp"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
