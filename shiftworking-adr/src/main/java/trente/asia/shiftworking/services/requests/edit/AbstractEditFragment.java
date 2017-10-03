@@ -30,6 +30,7 @@ import trente.asia.welfare.adr.models.UserModel;
  */
 
 public abstract class AbstractEditFragment extends AbstractSwFragment implements OnUserAdapterListener{
+
 	private DatePickerDialog	datePickerDialogStart;
 
 	private ChiaseTextView		txtStartDate;
@@ -52,12 +53,9 @@ public abstract class AbstractEditFragment extends AbstractSwFragment implements
 	@Override
 	protected void initData(){
 		txtUserName = ((TextView)getView().findViewById(R.id.txt_offer_user));
-		if(CCStringUtil.isEmpty(activeOfferId)){
-			selectedUser = myself;
-			txtUserName.setText(selectedUser.userName);
-		}else{
-			loadOfferDetail();
-		}
+		selectedUser = myself;
+		txtUserName.setText(selectedUser.userName);
+		loadOfferDetail();
 	}
 
 	@Override
@@ -65,13 +63,13 @@ public abstract class AbstractEditFragment extends AbstractSwFragment implements
 		super.initView();
 		super.initHeader(R.drawable.sw_back_white, myself.userName, R.drawable.sw_action_save);
 		getView().findViewById(R.id.img_id_header_right_icon).setOnClickListener(this);
-		txtStartDate = (ChiaseTextView) getView().findViewById(R.id.txt_start_date);
+		txtStartDate = (ChiaseTextView)getView().findViewById(R.id.txt_start_date);
 		txtStartDate.setText(CCFormatUtil.formatDate(new Date()));
 		buildDatePickerDialogs();
 		setOnClickListener();
 	}
 
-	protected void setOnClickListener() {
+	protected void setOnClickListener(){
 		getView().findViewById(R.id.lnr_start_date).setOnClickListener(this);
 		if(Boolean.parseBoolean(myself.adminFlag) && CCStringUtil.isEmpty(activeOfferId)){
 			getView().findViewById(R.id.lnr_user).setOnClickListener(this);
@@ -128,7 +126,7 @@ public abstract class AbstractEditFragment extends AbstractSwFragment implements
 
 	protected abstract void onClickBtnDone();
 
-	protected void buildDatePickerDialogs() {
+	protected void buildDatePickerDialogs(){
 		Calendar calendar = Calendar.getInstance();
 		Date starDate = CCDateUtil.makeDate(txtStartDate.getText().toString());
 		calendar.setTime(starDate);
@@ -142,7 +140,7 @@ public abstract class AbstractEditFragment extends AbstractSwFragment implements
 		}, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
 	}
 
-	protected void setStartDate(String startDate) {
+	protected void setStartDate(String startDate){
 		txtStartDate.setText(startDate);
 	}
 

@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import trente.asia.shiftworking.BuildConfig;
 import trente.asia.shiftworking.R;
-import trente.asia.shiftworking.common.interfaces.OnVacationAdapterListener;
+import trente.asia.shiftworking.common.interfaces.OnRequestAdapterListener;
 import trente.asia.welfare.adr.models.VacationRequestModel;
 import trente.asia.welfare.adr.utils.WfPicassoHelper;
 
@@ -21,23 +21,23 @@ import trente.asia.welfare.adr.utils.WfPicassoHelper;
  *
  * @author TrungND
  */
-public class VacationAdapter extends ArrayAdapter<VacationRequestModel>{
+public class RequestAdapter extends ArrayAdapter<VacationRequestModel>{
 
 	private List<VacationRequestModel>	lstHistory;
 	private Context						mContext;
 	private int							layoutId;
-	private OnVacationAdapterListener	callback;
+	private OnRequestAdapterListener callback;
 	private String						type;
 
 	public void setType(String type){
 		this.type = type;
 	}
 
-	public void setCallback(OnVacationAdapterListener callback){
+	public void setCallback(OnRequestAdapterListener callback){
 		this.callback = callback;
 	}
 
-	public VacationAdapter(Context context, List<VacationRequestModel> lstHistory){
+	public RequestAdapter(Context context, List<VacationRequestModel> lstHistory){
 		super(context, R.layout.item_offer, lstHistory);
 		this.mContext = context;
 		this.layoutId = R.layout.item_offer;
@@ -72,7 +72,7 @@ public class VacationAdapter extends ArrayAdapter<VacationRequestModel>{
 			@Override
 			public void onClick(View view){
 				if(callback != null){
-					callback.onVationAdapterClick(vactionRequest, type);
+					callback.onRequestAdapterClick(vactionRequest, type);
 				}
 			}
 		});

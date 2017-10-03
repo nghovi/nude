@@ -39,7 +39,7 @@ public class HolidayWorkingDetailFragment extends AbstractDetailFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 		if(mRootView == null){
-			binding = DataBindingUtil.inflate(inflater, R.layout.fragwment_holiday_working_detail, container, false);
+			binding = DataBindingUtil.inflate(inflater, R.layout.fragment_holiday_working_detail, container, false);
 			mRootView = binding.getRoot();
 		}
 		return mRootView;
@@ -88,7 +88,7 @@ public class HolidayWorkingDetailFragment extends AbstractDetailFragment {
 	private void setWorkOffer(HolidayWorkingModel offerModel){
 		binding.txtOfferUser.setText(offerModel.userName);
 		binding.txtStartDate.setText(offerModel.startDateString);
-		binding.edtComment.setText(offerModel.note);
+		binding.txtReason.setText(offerModel.note);
 	}
 
 	@Override

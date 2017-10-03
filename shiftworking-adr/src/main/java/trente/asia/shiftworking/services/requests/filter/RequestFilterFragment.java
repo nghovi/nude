@@ -21,19 +21,20 @@ import trente.asia.welfare.adr.models.ApiObjectModel;
 import trente.asia.welfare.adr.models.DeptModel;
 import trente.asia.welfare.adr.models.UserModel;
 
-public class VacationFilterFragment extends AbstractSwFragment implements OnDepartmentAdapterListener, OnUserAdapterListener, OnTypeAdapterListener{
+public class RequestFilterFragment extends AbstractSwFragment implements OnDepartmentAdapterListener,OnUserAdapterListener,OnTypeAdapterListener{
 
 	private FragmentOfferFilterBinding	binding;
 
 	private OnFilterListener			callback;
-	private List<ApiObjectModel>		vacationTypes;
+	private List<ApiObjectModel>		requestTypes;
 	private List<DeptModel>				depts;
 
 	private DeptModel					selectedDept;
 	private UserModel					selectedUser;
 	private ApiObjectModel				selectedType;
+	private boolean						enableSelectType;
 
-	public void setSelected(DeptModel dept, UserModel user, ApiObjectModel type) {
+	public void setSelected(DeptModel dept, UserModel user, ApiObjectModel type){
 		this.selectedDept = dept;
 		this.selectedUser = user;
 		this.selectedType = type;
@@ -43,8 +44,8 @@ public class VacationFilterFragment extends AbstractSwFragment implements OnDepa
 		this.depts = depts;
 	}
 
-	public void setVacationTypes(List<ApiObjectModel> vacationTypes){
-		this.vacationTypes = vacationTypes;
+	public void setRequestTypes(List<ApiObjectModel> requestTypes){
+		this.requestTypes = requestTypes;
 	}
 
 	public void setCallback(OnFilterListener callback){
@@ -77,22 +78,26 @@ public class VacationFilterFragment extends AbstractSwFragment implements OnDepa
 		updateSelectedValues();
 	}
 
-	private void updateSelectedValues() {
-		if (selectedDept == null) {
+	private void updateSelectedValues(){
+		if(selectedDept == null){
 			selectedDept = depts.get(0);
 		}
 
-		if (selectedUser == null) {
+		if(selectedUser == null){
 			selectedUser = selectedDept.members.get(0);
 		}
 
-		if (selectedType == null) {
-			selectedType = vacationTypes.get(0);
+		if(selectedType == null && requestTypes != null){
+			selectedType = requestTypes.get(0);
+			binding.txtOfferType.setText(selectedType.value);
+		}
+
+		if(requestTypes == null){
+			binding.lnrIdOfferType.setVisibility(View.GONE);
 		}
 
 		binding.txtOfferDept.setText(selectedDept.deptName);
 		binding.txtOfferUser.setText(selectedUser.userName);
-		binding.txtOfferType.setText(selectedType.value);
 	}
 
 	@Override
@@ -127,9 +132,11 @@ public class VacationFilterFragment extends AbstractSwFragment implements OnDepa
 			gotoFragment(fragment);
 			break;
 		case R.id.lnr_id_offer_type:
-//			SelectTypeFragment selectTypeFragment = new SelectTypeFragment();
-//			selectTypeFragment.setData(this, vacationTypes, selectedType);
-//			gotoFragment(selectTypeFragment);
+			if(enableSelectType){
+				SelectTypeFragment selectTypeFragment = new SelectTypeFragment();
+				selectTypeFragment.setData(this, requestTypes, selectedType);
+				gotoFragment(selectTypeFragment);
+			}
 			break;
 		default:
 			break;
@@ -137,28 +144,32 @@ public class VacationFilterFragment extends AbstractSwFragment implements OnDepa
 	}
 
 	@Override
-	public void onSelectDepartment(DeptModel deptModel) {
+	public void onSelectDepartment(DeptModel deptModel){
 		selectedDept = deptModel;
 		binding.txtOfferDept.setText(selectedDept.deptName);
-		if (!selectedDept.members.contains(selectedUser)) {
+		if(!selectedDept.members.contains(selectedUser)){
 			selectedUser = selectedDept.members.get(0);
 			binding.txtOfferUser.setText(selectedUser.userName);
 		}
 	}
 
 	@Override
-	public void onSelectUser(UserModel user) {
+	public void onSelectUser(UserModel user){
 		selectedUser = user;
 		binding.txtOfferUser.setText(selectedUser.userName);
 	}
 
 	@Override
-	public void onSelectType(ApiObjectModel type) {
+	public void onSelectType(ApiObjectModel type){
 		selectedType = type;
 		binding.txtOfferType.setText(type.value);
 	}
 
-	private void log(String msg) {
+	private void log(String msg){
 		Log.e("VacationFilter", msg);
+	}
+
+	public void setEnableSelectType(boolean enableSelectType) {
+		this.enableSelectType = enableSelectType;
 	}
 }

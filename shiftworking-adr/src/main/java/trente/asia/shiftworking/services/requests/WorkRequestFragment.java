@@ -77,11 +77,11 @@ public class WorkRequestFragment extends AbstractSwFragment implements ViewPager
 			return;
 		}
 		if(binding.viewPager.getCurrentItem() == 0){
-			vacationListFragment.requestOfferList();
+			vacationListFragment.loadRequestList();
 		}else if(binding.viewPager.getCurrentItem() == 1){
-			overtimeListFragment.requestOfferList();
+			overtimeListFragment.loadRequestList();
 		}else if(binding.viewPager.getCurrentItem() == 2){
-			holidayWorkingListFragment.requestOfferList();
+			holidayWorkingListFragment.loadRequestList();
 		}
 	}
 

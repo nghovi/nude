@@ -17,8 +17,7 @@
                 android:focusableInTouchMode="true"
                 android:orientation="vertical"
                 android:paddingBottom="@dimen/margin_16dp"
-                android:paddingTop="@dimen/margin_16dp"
-                android:visibility="invisible">
+                android:paddingTop="@dimen/margin_16dp">
 
                 <TextView
                     style="@style/wl_common_text"

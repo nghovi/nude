@@ -131,7 +131,9 @@ public class VacationEditFragment extends AbstractEditFragment{
 			}
 
 		}else if(SwConst.API_VACATION_DETAIL.equals(url)){
-			updateLayout(response);
+			if (!CCStringUtil.isEmpty(activeOfferId)) {
+				updateLayout(response);
+			}
 		}else{
 			super.successLoad(response, url);
 		}
@@ -139,9 +141,6 @@ public class VacationEditFragment extends AbstractEditFragment{
 
 	private void updateLayout(JSONObject response){
 		VacationRequestModel vacationRequest = CCJsonUtil.convertToModel(response.optString("vacation"), VacationRequestModel.class);
-		if(vacationRequest == null){
-			return;
-		}
 		selectedUser = new UserModel(vacationRequest.userId, vacationRequest.userName);
 		binding.txtOfferUser.setText(selectedUser.userName);
 		binding.txtOfferType.setText(vacationRequest.vacationName);
