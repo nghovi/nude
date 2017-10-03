@@ -24,7 +24,7 @@ import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.dialog.WfDialog;
 import trente.asia.welfare.adr.models.ApproveHistory;
 
-public abstract class WRDetailFragment extends AbstractSwFragment{
+public abstract class AbstractDetailFragment extends AbstractSwFragment{
 
 	protected ImageView	imgEdit;
 	protected String	offerPermission;

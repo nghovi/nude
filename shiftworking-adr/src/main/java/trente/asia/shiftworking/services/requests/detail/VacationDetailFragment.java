@@ -19,7 +19,7 @@ import trente.asia.shiftworking.services.requests.edit.VacationEditFragment;
 import trente.asia.welfare.adr.models.ApproveHistory;
 import trente.asia.welfare.adr.models.VacationRequestModel;
 
-public class VacationDetailFragment extends WRDetailFragment{
+public class VacationDetailFragment extends AbstractDetailFragment {
 
 	private VacationRequestModel			vacationRequest;
 	private FragmentVacationDetailBinding	binding;

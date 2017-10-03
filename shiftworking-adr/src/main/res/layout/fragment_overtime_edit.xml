@@ -31,7 +31,8 @@
 
                 <LinearLayout
                     android:id="@+id/lnr_user"
-                    style="@style/wf_common_item_linear2">
+                    style="@style/wf_common_item_linear2"
+                    android:background="@drawable/state_common_selectable_row">
 
                     <TextView
                         style="@style/wl_common_text"
@@ -39,25 +40,25 @@
                         android:text="@string/fragment_offer_edit_offer_user" />
 
                     <trente.asia.android.view.ChiaseTextView
-                        android:id="@+id/txt_fragment_overtime_detail_offer_user"
+                        android:id="@+id/txt_offer_user"
                         style="@style/wl_common_edit_text2"
                         android:layout_marginStart="@dimen/margin_10dp"
                         android:layout_weight="1"
                         custom:mName="offerUser" />
 
                     <ImageView
-                        android:id="@+id/arrow_icon"
+                        android:id="@+id/user_arrow"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/wf_row_arrow_right"
-                        android:visibility="gone" />
+                        android:src="@drawable/wf_row_arrow_right"/>
                 </LinearLayout>
 
                 <View style="@style/cs_common_divider" />
 
                 <LinearLayout
                     android:id="@+id/lnr_id_type"
-                    style="@style/wf_common_item_linear2">
+                    style="@style/wf_common_item_linear2"
+                    android:background="@drawable/state_common_selectable_row">
 
                     <TextView
                         style="@style/wl_common_text"
@@ -65,7 +66,7 @@
                         android:text="@string/fragment_offer_edit_offer_type" />
 
                     <trente.asia.android.view.ChiaseTextView
-                        android:id="@+id/txt_fragment_overtime_detail_offer_type"
+                        android:id="@+id/txt_offer_type"
                         style="@style/wl_common_edit_text2"
                         android:layout_marginStart="@dimen/margin_10dp"
                         custom:mName="overtimeType" />
@@ -75,7 +76,8 @@
 
                 <LinearLayout
                     android:id="@+id/lnr_start_date"
-                    style="@style/wf_common_item_linear2">
+                    style="@style/wf_common_item_linear2"
+                    android:background="@drawable/state_common_selectable_row">
 
                     <TextView
                         style="@style/wl_common_text"
@@ -83,7 +85,7 @@
                         android:text="@string/fragment_overtime_detail_expected_date" />
 
                     <trente.asia.android.view.ChiaseTextView
-                        android:id="@+id/txt_fragment_overtime_detail_start_date"
+                        android:id="@+id/txt_start_date"
                         style="@style/wl_common_edit_text2"
                         android:layout_marginStart="@dimen/margin_10dp"
                         custom:mName="startDateString" />
@@ -93,7 +95,8 @@
 
                 <LinearLayout
                     android:id="@+id/lnr_start_time"
-                    style="@style/wf_common_item_linear2">
+                    style="@style/wf_common_item_linear2"
+                    android:background="@drawable/state_common_selectable_row">
 
                     <TextView
                         style="@style/wl_common_text"
@@ -101,7 +104,7 @@
                         android:text="@string/fragment_overtime_detail_start_time" />
 
                     <trente.asia.android.view.ChiaseTextView
-                        android:id="@+id/txt_fragment_overtime_detail_start_time"
+                        android:id="@+id/txt_start_time"
                         style="@style/wl_common_edit_text2"
                         android:layout_marginStart="@dimen/margin_10dp"
                         custom:mName="startTimeString" />
@@ -111,7 +114,8 @@
 
                 <LinearLayout
                     android:id="@+id/lnr_end_time"
-                    style="@style/wf_common_item_linear2">
+                    style="@style/wf_common_item_linear2"
+                    android:background="@drawable/state_common_selectable_row">
 
                     <TextView
                         style="@style/wl_common_text"
@@ -119,7 +123,7 @@
                         android:text="@string/fragment_overtime_detail_end_time" />
 
                     <trente.asia.android.view.ChiaseTextView
-                        android:id="@+id/txt_fragment_overtime_detail_end_time"
+                        android:id="@+id/txt_end_time"
                         style="@style/wl_common_edit_text2"
                         android:layout_marginStart="@dimen/margin_10dp"
                         custom:mName="endTimeString" />
@@ -144,7 +148,7 @@
                     <LinearLayout style="@style/wf_common_item_linear2">
 
                         <trente.asia.android.view.ChiaseEditText
-                            android:id="@+id/txt_fragment_overtime_detail_reason"
+                            android:id="@+id/txt_reason"
                             style="@style/wl_common_text"
                             android:background="@android:color/transparent"
                             android:gravity="top|left"
@@ -155,9 +159,5 @@
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>
-
-        <!--<include layout="@layout/view_common_footer"/>-->
-
-
     </LinearLayout>
 </layout>

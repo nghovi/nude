@@ -40,29 +40,13 @@ import trente.asia.welfare.adr.utils.WelfareFormatUtil;
  * Created by viet on 11/25/2016.
  */
 
-public class VacationEditFragment extends AbstractSwFragment implements OnUserAdapterListener{
+public class VacationEditFragment extends AbstractEditFragment{
 
-	private ChiaseListDialog			spnType;
-	private DatePickerDialog			datePickerDialogStart;
-	private DatePickerDialog			datePickerDialogEnd;
-	private ChiaseTextView				txtAmount;
-
-	private ChiaseTextView				txtStartDate;
-	private ChiaseTextView				txtEndDate;
-
-	private ChiaseTextView				txtOfferType;
-	private String						activeOfferId;
 	private FragmentVacationEditBinding	binding;
-
-	private ChiaseTextView				txtUserName;
-	private UserModel					selectedUser;
-
-	private List<ApiObjectModel>		vacationTypes;
 	private String						amount;
-
-	public void setActiveOfferId(String activeOfferId){
-		this.activeOfferId = activeOfferId;
-	}
+	private List<ApiObjectModel>		vacationTypes;
+	private DatePickerDialog			datePickerDialogEnd;
+	private ChiaseListDialog			spnType;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -74,59 +58,34 @@ public class VacationEditFragment extends AbstractSwFragment implements OnUserAd
 	}
 
 	@Override
-	public int getFooterItemId(){
-		return 0;
+	protected void initView(){
+		binding.txtEndDate.setText(CCFormatUtil.formatDate(new Date()));
+		super.initView();
 	}
 
 	@Override
-	protected void initView(){
-		super.initView();
-		super.initHeader(R.drawable.sw_back_white, myself.userName, R.drawable.sw_action_save);
-		ImageView imgRightIcon = (ImageView)getView().findViewById(R.id.img_id_header_right_icon);
-		imgRightIcon.setOnClickListener(this);
-
-		txtUserName = (ChiaseTextView)getView().findViewById(R.id.txt_fragment_offer_detail_offer_user);
-		txtOfferType = (ChiaseTextView)getView().findViewById(R.id.txt_fragment_offer_edit_offer_type);
-		txtStartDate = (ChiaseTextView)getView().findViewById(R.id.txt_fragment_offer_edit_start_date);
-		txtEndDate = (ChiaseTextView)getView().findViewById(R.id.txt_fragment_offer_edit_end_date);
-		txtAmount = (ChiaseTextView)getView().findViewById(R.id.txt_amount);
-
-		txtStartDate.setText(CCFormatUtil.formatDate(new Date()));
-		txtEndDate.setText(CCFormatUtil.formatDate(new Date()));
-		setOnClickListener();
-	}
-
-	private void setOnClickListener(){
-		if(Boolean.parseBoolean(myself.adminFlag) && CCStringUtil.isEmpty(activeOfferId)){
-			binding.lnrUser.setOnClickListener(this);
-		}else{
-			binding.userArrow.setVisibility(View.GONE);
-		}
-		binding.lnrStartDate.setOnClickListener(this);
+	protected void setOnClickListener(){
+		super.setOnClickListener();
 		binding.lnrEndDate.setOnClickListener(this);
 		binding.lnrIdType.setOnClickListener(this);
 	}
 
 	@Override
-	protected void initData(){
-		if(CCStringUtil.isEmpty(activeOfferId)){
-			selectedUser = myself;
-			txtUserName.setText(selectedUser.userName);
-			loadTypeList();
-		}else{
-			loadVacationDetail();
-		}
+	protected String getDetailApi(){
+		return SwConst.API_VACATION_DETAIL;
 	}
 
-	private void loadVacationDetail(){
-		JSONObject jsonObject = new JSONObject();
-		try{
-			jsonObject.put("key", activeOfferId);
-			jsonObject.put("execType", SwConst.SW_OFFER_EXEC_TYPE_VIEW);
-		}catch(JSONException e){
-			e.printStackTrace();
+	@Override
+	protected String getUpdateApi(){
+		return SwConst.API_VACATION_UPDATE;
+	}
+
+	@Override
+	protected void initData(){
+		super.initData();
+		if(CCStringUtil.isEmpty(activeOfferId)){
+			loadTypeList();
 		}
-		requestLoad(SwConst.API_VACATION_DETAIL, jsonObject, true);
 	}
 
 	private void loadTypeList(){
@@ -142,10 +101,10 @@ public class VacationEditFragment extends AbstractSwFragment implements OnUserAd
 	private void getVacationAmount(){
 		JSONObject jsonObject = new JSONObject();
 		try{
-			jsonObject.put("key", txtOfferType.getValue());
+			jsonObject.put("key", binding.txtOfferType.getValue());
 			jsonObject.put("targetUserId", selectedUser.key);
-			jsonObject.put("searchStart", txtStartDate.getText());
-			jsonObject.put("searchEnd", txtEndDate.getText());
+			jsonObject.put("searchStart", binding.txtStartDate.getText());
+			jsonObject.put("searchEnd", binding.txtEndDate.getText());
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
@@ -167,7 +126,7 @@ public class VacationEditFragment extends AbstractSwFragment implements OnUserAd
 			if(Float.parseFloat(amount) >= 0){
 				updateVacationAmount(response.optString("amountString"));
 			}else{
-				txtStartDate.setText(txtEndDate.getText());
+				binding.txtStartDate.setText(binding.txtEndDate.getText());
 				getVacationAmount();
 			}
 
@@ -184,21 +143,25 @@ public class VacationEditFragment extends AbstractSwFragment implements OnUserAd
 			return;
 		}
 		selectedUser = new UserModel(vacationRequest.userId, vacationRequest.userName);
-		txtUserName.setText(selectedUser.userName);
-		txtOfferType.setText(vacationRequest.vacationName);
-		txtOfferType.setValue(vacationRequest.vacationId);
-		txtStartDate.setText(vacationRequest.startDateString);
-		txtEndDate.setText(vacationRequest.endDateString);
+		binding.txtOfferUser.setText(selectedUser.userName);
+		binding.txtOfferType.setText(vacationRequest.vacationName);
+		binding.txtOfferType.setValue(vacationRequest.vacationId);
+		binding.txtStartDate.setText(vacationRequest.startDateString);
+		binding.txtEndDate.setText(vacationRequest.endDateString);
 		updateVacationAmount(vacationRequest.amountString);
 		binding.switchSickAbsent.setChecked(vacationRequest.sickAbsent);
 		binding.edtNote.setText(vacationRequest.note);
 		amount = vacationRequest.amount;
-		if (Float.parseFloat(amount) < 1) {
+		if(Float.parseFloat(amount) < 1){
 			binding.lnrEndDate.setVisibility(View.GONE);
-		} else {
+		}else{
 			binding.lnrEndDate.setVisibility(View.VISIBLE);
 		}
 		loadTypeList();
+	}
+
+	private void updateVacationAmount(String amountString){
+		binding.txtAmount.setText(amountString);
 	}
 
 	private void getVacationTypeList(JSONObject response){
@@ -215,18 +178,14 @@ public class VacationEditFragment extends AbstractSwFragment implements OnUserAd
 		buildDatePickerDialogs();
 	}
 
-	private void updateVacationAmount(String amountString){
-		txtAmount.setText(amountString);
-	}
-
 	private void initTypeListDialog(List<ApiObjectModel> vacationTypes){
 		if(CCStringUtil.isEmpty(activeOfferId) && !vacationTypes.isEmpty()){
-			txtOfferType.setText(vacationTypes.get(0).value);
-			txtOfferType.setValue(vacationTypes.get(0).key);
+			binding.txtOfferType.setText(vacationTypes.get(0).value);
+			binding.txtOfferType.setValue(vacationTypes.get(0).key);
 			OnOfferTypeChangedUpdateLayout();
 		}
 
-		spnType = new ChiaseListDialog(activity, getString(R.string.fragment_work_offer_edit_offer_type), WelfareFormatUtil.convertList2Map(vacationTypes), txtOfferType, new ChiaseListDialog.OnItemClicked() {
+		spnType = new ChiaseListDialog(activity, getString(R.string.fragment_work_offer_edit_offer_type), WelfareFormatUtil.convertList2Map(vacationTypes), binding.txtOfferType, new ChiaseListDialog.OnItemClicked() {
 
 			@Override
 			public void onClicked(String selectedKey, boolean isSelected){
@@ -239,114 +198,68 @@ public class VacationEditFragment extends AbstractSwFragment implements OnUserAd
 		getVacationAmount();
 	}
 
-	private void buildDatePickerDialogs(){
+	@Override
+	protected void buildDatePickerDialogs(){
+		super.buildDatePickerDialogs();
 		Calendar calendar = Calendar.getInstance();
-		Date starDate = CCDateUtil.makeDate(txtStartDate.getText().toString());
-		Date endDate = CCDateUtil.makeDate(txtEndDate.getText().toString());
-
-		calendar.setTime(starDate);
-		datePickerDialogStart = new DatePickerDialog(activity, new DatePickerDialog.OnDateSetListener() {
-
-			@Override
-			public void onDateSet(DatePicker view, int year, int month, int dayOfMonth){
-				String startDate = year + "/" + getDisplayNum(month + 1) + "/" + getDisplayNum(dayOfMonth);
-				txtStartDate.setText(startDate);
-				txtEndDate.setText(startDate);
-				getVacationAmount();
-				buildDatePickerDialogs();
-			}
-		}, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
-
+		Date endDate = CCDateUtil.makeDate(binding.txtEndDate.getText().toString());
 		calendar.setTime(endDate);
 		datePickerDialogEnd = new DatePickerDialog(activity, new DatePickerDialog.OnDateSetListener() {
 
 			@Override
 			public void onDateSet(DatePicker view, int year, int month, int dayOfMonth){
 				String startDate = year + "/" + getDisplayNum(month + 1) + "/" + getDisplayNum(dayOfMonth);
-				txtEndDate.setText(startDate);
+				binding.txtEndDate.setText(startDate);
 				getVacationAmount();
 				buildDatePickerDialogs();
 			}
 		}, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
 	}
 
-	public String getDisplayNum(int num){
-		if(num <= 9){
-			return "0" + num;
-		}
-		return String.valueOf(num);
+	@Override
+	protected void setStartDate(String startDate){
+		super.setStartDate(startDate);
+		binding.txtEndDate.setText(startDate);
+		getVacationAmount();
+		buildDatePickerDialogs();
 	}
 
 	@Override
-	public void onDestroy(){
-		super.onDestroy();
-		txtEndDate = null;
-		txtStartDate = null;
-	}
-
-	private void onClickBtnDone(){
+	protected void onClickBtnDone(){
 		JSONObject jsonObject = new JSONObject();
 		try{
 			jsonObject.put("key", activeOfferId);
 			jsonObject.put("userId", selectedUser.key);
-			jsonObject.put("vacationId", txtOfferType.getValue());
-			jsonObject.put("startDateString", txtStartDate.getText().toString());
-			jsonObject.put("endDateString", txtEndDate.getText().toString());
+			jsonObject.put("vacationId", binding.txtOfferType.getValue());
+			jsonObject.put("startDateString", binding.txtStartDate.getText().toString());
+			jsonObject.put("endDateString", binding.txtEndDate.getText().toString());
 			jsonObject.put("note", binding.edtNote.getText().toString());
 			jsonObject.put("amount", amount);
 			jsonObject.put("sickAbsent", binding.switchSickAbsent.isChecked());
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
-		requestUpdate(SwConst.API_VACATION_UPDATE, jsonObject, true);
+		requestUpdate(getUpdateApi(), jsonObject, true);
 	}
 
 	@Override
-	protected void successUpdate(JSONObject response, String url){
-		if(SwConst.API_VACATION_UPDATE.equals(url)){
-			((ChiaseActivity)activity).isInitData = true;
-			((WelfareActivity)activity).dataMap.put(SwConst.ACTION_OFFER_UPDATE, CCConst.YES);
-			getFragmentManager().popBackStack();
-		}else{
-			super.successUpdate(response, url);
-		}
+	public void onSelectUser(UserModel user){
+		super.onSelectUser(user);
+		loadTypeList();
 	}
 
 	@Override
 	public void onClick(View v){
+		super.onClick(v);
 		switch(v.getId()){
-		case R.id.img_id_header_right_icon:
-			onClickBtnDone();
-			break;
-		case R.id.lnr_start_date:
-			datePickerDialogStart.show();
-			break;
 		case R.id.lnr_end_date:
 			datePickerDialogEnd.show();
 			break;
 		case R.id.lnr_id_type:
 			spnType.show();
 			break;
-		case R.id.lnr_user:
-			SelectUserEditFragment fragment = new SelectUserEditFragment();
-			fragment.setSelectedUser(selectedUser);
-			fragment.setCallback(this);
-			gotoFragment(fragment);
-			break;
 		default:
 			break;
 		}
-	}
-
-	@Override
-	public void onSelectUser(UserModel user){
-		selectedUser = user;
-		txtUserName.setText(selectedUser.userName);
-		loadTypeList();
-	}
-
-	@Override
-	public void onDestroyView(){
-		super.onDestroyView();
 	}
 }
