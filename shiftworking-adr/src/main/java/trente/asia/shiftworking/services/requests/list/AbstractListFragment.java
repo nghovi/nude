@@ -96,7 +96,7 @@ public abstract class AbstractListFragment extends AbstractSwFragment implements
 				jsonObject.put("offerDept", selectedDept.key);
 			}
 			if(selectedType != null && !CCConst.ALL.equals(selectedType.key)){
-				jsonObject.put("offerStatus", selectedType.key);
+				jsonObject.put("overtimeType", selectedType.key);
 			}
 
 			if(selectedUser != null && !CCConst.ALL.equals(selectedUser.key)){

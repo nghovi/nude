@@ -89,7 +89,7 @@ public class RequestFilterFragment extends AbstractSwFragment implements OnDepar
 
 		if(selectedType == null && requestTypes != null){
 			selectedType = requestTypes.get(0);
-			binding.txtOfferType.setText(selectedType.value);
+
 		}
 
 		if(requestTypes == null){
@@ -98,6 +98,9 @@ public class RequestFilterFragment extends AbstractSwFragment implements OnDepar
 
 		binding.txtOfferDept.setText(selectedDept.deptName);
 		binding.txtOfferUser.setText(selectedUser.userName);
+		if (selectedType != null) {
+			binding.txtOfferType.setText(selectedType.value);
+		}
 	}
 
 	@Override
