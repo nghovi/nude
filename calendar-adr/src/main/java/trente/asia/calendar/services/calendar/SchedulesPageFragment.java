@@ -271,14 +271,15 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 
 	private void adaptHolidayWorkingRequestsToWorkOffers(){
 		for(HolidayWorkingModel holidayWorkingModel : lstHolidayWorking){
-			WorkRequest workRequest = new WorkRequest(holidayWorkingModel, getString(R.string.holidayWork));
+			WorkRequest workRequest = new WorkRequest(holidayWorkingModel, getString(R.string.holiday_work));
 			lstWorkRequest.add(workRequest);
 		}
 	}
 
 	private void adaptOvertimeRequestsToWorkRequestOvertime(){
-		for(OvertimeRequestModel overtimeRequestModel : lstOvertimeRequest){
-			WorkRequest workRequest = new WorkRequest(overtimeRequestModel, overtimeRequestModel.overtimeType.equals("E") ? getString(R.string.overtimeTypeEarly) : getString(R.string.overtimeTypeOvertime));
+		for(OvertimeRequestModel otRequest : lstOvertimeRequest){
+			String overTimeInfo = otRequest.overtimeType.equals(OvertimeRequestModel.OVERTIME_EARLY) ? getString(R.string.overtime_early) : getString(R.string.overtime_lately);
+			WorkRequest workRequest = new WorkRequest(otRequest, overTimeInfo);
 			lstWorkRequest.add(workRequest);
 		}
 	}

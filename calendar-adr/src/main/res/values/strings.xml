@@ -119,7 +119,7 @@
     <string name="select_user_all">Select all</string>
     <string name="choose_user">Join user</string>
     <string name="choose_group">Select department</string>
-    <string name="overtimeTypeEarly">Overtime (Early)</string>
-    <string name="overtimeTypeOvertime">Overtime</string>
-    <string name="holidayWork">HolidayWork</string>
+    <string name="overtime_early">Overtime (Early)</string>
+    <string name="overtime_lately">Overtime</string>
+    <string name="holiday_work">HolidayWork</string>
 </resources>

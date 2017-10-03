@@ -119,7 +119,7 @@
     <string name="choose_user">参加ユーザー</string>
     <string name="choose_group">部門選択</string>
     <string name="overtimeType">E</string>
-    <string name="overtimeTypeEarly">Overtime (Early)</string>
-    <string name="overtimeTypeOvertime">Overtime</string>
-    <string name="holidayWork">Holiday work</string>
+    <string name="overtime_early">Overtime (Early)</string>
+    <string name="overtime_lately">Overtime</string>
+    <string name="holiday_work">Holiday work</string>
 </resources>

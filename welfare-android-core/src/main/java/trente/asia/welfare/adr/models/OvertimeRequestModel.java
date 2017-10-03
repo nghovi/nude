@@ -14,6 +14,9 @@ import trente.asia.welfare.adr.models.VacationRequestModel;
 @JsonObject(fieldDetectionPolicy = JsonObject.FieldDetectionPolicy.NONPRIVATE_FIELDS)
 public class OvertimeRequestModel extends VacationRequestModel{
 
+	public static final String OVERTIME_EARLY = "E";
+	public static final String OVERTIME_LATELY = "O";
+
 	public String				offerType;
 	public String				offerTypeName;
 	public String				overtimeType;

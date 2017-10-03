@@ -116,7 +116,7 @@
     <string name="select_user_all">すべて選択</string>
     <string name="choose_user">参加ユーザー</string>
     <string name="choose_group">部門選択</string>
-    <string name="overtimeTypeEarly">残業(早出)</string>
-    <string name="overtimeTypeOvertime">残業</string>
-    <string name="holidayWork">休出</string>
+    <string name="overtime_early">残業(早出)</string>
+    <string name="overtime_lately">残業</string>
+    <string name="holiday_work">休出</string>
 </resources>
