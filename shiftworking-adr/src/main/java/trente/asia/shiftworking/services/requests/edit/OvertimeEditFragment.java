@@ -21,7 +21,7 @@ import trente.asia.shiftworking.common.defines.SwConst;
 import trente.asia.shiftworking.common.dialog.SwTimePicker;
 import trente.asia.shiftworking.common.interfaces.OnTimePickerListener;
 import trente.asia.shiftworking.databinding.FragmentOvertimeEditBinding;
-import trente.asia.shiftworking.services.requests.model.OvertimeRequestModel;
+import trente.asia.welfare.adr.models.OvertimeRequestModel;
 import trente.asia.welfare.adr.models.ApiObjectModel;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 

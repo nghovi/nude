@@ -20,7 +20,7 @@ import trente.asia.shiftworking.databinding.FragmentHolidayWorkingDetailBinding;
 import trente.asia.shiftworking.services.requests.WorkRequestFragment;
 import trente.asia.shiftworking.services.requests.edit.HolidayWorkingEditFragment;
 import trente.asia.welfare.adr.models.ApproveHistory;
-import trente.asia.shiftworking.services.requests.model.HolidayWorkingModel;
+import trente.asia.welfare.adr.models.HolidayWorkingModel;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 
 public class HolidayWorkingDetailFragment extends AbstractDetailFragment {

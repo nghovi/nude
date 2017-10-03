@@ -118,4 +118,8 @@
     <string name="select_user_all">すべて選択</string>
     <string name="choose_user">参加ユーザー</string>
     <string name="choose_group">部門選択</string>
+    <string name="overtimeType">E</string>
+    <string name="overtimeTypeEarly">Overtime (Early)</string>
+    <string name="overtimeTypeOvertime">Overtime</string>
+    <string name="holidayWork">Holiday work</string>
 </resources>

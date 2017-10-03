@@ -1,4 +1,6 @@
-package trente.asia.shiftworking.services.requests.model;
+package trente.asia.welfare.adr.models;
+
+import com.bluelinelabs.logansquare.annotation.JsonObject;
 
 import java.util.List;
 
@@ -9,6 +11,7 @@ import trente.asia.welfare.adr.models.VacationRequestModel;
  * Created by viet on 11/25/2016.
  */
 
+@JsonObject(fieldDetectionPolicy = JsonObject.FieldDetectionPolicy.NONPRIVATE_FIELDS)
 public class OvertimeRequestModel extends VacationRequestModel{
 
 	public String				offerType;

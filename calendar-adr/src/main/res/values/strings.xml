@@ -81,7 +81,6 @@
     <string name="FM_CL_0042">Tomorrow\’s To Do: %1$s item(s)</string>
 
 
-
     <string name="cl_schedule_holiday_name">[H]%1$s</string>
     <string name="cl_schedule_birth_day_name">[B]%1$s</string>
     <string name="cl_schedule_offer_name">%1$s</string>
@@ -120,4 +119,7 @@
     <string name="select_user_all">Select all</string>
     <string name="choose_user">Join user</string>
     <string name="choose_group">Select department</string>
+    <string name="overtimeTypeEarly">Overtime (Early)</string>
+    <string name="overtimeTypeOvertime">Overtime</string>
+    <string name="holidayWork">HolidayWork</string>
 </resources>

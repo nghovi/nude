@@ -42,6 +42,8 @@ import trente.asia.calendar.services.calendar.view.WeeklyScheduleListAdapter;
 import trente.asia.calendar.services.todo.model.Todo;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
+import trente.asia.welfare.adr.models.HolidayWorkingModel;
+import trente.asia.welfare.adr.models.OvertimeRequestModel;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.models.VacationRequestModel;
 import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
@@ -53,34 +55,36 @@ import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
  */
 public abstract class SchedulesPageFragment extends ClPageFragment implements WeeklyScheduleListAdapter.OnScheduleItemClickListener,DailyScheduleClickListener{
 
-	protected List<Date>			dates;
+	protected List<Date>				dates;
 
-	protected LinearLayout			lnrCalendarContainer;
-	protected List<ScheduleModel>	lstSchedule			= new ArrayList<>();
-	protected List<HolidayModel>	lstHoliday;
+	protected LinearLayout				lnrCalendarContainer;
+	protected List<ScheduleModel>		lstSchedule			= new ArrayList<>();
+	protected List<HolidayModel>		lstHoliday;
 
-	protected List<CalendarModel>	lstCalendar;
-	protected List<UserModel>		lstCalendarUser;
-	protected List<CategoryModel>	lstCategory;
-	protected List<UserModel>		lstBirthdayUser;
-	protected List<WorkRequest> lstWorkRequest;
-	protected boolean				refreshDialogData	= false;
-	private String					scheduleStrings;
-	protected boolean				isChangedData		= true;
-	protected List<Todo>			todos;
-	protected LayoutInflater		inflater;
-	protected DailySummaryDialog	dialogDailySummary;
-	protected boolean				isExpanded			= false;
-	protected TextView				txtMore;
-	protected ImageView				imgExpand;
-	protected ScrollView			scrollView;
-	protected View					thisHourView;
-	protected String				currentHour;
+	protected List<CalendarModel>		lstCalendar;
+	protected List<UserModel>			lstCalendarUser;
+	protected List<CategoryModel>		lstCategory;
+	protected List<UserModel>			lstBirthdayUser;
+	protected List<WorkRequest>			lstWorkRequest;
+	protected boolean					refreshDialogData	= false;
+	private String						scheduleStrings;
+	protected boolean					isChangedData		= true;
+	protected List<Todo>				todos;
+	protected LayoutInflater			inflater;
+	protected DailySummaryDialog		dialogDailySummary;
+	protected boolean					isExpanded			= false;
+	protected TextView					txtMore;
+	protected ImageView					imgExpand;
+	protected ScrollView				scrollView;
+	protected View						thisHourView;
+	protected String					currentHour;
 
-	protected static final int		MAX_ROW				= 3;
-	protected Date					today;
-	private List<RoomModel>			rooms;
-	private List<VacationRequestModel> lstVacationRequest;
+	protected static final int			MAX_ROW				= 3;
+	protected Date						today;
+	private List<RoomModel>				rooms;
+	private List<VacationRequestModel>	lstVacationRequest;
+	private List<OvertimeRequestModel>	lstOvertimeRequest;
+	private List<HolidayWorkingModel>	lstHolidayWorking;
 
 	abstract protected List<Date> getAllDate();
 
@@ -205,6 +209,8 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 			lstCategory = LoganSquare.parseList(response.optString("categories"), CategoryModel.class);
 			lstWorkRequest = LoganSquare.parseList(response.optString("workOfferList"), WorkRequest.class);
 			lstVacationRequest = LoganSquare.parseList(response.optString("vacationList"), VacationRequestModel.class);
+			lstOvertimeRequest = LoganSquare.parseList(response.optString("overtimeList"), OvertimeRequestModel.class);
+			lstHolidayWorking = LoganSquare.parseList(response.optString("holidayWorkList"), HolidayWorkingModel.class);
 			lstBirthdayUser = LoganSquare.parseList(response.optString("birthdayList"), UserModel.class);
 			lstCalendarUser = LoganSquare.parseList(response.optString("calendarUsers"), UserModel.class);
 			rooms = LoganSquare.parseList(response.optString("rooms"), RoomModel.class);
@@ -212,6 +218,8 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 
 			lstSchedule = filterByPublicity();
 			adaptVacationRequestsToWorkOffers();
+			adaptOvertimeRequestsToWorkRequestOvertime();
+			adaptHolidayWorkingRequestsToWorkOffers();
 
 			ScheduleModel.determinePeriod(lstSchedule);
 
@@ -261,8 +269,22 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 		}
 	}
 
-	private void adaptVacationRequestsToWorkOffers() {
-		for (VacationRequestModel vacationRequestModel: lstVacationRequest) {
+	private void adaptHolidayWorkingRequestsToWorkOffers(){
+		for(HolidayWorkingModel holidayWorkingModel : lstHolidayWorking){
+			WorkRequest workRequest = new WorkRequest(holidayWorkingModel, getString(R.string.holidayWork));
+			lstWorkRequest.add(workRequest);
+		}
+	}
+
+	private void adaptOvertimeRequestsToWorkRequestOvertime(){
+		for(OvertimeRequestModel overtimeRequestModel : lstOvertimeRequest){
+			WorkRequest workRequest = new WorkRequest(overtimeRequestModel, overtimeRequestModel.overtimeType.equals("E") ? getString(R.string.overtimeTypeEarly) : getString(R.string.overtimeTypeOvertime));
+			lstWorkRequest.add(workRequest);
+		}
+	}
+
+	private void adaptVacationRequestsToWorkOffers(){
+		for(VacationRequestModel vacationRequestModel : lstVacationRequest){
 			WorkRequest workRequest = new WorkRequest(vacationRequestModel);
 			lstWorkRequest.add(workRequest);
 		}
@@ -363,7 +385,7 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 
 	@Override
 	protected void loadData(){
-		 loadScheduleList();
+		loadScheduleList();
 	}
 
 	protected int getNormalDayColor(){

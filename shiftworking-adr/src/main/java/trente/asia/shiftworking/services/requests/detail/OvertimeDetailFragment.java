@@ -19,7 +19,7 @@ import trente.asia.shiftworking.common.activities.MainActivity;
 import trente.asia.shiftworking.common.defines.SwConst;
 import trente.asia.shiftworking.databinding.FragmentOvertimeDetailBinding;
 import trente.asia.shiftworking.services.requests.edit.OvertimeEditFragment;
-import trente.asia.shiftworking.services.requests.model.OvertimeRequestModel;
+import trente.asia.welfare.adr.models.OvertimeRequestModel;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.models.ApiObjectModel;
 import trente.asia.welfare.adr.models.ApproveHistory;

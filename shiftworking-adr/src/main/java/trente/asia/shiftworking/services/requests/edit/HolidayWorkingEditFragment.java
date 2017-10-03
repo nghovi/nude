@@ -1,32 +1,20 @@
 package trente.asia.shiftworking.services.requests.edit;
 
-import android.app.DatePickerDialog;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-
-import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Calendar;
-
-import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.android.view.ChiaseEditText;
-import trente.asia.android.view.ChiaseTextView;
-import trente.asia.android.view.util.CAObjectSerializeUtil;
 import trente.asia.shiftworking.R;
 import trente.asia.shiftworking.common.defines.SwConst;
 import trente.asia.shiftworking.databinding.FragmentHolidayWorkingEditBinding;
-import trente.asia.shiftworking.services.requests.model.HolidayWorkingModel;
-import trente.asia.welfare.adr.models.UserModel;
+import trente.asia.welfare.adr.models.HolidayWorkingModel;
 
 /**
  * Created by chi on 9/22/2017.

@@ -37,7 +37,6 @@ public class DailySummaryDialog extends CLOutboundDismissDialog{
 	private List<UserModel>												lstBirthdayUser;
 	private List<HolidayModel>											lstHoliday;
 	private List<WorkRequest> lstWorkRequest;
-
 	private Date														selectedDate;
 	private OnAddBtnClickedListener										onAddBtnClickedListener;
 

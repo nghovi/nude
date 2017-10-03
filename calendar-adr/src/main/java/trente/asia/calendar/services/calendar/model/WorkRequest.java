@@ -6,6 +6,8 @@ import com.bluelinelabs.logansquare.annotation.JsonField;
 import com.bluelinelabs.logansquare.annotation.JsonObject;
 
 import trente.asia.welfare.adr.activity.WelfareActivity;
+import trente.asia.welfare.adr.models.HolidayWorkingModel;
+import trente.asia.welfare.adr.models.OvertimeRequestModel;
 import trente.asia.welfare.adr.models.VacationRequestModel;
 
 /**
@@ -37,7 +39,7 @@ public class WorkRequest{
 		userId = vacationRequestModel.userId;
 		userName = vacationRequestModel.userName;
 		offerType = REQUEST_TYPE_PAID_VACATION_ALL;
-		offerTypeName = vacationRequestModel.amountString;
+		offerTypeName = vacationRequestModel.vacationName;
 		startDateString = vacationRequestModel.startDateString;
 		startTimeString = "00:00";
 		endDateString = vacationRequestModel.endDateString;
@@ -58,6 +60,61 @@ public class WorkRequest{
 
 		startDate = vacationRequestModel.startDate;
 		endDate = vacationRequestModel.endDate;
+	}
+
+	public WorkRequest(OvertimeRequestModel overtimeRequestModel, String offerTypeName){
+
+		userId = overtimeRequestModel.userId;
+		userName = overtimeRequestModel.userName;
+		offerType = REQUEST_TYPE_PAID_VACATION_ALL;
+		this.offerTypeName = offerTypeName;
+		startDateString = overtimeRequestModel.startDateString;
+		startTimeString = "00:00";
+		endDateString = overtimeRequestModel.endDateString;
+		endTimeString = "00:00";
+		approveUser1 = overtimeRequestModel.approveUser1;
+		approveResult1 = overtimeRequestModel.approveResult1;
+		approveUser2 = overtimeRequestModel.approveUser2;
+		approveResult2 = overtimeRequestModel.approveResult2;
+
+		requestDateString = overtimeRequestModel.requestDateString;
+		approveResult = overtimeRequestModel.approveResult1;
+		userAvatarPath = overtimeRequestModel.userAvatarPath;
+		offerStatus = overtimeRequestModel.offerStatus;
+		offerStatusName = overtimeRequestModel.offerStatusName;
+		key = overtimeRequestModel.key;
+		note = overtimeRequestModel.note;
+		companyId = overtimeRequestModel.companyId;
+
+		startDate = overtimeRequestModel.startDate;
+		endDate = overtimeRequestModel.endDate;
+	}
+
+	public WorkRequest(HolidayWorkingModel holidayWorkingModel, String offerTypeName){
+
+		userId = holidayWorkingModel.userId;
+		userName = holidayWorkingModel.userName;
+		this.offerTypeName = offerTypeName;
+		startDateString = holidayWorkingModel.startDateString;
+		startTimeString = "00:00";
+		endDateString = holidayWorkingModel.startDateString;
+		endTimeString = "00:00";
+		approveUser1 = holidayWorkingModel.approveUser1;
+		approveResult1 = holidayWorkingModel.approveResult1;
+		approveUser2 = holidayWorkingModel.approveUser2;
+		approveResult2 = holidayWorkingModel.approveResult2;
+
+		requestDateString = holidayWorkingModel.requestDateString;
+		approveResult = holidayWorkingModel.approveResult1;
+		userAvatarPath = holidayWorkingModel.userAvatarPath;
+		offerStatus = holidayWorkingModel.offerStatus;
+		offerStatusName = holidayWorkingModel.offerStatusName;
+		key = holidayWorkingModel.key;
+		note = holidayWorkingModel.note;
+		companyId = holidayWorkingModel.companyId;
+
+		startDate = holidayWorkingModel.startDate;
+		endDate = holidayWorkingModel.startDate;
 	}
 
 	public String	userColor	= "#FFFFFF";
