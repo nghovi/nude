@@ -1,82 +1,46 @@
 package trente.asia.shiftworking.services.requests.edit;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.google.gson.Gson;
-
-import android.app.DatePickerDialog;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.DatePicker;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 
-import asia.chiase.core.define.CCConst;
-import asia.chiase.core.util.CCDateUtil;
-import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.android.activity.ChiaseActivity;
-import trente.asia.android.view.ChiaseEditText;
 import trente.asia.android.view.ChiaseListDialog;
-import trente.asia.android.view.ChiaseTextView;
-import trente.asia.android.view.util.CAObjectSerializeUtil;
 import trente.asia.shiftworking.R;
 import trente.asia.shiftworking.common.defines.SwConst;
 import trente.asia.shiftworking.common.dialog.SwTimePicker;
-import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
 import trente.asia.shiftworking.common.interfaces.OnTimePickerListener;
-import trente.asia.shiftworking.common.interfaces.OnUserAdapterListener;
 import trente.asia.shiftworking.databinding.FragmentOvertimeEditBinding;
-import trente.asia.shiftworking.services.requests.list.OvertimeListFragment;
 import trente.asia.shiftworking.services.requests.model.OvertimeRequestModel;
-import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.models.ApiObjectModel;
-import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 
 /**
  * Created by chi on 9/22/2017.
  */
 
-public class OvertimeEditFragment extends AbstractSwFragment implements OnTimePickerListener,OnUserAdapterListener{
+public class OvertimeEditFragment extends AbstractEditFragment implements OnTimePickerListener{
 
-	private OvertimeRequestModel otRequest;
+	private OvertimeRequestModel		overtimeRequest;
 	private ChiaseListDialog			spnType;
-	private DatePickerDialog			datePickerDialogStart;
 	private SwTimePicker				timePickerDialog;
-	private ChiaseTextView				txtUserName;
-	private ChiaseTextView				txtStartTime;
-	private ChiaseTextView				txtEndTime;
-	private ChiaseTextView				txtStartDate;
-	private ChiaseTextView				txtOfferType;
-	private ChiaseEditText				txtReason;
-	private String						activeOfferId;
 	private FragmentOvertimeEditBinding	binding;
-	private String						execType;
 	private List<ApiObjectModel>		typeList;
-	private String						m;
-	private String						h;
+
 	private boolean						timePickerStart;
-	private UserModel					selectedUser;
 	private int							selectedHour;
 	private int							selectedMinute;
 	private Map<String, String>			typeListMap;
-
-	public void setActiveOfferId(String activeOfferId){
-		this.activeOfferId = activeOfferId;
-	}
-
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -87,172 +51,89 @@ public class OvertimeEditFragment extends AbstractSwFragment implements OnTimePi
 		return mRootView;
 	}
 
-	private void setOnClickListener(){
-		getView().findViewById(R.id.lnr_id_type).setOnClickListener(this);
-		getView().findViewById(R.id.lnr_start_date).setOnClickListener(this);
-		getView().findViewById(R.id.lnr_start_time).setOnClickListener(this);
-		getView().findViewById(R.id.lnr_end_time).setOnClickListener(this);
-		Boolean b = Boolean.valueOf(myself.adminFlag);
-		if(b && activeOfferId == null){
-			getView().findViewById(R.id.arrow_icon).setVisibility(View.VISIBLE);
-			getView().findViewById(R.id.lnr_user).setOnClickListener(this);
-		}
-	}
-
 	@Override
-	public int getFooterItemId(){
-		return 0;
-	}
-
-	@Override
-	protected void initData(){
-		selectedUser = myself;
-		loadWorkOfferForm();
+	protected void setOnClickListener(){
+		super.setOnClickListener();
+		binding.lnrIdType.setOnClickListener(this);
+		binding.lnrStartTime.setOnClickListener(this);
+		binding.lnrEndTime.setOnClickListener(this);
 	}
 
 	@Override
 	protected void initView(){
 		super.initView();
-		super.initHeader(R.drawable.sw_back_white, myself.userName, R.drawable.sw_action_save);
-		ImageView imgRightIcon = (ImageView)getView().findViewById(R.id.img_id_header_right_icon);
-		imgRightIcon.setOnClickListener(this);
-
-		txtUserName = (ChiaseTextView)getView().findViewById(R.id.txt_fragment_overtime_detail_offer_user);
-		txtOfferType = (ChiaseTextView)getView().findViewById(R.id.txt_fragment_overtime_detail_offer_type);
-		txtStartDate = (ChiaseTextView)getView().findViewById(R.id.txt_fragment_overtime_detail_start_date);
-		txtStartTime = (ChiaseTextView)getView().findViewById(R.id.txt_fragment_overtime_detail_start_time);
-		txtEndTime = (ChiaseTextView)getView().findViewById(R.id.txt_fragment_overtime_detail_end_time);
-		txtReason = (ChiaseEditText)getView().findViewById((R.id.txt_fragment_overtime_detail_reason));
-
-		setOnClickListener();
+		binding.txtStartTime.setText("00:00");
+		binding.txtEndTime.setText("00:00");
 	}
 
-	private void loadWorkOfferForm(){
-		JSONObject jsonObject = new JSONObject();
-		try{
-			jsonObject.put("key", activeOfferId);
-			jsonObject.put("execType", SwConst.SW_OFFER_EXEC_TYPE_VIEW);
-		}catch(JSONException e){
-			e.printStackTrace();
-		}
-
-		requestLoad(SwConst.API_OVERTIME_DETAIL, jsonObject, true);
+	@Override
+	protected String getDetailApi(){
+		return SwConst.API_OVERTIME_DETAIL;
 	}
 
 	@Override
 	protected void successLoad(JSONObject response, String url){
-		if(SwConst.API_OVERTIME_DETAIL.equals(url)){
-			otRequest = CCJsonUtil.convertToModel(response.optString("overtime"), OvertimeRequestModel.class);
+		if(getDetailApi().equals(url)){
+			overtimeRequest = CCJsonUtil.convertToModel(response.optString("overtime"), OvertimeRequestModel.class);
 			typeList = CCJsonUtil.convertToModelList(response.optString("overtimeTypeList"), ApiObjectModel.class);
 			typeListMap = WelfareFormatUtil.convertList2Map(typeList);
-			buildDatePickerDialogs(otRequest);
 			if(!CCStringUtil.isEmpty(activeOfferId)){
-				loadWorkOffer(otRequest);
-			}else{
-				txtUserName.setText(selectedUser.userName);
-				txtStartTime.setText("00:00");
-				txtEndTime.setText("00:00");
-				txtStartDate.setText(CCFormatUtil.formatDate(Calendar.getInstance().getTime()));
+				updateLayout(overtimeRequest);
 			}
+			buildDatePickerDialogs();
 			initDialog(typeList);
 		}else{
 			super.successLoad(response, url);
 		}
 	}
 
-	private void loadWorkOffer(OvertimeRequestModel otRequest){
-		LinearLayout lnrContent = (LinearLayout)getView().findViewById(R.id.lnr_id_content);
-		try{
-			Gson gson = new Gson();
-			CAObjectSerializeUtil.deserializeObject(lnrContent, new JSONObject(gson.toJson(otRequest)));
-			txtUserName.setText(otRequest.userName);
-			txtOfferType.setText(typeListMap.get(otRequest.overtimeType));
-			txtStartDate.setText(otRequest.startDateString);
-			txtStartTime.setText(otRequest.startTimeString);
-			txtEndTime.setText(CCStringUtil.toString(otRequest.endTimeString));
-
-		}catch(JSONException e){
-			e.printStackTrace();
-		}
+	private void updateLayout(OvertimeRequestModel overtimeRequest){
+		binding.txtOfferUser.setText(overtimeRequest.userName);
+		binding.txtOfferType.setText(typeListMap.get(overtimeRequest.overtimeType));
+		binding.txtStartDate.setText(overtimeRequest.startDateString);
+		binding.txtStartTime.setText(overtimeRequest.startTimeString);
+		binding.txtEndTime.setText(overtimeRequest.endTimeString);
 	}
 
-	private void initDialog(final List<ApiObjectModel> o){
+	private void initDialog(final List<ApiObjectModel> types){
 		if(CCStringUtil.isEmpty(activeOfferId)){
-			txtOfferType.setText(o.get(0).value);
-			txtOfferType.setValue(o.get(0).key);
+			binding.txtOfferType.setText(types.get(0).value);
+			binding.txtOfferType.setValue(types.get(0).key);
 		}
 
-		spnType = new ChiaseListDialog(activity, getString(R.string.fragment_work_offer_edit_offer_type), WelfareFormatUtil.convertList2Map(o), txtOfferType, new ChiaseListDialog.OnItemClicked() {
+		spnType = new ChiaseListDialog(activity, getString(R.string.fragment_work_offer_edit_offer_type), WelfareFormatUtil.convertList2Map(types), binding.txtOfferType, new ChiaseListDialog.OnItemClicked() {
 
 			@Override
 			public void onClicked(String selectedKey, boolean isSelected){
 				if("E".equals(selectedKey)){
-					txtOfferType.setText("Early");
+					binding.txtOfferType.setText("Early");
 				}else{
-					txtOfferType.setText("Overtime");
+					binding.txtOfferType.setText("Overtime");
 				}
 			}
 		});
 	}
 
-	private void buildDatePickerDialogs(OvertimeRequestModel otRequest){
-		Calendar calendar = Calendar.getInstance();
-		Date starDate = new Date();
-
-		if(!CCStringUtil.isEmpty(activeOfferId)){
-			starDate = CCDateUtil.makeDate(otRequest.startDateString);
-		}
-
-		calendar.setTime(starDate);
-		datePickerDialogStart = new DatePickerDialog(activity, new DatePickerDialog.OnDateSetListener() {
-
-			@Override
-			public void onDateSet(DatePicker view, int year, int month, int dayOfMonth){
-				String startDate = year + "/" + getDisplayNum(month + 1) + "/" + getDisplayNum(dayOfMonth);
-				txtStartDate.setText(startDate);
-				txtStartDate.setValue(startDate);
-			}
-		}, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
-	}
-
-	public String getDisplayNum(int num){
-		if(num <= 9){
-			return "0" + num;
-		}
-		return String.valueOf(num);
-	}
-
 	@Override
-	public void onDestroy(){
-		super.onDestroy();
-		txtStartDate = null;
-	}
-
-	private void onClickBtnDone(){
+	protected void onClickBtnDone(){
 		JSONObject jsonObject = new JSONObject();
 		try{
 			jsonObject.put("userId", selectedUser.getKey());
 			jsonObject.put("key", activeOfferId);
-			jsonObject.put("startDateString", txtStartDate.getText());
-			jsonObject.put("startTimeString", txtStartTime.getText());
-			jsonObject.put("endTimeString", txtEndTime.getText());
-			jsonObject.put("overtimeType", txtOfferType.getValue());
-			jsonObject.put("note", txtReason.getText());
+			jsonObject.put("startDateString", binding.txtStartDate.getText());
+			jsonObject.put("startTimeString", binding.txtStartTime.getText());
+			jsonObject.put("endTimeString", binding.txtEndTime.getText());
+			jsonObject.put("overtimeType", binding.txtOfferType.getValue());
+			jsonObject.put("note", binding.txtReason.getText());
 		}catch(JSONException e){
 			e.printStackTrace();
 		}
-		requestUpdate(SwConst.API_OVERTIME_UPDATE, jsonObject, true);
+		requestUpdate(getUpdateApi(), jsonObject, true);
 	}
 
 	@Override
-	protected void successUpdate(JSONObject response, String url){
-		if(SwConst.API_OVERTIME_UPDATE.equals(url)){
-			((ChiaseActivity)activity).isInitData = true;
-			((WelfareActivity)activity).dataMap.put(SwConst.ACTION_OFFER_UPDATE, CCConst.YES);
-			getFragmentManager().popBackStack();
-		}else{
-			super.successUpdate(response, url);
-		}
+	protected String getUpdateApi(){
+		return SwConst.API_OVERTIME_UPDATE;
 	}
 
 	@Override
@@ -264,25 +145,23 @@ public class OvertimeEditFragment extends AbstractSwFragment implements OnTimePi
 		case R.id.lnr_user:
 			goToSelectUserEditFragment();
 			break;
-		case R.id.lnr_start_date:
-			datePickerDialogStart.show();
-			break;
 		case R.id.lnr_start_time:
 			timePickerStart = true;
-			selectedHour = Integer.parseInt(txtStartTime.getText().toString().split(":")[0]);
-			selectedMinute = Integer.parseInt(txtStartTime.getText().toString().split(":")[1]);
+			selectedHour = Integer.parseInt(binding.txtStartTime.getText().toString().split(":")[0]);
+			selectedMinute = Integer.parseInt(binding.txtStartTime.getText().toString().split(":")[1]);
 			openTimePicker();
 			break;
 		case R.id.lnr_end_time:
 			timePickerStart = false;
-			selectedHour = Integer.parseInt(txtEndTime.getText().toString().split(":")[0]);
-			selectedMinute = Integer.parseInt(txtEndTime.getText().toString().split(":")[1]);
+			selectedHour = Integer.parseInt(binding.txtEndTime.getText().toString().split(":")[0]);
+			selectedMinute = Integer.parseInt(binding.txtEndTime.getText().toString().split(":")[1]);
 			openTimePicker();
 			break;
 		case R.id.lnr_id_type:
 			spnType.show();
 			break;
 		default:
+			super.onClick(v);
 			break;
 		}
 	}
@@ -305,37 +184,11 @@ public class OvertimeEditFragment extends AbstractSwFragment implements OnTimePi
 	}
 
 	@Override
-	protected void onClickBackBtn(){
-		if(isClickNotification){
-			emptyBackStack();
-			gotoFragment(new OvertimeListFragment());
-		}else{
-			super.onClickBackBtn();
-		}
-	}
-
-	@Override
 	public void onTimePickerCompleted(int hour, int minute){
-		if(hour < 10){
-			h = "0" + hour;
-		}else{
-			h = String.valueOf(hour);
-		}
-		if(minute < 10){
-			m = "0" + minute;
-		}else{
-			m = String.valueOf(minute);
-		}
 		if(timePickerStart){
-			txtStartTime.setText(h + ":" + m);
+			binding.txtStartTime.setText(getDisplayNum(hour) + ":" + getDisplayNum(minute));
 		}else{
-			txtEndTime.setText(h + ":" + m);
+			binding.txtEndTime.setText(getDisplayNum(hour) + ":" + getDisplayNum(minute));
 		}
-	}
-
-	@Override
-	public void onSelectUser(UserModel user){
-		selectedUser = user;
-		txtUserName.setText(selectedUser.getUserName());
 	}
 }

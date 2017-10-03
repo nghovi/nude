@@ -5,12 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import com.google.gson.Gson;
-
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
@@ -18,7 +13,6 @@ import java.util.List;
 import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.android.view.util.CAObjectSerializeUtil;
 import trente.asia.shiftworking.R;
 import trente.asia.shiftworking.common.activities.MainActivity;
 import trente.asia.shiftworking.common.defines.SwConst;
@@ -29,7 +23,7 @@ import trente.asia.welfare.adr.models.ApproveHistory;
 import trente.asia.shiftworking.services.requests.model.HolidayWorkingModel;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 
-public class HolidayWorkingDetailFragment extends WRDetailFragment{
+public class HolidayWorkingDetailFragment extends AbstractDetailFragment {
 
 	private HolidayWorkingModel holidayWorkingRequest;
 	private FragmentHolidayWorkingDetailBinding	binding;
@@ -45,7 +39,7 @@ public class HolidayWorkingDetailFragment extends WRDetailFragment{
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 		if(mRootView == null){
-			binding = DataBindingUtil.inflate(inflater, R.layout.fragment_holiday_working_detail, container, false);
+			binding = DataBindingUtil.inflate(inflater, R.layout.fragwment_holiday_working_detail, container, false);
 			mRootView = binding.getRoot();
 		}
 		return mRootView;

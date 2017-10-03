@@ -25,7 +25,7 @@ import trente.asia.welfare.adr.models.ApiObjectModel;
 import trente.asia.welfare.adr.models.ApproveHistory;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 
-public class OvertimeDetailFragment extends WRDetailFragment{
+public class OvertimeDetailFragment extends AbstractDetailFragment {
 
 	private OvertimeRequestModel			overtimeRequest;
 	private FragmentOvertimeDetailBinding	binding;
