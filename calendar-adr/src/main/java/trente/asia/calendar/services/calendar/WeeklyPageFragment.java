@@ -137,6 +137,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 
 	@Override
 	protected void updateSchedules(List<ScheduleModel> schedules, List<CategoryModel> categories){
+		Collections.sort(lstWorkRequest, getWorkRequestComparator());
 		super.updateSchedules(schedules, categories);
 		sortSchedules(schedules, dates.get(0), dates.get(dates.size() - 1), true);
 		schedules = multiplyWithUsers(schedules);
@@ -230,7 +231,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 			itemNum++;
 		}
 
-		// offer
+		// work requests
 		for(WorkRequest workRequest : lstWorkRequest){
 			Calendar cStart = CCDateUtil.makeCalendarWithDateOnly(workRequest.startDate);
 			Calendar cEnd = CCDateUtil.makeCalendarWithDateOnly(workRequest.endDate);
@@ -670,5 +671,15 @@ public class WeeklyPageFragment extends SchedulesPageFragment{
 	@Override
 	public void onClick(View v){
 
+	}
+
+	public static Comparator<? super WorkRequest> getWorkRequestComparator(){
+		return new Comparator<WorkRequest>() {
+
+			@Override
+			public int compare(WorkRequest o1, WorkRequest o2){
+				return o1.offerTypeName.compareTo(o2.offerTypeName);
+			}
+		};
 	}
 }

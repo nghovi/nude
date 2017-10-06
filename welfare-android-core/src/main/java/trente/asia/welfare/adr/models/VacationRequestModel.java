@@ -22,7 +22,7 @@ public class VacationRequestModel{
 	public String				endDateString;
 	public String				amount;
 	public String				amountString;
-	public Boolean				sickAbsent = false;
+	public Boolean				sickAbsent			= false;
 	public String				userId;
 	public String				userAvatarPath;
 	public String				userName;
@@ -37,8 +37,9 @@ public class VacationRequestModel{
 	public String				approveUser2;
 	public String				approveResult2;
 	public String				requestDateString;
-	public Boolean				isWorktimeRelation = false;
+	public Boolean				isWorktimeRelation	= false;
 	public String				key;
 	public String				companyId;
 	public List<ApproveHistory>	listHistories;
+	public String				userColor;
 }

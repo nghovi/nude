@@ -35,11 +35,11 @@ public class WorkRequest{
 	}
 
 	public WorkRequest(VacationRequestModel vacationRequestModel){
+		offerTypeName = vacationRequestModel.vacationName;
+		offerType = REQUEST_TYPE_PAID_VACATION_ALL;
 
 		userId = vacationRequestModel.userId;
 		userName = vacationRequestModel.userName;
-		offerType = REQUEST_TYPE_PAID_VACATION_ALL;
-		offerTypeName = vacationRequestModel.vacationName;
 		startDateString = vacationRequestModel.startDateString;
 		startTimeString = "00:00";
 		endDateString = vacationRequestModel.endDateString;
@@ -60,14 +60,15 @@ public class WorkRequest{
 
 		startDate = vacationRequestModel.startDate;
 		endDate = vacationRequestModel.endDate;
+		userColor = vacationRequestModel.userColor;
 	}
 
 	public WorkRequest(OvertimeRequestModel overtimeRequestModel, String offerTypeName){
+		offerType = REQUEST_TYPE_PAID_VACATION_ALL;
+		this.offerTypeName = offerTypeName;
 
 		userId = overtimeRequestModel.userId;
 		userName = overtimeRequestModel.userName;
-		offerType = REQUEST_TYPE_PAID_VACATION_ALL;
-		this.offerTypeName = offerTypeName;
 		startDateString = overtimeRequestModel.startDateString;
 		startTimeString = "00:00";
 		endDateString = overtimeRequestModel.endDateString;
@@ -76,7 +77,6 @@ public class WorkRequest{
 		approveResult1 = overtimeRequestModel.approveResult1;
 		approveUser2 = overtimeRequestModel.approveUser2;
 		approveResult2 = overtimeRequestModel.approveResult2;
-
 		requestDateString = overtimeRequestModel.requestDateString;
 		approveResult = overtimeRequestModel.approveResult1;
 		userAvatarPath = overtimeRequestModel.userAvatarPath;
@@ -85,12 +85,14 @@ public class WorkRequest{
 		key = overtimeRequestModel.key;
 		note = overtimeRequestModel.note;
 		companyId = overtimeRequestModel.companyId;
-
 		startDate = overtimeRequestModel.startDate;
 		endDate = overtimeRequestModel.endDate;
+		userColor = overtimeRequestModel.userColor;
 	}
 
 	public WorkRequest(HolidayWorkingModel holidayWorkingModel, String offerTypeName){
+		startDate = holidayWorkingModel.startDate;
+		endDate = holidayWorkingModel.startDate;
 
 		userId = holidayWorkingModel.userId;
 		userName = holidayWorkingModel.userName;
@@ -103,7 +105,6 @@ public class WorkRequest{
 		approveResult1 = holidayWorkingModel.approveResult1;
 		approveUser2 = holidayWorkingModel.approveUser2;
 		approveResult2 = holidayWorkingModel.approveResult2;
-
 		requestDateString = holidayWorkingModel.requestDateString;
 		approveResult = holidayWorkingModel.approveResult1;
 		userAvatarPath = holidayWorkingModel.userAvatarPath;
@@ -112,9 +113,7 @@ public class WorkRequest{
 		key = holidayWorkingModel.key;
 		note = holidayWorkingModel.note;
 		companyId = holidayWorkingModel.companyId;
-
-		startDate = holidayWorkingModel.startDate;
-		endDate = holidayWorkingModel.startDate;
+		userColor = holidayWorkingModel.userColor;
 	}
 
 	public String	userColor	= "#FFFFFF";

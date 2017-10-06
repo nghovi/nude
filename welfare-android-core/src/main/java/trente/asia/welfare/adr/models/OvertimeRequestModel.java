@@ -23,5 +23,4 @@ public class OvertimeRequestModel extends VacationRequestModel{
 	public String				startTimeString;
 	public String				endTimeString;
 	public String				approveResult;
-
 }

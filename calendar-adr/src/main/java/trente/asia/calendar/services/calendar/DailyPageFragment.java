@@ -33,6 +33,8 @@ import trente.asia.calendar.services.todo.TodoListFragment;
 import trente.asia.calendar.services.todo.TodoListTodayFragment;
 import trente.asia.welfare.adr.define.WelfareConst;
 
+import static trente.asia.calendar.services.calendar.WeeklyPageFragment.getWorkRequestComparator;
+
 /**
  * DailyPageFragment
  *
@@ -176,6 +178,7 @@ public class DailyPageFragment extends SchedulesPageFragment{
 
 	@Override
 	protected void updateSchedules(List<ScheduleModel> schedules, List<CategoryModel> categories){
+
 		WeeklyPageFragment.sortSchedules(schedules, dates.get(0), dates.get(dates.size() - 1), false);
 		numRow = 0;
 		int oldMoreNumber = moreNumber;
@@ -204,7 +207,8 @@ public class DailyPageFragment extends SchedulesPageFragment{
 			lnrScheduleAllDays.addView(textView);
 		}
 
-		// offer
+		// request
+		Collections.sort(lstWorkRequest, getWorkRequestComparator());
 		for(WorkRequest workRequest : lstWorkRequest){
 			TextView textView = WeeklyPageFragment.makeTextView(activity, workRequest.offerTypeName, 0, 0, LinearLayout.LayoutParams.MATCH_PARENT, Color.parseColor(workRequest.userColor), 0, Gravity.CENTER);
 			lnrScheduleAllDays.addView(textView);
