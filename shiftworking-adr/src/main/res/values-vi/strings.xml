@@ -131,4 +131,6 @@
     <string name="rejected">Rejected</string>
     <string name="done">Done</string>
     <string name="wait2">Wait2</string>
+    <string name="fragment_holiday_working_edit_header">Holiday working offer add</string>
+    <string name="fragment_overtime_edit_header">Overtime offer add</string>
 </resources>

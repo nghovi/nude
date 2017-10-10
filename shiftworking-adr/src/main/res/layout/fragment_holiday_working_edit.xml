@@ -25,7 +25,7 @@
                     android:layout_marginBottom="@dimen/margin_10dp"
                     android:paddingLeft="@dimen/margin_16dp"
                     android:paddingRight="@dimen/margin_16dp"
-                    android:text="@string/fragment_holiday_working_detail_header" />
+                    android:text="@string/fragment_holiday_working_edit_header" />
 
                 <View style="@style/cs_common_divider" />
 
