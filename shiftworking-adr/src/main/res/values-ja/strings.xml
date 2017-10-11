@@ -163,4 +163,5 @@
     <string name="sw_delete">削除</string>
     <string name="fragment_holiday_working_edit_header">休出申請追加</string>
     <string name="fragment_overtime_edit_header">残業申請追加</string>
+    <string name="sw_early">早出</string>
 </resources>

@@ -165,4 +165,5 @@
     <string name="sw_delete">Delete</string>
     <string name="fragment_holiday_working_edit_header">Holiday working offer add</string>
     <string name="fragment_overtime_edit_header">Overtime offer add</string>
+    <string name="sw_early">Early</string>
 </resources>
