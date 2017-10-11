@@ -105,7 +105,11 @@ public class OvertimeEditFragment extends AbstractEditFragment implements OnTime
 
 			@Override
 			public void onClicked(String selectedKey, boolean isSelected){
-				binding.txtOfferType.setText(typeListMap.get(overtimeRequest.overtimeType));
+				if("E".equals(selectedKey)){
+					binding.txtOfferType.setText("Early");
+				}else{
+					binding.txtOfferType.setText("Overtime");
+				}
 			}
 		});
 	}
