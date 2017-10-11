@@ -128,7 +128,7 @@
     <string name="sw_offer">申請</string>
     <string name="sw_holiday_working_offer">休出申請</string>
     <string name="sw_other_holiday_working_offer">みんなの休出申請</string>
-    <string name="fragment_overtime_detail_header">残業申請</string>
+    <string name="fragment_overtime_detail_header">残業申請詳細</string>
     <string name="fragment_overtime_detail_expected_date">残業希望日</string>
     <string name="fragment_overtime_detail_expected_time">残業希望時間</string>
     <string name="fragment_overtime_detail_reason">理由</string>
