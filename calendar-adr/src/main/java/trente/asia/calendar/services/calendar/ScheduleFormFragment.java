@@ -222,6 +222,9 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 				repeatDialog.initDefaultValue();
 				Date startDate = CCDateUtil.makeDateCustom(startDateStr, WelfareConst.WF_DATE_TIME_DATE);
 				Date endDate = CCDateUtil.makeDateCustom(txtEndDate.getText().toString(), WelfareConst.WF_DATE_TIME_DATE);
+				if (!swtAllDay.isChecked()){
+					endDate = startDate;
+				}
 				datePickerDialogEnd.getDatePicker().setMinDate(startDate.getTime());
 				// // TODO: 3/21/2017 it's not good initDataPickerDialogEnd everytime
 				Calendar cal = Calendar.getInstance();
