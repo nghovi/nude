@@ -1,5 +1,12 @@
 package trente.asia.welfare.adr.activity;
 
+import java.io.File;
+import java.util.List;
+import java.util.TimeZone;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
@@ -16,13 +23,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.File;
-import java.util.List;
-import java.util.TimeZone;
 
 import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCJsonUtil;
@@ -52,12 +52,13 @@ public abstract class WelfareFragment extends ChiaseFragment implements WelfareA
 
 	protected PreferencesAccountUtil	prefAccUtil;
 	protected UserModel					myself;
-	public boolean						isClickNotification		= false;
+	public boolean						isClickNotification			= false;
 	protected Integer					lnrContentId;
-	public static final int				MARGIN_LEFT_RIGHT_PX	= WelfareUtil.dpToPx(16);
-	public static final int				MARGIN_TEXT_TOP_BOTTOM	= WelfareUtil.dpToPx(4);
-
-	public static long					currentTime				= 0;
+	public static final int				MARGIN_LEFT_RIGHT_PX		= WelfareUtil.dpToPx(16);
+	public static final int				MARGIN_TEXT_TOP_BOTTOM_PX	= WelfareUtil.dpToPx(4);
+	public static final int				MARGIN_TEXT_MIDDLE_PX		= WelfareUtil.dpToPx(8);
+	public static final int				TIME_WIDTH_PX				= WelfareUtil.dpToPx(60);
+	public static long					currentTime					= 0;
 
 	public void benchmark(String msg){
 		if(currentTime == 0){

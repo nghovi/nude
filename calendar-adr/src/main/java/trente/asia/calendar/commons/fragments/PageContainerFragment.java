@@ -40,6 +40,8 @@ public abstract class PageContainerFragment extends AbstractClFragment{
 	protected TextView					txtToday;
 	private UserFacilityView			userFacilityView;
 	private int							pagerScrollingState;
+	public ClPageFragment				leftNeighborFragment;
+	public ClPageFragment				rightNeiborFragment;
 
 	@Override
 	public void onResume(){
@@ -138,9 +140,18 @@ public abstract class PageContainerFragment extends AbstractClFragment{
 				setActiveDate(position);
 				holder.selectedPagePosition = position;
 				ClPageFragment fragment = (ClPageFragment)mPagerAdapter.getItem(position);
+				leftNeighborFragment = (ClPageFragment)mPagerAdapter.getItem(position - 1);
+				rightNeiborFragment = (ClPageFragment)mPagerAdapter.getItem(position + 1);
 				fragment.loadData();
+				onFragmentSelected(fragment);
 			}
 		});
+		leftNeighborFragment = (ClPageFragment)mPagerAdapter.getItem(INITIAL_POSITION - 1);
+		rightNeiborFragment = (ClPageFragment)mPagerAdapter.getItem(INITIAL_POSITION + 1);
+	}
+
+	protected void onFragmentSelected(ClPageFragment fragment){
+
 	}
 
 	public int getScrollingState(){

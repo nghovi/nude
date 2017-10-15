@@ -438,4 +438,5 @@ public class WelfareUtil{
 	public static int getColor(Context context, int colorResourceId){
 		return ContextCompat.getColor(context, colorResourceId);
 	}
+
 }

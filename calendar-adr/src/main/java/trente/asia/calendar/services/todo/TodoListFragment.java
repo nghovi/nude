@@ -390,7 +390,7 @@ public class TodoListFragment extends AbstractClFragment {
 
                 @Override
                 public void run() {
-                    // scrollView.fullScroll(View.FOCUS_DOWN);
+                    // scrSchedules.fullScroll(View.FOCUS_DOWN);
                     scrollToView(scrollView, btnShowFinished, -16);
                 }
             });

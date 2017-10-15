@@ -79,22 +79,22 @@
 
         <View style="@style/cs_common_divider" />
 
-        <ScrollView
-            android:id="@+id/src_fragment_daily_page"
+        <trente.asia.calendar.services.calendar.ObservableScrollView
+            android:id="@+id/scr_schedules"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fillViewport="true">
 
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/lnr_fragment_daily_page_schedules_time"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:paddingLeft="@dimen/margin_16dp"
                 android:paddingRight="@dimen/margin_16dp"
-                android:paddingTop="@dimen/margin_10dp"></LinearLayout>
+                android:paddingTop="@dimen/margin_0dp"></RelativeLayout>
 
-        </ScrollView>
+        </trente.asia.calendar.services.calendar.ObservableScrollView>
 
 
     </LinearLayout>
