@@ -44,7 +44,6 @@ import trente.asia.calendar.services.calendar.model.CategoryModel;
 import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.model.WorkRequest;
-import trente.asia.calendar.services.calendar.view.DailyScheduleList;
 import trente.asia.calendar.services.calendar.view.MonthlyCalendarRowView;
 import trente.asia.calendar.services.todo.TodoListFragment;
 import trente.asia.calendar.services.todo.TodoListTodayFragment;
@@ -58,17 +57,16 @@ import trente.asia.welfare.adr.utils.WelfareUtil;
  *
  * @author VietNH
  */
-public class WeeklyPageFragment extends SchedulesPageFragment implements ObservableScrollView.ScrollViewListener{
+public class WeeklyPageFragment extends SchedulesPageFragment{
 
 	public static final Integer			CELL_HEIGHT_PIXEL	= WelfareUtil.dpToPx(18);
 	protected LinearLayout				lnrHeader;
 	private RelativeLayout				rltExpandBar;
 	private RelativeLayout				rltPart1;
-	private RelativeLayout				rltPart2;
+	private LinearLayout				lnrPart2;
 	private Map<Integer, List<Integer>>	columnTopMarginsMap;
 	private int							maxTopMargin		= 0;
 	private ScrollView					scrollViewPart1;
-	public ObservableScrollView			scrMain;
 	private boolean						shouldClick;
 	private LinearLayout				lnrVerticalLineContainer;
 
@@ -76,10 +74,6 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 	private float						mDownY;
 	private final float					SCROLL_THRESHOLD	= 5;
 	private boolean						firstTime			= true;
-	private static final int			MARGIN_TOP_PX		= WelfareUtil.dpToPx(10);
-
-	private WeeklyFragment				parent;
-	private int							height				= MARGIN_LEFT_RIGHT_PX + MARGIN_TOP_PX - 1;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -92,20 +86,13 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 	public void expand(final View v){
 		v.measure(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
 		final int targetHeight = v.getMeasuredHeight();
-		height = targetHeight + MARGIN_LEFT_RIGHT_PX + MARGIN_TOP_PX - 1;
 		v.setVisibility(View.VISIBLE);
 		Animation a = new Animation() {
 
 			@Override
 			protected void applyTransformation(float interpolatedTime, Transformation t){
-				if(interpolatedTime == 1){
-					v.getLayoutParams().height = targetHeight;
-					v.requestLayout();
-					updateTimeColumnPosition();
-				}else{
-					v.getLayoutParams().height = (int)(targetHeight * interpolatedTime);
-					v.requestLayout();
-				}
+				v.getLayoutParams().height = interpolatedTime == 1 ? targetHeight : (int)(targetHeight * interpolatedTime);
+				v.requestLayout();
 			}
 
 			@Override
@@ -117,12 +104,12 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 		// 1dp/ms
 		a.setDuration((int)(targetHeight / v.getContext().getResources().getDisplayMetrics().density));
 		v.startAnimation(a);
-		// scrollToFavouritePost();
+		scrollToFavouritePost();
 	}
 
 	public void collapse(final View v, final int targetHeight){
 		final int initialHeight = v.getMeasuredHeight();
-		height = targetHeight + TIME_WIDTH_PX - MARGIN_LEFT_RIGHT_PX - 1;
+
 		Animation a = new Animation() {
 
 			@Override
@@ -145,8 +132,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 		// 1dp/ms
 		a.setDuration((int)(initialHeight / v.getContext().getResources().getDisplayMetrics().density));
 		v.startAnimation(a);
-		// scrollToFavouritePost();
-		updateTimeColumnPosition();
+		scrollToFavouritePost();
 	}
 
 	@Override
@@ -155,20 +141,8 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 		super.updateSchedules(schedules, categories);
 		sortSchedules(schedules, dates.get(0), dates.get(dates.size() - 1), true);
 		schedules = multiplyWithUsers(schedules);
-
-		List<ScheduleModel> normalSchedules = new ArrayList<>();
-		List<ScheduleModel> allDaySchedules = new ArrayList<>();
-
-		for(ScheduleModel scheduleModel : schedules){
-			if(!scheduleModel.isAllDay){
-				normalSchedules.add(scheduleModel);
-			}else{
-				allDaySchedules.add(scheduleModel);
-			}
-		}
-
-		buildPart1(allDaySchedules);
-		buildPart2(normalSchedules);
+		buildPart1(schedules);
+		buildPart2(schedules);
 	}
 
 	public static void sortSchedules(List<ScheduleModel> schedules, Date dateStart, Date dateEnd, boolean checkAllDayTime){
@@ -196,7 +170,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 
 	private void buildPart1(List<ScheduleModel> schedules){
 		rltPart1.removeAllViews();
-		float screenW = lnrHeader.getMeasuredWidth();
+		final int cellWidth = lnrHeader.getMeasuredWidth() / 8;
 		Calendar cStartWeek = CCDateUtil.makeCalendarWithDateOnly(dates.get(0));
 		columnTopMarginsMap = new HashMap<>();
 		int oldMaxTopMargin = maxTopMargin;
@@ -210,9 +184,9 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 			int dayDistance = c2.get(Calendar.DAY_OF_YEAR) - cStartWeek.get(Calendar.DAY_OF_YEAR);
 
 			if(!columnTopMarginsMap.keySet().contains(dayDistance)){
-				int leftMargin = (int)(screenW * dayDistance / 7);
+				int leftMargin = cellWidth * (1 + dayDistance);
 				topMargin = getNextTopMargin(dayDistance, dayDistance);
-				TextView textView = makeTextView(activity, getString(R.string.cl_footer_todo), leftMargin, topMargin, (int)(screenW / 7), Color.GRAY, 0, Gravity.CENTER);
+				TextView textView = makeTextView(activity, getString(R.string.cl_footer_todo), leftMargin, topMargin, cellWidth, Color.GRAY, 0, Gravity.CENTER);
 				textView.setOnClickListener(new View.OnClickListener() {
 
 					@Override
@@ -232,7 +206,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 			if(!birthdayIconMap.containsKey(keyDate)){
 				Calendar c2 = CCDateUtil.makeCalendarWithDateOnly(userModel.dateBirth);
 				int dayDistance = c2.get(Calendar.DAY_OF_YEAR) - cStartWeek.get(Calendar.DAY_OF_YEAR);
-				int leftMargin = (int)(screenW * (0 + dayDistance) / 7 + (screenW / 7 - CELL_HEIGHT_PIXEL) / 2);
+				int leftMargin = cellWidth * (1 + dayDistance) + (cellWidth - CELL_HEIGHT_PIXEL) / 2;
 				topMargin = getNextTopMargin(dayDistance, dayDistance);
 
 				ImageView imageViewBirthday = new ImageView(activity);
@@ -250,9 +224,9 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 		for(HolidayModel holidayModel : lstHoliday){
 			Calendar c2 = CCDateUtil.makeCalendarWithDateOnly(holidayModel.startDate);
 			int dayDistance = c2.get(Calendar.DAY_OF_YEAR) - cStartWeek.get(Calendar.DAY_OF_YEAR);
-			int leftMargin = (int)(screenW * (0 + dayDistance) / 7);
+			int leftMargin = cellWidth * (1 + dayDistance);
 			topMargin = getNextTopMargin(dayDistance, dayDistance);
-			TextView textView = makeTextView(activity, holidayModel.holidayName, leftMargin, topMargin, (int)(screenW / 7), Color.WHITE, Color.RED, Gravity.CENTER);
+			TextView textView = makeTextView(activity, holidayModel.holidayName, leftMargin, topMargin, cellWidth, Color.WHITE, Color.RED, Gravity.CENTER);
 			rltPart1.addView(textView);
 			itemNum++;
 		}
@@ -266,29 +240,32 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 			int dayDistanceEnd = Math.min(7, cEnd.get(Calendar.DAY_OF_YEAR) - cStartWeek.get(Calendar.DAY_OF_YEAR));
 			int cellNumber = dayDistanceEnd - dayDistance + 1;
 
-			int leftMargin = (int)(screenW * (0 + dayDistance) / 7);
+			int leftMargin = cellWidth * (1 + dayDistance);
 			topMargin = getNextTopMargin(dayDistance, dayDistance + cellNumber - 1);
 
-			TextView textView = makeTextView(activity, workRequest.offerTypeName, leftMargin, topMargin, (int)(screenW * cellNumber / 7), Color.parseColor(workRequest.userColor), 0, Gravity.CENTER);
+			TextView textView = makeTextView(activity, workRequest.offerTypeName, leftMargin, topMargin, cellWidth * cellNumber, Color.parseColor(workRequest.userColor), 0, Gravity.CENTER);
 			rltPart1.addView(textView);
 			itemNum++;
 		}
 
 		// all day schedules
 		for(ScheduleModel schedule : schedules){
-			Calendar cStart = CCDateUtil.makeCalendarWithDateOnly(schedule.startDate);
-			Calendar cEnd = CCDateUtil.makeCalendarWithDateOnly(schedule.endDate);
 
-			int dayDistance = Math.max(0, cStart.get(Calendar.DAY_OF_YEAR) - cStartWeek.get(Calendar.DAY_OF_YEAR));
-			int dayDistanceEnd = Math.min(7, cEnd.get(Calendar.DAY_OF_YEAR) - cStartWeek.get(Calendar.DAY_OF_YEAR));
-			int cellNumber = dayDistanceEnd - dayDistance + 1;
-			int maxWidth = (int)(screenW * cellNumber / 7);
-			int leftMargin = (int)(screenW * (0 + dayDistance) / 7);
+			if(schedule.isAllDay){
+				Calendar cStart = CCDateUtil.makeCalendarWithDateOnly(schedule.startDate);
+				Calendar cEnd = CCDateUtil.makeCalendarWithDateOnly(schedule.endDate);
 
-			topMargin = getNextTopMargin(dayDistance, dayDistance + cellNumber - 1);
-			TextView textView = makeTextView(activity, schedule.scheduleName, leftMargin, topMargin, maxWidth, getColor(schedule), 0, Gravity.CENTER);
-			rltPart1.addView(textView);
-			itemNum++;
+				int dayDistance = Math.max(0, cStart.get(Calendar.DAY_OF_YEAR) - cStartWeek.get(Calendar.DAY_OF_YEAR));
+				int dayDistanceEnd = Math.min(7, cEnd.get(Calendar.DAY_OF_YEAR) - cStartWeek.get(Calendar.DAY_OF_YEAR));
+				int cellNumber = dayDistanceEnd - dayDistance + 1;
+				int maxWidth = cellWidth * cellNumber;
+				int leftMargin = cellWidth * (1 + dayDistance);
+
+				topMargin = getNextTopMargin(dayDistance, dayDistance + cellNumber - 1);
+				TextView textView = makeTextView(activity, schedule.scheduleName, leftMargin, topMargin, maxWidth, getColor(schedule), 0, Gravity.CENTER);
+				rltPart1.addView(textView);
+				itemNum++;
+			}
 		}
 		int rowNum = maxTopMargin / CELL_HEIGHT_PIXEL;
 		if(rowNum == 0){
@@ -299,16 +276,11 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 		int moreNumber = rowNum - MAX_ROW;
 
 		if(moreNumber <= 0){
-			int initialHeight = rowNum * WeeklyPageFragment.CELL_HEIGHT_PIXEL;
-			rltPart1.getLayoutParams().height = initialHeight;
-			height = initialHeight + MARGIN_LEFT_RIGHT_PX + MARGIN_TOP_PX - 1;
+			int height = rowNum * WeeklyPageFragment.CELL_HEIGHT_PIXEL;
+			rltPart1.getLayoutParams().height = height;
 			rltPart1.requestLayout();
 			rltExpandBar.setVisibility(View.GONE);
-			if(isActivePage()){
-				parent.imgExpand.setVisibility(View.INVISIBLE);
-			}
 		}else{
-			parent.imgExpand.setVisibility(View.VISIBLE);
 			int maxTopMarginAllowed = (MAX_ROW - 1) * CELL_HEIGHT_PIXEL;
 			while(rltExpandBar.getChildAt(1) != null){
 				rltExpandBar.removeViewAt(1);
@@ -326,13 +298,13 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 					textView.setMaxLines(1);
 					textView.setEllipsize(TextUtils.TruncateAt.END);
 					textView.setTextSize(13);
-					textView.setMaxWidth((int)(screenW / 7 - 2));
+					textView.setMaxWidth(cellWidth - 2);
 					textView.setGravity(Gravity.CENTER);
 					// textView.setBackgroundColor(Color.WHITE);
 					// textView.setBackground(ContextCompat.getDrawable(activity, R.drawable.wf_background_gray_border_white));
 					textView.setText("+" + more);
-					RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams((int)(screenW / 7 - 2), RelativeLayout.LayoutParams.WRAP_CONTENT);
-					rlp.setMargins((int)(key * screenW / 7), 0, 0, 0);
+					RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(cellWidth - 2, RelativeLayout.LayoutParams.WRAP_CONTENT);
+					rlp.setMargins((key + 1) * cellWidth, 0, 0, 0);
 					textView.setLayoutParams(rlp);
 					rltExpandBar.addView(textView);
 				}
@@ -343,14 +315,13 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 			}else if(oldMaxTopMargin != maxTopMargin){
 				if(isExpanded){
 					rltExpandBar.setVisibility(View.VISIBLE);
-					if(isActivePage()){
-						parent.imgExpand.setVisibility(View.VISIBLE);
-					}
+					imgExpand.setVisibility(View.VISIBLE);
 					for(int i = 1; i < rltExpandBar.getChildCount(); i++){
 						rltExpandBar.getChildAt(i).setVisibility(View.GONE);
 					}
-					height = rowNum * WeeklyPageFragment.CELL_HEIGHT_PIXEL + TIME_WIDTH_PX / 2 + MARGIN_TEXT_MIDDLE_PX - 1;
-					rltPart1.getLayoutParams().height = height;
+					// rltPart1.measure(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+					// rltPart1.getLayoutParams().height = rltPart1.getMeasuredHeight();
+					rltPart1.getLayoutParams().height = rowNum * WeeklyPageFragment.CELL_HEIGHT_PIXEL;
 					rltPart1.requestLayout();
 				}else{
 					showCollapse();
@@ -366,31 +337,17 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 			}
 		}
 
-		setOnTouchListener(scrollViewPart1, (int)(screenW / 7));
+		setOnTouchListener(scrollViewPart1, cellWidth);
 		firstTime = false;
-		if(isActivePage()){
-			updateTimeColumnPosition();
-		}
-	}
-
-	public void updateTimeColumnPosition(){
-		LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams)parent.lnrTimeColumn.getLayoutParams();
-		lp.setMargins(0, height, 0, 0);
-		parent.lnrTimeColumn.setLayoutParams(lp);
-		parent.lnrTimeColumn.requestLayout();
 	}
 
 	private void showCollapse(){
 		rltExpandBar.setVisibility(View.VISIBLE);
-		if(isActivePage()){
-			parent.imgExpand.setVisibility(View.VISIBLE);
-		}
+		imgExpand.setVisibility(View.VISIBLE);
 		for(int i = 1; i < rltExpandBar.getChildCount(); i++){
 			rltExpandBar.getChildAt(i).setVisibility(View.VISIBLE);
 		}
-		int initialHeight = (MAX_ROW - 1) * WeeklyPageFragment.CELL_HEIGHT_PIXEL;
-		rltPart1.getLayoutParams().height = initialHeight;
-		height = initialHeight + TIME_WIDTH_PX - MARGIN_LEFT_RIGHT_PX - 1;
+		rltPart1.getLayoutParams().height = (MAX_ROW - 1) * WeeklyPageFragment.CELL_HEIGHT_PIXEL;
 		rltPart1.requestLayout();
 	}
 
@@ -461,49 +418,66 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 		return textView;
 	}
 
-	public static TextView makeTextView2(Context activity, String text, int leftMargin, int topMargin, int maxWidth, int height, int bgColor, int textColor, int gravity){
-		TextView textView = new TextView(activity);
-		textView.setMaxLines(1);
-		// textView.setEllipsize(TextUtils.TruncateAt.END);
-		textView.setTextSize(13);
-
-		textView.setMaxWidth(maxWidth);
-		textView.setGravity(gravity);
-
-		if(bgColor != 0){
-			textView.setBackground(ContextCompat.getDrawable(activity, R.drawable.wf_background_round_border_white));
-			GradientDrawable bgShape = (GradientDrawable)textView.getBackground();
-			bgShape.setColor(bgColor);
-		}
-		if(textColor != 0){
-			textView.setTextColor(textColor);
-		}
-		RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(maxWidth, height);
-		rlp.setMargins(leftMargin, topMargin, 0, 0);
-		textView.setLayoutParams(rlp);
-		textView.setText(text);
-		return textView;
-	}
-
 	private void buildPart2(List<ScheduleModel> schedules){
-		float screenW = lnrHeader.getMeasuredWidth();
+		lnrPart2.removeAllViews();
+		final int cellWidth = lnrHeader.getMeasuredWidth() / 8;
 
-		Map<Date, List<ScheduleModel>> daySchedulesMap = DailyScheduleList.buildDaySchedulesMap(dates, schedules);
+		final Calendar c = CCDateUtil.makeCalendarToday();
+		Map<String, List<ScheduleModel>> startTimeSchedulesMap = new HashMap<>();
+		for(int i = 0; i < 24; i++){
+			String startTime = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_HH_MM, c.getTime());
+			startTimeSchedulesMap.put(startTime, new ArrayList<ScheduleModel>());
+			c.add(Calendar.HOUR, 1);
+		}
+
+		for(ScheduleModel scheduleModel : schedules){
+			if(!scheduleModel.isAllDay){
+				String keyMap = scheduleModel.startTime.split(":")[0] + ":00";
+				startTimeSchedulesMap.get(keyMap).add(scheduleModel);
+			}
+		}
 
 		Calendar c1 = CCDateUtil.makeCalendarWithDateOnly(dates.get(0));
 
-		for(Date date : daySchedulesMap.keySet()){
-			Calendar c2 = CCDateUtil.makeCalendarWithDateOnly(date);
-			int dayDistance = c2.get(Calendar.DAY_OF_YEAR) - c1.get(Calendar.DAY_OF_YEAR);
-			int leftMargin = (int)(screenW * dayDistance / 7) + 1;
-			List<ScheduleModel> daySchedules = daySchedulesMap.get(date);
-			DailyPageFragment.buildBlocks(activity, leftMargin, screenW / 7, daySchedules, rltPart2);
+		List<String> keys = new ArrayList<>(startTimeSchedulesMap.keySet());
+		Collections.sort(keys);
+
+		for(String key : keys){
+			View cell = inflater.inflate(R.layout.item_weekly_schedule, null);
+			((TextView)cell.findViewById(R.id.txt_item_daily_schedule_start_time)).setText(key);
+			RelativeLayout rltSchedules = (RelativeLayout)cell.findViewById(R.id.rlt_schedule_weekly_container);
+
+			Map<Integer, Integer> leftMarginScheduleNumMap = new HashMap<>();
+
+			for(final ScheduleModel schedule : startTimeSchedulesMap.get(key)){
+				Calendar c2 = CCDateUtil.makeCalendarWithDateOnly(schedule.startDate);
+				int dayDistance = c2.get(Calendar.DAY_OF_YEAR) - c1.get(Calendar.DAY_OF_YEAR);
+				int leftMargin = cellWidth * (1 + dayDistance);
+				int topMargin = 0;
+				int leftMarginScheduleNum = 0;
+				if(leftMarginScheduleNumMap.containsKey(leftMargin)){
+					leftMarginScheduleNum = leftMarginScheduleNumMap.get(leftMargin);
+					topMargin = leftMarginScheduleNum * CELL_HEIGHT_PIXEL;
+				}
+
+				leftMarginScheduleNumMap.put(leftMargin, leftMarginScheduleNum + 1);
+
+				int color = WeeklyPageFragment.getColor(schedule);
+				if("#FFFFFF".equals(schedule.getScheduleColor())){
+					color = Color.parseColor("#000000");
+				}
+
+				TextView textView = makeTextView(activity, schedule.scheduleName, leftMargin + 1, topMargin, cellWidth, 0, color, Gravity.LEFT);
+				rltSchedules.addView(textView);
+			}
+			lnrPart2.addView(cell);
+			if(key.equals(currentHour)){
+				thisHourView = cell;
+			}
 		}
 
-		setOnTouchListener(scrSchedules, (int)(screenW / 7));
-		if(isActivePage() && parent.timeScroll.y == 0){
-			scrollToFavouritePost();
-		}
+		setOnTouchListener(scrollView, cellWidth);
+		scrollToFavouritePost();
 	}
 
 	private void setOnTouchListener(View scrollview, final int cellWidth){
@@ -529,8 +503,8 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 						float x = event.getAxisValue(MotionEvent.AXIS_X);
 						float y = cellWidth;
 						int column = (int)(x / y);
-						if(column >= 0 && column < dates.size()){
-							onDailyScheduleClickListener(dates.get(column));
+						if(column - 1 >= 0 && column - 1 < dates.size()){
+							onDailyScheduleClickListener(dates.get(column - 1));
 						}
 						return true;
 					}
@@ -545,11 +519,11 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 	}
 
 	private void scrollToFavouritePost(){
-		scrSchedules.post(new Runnable() {
+		scrollView.post(new Runnable() {
 
 			@Override
 			public void run(){
-				TodoListFragment.scrollToView(parent.timeScroll, parent.goldenHourView, 2);
+				TodoListFragment.scrollToView(scrollView, thisHourView, 2);
 			}
 		});
 	}
@@ -567,7 +541,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 	protected void initCalendarHeader(){
 		lnrHeader = (LinearLayout)getView().findViewById(R.id.lnr_weekly_header);
 		lnrHeader.removeAllViews();
-		// addCell("", "", 0, today);
+		addCell("", "", 0, today);
 		Calendar c = Calendar.getInstance();
 		for(Date date : dates){
 			c.setTime(date);
@@ -624,7 +598,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 		// }
 		// });
 
-		for(int i = 0; i < 7; i++){
+		for(int i = 0; i < 8; i++){
 			View verticalBar = new View(activity);
 			LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(1, LinearLayout.LayoutParams.MATCH_PARENT);
 			verticalBar.setLayoutParams(layoutParams);
@@ -646,74 +620,36 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 		return "W";
 	}
 
+	private void gotoDailySummaryDialog(int finalI){
+		if(1 <= finalI && finalI <= 8){
+			onDailyScheduleClickListener(dates.get(finalI - 1));
+		}
+	}
+
 	@Override
 	protected void initView(){
 		super.initView();
-		parent = (WeeklyFragment)getParentFragment();
-		scrMain = (ObservableScrollView)getView().findViewById(R.id.scr_schedules);
-		if(isActivePage()){
-			parent.timeScroll.setScrollViewListener(this);
-			scrMain.setScrollViewListener(this);
-			setOnClickListenerForExpandIcon();
-		}
 		scrollViewPart1 = (ScrollView)getView().findViewById(R.id.scroll_part1);
 		rltPart1 = (RelativeLayout)getView().findViewById(R.id.rlt_part1);
-		rltPart2 = (RelativeLayout)getView().findViewById(R.id.rlt_part2);
+		lnrPart2 = (LinearLayout)getView().findViewById(R.id.lnr_part2);
 		rltExpandBar = (RelativeLayout)getView().findViewById(R.id.rlt_expand);
 
-		// imgExpand = (ImageView)getView().findViewById(R.id.ic_icon_expand);
-
-		// Add horizontal time lines
-		Calendar c = CCDateUtil.makeCalendarToday();
-		List<String> times = new ArrayList<>();
-		for(int i = 0; i < 24; i++){
-			String startTime = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_HH_MM, c.getTime());
-			times.add(startTime);
-			c.add(Calendar.HOUR, 1);
-		}
-
-		Collections.sort(times);
-
-		for(int i = 0; i < times.size(); i++){
-			addSHorizontalLine(times.get(i), (i + 1) * TIME_WIDTH_PX);
-		}
-
-		//// TODO: 10/13/17 why next page line is not good
-		scrMain.post(new Runnable() {
-
-			@Override
-			public void run(){
-				scrMain.scrollTo(parent.timeScroll.x, parent.timeScroll.y);
-				scrMain.setCoordinate(parent.timeScroll.x, parent.timeScroll.y, parent.timeScroll.oldx, parent.timeScroll.oldy);
-			}
-		});
-	}
-
-	private void addSHorizontalLine(String startTime, int i){
-		View cell = new View(activity);
-		cell.setBackgroundColor(Color.GRAY);
-		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1);
-		params.setMargins(0, i, 0, 0);
-		cell.setLayoutParams(params);
-		rltPart2.addView(cell);
-	}
-
-	public void setOnClickListenerForExpandIcon(){
-		parent.imgExpand.setOnClickListener(new View.OnClickListener() {
+		imgExpand = (ImageView)getView().findViewById(R.id.ic_icon_expand);
+		imgExpand.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v){
 				if(isExpanded){
 					collapse(rltPart1, (MAX_ROW - 1) * WeeklyPageFragment.CELL_HEIGHT_PIXEL);
-					for(int i = 0; i < rltExpandBar.getChildCount(); i++){
+					for(int i = 1; i < rltExpandBar.getChildCount(); i++){
 						rltExpandBar.getChildAt(i).setVisibility(View.VISIBLE);
 					}
 					isExpanded = false;
-					parent.imgExpand.setImageResource(R.drawable.down);
+					imgExpand.setImageResource(R.drawable.down);
 				}else{
-					parent.imgExpand.setImageResource(R.drawable.up);
+					imgExpand.setImageResource(R.drawable.up);
 					expand(rltPart1);
-					for(int i = 0; i < rltExpandBar.getChildCount(); i++){
+					for(int i = 1; i < rltExpandBar.getChildCount(); i++){
 						rltExpandBar.getChildAt(i).setVisibility(View.GONE);
 					}
 					isExpanded = true;
@@ -745,17 +681,5 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 				return o1.offerTypeName.compareTo(o2.offerTypeName);
 			}
 		};
-	}
-
-	@Override
-	public void onScrollChanged(ObservableScrollView scrollView, int x, int y, int oldx, int oldy){
-		if(scrollView == scrMain){
-			parent.timeScroll.scrollTo(x, y);
-			parent.timeScroll.setCoordinate(x, y, oldx, oldy);
-		}else if(scrollView == parent.timeScroll){
-			scrMain.scrollTo(x, y);
-			scrMain.setCoordinate(x, y, oldx, oldy);
-		}
-		parent.scrollNeighbors(x, y, oldx, oldy);
 	}
 }

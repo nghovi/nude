@@ -1,16 +1,13 @@
 package trente.asia.calendar.services.calendar;
 
-import static trente.asia.calendar.services.calendar.WeeklyPageFragment.getWorkRequestComparator;
-import static trente.asia.calendar.services.calendar.WeeklyPageFragment.makeTextView2;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -21,7 +18,6 @@ import android.view.animation.Animation;
 import android.view.animation.Transformation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import asia.chiase.core.util.CCCollectionUtil;
@@ -36,27 +32,24 @@ import trente.asia.calendar.services.calendar.model.WorkRequest;
 import trente.asia.calendar.services.todo.TodoListFragment;
 import trente.asia.calendar.services.todo.TodoListTodayFragment;
 import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.utils.WelfareUtil;
+
+import static trente.asia.calendar.services.calendar.WeeklyPageFragment.getWorkRequestComparator;
 
 /**
  * DailyPageFragment
  *
  * @author Vietnh
  */
-public class DailyPageFragment extends SchedulesPageFragment implements ObservableScrollView.ScrollViewListener{
+public class DailyPageFragment extends SchedulesPageFragment{
 
 	private LinearLayout						lnrScheduleAllDays;
 	private TextView							txtTodoInfo;
-	private RelativeLayout						rltListSchedules;
+	private LinearLayout						lnrListSchedules;
 	private Map<String, List<ScheduleModel>>	startTimeSchedulesMap;
 	private ImageView							imgBirthdayIcon;
 	private int									moreNumber;
 	private boolean								firstTime	= true;
 	private int									numRow;
-	private List<EventRect>						mEventRects	= new ArrayList<>();
-	private DailyFragment						parent;
-	private ImageView							imgExpand;
-	// private int screenW;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -69,7 +62,6 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 	@Override
 	protected void initView(){
 		super.initView();
-		imgExpand = (ImageView)getView().findViewById(R.id.ic_icon_expand);
 		txtTodoInfo = (TextView)getView().findViewById(R.id.txt_todo_things);
 		txtTodoInfo.setOnClickListener(new View.OnClickListener() {
 
@@ -81,28 +73,14 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 		imgBirthdayIcon = (ImageView)getView().findViewById(R.id.img_birthday_daily_page);
 		lnrScheduleAllDays = (LinearLayout)getView().findViewById(R.id.lnr_schedule_all_day_container);
 		lnrScheduleAllDays.setOnClickListener(this);
-		rltListSchedules = (RelativeLayout)getView().findViewById(R.id.lnr_fragment_daily_page_schedules_time);
-		rltListSchedules.setOnClickListener(this);
-		scrSchedules.setScrollViewListener(this);
-		parent = (DailyFragment)getParentFragment();
-
-		// Add horizontal time lines
+		lnrListSchedules = (LinearLayout)getView().findViewById(R.id.lnr_fragment_daily_page_schedules_time);
+		lnrListSchedules.setOnClickListener(this);
 		Calendar c = CCDateUtil.makeCalendarToday();
-		List<String> times = new ArrayList<>();
-		for(int i = 1; i < 24; i++){
-			c.set(Calendar.HOUR_OF_DAY, i);
+		startTimeSchedulesMap = new HashMap<>();
+		for(int i = 0; i < 24; i++){
 			String startTime = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_HH_MM, c.getTime());
-			times.add(startTime);
-		}
-
-		Collections.sort(times);
-
-		for(int i = 0; i < times.size(); i++){
-			int bottomMargin = 0;
-			if(i == times.size() - 1){
-				bottomMargin = TIME_WIDTH_PX - MARGIN_TEXT_MIDDLE_PX - 1;
-			}
-			addStartTimeRow(times.get(i), (i + 1) * DailyPageFragment.TIME_WIDTH_PX - MARGIN_TEXT_MIDDLE_PX, bottomMargin);
+			startTimeSchedulesMap.put(startTime, new ArrayList<ScheduleModel>());
+			c.add(Calendar.HOUR, 1);
 		}
 
 		imgExpand.setOnClickListener(new View.OnClickListener() {
@@ -122,6 +100,7 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 				}
 			}
 		});
+
 	}
 
 	private void gotoTodoListTodayFragment(Date selectedDate){
@@ -198,23 +177,7 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 	}
 
 	@Override
-	public void onScrollChanged(ObservableScrollView scrollView, int x, int y, int oldx, int oldy){
-		parent.scrollNeighbors(x, y, oldx, oldy);
-	}
-
-	public class RECT{
-
-		public int		startX;
-		public int		endX;
-		public int		startY;
-		public int		endY;
-		public String	key;
-	}
-
-	@Override
 	protected void updateSchedules(List<ScheduleModel> schedules, List<CategoryModel> categories){
-
-		float screenW = rltListSchedules.getMeasuredWidth() - TIME_WIDTH_PX - MARGIN_LEFT_RIGHT_PX;
 
 		WeeklyPageFragment.sortSchedules(schedules, dates.get(0), dates.get(dates.size() - 1), false);
 		numRow = 0;
@@ -251,23 +214,23 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 			lnrScheduleAllDays.addView(textView);
 		}
 
-		List<ScheduleModel> normalSchedules = new ArrayList<>();
 		List<ScheduleModel> allDaySchedules = new ArrayList<>();
+		for(String key : startTimeSchedulesMap.keySet()){
+			startTimeSchedulesMap.put(key, new ArrayList<ScheduleModel>());
+		}
 
 		for(ScheduleModel scheduleModel : schedules){
 			if(!scheduleModel.isAllDay){
-				normalSchedules.add(scheduleModel);
+				String keyMap = scheduleModel.startTime.split(":")[0] + ":00";
+				startTimeSchedulesMap.get(keyMap).add(scheduleModel);
 			}else{
 				allDaySchedules.add(scheduleModel);
+				TextView textView = WeeklyPageFragment.makeTextView(activity, scheduleModel.scheduleName, 0, 0, LinearLayout.LayoutParams.MATCH_PARENT, WeeklyPageFragment.getColor(scheduleModel), 0, Gravity.CENTER);
+				lnrScheduleAllDays.addView(textView);
 			}
 		}
 
-		buildBlocks(activity, TIME_WIDTH_PX - MARGIN_LEFT_RIGHT_PX, screenW, normalSchedules, rltListSchedules);
-
-		for(ScheduleModel scheduleModel : allDaySchedules){
-			TextView textView = WeeklyPageFragment.makeTextView(activity, scheduleModel.scheduleName, 0, 0, LinearLayout.LayoutParams.MATCH_PARENT, WeeklyPageFragment.getColor(scheduleModel), 0, Gravity.CENTER);
-			lnrScheduleAllDays.addView(textView);
-		}
+		lnrListSchedules.removeAllViews();
 
 		int childCount = lnrScheduleAllDays.getChildCount();
 		moreNumber = (childCount + numRow) - MAX_ROW;
@@ -293,231 +256,17 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 			}
 		}
 
+		List<String> keys = new ArrayList<>(startTimeSchedulesMap.keySet());
+		Collections.sort(keys);
+
+		for(String key : keys){
+			List<ScheduleModel> scheduleModels = startTimeSchedulesMap.get(key);
+			addStartTimeRow(key, scheduleModels);
+		}
+
 		firstTime = false;
 		scrollToFavouritePost();
 
-	}
-
-	public static void buildBlocks(Context context, int leftPx, float containerWidth, List<ScheduleModel> scheduleModels, RelativeLayout container){
-		List<EventRect> eventRects = new ArrayList<>();
-		for(ScheduleModel scheduleModel : scheduleModels){
-			EventRect eventRect = new EventRect(scheduleModel);
-			eventRects.add(eventRect);
-		}
-
-		eventRects = computePositionOfEvents(eventRects);
-
-		for(EventRect eventRect : eventRects){
-			int leftMargin = leftPx + (int)(containerWidth * eventRect.left);
-			int topMargin = WelfareUtil.dpToPx((int)eventRect.top);
-			int width = (int)(eventRect.width * containerWidth);
-			int height = WelfareUtil.dpToPx((int)eventRect.bottom - (int)eventRect.top);
-			TextView txtView = makeTextView2(context, eventRect.schedule.scheduleName, leftMargin, topMargin, width, height, Color.parseColor(eventRect.schedule.scheduleColor), 0, Gravity.CENTER);
-			container.addView(txtView);
-		}
-	}
-
-	/**
-	 * A class to hold reference to the events and their visual representation. An EventRect is
-	 * actually the rectangle that is drawn on the calendar for a given schedule. There may be more
-	 * than one rectangle for a single schedule (an schedule that expands more than one day). In that
-	 * case two instances of the EventRect will be used for a single schedule. The given schedule will be
-	 * stored in "originalEvent". But the schedule that corresponds to rectangle the rectangle
-	 * instance will be stored in "schedule".
-	 */
-	public static final class EventRect{
-
-		public ScheduleModel	schedule;
-		public float			left;
-		public float			width;
-		public float			top;
-		public float			bottom;
-
-		/**
-		 * Create a new instance of schedule rect. An EventRect is actually the rectangle that is drawn
-		 * on the calendar for a given schedule. There may be more than one rectangle for a single
-		 * schedule (an schedule that expands more than one day). In that case two instances of the
-		 * EventRect will be used for a single schedule. The given schedule will be stored in
-		 * "originalEvent". But the schedule that corresponds to rectangle the rectangle instance will
-		 * be stored in "schedule".
-		 * 
-		 * @param schedule Represents the schedule which this instance of rectangle represents.
-		 */
-		public EventRect(ScheduleModel schedule){
-			this.schedule = schedule;
-		}
-	}
-
-	/**
-	 * Calculates the left and right positions of each events. This comes handy specially if events
-	 * are overlapping.
-	 * 
-	 * @param eventRects The events along with their wrapper class.
-	 */
-	public static List<EventRect> computePositionOfEvents(List<EventRect> eventRects){
-		// Make "collision groups" for all events that collide with others.
-		List<EventRect> result = new ArrayList<>();
-		List<List<EventRect>> collisionGroups = new ArrayList<List<EventRect>>();
-		for(EventRect eventRect : eventRects){
-			boolean isPlaced = false;
-
-			outerLoop:for(List<EventRect> collisionGroup : collisionGroups){
-				for(EventRect groupEvent : collisionGroup){
-					if(isEventsCollide(groupEvent.schedule, eventRect.schedule)){
-						collisionGroup.add(eventRect);
-						isPlaced = true;
-						break outerLoop;
-					}
-				}
-			}
-
-			if(!isPlaced){
-				List<EventRect> newGroup = new ArrayList<EventRect>();
-				newGroup.add(eventRect);
-				collisionGroups.add(newGroup);
-			}
-		}
-
-		for(List<EventRect> collisionGroup : collisionGroups){
-			expandEventsToMaxWidth(collisionGroup, result);
-		}
-
-		return result;
-	}
-
-	/**
-	 * Expands all the events to maximum possible width. The events will try to occupy maximum
-	 * space available horizontally.
-	 *
-	 * @param collisionGroup The group of events which overlap with each other.
-	 * @param result
-	 */
-	public static void expandEventsToMaxWidth(List<EventRect> collisionGroup, List<EventRect> result){
-		// Expand the events to maximum possible width.
-		List<List<EventRect>> columns = new ArrayList<List<EventRect>>();
-		columns.add(new ArrayList<EventRect>());
-		for(EventRect eventRect : collisionGroup){
-			boolean isPlaced = false;
-			for(List<EventRect> column : columns){
-				if(column.size() == 0){
-					column.add(eventRect);
-					isPlaced = true;
-				}else if(!isEventsCollide(eventRect.schedule, column.get(column.size() - 1).schedule)){
-					column.add(eventRect);
-					isPlaced = true;
-					break;
-				}
-			}
-			if(!isPlaced){
-				List<EventRect> newColumn = new ArrayList<EventRect>();
-				newColumn.add(eventRect);
-				columns.add(newColumn);
-			}
-		}
-
-		// Calculate left and right position for all the events.
-		// Get the maxRowCount by looking in all columns.
-		int maxRowCount = 0;
-		for(List<EventRect> column : columns){
-			maxRowCount = Math.max(maxRowCount, column.size());
-		}
-		for(int i = 0; i < maxRowCount; i++){
-			// Set the left and right values of the schedule.
-			float j = 0;
-			for(List<EventRect> column : columns){
-				if(column.size() >= i + 1){
-					EventRect eventRect = column.get(i);
-					eventRect.width = 1f / columns.size();
-					eventRect.left = j / columns.size();
-					eventRect.top = CCDateUtil.convertTime2Min(eventRect.schedule.startTime);
-					eventRect.bottom = CCDateUtil.convertTime2Min(eventRect.schedule.endTime);
-					result.add(eventRect);
-				}
-				j++;
-			}
-		}
-	}
-
-	/**
-	 * Checks if two events overlap.
-	 * 
-	 * @param event1 The first schedule.
-	 * @param event2 The second schedule.
-	 * @return true if the events overlap.
-	 */
-	public static boolean isEventsCollide(ScheduleModel event1, ScheduleModel event2){
-
-		long start1 = event1.getStartTimeMilis();
-		long end1 = event1.getEndTimeMilis();
-		long start2 = event2.getStartTimeMilis();
-		long end2 = event2.getEndTimeMilis();
-		return !((start1 >= end2) || (end1 <= start2));
-	}
-
-	private List<RECT> getRemainRects(List<ScheduleModel> arranged, List<RECT> rects){
-		List<RECT> result = new ArrayList<>();
-		for(RECT rect : rects){
-			boolean isPlaced = false;
-			for(ScheduleModel arran : arranged){
-				if(arran.key.equals(rect.key)){
-					isPlaced = true;
-					break;
-				}
-			}
-			if(!isPlaced){
-				result.add(rect);
-			}
-		}
-		return result;
-	}
-
-	private int getLeftMargin(RECT meRect, List<ScheduleModel> arranged, Map<String, RECT> schedulePositions, int blockSize){
-		int leftMargin = 0;
-		for(ScheduleModel scheduleModel : arranged){
-			RECT rect = schedulePositions.get(scheduleModel.key);
-			if(meRect.startY >= rect.endY || meRect.endY <= rect.startY){
-				continue;
-			}else{
-				if(leftMargin + blockSize > rect.startX){
-					leftMargin = rect.endX;
-				}
-			}
-		}
-		return leftMargin;
-	}
-
-	private int countBlocksContains(RECT me, List<RECT> rects){
-		int count = 0;
-		List<RECT> collide = getCollisionRects(me, rects);
-		for(RECT child : collide){
-			int childConflict = countBlocksContains(child, collide);
-			if(childConflict + 1 > count){
-				count = childConflict + 1;
-			}
-		}
-
-		return count;
-	}
-
-	List<RECT> getCollisionRects(RECT me, List<RECT> others){
-		List<RECT> result = new ArrayList<>();
-		for(RECT rect : others){
-			if(!rect.key.equals(me.key) && (me.endY > rect.startY || me.startY < rect.endY)){
-				result.add(rect);
-			}
-		}
-		return result;
-	}
-
-	private List<ScheduleModel> getConflicts(Map<String, RECT> scheduleRects, List<ScheduleModel> normalSchedules, RECT meRect){
-		List<ScheduleModel> result = new ArrayList<>();
-		for(ScheduleModel scheduleModel : normalSchedules){
-			RECT otherRect = scheduleRects.get(scheduleModel.key);
-			if(meRect.endY < otherRect.startY || meRect.startY < otherRect.endY){
-				result.add(scheduleModel);
-			}
-		}
-		return result;
 	}
 
 	private void showCollapse(){
@@ -528,27 +277,34 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 	}
 
 	private void scrollToFavouritePost(){
-		if(scrSchedules.y == 0){
-			scrSchedules.post(new Runnable() {
+		scrollView.post(new Runnable() {
 
-				@Override
-				public void run(){
-					TodoListFragment.scrollToView(scrSchedules, thisHourView, 2);
-				}
-			});
-		}
+			@Override
+			public void run(){
+				TodoListFragment.scrollToView(scrollView, thisHourView, 2);
+			}
+		});
 	}
 
-	private void addStartTimeRow(String startTime, int marginTop, int bottomMargin){
+	private void addStartTimeRow(String startTime, List<ScheduleModel> scheduleModels){
 		View cell = inflater.inflate(R.layout.item_daily_schedule, null);
-		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-		params.setMargins(0, marginTop, 0, bottomMargin);
-		cell.setLayoutParams(params);
 		((TextView)cell.findViewById(R.id.txt_item_daily_schedule_start_time)).setText(startTime);
-		if(startTime.equals(GOLDEN_HOUR_STR)){
+		LinearLayout lnrSchedules = (LinearLayout)cell.findViewById(R.id.lnr_schedule_list_item_daily);
+		for(ScheduleModel scheduleModel : scheduleModels){
+			TextView textView = new TextView(activity);
+			textView.setText(scheduleModel.scheduleName);
+			int color = WeeklyPageFragment.getColor(scheduleModel);
+			if("#FFFFFF".equals(scheduleModel.getScheduleColor())){
+				color = Color.parseColor("#000000");
+			}
+			textView.setTextColor(color);
+			textView.setGravity(Gravity.CENTER_VERTICAL);
+			lnrSchedules.addView(textView);
+		}
+		if(startTime.equals(currentHour)){
 			thisHourView = cell;
 		}
-		rltListSchedules.addView(cell);
+		lnrListSchedules.addView(cell);
 	}
 
 	@Override

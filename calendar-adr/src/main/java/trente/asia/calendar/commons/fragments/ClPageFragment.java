@@ -80,10 +80,6 @@ public abstract class ClPageFragment extends AbstractClFragment implements Daily
 		parentFragment.gotoFragment(scheduleFormFragment);
 	}
 
-	public boolean isActivePage() {
-		return pageSharingHolder.selectedPagePosition == pagePosition;
-	}
-
 	@Override
 	public int getFooterItemId(){
 		return 0;

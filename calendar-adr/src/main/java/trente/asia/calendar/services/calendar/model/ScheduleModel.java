@@ -156,12 +156,4 @@ public class ScheduleModel{
 		cloned.owner = scheduleModel.owner;
 		return cloned;
 	}
-
-	public long getStartTimeMilis() {
-		return startDate.getTime() + CCDateUtil.convertTime2Min(startTime) * 60 * 1000;
-	}
-
-	public long getEndTimeMilis() {
-		return endDate.getTime() + CCDateUtil.convertTime2Min(endTime) * 60 * 1000;
-	}
 }

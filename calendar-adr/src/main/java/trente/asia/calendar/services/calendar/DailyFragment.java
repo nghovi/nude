@@ -1,13 +1,12 @@
 package trente.asia.calendar.services.calendar;
 
-import java.util.Date;
-
 import android.view.View;
+
+import java.util.Date;
 
 import asia.chiase.core.util.CCFormatUtil;
 import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.R;
-import trente.asia.calendar.commons.fragments.ClPageFragment;
 import trente.asia.calendar.commons.fragments.PageContainerFragment;
 import trente.asia.calendar.commons.views.ClFragmentPagerAdapter;
 import trente.asia.calendar.services.calendar.view.DailySchedulesPagerAdapter;
@@ -54,18 +53,4 @@ public class DailyFragment extends PageContainerFragment{
 		return new DailySchedulesPagerAdapter(getChildFragmentManager());
 	}
 
-	public void scrollNeighbors(int x, int y, int oldx, int oldy){
-		scrollNeighbor(leftNeighborFragment, x, y, oldx, oldy);
-		scrollNeighbor(rightNeiborFragment, x, y, oldx, oldy);
-	}
-
-	public void scrollNeighbor(ClPageFragment clPageFragment, int x, int y, int oldx, int oldy){
-		if(clPageFragment != null){
-			ObservableScrollView scrollView = ((DailyPageFragment)clPageFragment).scrSchedules;
-			if(scrollView != null){
-				scrollView.setCoordinate(x, y, oldx, oldy);
-				scrollView.scrollTo(x, y);
-			}
-		}
-	}
 }

@@ -16,7 +16,9 @@ import com.bluelinelabs.logansquare.LoganSquare;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import asia.chiase.core.util.CCCollectionUtil;
@@ -72,17 +74,17 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 	protected DailySummaryDialog		dialogDailySummary;
 	protected boolean					isExpanded			= false;
 	protected TextView					txtMore;
-	// protected ImageView imgExpand;
-	protected ObservableScrollView		scrSchedules;
+	protected ImageView					imgExpand;
+	protected ScrollView				scrollView;
 	protected View						thisHourView;
-	public static final String			GOLDEN_HOUR_STR		= "09:00";
+	protected String					currentHour;
 
 	protected static final int			MAX_ROW				= 3;
 	protected Date						today;
+	private List<RoomModel>				rooms;
 	private List<VacationRequestModel>	lstVacationRequest;
 	private List<OvertimeRequestModel>	lstOvertimeRequest;
 	private List<HolidayWorkingModel>	lstHolidayWorking;
-	private List<RoomModel>				rooms;
 
 	abstract protected List<Date> getAllDate();
 
@@ -92,7 +94,7 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 	@Override
 	protected void initView(){
 		super.initView();
-		scrSchedules = (ObservableScrollView)getView().findViewById(R.id.scr_schedules);
+
 		today = Calendar.getInstance().getTime();
 
 		inflater = LayoutInflater.from(activity);
@@ -104,7 +106,11 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 		}
 
 		txtMore = (TextView)getView().findViewById(R.id.txt_more_to_come);
-		// imgExpand = (ImageView)getView().findViewById(R.id.ic_icon_expand);
+		imgExpand = (ImageView)getView().findViewById(R.id.ic_icon_expand);
+		scrollView = (ScrollView)getView().findViewById(R.id.src_fragment_daily_page);
+		// currentHour = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_HH_MM, Calendar.getInstance().getTime());
+		// currentHour = currentHour.split(":")[0] + ":00";
+		currentHour = "09:00";
 	}
 
 	protected void initCalendarView(){
@@ -117,8 +123,12 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 	abstract protected void initDayViews();
 
 	public void loadScheduleList(){
+		// if(pageSharingHolder.selectedPagePosition != pagePosition || (pageSharingHolder.selectedPagePosition ={
+		// pageSharingHolder.isLoadingSchedules = true;
+		// if(pageSharingHolder.selectedPagePosition == pagePosition) log("start load schedule list");
 		JSONObject jsonObject = prepareJsonObject();
 		requestLoad(ClConst.API_SCHEDULE_LIST, jsonObject, false);
+		// }
 	}
 
 	protected JSONObject prepareJsonObject(){

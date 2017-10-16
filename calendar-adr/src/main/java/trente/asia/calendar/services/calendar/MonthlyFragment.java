@@ -23,7 +23,7 @@ public class MonthlyFragment extends PageContainerFragment{
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 		if(mRootView == null){
-			mRootView = inflater.inflate(R.layout.fragment_monthly, container, false);
+			mRootView = inflater.inflate(R.layout.fragment_pager_container, container, false);
 		}
 		return mRootView;
 	}
