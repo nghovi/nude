@@ -1,0 +1,8 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:bottom="2px"
+        android:drawable="@drawable/wf_background_black_border"
+        android:left="2px"
+        android:right="2px"
+        android:top="2px" />
+</layer-list>

@@ -57,7 +57,7 @@ public abstract class WelfareFragment extends ChiaseFragment implements WelfareA
 	public static final int				MARGIN_LEFT_RIGHT_PX		= WelfareUtil.dpToPx(16);
 	public static final int				MARGIN_TEXT_TOP_BOTTOM_PX	= WelfareUtil.dpToPx(4);
 	public static final int				MARGIN_TEXT_MIDDLE_PX		= WelfareUtil.dpToPx(8);
-	public static final int TIME_COLUMN_WIDTH_PX = WelfareUtil.dpToPx(60);
+	public static final int				TIME_COLUMN_WIDTH_PX		= WelfareUtil.dpToPx(60);
 	public static long					currentTime					= 0;
 
 	public void benchmark(String msg){

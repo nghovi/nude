@@ -317,7 +317,7 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 			int leftMargin = leftPx + (int)(containerWidth * eventRect.left);
 			int topMargin = WelfareUtil.dpToPx((int)eventRect.top);
 			int width = (int)(eventRect.width * containerWidth);
-			int height = WelfareUtil.dpToPx((int)eventRect.bottom - (int)eventRect.top);
+			int height = WelfareUtil.dpToPx((int)(eventRect.bottom - eventRect.top)) + 1;
 			float minWithToShowText = 1.f / maxBlockNumToShowText;
 			String txtShowed = eventRect.width < minWithToShowText ? "" : eventRect.schedule.scheduleName;
 			TextView txtView = makeBlock(context, txtShowed, leftMargin, topMargin, width, height, Color.parseColor(eventRect.schedule.scheduleColor), 0, Gravity.TOP | Gravity.CENTER_HORIZONTAL);

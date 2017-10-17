@@ -303,7 +303,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 		if(moreNumber <= 0){
 			int initialHeight = rowNum * WeeklyPageFragment.CELL_HEIGHT_PIXEL;
 			rltPart1.getLayoutParams().height = initialHeight;
-			height = initialHeight + MARGIN_LEFT_RIGHT_PX + MARGIN_TOP_PX + 1;
+			height = initialHeight + MARGIN_LEFT_RIGHT_PX + MARGIN_TOP_PX;
 			rltPart1.requestLayout();
 			rltExpandBar.setVisibility(View.GONE);
 			if(isActivePage()){
@@ -683,7 +683,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 		Collections.sort(times);
 
 		for(int i = 0; i < times.size(); i++){
-			addSHorizontalLine(times.get(i), (i + 1) * TIME_COLUMN_WIDTH_PX);
+			addSHorizontalLine(times.get(i), WelfareUtil.dpToPx(60 * (i + 1)));
 		}
 
 		//// TODO: 10/13/17 why next page line is not good
@@ -700,7 +700,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 	private void addSHorizontalLine(String startTime, int i){
 		View cell = new View(activity);
 		cell.setBackgroundColor(Color.GRAY);
-		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1);
+		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, WelfareUtil.dpToPx(1));
 		params.setMargins(0, i, 0, 0);
 		cell.setLayoutParams(params);
 		rltPart2LineContainer.addView(cell);

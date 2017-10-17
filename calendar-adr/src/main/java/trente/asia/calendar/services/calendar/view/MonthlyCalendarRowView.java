@@ -214,7 +214,7 @@ public class MonthlyCalendarRowView extends RelativeLayout{
 		txtSchedule.setGravity(Gravity.CENTER_VERTICAL);
 		txtSchedule.setTextColor(Color.BLACK);
 		if(scheduleModel.isAllDay || scheduleModel.isPeriod){
-			txtSchedule.setBackground(ContextCompat.getDrawable(context, R.drawable.wf_background_black_border));
+			txtSchedule.setBackground(ContextCompat.getDrawable(context, R.drawable.wf_background_black_border2));
 		}
 		txtSchedule.setPadding(WelfareUtil.dpToPx(2), 0, 0, 0);
 
