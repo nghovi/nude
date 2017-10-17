@@ -448,7 +448,7 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 		// add birthday
 		if(!CCCollectionUtil.isEmpty(lstBirthdayUser)){
 			for(UserModel birthday : lstBirthdayUser){
-				ScheduleModel scheduleModel = new ScheduleModel(birthday);
+				ScheduleModel scheduleModel = new ScheduleModel(birthday, dates.get(0), dates.get(dates.size() - 1));
 				// scheduleModel.scheduleName = getString(R.string.cl_schedule_birth_day_name, scheduleModel.scheduleName);
 				lstSchedule.add(scheduleModel);
 			}

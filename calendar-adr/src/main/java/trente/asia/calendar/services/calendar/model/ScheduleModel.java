@@ -66,12 +66,19 @@ public class ScheduleModel{
 		this.scheduleType = ClConst.SCHEDULE_TYPE_HOLIDAY;
 	}
 
-	public ScheduleModel(UserModel userModel){
+	public ScheduleModel(UserModel userModel, Date start, Date end){
 		this.scheduleName = userModel.userName;
-		Calendar calendar = Calendar.getInstance();
 		Calendar birthdayCalendar = CCDateUtil.makeCalendar(userModel.dateBirth);
-		Calendar scheduleCalendar = CCDateUtil.makeCalendar(calendar.get(Calendar.YEAR), birthdayCalendar.get(Calendar.MONTH) + 1, birthdayCalendar.get(Calendar.DAY_OF_MONTH));
-		this.startDate = scheduleCalendar.getTime();
+		Calendar cStart = CCDateUtil.makeCalendar(start);
+		Calendar cEnd = CCDateUtil.makeCalendar(end);
+
+		birthdayCalendar.set(Calendar.YEAR, cStart.get(Calendar.YEAR));
+
+		if(cStart.getTimeInMillis() > birthdayCalendar.getTimeInMillis() || birthdayCalendar.getTimeInMillis() > cEnd.getTimeInMillis()){
+			birthdayCalendar.set(Calendar.YEAR, cEnd.get(Calendar.YEAR));
+		}
+
+		this.startDate = birthdayCalendar.getTime();
 		this.endDate = this.startDate;
 		this.isAllDay = true;
 		this.scheduleType = ClConst.SCHEDULE_TYPE_BIRTHDAY;
