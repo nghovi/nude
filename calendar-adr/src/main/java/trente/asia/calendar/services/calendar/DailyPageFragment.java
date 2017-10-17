@@ -312,7 +312,7 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 			int topMargin = WelfareUtil.dpToPx((int)eventRect.top);
 			int width = (int)(eventRect.width * containerWidth);
 			int height = WelfareUtil.dpToPx((int)eventRect.bottom - (int)eventRect.top);
-			TextView txtView = makeTextView2(context, eventRect.schedule.scheduleName, leftMargin, topMargin, width, height, Color.parseColor(eventRect.schedule.scheduleColor), 0, Gravity.CENTER);
+			TextView txtView = makeTextView2(context, eventRect.schedule.scheduleName, leftMargin, topMargin, width, height, Color.parseColor(eventRect.schedule.scheduleColor), 0, Gravity.TOP | Gravity.CENTER_HORIZONTAL);
 			container.addView(txtView);
 		}
 	}

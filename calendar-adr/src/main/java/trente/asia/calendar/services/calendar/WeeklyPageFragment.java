@@ -464,7 +464,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 
 	public static TextView makeTextView2(Context activity, String text, int leftMargin, int topMargin, int maxWidth, int height, int bgColor, int textColor, int gravity){
 		TextView textView = new TextView(activity);
-		textView.setMaxLines(1);
+		// textView.setMaxLines(1);
 		// textView.setEllipsize(TextUtils.TruncateAt.END);
 		textView.setTextSize(13);
 
