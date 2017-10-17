@@ -60,13 +60,15 @@ import trente.asia.welfare.adr.utils.WelfareUtil;
  */
 public class WeeklyPageFragment extends SchedulesPageFragment implements ObservableScrollView.ScrollViewListener{
 
-	public static final Integer			CELL_HEIGHT_PIXEL	= WelfareUtil.dpToPx(18);
+	public static final Integer			CELL_HEIGHT_PIXEL			= WelfareUtil.dpToPx(18);
+	private static final int			MAX_BLOCK_NUM_TO_SHOW_TEXT	= 5;
 	protected LinearLayout				lnrHeader;
 	private RelativeLayout				rltExpandBar;
 	private RelativeLayout				rltPart1;
 	private RelativeLayout				rltPart2;
+	private RelativeLayout				rltPart2LineContainer;
 	private Map<Integer, List<Integer>>	columnTopMarginsMap;
-	private int							maxTopMargin		= 0;
+	private int							maxTopMargin				= 0;
 	private ScrollView					scrollViewPart1;
 	public ObservableScrollView			scrMain;
 	private boolean						shouldClick;
@@ -74,12 +76,12 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 
 	private float						mDownX;
 	private float						mDownY;
-	private final float					SCROLL_THRESHOLD	= 5;
-	private boolean						firstTime			= true;
-	private static final int			MARGIN_TOP_PX		= WelfareUtil.dpToPx(10);
+	private final float					SCROLL_THRESHOLD			= 5;
+	private boolean						firstTime					= true;
+	private static final int			MARGIN_TOP_PX				= WelfareUtil.dpToPx(10);
 
 	private WeeklyFragment				parent;
-	private int							height				= MARGIN_LEFT_RIGHT_PX + MARGIN_TOP_PX - 1;
+	private int							height						= MARGIN_LEFT_RIGHT_PX + MARGIN_TOP_PX + WelfareUtil.dpToPx(1);
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -92,7 +94,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 	public void expand(final View v){
 		v.measure(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
 		final int targetHeight = v.getMeasuredHeight();
-		height = targetHeight + MARGIN_LEFT_RIGHT_PX + MARGIN_TOP_PX - 1;
+		height = targetHeight + MARGIN_LEFT_RIGHT_PX + MARGIN_TOP_PX;
 		v.setVisibility(View.VISIBLE);
 		Animation a = new Animation() {
 
@@ -122,7 +124,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 
 	public void collapse(final View v, final int targetHeight){
 		final int initialHeight = v.getMeasuredHeight();
-		height = targetHeight + TIME_WIDTH_PX - MARGIN_LEFT_RIGHT_PX - 1;
+		height = targetHeight + TIME_COLUMN_WIDTH_PX - MARGIN_LEFT_RIGHT_PX;
 		Animation a = new Animation() {
 
 			@Override
@@ -301,14 +303,16 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 		if(moreNumber <= 0){
 			int initialHeight = rowNum * WeeklyPageFragment.CELL_HEIGHT_PIXEL;
 			rltPart1.getLayoutParams().height = initialHeight;
-			height = initialHeight + MARGIN_LEFT_RIGHT_PX + MARGIN_TOP_PX - 1;
+			height = initialHeight + MARGIN_LEFT_RIGHT_PX + MARGIN_TOP_PX + 1;
 			rltPart1.requestLayout();
 			rltExpandBar.setVisibility(View.GONE);
 			if(isActivePage()){
 				parent.imgExpand.setVisibility(View.INVISIBLE);
 			}
 		}else{
-			parent.imgExpand.setVisibility(View.VISIBLE);
+			if(isActivePage()){
+				parent.imgExpand.setVisibility(View.VISIBLE);
+			}
 			int maxTopMarginAllowed = (MAX_ROW - 1) * CELL_HEIGHT_PIXEL;
 			while(rltExpandBar.getChildAt(1) != null){
 				rltExpandBar.removeViewAt(1);
@@ -349,7 +353,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 					for(int i = 1; i < rltExpandBar.getChildCount(); i++){
 						rltExpandBar.getChildAt(i).setVisibility(View.GONE);
 					}
-					height = rowNum * WeeklyPageFragment.CELL_HEIGHT_PIXEL + TIME_WIDTH_PX / 2 + MARGIN_TEXT_MIDDLE_PX - 1;
+					height = rowNum * WeeklyPageFragment.CELL_HEIGHT_PIXEL + TIME_COLUMN_WIDTH_PX / 2 + MARGIN_TEXT_MIDDLE_PX - 1;
 					rltPart1.getLayoutParams().height = height;
 					rltPart1.requestLayout();
 				}else{
@@ -390,7 +394,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 		}
 		int initialHeight = (MAX_ROW - 1) * WeeklyPageFragment.CELL_HEIGHT_PIXEL;
 		rltPart1.getLayoutParams().height = initialHeight;
-		height = initialHeight + TIME_WIDTH_PX - MARGIN_LEFT_RIGHT_PX - 1;
+		height = initialHeight + TIME_COLUMN_WIDTH_PX - MARGIN_LEFT_RIGHT_PX;
 		rltPart1.requestLayout();
 	}
 
@@ -462,7 +466,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 		return textView;
 	}
 
-	public static TextView makeTextView2(Context activity, String text, int leftMargin, int topMargin, int maxWidth, int height, int bgColor, int textColor, int gravity){
+	public static TextView makeBlock(Context activity, String text, int leftMargin, int topMargin, int maxWidth, int height, int bgColor, int textColor, int gravity){
 		TextView textView = new TextView(activity);
 		// textView.setMaxLines(1);
 		// textView.setEllipsize(TextUtils.TruncateAt.END);
@@ -488,6 +492,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 	}
 
 	private void buildPart2(List<ScheduleModel> schedules){
+		rltPart2.removeAllViews();
 		float screenW = lnrHeader.getMeasuredWidth();
 
 		Map<Date, List<ScheduleModel>> daySchedulesMap = DailyScheduleList.buildDaySchedulesMap(dates, schedules);
@@ -499,7 +504,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 			int dayDistance = c2.get(Calendar.DAY_OF_YEAR) - c1.get(Calendar.DAY_OF_YEAR);
 			int leftMargin = (int)(screenW * dayDistance / 7) + 1;
 			List<ScheduleModel> daySchedules = daySchedulesMap.get(date);
-			DailyPageFragment.buildBlocks(activity, leftMargin, screenW / 7, daySchedules, rltPart2);
+			DailyPageFragment.buildBlocks(activity, leftMargin, screenW / 7, daySchedules, rltPart2, MAX_BLOCK_NUM_TO_SHOW_TEXT);
 		}
 
 		setOnTouchListener(scrSchedules, (int)(screenW / 7));
@@ -661,6 +666,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 		scrollViewPart1 = (ScrollView)getView().findViewById(R.id.scroll_part1);
 		rltPart1 = (RelativeLayout)getView().findViewById(R.id.rlt_part1);
 		rltPart2 = (RelativeLayout)getView().findViewById(R.id.rlt_part2);
+		rltPart2LineContainer = (RelativeLayout)getView().findViewById(R.id.rlt_part2_line_container);
 		rltExpandBar = (RelativeLayout)getView().findViewById(R.id.rlt_expand);
 
 		// imgExpand = (ImageView)getView().findViewById(R.id.ic_icon_expand);
@@ -677,7 +683,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 		Collections.sort(times);
 
 		for(int i = 0; i < times.size(); i++){
-			addSHorizontalLine(times.get(i), (i + 1) * TIME_WIDTH_PX);
+			addSHorizontalLine(times.get(i), (i + 1) * TIME_COLUMN_WIDTH_PX);
 		}
 
 		//// TODO: 10/13/17 why next page line is not good
@@ -697,7 +703,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1);
 		params.setMargins(0, i, 0, 0);
 		cell.setLayoutParams(params);
-		rltPart2.addView(cell);
+		rltPart2LineContainer.addView(cell);
 	}
 
 	public void setOnClickListenerForExpandIcon(){

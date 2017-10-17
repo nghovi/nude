@@ -78,19 +78,27 @@
                         android:fillViewport="true">
 
                         <RelativeLayout
-                            android:id="@+id/rlt_part2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_alignBottom="@+id/lnr_part1"
-                            android:orientation="vertical"></RelativeLayout>
+                            android:orientation="vertical">
+
+                            <RelativeLayout
+                                android:id="@+id/rlt_part2_line_container"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"></RelativeLayout>
+
+                            <RelativeLayout
+                                android:id="@+id/rlt_part2"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"></RelativeLayout>
+                        </RelativeLayout>
 
                     </trente.asia.calendar.services.calendar.ObservableScrollView>
 
                 </LinearLayout>
-
-
             </RelativeLayout>
-
         </LinearLayout>
 
 

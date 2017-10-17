@@ -135,7 +135,7 @@ public class MonthlyCalendarDayView extends LinearLayout{
 			usedMargins.add(marginTop);
 
 			int width = getWidth();
-			TextView txtSchedule = MonthlyCalendarRowView.createTextView(getContext(), width, 0, scheduleModel, marginTop - ClConst.TEXT_VIEW_HEIGHT + WelfareUtil.dpToPx(2));
+			TextView txtSchedule = MonthlyCalendarRowView.createTextView(getContext(), width, 0, scheduleModel, marginTop - ClConst.TEXT_VIEW_HEIGHT + WelfareUtil.dpToPx(6));
 			lnrRowContent.addView(txtSchedule);
 			txtSchedules.add(txtSchedule);
 			// if (ClConst.SCHEDULE_TYPE_HOLIDAY.equals(scheduleModel.scheduleType)) {

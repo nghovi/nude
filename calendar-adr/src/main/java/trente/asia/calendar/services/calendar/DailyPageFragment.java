@@ -1,7 +1,7 @@
 package trente.asia.calendar.services.calendar;
 
 import static trente.asia.calendar.services.calendar.WeeklyPageFragment.getWorkRequestComparator;
-import static trente.asia.calendar.services.calendar.WeeklyPageFragment.makeTextView2;
+import static trente.asia.calendar.services.calendar.WeeklyPageFragment.makeBlock;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -45,15 +45,17 @@ import trente.asia.welfare.adr.utils.WelfareUtil;
  */
 public class DailyPageFragment extends SchedulesPageFragment implements ObservableScrollView.ScrollViewListener{
 
+	private static final int					MAX_BLOCK_NUM_TO_SHOW_TEXT	= 40;
 	private LinearLayout						lnrScheduleAllDays;
 	private TextView							txtTodoInfo;
-	private RelativeLayout						rltListSchedules;
+	private RelativeLayout						rltSchedules;
+	private RelativeLayout						rltLineContainer;
 	private Map<String, List<ScheduleModel>>	startTimeSchedulesMap;
 	private ImageView							imgBirthdayIcon;
 	private int									moreNumber;
-	private boolean								firstTime	= true;
+	private boolean								firstTime					= true;
 	private int									numRow;
-	private List<EventRect>						mEventRects	= new ArrayList<>();
+	private List<EventRect>						mEventRects					= new ArrayList<>();
 	private DailyFragment						parent;
 	private ImageView							imgExpand;
 	// private int screenW;
@@ -81,8 +83,9 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 		imgBirthdayIcon = (ImageView)getView().findViewById(R.id.img_birthday_daily_page);
 		lnrScheduleAllDays = (LinearLayout)getView().findViewById(R.id.lnr_schedule_all_day_container);
 		lnrScheduleAllDays.setOnClickListener(this);
-		rltListSchedules = (RelativeLayout)getView().findViewById(R.id.lnr_fragment_daily_page_schedules_time);
-		rltListSchedules.setOnClickListener(this);
+		rltLineContainer = (RelativeLayout)getView().findViewById(R.id.rlt_line_container);
+		rltSchedules = (RelativeLayout)getView().findViewById(R.id.rlt_fragment_daily_page_schedules_time);
+		rltSchedules.setOnClickListener(this);
 		scrSchedules.setScrollViewListener(this);
 		parent = (DailyFragment)getParentFragment();
 
@@ -100,9 +103,9 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 		for(int i = 0; i < times.size(); i++){
 			int bottomMargin = 0;
 			if(i == times.size() - 1){
-				bottomMargin = TIME_WIDTH_PX - MARGIN_TEXT_MIDDLE_PX - 1;
+				bottomMargin = TIME_COLUMN_WIDTH_PX - MARGIN_TEXT_MIDDLE_PX - 1;
 			}
-			addStartTimeRow(times.get(i), (i + 1) * DailyPageFragment.TIME_WIDTH_PX - MARGIN_TEXT_MIDDLE_PX - WelfareUtil.dpToPx(1), bottomMargin);
+			addStartTimeRow(times.get(i), (i + 1) * DailyPageFragment.TIME_COLUMN_WIDTH_PX - MARGIN_TEXT_MIDDLE_PX - WelfareUtil.dpToPx(1), bottomMargin);
 		}
 
 		imgExpand.setOnClickListener(new View.OnClickListener() {
@@ -214,7 +217,9 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 	@Override
 	protected void updateSchedules(List<ScheduleModel> schedules, List<CategoryModel> categories){
 
-		float screenW = rltListSchedules.getMeasuredWidth() - TIME_WIDTH_PX - MARGIN_LEFT_RIGHT_PX;
+		rltSchedules.removeAllViews();
+
+		float screenW = rltSchedules.getMeasuredWidth() - TIME_COLUMN_WIDTH_PX + MARGIN_LEFT_RIGHT_PX;
 
 		WeeklyPageFragment.sortSchedules(schedules, dates.get(0), dates.get(dates.size() - 1), false);
 		numRow = 0;
@@ -262,7 +267,7 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 			}
 		}
 
-		buildBlocks(activity, TIME_WIDTH_PX - MARGIN_LEFT_RIGHT_PX, screenW, normalSchedules, rltListSchedules);
+		buildBlocks(activity, TIME_COLUMN_WIDTH_PX - MARGIN_LEFT_RIGHT_PX, screenW, normalSchedules, rltSchedules, MAX_BLOCK_NUM_TO_SHOW_TEXT);
 
 		for(ScheduleModel scheduleModel : allDaySchedules){
 			TextView textView = WeeklyPageFragment.makeTextView(activity, scheduleModel.scheduleName, 0, 0, LinearLayout.LayoutParams.MATCH_PARENT, WeeklyPageFragment.getColor(scheduleModel), 0, Gravity.CENTER);
@@ -298,7 +303,8 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 
 	}
 
-	public static void buildBlocks(Context context, int leftPx, float containerWidth, List<ScheduleModel> scheduleModels, RelativeLayout container){
+	public static void buildBlocks(Context context, int leftPx, float containerWidth, List<ScheduleModel> scheduleModels, RelativeLayout container, int maxBlockNumToShowText){
+
 		List<EventRect> eventRects = new ArrayList<>();
 		for(ScheduleModel scheduleModel : scheduleModels){
 			EventRect eventRect = new EventRect(scheduleModel);
@@ -312,7 +318,9 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 			int topMargin = WelfareUtil.dpToPx((int)eventRect.top);
 			int width = (int)(eventRect.width * containerWidth);
 			int height = WelfareUtil.dpToPx((int)eventRect.bottom - (int)eventRect.top);
-			TextView txtView = makeTextView2(context, eventRect.schedule.scheduleName, leftMargin, topMargin, width, height, Color.parseColor(eventRect.schedule.scheduleColor), 0, Gravity.TOP | Gravity.CENTER_HORIZONTAL);
+			float minWithToShowText = 1.f / maxBlockNumToShowText;
+			String txtShowed = eventRect.width < minWithToShowText ? "" : eventRect.schedule.scheduleName;
+			TextView txtView = makeBlock(context, txtShowed, leftMargin, topMargin, width, height, Color.parseColor(eventRect.schedule.scheduleColor), 0, Gravity.TOP | Gravity.CENTER_HORIZONTAL);
 			container.addView(txtView);
 		}
 	}
@@ -548,7 +556,7 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 		if(startTime.equals(GOLDEN_HOUR_STR)){
 			thisHourView = cell;
 		}
-		rltListSchedules.addView(cell);
+		rltLineContainer.addView(cell);
 	}
 
 	@Override
@@ -561,7 +569,7 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 	@Override
 	public void onClick(View v){
 		switch(v.getId()){
-		case R.id.lnr_fragment_daily_page_schedules_time:
+		case R.id.rlt_fragment_daily_page_schedules_time:
 		case R.id.lnr_schedule_all_day_container:
 			onDailyScheduleClickListener(selectedDate);
 			break;

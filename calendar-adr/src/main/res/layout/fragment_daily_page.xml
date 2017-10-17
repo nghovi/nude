@@ -86,13 +86,25 @@
             android:fillViewport="true">
 
             <RelativeLayout
-                android:id="@+id/lnr_fragment_daily_page_schedules_time"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
+                android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/margin_16dp"
-                android:paddingRight="@dimen/margin_16dp"
-                android:paddingTop="@dimen/margin_0dp"></RelativeLayout>
+                android:paddingRight="@dimen/margin_16dp">
+
+                <RelativeLayout
+                    android:id="@+id/rlt_line_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"></RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rlt_fragment_daily_page_schedules_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"></RelativeLayout>
+
+
+            </RelativeLayout>
+
 
         </trente.asia.calendar.services.calendar.ObservableScrollView>
 
