@@ -447,6 +447,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 		textView.setGravity(gravity);
 
 		if(bgColor != 0){
+			// textView.setBackgroundColor(bgColor);
 			textView.setBackground(ContextCompat.getDrawable(activity, R.drawable.wf_background_round_border_white));
 			GradientDrawable bgShape = (GradientDrawable)textView.getBackground();
 			bgShape.setColor(bgColor);
@@ -471,7 +472,8 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 		textView.setGravity(gravity);
 
 		if(bgColor != 0){
-			textView.setBackground(ContextCompat.getDrawable(activity, R.drawable.wf_background_round_border_white));
+			// textView.setBackgroundColor(bgColor);
+			textView.setBackground(ContextCompat.getDrawable(activity, R.drawable.wf_background_round_border_white_small));
 			GradientDrawable bgShape = (GradientDrawable)textView.getBackground();
 			bgShape.setColor(bgColor);
 		}

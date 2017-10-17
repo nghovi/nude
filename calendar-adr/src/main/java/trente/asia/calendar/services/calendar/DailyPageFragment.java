@@ -102,7 +102,7 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 			if(i == times.size() - 1){
 				bottomMargin = TIME_WIDTH_PX - MARGIN_TEXT_MIDDLE_PX - 1;
 			}
-			addStartTimeRow(times.get(i), (i + 1) * DailyPageFragment.TIME_WIDTH_PX - MARGIN_TEXT_MIDDLE_PX, bottomMargin);
+			addStartTimeRow(times.get(i), (i + 1) * DailyPageFragment.TIME_WIDTH_PX - MARGIN_TEXT_MIDDLE_PX - WelfareUtil.dpToPx(1), bottomMargin);
 		}
 
 		imgExpand.setOnClickListener(new View.OnClickListener() {
