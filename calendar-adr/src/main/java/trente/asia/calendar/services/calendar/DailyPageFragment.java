@@ -57,7 +57,11 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 	private int									numRow;
 	private List<EventRect>						mEventRects					= new ArrayList<>();
 	private DailyFragment						parent;
-	private ImageView							imgExpand;
+	private TextView							txtMore;
+	public ObservableScrollView					scrMain;
+	private static final int					MARGIN_TOP_PX				= WelfareUtil.dpToPx(10);
+	private int									height						= MARGIN_LEFT_RIGHT_PX + WelfareUtil.dpToPx(10);
+
 	// private int screenW;
 
 	@Override
@@ -71,7 +75,7 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 	@Override
 	protected void initView(){
 		super.initView();
-		imgExpand = (ImageView)getView().findViewById(R.id.ic_icon_expand);
+		parent = (DailyFragment)getParentFragment();
 		txtTodoInfo = (TextView)getView().findViewById(R.id.txt_todo_things);
 		txtTodoInfo.setOnClickListener(new View.OnClickListener() {
 
@@ -80,14 +84,19 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 				gotoTodoListTodayFragment(selectedDate);
 			}
 		});
+		txtMore = (TextView)getView().findViewById(R.id.txt_more_to_come);
 		imgBirthdayIcon = (ImageView)getView().findViewById(R.id.img_birthday_daily_page);
 		lnrScheduleAllDays = (LinearLayout)getView().findViewById(R.id.lnr_schedule_all_day_container);
 		lnrScheduleAllDays.setOnClickListener(this);
 		rltLineContainer = (RelativeLayout)getView().findViewById(R.id.rlt_line_container);
 		rltSchedules = (RelativeLayout)getView().findViewById(R.id.rlt_fragment_daily_page_schedules_time);
 		rltSchedules.setOnClickListener(this);
-		scrSchedules.setScrollViewListener(this);
-		parent = (DailyFragment)getParentFragment();
+		scrMain = (ObservableScrollView)getView().findViewById(R.id.scr_schedules);
+		if(isActivePage()){
+			parent.timeScroll.setScrollViewListener(this);
+			scrMain.setScrollViewListener(this);
+			setOnClickListenerForExpandIcon();
+		}
 
 		// Add horizontal time lines
 		Calendar c = CCDateUtil.makeCalendarToday();
@@ -108,7 +117,18 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 			addStartTimeRow(times.get(i), (i + 1) * DailyPageFragment.TIME_COLUMN_WIDTH_PX - MARGIN_TEXT_MIDDLE_PX - WelfareUtil.dpToPx(1), bottomMargin);
 		}
 
-		imgExpand.setOnClickListener(new View.OnClickListener() {
+		scrMain.post(new Runnable() {
+
+			@Override
+			public void run(){
+				scrMain.scrollTo(parent.timeScroll.x, parent.timeScroll.y);
+				scrMain.setCoordinate(parent.timeScroll.x, parent.timeScroll.y, parent.timeScroll.oldx, parent.timeScroll.oldy);
+			}
+		});
+	}
+
+	public void setOnClickListenerForExpandIcon(){
+		parent.imgExpand.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v){
@@ -116,9 +136,9 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 					collapse(lnrScheduleAllDays, Math.max(0, (MAX_ROW - numRow - 1) * WeeklyPageFragment.CELL_HEIGHT_PIXEL));
 					txtMore.setVisibility(View.VISIBLE);
 					isExpanded = false;
-					imgExpand.setImageResource(R.drawable.down);
+					parent.imgExpand.setImageResource(R.drawable.down);
 				}else{
-					imgExpand.setImageResource(R.drawable.up);
+					parent.imgExpand.setImageResource(R.drawable.up);
 					expand(lnrScheduleAllDays);
 					txtMore.setVisibility(View.GONE);
 					isExpanded = true;
@@ -136,13 +156,20 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 	public void expand(final View v){
 		v.measure(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
 		final int targetHeight = Math.max(0, ((LinearLayout)v).getChildCount() * WeeklyPageFragment.CELL_HEIGHT_PIXEL);
+		height = targetHeight - WelfareUtil.dpToPx(12) + 1;
 		v.setVisibility(View.VISIBLE);
 		Animation a = new Animation() {
 
 			@Override
 			protected void applyTransformation(float interpolatedTime, Transformation t){
-				v.getLayoutParams().height = interpolatedTime == 1 ? targetHeight : (int)(targetHeight * interpolatedTime);
-				v.requestLayout();
+				if(interpolatedTime == 1){
+					v.getLayoutParams().height = targetHeight;
+					v.requestLayout();
+					updateTimeColumnPosition();
+				}else{
+					v.getLayoutParams().height = (int)(targetHeight * interpolatedTime);
+					v.requestLayout();
+				}
 			}
 
 			@Override
@@ -154,12 +181,12 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 		// 1dp/ms
 		a.setDuration((int)(targetHeight / v.getContext().getResources().getDisplayMetrics().density));
 		v.startAnimation(a);
-		scrollToFavouritePost();
+		// scrollToFavouritePost();
 	}
 
 	public void collapse(final View v, final int targetHeight){
 		final int initialHeight = v.getMeasuredHeight();
-
+		height = targetHeight + WelfareUtil.dpToPx(8) - 1;
 		Animation a = new Animation() {
 
 			@Override
@@ -182,7 +209,8 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 		// 1dp/ms
 		a.setDuration((int)(initialHeight / v.getContext().getResources().getDisplayMetrics().density));
 		v.startAnimation(a);
-		scrollToFavouritePost();
+		// scrollToFavouritePost();
+		updateTimeColumnPosition();
 	}
 
 	@Override
@@ -202,6 +230,13 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 
 	@Override
 	public void onScrollChanged(ObservableScrollView scrollView, int x, int y, int oldx, int oldy){
+		if(scrollView == scrMain){
+			parent.timeScroll.scrollTo(x, y);
+			parent.timeScroll.setCoordinate(x, y, oldx, oldy);
+		}else if(scrollView == parent.timeScroll){
+			scrMain.scrollTo(x, y);
+			scrMain.setCoordinate(x, y, oldx, oldy);
+		}
 		parent.scrollNeighbors(x, y, oldx, oldy);
 	}
 
@@ -279,7 +314,7 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 
 		if(moreNumber <= 0){
 			txtMore.setVisibility(View.GONE);
-			imgExpand.setVisibility(View.GONE);
+			if(isActivePage()) parent.imgExpand.setVisibility(View.INVISIBLE);
 			lnrScheduleAllDays.getLayoutParams().height = Math.max(0, childCount * WeeklyPageFragment.CELL_HEIGHT_PIXEL);
 			lnrScheduleAllDays.requestLayout();
 		}else{
@@ -291,7 +326,7 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 					txtMore.setVisibility(View.GONE);
 					lnrScheduleAllDays.getLayoutParams().height = Math.max(0, childCount * WeeklyPageFragment.CELL_HEIGHT_PIXEL);
 					lnrScheduleAllDays.requestLayout();
-					imgExpand.setVisibility(View.VISIBLE);
+					if(isActivePage()) parent.imgExpand.setVisibility(View.VISIBLE);
 				}else{
 					showCollapse();
 				}
@@ -299,8 +334,19 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 		}
 
 		firstTime = false;
-		scrollToFavouritePost();
+		if(isActivePage() && parent.timeScroll.y == 0){
+			scrollToFavouritePost();
+		}
+		if(isActivePage()){
+			updateTimeColumnPosition();
+		}
+	}
 
+	public void updateTimeColumnPosition(){
+		LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams)parent.lnrTimeColumn.getLayoutParams();
+		lp.setMargins(0, height, 0, 0);
+		parent.lnrTimeColumn.setLayoutParams(lp);
+		parent.lnrTimeColumn.requestLayout();
 	}
 
 	public static void buildBlocks(Context context, int leftPx, float containerWidth, List<ScheduleModel> scheduleModels, RelativeLayout container, int maxBlockNumToShowText){
@@ -529,22 +575,25 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 	}
 
 	private void showCollapse(){
-		lnrScheduleAllDays.getLayoutParams().height = Math.max(0, (MAX_ROW - numRow - 1) * WeeklyPageFragment.CELL_HEIGHT_PIXEL);
+		int alldayHeight = Math.max(0, (MAX_ROW - numRow - 1) * WeeklyPageFragment.CELL_HEIGHT_PIXEL);
+		lnrScheduleAllDays.getLayoutParams().height = alldayHeight;
 		lnrScheduleAllDays.requestLayout();
 		txtMore.setVisibility(View.VISIBLE);
-		imgExpand.setVisibility(View.VISIBLE);
+		if(isActivePage()){
+			parent.imgExpand.setVisibility(View.VISIBLE);
+		}
+		height = alldayHeight + WelfareUtil.dpToPx(7) + 1;
+		updateTimeColumnPosition();
 	}
 
 	private void scrollToFavouritePost(){
-		if(scrSchedules.y == 0){
-			scrSchedules.post(new Runnable() {
+		scrSchedules.post(new Runnable() {
 
-				@Override
-				public void run(){
-					TodoListFragment.scrollToView(scrSchedules, thisHourView, 2);
-				}
-			});
-		}
+			@Override
+			public void run(){
+				TodoListFragment.scrollToView(parent.timeScroll, parent.goldenHourView, 2);
+			}
+		});
 	}
 
 	private void addStartTimeRow(String startTime, int marginTop, int bottomMargin){

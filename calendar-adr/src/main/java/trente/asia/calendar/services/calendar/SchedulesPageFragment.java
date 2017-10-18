@@ -71,7 +71,6 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 	protected LayoutInflater			inflater;
 	protected DailySummaryDialog		dialogDailySummary;
 	protected boolean					isExpanded			= false;
-	protected TextView					txtMore;
 	// protected ImageView imgExpand;
 	protected ObservableScrollView		scrSchedules;
 	protected View						thisHourView;
@@ -103,7 +102,6 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 			initCalendarView();
 		}
 
-		txtMore = (TextView)getView().findViewById(R.id.txt_more_to_come);
 		// imgExpand = (ImageView)getView().findViewById(R.id.ic_icon_expand);
 	}
 
