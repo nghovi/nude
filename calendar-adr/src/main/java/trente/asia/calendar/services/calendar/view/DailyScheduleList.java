@@ -144,7 +144,7 @@ public class DailyScheduleList extends LinearLayout{
 			TextView header = buildTextView(getContext().getString(R.string.daily_schedules_event_title));
 			lnrEvents.addView(header);
 			for(HolidayModel holidayModel : holidayModelList){
-				LinearLayout holidayItem = buildHolidayItem(inflater, holidayModel, WelfareFragment.MARGIN_LEFT_RIGHT_PX, R.layout.item_holiday);
+				LinearLayout holidayItem = buildHolidayItem(inflater, holidayModel, WelfareUtil.dpToPx(WelfareFragment.MARGIN_LEFT_RIGHT_PX), R.layout.item_holiday);
 				lnrEvents.addView(holidayItem);
 				hasDisplayedItem = true;
 			}

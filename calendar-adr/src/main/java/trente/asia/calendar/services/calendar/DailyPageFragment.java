@@ -60,7 +60,7 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 	private DailyFragment						parent;
 	private TextView							txtMore;
 	public ObservableScrollView					scrMain;
-	private int									height						= MARGIN_LEFT_RIGHT_PX + WelfareUtil.dpToPx(10);
+	private int									height						= WelfareUtil.dpToPx(MARGIN_LEFT_RIGHT_PX) + WelfareUtil.dpToPx(10);
 
 	// private int screenW;
 
@@ -259,7 +259,7 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 
 		rltSchedules.removeAllViews();
 
-		float screenW = rltSchedules.getMeasuredWidth() - MARGIN_LEFT_RIGHT_PX;
+		float screenW = rltSchedules.getMeasuredWidth() - WelfareUtil.dpToPx(MARGIN_LEFT_RIGHT_PX);
 
 		WeeklyPageFragment.sortSchedules(schedules, dates.get(0), dates.get(dates.size() - 1), false);
 		numRow = 0;
@@ -307,7 +307,7 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 			}
 		}
 
-		buildBlocks(activity, MARGIN_LEFT_RIGHT_PX, screenW, normalSchedules, rltSchedules, MAX_BLOCK_NUM_TO_SHOW_TEXT);
+		buildBlocks(activity, WelfareUtil.dpToPx(MARGIN_LEFT_RIGHT_PX), screenW, normalSchedules, rltSchedules, MAX_BLOCK_NUM_TO_SHOW_TEXT);
 
 		for(ScheduleModel scheduleModel : allDaySchedules){
 			TextView textView = WeeklyPageFragment.makeTextView(activity, scheduleModel.scheduleName, 0, 0, LinearLayout.LayoutParams.MATCH_PARENT, WeeklyPageFragment.getColor(scheduleModel), 0, Gravity.CENTER);

@@ -25,6 +25,7 @@ import trente.asia.calendar.commons.views.ClFragmentPagerAdapter;
 import trente.asia.calendar.services.calendar.view.DailySchedulesPagerAdapter;
 import trente.asia.calendar.services.calendar.view.SchedulesPagerAdapter;
 import trente.asia.welfare.adr.define.WelfareConst;
+import trente.asia.welfare.adr.utils.WelfareUtil;
 
 /**
  * DailyFragment
@@ -81,9 +82,9 @@ public class DailyFragment extends PageContainerFragment{
 		for(int i = 0; i < times.size(); i++){
 			int bottomMargin = 0;
 			if(i == times.size() - 1){
-				bottomMargin = TIME_COLUMN_WIDTH_PX - MARGIN_TEXT_MIDDLE_PX - 1;
+				bottomMargin = WelfareUtil.dpToPx(TIME_COLUMN_WIDTH_PX) - WelfareUtil.dpToPx(MARGIN_TEXT_MIDDLE_PX) - 1;
 			}
-			addStartTimeRow(times.get(i), (i + 1) * TIME_COLUMN_WIDTH_PX - MARGIN_TEXT_MIDDLE_PX - 1, bottomMargin);
+			addStartTimeRow(times.get(i), (i + 1) * WelfareUtil.dpToPx(TIME_COLUMN_WIDTH_PX) - WelfareUtil.dpToPx(MARGIN_TEXT_MIDDLE_PX) - 1, bottomMargin);
 		}
 
 		timeScroll = (ObservableScrollView)getView().findViewById(R.id.src_time_container);

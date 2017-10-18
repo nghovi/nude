@@ -81,7 +81,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 	private static final int			MARGIN_TOP_PX				= WelfareUtil.dpToPx(10);
 
 	private WeeklyFragment				parent;
-	private int							height						= MARGIN_LEFT_RIGHT_PX + MARGIN_TOP_PX + WelfareUtil.dpToPx(1);
+	private int							height						= WelfareUtil.dpToPx(MARGIN_LEFT_RIGHT_PX) + MARGIN_TOP_PX + WelfareUtil.dpToPx(1);
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -94,7 +94,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 	public void expand(final View v){
 		v.measure(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
 		final int targetHeight = v.getMeasuredHeight();
-		height = targetHeight + MARGIN_LEFT_RIGHT_PX + MARGIN_TOP_PX;
+		height = targetHeight + WelfareUtil.dpToPx(MARGIN_LEFT_RIGHT_PX) + MARGIN_TOP_PX;
 		v.setVisibility(View.VISIBLE);
 		Animation a = new Animation() {
 
@@ -124,7 +124,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 
 	public void collapse(final View v, final int targetHeight){
 		final int initialHeight = v.getMeasuredHeight();
-		height = targetHeight + TIME_COLUMN_WIDTH_PX - MARGIN_LEFT_RIGHT_PX;
+		height = targetHeight + WelfareUtil.dpToPx(TIME_COLUMN_WIDTH_PX) - WelfareUtil.dpToPx(MARGIN_LEFT_RIGHT_PX);
 		Animation a = new Animation() {
 
 			@Override
@@ -303,7 +303,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 		if(moreNumber <= 0){
 			int initialHeight = rowNum * WeeklyPageFragment.CELL_HEIGHT_PIXEL;
 			rltPart1.getLayoutParams().height = initialHeight;
-			height = initialHeight + MARGIN_LEFT_RIGHT_PX + MARGIN_TOP_PX;
+			height = initialHeight + WelfareUtil.dpToPx(MARGIN_LEFT_RIGHT_PX) + MARGIN_TOP_PX;
 			rltPart1.requestLayout();
 			rltExpandBar.setVisibility(View.GONE);
 			if(isActivePage()){
@@ -353,7 +353,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 					for(int i = 1; i < rltExpandBar.getChildCount(); i++){
 						rltExpandBar.getChildAt(i).setVisibility(View.GONE);
 					}
-					height = rowNum * WeeklyPageFragment.CELL_HEIGHT_PIXEL + TIME_COLUMN_WIDTH_PX / 2 + MARGIN_TEXT_MIDDLE_PX - 1;
+					height = rowNum * WeeklyPageFragment.CELL_HEIGHT_PIXEL + WelfareUtil.dpToPx(TIME_COLUMN_WIDTH_PX) / 2 + WelfareUtil.dpToPx(MARGIN_TEXT_MIDDLE_PX) - 1;
 					rltPart1.getLayoutParams().height = height;
 					rltPart1.requestLayout();
 				}else{
@@ -394,7 +394,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 		}
 		int initialHeight = (MAX_ROW - 1) * WeeklyPageFragment.CELL_HEIGHT_PIXEL;
 		rltPart1.getLayoutParams().height = initialHeight;
-		height = initialHeight + TIME_COLUMN_WIDTH_PX - MARGIN_LEFT_RIGHT_PX;
+		height = initialHeight + WelfareUtil.dpToPx(TIME_COLUMN_WIDTH_PX) - WelfareUtil.dpToPx(MARGIN_LEFT_RIGHT_PX);
 		rltPart1.requestLayout();
 	}
 
