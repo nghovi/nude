@@ -77,7 +77,10 @@
 
         </LinearLayout>
 
-        <View style="@style/cs_common_divider" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="#323232" />
 
         <trente.asia.calendar.services.calendar.ObservableScrollView
             android:id="@+id/scr_schedules"
