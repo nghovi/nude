@@ -88,7 +88,6 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/margin_16dp"
                 android:paddingRight="@dimen/margin_16dp">
 
                 <RelativeLayout

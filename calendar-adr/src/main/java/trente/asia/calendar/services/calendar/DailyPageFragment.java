@@ -99,22 +99,19 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 		}
 
 		// Add horizontal time lines
+		// Add horizontal time lines
 		Calendar c = CCDateUtil.makeCalendarToday();
 		List<String> times = new ArrayList<>();
-		for(int i = 1; i < 24; i++){
-			c.set(Calendar.HOUR_OF_DAY, i);
+		for(int i = 0; i < 24; i++){
 			String startTime = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_HH_MM, c.getTime());
 			times.add(startTime);
+			c.add(Calendar.HOUR, 1);
 		}
 
 		Collections.sort(times);
 
 		for(int i = 0; i < times.size(); i++){
-			int bottomMargin = 0;
-			if(i == times.size() - 1){
-				bottomMargin = TIME_COLUMN_WIDTH_PX - MARGIN_TEXT_MIDDLE_PX - 1;
-			}
-			addStartTimeRow(times.get(i), (i + 1) * DailyPageFragment.TIME_COLUMN_WIDTH_PX - MARGIN_TEXT_MIDDLE_PX - WelfareUtil.dpToPx(1), bottomMargin);
+			addSHorizontalLine(times.get(i), WelfareUtil.dpToPx(60 * (i + 1)));
 		}
 
 		scrMain.post(new Runnable() {
@@ -125,6 +122,15 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 				scrMain.setCoordinate(parent.timeScroll.x, parent.timeScroll.y, parent.timeScroll.oldx, parent.timeScroll.oldy);
 			}
 		});
+	}
+
+	private void addSHorizontalLine(String startTime, int i){
+		View cell = new View(activity);
+		cell.setBackgroundColor(Color.GRAY);
+		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, WelfareUtil.dpToPx(1));
+		params.setMargins(0, i, 0, 0);
+		cell.setLayoutParams(params);
+		rltLineContainer.addView(cell);
 	}
 
 	public void setOnClickListenerForExpandIcon(){
@@ -254,13 +260,13 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 
 		rltSchedules.removeAllViews();
 
-		float screenW = rltSchedules.getMeasuredWidth() - TIME_COLUMN_WIDTH_PX + MARGIN_LEFT_RIGHT_PX;
+		float screenW = rltSchedules.getMeasuredWidth() - MARGIN_LEFT_RIGHT_PX;
 
 		WeeklyPageFragment.sortSchedules(schedules, dates.get(0), dates.get(dates.size() - 1), false);
 		numRow = 0;
 		int oldMoreNumber = moreNumber;
 		super.updateSchedules(schedules, categories);
-		schedules = multiplyWithUsers(schedules);
+		// schedules = multiplyWithUsers(schedules);
 		if(!CCCollectionUtil.isEmpty(todos)){
 			txtTodoInfo.setVisibility(View.VISIBLE);
 			txtTodoInfo.setText(getString(R.string.two_things_todo, String.valueOf(todos.size())));
@@ -302,7 +308,7 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 			}
 		}
 
-		buildBlocks(activity, TIME_COLUMN_WIDTH_PX - MARGIN_LEFT_RIGHT_PX, screenW, normalSchedules, rltSchedules, MAX_BLOCK_NUM_TO_SHOW_TEXT);
+		buildBlocks(activity, MARGIN_LEFT_RIGHT_PX, screenW, normalSchedules, rltSchedules, MAX_BLOCK_NUM_TO_SHOW_TEXT);
 
 		for(ScheduleModel scheduleModel : allDaySchedules){
 			TextView textView = WeeklyPageFragment.makeTextView(activity, scheduleModel.scheduleName, 0, 0, LinearLayout.LayoutParams.MATCH_PARENT, WeeklyPageFragment.getColor(scheduleModel), 0, Gravity.CENTER);
@@ -315,17 +321,21 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 		if(moreNumber <= 0){
 			txtMore.setVisibility(View.GONE);
 			if(isActivePage()) parent.imgExpand.setVisibility(View.INVISIBLE);
-			lnrScheduleAllDays.getLayoutParams().height = Math.max(0, childCount * WeeklyPageFragment.CELL_HEIGHT_PIXEL);
+			int allDayHeight = Math.max(0, childCount * WeeklyPageFragment.CELL_HEIGHT_PIXEL);
+			lnrScheduleAllDays.getLayoutParams().height = allDayHeight;
 			lnrScheduleAllDays.requestLayout();
+			height = allDayHeight - WelfareUtil.dpToPx(12);
 		}else{
 			txtMore.setText("+" + (moreNumber + 1));
-			if(firstTime){
+			if(firstTime || oldMoreNumber == moreNumber){
 				showCollapse();
 			}else if(oldMoreNumber != moreNumber){
 				if(isExpanded){
 					txtMore.setVisibility(View.GONE);
-					lnrScheduleAllDays.getLayoutParams().height = Math.max(0, childCount * WeeklyPageFragment.CELL_HEIGHT_PIXEL);
+					int allDayHeight = Math.max(0, childCount * WeeklyPageFragment.CELL_HEIGHT_PIXEL);
+					lnrScheduleAllDays.getLayoutParams().height = allDayHeight;
 					lnrScheduleAllDays.requestLayout();
+					height = allDayHeight;
 					if(isActivePage()) parent.imgExpand.setVisibility(View.VISIBLE);
 				}else{
 					showCollapse();
@@ -579,11 +589,10 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 		lnrScheduleAllDays.getLayoutParams().height = alldayHeight;
 		lnrScheduleAllDays.requestLayout();
 		txtMore.setVisibility(View.VISIBLE);
+		height = alldayHeight + WelfareUtil.dpToPx(7) + 1;
 		if(isActivePage()){
 			parent.imgExpand.setVisibility(View.VISIBLE);
 		}
-		height = alldayHeight + WelfareUtil.dpToPx(7) + 1;
-		updateTimeColumnPosition();
 	}
 
 	private void scrollToFavouritePost(){
@@ -594,18 +603,6 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 				TodoListFragment.scrollToView(parent.timeScroll, parent.goldenHourView, 2);
 			}
 		});
-	}
-
-	private void addStartTimeRow(String startTime, int marginTop, int bottomMargin){
-		View cell = inflater.inflate(R.layout.item_daily_schedule, null);
-		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-		params.setMargins(0, marginTop, 0, bottomMargin);
-		cell.setLayoutParams(params);
-		((TextView)cell.findViewById(R.id.txt_item_daily_schedule_start_time)).setText(startTime);
-		if(startTime.equals(GOLDEN_HOUR_STR)){
-			thisHourView = cell;
-		}
-		rltLineContainer.addView(cell);
 	}
 
 	@Override

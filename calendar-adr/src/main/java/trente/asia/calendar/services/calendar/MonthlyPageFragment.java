@@ -37,7 +37,6 @@ import trente.asia.calendar.commons.dialogs.TodoDialog;
 import trente.asia.calendar.commons.utils.ClUtil;
 import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
-import trente.asia.calendar.services.calendar.model.WorkRequest;
 import trente.asia.calendar.services.calendar.view.MonthlyCalendarDayView;
 import trente.asia.calendar.services.calendar.view.MonthlyCalendarRowView;
 import trente.asia.calendar.services.todo.model.Todo;
@@ -325,10 +324,6 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 					if(!diff1 && diff2) return -1;
 					if(diff1 && !diff2) return 1;
 				}
-
-				// boolean isAll1 = CCBooleanUtil.checkBoolean(schedule1.isAllDay);
-				// boolean isAll2 = CCBooleanUtil.checkBoolean(schedule2.isAllDay);
-
 				if(schedule1.isAllDay && !schedule2.isAllDay) return -1;
 				if(!schedule1.isAllDay && schedule2.isAllDay) return 1;
 				if(schedule1.isAllDay && schedule2.isAllDay && !checkAllDayTime){
@@ -364,8 +359,6 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 		int rowNum = Math.min(todos.size() + 1, MAX_ROW + 1);
 		final int targetHeight = WelfareUtil.dpToPx(44 * rowNum);
 
-		// Older versions of android (pre API 21) cancel animations for views with a height of 0.
-		// v.getLayoutParams().height = 1;
 		v.setVisibility(View.VISIBLE);
 		Animation a = new Animation() {
 
@@ -381,7 +374,6 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 			}
 		};
 
-		// 1dp/ms
 		a.setDuration((int)(targetHeight / v.getContext().getResources().getDisplayMetrics().density));
 		v.startAnimation(a);
 	}
@@ -404,7 +396,6 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 				@Override
 				protected void applyTransformation(float interpolatedTime, Transformation t){
 					if(interpolatedTime == 1){
-						// v.setVisibility(VTodoiew.GONE);
 						v.getLayoutParams().height = firstChildHeight;
 						v.requestLayout();
 					}else{
@@ -419,7 +410,6 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 				}
 			};
 
-			// 1dp/ms
 			a.setDuration((int)(initialHeight / v.getContext().getResources().getDisplayMetrics().density));
 			v.startAnimation(a);
 		}
@@ -428,8 +418,6 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 
 	@Override
 	protected void onLoadSchedulesSuccess(JSONObject response){
-		// benchmark("onLoad success");
-		// Reload if inflating view hasn't been finished yet
 		if(isFinishInflateView == false){
 			loadScheduleList();
 			return;
@@ -449,22 +437,11 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 		if(!CCCollectionUtil.isEmpty(lstBirthdayUser)){
 			for(UserModel birthday : lstBirthdayUser){
 				ScheduleModel scheduleModel = new ScheduleModel(birthday, dates.get(0), dates.get(dates.size() - 1));
-				// scheduleModel.scheduleName = getString(R.string.cl_schedule_birth_day_name, scheduleModel.scheduleName);
 				lstSchedule.add(scheduleModel);
 			}
 		}
 
-		// add work offer
-		if(!CCCollectionUtil.isEmpty(lstWorkRequest)){
-			for(WorkRequest workRequest : lstWorkRequest){
-				ScheduleModel scheduleModel = new ScheduleModel(workRequest);
-				// scheduleModel.scheduleName = scheduleModel.scheduleName;
-				lstSchedule.add(0, scheduleModel);
-			}
-		}
-
 		clearOldData();
-		// if(pageSharingHolder.selectedPagePosition == pagePosition) log("done for clear data");
 
 		for(ScheduleModel schedule : lstSchedule){
 			if(schedule.isPeriod){
@@ -481,10 +458,6 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 				}
 			}else{
 				dateDayViewMap.get(WelfareUtil.getDateString(schedule.startDate)).addSchedule(schedule);
-				// MonthlyCalendarDayView activeCalendarDay = ClUtil.findView4Day(lstCalendarDay, schedule.startDate, schedule.endDate);
-				// if(activeCalendarDay != null){
-				// activeCalendarDay.addSchedule(schedule);
-				// }
 			}
 		}
 
@@ -495,12 +468,7 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 		for(MonthlyCalendarDayView dayView : lstCalendarDay){
 			dayView.showSchedules();
 		}
-		// if(pageSharingHolder.selectedPagePosition == pagePosition) log("done for schedule");
 		buildTodoList(todos);
-		// if(pageSharingHolder.selectedPagePosition == pagePosition)
-		//
-		// log("done for todo");
-
 	}
 
 	@Override
@@ -512,7 +480,6 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 		for(MonthlyCalendarRowView rowView : lstCalendarRow){
 			rowView.removeAllData();
 		}
-		// lstScheduleWithoutHoliday.clear();
 	}
 
 	@Override

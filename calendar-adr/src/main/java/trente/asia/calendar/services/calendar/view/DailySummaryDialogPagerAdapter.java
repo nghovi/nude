@@ -16,7 +16,6 @@ import android.widget.TextView;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import trente.asia.calendar.R;
-import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.dialogs.DailySummaryDialog;
 import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
@@ -42,11 +41,11 @@ public class DailySummaryDialogPagerAdapter extends PagerAdapter{
 	private List<ScheduleModel>										lstSchedule;
 	private List<UserModel>											lstBirthdayUser;
 	private List<HolidayModel>										lstHoliday;
-	private List<WorkRequest> lstWorkRequest;
+	private List<WorkRequest>										lstWorkRequest;
 	private DailySummaryDialog.OnAddBtnClickedListener				onAddBtnClickedListener;
 	private WeeklyScheduleListAdapter.OnScheduleItemClickListener	listener;
 	Map<Date, List<ScheduleModel>>									daySchedulesMap;
-	Map<Date, List<WorkRequest>>										dayOfferMap;
+	Map<Date, List<WorkRequest>>									dayOfferMap;
 	Map<Date, List<UserModel>>										dayBirthdayUsersMap;
 
 	private DailySummaryDialog										dialog;
@@ -91,7 +90,7 @@ public class DailySummaryDialogPagerAdapter extends PagerAdapter{
 
 			@Override
 			public void onClickScheduleItem(ScheduleModel schedule, Date selectedDate){
-				if(ClConst.SCHEDULE_TYPE_PRI.equals(schedule.scheduleType) && schedule.scheduleName.equals(mContext.getString(R.string.schedule_mystery))){
+				if(ScheduleModel.SCHEDULE_TYPE_PRI.equals(schedule.scheduleType) && schedule.scheduleName.equals(mContext.getString(R.string.schedule_mystery))){
 					return;
 				}
 				dialog.dismiss();// // TODO: 3/13/2017

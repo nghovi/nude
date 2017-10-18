@@ -156,7 +156,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 		Collections.sort(lstWorkRequest, getWorkRequestComparator());
 		super.updateSchedules(schedules, categories);
 		sortSchedules(schedules, dates.get(0), dates.get(dates.size() - 1), true);
-		schedules = multiplyWithUsers(schedules);
+		// schedules = multiplyWithUsers(schedules);
 
 		List<ScheduleModel> normalSchedules = new ArrayList<>();
 		List<ScheduleModel> allDaySchedules = new ArrayList<>();

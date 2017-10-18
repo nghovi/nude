@@ -83,19 +83,19 @@ public class MonthlyCalendarRowView extends RelativeLayout{
 			@Override
 			public int compare(ScheduleModel schedule1, ScheduleModel schedule2){
 
-				if(ClConst.SCHEDULE_TYPE_HOLIDAY.equals(schedule1.scheduleType) && !ClConst.SCHEDULE_TYPE_HOLIDAY.equals(schedule2.scheduleType)){
+				if(ScheduleModel.EVENT_TYPE_HOLIDAY_OLD.equals(schedule1.eventType) && !ScheduleModel.EVENT_TYPE_HOLIDAY_OLD.equals(schedule2.eventType)){
 					return -1;
-				}else if(ClConst.SCHEDULE_TYPE_HOLIDAY.equals(schedule2.scheduleType) && !ClConst.SCHEDULE_TYPE_HOLIDAY.equals(schedule1.scheduleType)){
+				}else if(ScheduleModel.EVENT_TYPE_HOLIDAY_OLD.equals(schedule2.eventType) && !ScheduleModel.EVENT_TYPE_HOLIDAY_OLD.equals(schedule1.eventType)){
 					return 1;
-				}else if(ClConst.SCHEDULE_TYPE_HOLIDAY.equals(schedule1.scheduleType) && ClConst.SCHEDULE_TYPE_HOLIDAY.equals(schedule2.scheduleType)){
+				}else if(ScheduleModel.EVENT_TYPE_HOLIDAY_OLD.equals(schedule1.eventType) && ScheduleModel.EVENT_TYPE_HOLIDAY_OLD.equals(schedule2.eventType)){
 					return compareOffer(schedule1, schedule2);
 				}
 
-				if(ClConst.SCHEDULE_TYPE_WORK_OFFER.equals(schedule1.scheduleType) && !ClConst.SCHEDULE_TYPE_WORK_OFFER.equals(schedule2.scheduleType)){
+				if(ScheduleModel.EVENT_TYPE_WORK_OFFER.equals(schedule1.eventType) && !ScheduleModel.EVENT_TYPE_WORK_OFFER.equals(schedule2.eventType)){
 					return -1;
-				}else if(ClConst.SCHEDULE_TYPE_WORK_OFFER.equals(schedule2.scheduleType) && !ClConst.SCHEDULE_TYPE_WORK_OFFER.equals(schedule1.scheduleType)){
+				}else if(ScheduleModel.EVENT_TYPE_WORK_OFFER.equals(schedule2.eventType) && !ScheduleModel.EVENT_TYPE_WORK_OFFER.equals(schedule1.eventType)){
 					return 1;
-				}else if(ClConst.SCHEDULE_TYPE_WORK_OFFER.equals(schedule1.scheduleType) && ClConst.SCHEDULE_TYPE_WORK_OFFER.equals(schedule2.scheduleType)){
+				}else if(ScheduleModel.EVENT_TYPE_WORK_OFFER.equals(schedule1.eventType) && ScheduleModel.EVENT_TYPE_WORK_OFFER.equals(schedule2.eventType)){
 					return compareOffer(schedule1, schedule2);
 				}
 
@@ -197,7 +197,7 @@ public class MonthlyCalendarRowView extends RelativeLayout{
 
 		TextView txtSchedule = createTextView(getContext(), width, marginLeft, scheduleModel, marginTopAfter + WelfareUtil.dpToPx(4));
 
-		if(ClConst.SCHEDULE_TYPE_HOLIDAY.equals(scheduleModel.scheduleType)){
+		if(ScheduleModel.EVENT_TYPE_HOLIDAY_OLD.equals(scheduleModel.eventType)){
 			txtSchedule.setTextColor(Color.RED);
 		}
 
