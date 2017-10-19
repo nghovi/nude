@@ -1,6 +1,6 @@
 package trente.asia.calendar.services.calendar.view;
 
-import static trente.asia.calendar.services.calendar.MonthlyPageFragment.getScheduleComparator;
+//import static trente.asia.calendar.services.calendar.MonthlyPageFragment.getScheduleComparator;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -116,7 +116,7 @@ public class MonthlyCalendarDayView extends LinearLayout{
 
 	public void showSchedules(){
 		Collections.sort(usedMargins);
-		Collections.sort(lstSchedule, getScheduleComparator(false));
+//		Collections.sort(lstSchedule, getScheduleComparator(false));
 		for(ScheduleModel scheduleModel : schedules){
 			showSchedule(scheduleModel);
 		}

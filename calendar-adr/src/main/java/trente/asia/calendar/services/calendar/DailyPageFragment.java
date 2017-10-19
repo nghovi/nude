@@ -1,7 +1,5 @@
 package trente.asia.calendar.services.calendar;
 
-import static trente.asia.calendar.services.calendar.WeeklyPageFragment.CELL_HEIGHT_PIXEL;
-import static trente.asia.calendar.services.calendar.WeeklyPageFragment.getWorkRequestComparator;
 import static trente.asia.calendar.services.calendar.WeeklyPageFragment.makeBlock;
 
 import java.util.ArrayList;
@@ -261,7 +259,7 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 
 		float screenW = rltSchedules.getMeasuredWidth() - WelfareUtil.dpToPx(MARGIN_LEFT_RIGHT_PX);
 
-		WeeklyPageFragment.sortSchedules(schedules, dates.get(0), dates.get(dates.size() - 1), false);
+		// WeeklyPageFragment.sortSchedules(schedules, dates.get(0), dates.get(dates.size() - 1), false);
 		numRow = 0;
 		int oldMoreNumber = moreNumber;
 		super.updateSchedules(schedules, categories);
@@ -290,7 +288,7 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 		}
 
 		// request
-		Collections.sort(lstWorkRequest, getWorkRequestComparator());
+		// Collections.sort(lstWorkRequest, getWorkRequestComparator());
 		for(WorkRequest workRequest : lstWorkRequest){
 			TextView textView = WeeklyPageFragment.makeTextView(activity, workRequest.offerTypeName, 0, 0, LinearLayout.LayoutParams.MATCH_PARENT, Color.parseColor(workRequest.userColor), 0, Gravity.CENTER);
 			lnrScheduleAllDays.addView(textView);

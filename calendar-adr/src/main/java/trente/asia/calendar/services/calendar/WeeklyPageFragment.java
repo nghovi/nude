@@ -5,7 +5,6 @@ import static trente.asia.android.util.CsDateUtil.CS_DATE_TIME_1;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -45,7 +44,6 @@ import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.model.WorkRequest;
 import trente.asia.calendar.services.calendar.view.DailyScheduleList;
-import trente.asia.calendar.services.calendar.view.MonthlyCalendarRowView;
 import trente.asia.calendar.services.todo.TodoListFragment;
 import trente.asia.calendar.services.todo.TodoListTodayFragment;
 import trente.asia.calendar.services.todo.model.Todo;
@@ -153,9 +151,9 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 
 	@Override
 	protected void updateSchedules(List<ScheduleModel> schedules, List<CategoryModel> categories){
-		Collections.sort(lstWorkRequest, getWorkRequestComparator());
+		// Collections.sort(lstWorkRequest, getWorkRequestComparator());
 		super.updateSchedules(schedules, categories);
-		sortSchedules(schedules, dates.get(0), dates.get(dates.size() - 1), true);
+		// sortSchedules(schedules, dates.get(0), dates.get(dates.size() - 1), true);
 		// schedules = multiplyWithUsers(schedules);
 
 		List<ScheduleModel> normalSchedules = new ArrayList<>();
@@ -173,28 +171,28 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 		buildPart2(normalSchedules);
 	}
 
-	public static void sortSchedules(List<ScheduleModel> schedules, Date dateStart, Date dateEnd, boolean checkAllDayTime){
-		final Comparator<ScheduleModel> normalComparator = MonthlyPageFragment.getScheduleComparator(checkAllDayTime);
-		if(!checkAllDayTime){
-			Collections.sort(schedules, normalComparator);
-		}else{
-			final Comparator<ScheduleModel> periodComparator = MonthlyCalendarRowView.getPeriodScheduleComparator(dateStart, dateEnd);
-			Collections.sort(schedules, new Comparator<ScheduleModel>() {
-
-				@Override
-				public int compare(ScheduleModel o1, ScheduleModel o2){
-					if(o1.isPeriod && !o2.isPeriod){
-						return -1;
-					}else if(!o1.isPeriod && o2.isPeriod){
-						return 1;
-					}else if(o1.isPeriod && o2.isPeriod){
-						return periodComparator.compare(o1, o2);
-					}
-					return normalComparator.compare(o1, o2);
-				}
-			});
-		}
-	}
+	// public static void sortSchedules(List<ScheduleModel> schedules, Date dateStart, Date dateEnd, boolean checkAllDayTime){
+	//// final Comparator<ScheduleModel> normalComparator = MonthlyPageFragment.getScheduleComparator(checkAllDayTime);
+	// if(!checkAllDayTime){
+	// Collections.sort(schedules, normalComparator);
+	// }else{
+	// final Comparator<ScheduleModel> periodComparator = MonthlyCalendarRowView.getPeriodScheduleComparator(dateStart, dateEnd);
+	// Collections.sort(schedules, new Comparator<ScheduleModel>() {
+	//
+	// @Override
+	// public int compare(ScheduleModel o1, ScheduleModel o2){
+	// if(o1.isPeriod && !o2.isPeriod){
+	// return -1;
+	// }else if(!o1.isPeriod && o2.isPeriod){
+	// return 1;
+	// }else if(o1.isPeriod && o2.isPeriod){
+	// return periodComparator.compare(o1, o2);
+	// }
+	// return normalComparator.compare(o1, o2);
+	// }
+	// });
+	// }
+	// }
 
 	private void buildPart1(List<ScheduleModel> schedules){
 		rltPart1.removeAllViews();
@@ -745,15 +743,15 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 
 	}
 
-	public static Comparator<? super WorkRequest> getWorkRequestComparator(){
-		return new Comparator<WorkRequest>() {
-
-			@Override
-			public int compare(WorkRequest o1, WorkRequest o2){
-				return o1.offerTypeName.compareTo(o2.offerTypeName);
-			}
-		};
-	}
+	// public static Comparator<? super WorkRequest> getWorkRequestComparator(){
+	// return new Comparator<WorkRequest>() {
+	//
+	// @Override
+	// public int compare(WorkRequest o1, WorkRequest o2){
+	// return o1.offerTypeName.compareTo(o2.offerTypeName);
+	// }
+	// };
+	// }
 
 	@Override
 	public void onScrollChanged(ObservableScrollView scrollView, int x, int y, int oldx, int oldy){

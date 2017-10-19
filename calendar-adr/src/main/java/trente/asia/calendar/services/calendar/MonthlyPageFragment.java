@@ -306,40 +306,40 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 		requestUpdate(ClConst.API_TODO_UPDATE, jsonObject, true);
 	}
 
-	public static Comparator<ScheduleModel> getScheduleComparator(final boolean checkAllDayTime){
-		return new Comparator<ScheduleModel>() {
-
-			@Override
-			public int compare(ScheduleModel schedule1, ScheduleModel schedule2){
-				if(checkAllDayTime){
-					String startDate1 = WelfareUtil.getDateString(schedule1.startDate);
-					String endDate1 = WelfareUtil.getDateString(schedule1.endDate);
-
-					String startDate2 = WelfareUtil.getDateString(schedule2.startDate);
-					String endDate2 = WelfareUtil.getDateString(schedule2.endDate);
-
-					boolean diff1 = startDate1.equals(endDate1);
-					boolean diff2 = startDate2.equals(endDate2);
-
-					if(!diff1 && diff2) return -1;
-					if(diff1 && !diff2) return 1;
-				}
-				if(schedule1.isAllDay && !schedule2.isAllDay) return -1;
-				if(!schedule1.isAllDay && schedule2.isAllDay) return 1;
-				if(schedule1.isAllDay && schedule2.isAllDay && !checkAllDayTime){
-					return schedule1.scheduleName.compareTo(schedule2.scheduleName);
-				}
-
-				Integer timeStart1 = CCDateUtil.convertTime2Min(schedule1.startTime);
-				Integer timeStart2 = CCDateUtil.convertTime2Min(schedule2.startTime);
-				if(timeStart1 != timeStart2){
-					return timeStart1.compareTo(timeStart2);
-				}
-
-				return schedule1.scheduleName.compareTo(schedule2.scheduleName);
-			}
-		};
-	}
+//	public static Comparator<ScheduleModel> getScheduleComparator(final boolean checkAllDayTime){
+//		return new Comparator<ScheduleModel>() {
+//
+//			@Override
+//			public int compare(ScheduleModel schedule1, ScheduleModel schedule2){
+//				if(checkAllDayTime){
+//					String startDate1 = WelfareUtil.getDateString(schedule1.startDate);
+//					String endDate1 = WelfareUtil.getDateString(schedule1.endDate);
+//
+//					String startDate2 = WelfareUtil.getDateString(schedule2.startDate);
+//					String endDate2 = WelfareUtil.getDateString(schedule2.endDate);
+//
+//					boolean diff1 = startDate1.equals(endDate1);
+//					boolean diff2 = startDate2.equals(endDate2);
+//
+//					if(!diff1 && diff2) return -1;
+//					if(diff1 && !diff2) return 1;
+//				}
+//				if(schedule1.isAllDay && !schedule2.isAllDay) return -1;
+//				if(!schedule1.isAllDay && schedule2.isAllDay) return 1;
+//				if(schedule1.isAllDay && schedule2.isAllDay && !checkAllDayTime){
+//					return schedule1.scheduleName.compareTo(schedule2.scheduleName);
+//				}
+//
+//				Integer timeStart1 = CCDateUtil.convertTime2Min(schedule1.startTime);
+//				Integer timeStart2 = CCDateUtil.convertTime2Min(schedule2.startTime);
+//				if(timeStart1 != timeStart2){
+//					return timeStart1.compareTo(timeStart2);
+//				}
+//
+//				return schedule1.scheduleName.compareTo(schedule2.scheduleName);
+//			}
+//		};
+//	}
 
 	protected List<Date> getAllDate(){
 		int firstDay = Calendar.SUNDAY;

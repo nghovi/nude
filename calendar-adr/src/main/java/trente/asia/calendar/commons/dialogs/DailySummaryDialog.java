@@ -11,7 +11,6 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import trente.asia.calendar.R;
-import trente.asia.calendar.services.calendar.WeeklyPageFragment;
 import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.model.WorkRequest;
@@ -36,7 +35,7 @@ public class DailySummaryDialog extends CLOutboundDismissDialog{
 	private List<ScheduleModel>											lstSchedule;
 	private List<UserModel>												lstBirthdayUser;
 	private List<HolidayModel>											lstHoliday;
-	private List<WorkRequest> lstWorkRequest;
+	private List<WorkRequest>											lstWorkRequest;
 	private Date														selectedDate;
 	private OnAddBtnClickedListener										onAddBtnClickedListener;
 
@@ -66,7 +65,7 @@ public class DailySummaryDialog extends CLOutboundDismissDialog{
 		this.lstHoliday = lstHoliday;
 		this.lstWorkRequest = lstWorkRequest;
 
-		WeeklyPageFragment.sortSchedules(lstSchedule, dates.get(0), dates.get(dates.size() - 1), false);
+		// WeeklyPageFragment.sortSchedules(lstSchedule, dates.get(0), dates.get(dates.size() - 1), false);
 		Collections.sort(lstWorkRequest, new Comparator<WorkRequest>() {
 
 			@Override
