@@ -21,7 +21,6 @@ import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.fragments.ClPageFragment;
 import trente.asia.calendar.commons.fragments.PageContainerFragment;
-import trente.asia.calendar.commons.views.ClFragmentPagerAdapter;
 import trente.asia.calendar.services.calendar.view.DailySchedulesPagerAdapter;
 import trente.asia.calendar.services.calendar.view.SchedulesPagerAdapter;
 import trente.asia.welfare.adr.define.WelfareConst;
@@ -39,7 +38,6 @@ public class DailyFragment extends PageContainerFragment{
 	public RelativeLayout		rltTimeContainer;
 	public ImageView			imgExpand;
 	public LinearLayout			lnrTimeColumn;
-
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -105,7 +103,8 @@ public class DailyFragment extends PageContainerFragment{
 
 	@Override
 	protected void onFragmentSelected(ClPageFragment fragment){
-		DailyPageFragment dailyPageFragment = (DailyPageFragment) fragment;
+		DailyPageFragment dailyPageFragment = (DailyPageFragment)fragment;
+		imgExpand.setVisibility(View.INVISIBLE);
 		dailyPageFragment.updateTimeColumnPosition();
 		dailyPageFragment.scrMain.setScrollViewListener(dailyPageFragment);
 		timeScroll.setScrollViewListener(dailyPageFragment);

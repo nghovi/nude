@@ -87,8 +87,8 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 		lnrScheduleAllDays = (LinearLayout)getView().findViewById(R.id.lnr_schedule_all_day_container);
 		lnrScheduleAllDays.setOnClickListener(this);
 		rltLineContainer = (RelativeLayout)getView().findViewById(R.id.rlt_line_container);
+		rltLineContainer.setOnClickListener(this);
 		rltSchedules = (RelativeLayout)getView().findViewById(R.id.rlt_fragment_daily_page_schedules_time);
-		rltSchedules.setOnClickListener(this);
 		scrMain = (ObservableScrollView)getView().findViewById(R.id.scr_schedules);
 		if(isActivePage()){
 			parent.timeScroll.setScrollViewListener(this);
@@ -612,7 +612,7 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 	@Override
 	public void onClick(View v){
 		switch(v.getId()){
-		case R.id.rlt_fragment_daily_page_schedules_time:
+		case R.id.rlt_line_container:
 		case R.id.lnr_schedule_all_day_container:
 			onDailyScheduleClickListener(selectedDate);
 			break;
