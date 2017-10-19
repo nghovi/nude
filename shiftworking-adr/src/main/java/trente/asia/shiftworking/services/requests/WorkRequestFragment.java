@@ -95,12 +95,15 @@ public class WorkRequestFragment extends AbstractSwFragment implements ViewPager
 		switch(view.getId()){
 		case R.id.tab_vacation:
 			binding.viewPager.setCurrentItem(0);
+			vacationListFragment.loadRequestList();;
 			break;
 		case R.id.tab_overtime:
 			binding.viewPager.setCurrentItem(1);
+			overtimeListFragment.loadRequestList();
 			break;
 		case R.id.tab_holiday_working:
 			binding.viewPager.setCurrentItem(2);
+			holidayWorkingListFragment.loadRequestList();
 			break;
 		case R.id.img_id_header_right_icon:
 			if(binding.viewPager.getCurrentItem() == 0){
