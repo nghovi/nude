@@ -1,13 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android"
-android:shape="rectangle">
-<stroke
-    android:width="2px"
-    android:color="@color/chiase_black" />
-<corners android:radius="3dp" />
-<padding
-    android:bottom="2px"
-    android:left="2px"
-    android:right="2px"
-    android:top="2px"  />
-</shape>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:bottom="2px"
+        android:drawable="@drawable/wf_background_black_border"
+        android:left="2px"
+        android:right="2px"
+        android:top="2px" />
+    <corners android:radius="4dp" />
+</layer-list>
