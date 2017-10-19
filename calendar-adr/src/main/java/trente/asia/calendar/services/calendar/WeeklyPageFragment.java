@@ -477,7 +477,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 
 		if(bgColor != 0){
 			// textView.setBackgroundColor(bgColor);
-			textView.setBackground(ContextCompat.getDrawable(activity, R.drawable.wf_background_round_border_white_small));
+			textView.setBackground(ContextCompat.getDrawable(activity, R.drawable.wf_background_round_border_transparent));
 			GradientDrawable bgShape = (GradientDrawable)textView.getBackground();
 			bgShape.setColor(bgColor);
 		}
