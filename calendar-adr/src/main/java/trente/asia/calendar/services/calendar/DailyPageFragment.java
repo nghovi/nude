@@ -44,7 +44,7 @@ import trente.asia.welfare.adr.utils.WelfareUtil;
  */
 public class DailyPageFragment extends SchedulesPageFragment implements ObservableScrollView.ScrollViewListener{
 
-	private static final int					MAX_BLOCK_NUM_TO_SHOW_TEXT	= 40;
+	private static final int					MAX_BLOCK_NUM_TO_SHOW_TEXT	= 21;
 	private LinearLayout						lnrScheduleAllDays;
 	private TextView							txtTodoInfo;
 	private RelativeLayout						rltSchedules;
