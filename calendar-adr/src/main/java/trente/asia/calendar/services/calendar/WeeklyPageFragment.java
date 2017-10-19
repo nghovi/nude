@@ -736,7 +736,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 		if(!CCStringUtil.isEmpty(prefAccUtil.getSetting().CL_START_DAY_IN_WEEK)){
 			firstDay = Integer.parseInt(prefAccUtil.getSetting().CL_START_DAY_IN_WEEK);
 		}
-		List<Date> dates = CsDateUtil.getAllDate4Week(CCDateUtil.makeCalendar(selectedDate), firstDay);
+		List<Date> dates = CsDateUtil.getAllDatesOfWeek(CCDateUtil.makeCalendar(selectedDate), firstDay);
 		return dates;
 	}
 

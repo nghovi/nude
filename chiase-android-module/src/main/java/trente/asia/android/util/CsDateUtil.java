@@ -81,20 +81,23 @@ public class CsDateUtil{
 	}
 
 	/**
-	 * <strong>getAllDate4Week</strong><br>
-	 * <br> get all date in week with start: Sunday and end: Saturday
+	 * <strong>getAllDatesOfWeek</strong><br>
 	 *
 	 * @param calendar
-	 * @return
+	 * @param firstDayOfWeek
+	 * @return List<Date>
 	 */
-	public static List<Date> getAllDate4Week(Calendar calendar, int startDay){
+	public static List<Date> getAllDatesOfWeek(Calendar calendar, int firstDayOfWeek){
 		if(calendar == null){
 			return null;
 		}else{
-			calendar.setFirstDayOfWeek(startDay);
+			calendar.setFirstDayOfWeek(firstDayOfWeek);
 			List<Date> lstDate = new ArrayList<>();
 
-			calendar.set(Calendar.DAY_OF_WEEK, calendar.getFirstDayOfWeek());
+			while(calendar.get(Calendar.DAY_OF_WEEK) > calendar.getFirstDayOfWeek()){
+				calendar.add(Calendar.DATE, -1); // Substract 1 day until first day of week.
+			}
+
 			Date firstDate = calendar.getTime();
 			calendar.add(Calendar.DATE, 6);
 			Date lastDate = calendar.getTime();
