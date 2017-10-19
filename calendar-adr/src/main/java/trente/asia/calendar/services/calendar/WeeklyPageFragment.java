@@ -34,6 +34,7 @@ import android.widget.TextView;
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
+import asia.chiase.core.util.CCNumberUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.activity.ChiaseFragment;
 import trente.asia.android.util.CsDateUtil;
@@ -252,7 +253,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 			int dayDistance = c2.get(Calendar.DAY_OF_YEAR) - cStartWeek.get(Calendar.DAY_OF_YEAR);
 			int leftMargin = (int)(screenW * (0 + dayDistance) / 7);
 			topMargin = getNextTopMargin(dayDistance, dayDistance);
-			TextView textView = makeTextView(activity, holidayModel.holidayName, leftMargin, topMargin, (int)(screenW / 7), Color.WHITE, Color.RED, Gravity.CENTER);
+			TextView textView = makeTextView(activity, holidayModel.holidayName, leftMargin, topMargin, (int)(screenW / 7), Color.WHITE, Color.RED, Gravity.LEFT);
 			rltPart1.addView(textView);
 			itemNum++;
 		}
@@ -269,7 +270,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 			int leftMargin = (int)(screenW * (0 + dayDistance) / 7);
 			topMargin = getNextTopMargin(dayDistance, dayDistance + cellNumber - 1);
 
-			TextView textView = makeTextView(activity, workRequest.offerTypeName, leftMargin, topMargin, (int)(screenW * cellNumber / 7), Color.parseColor(workRequest.userColor), 0, Gravity.CENTER);
+			TextView textView = makeTextView(activity, workRequest.offerTypeName, leftMargin, topMargin, (int)(screenW * cellNumber / 7), Color.parseColor(workRequest.userColor), 0, Gravity.LEFT);
 			rltPart1.addView(textView);
 			itemNum++;
 		}
@@ -286,7 +287,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 			int leftMargin = (int)(screenW * (0 + dayDistance) / 7);
 
 			topMargin = getNextTopMargin(dayDistance, dayDistance + cellNumber - 1);
-			TextView textView = makeTextView(activity, schedule.scheduleName, leftMargin, topMargin, maxWidth, getColor(schedule), 0, Gravity.CENTER);
+			TextView textView = makeTextView(activity, schedule.scheduleName, leftMargin, topMargin, maxWidth, getColor(schedule), 0, Gravity.LEFT);
 			rltPart1.addView(textView);
 			itemNum++;
 		}
