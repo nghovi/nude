@@ -283,14 +283,14 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 
 		// holiday
 		for(HolidayModel holidayModel : lstHoliday){
-			TextView textView = WeeklyPageFragment.makeTextView(activity, holidayModel.holidayName, 0, 0, LinearLayout.LayoutParams.MATCH_PARENT, Color.WHITE, Color.RED, Gravity.CENTER);
+			TextView textView = WeeklyPageFragment.makeTextView(activity, holidayModel.holidayName, 0, 0, LinearLayout.LayoutParams.MATCH_PARENT, Color.WHITE, Color.RED, Gravity.LEFT);
 			lnrScheduleAllDays.addView(textView);
 		}
 
 		// request
 		// Collections.sort(lstWorkRequest, getWorkRequestComparator());
 		for(WorkRequest workRequest : lstWorkRequest){
-			TextView textView = WeeklyPageFragment.makeTextView(activity, workRequest.offerTypeName, 0, 0, LinearLayout.LayoutParams.MATCH_PARENT, Color.parseColor(workRequest.userColor), 0, Gravity.CENTER);
+			TextView textView = WeeklyPageFragment.makeTextView(activity, workRequest.offerTypeName, 0, 0, LinearLayout.LayoutParams.MATCH_PARENT, Color.parseColor(workRequest.userColor), 0, Gravity.LEFT);
 			lnrScheduleAllDays.addView(textView);
 		}
 
@@ -308,7 +308,7 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 		buildBlocks(activity, WelfareUtil.dpToPx(MARGIN_LEFT_RIGHT_PX), screenW, normalSchedules, rltSchedules, MAX_BLOCK_NUM_TO_SHOW_TEXT);
 
 		for(ScheduleModel scheduleModel : allDaySchedules){
-			TextView textView = WeeklyPageFragment.makeTextView(activity, scheduleModel.scheduleName, 0, 0, LinearLayout.LayoutParams.MATCH_PARENT, WeeklyPageFragment.getColor(scheduleModel), 0, Gravity.CENTER);
+			TextView textView = WeeklyPageFragment.makeTextView(activity, scheduleModel.scheduleName, 0, 0, LinearLayout.LayoutParams.MATCH_PARENT, WeeklyPageFragment.getColor(scheduleModel), 0, Gravity.LEFT);
 			lnrScheduleAllDays.addView(textView);
 		}
 
@@ -373,7 +373,7 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 			int height = WelfareUtil.dpToPx((int)(eventRect.bottom - eventRect.top)) + 1;
 			float minWithToShowText = 1.f / maxBlockNumToShowText;
 			String txtShowed = eventRect.width < minWithToShowText ? "" : eventRect.schedule.scheduleName;
-			TextView txtView = makeBlock(context, txtShowed, leftMargin, topMargin, width, height, Color.parseColor(eventRect.schedule.scheduleColor), 0, Gravity.TOP | Gravity.CENTER_HORIZONTAL);
+			TextView txtView = makeBlock(context, txtShowed, leftMargin, topMargin, width, height, Color.parseColor(eventRect.schedule.scheduleColor), 0, Gravity.TOP | Gravity.LEFT);
 			container.addView(txtView);
 		}
 	}
