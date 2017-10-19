@@ -127,14 +127,14 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 			searchText = "-1";
 			targetUserList = prefAccUtil.get(ClConst.PREF_ACTIVE_USER_LIST);
 			if(CCStringUtil.isEmpty(targetUserList)){
-				targetUserList = "-1";
+				targetUserList = "";
 			}
 		}else{
 			searchType = "FACI";
 			targetUserList = "-1";
 			searchText = prefAccUtil.get(ClConst.PREF_ACTIVE_ROOM);
 			if(CCStringUtil.isEmpty(searchText)){
-				searchText = "-1";
+				searchText = "";
 			}
 		}
 
