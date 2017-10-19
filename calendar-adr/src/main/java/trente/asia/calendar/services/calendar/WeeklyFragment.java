@@ -105,6 +105,7 @@ public class WeeklyFragment extends PageContainerFragment{
 	@Override
 	protected void onFragmentSelected(ClPageFragment fragment){
 		WeeklyPageFragment weeklyPageFragment = (WeeklyPageFragment)fragment;
+		imgExpand.setVisibility(View.INVISIBLE);
         weeklyPageFragment.updateTimeColumnPosition();
 		weeklyPageFragment.scrMain.setScrollViewListener(weeklyPageFragment);
 		timeScroll.setScrollViewListener(weeklyPageFragment);
