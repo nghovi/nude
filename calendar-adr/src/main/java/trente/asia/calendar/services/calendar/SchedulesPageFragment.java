@@ -240,7 +240,7 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 		List<ScheduleModel> result = new ArrayList<>();
 
 		for(ScheduleModel scheduleModel : lstSchedule){
-			if(ScheduleModel.SCHEDULE_TYPE_PUB.equals(scheduleModel.scheduleType) || containUser(scheduleModel, myself.key)){
+			if(CCStringUtil.isEmpty(scheduleModel.scheduleType) || ScheduleModel.SCHEDULE_TYPE_PUB.equals(scheduleModel.scheduleType) || containUser(scheduleModel, myself.key)){
 				result.add(scheduleModel);
 			}else if(ScheduleModel.SCHEDULE_TYPE_PRI.equals(scheduleModel.scheduleType)){
 				scheduleModel.scheduleName = getString(R.string.schedule_mystery);
