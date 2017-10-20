@@ -213,7 +213,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 			if(!columnTopMarginsMap.keySet().contains(dayDistance)){
 				int leftMargin = (int)(screenW * dayDistance / 7);
 				topMargin = getNextTopMargin(dayDistance, dayDistance);
-				TextView textView = makeTextView(activity, getString(R.string.cl_footer_todo), leftMargin, topMargin, (int)(screenW / 7), Color.GRAY, 0, Gravity.CENTER);
+				TextView textView = makeTextView(activity, getString(R.string.cl_footer_todo), leftMargin, topMargin, (int)(screenW / 7), Color.GRAY, 0, Gravity.LEFT);
 				textView.setOnClickListener(new View.OnClickListener() {
 
 					@Override
@@ -330,7 +330,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 					textView.setEllipsize(TextUtils.TruncateAt.END);
 					textView.setTextSize(13);
 					textView.setMaxWidth((int)(screenW / 7 - 2));
-					textView.setGravity(Gravity.CENTER);
+					textView.setGravity(Gravity.LEFT);
 					// textView.setBackgroundColor(Color.WHITE);
 					// textView.setBackground(ContextCompat.getDrawable(activity, R.drawable.wf_background_gray_border_white));
 					textView.setText("+" + more);

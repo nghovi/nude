@@ -288,7 +288,7 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 		}
 
 		// request
-		// Collections.sort(lstWorkRequest, getWorkRequestComparator());
+		// Collections.sort(lstWoFrkRequest, getWorkRequestComparator());
 		for(WorkRequest workRequest : lstWorkRequest){
 			TextView textView = WeeklyPageFragment.makeTextView(activity, workRequest.offerTypeName, 0, 0, LinearLayout.LayoutParams.MATCH_PARENT, Color.parseColor(workRequest.userColor), 0, Gravity.LEFT);
 			lnrScheduleAllDays.addView(textView);
