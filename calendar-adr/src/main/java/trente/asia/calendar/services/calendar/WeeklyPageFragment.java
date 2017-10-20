@@ -60,7 +60,7 @@ import trente.asia.welfare.adr.utils.WelfareUtil;
 public class WeeklyPageFragment extends SchedulesPageFragment implements ObservableScrollView.ScrollViewListener{
 
 	public static final Integer			CELL_HEIGHT_PIXEL			= WelfareUtil.dpToPx(18);
-	private static final int			MAX_BLOCK_NUM_TO_SHOW_TEXT	= 5;
+	private static final int			MAX_BLOCK_NUM_TO_SHOW_TEXT	= 3;
 	protected LinearLayout				lnrHeader;
 	private RelativeLayout				rltExpandBar;
 	private RelativeLayout				rltPart1;
