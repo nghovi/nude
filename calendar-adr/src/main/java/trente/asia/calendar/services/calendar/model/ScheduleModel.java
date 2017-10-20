@@ -25,8 +25,8 @@ public class ScheduleModel{
 
 	public static final String	EVENT_TYPE_SCHEDULE		= "SH";
 	public static final String	EVENT_TYPE_WORK_OFFER	= "WO";
-	public static final String	EVENT_TYPE_HOLIDAY_OLD	= "HOLIDAY_OLD";
-	public static final String	EVENT_TYPE_BIRTHDAY		= "BIRTHDAY";
+	public static final String	EVENT_TYPE_HOLIDAY_OLD	= "HO";
+	public static final String	EVENT_TYPE_BIRTHDAY		= "BI";
 	// public static final String SCHEDULE_TYPE_HOLIDAY = "H";
 	// public static final String SCHEDULE_TYPE_WORK_OFFER = "O";
 	// public static final String SCHEDULE_TYPE_BIRTHDAY = "B";
@@ -82,23 +82,23 @@ public class ScheduleModel{
 		this.eventType = EVENT_TYPE_HOLIDAY_OLD;
 	}
 
-	public ScheduleModel(UserModel userModel, Date start, Date end){
-		this.scheduleName = userModel.userName;
-		Calendar birthdayCalendar = CCDateUtil.makeCalendar(userModel.dateBirth);
-		Calendar cStart = CCDateUtil.makeCalendar(start);
-		Calendar cEnd = CCDateUtil.makeCalendar(end);
-
-		birthdayCalendar.set(Calendar.YEAR, cStart.get(Calendar.YEAR));
-
-		if(cStart.getTimeInMillis() > birthdayCalendar.getTimeInMillis() || birthdayCalendar.getTimeInMillis() > cEnd.getTimeInMillis()){
-			birthdayCalendar.set(Calendar.YEAR, cEnd.get(Calendar.YEAR));
-		}
-
-		this.startDate = birthdayCalendar.getTime();
-		this.endDate = this.startDate;
-		this.isAllDay = true;
-		this.scheduleType = EVENT_TYPE_BIRTHDAY;
-	}
+//	public ScheduleModel(UserModel userModel, Date start, Date end){
+//		this.scheduleName = userModel.userName;
+//		Calendar birthdayCalendar = CCDateUtil.makeCalendar(userModel.birthDay);
+//		Calendar cStart = CCDateUtil.makeCalendar(start);
+//		Calendar cEnd = CCDateUtil.makeCalendar(end);
+//
+//		birthdayCalendar.set(Calendar.YEAR, cStart.get(Calendar.YEAR));
+//
+//		if(cStart.getTimeInMillis() > birthdayCalendar.getTimeInMillis() || birthdayCalendar.getTimeInMillis() > cEnd.getTimeInMillis()){
+//			birthdayCalendar.set(Calendar.YEAR, cEnd.get(Calendar.YEAR));
+//		}
+//
+//		this.startDate = birthdayCalendar.getTime();
+//		this.endDate = this.startDate;
+//		this.isAllDay = true;
+//		this.scheduleType = EVENT_TYPE_BIRTHDAY;
+//	}
 
 	public static void determinePeriod(List<ScheduleModel> scheduleModels){
 		for(ScheduleModel scheduleModel : scheduleModels){

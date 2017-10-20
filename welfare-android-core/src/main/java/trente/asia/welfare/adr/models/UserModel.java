@@ -35,7 +35,7 @@ public class UserModel extends BitmapModel implements Serializable{
 	public String		token;
 	public String		language	= "en";
 	@JsonField(typeConverter = WelfareActivity.WelfareTimeConverter.class)
-	public Date			dateBirth;
+	public Date			birthDay;
 	public String		color		= "#FF0000";
 
 	public UserModel(){

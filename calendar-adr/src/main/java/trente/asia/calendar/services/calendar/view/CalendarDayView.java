@@ -10,6 +10,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -20,6 +21,7 @@ import trente.asia.calendar.R;
 import trente.asia.calendar.services.calendar.model.CalendarDayModel;
 import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.welfare.adr.define.WelfareConst;
+import trente.asia.welfare.adr.models.UserModel;
 
 /**
  * WeeklyCalendarDayView
@@ -46,7 +48,7 @@ public class CalendarDayView extends LinearLayout{
 		this.date = date;
 	}
 
-	private Date	date;
+	private Date date;
 
 	public Date getDate(){
 		return date;
@@ -119,6 +121,7 @@ public class CalendarDayView extends LinearLayout{
 		LinearLayout itemView = (LinearLayout)inflater.inflate(R.layout.weekly_calendar_row_header_item, null);
 		rowItemView = itemView.findViewById(R.id.rlt_day_view);
 		txtContent = (TextView)rowItemView.findViewById(R.id.monthly_calendar_title_day_label);
+
 		LayoutParams layoutParams = new LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
 		itemView.setLayoutParams(layoutParams);
 

@@ -273,11 +273,11 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 			txtTodoInfo.setVisibility(View.GONE);
 		}
 
-		if(!CCCollectionUtil.isEmpty(lstBirthdayUser)){
-			imgBirthdayIcon.setVisibility(View.VISIBLE);
-			numRow += 1;
-		}else{
-			imgBirthdayIcon.setVisibility(View.GONE);
+		for (ScheduleModel scheduleModel:schedules){
+			if("BI".equals(scheduleModel.eventType)){
+				imgBirthdayIcon.setVisibility(View.VISIBLE);
+				numRow += 1;
+			}
 		}
 
 		lnrScheduleAllDays.removeAllViews();
@@ -301,7 +301,7 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 		for(ScheduleModel scheduleModel : schedules){
 			if(!scheduleModel.isAllDay){
 				normalSchedules.add(scheduleModel);
-			}else{
+			}else if (!"BI".equals(scheduleModel.eventType)){
 				allDaySchedules.add(scheduleModel);
 			}
 		}

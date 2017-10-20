@@ -228,22 +228,24 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 
 		Map<String, Boolean> birthdayIconMap = new HashMap<>();
 		// birthday
-		for(UserModel userModel : lstBirthdayUser){
-			String keyDate = WelfareUtil.getDateString(userModel.dateBirth);
-			if(!birthdayIconMap.containsKey(keyDate)){
-				Calendar c2 = CCDateUtil.makeCalendarWithDateOnly(userModel.dateBirth);
-				int dayDistance = c2.get(Calendar.DAY_OF_YEAR) - cStartWeek.get(Calendar.DAY_OF_YEAR);
-				int leftMargin = (int)(screenW * (0 + dayDistance) / 7 + (screenW / 7 - CELL_HEIGHT_PIXEL) / 2);
-				topMargin = getNextTopMargin(dayDistance, dayDistance);
+		for(ScheduleModel scheduleModel : schedules){
+			if("BI".equals(scheduleModel.eventType)) {
+				String keyDate = WelfareUtil.getDateString(scheduleModel.startDate);
+				if (!birthdayIconMap.containsKey(keyDate)) {
+					Calendar c2 = CCDateUtil.makeCalendarWithDateOnly(scheduleModel.startDate);
+					int dayDistance = c2.get(Calendar.DAY_OF_YEAR) - cStartWeek.get(Calendar.DAY_OF_YEAR);
+					int leftMargin = (int) (screenW * (0 + dayDistance) / 7 + (screenW / 7 - CELL_HEIGHT_PIXEL) / 2);
+					topMargin = getNextTopMargin(dayDistance, dayDistance);
 
-				ImageView imageViewBirthday = new ImageView(activity);
-				imageViewBirthday.setImageResource(R.drawable.cl_icon_birthday);
-				RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(CELL_HEIGHT_PIXEL, CELL_HEIGHT_PIXEL);
-				rlp.setMargins(leftMargin, topMargin, 0, 0);
-				imageViewBirthday.setLayoutParams(rlp);
-				rltPart1.addView(imageViewBirthday);
-				birthdayIconMap.put(keyDate, true);
-				itemNum++;
+					ImageView imageViewBirthday = new ImageView(activity);
+					imageViewBirthday.setImageResource(R.drawable.cl_icon_birthday);
+					RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(CELL_HEIGHT_PIXEL, CELL_HEIGHT_PIXEL);
+					rlp.setMargins(leftMargin, topMargin, 0, 0);
+					imageViewBirthday.setLayoutParams(rlp);
+					rltPart1.addView(imageViewBirthday);
+					birthdayIconMap.put(keyDate, true);
+					itemNum++;
+				}
 			}
 		}
 

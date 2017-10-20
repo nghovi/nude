@@ -64,6 +64,8 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 	private ImageView							expIcon;
 	private Map<String, MonthlyCalendarDayView>	dateDayViewMap		= new HashMap<>();
 	private boolean								isFinishInflateView	= false;
+	private ImageView birthdayIcon;
+	private View rowItemView;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -436,10 +438,10 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 
 		// add birthday
 		if(!CCCollectionUtil.isEmpty(lstBirthdayUser)){
-			for(UserModel birthday : lstBirthdayUser){
-				ScheduleModel scheduleModel = new ScheduleModel(birthday, dates.get(0), dates.get(dates.size() - 1));
-				lstSchedule.add(scheduleModel);
-			}
+//			for(UserModel birthday : lstBirthdayUser){
+//				ScheduleModel scheduleModel = new ScheduleModel(birthday, dates.get(0), dates.get(dates.size() - 1));
+//				lstSchedule.add(scheduleModel);
+//			}
 		}
 
 		clearOldData();

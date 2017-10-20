@@ -246,7 +246,7 @@ public class DailyScheduleList extends LinearLayout{
 	public static List<UserModel> getSortedBirthdayUsersByDate(List<UserModel> userModels, Date date){
 		List<UserModel> result = new ArrayList<>();
 		for(UserModel userModel : userModels){
-			if(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_MM_DD, date).equals(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_MM_DD, userModel.dateBirth))){
+			if(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_MM_DD, date).equals(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_MM_DD, userModel.birthDay))){
 				result.add(userModel);
 			}
 		}
