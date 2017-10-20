@@ -1,5 +1,6 @@
 package trente.asia.calendar.services.calendar;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -126,7 +127,7 @@ public class DailyFragment extends PageContainerFragment{
 	@Override
 	protected void setActiveDate(int position){
 		Date activeDate = getActiveDate(position);
-		String title = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, activeDate);
+		String title = new SimpleDateFormat("yyyy/M/d").format(activeDate);
 		updateHeader(title);
 	}
 

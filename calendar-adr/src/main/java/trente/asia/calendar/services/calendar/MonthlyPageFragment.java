@@ -83,6 +83,7 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 
 	@Override
 	protected void initCalendarView(){
+		super.screenMode = "MO";
 		loadScheduleList();// loadData
 		super.initCalendarView();
 		isFinishInflateView = true;

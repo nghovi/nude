@@ -1,5 +1,6 @@
 package trente.asia.calendar.services.calendar.view;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -98,7 +99,7 @@ public class DailySummaryDialogPagerAdapter extends PagerAdapter{
 			}
 		});
 
-		txtHeader.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, selectedDate));
+		txtHeader.setText(new SimpleDateFormat("yyyy/M/d").format(selectedDate));
 		dailyScheduleListView.hasDisplayedItem = false;
 		dailyScheduleListView.initDataWithMap(this.dayBirthdayUsersMap, this.dayOfferMap, this.daySchedulesMap, lstSchedule, lstHoliday, lstWorkRequest, lstBirthdayUser);
 		dailyScheduleListView.showFor(selectedDate);

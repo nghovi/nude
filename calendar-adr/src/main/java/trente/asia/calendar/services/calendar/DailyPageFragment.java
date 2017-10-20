@@ -73,6 +73,7 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 	@Override
 	protected void initView(){
 		super.initView();
+		super.screenMode = "DA";
 		parent = (DailyFragment)getParentFragment();
 		txtTodoInfo = (TextView)getView().findViewById(R.id.txt_todo_things);
 		txtTodoInfo.setOnClickListener(new View.OnClickListener() {

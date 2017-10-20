@@ -2,6 +2,7 @@ package trente.asia.calendar.services.calendar.view;
 
 //import static trente.asia.calendar.services.calendar.MonthlyPageFragment.getScheduleComparator;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -87,7 +88,7 @@ public class MonthlyCalendarDayView extends LinearLayout{
 		// txtHoliday = (TextView) this.findViewById(R.id.txt_id_row_holiday);
 
 		txtDayLabel = (TextView)this.findViewById(R.id.txt_id_day_label);
-		txtDayLabel.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DD, itemDate));
+		txtDayLabel.setText(new SimpleDateFormat("d").format(itemDate));
 		Calendar itemCalendar = CCDateUtil.makeCalendar(itemDate);
 		if(isWithoutMonth){
 			txtDayLabel.setTextColor(Color.GRAY);

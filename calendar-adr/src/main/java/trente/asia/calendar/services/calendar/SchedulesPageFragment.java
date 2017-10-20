@@ -4,8 +4,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -75,6 +78,7 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 	protected static final int		MAX_ROW				= 3;
 	protected Date					today;
 	private List<RoomModel>			rooms;
+	protected String				screenMode;
 
 	abstract protected List<Date> getAllDate();
 
@@ -122,6 +126,7 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 		String searchText = null;
 		String filterType = prefAccUtil.get(ClConst.PREF_FILTER_TYPE);
 		String searchType = null;
+
 		if(filterType.equals(ClConst.PREF_FILTER_TYPE_USER)){
 			searchType = "USER";
 			searchText = "-1";
@@ -143,6 +148,7 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 			jsonObject.put("targetUserList", targetUserList);
 			jsonObject.put("searchText", searchText);
 			jsonObject.put("searchType", searchType);
+			jsonObject.put("screenMode", screenMode);
 			jsonObject.put("startDateString", CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, startDate));
 			jsonObject.put("endDateString", CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, endDate));
 			jsonObject.put("execType", getExecType());
