@@ -290,7 +290,9 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 
 			topMargin = getNextTopMargin(dayDistance, dayDistance + cellNumber - 1);
 			TextView textView = makeTextView(activity, schedule.scheduleName, leftMargin, topMargin, maxWidth, getColor(schedule), 0, Gravity.LEFT);
-			rltPart1.addView(textView);
+			if(!"BI".equals(schedule.eventType)) {
+				rltPart1.addView(textView);
+			}
 			itemNum++;
 		}
 		int rowNum = maxTopMargin / CELL_HEIGHT_PIXEL;
