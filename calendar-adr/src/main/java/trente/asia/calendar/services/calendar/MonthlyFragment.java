@@ -51,6 +51,7 @@ public class MonthlyFragment extends PageContainerFragment{
 	@Override
 	protected void initView(){
 		super.initView();
+		txtToday.setText(R.string.show_current_month);
 		txtToday.setOnClickListener(new View.OnClickListener() {
 
 			@Override
