@@ -69,7 +69,7 @@ public class DailySummaryDialogPagerAdapter extends PagerAdapter{
 		DailyScheduleList dailyScheduleListView;
 		ImageView imgAdd;
 		TextView txtHeader;
-		TextView txtNoSchedule;
+		final TextView txtNoSchedule;
 
 		txtHeader = (TextView)view.findViewById(R.id.txt_dialog_common_daily_summary);
 		txtNoSchedule = (TextView)view.findViewById(R.id.txt_dialog_common_daily_summary_no_schedule);
@@ -91,7 +91,7 @@ public class DailySummaryDialogPagerAdapter extends PagerAdapter{
 
 			@Override
 			public void onClickScheduleItem(ScheduleModel schedule, Date selectedDate){
-				if(ScheduleModel.SCHEDULE_TYPE_PRI.equals(schedule.scheduleType) && schedule.scheduleName.equals(mContext.getString(R.string.schedule_mystery))){
+				if(ScheduleModel.SCHEDULE_TYPE_PRI.equals(schedule.scheduleType)){
 					return;
 				}
 				dialog.dismiss();// // TODO: 3/13/2017

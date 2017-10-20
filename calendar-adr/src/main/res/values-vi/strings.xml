@@ -105,7 +105,7 @@
     <string name="schedule">Schedule</string>
     <string name="show_today">今日を表示</string>
     <string name="public_str">Public</string>
-    <string name="private_str">Private</string>
+    <string name="private_str">Private schedule</string>
     <string name="complete_private">Complete private</string>
     <string name="schedule_mystery">非表示</string>
     <string name="today_empty_todo">There is no Todo for today</string>
