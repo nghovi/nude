@@ -38,6 +38,7 @@ public class TodoDetailFragment extends AbstractClFragment{
 	private EditText			edtContent;
 	private ChiaseEditText		txtDeadline;
 	private DatePickerDialog	datePickerDialog;
+	private boolean isEditable;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -52,6 +53,10 @@ public class TodoDetailFragment extends AbstractClFragment{
 		if(todo != null){
 			loadTodoDetail();
 		}
+	}
+
+	public void setEditable (boolean isEditable){
+		this.isEditable = isEditable;
 	}
 
 	private void loadTodoDetail(){
@@ -79,7 +84,7 @@ public class TodoDetailFragment extends AbstractClFragment{
 		edtTitle = (EditText)getView().findViewById(R.id.txt_fragment_todo_detail_title);
 		edtContent = (EditText)getView().findViewById(R.id.txt_fragment_todo_detail_content);
 		txtDeadline = (ChiaseEditText)getView().findViewById(R.id.txt_deadline);
-		if(todo != null && todo.isFinish == true){
+		if(todo != null && todo.isFinish == true || !isEditable){
 			initHeader(R.drawable.wf_back_white, getString(R.string.todo_title), null);
 			edtTitle.setFocusable(false);
 			edtContent.setFocusable(false);

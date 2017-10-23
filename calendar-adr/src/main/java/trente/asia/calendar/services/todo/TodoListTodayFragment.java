@@ -255,6 +255,7 @@ public class TodoListTodayFragment extends AbstractClFragment{
 	private void gotoTodoDetail(Todo todo){
 		TodoDetailFragment fragment = new TodoDetailFragment();
 		fragment.setTodo(todo);
+		fragment.setEditable(false);
 		gotoFragment(fragment);
 	}
 
