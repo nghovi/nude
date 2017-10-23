@@ -127,7 +127,7 @@ public class DailyFragment extends PageContainerFragment{
 	@Override
 	protected void setActiveDate(int position){
 		Date activeDate = getActiveDate(position);
-		String title = new SimpleDateFormat("yyyy/M/d").format(activeDate);
+		String title = CCFormatUtil.formatDateCustom("yyyy/M/d",activeDate);
 		updateHeader(title);
 	}
 
