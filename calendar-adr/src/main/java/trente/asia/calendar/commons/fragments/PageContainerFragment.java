@@ -185,7 +185,7 @@ public abstract class PageContainerFragment extends AbstractClFragment{
 
 	protected void setActiveDate(int position){
 		Date activeDate = getActiveDate(position);
-		String title = new SimpleDateFormat("yyyy/M/d").format(activeDate);
+		String title = new SimpleDateFormat("yyyy/M").format(activeDate);
 		updateHeader(title);
 	}
 
