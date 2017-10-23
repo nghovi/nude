@@ -34,7 +34,6 @@ import android.widget.TextView;
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
-import asia.chiase.core.util.CCNumberUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.activity.ChiaseFragment;
 import trente.asia.android.util.CsDateUtil;
@@ -49,7 +48,6 @@ import trente.asia.calendar.services.todo.TodoListFragment;
 import trente.asia.calendar.services.todo.TodoListTodayFragment;
 import trente.asia.calendar.services.todo.model.Todo;
 import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WelfareUtil;
 
 /**
@@ -61,6 +59,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 
 	public static final Integer			CELL_HEIGHT_PIXEL			= WelfareUtil.dpToPx(18);
 	private static final int			MAX_BLOCK_NUM_TO_SHOW_TEXT	= 3;
+
 	protected LinearLayout				lnrHeader;
 	private RelativeLayout				rltExpandBar;
 	private RelativeLayout				rltPart1;
@@ -229,9 +228,9 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 		Map<String, Boolean> birthdayIconMap = new HashMap<>();
 		// birthday
 		for(ScheduleModel scheduleModel : schedules){
-			if("BI".equals(scheduleModel.eventType)) {
+			if(ScheduleModel.EVENT_TYPE_BIRTHDAY.equals(scheduleModel.eventType)){
 				String keyDate = WelfareUtil.getDateString(scheduleModel.startDate);
-				if (!birthdayIconMap.containsKey(keyDate)) {
+				if(!birthdayIconMap.containsKey(keyDate)){
 					Calendar c2 = CCDateUtil.makeCalendarWithDateOnly(scheduleModel.startDate);
 					int dayDistance = c2.get(Calendar.DAY_OF_YEAR) - cStartWeek.get(Calendar.DAY_OF_YEAR);
 					int leftMargin = (int) (screenW * (0 + dayDistance) / 7 + (screenW / 7));
@@ -289,8 +288,8 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 			int leftMargin = (int)(screenW * (0 + dayDistance) / 7);
 
 			topMargin = getNextTopMargin(dayDistance, dayDistance + cellNumber - 1);
-			TextView textView = makeTextView(activity, schedule.scheduleName, leftMargin, topMargin, maxWidth, getColor(schedule), 0, Gravity.LEFT);
-			if(!"BI".equals(schedule.eventType)) {
+			TextView textView = makeTextView(activity, schedule.scheduleName, leftMargin, topMargin, maxWidth, getScheduleColor(schedule), getScheduleTextColor(schedule), Gravity.LEFT);
+			if(!"BI".equals(schedule.eventType)){
 				rltPart1.addView(textView);
 			}
 			itemNum++;
@@ -564,8 +563,12 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 		});
 	}
 
-	public static int getColor(ScheduleModel scheduleModel){
+	public static int getScheduleColor(ScheduleModel scheduleModel){
 		return Color.parseColor(scheduleModel.getScheduleColor());
+	}
+
+	public static int getScheduleTextColor(ScheduleModel scheduleModel){
+		return Color.parseColor(scheduleModel.scheduleTextColor);
 	}
 
 	protected void initCalendarView(){
@@ -649,6 +652,11 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 			lnrVerticalLineContainer.addView(lnrDay);
 		}
 
+	}
+
+	@Override
+	protected String getScreenMode(){
+		return SCREEN_MODE_WEEK;
 	}
 
 	@Override

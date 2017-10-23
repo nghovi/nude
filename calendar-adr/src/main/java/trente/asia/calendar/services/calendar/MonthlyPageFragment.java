@@ -2,7 +2,6 @@ package trente.asia.calendar.services.calendar;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -42,7 +41,6 @@ import trente.asia.calendar.services.calendar.view.MonthlyCalendarRowView;
 import trente.asia.calendar.services.todo.model.Todo;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.dialog.WfDialog;
-import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WelfareUtil;
 
 /**
@@ -85,7 +83,6 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 
 	@Override
 	protected void initCalendarView(){
-		super.screenMode = "MO";
 		loadScheduleList();// loadData
 		super.initCalendarView();
 		isFinishInflateView = true;
@@ -309,6 +306,11 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 		requestUpdate(ClConst.API_TODO_UPDATE, jsonObject, true);
 	}
 
+	@Override
+	protected String getScreenMode() {
+		return SCREEN_MODE_MONTH;
+	}
+
 //	public static Comparator<ScheduleModel> getScheduleComparator(final boolean checkAllDayTime){
 //		return new Comparator<ScheduleModel>() {
 //
@@ -437,8 +439,8 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 		}
 
 		// add birthday
-		if(!CCCollectionUtil.isEmpty(lstBirthdayUser)){
-//			for(UserModel birthday : lstBirthdayUser){
+		if(!CCCollectionUtil.isEmpty(calendarBirthdayModels)){
+//			for(UserModel birthday : calendarBirthdayModels){
 //				ScheduleModel scheduleModel = new ScheduleModel(birthday, dates.get(0), dates.get(dates.size() - 1));
 //				lstSchedule.add(scheduleModel);
 //			}

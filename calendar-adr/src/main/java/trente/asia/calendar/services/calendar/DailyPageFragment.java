@@ -73,7 +73,6 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 	@Override
 	protected void initView(){
 		super.initView();
-		super.screenMode = "DA";
 		parent = (DailyFragment)getParentFragment();
 		txtTodoInfo = (TextView)getView().findViewById(R.id.txt_todo_things);
 		txtTodoInfo.setOnClickListener(new View.OnClickListener() {
@@ -228,6 +227,11 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 	}
 
 	@Override
+	protected String getScreenMode(){
+		return SCREEN_MODE_DAY;
+	}
+
+	@Override
 	protected String getExecType(){
 		return "D";
 	}
@@ -273,7 +277,7 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 			txtTodoInfo.setVisibility(View.GONE);
 		}
 
-		for (ScheduleModel scheduleModel:schedules){
+		for(ScheduleModel scheduleModel : schedules){
 			if("BI".equals(scheduleModel.eventType)){
 				imgBirthdayIcon.setVisibility(View.VISIBLE);
 				numRow += 1;
@@ -301,7 +305,7 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 		for(ScheduleModel scheduleModel : schedules){
 			if(!scheduleModel.isAllDay){
 				normalSchedules.add(scheduleModel);
-			}else if (!"BI".equals(scheduleModel.eventType)){
+			}else if(!"BI".equals(scheduleModel.eventType)){
 				allDaySchedules.add(scheduleModel);
 			}
 		}
@@ -309,7 +313,7 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 		buildBlocks(activity, WelfareUtil.dpToPx(MARGIN_LEFT_RIGHT_PX), screenW, normalSchedules, rltSchedules, MAX_BLOCK_NUM_TO_SHOW_TEXT);
 
 		for(ScheduleModel scheduleModel : allDaySchedules){
-			TextView textView = WeeklyPageFragment.makeTextView(activity, scheduleModel.scheduleName, 0, 0, LinearLayout.LayoutParams.MATCH_PARENT, WeeklyPageFragment.getColor(scheduleModel), 0, Gravity.LEFT);
+			TextView textView = WeeklyPageFragment.makeTextView(activity, scheduleModel.scheduleName, 0, 0, LinearLayout.LayoutParams.MATCH_PARENT, WeeklyPageFragment.getScheduleColor(scheduleModel), WeeklyPageFragment.getScheduleTextColor(scheduleModel), Gravity.LEFT);
 			lnrScheduleAllDays.addView(textView);
 		}
 
