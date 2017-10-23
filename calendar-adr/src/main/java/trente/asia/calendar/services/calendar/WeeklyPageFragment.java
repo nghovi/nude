@@ -234,7 +234,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 				if (!birthdayIconMap.containsKey(keyDate)) {
 					Calendar c2 = CCDateUtil.makeCalendarWithDateOnly(scheduleModel.startDate);
 					int dayDistance = c2.get(Calendar.DAY_OF_YEAR) - cStartWeek.get(Calendar.DAY_OF_YEAR);
-					int leftMargin = (int) (screenW * (0 + dayDistance) / 7 + (screenW / 7 - CELL_HEIGHT_PIXEL) / 2);
+					int leftMargin = (int) (screenW * (0 + dayDistance) / 7 + (screenW / 7));
 					topMargin = getNextTopMargin(dayDistance, dayDistance);
 
 					ImageView imageViewBirthday = new ImageView(activity);
