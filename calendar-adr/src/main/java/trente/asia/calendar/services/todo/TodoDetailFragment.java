@@ -38,6 +38,7 @@ public class TodoDetailFragment extends AbstractClFragment{
 	private EditText			edtContent;
 	private ChiaseEditText		txtDeadline;
 	private DatePickerDialog	datePickerDialog;
+	private boolean isEditable;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -52,6 +53,10 @@ public class TodoDetailFragment extends AbstractClFragment{
 		if(todo != null){
 			loadTodoDetail();
 		}
+	}
+
+	public void setEditable (boolean isEditable){
+		this.isEditable = isEditable;
 	}
 
 	private void loadTodoDetail(){
@@ -88,6 +93,12 @@ public class TodoDetailFragment extends AbstractClFragment{
 			initHeader(R.drawable.wf_back_white, getString(R.string.todo_title), R.drawable.cl_action_save);
 			txtDeadline.setOnClickListener(this);
 			getView().findViewById(R.id.lnr_deadline).setOnClickListener(this);
+		}
+
+		if(isEditable){
+			initHeader(R.drawable.wf_back_white, getString(R.string.todo_title), R.drawable.cl_action_save);
+		}else{
+			initHeader(R.drawable.wf_back_white, getString(R.string.todo_title), null);
 		}
 
 		Calendar calendar = Calendar.getInstance();
