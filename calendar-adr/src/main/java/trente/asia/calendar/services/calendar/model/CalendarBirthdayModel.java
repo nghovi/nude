@@ -7,8 +7,9 @@ import com.bluelinelabs.logansquare.annotation.JsonObject;
  */
 
 @JsonObject(fieldDetectionPolicy = JsonObject.FieldDetectionPolicy.NONPRIVATE_FIELDS)
-public class CalendarBirthdayModel {
+public class CalendarBirthdayModel{
 
 	public String	birthDay;
-	public String	message;
+	public String	message;	// dialog
+	public String	avatar;
 }

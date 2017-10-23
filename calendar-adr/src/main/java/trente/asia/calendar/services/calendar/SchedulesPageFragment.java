@@ -4,10 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -16,9 +14,7 @@ import com.bluelinelabs.logansquare.LoganSquare;
 
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
@@ -30,6 +26,7 @@ import trente.asia.calendar.commons.dialogs.DailySummaryDialog;
 import trente.asia.calendar.commons.fragments.ClPageFragment;
 import trente.asia.calendar.commons.utils.ClUtil;
 import trente.asia.calendar.services.calendar.listener.DailyScheduleClickListener;
+import trente.asia.calendar.services.calendar.model.CalendarBirthdayModel;
 import trente.asia.calendar.services.calendar.model.CalendarModel;
 import trente.asia.calendar.services.calendar.model.CategoryModel;
 import trente.asia.calendar.services.calendar.model.HolidayModel;
@@ -50,34 +47,33 @@ import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
  */
 public abstract class SchedulesPageFragment extends ClPageFragment implements WeeklyScheduleListAdapter.OnScheduleItemClickListener,DailyScheduleClickListener{
 
-	protected List<Date>			dates;
+	protected List<Date>					dates;
 
-	protected LinearLayout			lnrCalendarContainer;
-	protected List<ScheduleModel>	lstSchedule			= new ArrayList<>();
-	protected List<HolidayModel>	lstHoliday;
+	protected LinearLayout					lnrCalendarContainer;
+	protected List<ScheduleModel>			lstSchedule			= new ArrayList<>();
+	protected List<HolidayModel>			lstHoliday;
 
-	protected List<CalendarModel>	lstCalendar;
-	protected List<UserModel>		lstCalendarUser;
-	protected List<CategoryModel>	lstCategory;
-	protected List<UserModel>		lstBirthdayUser;
-	protected List<WorkRequest>		lstWorkRequest;
-	protected boolean				refreshDialogData	= false;
-	private String					scheduleStrings;
-	protected boolean				isChangedData		= true;
-	protected List<Todo>			todos;
-	protected LayoutInflater		inflater;
-	protected DailySummaryDialog	dialogDailySummary;
-	protected boolean				isExpanded			= false;
-	protected TextView				txtMore;
-	// protected ImageView imgExpand;
-	protected ObservableScrollView	scrSchedules;
-	protected View					thisHourView;
-	public static final String		GOLDEN_HOUR_STR		= "09:00";
+	protected List<CalendarModel>			lstCalendar;
+	protected List<UserModel>				lstCalendarUser;
+	protected List<CategoryModel>			lstCategory;
+	protected List<CalendarBirthdayModel>	calendarBirthdayModels;
+	protected List<WorkRequest>				lstWorkRequest;
+	protected boolean						refreshDialogData	= false;
+	private String							scheduleStrings;
+	protected boolean						isChangedData		= true;
+	protected List<Todo>					todos;
+	protected LayoutInflater				inflater;
+	protected DailySummaryDialog			dialogDailySummary;
+	protected boolean						isExpanded			= false;
+	protected ObservableScrollView			scrSchedules;
+	public static final String				GOLDEN_HOUR_STR		= "09:00";
 
-	protected static final int		MAX_ROW				= 3;
-	protected Date					today;
-	private List<RoomModel>			rooms;
-	protected String				screenMode;
+	protected static final int				MAX_ROW				= 3;
+	public static final String				SCREEN_MODE_WEEK	= "WE";
+	public static final String				SCREEN_MODE_MONTH	= "MO";
+	public static final String				SCREEN_MODE_DAY		= "DA";
+	protected Date							today;
+	private List<RoomModel>					rooms;
 
 	abstract protected List<Date> getAllDate();
 
@@ -142,12 +138,16 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 			}
 		}
 
+		String screenMode = getScreenMode();
+		Boolean duplicatedSchedule = getDuplicateMode();
+
 		JSONObject jsonObject = new JSONObject();
 		try{
 			jsonObject.put("targetUserList", targetUserList);
 			jsonObject.put("searchText", searchText);
 			jsonObject.put("searchType", searchType);
 			jsonObject.put("screenMode", screenMode);
+			jsonObject.put("duplicatedSchedule", duplicatedSchedule);
 			jsonObject.put("startDateString", CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, startDate));
 			jsonObject.put("endDateString", CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, endDate));
 			jsonObject.put("execType", getExecType());
@@ -156,6 +156,10 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 		}
 		return jsonObject;
 	}
+
+	protected abstract Boolean getDuplicateMode();
+
+	protected abstract String getScreenMode();
 
 	abstract protected String getExecType();
 
@@ -194,7 +198,7 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 			lstHoliday = LoganSquare.parseList(response.optString("holidayList"), HolidayModel.class);
 			lstCategory = LoganSquare.parseList(response.optString("categories"), CategoryModel.class);
 			lstWorkRequest = LoganSquare.parseList(response.optString("workOfferList"), WorkRequest.class);
-			lstBirthdayUser = LoganSquare.parseList(response.optString("birthdayList"), UserModel.class);
+			calendarBirthdayModels = LoganSquare.parseList(response.optString("birthdayList"), CalendarBirthdayModel.class);
 			lstCalendarUser = LoganSquare.parseList(response.optString("calendarUsers"), UserModel.class);
 			rooms = LoganSquare.parseList(response.optString("rooms"), RoomModel.class);
 			todos = LoganSquare.parseList(response.optString("todoList"), Todo.class);
@@ -216,7 +220,7 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 
 					@Override
 					public void run(){
-						dialogDailySummary.setData(lstSchedule, lstBirthdayUser, lstHoliday, lstWorkRequest);
+						dialogDailySummary.setData(lstSchedule, calendarBirthdayModels, lstHoliday, lstWorkRequest);
 					}
 				});
 
@@ -228,7 +232,7 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 
 					@Override
 					public void run(){
-						dialogDailySummary.setData(lstSchedule, lstBirthdayUser, lstHoliday, lstWorkRequest);
+						dialogDailySummary.setData(lstSchedule, calendarBirthdayModels, lstHoliday, lstWorkRequest);
 					}
 				});
 				isChangedData = false;

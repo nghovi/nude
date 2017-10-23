@@ -72,7 +72,7 @@ public class WeeklyScheduleListAdapter extends ArrayAdapter<CalendarDayModel>{
 		buildHolidays(viewHolder, calendarDay);
 		buildScheduleList(viewHolder, calendarDay);
 		buildWorkOffers(viewHolder, calendarDay);
-		buildBirthdays(viewHolder, calendarDay);
+//		buildBirthdays(viewHolder, calendarDay);
 
 		return convertView;
 	}
@@ -88,16 +88,16 @@ public class WeeklyScheduleListAdapter extends ArrayAdapter<CalendarDayModel>{
 		}
 	}
 
-	private void buildBirthdays(ViewHolder viewHolder, CalendarDayModel calendarDay){
-		List<UserModel> birthdayUsers = calendarDay.birthdayUsers;
-		if(!CCCollectionUtil.isEmpty(birthdayUsers)){
-			DailyScheduleList.sortBirthdays(birthdayUsers);
-			for(UserModel user : birthdayUsers){
-				LinearLayout holidayItem = DailyScheduleList.buildBirthdayItem(context, layoutInflater, user, R.layout.item_birthday_weekly);
-				viewHolder.lnrEventList.addView(holidayItem);
-			}
-		}
-	}
+//	private void buildBirthdays(ViewHolder viewHolder, CalendarDayModel calendarDay){
+//		List<UserModel> birthdayUsers = calendarDay.birthdayUsers;
+//		if(!CCCollectionUtil.isEmpty(birthdayUsers)){
+//			DailyScheduleList.sortBirthdays(birthdayUsers);
+//			for(UserModel user : birthdayUsers){
+//				LinearLayout holidayItem = DailyScheduleList.buildBirthdayItem(context, layoutInflater, user, R.layout.item_birthday_weekly);
+//				viewHolder.lnrEventList.addView(holidayItem);
+//			}
+//		}
+//	}
 
 	private void buildHolidays(ViewHolder viewHolder, CalendarDayModel calendarDay){
 		List<HolidayModel> holidayModels = calendarDay.holidayModels;
@@ -113,8 +113,14 @@ public class WeeklyScheduleListAdapter extends ArrayAdapter<CalendarDayModel>{
 	private void buildScheduleList(ViewHolder viewHolder, CalendarDayModel calendarDay){
 		// sortSchedulesByType(calendarDay.schedules);
 		for(final ScheduleModel schedule : calendarDay.schedules){
-			View lnrSchedulesContainer = buildWeeklyScheduleItem(getContext(), layoutInflater, schedule, onScheduleItemClickListener, calendarDay.date);
-			viewHolder.lnrEventList.addView(lnrSchedulesContainer);
+			if (ScheduleModel.EVENT_TYPE_SCHEDULE.equals(schedule.eventType)) {
+				View lnrSchedulesContainer = buildWeeklyScheduleItem(getContext(), layoutInflater, schedule, onScheduleItemClickListener, calendarDay.date);
+				viewHolder.lnrEventList.addView(lnrSchedulesContainer);
+			} else if (ScheduleModel.EVENT_TYPE_BIRTHDAY.equals(schedule.eventType)) {
+				LinearLayout birthdayItem = DailyScheduleList.buildBirthdayItem(context, layoutInflater, schedule.calendarUsers.get(0), R.layout.item_birthday_weekly);
+				viewHolder.lnrEventList.addView(birthdayItem);
+//			}
+			}
 		}
 	}
 

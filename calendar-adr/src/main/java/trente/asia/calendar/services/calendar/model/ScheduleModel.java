@@ -1,6 +1,5 @@
 package trente.asia.calendar.services.calendar.model;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -66,8 +65,10 @@ public class ScheduleModel{
 	public Boolean				isWarning;
 	public UserModel			owner;
 	public String				scheduleColor			= "#FF0000";
+	public String				scheduleTextColor		= "#000000";
 	public boolean				isPeriod;
 	public String				eventType;
+	public List<CalendarUser>	calendarUsers;
 
 	public ScheduleModel(){
 
@@ -82,23 +83,23 @@ public class ScheduleModel{
 		this.eventType = EVENT_TYPE_HOLIDAY_OLD;
 	}
 
-//	public ScheduleModel(UserModel userModel, Date start, Date end){
-//		this.scheduleName = userModel.userName;
-//		Calendar birthdayCalendar = CCDateUtil.makeCalendar(userModel.birthDay);
-//		Calendar cStart = CCDateUtil.makeCalendar(start);
-//		Calendar cEnd = CCDateUtil.makeCalendar(end);
-//
-//		birthdayCalendar.set(Calendar.YEAR, cStart.get(Calendar.YEAR));
-//
-//		if(cStart.getTimeInMillis() > birthdayCalendar.getTimeInMillis() || birthdayCalendar.getTimeInMillis() > cEnd.getTimeInMillis()){
-//			birthdayCalendar.set(Calendar.YEAR, cEnd.get(Calendar.YEAR));
-//		}
-//
-//		this.startDate = birthdayCalendar.getTime();
-//		this.endDate = this.startDate;
-//		this.isAllDay = true;
-//		this.scheduleType = EVENT_TYPE_BIRTHDAY;
-//	}
+	// public ScheduleModel(UserModel userModel, Date start, Date end){
+	// this.scheduleName = userModel.userName;
+	// Calendar birthdayCalendar = CCDateUtil.makeCalendar(userModel.birthDay);
+	// Calendar cStart = CCDateUtil.makeCalendar(start);
+	// Calendar cEnd = CCDateUtil.makeCalendar(end);
+	//
+	// birthdayCalendar.set(Calendar.YEAR, cStart.get(Calendar.YEAR));
+	//
+	// if(cStart.getTimeInMillis() > birthdayCalendar.getTimeInMillis() || birthdayCalendar.getTimeInMillis() > cEnd.getTimeInMillis()){
+	// birthdayCalendar.set(Calendar.YEAR, cEnd.get(Calendar.YEAR));
+	// }
+	//
+	// this.startDate = birthdayCalendar.getTime();
+	// this.endDate = this.startDate;
+	// this.isAllDay = true;
+	// this.scheduleType = EVENT_TYPE_BIRTHDAY;
+	// }
 
 	public static void determinePeriod(List<ScheduleModel> scheduleModels){
 		for(ScheduleModel scheduleModel : scheduleModels){

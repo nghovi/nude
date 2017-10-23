@@ -2,7 +2,6 @@ package trente.asia.calendar.services.calendar;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -42,7 +41,6 @@ import trente.asia.calendar.services.calendar.view.MonthlyCalendarRowView;
 import trente.asia.calendar.services.todo.model.Todo;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.dialog.WfDialog;
-import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WelfareUtil;
 
 /**
@@ -64,8 +62,8 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 	private ImageView							expIcon;
 	private Map<String, MonthlyCalendarDayView>	dateDayViewMap		= new HashMap<>();
 	private boolean								isFinishInflateView	= false;
-	private ImageView birthdayIcon;
-	private View rowItemView;
+	private ImageView							birthdayIcon;
+	private View								rowItemView;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -77,6 +75,11 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 		return mRootView;
 	}
 
+	@Override
+	protected Boolean getDuplicateMode(){
+		return false;
+	}
+
 	// Monthly is slow, so i loadData before inflate view to save time
 	@Override
 	protected void loadData(){
@@ -85,7 +88,6 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 
 	@Override
 	protected void initCalendarView(){
-		super.screenMode = "MO";
 		loadScheduleList();// loadData
 		super.initCalendarView();
 		isFinishInflateView = true;
@@ -309,40 +311,45 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 		requestUpdate(ClConst.API_TODO_UPDATE, jsonObject, true);
 	}
 
-//	public static Comparator<ScheduleModel> getScheduleComparator(final boolean checkAllDayTime){
-//		return new Comparator<ScheduleModel>() {
-//
-//			@Override
-//			public int compare(ScheduleModel schedule1, ScheduleModel schedule2){
-//				if(checkAllDayTime){
-//					String startDate1 = WelfareUtil.getDateString(schedule1.startDate);
-//					String endDate1 = WelfareUtil.getDateString(schedule1.endDate);
-//
-//					String startDate2 = WelfareUtil.getDateString(schedule2.startDate);
-//					String endDate2 = WelfareUtil.getDateString(schedule2.endDate);
-//
-//					boolean diff1 = startDate1.equals(endDate1);
-//					boolean diff2 = startDate2.equals(endDate2);
-//
-//					if(!diff1 && diff2) return -1;
-//					if(diff1 && !diff2) return 1;
-//				}
-//				if(schedule1.isAllDay && !schedule2.isAllDay) return -1;
-//				if(!schedule1.isAllDay && schedule2.isAllDay) return 1;
-//				if(schedule1.isAllDay && schedule2.isAllDay && !checkAllDayTime){
-//					return schedule1.scheduleName.compareTo(schedule2.scheduleName);
-//				}
-//
-//				Integer timeStart1 = CCDateUtil.convertTime2Min(schedule1.startTime);
-//				Integer timeStart2 = CCDateUtil.convertTime2Min(schedule2.startTime);
-//				if(timeStart1 != timeStart2){
-//					return timeStart1.compareTo(timeStart2);
-//				}
-//
-//				return schedule1.scheduleName.compareTo(schedule2.scheduleName);
-//			}
-//		};
-//	}
+	@Override
+	protected String getScreenMode(){
+		return SCREEN_MODE_MONTH;
+	}
+
+	// public static Comparator<ScheduleModel> getScheduleComparator(final boolean checkAllDayTime){
+	// return new Comparator<ScheduleModel>() {
+	//
+	// @Override
+	// public int compare(ScheduleModel schedule1, ScheduleModel schedule2){
+	// if(checkAllDayTime){
+	// String startDate1 = WelfareUtil.getDateString(schedule1.startDate);
+	// String endDate1 = WelfareUtil.getDateString(schedule1.endDate);
+	//
+	// String startDate2 = WelfareUtil.getDateString(schedule2.startDate);
+	// String endDate2 = WelfareUtil.getDateString(schedule2.endDate);
+	//
+	// boolean diff1 = startDate1.equals(endDate1);
+	// boolean diff2 = startDate2.equals(endDate2);
+	//
+	// if(!diff1 && diff2) return -1;
+	// if(diff1 && !diff2) return 1;
+	// }
+	// if(schedule1.isAllDay && !schedule2.isAllDay) return -1;
+	// if(!schedule1.isAllDay && schedule2.isAllDay) return 1;
+	// if(schedule1.isAllDay && schedule2.isAllDay && !checkAllDayTime){
+	// return schedule1.scheduleName.compareTo(schedule2.scheduleName);
+	// }
+	//
+	// Integer timeStart1 = CCDateUtil.convertTime2Min(schedule1.startTime);
+	// Integer timeStart2 = CCDateUtil.convertTime2Min(schedule2.startTime);
+	// if(timeStart1 != timeStart2){
+	// return timeStart1.compareTo(timeStart2);
+	// }
+	//
+	// return schedule1.scheduleName.compareTo(schedule2.scheduleName);
+	// }
+	// };
+	// }
 
 	protected List<Date> getAllDate(){
 		int firstDay = Calendar.SUNDAY;
@@ -437,11 +444,11 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 		}
 
 		// add birthday
-		if(!CCCollectionUtil.isEmpty(lstBirthdayUser)){
-//			for(UserModel birthday : lstBirthdayUser){
-//				ScheduleModel scheduleModel = new ScheduleModel(birthday, dates.get(0), dates.get(dates.size() - 1));
-//				lstSchedule.add(scheduleModel);
-//			}
+		if(!CCCollectionUtil.isEmpty(calendarBirthdayModels)){
+			// for(UserModel birthday : calendarBirthdayModels){
+			// ScheduleModel scheduleModel = new ScheduleModel(birthday, dates.get(0), dates.get(dates.size() - 1));
+			// lstSchedule.add(scheduleModel);
+			// }
 		}
 
 		clearOldData();

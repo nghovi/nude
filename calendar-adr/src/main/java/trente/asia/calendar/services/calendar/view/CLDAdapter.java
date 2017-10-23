@@ -110,19 +110,19 @@ public class CLDAdapter extends BaseAdapter{
 			txtDay.setClickable(false);
 			txtDay.setFocusable(false);
 			imgReportStatus.setVisibility(View.INVISIBLE);
-			// rltBackground.setBackgroundColor(ContextCompat.getColor(mContext,
+			// rltBackground.setBackgroundColor(ContextCompat.getScheduleColor(mContext,
 			// R.color.core_silver));
 		}else{
 			imgReportStatus.setVisibility(View.VISIBLE);
 			// setting dayStr text color: red for sundays, blue for saturday and
 			// black for normal dayStr
 			if(position % 7 == 0){// Sundays
-				// dayColor = ContextCompat.getColor(mContext, R.color
+				// dayColor = ContextCompat.getScheduleColor(mContext, R.color
 				// .dr_day_color_sun);
 				// rltBackground.setBackgroundResource(R.drawable
 				// .dr_item_calendar_background_sun);
 			}else if(position % 7 == 6){// Saturdays
-				// dayColor = ContextCompat.getColor(mContext, R.color
+				// dayColor = ContextCompat.getScheduleColor(mContext, R.color
 				// .dr_text_day_color_sat);
 				// rltBackground.setBackgroundResource(R.drawable
 				// .dr_item_calendar_background_sat);
@@ -131,7 +131,7 @@ public class CLDAdapter extends BaseAdapter{
 			// CalendarDay calendarDay = MyReportFragment.getReportByDay
 			// (dayString.get(position), calendarDays);
 			// if(calendarDay.holiday != null){
-			// dayColor = ContextCompat.getColor(mContext, R.color
+			// dayColor = ContextCompat.getScheduleColor(mContext, R.color
 			// .dr_day_color_sun);
 			// rltBackground.setBackgroundResource(R.drawable
 			// .dr_item_calendar_background_holiday);
@@ -143,7 +143,7 @@ public class CLDAdapter extends BaseAdapter{
 			// (calendarDay.reportDate, DRConst
 			// .DATE_FORMAT_YYYY_MM_DD_HH_MM_SS,
 			// DRConst.DATE_FORMAT_YYYY_MM_DD))){
-			// dayColor = ContextCompat.getColor(mContext, R.color.core_white);
+			// dayColor = ContextCompat.getScheduleColor(mContext, R.color.core_white);
 			// // rltBackground.setBackgroundResource(R.drawable
 			// .dr_item_calendar_background_today);
 			// txtDate.setBackgroundResource(R.drawable

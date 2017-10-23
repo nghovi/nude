@@ -1,5 +1,6 @@
 package trente.asia.calendar.commons.dialogs;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -11,6 +12,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import trente.asia.calendar.R;
+import trente.asia.calendar.services.calendar.model.CalendarBirthdayModel;
 import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.model.WorkRequest;
@@ -33,7 +35,7 @@ public class DailySummaryDialog extends CLOutboundDismissDialog{
 	protected ViewPager													mViewPager;
 
 	private List<ScheduleModel>											lstSchedule;
-	private List<UserModel>												lstBirthdayUser;
+	private List<CalendarBirthdayModel>									calendarBirthdayModels;
 	private List<HolidayModel>											lstHoliday;
 	private List<WorkRequest>											lstWorkRequest;
 	private Date														selectedDate;
@@ -59,9 +61,9 @@ public class DailySummaryDialog extends CLOutboundDismissDialog{
 		window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
 	}
 
-	public void setData(List<ScheduleModel> lstSchedule, List<UserModel> lstBirthdayUser, List<HolidayModel> lstHoliday, List<WorkRequest> lstWorkRequest){
-		this.lstSchedule = lstSchedule;
-		this.lstBirthdayUser = lstBirthdayUser;
+	public void setData(List<ScheduleModel> lstSchedule, List<CalendarBirthdayModel> calendarBirthdays, List<HolidayModel> lstHoliday, List<WorkRequest> lstWorkRequest){
+		this.lstSchedule = ignoreDuplicatedSchedule(lstSchedule);
+		this.calendarBirthdayModels = calendarBirthdays;
 		this.lstHoliday = lstHoliday;
 		this.lstWorkRequest = lstWorkRequest;
 
@@ -75,12 +77,28 @@ public class DailySummaryDialog extends CLOutboundDismissDialog{
 		});
 
 		mPagerAdapter = new DailySummaryDialogPagerAdapter(this, mContext, dates);
-		mPagerAdapter.setData(this.lstSchedule, this.lstBirthdayUser, this.lstHoliday, this.lstWorkRequest, this.onAddBtnClickedListener, this.listener, this);
+		mPagerAdapter.setData(this.lstSchedule, this.calendarBirthdayModels, this.lstHoliday, this.lstWorkRequest, this.onAddBtnClickedListener, this.listener, this);
 		mViewPager.setAdapter(mPagerAdapter);
 		if(selectedDate != null){
 			int currentItemPosition = mPagerAdapter.getPositionByDate(selectedDate);
 			mViewPager.setCurrentItem(currentItemPosition, false);
 		}
+	}
+
+	private List<ScheduleModel> ignoreDuplicatedSchedule(List<ScheduleModel> scheduleModels){
+		List<ScheduleModel> result = new ArrayList<>();
+		List<String> scheduleKeys = new ArrayList<>();
+		for(ScheduleModel scheduleModel : scheduleModels){
+			if(ScheduleModel.EVENT_TYPE_SCHEDULE.equals(scheduleModel.eventType)){
+				if(scheduleKeys.contains(scheduleModel.key)){
+					continue;
+				}else{
+					scheduleKeys.add(scheduleModel.key);
+				}
+			}
+			result.add(scheduleModel);
+		}
+		return result;
 	}
 
 	public void show(Date selectedDate){
@@ -90,11 +108,11 @@ public class DailySummaryDialog extends CLOutboundDismissDialog{
 		super.show();
 	}
 
-	public void notifyDataUpdated(List<ScheduleModel> lstSchedule, List<UserModel> lstBirthdayUser, List<HolidayModel> lstHoliday, List<WorkRequest> lstWorkRequest){
-		this.lstSchedule = lstSchedule;
-		this.lstBirthdayUser = lstBirthdayUser;
-		this.lstHoliday = lstHoliday;
-		this.lstWorkRequest = lstWorkRequest;
-		mPagerAdapter.notifyDataSetChanged();
-	}
+//	public void notifyDataUpdated(List<ScheduleModel> lstSchedule, List<CalendarBirthdayModel> calendarBirthdays, List<HolidayModel> lstHoliday, List<WorkRequest> lstWorkRequest){
+//		this.lstSchedule = lstSchedule;
+//		this.calendarBirthdayModels = calendarBirthdays;
+//		this.lstHoliday = lstHoliday;
+//		this.lstWorkRequest = lstWorkRequest;
+//		mPagerAdapter.notifyDataSetChanged();
+//	}
 }

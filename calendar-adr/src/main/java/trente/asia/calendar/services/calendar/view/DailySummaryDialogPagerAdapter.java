@@ -15,14 +15,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import asia.chiase.core.util.CCDateUtil;
-import asia.chiase.core.util.CCFormatUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.dialogs.DailySummaryDialog;
+import trente.asia.calendar.services.calendar.model.CalendarBirthdayModel;
 import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.model.WorkRequest;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.models.UserModel;
 
 //import trente.asia.calendar.services.calendar.listener.OnChangeCalendarUserListener;
 
@@ -40,14 +38,14 @@ public class DailySummaryDialogPagerAdapter extends PagerAdapter{
 	private final LayoutInflater									mInflater;
 
 	private List<ScheduleModel>										lstSchedule;
-	private List<UserModel>											lstBirthdayUser;
+	private List<CalendarBirthdayModel>								calendarBirthdayModels;
 	private List<HolidayModel>										lstHoliday;
 	private List<WorkRequest>										lstWorkRequest;
 	private DailySummaryDialog.OnAddBtnClickedListener				onAddBtnClickedListener;
 	private WeeklyScheduleListAdapter.OnScheduleItemClickListener	listener;
 	Map<Date, List<ScheduleModel>>									daySchedulesMap;
 	Map<Date, List<WorkRequest>>									dayOfferMap;
-	Map<Date, List<UserModel>>										dayBirthdayUsersMap;
+	Map<Date, List<CalendarBirthdayModel>>							dayBirthdayUsersMap;
 
 	private DailySummaryDialog										dialog;
 
@@ -101,7 +99,7 @@ public class DailySummaryDialogPagerAdapter extends PagerAdapter{
 
 		txtHeader.setText(new SimpleDateFormat("yyyy/M/d").format(selectedDate));
 		dailyScheduleListView.hasDisplayedItem = false;
-		dailyScheduleListView.initDataWithMap(this.dayBirthdayUsersMap, this.dayOfferMap, this.daySchedulesMap, lstSchedule, lstHoliday, lstWorkRequest, lstBirthdayUser);
+		dailyScheduleListView.initDataWithMap(dayBirthdayUsersMap, this.dayOfferMap, this.daySchedulesMap, lstSchedule, lstHoliday, lstWorkRequest);
 		dailyScheduleListView.showFor(selectedDate);
 		if(!dailyScheduleListView.hasDisplayedItem){
 			dailyScheduleListView.setVisibility(View.GONE);
@@ -136,9 +134,9 @@ public class DailySummaryDialogPagerAdapter extends PagerAdapter{
 		return o == view;
 	}
 
-	public void setData(List<ScheduleModel> lstSchedule, List<UserModel> lstBirthdayUser, List<HolidayModel> lstHoliday, List<WorkRequest> lstWorkRequest, DailySummaryDialog.OnAddBtnClickedListener onAddBtnClickedListener, WeeklyScheduleListAdapter.OnScheduleItemClickListener listener, DailySummaryDialog dialog){
+	public void setData(List<ScheduleModel> lstSchedule, List<CalendarBirthdayModel> calendarBirthdays, List<HolidayModel> lstHoliday, List<WorkRequest> lstWorkRequest, DailySummaryDialog.OnAddBtnClickedListener onAddBtnClickedListener, WeeklyScheduleListAdapter.OnScheduleItemClickListener listener, DailySummaryDialog dialog){
 		this.lstSchedule = lstSchedule;
-		this.lstBirthdayUser = lstBirthdayUser;
+		this.calendarBirthdayModels = calendarBirthdays;
 		this.lstHoliday = lstHoliday;
 		this.lstWorkRequest = lstWorkRequest;
 		this.onAddBtnClickedListener = onAddBtnClickedListener;
@@ -146,7 +144,7 @@ public class DailySummaryDialogPagerAdapter extends PagerAdapter{
 		this.dialog = dialog;
 		this.daySchedulesMap = DailyScheduleList.buildDaySchedulesMap(dates, this.lstSchedule);
 		this.dayOfferMap = DailyScheduleList.buildDayOfferMap(dates, lstWorkRequest);
-		this.dayBirthdayUsersMap = DailyScheduleList.buildDayBirthdayUserMap(dates, lstBirthdayUser);
+		this.dayBirthdayUsersMap = DailyScheduleList.buildDayBirthdayUserMap(dates, calendarBirthdayModels);
 	}
 
 	public int getPositionByDate(Date selectedDate){
