@@ -84,7 +84,7 @@ public class TodoDetailFragment extends AbstractClFragment{
 		edtTitle = (EditText)getView().findViewById(R.id.txt_fragment_todo_detail_title);
 		edtContent = (EditText)getView().findViewById(R.id.txt_fragment_todo_detail_content);
 		txtDeadline = (ChiaseEditText)getView().findViewById(R.id.txt_deadline);
-		if(todo != null && todo.isFinish == true){
+		if(todo != null && todo.isFinish == true || !isEditable){
 			initHeader(R.drawable.wf_back_white, getString(R.string.todo_title), null);
 			edtTitle.setFocusable(false);
 			edtContent.setFocusable(false);
@@ -93,12 +93,6 @@ public class TodoDetailFragment extends AbstractClFragment{
 			initHeader(R.drawable.wf_back_white, getString(R.string.todo_title), R.drawable.cl_action_save);
 			txtDeadline.setOnClickListener(this);
 			getView().findViewById(R.id.lnr_deadline).setOnClickListener(this);
-		}
-
-		if(isEditable){
-			initHeader(R.drawable.wf_back_white, getString(R.string.todo_title), R.drawable.cl_action_save);
-		}else{
-			initHeader(R.drawable.wf_back_white, getString(R.string.todo_title), null);
 		}
 
 		Calendar calendar = Calendar.getInstance();

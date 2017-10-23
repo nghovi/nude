@@ -82,8 +82,8 @@ public class ScheduleFormFragment extends AbstractScheduleFragment implements On
 	private String						editMode;
 	private List<UserModel>				joinUsers;
 	private boolean						timePickerStart;
-	private int selectedHour;
-	private int selectedMinute;
+	private int							selectedHour;
+	private int							selectedMinute;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -453,7 +453,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment implements On
 		}
 	}
 
-	private void openTimePicker() {
+	private void openTimePicker(){
 		timePickerDialog = new CLTimePicker();
 		timePickerDialog.setStartTime(timePickerStart);
 		timePickerDialog.setCallback(this);
