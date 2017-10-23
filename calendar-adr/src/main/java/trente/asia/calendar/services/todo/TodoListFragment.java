@@ -1,6 +1,7 @@
 package trente.asia.calendar.services.todo;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -210,7 +211,7 @@ public class TodoListFragment extends AbstractClFragment {
                 if (CCDateUtil.compareDate(today, todo.limitDate, false) == 0) {
                     txtDate.setText(getString(R.string.chiase_common_today));
                 } else {
-                    txtDate.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_MM_DD, todo.limitDate));
+                    txtDate.setText(CCFormatUtil.formatDateCustom("yyyy/M/d",todo.limitDate));
                 }
             }
             txtTitle.setText(todo.name);
@@ -294,7 +295,7 @@ public class TodoListFragment extends AbstractClFragment {
                 if (CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, today).equals(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, todo.limitDate))) {
                     txtDate.setText(getString(R.string.chiase_common_today));
                 } else {
-                    txtDate.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_MM_DD, todo.limitDate));
+                    txtDate.setText(CCFormatUtil.formatDateCustom("yyyy/M/d", todo.limitDate));
                 }
             }
             txtTitle.setText(todo.name);

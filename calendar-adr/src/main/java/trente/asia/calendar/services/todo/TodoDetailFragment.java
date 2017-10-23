@@ -103,7 +103,7 @@ public class TodoDetailFragment extends AbstractClFragment{
 
 			@Override
 			public void onDateSet(DatePicker view, int year, int month, int dayOfMonth){
-				String startDateStr = year + "/" + CCFormatUtil.formatZero(month + 1) + "/" + CCFormatUtil.formatZero(dayOfMonth);
+				String startDateStr = year + "/" + (month + 1) + "/" + (dayOfMonth);
 				// txtDeadline.setTextColor(Color.BLACK);
 				txtDeadline.setText(startDateStr);
 			}
@@ -130,7 +130,7 @@ public class TodoDetailFragment extends AbstractClFragment{
 				if(todo.limitDate == null){
 					txtDeadline.setText(getString(R.string.no_deadline));
 				}else{
-					txtDeadline.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, todo.limitDate));
+					txtDeadline.setText(CCFormatUtil.formatDateCustom("yyyy/M/d", todo.limitDate));
 				}
 			}else{
 			}

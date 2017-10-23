@@ -146,7 +146,7 @@ public class ClScheduleRepeatDialog extends CLOutboundDismissDialog{
 
 			@Override
 			public void onDateSet(DatePicker view, int year, int month, int dayOfMonth){
-				String dateString = year + "/" + CCFormatUtil.formatZero(month + 1) + "/" + CCFormatUtil.formatZero(dayOfMonth);
+				String dateString = year + "/" + (month + 1) + "/" + (dayOfMonth);
 				txtLimitUtil.setText(dateString);
 			}
 		}, mYear, mMonth, mDay);
@@ -204,7 +204,7 @@ public class ClScheduleRepeatDialog extends CLOutboundDismissDialog{
 			}
 			cal.set(Calendar.DATE, cal.getActualMaximum(Calendar.DATE));
 			if (repeatModel.repeatEnd != null){
-				defaultDatePicker = CCFormatUtil.formatDateCustom("yyyy/MM/dd",repeatModel.repeatEnd);
+				defaultDatePicker = CCFormatUtil.formatDateCustom("yyyy/M/d",repeatModel.repeatEnd);
 			}else {
 				defaultDatePicker = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, cal.getTime());
 			}

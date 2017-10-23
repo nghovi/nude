@@ -236,7 +236,7 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 			if(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, today).equals(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, todo.limitDate))){
 				txtDate.setText(getString(R.string.chiase_common_today));
 			}else{
-				txtDate.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DD, todo.limitDate) + getString(R.string.japan_day));
+				txtDate.setText(CCFormatUtil.formatDateCustom("d", todo.limitDate) + getString(R.string.japan_day));
 			}
 			RadioButton radioButton = (RadioButton)cell.findViewById(R.id.radio);
 			radioButton.setOnClickListener(new View.OnClickListener() {
