@@ -21,6 +21,7 @@ import trente.asia.calendar.services.calendar.model.CalendarBirthdayModel;
 import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.model.WorkRequest;
+import trente.asia.welfare.adr.models.UserModel;
 
 //import trente.asia.calendar.services.calendar.listener.OnChangeCalendarUserListener;
 
@@ -89,7 +90,7 @@ public class DailySummaryDialogPagerAdapter extends PagerAdapter{
 
 			@Override
 			public void onClickScheduleItem(ScheduleModel schedule, Date selectedDate){
-				if(ScheduleModel.SCHEDULE_TYPE_PRI.equals(schedule.scheduleType)){
+				if(ScheduleModel.SCHEDULE_TYPE_PRI.equals(schedule.scheduleType) && !schedule.isBelongToLoginUser()){
 					return;
 				}
 				dialog.dismiss();// // TODO: 3/13/2017

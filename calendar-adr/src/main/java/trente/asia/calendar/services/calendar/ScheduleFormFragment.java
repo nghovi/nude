@@ -1,6 +1,7 @@
 package trente.asia.calendar.services.calendar;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -82,8 +83,8 @@ public class ScheduleFormFragment extends AbstractScheduleFragment implements On
 	private String						editMode;
 	private List<UserModel>				joinUsers;
 	private boolean						timePickerStart;
-	private int selectedHour;
-	private int selectedMinute;
+	private int							selectedHour;
+	private int							selectedMinute;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -202,7 +203,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment implements On
 			endTimeStr = addAnHour(startTimeStr);
 		}
 
-		repeatDialog.setStartDateStr(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, startDate));
+		repeatDialog.setStartDateStr(CCFormatUtil.formatDateCustom("yyyy/M/d",startDate));
 		if(ClRepeatUtil.isRepeat(schedule.repeatType)){
 			// set repeat dialog values
 			repeatDialog.setRepeatModel(schedule);
@@ -220,7 +221,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment implements On
 
 			@Override
 			public void onDateSet(DatePicker view, int year, int month, int dayOfMonth){
-				String startDateStr = year + "/" + CCFormatUtil.formatZero(month + 1) + "/" + CCFormatUtil.formatZero(dayOfMonth);
+				String startDateStr = year + "/" + (month + 1) + "/" + (dayOfMonth);
 				txtStartDate.setText(startDateStr);
 				txtStartDate.setValue(startDateStr);
 				repeatDialog.setStartDateStr(startDateStr);
@@ -260,7 +261,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment implements On
 	}
 
 	private void onEndDateSet(int year, int month, int dayOfMonth){
-		String endDateStr = year + "/" + CCFormatUtil.formatZero(month + 1) + "/" + CCFormatUtil.formatZero(dayOfMonth);
+		String endDateStr = year + "/" + (month + 1) + "/" + (dayOfMonth);
 		txtEndDate.setText(endDateStr);
 		txtEndDate.setValue(endDateStr);
 	}
@@ -463,7 +464,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment implements On
 		}
 	}
 
-	private void openTimePicker() {
+	private void openTimePicker(){
 		timePickerDialog = new CLTimePicker();
 		timePickerDialog.setStartTime(timePickerStart);
 		timePickerDialog.setCallback(this);

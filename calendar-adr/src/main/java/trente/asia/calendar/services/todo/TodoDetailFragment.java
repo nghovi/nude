@@ -38,6 +38,7 @@ public class TodoDetailFragment extends AbstractClFragment{
 	private EditText			edtContent;
 	private ChiaseEditText		txtDeadline;
 	private DatePickerDialog	datePickerDialog;
+	private boolean isEditable;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -52,6 +53,10 @@ public class TodoDetailFragment extends AbstractClFragment{
 		if(todo != null){
 			loadTodoDetail();
 		}
+	}
+
+	public void setEditable (boolean isEditable){
+		this.isEditable = isEditable;
 	}
 
 	private void loadTodoDetail(){
@@ -79,7 +84,7 @@ public class TodoDetailFragment extends AbstractClFragment{
 		edtTitle = (EditText)getView().findViewById(R.id.txt_fragment_todo_detail_title);
 		edtContent = (EditText)getView().findViewById(R.id.txt_fragment_todo_detail_content);
 		txtDeadline = (ChiaseEditText)getView().findViewById(R.id.txt_deadline);
-		if(todo != null && todo.isFinish == true){
+		if(todo != null && todo.isFinish == true || !isEditable){
 			initHeader(R.drawable.wf_back_white, getString(R.string.todo_title), null);
 			edtTitle.setFocusable(false);
 			edtContent.setFocusable(false);
@@ -98,7 +103,7 @@ public class TodoDetailFragment extends AbstractClFragment{
 
 			@Override
 			public void onDateSet(DatePicker view, int year, int month, int dayOfMonth){
-				String startDateStr = year + "/" + CCFormatUtil.formatZero(month + 1) + "/" + CCFormatUtil.formatZero(dayOfMonth);
+				String startDateStr = year + "/" + (month + 1) + "/" + (dayOfMonth);
 				// txtDeadline.setTextColor(Color.BLACK);
 				txtDeadline.setText(startDateStr);
 			}
@@ -125,7 +130,7 @@ public class TodoDetailFragment extends AbstractClFragment{
 				if(todo.limitDate == null){
 					txtDeadline.setText(getString(R.string.no_deadline));
 				}else{
-					txtDeadline.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, todo.limitDate));
+					txtDeadline.setText(CCFormatUtil.formatDateCustom("yyyy/M/d", todo.limitDate));
 				}
 			}else{
 			}

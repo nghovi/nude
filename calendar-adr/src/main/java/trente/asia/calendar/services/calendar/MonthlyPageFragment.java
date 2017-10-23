@@ -34,6 +34,7 @@ import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.dialogs.TodoDialog;
 import trente.asia.calendar.commons.utils.ClUtil;
+import trente.asia.calendar.services.calendar.model.CalendarBirthdayModel;
 import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.view.MonthlyCalendarDayView;
@@ -76,8 +77,8 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 	}
 
 	@Override
-	protected Boolean getDuplicateMode(){
-		return false;
+	protected String getDuplicateMode(){
+		return "N";
 	}
 
 	// Monthly is slow, so i loadData before inflate view to save time
@@ -235,7 +236,7 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 			if(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, today).equals(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, todo.limitDate))){
 				txtDate.setText(getString(R.string.chiase_common_today));
 			}else{
-				txtDate.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DD, todo.limitDate) + getString(R.string.japan_day));
+				txtDate.setText(CCFormatUtil.formatDateCustom("d", todo.limitDate) + getString(R.string.japan_day));
 			}
 			RadioButton radioButton = (RadioButton)cell.findViewById(R.id.radio);
 			radioButton.setOnClickListener(new View.OnClickListener() {
@@ -445,10 +446,10 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 
 		// add birthday
 		if(!CCCollectionUtil.isEmpty(calendarBirthdayModels)){
-			// for(UserModel birthday : calendarBirthdayModels){
-			// ScheduleModel scheduleModel = new ScheduleModel(birthday, dates.get(0), dates.get(dates.size() - 1));
-			// lstSchedule.add(scheduleModel);
-			// }
+			for(CalendarBirthdayModel calendarBirthdayModel : calendarBirthdayModels){
+				ScheduleModel scheduleModel = new ScheduleModel(calendarBirthdayModel, dates.get(0), dates.get(dates.size() - 1));
+				lstSchedule.add(scheduleModel);
+			}
 		}
 
 		clearOldData();
