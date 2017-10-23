@@ -277,20 +277,7 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 			txtTodoInfo.setVisibility(View.GONE);
 		}
 
-		for(ScheduleModel scheduleModel : schedules){
-			if("BI".equals(scheduleModel.eventType)){
-				imgBirthdayIcon.setVisibility(View.VISIBLE);
-				numRow += 1;
-			}
-		}
-
 		lnrScheduleAllDays.removeAllViews();
-
-		// holiday
-		for(HolidayModel holidayModel : lstHoliday){
-			TextView textView = WeeklyPageFragment.makeTextView(activity, holidayModel.holidayName, 0, 0, LinearLayout.LayoutParams.MATCH_PARENT, Color.WHITE, Color.RED, Gravity.LEFT);
-			lnrScheduleAllDays.addView(textView);
-		}
 
 		// request
 		// Collections.sort(lstWoFrkRequest, getWorkRequestComparator());
@@ -305,7 +292,13 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 		for(ScheduleModel scheduleModel : schedules){
 			if(!scheduleModel.isAllDay){
 				normalSchedules.add(scheduleModel);
-			}else if(!"BI".equals(scheduleModel.eventType)){
+			}else if(ScheduleModel.EVENT_TYPE_BIRTHDAY.equals(scheduleModel.eventType)){
+				imgBirthdayIcon.setVisibility(View.VISIBLE);
+				numRow += 1;
+			}else if(ScheduleModel.EVENT_TYPE_HOLIDAY_OLD.equals(scheduleModel.eventType)){
+				TextView textView = WeeklyPageFragment.makeTextView(activity, scheduleModel.scheduleName, 0, 0, LinearLayout.LayoutParams.MATCH_PARENT, Color.TRANSPARENT, Color.RED, Gravity.LEFT);
+				lnrScheduleAllDays.addView(textView);
+			}else{
 				allDaySchedules.add(scheduleModel);
 			}
 		}
