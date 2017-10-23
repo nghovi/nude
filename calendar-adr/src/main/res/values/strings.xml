@@ -106,8 +106,8 @@
     <string name="schedule">Schedule</string>
     <string name="show_today">Show Today</string>
     <string name="public_str">Public</string>
-    <string name="private_str">Private schedule</string>
-    <string name="complete_private">Complete private</string>
+    <string name="private_str">Private schedule \n   (Users can see only date and time of schedule)</string>
+    <string name="complete_private">Complete private \n    (Users can\'t see any information of schedule)</string>
     <string name="schedule_mystery">Private</string>
     <string name="today_empty_todo">There is no ToDo for today</string>
     <string name="holiday">Holiday</string>

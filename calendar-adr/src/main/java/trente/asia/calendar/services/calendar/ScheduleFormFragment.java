@@ -293,8 +293,13 @@ public class ScheduleFormFragment extends AbstractScheduleFragment implements On
 	}
 
 	private void initScopeDialog(ScheduleModel scheduleModel){
-		Map<String, String> scopes = getPublicityMap();
-		dlgChooseScope = new CLOutboundDismissListDialog(activity, getString(R.string.cl_schedule_form_item_scope), scopes, txtScope, null);
+		final Map<String, String> scopes = getPublicityMap();
+		dlgChooseScope = new CLOutboundDismissListDialog(activity, getString(R.string.cl_schedule_form_item_scope), scopes, txtScope, new ChiaseListDialog.OnItemClicked() {
+			@Override
+			public void onClicked(String selectedKey, boolean isSelected) {
+				txtScope.setText(getTitle(scopes.get(selectedKey)));
+			}
+		});
 		dlgChooseRoom = new CLOutboundDismissListDialog(activity, getString(R.string.cl_schedule_form_item_meeting_room), getRoomMap(rooms), txtRoom, null);
 		dlgChooseCategory = new CLOutboundDismissListDialog(activity, getString(R.string.cl_schedule_form_item_category), ClUtil.convertCategoryList2Map(categories), txtCategory, new ChiaseListDialog.OnItemClicked() {
 
@@ -308,6 +313,11 @@ public class ScheduleFormFragment extends AbstractScheduleFragment implements On
 		});
 	}
 
+//	public String getDescriptionfromKey(String key, Map<String,String> scopes){
+////		for(int temp =0;temp<scopes.size();temp++){
+//			return scopes.get(key);
+////		}
+//	}
 	private Map<String, String> getRoomMap(List<RoomModel> rooms){
 
 		if(CCCollectionUtil.isEmpty(rooms)){

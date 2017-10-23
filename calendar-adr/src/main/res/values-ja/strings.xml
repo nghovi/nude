@@ -103,8 +103,8 @@
     <string name="schedule">予定</string>
     <string name="show_today">今日を表示</string>
     <string name="public_str">公開</string>
-    <string name="private_str">非公開スケジュール</string>
-    <string name="complete_private">完全非公開</string>
+    <string name="private_str">非公開スケジュール \n    (スケジュールの日時のみ全員に公開します)</string>
+    <string name="complete_private">完全非公開 \n    (スケジュールを全て非公開とします)</string>
     <string name="schedule_mystery">非公開</string>
     <string name="today_empty_todo">There is no ToDo for today</string>
     <string name="holiday">休暇</string>

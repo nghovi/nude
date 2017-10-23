@@ -152,7 +152,7 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 				// txtCategory.setTextColor(Color.parseColor(WelfareFormatUtil.formatColor(categoryModel.categoryColor)));
 			}
 
-			txtScope.setText(scopes.get(schedule.scheduleType));
+			txtScope.setText(getTitle(scopes.get(schedule.scheduleType)));
 			txtScope.setValue(schedule.scheduleType);
 
 			showJoinUserList();
@@ -176,7 +176,7 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 			txtCategory.setValue(categories.get(0).key);
 			// txtCategory.setTextColor(Color.parseColor(WelfareFormatUtil.formatColor(categories.get(0).categoryColor)));
 			txtScope.setValue(ScheduleModel.SCHEDULE_TYPE_PUB);
-			txtScope.setText(scopes.get(ScheduleModel.SCHEDULE_TYPE_PUB));
+			txtScope.setText(getTitle(scopes.get(ScheduleModel.SCHEDULE_TYPE_PUB)));
 		}
 
 		lnrEndDate.setVisibility(View.VISIBLE);
@@ -195,6 +195,10 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 		}
 	}
 
+	public static String getTitle(String text){
+		String[] arrayString = text.split("\n");
+		return arrayString[0];
+	}
 	public static String getRoomName(List<RoomModel> rooms, String roomId){
 		for(RoomModel roomModel : rooms){
 			if(roomModel.key.equals(roomId)){
