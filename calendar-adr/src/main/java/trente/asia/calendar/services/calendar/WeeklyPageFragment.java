@@ -17,7 +17,9 @@ import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -234,7 +236,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 				if (!birthdayIconMap.containsKey(keyDate)) {
 					Calendar c2 = CCDateUtil.makeCalendarWithDateOnly(scheduleModel.startDate);
 					int dayDistance = c2.get(Calendar.DAY_OF_YEAR) - cStartWeek.get(Calendar.DAY_OF_YEAR);
-					int leftMargin = (int) (screenW * (0 + dayDistance) / 7 + (screenW / 7));
+					int leftMargin = (int) (screenW * (0 + dayDistance) / 7 + (screenW / 7) + WelfareUtil.dpToPx(2));
 					topMargin = getNextTopMargin(dayDistance, dayDistance);
 
 					ImageView imageViewBirthday = new ImageView(activity);

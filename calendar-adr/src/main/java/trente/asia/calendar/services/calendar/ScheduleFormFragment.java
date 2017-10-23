@@ -19,6 +19,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,8 +39,10 @@ import trente.asia.android.activity.ChiaseActivity;
 import trente.asia.android.view.ChiaseListDialog;
 import trente.asia.android.view.util.CAObjectSerializeUtil;
 import trente.asia.calendar.R;
+import trente.asia.calendar.commons.OnTimePickerListener;
 import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.dialogs.CLOutboundDismissListDialog;
+import trente.asia.calendar.commons.dialogs.CLTimePicker;
 import trente.asia.calendar.commons.dialogs.ClDialog;
 import trente.asia.calendar.commons.dialogs.ClScheduleRepeatDialog;
 import trente.asia.calendar.commons.utils.ClRepeatUtil;
@@ -58,7 +61,7 @@ import trente.asia.welfare.adr.utils.WelfareUtil;
  *
  * @author VietNH
  */
-public class ScheduleFormFragment extends AbstractScheduleFragment{
+public class ScheduleFormFragment extends AbstractScheduleFragment implements OnTimePickerListener{
 
 	private CLOutboundDismissListDialog	dlgChooseRoom;
 	private CLOutboundDismissListDialog	dlgChooseCategory;
@@ -66,8 +69,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 
 	private DatePickerDialog			datePickerDialogStart;
 	private DatePickerDialog			datePickerDialogEnd;
-	private TimePickerDialog			timePickerDialogStart;
-	private TimePickerDialog			timePickerDialogEnd;
+	private CLTimePicker				timePickerDialog;
 
 	private ClScheduleRepeatDialog		repeatDialog;
 
@@ -79,6 +81,9 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 	private final String				SCHEDULE_DELETE_MODE	= "D";
 	private String						editMode;
 	private List<UserModel>				joinUsers;
+	private boolean						timePickerStart;
+	private int selectedHour;
+	private int selectedMinute;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -222,7 +227,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 				repeatDialog.initDefaultValue();
 				Date startDate = CCDateUtil.makeDateCustom(startDateStr, WelfareConst.WF_DATE_TIME_DATE);
 				Date endDate = CCDateUtil.makeDateCustom(txtEndDate.getText().toString(), WelfareConst.WF_DATE_TIME_DATE);
-				if (!swtAllDay.isChecked()){
+				if(!swtAllDay.isChecked()){
 					endDate = startDate;
 				}
 				datePickerDialogEnd.getDatePicker().setMinDate(startDate.getTime());
@@ -238,28 +243,8 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 			}
 		}, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
 
-		timePickerDialogStart = new TimePickerDialog(activity, new TimePickerDialog.OnTimeSetListener() {
-
-			@Override
-			public void onTimeSet(TimePicker view, int hourOfDay, int minute){
-				txtStartTime.setText(CCFormatUtil.formatZero(hourOfDay) + ":" + CCFormatUtil.formatZero(minute));
-				txtStartTime.setValue(CCFormatUtil.formatZero(hourOfDay) + ":" + CCFormatUtil.formatZero(minute));
-			}
-		}, CCDateUtil.getHourFromTimeString(startTimeStr), CCDateUtil.getMinuteFromTimeString(startTimeStr), true);
-
 		calendar.setTime(endDate);
 		initDatePickerDialogEnd(calendar, startDate);
-
-		timePickerDialogEnd = new TimePickerDialog(activity, new TimePickerDialog.OnTimeSetListener() {
-
-			@Override
-			public void onTimeSet(TimePicker view, int hourOfDay, int minute){
-				txtEndTime.setText(CCFormatUtil.formatZero(hourOfDay) + ":" + CCFormatUtil.formatZero(minute));
-				txtEndTime.setValue(CCFormatUtil.formatZero(hourOfDay) + ":" + CCFormatUtil.formatZero(minute));
-			}
-		}, CCDateUtil.getHourFromTimeString(endTimeStr), CCDateUtil.getMinuteFromTimeString(endTimeStr), true);
-		// txtEndTime.setValue(CCFormatUtil.formatZero(endHour) + ":" + CCFormatUtil.formatZero(endMinute));
-
 	}
 
 	private void initDatePickerDialogEnd(Calendar calendar, Date startDate){
@@ -400,10 +385,16 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 			datePickerDialogEnd.show();
 			break;
 		case R.id.txt_id_start_time:
-			timePickerDialogStart.show();
+			timePickerStart = true;
+			selectedHour = Integer.parseInt(txtStartTime.getText().toString().split(":")[0]);
+			selectedMinute = Integer.parseInt(txtStartTime.getText().toString().split(":")[1]);
+			openTimePicker();
 			break;
 		case R.id.txt_id_end_time:
-			timePickerDialogEnd.show();
+			timePickerStart = false;
+			selectedHour = Integer.parseInt(txtEndTime.getText().toString().split(":")[0]);
+			selectedMinute = Integer.parseInt(txtEndTime.getText().toString().split(":")[1]);
+			openTimePicker();
 			break;
 		case R.id.lnr_id_repeat:
 			repeatDialog.show();
@@ -462,6 +453,16 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 		}
 	}
 
+	private void openTimePicker() {
+		timePickerDialog = new CLTimePicker();
+		timePickerDialog.setStartTime(timePickerStart);
+		timePickerDialog.setCallback(this);
+		timePickerDialog.setSelectedHour(selectedHour);
+		timePickerDialog.setSelectedMinute(selectedMinute);
+		FragmentManager fm = getFragmentManager();
+		timePickerDialog.show(fm, "dialog");
+	}
+
 	private void gotoSelectUserFragment(){
 		UserSelectFragment userSelectFragment = new UserSelectFragment();
 		userSelectFragment.setJoinUsers(joinUsers);
@@ -472,6 +473,17 @@ public class ScheduleFormFragment extends AbstractScheduleFragment{
 	public void updateJoinUsers(List<UserModel> lstSelectedUser){
 		joinUsers = lstSelectedUser;
 		lnrUserList.show(joinUsers, WelfareUtil.dpToPx(30));
+	}
+
+	@Override
+	public void onTimePickerCompleted(int hour, int minute){
+		if(timePickerStart){
+			txtStartTime.setText(CCFormatUtil.formatZero(hour) + ":" + CCFormatUtil.formatZero(minute));
+			txtStartTime.setValue(CCFormatUtil.formatZero(hour) + ":" + CCFormatUtil.formatZero(minute));
+		}else{
+			txtEndTime.setText(CCFormatUtil.formatZero(hour) + ":" + CCFormatUtil.formatZero(minute));
+			txtEndTime.setValue(CCFormatUtil.formatZero(hour) + ":" + CCFormatUtil.formatZero(minute));
+		}
 	}
 
 	public static class ChangeCalendarConfirmDialog extends DialogFragment{
