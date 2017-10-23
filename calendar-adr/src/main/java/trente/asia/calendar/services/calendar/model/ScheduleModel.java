@@ -1,5 +1,6 @@
 package trente.asia.calendar.services.calendar.model;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.welfare.adr.activity.WelfareActivity;
+import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WelfareFormatUtil;
 
@@ -69,6 +71,7 @@ public class ScheduleModel{
 	public boolean				isPeriod;
 	public String				eventType;
 	public List<CalendarUser>	calendarUsers;
+	private boolean				isBelongToLoginUser		= false;
 
 	public ScheduleModel(){
 
@@ -83,23 +86,24 @@ public class ScheduleModel{
 		this.eventType = EVENT_TYPE_HOLIDAY_OLD;
 	}
 
-	// public ScheduleModel(UserModel userModel, Date start, Date end){
-	// this.scheduleName = userModel.userName;
-	// Calendar birthdayCalendar = CCDateUtil.makeCalendar(userModel.birthDay);
-	// Calendar cStart = CCDateUtil.makeCalendar(start);
-	// Calendar cEnd = CCDateUtil.makeCalendar(end);
-	//
-	// birthdayCalendar.set(Calendar.YEAR, cStart.get(Calendar.YEAR));
-	//
-	// if(cStart.getTimeInMillis() > birthdayCalendar.getTimeInMillis() || birthdayCalendar.getTimeInMillis() > cEnd.getTimeInMillis()){
-	// birthdayCalendar.set(Calendar.YEAR, cEnd.get(Calendar.YEAR));
-	// }
-	//
-	// this.startDate = birthdayCalendar.getTime();
-	// this.endDate = this.startDate;
-	// this.isAllDay = true;
-	// this.scheduleType = EVENT_TYPE_BIRTHDAY;
-	// }
+	public ScheduleModel(CalendarBirthdayModel calendarBirthdayModel, Date start, Date end){
+		this.scheduleName = calendarBirthdayModel.message;
+		Calendar birthdayCalendar = CCDateUtil.makeCalendar(CCDateUtil.makeDateCustom(calendarBirthdayModel.birthDay, WelfareConst.WF_DATE_TIME_DATE_HYPHEN));
+		Calendar cStart = CCDateUtil.makeCalendar(start);
+		Calendar cEnd = CCDateUtil.makeCalendar(end);
+
+		birthdayCalendar.set(Calendar.YEAR, cStart.get(Calendar.YEAR));
+
+		if(cStart.getTimeInMillis() > birthdayCalendar.getTimeInMillis() || birthdayCalendar.getTimeInMillis() > cEnd.getTimeInMillis()){
+			birthdayCalendar.set(Calendar.YEAR, cEnd.get(Calendar.YEAR));
+		}
+
+		this.startDate = birthdayCalendar.getTime();
+		this.endDate = this.startDate;
+		this.isAllDay = true;
+		this.scheduleType = SCHEDULE_TYPE_PUB;
+		this.eventType = EVENT_TYPE_BIRTHDAY;
+	}
 
 	public static void determinePeriod(List<ScheduleModel> scheduleModels){
 		for(ScheduleModel scheduleModel : scheduleModels){
@@ -109,6 +113,10 @@ public class ScheduleModel{
 
 	public void determinePeriodSchedule(){
 		isPeriod = CCDateUtil.compareDate(startDate, endDate, false) != 0;
+	}
+
+	public void determineBelongToLoginUser(UserModel loginUser){
+		isBelongToLoginUser = UserModel.contain(scheduleJoinUsers, loginUser);
 	}
 
 	public String getScheduleColor(){
@@ -163,5 +171,15 @@ public class ScheduleModel{
 
 	public long getEndTimeMilis(){
 		return CCDateUtil.convertTime2Min(endTime) * 60 * 1000;
+	}
+
+	public boolean isBelongToLoginUser(){
+		return isBelongToLoginUser;
+	}
+
+	public static void determineBelongToLoginUser(List<ScheduleModel> lstSchedule, UserModel loginUser){
+		for(ScheduleModel scheduleModel : lstSchedule){
+			scheduleModel.determineBelongToLoginUser(loginUser);
+		}
 	}
 }

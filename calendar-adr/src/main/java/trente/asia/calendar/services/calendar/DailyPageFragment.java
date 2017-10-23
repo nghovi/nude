@@ -278,7 +278,7 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 		}
 
 		for(ScheduleModel scheduleModel : schedules){
-			if("BI".equals(scheduleModel.eventType)){
+			if(ScheduleModel.EVENT_TYPE_BIRTHDAY.equals(scheduleModel.eventType)){
 				imgBirthdayIcon.setVisibility(View.VISIBLE);
 				numRow += 1;
 			}
@@ -615,8 +615,8 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 	}
 
 	@Override
-	protected Boolean getDuplicateMode(){
-		return true;
+	protected String getDuplicateMode(){
+		return "Y";
 	}
 
 	@Override
