@@ -42,7 +42,6 @@ import trente.asia.calendar.commons.fragments.PageContainerFragment;
 import trente.asia.calendar.services.calendar.model.CategoryModel;
 import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
-import trente.asia.calendar.services.calendar.model.WorkRequest;
 import trente.asia.calendar.services.calendar.view.DailyScheduleList;
 import trente.asia.calendar.services.todo.TodoListFragment;
 import trente.asia.calendar.services.todo.TodoListTodayFragment;
@@ -233,7 +232,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 				if(!birthdayIconMap.containsKey(keyDate)){
 					Calendar c2 = CCDateUtil.makeCalendarWithDateOnly(scheduleModel.startDate);
 					int dayDistance = c2.get(Calendar.DAY_OF_YEAR) - cStartWeek.get(Calendar.DAY_OF_YEAR);
-					int leftMargin = (int) (screenW * (0 + dayDistance) / 7 + (screenW / 7));
+					int leftMargin = (int)(screenW * (0 + dayDistance) / 7 + (screenW / 7));
 					topMargin = getNextTopMargin(dayDistance, dayDistance);
 
 					ImageView imageViewBirthday = new ImageView(activity);
@@ -260,21 +259,22 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 		}
 
 		// work requests
-		for(WorkRequest workRequest : lstWorkRequest){
-			Calendar cStart = CCDateUtil.makeCalendarWithDateOnly(workRequest.startDate);
-			Calendar cEnd = CCDateUtil.makeCalendarWithDateOnly(workRequest.endDate);
-
-			int dayDistance = Math.max(0, cStart.get(Calendar.DAY_OF_YEAR) - cStartWeek.get(Calendar.DAY_OF_YEAR));
-			int dayDistanceEnd = Math.min(7, cEnd.get(Calendar.DAY_OF_YEAR) - cStartWeek.get(Calendar.DAY_OF_YEAR));
-			int cellNumber = dayDistanceEnd - dayDistance + 1;
-
-			int leftMargin = (int)(screenW * (0 + dayDistance) / 7);
-			topMargin = getNextTopMargin(dayDistance, dayDistance + cellNumber - 1);
-
-			TextView textView = makeTextView(activity, workRequest.offerTypeName, leftMargin, topMargin, (int)(screenW * cellNumber / 7), Color.parseColor(workRequest.userColor), 0, Gravity.LEFT);
-			rltPart1.addView(textView);
-			itemNum++;
-		}
+		// for(WorkRequest workRequest : lstWorkRequest){
+		// Calendar cStart = CCDateUtil.makeCalendarWithDateOnly(workRequest.startDate);
+		// Calendar cEnd = CCDateUtil.makeCalendarWithDateOnly(workRequest.endDate);
+		//
+		// int dayDistance = Math.max(0, cStart.get(Calendar.DAY_OF_YEAR) - cStartWeek.get(Calendar.DAY_OF_YEAR));
+		// int dayDistanceEnd = Math.min(7, cEnd.get(Calendar.DAY_OF_YEAR) - cStartWeek.get(Calendar.DAY_OF_YEAR));
+		// int cellNumber = dayDistanceEnd - dayDistance + 1;
+		//
+		// int leftMargin = (int)(screenW * (0 + dayDistance) / 7);
+		// topMargin = getNextTopMargin(dayDistance, dayDistance + cellNumber - 1);
+		//
+		// TextView textView = makeTextView(activity, workRequest.offerTypeName, leftMargin, topMargin, (int)(screenW * cellNumber / 7),
+		// Color.parseColor(workRequest.userColor), 0, Gravity.LEFT);
+		// rltPart1.addView(textView);
+		// itemNum++;
+		// }
 
 		// all day schedules
 		for(ScheduleModel schedule : schedules){
@@ -652,6 +652,11 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 			lnrVerticalLineContainer.addView(lnrDay);
 		}
 
+	}
+
+	@Override
+	protected Boolean getDuplicateMode(){
+		return true;
 	}
 
 	@Override

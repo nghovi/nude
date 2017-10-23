@@ -615,6 +615,11 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 	}
 
 	@Override
+	protected Boolean getDuplicateMode(){
+		return true;
+	}
+
+	@Override
 	public void onClick(View v){
 		switch(v.getId()){
 		case R.id.rlt_line_container:

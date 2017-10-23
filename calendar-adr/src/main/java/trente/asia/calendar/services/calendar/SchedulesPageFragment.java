@@ -139,7 +139,7 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 		}
 
 		String screenMode = getScreenMode();
-		Boolean duplicatedSchedule = false;
+		Boolean duplicatedSchedule = getDuplicateMode();
 
 		JSONObject jsonObject = new JSONObject();
 		try{
@@ -156,6 +156,8 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 		}
 		return jsonObject;
 	}
+
+	protected abstract Boolean getDuplicateMode();
 
 	protected abstract String getScreenMode();
 
