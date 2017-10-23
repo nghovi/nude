@@ -139,7 +139,7 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 		}
 
 		String screenMode = getScreenMode();
-		Boolean duplicatedSchedule = getDuplicateMode();
+		String duplicatedSchedule = getDuplicateMode();
 
 		JSONObject jsonObject = new JSONObject();
 		try{
@@ -157,7 +157,7 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 		return jsonObject;
 	}
 
-	protected abstract Boolean getDuplicateMode();
+	protected abstract String getDuplicateMode();
 
 	protected abstract String getScreenMode();
 
@@ -206,6 +206,7 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 			lstSchedule = filterByPublicity();
 
 			ScheduleModel.determinePeriod(lstSchedule);
+			ScheduleModel.determineBelongToLoginUser(lstSchedule, myself);
 
 			if(refreshDialogData && !newScheduleStrings.equals(scheduleStrings)){
 				isChangedData = true;
