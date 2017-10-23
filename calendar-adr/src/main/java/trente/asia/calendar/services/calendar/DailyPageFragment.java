@@ -298,9 +298,6 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 		for(ScheduleModel scheduleModel : schedules){
 			if(!scheduleModel.isAllDay){
 				normalSchedules.add(scheduleModel);
-			}else if(ScheduleModel.EVENT_TYPE_BIRTHDAY.equals(scheduleModel.eventType)){
-				imgBirthdayIcon.setVisibility(View.VISIBLE);
-				numRow += 1;
 			}else if(ScheduleModel.EVENT_TYPE_HOLIDAY_OLD.equals(scheduleModel.eventType)){
 				TextView textView = WeeklyPageFragment.makeTextView(activity, scheduleModel.scheduleName, 0, 0, LinearLayout.LayoutParams.MATCH_PARENT, Color.TRANSPARENT, Color.RED, Gravity.LEFT);
 				lnrScheduleAllDays.addView(textView);
@@ -312,8 +309,12 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 		buildBlocks(activity, WelfareUtil.dpToPx(MARGIN_LEFT_RIGHT_PX), screenW, normalSchedules, rltSchedules, MAX_BLOCK_NUM_TO_SHOW_TEXT);
 
 		for(ScheduleModel scheduleModel : allDaySchedules){
-			TextView textView = WeeklyPageFragment.makeTextView(activity, scheduleModel.scheduleName, 0, 0, LinearLayout.LayoutParams.MATCH_PARENT, WeeklyPageFragment.getScheduleColor(scheduleModel), WeeklyPageFragment.getScheduleTextColor(scheduleModel), Gravity.LEFT);
-			lnrScheduleAllDays.addView(textView);
+			if(ScheduleModel.EVENT_TYPE_SCHEDULE.equals(scheduleModel.eventType)){
+				TextView textView = WeeklyPageFragment.makeTextView(activity, scheduleModel.scheduleName, 0, 0, LinearLayout.LayoutParams.MATCH_PARENT, WeeklyPageFragment.getScheduleColor(scheduleModel), WeeklyPageFragment.getScheduleTextColor(scheduleModel), Gravity.LEFT);
+				lnrScheduleAllDays.addView(textView);
+			}else if(ScheduleModel.EVENT_TYPE_BIRTHDAY.equals(scheduleModel.eventType)){
+				imgBirthdayIcon.setVisibility(View.VISIBLE);
+			}
 		}
 
 		int childCount = lnrScheduleAllDays.getChildCount();
@@ -327,8 +328,9 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 			lnrScheduleAllDays.requestLayout();
 			height = Math.max(0, numRow * WeeklyPageFragment.CELL_HEIGHT_PIXEL) + allDayHeight - WelfareUtil.dpToPx(12);
 		}else{
+			if(isActivePage()) parent.imgExpand.setVisibility(View.VISIBLE);
 			txtMore.setText("+" + (moreNumber + 1));
-			if(firstTime || oldMoreNumber == moreNumber){
+			if(firstTime){
 				showCollapse();
 			}else if(oldMoreNumber != moreNumber){
 				if(isExpanded){
@@ -340,6 +342,14 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 					if(isActivePage()) parent.imgExpand.setVisibility(View.VISIBLE);
 				}else{
 					showCollapse();
+				}
+			}else{
+				if(isActivePage()){
+					if(isExpanded){
+						parent.imgExpand.setImageResource(R.drawable.up);
+					}else{
+						parent.imgExpand.setImageResource(R.drawable.down);
+					}
 				}
 			}
 		}
@@ -593,6 +603,8 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 		height = Math.max(0, numRow * WeeklyPageFragment.CELL_HEIGHT_PIXEL) + alldayHeight + WelfareUtil.dpToPx(7) + 1;
 		if(isActivePage()){
 			parent.imgExpand.setVisibility(View.VISIBLE);
+			parent.imgExpand.setImageResource(R.drawable.down);
+
 		}
 	}
 

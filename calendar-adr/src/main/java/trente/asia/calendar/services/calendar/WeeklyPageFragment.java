@@ -298,7 +298,6 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 				TextView textView = makeTextView(activity, schedule.scheduleName, leftMargin, topMargin, maxWidth, getScheduleColor(schedule), getScheduleTextColor(schedule), Gravity.LEFT);
 				rltPart1.addView(textView);
 				itemNum++;
-				rltPart1.addView(textView);
 			}
 		}
 		int rowNum = maxTopMargin / CELL_HEIGHT_PIXEL;
@@ -372,6 +371,14 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 					showCollapse();
 				}
 			}else{
+				if(isActivePage()){
+					if(isExpanded){
+						parent.imgExpand.setImageResource(R.drawable.up);
+					}else{
+						parent.imgExpand.setImageResource(R.drawable.down);
+					}
+				}
+
 				for(int i = 1; i < rltExpandBar.getChildCount(); i++){
 					if(isExpanded){
 						rltExpandBar.getChildAt(i).setVisibility(View.GONE);
@@ -397,9 +404,9 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 	}
 
 	private void showCollapse(){
-		rltExpandBar.setVisibility(View.VISIBLE);
-		parent.imgExpand.setImageResource(R.drawable.down);
 		if(isActivePage()){
+			rltExpandBar.setVisibility(View.VISIBLE);
+			parent.imgExpand.setImageResource(R.drawable.down);
 			parent.imgExpand.setVisibility(View.VISIBLE);
 		}
 		for(int i = 1; i < rltExpandBar.getChildCount(); i++){
