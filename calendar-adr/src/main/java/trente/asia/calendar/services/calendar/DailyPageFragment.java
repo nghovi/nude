@@ -11,6 +11,7 @@ import java.util.Map;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -300,6 +301,10 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 				normalSchedules.add(scheduleModel);
 			}else if(ScheduleModel.EVENT_TYPE_HOLIDAY_OLD.equals(scheduleModel.eventType)){
 				TextView textView = WeeklyPageFragment.makeTextView(activity, scheduleModel.scheduleName, 0, 0, LinearLayout.LayoutParams.MATCH_PARENT, Color.TRANSPARENT, Color.RED, Gravity.LEFT);
+				GradientDrawable gradientDrawable = new GradientDrawable();
+				gradientDrawable.setCornerRadius(WelfareUtil.dpToPx(4));
+				gradientDrawable.setStroke(2, Color.BLACK);
+				textView.setBackground(gradientDrawable);
 				lnrScheduleAllDays.addView(textView);
 			}else{
 				allDaySchedules.add(scheduleModel);
