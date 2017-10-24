@@ -293,7 +293,7 @@ public class DailyScheduleList extends LinearLayout{
 			lnrEvents.addView(offerItem);
 			break;
 		case ScheduleModel.EVENT_TYPE_HOLIDAY_OLD:
-			LinearLayout holidayItem = buildHolidayItemFromSchedule(inflater, scheduleModel, WelfareUtil.dpToPx(WelfareFragment.MARGIN_LEFT_RIGHT_PX), R.layout.item_holiday);
+			LinearLayout holidayItem = buildHolidayItemFromSchedule(inflater, scheduleModel, WelfareUtil.dpToPx(WelfareFragment.MARGIN_LEFT_RIGHT_DP), R.layout.item_holiday);
 			lnrEvents.addView(holidayItem);
 			break;
 		default:

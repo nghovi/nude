@@ -75,14 +75,14 @@ public class WeeklyFragment extends PageContainerFragment{
 		Collections.sort(times);
 
 		// // first row need to subtract some px
-		// addStartTimeRow(times.get(0), TIME_COLUMN_WIDTH_PX - MARGIN_LEFT_RIGHT_PX / 2);
+		// addStartTimeRow(times.get(0), TIME_COLUMN_WIDTH_PX - MARGIN_LEFT_RIGHT_DP / 2);
 
 		for(int i = 0; i < times.size(); i++){
 			int bottomMargin = 0;
 			if(i == times.size() - 1){
-				bottomMargin = WelfareUtil.dpToPx(TIME_COLUMN_WIDTH_PX) - WelfareUtil.dpToPx(MARGIN_TEXT_MIDDLE_PX) - 1;
+				bottomMargin = WelfareUtil.dpToPx(TIME_COLUMN_WIDTH_PX) - WelfareUtil.dpToPx(MARGIN_TEXT_MIDDLE_DP) - 1;
 			}
-			addStartTimeRow(times.get(i), (i + 1) * WelfareUtil.dpToPx(TIME_COLUMN_WIDTH_PX) - WelfareUtil.dpToPx(MARGIN_TEXT_MIDDLE_PX) - 1, bottomMargin);
+			addStartTimeRow(times.get(i), (i + 1) * WelfareUtil.dpToPx(TIME_COLUMN_WIDTH_PX) - WelfareUtil.dpToPx(MARGIN_TEXT_MIDDLE_DP) - 1, bottomMargin);
 		}
 
 		timeScroll = (ObservableScrollView)getView().findViewById(R.id.src_time_container);

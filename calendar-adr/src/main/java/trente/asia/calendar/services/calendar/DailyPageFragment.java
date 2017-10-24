@@ -11,10 +11,9 @@ import java.util.Map;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.Point;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
-import android.view.Display;
+import android.os.Debug;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,7 +59,7 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 	private DailyFragment						parent;
 	private TextView							txtMore;
 	public ObservableScrollView					scrMain;
-	private int									height						= WelfareUtil.dpToPx(MARGIN_LEFT_RIGHT_PX) + WelfareUtil.dpToPx(10);
+	private int									height						= WelfareUtil.dpToPx(MARGIN_LEFT_RIGHT_DP) + WelfareUtil.dpToPx(10);
 
 	// private int screenW;
 
@@ -162,7 +161,7 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 	public void expand(final View v){
 		v.measure(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
 		final int targetHeight = Math.max(0, ((LinearLayout)v).getChildCount() * WeeklyPageFragment.CELL_HEIGHT_PIXEL);
-		height = Math.max(0, numRow * WeeklyPageFragment.CELL_HEIGHT_PIXEL) + targetHeight - WelfareUtil.dpToPx(12);
+		height = Math.max(0, numRow * WeeklyPageFragment.CELL_HEIGHT_PIXEL) + targetHeight - WelfareUtil.dpToPx(14);
 		v.setVisibility(View.VISIBLE);
 		Animation a = new Animation() {
 
@@ -192,7 +191,7 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 
 	public void collapse(final View v, final int targetHeight){
 		final int initialHeight = v.getMeasuredHeight();
-		height = Math.max(0, numRow * WeeklyPageFragment.CELL_HEIGHT_PIXEL) + targetHeight + WelfareUtil.dpToPx(8) - 2;
+		height = Math.max(0, numRow * WeeklyPageFragment.CELL_HEIGHT_PIXEL) + targetHeight  + WelfareUtil.dpToPx(4)- 2;
 		Animation a = new Animation() {
 
 			@Override
@@ -265,7 +264,7 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 
 		rltSchedules.removeAllViews();
 
-		float screenW = rltSchedules.getMeasuredWidth() - WelfareUtil.dpToPx(MARGIN_LEFT_RIGHT_PX);
+		float screenW = rltSchedules.getMeasuredWidth() - WelfareUtil.dpToPx(MARGIN_LEFT_RIGHT_DP);
 
 		// WeeklyPageFragment.sortSchedules(schedules, dates.get(0), dates.get(dates.size() - 1), false);
 		numRow = 0;
@@ -314,7 +313,7 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 			}
 		}
 
-		buildBlocks(activity, WelfareUtil.dpToPx(MARGIN_LEFT_RIGHT_PX), screenW, normalSchedules, rltSchedules, MAX_BLOCK_NUM_TO_SHOW_TEXT);
+		buildBlocks(activity, WelfareUtil.dpToPx(MARGIN_LEFT_RIGHT_DP), screenW, normalSchedules, rltSchedules, MAX_BLOCK_NUM_TO_SHOW_TEXT);
 
 		for(ScheduleModel scheduleModel : allDaySchedules){
 			if(ScheduleModel.EVENT_TYPE_BIRTHDAY.equals(scheduleModel.eventType)){
@@ -612,7 +611,7 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 		lnrScheduleAllDays.getLayoutParams().height = alldayHeight;
 		lnrScheduleAllDays.requestLayout();
 		txtMore.setVisibility(View.VISIBLE);
-		height = Math.max(0, numRow * WeeklyPageFragment.CELL_HEIGHT_PIXEL) + alldayHeight + WelfareUtil.dpToPx(7) + 1;
+		height = Math.max(0, numRow * WeeklyPageFragment.CELL_HEIGHT_PIXEL) + alldayHeight + WelfareUtil.dpToPx(4) -1;
 		if(isActivePage()){
 			parent.imgExpand.setVisibility(View.VISIBLE);
 			parent.imgExpand.setImageResource(R.drawable.down);
