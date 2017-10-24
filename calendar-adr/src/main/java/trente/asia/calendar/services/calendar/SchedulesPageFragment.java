@@ -33,7 +33,7 @@ import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.RoomModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.model.WorkRequest;
-import trente.asia.calendar.services.calendar.view.WeeklyScheduleListAdapter;
+import trente.asia.calendar.services.calendar.view.DailyScheduleList;
 import trente.asia.calendar.services.todo.model.Todo;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
@@ -45,7 +45,7 @@ import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
  *
  * @author VietNH
  */
-public abstract class SchedulesPageFragment extends ClPageFragment implements WeeklyScheduleListAdapter.OnScheduleItemClickListener,DailyScheduleClickListener{
+public abstract class SchedulesPageFragment extends ClPageFragment implements DailyScheduleList.OnScheduleItemClickListener,DailyScheduleClickListener{
 
 	protected List<Date>					dates;
 
@@ -220,7 +220,7 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 
 					@Override
 					public void run(){
-						dialogDailySummary.setData(lstSchedule, calendarBirthdayModels, lstHoliday, lstWorkRequest);
+						dialogDailySummary.setData(lstSchedule, calendarBirthdayModels, lstHoliday, lstWorkRequest, getScreenMode());
 					}
 				});
 
@@ -232,7 +232,7 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 
 					@Override
 					public void run(){
-						dialogDailySummary.setData(lstSchedule, calendarBirthdayModels, lstHoliday, lstWorkRequest);
+						dialogDailySummary.setData(lstSchedule, calendarBirthdayModels, lstHoliday, lstWorkRequest, getScreenMode());
 					}
 				});
 				isChangedData = false;

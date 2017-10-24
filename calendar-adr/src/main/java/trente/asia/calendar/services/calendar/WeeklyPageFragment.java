@@ -40,7 +40,6 @@ import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.fragments.PageContainerFragment;
 import trente.asia.calendar.services.calendar.model.CategoryModel;
-import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.view.DailyScheduleList;
 import trente.asia.calendar.services.todo.TodoListFragment;
@@ -150,11 +149,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 
 	@Override
 	protected void updateSchedules(List<ScheduleModel> schedules, List<CategoryModel> categories){
-		// Collections.sort(lstWorkRequest, getWorkRequestComparator());
 		super.updateSchedules(schedules, categories);
-		// sortSchedules(schedules, dates.get(0), dates.get(dates.size() - 1), true);
-		// schedules = multiplyWithUsers(schedules);
-
 		List<ScheduleModel> normalSchedules = new ArrayList<>();
 		List<ScheduleModel> allDaySchedules = new ArrayList<>();
 
@@ -169,29 +164,6 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 		buildPart1(allDaySchedules);
 		buildPart2(normalSchedules);
 	}
-
-	// public static void sortSchedules(List<ScheduleModel> schedules, Date dateStart, Date dateEnd, boolean checkAllDayTime){
-	//// final Comparator<ScheduleModel> normalComparator = MonthlyPageFragment.getScheduleComparator(checkAllDayTime);
-	// if(!checkAllDayTime){
-	// Collections.sort(schedules, normalComparator);
-	// }else{
-	// final Comparator<ScheduleModel> periodComparator = MonthlyCalendarRowView.getPeriodScheduleComparator(dateStart, dateEnd);
-	// Collections.sort(schedules, new Comparator<ScheduleModel>() {
-	//
-	// @Override
-	// public int compare(ScheduleModel o1, ScheduleModel o2){
-	// if(o1.isPeriod && !o2.isPeriod){
-	// return -1;
-	// }else if(!o1.isPeriod && o2.isPeriod){
-	// return 1;
-	// }else if(o1.isPeriod && o2.isPeriod){
-	// return periodComparator.compare(o1, o2);
-	// }
-	// return normalComparator.compare(o1, o2);
-	// }
-	// });
-	// }
-	// }
 
 	private void buildPart1(List<ScheduleModel> schedules){
 		rltPart1.removeAllViews();
@@ -225,37 +197,6 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 		}
 
 		Map<String, Boolean> birthdayIconMap = new HashMap<>();
-		// birthday
-//		for(ScheduleModel scheduleModel : schedules){
-//			if(ScheduleModel.EVENT_TYPE_BIRTHDAY.equals(scheduleModel.eventType)){
-//				String keyDate = WelfareUtil.getDateString(scheduleModel.startDate);
-//				if(!birthdayIconMap.containsKey(keyDate)){
-//					Calendar c2 = CCDateUtil.makeCalendarWithDateOnly(scheduleModel.startDate);
-//					int dayDistance = c2.get(Calendar.DAY_OF_YEAR) - cStartWeek.get(Calendar.DAY_OF_YEAR);
-//					int leftMargin = (int)(screenW * (0 + dayDistance) / 7);
-//					topMargin = getNextTopMargin(dayDistance, dayDistance);
-//					ImageView imageViewBirthday = new ImageView(activity);
-//					imageViewBirthday.setImageResource(R.drawable.cl_icon_birthday);
-//					RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(CELL_HEIGHT_PIXEL, CELL_HEIGHT_PIXEL);
-//					rlp.setMargins(leftMargin, topMargin, 0, 0);
-//					imageViewBirthday.setLayoutParams(rlp);
-//					rltPart1.addView(imageViewBirthday);
-//					birthdayIconMap.put(keyDate, true);
-//					itemNum++;
-//				}
-//			}
-//		}
-//
-//		// holiday
-//		for(HolidayModel holidayModel : lstHoliday){
-//			Calendar c2 = CCDateUtil.makeCalendarWithDateOnly(holidayModel.startDate);
-//			int dayDistance = c2.get(Calendar.DAY_OF_YEAR) - cStartWeek.get(Calendar.DAY_OF_YEAR);
-//			int leftMargin = (int)(screenW * (0 + dayDistance) / 7);
-//			topMargin = getNextTopMargin(dayDistance, dayDistance);
-//			TextView textView = makeTextView(activity, holidayModel.holidayName, leftMargin, topMargin, (int)(screenW / 7), Color.WHITE, Color.RED, Gravity.LEFT);
-//			rltPart1.addView(textView);
-//			itemNum++;
-//		}
 
 		for(ScheduleModel schedule : schedules){
 			// birthday
@@ -264,7 +205,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 				if(!birthdayIconMap.containsKey(keyDate)){
 					Calendar c2 = CCDateUtil.makeCalendarWithDateOnly(schedule.startDate);
 					int dayDistance = c2.get(Calendar.DAY_OF_YEAR) - cStartWeek.get(Calendar.DAY_OF_YEAR);
-					int leftMargin = (int)(screenW * (0 + dayDistance) / 7 + (screenW / 7) + WelfareUtil.dpToPx(2));
+					int leftMargin = (int)(screenW * (0 + dayDistance) / 7 + WelfareUtil.dpToPx(2));
 					topMargin = getNextTopMargin(dayDistance, dayDistance);
 
 					ImageView imageViewBirthday = new ImageView(activity);
@@ -345,8 +286,6 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 					textView.setTextSize(13);
 					textView.setMaxWidth((int)(screenW / 7 - 2));
 					textView.setGravity(Gravity.LEFT);
-					// textView.setBackgroundColor(Color.WHITE);
-					// textView.setBackground(ContextCompat.getDrawable(activity, R.drawable.wf_background_gray_border_white));
 					textView.setText("+" + more);
 					RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams((int)(screenW / 7 - 2), RelativeLayout.LayoutParams.WRAP_CONTENT);
 					rlp.setMargins((int)(key * screenW / 7), 0, 0, 0);
@@ -359,16 +298,12 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 				showCollapse();
 			}else if(oldMaxTopMargin != maxTopMargin){
 				if(isExpanded){
-					// rltExpandBar.setVisibility(View.VISIBLE);
 					if(isActivePage()){
 						parent.imgExpand.setVisibility(View.VISIBLE);
 					}
 					rltExpandBar.setVisibility(View.GONE);
-					// for(int i = 0; i < rltExpandBar.getChildCount(); i++){
-					// rltExpandBar.getChildAt(i).setVisibility(View.GONE);
-					// }
 					int initialHeight = rowNum * WeeklyPageFragment.CELL_HEIGHT_PIXEL;
-					height = initialHeight + TIME_COLUMN_WIDTH_PX + MARGIN_TEXT_MIDDLE_PX - 1;
+					height = initialHeight + TIME_COLUMN_WIDTH_PX + MARGIN_LEFT_RIGHT_PX + MARGIN_TOP_PX - 1;
 					rltPart1.getLayoutParams().height = initialHeight;
 					rltPart1.requestLayout();
 				}else{
@@ -385,9 +320,9 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 
 				for(int i = 1; i < rltExpandBar.getChildCount(); i++){
 					if(isExpanded){
-						rltExpandBar.getChildAt(i).setVisibility(View.GONE);
+						rltExpandBar.setVisibility(View.GONE);
 					}else{
-						rltExpandBar.getChildAt(i).setVisibility(View.VISIBLE);
+						rltExpandBar.setVisibility(View.VISIBLE);
 					}
 				}
 			}
@@ -402,7 +337,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 
 	public void updateTimeColumnPosition(){
 		int screenHeight = mRootView.getHeight();
-		if (height > screenHeight){
+		if(height > screenHeight){
 			height = screenHeight - WeeklyPageFragment.CELL_HEIGHT_PIXEL - WelfareUtil.dpToPx(4);
 		}
 		LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams)parent.lnrTimeColumn.getLayoutParams();
@@ -412,13 +347,10 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 	}
 
 	private void showCollapse(){
+		rltExpandBar.setVisibility(View.VISIBLE);
 		if(isActivePage()){
-			rltExpandBar.setVisibility(View.VISIBLE);
 			parent.imgExpand.setImageResource(R.drawable.down);
 			parent.imgExpand.setVisibility(View.VISIBLE);
-		}
-		for(int i = 1; i < rltExpandBar.getChildCount(); i++){
-			rltExpandBar.getChildAt(i).setVisibility(View.VISIBLE);
 		}
 		int initialHeight = (MAX_ROW - 1) * WeeklyPageFragment.CELL_HEIGHT_PIXEL;
 		rltPart1.getLayoutParams().height = initialHeight;
@@ -755,17 +687,13 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 			public void onClick(View v){
 				if(isExpanded){
 					collapse(rltPart1, (MAX_ROW - 1) * WeeklyPageFragment.CELL_HEIGHT_PIXEL);
-					for(int i = 0; i < rltExpandBar.getChildCount(); i++){
-						rltExpandBar.getChildAt(i).setVisibility(View.VISIBLE);
-					}
+					rltExpandBar.setVisibility(View.VISIBLE);
 					isExpanded = false;
 					parent.imgExpand.setImageResource(R.drawable.down);
 				}else{
 					parent.imgExpand.setImageResource(R.drawable.up);
 					expand(rltPart1);
-					for(int i = 0; i < rltExpandBar.getChildCount(); i++){
-						rltExpandBar.getChildAt(i).setVisibility(View.GONE);
-					}
+					rltExpandBar.setVisibility(View.GONE);
 					isExpanded = true;
 				}
 			}

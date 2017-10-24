@@ -11,32 +11,32 @@ import android.view.WindowManager;
 
 import asia.chiase.core.util.CCFormatUtil;
 import trente.asia.calendar.R;
+import trente.asia.calendar.services.calendar.SchedulesPageFragment;
 import trente.asia.calendar.services.calendar.model.CalendarBirthdayModel;
 import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.model.WorkRequest;
+import trente.asia.calendar.services.calendar.view.DailyScheduleList;
 import trente.asia.calendar.services.calendar.view.DailySummaryDialogPagerAdapter;
-import trente.asia.calendar.services.calendar.view.WeeklyScheduleListAdapter;
 import trente.asia.welfare.adr.define.WelfareConst;
 
 /**
- * ClDailySummaryDialog
+ * DailySummaryDialog
  *
  * @author TrungND
  */
 public class DailySummaryDialog extends CLOutboundDismissDialog{
 
 	private final Context												mContext;
-	private final WeeklyScheduleListAdapter.OnScheduleItemClickListener	listener;
+	private final DailyScheduleList.OnScheduleItemClickListener listener;
 
 	private final List<Date>											dates;
 	private DailySummaryDialogPagerAdapter								mPagerAdapter;
 	protected ViewPager													mViewPager;
 
 	private List<ScheduleModel>											lstSchedule;
-	private List<CalendarBirthdayModel>									calendarBirthdayModels;
-	private List<HolidayModel>											lstHoliday;
-	private List<WorkRequest>											lstWorkRequest;
+	private List<CalendarBirthdayModel>									calendarBirthdayModels	= new ArrayList<>();
+	private List<HolidayModel>											lstHoliday				= new ArrayList<>();
 	private Date														selectedDate;
 	private OnAddBtnClickedListener										onAddBtnClickedListener;
 
@@ -45,7 +45,7 @@ public class DailySummaryDialog extends CLOutboundDismissDialog{
 		public void onAddBtnClick(Date selectedDate);
 	}
 
-	public DailySummaryDialog(Context context, final WeeklyScheduleListAdapter.OnScheduleItemClickListener listener, final OnAddBtnClickedListener onAddBtnClickedListener, List<Date> dates){
+	public DailySummaryDialog(Context context, final DailyScheduleList.OnScheduleItemClickListener listener, final OnAddBtnClickedListener onAddBtnClickedListener, List<Date> dates){
 		super(context);
 
 		this.setContentView(R.layout.dialog_daily_summary);
@@ -60,23 +60,14 @@ public class DailySummaryDialog extends CLOutboundDismissDialog{
 		window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
 	}
 
-	public void setData(List<ScheduleModel> lstSchedule, List<CalendarBirthdayModel> calendarBirthdays, List<HolidayModel> lstHoliday, List<WorkRequest> lstWorkRequest){
+	public void setData(List<ScheduleModel> lstSchedule, List<CalendarBirthdayModel> calendarBirthdays, List<HolidayModel> lstHoliday, List<WorkRequest> lstWorkRequest, String screenMode){
 		this.lstSchedule = ignoreDuplicatedSchedule(lstSchedule);
-		this.calendarBirthdayModels = calendarBirthdays;
-		this.lstHoliday = lstHoliday;
-		this.lstWorkRequest = lstWorkRequest;
-
-		// WeeklyPageFragment.sortSchedules(lstSchedule, dates.get(0), dates.get(dates.size() - 1), false);
-		// Collections.sort(lstWorkRequest, new Comparator<WorkRequest>() {
-		//
-		// @Override
-		// public int compare(WorkRequest o1, WorkRequest o2){
-		// return o1.offerTypeName.compareTo(o2.offerTypeName);
-		// }
-		// });
-
+		if(!SchedulesPageFragment.SCREEN_MODE_MONTH.equals(screenMode)){
+			this.calendarBirthdayModels = calendarBirthdays;
+			this.lstHoliday = lstHoliday;
+		}
 		mPagerAdapter = new DailySummaryDialogPagerAdapter(this, mContext, dates);
-		mPagerAdapter.setData(this.lstSchedule, this.calendarBirthdayModels, this.lstHoliday, this.lstWorkRequest, this.onAddBtnClickedListener, this.listener, this);
+		mPagerAdapter.setData(this.lstSchedule, this.calendarBirthdayModels, this.lstHoliday, this.onAddBtnClickedListener, this.listener, this);
 		mViewPager.setAdapter(mPagerAdapter);
 		if(selectedDate != null){
 			int currentItemPosition = mPagerAdapter.getPositionByDate(selectedDate);
@@ -107,13 +98,4 @@ public class DailySummaryDialog extends CLOutboundDismissDialog{
 		mViewPager.setCurrentItem(currentItemPosition, false);
 		super.show();
 	}
-
-	// public void notifyDataUpdated(List<ScheduleModel> lstSchedule, List<CalendarBirthdayModel> calendarBirthdays, List<HolidayModel> lstHoliday,
-	// List<WorkRequest> lstWorkRequest){
-	// this.lstSchedule = lstSchedule;
-	// this.calendarBirthdayModels = calendarBirthdays;
-	// this.lstHoliday = lstHoliday;
-	// this.lstWorkRequest = lstWorkRequest;
-	// mPagerAdapter.notifyDataSetChanged();
-	// }
 }

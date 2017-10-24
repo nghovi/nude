@@ -98,7 +98,9 @@ public class ScheduleModel{
 		if(cStart.getTimeInMillis() > birthdayCalendar.getTimeInMillis() || birthdayCalendar.getTimeInMillis() > cEnd.getTimeInMillis()){
 			birthdayCalendar.set(Calendar.YEAR, cEnd.get(Calendar.YEAR));
 		}
-
+		this.showUserModel = new UserModel();
+		this.showUserModel.avatarPath = calendarBirthdayModel.avatar;
+		this.showUserModel.userName = calendarBirthdayModel.message;
 		this.startDate = birthdayCalendar.getTime();
 		this.endDate = this.startDate;
 		this.isAllDay = true;
