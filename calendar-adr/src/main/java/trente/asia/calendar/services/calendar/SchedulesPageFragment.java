@@ -249,7 +249,7 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements Da
 		List<ScheduleModel> result = new ArrayList<>();
 
 		for(ScheduleModel scheduleModel : lstSchedule){
-			if(CCStringUtil.isEmpty(scheduleModel.scheduleType) || ScheduleModel.SCHEDULE_TYPE_PUB.equals(scheduleModel.scheduleType) || scheduleModel.publicMode || ScheduleModel.SCHEDULE_TYPE_PRI.equals(scheduleModel.scheduleType)){
+			if(CCStringUtil.isEmpty(scheduleModel.scheduleType) || ScheduleModel.SCHEDULE_TYPE_PUB.equals(scheduleModel.scheduleType) || scheduleModel.publicMode ){
 				result.add(scheduleModel);
 			}
 		}

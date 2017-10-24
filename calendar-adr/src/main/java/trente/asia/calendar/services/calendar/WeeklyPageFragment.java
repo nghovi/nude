@@ -40,6 +40,7 @@ import trente.asia.android.util.CsDateUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.fragments.PageContainerFragment;
 import trente.asia.calendar.services.calendar.model.CategoryModel;
+import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.view.DailyScheduleList;
 import trente.asia.calendar.services.todo.TodoListFragment;
@@ -165,6 +166,12 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 		buildPart2(normalSchedules);
 	}
 
+	private void highLightHolidayDate(int dayDistance){
+		LinearLayout dayView = (LinearLayout)lnrHeader.getChildAt(dayDistance);
+		((TextView)dayView.getChildAt(0)).setTextColor(HolidayModel.HOLIDAY_DAY_COLOR);
+		((TextView)dayView.getChildAt(1)).setTextColor(HolidayModel.HOLIDAY_DAY_COLOR);
+	}
+
 	private void buildPart1(List<ScheduleModel> schedules){
 		rltPart1.removeAllViews();
 		float screenW = lnrHeader.getMeasuredWidth();
@@ -229,6 +236,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 				gradientDrawable.setStroke(2, Color.BLACK);
 				textView.setBackground(gradientDrawable);
 				rltPart1.addView(textView);
+				highLightHolidayDate(dayDistance);
 			}else{ // schedule/wo
 				Calendar cStart = CCDateUtil.makeCalendarWithDateOnly(schedule.startDate);
 				Calendar cEnd = CCDateUtil.makeCalendarWithDateOnly(schedule.endDate);

@@ -9,6 +9,8 @@ import java.util.List;
 import com.bluelinelabs.logansquare.annotation.JsonField;
 import com.bluelinelabs.logansquare.annotation.JsonObject;
 
+import android.graphics.Color;
+
 import asia.chiase.core.util.CCDateUtil;
 import trente.asia.calendar.commons.activites.MainClActivity;
 
@@ -21,12 +23,14 @@ import trente.asia.calendar.commons.activites.MainClActivity;
 @JsonObject(fieldDetectionPolicy = JsonObject.FieldDetectionPolicy.NONPRIVATE_FIELDS)
 public class HolidayModel{
 
-	public String	holidayName;
+	public static final int	HOLIDAY_DAY_COLOR	= Color.RED;
+
+	public String			holidayName;
 	@JsonField(typeConverter = MainClActivity.WelfareTimeConverter.class)
-	public Date		startDate;
+	public Date				startDate;
 	@JsonField(typeConverter = MainClActivity.WelfareTimeConverter.class)
-	public Date		endDate;
-	public String	imgPath;
+	public Date				endDate;
+	public String			imgPath;
 
 	public HolidayModel(){
 
