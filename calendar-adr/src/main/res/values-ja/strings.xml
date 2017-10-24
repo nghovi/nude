@@ -120,4 +120,5 @@
     <string name="overtime_lately">残業</string>
     <string name="holiday_work">休出</string>
     <string name="japan_day">日</string>
+    <string name="calendar_common_delete">削除</string>
 </resources>

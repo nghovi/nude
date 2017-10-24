@@ -6,9 +6,9 @@
     android:background="@color/core_white"
     android:orientation="vertical"
     android:paddingBottom="@dimen/margin_16dp"
-    android:paddingTop="@dimen/margin_16dp"
     android:paddingLeft="@dimen/margin_16dp"
-    android:paddingRight="@dimen/margin_16dp">
+    android:paddingRight="@dimen/margin_16dp"
+    android:paddingTop="@dimen/margin_16dp">
 
     <LinearLayout
         style="@style/cs_common_match_wrap"
@@ -69,17 +69,17 @@
         android:gravity="center" />
 
     <TextView
-        android:layout_marginTop="@dimen/margin_32dp"
         android:id="@+id/btn_todo_dialog_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/margin_32dp"
         android:background="@drawable/wf_background_gray_border_white_padding_round"
         android:gravity="center_vertical|center_horizontal"
         android:paddingBottom="@dimen/margin_10dp"
         android:paddingLeft="@dimen/margin_32dp"
         android:paddingRight="@dimen/margin_32dp"
         android:paddingTop="@dimen/margin_10dp"
-        android:text="@string/chiase_common_delete" />
+        android:text="@string/calendar_common_delete" />
 
 </LinearLayout>

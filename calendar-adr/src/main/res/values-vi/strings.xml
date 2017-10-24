@@ -123,4 +123,5 @@
     <string name="overtime_lately">Overtime</string>
     <string name="holiday_work">Holiday work</string>
     <string name="japan_day" />
+    <string name="calendar_common_delete">削除</string>
 </resources>
