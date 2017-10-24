@@ -283,6 +283,10 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 				int leftMargin = (int)(screenW * (0 + dayDistance) / 7);
 				topMargin = getNextTopMargin(dayDistance, dayDistance);
 				TextView textView = makeTextView(activity, schedule.scheduleName, leftMargin, topMargin, (int)(screenW / 7), Color.TRANSPARENT, Color.RED, Gravity.LEFT);
+				GradientDrawable gradientDrawable = new GradientDrawable();
+				gradientDrawable.setCornerRadius(WelfareUtil.dpToPx(4));
+				gradientDrawable.setStroke(2, Color.BLACK);
+				textView.setBackground(gradientDrawable);
 				rltPart1.addView(textView);
 			}else if(ScheduleModel.EVENT_TYPE_SCHEDULE.equals(schedule.eventType)){
 				Calendar cStart = CCDateUtil.makeCalendarWithDateOnly(schedule.startDate);
