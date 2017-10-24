@@ -33,7 +33,7 @@ import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.RoomModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.model.WorkRequest;
-import trente.asia.calendar.services.calendar.view.WeeklyScheduleListAdapter;
+import trente.asia.calendar.services.calendar.view.DailyScheduleList;
 import trente.asia.calendar.services.todo.model.Todo;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
@@ -45,7 +45,7 @@ import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
  *
  * @author VietNH
  */
-public abstract class SchedulesPageFragment extends ClPageFragment implements WeeklyScheduleListAdapter.OnScheduleItemClickListener,DailyScheduleClickListener{
+public abstract class SchedulesPageFragment extends ClPageFragment implements DailyScheduleList.OnScheduleItemClickListener,DailyScheduleClickListener{
 
 	protected List<Date>					dates;
 
@@ -204,9 +204,13 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 			todos = LoganSquare.parseList(response.optString("todoList"), Todo.class);
 
 			lstSchedule = filterByPublicity();
+			for(ScheduleModel schedule : lstSchedule){
+				if(ScheduleModel.EVENT_TYPE_WORK_OFFER.equals(schedule.eventType)){
+					schedule.isPeriod = true;
+				}
+			}
 
 			ScheduleModel.determinePeriod(lstSchedule);
-			ScheduleModel.determineBelongToLoginUser(lstSchedule, myself);
 
 			if(refreshDialogData && !newScheduleStrings.equals(scheduleStrings)){
 				isChangedData = true;
@@ -221,7 +225,7 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 
 					@Override
 					public void run(){
-						dialogDailySummary.setData(lstSchedule, calendarBirthdayModels, lstHoliday, lstWorkRequest);
+						dialogDailySummary.setData(lstSchedule, calendarBirthdayModels, lstHoliday, lstWorkRequest, getScreenMode());
 					}
 				});
 
@@ -233,7 +237,7 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 
 					@Override
 					public void run(){
-						dialogDailySummary.setData(lstSchedule, calendarBirthdayModels, lstHoliday, lstWorkRequest);
+						dialogDailySummary.setData(lstSchedule, calendarBirthdayModels, lstHoliday, lstWorkRequest, getScreenMode());
 					}
 				});
 				isChangedData = false;
@@ -250,21 +254,21 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 		List<ScheduleModel> result = new ArrayList<>();
 
 		for(ScheduleModel scheduleModel : lstSchedule){
-			if(CCStringUtil.isEmpty(scheduleModel.scheduleType) || ScheduleModel.SCHEDULE_TYPE_PUB.equals(scheduleModel.scheduleType) || containUser(scheduleModel, myself.key) || ScheduleModel.SCHEDULE_TYPE_PRI.equals(scheduleModel.scheduleType)){
+			if(CCStringUtil.isEmpty(scheduleModel.scheduleType) || ScheduleModel.SCHEDULE_TYPE_PUB.equals(scheduleModel.scheduleType) || scheduleModel.publicMode || ScheduleModel.SCHEDULE_TYPE_PRI.equals(scheduleModel.scheduleType)){
 				result.add(scheduleModel);
 			}
 		}
 		return result;
 	}
 
-	private boolean containUser(ScheduleModel scheduleModel, String userKey){
-		for(UserModel userModel : scheduleModel.scheduleJoinUsers){
-			if(userModel.key.equals(userKey)){
-				return true;
-			}
-		}
-		return false;
-	}
+	// private boolean containUser(ScheduleModel scheduleModel, String userKey){
+	// for(UserModel userModel : scheduleModel.scheduleJoinUsers){
+	// if(userModel.key.equals(userKey)){
+	// return true;
+	// }
+	// }
+	// return false;
+	// }
 
 	protected void updateSchedules(List<ScheduleModel> schedules, List<CategoryModel> categories){
 		Map<String, CategoryModel> categoryMap = ClUtil.convertCategory2Map(categories);

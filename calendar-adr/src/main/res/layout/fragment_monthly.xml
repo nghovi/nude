@@ -11,17 +11,17 @@
         android:paddingTop="@dimen/margin_10dp"
         android:gravity="center_vertical">
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1">
-
             <include
                 android:id="@+id/user_facility_view"
                 layout="@layout/view_user_facility_tabs"
                 android:visibility="visible" />
-
         </LinearLayout>
+
 
         <TextView
             android:id="@+id/txt_today"
@@ -31,7 +31,8 @@
             android:gravity="right|center_vertical"
             android:paddingLeft="@dimen/margin_16dp"
             android:paddingRight="@dimen/margin_16dp"
-            android:text="@string/show_today" />
+            android:text="@string/show_current_month" />
+
 
     </LinearLayout>
 

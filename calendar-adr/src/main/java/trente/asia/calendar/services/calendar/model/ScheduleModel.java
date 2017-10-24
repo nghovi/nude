@@ -1,5 +1,7 @@
 package trente.asia.calendar.services.calendar.model;
 
+import android.text.Html;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -71,7 +73,8 @@ public class ScheduleModel{
 	public boolean				isPeriod;
 	public String				eventType;
 	public List<CalendarUser>	calendarUsers;
-	private boolean				isBelongToLoginUser		= false;
+	public boolean				publicMode;
+	public UserModel			showUserModel;
 
 	public ScheduleModel(){
 
@@ -97,7 +100,10 @@ public class ScheduleModel{
 		if(cStart.getTimeInMillis() > birthdayCalendar.getTimeInMillis() || birthdayCalendar.getTimeInMillis() > cEnd.getTimeInMillis()){
 			birthdayCalendar.set(Calendar.YEAR, cEnd.get(Calendar.YEAR));
 		}
-
+		this.showUserModel = new UserModel();
+		this.showUserModel.avatarPath = calendarBirthdayModel.avatar;
+		String noHtml = Html.fromHtml(calendarBirthdayModel.message).toString();
+		this.showUserModel.userName = noHtml.split("\n-")[1];
 		this.startDate = birthdayCalendar.getTime();
 		this.endDate = this.startDate;
 		this.isAllDay = true;
@@ -115,9 +121,9 @@ public class ScheduleModel{
 		isPeriod = CCDateUtil.compareDate(startDate, endDate, false) != 0;
 	}
 
-	public void determineBelongToLoginUser(UserModel loginUser){
-		isBelongToLoginUser = UserModel.contain(scheduleJoinUsers, loginUser);
-	}
+	// public void determineBelongToLoginUser(UserModel loginUser){
+	// isBelongToLoginUser = UserModel.contain(scheduleJoinUsers, loginUser);
+	// }
 
 	public String getScheduleColor(){
 		if(EVENT_TYPE_HOLIDAY_OLD.equals(eventType)){
@@ -171,15 +177,5 @@ public class ScheduleModel{
 
 	public long getEndTimeMilis(){
 		return CCDateUtil.convertTime2Min(endTime) * 60 * 1000;
-	}
-
-	public boolean isBelongToLoginUser(){
-		return isBelongToLoginUser;
-	}
-
-	public static void determineBelongToLoginUser(List<ScheduleModel> lstSchedule, UserModel loginUser){
-		for(ScheduleModel scheduleModel : lstSchedule){
-			scheduleModel.determineBelongToLoginUser(loginUser);
-		}
 	}
 }

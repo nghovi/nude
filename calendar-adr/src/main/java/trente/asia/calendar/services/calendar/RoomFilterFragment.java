@@ -83,6 +83,7 @@ public class RoomFilterFragment extends AbstractClFragment{
 			e.printStackTrace();
 		}
 	}
+
 //	public List<RoomModel> getListRoomSubBegin(List<RoomModel> rooms){
 //		List<RoomModel> results = new ArrayList<>();
 //		if(rooms.size()<=1)return results;

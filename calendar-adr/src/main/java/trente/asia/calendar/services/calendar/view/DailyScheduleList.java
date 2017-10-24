@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,15 +16,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import asia.chiase.core.util.CCBooleanUtil;
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
-import asia.chiase.core.util.CCStringUtil;
 import trente.asia.calendar.BuildConfig;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.utils.ClUtil;
 import trente.asia.calendar.services.calendar.model.CalendarBirthdayModel;
-import trente.asia.calendar.services.calendar.model.CalendarUser;
 import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.model.WorkRequest;
@@ -41,26 +39,17 @@ import trente.asia.welfare.adr.view.SelectableRoundedImageView;
 
 public class DailyScheduleList extends LinearLayout{
 
-	private static final String										TIME_NOON				= "12:00";
-	private static final int										MARGIN_LEFT_RIGHT		= WelfareUtil.dpToPx(16);
-	private static final int										MARGIN_TEXT_TOP_BOTTOM	= WelfareUtil.dpToPx(4);
-	private static final int										MARGIN_TOP_BOTTOM		= WelfareUtil.dpToPx(4);
+	private static final int			MARGIN_LEFT_RIGHT		= WelfareUtil.dpToPx(16);
+	private static final int			MARGIN_TEXT_TOP_BOTTOM	= WelfareUtil.dpToPx(4);
+	private static final int			MARGIN_TOP_BOTTOM		= WelfareUtil.dpToPx(4);
 
-	private List<ScheduleModel>										mSchedules;
-	Map<Date, List<ScheduleModel>>									daySchedulesMap;
-	Map<Date, List<WorkRequest>>									dayOfferMap;
-	Map<Date, List<CalendarBirthdayModel>>							dayBirthdayUsersMap;
-	private LayoutInflater											inflater;
-	private List<ScheduleModel>										lstSchedule;
-	private Date													selectedDate;
-	private WeeklyScheduleListAdapter.OnScheduleItemClickListener	onScheduleItemClickListener;
-
-	private LinearLayout											lnrEvents;
-	public boolean													hasDisplayedItem		= false;
-
-	private List<HolidayModel>										holidayModels;
-	private List<WorkRequest>										offers;
-	// private List<C> userModels;
+	private List<ScheduleModel>			mSchedules;
+	Map<Date, List<ScheduleModel>>		daySchedulesMap;
+	private LayoutInflater				inflater;
+	private Date						selectedDate;
+	private OnScheduleItemClickListener	onScheduleItemClickListener;
+	private LinearLayout				lnrEvents;
+	public boolean						hasDisplayedItem		= false;
 
 	public DailyScheduleList(Context context){
 		super(context);
@@ -70,7 +59,7 @@ public class DailyScheduleList extends LinearLayout{
 		super(context, attrs);
 	}
 
-	public void init(LayoutInflater inflater, WeeklyScheduleListAdapter.OnScheduleItemClickListener onScheduleItemClickListener){
+	public void init(LayoutInflater inflater, OnScheduleItemClickListener onScheduleItemClickListener){
 		this.inflater = inflater;
 		this.onScheduleItemClickListener = onScheduleItemClickListener;
 		lnrEvents = (LinearLayout)findViewById(R.id.lnr_daily_schedules_list_event);
@@ -79,45 +68,19 @@ public class DailyScheduleList extends LinearLayout{
 	public void showFor(Date selectedDate){
 		this.selectedDate = CCDateUtil.makeDate(selectedDate);
 		mSchedules = daySchedulesMap.get(this.selectedDate);
+		lnrEvents.removeAllViews();
 		buildTimelySchedules(R.id.lnr_daily_schedule_list_all_day, R.string.schedule, mSchedules);
-		buildEvents(holidayModels);
 	}
 
-	// public void initData(List<Date> dates, List<ScheduleModel> lstSchedule, List<HolidayModel> holidayModels, List<WorkRequest> offers,
-	// List<UserModel> userModels){
-	// this.lstSchedule = lstSchedule;
-	// this.holidayModels = holidayModels;
-	// this.offers = offers;
-	// this.userModels = userModels;
-	// dayOfferMap = buildDayOfferMap(dates, this.offers);
-	// dayBirthdayUsersMap = buildDayBirthdayUserMap(dates, this.userModels);
-	// daySchedulesMap = buildDaySchedulesMap(dates, this.lstSchedule);
-	// }
-
-	public void initDataWithMap(Map<Date, List<CalendarBirthdayModel>> dayBirthdayUsersMap, Map<Date, List<WorkRequest>> dayOfferMap, Map<Date, List<ScheduleModel>> daySchedulesMap, List<ScheduleModel> lstSchedule, List<HolidayModel> holidayModels, List<WorkRequest> offers){
-		this.lstSchedule = lstSchedule;
-		this.holidayModels = holidayModels;
-		this.offers = offers;
+	public void initDataWithMap(Map<Date, List<ScheduleModel>> daySchedulesMap){
 		this.daySchedulesMap = daySchedulesMap;
-		this.dayBirthdayUsersMap = dayBirthdayUsersMap;
-		this.dayOfferMap = dayOfferMap;
-	}
-
-	public static Map<Date, List<WorkRequest>> buildDayOfferMap(List<Date> dates, List<WorkRequest> workRequests){
-		Map<Date, List<WorkRequest>> result = new LinkedHashMap<>();
-		for(Date date : dates){
-			Date dateOnly = CCDateUtil.makeDate(date);
-			List<WorkRequest> dayWorkRequests = getSortedWorkOffersByDate(workRequests, date);
-			result.put(dateOnly, dayWorkRequests);
-		}
-		return result;
 	}
 
 	public static Map<Date, List<CalendarBirthdayModel>> buildDayBirthdayUserMap(List<Date> dates, List<CalendarBirthdayModel> userModels){
 		Map<Date, List<CalendarBirthdayModel>> result = new HashMap<>();
 		for(Date date : dates){
 			Date dateOnly = CCDateUtil.makeDate(date);
-			List<CalendarBirthdayModel> dayBirthdayUsers = getSortedBirthdayUsersByDate(userModels, date);
+			List<CalendarBirthdayModel> dayBirthdayUsers = getBirthdayUsersByDate(userModels, date);
 			result.put(dateOnly, dayBirthdayUsers);
 		}
 		return result;
@@ -134,43 +97,12 @@ public class DailyScheduleList extends LinearLayout{
 		return result;
 	}
 
-	private void buildEvents(List<HolidayModel> holidayModels){
-		lnrEvents.removeAllViews();
-		List<CalendarBirthdayModel> calendarBirthdayModels = dayBirthdayUsersMap.get(this.selectedDate);
-		List<WorkRequest> workRequests = dayOfferMap.get(this.selectedDate);
-		List<HolidayModel> holidayModelList = HolidayModel.getHolidayModels(this.selectedDate, holidayModels);
-		if(!CCCollectionUtil.isEmpty(holidayModelList) || !CCCollectionUtil.isEmpty(workRequests) || !CCCollectionUtil.isEmpty(calendarBirthdayModels)){
-			lnrEvents.setVisibility(View.VISIBLE);
-			TextView header = buildTextView(getContext().getString(R.string.daily_schedules_event_title));
-			lnrEvents.addView(header);
-			for(HolidayModel holidayModel : holidayModelList){
-				LinearLayout holidayItem = buildHolidayItem(inflater, holidayModel, WelfareUtil.dpToPx(WelfareFragment.MARGIN_LEFT_RIGHT_PX), R.layout.item_holiday);
-				lnrEvents.addView(holidayItem);
-				hasDisplayedItem = true;
-			}
-
-			for(WorkRequest offer : workRequests){
-				LinearLayout offerItem = buildOfferItem(getContext(), inflater, offer, R.layout.item_work_offer);
-				lnrEvents.addView(offerItem);
-				hasDisplayedItem = true;
-			}
-
-			for(CalendarBirthdayModel calendarBirthdayModel : calendarBirthdayModels){
-				LinearLayout birthdayItem = buildBirthdayItem2(getContext(), inflater, calendarBirthdayModel, R.layout.item_birthday);
-				lnrEvents.addView(birthdayItem);
-				hasDisplayedItem = true;
-			}
-		}else{
-			lnrEvents.setVisibility(View.GONE);
-		}
-	}
-
-	public LinearLayout buildBirthdayItem2(Context context, LayoutInflater inflater, CalendarBirthdayModel calendarBirthdayModel, int layoutId){
+	public LinearLayout buildBirthdayItem(Context context, LayoutInflater inflater, ScheduleModel scheduleModel, int layoutId){
 		LinearLayout birthdayItem = (LinearLayout)inflater.inflate(layoutId, null);
 		SelectableRoundedImageView imgUser = (SelectableRoundedImageView)birthdayItem.findViewById(R.id.img_item_birthday_user);
-		WfPicassoHelper.loadImage(context, BuildConfig.HOST + calendarBirthdayModel.avatar, imgUser, null);
+		WfPicassoHelper.loadImage(context, BuildConfig.HOST + scheduleModel.showUserModel.avatarPath, imgUser, null);
 		TextView txtUser = (TextView)birthdayItem.findViewById(R.id.txt_item_birthday_username);
-		txtUser.setText(calendarBirthdayModel.message);
+		txtUser.setText(scheduleModel.showUserModel.userName);
 		return birthdayItem;
 	}
 
@@ -179,6 +111,14 @@ public class DailyScheduleList extends LinearLayout{
 		itemHoliday.setPadding(paddingLeftRightPx, MARGIN_TOP_BOTTOM, paddingLeftRightPx, MARGIN_TOP_BOTTOM);
 		TextView txtHolidayName = (TextView)itemHoliday.findViewById(R.id.txt_item_holiday_name);
 		txtHolidayName.setText(holidayModel.holidayName);
+		return itemHoliday;
+	}
+
+	public static LinearLayout buildHolidayItemFromSchedule(LayoutInflater inflater, ScheduleModel scheduleModel, int paddingLeftRightPx, int layoutId){
+		LinearLayout itemHoliday = (LinearLayout)inflater.inflate(layoutId, null);
+		itemHoliday.setPadding(paddingLeftRightPx, MARGIN_TOP_BOTTOM, paddingLeftRightPx, MARGIN_TOP_BOTTOM);
+		TextView txtHolidayName = (TextView)itemHoliday.findViewById(R.id.txt_item_holiday_name);
+		txtHolidayName.setText(scheduleModel.scheduleName);
 		return itemHoliday;
 	}
 
@@ -242,34 +182,29 @@ public class DailyScheduleList extends LinearLayout{
 		return offerItemView;
 	}
 
-	// public static void sortBirthdays(List<CalendarBirthdayModel> userModels){
-	// Collections.sort(userModels, new Comparator<CalendarBirthdayModel>() {
-	//
-	// @Override
-	// public int compare(CalendarBirthdayModel o1, CalendarBirthdayModel o2){
-	// return o1.birthDay.compareTo(o2.birthDay);
-	// }
-	// });
-	// }
+	public static LinearLayout buildWorkRequestItemFromSchedule(Context context, LayoutInflater inflater, ScheduleModel workRequest, int layoutId){
+		LinearLayout offerItemView = (LinearLayout)inflater.inflate(layoutId, null);
+		ImageView imgAvatar = (ImageView)offerItemView.findViewById(R.id.img_item_offer_avatar);
+		TextView txtUsername = (TextView)offerItemView.findViewById(R.id.txt_item_offer_username);
+		TextView txtDate = (TextView)offerItemView.findViewById(R.id.txt_item_offer_date);
+		TextView txtType = (TextView)offerItemView.findViewById(R.id.txt_item_offer_type);
+		TextView txtStatus = (TextView)offerItemView.findViewById(R.id.txt_item_offer_status);
+		WfPicassoHelper.loadImageWithDefaultIcon(context, BuildConfig.HOST, imgAvatar, workRequest.showUserModel.avatarPath, R.drawable.wf_profile);
+		txtUsername.setText(workRequest.showUserModel.userName);
+		txtDate.setText(" - " + workRequest.startTime + " - " + workRequest.endTime);
+		txtType.setText(workRequest.scheduleName);
+		txtStatus.setText(workRequest.scheduleNote);
+		return offerItemView;
+	}
 
-	public static List<CalendarBirthdayModel> getSortedBirthdayUsersByDate(List<CalendarBirthdayModel> userModels, Date date){
+	public static List<CalendarBirthdayModel> getBirthdayUsersByDate(List<CalendarBirthdayModel> userModels, Date date){
 		List<CalendarBirthdayModel> result = new ArrayList<>();
 		for(CalendarBirthdayModel userModel : userModels){
 			if(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE_HYPHEN, date).equals(userModel.birthDay)){
 				result.add(userModel);
 			}
 		}
-		// sortBirthdays(result);
 		return result;
-	}
-
-	public static LinearLayout buildBirthdayItem(Context context, LayoutInflater inflater, CalendarUser calendarUser, int layoutId){
-		LinearLayout birthdayItem = (LinearLayout)inflater.inflate(layoutId, null);
-		SelectableRoundedImageView imgUser = (SelectableRoundedImageView)birthdayItem.findViewById(R.id.img_item_birthday_user);
-		WfPicassoHelper.loadImage(context, BuildConfig.HOST + calendarUser.avatar, imgUser, null);
-		TextView txtUser = (TextView)birthdayItem.findViewById(R.id.txt_item_birthday_username);
-		txtUser.setText(calendarUser.userName);
-		return birthdayItem;
 	}
 
 	private void buildTimelySchedules(int parentId, int titleId, List<ScheduleModel> scheduleModels){
@@ -289,8 +224,17 @@ public class DailyScheduleList extends LinearLayout{
 		TextView textView = buildTextView(title);
 		lnrParent.addView(textView);
 
+		lnrEvents.removeAllViews();
+		lnrEvents.setVisibility(View.VISIBLE);
+		TextView header = buildTextView(getContext().getString(R.string.daily_schedules_event_title));
+		lnrEvents.addView(header);
+
 		for(ScheduleModel scheduleModel : scheduleModels){
 			buildScheduleItem(lnrParent, scheduleModel);
+		}
+
+		if(lnrEvents.getChildCount() <= 1){
+			lnrEvents.setVisibility(View.GONE);
 		}
 	}
 
@@ -303,14 +247,57 @@ public class DailyScheduleList extends LinearLayout{
 		return textView;
 	}
 
-	private void buildScheduleItem(LinearLayout lnrParent, ScheduleModel scheduleModel){
-		if(ScheduleModel.EVENT_TYPE_BIRTHDAY.equals(scheduleModel.eventType)){
-			LinearLayout birthdayItem = buildBirthdayItem(getContext(), inflater, scheduleModel.calendarUsers.get(0), R.layout.item_birthday);
-			lnrEvents.addView(birthdayItem);
+	public LinearLayout buildScheduleItem(final Context context, LayoutInflater layoutInflater, final ScheduleModel schedule, OnScheduleItemClickListener onScheduleItemClickListener, final Date selectedDate){
+		LinearLayout lnrSchedulesContainer = (LinearLayout)layoutInflater.inflate(R.layout.item_schedule, null);
+		buildScheduleItemCommon(context, lnrSchedulesContainer, schedule, onScheduleItemClickListener, selectedDate);
+		lnrSchedulesContainer.setFocusable(true);
+		return lnrSchedulesContainer;
+	}
+
+	public void buildScheduleItemCommon(Context context, LinearLayout lnrSchedulesContainer, final ScheduleModel schedule, final OnScheduleItemClickListener onScheduleItemClickListener, final Date selectedDate){
+		TextView txtScheduleTime = (TextView)lnrSchedulesContainer.findViewById(R.id.txt_item_schedule_time);
+		String time;
+		if(CCBooleanUtil.checkBoolean(schedule.isAllDay)){
+			time = context.getString(R.string.daily_page_all_day);
 		}else{
-			LinearLayout item = (LinearLayout)WeeklyScheduleListAdapter.buildScheduleItem(getContext(), this.inflater, scheduleModel, onScheduleItemClickListener, selectedDate);
+			time = schedule.startTime + " - " + schedule.endTime;
+		}
+		txtScheduleTime.setText(time);
+
+		TextView txtScheduleName = (TextView)lnrSchedulesContainer.findViewById(R.id.txt_item_schedule_name);
+		txtScheduleName.setText(schedule.scheduleName);
+
+		lnrSchedulesContainer.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v){
+
+				onScheduleItemClickListener.onClickScheduleItem(schedule, selectedDate);
+			}
+		});
+	}
+
+	private void buildScheduleItem(LinearLayout lnrParent, ScheduleModel scheduleModel){
+		switch(scheduleModel.eventType){
+		case ScheduleModel.EVENT_TYPE_SCHEDULE:
+			LinearLayout item = (LinearLayout)buildScheduleItem(getContext(), this.inflater, scheduleModel, onScheduleItemClickListener, selectedDate);
 			item.setPadding(MARGIN_LEFT_RIGHT, 0, MARGIN_LEFT_RIGHT, 0);
 			lnrParent.addView(item);
+			break;
+		case ScheduleModel.EVENT_TYPE_BIRTHDAY:
+			LinearLayout birthdayItem = buildBirthdayItem(getContext(), inflater, scheduleModel, R.layout.item_birthday);
+			lnrEvents.addView(birthdayItem);
+			break;
+		case ScheduleModel.EVENT_TYPE_WORK_OFFER:
+			LinearLayout offerItem = buildWorkRequestItemFromSchedule(getContext(), inflater, scheduleModel, R.layout.item_work_offer);
+			lnrEvents.addView(offerItem);
+			break;
+		case ScheduleModel.EVENT_TYPE_HOLIDAY_OLD:
+			LinearLayout holidayItem = buildHolidayItemFromSchedule(inflater, scheduleModel, WelfareUtil.dpToPx(WelfareFragment.MARGIN_LEFT_RIGHT_PX), R.layout.item_holiday);
+			lnrEvents.addView(holidayItem);
+			break;
+		default:
+			break;
 		}
 		hasDisplayedItem = true;
 	}
@@ -318,31 +305,19 @@ public class DailyScheduleList extends LinearLayout{
 	public static List<ScheduleModel> getDisplayedSchedules(Date date, List<ScheduleModel> lstSchedule){
 		List<ScheduleModel> scheduleModels = new ArrayList<>();
 		for(ScheduleModel scheduleModel : lstSchedule){
-			if(!CCStringUtil.isEmpty(scheduleModel.key) && isScheduleOf(scheduleModel, date)){
+			if(isScheduleOf(scheduleModel, date)){
 				scheduleModels.add(scheduleModel);
 			}
 		}
-		sortByTime(scheduleModels);
 		return scheduleModels;
-	}
-
-	public static void sortByTime(List<ScheduleModel> scheduleModels){
-		Collections.sort(scheduleModels, new Comparator<ScheduleModel>() {
-
-			@Override
-			public int compare(ScheduleModel o1, ScheduleModel o2){
-				return CCDateUtil.convertHour2Min(o1.startTime).compareTo(CCDateUtil.convertHour2Min(o2.startTime));
-			}
-		});
-	}
-
-	public static boolean isBeforeNoon(String startTime){
-		int startMinute = CCDateUtil.convertTime2Min(startTime);
-		int noonMinute = CCDateUtil.convertTime2Min(TIME_NOON);
-		return startMinute < noonMinute;
 	}
 
 	public static boolean isScheduleOf(ScheduleModel scheduleModel, Date date){
 		return CCDateUtil.compareDate(scheduleModel.startDate, date, false) <= 0 && CCDateUtil.compareDate(date, scheduleModel.endDate, false) <= 0;
+	}
+
+	public interface OnScheduleItemClickListener{
+
+		void onClickScheduleItem(ScheduleModel schedule, Date selectedDate);
 	}
 }
