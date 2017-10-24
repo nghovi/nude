@@ -454,6 +454,12 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 		clearOldData();
 
 		for(ScheduleModel schedule : lstSchedule){
+			if(ScheduleModel.EVENT_TYPE_WORK_OFFER.equals(schedule.eventType)){
+				schedule.isPeriod = true;
+			}
+		}
+
+		for(ScheduleModel schedule : lstSchedule){
 			if(schedule.isPeriod){
 				for(MonthlyCalendarRowView rowView : lstCalendarRow){
 					Date minDate = rowView.lstCalendarDay.get(0).date;

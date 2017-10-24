@@ -204,11 +204,6 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements Da
 			todos = LoganSquare.parseList(response.optString("todoList"), Todo.class);
 
 			lstSchedule = filterByPublicity();
-			for(ScheduleModel schedule : lstSchedule){
-				if(ScheduleModel.EVENT_TYPE_WORK_OFFER.equals(schedule.eventType)){
-					schedule.isPeriod = true;
-				}
-			}
 
 			ScheduleModel.determinePeriod(lstSchedule);
 

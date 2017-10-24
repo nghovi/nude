@@ -1,13 +1,13 @@
 package trente.asia.calendar.services.calendar.model;
 
-import android.text.Html;
-
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import com.bluelinelabs.logansquare.annotation.JsonField;
 import com.bluelinelabs.logansquare.annotation.JsonObject;
+
+import android.text.Html;
 
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCStringUtil;
@@ -126,12 +126,14 @@ public class ScheduleModel{
 	// }
 
 	public String getScheduleColor(){
-		if(EVENT_TYPE_HOLIDAY_OLD.equals(eventType)){
-			return WelfareFormatUtil.formatColor(SCHEDULE_COLOR_HOLIDAY);
-		}else if(EVENT_TYPE_BIRTHDAY.equals(eventType)){
-			return WelfareFormatUtil.formatColor(SCHEDULE_COLOR_BIRTHDAY);
-		}else if(EVENT_TYPE_WORK_OFFER.equals(eventType)){
-			return WelfareFormatUtil.formatColor(SCHEDULE_COLOR_OFFER);
+		if(CCStringUtil.isEmpty(scheduleColor)){
+			if(EVENT_TYPE_HOLIDAY_OLD.equals(eventType)){
+				return WelfareFormatUtil.formatColor(SCHEDULE_COLOR_HOLIDAY);
+			}else if(EVENT_TYPE_BIRTHDAY.equals(eventType)){
+				return WelfareFormatUtil.formatColor(SCHEDULE_COLOR_BIRTHDAY);
+			}else if(EVENT_TYPE_WORK_OFFER.equals(eventType)){
+				return WelfareFormatUtil.formatColor(SCHEDULE_COLOR_OFFER);
+			}
 		}
 
 		return scheduleColor;
