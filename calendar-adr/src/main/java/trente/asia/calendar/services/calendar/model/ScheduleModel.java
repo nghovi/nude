@@ -1,5 +1,7 @@
 package trente.asia.calendar.services.calendar.model;
 
+import android.text.Html;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -100,7 +102,8 @@ public class ScheduleModel{
 		}
 		this.showUserModel = new UserModel();
 		this.showUserModel.avatarPath = calendarBirthdayModel.avatar;
-		this.showUserModel.userName = calendarBirthdayModel.message;
+		String noHtml = Html.fromHtml(calendarBirthdayModel.message).toString();
+		this.showUserModel.userName = noHtml.split("\n-")[1];
 		this.startDate = birthdayCalendar.getTime();
 		this.endDate = this.startDate;
 		this.isAllDay = true;

@@ -14,11 +14,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import asia.chiase.core.util.CCDateUtil;
+import asia.chiase.core.util.CCFormatUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.dialogs.DailySummaryDialog;
 import trente.asia.calendar.services.calendar.model.CalendarBirthdayModel;
 import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
+import trente.asia.welfare.adr.utils.WelfareFormatUtil;
+import trente.asia.welfare.adr.utils.WelfareUtil;
 
 //import trente.asia.calendar.services.calendar.listener.OnChangeCalendarUserListener;
 
@@ -87,7 +90,7 @@ public class DailySummaryDialogPagerAdapter extends PagerAdapter{
 			}
 		});
 
-		txtHeader.setText(new SimpleDateFormat("yyyy/M/d").format(selectedDate));
+		txtHeader.setText(CCFormatUtil.formatDateCustom("yyyy/M/d",selectedDate));
 		dailyScheduleListView.hasDisplayedItem = false;
 		dailyScheduleListView.initDataWithMap(this.daySchedulesMap);
 		dailyScheduleListView.showFor(selectedDate);
