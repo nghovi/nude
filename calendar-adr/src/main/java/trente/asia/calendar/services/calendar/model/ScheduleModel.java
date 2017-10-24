@@ -71,6 +71,7 @@ public class ScheduleModel{
 	public boolean				isPeriod;
 	public String				eventType;
 	public List<CalendarUser>	calendarUsers;
+	public UserModel			showUserModel;
 	private boolean				isBelongToLoginUser		= false;
 
 	public ScheduleModel(){

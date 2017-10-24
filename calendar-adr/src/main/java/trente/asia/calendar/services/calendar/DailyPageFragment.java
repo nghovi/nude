@@ -11,8 +11,10 @@ import java.util.Map;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -314,11 +316,11 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 		buildBlocks(activity, WelfareUtil.dpToPx(MARGIN_LEFT_RIGHT_PX), screenW, normalSchedules, rltSchedules, MAX_BLOCK_NUM_TO_SHOW_TEXT);
 
 		for(ScheduleModel scheduleModel : allDaySchedules){
-			if(ScheduleModel.EVENT_TYPE_SCHEDULE.equals(scheduleModel.eventType)){
+			if(ScheduleModel.EVENT_TYPE_BIRTHDAY.equals(scheduleModel.eventType)){
+				imgBirthdayIcon.setVisibility(View.VISIBLE);
+			}else{
 				TextView textView = WeeklyPageFragment.makeTextView(activity, scheduleModel.scheduleName, 0, 0, LinearLayout.LayoutParams.MATCH_PARENT, WeeklyPageFragment.getScheduleColor(scheduleModel), WeeklyPageFragment.getScheduleTextColor(scheduleModel), Gravity.LEFT);
 				lnrScheduleAllDays.addView(textView);
-			}else if(ScheduleModel.EVENT_TYPE_BIRTHDAY.equals(scheduleModel.eventType)){
-				imgBirthdayIcon.setVisibility(View.VISIBLE);
 			}
 		}
 
@@ -369,6 +371,10 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 	}
 
 	public void updateTimeColumnPosition(){
+		int screenHeight = mRootView.getHeight();
+		if (height > screenHeight){
+			height = screenHeight - WeeklyPageFragment.CELL_HEIGHT_PIXEL - WelfareUtil.dpToPx(4);
+		}
 		LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams)parent.lnrTimeColumn.getLayoutParams();
 		lp.setMargins(0, height, 0, 0);
 		parent.lnrTimeColumn.setLayoutParams(lp);
