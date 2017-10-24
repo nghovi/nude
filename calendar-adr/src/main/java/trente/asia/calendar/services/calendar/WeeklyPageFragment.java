@@ -1,6 +1,7 @@
 package trente.asia.calendar.services.calendar;
 
 import static trente.asia.android.util.CsDateUtil.CS_DATE_TIME_1;
+import static trente.asia.calendar.R.color.cl_cell_bg_color;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -504,6 +505,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 		if(textColor != 0){
 			textView.setTextColor(textColor);
 		}
+//		textView.setTextColor(Color.parseColor("#FFFFFF"));
 		RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(maxWidth, height);
 		rlp.setMargins(leftMargin, topMargin, 0, 0);
 		textView.setLayoutParams(rlp);
