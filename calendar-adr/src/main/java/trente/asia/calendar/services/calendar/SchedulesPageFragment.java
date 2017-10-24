@@ -204,6 +204,11 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements Da
 			todos = LoganSquare.parseList(response.optString("todoList"), Todo.class);
 
 			lstSchedule = filterByPublicity();
+			for(ScheduleModel schedule : lstSchedule){
+				if(ScheduleModel.EVENT_TYPE_WORK_OFFER.equals(schedule.eventType)){
+					schedule.isPeriod = true;
+				}
+			}
 
 			ScheduleModel.determinePeriod(lstSchedule);
 
@@ -249,21 +254,21 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements Da
 		List<ScheduleModel> result = new ArrayList<>();
 
 		for(ScheduleModel scheduleModel : lstSchedule){
-			if(CCStringUtil.isEmpty(scheduleModel.scheduleType) || ScheduleModel.SCHEDULE_TYPE_PUB.equals(scheduleModel.scheduleType) || containUser(scheduleModel, myself.key) || ScheduleModel.SCHEDULE_TYPE_PRI.equals(scheduleModel.scheduleType)){
+			if(CCStringUtil.isEmpty(scheduleModel.scheduleType) || ScheduleModel.SCHEDULE_TYPE_PUB.equals(scheduleModel.scheduleType) || scheduleModel.publicMode || ScheduleModel.SCHEDULE_TYPE_PRI.equals(scheduleModel.scheduleType)){
 				result.add(scheduleModel);
 			}
 		}
 		return result;
 	}
 
-	private boolean containUser(ScheduleModel scheduleModel, String userKey){
-		for(UserModel userModel : scheduleModel.scheduleJoinUsers){
-			if(userModel.key.equals(userKey)){
-				return true;
-			}
-		}
-		return false;
-	}
+	// private boolean containUser(ScheduleModel scheduleModel, String userKey){
+	// for(UserModel userModel : scheduleModel.scheduleJoinUsers){
+	// if(userModel.key.equals(userKey)){
+	// return true;
+	// }
+	// }
+	// return false;
+	// }
 
 	protected void updateSchedules(List<ScheduleModel> schedules, List<CategoryModel> categories){
 		Map<String, CategoryModel> categoryMap = ClUtil.convertCategory2Map(categories);
