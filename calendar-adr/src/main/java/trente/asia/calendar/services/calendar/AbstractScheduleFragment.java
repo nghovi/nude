@@ -119,7 +119,6 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 			schedule = LoganSquare.parse(response.optString("schedule"), ScheduleModel.class);
 			if(!CCStringUtil.isEmpty(schedule.key)){
 				schedule.determinePeriodSchedule();
-				schedule.determineBelongToLoginUser(myself);
 			}
 			rooms = LoganSquare.parseList(response.optString("rooms"), RoomModel.class);
 			users = LoganSquare.parseList(response.optString("users"), UserModel.class);

@@ -90,7 +90,7 @@ public class DailySummaryDialogPagerAdapter extends PagerAdapter{
 
 			@Override
 			public void onClickScheduleItem(ScheduleModel schedule, Date selectedDate){
-				if(ScheduleModel.SCHEDULE_TYPE_PRI.equals(schedule.scheduleType) && !schedule.isBelongToLoginUser()){
+				if(!schedule.publicMode){
 					return;
 				}
 				dialog.dismiss();// // TODO: 3/13/2017

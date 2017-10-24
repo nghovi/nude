@@ -206,7 +206,6 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 			lstSchedule = filterByPublicity();
 
 			ScheduleModel.determinePeriod(lstSchedule);
-			ScheduleModel.determineBelongToLoginUser(lstSchedule, myself);
 
 			if(refreshDialogData && !newScheduleStrings.equals(scheduleStrings)){
 				isChangedData = true;

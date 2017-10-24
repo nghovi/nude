@@ -71,7 +71,7 @@ public class ScheduleModel{
 	public boolean				isPeriod;
 	public String				eventType;
 	public List<CalendarUser>	calendarUsers;
-	private boolean				isBelongToLoginUser		= false;
+	public boolean				publicMode;
 
 	public ScheduleModel(){
 
@@ -115,9 +115,9 @@ public class ScheduleModel{
 		isPeriod = CCDateUtil.compareDate(startDate, endDate, false) != 0;
 	}
 
-	public void determineBelongToLoginUser(UserModel loginUser){
-		isBelongToLoginUser = UserModel.contain(scheduleJoinUsers, loginUser);
-	}
+	// public void determineBelongToLoginUser(UserModel loginUser){
+	// isBelongToLoginUser = UserModel.contain(scheduleJoinUsers, loginUser);
+	// }
 
 	public String getScheduleColor(){
 		if(EVENT_TYPE_HOLIDAY_OLD.equals(eventType)){
@@ -171,15 +171,5 @@ public class ScheduleModel{
 
 	public long getEndTimeMilis(){
 		return CCDateUtil.convertTime2Min(endTime) * 60 * 1000;
-	}
-
-	public boolean isBelongToLoginUser(){
-		return isBelongToLoginUser;
-	}
-
-	public static void determineBelongToLoginUser(List<ScheduleModel> lstSchedule, UserModel loginUser){
-		for(ScheduleModel scheduleModel : lstSchedule){
-			scheduleModel.determineBelongToLoginUser(loginUser);
-		}
 	}
 }
