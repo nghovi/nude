@@ -86,6 +86,7 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 		});
 		txtMore = (TextView)getView().findViewById(R.id.txt_more_to_come);
 		imgBirthdayIcon = (ImageView)getView().findViewById(R.id.img_birthday_daily_page);
+		imgBirthdayIcon.setOnClickListener(this);
 		lnrScheduleAllDays = (LinearLayout)getView().findViewById(R.id.lnr_schedule_all_day_container);
 		lnrScheduleAllDays.setOnClickListener(this);
 		rltLineContainer = (RelativeLayout)getView().findViewById(R.id.rlt_line_container);
@@ -372,7 +373,7 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 
 	public void updateTimeColumnPosition(){
 		int screenHeight = mRootView.getHeight();
-		if (height > screenHeight){
+		if(height > screenHeight){
 			height = screenHeight - WeeklyPageFragment.CELL_HEIGHT_PIXEL - WelfareUtil.dpToPx(4);
 		}
 		LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams)parent.lnrTimeColumn.getLayoutParams();
@@ -398,8 +399,7 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 			int height = WelfareUtil.dpToPx((int)(eventRect.bottom - eventRect.top)) + 1;
 			float minWithToShowText = 1.f / maxBlockNumToShowText;
 			String txtShowed = eventRect.width < minWithToShowText ? "" : eventRect.schedule.scheduleName;
-			TextView txtView = makeBlock(context, txtShowed, leftMargin, topMargin, width, height, Color.parseColor
-					(eventRect.schedule.scheduleColor), Color.parseColor(eventRect.schedule.scheduleTextColor), Gravity.TOP | Gravity.LEFT);
+			TextView txtView = makeBlock(context, txtShowed, leftMargin, topMargin, width, height, Color.parseColor(eventRect.schedule.scheduleColor), Color.parseColor(eventRect.schedule.scheduleTextColor), Gravity.TOP | Gravity.LEFT);
 			container.addView(txtView);
 		}
 	}
@@ -647,6 +647,7 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 		switch(v.getId()){
 		case R.id.rlt_line_container:
 		case R.id.lnr_schedule_all_day_container:
+		case R.id.img_birthday_daily_page:
 			onDailyScheduleClickListener(selectedDate);
 			break;
 		default:
