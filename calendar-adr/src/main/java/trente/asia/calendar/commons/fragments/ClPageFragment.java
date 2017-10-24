@@ -1,17 +1,11 @@
 package trente.asia.calendar.commons.fragments;
 
 import java.util.Date;
-import java.util.List;
 
 import android.os.Bundle;
-import android.view.View;
 
-import asia.chiase.core.util.CCCollectionUtil;
-import asia.chiase.core.util.CCStringUtil;
 import trente.asia.android.activity.ChiaseFragment;
 import trente.asia.calendar.BuildConfig;
-import trente.asia.calendar.R;
-import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.dialogs.DailySummaryDialog;
 import trente.asia.calendar.commons.views.PageSharingHolder;
 import trente.asia.calendar.services.calendar.ScheduleFormFragment;
@@ -61,13 +55,7 @@ public abstract class ClPageFragment extends AbstractClFragment implements Daily
 
 	@Override
 	public void onAddBtnClick(Date date){
-		// String selectedCalendarString = prefAccUtil.get(ClConst.SELECTED_CALENDAR_STRING);
-		// if(!CCStringUtil.isEmpty(selectedCalendarString)){
 		gotoScheduleFormFragment(date);
-		// }else{
-		// alertDialog.setMessage(getString(R.string.cl_common_validate_no_calendar_msg));
-		// alertDialog.show();
-		// }
 	}
 
 	private void gotoScheduleFormFragment(Date date){
@@ -78,6 +66,10 @@ public abstract class ClPageFragment extends AbstractClFragment implements Daily
 		scheduleFormFragment.setSelectedDate(date);
 		ChiaseFragment parentFragment = (ChiaseFragment)getParentFragment();
 		parentFragment.gotoFragment(scheduleFormFragment);
+	}
+
+	public boolean isActivePage(){
+		return pageSharingHolder.selectedPagePosition == pagePosition;
 	}
 
 	@Override
