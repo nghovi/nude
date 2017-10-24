@@ -233,7 +233,7 @@ public class DailyScheduleList extends LinearLayout{
 			buildScheduleItem(lnrParent, scheduleModel);
 		}
 
-		if(lnrEvents.getChildCount() <= 0){
+		if(lnrEvents.getChildCount() <= 1){
 			lnrEvents.setVisibility(View.GONE);
 		}
 	}
