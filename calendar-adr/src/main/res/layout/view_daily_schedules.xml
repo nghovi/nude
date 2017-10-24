@@ -13,7 +13,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <View style="@style/cs_common_divider" />
     </LinearLayout>
 
     <LinearLayout
@@ -23,7 +22,6 @@
         android:background="@color/cl_cell_bg_color"
         android:orientation="vertical">
 
-        <View style="@style/cs_common_divider" />
     </LinearLayout>
 
     <LinearLayout
@@ -32,7 +30,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <View style="@style/cs_common_divider" />
     </LinearLayout>
 
     <LinearLayout
@@ -41,7 +38,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <View style="@style/cs_common_divider" />
     </LinearLayout>
 
 </trente.asia.calendar.services.calendar.view.DailyScheduleList>

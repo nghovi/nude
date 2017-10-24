@@ -85,7 +85,7 @@ public class ScheduleDetailFragment extends AbstractScheduleFragment{
 		txtScheduleName.setText(schedule.scheduleName);
 		Map<String, String> scopes = getPublicityMap();
 		if(scopes.containsKey(schedule.scheduleType)){
-			txtScope.setText(scopes.get(schedule.scheduleType));
+			txtScope.setText(getTitle(scopes.get(schedule.scheduleType)));
 		}
 		txtScheduleNote.setText(schedule.scheduleNote);
 		if(!CCStringUtil.isEmpty(schedule.scheduleUrl)){

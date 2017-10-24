@@ -2,7 +2,6 @@ package trente.asia.calendar.services.calendar;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -35,15 +34,14 @@ import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.dialogs.TodoDialog;
 import trente.asia.calendar.commons.utils.ClUtil;
+import trente.asia.calendar.services.calendar.model.CalendarBirthdayModel;
 import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
-import trente.asia.calendar.services.calendar.model.WorkRequest;
 import trente.asia.calendar.services.calendar.view.MonthlyCalendarDayView;
 import trente.asia.calendar.services.calendar.view.MonthlyCalendarRowView;
 import trente.asia.calendar.services.todo.model.Todo;
 import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.dialog.WfDialog;
-import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WelfareUtil;
 
 /**
@@ -65,6 +63,8 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 	private ImageView							expIcon;
 	private Map<String, MonthlyCalendarDayView>	dateDayViewMap		= new HashMap<>();
 	private boolean								isFinishInflateView	= false;
+	private ImageView							birthdayIcon;
+	private View								rowItemView;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -74,6 +74,11 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 
 		}
 		return mRootView;
+	}
+
+	@Override
+	protected String getDuplicateMode(){
+		return "N";
 	}
 
 	// Monthly is slow, so i loadData before inflate view to save time
@@ -231,7 +236,7 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 			if(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, today).equals(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, todo.limitDate))){
 				txtDate.setText(getString(R.string.chiase_common_today));
 			}else{
-				txtDate.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_MM_DD, todo.limitDate));
+				txtDate.setText(CCFormatUtil.formatDateCustom("d", todo.limitDate) + getString(R.string.japan_day));
 			}
 			RadioButton radioButton = (RadioButton)cell.findViewById(R.id.radio);
 			radioButton.setOnClickListener(new View.OnClickListener() {
@@ -307,44 +312,45 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 		requestUpdate(ClConst.API_TODO_UPDATE, jsonObject, true);
 	}
 
-	public static Comparator<ScheduleModel> getScheduleComparator(final boolean checkAllDayTime){
-		return new Comparator<ScheduleModel>() {
-
-			@Override
-			public int compare(ScheduleModel schedule1, ScheduleModel schedule2){
-				if(checkAllDayTime){
-					String startDate1 = WelfareUtil.getDateString(schedule1.startDate);
-					String endDate1 = WelfareUtil.getDateString(schedule1.endDate);
-
-					String startDate2 = WelfareUtil.getDateString(schedule2.startDate);
-					String endDate2 = WelfareUtil.getDateString(schedule2.endDate);
-
-					boolean diff1 = startDate1.equals(endDate1);
-					boolean diff2 = startDate2.equals(endDate2);
-
-					if(!diff1 && diff2) return -1;
-					if(diff1 && !diff2) return 1;
-				}
-
-				// boolean isAll1 = CCBooleanUtil.checkBoolean(schedule1.isAllDay);
-				// boolean isAll2 = CCBooleanUtil.checkBoolean(schedule2.isAllDay);
-
-				if(schedule1.isAllDay && !schedule2.isAllDay) return -1;
-				if(!schedule1.isAllDay && schedule2.isAllDay) return 1;
-				if(schedule1.isAllDay && schedule2.isAllDay && !checkAllDayTime){
-					return schedule1.scheduleName.compareTo(schedule2.scheduleName);
-				}
-
-				Integer timeStart1 = CCDateUtil.convertTime2Min(schedule1.startTime);
-				Integer timeStart2 = CCDateUtil.convertTime2Min(schedule2.startTime);
-				if(timeStart1 != timeStart2){
-					return timeStart1.compareTo(timeStart2);
-				}
-
-				return schedule1.scheduleName.compareTo(schedule2.scheduleName);
-			}
-		};
+	@Override
+	protected String getScreenMode(){
+		return SCREEN_MODE_MONTH;
 	}
+
+	// public static Comparator<ScheduleModel> getScheduleComparator(final boolean checkAllDayTime){
+	// return new Comparator<ScheduleModel>() {
+	//
+	// @Override
+	// public int compare(ScheduleModel schedule1, ScheduleModel schedule2){
+	// if(checkAllDayTime){
+	// String startDate1 = WelfareUtil.getDateString(schedule1.startDate);
+	// String endDate1 = WelfareUtil.getDateString(schedule1.endDate);
+	//
+	// String startDate2 = WelfareUtil.getDateString(schedule2.startDate);
+	// String endDate2 = WelfareUtil.getDateString(schedule2.endDate);
+	//
+	// boolean diff1 = startDate1.equals(endDate1);
+	// boolean diff2 = startDate2.equals(endDate2);
+	//
+	// if(!diff1 && diff2) return -1;
+	// if(diff1 && !diff2) return 1;
+	// }
+	// if(schedule1.isAllDay && !schedule2.isAllDay) return -1;
+	// if(!schedule1.isAllDay && schedule2.isAllDay) return 1;
+	// if(schedule1.isAllDay && schedule2.isAllDay && !checkAllDayTime){
+	// return schedule1.scheduleName.compareTo(schedule2.scheduleName);
+	// }
+	//
+	// Integer timeStart1 = CCDateUtil.convertTime2Min(schedule1.startTime);
+	// Integer timeStart2 = CCDateUtil.convertTime2Min(schedule2.startTime);
+	// if(timeStart1 != timeStart2){
+	// return timeStart1.compareTo(timeStart2);
+	// }
+	//
+	// return schedule1.scheduleName.compareTo(schedule2.scheduleName);
+	// }
+	// };
+	// }
 
 	protected List<Date> getAllDate(){
 		int firstDay = Calendar.SUNDAY;
@@ -364,8 +370,6 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 		int rowNum = Math.min(todos.size() + 1, MAX_ROW + 1);
 		final int targetHeight = WelfareUtil.dpToPx(44 * rowNum);
 
-		// Older versions of android (pre API 21) cancel animations for views with a height of 0.
-		// v.getLayoutParams().height = 1;
 		v.setVisibility(View.VISIBLE);
 		Animation a = new Animation() {
 
@@ -381,7 +385,6 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 			}
 		};
 
-		// 1dp/ms
 		a.setDuration((int)(targetHeight / v.getContext().getResources().getDisplayMetrics().density));
 		v.startAnimation(a);
 	}
@@ -404,7 +407,6 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 				@Override
 				protected void applyTransformation(float interpolatedTime, Transformation t){
 					if(interpolatedTime == 1){
-						// v.setVisibility(VTodoiew.GONE);
 						v.getLayoutParams().height = firstChildHeight;
 						v.requestLayout();
 					}else{
@@ -419,7 +421,6 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 				}
 			};
 
-			// 1dp/ms
 			a.setDuration((int)(initialHeight / v.getContext().getResources().getDisplayMetrics().density));
 			v.startAnimation(a);
 		}
@@ -428,8 +429,6 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 
 	@Override
 	protected void onLoadSchedulesSuccess(JSONObject response){
-		// benchmark("onLoad success");
-		// Reload if inflating view hasn't been finished yet
 		if(isFinishInflateView == false){
 			loadScheduleList();
 			return;
@@ -440,31 +439,19 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 		if(!CCCollectionUtil.isEmpty(lstHoliday)){
 			for(HolidayModel holidayModel : lstHoliday){
 				ScheduleModel scheduleModel = new ScheduleModel(holidayModel);
-				// scheduleModel.scheduleName = getString(R.string.cl_schedule_holiday_name, scheduleModel.scheduleName);
 				lstSchedule.add(scheduleModel);
 			}
 		}
 
 		// add birthday
-		if(!CCCollectionUtil.isEmpty(lstBirthdayUser)){
-			for(UserModel birthday : lstBirthdayUser){
-				ScheduleModel scheduleModel = new ScheduleModel(birthday);
-				// scheduleModel.scheduleName = getString(R.string.cl_schedule_birth_day_name, scheduleModel.scheduleName);
+		if(!CCCollectionUtil.isEmpty(calendarBirthdayModels)){
+			for(CalendarBirthdayModel calendarBirthdayModel : calendarBirthdayModels){
+				ScheduleModel scheduleModel = new ScheduleModel(calendarBirthdayModel, dates.get(0), dates.get(dates.size() - 1));
 				lstSchedule.add(scheduleModel);
 			}
 		}
 
-		// add work offer
-		if(!CCCollectionUtil.isEmpty(lstWorkRequest)){
-			for(WorkRequest workRequest : lstWorkRequest){
-				ScheduleModel scheduleModel = new ScheduleModel(workRequest);
-				// scheduleModel.scheduleName = scheduleModel.scheduleName;
-				lstSchedule.add(0, scheduleModel);
-			}
-		}
-
 		clearOldData();
-		// if(pageSharingHolder.selectedPagePosition == pagePosition) log("done for clear data");
 
 		for(ScheduleModel schedule : lstSchedule){
 			if(schedule.isPeriod){
@@ -481,10 +468,6 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 				}
 			}else{
 				dateDayViewMap.get(WelfareUtil.getDateString(schedule.startDate)).addSchedule(schedule);
-				// MonthlyCalendarDayView activeCalendarDay = ClUtil.findView4Day(lstCalendarDay, schedule.startDate, schedule.endDate);
-				// if(activeCalendarDay != null){
-				// activeCalendarDay.addSchedule(schedule);
-				// }
 			}
 		}
 
@@ -495,12 +478,7 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 		for(MonthlyCalendarDayView dayView : lstCalendarDay){
 			dayView.showSchedules();
 		}
-		// if(pageSharingHolder.selectedPagePosition == pagePosition) log("done for schedule");
 		buildTodoList(todos);
-		// if(pageSharingHolder.selectedPagePosition == pagePosition)
-		//
-		// log("done for todo");
-
 	}
 
 	@Override
@@ -512,7 +490,6 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 		for(MonthlyCalendarRowView rowView : lstCalendarRow){
 			rowView.removeAllData();
 		}
-		// lstScheduleWithoutHoliday.clear();
 	}
 
 	@Override

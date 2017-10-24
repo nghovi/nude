@@ -152,7 +152,7 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 				// txtCategory.setTextColor(Color.parseColor(WelfareFormatUtil.formatColor(categoryModel.categoryColor)));
 			}
 
-			txtScope.setText(scopes.get(schedule.scheduleType));
+			txtScope.setText(getTitle(scopes.get(schedule.scheduleType)));
 			txtScope.setValue(schedule.scheduleType);
 
 			showJoinUserList();
@@ -175,8 +175,8 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 			txtCategory.setText(categories.get(0).categoryName);
 			txtCategory.setValue(categories.get(0).key);
 			// txtCategory.setTextColor(Color.parseColor(WelfareFormatUtil.formatColor(categories.get(0).categoryColor)));
-			txtScope.setValue(ClConst.SCHEDULE_TYPE_PUB);
-			txtScope.setText(scopes.get(ClConst.SCHEDULE_TYPE_PUB));
+			txtScope.setValue(ScheduleModel.SCHEDULE_TYPE_PUB);
+			txtScope.setText(getTitle(scopes.get(ScheduleModel.SCHEDULE_TYPE_PUB)));
 		}
 
 		lnrEndDate.setVisibility(View.VISIBLE);
@@ -195,6 +195,10 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 		}
 	}
 
+	public static String getTitle(String text){
+		String[] arrayString = text.split("\n");
+		return arrayString[0];
+	}
 	public static String getRoomName(List<RoomModel> rooms, String roomId){
 		for(RoomModel roomModel : rooms){
 			if(roomModel.key.equals(roomId)){
@@ -253,9 +257,9 @@ public class AbstractScheduleFragment extends AbstractClFragment{
 
 	public Map<String, String> getPublicityMap(){
 		Map<String, String> scopes = new LinkedHashMap<>();
-		scopes.put(ClConst.SCHEDULE_TYPE_PUB, getString(R.string.public_str));
-		scopes.put(ClConst.SCHEDULE_TYPE_PRI, getString(R.string.private_str));
-		scopes.put(ClConst.SCHEDULE_TYPE_PRI_COM, getString(R.string.complete_private));
+		scopes.put(ScheduleModel.SCHEDULE_TYPE_PUB, getString(R.string.public_str));
+		scopes.put(ScheduleModel.SCHEDULE_TYPE_PRI, getString(R.string.private_str));
+		scopes.put(ScheduleModel.SCHEDULE_TYPE_PRI_COM, getString(R.string.complete_private));
 		return scopes;
 	}
 

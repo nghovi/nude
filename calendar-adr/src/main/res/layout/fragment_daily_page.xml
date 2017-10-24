@@ -43,7 +43,7 @@
                             android:id="@+id/txt_todo_things"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
+                            android:gravity="left"
                             android:text="@string/two_things_todo"
                             android:textSize="13sp"
                             android:visibility="gone" />
@@ -52,7 +52,7 @@
                             android:id="@+id/img_birthday_daily_page"
                             android:layout_width="wrap_content"
                             android:layout_height="@dimen/margin_18dp"
-                            android:layout_gravity="center"
+                            android:layout_gravity="start"
                             android:src="@drawable/cl_icon_birthday"
                             android:visibility="gone" />
 
@@ -66,7 +66,7 @@
                             android:id="@+id/txt_more_to_come"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
+                            android:gravity="left"
                             android:text="+2"
                             android:visibility="gone" />
                     </LinearLayout>
@@ -77,24 +77,38 @@
 
         </LinearLayout>
 
-        <View style="@style/cs_common_divider" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="#323232" />
 
-        <ScrollView
-            android:id="@+id/src_fragment_daily_page"
+        <trente.asia.calendar.services.calendar.ObservableScrollView
+            android:id="@+id/scr_schedules"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fillViewport="true">
 
-            <LinearLayout
-                android:id="@+id/lnr_fragment_daily_page_schedules_time"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:paddingLeft="@dimen/margin_16dp"
-                android:paddingRight="@dimen/margin_16dp"
-                android:paddingTop="@dimen/margin_10dp"></LinearLayout>
+                android:layout_height="wrap_content"
+                android:paddingRight="@dimen/margin_16dp">
 
-        </ScrollView>
+                <RelativeLayout
+                    android:id="@+id/rlt_line_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"></RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rlt_fragment_daily_page_schedules_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"></RelativeLayout>
+
+
+            </RelativeLayout>
+
+
+        </trente.asia.calendar.services.calendar.ObservableScrollView>
 
 
     </LinearLayout>

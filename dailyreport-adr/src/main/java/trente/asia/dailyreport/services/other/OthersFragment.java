@@ -139,7 +139,7 @@ public class OthersFragment extends AbstractDRFragment{
 		mLnrReportHeader.removeAllViews();
 
 		Date selectedDate = calendarHeader.getSelectedDate();
-		List<Date> dates = CsDateUtil.getAllDate4Week(CCDateUtil.makeCalendar(selectedDate), FIRST_DAY);
+		List<Date> dates = CsDateUtil.getAllDatesOfWeek(CCDateUtil.makeCalendar(selectedDate), FIRST_DAY);
 
 		lstDate = CCDateUtil.makeDateList(dates.get(0), dates.get(dates.size() - 1));
 
@@ -429,7 +429,7 @@ public class OthersFragment extends AbstractDRFragment{
 			Calendar c = Calendar.getInstance();
 			selectedDate = c.getTime();
 		}
-		List<Date> dates = CsDateUtil.getAllDate4Week(CCDateUtil.makeCalendar(selectedDate), FIRST_DAY);
+		List<Date> dates = CsDateUtil.getAllDatesOfWeek(CCDateUtil.makeCalendar(selectedDate), FIRST_DAY);
 
 		JSONObject jsonObject = new JSONObject();
 		try{

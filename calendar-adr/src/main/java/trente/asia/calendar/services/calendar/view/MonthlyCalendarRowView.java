@@ -2,8 +2,6 @@ package trente.asia.calendar.services.calendar.view;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -77,64 +75,65 @@ public class MonthlyCalendarRowView extends RelativeLayout{
 		schedules.add(scheduleModel);
 	}
 
-	public static Comparator<ScheduleModel> getPeriodScheduleComparator(final Date startDate, final Date endDate){
-		return new Comparator<ScheduleModel>() {
+	// public static Comparator<ScheduleModel> getPeriodScheduleComparator(final Date startDate, final Date endDate){
+	// return new Comparator<ScheduleModel>() {
+	//
+	// @Override
+	// public int compare(ScheduleModel schedule1, ScheduleModel schedule2){
+	//
+	// if(ScheduleModel.EVENT_TYPE_HOLIDAY_OLD.equals(schedule1.eventType) && !ScheduleModel.EVENT_TYPE_HOLIDAY_OLD.equals(schedule2.eventType)){
+	// return -1;
+	// }else if(ScheduleModel.EVENT_TYPE_HOLIDAY_OLD.equals(schedule2.eventType) &&
+	// !ScheduleModel.EVENT_TYPE_HOLIDAY_OLD.equals(schedule1.eventType)){
+	// return 1;
+	// }else if(ScheduleModel.EVENT_TYPE_HOLIDAY_OLD.equals(schedule1.eventType) && ScheduleModel.EVENT_TYPE_HOLIDAY_OLD.equals(schedule2.eventType)){
+	// return compareOffer(schedule1, schedule2);
+	// }
+	//
+	// if(ScheduleModel.EVENT_TYPE_WORK_OFFER.equals(schedule1.eventType) && !ScheduleModel.EVENT_TYPE_WORK_OFFER.equals(schedule2.eventType)){
+	// return -1;
+	// }else if(ScheduleModel.EVENT_TYPE_WORK_OFFER.equals(schedule2.eventType) && !ScheduleModel.EVENT_TYPE_WORK_OFFER.equals(schedule1.eventType)){
+	// return 1;
+	// }else if(ScheduleModel.EVENT_TYPE_WORK_OFFER.equals(schedule1.eventType) && ScheduleModel.EVENT_TYPE_WORK_OFFER.equals(schedule2.eventType)){
+	// return compareOffer(schedule1, schedule2);
+	// }
+	//
+	// Date startDate1 = schedule1.startDate;
+	// Date startDate2 = schedule2.startDate;
+	//
+	// Date endDate1 = schedule1.endDate;
+	// Date endDate2 = schedule2.endDate;
+	//
+	// startDate1 = CCDateUtil.compareDate(startDate1, startDate, false) <= 0 ? startDate : startDate1;
+	// startDate2 = CCDateUtil.compareDate(startDate2, startDate, false) <= 0 ? startDate : startDate2;
+	//
+	// int startCompareResult = CCDateUtil.compareDate(startDate1, startDate2, false);
+	//
+	// if(startCompareResult == 0){
+	// endDate1 = CCDateUtil.compareDate(endDate1, endDate, false) >= 0 ? endDate : endDate1;
+	// endDate2 = CCDateUtil.compareDate(endDate2, endDate, false) >= 0 ? endDate : endDate2;
+	//
+	// long startDate1Long = CCDateUtil.makeDate(startDate1).getTime();
+	// long startDate2Long = CCDateUtil.makeDate(startDate2).getTime();
+	//
+	// long period1 = CCDateUtil.makeDate(endDate1).getTime() - startDate1Long;
+	// long period2 = CCDateUtil.makeDate(endDate2).getTime() - startDate2Long;
+	//
+	// int lengthCompareResult = Long.compare(period2, period1);
+	// if(lengthCompareResult == 0){
+	// return schedule1.scheduleName.compareTo(schedule2.scheduleName);
+	// }
+	// return lengthCompareResult;
+	// }
+	//
+	// return startCompareResult;
+	// }
+	// };
+	// }
 
-			@Override
-			public int compare(ScheduleModel schedule1, ScheduleModel schedule2){
-
-				if(ClConst.SCHEDULE_TYPE_HOLIDAY.equals(schedule1.scheduleType) && !ClConst.SCHEDULE_TYPE_HOLIDAY.equals(schedule2.scheduleType)){
-					return -1;
-				}else if(ClConst.SCHEDULE_TYPE_HOLIDAY.equals(schedule2.scheduleType) && !ClConst.SCHEDULE_TYPE_HOLIDAY.equals(schedule1.scheduleType)){
-					return 1;
-				}else if(ClConst.SCHEDULE_TYPE_HOLIDAY.equals(schedule1.scheduleType) && ClConst.SCHEDULE_TYPE_HOLIDAY.equals(schedule2.scheduleType)){
-					return compareOffer(schedule1, schedule2);
-				}
-
-				if(ClConst.SCHEDULE_TYPE_WORK_OFFER.equals(schedule1.scheduleType) && !ClConst.SCHEDULE_TYPE_WORK_OFFER.equals(schedule2.scheduleType)){
-					return -1;
-				}else if(ClConst.SCHEDULE_TYPE_WORK_OFFER.equals(schedule2.scheduleType) && !ClConst.SCHEDULE_TYPE_WORK_OFFER.equals(schedule1.scheduleType)){
-					return 1;
-				}else if(ClConst.SCHEDULE_TYPE_WORK_OFFER.equals(schedule1.scheduleType) && ClConst.SCHEDULE_TYPE_WORK_OFFER.equals(schedule2.scheduleType)){
-					return compareOffer(schedule1, schedule2);
-				}
-
-				Date startDate1 = schedule1.startDate;
-				Date startDate2 = schedule2.startDate;
-
-				Date endDate1 = schedule1.endDate;
-				Date endDate2 = schedule2.endDate;
-
-				startDate1 = CCDateUtil.compareDate(startDate1, startDate, false) <= 0 ? startDate : startDate1;
-				startDate2 = CCDateUtil.compareDate(startDate2, startDate, false) <= 0 ? startDate : startDate2;
-
-				int startCompareResult = CCDateUtil.compareDate(startDate1, startDate2, false);
-
-				if(startCompareResult == 0){
-					endDate1 = CCDateUtil.compareDate(endDate1, endDate, false) >= 0 ? endDate : endDate1;
-					endDate2 = CCDateUtil.compareDate(endDate2, endDate, false) >= 0 ? endDate : endDate2;
-
-					long startDate1Long = CCDateUtil.makeDate(startDate1).getTime();
-					long startDate2Long = CCDateUtil.makeDate(startDate2).getTime();
-
-					long period1 = CCDateUtil.makeDate(endDate1).getTime() - startDate1Long;
-					long period2 = CCDateUtil.makeDate(endDate2).getTime() - startDate2Long;
-
-					int lengthCompareResult = Long.compare(period2, period1);
-					if(lengthCompareResult == 0){
-						return schedule1.scheduleName.compareTo(schedule2.scheduleName);
-					}
-					return lengthCompareResult;
-				}
-
-				return startCompareResult;
-			}
-		};
-	}
-
-	private void sortSchedules(){
-		Collections.sort(schedules, getPeriodScheduleComparator(startDate, endDate));
-	}
+	// private void sortSchedules(){
+	// Collections.sort(schedules, getPeriodScheduleComparator(startDate, endDate));
+	// }
 
 	public static int compareOffer(ScheduleModel schedule1, ScheduleModel schedule2){
 		return schedule1.scheduleName.compareTo(schedule2.scheduleName);
@@ -153,7 +152,7 @@ public class MonthlyCalendarRowView extends RelativeLayout{
 	}
 
 	public void refreshLayout(){
-		sortSchedules();
+		// sortSchedules();
 		for(int i = 0; i < schedules.size(); i++){
 			ScheduleModel scheduleModel = schedules.get(i);
 			showSchedule(scheduleModel, i);
@@ -195,9 +194,9 @@ public class MonthlyCalendarRowView extends RelativeLayout{
 		int marginLeft = (int)(itemWidth * theFirstCalendarDay.dayOfTheWeek);
 		int marginTopAfter = marginTop + WelfareUtil.dpToPx(5);
 
-		TextView txtSchedule = createTextView(getContext(), width, marginLeft, scheduleModel, marginTopAfter);
+		TextView txtSchedule = createTextView(getContext(), width, marginLeft, scheduleModel, marginTopAfter + WelfareUtil.dpToPx(4));
 
-		if(ClConst.SCHEDULE_TYPE_HOLIDAY.equals(scheduleModel.scheduleType)){
+		if(ScheduleModel.EVENT_TYPE_HOLIDAY_OLD.equals(scheduleModel.eventType)){
 			txtSchedule.setTextColor(Color.RED);
 		}
 
@@ -214,7 +213,7 @@ public class MonthlyCalendarRowView extends RelativeLayout{
 		txtSchedule.setGravity(Gravity.CENTER_VERTICAL);
 		txtSchedule.setTextColor(Color.BLACK);
 		if(scheduleModel.isAllDay || scheduleModel.isPeriod){
-			txtSchedule.setBackground(ContextCompat.getDrawable(context, R.drawable.wf_background_black_border));
+			txtSchedule.setBackground(ContextCompat.getDrawable(context, R.drawable.wf_background_black_border2));
 		}
 		txtSchedule.setPadding(WelfareUtil.dpToPx(2), 0, 0, 0);
 

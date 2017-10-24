@@ -2,7 +2,6 @@ package trente.asia.calendar.services.calendar;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -15,13 +14,8 @@ import com.bluelinelabs.logansquare.LoganSquare;
 
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
-import android.widget.TextView;
 
-import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCStringUtil;
@@ -32,20 +26,18 @@ import trente.asia.calendar.commons.dialogs.DailySummaryDialog;
 import trente.asia.calendar.commons.fragments.ClPageFragment;
 import trente.asia.calendar.commons.utils.ClUtil;
 import trente.asia.calendar.services.calendar.listener.DailyScheduleClickListener;
+import trente.asia.calendar.services.calendar.model.CalendarBirthdayModel;
 import trente.asia.calendar.services.calendar.model.CalendarModel;
 import trente.asia.calendar.services.calendar.model.CategoryModel;
 import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.RoomModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.model.WorkRequest;
-import trente.asia.calendar.services.calendar.view.WeeklyScheduleListAdapter;
+import trente.asia.calendar.services.calendar.view.DailyScheduleList;
 import trente.asia.calendar.services.todo.model.Todo;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.models.HolidayWorkingModel;
-import trente.asia.welfare.adr.models.OvertimeRequestModel;
 import trente.asia.welfare.adr.models.UserModel;
-import trente.asia.welfare.adr.models.VacationRequestModel;
 import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
 
 /**
@@ -53,38 +45,35 @@ import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
  *
  * @author VietNH
  */
-public abstract class SchedulesPageFragment extends ClPageFragment implements WeeklyScheduleListAdapter.OnScheduleItemClickListener,DailyScheduleClickListener{
+public abstract class SchedulesPageFragment extends ClPageFragment implements DailyScheduleList.OnScheduleItemClickListener,DailyScheduleClickListener{
 
-	protected List<Date>				dates;
+	protected List<Date>					dates;
 
-	protected LinearLayout				lnrCalendarContainer;
-	protected List<ScheduleModel>		lstSchedule			= new ArrayList<>();
-	protected List<HolidayModel>		lstHoliday;
+	protected LinearLayout					lnrCalendarContainer;
+	protected List<ScheduleModel>			lstSchedule			= new ArrayList<>();
+	protected List<HolidayModel>			lstHoliday;
 
-	protected List<CalendarModel>		lstCalendar;
-	protected List<UserModel>			lstCalendarUser;
-	protected List<CategoryModel>		lstCategory;
-	protected List<UserModel>			lstBirthdayUser;
-	protected List<WorkRequest>			lstWorkRequest;
-	protected boolean					refreshDialogData	= false;
-	private String						scheduleStrings;
-	protected boolean					isChangedData		= true;
-	protected List<Todo>				todos;
-	protected LayoutInflater			inflater;
-	protected DailySummaryDialog		dialogDailySummary;
-	protected boolean					isExpanded			= false;
-	protected TextView					txtMore;
-	protected ImageView					imgExpand;
-	protected ScrollView				scrollView;
-	protected View						thisHourView;
-	protected String					currentHour;
+	protected List<CalendarModel>			lstCalendar;
+	protected List<UserModel>				lstCalendarUser;
+	protected List<CategoryModel>			lstCategory;
+	protected List<CalendarBirthdayModel>	calendarBirthdayModels;
+	protected List<WorkRequest>				lstWorkRequest;
+	protected boolean						refreshDialogData	= false;
+	private String							scheduleStrings;
+	protected boolean						isChangedData		= true;
+	protected List<Todo>					todos;
+	protected LayoutInflater				inflater;
+	protected DailySummaryDialog			dialogDailySummary;
+	protected boolean						isExpanded			= false;
+	protected ObservableScrollView			scrSchedules;
+	public static final String				GOLDEN_HOUR_STR		= "09:00";
 
-	protected static final int			MAX_ROW				= 3;
-	protected Date						today;
-	private List<RoomModel>				rooms;
-	private List<VacationRequestModel>	lstVacationRequest;
-	private List<OvertimeRequestModel>	lstOvertimeRequest;
-	private List<HolidayWorkingModel>	lstHolidayWorking;
+	protected static final int				MAX_ROW				= 3;
+	public static final String				SCREEN_MODE_WEEK	= "WE";
+	public static final String				SCREEN_MODE_MONTH	= "MO";
+	public static final String				SCREEN_MODE_DAY		= "DA";
+	protected Date							today;
+	private List<RoomModel>					rooms;
 
 	abstract protected List<Date> getAllDate();
 
@@ -94,7 +83,7 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 	@Override
 	protected void initView(){
 		super.initView();
-
+		scrSchedules = (ObservableScrollView)getView().findViewById(R.id.scr_schedules);
 		today = Calendar.getInstance().getTime();
 
 		inflater = LayoutInflater.from(activity);
@@ -105,12 +94,7 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 			initCalendarView();
 		}
 
-		txtMore = (TextView)getView().findViewById(R.id.txt_more_to_come);
-		imgExpand = (ImageView)getView().findViewById(R.id.ic_icon_expand);
-		scrollView = (ScrollView)getView().findViewById(R.id.src_fragment_daily_page);
-		// currentHour = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_HH_MM, Calendar.getInstance().getTime());
-		// currentHour = currentHour.split(":")[0] + ":00";
-		currentHour = "09:00";
+		// imgExpand = (ImageView)getView().findViewById(R.id.ic_icon_expand);
 	}
 
 	protected void initCalendarView(){
@@ -123,12 +107,8 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 	abstract protected void initDayViews();
 
 	public void loadScheduleList(){
-		// if(pageSharingHolder.selectedPagePosition != pagePosition || (pageSharingHolder.selectedPagePosition ={
-		// pageSharingHolder.isLoadingSchedules = true;
-		// if(pageSharingHolder.selectedPagePosition == pagePosition) log("start load schedule list");
 		JSONObject jsonObject = prepareJsonObject();
 		requestLoad(ClConst.API_SCHEDULE_LIST, jsonObject, false);
-		// }
 	}
 
 	protected JSONObject prepareJsonObject(){
@@ -141,27 +121,33 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 		String searchText = null;
 		String filterType = prefAccUtil.get(ClConst.PREF_FILTER_TYPE);
 		String searchType = null;
+
 		if(filterType.equals(ClConst.PREF_FILTER_TYPE_USER)){
 			searchType = "USER";
 			searchText = "-1";
 			targetUserList = prefAccUtil.get(ClConst.PREF_ACTIVE_USER_LIST);
 			if(CCStringUtil.isEmpty(targetUserList)){
-				targetUserList = "-1";
+				targetUserList = "";
 			}
 		}else{
 			searchType = "FACI";
 			targetUserList = "-1";
 			searchText = prefAccUtil.get(ClConst.PREF_ACTIVE_ROOM);
 			if(CCStringUtil.isEmpty(searchText)){
-				searchText = "-1";
+				searchText = "";
 			}
 		}
+
+		String screenMode = getScreenMode();
+		String duplicatedSchedule = getDuplicateMode();
 
 		JSONObject jsonObject = new JSONObject();
 		try{
 			jsonObject.put("targetUserList", targetUserList);
 			jsonObject.put("searchText", searchText);
 			jsonObject.put("searchType", searchType);
+			jsonObject.put("screenMode", screenMode);
+			jsonObject.put("duplicatedSchedule", duplicatedSchedule);
 			jsonObject.put("startDateString", CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, startDate));
 			jsonObject.put("endDateString", CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, endDate));
 			jsonObject.put("execType", getExecType());
@@ -170,6 +156,10 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 		}
 		return jsonObject;
 	}
+
+	protected abstract String getDuplicateMode();
+
+	protected abstract String getScreenMode();
 
 	abstract protected String getExecType();
 
@@ -208,28 +198,14 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 			lstHoliday = LoganSquare.parseList(response.optString("holidayList"), HolidayModel.class);
 			lstCategory = LoganSquare.parseList(response.optString("categories"), CategoryModel.class);
 			lstWorkRequest = LoganSquare.parseList(response.optString("workOfferList"), WorkRequest.class);
-			lstVacationRequest = LoganSquare.parseList(response.optString("vacationList"), VacationRequestModel.class);
-			lstOvertimeRequest = LoganSquare.parseList(response.optString("overtimeList"), OvertimeRequestModel.class);
-			lstHolidayWorking = LoganSquare.parseList(response.optString("holidayWorkList"), HolidayWorkingModel.class);
-			lstBirthdayUser = LoganSquare.parseList(response.optString("birthdayList"), UserModel.class);
+			calendarBirthdayModels = LoganSquare.parseList(response.optString("birthdayList"), CalendarBirthdayModel.class);
 			lstCalendarUser = LoganSquare.parseList(response.optString("calendarUsers"), UserModel.class);
 			rooms = LoganSquare.parseList(response.optString("rooms"), RoomModel.class);
 			todos = LoganSquare.parseList(response.optString("todoList"), Todo.class);
 
 			lstSchedule = filterByPublicity();
-			adaptVacationRequestsToWorkOffers();
-			adaptOvertimeRequestsToWorkRequestOvertime();
-			adaptHolidayWorkingRequestsToWorkOffers();
 
 			ScheduleModel.determinePeriod(lstSchedule);
-
-			// if(pageSharingHolder.selectedPagePosition == pagePosition)
-			//
-			// log("finish parsing:");
-
-			// if(pageSharingHolder.selectedPagePosition == pagePosition)
-			//
-			// log("finish 1st step sort");
 
 			if(refreshDialogData && !newScheduleStrings.equals(scheduleStrings)){
 				isChangedData = true;
@@ -244,7 +220,7 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 
 					@Override
 					public void run(){
-						dialogDailySummary.setData(lstSchedule, lstBirthdayUser, lstHoliday, lstWorkRequest);
+						dialogDailySummary.setData(lstSchedule, calendarBirthdayModels, lstHoliday, lstWorkRequest, getScreenMode());
 					}
 				});
 
@@ -256,7 +232,7 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 
 					@Override
 					public void run(){
-						dialogDailySummary.setData(lstSchedule, lstBirthdayUser, lstHoliday, lstWorkRequest);
+						dialogDailySummary.setData(lstSchedule, calendarBirthdayModels, lstHoliday, lstWorkRequest, getScreenMode());
 					}
 				});
 				isChangedData = false;
@@ -269,52 +245,11 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 		}
 	}
 
-	private void adaptHolidayWorkingRequestsToWorkOffers(){
-		for(HolidayWorkingModel holidayWorkingModel : lstHolidayWorking){
-			WorkRequest workRequest = new WorkRequest(holidayWorkingModel, getString(R.string.holiday_work));
-			lstWorkRequest.add(workRequest);
-		}
-	}
-
-	private void adaptOvertimeRequestsToWorkRequestOvertime(){
-		for(OvertimeRequestModel otRequest : lstOvertimeRequest){
-			String overTimeInfo = otRequest.overtimeType.equals(OvertimeRequestModel.OVERTIME_EARLY) ? getString(R.string.overtime_early) : getString(R.string.overtime_lately);
-			WorkRequest workRequest = new WorkRequest(otRequest, overTimeInfo);
-			lstWorkRequest.add(workRequest);
-		}
-	}
-
-	private void adaptVacationRequestsToWorkOffers(){
-		for(VacationRequestModel vacationRequestModel : lstVacationRequest){
-			WorkRequest workRequest = new WorkRequest(vacationRequestModel);
-			lstWorkRequest.add(workRequest);
-		}
-	}
-
-	private List<UserModel> filterByUser(){
-		List<UserModel> result = new ArrayList<>();
-		String targetUserData = prefAccUtil.get(ClConst.PREF_ACTIVE_USER_LIST);
-		List<String> targetUserIds = CCStringUtil.isEmpty(targetUserData) ? null : Arrays.asList(targetUserData.split(","));
-		if(!CCCollectionUtil.isEmpty(targetUserIds)){
-			for(UserModel userModel : lstBirthdayUser){
-				if(targetUserIds.contains(userModel.key)){
-					result.add(userModel);
-				}
-			}
-		}else{
-			return lstBirthdayUser;
-		}
-		return result;
-	}
-
 	private List<ScheduleModel> filterByPublicity(){
 		List<ScheduleModel> result = new ArrayList<>();
 
 		for(ScheduleModel scheduleModel : lstSchedule){
-			if(ClConst.SCHEDULE_TYPE_PUB.equals(scheduleModel.scheduleType) || containUser(scheduleModel, myself.key)){
-				result.add(scheduleModel);
-			}else if(ClConst.SCHEDULE_TYPE_PRI.equals(scheduleModel.scheduleType)){
-				scheduleModel.scheduleName = getString(R.string.schedule_mystery);
+			if(CCStringUtil.isEmpty(scheduleModel.scheduleType) || ScheduleModel.SCHEDULE_TYPE_PUB.equals(scheduleModel.scheduleType) || containUser(scheduleModel, myself.key) || ScheduleModel.SCHEDULE_TYPE_PRI.equals(scheduleModel.scheduleType)){
 				result.add(scheduleModel);
 			}
 		}
@@ -337,31 +272,31 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements We
 		}
 	}
 
-	protected List<ScheduleModel> multiplyWithUsers(List<ScheduleModel> origins){
-		List<ScheduleModel> result = new ArrayList<>();
-		String filterType = prefAccUtil.get(ClConst.PREF_FILTER_TYPE);
-		if(filterType.equals(ClConst.PREF_FILTER_TYPE_USER)){
-			String targetUserList = prefAccUtil.get(ClConst.PREF_ACTIVE_USER_LIST);
-			List<String> targetUserListId = Arrays.asList(targetUserList.split(","));
-			for(ScheduleModel scheduleModel : origins){
-				for(UserModel userModel : scheduleModel.scheduleJoinUsers){
-					if(targetUserListId.contains(userModel.key)){
-						ScheduleModel cloned = ScheduleModel.clone(scheduleModel, userModel);
-						result.add(cloned);
-					}
-				}
-			}
-		}else{
-			for(ScheduleModel scheduleModel : origins){
-				if(!CCStringUtil.isEmpty(scheduleModel.roomModel.color)){
-					scheduleModel.scheduleColor = scheduleModel.roomModel.color;
-				}
-				result.add(scheduleModel);
-			}
-		}
-
-		return result;
-	}
+	// protected List<ScheduleModel> multiplyWithUsers(List<ScheduleModel> origins){
+	// List<ScheduleModel> result = new ArrayList<>();
+	// String filterType = prefAccUtil.get(ClConst.PREF_FILTER_TYPE);
+	// if(filterType.equals(ClConst.PREF_FILTER_TYPE_USER)){
+	// String targetUserList = prefAccUtil.get(ClConst.PREF_ACTIVE_USER_LIST);
+	// List<String> targetUserListId = Arrays.asList(targetUserList.split(","));
+	// for(ScheduleModel scheduleModel : origins){
+	// for(UserModel userModel : scheduleModel.scheduleJoinUsers){
+	// if(targetUserListId.contains(userModel.key)){
+	// ScheduleModel cloned = ScheduleModel.clone(scheduleModel, userModel);
+	// result.add(cloned);
+	// }
+	// }
+	// }
+	// }else{
+	// for(ScheduleModel scheduleModel : origins){
+	// if(!CCStringUtil.isEmpty(scheduleModel.roomModel.color)){
+	// scheduleModel.scheduleColor = scheduleModel.roomModel.color;
+	// }
+	// result.add(scheduleModel);
+	// }
+	// }
+	//
+	// return result;
+	// }
 
 	@Override
 	public void onClickScheduleItem(ScheduleModel schedule, Date selectedDate){

@@ -1,7 +1,8 @@
 package trente.asia.calendar.services.calendar.view;
 
-import static trente.asia.calendar.services.calendar.MonthlyPageFragment.getScheduleComparator;
+//import static trente.asia.calendar.services.calendar.MonthlyPageFragment.getScheduleComparator;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -87,7 +88,7 @@ public class MonthlyCalendarDayView extends LinearLayout{
 		// txtHoliday = (TextView) this.findViewById(R.id.txt_id_row_holiday);
 
 		txtDayLabel = (TextView)this.findViewById(R.id.txt_id_day_label);
-		txtDayLabel.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DD, itemDate));
+		txtDayLabel.setText(new SimpleDateFormat("d").format(itemDate));
 		Calendar itemCalendar = CCDateUtil.makeCalendar(itemDate);
 		if(isWithoutMonth){
 			txtDayLabel.setTextColor(Color.GRAY);
@@ -116,14 +117,14 @@ public class MonthlyCalendarDayView extends LinearLayout{
 
 	public void showSchedules(){
 		Collections.sort(usedMargins);
-		Collections.sort(lstSchedule, getScheduleComparator(false));
+//		Collections.sort(lstSchedule, getScheduleComparator(false));
 		for(ScheduleModel scheduleModel : schedules){
 			showSchedule(scheduleModel);
 		}
 	}
 
 	private void showSchedule(ScheduleModel scheduleModel){
-		if(ClConst.SCHEDULE_TYPE_BIRTHDAY.equals(scheduleModel.scheduleType)){
+		if(ScheduleModel.EVENT_TYPE_BIRTHDAY.equals(scheduleModel.eventType)){
 			setLayoutBirthday(scheduleModel);
 		}else{
 			lstSchedule.add(scheduleModel);
@@ -135,12 +136,9 @@ public class MonthlyCalendarDayView extends LinearLayout{
 			usedMargins.add(marginTop);
 
 			int width = getWidth();
-			TextView txtSchedule = MonthlyCalendarRowView.createTextView(getContext(), width, 0, scheduleModel, marginTop - ClConst.TEXT_VIEW_HEIGHT + WelfareUtil.dpToPx(2));
+			TextView txtSchedule = MonthlyCalendarRowView.createTextView(getContext(), width, 0, scheduleModel, marginTop - ClConst.TEXT_VIEW_HEIGHT + WelfareUtil.dpToPx(6));
 			lnrRowContent.addView(txtSchedule);
 			txtSchedules.add(txtSchedule);
-			// if (ClConst.SCHEDULE_TYPE_HOLIDAY.equals(scheduleModel.scheduleType)) {
-			// txtSchedule.setTextColor(Color.RED);
-			// }
 		}
 	}
 
@@ -176,18 +174,6 @@ public class MonthlyCalendarDayView extends LinearLayout{
 		}
 		return maxMarginTop;
 	}
-
-	// private void setLayoutHoliday(ScheduleModel scheduleModel) {
-	// txtHoliday.setVisibility(View.VISIBLE);
-	// txtHoliday.setTextColor(Color.RED);
-	// txtHoliday.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.wf_background_gray_border));
-	// txtHoliday.setText(scheduleModel.scheduleName);
-	// if (!isToday) {
-	// txtDayLabel.setTextColor(Color.RED);
-	// } else {
-	// txtDayLabel.setTextColor(Color.WHITE);
-	// }
-	// }
 
 	public void setLayoutBirthday(ScheduleModel scheduleModel){
 		imgBirthday.setVisibility(View.VISIBLE);

@@ -40,7 +40,6 @@ import trente.asia.thankscard.services.mypage.model.NoticeModel;
 import trente.asia.thankscard.services.mypage.model.StampCategoryModel;
 import trente.asia.thankscard.services.mypage.model.StampModel;
 import trente.asia.thankscard.services.mypage.view.NoticeListAdapter;
-import trente.asia.thankscard.services.posted.PostPreviewFragment;
 import trente.asia.thankscard.services.posted.PostTCFragment;
 import trente.asia.thankscard.services.rank.model.RankStage;
 import trente.asia.welfare.adr.define.WelfareConst;
@@ -89,7 +88,7 @@ public class MypageFragment extends AbstractTCFragment{
 		boolean isBirthday = false;
 		Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
 		int thisYear = calendar.get(Calendar.YEAR);
-		String dateBirth = DateFormat.format("yyyy/MM/dd hh:mm:ss", myself.dateBirth).toString();
+		String dateBirth = DateFormat.format("yyyy/MM/dd hh:mm:ss", myself.birthDay).toString();
 		String birthday = thisYear + dateBirth.substring(4);
 		Date date = CCDateUtil.makeDateCustom(birthday, "yyyy/MM/dd hh:mm:ss");
 

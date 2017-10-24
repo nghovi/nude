@@ -1,5 +1,6 @@
 package trente.asia.calendar.commons.fragments;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -40,6 +41,8 @@ public abstract class PageContainerFragment extends AbstractClFragment{
 	protected TextView					txtToday;
 	private UserFacilityView			userFacilityView;
 	private int							pagerScrollingState;
+	public ClPageFragment				leftNeighborFragment;
+	public ClPageFragment				rightNeiborFragment;
 
 	@Override
 	public void onResume(){
@@ -138,9 +141,18 @@ public abstract class PageContainerFragment extends AbstractClFragment{
 				setActiveDate(position);
 				holder.selectedPagePosition = position;
 				ClPageFragment fragment = (ClPageFragment)mPagerAdapter.getItem(position);
+				leftNeighborFragment = (ClPageFragment)mPagerAdapter.getItem(position - 1);
+				rightNeiborFragment = (ClPageFragment)mPagerAdapter.getItem(position + 1);
 				fragment.loadData();
+				onFragmentSelected(fragment);
 			}
 		});
+		leftNeighborFragment = (ClPageFragment)mPagerAdapter.getItem(INITIAL_POSITION - 1);
+		rightNeiborFragment = (ClPageFragment)mPagerAdapter.getItem(INITIAL_POSITION + 1);
+	}
+
+	protected void onFragmentSelected(ClPageFragment fragment){
+
 	}
 
 	public int getScrollingState(){
@@ -173,7 +185,7 @@ public abstract class PageContainerFragment extends AbstractClFragment{
 
 	protected void setActiveDate(int position){
 		Date activeDate = getActiveDate(position);
-		String title = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_YYYY_MM, activeDate);
+		String title = CCFormatUtil.formatDateCustom("yyyy/M",activeDate);
 		updateHeader(title);
 	}
 

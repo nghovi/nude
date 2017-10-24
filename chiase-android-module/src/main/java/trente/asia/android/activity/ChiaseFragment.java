@@ -213,7 +213,7 @@ public class ChiaseFragment extends Fragment implements HttpCallback{
 		}
 
 		if(isAlert){
-			loadingDialog.show();
+			loadingDialog.dismiss();
 		}
 
 		initParams(jsonObject);

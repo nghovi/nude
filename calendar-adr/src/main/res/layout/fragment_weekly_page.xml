@@ -59,21 +59,8 @@
                                 android:id="@+id/rlt_expand"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:gravity="center_vertical"
-                                android:visibility="visible">
-
-                                <ImageView
-                                    android:id="@+id/ic_icon_expand"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="bottom|left"
-                                    android:paddingLeft="@dimen/margin_10dp"
-                                    android:paddingRight="@dimen/margin_10dp"
-                                    android:paddingTop="@dimen/margin_8dp"
-                                    android:src="@drawable/down"
-                                    android:visibility="visible" />
-
-                            </RelativeLayout>
+                                android:gravity="left"
+                                android:visibility="visible"></RelativeLayout>
 
                         </LinearLayout>
 
@@ -84,26 +71,34 @@
                         style="@style/cs_common_divider"
                         android:background="@color/chiase_black" />
 
-                    <ScrollView
-                        android:id="@+id/src_fragment_daily_page"
+                    <trente.asia.calendar.services.calendar.ObservableScrollView
+                        android:id="@+id/scr_schedules"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:fillViewport="true">
 
-                        <LinearLayout
-                            android:id="@+id/lnr_part2"
+                        <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_alignBottom="@+id/lnr_part1"
-                            android:orientation="vertical"></LinearLayout>
+                            android:orientation="vertical">
 
-                    </ScrollView>
+                            <RelativeLayout
+                                android:id="@+id/rlt_part2_line_container"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"></RelativeLayout>
+
+                            <RelativeLayout
+                                android:id="@+id/rlt_part2"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"></RelativeLayout>
+                        </RelativeLayout>
+
+                    </trente.asia.calendar.services.calendar.ObservableScrollView>
 
                 </LinearLayout>
-
-
             </RelativeLayout>
-
         </LinearLayout>
 
 
