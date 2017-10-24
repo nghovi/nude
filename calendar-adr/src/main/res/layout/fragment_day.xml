@@ -91,7 +91,8 @@
             <LinearLayout
                 android:layout_width="1px"
                 android:layout_height="match_parent"
-                android:background="@color/chiase_gray">
+                android:background="@color/chiase_gray"
+                android:visibility="invisible">
 
             </LinearLayout>
 

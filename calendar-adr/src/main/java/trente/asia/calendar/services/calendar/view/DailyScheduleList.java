@@ -20,17 +20,16 @@ import android.widget.TextView;
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
-import asia.chiase.core.util.CCStringUtil;
 import trente.asia.calendar.BuildConfig;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.utils.ClUtil;
 import trente.asia.calendar.services.calendar.model.CalendarBirthdayModel;
-import trente.asia.calendar.services.calendar.model.CalendarUser;
 import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.model.WorkRequest;
 import trente.asia.welfare.adr.activity.WelfareFragment;
 import trente.asia.welfare.adr.define.WelfareConst;
+import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.utils.WelfareUtil;
 import trente.asia.welfare.adr.utils.WfPicassoHelper;
 import trente.asia.welfare.adr.view.SelectableRoundedImageView;
@@ -79,6 +78,7 @@ public class DailyScheduleList extends LinearLayout{
 	public void showFor(Date selectedDate){
 		this.selectedDate = CCDateUtil.makeDate(selectedDate);
 		mSchedules = daySchedulesMap.get(this.selectedDate);
+		lnrEvents.removeAllViews();
 		buildTimelySchedules(R.id.lnr_daily_schedule_list_all_day, R.string.schedule, mSchedules);
 		buildEvents(holidayModels);
 	}
@@ -135,7 +135,6 @@ public class DailyScheduleList extends LinearLayout{
 	}
 
 	private void buildEvents(List<HolidayModel> holidayModels){
-		lnrEvents.removeAllViews();
 		List<CalendarBirthdayModel> calendarBirthdayModels = dayBirthdayUsersMap.get(this.selectedDate);
 		List<WorkRequest> workRequests = dayOfferMap.get(this.selectedDate);
 		List<HolidayModel> holidayModelList = HolidayModel.getHolidayModels(this.selectedDate, holidayModels);
@@ -160,7 +159,8 @@ public class DailyScheduleList extends LinearLayout{
 				lnrEvents.addView(birthdayItem);
 				hasDisplayedItem = true;
 			}
-		}else{
+		}
+		if(lnrEvents.getChildCount() <= 0){
 			lnrEvents.setVisibility(View.GONE);
 		}
 	}
@@ -179,6 +179,14 @@ public class DailyScheduleList extends LinearLayout{
 		itemHoliday.setPadding(paddingLeftRightPx, MARGIN_TOP_BOTTOM, paddingLeftRightPx, MARGIN_TOP_BOTTOM);
 		TextView txtHolidayName = (TextView)itemHoliday.findViewById(R.id.txt_item_holiday_name);
 		txtHolidayName.setText(holidayModel.holidayName);
+		return itemHoliday;
+	}
+
+	public static LinearLayout buildHolidayItemFromSchedule(LayoutInflater inflater, ScheduleModel scheduleModel, int paddingLeftRightPx, int layoutId){
+		LinearLayout itemHoliday = (LinearLayout)inflater.inflate(layoutId, null);
+		itemHoliday.setPadding(paddingLeftRightPx, MARGIN_TOP_BOTTOM, paddingLeftRightPx, MARGIN_TOP_BOTTOM);
+		TextView txtHolidayName = (TextView)itemHoliday.findViewById(R.id.txt_item_holiday_name);
+		txtHolidayName.setText(scheduleModel.scheduleName);
 		return itemHoliday;
 	}
 
@@ -242,6 +250,30 @@ public class DailyScheduleList extends LinearLayout{
 		return offerItemView;
 	}
 
+	public static LinearLayout buildWorkRequestItemFromSchedule(Context context, LayoutInflater inflater, ScheduleModel workRequest, int layoutId){
+		LinearLayout offerItemView = (LinearLayout)inflater.inflate(layoutId, null);
+		ImageView imgAvatar = (ImageView)offerItemView.findViewById(R.id.img_item_offer_avatar);
+		TextView txtUsername = (TextView)offerItemView.findViewById(R.id.txt_item_offer_username);
+		TextView txtDate = (TextView)offerItemView.findViewById(R.id.txt_item_offer_date);
+		TextView txtType = (TextView)offerItemView.findViewById(R.id.txt_item_offer_type);
+		TextView txtStatus = (TextView)offerItemView.findViewById(R.id.txt_item_offer_status);
+		// TextView txtNote = (TextView)offerItemView.findViewById(R.id.txt_item_offer_note);
+
+		WfPicassoHelper.loadImageWithDefaultIcon(context, BuildConfig.HOST, imgAvatar, workRequest.showUserModel.avatarPath, R.drawable.wf_profile);
+		txtUsername.setText(workRequest.showUserModel.userName);
+
+		// if(WorkRequest.REQUEST_TYPE_HOLIDAY_WORKING.equals(offer.offerType) || WorkRequest.REQUEST_TYPE_OVERTIME.equals(offer.offerType) ||
+		// WorkRequest.REQUEST_TYPE_SHORT_TIME.equals(offer.offerType)){
+		txtDate.setText(" - " + workRequest.startTime + " - " + workRequest.endTime);
+		// }else{
+		// txtDate.setVisibility(View.GONE);
+		// }
+
+		txtType.setText(workRequest.scheduleName);
+		txtStatus.setText(workRequest.scheduleNote);
+		return offerItemView;
+	}
+
 	// public static void sortBirthdays(List<CalendarBirthdayModel> userModels){
 	// Collections.sort(userModels, new Comparator<CalendarBirthdayModel>() {
 	//
@@ -263,12 +295,12 @@ public class DailyScheduleList extends LinearLayout{
 		return result;
 	}
 
-	public static LinearLayout buildBirthdayItem(Context context, LayoutInflater inflater, CalendarUser calendarUser, int layoutId){
+	public static LinearLayout buildBirthdayItem(Context context, LayoutInflater inflater, UserModel userModel, int layoutId){
 		LinearLayout birthdayItem = (LinearLayout)inflater.inflate(layoutId, null);
 		SelectableRoundedImageView imgUser = (SelectableRoundedImageView)birthdayItem.findViewById(R.id.img_item_birthday_user);
-		WfPicassoHelper.loadImage(context, BuildConfig.HOST + calendarUser.avatar, imgUser, null);
+		WfPicassoHelper.loadImage(context, BuildConfig.HOST + userModel.avatarPath, imgUser, null);
 		TextView txtUser = (TextView)birthdayItem.findViewById(R.id.txt_item_birthday_username);
-		txtUser.setText(calendarUser.userName);
+		txtUser.setText(userModel.userName);
 		return birthdayItem;
 	}
 
@@ -304,13 +336,26 @@ public class DailyScheduleList extends LinearLayout{
 	}
 
 	private void buildScheduleItem(LinearLayout lnrParent, ScheduleModel scheduleModel){
-		if(ScheduleModel.EVENT_TYPE_BIRTHDAY.equals(scheduleModel.eventType)){
-			LinearLayout birthdayItem = buildBirthdayItem(getContext(), inflater, scheduleModel.calendarUsers.get(0), R.layout.item_birthday);
+		switch(scheduleModel.eventType){
+		case ScheduleModel.EVENT_TYPE_BIRTHDAY:
+			LinearLayout birthdayItem = buildBirthdayItem(getContext(), inflater, scheduleModel.showUserModel, R.layout.item_birthday);
 			lnrEvents.addView(birthdayItem);
-		}else{
+			break;
+		case ScheduleModel.EVENT_TYPE_SCHEDULE:
 			LinearLayout item = (LinearLayout)WeeklyScheduleListAdapter.buildScheduleItem(getContext(), this.inflater, scheduleModel, onScheduleItemClickListener, selectedDate);
 			item.setPadding(MARGIN_LEFT_RIGHT, 0, MARGIN_LEFT_RIGHT, 0);
 			lnrParent.addView(item);
+			break;
+		case ScheduleModel.EVENT_TYPE_WORK_OFFER:
+			LinearLayout offerItem = buildWorkRequestItemFromSchedule(getContext(), inflater, scheduleModel, R.layout.item_work_offer);
+			lnrEvents.addView(offerItem);
+			break;
+		case ScheduleModel.EVENT_TYPE_HOLIDAY_OLD:
+			LinearLayout holidayItem = buildHolidayItemFromSchedule(inflater, scheduleModel, WelfareUtil.dpToPx(WelfareFragment.MARGIN_LEFT_RIGHT_PX), R.layout.item_holiday);
+			lnrEvents.addView(holidayItem);
+			break;
+		default:
+			break;
 		}
 		hasDisplayedItem = true;
 	}
@@ -318,23 +363,23 @@ public class DailyScheduleList extends LinearLayout{
 	public static List<ScheduleModel> getDisplayedSchedules(Date date, List<ScheduleModel> lstSchedule){
 		List<ScheduleModel> scheduleModels = new ArrayList<>();
 		for(ScheduleModel scheduleModel : lstSchedule){
-			if(!CCStringUtil.isEmpty(scheduleModel.key) && isScheduleOf(scheduleModel, date)){
+			if(isScheduleOf(scheduleModel, date)){
 				scheduleModels.add(scheduleModel);
 			}
 		}
-		sortByTime(scheduleModels);
+		// sortByTime(scheduleModels);
 		return scheduleModels;
 	}
 
-	public static void sortByTime(List<ScheduleModel> scheduleModels){
-		Collections.sort(scheduleModels, new Comparator<ScheduleModel>() {
-
-			@Override
-			public int compare(ScheduleModel o1, ScheduleModel o2){
-				return CCDateUtil.convertHour2Min(o1.startTime).compareTo(CCDateUtil.convertHour2Min(o2.startTime));
-			}
-		});
-	}
+	// public static void sortByTime(List<ScheduleModel> scheduleModels){
+	// Collections.sort(scheduleModels, new Comparator<ScheduleModel>() {
+	//
+	// @Override
+	// public int compare(ScheduleModel o1, ScheduleModel o2){
+	// return CCDateUtil.convertHour2Min(o1.startTime).compareTo(CCDateUtil.convertHour2Min(o2.startTime));
+	// }
+	// });
+	// }
 
 	public static boolean isBeforeNoon(String startTime){
 		int startMinute = CCDateUtil.convertTime2Min(startTime);

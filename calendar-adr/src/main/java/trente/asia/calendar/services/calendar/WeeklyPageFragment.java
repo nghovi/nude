@@ -288,7 +288,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 				gradientDrawable.setStroke(2, Color.BLACK);
 				textView.setBackground(gradientDrawable);
 				rltPart1.addView(textView);
-			}else if(ScheduleModel.EVENT_TYPE_SCHEDULE.equals(schedule.eventType)){
+			}else{ // schedule/wo
 				Calendar cStart = CCDateUtil.makeCalendarWithDateOnly(schedule.startDate);
 				Calendar cEnd = CCDateUtil.makeCalendarWithDateOnly(schedule.endDate);
 

@@ -117,7 +117,7 @@ public class WeeklyScheduleListAdapter extends ArrayAdapter<CalendarDayModel>{
 				View lnrSchedulesContainer = buildWeeklyScheduleItem(getContext(), layoutInflater, schedule, onScheduleItemClickListener, calendarDay.date);
 				viewHolder.lnrEventList.addView(lnrSchedulesContainer);
 			} else if (ScheduleModel.EVENT_TYPE_BIRTHDAY.equals(schedule.eventType)) {
-				LinearLayout birthdayItem = DailyScheduleList.buildBirthdayItem(context, layoutInflater, schedule.calendarUsers.get(0), R.layout.item_birthday_weekly);
+				LinearLayout birthdayItem = DailyScheduleList.buildBirthdayItem(context, layoutInflater, schedule.showUserModel, R.layout.item_birthday_weekly);
 				viewHolder.lnrEventList.addView(birthdayItem);
 //			}
 			}
