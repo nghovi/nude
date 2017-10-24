@@ -35,7 +35,7 @@ import trente.asia.welfare.adr.utils.WelfareUtil;
 public class MonthlyCalendarDayView extends LinearLayout{
 
 	private Context						mContext;
-	private TextView					txtDayLabel;
+	public TextView					txtDayLabel;
 	private RelativeLayout				lnrRowContent;
 	private DailyScheduleClickListener	mListener;
 
