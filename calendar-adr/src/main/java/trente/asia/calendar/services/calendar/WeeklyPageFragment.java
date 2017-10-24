@@ -226,36 +226,36 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 
 		Map<String, Boolean> birthdayIconMap = new HashMap<>();
 		// birthday
-		for(ScheduleModel scheduleModel : schedules){
-			if(ScheduleModel.EVENT_TYPE_BIRTHDAY.equals(scheduleModel.eventType)){
-				String keyDate = WelfareUtil.getDateString(scheduleModel.startDate);
-				if(!birthdayIconMap.containsKey(keyDate)){
-					Calendar c2 = CCDateUtil.makeCalendarWithDateOnly(scheduleModel.startDate);
-					int dayDistance = c2.get(Calendar.DAY_OF_YEAR) - cStartWeek.get(Calendar.DAY_OF_YEAR);
-					int leftMargin = (int)(screenW * (0 + dayDistance) / 7);
-					topMargin = getNextTopMargin(dayDistance, dayDistance);
-					ImageView imageViewBirthday = new ImageView(activity);
-					imageViewBirthday.setImageResource(R.drawable.cl_icon_birthday);
-					RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(CELL_HEIGHT_PIXEL, CELL_HEIGHT_PIXEL);
-					rlp.setMargins(leftMargin, topMargin, 0, 0);
-					imageViewBirthday.setLayoutParams(rlp);
-					rltPart1.addView(imageViewBirthday);
-					birthdayIconMap.put(keyDate, true);
-					itemNum++;
-				}
-			}
-		}
-
-		// holiday
-		for(HolidayModel holidayModel : lstHoliday){
-			Calendar c2 = CCDateUtil.makeCalendarWithDateOnly(holidayModel.startDate);
-			int dayDistance = c2.get(Calendar.DAY_OF_YEAR) - cStartWeek.get(Calendar.DAY_OF_YEAR);
-			int leftMargin = (int)(screenW * (0 + dayDistance) / 7);
-			topMargin = getNextTopMargin(dayDistance, dayDistance);
-			TextView textView = makeTextView(activity, holidayModel.holidayName, leftMargin, topMargin, (int)(screenW / 7), Color.WHITE, Color.RED, Gravity.LEFT);
-			rltPart1.addView(textView);
-			itemNum++;
-		}
+//		for(ScheduleModel scheduleModel : schedules){
+//			if(ScheduleModel.EVENT_TYPE_BIRTHDAY.equals(scheduleModel.eventType)){
+//				String keyDate = WelfareUtil.getDateString(scheduleModel.startDate);
+//				if(!birthdayIconMap.containsKey(keyDate)){
+//					Calendar c2 = CCDateUtil.makeCalendarWithDateOnly(scheduleModel.startDate);
+//					int dayDistance = c2.get(Calendar.DAY_OF_YEAR) - cStartWeek.get(Calendar.DAY_OF_YEAR);
+//					int leftMargin = (int)(screenW * (0 + dayDistance) / 7);
+//					topMargin = getNextTopMargin(dayDistance, dayDistance);
+//					ImageView imageViewBirthday = new ImageView(activity);
+//					imageViewBirthday.setImageResource(R.drawable.cl_icon_birthday);
+//					RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(CELL_HEIGHT_PIXEL, CELL_HEIGHT_PIXEL);
+//					rlp.setMargins(leftMargin, topMargin, 0, 0);
+//					imageViewBirthday.setLayoutParams(rlp);
+//					rltPart1.addView(imageViewBirthday);
+//					birthdayIconMap.put(keyDate, true);
+//					itemNum++;
+//				}
+//			}
+//		}
+//
+//		// holiday
+//		for(HolidayModel holidayModel : lstHoliday){
+//			Calendar c2 = CCDateUtil.makeCalendarWithDateOnly(holidayModel.startDate);
+//			int dayDistance = c2.get(Calendar.DAY_OF_YEAR) - cStartWeek.get(Calendar.DAY_OF_YEAR);
+//			int leftMargin = (int)(screenW * (0 + dayDistance) / 7);
+//			topMargin = getNextTopMargin(dayDistance, dayDistance);
+//			TextView textView = makeTextView(activity, holidayModel.holidayName, leftMargin, topMargin, (int)(screenW / 7), Color.WHITE, Color.RED, Gravity.LEFT);
+//			rltPart1.addView(textView);
+//			itemNum++;
+//		}
 
 		for(ScheduleModel schedule : schedules){
 			// birthday
@@ -401,6 +401,10 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 	}
 
 	public void updateTimeColumnPosition(){
+		int screenHeight = mRootView.getHeight();
+		if (height > screenHeight){
+			height = screenHeight - WeeklyPageFragment.CELL_HEIGHT_PIXEL - WelfareUtil.dpToPx(4);
+		}
 		LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams)parent.lnrTimeColumn.getLayoutParams();
 		lp.setMargins(0, height, 0, 0);
 		parent.lnrTimeColumn.setLayoutParams(lp);

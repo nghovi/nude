@@ -11,8 +11,10 @@ import java.util.Map;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -369,6 +371,10 @@ public class DailyPageFragment extends SchedulesPageFragment implements Observab
 	}
 
 	public void updateTimeColumnPosition(){
+		int screenHeight = mRootView.getHeight();
+		if (height > screenHeight){
+			height = screenHeight - WeeklyPageFragment.CELL_HEIGHT_PIXEL - WelfareUtil.dpToPx(4);
+		}
 		LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams)parent.lnrTimeColumn.getLayoutParams();
 		lp.setMargins(0, height, 0, 0);
 		parent.lnrTimeColumn.setLayoutParams(lp);
