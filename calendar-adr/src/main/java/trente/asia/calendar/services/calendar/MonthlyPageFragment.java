@@ -439,7 +439,6 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 		if(!CCCollectionUtil.isEmpty(lstHoliday)){
 			for(HolidayModel holidayModel : lstHoliday){
 				ScheduleModel scheduleModel = new ScheduleModel(holidayModel);
-				// scheduleModel.scheduleName = getString(R.string.cl_schedule_holiday_name, scheduleModel.scheduleName);
 				lstSchedule.add(scheduleModel);
 			}
 		}

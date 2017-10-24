@@ -72,6 +72,7 @@ public class ScheduleModel{
 	public String				eventType;
 	public List<CalendarUser>	calendarUsers;
 	public boolean				publicMode;
+	public UserModel			showUserModel;
 
 	public ScheduleModel(){
 

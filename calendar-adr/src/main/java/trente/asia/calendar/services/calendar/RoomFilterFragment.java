@@ -76,13 +76,21 @@ public class RoomFilterFragment extends AbstractClFragment{
 				prefAccUtil.set(ClConst.PREF_ACTIVE_ROOM, ClUtil.convertRoomList2String(rooms));
 			}
 			List<RoomModel> selectedRooms = getSelectedRooms(rooms);
-			this.mLnrFilterDept.fillInRoomData(rooms, selectedRooms, null);
+
+			this.mLnrFilterDept.fillInRoomData(getListRoomSubBegin(rooms), selectedRooms, null);
 
 		}catch(IOException e){
 			e.printStackTrace();
 		}
 	}
-
+	public List<RoomModel> getListRoomSubBegin(List<RoomModel> rooms){
+		List<RoomModel> results = new ArrayList<>();
+		if(rooms.size()<=1)return results;
+		for(int temp = 1;temp<rooms.size();temp++){
+			results.add(rooms.get(temp));
+		}
+		return results;
+	}
 	@Override
 	public void initView(){
 		super.initView();

@@ -1,8 +1,6 @@
 package trente.asia.calendar.commons.dialogs;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -11,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.view.Window;
 import android.view.WindowManager;
 
+import asia.chiase.core.util.CCFormatUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.services.calendar.model.CalendarBirthdayModel;
 import trente.asia.calendar.services.calendar.model.HolidayModel;
@@ -18,7 +17,7 @@ import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.model.WorkRequest;
 import trente.asia.calendar.services.calendar.view.DailySummaryDialogPagerAdapter;
 import trente.asia.calendar.services.calendar.view.WeeklyScheduleListAdapter;
-import trente.asia.welfare.adr.models.UserModel;
+import trente.asia.welfare.adr.define.WelfareConst;
 
 /**
  * ClDailySummaryDialog
@@ -68,13 +67,13 @@ public class DailySummaryDialog extends CLOutboundDismissDialog{
 		this.lstWorkRequest = lstWorkRequest;
 
 		// WeeklyPageFragment.sortSchedules(lstSchedule, dates.get(0), dates.get(dates.size() - 1), false);
-		Collections.sort(lstWorkRequest, new Comparator<WorkRequest>() {
-
-			@Override
-			public int compare(WorkRequest o1, WorkRequest o2){
-				return o1.offerTypeName.compareTo(o2.offerTypeName);
-			}
-		});
+		// Collections.sort(lstWorkRequest, new Comparator<WorkRequest>() {
+		//
+		// @Override
+		// public int compare(WorkRequest o1, WorkRequest o2){
+		// return o1.offerTypeName.compareTo(o2.offerTypeName);
+		// }
+		// });
 
 		mPagerAdapter = new DailySummaryDialogPagerAdapter(this, mContext, dates);
 		mPagerAdapter.setData(this.lstSchedule, this.calendarBirthdayModels, this.lstHoliday, this.lstWorkRequest, this.onAddBtnClickedListener, this.listener, this);
@@ -90,10 +89,11 @@ public class DailySummaryDialog extends CLOutboundDismissDialog{
 		List<String> scheduleKeys = new ArrayList<>();
 		for(ScheduleModel scheduleModel : scheduleModels){
 			if(ScheduleModel.EVENT_TYPE_SCHEDULE.equals(scheduleModel.eventType)){
-				if(scheduleKeys.contains(scheduleModel.key)){
+				String code = scheduleModel.key + CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, scheduleModel.startDate);
+				if(scheduleKeys.contains(code)){
 					continue;
 				}else{
-					scheduleKeys.add(scheduleModel.key);
+					scheduleKeys.add(code);
 				}
 			}
 			result.add(scheduleModel);
@@ -108,11 +108,12 @@ public class DailySummaryDialog extends CLOutboundDismissDialog{
 		super.show();
 	}
 
-//	public void notifyDataUpdated(List<ScheduleModel> lstSchedule, List<CalendarBirthdayModel> calendarBirthdays, List<HolidayModel> lstHoliday, List<WorkRequest> lstWorkRequest){
-//		this.lstSchedule = lstSchedule;
-//		this.calendarBirthdayModels = calendarBirthdays;
-//		this.lstHoliday = lstHoliday;
-//		this.lstWorkRequest = lstWorkRequest;
-//		mPagerAdapter.notifyDataSetChanged();
-//	}
+	// public void notifyDataUpdated(List<ScheduleModel> lstSchedule, List<CalendarBirthdayModel> calendarBirthdays, List<HolidayModel> lstHoliday,
+	// List<WorkRequest> lstWorkRequest){
+	// this.lstSchedule = lstSchedule;
+	// this.calendarBirthdayModels = calendarBirthdays;
+	// this.lstHoliday = lstHoliday;
+	// this.lstWorkRequest = lstWorkRequest;
+	// mPagerAdapter.notifyDataSetChanged();
+	// }
 }
