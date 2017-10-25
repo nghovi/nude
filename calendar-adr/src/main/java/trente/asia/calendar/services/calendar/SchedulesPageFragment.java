@@ -75,6 +75,7 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements Da
 	public static final String				SCREEN_MODE_DS		= "DS";
 	protected Date							today;
 	private List<RoomModel>					rooms;
+	private String							currentScreenMode;
 
 	abstract protected List<Date> getAllDate();
 
@@ -108,12 +109,14 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements Da
 	abstract protected void initDayViews();
 
 	public void loadScheduleList(){
-		JSONObject jsonObject = prepareJsonObject(getScreenMode());
+		currentScreenMode = getScreenMode();
+		JSONObject jsonObject = prepareJsonObject(currentScreenMode);
 		requestLoad(ClConst.API_SCHEDULE_LIST, jsonObject, false);
 	}
 
 	public void loadScheduleListForDialog(){
-		JSONObject jsonObject = prepareJsonObject(SCREEN_MODE_DS);
+		currentScreenMode = SCREEN_MODE_DS;
+		JSONObject jsonObject = prepareJsonObject(currentScreenMode);
 		requestLoad(ClConst.API_SCHEDULE_LIST, jsonObject, false);
 	}
 
@@ -252,8 +255,9 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements Da
 					scheduleModel.endDate = scheduleModel.startDate;
 				}
 			}
-
-			updateSchedules(lstSchedule, lstCategory);
+			if(!currentScreenMode.equals(SCREEN_MODE_DS)){
+				updateSchedules(lstSchedule, lstCategory);
+			}
 
 		}catch(IOException e){
 			e.printStackTrace();
