@@ -72,6 +72,7 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements Da
 	public static final String				SCREEN_MODE_WEEK	= "WE";
 	public static final String				SCREEN_MODE_MONTH	= "MO";
 	public static final String				SCREEN_MODE_DAY		= "DA";
+	public static final String				SCREEN_MODE_DS		= "DS";
 	protected Date							today;
 	private List<RoomModel>					rooms;
 
@@ -107,15 +108,20 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements Da
 	abstract protected void initDayViews();
 
 	public void loadScheduleList(){
-		JSONObject jsonObject = prepareJsonObject();
+		JSONObject jsonObject = prepareJsonObject(getScreenMode());
 		requestLoad(ClConst.API_SCHEDULE_LIST, jsonObject, false);
 	}
 
-	protected JSONObject prepareJsonObject(){
-		return buildJsonObjForScheduleListRequest(prefAccUtil, dates.get(0), dates.get(dates.size() - 1));
+	public void loadScheduleListForDialog(){
+		JSONObject jsonObject = prepareJsonObject(SCREEN_MODE_DS);
+		requestLoad(ClConst.API_SCHEDULE_LIST, jsonObject, false);
 	}
 
-	public JSONObject buildJsonObjForScheduleListRequest(PreferencesAccountUtil prefAccUtil, Date startDate, Date endDate){
+	protected JSONObject prepareJsonObject(String screenMode){
+		return buildJsonObjForScheduleListRequest(prefAccUtil, dates.get(0), dates.get(dates.size() - 1), screenMode);
+	}
+
+	public JSONObject buildJsonObjForScheduleListRequest(PreferencesAccountUtil prefAccUtil, Date startDate, Date endDate, String screenMode){
 
 		String targetUserList = null;
 		String searchText = null;
@@ -138,7 +144,6 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements Da
 			}
 		}
 
-		String screenMode = getScreenMode();
 		String duplicatedSchedule = getDuplicateMode();
 
 		JSONObject jsonObject = new JSONObject();
@@ -238,6 +243,16 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements Da
 				isChangedData = false;
 			}
 
+			Calendar selectedCal = CCDateUtil.makeCalendar(selectedDate);
+			for(ScheduleModel scheduleModel : lstSchedule){
+				if(ScheduleModel.EVENT_TYPE_BIRTHDAY.equals(scheduleModel.eventType)){
+					Calendar cStart = CCDateUtil.makeCalendar(scheduleModel.startDate);
+					cStart.set(Calendar.YEAR, selectedCal.get(Calendar.YEAR));
+					scheduleModel.startDate = cStart.getTime();
+					scheduleModel.endDate = scheduleModel.startDate;
+				}
+			}
+
 			updateSchedules(lstSchedule, lstCategory);
 
 		}catch(IOException e){
@@ -249,21 +264,12 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements Da
 		List<ScheduleModel> result = new ArrayList<>();
 
 		for(ScheduleModel scheduleModel : lstSchedule){
-			if(CCStringUtil.isEmpty(scheduleModel.scheduleType) || ScheduleModel.SCHEDULE_TYPE_PUB.equals(scheduleModel.scheduleType) || scheduleModel.publicMode ){
+			if(CCStringUtil.isEmpty(scheduleModel.scheduleType) || ScheduleModel.SCHEDULE_TYPE_PUB.equals(scheduleModel.scheduleType) || scheduleModel.publicMode){
 				result.add(scheduleModel);
 			}
 		}
 		return result;
 	}
-
-	// private boolean containUser(ScheduleModel scheduleModel, String userKey){
-	// for(UserModel userModel : scheduleModel.scheduleJoinUsers){
-	// if(userModel.key.equals(userKey)){
-	// return true;
-	// }
-	// }
-	// return false;
-	// }
 
 	protected void updateSchedules(List<ScheduleModel> schedules, List<CategoryModel> categories){
 		Map<String, CategoryModel> categoryMap = ClUtil.convertCategory2Map(categories);
@@ -271,32 +277,6 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements Da
 			schedule.categoryModel = categoryMap.get(schedule.categoryId);
 		}
 	}
-
-	// protected List<ScheduleModel> multiplyWithUsers(List<ScheduleModel> origins){
-	// List<ScheduleModel> result = new ArrayList<>();
-	// String filterType = prefAccUtil.get(ClConst.PREF_FILTER_TYPE);
-	// if(filterType.equals(ClConst.PREF_FILTER_TYPE_USER)){
-	// String targetUserList = prefAccUtil.get(ClConst.PREF_ACTIVE_USER_LIST);
-	// List<String> targetUserListId = Arrays.asList(targetUserList.split(","));
-	// for(ScheduleModel scheduleModel : origins){
-	// for(UserModel userModel : scheduleModel.scheduleJoinUsers){
-	// if(targetUserListId.contains(userModel.key)){
-	// ScheduleModel cloned = ScheduleModel.clone(scheduleModel, userModel);
-	// result.add(cloned);
-	// }
-	// }
-	// }
-	// }else{
-	// for(ScheduleModel scheduleModel : origins){
-	// if(!CCStringUtil.isEmpty(scheduleModel.roomModel.color)){
-	// scheduleModel.scheduleColor = scheduleModel.roomModel.color;
-	// }
-	// result.add(scheduleModel);
-	// }
-	// }
-	//
-	// return result;
-	// }
 
 	@Override
 	public void onClickScheduleItem(ScheduleModel schedule, Date selectedDate){
@@ -315,7 +295,7 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements Da
 		if(dialogDailySummary != null && !dialogDailySummary.isShowing()){
 			dialogDailySummary.show(date);
 			refreshDialogData = true;
-			loadScheduleList();
+			loadScheduleListForDialog();
 		}
 	}
 
