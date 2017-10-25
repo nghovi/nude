@@ -60,7 +60,7 @@ public class DailySummaryDialog extends CLOutboundDismissDialog{
 		window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
 	}
 
-	public void setData(List<ScheduleModel> lstSchedule, List<CalendarBirthdayModel> calendarBirthdays, List<HolidayModel> lstHoliday, List<WorkRequest> lstWorkRequest, String screenMode){
+	public void setData(List<ScheduleModel> lstSchedule, List<CalendarBirthdayModel> calendarBirthdays, List<HolidayModel> lstHoliday, String screenMode){
 		this.lstSchedule = ignoreDuplicatedSchedule(lstSchedule);
 		if(!SchedulesPageFragment.SCREEN_MODE_MONTH.equals(screenMode)){
 			this.calendarBirthdayModels = calendarBirthdays;

@@ -211,9 +211,9 @@ public class ScheduleFormFragment extends AbstractScheduleFragment implements On
 			repeatDialog.initDefaultValue();
 		}
 
-		WelfareFormatUtil.setChiaseTextView(txtStartDate, WelfareUtil.getDateString(startDate));
+		WelfareFormatUtil.setChiaseTextView(txtStartDate, CCFormatUtil.formatDateCustom("yyyy/M/d",startDate));
 		WelfareFormatUtil.setChiaseTextView(txtStartTime, startTimeStr);
-		WelfareFormatUtil.setChiaseTextView(txtEndDate, WelfareUtil.getDateString(endDate));
+		WelfareFormatUtil.setChiaseTextView(txtEndDate, CCFormatUtil.formatDateCustom("yyyy/M/d",endDate));
 		WelfareFormatUtil.setChiaseTextView(txtEndTime, endTimeStr);
 
 		calendar.setTime(startDate);
