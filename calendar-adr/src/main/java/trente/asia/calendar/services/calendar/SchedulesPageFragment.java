@@ -225,7 +225,7 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements Da
 
 					@Override
 					public void run(){
-						dialogDailySummary.setData(lstSchedule, calendarBirthdayModels, lstHoliday, lstWorkRequest, getScreenMode());
+						dialogDailySummary.setData(lstSchedule, calendarBirthdayModels, lstHoliday, getScreenMode());
 					}
 				});
 
@@ -237,7 +237,7 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements Da
 
 					@Override
 					public void run(){
-						dialogDailySummary.setData(lstSchedule, calendarBirthdayModels, lstHoliday, lstWorkRequest, getScreenMode());
+						dialogDailySummary.setData(lstSchedule, calendarBirthdayModels, lstHoliday, getScreenMode());
 					}
 				});
 				isChangedData = false;

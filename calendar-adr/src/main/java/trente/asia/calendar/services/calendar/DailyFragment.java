@@ -64,7 +64,7 @@ public class DailyFragment extends PageContainerFragment{
 		// Add horizontal time lines
 		Calendar c = CCDateUtil.makeCalendarToday();
 		List<String> times = new ArrayList<>();
-		for(int i = 1; i < 24; i++){
+		for(int i = 0; i < 24; i++){
 			c.set(Calendar.HOUR_OF_DAY, i);
 			String startTime = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_HH_MM, c.getTime());
 			times.add(startTime);
@@ -82,7 +82,7 @@ public class DailyFragment extends PageContainerFragment{
 			if(i == times.size() - 1){
 				bottomMargin = WelfareUtil.dpToPx(TIME_COLUMN_WIDTH_PX) - WelfareUtil.dpToPx(MARGIN_TEXT_MIDDLE_DP) - 1;
 			}
-			addStartTimeRow(times.get(i), (i + 1) * WelfareUtil.dpToPx(TIME_COLUMN_WIDTH_PX) - WelfareUtil.dpToPx(MARGIN_TEXT_MIDDLE_DP) - 1, bottomMargin);
+			addStartTimeRow(times.get(i), (i) * WelfareUtil.dpToPx(TIME_COLUMN_WIDTH_PX) - WelfareUtil.dpToPx(MARGIN_TEXT_MIDDLE_DP) - 1, bottomMargin);
 		}
 
 		timeScroll = (ObservableScrollView)getView().findViewById(R.id.src_time_container);
@@ -91,6 +91,9 @@ public class DailyFragment extends PageContainerFragment{
 	private void addStartTimeRow(String startTime, int marginTop, int bottomMargin){
 		View cell = activity.getLayoutInflater().inflate(R.layout.item_daily_schedule, null);
 		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+		if("00:00".equals(startTime)){
+			marginTop = 0;
+		}
 		params.setMargins(0, marginTop, 0, bottomMargin);
 		cell.setLayoutParams(params);
 		((TextView)cell.findViewById(R.id.txt_item_daily_schedule_start_time)).setText(startTime);
