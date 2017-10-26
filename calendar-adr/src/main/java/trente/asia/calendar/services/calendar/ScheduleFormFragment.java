@@ -650,7 +650,8 @@ public class ScheduleFormFragment extends AbstractScheduleFragment implements On
 	private void onScheduleUpdateSuccess(String newKey){
 		((WelfareActivity)activity).dataMap.put(ClConst.ACTION_SCHEDULE_UPDATE, CCConst.YES);
 		((WelfareActivity)activity).dataMap.put(ClConst.ACTION_SCHEDULE_UPDATE_NEW_KEY, newKey);
-		onClickBackBtn();
+		((ChiaseActivity)activity).isInitData = true;
+		getFragmentManager().popBackStack();
 	}
 
 	@Override
@@ -664,12 +665,6 @@ public class ScheduleFormFragment extends AbstractScheduleFragment implements On
 
 	public void setSelectedDate(Date selectedDate){
 		this.selectedDate = selectedDate;
-	}
-
-	@Override
-	protected void onClickBackBtn(){
-		((ChiaseActivity)activity).isInitData = true;
-		super.onClickBackBtn();
 	}
 
 }
