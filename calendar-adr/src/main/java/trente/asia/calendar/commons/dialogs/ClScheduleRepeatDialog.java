@@ -54,7 +54,6 @@ public class ClScheduleRepeatDialog extends CLOutboundDismissDialog{
 //	private Calendar					calendarLimit	= Calendar.getInstance();
 	private DatePickerDialog			datePickerDialogLimit;
 	private SwitchCompat				swtRepeat;
-	private EditText					edtLimitTimes;
 
 	private ScheduleModel				repeatModel		= new ScheduleModel();
 	private String						startDateStr;
@@ -94,7 +93,6 @@ public class ClScheduleRepeatDialog extends CLOutboundDismissDialog{
 		lnrLimitAfter = (LinearLayout)this.findViewById(R.id.lnr_id_repeat_after);
 		txtLimitUtil = (TextView)this.findViewById(R.id.txt_id_repeat_limit_util);
 		swtRepeat = (SwitchCompat)this.findViewById(R.id.swt_id_repeat);
-		edtLimitTimes = (EditText)this.findViewById(R.id.edt_id_limit_times);
 
 		lnrRepeatWeeklyDay = (RepeatWeeklyDayLinearLayout)this.findViewById(R.id.lnr_id_repeat_weekly_day);
 		lnrRepeatWeeklyDay.initialization();
@@ -173,7 +171,7 @@ public class ClScheduleRepeatDialog extends CLOutboundDismissDialog{
 					if(ClConst.SCHEDULE_REPEAT_LIMIT_FOREVER.equals(repeatModel.repeatLimitType) || CCStringUtil.isEmpty(repeatModel.repeatLimitType)){
 						txtUntil.setText(mContext.getString(R.string.cl_schedule_repeat_limit_forever));
 					}else{
-						txtUntil.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, repeatModel.repeatEnd));
+						txtUntil.setText(CCFormatUtil.formatDateCustom("yyyy/M/d", repeatModel.repeatEnd));
 					}
 				}
 				ClScheduleRepeatDialog.this.dismiss();
@@ -255,15 +253,8 @@ public class ClScheduleRepeatDialog extends CLOutboundDismissDialog{
 		ChiaseSpinnerModel repeatLimit = (ChiaseSpinnerModel)spnRepeatLimit.getSelectedItem();
 		repeatModel.repeatLimitType = repeatLimit.key;
 		if(ClConst.SCHEDULE_REPEAT_LIMIT_FOREVER.equals(repeatLimit.key)){
-		}else if(ClConst.SCHEDULE_REPEAT_LIMIT_UNTIL.equals(repeatLimit.key)){
-			repeatModel.repeatEnd = CCDateUtil.makeDateCustom(txtLimitUtil.getText().toString(), WelfareConst.WF_DATE_TIME_DATE);
-		}else{
-			String timesValue = edtLimitTimes.getText().toString();
-			if(CCStringUtil.isEmpty(timesValue)){
-				repeatModel.repeatInterval = "1";
-			}else{
-				repeatModel.repeatInterval = timesValue;
-			}
+		}else if(ClConst.SCHEDULE_REPEAT_LIMIT_UNTIL.equals(repeatLimit.key)) {
+			repeatModel.repeatEnd = CCDateUtil.makeDateCustom(txtLimitUtil.getText().toString(), "yyyy/M/d");
 		}
 
 		return ClRepeatUtil.getRepeatDescription(repeatModel, mContext);
@@ -289,9 +280,6 @@ public class ClScheduleRepeatDialog extends CLOutboundDismissDialog{
 //			calendarLimit = CCDateUtil.makeCalendar(repeatModel.repeatEnd);
 //			datePickerDialogLimit.getDatePicker().updateDate(mYear, mMonth, mDay);
 //		}
-		else{
-			edtLimitTimes.setText(repeatModel.repeatInterval);
-		}
 	}
 
 	public ScheduleModel getRepeatModel(){
