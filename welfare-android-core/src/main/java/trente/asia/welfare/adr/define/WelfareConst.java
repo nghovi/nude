@@ -44,6 +44,7 @@ public class WelfareConst{
 	public static final String		WF_DATE_TIME_YYYY_MM			= "yyyy/MM";
 	public static final String		WF_DATE_TIME_MM_DD				= "MM/dd";
 	public static final String		WF_DATE_TIME_DATE				= "yyyy/MM/dd";
+	public static final String		WF_DATE_TIME_SHORT				= "yyyy/M/d";
 	public static final String		WF_DATE_TIME_DATE_HYPHEN		= "yyyy-MM-dd";
 	public static final String		WF_DATE_TIME_YYYY_HYPHEN_MM		= "yyyy-MM";
 	public static final String		WF_DATE_TIME_HH_MM				= "HH:mm";

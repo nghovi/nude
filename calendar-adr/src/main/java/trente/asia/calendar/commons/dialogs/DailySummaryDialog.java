@@ -67,7 +67,7 @@ public class DailySummaryDialog extends CLOutboundDismissDialog{
 			this.lstHoliday = lstHoliday;
 		}
 		mPagerAdapter = new DailySummaryDialogPagerAdapter(this, mContext, dates);
-		mPagerAdapter.setData(this.lstSchedule, this.calendarBirthdayModels, this.lstHoliday, this.onAddBtnClickedListener, this.listener, this);
+		mPagerAdapter.setData(this.lstSchedule, this.onAddBtnClickedListener, this.listener, this);
 		mViewPager.setAdapter(mPagerAdapter);
 		if(selectedDate != null){
 			int currentItemPosition = mPagerAdapter.getPositionByDate(selectedDate);

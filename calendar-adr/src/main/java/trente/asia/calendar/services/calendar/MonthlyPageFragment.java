@@ -35,6 +35,7 @@ import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.dialogs.TodoDialog;
 import trente.asia.calendar.commons.utils.ClUtil;
 import trente.asia.calendar.services.calendar.model.CalendarBirthdayModel;
+import trente.asia.calendar.services.calendar.model.CategoryModel;
 import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
 import trente.asia.calendar.services.calendar.view.MonthlyCalendarDayView;
@@ -434,7 +435,11 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 			return;
 		}
 		super.onLoadSchedulesSuccess(response);
+	}
 
+	@Override
+	protected void updateSchedules(List<ScheduleModel> schedules, List<CategoryModel> categories){
+		super.updateSchedules(schedules, categories);
 		// add holiday,
 		if(!CCCollectionUtil.isEmpty(lstHoliday)){
 			for(HolidayModel holidayModel : lstHoliday){
@@ -485,6 +490,7 @@ public class MonthlyPageFragment extends SchedulesPageFragment{
 		for(MonthlyCalendarDayView dayView : lstCalendarDay){
 			dayView.showSchedules();
 		}
+
 		buildTodoList(todos);
 	}
 

@@ -96,6 +96,8 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements Da
 			initCalendarView();
 		}
 
+		dialogDailySummary = new DailySummaryDialog(activity, this, this, dates);
+
 		// imgExpand = (ImageView)getView().findViewById(R.id.ic_icon_expand);
 	}
 
@@ -222,29 +224,29 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements Da
 			pageSharingHolder.isLoadingSchedules = false;
 
 			// make daily summary dialog
-			if(dialogDailySummary == null){
-				dialogDailySummary = new DailySummaryDialog(activity, this, this, dates);
-				mRootView.post(new Runnable() {
-
-					@Override
-					public void run(){
-						dialogDailySummary.setData(lstSchedule, calendarBirthdayModels, lstHoliday, getScreenMode());
-					}
-				});
-
-			}
-
-			if(refreshDialogData && isChangedData){
-				//// TODO: 4/27/2017 more check change data
-				mRootView.post(new Runnable() {
-
-					@Override
-					public void run(){
-						dialogDailySummary.setData(lstSchedule, calendarBirthdayModels, lstHoliday, getScreenMode());
-					}
-				});
-				isChangedData = false;
-			}
+			// if(dialogDailySummary == null){
+			// dialogDailySummary = new DailySummaryDialog(activity, this, this, dates);
+			// mRootView.post(new Runnable() {
+			//
+			// @Override
+			// public void run(){
+			// dialogDailySummary.setData(lstSchedule, calendarBirthdayModels, lstHoliday, getScreenMode());
+			// }
+			// });
+			//
+			// }
+			//
+			// if(refreshDialogData && isChangedData){
+			// //// TODO: 4/27/2017 more check change data
+			// mRootView.post(new Runnable() {
+			//
+			// @Override
+			// public void run(){
+			// dialogDailySummary.setData(lstSchedule, calendarBirthdayModels, lstHoliday, getScreenMode());
+			// }
+			// });
+			// isChangedData = false;
+			// }
 
 			Calendar selectedCal = CCDateUtil.makeCalendar(selectedDate);
 			for(ScheduleModel scheduleModel : lstSchedule){
@@ -257,6 +259,9 @@ public abstract class SchedulesPageFragment extends ClPageFragment implements Da
 			}
 			if(!currentScreenMode.equals(SCREEN_MODE_DS)){
 				updateSchedules(lstSchedule, lstCategory);
+				loadScheduleListForDialog();
+			}else{
+				dialogDailySummary.setData(lstSchedule, calendarBirthdayModels, lstHoliday, getScreenMode());
 			}
 
 		}catch(IOException e){

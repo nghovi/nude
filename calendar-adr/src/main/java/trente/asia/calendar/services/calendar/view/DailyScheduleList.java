@@ -68,23 +68,11 @@ public class DailyScheduleList extends LinearLayout{
 	public void showFor(Date selectedDate){
 		this.selectedDate = CCDateUtil.makeDate(selectedDate);
 		mSchedules = daySchedulesMap.get(this.selectedDate);
-		lnrEvents.removeAllViews();
 		buildTimelySchedules(R.id.lnr_daily_schedule_list_all_day, R.string.schedule, mSchedules);
 	}
 
 	public void initDataWithMap(Map<Date, List<ScheduleModel>> daySchedulesMap){
 		this.daySchedulesMap = daySchedulesMap;
-	}
-
-	public static Map<Date, List<CalendarBirthdayModel>> buildDayBirthdayUserMap(List<Date> dates, List<CalendarBirthdayModel> userModels){
-		Map<Date, List<CalendarBirthdayModel>> result = new HashMap<>();
-		for(Date date : dates){
-			Date dateOnly = CCDateUtil.makeDate(date);
-			List<CalendarBirthdayModel> dayBirthdayUsers = getBirthdayUsersByDate(userModels, date);
-			result.put(dateOnly, dayBirthdayUsers);
-		}
-		return result;
-
 	}
 
 	public static Map<Date, List<ScheduleModel>> buildDaySchedulesMap(List<Date> dates, List<ScheduleModel> lstSchedule){
@@ -106,80 +94,12 @@ public class DailyScheduleList extends LinearLayout{
 		return birthdayItem;
 	}
 
-	public static LinearLayout buildHolidayItem(LayoutInflater inflater, HolidayModel holidayModel, int paddingLeftRightPx, int layoutId){
-		LinearLayout itemHoliday = (LinearLayout)inflater.inflate(layoutId, null);
-		itemHoliday.setPadding(paddingLeftRightPx, MARGIN_TOP_BOTTOM, paddingLeftRightPx, MARGIN_TOP_BOTTOM);
-		TextView txtHolidayName = (TextView)itemHoliday.findViewById(R.id.txt_item_holiday_name);
-		txtHolidayName.setText(holidayModel.holidayName);
-		return itemHoliday;
-	}
-
 	public static LinearLayout buildHolidayItemFromSchedule(LayoutInflater inflater, ScheduleModel scheduleModel, int paddingLeftRightPx, int layoutId){
 		LinearLayout itemHoliday = (LinearLayout)inflater.inflate(layoutId, null);
 		itemHoliday.setPadding(paddingLeftRightPx, MARGIN_TOP_BOTTOM, paddingLeftRightPx, MARGIN_TOP_BOTTOM);
 		TextView txtHolidayName = (TextView)itemHoliday.findViewById(R.id.txt_item_holiday_name);
 		txtHolidayName.setText(scheduleModel.scheduleName);
 		return itemHoliday;
-	}
-
-	private void buildOffers(List<WorkRequest> offers){
-
-	}
-
-	public static List<WorkRequest> getSortedWorkOffersByDate(List<WorkRequest> offers, Date date){
-		List<WorkRequest> result = new ArrayList<>();
-		for(WorkRequest offer : offers){
-			if(ClUtil.belongPeriod(date, offer.startDate, offer.endDate)){
-				result.add(offer);
-			}
-		}
-		// sortOffersByType(result);
-		return result;
-	}
-
-	public static void sortOffersByType(List<WorkRequest> offers){
-		final Map<String, Integer> offer_type_order = new HashMap<>();
-		offer_type_order.put(WorkRequest.REQUEST_TYPE_PAID_VACATION_ALL, 1);
-		offer_type_order.put(WorkRequest.REQUEST_TYPE_PAID_VACATION_MORNING, 2);
-		offer_type_order.put(WorkRequest.REQUEST_TYPE_PAID_VACATION_AFTERNOON, 3);
-		offer_type_order.put(WorkRequest.REQUEST_TYPE_SPECIAL_HOLIDAY, 4);
-		offer_type_order.put(WorkRequest.REQUEST_TYPE_COMPENSATORY_HOLIDAY, 5);
-		offer_type_order.put(WorkRequest.REQUEST_TYPE_ABSENT, 6);
-		offer_type_order.put(WorkRequest.REQUEST_TYPE_OVERTIME_WORKING, 7);
-		offer_type_order.put(WorkRequest.REQUEST_TYPE_OVERTIME, 8);
-		offer_type_order.put(WorkRequest.REQUEST_TYPE_HOLIDAY_WORKING, 9);
-		offer_type_order.put(WorkRequest.REQUEST_TYPE_SHORT_TIME, 10);
-
-		Collections.sort(offers, new Comparator<WorkRequest>() {
-
-			@Override
-			public int compare(WorkRequest o1, WorkRequest o2){
-				return offer_type_order.get(o1.offerType).compareTo(offer_type_order.get(o2.offerType));
-			}
-		});
-	}
-
-	public static LinearLayout buildOfferItem(Context context, LayoutInflater inflater, WorkRequest offer, int layoutId){
-		LinearLayout offerItemView = (LinearLayout)inflater.inflate(layoutId, null);
-		ImageView imgAvatar = (ImageView)offerItemView.findViewById(R.id.img_item_offer_avatar);
-		TextView txtUsername = (TextView)offerItemView.findViewById(R.id.txt_item_offer_username);
-		TextView txtDate = (TextView)offerItemView.findViewById(R.id.txt_item_offer_date);
-		TextView txtType = (TextView)offerItemView.findViewById(R.id.txt_item_offer_type);
-		TextView txtStatus = (TextView)offerItemView.findViewById(R.id.txt_item_offer_status);
-		// TextView txtNote = (TextView)offerItemView.findViewById(R.id.txt_item_offer_note);
-
-		WfPicassoHelper.loadImageWithDefaultIcon(context, BuildConfig.HOST, imgAvatar, offer.userAvatarPath, R.drawable.wf_profile);
-		txtUsername.setText(offer.userName);
-
-		if(WorkRequest.REQUEST_TYPE_HOLIDAY_WORKING.equals(offer.offerType) || WorkRequest.REQUEST_TYPE_OVERTIME.equals(offer.offerType) || WorkRequest.REQUEST_TYPE_SHORT_TIME.equals(offer.offerType)){
-			txtDate.setText(" - " + offer.startTimeString + " - " + offer.endTimeString);
-		}else{
-			txtDate.setVisibility(View.GONE);
-		}
-
-		txtType.setText(offer.offerTypeName);
-		txtStatus.setText(offer.offerStatusName);
-		return offerItemView;
 	}
 
 	public static LinearLayout buildWorkRequestItemFromSchedule(Context context, LayoutInflater inflater, ScheduleModel workRequest, int layoutId){

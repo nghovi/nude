@@ -1,6 +1,5 @@
 package trente.asia.calendar.services.calendar.view;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -17,11 +16,7 @@ import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.dialogs.DailySummaryDialog;
-import trente.asia.calendar.services.calendar.model.CalendarBirthdayModel;
-import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
-import trente.asia.welfare.adr.utils.WelfareFormatUtil;
-import trente.asia.welfare.adr.utils.WelfareUtil;
 
 //import trente.asia.calendar.services.calendar.listener.OnChangeCalendarUserListener;
 
@@ -35,12 +30,9 @@ public class DailySummaryDialogPagerAdapter extends PagerAdapter{
 	private final List<Date>								dates;
 	private final LayoutInflater							mInflater;
 	private List<ScheduleModel>								lstSchedule;
-	private List<CalendarBirthdayModel>						calendarBirthdayModels;
-	private List<HolidayModel>								lstHoliday;
 	private DailySummaryDialog.OnAddBtnClickedListener		onAddBtnClickedListener;
 	private DailyScheduleList.OnScheduleItemClickListener	listener;
 	Map<Date, List<ScheduleModel>>							daySchedulesMap;
-	Map<Date, List<CalendarBirthdayModel>>					dayBirthdayUsersMap;
 	private DailySummaryDialog								dialog;
 
 	public DailySummaryDialogPagerAdapter(DailySummaryDialog dialog, Context context, List<Date> dates){
@@ -90,7 +82,7 @@ public class DailySummaryDialogPagerAdapter extends PagerAdapter{
 			}
 		});
 
-		txtHeader.setText(CCFormatUtil.formatDateCustom("yyyy/M/d",selectedDate));
+		txtHeader.setText(CCFormatUtil.formatDateCustom("yyyy/M/d", selectedDate));
 		dailyScheduleListView.hasDisplayedItem = false;
 		dailyScheduleListView.initDataWithMap(this.daySchedulesMap);
 		dailyScheduleListView.showFor(selectedDate);
@@ -127,15 +119,12 @@ public class DailySummaryDialogPagerAdapter extends PagerAdapter{
 		return o == view;
 	}
 
-	public void setData(List<ScheduleModel> lstSchedule, List<CalendarBirthdayModel> calendarBirthdays, List<HolidayModel> lstHoliday, DailySummaryDialog.OnAddBtnClickedListener onAddBtnClickedListener, DailyScheduleList.OnScheduleItemClickListener listener, DailySummaryDialog dialog){
+	public void setData(List<ScheduleModel> lstSchedule, DailySummaryDialog.OnAddBtnClickedListener onAddBtnClickedListener, DailyScheduleList.OnScheduleItemClickListener listener, DailySummaryDialog dialog){
 		this.lstSchedule = lstSchedule;
-		this.calendarBirthdayModels = calendarBirthdays;
-		this.lstHoliday = lstHoliday;
 		this.onAddBtnClickedListener = onAddBtnClickedListener;
 		this.listener = listener;
 		this.dialog = dialog;
 		this.daySchedulesMap = DailyScheduleList.buildDaySchedulesMap(dates, this.lstSchedule);
-		this.dayBirthdayUsersMap = DailyScheduleList.buildDayBirthdayUserMap(dates, calendarBirthdayModels);
 	}
 
 	public int getPositionByDate(Date selectedDate){
