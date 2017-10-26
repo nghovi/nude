@@ -1,7 +1,6 @@
 package trente.asia.calendar.services.todo;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -29,7 +28,6 @@ import android.widget.TextView;
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
-import asia.chiase.core.util.CCStringUtil;
 import trente.asia.calendar.R;
 import trente.asia.calendar.commons.defines.ClConst;
 import trente.asia.calendar.commons.fragments.AbstractClFragment;
@@ -82,17 +80,17 @@ public class TodoListFragment extends AbstractClFragment {
 
     @Override
     protected void initData() {
-        loadTodoList();
+        loadTodoList(true);
     }
 
-    private void loadTodoList() {
+    private void loadTodoList(boolean showLoading) {
         JSONObject jsonObject = new JSONObject();
         // try{
         // jsonObject.put("targetDateString", "2017/02/22");
         // }catch(JSONException e){
         // e.printStackTrace();
         // }
-        requestLoad(ClConst.API_TODO_LIST, jsonObject, true);
+        requestLoad(ClConst.API_TODO_LIST, jsonObject, showLoading);
 
     }
 
@@ -316,7 +314,7 @@ public class TodoListFragment extends AbstractClFragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        requestUpdate(ClConst.API_TODO_UPDATE, jsonObject, true);
+        requestUpdate(ClConst.API_TODO_UPDATE, jsonObject, false);
     }
 
     private void showDeleteDialog(final Todo todo) {
@@ -420,7 +418,7 @@ public class TodoListFragment extends AbstractClFragment {
         if (ClConst.API_TODO_DELETE.equals(url)) {
             dlgDeleteConfirm.dismiss();
         }
-        loadTodoList();
+        loadTodoList(false);
         // View cell = lnrUnfinished.findViewWithTag(selectedTodo.key);
         // lnrUnfinished.removeView(cell);
         // buildFinishedTodoItem(selectedTodo, false);
