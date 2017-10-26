@@ -1,7 +1,6 @@
 package trente.asia.calendar.services.calendar;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -15,7 +14,6 @@ import com.bluelinelabs.logansquare.LoganSquare;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -28,8 +26,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.TimePicker;
 
 import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCCollectionUtil;
@@ -85,6 +83,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment implements On
 	private boolean						timePickerStart;
 	private int							selectedHour;
 	private int							selectedMinute;
+	ImageView							imgChecked;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -102,6 +101,8 @@ public class ScheduleFormFragment extends AbstractScheduleFragment implements On
 		}else{
 			initHeader(R.drawable.wf_back_white, getString(R.string.fragment_schedule_form_title), R.drawable.cl_action_save);
 		}
+
+		imgChecked = (ImageView)getView().findViewById(R.id.img_id_header_right_icon);
 
 		repeatDialog = new ClScheduleRepeatDialog(activity, txtRepeat, txtRepeatUntil);
 		repeatDialog.setOnChangeRepeatTypeListener(new ClScheduleRepeatDialog.OnChangeRepeatTypeListener() {
@@ -203,7 +204,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment implements On
 			endTimeStr = addAnHour(startTimeStr);
 		}
 
-		repeatDialog.setStartDateStr(CCFormatUtil.formatDateCustom("yyyy/M/d",startDate));
+		repeatDialog.setStartDateStr(CCFormatUtil.formatDateCustom("yyyy/M/d", startDate));
 		if(ClRepeatUtil.isRepeat(schedule.repeatType)){
 			// set repeat dialog values
 			repeatDialog.setRepeatModel(schedule);
@@ -211,9 +212,9 @@ public class ScheduleFormFragment extends AbstractScheduleFragment implements On
 			repeatDialog.initDefaultValue();
 		}
 
-		WelfareFormatUtil.setChiaseTextView(txtStartDate, CCFormatUtil.formatDateCustom("yyyy/M/d",startDate));
+		WelfareFormatUtil.setChiaseTextView(txtStartDate, CCFormatUtil.formatDateCustom("yyyy/M/d", startDate));
 		WelfareFormatUtil.setChiaseTextView(txtStartTime, startTimeStr);
-		WelfareFormatUtil.setChiaseTextView(txtEndDate, CCFormatUtil.formatDateCustom("yyyy/M/d",endDate));
+		WelfareFormatUtil.setChiaseTextView(txtEndDate, CCFormatUtil.formatDateCustom("yyyy/M/d", endDate));
 		WelfareFormatUtil.setChiaseTextView(txtEndTime, endTimeStr);
 
 		calendar.setTime(startDate);
@@ -296,8 +297,9 @@ public class ScheduleFormFragment extends AbstractScheduleFragment implements On
 	private void initScopeDialog(ScheduleModel scheduleModel){
 		final Map<String, String> scopes = getPublicityMap();
 		dlgChooseScope = new CLOutboundDismissListDialog(activity, getString(R.string.cl_schedule_form_item_scope), scopes, txtScope, new ChiaseListDialog.OnItemClicked() {
+
 			@Override
-			public void onClicked(String selectedKey, boolean isSelected) {
+			public void onClicked(String selectedKey, boolean isSelected){
 				txtScope.setText(getTitle(scopes.get(selectedKey)));
 			}
 		});
@@ -314,11 +316,11 @@ public class ScheduleFormFragment extends AbstractScheduleFragment implements On
 		});
 	}
 
-//	public String getDescriptionfromKey(String key, Map<String,String> scopes){
-////		for(int temp =0;temp<scopes.size();temp++){
-//			return scopes.get(key);
-////		}
-//	}
+	// public String getDescriptionfromKey(String key, Map<String,String> scopes){
+	//// for(int temp =0;temp<scopes.size();temp++){
+	// return scopes.get(key);
+	//// }
+	// }
 	private Map<String, String> getRoomMap(List<RoomModel> rooms){
 
 		if(CCCollectionUtil.isEmpty(rooms)){
@@ -372,6 +374,7 @@ public class ScheduleFormFragment extends AbstractScheduleFragment implements On
 	public void onClick(View v){
 		switch(v.getId()){
 		case R.id.img_id_header_right_icon:
+			imgChecked.setClickable(false);
 			if(schedule != null && !CCStringUtil.isEmpty(schedule.key) && ClRepeatUtil.isRepeat(schedule.repeatType)){
 				editMode = SCHEDULE_EDIT_MODE;
 				editModeDialog.updateScheduleEditModeTitle(getString(R.string.cl_schedule_edit_mode_title));
@@ -635,6 +638,13 @@ public class ScheduleFormFragment extends AbstractScheduleFragment implements On
 		default:
 			super.successUpdate(response, url);
 		}
+		imgChecked.setClickable(true);
+	}
+
+	@Override
+	protected void commonNotSuccess(JSONObject response, String url){
+		super.commonNotSuccess(response, url);
+		imgChecked.setClickable(true);
 	}
 
 	private void onScheduleUpdateSuccess(String newKey){
