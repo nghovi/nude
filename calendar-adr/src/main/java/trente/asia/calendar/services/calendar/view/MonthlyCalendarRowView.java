@@ -194,7 +194,7 @@ public class MonthlyCalendarRowView extends RelativeLayout{
 		int marginLeft = (int)(itemWidth * theFirstCalendarDay.dayOfTheWeek);
 		int marginTopAfter = marginTop + WelfareUtil.dpToPx(5);
 
-		TextView txtSchedule = createTextView(getContext(), width, marginLeft, scheduleModel, marginTopAfter + WelfareUtil.dpToPx(4));
+		TextView txtSchedule = createTextView(getContext(), width, marginLeft, scheduleModel, marginTop);
 
 		if(ScheduleModel.EVENT_TYPE_HOLIDAY_OLD.equals(scheduleModel.eventType)){
 			txtSchedule.setTextColor(Color.RED);
