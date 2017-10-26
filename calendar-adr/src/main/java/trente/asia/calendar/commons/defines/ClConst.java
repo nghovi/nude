@@ -35,7 +35,7 @@ public class ClConst{
 	public static final String	SCHEDULE_MODIFY_TYPE_ONLY_THIS				= "OT";
 	public static final String	SCHEDULE_MODIFY_TYPE_ONLY_FUTURE			= "OF";
 
-	public static final int		TEXT_VIEW_HEIGHT							= WelfareUtil.dpToPx(15);
+	public static final int		TEXT_VIEW_HEIGHT							= WelfareUtil.dpToPx(17);
 
 	public static final String	ACTION_SCHEDULE_DELETE						= "ACTION_SCHEDULE_DELETE";
 	public static final String	ACTION_SCHEDULE_UPDATE						= "ACTION_SCHEDULE_UPDATE";

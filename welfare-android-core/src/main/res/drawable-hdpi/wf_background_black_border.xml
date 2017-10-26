@@ -6,11 +6,6 @@
         android:width="2px"
         android:color="@color/chiase_black" />
     <corners android:radius="3dp" />
-    <padding
-        android:bottom="0dp"
-        android:left="0dp"
-        android:right="0dp"
-        android:top="0dp" />
 </shape>
 
 
