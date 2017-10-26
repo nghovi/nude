@@ -70,31 +70,6 @@
                 style="@style/wl_common_text"
                 android:layout_width="wrap_content"/>
         </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/lnr_id_repeat_after"
-            style="@style/cs_common_wrap"
-            android:layout_weight="1"
-            android:gravity="right|center_vertical"
-            android:orientation="horizontal"
-            android:visibility="gone">
-
-            <EditText
-                android:id="@+id/edt_id_limit_times"
-                style="@style/wl_common_text"
-                android:layout_width="wrap_content"
-                android:inputType="number"
-                android:paddingLeft="@dimen/margin_15dp"
-                android:paddingRight="@dimen/margin_15dp"
-                android:text="3"/>
-
-            <TextView
-                style="@style/wl_common_text"
-                android:layout_width="wrap_content"
-                android:layout_marginLeft="@dimen/margin_6dp"
-                android:text="@string/cl_schedule_repeat_dialog_times"/>
-        </LinearLayout>
-
     </LinearLayout>
 
     <View style="@style/cs_common_divider"/>

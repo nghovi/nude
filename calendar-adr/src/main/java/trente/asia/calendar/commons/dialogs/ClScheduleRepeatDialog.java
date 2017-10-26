@@ -47,23 +47,22 @@ public class ClScheduleRepeatDialog extends CLOutboundDismissDialog{
 
 	private LinearLayout				lnrWeeklyDay;
 	private LinearLayout				lnrLimitUtil;
-	private LinearLayout				lnrLimitAfter;
 	private TextView					txtLimitUtil;
 
 	private RepeatWeeklyDayLinearLayout	lnrRepeatWeeklyDay;
-//	private Calendar					calendarLimit	= Calendar.getInstance();
+	// private Calendar calendarLimit = Calendar.getInstance();
 	private DatePickerDialog			datePickerDialogLimit;
 	private SwitchCompat				swtRepeat;
 	private EditText					edtLimitTimes;
 
-	private ScheduleModel				repeatModel		= new ScheduleModel();
+	private ScheduleModel				repeatModel	= new ScheduleModel();
 	private String						startDateStr;
 	private List<ChiaseSpinnerModel>	lstRepeatType;
 	private List<ChiaseSpinnerModel>	lstRepeatLimit;
 	private String						defaultDatePicker;
-	private int mYear;
-	private int mMonth;
-	private int mDay;
+	private int							mYear;
+	private int							mMonth;
+	private int							mDay;
 
 	public interface OnChangeRepeatTypeListener{
 
@@ -91,7 +90,6 @@ public class ClScheduleRepeatDialog extends CLOutboundDismissDialog{
 		lnrWeeklyDay = (LinearLayout)this.findViewById(R.id.lnr_id_weekly_day);
 
 		lnrLimitUtil = (LinearLayout)this.findViewById(R.id.lnr_id_repeat_until);
-		lnrLimitAfter = (LinearLayout)this.findViewById(R.id.lnr_id_repeat_after);
 		txtLimitUtil = (TextView)this.findViewById(R.id.txt_id_repeat_limit_util);
 		swtRepeat = (SwitchCompat)this.findViewById(R.id.swt_id_repeat);
 		edtLimitTimes = (EditText)this.findViewById(R.id.edt_id_limit_times);
@@ -99,7 +97,6 @@ public class ClScheduleRepeatDialog extends CLOutboundDismissDialog{
 		lnrRepeatWeeklyDay = (RepeatWeeklyDayLinearLayout)this.findViewById(R.id.lnr_id_repeat_weekly_day);
 		lnrRepeatWeeklyDay.initialization();
 		// calendarLimit.add(Calendar.MONTH, 1);
-
 
 		lstRepeatType = new ArrayList<>();
 		lstRepeatType.add(new ChiaseSpinnerModel(ClConst.SCHEDULE_REPEAT_TYPE_WEEKLY, mContext.getString(R.string.cl_schedule_repeat_type_weekly)));
@@ -193,25 +190,20 @@ public class ClScheduleRepeatDialog extends CLOutboundDismissDialog{
 	private void onChangeRepeatLimit(ChiaseSpinnerModel model){
 		if(ClConst.SCHEDULE_REPEAT_LIMIT_FOREVER.equals(model.key)){
 			lnrLimitUtil.setVisibility(View.GONE);
-			lnrLimitAfter.setVisibility(View.GONE);
 		}else if(ClConst.SCHEDULE_REPEAT_LIMIT_UNTIL.equals(model.key)){
 			lnrLimitUtil.setVisibility(View.VISIBLE);
-			lnrLimitAfter.setVisibility(View.GONE);
 			Calendar cal = Calendar.getInstance();
 			if(!CCStringUtil.isEmpty(startDateStr)){
-				Date start = CCDateUtil.makeDateCustom(startDateStr, WelfareConst.WF_DATE_TIME_DATE);
+				Date start = CCDateUtil.makeDateCustom(startDateStr, "yyyy/M/d");
 				cal.setTime(start);
 			}
 			cal.set(Calendar.DATE, cal.getActualMaximum(Calendar.DATE));
-			if (repeatModel.repeatEnd != null){
-				defaultDatePicker = CCFormatUtil.formatDateCustom("yyyy/M/d",repeatModel.repeatEnd);
-			}else {
-				defaultDatePicker = CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, cal.getTime());
+			if(repeatModel.repeatEnd != null){
+				defaultDatePicker = CCFormatUtil.formatDateCustom("yyyy/M/d", repeatModel.repeatEnd);
+			}else{
+				defaultDatePicker = CCFormatUtil.formatDateCustom("yyyy/M/d", cal.getTime());
 			}
 			txtLimitUtil.setText(defaultDatePicker);
-		}else{
-			lnrLimitUtil.setVisibility(View.GONE);
-			lnrLimitAfter.setVisibility(View.VISIBLE);
 		}
 		if(defaultDatePicker != null){
 			mYear = Integer.parseInt(defaultDatePicker.split("/")[0]);
@@ -281,14 +273,14 @@ public class ClScheduleRepeatDialog extends CLOutboundDismissDialog{
 		this.spnRepeatLimit.setSelection(CsUtil.findPosition4Spinner(lstRepeatLimit, repeatModel.repeatLimitType));
 		if(ClConst.SCHEDULE_REPEAT_LIMIT_FOREVER.equals(repeatModel.repeatLimitType)){
 		}
-//		else if(ClConst.SCHEDULE_REPEAT_LIMIT_UNTIL.equals(repeatModel.repeatLimitType)){
-//			defaultDatePicker = CCFormatUtil.formatDateCustom("yyyy/MM/dd",repeatModel.repeatEnd);
-//			mYear = Integer.parseInt(defaultDatePicker.split("/")[0]);
-//			mMonth = Integer.parseInt(defaultDatePicker.split("/")[1]) - 1;
-//			mDay = Integer.parseInt(defaultDatePicker.split("/")[2]);
-//			calendarLimit = CCDateUtil.makeCalendar(repeatModel.repeatEnd);
-//			datePickerDialogLimit.getDatePicker().updateDate(mYear, mMonth, mDay);
-//		}
+		// else if(ClConst.SCHEDULE_REPEAT_LIMIT_UNTIL.equals(repeatModel.repeatLimitType)){
+		// defaultDatePicker = CCFormatUtil.formatDateCustom("yyyy/MM/dd",repeatModel.repeatEnd);
+		// mYear = Integer.parseInt(defaultDatePicker.split("/")[0]);
+		// mMonth = Integer.parseInt(defaultDatePicker.split("/")[1]) - 1;
+		// mDay = Integer.parseInt(defaultDatePicker.split("/")[2]);
+		// calendarLimit = CCDateUtil.makeCalendar(repeatModel.repeatEnd);
+		// datePickerDialogLimit.getDatePicker().updateDate(mYear, mMonth, mDay);
+		// }
 		else{
 			edtLimitTimes.setText(repeatModel.repeatInterval);
 		}
