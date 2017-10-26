@@ -29,30 +29,19 @@ public class ClConst{
 
 	public static final String	SCHEDULE_REPEAT_LIMIT_FOREVER				= "F";
 	public static final String	SCHEDULE_REPEAT_LIMIT_UNTIL					= "U";
-	// public static final String SCHEDULE_REPEAT_LIMIT_AFTER = "A";
 
 	public static final String	SCHEDULE_MODIFY_TYPE_ALL					= "AL";
 	public static final String	SCHEDULE_MODIFY_TYPE_ONLY_THIS				= "OT";
 	public static final String	SCHEDULE_MODIFY_TYPE_ONLY_FUTURE			= "OF";
 
-	public static final int		TEXT_VIEW_HEIGHT							= WelfareUtil.dpToPx(15);
+	public static final int		TEXT_VIEW_HEIGHT							= WelfareUtil.dpToPx(18);
 
 	public static final String	ACTION_SCHEDULE_DELETE						= "ACTION_SCHEDULE_DELETE";
 	public static final String	ACTION_SCHEDULE_UPDATE						= "ACTION_SCHEDULE_UPDATE";
 	public static final String	ACTION_SCHEDULE_UPDATE_NEW_KEY				= "ACTION_SCHEDULE_UPDATE_NEW_KEY";
 
-	public static final String	WORKING_OFFER_TYPE_PAID_VACATION_ALL		= "PVAL";
-	public static final String	WORKING_OFFER_TYPE_PAID_VACATION_MORNING	= "PVMO";
-	public static final String	WORKING_OFFER_TYPE_PAID_VACATION_AFTERNOON	= "PVAF";
-	public static final String	WORKING_OFFER_TYPE_SPECIAL_HOLIDAY			= "SPH";
-	public static final String	WORKING_OFFER_TYPE_COMPENSATORY_HOLIDAY		= "CPH";
-	public static final String	WORKING_OFFER_TYPE_ABSENT					= "ABS";
-	public static final String	WORKING_OFFER_TYPE_OVERTIME_WORKING			= "OTW";
-	public static final String	WORKING_OFFER_TYPE_HOLIDAY_WORKING			= "HDW";
-	public static final String	WORKING_OFFER_TYPE_SHORT_TIME				= "STO";
 
 	public static final String	API_CALENDAR_LIST							= "/api/cl/calendars";
-	public static final String	API_SUMMARY									= "/api/cl/summary";
 
 	public static final String	API_SCHEDULE_LIST							= "/api/cl/schedule/list";
 	public static final String	API_SCHEDULE_DETAIL							= "/api/cl/schedule/detail";

@@ -292,7 +292,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
                     TextView textView = new TextView(activity);
                     textView.setMaxLines(1);
                     textView.setEllipsize(TextUtils.TruncateAt.END);
-                    textView.setTextSize(13);
+                    textView.setTextSize(14);
                     textView.setMaxWidth((int) (screenW / 7 - 2));
                     textView.setGravity(Gravity.LEFT);
                     textView.setText("+" + more);
@@ -419,7 +419,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
         TextView textView = new TextView(activity);
         textView.setMaxLines(1);
         // textView.setEllipsize(TextUtils.TruncateAt.END);
-        textView.setTextSize(13);
+        textView.setTextSize(14);
 
         textView.setMaxWidth(maxWidth);
         textView.setGravity(gravity);
@@ -444,7 +444,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
         TextView textView = new TextView(activity);
         // textView.setMaxLines(1);
         // textView.setEllipsize(TextUtils.TruncateAt.END);
-        textView.setTextSize(13);
+        textView.setTextSize(14);
 
         textView.setMaxWidth(maxWidth);
         textView.setGravity(gravity);

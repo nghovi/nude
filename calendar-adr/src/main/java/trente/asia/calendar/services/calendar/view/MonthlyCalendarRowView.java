@@ -28,7 +28,7 @@ import trente.asia.welfare.adr.utils.WelfareUtil;
  */
 public class MonthlyCalendarRowView extends RelativeLayout{
 
-	public static final int				TEXT_SIZE		= 10;
+	public static final int				TEXT_SIZE		= 14;
 	private Context						mContext;
 	public List<MonthlyCalendarDayView>	lstCalendarDay;
 
