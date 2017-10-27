@@ -19,16 +19,10 @@ import android.widget.TextView;
 import asia.chiase.core.util.CCBooleanUtil;
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
-import asia.chiase.core.util.CCFormatUtil;
 import trente.asia.calendar.BuildConfig;
 import trente.asia.calendar.R;
-import trente.asia.calendar.commons.utils.ClUtil;
-import trente.asia.calendar.services.calendar.model.CalendarBirthdayModel;
-import trente.asia.calendar.services.calendar.model.HolidayModel;
 import trente.asia.calendar.services.calendar.model.ScheduleModel;
-import trente.asia.calendar.services.calendar.model.WorkRequest;
 import trente.asia.welfare.adr.activity.WelfareFragment;
-import trente.asia.welfare.adr.define.WelfareConst;
 import trente.asia.welfare.adr.utils.WelfareUtil;
 import trente.asia.welfare.adr.utils.WfPicassoHelper;
 import trente.asia.welfare.adr.view.SelectableRoundedImageView;
@@ -68,6 +62,18 @@ public class DailyScheduleList extends LinearLayout{
 	public void showFor(Date selectedDate){
 		this.selectedDate = CCDateUtil.makeDate(selectedDate);
 		mSchedules = daySchedulesMap.get(this.selectedDate);
+		Collections.sort(mSchedules, new Comparator<ScheduleModel>() {
+
+			@Override
+			public int compare(ScheduleModel o1, ScheduleModel o2){
+				if(ScheduleModel.EVENT_TYPE_WORK_OFFER.equals(o1.eventType) && ScheduleModel.EVENT_TYPE_BIRTHDAY.equals(o2.eventType)){
+					return -1;
+				}else if(ScheduleModel.EVENT_TYPE_BIRTHDAY.equals(o1.eventType) && ScheduleModel.EVENT_TYPE_WORK_OFFER.equals(o2.eventType)){
+					return 1;
+				}
+				return 0;
+			}
+		});
 		buildTimelySchedules(R.id.lnr_daily_schedule_list_all_day, R.string.schedule, mSchedules);
 	}
 
@@ -115,16 +121,6 @@ public class DailyScheduleList extends LinearLayout{
 		txtType.setText(workRequest.scheduleName);
 		txtStatus.setText(workRequest.scheduleNote);
 		return offerItemView;
-	}
-
-	public static List<CalendarBirthdayModel> getBirthdayUsersByDate(List<CalendarBirthdayModel> userModels, Date date){
-		List<CalendarBirthdayModel> result = new ArrayList<>();
-		for(CalendarBirthdayModel userModel : userModels){
-			if(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE_HYPHEN, date).equals(userModel.birthDay)){
-				result.add(userModel);
-			}
-		}
-		return result;
 	}
 
 	private void buildTimelySchedules(int parentId, int titleId, List<ScheduleModel> scheduleModels){

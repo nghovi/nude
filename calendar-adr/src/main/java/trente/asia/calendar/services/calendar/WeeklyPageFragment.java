@@ -572,7 +572,7 @@ public class WeeklyPageFragment extends SchedulesPageFragment implements Observa
 			txtTitleItem.setTextColor(Color.BLUE);
 			// txtDayNumber.setTextColor(Color.BLUE);
 		}else{
-			txtTitleItem.setTextColor(getNormalDayColor());
+			// txtTitleItem.setTextColor(getNormalDayColor());
 			// txtDayNumber.setTextColor(getNormalDayColor());
 		}
 
