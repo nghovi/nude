@@ -1,16 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="chiase_date_time_view_set_button">Set</string>
     <string name="chiase_date_time_view_cancel_button">Cancel</string>
-
     <string name="chiase_photo_actions">Photo actions</string>
     <string name="chiase_movie_actions">Movie actions</string>
     <string name="chiase_title_photo_choose">Choose a photo</string>
     <string name="chiase_title_photo_take">Take a photo</string>
     <string name="chiase_title_movie_choose">Choose a movie</string>
     <string name="chiase_title_movie_take">Take a movie</string>
-
     <string name="chiase_common_ok">OK</string>
     <string name="chiase_common_cancel">Cancel</string>
     <string name="chiase_common_cancel1">Cancel</string>
@@ -22,26 +18,20 @@
     <string name="chiase_common_modify">Modify</string>
     <string name="chiase_common_add">Add</string>
     <string name="chiase_common_request">Request</string>
-
     <string name="chiase_common_send">Send</string>
     <string name="chiase_common_prev">Prev</string>
     <string name="chiase_common_next">Next</string>
     <string name="chiase_common_check">Check</string>
-
     <string name="chiase_common_none">None</string>
     <string name="chiase_common_all">All</string>
     <string name="chiase_common_please_input">Please input</string>
     <string name="chiase_common_please_select">Please select</string>
-
     <string name="chiase_common_today">Today</string>
-
     <string name="chiase_common_action_downloading">Downloading</string>
     <string name="chiase_action_downloaded">File is downloaded</string>
     <string name="chiase_action_open_file_confirm">Do you want to open file?</string>
-
     <string name="chiase_common_disabled_function">now you can\'t use this function.</string>
     <string name="chiase_common_not_working_gps">Can\'t get location, please check network again.</string>
-
     <string name="chiase_common_success_change_push_setting">Push Notification setting has been changed.</string>
     <string name="chiase_common_success_change_avatar">Your avatar has been changed successfully!</string>
     <string name="chiase_common_success_change_password"> Your password has been changed successfully!</string>
@@ -50,6 +40,4 @@
     <string name="chiase_setting_title">Setting</string>
     <string name="system_error_msg">Connection error</string>
     <string name="chiase_common_search">Search</string>
-
-
 </resources>

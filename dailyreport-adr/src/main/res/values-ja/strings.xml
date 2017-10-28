@@ -1,14 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">DailyReport</string>
-
-    <string name="dr_at_time">&#160;%1$s</string>
-
-    <!-- footer -->
     <string name="footer_item1">日報</string>
     <string name="footer_item2">みんなの日報</string>
     <string name="footer_item3">行動予定</string>
     <string name="footer_item4">設定</string>
+    <string name="dr_at_time">&#160;%1$s</string>
     <string name="fragment_report_edit_change_template_confirm">このテンプレートを変更しますか？</string>
     <string name="fragment_other_title">みんなの日報</string>
     <string name="fragment_follower_title_checker">既読リスト</string>
@@ -16,30 +11,26 @@
     <string name="dr_report_comment_title">コメント</string>
     <string name="spinner_name_template">テンプレート</string>
     <string name="spinner_name_dept">部門</string>
-
     <string name="fragment_setting_title">設定</string>
     <string name="fragment_title_empty"></string>
     <string name="header_calendar_this_month">今月</string>
     <string name="fragment_common_list_empty">Sorry, there is no data</string>
     <string name="fragment_activities_title">アクティビティ</string>
-
     <string name="fragment_about_version">Version %1$s</string>
+    <string name="str_all">すべて</string>
+    <string name="str_none">なし</string>
     <string name="dr_preview_title">プレビュー</string>
     <string name="btn_prev">前へ</string>
     <string name="btn_next">次へ</string>
-
     <string name="dlr_report_content">日報</string>
     <string name="dlr_add_comment">コメントする</string>
     <string name="dlr_like">いいね！</string>
-
     <string name="dlr_send">送信する</string>
     <string name="dlr_save">保存</string>
     <string name="dlr_plan">予定</string>
     <string name="dlr_actual">実績</string>
     <string name="dlr_content">日報</string>
-
     <string name="dlr_add_kpi">追加</string>
-
     <string name="dlr_saturday">土</string>
     <string name="dlr_sunday">日</string>
     <string name="dlr_monday">月</string>
@@ -47,8 +38,6 @@
     <string name="dlr_wed">水</string>
     <string name="dlr_thu">木</string>
     <string name="dlr_fri">金</string>
-    <string name="str_all">すべて</string>
-    <string name="str_none">なし</string>
     <string name="view_kpi_monthly_goal">月間目標</string>
     <string name="view_kpi_actual_plan">アクションプラン</string>
     <string name="dlr_copy">コピー</string>
@@ -56,15 +45,11 @@
     <string name="dlr_goal">目標値</string>
     <string name="dlr_sum">累計</string>
     <string name="dlr_avg">平均</string>
-
     <string name="dr_comment_edittext_hint">メッセージを入力</string>
     <string name="spinner_name_report_user">日報者</string>
     <string name="spinner_name_action_user">活動者</string>
-
     <string name="dr_activity_item_desc">日報: %1$s %2$s さんから日報</string>
     <string name="dr_item">目標</string>
-
-    <!--Notifications-->
     <string name="FM_DR_001">%1$sさんが新しい日報を作成しました</string>
     <string name="FM_DR_002">%1$s新しいいいね！があります</string>
     <string name="FM_DR_003">%1$s新しいコメントがあります</string>
@@ -72,7 +57,6 @@
     <string name="FM_DR_005">%1$s さんが目標を達成しました。</string>
     <string name="FM_DR_006">%1$s さんが目標を達成しません。</string>
     <string name="FM_DR_007">グループ目標を達成しました！</string>
-
     <string name="header_calendar_this_week">今週</string>
     <string name="goal_period">目標期限</string>
     <string name="personal_goal">個人目標</string>

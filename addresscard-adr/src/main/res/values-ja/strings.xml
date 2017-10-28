@@ -1,13 +1,53 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name" translatable="false"></string>
+    <string name="btn_camera_text" translatable="false"></string>
+    <string name="default_title_card" translatable="false"></string>
+    <string name="menu_card_title" translatable="false"></string>
+    <string name="menu_company_title" translatable="false"></string>
+    <string name="menu_history_title" translatable="false"></string>
+    <string name="menu_setting_title" translatable="false"></string>
     <string name="ac_about_app_version">1.0</string>
+    <string name="ac_upload_card_modify_data" translatable="false"></string>
+    <string name="ac_company_tel" translatable="false"></string>
+    <string name="ac_url" translatable="false"></string>
+    <string name="ac_name" translatable="false"></string>
+    <string name="ac_tel" translatable="false"></string>
+    <string name="ac_address" translatable="false"></string>
+    <string name="ac_email" translatable="false"></string>
+    <string name="ac_note" translatable="false"></string>
+    <string name="ac_user" translatable="false"></string>
+    <string name="ac_upload_card_customer" translatable="false"></string>
+    <string name="ac_main_card_title" translatable="false"></string>
+    <string name="ac_card_detail_title" translatable="false"></string>
+    <string name="ac_card_detail_customer_name" translatable="false"></string>
+    <string name="ac_set_customer_title" translatable="false"></string>
+    <string name="ac_choose_customer_title" translatable="false"></string>
+    <string name="ac_new_customer_title" translatable="false"></string>
+    <string name="ac_category" translatable="false"></string>
+    <string name="ac_category_name" translatable="false"></string>
+    <string name="ac_category_note" translatable="false"></string>
+    <string name="ac_category_list" translatable="false"></string>
+    <string name="ac_customer_list" translatable="false"></string>
+    <string name="ac_customer_title" translatable="false"></string>
+    <string name="ac_customer_last_comment" translatable="false"></string>
+    <string name="ac_btn_add_comment" translatable="false"></string>
+    <string name="ac_customer_list_title" translatable="false"></string>
+    <string name="ac_update_by" translatable="false"></string>
+    <string name="ac_ungroup" translatable="false"></string>
+    <string name="ac_delete" translatable="false"></string>
     <string name="shop_cards_title">Shop cards</string>
+    <string name="test_string" translatable="false"></string>
     <string name="fragment_shop_cards_tags">Tags</string>
     <string name="tag_title">Tag title</string>
+    <string name="ac_lastest_card_list" translatable="false"></string>
+    <string name="ac_all" translatable="false"></string>
+    <string name="ac_customer" translatable="false"></string>
     <string name="shop_card_detail_title">Shop card detail</string>
     <string name="shop_card_detail_address">Address</string>
     <string name="shop_cards_no_tag">No tag</string>
     <string name="fragment_tags_uncheck_all">Uncheck all</string>
     <string name="fragment_tags_check_all">Check all</string>
     <string name="ac_delete_card">Delete card</string>
+    <string name="ac_delete_company" translatable="false"></string>
+    <string name="ac_latest_card_list" translatable="false"></string>
 </resources>

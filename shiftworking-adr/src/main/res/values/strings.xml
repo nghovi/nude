@@ -1,32 +1,23 @@
 <resources>
     <string name="app_name">Work time Record</string>
-
     <string name="fragment_setting_title">Setting</string>
     <string name="fragment_about_version">Version %1$s</string>
     <string name="wf_about_app">About App</string>
     <string name="wf_account_info_title">Account Information</string>
-
     <string name="sw_offer_title">Notice information</string>
     <string name="sw_notice_list_title">Notice list</string>
     <string name="sw_worker_title">Who\'s working</string>
     <string name="sw_notice_detail_title">Notice information</string>
-
     <string name="fragment_offer_edit_confirm_delete_msg">Are you sure to delete this offer?</string>
     <string name="fragment_offer_edit_offer_type">Offer Type</string>
-
     <string name="sw_footer_work_time">Check in</string>
     <string name="sw_footer_work_shift">Work shift</string>
     <string name="sw_footer_work_offer">Work offer</string>
     <string name="sw_footer_setting">Setting</string>
     <string name="sw_footer_work_status">Work status</string>
-
-    <!--Check in service-->
-
-
     <string name="sw_work_item_project">Project name</string>
     <string name="sw_work_item_project_loc">Location</string>
     <string name="sw_work_item_checkin_list">Check in history</string>
-
     <string name="sw_work_item_notice_type">Notice type</string>
     <string name="sw_work_item_target_dept">Target department</string>
     <string name="sw_work_item_reason">Reason</string>
@@ -35,17 +26,13 @@
     <string name="sw_work_item_notice_user">User</string>
     <string name="sw_work_item_notice_date">Notice date</string>
     <string name="sw_work_item_check_user">Checked users</string>
-
     <string name="sw_work_notice_item_offer_dept">Department</string>
-
     <string name="sw_work_time_modify_request_title">Modify request</string>
     <string name="sw_work_time_modify_request">Modify request for %1$s check in</string>
     <string name="sw_work_time_modify_request_start">Modify request for %1$s Start time</string>
     <string name="sw_work_time_modify_request_undefined">Modify request for %1$s Undefined</string>
     <string name="sw_work_time_modify_request_end">Modify request for %1$s End time</string>
-
     <string name="sw_work_time_modify_request_success">Success request</string>
-
     <string name="sw_shift_work_this_month">This month</string>
     <string name="sw_shift_work_history">Work history</string>
     <string name="sw_shift_work_item_status">Status</string>
@@ -59,15 +46,10 @@
     <string name="sw_shift_work_be_late">Be late</string>
     <string name="sw_shift_work_leave_early">Leave early</string>
     <string name="sw_shift_work_summary_title">Summary</string>
-
     <string name="sw_shift_work_item_over_time">Over time</string>
-
     <string name="sw_work_action_check_in">Check in</string>
     <string name="sw_work_action_choose_loc">Set location</string>
-
     <string name="sw_msg_no_shift">Shift is not registered</string>
-
-    <!--Notifications-->
     <string name="FM_SW_001">You have new work notice</string>
     <string name="FM_SW_002">You haven\'t check in yet</string>
     <string name="FM_SW_003">You haven\'t check out yet</string>
@@ -86,10 +68,7 @@
     <string name="FM_SW_008_02">You  have new holiday offer.</string>
     <string name="FM_SW_008_03">Your holiday work offer is approved.</string>
     <string name="FM_SW_008_04">Your holiday work approve is rejected.</string>
-
     <string name="sw_work_offer_history">My vacation offer</string>
-
-    <!--Work transit service-->
     <string name="sw_work_transit_entry_title">Work transit entry</string>
     <string name="sw_work_transit_leave_item">Leave</string>
     <string name="sw_work_transit_arrive_item">Arrive</string>
@@ -98,10 +77,8 @@
     <string name="sw_work_transit_fee_item">Fee</string>
     <string name="sw_work_transit_note_item">Note</string>
     <string name="sw_work_transit_attachment_item">Attachment</string>
-
     <string name="sw_work_transit_list_title">Transit list</string>
     <string name="fragment_transit_confirm_delete_msg">Are you sure to delete this transit?</string>
-
     <string name="fragment_offer_detail_comment_hint">Comment</string>
     <string name="fragment_offer_filter_offer_type">Offer type</string>
     <string name="fragment_offer_filter_other_history_filter">Filter: %1$s</string>
@@ -124,13 +101,11 @@
     <string name="fragment_work_offer_edit_offer_type">Offer types</string>
     <string name="fragment_work_offer_edit_offer_status">Offer status</string>
     <string name="fragment_work_offer_edit_offer_dept">Departments</string>
-
     <string name="sw_work_offer_action_approve">Approve</string>
     <string name="sw_work_offer_action_reject">Reject</string>
     <string name="sw_work_offer_list_filter">Filter: %1$s</string>
     <string name="dlg_checkin_types_title">Change work type</string>
     <string name="txt_dialog_checkin_types_guide">Choose check in type</string>
-
     <string name="fragment_offer_detail_sick_absent">Sick absent</string>
     <string name="fragment_offer_edit_offer_user">Offer user</string>
     <string name="sw_vacation">Vacation</string>

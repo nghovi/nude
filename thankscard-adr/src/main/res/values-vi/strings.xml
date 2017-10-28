@@ -1,15 +1,12 @@
 <resources>
     <string name="app_name">ThanksCard</string>
-
     <string name="main_activity_back_btn_guide">Click lần nữa để thoát</string>
     <string name="common_server_api_error">Lỗi máy chủ</string>
-
     <string name="fragment_signin_login_button">Đăng nhập</string>
     <string name="fragment_signin_user_id">Tên tài khoản</string>
     <string name="fragment_signin_password">Mật khẩu</string>
     <string name="fragment_signin_title">Đăng nhập</string>
     <string name="fragment_signin_login_error_title">Lỗi</string>
-
     <string name="fragment_mypage_note_list">Thông báo</string>
     <string name="fragment_mypage_alert_title">Thông báo</string>
     <string name="fragment_mypage_alert_post">Đăng</string>
@@ -22,12 +19,10 @@
     <string name="fragment_mypage_dialog_title">Tin nhắn xác nhận</string>
     <string name="fragment_mypage_notice_new">MỚI</string>
     <string name="fragment_mypage_dialog_message">Bạn muốn đăng xuất?</string>
-
     <string name="page_ranking_post">Thứ tự đăng</string>
     <string name="page_ranking_receive">Thứ tự nhận</string>
     <string name="fragment_ranking_title">Xếp hạng</string>
     <string name="fragment_ranking_date">%1$s-%2$s</string>
-
     <string name="fragment_setting_pass_cur">Mật khẩu hiện tại</string>
     <string name="fragment_setting_pass_new">Mật khẩu mới</string>
     <string name="fragment_setting_pass_confirm">Xác nhận mật khẩu</string>
@@ -37,9 +32,7 @@
     <string name="fragment_setting_title">Cài đặt</string>
     <string name="fragment_setting_change_success_title">Đã thay đổi mật khẩu</string>
     <string name="fragment_setting_change_success_message">Thành công</string>
-
     <string name="fragment_month_post_button">Đăng</string>
-
     <string name="fragment_post_tc_list_title">Lịch sử đăng</string>
     <string name="fragment_receive_tc_list_title">Lịch sử nhận</string>
     <string name="fragment_tc_list_back">Trước</string>
@@ -47,7 +40,6 @@
     <string name="fragment_tc_list_date">Năm tháng</string>
     <string name="fragment_tc_list_dept">Phòng ban</string>
     <string name="fragment_tc_list_user">Thành viên</string>
-
     <string name="fragment_tc_detail_date">%1$s</string>
     <string name="fragment_tc_detail_to">Gửi: %1$s</string>
     <string name="fragment_tc_detail_from">Từ: %1$s</string>
@@ -56,10 +48,8 @@
     <string name="fragment_tc_detail_send_post">Gửi tin nhắn đến người này</string>
     <string name="fragment_tc_detail_like">Thích</string>
     <string name="fragment_tc_detail_dislike">Không thích</string>
-
     <string name="fragment_post_template_title">Mẫu</string>
     <string name="fragment_post_template_sample_message">Cảm ơn</string>
-
     <string name="fragment_post_edit_title">Chỉnh sửa</string>
     <string name="fragment_post_edit_button">Gửi</string>
     <string name="fragment_post_edit_hint"></string>
@@ -72,17 +62,13 @@
     <string name="fragment_post_edit_alert_dlg_message1">Hãy chọn người dùng</string>
     <string name="fragment_post_edit_alert_dlg_message2">Tin nhắn trong khoảng 1 đến %1$s ký tự</string>
     <string name="fragment_post_edit_alert_dlg_message3">Hãy chọn mẫu</string>
-
     <string name="fragment_post_edit_alert_dlg_confirm_title">Tin nhắn xác nhận</string>
     <string name="fragment_post_edit_alert_dlg_confirm_message">Gửi tin nhắn đến %1$s?</string>
-
-
     <string name="fragment_post_confirm_title">Xác nhận</string>
     <string name="fragment_post_confirm_btn_cancel">Hủy</string>
     <string name="fragment_post_confirm_btn_submit">Gửi</string>
     <string name="fragment_posted_confirm_success_title">Thành công</string>
     <string name="fragment_posted_confirm_success_message">Tin nhắn đã được gửi</string>
-
     <string name="spinner_default_department">Tất cả</string>
     <string name="spinner_default_user">Tất cả</string>
     <string name="spinner_default_prompt"></string>
@@ -90,37 +76,27 @@
     <string name="spinner_user_selection_prompt">Tất cả</string>
     <string name="dialog_category_selection_category">Thể loại</string>
     <string name="dialog_template_selection_template">Mẫu</string>
-
-
     <string name="dialog_avatar_handlers_camera">Máy ảnh</string>
     <string name="dialog_avatar_handlers_gallery">Thư viện</string>
     <string name="dialog_avatar_handlers_delete">Xóa ảnh</string>
-
     <string name="tc_crop_message">Trimming</string>
     <string name="tc_crop_tip">Điều chỉnh vị trí và kích cỡ ảnh</string>
     <string name="fragment_upload_photo_title">Cắt ảnh</string>
-
     <string name="dialog_rank_stage_title">Tổng số: %1$sP</string>
     <string name="dialog_rank_stage_cancel">Hủy</string>
     <string name="dialog_rank_stage_require">Cần %1$sP</string>
     <string name="dialog_rank_stage_status_ok">Đạt</string>
     <string name="dialog_rank_stage_status_not_ok">Chưa đạt</string>
-
-    <!-- footer -->
     <string name="footer_item1">Trang của tôi</string>
     <string name="footer_item2">Đăng</string>
     <string name="footer_item3">Nhận</string>
     <string name="footer_item4">Xếp hạng</string>
     <string name="fragment_tc_detail_liked">Đã thích</string>
-
     <string name="tc_common_point">%1$spt</string>
     <string name="msg_msg_invalid_empty">Tin nhắn từ 1 ký tự đến 75 ký tự</string>
-
-    <!--Notifications-->
     <string name="FM_TC_001">Đã nhận được thông báo mới</string>
     <string name="FM_TC_002">Hôm nay là sinh nhật của %1$s</string>
     <string name="FM_TC_003">Đã nhận được ThanksCard từ %1$s</string>
-
     <string name="tc_dialog_profile_title">Chi tiết về người dùng</string>
     <string name="tc_contact_us_problem_item">Báo cáo vấn đề</string>
     <string name="tc_contact_us_improve_item">Đề xuất cải thiện</string>
@@ -129,6 +105,49 @@
     <string name="tc_contact_us_select_item">Chọn</string>
     <string name="fragment_mypage_rank_next_post">%2$spt đến rank %1$s</string>
     <string name="fragment_mypage_rank_next_receive">%2$spt đến rank %1$s</string>
+    <string name="fragment_card_detail_from"></string>
     <string name="rank_first_congrats">Xin chúc mừng！☆</string>
+    <string name="tc_stage_information"></string>
+    <string name="tc_stage_infor_explain"></string>
+    <string name="tc_rank_gold"></string>
+    <string name="tc_rank_silver"></string>
+    <string name="tc_rank_bronze"></string>
+    <string name="tc_rank_regular"></string>
+    <string name="tc_point_gold"></string>
+    <string name="tc_point_silver"></string>
+    <string name="tc_point_bronze"></string>
+    <string name="tc_point_regular"></string>
+    <string name="tc_explain_gold"></string>
+    <string name="tc_explain_silver"></string>
+    <string name="tc_explain_bronze"></string>
+    <string name="tc_explain_regular"></string>
     <string name="tc_confirm_dialog_title">送信確認</string>
+    <string name="tc_confirm_msg"></string>
+    <string name="tc_secret_mode"></string>
+    <string name="tc_ok"></string>
+    <string name="tc_select_card"></string>
+    <string name="tc_select_dept"></string>
+    <string name="tc_select_user"></string>
+    <string name="tc_search"></string>
+    <string name="tc_no_rank"></string>
+    <string name="tc_1_rank"></string>
+    <string name="tc_2_rank"></string>
+    <string name="tc_3_rank"></string>
+    <string name="tc_4_more_rank"></string>
+    <string name="tc_select_sticker"></string>
+    <string name="tc_select_photo"></string>
+    <string name="tc_choose_picture"></string>
+    <string name="tc_change_to_normal_card"></string>
+    <string name="tc_limit_sticker"></string>
+    <string name="tc_cannot_use_stickers"></string>
+    <string name="tc_cannot_use_photo"></string>
+    <string name="tc_cannot_user_animation"></string>
+    <string name="tc_normal_card_tab"></string>
+    <string name="tc_photo_card_tab"></string>
+    <string name="tc_animation_card_tab"></string>
+    <string name="tc_unselected"></string>
+    <string name="tc_card"></string>
+    <string name="tc_cropping_title" formatted="false"></string>
+    <string name="tc_done"></string>
+    <string name="tc_preview"></string>
 </resources>

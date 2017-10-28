@@ -1,17 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Welfare-androi-core</string>
     <string name="main_activity_back_btn_guide">もう一度クリックしてアプリを終了します</string>
-
-    <!--Date time format-->
     <string name="wf_date_time_format1">yyyy.MM.dd HH:mm</string>
-
     <string name="wf_common_board_type_dept">部門 (%1$s)</string>
     <string name="wf_common_board_type_group">グループ (%1$s)</string>
     <string name="wf_common_board_type_private">プライベート</string>
-
     <string name="wf_common_invalid_permission">You don\'t have permission</string>
-
     <string name="wlf_account_name">アカウント名</string>
     <string name="wlf_pass_word">パスワード</string>
     <string name="wlf_sign_in">ログイン</string>
@@ -21,25 +15,21 @@
     <string name="wf_sign_in_remember">ユーザーID を保持する</string>
     <string name="wf_common_signin_user_id">ユーザーID</string>
     <string name="wf_common_signin_password">パスワード</string>
-
     <string name="wf_signout_confirm">ログアウトしますか？</string>
-
     <string name="wf_forget_password">パスワードを忘れた場合はコチラ</string>
     <string name="wf_update_info">情報更新</string>
     <string name="wf_error">エラー</string>
     <string name="wf_network_lost">ネットワークエラー</string>
     <string name="wf_user_name">サビース名</string>
-    <string name="wf_name">名前</string>
     <string name="wf_user_name_kana">ユーザー名（カナ）</string>
     <string name="wf_change_profile">プロファイル変更</string>
-
     <string name="wf_push_notification">プッシュ通知</string>
     <string name="wf_password_change_title">パスワードを変更する</string>
     <string name="wf_old_password">現在のパスワード</string>
     <string name="wf_new_password">新しいパスワード</string>
     <string name="wf_confirm_password">新しいパスワード（再確認）</string>
-
     <string name="wf_email">メール</string>
+    <string name="wf_name">名前</string>
     <string name="wf_select_attach_file">画像を選択</string>
     <string name="wf_file">ファイル</string>
     <string name="wf_camera">カメラ</string>
@@ -56,23 +46,18 @@
     <string name="wf_term_service2"><u>利用規約</u></string>
     <string name="wf_select">選択</string>
     <string name="wf_about_version">Version %1$s</string>
-
     <string name="wf_common_send">送信する</string>
-
     <string name="wf_upgrade_version_title">Upgrade version</string>
     <string name="wf_upgrade_version_msg">Are you open store?</string>
-
     <string name="wf_detail_photo_title">イメージ詳細</string>
     <string name="wf_invalid_photo_over">サイズは大きすぎです。ファイルの最大は50Mbです。</string>
     <string name="wf_invalid_photo_over2">サイズは大きすぎです。</string>
-
     <string name="wf_setting_contact_us_title">お問い合わせ</string>
     <string name="wf_thanks_card_service_name">ThanksCard</string>
     <string name="wf_messenger_service_name">Messenger</string>
     <string name="wf_daily_report_service_name">DailyReport</string>
     <string name="wf_shift_working_service_name">ShiftWorking</string>
     <string name="wf_fukuri_service_name">FUKURI全般</string>
-
     <string name="wf_contact_us_problem_item">問題を報告</string>
     <string name="wf_contact_us_improve_item">改善を提案</string>
     <string name="wf_contact_us_content_title">内容</string>

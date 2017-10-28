@@ -1,15 +1,12 @@
 <resources>
     <string name="app_name">カレンダー</string>
-
     <string name="cl_footer_monthly">月間</string>
     <string name="cl_footer_weekly">週間</string>
     <string name="cl_footer_daily">日別</string>
     <string name="cl_footer_summary">サマリー</string>
     <string name="cl_footer_setting">設定</string>
-
     <string name="cl_common_calendar_sub_title">%1$s カレンダー</string>
     <string name="cl_common_validate_no_calendar_msg">カレンダーを選んでください</string>
-
     <string name="fragment_schedule_form_title">スケジュール作成</string>
     <string name="fragment_schedule_edit_title">スケジュール編集</string>
     <string name="fragment_schedule_detail_title">スケジュール詳細</string>
@@ -23,39 +20,30 @@
     <string name="cl_schedule_form_item_category">カテゴリ</string>
     <string name="cl_schedule_form_item_join_user">参加ユーザー</string>
     <string name="cl_schedule_form_item_schedule_note">スケジュールノート</string>
-
     <string name="cl_schedule_edit_mode_title">編集モード</string>
     <string name="cl_schedule_delete_mode_title">削除モード</string>
     <string name="cl_schedule_edit_mode_only_this">今回のみ</string>
     <string name="cl_schedule_edit_mode_only_future">今回以降</string>
     <string name="cl_schedule_edit_mode_all">この予定すべて</string>
-
     <string name="cl_schedule_confirm_mode_title">時間が重複しています</string>
     <string name="cl_schedule_confirm_mode_action_ok">更新する</string>
     <string name="cl_schedule_confirm_mode_label_user">以下のユーザースケジュール</string>
     <string name="cl_schedule_confirm_mode_label_room">以下の会議室スケジュールの時間が重複しています。</string>
-
     <string name="cl_schedule_confirm_change_cal">カレンダー変更により、参加ユーザー情報はクリアされます。</string>
-
     <string name="cl_filter_user_dialog_title">ユーザーフィルター</string>
     <string name="cl_join_user_dialog_title">参加ユーザー</string>
     <string name="cl_schedule_repeat_dialog_title">繰り返し</string>
     <string name="cl_schedule_repeat_dialog_times">回</string>
-
-
     <string name="cl_schedule_repeat_type_weekly">毎週</string>
     <string name="cl_schedule_repeat_type_monthly">毎月</string>
-
     <string name="cl_schedule_repeat_weekly_message">毎週%1$s</string>
     <string name="cl_schedule_repeat_monthly_message">毎月</string>
     <string name="cl_schedule_repeat_yearly_message">毎年</string>
     <string name="cl_schedule_repeat_until_message">, まで %1$s.</string>
     <string name="cl_schedule_repeat_for_message">, あと %1$s 回。</string>
     <string name="cl_schedule_repeat_for_one_message">, あと 1 回。.</string>
-
     <string name="cl_schedule_repeat_limit_forever">終了日を設定しない</string>
     <string name="cl_schedule_repeat_limit_until">終了日</string>
-
     <string name="daily_page_all_day">終日</string>
     <string name="daily_page_morning">午前</string>
     <string name="daily_page_afternoon">午後</string>
@@ -64,8 +52,6 @@
     <string name="daily_schedules_event_title">イベント</string>
     <string name="offer_title">勤怠申請</string>
     <string name="no_schedule">スケジュールがありません</string>
-
-    <!--Notifications-->
     <string name="fragment_summary_title">要約</string>
     <string name="coming_soon">近日公開</string>
     <string name="FM_CL_001">%1$sさんが%2$sスケジュールを作成しました</string>
@@ -76,8 +62,6 @@
     <string name="FM_CL_0032">本日のToDo：%1$s件</string>
     <string name="FM_CL_0041">明日のスケジュール：%1$s件</string>
     <string name="FM_CL_0042">明日のToDo：%1$s件</string>
-
-
     <string name="cl_schedule_holiday_name">[H]%1$s</string>
     <string name="cl_schedule_birth_day_name">[B]%1$s</string>
     <string name="cl_schedule_offer_name">%1$s</string>

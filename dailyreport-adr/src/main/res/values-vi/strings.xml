@@ -1,14 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">DailyReport</string>
-
-    <string name="dr_at_time">&#160;%1$s</string>
-
-    <!-- footer -->
     <string name="footer_item1">Báo cáo </string>
     <string name="footer_item2">Báo cáo khác</string>
     <string name="footer_item3">Hoạt động</string>
     <string name="footer_item4">Cài đặt</string>
+    <string name="dr_at_time">&#160;%1$s</string>
     <string name="fragment_report_edit_change_template_confirm">Bạn muốn thay đổi mẫu này?</string>
     <string name="fragment_other_title">Báo cáo khác</string>
     <string name="fragment_follower_title_checker">Danh sách đã đọc</string>
@@ -16,30 +11,26 @@
     <string name="dr_report_comment_title">Bình luận</string>
     <string name="spinner_name_template">Mẫu</string>
     <string name="spinner_name_dept">Phòng ban</string>
-
     <string name="fragment_setting_title">Cài đặt</string>
     <string name="fragment_title_empty"></string>
     <string name="header_calendar_this_month">Tháng này</string>
     <string name="fragment_common_list_empty">Rất tiếc, hiện chưa có dữ liệu</string>
     <string name="fragment_activities_title">Hoạt động</string>
-
     <string name="fragment_about_version">Phiên bản %1$s</string>
+    <string name="str_all">Tất cả</string>
+    <string name="str_none">Không có</string>
     <string name="dr_preview_title">Xem lại</string>
     <string name="btn_prev">Trước</string>
     <string name="btn_next">Sau</string>
-
     <string name="dlr_report_content">Báo cáo hàng ngày</string>
     <string name="dlr_add_comment">Bình luận</string>
     <string name="dlr_like">Thích!</string>
-
     <string name="dlr_send">Gửi</string>
     <string name="dlr_save">Lưu vào nháp</string>
     <string name="dlr_plan">Dự định</string>
     <string name="dlr_actual">Thực tế</string>
     <string name="dlr_content">Báo cáo hàng ngày</string>
-
     <string name="dlr_add_kpi">Thêm</string>
-
     <string name="dlr_saturday">T7</string>
     <string name="dlr_sunday">CN</string>
     <string name="dlr_monday">T2</string>
@@ -47,8 +38,6 @@
     <string name="dlr_wed">T4</string>
     <string name="dlr_thu">T5</string>
     <string name="dlr_fri">T6</string>
-    <string name="str_all">Tất cả</string>
-    <string name="str_none">Không có</string>
     <string name="view_kpi_monthly_goal">Mục tiêu tháng</string>
     <string name="view_kpi_actual_plan">Kế hoạch hành động</string>
     <string name="dlr_copy">Sao chép</string>
@@ -56,15 +45,11 @@
     <string name="dlr_goal">Giá trị mục tiêu</string>
     <string name="dlr_sum">Lũy kế</string>
     <string name="dlr_avg">Bình quân</string>
-
     <string name="dr_comment_edittext_hint">Viết bình luận</string>
     <string name="spinner_name_report_user">Người báo cáo</string>
     <string name="spinner_name_action_user">Người hoạt động</string>
-
     <string name="dr_activity_item_desc">Báo cáo hàng ngày: %1$s Báo cáo từ %2$s</string>
     <string name="dr_item">Mục tiêu</string>
-
-    <!--Notifications-->
     <string name="FM_DR_001">%1$s đã tạo báo cáo hàng ngày mới</string>
     <string name="FM_DR_002">Có %1$s lượt thích mới</string>
     <string name="FM_DR_003">Có %1$s bình luận mới</string>
@@ -72,7 +57,6 @@
     <string name="FM_DR_005">%1$s has achieved their goal.</string>
     <string name="FM_DR_006">%1$s has not achieved their goal.</string>
     <string name="FM_DR_007">Group goal has been achieved!</string>
-
     <string name="header_calendar_this_week">Tuần này</string>
     <string name="goal_period">Title1</string>
     <string name="personal_goal">title2</string>

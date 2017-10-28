@@ -5,19 +5,14 @@
     <string name="cl_footer_daily">Ngày</string>
     <string name="cl_footer_summary">Tổng hợp</string>
     <string name="cl_footer_setting">Cài đặt</string>
-
-
     <string name="cl_common_calendar_sub_title">%1$s Lịch</string>
-    <string name="cl_common_validate_no_calendar_msg">Hãy chọn lịch
-    </string>
-
+    <string name="cl_common_validate_no_calendar_msg">Hãy chọn lịch</string>
     <string name="fragment_schedule_form_title">Lịch trình mới</string>
     <string name="fragment_schedule_edit_title">Sửa lịch trình</string>
     <string name="fragment_schedule_detail_title">Lịch trình chi tiết</string>
     <string name="cl_schedule_form_all_day">Cả ngày</string>
     <string name="cl_schedule_form_repeat">Lặp lại</string>
-    <string name="cl_schedule_form_schedule_info_title">Thông tin lịch trình
-    </string>
+    <string name="cl_schedule_form_schedule_info_title">Thông tin lịch trình</string>
     <string name="cl_schedule_form_item_calendar">Lịch</string>
     <string name="cl_schedule_form_item_name">Tên</string>
     <string name="cl_schedule_form_item_meeting_room">Phòng</string>
@@ -25,39 +20,30 @@
     <string name="cl_schedule_form_item_category">Mục</string>
     <string name="cl_schedule_form_item_join_user">Người tham gia</string>
     <string name="cl_schedule_form_item_schedule_note">Ghi chú</string>
-
     <string name="cl_schedule_edit_mode_title">Chế độ sửa</string>
     <string name="cl_schedule_delete_mode_title">Chế độ xóa</string>
     <string name="cl_schedule_edit_mode_only_this">Chỉ thay đổi hiện tại</string>
     <string name="cl_schedule_edit_mode_only_future">Chỉ thay đổi tương lai</string>
     <string name="cl_schedule_edit_mode_all">Thay đổi tất cả</string>
-
     <string name="cl_schedule_confirm_mode_title">Confirm for duplicate</string>
     <string name="cl_schedule_confirm_mode_action_ok">Update</string>
     <string name="cl_schedule_confirm_mode_label_user">Duplicate time for users</string>
     <string name="cl_schedule_confirm_mode_label_room">Duplicate time for rooms</string>
-
     <string name="cl_schedule_confirm_change_cal">Join user information will be cleared because of changing calendar.</string>
-
     <string name="cl_filter_user_dialog_title">Lọc người dùng</string>
     <string name="cl_join_user_dialog_title">Người tham gia</string>
     <string name="cl_schedule_repeat_dialog_title">Schedule repeat</string>
     <string name="cl_schedule_repeat_dialog_times">lần</string>
-
     <string name="cl_schedule_repeat_type_weekly">Tuần</string>
     <string name="cl_schedule_repeat_type_monthly">Tháng</string>
-
-    <string name="cl_schedule_repeat_weekly_message">Lặp lại hàng tuần vào %1$s
-    </string>
+    <string name="cl_schedule_repeat_weekly_message">Lặp lại hàng tuần vào %1$s</string>
     <string name="cl_schedule_repeat_monthly_message">Lặp hàng tháng</string>
     <string name="cl_schedule_repeat_yearly_message">Lặp hàng năm</string>
     <string name="cl_schedule_repeat_until_message">,cho đến %1$s.</string>
     <string name="cl_schedule_repeat_for_message">,cho %1$s lần.</string>
     <string name="cl_schedule_repeat_for_one_message">,cho một lần.</string>
-
     <string name="cl_schedule_repeat_limit_forever">Mãi mãi</string>
     <string name="cl_schedule_repeat_limit_until">Cho đến</string>
-
     <string name="daily_page_all_day">Cả ngày</string>
     <string name="daily_page_morning">Buổi sáng</string>
     <string name="daily_page_afternoon">Buổi chiều</string>
@@ -66,12 +52,9 @@
     <string name="daily_schedules_event_title">Sụ kiện</string>
     <string name="offer_title">Chấm công</string>
     <string name="no_schedule">Không có lịch trình</string>
-
-    <!--Notifications-->
     <string name="fragment_summary_title">Tổng hợp</string>
     <string name="coming_soon">Sắp ra mắt</string>
-    <string name="FM_CL_001">[%1$s] %2$s đã tham gia vào lịch trình : %3$s
-    </string>
+    <string name="FM_CL_001">[%1$s] %2$s đã tham gia vào lịch trình : %3$s</string>
     <string name="FM_CL_002">[%1$s] %2$s đã sửa lịch trình : %3$s</string>
     <string name="FM_CL_003">Today\’s schedule: %1$s item(s) \nToday\’s ToDo: %2$s item(s)</string>
     <string name="FM_CL_004">Tomorrow\’s schedule: %1$s item(s) \nTomorrow\’s ToDo: %2$s item(s)</string>
@@ -79,7 +62,6 @@
     <string name="FM_CL_0032">Today\’s ToDo: %1$s item(s)</string>
     <string name="FM_CL_0041">Tomorrow\’s schedule: %1$s item(s)</string>
     <string name="FM_CL_0042">Tomorrow\’s ToDo: %1$s item(s)</string>
-
     <string name="cl_schedule_holiday_name">[H]%1$s</string>
     <string name="cl_schedule_birth_day_name">[B]%1$s</string>
     <string name="cl_schedule_offer_name">[O]%1$s</string>
@@ -118,10 +100,9 @@
     <string name="select_user_all">すべて選択</string>
     <string name="choose_user">参加ユーザー</string>
     <string name="choose_group">部門選択</string>
-    <string name="overtimeType">E</string>
     <string name="overtime_early">Overtime (Early)</string>
     <string name="overtime_lately">Overtime</string>
     <string name="holiday_work">Holiday work</string>
-    <string name="japan_day" />
+    <string name="japan_day"></string>
     <string name="calendar_common_delete">削除</string>
 </resources>

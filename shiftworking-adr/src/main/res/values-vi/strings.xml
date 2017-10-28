@@ -1,34 +1,23 @@
 <resources>
     <string name="app_name">Work Record</string>
-
     <string name="fragment_setting_title">Cài đặt</string>
     <string name="fragment_about_version">Phiên bản %1$s</string>
     <string name="wf_about_app">Giới thiệu về ứng dụng</string>
     <string name="wf_account_info_title">Thông tin tài khoản</string>
-
     <string name="sw_offer_title">Nhập thông báo làm việc</string>
     <string name="sw_notice_list_title">Thông báo làm việc</string>
     <string name="sw_worker_title">Thành viên</string>
     <string name="sw_notice_detail_title">Chi tiết thông báo</string>
-
     <string name="fragment_offer_edit_confirm_delete_msg">Bạn muốn xóa đăng ký làm việc này?</string>
     <string name="fragment_offer_edit_offer_type">Phân loại đăng ký</string>
-
-    <string name="fragment_offer_detail_comment_hint">Bình luận</string>
-
     <string name="sw_footer_work_time">Thời gian</string>
     <string name="sw_footer_work_shift">Phân ca</string>
+    <string name="sw_footer_work_offer">Đăng ký</string>
     <string name="sw_footer_setting">Cài đặt</string>
     <string name="sw_footer_work_status">Trạng thái</string>
-    <string name="sw_footer_work_offer">Đăng ký</string>
-
-    <!--Check in service-->
-
-
     <string name="sw_work_item_project">Dự án</string>
     <string name="sw_work_item_project_loc">Địa chỉ</string>
     <string name="sw_work_item_checkin_list">Lịch sử checkin</string>
-
     <string name="sw_work_item_notice_type">Phân loại thông báo</string>
     <string name="sw_work_item_target_dept">Phòng ban nhận</string>
     <string name="sw_work_item_reason">Lý do</string>
@@ -37,17 +26,13 @@
     <string name="sw_work_item_notice_user">Người dùng</string>
     <string name="sw_work_item_notice_date">Ngày thông báo</string>
     <string name="sw_work_item_check_user">Người dùng đã xem</string>
-
     <string name="sw_work_notice_item_offer_dept">Phòng ban đăng ký</string>
-
     <string name="sw_work_time_modify_request_title">Yêu cầu chỉnh sửa</string>
     <string name="sw_work_time_modify_request">Yêu cầu chỉnh sửa %1$s checkin</string>
-    <string name="sw_work_time_modify_request_undefined">Yêu cầu chỉnh sửa %1$s Chưa xác định</string>
     <string name="sw_work_time_modify_request_start">Yêu cầu chỉnh sửa %1$s Bắt đầu làm việc</string>
+    <string name="sw_work_time_modify_request_undefined">Yêu cầu chỉnh sửa %1$s Chưa xác định</string>
     <string name="sw_work_time_modify_request_end">Yêu cầu chỉnh sửa %1$s Kết thúc làm việc</string>
-
     <string name="sw_work_time_modify_request_success">Yêu cầu thành công</string>
-
     <string name="sw_shift_work_this_month">Tháng này</string>
     <string name="sw_shift_work_history">Lịch sử làm việc</string>
     <string name="sw_shift_work_item_status">Trạng thái</string>
@@ -61,28 +46,29 @@
     <string name="sw_shift_work_be_late">Đi muộn</string>
     <string name="sw_shift_work_leave_early">Về sớm</string>
     <string name="sw_shift_work_summary_title">Tổng</string>
-
     <string name="sw_shift_work_item_over_time">Thời gian làm thêm</string>
-
-
     <string name="sw_work_action_check_in">Checkin</string>
     <string name="sw_work_action_choose_loc">Chọn thông tin địa chỉnh</string>
-
     <string name="sw_msg_no_shift">Bạn không có shift</string>
-
-    <!--Notifications-->
     <string name="FM_SW_001">Đã nhận được thông báo mới</string>
     <string name="FM_SW_002">Bạn vẫn chưa checkin</string>
     <string name="FM_SW_003">Bạn vẫn chưa checkout</string>
     <string name="FM_SW_0041">%1$s:đã vượt quá thời gian làm thêm</string>
     <string name="FM_SW_0042">Người dùng %1$s đã vượt quá thời gian làm thêm</string>
     <string name="FM_SW_005">Dự định làm việc đã được cập nhập</string>
-    <string name="FM_SW_006">Đăng ký đã bị hủy</string>
-    <string name="FM_SW_007">Có đăng ký mới</string>
-    <string name="FM_SW_008">Đăng ký đã được phê duyệt</string>
-    <string name="FM_SW_009">Phê duyệt đã bị hủy</string>
-
-    <!--Work transit service-->
+    <string name="FM_SW_006_01"></string>
+    <string name="FM_SW_006_02"></string>
+    <string name="FM_SW_006_03"></string>
+    <string name="FM_SW_006_04"></string>
+    <string name="FM_SW_007_01"></string>
+    <string name="FM_SW_007_02"></string>
+    <string name="FM_SW_007_03"></string>
+    <string name="FM_SW_007_04"></string>
+    <string name="FM_SW_008_01"></string>
+    <string name="FM_SW_008_02"></string>
+    <string name="FM_SW_008_03"></string>
+    <string name="FM_SW_008_04"></string>
+    <string name="sw_work_offer_history">Đăng ký của tôi</string>
     <string name="sw_work_transit_entry_title">Nhập thông tin đi lại</string>
     <string name="sw_work_transit_leave_item">Điểm xuất phát</string>
     <string name="sw_work_transit_arrive_item">Điểm đến</string>
@@ -92,12 +78,12 @@
     <string name="sw_work_transit_note_item">Ghi chú</string>
     <string name="sw_work_transit_attachment_item">Đính kèm</string>
     <string name="sw_work_transit_list_title">Danh sách</string>
-
     <string name="fragment_transit_confirm_delete_msg">Bạn muốn xóa đăng ký đi lại này?</string>
-
+    <string name="fragment_offer_detail_comment_hint">Bình luận</string>
     <string name="fragment_offer_filter_offer_type">Phân loại đăng ký</string>
     <string name="fragment_offer_filter_other_history_filter">Lọc: %1$s</string>
     <string name="fragment_offer_filter_offer_status">Trạng thái đăng ký</string>
+    <string name="fragment_offer_filter_offer_user"></string>
     <string name="fragment_offer_filter_offer_dept">Phòng ban đăng ký</string>
     <string name="fragment_offer_filter_title">Lọc</string>
     <string name="fragment_offer_filter_clear">Xóa</string>
@@ -115,22 +101,43 @@
     <string name="fragment_work_offer_edit_offer_type">Phân loại đăng ký</string>
     <string name="fragment_work_offer_edit_offer_status">Trạng thái đăng ký</string>
     <string name="fragment_work_offer_edit_offer_dept">Phòng ban đăng ký</string>
-    <string name="sw_work_offer_history">Đăng ký của tôi</string>
-
     <string name="sw_work_offer_action_approve">Phê duyệt</string>
     <string name="sw_work_offer_action_reject">Hủy</string>
     <string name="sw_work_offer_list_filter">Lọc  %1$s</string>
     <string name="dlg_checkin_types_title">Change work type</string>
     <string name="txt_dialog_checkin_types_guide">Choose check in type</string>
+    <string name="fragment_offer_detail_sick_absent"></string>
     <string name="fragment_offer_edit_offer_user">Request user</string>
+    <string name="sw_vacation"></string>
+    <string name="sw_overtime"></string>
+    <string name="sw_holiday_working"></string>
+    <string name="sw_time_picker"></string>
+    <string name="sw_overtime_offer"></string>
+    <string name="sw_other_overtime_offer"></string>
+    <string name="sw_offer"></string>
+    <string name="sw_holiday_working_offer"></string>
+    <string name="sw_other_holiday_working_offer"></string>
     <string name="fragment_overtime_detail_header">Overtime offer detail</string>
+    <string name="fragment_overtime_detail_expected_date"></string>
     <string name="fragment_overtime_detail_expected_time">Expected time</string>
+    <string name="fragment_overtime_detail_reason"></string>
+    <string name="sw_select_dept"></string>
+    <string name="sw_select_user"></string>
+    <string name="sw_select_type"></string>
+    <string name="sw_search"></string>
     <string name="fragment_holiday_working_detail_header">Holiday working offer detail</string>
+    <string name="fragment_holiday_working_detail_expected_date"></string>
     <string name="fragment_overtime_detail_start_time">Start time</string>
     <string name="fragment_overtime_detail_end_time">End time</string>
+    <string name="sw_amount"></string>
+    <string name="sw_day"></string>
+    <string name="sw_yes"></string>
+    <string name="sw_no"></string>
+    <string name="sw_filter"></string>
     <string name="rejected">Rejected</string>
     <string name="done">Done</string>
     <string name="wait2">Wait2</string>
+    <string name="sw_delete"></string>
     <string name="fragment_holiday_working_edit_header">Holiday working offer add</string>
     <string name="fragment_overtime_edit_header">Overtime offer add</string>
     <string name="sw_early">Early</string>

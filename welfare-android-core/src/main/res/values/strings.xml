@@ -1,17 +1,11 @@
 <resources>
     <string name="app_name">Welfare-androi-core</string>
     <string name="main_activity_back_btn_guide">Click again to exit</string>
-
-    <!--Date time format-->
     <string name="wf_date_time_format1">yyyy.MM.dd HH:mm</string>
-
     <string name="wf_common_board_type_dept">Dept (%1$s)</string>
     <string name="wf_common_board_type_group">Group (%1$s)</string>
     <string name="wf_common_board_type_private">Private</string>
-
-    <string name="wf_common_invalid_permission">You don\'t have permission
-    </string>
-
+    <string name="wf_common_invalid_permission">You don\'t have permission</string>
     <string name="wlf_account_name">Account name</string>
     <string name="wlf_pass_word">Password</string>
     <string name="wlf_sign_in">Sign in</string>
@@ -21,9 +15,7 @@
     <string name="wf_sign_in_remember">Remember me</string>
     <string name="wf_common_signin_user_id">Account name</string>
     <string name="wf_common_signin_password">Password</string>
-
     <string name="wf_signout_confirm">Are you sure to sign out?</string>
-
     <string name="wf_forget_password">Forgot password</string>
     <string name="wf_update_info">Update information</string>
     <string name="wf_error">Error</string>
@@ -31,13 +23,11 @@
     <string name="wf_user_name">User name</string>
     <string name="wf_user_name_kana">User name kana</string>
     <string name="wf_change_profile">Change profile</string>
-
     <string name="wf_push_notification">Push notification</string>
     <string name="wf_password_change_title">Change password</string>
     <string name="wf_old_password">Current password</string>
     <string name="wf_new_password">New password</string>
     <string name="wf_confirm_password">Confirm password</string>
-
     <string name="wf_email">Email</string>
     <string name="wf_name">Name</string>
     <string name="wf_select_attach_file">Take new or select from gallery</string>
@@ -52,33 +42,22 @@
     <string name="wf_setting_contact_us">Contact us</string>
     <string name="wf_pricacy_policy">Privacy policy</string>
     <string name="wf_term_service">Term of service</string>
-    <string name="wf_pricacy_policy2">
-        <u>Privacy policy</u>
-    </string>
-    <string name="wf_term_service2">
-        <u>Term of service</u>
-    </string>
+    <string name="wf_pricacy_policy2"><u>Privacy policy</u></string>
+    <string name="wf_term_service2"><u>Term of service</u></string>
     <string name="wf_select">Select</string>
     <string name="wf_about_version">Version %1$s</string>
-
     <string name="wf_common_send">Send</string>
-
     <string name="wf_upgrade_version_title">Upgrade version</string>
     <string name="wf_upgrade_version_msg">Are you open store?</string>
-
     <string name="wf_detail_photo_title">Photo detail</string>
-    <string name="wf_invalid_photo_over">File size is too big. Max size is
-        50Mb
-    </string>
+    <string name="wf_invalid_photo_over">File size is too big. Max size is 50Mb</string>
     <string name="wf_invalid_photo_over2">File size is too big</string>
-
     <string name="wf_setting_contact_us_title">Contact us</string>
     <string name="wf_thanks_card_service_name">ThanksCard</string>
     <string name="wf_messenger_service_name">Messenger</string>
     <string name="wf_daily_report_service_name">DailyReport</string>
     <string name="wf_shift_working_service_name">ShiftWorking</string>
     <string name="wf_fukuri_service_name">FUKURI全般</string>
-
     <string name="wf_contact_us_problem_item">Bug report</string>
     <string name="wf_contact_us_improve_item">Improvement suggestion</string>
     <string name="wf_contact_us_content_title">Content</string>
