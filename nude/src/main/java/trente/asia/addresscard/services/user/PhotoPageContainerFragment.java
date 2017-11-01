@@ -68,6 +68,13 @@ public class PhotoPageContainerFragment extends WelfareFragment{
 	protected void initView(){
 		super.initView();
 		initHeader(null, "", null);
+		getView().findViewById(R.id.img_refresh).setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v){
+				loadPhotos(true);
+			}
+		});
 
 		txtToday = (TextView)getView().findViewById(R.id.txt_today);
 		holder = new PageSharingHolder();
@@ -101,7 +108,7 @@ public class PhotoPageContainerFragment extends WelfareFragment{
 				PhotoPageFragment fragment = (PhotoPageFragment)mPagerAdapter.getItem(position);
 				leftNeighborFragment = (PhotoPageFragment)mPagerAdapter.getItem(position - 1);
 				rightNeiborFragment = (PhotoPageFragment)mPagerAdapter.getItem(position + 1);
-				// fragment.loadPhotos(false);
+				fragment.showPhoto(getImgUrl(fragment.pagePosition));
 				onFragmentSelected(fragment);
 			}
 		});
@@ -114,22 +121,24 @@ public class PhotoPageContainerFragment extends WelfareFragment{
 		loadPhotos(true);
 	}
 
-	//https://github.com/500px/api-documentation/blob/master/endpoints/photo/GET_photos.md
+	// https://github.com/500px/api-documentation/blob/master/endpoints/photo/GET_photos.md
 	public void loadPhotos(boolean showLoadingIcon){
 		JSONObject jsonObject = new JSONObject();
 		// "https://api.500px.com/v1/photos?feature=fresh_today&sort=created_at&image_size=3&include_store=store_download&include_states=voted";
 
+		String url = "v1/photos?feature=popular&sort=created_at&image_size=1080&include_store=store_download&include_states=voted&consumer_key=PSfuSSCFSFOBqq6vvhp54lEVRODRa1xncBOPIJem";
 
-		String url = "v1/photos?feature=popular&only=Nude&sort=created_at&image_size=3&include_store=store_download&include_states=voted&consumer_key=PSfuSSCFSFOBqq6vvhp54lEVRODRa1xncBOPIJem";
+		// String url =
+		// "v1/photos?feature=popular&only=Nude&sort=created_at&image_size=3&include_store=store_download&include_states=voted&consumer_key=PSfuSSCFSFOBqq6vvhp54lEVRODRa1xncBOPIJem";
 
-//		String url = "v1/photos?";
-//		url += "feature=popular";
-//		url += "&sort=created_at";
-//		url += "&image_size=3";
-//		url += "&include_store=store_download";
-//		url += "&include_states=voted";
-//		url += "&consumer_key=PSfuSSCFSFOBqq6vvhp54lEVRODRa1xncBOPIJem";
-//		url += "&only=4";
+		// String url = "v1/photos?";
+		// url += "feature=popular";
+		// url += "&sort=created_at";
+		// url += "&image_size=3";
+		// url += "&include_store=store_download";
+		// url += "&include_states=voted";
+		// url += "&consumer_key=PSfuSSCFSFOBqq6vvhp54lEVRODRa1xncBOPIJem";
+		// url += "&only=4";
 
 		requestLoad(url, jsonObject, showLoadingIcon);
 	}

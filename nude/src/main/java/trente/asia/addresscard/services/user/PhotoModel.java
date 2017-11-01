@@ -9,5 +9,7 @@ import com.bluelinelabs.logansquare.annotation.JsonObject;
 @JsonObject(fieldDetectionPolicy = JsonObject.FieldDetectionPolicy.NONPRIVATE_FIELDS)
 public class PhotoModel{
 
-	public String image_url;
+	public String	image_url;
+	public String	url;
+
 }

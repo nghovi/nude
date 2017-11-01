@@ -94,34 +94,34 @@ public abstract class WelfareFragment extends ChiaseFragment implements WelfareA
 	}
 
 	protected void initHeader(Integer leftIconId, String title, Integer rightIconId){
-		ImageView imgLeftIcon = (ImageView)activity.findViewById(R.id.img_id_header_left_icon);
-		if(leftIconId != null){
-			imgLeftIcon.setImageResource(leftIconId);
-			imgLeftIcon.setVisibility(View.VISIBLE);
-			imgLeftIcon.setOnClickListener(new View.OnClickListener() {
-
-				@Override
-				public void onClick(View v){
-					onClickBackBtn();
-				}
-			});
-		}else{
-			imgLeftIcon.setVisibility(View.INVISIBLE);
-		}
-
-		if(!CCStringUtil.isEmpty(title)){
-			TextView txtTitle = (TextView)activity.findViewById(R.id.txt_id_header_title);
-			txtTitle.setText(title);
-		}
-
-		ImageView imgRightIcon = (ImageView)activity.findViewById(R.id.img_id_header_right_icon);
-		if(rightIconId != null){
-			// LinearLayout lnrRightIcon = (LinearLayout)activity.findViewById(R.id.lnr_header_right_icon);
-			imgRightIcon.setVisibility(View.VISIBLE);
-			imgRightIcon.setImageResource(rightIconId);
-		}else{
-			imgRightIcon.setVisibility(View.INVISIBLE);
-		}
+//		ImageView imgLeftIcon = (ImageView)activity.findViewById(R.id.img_id_header_left_icon);
+//		if(leftIconId != null){
+//			imgLeftIcon.setImageResource(leftIconId);
+//			imgLeftIcon.setVisibility(View.VISIBLE);
+//			imgLeftIcon.setOnClickListener(new View.OnClickListener() {
+//
+//				@Override
+//				public void onClick(View v){
+//					onClickBackBtn();
+//				}
+//			});
+//		}else{
+//			imgLeftIcon.setVisibility(View.INVISIBLE);
+//		}
+//
+//		if(!CCStringUtil.isEmpty(title)){
+//			TextView txtTitle = (TextView)activity.findViewById(R.id.txt_id_header_title);
+//			txtTitle.setText(title);
+//		}
+//
+//		ImageView imgRightIcon = (ImageView)activity.findViewById(R.id.img_id_header_right_icon);
+//		if(rightIconId != null){
+//			// LinearLayout lnrRightIcon = (LinearLayout)activity.findViewById(R.id.lnr_header_right_icon);
+//			imgRightIcon.setVisibility(View.VISIBLE);
+//			imgRightIcon.setImageResource(rightIconId);
+//		}else{
+//			imgRightIcon.setVisibility(View.INVISIBLE);
+//		}
 	}
 
 	//// TODO: 7/5/17 Refactor name -> updateHeaderTitle
