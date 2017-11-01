@@ -1,0 +1,24 @@
+diff --git a/calendar-adr/src/main/res/values-vi/strings.xml b/calendar-adr/src/main/res/values-vi/strings.xml
+index 79d0639c..5c9a38fc 100644
+--- a/calendar-adr/src/main/res/values-vi/strings.xml
++++ b/calendar-adr/src/main/res/values-vi/strings.xml
+@@ -122,6 +122,6 @@
+     <string name="overtime_early">Overtime (Early)</string>
+     <string name="overtime_lately">Overtime</string>
+     <string name="holiday_work">Holiday work</string>
+-    <string name="japan_day" />
++    <string name="japan_day"></string>
+     <string name="calendar_common_delete">削除</string>
+ </resources>
+diff --git a/calendar-adr/src/main/res/values/strings.xml b/calendar-adr/src/main/res/values/strings.xml
+index e4476247..ea077ce1 100644
+--- a/calendar-adr/src/main/res/values/strings.xml
++++ b/calendar-adr/src/main/res/values/strings.xml
+@@ -122,6 +122,6 @@
+     <string name="overtime_early">Overtime (Early)</string>
+     <string name="overtime_lately">Overtime</string>
+     <string name="holiday_work">HolidayWork</string>
+-    <string name="japan_day" />
++    <string name="japan_day"></string>
+     <string name="calendar_common_delete">Delete</string>
+ </resources>

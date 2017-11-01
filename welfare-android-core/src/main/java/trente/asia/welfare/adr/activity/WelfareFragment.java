@@ -87,10 +87,10 @@ public abstract class WelfareFragment extends ChiaseFragment implements WelfareA
 		super.initView();
 		((WelfareActivity)activity).setOnActivityResultListener(null);
 
-		if(!((WelfareActivity)activity).isClearRegistrationId && CCStringUtil.isEmpty(myself.key)){
-			clearRegistrationId();
-			((WelfareActivity)activity).isClearRegistrationId = true;
-		}
+//		if(!((WelfareActivity)activity).isClearRegistrationId && CCStringUtil.isEmpty(myself.key)){
+//			clearRegistrationId();
+//			((WelfareActivity)activity).isClearRegistrationId = true;
+//		}
 	}
 
 	protected void initHeader(Integer leftIconId, String title, Integer rightIconId){

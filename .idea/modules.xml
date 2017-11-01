@@ -2,17 +2,16 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/addresscard-adr/addresscard-adr.iml" filepath="$PROJECT_DIR$/addresscard-adr/addresscard-adr.iml" />
       <module fileurl="file://$PROJECT_DIR$/calendar-adr/calendar-adr.iml" filepath="$PROJECT_DIR$/calendar-adr/calendar-adr.iml" />
       <module fileurl="file://$PROJECT_DIR$/chiase-android-module/chiase-android-module.iml" filepath="$PROJECT_DIR$/chiase-android-module/chiase-android-module.iml" />
       <module fileurl="file://$PROJECT_DIR$/dailyreport-adr/dailyreport-adr.iml" filepath="$PROJECT_DIR$/dailyreport-adr/dailyreport-adr.iml" />
       <module fileurl="file://$PROJECT_DIR$/messenger-adr/messenger-adr.iml" filepath="$PROJECT_DIR$/messenger-adr/messenger-adr.iml" />
+      <module fileurl="file://$PROJECT_DIR$/nude/nude.iml" filepath="$PROJECT_DIR$/nude/nude.iml" />
       <module fileurl="file://$PROJECT_DIR$/officeletter-adr/officeletter-adr.iml" filepath="$PROJECT_DIR$/officeletter-adr/officeletter-adr.iml" />
-      <module fileurl="file://$PROJECT_DIR$/openCVLibrary320/openCVLibrary320.iml" filepath="$PROJECT_DIR$/openCVLibrary320/openCVLibrary320.iml" />
       <module fileurl="file://$PROJECT_DIR$/shiftworking-adr/shiftworking-adr.iml" filepath="$PROJECT_DIR$/shiftworking-adr/shiftworking-adr.iml" />
       <module fileurl="file://$PROJECT_DIR$/team360-adr/team360-adr.iml" filepath="$PROJECT_DIR$/team360-adr/team360-adr.iml" />
       <module fileurl="file://$PROJECT_DIR$/thankscard-adr/thankscard-adr.iml" filepath="$PROJECT_DIR$/thankscard-adr/thankscard-adr.iml" />
-      <module fileurl="file://$PROJECT_DIR$/welfare-adr.iml" filepath="$PROJECT_DIR$/welfare-adr.iml" />
+      <module fileurl="file://$PROJECT_DIR$/vpcorp.iml" filepath="$PROJECT_DIR$/vpcorp.iml" />
       <module fileurl="file://$PROJECT_DIR$/welfare-android-core/welfare-android-core.iml" filepath="$PROJECT_DIR$/welfare-android-core/welfare-android-core.iml" />
     </modules>
   </component>

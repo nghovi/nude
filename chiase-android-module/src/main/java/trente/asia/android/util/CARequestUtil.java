@@ -49,7 +49,7 @@ public class CARequestUtil {
     }
 
     public static String getGetUrl(String url, JSONObject jsonObject) {
-        url = url + "?" + getQueryString(jsonObject);
+//        url = url + "?" + getQueryString(jsonObject);
         return (url);
     }
 

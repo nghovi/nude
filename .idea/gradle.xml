@@ -8,13 +8,12 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/addresscard-adr" />
             <option value="$PROJECT_DIR$/calendar-adr" />
             <option value="$PROJECT_DIR$/chiase-android-module" />
             <option value="$PROJECT_DIR$/dailyreport-adr" />
             <option value="$PROJECT_DIR$/messenger-adr" />
+            <option value="$PROJECT_DIR$/nude" />
             <option value="$PROJECT_DIR$/officeletter-adr" />
-            <option value="$PROJECT_DIR$/openCVLibrary320" />
             <option value="$PROJECT_DIR$/shiftworking-adr" />
             <option value="$PROJECT_DIR$/team360-adr" />
             <option value="$PROJECT_DIR$/thankscard-adr" />

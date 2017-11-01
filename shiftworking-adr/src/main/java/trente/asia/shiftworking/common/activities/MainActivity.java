@@ -108,7 +108,7 @@ public class MainActivity extends WelfareActivity{
 
 		PreferencesAccountUtil prefAccUtil = new PreferencesAccountUtil(activity);
 		if(!CCStringUtil.isEmpty(prefAccUtil.getUserPref().key)){
-			startTimer();
+//			startTimer();
 		}
 	}
 
@@ -137,7 +137,7 @@ public class MainActivity extends WelfareActivity{
     }
 
 	private void loadUncheckNotice(){
-		requestBackground(SwConst.API_CHECK, new JSONObject(), false);
+//		requestBackground(SwConst.API_CHECK, new JSONObject(), false);
 	}
 
 	@Override
