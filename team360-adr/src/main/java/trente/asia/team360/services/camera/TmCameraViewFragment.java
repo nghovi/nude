@@ -1,4 +1,4 @@
-package trente.asia.team360.services.camera;
+package nguyenhoangviet.vpcorp.team360.services.camera;
 
 import android.content.ContentValues;
 import android.content.Intent;
@@ -21,11 +21,11 @@ import com.google.android.gms.vision.text.TextRecognizer;
 
 import java.io.IOException;
 
-import trente.asia.team360.R;
-import trente.asia.team360.common.fragments.AbstractTmFragment;
-import trente.asia.team360.databinding.FragmentMemberViewBinding;
-import trente.asia.team360.services.member.TmMemberViewFragment;
-import trente.asia.welfare.adr.models.UserModel;
+import nguyenhoangviet.vpcorp.team360.R;
+import nguyenhoangviet.vpcorp.team360.common.fragments.AbstractTmFragment;
+import nguyenhoangviet.vpcorp.team360.databinding.FragmentMemberViewBinding;
+import nguyenhoangviet.vpcorp.team360.services.member.TmMemberViewFragment;
+import nguyenhoangviet.vpcorp.welfare.adr.models.UserModel;
 
 /**
  * Created by takano-yasuhiro on 2017/06/19.

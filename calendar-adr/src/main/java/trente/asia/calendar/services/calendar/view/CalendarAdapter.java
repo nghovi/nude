@@ -1,4 +1,4 @@
-package trente.asia.calendar.services.calendar.view;
+package nguyenhoangviet.vpcorp.calendar.services.calendar.view;
 
 import java.util.List;
 
@@ -17,13 +17,13 @@ import android.widget.TextView;
 
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.android.listener.CsOnCheckedChangeListener;
-import trente.asia.android.view.layout.CheckableLinearLayout;
-import trente.asia.calendar.BuildConfig;
-import trente.asia.calendar.R;
-import trente.asia.calendar.commons.views.UserListLinearLayout;
-import trente.asia.calendar.services.calendar.model.CalendarModel;
-import trente.asia.welfare.adr.utils.WfPicassoHelper;
+import nguyenhoangviet.vpcorp.android.listener.CsOnCheckedChangeListener;
+import nguyenhoangviet.vpcorp.android.view.layout.CheckableLinearLayout;
+import nguyenhoangviet.vpcorp.calendar.BuildConfig;
+import nguyenhoangviet.vpcorp.calendar.R;
+import nguyenhoangviet.vpcorp.calendar.commons.views.UserListLinearLayout;
+import nguyenhoangviet.vpcorp.calendar.services.calendar.model.CalendarModel;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WfPicassoHelper;
 
 /**
  * BoardAdapter.

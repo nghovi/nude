@@ -1,4 +1,4 @@
-package trente.asia.messenger.services.message.view;
+package nguyenhoangviet.vpcorp.messenger.services.message.view;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -8,10 +8,10 @@ import android.view.ViewGroup;
 
 import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
-import trente.asia.messenger.BR;
-import trente.asia.messenger.R;
-import trente.asia.messenger.databinding.ItemStampCategoryBinding;
-import trente.asia.messenger.services.message.model.WFMStampCategoryModel;
+import nguyenhoangviet.vpcorp.messenger.BR;
+import nguyenhoangviet.vpcorp.messenger.R;
+import nguyenhoangviet.vpcorp.messenger.databinding.ItemStampCategoryBinding;
+import nguyenhoangviet.vpcorp.messenger.services.message.model.WFMStampCategoryModel;
 
 /**
  * Created by tien on 6/8/2017.

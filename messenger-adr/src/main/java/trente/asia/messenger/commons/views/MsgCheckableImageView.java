@@ -1,4 +1,4 @@
-package trente.asia.messenger.commons.views;
+package nguyenhoangviet.vpcorp.messenger.commons.views;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -7,9 +7,9 @@ import android.widget.TextView;
 
 import asia.chiase.core.util.CCNumberUtil;
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.android.view.ChiaseCheckableImageView;
-import trente.asia.android.view.listener.ChiaseOnCheckedChangeListener;
-import trente.asia.messenger.R;
+import nguyenhoangviet.vpcorp.android.view.ChiaseCheckableImageView;
+import nguyenhoangviet.vpcorp.android.view.listener.ChiaseOnCheckedChangeListener;
+import nguyenhoangviet.vpcorp.messenger.R;
 
 /**
  * MsgCheckableImageView

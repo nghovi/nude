@@ -1,4 +1,4 @@
-package trente.asia.dailyreport.dialogs;
+package nguyenhoangviet.vpcorp.dailyreport.dialogs;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ import android.view.View;
 import android.widget.NumberPicker;
 import android.widget.TimePicker;
 
-import trente.asia.android.view.ChiaseDateTimeView;
+import nguyenhoangviet.vpcorp.android.view.ChiaseDateTimeView;
 
 /**
  * Created by viet on 5/18/2016.
@@ -130,7 +130,7 @@ public class DRDateTimePickerDialog extends ChiaseDateTimeView{
 	}
 
 	public void setCancelListener(final View.OnClickListener listener){
-		alertDialog.findViewById(trente.asia.android.R.id.txt_id_cancel).setOnClickListener(new View.OnClickListener() {
+		alertDialog.findViewById(nguyenhoangviet.vpcorp.android.R.id.txt_id_cancel).setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View view){

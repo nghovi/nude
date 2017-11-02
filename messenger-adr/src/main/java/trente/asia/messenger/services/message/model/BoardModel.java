@@ -1,8 +1,8 @@
-package trente.asia.messenger.services.message.model;
+package nguyenhoangviet.vpcorp.messenger.services.message.model;
 
 import java.util.List;
 
-import trente.asia.welfare.adr.models.UserModel;
+import nguyenhoangviet.vpcorp.welfare.adr.models.UserModel;
 
 /**
  * BoardModel

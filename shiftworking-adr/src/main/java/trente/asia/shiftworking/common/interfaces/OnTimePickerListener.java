@@ -1,4 +1,4 @@
-package trente.asia.shiftworking.common.interfaces;
+package nguyenhoangviet.vpcorp.shiftworking.common.interfaces;
 
 /**
  * Created by tien on 9/20/2017.

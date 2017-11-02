@@ -1,4 +1,4 @@
-package trente.asia.team360.services.model;
+package nguyenhoangviet.vpcorp.team360.services.model;
 
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;

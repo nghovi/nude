@@ -1,4 +1,4 @@
-package trente.asia.thankscard.commons.defines;
+package nguyenhoangviet.vpcorp.thankscard.commons.defines;
 
 /**
  * Created by viet on 8/13/2015.

@@ -1,4 +1,4 @@
-package trente.asia.thankscard.services.posted.adapter;
+package nguyenhoangviet.vpcorp.thankscard.services.posted.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -10,10 +10,10 @@ import java.util.List;
 
 import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
-import trente.asia.thankscard.BR;
-import trente.asia.thankscard.R;
-import trente.asia.thankscard.databinding.ItemStampCategoryBinding;
-import trente.asia.thankscard.services.mypage.model.StampCategoryModel;
+import nguyenhoangviet.vpcorp.thankscard.BR;
+import nguyenhoangviet.vpcorp.thankscard.R;
+import nguyenhoangviet.vpcorp.thankscard.databinding.ItemStampCategoryBinding;
+import nguyenhoangviet.vpcorp.thankscard.services.mypage.model.StampCategoryModel;
 
 /**
  * Created by tien on 6/8/2017.

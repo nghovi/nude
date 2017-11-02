@@ -1,4 +1,4 @@
-package trente.asia.dailyreport.services.activities;
+package nguyenhoangviet.vpcorp.dailyreport.services.activities;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,15 +12,15 @@ import android.widget.ListView;
 
 import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCJsonUtil;
-import trente.asia.dailyreport.DRConst;
-import trente.asia.dailyreport.R;
-import trente.asia.dailyreport.fragments.AbstractDRFragment;
-import trente.asia.dailyreport.services.activities.model.ActivityModel;
-import trente.asia.dailyreport.services.activities.view.ActivityListAdapter;
-import trente.asia.dailyreport.services.report.MyReportFragment;
-import trente.asia.welfare.adr.models.UserModel;
-import trente.asia.welfare.adr.utils.WelfareUtil;
-import trente.asia.welfare.adr.view.WfSpinner;
+import nguyenhoangviet.vpcorp.dailyreport.DRConst;
+import nguyenhoangviet.vpcorp.dailyreport.R;
+import nguyenhoangviet.vpcorp.dailyreport.fragments.AbstractDRFragment;
+import nguyenhoangviet.vpcorp.dailyreport.services.activities.model.ActivityModel;
+import nguyenhoangviet.vpcorp.dailyreport.services.activities.view.ActivityListAdapter;
+import nguyenhoangviet.vpcorp.dailyreport.services.report.MyReportFragment;
+import nguyenhoangviet.vpcorp.welfare.adr.models.UserModel;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WelfareUtil;
+import nguyenhoangviet.vpcorp.welfare.adr.view.WfSpinner;
 
 /**
  * Created by viet on 2/15/2016.

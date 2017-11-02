@@ -1,4 +1,4 @@
-package trente.asia.shiftworking.services.transit.view;
+package nguyenhoangviet.vpcorp.shiftworking.services.transit.view;
 
 import java.util.Date;
 import java.util.List;
@@ -13,11 +13,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import asia.chiase.core.util.CCFormatUtil;
-import trente.asia.shiftworking.R;
-import trente.asia.shiftworking.common.defines.SwConst;
-import trente.asia.shiftworking.services.transit.model.TransitModel;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.utils.WelfareUtil;
+import nguyenhoangviet.vpcorp.shiftworking.R;
+import nguyenhoangviet.vpcorp.shiftworking.common.defines.SwConst;
+import nguyenhoangviet.vpcorp.shiftworking.services.transit.model.TransitModel;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WelfareUtil;
 
 /**
  * TransitAdapter.

@@ -1,4 +1,4 @@
-package trente.asia.calendar.services.calendar.view;
+package nguyenhoangviet.vpcorp.calendar.services.calendar.view;
 
 import java.util.List;
 
@@ -11,10 +11,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import trente.asia.calendar.R;
-import trente.asia.calendar.commons.views.UserListLinearLayout;
-import trente.asia.calendar.services.calendar.model.ScheduleModel;
-import trente.asia.welfare.adr.utils.WelfareFormatUtil;
+import nguyenhoangviet.vpcorp.calendar.R;
+import nguyenhoangviet.vpcorp.calendar.commons.views.UserListLinearLayout;
+import nguyenhoangviet.vpcorp.calendar.services.calendar.model.ScheduleModel;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WelfareFormatUtil;
 
 /**
  * DailySummaryScheduleAdapter.

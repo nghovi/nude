@@ -1,6 +1,6 @@
 package asia.trente.officeletter.services.document.model;
 
-import trente.asia.welfare.adr.models.AttachmentModel;
+import nguyenhoangviet.vpcorp.welfare.adr.models.AttachmentModel;
 
 /**
  * Created by tien on 8/23/2017.

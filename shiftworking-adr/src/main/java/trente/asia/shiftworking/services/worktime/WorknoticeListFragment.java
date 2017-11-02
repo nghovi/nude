@@ -1,4 +1,4 @@
-package trente.asia.shiftworking.services.worktime;
+package nguyenhoangviet.vpcorp.shiftworking.services.worktime;
 
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -22,17 +22,17 @@ import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.android.view.ChiaseListDialog;
-import trente.asia.android.view.ChiaseTextView;
-import trente.asia.shiftworking.R;
-import trente.asia.shiftworking.common.defines.SwConst;
-import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
-import trente.asia.shiftworking.services.shiftworking.view.CommonMonthView;
-import trente.asia.shiftworking.services.worktime.model.NoticeModel;
-import trente.asia.shiftworking.services.worktime.view.NoticeAdapter;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.models.DeptModel;
-import trente.asia.welfare.adr.utils.WelfareUtil;
+import nguyenhoangviet.vpcorp.android.view.ChiaseListDialog;
+import nguyenhoangviet.vpcorp.android.view.ChiaseTextView;
+import nguyenhoangviet.vpcorp.shiftworking.R;
+import nguyenhoangviet.vpcorp.shiftworking.common.defines.SwConst;
+import nguyenhoangviet.vpcorp.shiftworking.common.fragments.AbstractSwFragment;
+import nguyenhoangviet.vpcorp.shiftworking.services.shiftworking.view.CommonMonthView;
+import nguyenhoangviet.vpcorp.shiftworking.services.worktime.model.NoticeModel;
+import nguyenhoangviet.vpcorp.shiftworking.services.worktime.view.NoticeAdapter;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.models.DeptModel;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WelfareUtil;
 
 public class WorknoticeListFragment extends AbstractSwFragment {
 

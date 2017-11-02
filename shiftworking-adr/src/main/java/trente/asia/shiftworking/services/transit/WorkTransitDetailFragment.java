@@ -1,4 +1,4 @@
-package trente.asia.shiftworking.services.transit;
+package nguyenhoangviet.vpcorp.shiftworking.services.transit;
 
 import java.util.List;
 
@@ -19,14 +19,14 @@ import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.shiftworking.BuildConfig;
-import trente.asia.shiftworking.R;
-import trente.asia.shiftworking.common.defines.SwConst;
-import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
-import trente.asia.shiftworking.services.transit.model.TransitModelHolder;
-import trente.asia.welfare.adr.activity.WelfareActivity;
-import trente.asia.welfare.adr.models.ImageAttachmentModel;
-import trente.asia.welfare.adr.utils.WfPicassoHelper;
+import nguyenhoangviet.vpcorp.shiftworking.BuildConfig;
+import nguyenhoangviet.vpcorp.shiftworking.R;
+import nguyenhoangviet.vpcorp.shiftworking.common.defines.SwConst;
+import nguyenhoangviet.vpcorp.shiftworking.common.fragments.AbstractSwFragment;
+import nguyenhoangviet.vpcorp.shiftworking.services.transit.model.TransitModelHolder;
+import nguyenhoangviet.vpcorp.welfare.adr.activity.WelfareActivity;
+import nguyenhoangviet.vpcorp.welfare.adr.models.ImageAttachmentModel;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WfPicassoHelper;
 
 public class WorkTransitDetailFragment extends AbstractSwFragment{
 

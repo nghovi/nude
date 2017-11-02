@@ -1,4 +1,4 @@
-package trente.asia.thankscard.commons.fcm;
+package nguyenhoangviet.vpcorp.thankscard.commons.fcm;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -14,11 +14,11 @@ import android.util.Log;
 
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.android.util.CsMsgUtil;
-import trente.asia.thankscard.R;
-import trente.asia.thankscard.activities.MainActivity;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.models.FcmNotificationModel;
+import nguyenhoangviet.vpcorp.android.util.CsMsgUtil;
+import nguyenhoangviet.vpcorp.thankscard.R;
+import nguyenhoangviet.vpcorp.thankscard.activities.MainActivity;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.models.FcmNotificationModel;
 
 /**
  * MyFirebaseMessagingService

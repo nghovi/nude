@@ -1,9 +1,9 @@
-package trente.asia.messenger.services.message.listener;
+package nguyenhoangviet.vpcorp.messenger.services.message.listener;
 
 import java.util.List;
 
-import trente.asia.messenger.services.message.model.BoardModel;
-import trente.asia.messenger.services.message.model.RealmBoardModel;
+import nguyenhoangviet.vpcorp.messenger.services.message.model.BoardModel;
+import nguyenhoangviet.vpcorp.messenger.services.message.model.RealmBoardModel;
 
 /**
  * OnRefreshBoardListListener

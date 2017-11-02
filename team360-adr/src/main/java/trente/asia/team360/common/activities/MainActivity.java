@@ -1,15 +1,15 @@
-package trente.asia.team360.common.activities;
+package nguyenhoangviet.vpcorp.team360.common.activities;
 
 import android.os.Bundle;
 
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.team360.R;
-import trente.asia.team360.services.member.TmMemberViewFragment;
-import trente.asia.team360.services.login.TmLoginFragment;
+import nguyenhoangviet.vpcorp.team360.R;
+import nguyenhoangviet.vpcorp.team360.services.member.TmMemberViewFragment;
+import nguyenhoangviet.vpcorp.team360.services.login.TmLoginFragment;
 
-import trente.asia.welfare.adr.activity.WelfareActivity;
-import trente.asia.welfare.adr.models.UserModel;
-import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
+import nguyenhoangviet.vpcorp.welfare.adr.activity.WelfareActivity;
+import nguyenhoangviet.vpcorp.welfare.adr.models.UserModel;
+import nguyenhoangviet.vpcorp.welfare.adr.pref.PreferencesAccountUtil;
 
 public class MainActivity extends WelfareActivity{
 

@@ -1,4 +1,4 @@
-package trente.asia.calendar.commons.activites;
+package nguyenhoangviet.vpcorp.calendar.commons.activites;
 
 import java.util.Date;
 
@@ -8,16 +8,16 @@ import android.os.Bundle;
 
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.calendar.R;
-import trente.asia.calendar.commons.defines.ClConst;
-import trente.asia.calendar.services.calendar.MonthlyFragment;
-import trente.asia.calendar.services.calendar.ScheduleDetailFragment;
-import trente.asia.calendar.services.calendar.model.ScheduleModel;
-import trente.asia.calendar.services.user.ClLoginFragment;
-import trente.asia.welfare.adr.activity.WelfareActivity;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.models.UserModel;
-import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
+import nguyenhoangviet.vpcorp.calendar.R;
+import nguyenhoangviet.vpcorp.calendar.commons.defines.ClConst;
+import nguyenhoangviet.vpcorp.calendar.services.calendar.MonthlyFragment;
+import nguyenhoangviet.vpcorp.calendar.services.calendar.ScheduleDetailFragment;
+import nguyenhoangviet.vpcorp.calendar.services.calendar.model.ScheduleModel;
+import nguyenhoangviet.vpcorp.calendar.services.user.ClLoginFragment;
+import nguyenhoangviet.vpcorp.welfare.adr.activity.WelfareActivity;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.models.UserModel;
+import nguyenhoangviet.vpcorp.welfare.adr.pref.PreferencesAccountUtil;
 
 public class MainClActivity extends WelfareActivity{
 

@@ -1,4 +1,4 @@
-package trente.asia.thankscard.services.rank;
+package nguyenhoangviet.vpcorp.thankscard.services.rank;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -20,15 +20,15 @@ import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
-import trente.asia.thankscard.BuildConfig;
-import trente.asia.thankscard.R;
-import trente.asia.thankscard.commons.defines.TcConst;
-import trente.asia.thankscard.fragments.AbstractTCFragment;
-import trente.asia.welfare.adr.dialog.WfProfileDialog;
-import trente.asia.thankscard.services.rank.model.RankModel;
-import trente.asia.thankscard.services.rank.view.RankingListAdapter;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.utils.WelfareUtil;
+import nguyenhoangviet.vpcorp.thankscard.BuildConfig;
+import nguyenhoangviet.vpcorp.thankscard.R;
+import nguyenhoangviet.vpcorp.thankscard.commons.defines.TcConst;
+import nguyenhoangviet.vpcorp.thankscard.fragments.AbstractTCFragment;
+import nguyenhoangviet.vpcorp.welfare.adr.dialog.WfProfileDialog;
+import nguyenhoangviet.vpcorp.thankscard.services.rank.model.RankModel;
+import nguyenhoangviet.vpcorp.thankscard.services.rank.view.RankingListAdapter;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WelfareUtil;
 
 /**
  * Created by viet on 2/15/2016.

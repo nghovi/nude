@@ -1,4 +1,4 @@
-package trente.asia.calendar.services.todo;
+package nguyenhoangviet.vpcorp.calendar.services.todo;
 
 import java.io.IOException;
 import java.util.Calendar;
@@ -19,12 +19,12 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 
 import asia.chiase.core.util.CCFormatUtil;
-import trente.asia.android.view.ChiaseEditText;
-import trente.asia.calendar.R;
-import trente.asia.calendar.commons.defines.ClConst;
-import trente.asia.calendar.commons.fragments.AbstractClFragment;
-import trente.asia.calendar.services.todo.model.Todo;
-import trente.asia.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.android.view.ChiaseEditText;
+import nguyenhoangviet.vpcorp.calendar.R;
+import nguyenhoangviet.vpcorp.calendar.commons.defines.ClConst;
+import nguyenhoangviet.vpcorp.calendar.commons.fragments.AbstractClFragment;
+import nguyenhoangviet.vpcorp.calendar.services.todo.model.Todo;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
 
 /**
  * TodoDetailFragment

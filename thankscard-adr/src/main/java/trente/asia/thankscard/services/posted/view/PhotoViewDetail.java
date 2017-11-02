@@ -1,4 +1,4 @@
-package trente.asia.thankscard.services.posted.view;
+package nguyenhoangviet.vpcorp.thankscard.services.posted.view;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -14,10 +14,10 @@ import android.util.Log;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
-import trente.asia.thankscard.BuildConfig;
-import trente.asia.thankscard.commons.defines.TcConst;
-import trente.asia.welfare.adr.pref.PreferencesSystemUtil;
-import trente.asia.welfare.adr.utils.WelfareUtil;
+import nguyenhoangviet.vpcorp.thankscard.BuildConfig;
+import nguyenhoangviet.vpcorp.thankscard.commons.defines.TcConst;
+import nguyenhoangviet.vpcorp.welfare.adr.pref.PreferencesSystemUtil;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WelfareUtil;
 
 /**
  * Created by tien on 7/26/2017.

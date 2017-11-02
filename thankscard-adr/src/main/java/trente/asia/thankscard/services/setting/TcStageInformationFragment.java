@@ -1,4 +1,4 @@
-package trente.asia.thankscard.services.setting;
+package nguyenhoangviet.vpcorp.thankscard.services.setting;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -7,11 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import trente.asia.thankscard.R;
-import trente.asia.thankscard.commons.defines.TcConst;
-import trente.asia.thankscard.databinding.FragmentStageInformationBinding;
-import trente.asia.thankscard.fragments.AbstractTCFragment;
-import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
+import nguyenhoangviet.vpcorp.thankscard.R;
+import nguyenhoangviet.vpcorp.thankscard.commons.defines.TcConst;
+import nguyenhoangviet.vpcorp.thankscard.databinding.FragmentStageInformationBinding;
+import nguyenhoangviet.vpcorp.thankscard.fragments.AbstractTCFragment;
+import nguyenhoangviet.vpcorp.welfare.adr.pref.PreferencesAccountUtil;
 
 /**
  * Created by tien on 7/10/2017.

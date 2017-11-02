@@ -1,4 +1,4 @@
-package trente.asia.shiftworking.common.fragments;
+package nguyenhoangviet.vpcorp.shiftworking.common.fragments;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -8,11 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import trente.asia.shiftworking.R;
-import trente.asia.shiftworking.common.utils.SwUtil;
-import trente.asia.shiftworking.services.login.SwLoginFragment;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.fragment.AbstractCameraPhotoPreviewFragment;
+import nguyenhoangviet.vpcorp.shiftworking.R;
+import nguyenhoangviet.vpcorp.shiftworking.common.utils.SwUtil;
+import nguyenhoangviet.vpcorp.shiftworking.services.login.SwLoginFragment;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.fragment.AbstractCameraPhotoPreviewFragment;
 
 /**
  * A simple {@link Fragment} subclass.

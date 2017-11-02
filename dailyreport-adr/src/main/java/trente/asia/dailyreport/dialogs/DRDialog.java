@@ -1,4 +1,4 @@
-package trente.asia.dailyreport.dialogs;
+package nguyenhoangviet.vpcorp.dailyreport.dialogs;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,13 +20,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.android.view.ChiaseDialog;
-import trente.asia.dailyreport.R;
-import trente.asia.dailyreport.services.report.model.ReportModel;
-import trente.asia.dailyreport.services.report.view.DRLikeListAdapter;
-import trente.asia.welfare.adr.dialog.WfDialog;
-import trente.asia.welfare.adr.utils.WelfareUtil;
-import trente.asia.welfare.adr.view.WfSpinner;
+import nguyenhoangviet.vpcorp.android.view.ChiaseDialog;
+import nguyenhoangviet.vpcorp.dailyreport.R;
+import nguyenhoangviet.vpcorp.dailyreport.services.report.model.ReportModel;
+import nguyenhoangviet.vpcorp.dailyreport.services.report.view.DRLikeListAdapter;
+import nguyenhoangviet.vpcorp.welfare.adr.dialog.WfDialog;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WelfareUtil;
+import nguyenhoangviet.vpcorp.welfare.adr.view.WfSpinner;
 
 /**
  * QkChiaseDialog

@@ -1,4 +1,4 @@
-package trente.asia.shiftworking.services.setting;
+package nguyenhoangviet.vpcorp.shiftworking.services.setting;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,9 +8,9 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.TextView;
 
-import trente.asia.shiftworking.R;
-import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
-import trente.asia.android.util.AndroidUtil;
+import nguyenhoangviet.vpcorp.shiftworking.R;
+import nguyenhoangviet.vpcorp.shiftworking.common.fragments.AbstractSwFragment;
+import nguyenhoangviet.vpcorp.android.util.AndroidUtil;
 
 /**
  * A simple {@link Fragment} subclass.

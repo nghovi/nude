@@ -1,4 +1,4 @@
-package trente.asia.thankscard.services.mypage;
+package nguyenhoangviet.vpcorp.thankscard.services.mypage;
 
 import java.util.Calendar;
 import java.util.Collections;
@@ -30,23 +30,23 @@ import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCNumberUtil;
 import asia.chiase.core.util.CCStringUtil;
 import io.realm.Realm;
-import trente.asia.thankscard.R;
-import trente.asia.thankscard.activities.MainActivity;
-import trente.asia.thankscard.commons.defines.TcConst;
-import trente.asia.thankscard.fragments.AbstractTCFragment;
-import trente.asia.thankscard.fragments.dialogs.RankStageDialog;
-import trente.asia.thankscard.services.mypage.model.MypageModel;
-import trente.asia.thankscard.services.mypage.model.NoticeModel;
-import trente.asia.thankscard.services.mypage.model.StampCategoryModel;
-import trente.asia.thankscard.services.mypage.model.StampModel;
-import trente.asia.thankscard.services.mypage.view.NoticeListAdapter;
-import trente.asia.thankscard.services.posted.PostTCFragment;
-import trente.asia.thankscard.services.rank.model.RankStage;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.models.DeptModel;
-import trente.asia.welfare.adr.pref.PreferencesSystemUtil;
-import trente.asia.welfare.adr.utils.WelfareUtil;
-import trente.asia.welfare.adr.utils.WfPicassoHelper;
+import nguyenhoangviet.vpcorp.thankscard.R;
+import nguyenhoangviet.vpcorp.thankscard.activities.MainActivity;
+import nguyenhoangviet.vpcorp.thankscard.commons.defines.TcConst;
+import nguyenhoangviet.vpcorp.thankscard.fragments.AbstractTCFragment;
+import nguyenhoangviet.vpcorp.thankscard.fragments.dialogs.RankStageDialog;
+import nguyenhoangviet.vpcorp.thankscard.services.mypage.model.MypageModel;
+import nguyenhoangviet.vpcorp.thankscard.services.mypage.model.NoticeModel;
+import nguyenhoangviet.vpcorp.thankscard.services.mypage.model.StampCategoryModel;
+import nguyenhoangviet.vpcorp.thankscard.services.mypage.model.StampModel;
+import nguyenhoangviet.vpcorp.thankscard.services.mypage.view.NoticeListAdapter;
+import nguyenhoangviet.vpcorp.thankscard.services.posted.PostTCFragment;
+import nguyenhoangviet.vpcorp.thankscard.services.rank.model.RankStage;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.models.DeptModel;
+import nguyenhoangviet.vpcorp.welfare.adr.pref.PreferencesSystemUtil;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WelfareUtil;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WfPicassoHelper;
 
 /**
  * Created by viet on 2/15/2016.

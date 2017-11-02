@@ -1,11 +1,11 @@
-package trente.asia.dailyreport.activities;
+package nguyenhoangviet.vpcorp.dailyreport.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-import trente.asia.dailyreport.R;
-import trente.asia.welfare.adr.activity.WelfareActivity;
+import nguyenhoangviet.vpcorp.dailyreport.R;
+import nguyenhoangviet.vpcorp.welfare.adr.activity.WelfareActivity;
 
 public class SplashActivity extends WelfareActivity{
 

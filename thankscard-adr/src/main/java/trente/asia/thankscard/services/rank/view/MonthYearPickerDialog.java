@@ -1,4 +1,4 @@
-package trente.asia.thankscard.services.rank.view;
+package nguyenhoangviet.vpcorp.thankscard.services.rank.view;
 
 import java.util.Calendar;
 
@@ -13,7 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.NumberPicker;
 
-import trente.asia.thankscard.R;
+import nguyenhoangviet.vpcorp.thankscard.R;
 
 /**
  * Created by viet on 2/19/2016.

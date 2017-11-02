@@ -1,4 +1,4 @@
-package trente.asia.calendar.services.calendar;
+package nguyenhoangviet.vpcorp.calendar.services.calendar;
 
 import java.util.Date;
 
@@ -7,11 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import trente.asia.android.util.CsDateUtil;
-import trente.asia.calendar.R;
-import trente.asia.calendar.commons.fragments.PageContainerFragment;
-import trente.asia.calendar.commons.views.ClFragmentPagerAdapter;
-import trente.asia.calendar.services.calendar.view.MonthlyCalendarPagerAdapter;
+import nguyenhoangviet.vpcorp.android.util.CsDateUtil;
+import nguyenhoangviet.vpcorp.calendar.R;
+import nguyenhoangviet.vpcorp.calendar.commons.fragments.PageContainerFragment;
+import nguyenhoangviet.vpcorp.calendar.commons.views.ClFragmentPagerAdapter;
+import nguyenhoangviet.vpcorp.calendar.services.calendar.view.MonthlyCalendarPagerAdapter;
 
 /**
  * MonthlyFragment

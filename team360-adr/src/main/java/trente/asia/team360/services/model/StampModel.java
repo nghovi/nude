@@ -1,4 +1,4 @@
-package trente.asia.team360.services.model;
+package nguyenhoangviet.vpcorp.team360.services.model;
 
 /**
  * Created by takyas on 10/13/16.

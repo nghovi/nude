@@ -1,4 +1,4 @@
-package trente.asia.calendar.commons.dialogs;
+package nguyenhoangviet.vpcorp.calendar.commons.dialogs;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,14 +9,14 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.android.view.layout.CheckableLinearLayout;
-import trente.asia.calendar.R;
-import trente.asia.calendar.commons.defines.ClConst;
-import trente.asia.calendar.commons.utils.ClUtil;
-import trente.asia.calendar.commons.views.FilterUserLinearLayout;
-import trente.asia.calendar.commons.views.UserListLinearLayout;
-import trente.asia.welfare.adr.models.UserModel;
-import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
+import nguyenhoangviet.vpcorp.android.view.layout.CheckableLinearLayout;
+import nguyenhoangviet.vpcorp.calendar.R;
+import nguyenhoangviet.vpcorp.calendar.commons.defines.ClConst;
+import nguyenhoangviet.vpcorp.calendar.commons.utils.ClUtil;
+import nguyenhoangviet.vpcorp.calendar.commons.views.FilterUserLinearLayout;
+import nguyenhoangviet.vpcorp.calendar.commons.views.UserListLinearLayout;
+import nguyenhoangviet.vpcorp.welfare.adr.models.UserModel;
+import nguyenhoangviet.vpcorp.welfare.adr.pref.PreferencesAccountUtil;
 
 /**
  * QkChiaseDialog

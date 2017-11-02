@@ -1,4 +1,4 @@
-package trente.asia.thankscard.services.posted.view;
+package nguyenhoangviet.vpcorp.thankscard.services.posted.view;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -13,9 +13,9 @@ import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
-import trente.asia.thankscard.R;
-import trente.asia.thankscard.commons.defines.TcConst;
-import trente.asia.welfare.adr.pref.PreferencesSystemUtil;
+import nguyenhoangviet.vpcorp.thankscard.R;
+import nguyenhoangviet.vpcorp.thankscard.commons.defines.TcConst;
+import nguyenhoangviet.vpcorp.welfare.adr.pref.PreferencesSystemUtil;
 
 /**
  * Created by tien on 7/17/2017.

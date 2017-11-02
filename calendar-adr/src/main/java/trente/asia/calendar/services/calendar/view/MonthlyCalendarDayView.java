@@ -1,4 +1,4 @@
-package trente.asia.calendar.services.calendar.view;
+package nguyenhoangviet.vpcorp.calendar.services.calendar.view;
 
 //import static trente.asia.calendar.services.calendar.MonthlyPageFragment.getScheduleComparator;
 
@@ -20,12 +20,12 @@ import android.widget.TextView;
 
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
-import trente.asia.calendar.R;
-import trente.asia.calendar.commons.defines.ClConst;
-import trente.asia.calendar.services.calendar.listener.DailyScheduleClickListener;
-import trente.asia.calendar.services.calendar.model.ScheduleModel;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.utils.WelfareUtil;
+import nguyenhoangviet.vpcorp.calendar.R;
+import nguyenhoangviet.vpcorp.calendar.commons.defines.ClConst;
+import nguyenhoangviet.vpcorp.calendar.services.calendar.listener.DailyScheduleClickListener;
+import nguyenhoangviet.vpcorp.calendar.services.calendar.model.ScheduleModel;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WelfareUtil;
 
 /**
  * MonthlyCalendarDayView

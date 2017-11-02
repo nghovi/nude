@@ -1,4 +1,4 @@
-package trente.asia.calendar.services.setting;
+package nguyenhoangviet.vpcorp.calendar.services.setting;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,21 +29,21 @@ import com.bluelinelabs.logansquare.LoganSquare;
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCNumberUtil;
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.android.util.AndroidUtil;
-import trente.asia.calendar.BuildConfig;
-import trente.asia.calendar.R;
-import trente.asia.calendar.commons.activites.CameraPhotoPreviewAccountActivity;
-import trente.asia.calendar.commons.fragments.AbstractClFragment;
-import trente.asia.calendar.commons.utils.ClUtil;
-import trente.asia.calendar.services.user.ClLoginFragment;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.define.WfUrlConst;
-import trente.asia.welfare.adr.menu.OnMenuButtonsListener;
-import trente.asia.welfare.adr.menu.OnMenuManageListener;
-import trente.asia.welfare.adr.models.SettingModel;
-import trente.asia.welfare.adr.services.user.menu.AccountMenuManager;
-import trente.asia.welfare.adr.utils.WelfareUtil;
-import trente.asia.welfare.adr.utils.WfPicassoHelper;
+import nguyenhoangviet.vpcorp.android.util.AndroidUtil;
+import nguyenhoangviet.vpcorp.calendar.BuildConfig;
+import nguyenhoangviet.vpcorp.calendar.R;
+import nguyenhoangviet.vpcorp.calendar.commons.activites.CameraPhotoPreviewAccountActivity;
+import nguyenhoangviet.vpcorp.calendar.commons.fragments.AbstractClFragment;
+import nguyenhoangviet.vpcorp.calendar.commons.utils.ClUtil;
+import nguyenhoangviet.vpcorp.calendar.services.user.ClLoginFragment;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WfUrlConst;
+import nguyenhoangviet.vpcorp.welfare.adr.menu.OnMenuButtonsListener;
+import nguyenhoangviet.vpcorp.welfare.adr.menu.OnMenuManageListener;
+import nguyenhoangviet.vpcorp.welfare.adr.models.SettingModel;
+import nguyenhoangviet.vpcorp.welfare.adr.services.user.menu.AccountMenuManager;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WelfareUtil;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WfPicassoHelper;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -135,12 +135,12 @@ public class ClAccInforFragment extends AbstractClFragment{
 		super.initView();
 		super.initHeader(R.drawable.wf_back_white, getString(R.string.wf_account_info_title), null);
 
-		imgAvatar = (ImageView)getView().findViewById(trente.asia.welfare.adr.R.id.img_fragment_setting_avatar);
+		imgAvatar = (ImageView)getView().findViewById(nguyenhoangviet.vpcorp.welfare.adr.R.id.img_fragment_setting_avatar);
 
-		edtOldPassword = (EditText)getView().findViewById(trente.asia.welfare.adr.R.id.txt_old_password);
-		edtNewPassword = (EditText)getView().findViewById(trente.asia.welfare.adr.R.id.txt_new_password);
-		edtConfirmPassword = (EditText)getView().findViewById(trente.asia.welfare.adr.R.id.txt_comfirm_password);
-		txtUserName = (TextView)getView().findViewById(trente.asia.welfare.adr.R.id.txt_id_username);
+		edtOldPassword = (EditText)getView().findViewById(nguyenhoangviet.vpcorp.welfare.adr.R.id.txt_old_password);
+		edtNewPassword = (EditText)getView().findViewById(nguyenhoangviet.vpcorp.welfare.adr.R.id.txt_new_password);
+		edtConfirmPassword = (EditText)getView().findViewById(nguyenhoangviet.vpcorp.welfare.adr.R.id.txt_comfirm_password);
+		txtUserName = (TextView)getView().findViewById(nguyenhoangviet.vpcorp.welfare.adr.R.id.txt_id_username);
 
 		setupBtnUpdate();
 
@@ -152,7 +152,7 @@ public class ClAccInforFragment extends AbstractClFragment{
 			}
 		});
 
-		mViewForMenuBehind = getView().findViewById(trente.asia.welfare.adr.R.id.viewForMenuBehind);
+		mViewForMenuBehind = getView().findViewById(nguyenhoangviet.vpcorp.welfare.adr.R.id.viewForMenuBehind);
 		mViewForMenuBehind.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -162,28 +162,28 @@ public class ClAccInforFragment extends AbstractClFragment{
 		});
 
 		menuManager = new AccountMenuManager();
-		menuManager.setMenuLayout(activity, trente.asia.welfare.adr.R.id.menuMain, onMenuManagerListener, onMenuButtonsListener);
+		menuManager.setMenuLayout(activity, nguyenhoangviet.vpcorp.welfare.adr.R.id.menuMain, onMenuManagerListener, onMenuButtonsListener);
 
-		swtChangePassWord = (SwitchCompat)getView().findViewById(trente.asia.welfare.adr.R.id.swt_change_password);
+		swtChangePassWord = (SwitchCompat)getView().findViewById(nguyenhoangviet.vpcorp.welfare.adr.R.id.swt_change_password);
 		swtChangePassWord.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked){
 				if(isChecked){
-					getView().findViewById(trente.asia.welfare.adr.R.id.lnr_change_password).setVisibility(View.VISIBLE);
+					getView().findViewById(nguyenhoangviet.vpcorp.welfare.adr.R.id.lnr_change_password).setVisibility(View.VISIBLE);
 					isChangePass = true;
 				}else{
-					getView().findViewById(trente.asia.welfare.adr.R.id.lnr_change_password).setVisibility(View.GONE);
+					getView().findViewById(nguyenhoangviet.vpcorp.welfare.adr.R.id.lnr_change_password).setVisibility(View.GONE);
 					isChangePass = false;
 				}
 			}
 		});
 
-		swtNotification = (SwitchCompat)getView().findViewById(trente.asia.welfare.adr.R.id.swt_push_notification);
+		swtNotification = (SwitchCompat)getView().findViewById(nguyenhoangviet.vpcorp.welfare.adr.R.id.swt_push_notification);
 	}
 
 	protected void setupBtnUpdate(){
-		btnUpdate = (Button)getView().findViewById(trente.asia.welfare.adr.R.id.btn_id_update);
+		btnUpdate = (Button)getView().findViewById(nguyenhoangviet.vpcorp.welfare.adr.R.id.btn_id_update);
 		btnUpdate.setOnClickListener(new View.OnClickListener() {
 
 			@Override

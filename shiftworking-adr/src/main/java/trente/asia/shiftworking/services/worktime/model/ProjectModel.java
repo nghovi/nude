@@ -1,4 +1,4 @@
-package trente.asia.shiftworking.services.worktime.model;
+package nguyenhoangviet.vpcorp.shiftworking.services.worktime.model;
 
 /**
  * ProjectModel

@@ -1,4 +1,4 @@
-package trente.asia.thankscard.services.common;
+package nguyenhoangviet.vpcorp.thankscard.services.common;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -27,23 +27,23 @@ import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import io.realm.Realm;
-import trente.asia.thankscard.BuildConfig;
-import trente.asia.thankscard.R;
-import trente.asia.thankscard.commons.defines.TcConst;
-import trente.asia.thankscard.services.common.model.HistoryModel;
-import trente.asia.thankscard.services.mypage.model.StampModel;
-import trente.asia.thankscard.services.posted.PostTCFragment;
-import trente.asia.thankscard.services.posted.model.ApiStickerModel;
-import trente.asia.thankscard.services.posted.view.StickerViewDetail;
-import trente.asia.thankscard.services.received.ReceiveTCListFragment;
-import trente.asia.thankscard.utils.TCUtil;
-import trente.asia.welfare.adr.activity.WelfareActivity;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.models.DeptModel;
-import trente.asia.welfare.adr.models.UserModel;
-import trente.asia.welfare.adr.pref.PreferencesSystemUtil;
-import trente.asia.welfare.adr.utils.WelfareUtil;
-import trente.asia.welfare.adr.utils.WfPicassoHelper;
+import nguyenhoangviet.vpcorp.thankscard.BuildConfig;
+import nguyenhoangviet.vpcorp.thankscard.R;
+import nguyenhoangviet.vpcorp.thankscard.commons.defines.TcConst;
+import nguyenhoangviet.vpcorp.thankscard.services.common.model.HistoryModel;
+import nguyenhoangviet.vpcorp.thankscard.services.mypage.model.StampModel;
+import nguyenhoangviet.vpcorp.thankscard.services.posted.PostTCFragment;
+import nguyenhoangviet.vpcorp.thankscard.services.posted.model.ApiStickerModel;
+import nguyenhoangviet.vpcorp.thankscard.services.posted.view.StickerViewDetail;
+import nguyenhoangviet.vpcorp.thankscard.services.received.ReceiveTCListFragment;
+import nguyenhoangviet.vpcorp.thankscard.utils.TCUtil;
+import nguyenhoangviet.vpcorp.welfare.adr.activity.WelfareActivity;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.models.DeptModel;
+import nguyenhoangviet.vpcorp.welfare.adr.models.UserModel;
+import nguyenhoangviet.vpcorp.welfare.adr.pref.PreferencesSystemUtil;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WelfareUtil;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WfPicassoHelper;
 
 /**
  * Created by viet on 2/15/2016.

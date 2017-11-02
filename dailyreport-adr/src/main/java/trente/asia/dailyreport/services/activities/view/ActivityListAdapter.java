@@ -1,4 +1,4 @@
-package trente.asia.dailyreport.services.activities.view;
+package nguyenhoangviet.vpcorp.dailyreport.services.activities.view;
 
 import java.util.Date;
 import java.util.List;
@@ -14,11 +14,11 @@ import android.widget.TextView;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.dailyreport.BuildConfig;
-import trente.asia.dailyreport.R;
-import trente.asia.dailyreport.services.activities.model.ActivityModel;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.utils.WfPicassoHelper;
+import nguyenhoangviet.vpcorp.dailyreport.BuildConfig;
+import nguyenhoangviet.vpcorp.dailyreport.R;
+import nguyenhoangviet.vpcorp.dailyreport.services.activities.model.ActivityModel;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WfPicassoHelper;
 
 /**
  * Created by viet on 5/13/2016.

@@ -1,4 +1,4 @@
-package trente.asia.thankscard.services.posted.model;
+package nguyenhoangviet.vpcorp.thankscard.services.posted.model;
 
 /**
  * Created by tien on 7/24/2017.

@@ -1,4 +1,4 @@
-package trente.asia.thankscard.services.mypage.model;
+package nguyenhoangviet.vpcorp.thankscard.services.mypage.model;
 
 import com.squareup.picasso.Picasso;
 
@@ -12,7 +12,7 @@ import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
-import trente.asia.thankscard.BuildConfig;
+import nguyenhoangviet.vpcorp.thankscard.BuildConfig;
 
 /**
  * Created by tien on 6/7/2017.

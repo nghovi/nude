@@ -2,7 +2,7 @@
  * Copyright 2010 Mark Wyszomierski
  */
 
-package trente.asia.shiftworking.services.worktime.view;
+package nguyenhoangviet.vpcorp.shiftworking.services.worktime.view;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
-import trente.asia.shiftworking.R;
+import nguyenhoangviet.vpcorp.shiftworking.R;
 
 /**
  * A multi-button control which can only have one pressed button at

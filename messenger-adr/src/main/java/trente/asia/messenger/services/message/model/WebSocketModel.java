@@ -1,4 +1,4 @@
-package trente.asia.messenger.services.message.model;
+package nguyenhoangviet.vpcorp.messenger.services.message.model;
 
 /**
  * WebSocketModel

@@ -1,4 +1,4 @@
-package trente.asia.dailyreport.utils;
+package nguyenhoangviet.vpcorp.dailyreport.utils;
 
 import java.io.File;
 import java.text.ParseException;
@@ -8,9 +8,9 @@ import java.util.Date;
 import android.os.Environment;
 
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.dailyreport.DRConst;
-import trente.asia.dailyreport.services.report.model.ReportModel;
-import trente.asia.welfare.adr.models.CommentModel;
+import nguyenhoangviet.vpcorp.dailyreport.DRConst;
+import nguyenhoangviet.vpcorp.dailyreport.services.report.model.ReportModel;
+import nguyenhoangviet.vpcorp.welfare.adr.models.CommentModel;
 
 /**
  * Created by viet on 7/8/2016.

@@ -1,4 +1,4 @@
-package trente.asia.dailyreport.services.user;
+package nguyenhoangviet.vpcorp.dailyreport.services.user;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,20 +24,20 @@ import android.widget.Toast;
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCNumberUtil;
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.android.util.AndroidUtil;
-import trente.asia.dailyreport.BuildConfig;
-import trente.asia.dailyreport.R;
-import trente.asia.dailyreport.activities.CameraPhotoPreviewAccountActivity;
-import trente.asia.dailyreport.fragments.AbstractDRFragment;
-import trente.asia.dailyreport.utils.DRUtil;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.define.WfUrlConst;
-import trente.asia.welfare.adr.menu.OnMenuButtonsListener;
-import trente.asia.welfare.adr.menu.OnMenuManageListener;
-import trente.asia.welfare.adr.models.SettingModel;
-import trente.asia.welfare.adr.services.user.menu.AccountMenuManager;
-import trente.asia.welfare.adr.utils.WelfareUtil;
-import trente.asia.welfare.adr.utils.WfPicassoHelper;
+import nguyenhoangviet.vpcorp.android.util.AndroidUtil;
+import nguyenhoangviet.vpcorp.dailyreport.BuildConfig;
+import nguyenhoangviet.vpcorp.dailyreport.R;
+import nguyenhoangviet.vpcorp.dailyreport.activities.CameraPhotoPreviewAccountActivity;
+import nguyenhoangviet.vpcorp.dailyreport.fragments.AbstractDRFragment;
+import nguyenhoangviet.vpcorp.dailyreport.utils.DRUtil;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WfUrlConst;
+import nguyenhoangviet.vpcorp.welfare.adr.menu.OnMenuButtonsListener;
+import nguyenhoangviet.vpcorp.welfare.adr.menu.OnMenuManageListener;
+import nguyenhoangviet.vpcorp.welfare.adr.models.SettingModel;
+import nguyenhoangviet.vpcorp.welfare.adr.services.user.menu.AccountMenuManager;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WelfareUtil;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WfPicassoHelper;
 
 /**
  * Created by viet on 2/15/2016.
@@ -115,11 +115,11 @@ public class DrAccountInfoFragment extends AbstractDRFragment{
 	@Override
 	public void buildBodyLayout(){
 		super.initHeader(R.drawable.wf_back_white, getString(R.string.wf_account_info_title), null);
-		imgAvatar = (ImageView)getView().findViewById(trente.asia.welfare.adr.R.id.img_fragment_setting_avatar);
+		imgAvatar = (ImageView)getView().findViewById(nguyenhoangviet.vpcorp.welfare.adr.R.id.img_fragment_setting_avatar);
 
-		edtOldPassword = (EditText)getView().findViewById(trente.asia.welfare.adr.R.id.txt_old_password);
-		edtNewPassword = (EditText)getView().findViewById(trente.asia.welfare.adr.R.id.txt_new_password);
-		edtConfirmPassword = (EditText)getView().findViewById(trente.asia.welfare.adr.R.id.txt_comfirm_password);
+		edtOldPassword = (EditText)getView().findViewById(nguyenhoangviet.vpcorp.welfare.adr.R.id.txt_old_password);
+		edtNewPassword = (EditText)getView().findViewById(nguyenhoangviet.vpcorp.welfare.adr.R.id.txt_new_password);
+		edtConfirmPassword = (EditText)getView().findViewById(nguyenhoangviet.vpcorp.welfare.adr.R.id.txt_comfirm_password);
 
 		setupBtnUpdate();
 
@@ -131,7 +131,7 @@ public class DrAccountInfoFragment extends AbstractDRFragment{
 			}
 		});
 
-		mViewForMenuBehind = getView().findViewById(trente.asia.welfare.adr.R.id.viewForMenuBehind);
+		mViewForMenuBehind = getView().findViewById(nguyenhoangviet.vpcorp.welfare.adr.R.id.viewForMenuBehind);
 		mViewForMenuBehind.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -141,24 +141,24 @@ public class DrAccountInfoFragment extends AbstractDRFragment{
 		});
 
 		menuManager = new AccountMenuManager();
-		menuManager.setMenuLayout(activity, trente.asia.welfare.adr.R.id.menuMain, onMenuManagerListener, onMenuButtonsListener);
+		menuManager.setMenuLayout(activity, nguyenhoangviet.vpcorp.welfare.adr.R.id.menuMain, onMenuManagerListener, onMenuButtonsListener);
 
-		swtChangePassWord = (SwitchCompat)getView().findViewById(trente.asia.welfare.adr.R.id.swt_change_password);
+		swtChangePassWord = (SwitchCompat)getView().findViewById(nguyenhoangviet.vpcorp.welfare.adr.R.id.swt_change_password);
 		swtChangePassWord.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked){
 				if(isChecked){
-					getView().findViewById(trente.asia.welfare.adr.R.id.lnr_change_password).setVisibility(View.VISIBLE);
+					getView().findViewById(nguyenhoangviet.vpcorp.welfare.adr.R.id.lnr_change_password).setVisibility(View.VISIBLE);
 					isChangePass = true;
 				}else{
-					getView().findViewById(trente.asia.welfare.adr.R.id.lnr_change_password).setVisibility(View.GONE);
+					getView().findViewById(nguyenhoangviet.vpcorp.welfare.adr.R.id.lnr_change_password).setVisibility(View.GONE);
 					isChangePass = false;
 				}
 			}
 		});
 
-		swtNotification = (SwitchCompat)getView().findViewById(trente.asia.welfare.adr.R.id.swt_push_notification);
+		swtNotification = (SwitchCompat)getView().findViewById(nguyenhoangviet.vpcorp.welfare.adr.R.id.swt_push_notification);
 	}
 
 	@Override
@@ -172,7 +172,7 @@ public class DrAccountInfoFragment extends AbstractDRFragment{
 	}
 
 	protected void setupBtnUpdate(){
-		btnUpdate = (Button)getView().findViewById(trente.asia.welfare.adr.R.id.btn_id_update);
+		btnUpdate = (Button)getView().findViewById(nguyenhoangviet.vpcorp.welfare.adr.R.id.btn_id_update);
 		btnUpdate.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -228,7 +228,7 @@ public class DrAccountInfoFragment extends AbstractDRFragment{
 				}
 			});
 
-			TextView txtUserName = (TextView)getView().findViewById(trente.asia.welfare.adr.R.id.txt_id_username);
+			TextView txtUserName = (TextView)getView().findViewById(nguyenhoangviet.vpcorp.welfare.adr.R.id.txt_id_username);
 			txtUserName.setText(myself.userName);
 		}else{
 			super.successLoad(response, url);

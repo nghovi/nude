@@ -1,4 +1,4 @@
-package trente.asia.shiftworking.services.requests.edit;
+package nguyenhoangviet.vpcorp.shiftworking.services.requests.edit;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -16,14 +16,14 @@ import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.android.activity.ChiaseActivity;
-import trente.asia.android.view.ChiaseTextView;
-import trente.asia.shiftworking.R;
-import trente.asia.shiftworking.common.defines.SwConst;
-import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
-import trente.asia.shiftworking.common.interfaces.OnUserAdapterListener;
-import trente.asia.welfare.adr.activity.WelfareActivity;
-import trente.asia.welfare.adr.models.UserModel;
+import nguyenhoangviet.vpcorp.android.activity.ChiaseActivity;
+import nguyenhoangviet.vpcorp.android.view.ChiaseTextView;
+import nguyenhoangviet.vpcorp.shiftworking.R;
+import nguyenhoangviet.vpcorp.shiftworking.common.defines.SwConst;
+import nguyenhoangviet.vpcorp.shiftworking.common.fragments.AbstractSwFragment;
+import nguyenhoangviet.vpcorp.shiftworking.common.interfaces.OnUserAdapterListener;
+import nguyenhoangviet.vpcorp.welfare.adr.activity.WelfareActivity;
+import nguyenhoangviet.vpcorp.welfare.adr.models.UserModel;
 
 /**
  * Created by viet on 11/25/2016.

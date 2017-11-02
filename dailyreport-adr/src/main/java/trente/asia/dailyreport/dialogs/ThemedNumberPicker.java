@@ -1,11 +1,11 @@
-package trente.asia.dailyreport.dialogs;
+package nguyenhoangviet.vpcorp.dailyreport.dialogs;
 
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.ContextThemeWrapper;
 import android.widget.NumberPicker;
 
-import trente.asia.dailyreport.R;
+import nguyenhoangviet.vpcorp.dailyreport.R;
 
 /**
  * Created by viet on 2/19/2016.

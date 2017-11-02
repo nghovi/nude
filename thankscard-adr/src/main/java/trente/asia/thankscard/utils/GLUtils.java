@@ -1,4 +1,4 @@
-package trente.asia.thankscard.utils;
+package nguyenhoangviet.vpcorp.thankscard.utils;
 
 import static javax.microedition.khronos.egl.EGL10.EGL_ALPHA_SIZE;
 import static javax.microedition.khronos.egl.EGL10.EGL_BLUE_SIZE;

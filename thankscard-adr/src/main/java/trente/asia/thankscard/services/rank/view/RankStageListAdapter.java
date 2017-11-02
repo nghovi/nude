@@ -1,4 +1,4 @@
-package trente.asia.thankscard.services.rank.view;
+package nguyenhoangviet.vpcorp.thankscard.services.rank.view;
 
 import java.util.List;
 
@@ -11,10 +11,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import trente.asia.thankscard.BuildConfig;
-import trente.asia.thankscard.R;
-import trente.asia.thankscard.services.rank.model.RankStage;
-import trente.asia.welfare.adr.utils.WfPicassoHelper;
+import nguyenhoangviet.vpcorp.thankscard.BuildConfig;
+import nguyenhoangviet.vpcorp.thankscard.R;
+import nguyenhoangviet.vpcorp.thankscard.services.rank.model.RankStage;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WfPicassoHelper;
 
 /**
  * Created by viet on 3/16/2016.

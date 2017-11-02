@@ -1,4 +1,4 @@
-package trente.asia.dailyreport.services.util;
+package nguyenhoangviet.vpcorp.dailyreport.services.util;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -7,11 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import trente.asia.dailyreport.R;
-import trente.asia.dailyreport.services.user.DrLoginFragment;
-import trente.asia.dailyreport.utils.DRUtil;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.fragment.AbstractCameraPhotoPreviewFragment;
+import nguyenhoangviet.vpcorp.dailyreport.R;
+import nguyenhoangviet.vpcorp.dailyreport.services.user.DrLoginFragment;
+import nguyenhoangviet.vpcorp.dailyreport.utils.DRUtil;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.fragment.AbstractCameraPhotoPreviewFragment;
 
 /**
  * CameraPhotoPreviewAccountFragment

@@ -1,4 +1,4 @@
-package trente.asia.thankscard.fragments;
+package nguyenhoangviet.vpcorp.thankscard.fragments;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -20,19 +20,19 @@ import android.widget.TextView;
 import java.text.ParseException;
 
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.thankscard.BuildConfig;
-import trente.asia.thankscard.R;
-import trente.asia.thankscard.activities.MainActivity;
-import trente.asia.thankscard.commons.defines.TcConst;
-import trente.asia.thankscard.services.common.TcLogInFragment;
-import trente.asia.thankscard.services.mypage.MypageFragment;
-import trente.asia.thankscard.services.posted.PostTCListFragment;
-import trente.asia.thankscard.services.rank.RankingFragment;
-import trente.asia.thankscard.services.rank.TCSettingFragment;
-import trente.asia.thankscard.services.rank.view.MonthYearPickerDialog;
-import trente.asia.thankscard.services.received.ReceiveTCListFragment;
-import trente.asia.welfare.adr.activity.WelfareFragment;
-import trente.asia.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.thankscard.BuildConfig;
+import nguyenhoangviet.vpcorp.thankscard.R;
+import nguyenhoangviet.vpcorp.thankscard.activities.MainActivity;
+import nguyenhoangviet.vpcorp.thankscard.commons.defines.TcConst;
+import nguyenhoangviet.vpcorp.thankscard.services.common.TcLogInFragment;
+import nguyenhoangviet.vpcorp.thankscard.services.mypage.MypageFragment;
+import nguyenhoangviet.vpcorp.thankscard.services.posted.PostTCListFragment;
+import nguyenhoangviet.vpcorp.thankscard.services.rank.RankingFragment;
+import nguyenhoangviet.vpcorp.thankscard.services.rank.TCSettingFragment;
+import nguyenhoangviet.vpcorp.thankscard.services.rank.view.MonthYearPickerDialog;
+import nguyenhoangviet.vpcorp.thankscard.services.received.ReceiveTCListFragment;
+import nguyenhoangviet.vpcorp.welfare.adr.activity.WelfareFragment;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
 
 /**
  * Created by viet on 2/15/2016.

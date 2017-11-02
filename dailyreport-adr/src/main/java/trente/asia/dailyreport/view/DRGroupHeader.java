@@ -1,4 +1,4 @@
-package trente.asia.dailyreport.view;
+package nguyenhoangviet.vpcorp.dailyreport.view;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,8 +12,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import asia.chiase.core.util.CCCollectionUtil;
-import trente.asia.dailyreport.R;
-import trente.asia.dailyreport.services.kpi.model.GroupKpi;
+import nguyenhoangviet.vpcorp.dailyreport.R;
+import nguyenhoangviet.vpcorp.dailyreport.services.kpi.model.GroupKpi;
 
 /**
  * Created by viet on 7/8/2016.

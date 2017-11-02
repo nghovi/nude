@@ -1,4 +1,4 @@
-package trente.asia.shiftworking.services.worktime.view;
+package nguyenhoangviet.vpcorp.shiftworking.services.worktime.view;
 
 import java.util.List;
 
@@ -6,8 +6,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import trente.asia.shiftworking.services.shiftworking.view.CommonMonthView;
-import trente.asia.shiftworking.services.worktime.WorkerFragment;
+import nguyenhoangviet.vpcorp.shiftworking.services.shiftworking.view.CommonMonthView;
+import nguyenhoangviet.vpcorp.shiftworking.services.worktime.WorkerFragment;
 
 /**
  * WorkPagerAdapter

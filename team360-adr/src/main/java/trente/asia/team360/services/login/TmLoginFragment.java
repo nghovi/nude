@@ -1,4 +1,4 @@
-package trente.asia.team360.services.login;
+package nguyenhoangviet.vpcorp.team360.services.login;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -8,12 +8,12 @@ import android.view.View;
 
 import org.json.JSONObject;
 
-import trente.asia.team360.BuildConfig;
-import trente.asia.team360.R;
-import trente.asia.team360.services.member.TmMemberViewFragment;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.define.WfUrlConst;
-import trente.asia.welfare.adr.services.user.LoginFragment;
+import nguyenhoangviet.vpcorp.team360.BuildConfig;
+import nguyenhoangviet.vpcorp.team360.R;
+import nguyenhoangviet.vpcorp.team360.services.member.TmMemberViewFragment;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WfUrlConst;
+import nguyenhoangviet.vpcorp.welfare.adr.services.user.LoginFragment;
 
 /**
  * A simple {@link Fragment} subclass.

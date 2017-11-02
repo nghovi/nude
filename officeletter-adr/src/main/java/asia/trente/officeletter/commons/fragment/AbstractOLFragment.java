@@ -16,8 +16,8 @@ import asia.trente.officeletter.services.document.DocumentListFragment;
 import asia.trente.officeletter.services.salary.SalaryListFragment;
 import asia.trente.officeletter.services.setting.SettingFragment;
 import asia.trente.officeletter.services.wiki.WikiListFragment;
-import trente.asia.welfare.adr.activity.WelfareFragment;
-import trente.asia.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.activity.WelfareFragment;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
 
 /**
  * Created by tien on 8/18/2017.

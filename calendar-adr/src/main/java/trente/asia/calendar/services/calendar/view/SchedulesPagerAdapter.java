@@ -1,8 +1,8 @@
-package trente.asia.calendar.services.calendar.view;
+package nguyenhoangviet.vpcorp.calendar.services.calendar.view;
 
 import android.support.v4.app.FragmentManager;
 
-import trente.asia.calendar.commons.views.ClFragmentPagerAdapter;
+import nguyenhoangviet.vpcorp.calendar.commons.views.ClFragmentPagerAdapter;
 
 /**
  * SchedulesPagerAdapter

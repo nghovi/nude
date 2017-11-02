@@ -18,10 +18,10 @@ import asia.trente.officeletter.commons.fragment.AbstractListFragment;
 import asia.trente.officeletter.commons.fragment.AbstractOLFragment;
 import asia.trente.officeletter.commons.fragment.OLLogInFragment;
 import io.realm.Realm;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.define.WfUrlConst;
-import trente.asia.welfare.adr.dialog.WfDialog;
-import trente.asia.welfare.adr.pref.PreferencesSystemUtil;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WfUrlConst;
+import nguyenhoangviet.vpcorp.welfare.adr.dialog.WfDialog;
+import nguyenhoangviet.vpcorp.welfare.adr.pref.PreferencesSystemUtil;
 
 /**
  * Created by tien on 8/18/2017.

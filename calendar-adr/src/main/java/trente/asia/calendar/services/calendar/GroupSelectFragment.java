@@ -1,4 +1,4 @@
-package trente.asia.calendar.services.calendar;
+package nguyenhoangviet.vpcorp.calendar.services.calendar;
 
 import java.util.List;
 
@@ -8,13 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import asia.chiase.core.util.CCCollectionUtil;
-import trente.asia.calendar.R;
-import trente.asia.calendar.commons.fragments.AbstractClFragment;
-import trente.asia.calendar.commons.views.FilterDeptLinearLayout;
-import trente.asia.calendar.services.calendar.model.MyGroup;
-import trente.asia.welfare.adr.models.DeptModel;
-import trente.asia.welfare.adr.models.GroupModel;
-import trente.asia.welfare.adr.models.UserModel;
+import nguyenhoangviet.vpcorp.calendar.R;
+import nguyenhoangviet.vpcorp.calendar.commons.fragments.AbstractClFragment;
+import nguyenhoangviet.vpcorp.calendar.commons.views.FilterDeptLinearLayout;
+import nguyenhoangviet.vpcorp.calendar.services.calendar.model.MyGroup;
+import nguyenhoangviet.vpcorp.welfare.adr.models.DeptModel;
+import nguyenhoangviet.vpcorp.welfare.adr.models.GroupModel;
+import nguyenhoangviet.vpcorp.welfare.adr.models.UserModel;
 
 /**
  * GroupSelectFragment

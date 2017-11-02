@@ -1,4 +1,4 @@
-package trente.asia.dailyreport.services.setting;
+package nguyenhoangviet.vpcorp.dailyreport.services.setting;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -7,14 +7,14 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import trente.asia.dailyreport.R;
-import trente.asia.dailyreport.fragments.AbstractDRFragment;
-import trente.asia.dailyreport.services.user.DrAccountInfoFragment;
-import trente.asia.welfare.adr.activity.WelfareActivity;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.define.WfUrlConst;
-import trente.asia.welfare.adr.dialog.WfDialog;
-import trente.asia.welfare.adr.pref.PreferencesSystemUtil;
+import nguyenhoangviet.vpcorp.dailyreport.R;
+import nguyenhoangviet.vpcorp.dailyreport.fragments.AbstractDRFragment;
+import nguyenhoangviet.vpcorp.dailyreport.services.user.DrAccountInfoFragment;
+import nguyenhoangviet.vpcorp.welfare.adr.activity.WelfareActivity;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WfUrlConst;
+import nguyenhoangviet.vpcorp.welfare.adr.dialog.WfDialog;
+import nguyenhoangviet.vpcorp.welfare.adr.pref.PreferencesSystemUtil;
 
 /**
  * Created by viet on 2/15/2016.

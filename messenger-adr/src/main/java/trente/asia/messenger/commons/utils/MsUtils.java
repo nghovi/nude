@@ -1,4 +1,4 @@
-package trente.asia.messenger.commons.utils;
+package nguyenhoangviet.vpcorp.messenger.commons.utils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -16,11 +16,11 @@ import android.text.style.ImageSpan;
 import android.widget.Toast;
 
 import asia.chiase.core.util.CCCollectionUtil;
-import trente.asia.android.util.AndroidUtil;
-import trente.asia.messenger.commons.defines.MsConst;
-import trente.asia.messenger.services.message.model.RealmUserModel;
-import trente.asia.welfare.adr.models.LikeModel;
-import trente.asia.welfare.adr.models.UserModel;
+import nguyenhoangviet.vpcorp.android.util.AndroidUtil;
+import nguyenhoangviet.vpcorp.messenger.commons.defines.MsConst;
+import nguyenhoangviet.vpcorp.messenger.services.message.model.RealmUserModel;
+import nguyenhoangviet.vpcorp.welfare.adr.models.LikeModel;
+import nguyenhoangviet.vpcorp.welfare.adr.models.UserModel;
 
 /**
  * MsUtils

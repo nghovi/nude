@@ -1,12 +1,12 @@
-package trente.asia.dailyreport.services.report;
+package nguyenhoangviet.vpcorp.dailyreport.services.report;
 
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import trente.asia.dailyreport.R;
-import trente.asia.dailyreport.fragments.AbstractDRFragment;
-import trente.asia.welfare.adr.models.CommentModel;
-import trente.asia.welfare.adr.utils.WfPicassoHelper;
+import nguyenhoangviet.vpcorp.dailyreport.R;
+import nguyenhoangviet.vpcorp.dailyreport.fragments.AbstractDRFragment;
+import nguyenhoangviet.vpcorp.welfare.adr.models.CommentModel;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WfPicassoHelper;
 
 /**
  * Created by viet on 2/15/2016.

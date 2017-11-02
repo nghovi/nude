@@ -1,4 +1,4 @@
-package trente.asia.calendar.services.calendar.view;
+package nguyenhoangviet.vpcorp.calendar.services.calendar.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import trente.asia.calendar.R;
+import nguyenhoangviet.vpcorp.calendar.R;
 
 /**
  * MonthlyCalendarDayView

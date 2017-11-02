@@ -1,4 +1,4 @@
-package trente.asia.shiftworking.services.worktime;
+package nguyenhoangviet.vpcorp.shiftworking.services.worktime;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,20 +30,20 @@ import asia.chiase.core.model.KeyValueModel;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.android.util.AndroidUtil;
-import trente.asia.android.view.ChiaseListDialog;
-import trente.asia.android.view.ChiaseTextView;
-import trente.asia.shiftworking.R;
-import trente.asia.shiftworking.common.activities.CameraPhotoPreviewAccountActivity;
-import trente.asia.shiftworking.common.defines.SwConst;
-import trente.asia.shiftworking.common.fragments.AbstractLocationFragment;
-import trente.asia.welfare.adr.activity.WelfareActivity;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.menu.OnMenuButtonsListener;
-import trente.asia.welfare.adr.menu.OnMenuManageListener;
-import trente.asia.welfare.adr.models.DeptModel;
-import trente.asia.welfare.adr.services.user.menu.AccountMenuManager;
-import trente.asia.welfare.adr.utils.WelfareUtil;
+import nguyenhoangviet.vpcorp.android.util.AndroidUtil;
+import nguyenhoangviet.vpcorp.android.view.ChiaseListDialog;
+import nguyenhoangviet.vpcorp.android.view.ChiaseTextView;
+import nguyenhoangviet.vpcorp.shiftworking.R;
+import nguyenhoangviet.vpcorp.shiftworking.common.activities.CameraPhotoPreviewAccountActivity;
+import nguyenhoangviet.vpcorp.shiftworking.common.defines.SwConst;
+import nguyenhoangviet.vpcorp.shiftworking.common.fragments.AbstractLocationFragment;
+import nguyenhoangviet.vpcorp.welfare.adr.activity.WelfareActivity;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.menu.OnMenuButtonsListener;
+import nguyenhoangviet.vpcorp.welfare.adr.menu.OnMenuManageListener;
+import nguyenhoangviet.vpcorp.welfare.adr.models.DeptModel;
+import nguyenhoangviet.vpcorp.welfare.adr.services.user.menu.AccountMenuManager;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WelfareUtil;
 
 public class WorknoticeOfferFragment extends AbstractLocationFragment{
 
@@ -164,7 +164,7 @@ public class WorknoticeOfferFragment extends AbstractLocationFragment{
 		btnSend.setOnClickListener(this);
 
 		menuManager = new AccountMenuManager();
-		menuManager.setMenuLayout(activity, trente.asia.welfare.adr.R.id.menuMain, onMenuManagerListener, onMenuButtonsListener);
+		menuManager.setMenuLayout(activity, nguyenhoangviet.vpcorp.welfare.adr.R.id.menuMain, onMenuManagerListener, onMenuButtonsListener);
 		mViewForMenuBehind = getView().findViewById(R.id.viewForMenuBehind);
 		mViewForMenuBehind.setOnClickListener(new View.OnClickListener() {
 

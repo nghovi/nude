@@ -1,4 +1,4 @@
-package trente.asia.thankscard.fragments.dialogs;
+package nguyenhoangviet.vpcorp.thankscard.fragments.dialogs;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -6,8 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import trente.asia.thankscard.R;
-import trente.asia.thankscard.databinding.DialogPostConfirmBinding;
+import nguyenhoangviet.vpcorp.thankscard.R;
+import nguyenhoangviet.vpcorp.thankscard.databinding.DialogPostConfirmBinding;
 
 /**
  * Created by tien on 7/10/2017.

@@ -1,4 +1,4 @@
-package trente.asia.thankscard.services.posted.adapter;
+package nguyenhoangviet.vpcorp.thankscard.services.posted.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -8,10 +8,10 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
-import trente.asia.thankscard.BR;
-import trente.asia.thankscard.R;
-import trente.asia.thankscard.databinding.ItemDepartmentBinding;
-import trente.asia.welfare.adr.models.DeptModel;
+import nguyenhoangviet.vpcorp.thankscard.BR;
+import nguyenhoangviet.vpcorp.thankscard.R;
+import nguyenhoangviet.vpcorp.thankscard.databinding.ItemDepartmentBinding;
+import nguyenhoangviet.vpcorp.welfare.adr.models.DeptModel;
 
 /**
  * Created by tien on 7/12/2017.

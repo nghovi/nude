@@ -1,4 +1,4 @@
-package trente.asia.dailyreport.services.report;
+package nguyenhoangviet.vpcorp.dailyreport.services.report;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -26,17 +26,17 @@ import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.dailyreport.DRConst;
-import trente.asia.dailyreport.R;
-import trente.asia.dailyreport.dialogs.DRDialog;
-import trente.asia.dailyreport.fragments.AbstractDRFragment;
-import trente.asia.dailyreport.services.report.model.ReportModel;
-import trente.asia.dailyreport.services.report.model.ReportTemplate;
-import trente.asia.dailyreport.utils.DRUtil;
-import trente.asia.welfare.adr.activity.WelfareActivity;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.utils.WelfareUtil;
-import trente.asia.welfare.adr.view.WfSpinner;
+import nguyenhoangviet.vpcorp.dailyreport.DRConst;
+import nguyenhoangviet.vpcorp.dailyreport.R;
+import nguyenhoangviet.vpcorp.dailyreport.dialogs.DRDialog;
+import nguyenhoangviet.vpcorp.dailyreport.fragments.AbstractDRFragment;
+import nguyenhoangviet.vpcorp.dailyreport.services.report.model.ReportModel;
+import nguyenhoangviet.vpcorp.dailyreport.services.report.model.ReportTemplate;
+import nguyenhoangviet.vpcorp.dailyreport.utils.DRUtil;
+import nguyenhoangviet.vpcorp.welfare.adr.activity.WelfareActivity;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WelfareUtil;
+import nguyenhoangviet.vpcorp.welfare.adr.view.WfSpinner;
 
 /**
  * Created by viet on 2/15/2016.

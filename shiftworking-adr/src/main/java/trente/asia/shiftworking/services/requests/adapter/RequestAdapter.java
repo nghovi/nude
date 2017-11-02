@@ -1,4 +1,4 @@
-package trente.asia.shiftworking.services.requests.adapter;
+package nguyenhoangviet.vpcorp.shiftworking.services.requests.adapter;
 
 import java.util.List;
 
@@ -10,11 +10,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import trente.asia.shiftworking.BuildConfig;
-import trente.asia.shiftworking.R;
-import trente.asia.shiftworking.common.interfaces.OnRequestAdapterListener;
-import trente.asia.welfare.adr.models.VacationRequestModel;
-import trente.asia.welfare.adr.utils.WfPicassoHelper;
+import nguyenhoangviet.vpcorp.shiftworking.BuildConfig;
+import nguyenhoangviet.vpcorp.shiftworking.R;
+import nguyenhoangviet.vpcorp.shiftworking.common.interfaces.OnRequestAdapterListener;
+import nguyenhoangviet.vpcorp.welfare.adr.models.VacationRequestModel;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WfPicassoHelper;
 
 /**
  * ShiftWorkingAdapter.

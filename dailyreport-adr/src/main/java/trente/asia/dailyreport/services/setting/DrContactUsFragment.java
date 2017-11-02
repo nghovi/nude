@@ -1,4 +1,4 @@
-package trente.asia.dailyreport.services.setting;
+package nguyenhoangviet.vpcorp.dailyreport.services.setting;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,12 +15,12 @@ import android.widget.TextView;
 
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.dailyreport.R;
-import trente.asia.dailyreport.fragments.AbstractDRFragment;
-import trente.asia.welfare.adr.define.WfUrlConst;
-import trente.asia.welfare.adr.models.ApiObjectModel;
-import trente.asia.welfare.adr.utils.WelfareUtil;
-import trente.asia.welfare.adr.view.WfSpinner;
+import nguyenhoangviet.vpcorp.dailyreport.R;
+import nguyenhoangviet.vpcorp.dailyreport.fragments.AbstractDRFragment;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WfUrlConst;
+import nguyenhoangviet.vpcorp.welfare.adr.models.ApiObjectModel;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WelfareUtil;
+import nguyenhoangviet.vpcorp.welfare.adr.view.WfSpinner;
 
 /**
  * TcContactUsFragment

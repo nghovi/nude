@@ -13,10 +13,10 @@ import java.io.File;
 import asia.trente.officeletter.R;
 import asia.trente.officeletter.commons.defines.OLConst;
 import asia.trente.officeletter.services.document.listener.OnDownloadListener;
-import trente.asia.android.util.AndroidUtil;
-import trente.asia.android.util.DownloadFileManager;
-import trente.asia.android.util.OpenDownloadedFile;
-import trente.asia.android.view.ChiaseDownloadFileDialog;
+import nguyenhoangviet.vpcorp.android.util.AndroidUtil;
+import nguyenhoangviet.vpcorp.android.util.DownloadFileManager;
+import nguyenhoangviet.vpcorp.android.util.OpenDownloadedFile;
+import nguyenhoangviet.vpcorp.android.view.ChiaseDownloadFileDialog;
 
 /**
  * Created by tien on 8/18/2017.

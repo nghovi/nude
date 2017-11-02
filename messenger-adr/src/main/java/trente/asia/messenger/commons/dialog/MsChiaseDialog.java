@@ -1,4 +1,4 @@
-package trente.asia.messenger.commons.dialog;
+package nguyenhoangviet.vpcorp.messenger.commons.dialog;
 
 import java.io.File;
 import java.util.List;
@@ -12,16 +12,16 @@ import android.widget.ListView;
 import android.widget.MediaController;
 import android.widget.VideoView;
 
-import trente.asia.android.view.ChiaseDialog;
-import trente.asia.android.view.adapter.ChiaseListAdapter;
-import trente.asia.android.view.model.ChiaseListItemModel;
-import trente.asia.messenger.R;
-import trente.asia.messenger.services.message.listener.OnActionClickListener;
-import trente.asia.messenger.services.message.model.MessageContentModel;
-import trente.asia.messenger.services.message.model.RealmMessageModel;
-import trente.asia.messenger.services.message.model.RealmUserModel;
-import trente.asia.messenger.services.message.view.CheckUserListAdapter;
-import trente.asia.welfare.adr.models.UserModel;
+import nguyenhoangviet.vpcorp.android.view.ChiaseDialog;
+import nguyenhoangviet.vpcorp.android.view.adapter.ChiaseListAdapter;
+import nguyenhoangviet.vpcorp.android.view.model.ChiaseListItemModel;
+import nguyenhoangviet.vpcorp.messenger.R;
+import nguyenhoangviet.vpcorp.messenger.services.message.listener.OnActionClickListener;
+import nguyenhoangviet.vpcorp.messenger.services.message.model.MessageContentModel;
+import nguyenhoangviet.vpcorp.messenger.services.message.model.RealmMessageModel;
+import nguyenhoangviet.vpcorp.messenger.services.message.model.RealmUserModel;
+import nguyenhoangviet.vpcorp.messenger.services.message.view.CheckUserListAdapter;
+import nguyenhoangviet.vpcorp.welfare.adr.models.UserModel;
 
 /**
  * MsChiaseDialog

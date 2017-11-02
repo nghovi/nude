@@ -1,6 +1,6 @@
-package trente.asia.calendar.services.calendar;
+package nguyenhoangviet.vpcorp.calendar.services.calendar;
 
-import static trente.asia.android.util.CsDateUtil.CS_DATE_TIME_1;
+import static nguyenhoangviet.vpcorp.android.util.CsDateUtil.CS_DATE_TIME_1;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -35,19 +35,19 @@ import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.android.activity.ChiaseFragment;
-import trente.asia.android.util.CsDateUtil;
-import trente.asia.calendar.R;
-import trente.asia.calendar.commons.fragments.PageContainerFragment;
-import trente.asia.calendar.services.calendar.model.CategoryModel;
-import trente.asia.calendar.services.calendar.model.HolidayModel;
-import trente.asia.calendar.services.calendar.model.ScheduleModel;
-import trente.asia.calendar.services.calendar.view.DailyScheduleList;
-import trente.asia.calendar.services.todo.TodoListFragment;
-import trente.asia.calendar.services.todo.TodoListTodayFragment;
-import trente.asia.calendar.services.todo.model.Todo;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.utils.WelfareUtil;
+import nguyenhoangviet.vpcorp.android.activity.ChiaseFragment;
+import nguyenhoangviet.vpcorp.android.util.CsDateUtil;
+import nguyenhoangviet.vpcorp.calendar.R;
+import nguyenhoangviet.vpcorp.calendar.commons.fragments.PageContainerFragment;
+import nguyenhoangviet.vpcorp.calendar.services.calendar.model.CategoryModel;
+import nguyenhoangviet.vpcorp.calendar.services.calendar.model.HolidayModel;
+import nguyenhoangviet.vpcorp.calendar.services.calendar.model.ScheduleModel;
+import nguyenhoangviet.vpcorp.calendar.services.calendar.view.DailyScheduleList;
+import nguyenhoangviet.vpcorp.calendar.services.todo.TodoListFragment;
+import nguyenhoangviet.vpcorp.calendar.services.todo.TodoListTodayFragment;
+import nguyenhoangviet.vpcorp.calendar.services.todo.model.Todo;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WelfareUtil;
 
 /**
  * WeeklyPageFragment

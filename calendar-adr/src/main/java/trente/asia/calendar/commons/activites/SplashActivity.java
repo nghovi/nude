@@ -1,11 +1,11 @@
-package trente.asia.calendar.commons.activites;
+package nguyenhoangviet.vpcorp.calendar.commons.activites;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-import trente.asia.calendar.R;
-import trente.asia.welfare.adr.activity.WelfareActivity;
+import nguyenhoangviet.vpcorp.calendar.R;
+import nguyenhoangviet.vpcorp.welfare.adr.activity.WelfareActivity;
 
 public class SplashActivity extends WelfareActivity{
 

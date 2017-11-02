@@ -1,4 +1,4 @@
-package trente.asia.shiftworking.common.defines;
+package nguyenhoangviet.vpcorp.shiftworking.common.defines;
 
 /**
  * SwConst

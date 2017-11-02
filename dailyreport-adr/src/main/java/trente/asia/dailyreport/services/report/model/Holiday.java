@@ -1,4 +1,4 @@
-package trente.asia.dailyreport.services.report.model;
+package nguyenhoangviet.vpcorp.dailyreport.services.report.model;
 
 /**
  * Created by viet on 8/1/2016.

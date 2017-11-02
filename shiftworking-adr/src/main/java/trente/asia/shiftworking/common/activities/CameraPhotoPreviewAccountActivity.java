@@ -1,14 +1,14 @@
-package trente.asia.shiftworking.common.activities;
+package nguyenhoangviet.vpcorp.shiftworking.common.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
-import trente.asia.shiftworking.R;
-import trente.asia.shiftworking.common.fragments.CameraPhotoPreviewAccountFragment;
-import trente.asia.android.util.AndroidUtil;
-import trente.asia.welfare.adr.activity.WelfareActivity;
-import trente.asia.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.shiftworking.R;
+import nguyenhoangviet.vpcorp.shiftworking.common.fragments.CameraPhotoPreviewAccountFragment;
+import nguyenhoangviet.vpcorp.android.util.AndroidUtil;
+import nguyenhoangviet.vpcorp.welfare.adr.activity.WelfareActivity;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
 
 /**
  * Created by PC-Trente on 9/30/2016.

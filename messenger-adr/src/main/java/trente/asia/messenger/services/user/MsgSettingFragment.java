@@ -1,4 +1,4 @@
-package trente.asia.messenger.services.user;
+package nguyenhoangviet.vpcorp.messenger.services.user;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -14,15 +14,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import io.realm.Realm;
-import trente.asia.messenger.R;
-import trente.asia.messenger.commons.defines.MsConst;
-import trente.asia.messenger.fragment.AbstractMsgFragment;
-import trente.asia.messenger.services.setting.MsContactUsFragment;
-import trente.asia.welfare.adr.activity.WelfareActivity;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.define.WfUrlConst;
-import trente.asia.welfare.adr.dialog.WfDialog;
-import trente.asia.welfare.adr.pref.PreferencesSystemUtil;
+import nguyenhoangviet.vpcorp.messenger.R;
+import nguyenhoangviet.vpcorp.messenger.commons.defines.MsConst;
+import nguyenhoangviet.vpcorp.messenger.fragment.AbstractMsgFragment;
+import nguyenhoangviet.vpcorp.messenger.services.setting.MsContactUsFragment;
+import nguyenhoangviet.vpcorp.welfare.adr.activity.WelfareActivity;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WfUrlConst;
+import nguyenhoangviet.vpcorp.welfare.adr.dialog.WfDialog;
+import nguyenhoangviet.vpcorp.welfare.adr.pref.PreferencesSystemUtil;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -48,7 +48,7 @@ public class MsgSettingFragment extends AbstractMsgFragment implements View.OnCl
 	protected void initView(){
 		super.initView();
 
-		initHeader(trente.asia.welfare.adr.R.drawable.wf_back_white, getString(R.string.msg_setting), null);
+		initHeader(nguyenhoangviet.vpcorp.welfare.adr.R.drawable.wf_back_white, getString(R.string.msg_setting), null);
 
 		mLnrAccInfo = (LinearLayout)getView().findViewById(R.id.lnr_account_info);
 		mLnrAboutApp = (LinearLayout)getView().findViewById(R.id.lnr_about_app);

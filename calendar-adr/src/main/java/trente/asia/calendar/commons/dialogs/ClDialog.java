@@ -1,11 +1,11 @@
-package trente.asia.calendar.commons.dialogs;
+package nguyenhoangviet.vpcorp.calendar.commons.dialogs;
 
 import android.content.Context;
 import android.widget.TextView;
 
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.android.view.ChiaseDialog;
-import trente.asia.calendar.R;
+import nguyenhoangviet.vpcorp.android.view.ChiaseDialog;
+import nguyenhoangviet.vpcorp.calendar.R;
 
 /**
  * SwDialog

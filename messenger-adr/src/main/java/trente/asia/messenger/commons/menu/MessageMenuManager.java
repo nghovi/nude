@@ -1,4 +1,4 @@
-package trente.asia.messenger.commons.menu;
+package nguyenhoangviet.vpcorp.messenger.commons.menu;
 
 import android.app.Activity;
 import android.os.Handler;
@@ -7,14 +7,14 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
-import trente.asia.android.util.AndroidUtil;
-import trente.asia.welfare.adr.R;
-import trente.asia.welfare.adr.animators.SupportAnimator;
-import trente.asia.welfare.adr.animators.ViewAnimationUtils;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.menu.OnMenuButtonsListener;
-import trente.asia.welfare.adr.menu.OnMenuManageListener;
-import trente.asia.welfare.adr.utils.AnimUtils;
+import nguyenhoangviet.vpcorp.android.util.AndroidUtil;
+import nguyenhoangviet.vpcorp.welfare.adr.R;
+import nguyenhoangviet.vpcorp.welfare.adr.animators.SupportAnimator;
+import nguyenhoangviet.vpcorp.welfare.adr.animators.ViewAnimationUtils;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.menu.OnMenuButtonsListener;
+import nguyenhoangviet.vpcorp.welfare.adr.menu.OnMenuManageListener;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.AnimUtils;
 
 /**
  * Created by ubuntu_ivo on 24.07.15..

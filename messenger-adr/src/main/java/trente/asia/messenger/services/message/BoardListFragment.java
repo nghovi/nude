@@ -1,4 +1,4 @@
-package trente.asia.messenger.services.message;
+package nguyenhoangviet.vpcorp.messenger.services.message;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -24,22 +24,22 @@ import asia.chiase.core.util.CCNumberUtil;
 import asia.chiase.core.util.CCStringUtil;
 import io.realm.Realm;
 import io.realm.RealmResults;
-import trente.asia.android.view.ChiaseCheckableImageView;
-import trente.asia.messenger.BuildConfig;
-import trente.asia.messenger.R;
-import trente.asia.messenger.commons.defines.MsConst;
-import trente.asia.messenger.fragment.AbstractMsgFragment;
-import trente.asia.messenger.services.message.listener.OnChangedBoardListener;
-import trente.asia.messenger.services.message.listener.OnRefreshBoardListListener;
-import trente.asia.messenger.services.message.model.BoardModel;
-import trente.asia.messenger.services.message.model.RealmBoardModel;
-import trente.asia.messenger.services.message.view.BoardAdapter;
-import trente.asia.messenger.services.user.MsgSettingFragment;
-import trente.asia.messenger.services.user.UserListFragment;
-import trente.asia.messenger.services.user.listener.OnAddedContactListener;
-import trente.asia.welfare.adr.activity.WelfareActivity;
-import trente.asia.welfare.adr.dialog.WfProfileDialog;
-import trente.asia.welfare.adr.utils.WfPicassoHelper;
+import nguyenhoangviet.vpcorp.android.view.ChiaseCheckableImageView;
+import nguyenhoangviet.vpcorp.messenger.BuildConfig;
+import nguyenhoangviet.vpcorp.messenger.R;
+import nguyenhoangviet.vpcorp.messenger.commons.defines.MsConst;
+import nguyenhoangviet.vpcorp.messenger.fragment.AbstractMsgFragment;
+import nguyenhoangviet.vpcorp.messenger.services.message.listener.OnChangedBoardListener;
+import nguyenhoangviet.vpcorp.messenger.services.message.listener.OnRefreshBoardListListener;
+import nguyenhoangviet.vpcorp.messenger.services.message.model.BoardModel;
+import nguyenhoangviet.vpcorp.messenger.services.message.model.RealmBoardModel;
+import nguyenhoangviet.vpcorp.messenger.services.message.view.BoardAdapter;
+import nguyenhoangviet.vpcorp.messenger.services.user.MsgSettingFragment;
+import nguyenhoangviet.vpcorp.messenger.services.user.UserListFragment;
+import nguyenhoangviet.vpcorp.messenger.services.user.listener.OnAddedContactListener;
+import nguyenhoangviet.vpcorp.welfare.adr.activity.WelfareActivity;
+import nguyenhoangviet.vpcorp.welfare.adr.dialog.WfProfileDialog;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WfPicassoHelper;
 
 /**
  * BoardListFragment

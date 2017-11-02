@@ -1,12 +1,12 @@
-package trente.asia.messenger.services.user;
+package nguyenhoangviet.vpcorp.messenger.services.user;
 
 import android.os.Bundle;
 
-import trente.asia.messenger.BuildConfig;
-import trente.asia.messenger.activities.CameraPhotoPreviewAccountActivity;
-import trente.asia.messenger.commons.utils.MsUtils;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.services.user.AccountInfoFragment;
+import nguyenhoangviet.vpcorp.messenger.BuildConfig;
+import nguyenhoangviet.vpcorp.messenger.activities.CameraPhotoPreviewAccountActivity;
+import nguyenhoangviet.vpcorp.messenger.commons.utils.MsUtils;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.services.user.AccountInfoFragment;
 
 /**
  * MsAccountInfoFragment

@@ -1,4 +1,4 @@
-package trente.asia.thankscard.services.posted;
+package nguyenhoangviet.vpcorp.thankscard.services.posted;
 
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
@@ -10,15 +10,15 @@ import android.widget.LinearLayout;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.util.Util;
 
-import trente.asia.thankscard.R;
-import trente.asia.thankscard.commons.defines.TcConst;
-import trente.asia.thankscard.databinding.FragmentCroppingBinding;
-import trente.asia.thankscard.fragments.AbstractTCFragment;
-import trente.asia.thankscard.services.posted.listener.OnCroppingListener;
-import trente.asia.thankscard.services.posted.view.TouchPad;
-import trente.asia.thankscard.utils.TCUtil;
-import trente.asia.welfare.adr.pref.PreferencesSystemUtil;
-import trente.asia.welfare.adr.utils.WelfareUtil;
+import nguyenhoangviet.vpcorp.thankscard.R;
+import nguyenhoangviet.vpcorp.thankscard.commons.defines.TcConst;
+import nguyenhoangviet.vpcorp.thankscard.databinding.FragmentCroppingBinding;
+import nguyenhoangviet.vpcorp.thankscard.fragments.AbstractTCFragment;
+import nguyenhoangviet.vpcorp.thankscard.services.posted.listener.OnCroppingListener;
+import nguyenhoangviet.vpcorp.thankscard.services.posted.view.TouchPad;
+import nguyenhoangviet.vpcorp.thankscard.utils.TCUtil;
+import nguyenhoangviet.vpcorp.welfare.adr.pref.PreferencesSystemUtil;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WelfareUtil;
 
 /**
  * Created by tien on 9/6/2017.

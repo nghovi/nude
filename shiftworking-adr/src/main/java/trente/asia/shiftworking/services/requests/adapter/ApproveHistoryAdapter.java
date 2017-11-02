@@ -1,4 +1,4 @@
-package trente.asia.shiftworking.services.requests.adapter;
+package nguyenhoangviet.vpcorp.shiftworking.services.requests.adapter;
 
 import java.util.List;
 
@@ -11,9 +11,9 @@ import android.widget.TextView;
 
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
-import trente.asia.shiftworking.R;
-import trente.asia.welfare.adr.models.ApproveHistory;
-import trente.asia.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.shiftworking.R;
+import nguyenhoangviet.vpcorp.welfare.adr.models.ApproveHistory;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
 
 /**
  * ShiftWorkingAdapter.

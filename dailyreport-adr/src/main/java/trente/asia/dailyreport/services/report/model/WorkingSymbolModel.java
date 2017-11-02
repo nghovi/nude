@@ -1,8 +1,8 @@
-package trente.asia.dailyreport.services.report.model;
+package nguyenhoangviet.vpcorp.dailyreport.services.report.model;
 
 import java.util.List;
 
-import trente.asia.welfare.adr.models.ApiObjectModel;
+import nguyenhoangviet.vpcorp.welfare.adr.models.ApiObjectModel;
 
 /**
  * Created by hviet on 6/19/17.

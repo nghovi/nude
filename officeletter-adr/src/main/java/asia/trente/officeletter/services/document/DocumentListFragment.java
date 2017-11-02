@@ -25,8 +25,8 @@ import asia.trente.officeletter.commons.fragment.AbstractListFragment;
 import asia.trente.officeletter.databinding.FragmentDocumentListBinding;
 import asia.trente.officeletter.services.document.adapter.DocumentAdapter;
 import asia.trente.officeletter.services.document.model.DocumentModel;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.pref.PreferencesSystemUtil;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.pref.PreferencesSystemUtil;
 
 /**
  * Created by tien on 8/18/2017.

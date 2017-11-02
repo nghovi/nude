@@ -1,4 +1,4 @@
-package trente.asia.messenger.commons.defines;
+package nguyenhoangviet.vpcorp.messenger.commons.defines;
 
 /**
  * MsConst

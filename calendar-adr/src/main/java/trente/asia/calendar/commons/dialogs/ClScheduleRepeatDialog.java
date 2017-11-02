@@ -1,4 +1,4 @@
-package trente.asia.calendar.commons.dialogs;
+package nguyenhoangviet.vpcorp.calendar.commons.dialogs;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -18,16 +18,16 @@ import android.widget.TextView;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.android.util.CsUtil;
-import trente.asia.android.view.adapter.ChiaseSpinnerAdapter;
-import trente.asia.android.view.model.ChiaseSpinnerModel;
-import trente.asia.calendar.R;
-import trente.asia.calendar.commons.defines.ClConst;
-import trente.asia.calendar.commons.utils.ClRepeatUtil;
-import trente.asia.calendar.commons.views.RepeatWeeklyDayLinearLayout;
-import trente.asia.calendar.services.calendar.model.ScheduleModel;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.utils.WelfareFormatUtil;
+import nguyenhoangviet.vpcorp.android.util.CsUtil;
+import nguyenhoangviet.vpcorp.android.view.adapter.ChiaseSpinnerAdapter;
+import nguyenhoangviet.vpcorp.android.view.model.ChiaseSpinnerModel;
+import nguyenhoangviet.vpcorp.calendar.R;
+import nguyenhoangviet.vpcorp.calendar.commons.defines.ClConst;
+import nguyenhoangviet.vpcorp.calendar.commons.utils.ClRepeatUtil;
+import nguyenhoangviet.vpcorp.calendar.commons.views.RepeatWeeklyDayLinearLayout;
+import nguyenhoangviet.vpcorp.calendar.services.calendar.model.ScheduleModel;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WelfareFormatUtil;
 
 /**
  * ClScheduleRepeatDialog

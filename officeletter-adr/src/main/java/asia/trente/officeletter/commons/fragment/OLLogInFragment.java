@@ -13,10 +13,10 @@ import android.widget.LinearLayout;
 import asia.trente.officeletter.BuildConfig;
 import asia.trente.officeletter.R;
 import asia.trente.officeletter.services.document.DocumentListFragment;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.define.WfUrlConst;
-import trente.asia.welfare.adr.services.user.LoginFragment;
-import trente.asia.welfare.adr.utils.WelfareUtil;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WfUrlConst;
+import nguyenhoangviet.vpcorp.welfare.adr.services.user.LoginFragment;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WelfareUtil;
 
 /**
  * Created by viet on 2/15/2016.

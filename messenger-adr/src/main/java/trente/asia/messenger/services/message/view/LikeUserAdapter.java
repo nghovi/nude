@@ -1,10 +1,10 @@
-package trente.asia.messenger.services.message.view;
+package nguyenhoangviet.vpcorp.messenger.services.message.view;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import trente.asia.messenger.R;
+import nguyenhoangviet.vpcorp.messenger.R;
 
 /**
  * Created by tien on 8/18/2017.

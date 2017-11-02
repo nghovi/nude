@@ -11,10 +11,10 @@ import asia.trente.officeletter.commons.fragment.OLLogInFragment;
 import asia.trente.officeletter.services.document.DocumentListFragment;
 import asia.trente.officeletter.services.document.model.ItemDocumentModel;
 import asia.trente.officeletter.services.salary.SalaryListFragment;
-import trente.asia.welfare.adr.activity.WelfareActivity;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.models.UserModel;
-import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
+import nguyenhoangviet.vpcorp.welfare.adr.activity.WelfareActivity;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.models.UserModel;
+import nguyenhoangviet.vpcorp.welfare.adr.pref.PreferencesAccountUtil;
 
 /**
  * Created by tien on 8/18/2017.

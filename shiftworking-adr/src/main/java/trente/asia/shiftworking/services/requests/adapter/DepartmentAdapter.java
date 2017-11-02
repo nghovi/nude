@@ -1,4 +1,4 @@
-package trente.asia.shiftworking.services.requests.adapter;
+package nguyenhoangviet.vpcorp.shiftworking.services.requests.adapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,11 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import trente.asia.shiftworking.BR;
-import trente.asia.shiftworking.R;
-import trente.asia.shiftworking.common.interfaces.OnDepartmentAdapterListener;
-import trente.asia.shiftworking.databinding.ItemDepartmentBinding;
-import trente.asia.welfare.adr.models.DeptModel;
+import nguyenhoangviet.vpcorp.shiftworking.BR;
+import nguyenhoangviet.vpcorp.shiftworking.R;
+import nguyenhoangviet.vpcorp.shiftworking.common.interfaces.OnDepartmentAdapterListener;
+import nguyenhoangviet.vpcorp.shiftworking.databinding.ItemDepartmentBinding;
+import nguyenhoangviet.vpcorp.welfare.adr.models.DeptModel;
 
 /**
  * Created by tien on 7/12/2017.

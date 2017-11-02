@@ -1,4 +1,4 @@
-package trente.asia.thankscard.services.rank.view;
+package nguyenhoangviet.vpcorp.thankscard.services.rank.view;
 
 import android.content.Context;
 import android.support.v4.view.ViewPager;

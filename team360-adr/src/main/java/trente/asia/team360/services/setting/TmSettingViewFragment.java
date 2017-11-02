@@ -1,12 +1,12 @@
-package trente.asia.team360.services.setting;
+package nguyenhoangviet.vpcorp.team360.services.setting;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import trente.asia.team360.R;
-import trente.asia.team360.common.fragments.AbstractTmFragment;
+import nguyenhoangviet.vpcorp.team360.R;
+import nguyenhoangviet.vpcorp.team360.common.fragments.AbstractTmFragment;
 
 /**
  * Created by takano-yasuhiro on 2017/06/19.

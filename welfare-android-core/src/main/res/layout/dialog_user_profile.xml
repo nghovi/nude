@@ -27,7 +27,7 @@
                 android:src="@drawable/wf_close_white_thin"/>
         </LinearLayout>
 
-        <trente.asia.welfare.adr.view.SelectableRoundedImageView
+        <nguyenhoangviet.vpcorp.welfare.adr.view.SelectableRoundedImageView
             android:id="@+id/img_id_photo"
             android:layout_width="@dimen/margin_150dp"
             android:layout_height="@dimen/margin_150dp"

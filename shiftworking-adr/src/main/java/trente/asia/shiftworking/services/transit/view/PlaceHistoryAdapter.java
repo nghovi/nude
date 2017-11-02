@@ -1,4 +1,4 @@
-package trente.asia.shiftworking.services.transit.view;
+package nguyenhoangviet.vpcorp.shiftworking.services.transit.view;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,7 @@ import android.widget.Filter;
 import android.widget.TextView;
 
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.shiftworking.R;
+import nguyenhoangviet.vpcorp.shiftworking.R;
 
 /**
  * UserListAdapter.

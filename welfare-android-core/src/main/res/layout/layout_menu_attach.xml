@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:visibility="invisible">
 
-    <trente.asia.welfare.adr.view.RevealFrameLayout style="@style/cs_common_match_wrap">
+    <nguyenhoangviet.vpcorp.welfare.adr.view.RevealFrameLayout style="@style/cs_common_match_wrap">
 
         <LinearLayout
             android:id="@+id/menuMain"
@@ -172,6 +172,6 @@
 
         </LinearLayout>
 
-    </trente.asia.welfare.adr.view.RevealFrameLayout>
+    </nguyenhoangviet.vpcorp.welfare.adr.view.RevealFrameLayout>
 
 </LinearLayout>

@@ -29,10 +29,10 @@ import asia.trente.officeletter.services.salary.adapter.ItemValueAdapter;
 import asia.trente.officeletter.services.salary.model.ItemValueModel;
 import asia.trente.officeletter.services.salary.model.SalaryGroupModel;
 import asia.trente.officeletter.services.salary.model.SalaryModel;
-import trente.asia.android.util.AndroidUtil;
-import trente.asia.android.util.DownloadFileManager;
-import trente.asia.android.util.OpenDownloadedFile;
-import trente.asia.android.view.ChiaseDownloadFileDialog;
+import nguyenhoangviet.vpcorp.android.util.AndroidUtil;
+import nguyenhoangviet.vpcorp.android.util.DownloadFileManager;
+import nguyenhoangviet.vpcorp.android.util.OpenDownloadedFile;
+import nguyenhoangviet.vpcorp.android.view.ChiaseDownloadFileDialog;
 
 /**
  * Created by tien on 8/22/2017.

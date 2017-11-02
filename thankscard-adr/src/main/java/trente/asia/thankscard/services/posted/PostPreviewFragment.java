@@ -1,4 +1,4 @@
-package trente.asia.thankscard.services.posted;
+package nguyenhoangviet.vpcorp.thankscard.services.posted;
 
 import java.io.File;
 import java.util.Date;
@@ -26,20 +26,20 @@ import android.widget.TextView;
 
 import asia.chiase.core.util.CCFormatUtil;
 import io.realm.Realm;
-import trente.asia.thankscard.R;
-import trente.asia.thankscard.activities.MainActivity;
-import trente.asia.thankscard.commons.defines.TcConst;
-import trente.asia.thankscard.databinding.FragmentPostPreviewBinding;
-import trente.asia.thankscard.services.common.AbstractPagerFragment;
-import trente.asia.thankscard.services.common.model.Template;
-import trente.asia.thankscard.services.mypage.model.StampModel;
-import trente.asia.thankscard.services.posted.view.StickerViewDetail;
-import trente.asia.thankscard.services.posted.view.StickerViewPost;
-import trente.asia.thankscard.utils.TCUtil;
-import trente.asia.welfare.adr.activity.WelfareActivity;
-import trente.asia.welfare.adr.models.UserModel;
-import trente.asia.welfare.adr.pref.PreferencesSystemUtil;
-import trente.asia.welfare.adr.utils.WelfareUtil;
+import nguyenhoangviet.vpcorp.thankscard.R;
+import nguyenhoangviet.vpcorp.thankscard.activities.MainActivity;
+import nguyenhoangviet.vpcorp.thankscard.commons.defines.TcConst;
+import nguyenhoangviet.vpcorp.thankscard.databinding.FragmentPostPreviewBinding;
+import nguyenhoangviet.vpcorp.thankscard.services.common.AbstractPagerFragment;
+import nguyenhoangviet.vpcorp.thankscard.services.common.model.Template;
+import nguyenhoangviet.vpcorp.thankscard.services.mypage.model.StampModel;
+import nguyenhoangviet.vpcorp.thankscard.services.posted.view.StickerViewDetail;
+import nguyenhoangviet.vpcorp.thankscard.services.posted.view.StickerViewPost;
+import nguyenhoangviet.vpcorp.thankscard.utils.TCUtil;
+import nguyenhoangviet.vpcorp.welfare.adr.activity.WelfareActivity;
+import nguyenhoangviet.vpcorp.welfare.adr.models.UserModel;
+import nguyenhoangviet.vpcorp.welfare.adr.pref.PreferencesSystemUtil;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WelfareUtil;
 
 /**
  * Created by viet on 2/15/2016.

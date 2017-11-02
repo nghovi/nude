@@ -1,4 +1,4 @@
-package trente.asia.messenger.activities;
+package nguyenhoangviet.vpcorp.messenger.activities;
 
 import android.app.Application;
 

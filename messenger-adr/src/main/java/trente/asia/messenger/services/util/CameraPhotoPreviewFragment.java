@@ -1,4 +1,4 @@
-package trente.asia.messenger.services.util;
+package nguyenhoangviet.vpcorp.messenger.services.util;
 
 import java.io.File;
 import java.util.HashMap;
@@ -20,15 +20,15 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import trente.asia.android.util.AndroidUtil;
-import trente.asia.messenger.BuildConfig;
-import trente.asia.messenger.R;
-import trente.asia.messenger.commons.defines.MsConst;
-import trente.asia.messenger.commons.utils.MsUtils;
-import trente.asia.messenger.services.user.MsgLoginFragment;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.define.WfUrlConst;
-import trente.asia.welfare.adr.fragment.AbstractCameraPhotoPreviewFragment;
+import nguyenhoangviet.vpcorp.android.util.AndroidUtil;
+import nguyenhoangviet.vpcorp.messenger.BuildConfig;
+import nguyenhoangviet.vpcorp.messenger.R;
+import nguyenhoangviet.vpcorp.messenger.commons.defines.MsConst;
+import nguyenhoangviet.vpcorp.messenger.commons.utils.MsUtils;
+import nguyenhoangviet.vpcorp.messenger.services.user.MsgLoginFragment;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WfUrlConst;
+import nguyenhoangviet.vpcorp.welfare.adr.fragment.AbstractCameraPhotoPreviewFragment;
 
 /**
  * AbstractCameraPhotoPreviewFragment

@@ -1,4 +1,4 @@
-package trente.asia.team360;
+package nguyenhoangviet.vpcorp.team360;
 
 import android.app.Application;
 import android.util.Log;

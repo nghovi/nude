@@ -1,4 +1,4 @@
-package trente.asia.thankscard.fragments.dialogs;
+package nguyenhoangviet.vpcorp.thankscard.fragments.dialogs;
 
 import java.util.Calendar;
 import java.util.List;
@@ -12,13 +12,13 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 
 import asia.chiase.core.util.CCFormatUtil;
-import trente.asia.thankscard.R;
-import trente.asia.thankscard.services.common.TCDetailFragment;
-import trente.asia.thankscard.services.common.model.HistoryModel;
-import trente.asia.thankscard.services.common.model.Template;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.models.DeptModel;
-import trente.asia.welfare.adr.utils.WelfareUtil;
+import nguyenhoangviet.vpcorp.thankscard.R;
+import nguyenhoangviet.vpcorp.thankscard.services.common.TCDetailFragment;
+import nguyenhoangviet.vpcorp.thankscard.services.common.model.HistoryModel;
+import nguyenhoangviet.vpcorp.thankscard.services.common.model.Template;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.models.DeptModel;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WelfareUtil;
 
 /**
  * Created by viet on 3/16/2016.

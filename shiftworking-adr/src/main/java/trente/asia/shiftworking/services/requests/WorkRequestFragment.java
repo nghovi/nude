@@ -1,4 +1,4 @@
-package trente.asia.shiftworking.services.requests;
+package nguyenhoangviet.vpcorp.shiftworking.services.requests;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -9,16 +9,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import trente.asia.shiftworking.R;
-import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
-import trente.asia.shiftworking.databinding.FragmentWorkOfferBinding;
-import trente.asia.shiftworking.services.requests.adapter.WorkOfferFragmentAdapter;
-import trente.asia.shiftworking.services.requests.edit.HolidayWorkingEditFragment;
-import trente.asia.shiftworking.services.requests.edit.OvertimeEditFragment;
-import trente.asia.shiftworking.services.requests.edit.VacationEditFragment;
-import trente.asia.shiftworking.services.requests.list.HolidayWorkingListFragment;
-import trente.asia.shiftworking.services.requests.list.OvertimeListFragment;
-import trente.asia.shiftworking.services.requests.list.VacationListFragment;
+import nguyenhoangviet.vpcorp.shiftworking.R;
+import nguyenhoangviet.vpcorp.shiftworking.common.fragments.AbstractSwFragment;
+import nguyenhoangviet.vpcorp.shiftworking.databinding.FragmentWorkOfferBinding;
+import nguyenhoangviet.vpcorp.shiftworking.services.requests.adapter.WorkOfferFragmentAdapter;
+import nguyenhoangviet.vpcorp.shiftworking.services.requests.edit.HolidayWorkingEditFragment;
+import nguyenhoangviet.vpcorp.shiftworking.services.requests.edit.OvertimeEditFragment;
+import nguyenhoangviet.vpcorp.shiftworking.services.requests.edit.VacationEditFragment;
+import nguyenhoangviet.vpcorp.shiftworking.services.requests.list.HolidayWorkingListFragment;
+import nguyenhoangviet.vpcorp.shiftworking.services.requests.list.OvertimeListFragment;
+import nguyenhoangviet.vpcorp.shiftworking.services.requests.list.VacationListFragment;
 
 /**
  * Created by tien on 9/14/2017.

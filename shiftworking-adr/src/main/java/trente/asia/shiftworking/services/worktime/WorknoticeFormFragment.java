@@ -1,4 +1,4 @@
-package trente.asia.shiftworking.services.worktime;
+package nguyenhoangviet.vpcorp.shiftworking.services.worktime;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -20,18 +20,18 @@ import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.android.util.AndroidUtil;
-import trente.asia.shiftworking.BuildConfig;
-import trente.asia.shiftworking.R;
-import trente.asia.shiftworking.common.defines.SwConst;
-import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
-import trente.asia.shiftworking.common.models.SwApiHolder;
-import trente.asia.shiftworking.common.models.SwUserModel;
-import trente.asia.shiftworking.common.utils.SwUtil;
-import trente.asia.shiftworking.services.worktime.model.NoticeModel;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.utils.WelfareUtil;
-import trente.asia.welfare.adr.utils.WfPicassoHelper;
+import nguyenhoangviet.vpcorp.android.util.AndroidUtil;
+import nguyenhoangviet.vpcorp.shiftworking.BuildConfig;
+import nguyenhoangviet.vpcorp.shiftworking.R;
+import nguyenhoangviet.vpcorp.shiftworking.common.defines.SwConst;
+import nguyenhoangviet.vpcorp.shiftworking.common.fragments.AbstractSwFragment;
+import nguyenhoangviet.vpcorp.shiftworking.common.models.SwApiHolder;
+import nguyenhoangviet.vpcorp.shiftworking.common.models.SwUserModel;
+import nguyenhoangviet.vpcorp.shiftworking.common.utils.SwUtil;
+import nguyenhoangviet.vpcorp.shiftworking.services.worktime.model.NoticeModel;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WelfareUtil;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WfPicassoHelper;
 
 public class WorknoticeFormFragment extends AbstractSwFragment {
 

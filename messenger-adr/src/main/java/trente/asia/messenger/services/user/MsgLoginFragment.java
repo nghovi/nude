@@ -1,4 +1,4 @@
-package trente.asia.messenger.services.user;
+package nguyenhoangviet.vpcorp.messenger.services.user;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -8,13 +8,13 @@ import android.view.View;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import trente.asia.messenger.BuildConfig;
-import trente.asia.messenger.R;
-import trente.asia.messenger.commons.defines.MsConst;
-import trente.asia.messenger.services.message.MessageFragment;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.define.WfUrlConst;
-import trente.asia.welfare.adr.services.user.LoginFragment;
+import nguyenhoangviet.vpcorp.messenger.BuildConfig;
+import nguyenhoangviet.vpcorp.messenger.R;
+import nguyenhoangviet.vpcorp.messenger.commons.defines.MsConst;
+import nguyenhoangviet.vpcorp.messenger.services.message.MessageFragment;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WfUrlConst;
+import nguyenhoangviet.vpcorp.welfare.adr.services.user.LoginFragment;
 
 /**
  * MsgLoginFragment

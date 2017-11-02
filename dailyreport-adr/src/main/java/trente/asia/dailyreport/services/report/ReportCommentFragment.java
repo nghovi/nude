@@ -1,4 +1,4 @@
-package trente.asia.dailyreport.services.report;
+package nguyenhoangviet.vpcorp.dailyreport.services.report;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -13,21 +13,21 @@ import android.widget.Toast;
 
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.android.util.AndroidUtil;
-import trente.asia.android.view.ChiaseEditText;
-import trente.asia.dailyreport.DRConst;
-import trente.asia.dailyreport.R;
-import trente.asia.dailyreport.activities.CameraPhotoPreviewActivity;
-import trente.asia.dailyreport.activities.FilePreviewActivity;
-import trente.asia.dailyreport.fragments.AbstractDRFragment;
-import trente.asia.dailyreport.services.comment.menu.CommentMenuManager;
-import trente.asia.dailyreport.services.report.model.DRMessageContentModel;
-import trente.asia.dailyreport.services.report.model.ReportModel;
-import trente.asia.dailyreport.utils.DRUtil;
-import trente.asia.welfare.adr.activity.WelfareActivity;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.menu.OnMenuButtonsListener;
-import trente.asia.welfare.adr.menu.OnMenuManageListener;
+import nguyenhoangviet.vpcorp.android.util.AndroidUtil;
+import nguyenhoangviet.vpcorp.android.view.ChiaseEditText;
+import nguyenhoangviet.vpcorp.dailyreport.DRConst;
+import nguyenhoangviet.vpcorp.dailyreport.R;
+import nguyenhoangviet.vpcorp.dailyreport.activities.CameraPhotoPreviewActivity;
+import nguyenhoangviet.vpcorp.dailyreport.activities.FilePreviewActivity;
+import nguyenhoangviet.vpcorp.dailyreport.fragments.AbstractDRFragment;
+import nguyenhoangviet.vpcorp.dailyreport.services.comment.menu.CommentMenuManager;
+import nguyenhoangviet.vpcorp.dailyreport.services.report.model.DRMessageContentModel;
+import nguyenhoangviet.vpcorp.dailyreport.services.report.model.ReportModel;
+import nguyenhoangviet.vpcorp.dailyreport.utils.DRUtil;
+import nguyenhoangviet.vpcorp.welfare.adr.activity.WelfareActivity;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.menu.OnMenuButtonsListener;
+import nguyenhoangviet.vpcorp.welfare.adr.menu.OnMenuManageListener;
 
 /**
  * ReportCommentFragment

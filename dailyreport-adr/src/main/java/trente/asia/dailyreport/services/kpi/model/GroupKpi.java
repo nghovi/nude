@@ -1,10 +1,10 @@
-package trente.asia.dailyreport.services.kpi.model;
+package nguyenhoangviet.vpcorp.dailyreport.services.kpi.model;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import trente.asia.welfare.adr.models.ApiObjectModel;
-import trente.asia.welfare.adr.models.UserModel;
+import nguyenhoangviet.vpcorp.welfare.adr.models.ApiObjectModel;
+import nguyenhoangviet.vpcorp.welfare.adr.models.UserModel;
 
 /**
  * Created by hviet on 6/22/17.

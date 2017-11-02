@@ -1,4 +1,4 @@
-package trente.asia.shiftworking.common.fragments;
+package nguyenhoangviet.vpcorp.shiftworking.common.fragments;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -19,7 +19,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
 
-import trente.asia.android.util.AndroidUtil;
+import nguyenhoangviet.vpcorp.android.util.AndroidUtil;
 
 public abstract class AbstractLocationFragment extends AbstractSwFragment implements GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener{
 

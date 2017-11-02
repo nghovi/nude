@@ -1,4 +1,4 @@
-package trente.asia.thankscard.services.setting;
+package nguyenhoangviet.vpcorp.thankscard.services.setting;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,13 +15,13 @@ import android.widget.TextView;
 
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.thankscard.R;
-import trente.asia.thankscard.commons.defines.TcConst;
-import trente.asia.thankscard.fragments.AbstractTCFragment;
-import trente.asia.welfare.adr.define.WfUrlConst;
-import trente.asia.welfare.adr.models.ApiObjectModel;
-import trente.asia.welfare.adr.utils.WelfareUtil;
-import trente.asia.welfare.adr.view.WfSpinner;
+import nguyenhoangviet.vpcorp.thankscard.R;
+import nguyenhoangviet.vpcorp.thankscard.commons.defines.TcConst;
+import nguyenhoangviet.vpcorp.thankscard.fragments.AbstractTCFragment;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WfUrlConst;
+import nguyenhoangviet.vpcorp.welfare.adr.models.ApiObjectModel;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WelfareUtil;
+import nguyenhoangviet.vpcorp.welfare.adr.view.WfSpinner;
 
 /**
  * TcContactUsFragment

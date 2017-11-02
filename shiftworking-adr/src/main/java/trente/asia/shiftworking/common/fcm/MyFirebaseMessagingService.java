@@ -1,4 +1,4 @@
-package trente.asia.shiftworking.common.fcm;
+package nguyenhoangviet.vpcorp.shiftworking.common.fcm;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -14,11 +14,11 @@ import android.util.Log;
 
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.android.util.CsMsgUtil;
-import trente.asia.shiftworking.R;
-import trente.asia.shiftworking.common.activities.MainActivity;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.models.FcmNotificationModel;
+import nguyenhoangviet.vpcorp.android.util.CsMsgUtil;
+import nguyenhoangviet.vpcorp.shiftworking.R;
+import nguyenhoangviet.vpcorp.shiftworking.common.activities.MainActivity;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.models.FcmNotificationModel;
 
 /**
  * MyFirebaseMessagingService

@@ -1,4 +1,4 @@
-package trente.asia.calendar.services.todo.view;
+package nguyenhoangviet.vpcorp.calendar.services.todo.view;
 
 import java.util.List;
 
@@ -14,9 +14,9 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import asia.chiase.core.util.CCFormatUtil;
-import trente.asia.calendar.R;
-import trente.asia.calendar.services.todo.model.Todo;
-import trente.asia.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.calendar.R;
+import nguyenhoangviet.vpcorp.calendar.services.todo.model.Todo;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
 
 /**
  * Created by viet on 5/13/2016.

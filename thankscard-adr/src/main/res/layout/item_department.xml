@@ -3,7 +3,7 @@
     <data>
         <variable
             name="dept"
-            type="trente.asia.welfare.adr.models.DeptModel"/>
+            type="nguyenhoangviet.vpcorp.welfare.adr.models.DeptModel"/>
     </data>
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"

@@ -1,4 +1,4 @@
-package trente.asia.shiftworking.services.requests.filter;
+package nguyenhoangviet.vpcorp.shiftworking.services.requests.filter;
 
 import java.util.List;
 
@@ -9,17 +9,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import trente.asia.android.activity.ChiaseActivity;
-import trente.asia.shiftworking.R;
-import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
-import trente.asia.shiftworking.common.interfaces.OnDepartmentAdapterListener;
-import trente.asia.shiftworking.common.interfaces.OnFilterListener;
-import trente.asia.shiftworking.common.interfaces.OnTypeAdapterListener;
-import trente.asia.shiftworking.common.interfaces.OnUserAdapterListener;
-import trente.asia.shiftworking.databinding.FragmentOfferFilterBinding;
-import trente.asia.welfare.adr.models.ApiObjectModel;
-import trente.asia.welfare.adr.models.DeptModel;
-import trente.asia.welfare.adr.models.UserModel;
+import nguyenhoangviet.vpcorp.android.activity.ChiaseActivity;
+import nguyenhoangviet.vpcorp.shiftworking.R;
+import nguyenhoangviet.vpcorp.shiftworking.common.fragments.AbstractSwFragment;
+import nguyenhoangviet.vpcorp.shiftworking.common.interfaces.OnDepartmentAdapterListener;
+import nguyenhoangviet.vpcorp.shiftworking.common.interfaces.OnFilterListener;
+import nguyenhoangviet.vpcorp.shiftworking.common.interfaces.OnTypeAdapterListener;
+import nguyenhoangviet.vpcorp.shiftworking.common.interfaces.OnUserAdapterListener;
+import nguyenhoangviet.vpcorp.shiftworking.databinding.FragmentOfferFilterBinding;
+import nguyenhoangviet.vpcorp.welfare.adr.models.ApiObjectModel;
+import nguyenhoangviet.vpcorp.welfare.adr.models.DeptModel;
+import nguyenhoangviet.vpcorp.welfare.adr.models.UserModel;
 
 public class RequestFilterFragment extends AbstractSwFragment implements OnDepartmentAdapterListener,OnUserAdapterListener,OnTypeAdapterListener{
 

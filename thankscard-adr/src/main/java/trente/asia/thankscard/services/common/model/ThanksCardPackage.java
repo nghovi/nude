@@ -1,4 +1,4 @@
-package trente.asia.thankscard.services.common.model;
+package nguyenhoangviet.vpcorp.thankscard.services.common.model;
 
 import java.util.ArrayList;
 import java.util.List;

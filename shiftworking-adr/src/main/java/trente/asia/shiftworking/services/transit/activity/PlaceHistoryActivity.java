@@ -1,13 +1,13 @@
-package trente.asia.shiftworking.services.transit.activity;
+package nguyenhoangviet.vpcorp.shiftworking.services.transit.activity;
 
 import android.os.Bundle;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import trente.asia.shiftworking.R;
-import trente.asia.shiftworking.common.defines.SwConst;
-import trente.asia.welfare.adr.activity.WelfareActivity;
+import nguyenhoangviet.vpcorp.shiftworking.R;
+import nguyenhoangviet.vpcorp.shiftworking.common.defines.SwConst;
+import nguyenhoangviet.vpcorp.welfare.adr.activity.WelfareActivity;
 
 /**
  * PlaceHistoryActivity

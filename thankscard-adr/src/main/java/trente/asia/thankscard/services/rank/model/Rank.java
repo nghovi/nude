@@ -1,4 +1,4 @@
-package trente.asia.thankscard.services.rank.model;
+package nguyenhoangviet.vpcorp.thankscard.services.rank.model;
 
 import java.util.List;
 

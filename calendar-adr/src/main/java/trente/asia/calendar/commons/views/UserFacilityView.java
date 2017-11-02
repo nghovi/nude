@@ -1,4 +1,4 @@
-package trente.asia.calendar.commons.views;
+package nguyenhoangviet.vpcorp.calendar.commons.views;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
@@ -7,8 +7,8 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
-import trente.asia.calendar.R;
-import trente.asia.calendar.commons.defines.ClConst;
+import nguyenhoangviet.vpcorp.calendar.R;
+import nguyenhoangviet.vpcorp.calendar.commons.defines.ClConst;
 
 /**
  * Created by hviet on 7/25/17.

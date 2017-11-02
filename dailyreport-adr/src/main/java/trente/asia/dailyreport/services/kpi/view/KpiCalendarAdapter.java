@@ -1,4 +1,4 @@
-package trente.asia.dailyreport.services.kpi.view;
+package nguyenhoangviet.vpcorp.dailyreport.services.kpi.view;
 
 /**
  * Created by viet on 7/12/2016.
@@ -25,10 +25,10 @@ import android.widget.TextView;
 
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.dailyreport.R;
-import trente.asia.dailyreport.services.kpi.ActionPlansAddFragment;
-import trente.asia.dailyreport.services.kpi.model.ActionPlan;
-import trente.asia.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.dailyreport.R;
+import nguyenhoangviet.vpcorp.dailyreport.services.kpi.ActionPlansAddFragment;
+import nguyenhoangviet.vpcorp.dailyreport.services.kpi.model.ActionPlan;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
 
 public class KpiCalendarAdapter extends BaseAdapter{
 

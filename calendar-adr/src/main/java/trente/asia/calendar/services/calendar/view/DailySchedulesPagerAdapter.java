@@ -1,12 +1,12 @@
-package trente.asia.calendar.services.calendar.view;
+package nguyenhoangviet.vpcorp.calendar.services.calendar.view;
 
 import java.util.Date;
 
 import android.support.v4.app.FragmentManager;
 
-import trente.asia.android.util.CsDateUtil;
-import trente.asia.calendar.commons.fragments.ClPageFragment;
-import trente.asia.calendar.services.calendar.DailyPageFragment;
+import nguyenhoangviet.vpcorp.android.util.CsDateUtil;
+import nguyenhoangviet.vpcorp.calendar.commons.fragments.ClPageFragment;
+import nguyenhoangviet.vpcorp.calendar.services.calendar.DailyPageFragment;
 
 /**
  * SchedulesPagerAdapter

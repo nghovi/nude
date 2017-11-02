@@ -1,12 +1,12 @@
-package trente.asia.shiftworking.common.fragments;
+package nguyenhoangviet.vpcorp.shiftworking.common.fragments;
 
 import android.view.View;
 
-import trente.asia.shiftworking.R;
-import trente.asia.shiftworking.common.activities.CameraPhotoPreviewAccountActivity;
-import trente.asia.welfare.adr.menu.OnMenuButtonsListener;
-import trente.asia.welfare.adr.menu.OnMenuManageListener;
-import trente.asia.welfare.adr.services.user.menu.AccountMenuManager;
+import nguyenhoangviet.vpcorp.shiftworking.R;
+import nguyenhoangviet.vpcorp.shiftworking.common.activities.CameraPhotoPreviewAccountActivity;
+import nguyenhoangviet.vpcorp.welfare.adr.menu.OnMenuButtonsListener;
+import nguyenhoangviet.vpcorp.welfare.adr.menu.OnMenuManageListener;
+import nguyenhoangviet.vpcorp.welfare.adr.services.user.menu.AccountMenuManager;
 
 public abstract class AbstractPhotoFragment extends AbstractSwFragment{
 
@@ -66,7 +66,7 @@ public abstract class AbstractPhotoFragment extends AbstractSwFragment{
 		super.initView();
 
 		menuManager = new AccountMenuManager();
-		menuManager.setMenuLayout(activity, trente.asia.welfare.adr.R.id.menuMain, onMenuManagerListener, onMenuButtonsListener);
+		menuManager.setMenuLayout(activity, nguyenhoangviet.vpcorp.welfare.adr.R.id.menuMain, onMenuManagerListener, onMenuButtonsListener);
 		mViewForMenuBehind = getView().findViewById(R.id.viewForMenuBehind);
 		mViewForMenuBehind.setOnClickListener(new View.OnClickListener() {
 

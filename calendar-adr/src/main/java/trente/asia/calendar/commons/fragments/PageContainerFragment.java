@@ -1,4 +1,4 @@
-package trente.asia.calendar.commons.fragments;
+package nguyenhoangviet.vpcorp.calendar.commons.fragments;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -13,17 +13,17 @@ import android.widget.TextView;
 
 import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCFormatUtil;
-import trente.asia.calendar.R;
-import trente.asia.calendar.commons.defines.ClConst;
-import trente.asia.calendar.commons.views.ClFragmentPagerAdapter;
-import trente.asia.calendar.commons.views.PageSharingHolder;
-import trente.asia.calendar.commons.views.UserFacilityView;
-import trente.asia.calendar.services.calendar.RoomFilterFragment;
-import trente.asia.calendar.services.calendar.ScheduleFormFragment;
-import trente.asia.calendar.services.calendar.SchedulesPageFragment;
-import trente.asia.calendar.services.calendar.UserFilterFragment;
-import trente.asia.welfare.adr.activity.WelfareActivity;
-import trente.asia.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.calendar.R;
+import nguyenhoangviet.vpcorp.calendar.commons.defines.ClConst;
+import nguyenhoangviet.vpcorp.calendar.commons.views.ClFragmentPagerAdapter;
+import nguyenhoangviet.vpcorp.calendar.commons.views.PageSharingHolder;
+import nguyenhoangviet.vpcorp.calendar.commons.views.UserFacilityView;
+import nguyenhoangviet.vpcorp.calendar.services.calendar.RoomFilterFragment;
+import nguyenhoangviet.vpcorp.calendar.services.calendar.ScheduleFormFragment;
+import nguyenhoangviet.vpcorp.calendar.services.calendar.SchedulesPageFragment;
+import nguyenhoangviet.vpcorp.calendar.services.calendar.UserFilterFragment;
+import nguyenhoangviet.vpcorp.welfare.adr.activity.WelfareActivity;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
 
 /**
  * PageContainerFragment

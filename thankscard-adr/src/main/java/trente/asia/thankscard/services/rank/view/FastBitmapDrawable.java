@@ -1,4 +1,4 @@
-package trente.asia.thankscard.services.rank.view;
+package nguyenhoangviet.vpcorp.thankscard.services.rank.view;
 
 import java.io.InputStream;
 

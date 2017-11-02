@@ -1,4 +1,4 @@
-package trente.asia.messenger.services.message.view;
+package nguyenhoangviet.vpcorp.messenger.services.message.view;
 
 import android.app.Activity;
 import android.content.Context;
@@ -25,18 +25,18 @@ import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCNumberUtil;
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.messenger.BuildConfig;
-import trente.asia.messenger.R;
-import trente.asia.messenger.services.message.listener.ItemMsgClickListener;
-import trente.asia.messenger.services.message.model.RealmMessageModel;
-import trente.asia.messenger.services.message.model.RealmUserModel;
-import trente.asia.messenger.services.message.model.WFMStampModel;
-import trente.asia.welfare.adr.activity.WelfareFragment;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.models.UserModel;
-import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
-import trente.asia.welfare.adr.utils.WelfareUtil;
-import trente.asia.welfare.adr.utils.WfPicassoHelper;
+import nguyenhoangviet.vpcorp.messenger.BuildConfig;
+import nguyenhoangviet.vpcorp.messenger.R;
+import nguyenhoangviet.vpcorp.messenger.services.message.listener.ItemMsgClickListener;
+import nguyenhoangviet.vpcorp.messenger.services.message.model.RealmMessageModel;
+import nguyenhoangviet.vpcorp.messenger.services.message.model.RealmUserModel;
+import nguyenhoangviet.vpcorp.messenger.services.message.model.WFMStampModel;
+import nguyenhoangviet.vpcorp.welfare.adr.activity.WelfareFragment;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.models.UserModel;
+import nguyenhoangviet.vpcorp.welfare.adr.pref.PreferencesAccountUtil;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WelfareUtil;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WfPicassoHelper;
 
 /**
  * Created by Huy-nq on 7/12/2016.

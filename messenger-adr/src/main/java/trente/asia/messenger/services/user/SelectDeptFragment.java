@@ -1,4 +1,4 @@
-package trente.asia.messenger.services.user;
+package nguyenhoangviet.vpcorp.messenger.services.user;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -8,10 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import trente.asia.messenger.R;
-import trente.asia.messenger.databinding.FragmentSelectDeptBinding;
-import trente.asia.messenger.fragment.AbstractMsgFragment;
-import trente.asia.messenger.services.user.view.DeptAdapter;
+import nguyenhoangviet.vpcorp.messenger.R;
+import nguyenhoangviet.vpcorp.messenger.databinding.FragmentSelectDeptBinding;
+import nguyenhoangviet.vpcorp.messenger.fragment.AbstractMsgFragment;
+import nguyenhoangviet.vpcorp.messenger.services.user.view.DeptAdapter;
 
 /**
  * Created by tien on 8/16/2017.

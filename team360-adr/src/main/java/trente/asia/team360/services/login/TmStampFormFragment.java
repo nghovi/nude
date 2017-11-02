@@ -1,4 +1,4 @@
-package trente.asia.team360.services.login;
+package nguyenhoangviet.vpcorp.team360.services.login;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,14 +16,14 @@ import java.util.List;
 
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
-import trente.asia.team360.BuildConfig;
-import trente.asia.team360.R;
-import trente.asia.team360.common.fragments.AbstractTmFragment;
-import trente.asia.team360.services.model.StampModel;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.define.WfUrlConst;
-import trente.asia.welfare.adr.models.UserModel;
-import trente.asia.welfare.adr.utils.WfPicassoHelper;
+import nguyenhoangviet.vpcorp.team360.BuildConfig;
+import nguyenhoangviet.vpcorp.team360.R;
+import nguyenhoangviet.vpcorp.team360.common.fragments.AbstractTmFragment;
+import nguyenhoangviet.vpcorp.team360.services.model.StampModel;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WfUrlConst;
+import nguyenhoangviet.vpcorp.welfare.adr.models.UserModel;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WfPicassoHelper;
 
 public class TmStampFormFragment extends AbstractTmFragment {
 

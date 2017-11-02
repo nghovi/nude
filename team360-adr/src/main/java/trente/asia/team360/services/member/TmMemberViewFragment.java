@@ -1,4 +1,4 @@
-package trente.asia.team360.services.member;
+package nguyenhoangviet.vpcorp.team360.services.member;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,13 +17,13 @@ import asia.chiase.core.util.CCCollectionUtil;
 import io.realm.Realm;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
-import trente.asia.team360.R;
-import trente.asia.team360.common.fragments.AbstractTmFragment;
-import trente.asia.team360.databinding.FragmentMemberViewBinding;
-import trente.asia.team360.services.entity.UserEntity;
-import trente.asia.team360.services.login.TmStampFormFragment;
-import trente.asia.welfare.adr.define.WfUrlConst;
-import trente.asia.welfare.adr.models.UserModel;
+import nguyenhoangviet.vpcorp.team360.R;
+import nguyenhoangviet.vpcorp.team360.common.fragments.AbstractTmFragment;
+import nguyenhoangviet.vpcorp.team360.databinding.FragmentMemberViewBinding;
+import nguyenhoangviet.vpcorp.team360.services.entity.UserEntity;
+import nguyenhoangviet.vpcorp.team360.services.login.TmStampFormFragment;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WfUrlConst;
+import nguyenhoangviet.vpcorp.welfare.adr.models.UserModel;
 
 public class TmMemberViewFragment extends AbstractTmFragment {
 

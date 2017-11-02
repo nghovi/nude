@@ -1,4 +1,4 @@
-package trente.asia.calendar.services.setting;
+package nguyenhoangviet.vpcorp.calendar.services.setting;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,9 +8,9 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.TextView;
 
-import trente.asia.android.util.AndroidUtil;
-import trente.asia.calendar.R;
-import trente.asia.calendar.commons.fragments.AbstractClFragment;
+import nguyenhoangviet.vpcorp.android.util.AndroidUtil;
+import nguyenhoangviet.vpcorp.calendar.R;
+import nguyenhoangviet.vpcorp.calendar.commons.fragments.AbstractClFragment;
 
 /**
  * A simple {@link Fragment} subclass.

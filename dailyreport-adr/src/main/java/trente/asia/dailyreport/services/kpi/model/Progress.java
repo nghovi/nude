@@ -1,4 +1,4 @@
-package trente.asia.dailyreport.services.kpi.model;
+package nguyenhoangviet.vpcorp.dailyreport.services.kpi.model;
 
 /**
  * Created by hviet on 7/10/17.

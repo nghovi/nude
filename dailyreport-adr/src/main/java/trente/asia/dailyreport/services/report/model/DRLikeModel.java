@@ -1,6 +1,6 @@
-package trente.asia.dailyreport.services.report.model;
+package nguyenhoangviet.vpcorp.dailyreport.services.report.model;
 
-import trente.asia.welfare.adr.models.LikeModel;
+import nguyenhoangviet.vpcorp.welfare.adr.models.LikeModel;
 
 /**
  * Created by viet on 7/22/2016.

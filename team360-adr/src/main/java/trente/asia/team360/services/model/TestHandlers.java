@@ -1,9 +1,9 @@
-package trente.asia.team360.services.model;
+package nguyenhoangviet.vpcorp.team360.services.model;
 
 import android.util.Log;
 import android.view.View;
 
-import trente.asia.team360.BR;
+import nguyenhoangviet.vpcorp.team360.BR;
 
 /**
  * Created by takano-yasuhiro on 2017/05/15.

@@ -1,4 +1,4 @@
-package trente.asia.calendar.services.calendar;
+package nguyenhoangviet.vpcorp.calendar.services.calendar;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -19,26 +19,26 @@ import android.widget.LinearLayout;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.android.util.CsDateUtil;
-import trente.asia.calendar.R;
-import trente.asia.calendar.commons.defines.ClConst;
-import trente.asia.calendar.commons.dialogs.DailySummaryDialog;
-import trente.asia.calendar.commons.fragments.ClPageFragment;
-import trente.asia.calendar.commons.utils.ClUtil;
-import trente.asia.calendar.services.calendar.listener.DailyScheduleClickListener;
-import trente.asia.calendar.services.calendar.model.CalendarBirthdayModel;
-import trente.asia.calendar.services.calendar.model.CalendarModel;
-import trente.asia.calendar.services.calendar.model.CategoryModel;
-import trente.asia.calendar.services.calendar.model.HolidayModel;
-import trente.asia.calendar.services.calendar.model.RoomModel;
-import trente.asia.calendar.services.calendar.model.ScheduleModel;
-import trente.asia.calendar.services.calendar.model.WorkRequest;
-import trente.asia.calendar.services.calendar.view.DailyScheduleList;
-import trente.asia.calendar.services.todo.model.Todo;
-import trente.asia.welfare.adr.activity.WelfareActivity;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.models.UserModel;
-import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
+import nguyenhoangviet.vpcorp.android.util.CsDateUtil;
+import nguyenhoangviet.vpcorp.calendar.R;
+import nguyenhoangviet.vpcorp.calendar.commons.defines.ClConst;
+import nguyenhoangviet.vpcorp.calendar.commons.dialogs.DailySummaryDialog;
+import nguyenhoangviet.vpcorp.calendar.commons.fragments.ClPageFragment;
+import nguyenhoangviet.vpcorp.calendar.commons.utils.ClUtil;
+import nguyenhoangviet.vpcorp.calendar.services.calendar.listener.DailyScheduleClickListener;
+import nguyenhoangviet.vpcorp.calendar.services.calendar.model.CalendarBirthdayModel;
+import nguyenhoangviet.vpcorp.calendar.services.calendar.model.CalendarModel;
+import nguyenhoangviet.vpcorp.calendar.services.calendar.model.CategoryModel;
+import nguyenhoangviet.vpcorp.calendar.services.calendar.model.HolidayModel;
+import nguyenhoangviet.vpcorp.calendar.services.calendar.model.RoomModel;
+import nguyenhoangviet.vpcorp.calendar.services.calendar.model.ScheduleModel;
+import nguyenhoangviet.vpcorp.calendar.services.calendar.model.WorkRequest;
+import nguyenhoangviet.vpcorp.calendar.services.calendar.view.DailyScheduleList;
+import nguyenhoangviet.vpcorp.calendar.services.todo.model.Todo;
+import nguyenhoangviet.vpcorp.welfare.adr.activity.WelfareActivity;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.models.UserModel;
+import nguyenhoangviet.vpcorp.welfare.adr.pref.PreferencesAccountUtil;
 
 /**
  * SchedulesPageFragment

@@ -1,4 +1,4 @@
-package trente.asia.shiftworking.services.shiftworking.view;
+package nguyenhoangviet.vpcorp.shiftworking.services.shiftworking.view;
 
 import java.util.Date;
 
@@ -8,9 +8,9 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import trente.asia.shiftworking.R;
-import trente.asia.android.view.ChiaseCheckableImageView;
-import trente.asia.welfare.adr.utils.WelfareUtil;
+import nguyenhoangviet.vpcorp.shiftworking.R;
+import nguyenhoangviet.vpcorp.android.view.ChiaseCheckableImageView;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WelfareUtil;
 
 /**
  * CommonMonthView

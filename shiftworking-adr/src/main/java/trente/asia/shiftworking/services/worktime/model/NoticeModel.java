@@ -1,9 +1,9 @@
-package trente.asia.shiftworking.services.worktime.model;
+package nguyenhoangviet.vpcorp.shiftworking.services.worktime.model;
 
 import java.util.List;
 
-import trente.asia.shiftworking.common.models.SwUserModel;
-import trente.asia.welfare.adr.models.FileModel;
+import nguyenhoangviet.vpcorp.shiftworking.common.models.SwUserModel;
+import nguyenhoangviet.vpcorp.welfare.adr.models.FileModel;
 
 /**
  * NoticeModel

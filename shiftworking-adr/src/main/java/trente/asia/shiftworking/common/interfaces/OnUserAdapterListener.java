@@ -1,6 +1,6 @@
-package trente.asia.shiftworking.common.interfaces;
+package nguyenhoangviet.vpcorp.shiftworking.common.interfaces;
 
-import trente.asia.welfare.adr.models.UserModel;
+import nguyenhoangviet.vpcorp.welfare.adr.models.UserModel;
 
 /**
  * Created by tien on 9/21/2017.

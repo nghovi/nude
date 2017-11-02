@@ -1,4 +1,4 @@
-package trente.asia.calendar.commons.dialogs;
+package nguyenhoangviet.vpcorp.calendar.commons.dialogs;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -11,9 +11,9 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import asia.chiase.core.util.CCDateUtil;
-import trente.asia.calendar.R;
-import trente.asia.calendar.services.todo.model.Todo;
-import trente.asia.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.calendar.R;
+import nguyenhoangviet.vpcorp.calendar.services.todo.model.Todo;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
 
 /**
  * TodoDialog

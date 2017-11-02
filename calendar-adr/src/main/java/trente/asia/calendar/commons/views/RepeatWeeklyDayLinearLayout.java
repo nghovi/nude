@@ -1,4 +1,4 @@
-package trente.asia.calendar.commons.views;
+package nguyenhoangviet.vpcorp.calendar.commons.views;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,13 +13,13 @@ import android.widget.LinearLayout;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCNumberUtil;
-import trente.asia.android.model.DayModel;
-import trente.asia.android.util.CsDateUtil;
-import trente.asia.android.view.ChiaseTextViewCheckable;
-import trente.asia.calendar.R;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
-import trente.asia.welfare.adr.utils.WelfareFormatUtil;
+import nguyenhoangviet.vpcorp.android.model.DayModel;
+import nguyenhoangviet.vpcorp.android.util.CsDateUtil;
+import nguyenhoangviet.vpcorp.android.view.ChiaseTextViewCheckable;
+import nguyenhoangviet.vpcorp.calendar.R;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.pref.PreferencesAccountUtil;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WelfareFormatUtil;
 
 /**
  * RepeatWeeklyDayLinearLayout

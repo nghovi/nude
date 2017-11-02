@@ -1,4 +1,4 @@
-package trente.asia.shiftworking.services.requests.detail;
+package nguyenhoangviet.vpcorp.shiftworking.services.requests.detail;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -13,15 +13,15 @@ import java.util.List;
 import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.shiftworking.R;
-import trente.asia.shiftworking.common.activities.MainActivity;
-import trente.asia.shiftworking.common.defines.SwConst;
-import trente.asia.shiftworking.databinding.FragmentHolidayWorkingDetailBinding;
-import trente.asia.shiftworking.services.requests.WorkRequestFragment;
-import trente.asia.shiftworking.services.requests.edit.HolidayWorkingEditFragment;
-import trente.asia.welfare.adr.models.ApproveHistory;
-import trente.asia.welfare.adr.models.HolidayWorkingModel;
-import trente.asia.welfare.adr.activity.WelfareActivity;
+import nguyenhoangviet.vpcorp.shiftworking.R;
+import nguyenhoangviet.vpcorp.shiftworking.common.activities.MainActivity;
+import nguyenhoangviet.vpcorp.shiftworking.common.defines.SwConst;
+import nguyenhoangviet.vpcorp.shiftworking.databinding.FragmentHolidayWorkingDetailBinding;
+import nguyenhoangviet.vpcorp.shiftworking.services.requests.WorkRequestFragment;
+import nguyenhoangviet.vpcorp.shiftworking.services.requests.edit.HolidayWorkingEditFragment;
+import nguyenhoangviet.vpcorp.welfare.adr.models.ApproveHistory;
+import nguyenhoangviet.vpcorp.welfare.adr.models.HolidayWorkingModel;
+import nguyenhoangviet.vpcorp.welfare.adr.activity.WelfareActivity;
 
 public class HolidayWorkingDetailFragment extends AbstractDetailFragment {
 

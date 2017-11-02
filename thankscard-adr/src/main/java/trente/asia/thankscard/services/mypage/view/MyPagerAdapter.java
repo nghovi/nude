@@ -1,4 +1,4 @@
-package trente.asia.thankscard.services.mypage.view;
+package nguyenhoangviet.vpcorp.thankscard.services.mypage.view;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import trente.asia.thankscard.services.common.PageFragment;
+import nguyenhoangviet.vpcorp.thankscard.services.common.PageFragment;
 
 /**
  * Created by viet on 2/18/2016.

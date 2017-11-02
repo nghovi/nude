@@ -1,4 +1,4 @@
-package trente.asia.calendar.commons.dialogs;
+package nguyenhoangviet.vpcorp.calendar.commons.dialogs;
 
 import java.util.Map;
 
@@ -8,9 +8,9 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
-import trente.asia.android.view.ChiaseListDialog;
-import trente.asia.android.view.ChiaseTextView;
-import trente.asia.welfare.adr.utils.WelfareUtil;
+import nguyenhoangviet.vpcorp.android.view.ChiaseListDialog;
+import nguyenhoangviet.vpcorp.android.view.ChiaseTextView;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WelfareUtil;
 
 /**
  * Created by viet on 3/31/2017.

@@ -1,4 +1,4 @@
-package trente.asia.shiftworking.services.requests.detail;
+package nguyenhoangviet.vpcorp.shiftworking.services.requests.detail;
 
 import java.util.List;
 
@@ -11,13 +11,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import asia.chiase.core.util.CCJsonUtil;
-import trente.asia.shiftworking.R;
-import trente.asia.shiftworking.common.activities.MainActivity;
-import trente.asia.shiftworking.common.defines.SwConst;
-import trente.asia.shiftworking.databinding.FragmentVacationDetailBinding;
-import trente.asia.shiftworking.services.requests.edit.VacationEditFragment;
-import trente.asia.welfare.adr.models.ApproveHistory;
-import trente.asia.welfare.adr.models.VacationRequestModel;
+import nguyenhoangviet.vpcorp.shiftworking.R;
+import nguyenhoangviet.vpcorp.shiftworking.common.activities.MainActivity;
+import nguyenhoangviet.vpcorp.shiftworking.common.defines.SwConst;
+import nguyenhoangviet.vpcorp.shiftworking.databinding.FragmentVacationDetailBinding;
+import nguyenhoangviet.vpcorp.shiftworking.services.requests.edit.VacationEditFragment;
+import nguyenhoangviet.vpcorp.welfare.adr.models.ApproveHistory;
+import nguyenhoangviet.vpcorp.welfare.adr.models.VacationRequestModel;
 
 public class VacationDetailFragment extends AbstractDetailFragment {
 

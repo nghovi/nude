@@ -1,8 +1,8 @@
-package trente.asia.shiftworking.services.transit.model;
+package nguyenhoangviet.vpcorp.shiftworking.services.transit.model;
 
 import java.util.List;
 
-import trente.asia.welfare.adr.models.ApiObjectModel;
+import nguyenhoangviet.vpcorp.welfare.adr.models.ApiObjectModel;
 
 /**
  * TransitModel

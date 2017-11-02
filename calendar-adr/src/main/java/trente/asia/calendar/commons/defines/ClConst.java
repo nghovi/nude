@@ -1,6 +1,6 @@
-package trente.asia.calendar.commons.defines;
+package nguyenhoangviet.vpcorp.calendar.commons.defines;
 
-import trente.asia.welfare.adr.utils.WelfareUtil;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WelfareUtil;
 
 /**
  * SwConst

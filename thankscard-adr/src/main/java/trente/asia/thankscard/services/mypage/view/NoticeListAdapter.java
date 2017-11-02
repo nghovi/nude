@@ -1,4 +1,4 @@
-package trente.asia.thankscard.services.mypage.view;
+package nguyenhoangviet.vpcorp.thankscard.services.mypage.view;
 
 import java.util.Date;
 import java.util.List;
@@ -11,10 +11,10 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import asia.chiase.core.util.CCDateUtil;
-import trente.asia.thankscard.R;
-import trente.asia.thankscard.services.mypage.model.NoticeModel;
-import trente.asia.thankscard.utils.TCUtil;
-import trente.asia.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.thankscard.R;
+import nguyenhoangviet.vpcorp.thankscard.services.mypage.model.NoticeModel;
+import nguyenhoangviet.vpcorp.thankscard.utils.TCUtil;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
 
 /**
  * Created by viet on 3/16/2016.

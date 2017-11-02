@@ -1,4 +1,4 @@
-package trente.asia.shiftworking.services.requests.adapter;
+package nguyenhoangviet.vpcorp.shiftworking.services.requests.adapter;
 
 import java.util.List;
 
@@ -10,12 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import trente.asia.shiftworking.BuildConfig;
-import trente.asia.shiftworking.R;
-import trente.asia.shiftworking.common.interfaces.OnUserAdapterListener;
-import trente.asia.shiftworking.databinding.ItemUserAvatarBinding;
-import trente.asia.welfare.adr.models.UserModel;
-import trente.asia.welfare.adr.utils.WfPicassoHelper;
+import nguyenhoangviet.vpcorp.shiftworking.BuildConfig;
+import nguyenhoangviet.vpcorp.shiftworking.R;
+import nguyenhoangviet.vpcorp.shiftworking.common.interfaces.OnUserAdapterListener;
+import nguyenhoangviet.vpcorp.shiftworking.databinding.ItemUserAvatarBinding;
+import nguyenhoangviet.vpcorp.welfare.adr.models.UserModel;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WfPicassoHelper;
 
 /**
  * Created by tien on 9/25/2017.

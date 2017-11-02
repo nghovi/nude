@@ -1,4 +1,4 @@
-package trente.asia.team360.services.member;
+package nguyenhoangviet.vpcorp.team360.services.member;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -22,16 +22,16 @@ import io.realm.RealmQuery;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import trente.asia.android.define.CsConst;
-import trente.asia.android.exception.CAException;
-import trente.asia.android.util.AndroidUtil;
-import trente.asia.android.util.CARequestUtil;
-import trente.asia.team360.BuildConfig;
-import trente.asia.team360.services.entity.UserEntity;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.define.WfUrlConst;
-import trente.asia.welfare.adr.models.UserModel;
-import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
+import nguyenhoangviet.vpcorp.android.define.CsConst;
+import nguyenhoangviet.vpcorp.android.exception.CAException;
+import nguyenhoangviet.vpcorp.android.util.AndroidUtil;
+import nguyenhoangviet.vpcorp.android.util.CARequestUtil;
+import nguyenhoangviet.vpcorp.team360.BuildConfig;
+import nguyenhoangviet.vpcorp.team360.services.entity.UserEntity;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WfUrlConst;
+import nguyenhoangviet.vpcorp.welfare.adr.models.UserModel;
+import nguyenhoangviet.vpcorp.welfare.adr.pref.PreferencesAccountUtil;
 
 /*
  * 型パラメータは

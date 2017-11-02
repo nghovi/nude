@@ -1,4 +1,4 @@
-package trente.asia.thankscard.activities;
+package nguyenhoangviet.vpcorp.thankscard.activities;
 
 import android.app.Application;
 

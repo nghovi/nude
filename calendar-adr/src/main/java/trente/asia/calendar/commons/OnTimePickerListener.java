@@ -1,4 +1,4 @@
-package trente.asia.calendar.commons;
+package nguyenhoangviet.vpcorp.calendar.commons;
 
 /**
  * Created by tien on 9/20/2017.

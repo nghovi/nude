@@ -1,4 +1,4 @@
-package trente.asia.thankscard.services.rank;
+package nguyenhoangviet.vpcorp.thankscard.services.rank;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -12,18 +12,18 @@ import android.widget.Toast;
 import com.google.android.gms.vision.text.Line;
 
 import io.realm.Realm;
-import trente.asia.thankscard.R;
-import trente.asia.thankscard.activities.MainActivity;
-import trente.asia.thankscard.commons.defines.TcConst;
-import trente.asia.thankscard.fragments.AbstractTCFragment;
-import trente.asia.thankscard.services.mypage.model.StampCategoryModel;
-import trente.asia.thankscard.services.setting.TcContactUsFragment;
-import trente.asia.thankscard.services.setting.TcStageInformationFragment;
-import trente.asia.welfare.adr.activity.WelfareActivity;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.define.WfUrlConst;
-import trente.asia.welfare.adr.dialog.WfDialog;
-import trente.asia.welfare.adr.pref.PreferencesSystemUtil;
+import nguyenhoangviet.vpcorp.thankscard.R;
+import nguyenhoangviet.vpcorp.thankscard.activities.MainActivity;
+import nguyenhoangviet.vpcorp.thankscard.commons.defines.TcConst;
+import nguyenhoangviet.vpcorp.thankscard.fragments.AbstractTCFragment;
+import nguyenhoangviet.vpcorp.thankscard.services.mypage.model.StampCategoryModel;
+import nguyenhoangviet.vpcorp.thankscard.services.setting.TcContactUsFragment;
+import nguyenhoangviet.vpcorp.thankscard.services.setting.TcStageInformationFragment;
+import nguyenhoangviet.vpcorp.welfare.adr.activity.WelfareActivity;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WfUrlConst;
+import nguyenhoangviet.vpcorp.welfare.adr.dialog.WfDialog;
+import nguyenhoangviet.vpcorp.welfare.adr.pref.PreferencesSystemUtil;
 
 public class TCSettingFragment extends AbstractTCFragment implements View.OnClickListener{
 

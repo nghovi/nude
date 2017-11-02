@@ -1,4 +1,4 @@
-package trente.asia.shiftworking.services.worktime.view;
+package nguyenhoangviet.vpcorp.shiftworking.services.worktime.view;
 
 import java.util.List;
 
@@ -11,12 +11,12 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.shiftworking.BuildConfig;
-import trente.asia.shiftworking.R;
-import trente.asia.shiftworking.services.worktime.model.WorkingTimeDailyModel;
-import trente.asia.welfare.adr.utils.WelfareFormatUtil;
-import trente.asia.welfare.adr.utils.WfPicassoHelper;
-import trente.asia.welfare.adr.view.SelectableRoundedImageView;
+import nguyenhoangviet.vpcorp.shiftworking.BuildConfig;
+import nguyenhoangviet.vpcorp.shiftworking.R;
+import nguyenhoangviet.vpcorp.shiftworking.services.worktime.model.WorkingTimeDailyModel;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WelfareFormatUtil;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WfPicassoHelper;
+import nguyenhoangviet.vpcorp.welfare.adr.view.SelectableRoundedImageView;
 
 /**
  * WorkerAdapter.

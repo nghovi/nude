@@ -3,7 +3,7 @@
     <data>
         <variable
             name="type"
-            type="trente.asia.welfare.adr.models.ApiObjectModel"/>
+            type="nguyenhoangviet.vpcorp.welfare.adr.models.ApiObjectModel"/>
     </data>
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"

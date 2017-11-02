@@ -1,4 +1,4 @@
-package trente.asia.dailyreport.services.report.view;
+package nguyenhoangviet.vpcorp.dailyreport.services.report.view;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -13,9 +13,9 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.RelativeLayout;
 
-import trente.asia.dailyreport.R;
-import trente.asia.dailyreport.services.report.MyReportFragment;
-import trente.asia.dailyreport.services.report.model.ReportModel;
+import nguyenhoangviet.vpcorp.dailyreport.R;
+import nguyenhoangviet.vpcorp.dailyreport.services.report.MyReportFragment;
+import nguyenhoangviet.vpcorp.dailyreport.services.report.model.ReportModel;
 
 /**
  * Created by viet on 7/12/2016.

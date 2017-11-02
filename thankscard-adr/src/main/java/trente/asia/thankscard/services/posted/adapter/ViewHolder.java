@@ -1,4 +1,4 @@
-package trente.asia.thankscard.services.posted.adapter;
+package nguyenhoangviet.vpcorp.thankscard.services.posted.adapter;
 
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;

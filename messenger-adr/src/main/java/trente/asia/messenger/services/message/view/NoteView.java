@@ -1,11 +1,11 @@
-package trente.asia.messenger.services.message.view;
+package nguyenhoangviet.vpcorp.messenger.services.message.view;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
-import trente.asia.messenger.databinding.BoardPagerNoteBinding;
+import nguyenhoangviet.vpcorp.messenger.databinding.BoardPagerNoteBinding;
 
 /**
  * MessageView

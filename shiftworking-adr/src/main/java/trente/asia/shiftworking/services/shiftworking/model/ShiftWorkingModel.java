@@ -1,8 +1,8 @@
-package trente.asia.shiftworking.services.shiftworking.model;
+package nguyenhoangviet.vpcorp.shiftworking.services.shiftworking.model;
 
 import java.util.List;
 
-import trente.asia.shiftworking.services.worktime.model.WorkingTimeSummaryModel;
+import nguyenhoangviet.vpcorp.shiftworking.services.worktime.model.WorkingTimeSummaryModel;
 
 /**
  * ShiftWorkingModel

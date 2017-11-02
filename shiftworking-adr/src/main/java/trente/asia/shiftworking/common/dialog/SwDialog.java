@@ -1,4 +1,4 @@
-package trente.asia.shiftworking.common.dialog;
+package nguyenhoangviet.vpcorp.shiftworking.common.dialog;
 
 import java.io.File;
 import java.util.List;
@@ -12,11 +12,11 @@ import android.widget.ListView;
 import android.widget.MediaController;
 import android.widget.VideoView;
 
-import trente.asia.android.view.ChiaseDialog;
-import trente.asia.android.view.adapter.ChiaseListAdapter;
-import trente.asia.android.view.model.ChiaseListItemModel;
-import trente.asia.shiftworking.R;
-import trente.asia.welfare.adr.models.UserModel;
+import nguyenhoangviet.vpcorp.android.view.ChiaseDialog;
+import nguyenhoangviet.vpcorp.android.view.adapter.ChiaseListAdapter;
+import nguyenhoangviet.vpcorp.android.view.model.ChiaseListItemModel;
+import nguyenhoangviet.vpcorp.shiftworking.R;
+import nguyenhoangviet.vpcorp.welfare.adr.models.UserModel;
 
 /**
  * SwDialog

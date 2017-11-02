@@ -1,4 +1,4 @@
-package trente.asia.messenger.services.message.view;
+package nguyenhoangviet.vpcorp.messenger.services.message.view;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -15,13 +15,13 @@ import android.widget.LinearLayout;
 
 import com.squareup.picasso.Picasso;
 
-import trente.asia.messenger.BuildConfig;
-import trente.asia.messenger.R;
-import trente.asia.messenger.commons.defines.MsConst;
-import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
-import trente.asia.welfare.adr.utils.AnimUtils;
-import trente.asia.welfare.adr.utils.WelfareUtil;
-import trente.asia.welfare.adr.view.MsgMultiAutoCompleteTextView;
+import nguyenhoangviet.vpcorp.messenger.BuildConfig;
+import nguyenhoangviet.vpcorp.messenger.R;
+import nguyenhoangviet.vpcorp.messenger.commons.defines.MsConst;
+import nguyenhoangviet.vpcorp.welfare.adr.pref.PreferencesAccountUtil;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.AnimUtils;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WelfareUtil;
+import nguyenhoangviet.vpcorp.welfare.adr.view.MsgMultiAutoCompleteTextView;
 
 /**
  * MessageView

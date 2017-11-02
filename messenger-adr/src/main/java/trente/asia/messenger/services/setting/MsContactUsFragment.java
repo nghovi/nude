@@ -1,5 +1,5 @@
 
-package trente.asia.messenger.services.setting;
+package nguyenhoangviet.vpcorp.messenger.services.setting;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,12 +22,12 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.messenger.R;
-import trente.asia.messenger.fragment.AbstractMsgFragment;
-import trente.asia.welfare.adr.define.WfUrlConst;
-import trente.asia.welfare.adr.models.ApiObjectModel;
-import trente.asia.welfare.adr.utils.WelfareUtil;
-import trente.asia.welfare.adr.view.WfSpinner;
+import nguyenhoangviet.vpcorp.messenger.R;
+import nguyenhoangviet.vpcorp.messenger.fragment.AbstractMsgFragment;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WfUrlConst;
+import nguyenhoangviet.vpcorp.welfare.adr.models.ApiObjectModel;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WelfareUtil;
+import nguyenhoangviet.vpcorp.welfare.adr.view.WfSpinner;
 
 /**
  * MsContactUsFragment

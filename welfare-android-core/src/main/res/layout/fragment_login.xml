@@ -5,7 +5,7 @@
               android:paddingLeft="@dimen/margin_32dp"
               android:paddingRight="@dimen/margin_32dp">
 
-    <trente.asia.android.view.ChiaseImageViewRatioWidth
+    <nguyenhoangviet.vpcorp.android.view.ChiaseImageViewRatioWidth
         android:id="@+id/img_id_logo"
         style="@style/cs_common_match_wrap"/>
 
@@ -14,7 +14,7 @@
         style="@style/cs_common_match_wrap"
         android:orientation="vertical">
 
-        <trente.asia.android.view.ChiaseEditText
+        <nguyenhoangviet.vpcorp.android.view.ChiaseEditText
             android:id="@+id/edt_username"
             style="@style/wl_common_edit_text"
             android:layout_marginTop="@dimen/margin_100dp"
@@ -22,7 +22,7 @@
             android:inputType="textEmailAddress"
             custom:mName="account"/>
 
-        <trente.asia.android.view.ChiaseEditText
+        <nguyenhoangviet.vpcorp.android.view.ChiaseEditText
             android:id="@+id/edt_password"
             style="@style/wl_common_edit_text"
             android:hint="@string/wf_common_signin_password"

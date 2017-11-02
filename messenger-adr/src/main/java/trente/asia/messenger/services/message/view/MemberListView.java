@@ -1,4 +1,4 @@
-package trente.asia.messenger.services.message.view;
+package nguyenhoangviet.vpcorp.messenger.services.message.view;
 
 import java.util.List;
 
@@ -7,9 +7,9 @@ import android.util.AttributeSet;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
-import trente.asia.messenger.R;
-import trente.asia.messenger.services.message.model.RealmUserModel;
-import trente.asia.welfare.adr.models.UserModel;
+import nguyenhoangviet.vpcorp.messenger.R;
+import nguyenhoangviet.vpcorp.messenger.services.message.model.RealmUserModel;
+import nguyenhoangviet.vpcorp.welfare.adr.models.UserModel;
 
 /**
  * MessageView

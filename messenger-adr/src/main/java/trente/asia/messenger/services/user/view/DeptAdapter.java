@@ -1,4 +1,4 @@
-package trente.asia.messenger.services.user.view;
+package nguyenhoangviet.vpcorp.messenger.services.user.view;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -6,8 +6,8 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
-import trente.asia.messenger.R;
-import trente.asia.welfare.adr.models.DeptModel;
+import nguyenhoangviet.vpcorp.messenger.R;
+import nguyenhoangviet.vpcorp.welfare.adr.models.DeptModel;
 
 /**
  * Created by tien on 8/16/2017.

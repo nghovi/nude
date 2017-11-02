@@ -1,4 +1,4 @@
-package trente.asia.shiftworking.services.transit;
+package nguyenhoangviet.vpcorp.shiftworking.services.transit;
 
 import java.util.Date;
 import java.util.List;
@@ -17,12 +17,12 @@ import android.widget.ListView;
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
-import trente.asia.shiftworking.R;
-import trente.asia.shiftworking.common.defines.SwConst;
-import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
-import trente.asia.shiftworking.services.transit.model.TransitModel;
-import trente.asia.shiftworking.services.transit.view.TransitAdapter;
-import trente.asia.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.shiftworking.R;
+import nguyenhoangviet.vpcorp.shiftworking.common.defines.SwConst;
+import nguyenhoangviet.vpcorp.shiftworking.common.fragments.AbstractSwFragment;
+import nguyenhoangviet.vpcorp.shiftworking.services.transit.model.TransitModel;
+import nguyenhoangviet.vpcorp.shiftworking.services.transit.view.TransitAdapter;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
 
 public class WorkTransitListFragment extends AbstractSwFragment{
 

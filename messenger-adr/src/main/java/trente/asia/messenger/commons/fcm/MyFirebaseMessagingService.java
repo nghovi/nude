@@ -1,4 +1,4 @@
-package trente.asia.messenger.commons.fcm;
+package nguyenhoangviet.vpcorp.messenger.commons.fcm;
 
 import java.io.IOException;
 
@@ -16,13 +16,13 @@ import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.android.util.CsMsgUtil;
-import trente.asia.messenger.R;
-import trente.asia.messenger.activities.MainMsgActivity;
-import trente.asia.messenger.services.message.MessageDetailFragment;
-import trente.asia.messenger.services.message.MessageFragment;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.models.FcmNotificationModel;
+import nguyenhoangviet.vpcorp.android.util.CsMsgUtil;
+import nguyenhoangviet.vpcorp.messenger.R;
+import nguyenhoangviet.vpcorp.messenger.activities.MainMsgActivity;
+import nguyenhoangviet.vpcorp.messenger.services.message.MessageDetailFragment;
+import nguyenhoangviet.vpcorp.messenger.services.message.MessageFragment;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.models.FcmNotificationModel;
 
 /**
  * MyFirebaseMessagingService

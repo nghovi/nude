@@ -1,4 +1,4 @@
-package trente.asia.dailyreport.dialogs;
+package nguyenhoangviet.vpcorp.dailyreport.dialogs;
 
 import java.util.Calendar;
 
@@ -13,7 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.NumberPicker;
 
-import trente.asia.dailyreport.R;
+import nguyenhoangviet.vpcorp.dailyreport.R;
 
 /**
  * Created by viet on 2/19/2016.

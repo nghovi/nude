@@ -1,4 +1,4 @@
-package trente.asia.messenger.services.message.view;
+package nguyenhoangviet.vpcorp.messenger.services.message.view;
 
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;

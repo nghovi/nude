@@ -1,4 +1,4 @@
-package trente.asia.calendar.commons.fragments;
+package nguyenhoangviet.vpcorp.calendar.commons.fragments;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -7,19 +7,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import trente.asia.android.view.ChiaseImageView;
-import trente.asia.android.view.ChiaseTextView;
-import trente.asia.calendar.BuildConfig;
-import trente.asia.calendar.R;
-import trente.asia.calendar.commons.utils.ClUtil;
-import trente.asia.calendar.services.calendar.DailyFragment;
-import trente.asia.calendar.services.calendar.MonthlyFragment;
-import trente.asia.calendar.services.calendar.WeeklyFragment;
-import trente.asia.calendar.services.setting.ClSettingFragment;
-import trente.asia.calendar.services.todo.TodoListFragment;
-import trente.asia.calendar.services.user.ClLoginFragment;
-import trente.asia.welfare.adr.activity.WelfareFragment;
-import trente.asia.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.android.view.ChiaseImageView;
+import nguyenhoangviet.vpcorp.android.view.ChiaseTextView;
+import nguyenhoangviet.vpcorp.calendar.BuildConfig;
+import nguyenhoangviet.vpcorp.calendar.R;
+import nguyenhoangviet.vpcorp.calendar.commons.utils.ClUtil;
+import nguyenhoangviet.vpcorp.calendar.services.calendar.DailyFragment;
+import nguyenhoangviet.vpcorp.calendar.services.calendar.MonthlyFragment;
+import nguyenhoangviet.vpcorp.calendar.services.calendar.WeeklyFragment;
+import nguyenhoangviet.vpcorp.calendar.services.setting.ClSettingFragment;
+import nguyenhoangviet.vpcorp.calendar.services.todo.TodoListFragment;
+import nguyenhoangviet.vpcorp.calendar.services.user.ClLoginFragment;
+import nguyenhoangviet.vpcorp.welfare.adr.activity.WelfareFragment;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
 
 /**
  * A simple {@link Fragment} subclass.

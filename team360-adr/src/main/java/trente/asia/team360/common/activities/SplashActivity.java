@@ -1,11 +1,11 @@
-package trente.asia.team360.common.activities;
+package nguyenhoangviet.vpcorp.team360.common.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-import trente.asia.team360.R;
-import trente.asia.welfare.adr.activity.WelfareActivity;
+import nguyenhoangviet.vpcorp.team360.R;
+import nguyenhoangviet.vpcorp.welfare.adr.activity.WelfareActivity;
 
 public class SplashActivity extends WelfareActivity{
 

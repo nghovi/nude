@@ -1,4 +1,4 @@
-package trente.asia.shiftworking.common.utils;
+package nguyenhoangviet.vpcorp.shiftworking.common.utils;
 
 import java.io.File;
 import java.util.List;
@@ -7,11 +7,11 @@ import android.os.Environment;
 
 import asia.chiase.core.model.KeyValueModel;
 import asia.chiase.core.util.CCCollectionUtil;
-import trente.asia.shiftworking.common.defines.SwConst;
-import trente.asia.shiftworking.common.models.SwUserModel;
-import trente.asia.shiftworking.services.worktime.model.ProjectModel;
-import trente.asia.welfare.adr.models.DeptModel;
-import trente.asia.welfare.adr.models.UserModel;
+import nguyenhoangviet.vpcorp.shiftworking.common.defines.SwConst;
+import nguyenhoangviet.vpcorp.shiftworking.common.models.SwUserModel;
+import nguyenhoangviet.vpcorp.shiftworking.services.worktime.model.ProjectModel;
+import nguyenhoangviet.vpcorp.welfare.adr.models.DeptModel;
+import nguyenhoangviet.vpcorp.welfare.adr.models.UserModel;
 
 /**
  * Created by PC-Trente on 10/3/2016.

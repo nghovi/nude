@@ -1,10 +1,10 @@
-package trente.asia.thankscard.services.common.model;
+package nguyenhoangviet.vpcorp.thankscard.services.common.model;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import trente.asia.thankscard.R;
-import trente.asia.thankscard.commons.defines.TcConst;
+import nguyenhoangviet.vpcorp.thankscard.R;
+import nguyenhoangviet.vpcorp.thankscard.commons.defines.TcConst;
 
 /**
  * Created by viet on 3/16/2016.

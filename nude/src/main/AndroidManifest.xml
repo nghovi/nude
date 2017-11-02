@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="trente.asia.addresscard">
+    package="nguyenhoangviet.vpcorp.nude">
 
     <supports-screens
         android:anyDensity="true"
@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:largeHeap="true"
         android:theme="@style/AppTheme">
-        <activity android:name="trente.asia.addresscard.commons.activities.SplashActivity">
+        <activity android:name="nguyenhoangviet.vpcorp.nude.commons.activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,7 +24,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="trente.asia.addresscard.commons.activities.MainActivity"
+            android:name="nguyenhoangviet.vpcorp.nude.commons.activities.MainActivity"
             android:windowSoftInputMode="adjustUnspecified" />
     </application>
 

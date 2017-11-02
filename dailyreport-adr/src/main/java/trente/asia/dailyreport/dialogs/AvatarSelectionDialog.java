@@ -1,10 +1,10 @@
-package trente.asia.dailyreport.dialogs;
+package nguyenhoangviet.vpcorp.dailyreport.dialogs;
 
 import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
 
-import trente.asia.dailyreport.R;
+import nguyenhoangviet.vpcorp.dailyreport.R;
 
 /**
  * Created by viet on 3/16/2016.

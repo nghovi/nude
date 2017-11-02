@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import asia.trente.officeletter.R;
-import trente.asia.welfare.adr.activity.WelfareActivity;
+import nguyenhoangviet.vpcorp.welfare.adr.activity.WelfareActivity;
 
 /**
  * Created by tien on 8/18/2017.

@@ -1,4 +1,4 @@
-package trente.asia.dailyreport.view;
+package nguyenhoangviet.vpcorp.dailyreport.view;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -12,8 +12,8 @@ import android.widget.LinearLayout;
 
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
-import trente.asia.dailyreport.R;
-import trente.asia.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.dailyreport.R;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
 
 /**
  * Created by viet on 7/8/2016.

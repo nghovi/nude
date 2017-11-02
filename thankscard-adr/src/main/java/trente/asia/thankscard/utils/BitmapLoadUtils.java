@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package trente.asia.thankscard.utils;
+package nguyenhoangviet.vpcorp.thankscard.utils;
 
 import java.io.File;
 import java.io.FileOutputStream;

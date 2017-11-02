@@ -1,4 +1,4 @@
-package trente.asia.messenger.services.message.model;
+package nguyenhoangviet.vpcorp.messenger.services.message.model;
 
 /**
  * Created by Huy-nq on 7/12/2016.

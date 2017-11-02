@@ -1,4 +1,4 @@
-package trente.asia.calendar.commons.fcm;
+package nguyenhoangviet.vpcorp.calendar.commons.fcm;
 
 import java.io.IOException;
 
@@ -17,11 +17,11 @@ import android.util.Log;
 import android.widget.RemoteViews;
 
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.android.util.CsMsgUtil;
-import trente.asia.calendar.R;
-import trente.asia.calendar.commons.activites.MainClActivity;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.models.FcmNotificationModel;
+import nguyenhoangviet.vpcorp.android.util.CsMsgUtil;
+import nguyenhoangviet.vpcorp.calendar.R;
+import nguyenhoangviet.vpcorp.calendar.commons.activites.MainClActivity;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.models.FcmNotificationModel;
 
 /**
  * MyFirebaseMessagingService

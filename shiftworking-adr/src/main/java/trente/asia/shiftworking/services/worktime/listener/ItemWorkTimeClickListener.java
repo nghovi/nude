@@ -1,9 +1,9 @@
-package trente.asia.shiftworking.services.worktime.listener;
+package nguyenhoangviet.vpcorp.shiftworking.services.worktime.listener;
 
 import android.widget.TextView;
 
-import trente.asia.android.view.ChiaseTextView;
-import trente.asia.shiftworking.services.worktime.model.WorkingTimeModel;
+import nguyenhoangviet.vpcorp.android.view.ChiaseTextView;
+import nguyenhoangviet.vpcorp.shiftworking.services.worktime.model.WorkingTimeModel;
 
 /**
  * ItemWorkTimeClickListener

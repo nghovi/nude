@@ -1,9 +1,9 @@
-package trente.asia.messenger.services.message.model;
+package nguyenhoangviet.vpcorp.messenger.services.message.model;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
-import trente.asia.welfare.adr.models.CommentModel;
-import trente.asia.welfare.adr.models.UserModel;
+import nguyenhoangviet.vpcorp.welfare.adr.models.CommentModel;
+import nguyenhoangviet.vpcorp.welfare.adr.models.UserModel;
 
 /**
  * Created by tien on 6/29/2017.

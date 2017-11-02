@@ -2,7 +2,7 @@ package asia.trente.officeletter.services.salary.model;
 
 import java.util.List;
 
-import trente.asia.welfare.adr.models.AttachmentModel;
+import nguyenhoangviet.vpcorp.welfare.adr.models.AttachmentModel;
 
 /**
  * Created by tien on 8/21/2017.

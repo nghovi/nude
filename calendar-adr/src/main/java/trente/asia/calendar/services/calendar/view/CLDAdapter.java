@@ -1,4 +1,4 @@
-package trente.asia.calendar.services.calendar.view;
+package nguyenhoangviet.vpcorp.calendar.services.calendar.view;
 
 /**
  * Created by viet on 7/12/2016.
@@ -23,10 +23,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import asia.chiase.core.util.CCFormatUtil;
-import trente.asia.calendar.R;
-import trente.asia.calendar.services.calendar.model.CalendarDayModel;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.models.UserModel;
+import nguyenhoangviet.vpcorp.calendar.R;
+import nguyenhoangviet.vpcorp.calendar.services.calendar.model.CalendarDayModel;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.models.UserModel;
 
 public class CLDAdapter extends BaseAdapter{
 

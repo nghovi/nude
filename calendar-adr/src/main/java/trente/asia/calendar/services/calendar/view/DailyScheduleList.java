@@ -1,4 +1,4 @@
-package trente.asia.calendar.services.calendar.view;
+package nguyenhoangviet.vpcorp.calendar.services.calendar.view;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,13 +19,13 @@ import android.widget.TextView;
 import asia.chiase.core.util.CCBooleanUtil;
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
-import trente.asia.calendar.BuildConfig;
-import trente.asia.calendar.R;
-import trente.asia.calendar.services.calendar.model.ScheduleModel;
-import trente.asia.welfare.adr.activity.WelfareFragment;
-import trente.asia.welfare.adr.utils.WelfareUtil;
-import trente.asia.welfare.adr.utils.WfPicassoHelper;
-import trente.asia.welfare.adr.view.SelectableRoundedImageView;
+import nguyenhoangviet.vpcorp.calendar.BuildConfig;
+import nguyenhoangviet.vpcorp.calendar.R;
+import nguyenhoangviet.vpcorp.calendar.services.calendar.model.ScheduleModel;
+import nguyenhoangviet.vpcorp.welfare.adr.activity.WelfareFragment;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WelfareUtil;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WfPicassoHelper;
+import nguyenhoangviet.vpcorp.welfare.adr.view.SelectableRoundedImageView;
 
 /**
  * Created by viet on 3/6/2017.

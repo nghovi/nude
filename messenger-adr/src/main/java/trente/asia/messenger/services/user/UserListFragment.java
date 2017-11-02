@@ -1,4 +1,4 @@
-package trente.asia.messenger.services.user;
+package nguyenhoangviet.vpcorp.messenger.services.user;
 
 import java.io.IOException;
 import java.io.LineNumberReader;
@@ -23,17 +23,17 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import asia.chiase.core.util.CCCollectionUtil;
-import trente.asia.messenger.BuildConfig;
-import trente.asia.messenger.R;
-import trente.asia.messenger.commons.defines.MsConst;
-import trente.asia.messenger.fragment.AbstractMsgFragment;
-import trente.asia.messenger.services.message.BoardListFragment;
-import trente.asia.messenger.services.message.model.BoardModel;
-import trente.asia.messenger.services.message.model.RealmBoardModel;
-import trente.asia.messenger.services.user.listener.OnAddUserListener;
-import trente.asia.messenger.services.user.view.UserListAdapter;
-import trente.asia.welfare.adr.dialog.WfProfileDialog;
-import trente.asia.welfare.adr.models.UserModel;
+import nguyenhoangviet.vpcorp.messenger.BuildConfig;
+import nguyenhoangviet.vpcorp.messenger.R;
+import nguyenhoangviet.vpcorp.messenger.commons.defines.MsConst;
+import nguyenhoangviet.vpcorp.messenger.fragment.AbstractMsgFragment;
+import nguyenhoangviet.vpcorp.messenger.services.message.BoardListFragment;
+import nguyenhoangviet.vpcorp.messenger.services.message.model.BoardModel;
+import nguyenhoangviet.vpcorp.messenger.services.message.model.RealmBoardModel;
+import nguyenhoangviet.vpcorp.messenger.services.user.listener.OnAddUserListener;
+import nguyenhoangviet.vpcorp.messenger.services.user.view.UserListAdapter;
+import nguyenhoangviet.vpcorp.welfare.adr.dialog.WfProfileDialog;
+import nguyenhoangviet.vpcorp.welfare.adr.models.UserModel;
 
 /**
  * UserListFragment

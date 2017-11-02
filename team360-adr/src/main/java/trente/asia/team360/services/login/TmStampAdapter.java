@@ -1,4 +1,4 @@
-package trente.asia.team360.services.login;
+package nguyenhoangviet.vpcorp.team360.services.login;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,11 +12,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.team360.BuildConfig;
-import trente.asia.team360.R;
-import trente.asia.team360.services.model.StampModel;
-import trente.asia.welfare.adr.models.UserModel;
-import trente.asia.welfare.adr.utils.WfPicassoHelper;
+import nguyenhoangviet.vpcorp.team360.BuildConfig;
+import nguyenhoangviet.vpcorp.team360.R;
+import nguyenhoangviet.vpcorp.team360.services.model.StampModel;
+import nguyenhoangviet.vpcorp.welfare.adr.models.UserModel;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WfPicassoHelper;
 
 /**
  * Created by rakuishi on 6/22/14.

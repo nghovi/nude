@@ -1,4 +1,4 @@
-package trente.asia.dailyreport.dialogs;
+package nguyenhoangviet.vpcorp.dailyreport.dialogs;
 
 import java.util.Calendar;
 

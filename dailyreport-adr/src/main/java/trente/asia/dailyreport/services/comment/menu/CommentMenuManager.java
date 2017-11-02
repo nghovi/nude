@@ -1,4 +1,4 @@
-package trente.asia.dailyreport.services.comment.menu;
+package nguyenhoangviet.vpcorp.dailyreport.services.comment.menu;
 
 import android.app.Activity;
 import android.os.Handler;
@@ -6,14 +6,14 @@ import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.LinearLayout;
 
-import trente.asia.android.util.AndroidUtil;
-import trente.asia.welfare.adr.R;
-import trente.asia.welfare.adr.animators.SupportAnimator;
-import trente.asia.welfare.adr.animators.ViewAnimationUtils;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.menu.OnMenuButtonsListener;
-import trente.asia.welfare.adr.menu.OnMenuManageListener;
-import trente.asia.welfare.adr.utils.AnimUtils;
+import nguyenhoangviet.vpcorp.android.util.AndroidUtil;
+import nguyenhoangviet.vpcorp.welfare.adr.R;
+import nguyenhoangviet.vpcorp.welfare.adr.animators.SupportAnimator;
+import nguyenhoangviet.vpcorp.welfare.adr.animators.ViewAnimationUtils;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.menu.OnMenuButtonsListener;
+import nguyenhoangviet.vpcorp.welfare.adr.menu.OnMenuManageListener;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.AnimUtils;
 
 /**
  * CommentMenuManager

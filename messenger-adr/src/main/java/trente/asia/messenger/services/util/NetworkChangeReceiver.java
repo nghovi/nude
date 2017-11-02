@@ -1,4 +1,4 @@
-package trente.asia.messenger.services.util;
+package nguyenhoangviet.vpcorp.messenger.services.util;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

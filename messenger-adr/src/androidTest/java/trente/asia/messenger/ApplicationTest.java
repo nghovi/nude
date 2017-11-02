@@ -1,4 +1,4 @@
-package trente.asia.messenger;
+package nguyenhoangviet.vpcorp.messenger;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

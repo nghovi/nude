@@ -1,4 +1,4 @@
-package trente.asia.shiftworking.services.shiftworking;
+package nguyenhoangviet.vpcorp.shiftworking.services.shiftworking;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,16 +16,16 @@ import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.shiftworking.R;
-import trente.asia.shiftworking.common.defines.SwConst;
-import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
-import trente.asia.shiftworking.services.shiftworking.model.ShiftWorkingModel;
-import trente.asia.shiftworking.services.shiftworking.model.WorkHistoryModel;
-import trente.asia.shiftworking.services.shiftworking.view.CommonMonthView;
-import trente.asia.shiftworking.services.shiftworking.view.ShiftWorkingAdapter;
-import trente.asia.shiftworking.services.worktime.model.WorkingTimeSummaryModel;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.utils.WelfareUtil;
+import nguyenhoangviet.vpcorp.shiftworking.R;
+import nguyenhoangviet.vpcorp.shiftworking.common.defines.SwConst;
+import nguyenhoangviet.vpcorp.shiftworking.common.fragments.AbstractSwFragment;
+import nguyenhoangviet.vpcorp.shiftworking.services.shiftworking.model.ShiftWorkingModel;
+import nguyenhoangviet.vpcorp.shiftworking.services.shiftworking.model.WorkHistoryModel;
+import nguyenhoangviet.vpcorp.shiftworking.services.shiftworking.view.CommonMonthView;
+import nguyenhoangviet.vpcorp.shiftworking.services.shiftworking.view.ShiftWorkingAdapter;
+import nguyenhoangviet.vpcorp.shiftworking.services.worktime.model.WorkingTimeSummaryModel;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WelfareUtil;
 
 public class ShiftWorkingFragment extends AbstractSwFragment{
 

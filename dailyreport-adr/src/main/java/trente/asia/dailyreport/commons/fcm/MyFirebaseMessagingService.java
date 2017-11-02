@@ -1,4 +1,4 @@
-package trente.asia.dailyreport.commons.fcm;
+package nguyenhoangviet.vpcorp.dailyreport.commons.fcm;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -13,11 +13,11 @@ import android.support.v7.app.NotificationCompat;
 
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.android.util.CsMsgUtil;
-import trente.asia.dailyreport.R;
-import trente.asia.dailyreport.activities.MainDLActivity;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.models.FcmNotificationModel;
+import nguyenhoangviet.vpcorp.android.util.CsMsgUtil;
+import nguyenhoangviet.vpcorp.dailyreport.R;
+import nguyenhoangviet.vpcorp.dailyreport.activities.MainDLActivity;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.models.FcmNotificationModel;
 
 /**
  * MyFirebaseMessagingService

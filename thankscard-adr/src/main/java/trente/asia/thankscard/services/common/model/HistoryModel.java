@@ -1,10 +1,10 @@
-package trente.asia.thankscard.services.common.model;
+package nguyenhoangviet.vpcorp.thankscard.services.common.model;
 
 import java.util.List;
 
-import trente.asia.thankscard.services.posted.model.ApiStickerModel;
-import trente.asia.welfare.adr.models.AttachmentModel;
-import trente.asia.welfare.adr.models.LikeModel;
+import nguyenhoangviet.vpcorp.thankscard.services.posted.model.ApiStickerModel;
+import nguyenhoangviet.vpcorp.welfare.adr.models.AttachmentModel;
+import nguyenhoangviet.vpcorp.welfare.adr.models.LikeModel;
 
 /**
  * Created by viet on 2/17/2016.

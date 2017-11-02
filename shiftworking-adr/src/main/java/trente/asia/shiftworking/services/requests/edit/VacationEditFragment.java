@@ -1,4 +1,4 @@
-package trente.asia.shiftworking.services.requests.edit;
+package nguyenhoangviet.vpcorp.shiftworking.services.requests.edit;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -22,19 +22,19 @@ import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.android.activity.ChiaseActivity;
-import trente.asia.android.view.ChiaseListDialog;
-import trente.asia.android.view.ChiaseTextView;
-import trente.asia.shiftworking.R;
-import trente.asia.shiftworking.common.defines.SwConst;
-import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
-import trente.asia.shiftworking.common.interfaces.OnUserAdapterListener;
-import trente.asia.shiftworking.databinding.FragmentVacationEditBinding;
-import trente.asia.welfare.adr.activity.WelfareActivity;
-import trente.asia.welfare.adr.models.ApiObjectModel;
-import trente.asia.welfare.adr.models.UserModel;
-import trente.asia.welfare.adr.models.VacationRequestModel;
-import trente.asia.welfare.adr.utils.WelfareFormatUtil;
+import nguyenhoangviet.vpcorp.android.activity.ChiaseActivity;
+import nguyenhoangviet.vpcorp.android.view.ChiaseListDialog;
+import nguyenhoangviet.vpcorp.android.view.ChiaseTextView;
+import nguyenhoangviet.vpcorp.shiftworking.R;
+import nguyenhoangviet.vpcorp.shiftworking.common.defines.SwConst;
+import nguyenhoangviet.vpcorp.shiftworking.common.fragments.AbstractSwFragment;
+import nguyenhoangviet.vpcorp.shiftworking.common.interfaces.OnUserAdapterListener;
+import nguyenhoangviet.vpcorp.shiftworking.databinding.FragmentVacationEditBinding;
+import nguyenhoangviet.vpcorp.welfare.adr.activity.WelfareActivity;
+import nguyenhoangviet.vpcorp.welfare.adr.models.ApiObjectModel;
+import nguyenhoangviet.vpcorp.welfare.adr.models.UserModel;
+import nguyenhoangviet.vpcorp.welfare.adr.models.VacationRequestModel;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WelfareFormatUtil;
 
 /**
  * Created by viet on 11/25/2016.

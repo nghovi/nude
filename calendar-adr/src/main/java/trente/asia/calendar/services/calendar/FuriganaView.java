@@ -5,7 +5,7 @@
  */
 
 // Package
-package trente.asia.calendar.services.calendar;
+package nguyenhoangviet.vpcorp.calendar.services.calendar;
 
 // Imports
 import java.util.Vector;

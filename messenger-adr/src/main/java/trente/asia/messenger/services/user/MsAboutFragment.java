@@ -1,4 +1,4 @@
-package trente.asia.messenger.services.user;
+package nguyenhoangviet.vpcorp.messenger.services.user;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,9 +7,9 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.TextView;
 
-import trente.asia.android.util.AndroidUtil;
-import trente.asia.messenger.R;
-import trente.asia.messenger.fragment.AbstractMsgFragment;
+import nguyenhoangviet.vpcorp.android.util.AndroidUtil;
+import nguyenhoangviet.vpcorp.messenger.R;
+import nguyenhoangviet.vpcorp.messenger.fragment.AbstractMsgFragment;
 
 public class MsAboutFragment extends AbstractMsgFragment{
 
@@ -26,7 +26,7 @@ public class MsAboutFragment extends AbstractMsgFragment{
 	protected void initView(){
 		super.initView();
 
-		initHeader(trente.asia.welfare.adr.R.drawable.wf_back_white, getString(R.string.wf_about_app), null);
+		initHeader(nguyenhoangviet.vpcorp.welfare.adr.R.drawable.wf_back_white, getString(R.string.wf_about_app), null);
 
 		TextView version = (TextView)getView().findViewById(R.id.txt_fragment_about_version);
 		version.setText(getString(R.string.wf_about_version, AndroidUtil.getVersionName(activity)));

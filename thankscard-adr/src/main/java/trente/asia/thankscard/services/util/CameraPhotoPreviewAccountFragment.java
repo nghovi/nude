@@ -1,4 +1,4 @@
-package trente.asia.thankscard.services.util;
+package nguyenhoangviet.vpcorp.thankscard.services.util;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -7,10 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import trente.asia.thankscard.R;
-import trente.asia.thankscard.utils.TCUtil;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.fragment.AbstractCameraPhotoPreviewFragment;
+import nguyenhoangviet.vpcorp.thankscard.R;
+import nguyenhoangviet.vpcorp.thankscard.utils.TCUtil;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.fragment.AbstractCameraPhotoPreviewFragment;
 
 /**
  * CameraPhotoPreviewAccountFragment

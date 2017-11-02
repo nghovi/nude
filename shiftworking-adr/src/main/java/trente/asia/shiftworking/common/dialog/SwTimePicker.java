@@ -1,4 +1,4 @@
-package trente.asia.shiftworking.common.dialog;
+package nguyenhoangviet.vpcorp.shiftworking.common.dialog;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -12,9 +12,9 @@ import android.widget.NumberPicker;
 
 import java.io.StringBufferInputStream;
 
-import trente.asia.shiftworking.R;
-import trente.asia.shiftworking.common.interfaces.OnTimePickerListener;
-import trente.asia.shiftworking.databinding.DialogTimePickerBinding;
+import nguyenhoangviet.vpcorp.shiftworking.R;
+import nguyenhoangviet.vpcorp.shiftworking.common.interfaces.OnTimePickerListener;
+import nguyenhoangviet.vpcorp.shiftworking.databinding.DialogTimePickerBinding;
 
 /**
  * Created by tien on 9/20/2017.

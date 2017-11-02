@@ -1,6 +1,6 @@
-package trente.asia.dailyreport.services.other.view;
+package nguyenhoangviet.vpcorp.dailyreport.services.other.view;
 
-import static trente.asia.dailyreport.services.report.view.MyReportListAdapter.setReportStatsNumberColor;
+import static nguyenhoangviet.vpcorp.dailyreport.services.report.view.MyReportListAdapter.setReportStatsNumberColor;
 
 import java.util.Calendar;
 import java.util.List;
@@ -14,14 +14,14 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import trente.asia.dailyreport.BuildConfig;
-import trente.asia.dailyreport.DRConst;
-import trente.asia.dailyreport.R;
-import trente.asia.dailyreport.services.report.model.ReportModel;
-import trente.asia.dailyreport.utils.DRUtil;
-import trente.asia.welfare.adr.activity.WelfareFragment;
-import trente.asia.welfare.adr.utils.WfPicassoHelper;
-import trente.asia.welfare.adr.view.SelectableRoundedImageView;
+import nguyenhoangviet.vpcorp.dailyreport.BuildConfig;
+import nguyenhoangviet.vpcorp.dailyreport.DRConst;
+import nguyenhoangviet.vpcorp.dailyreport.R;
+import nguyenhoangviet.vpcorp.dailyreport.services.report.model.ReportModel;
+import nguyenhoangviet.vpcorp.dailyreport.utils.DRUtil;
+import nguyenhoangviet.vpcorp.welfare.adr.activity.WelfareFragment;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WfPicassoHelper;
+import nguyenhoangviet.vpcorp.welfare.adr.view.SelectableRoundedImageView;
 
 /**
  * Created by viet on 5/13/2016.

@@ -1,4 +1,4 @@
-package trente.asia.dailyreport.activities;
+package nguyenhoangviet.vpcorp.dailyreport.activities;
 
 import android.Manifest;
 import android.content.Intent;
@@ -12,18 +12,18 @@ import android.util.Log;
 import java.util.Date;
 
 import asia.chiase.core.util.CCDateUtil;
-import trente.asia.dailyreport.R;
-import trente.asia.dailyreport.services.kpi.GroupActualFragment;
-import trente.asia.dailyreport.services.kpi.UserActualFragment;
-import trente.asia.dailyreport.services.report.MyReportFragment;
-import trente.asia.dailyreport.services.report.ReportDetailFragment;
-import trente.asia.dailyreport.services.report.model.ReportModel;
-import trente.asia.dailyreport.services.user.DrLoginFragment;
-import trente.asia.dailyreport.utils.DRUtil;
-import trente.asia.welfare.adr.activity.WelfareActivity;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.models.UserModel;
-import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
+import nguyenhoangviet.vpcorp.dailyreport.R;
+import nguyenhoangviet.vpcorp.dailyreport.services.kpi.GroupActualFragment;
+import nguyenhoangviet.vpcorp.dailyreport.services.kpi.UserActualFragment;
+import nguyenhoangviet.vpcorp.dailyreport.services.report.MyReportFragment;
+import nguyenhoangviet.vpcorp.dailyreport.services.report.ReportDetailFragment;
+import nguyenhoangviet.vpcorp.dailyreport.services.report.model.ReportModel;
+import nguyenhoangviet.vpcorp.dailyreport.services.user.DrLoginFragment;
+import nguyenhoangviet.vpcorp.dailyreport.utils.DRUtil;
+import nguyenhoangviet.vpcorp.welfare.adr.activity.WelfareActivity;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.models.UserModel;
+import nguyenhoangviet.vpcorp.welfare.adr.pref.PreferencesAccountUtil;
 
 public class MainDLActivity extends WelfareActivity{
 

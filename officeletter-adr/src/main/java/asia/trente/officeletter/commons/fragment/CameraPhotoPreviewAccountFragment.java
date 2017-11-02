@@ -9,8 +9,8 @@ import android.view.ViewGroup;
 
 import asia.trente.officeletter.R;
 import asia.trente.officeletter.commons.utils.OLUtils;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.fragment.AbstractCameraPhotoPreviewFragment;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.fragment.AbstractCameraPhotoPreviewFragment;
 
 /**
  * CameraPhotoPreviewAccountFragment

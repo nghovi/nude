@@ -6,9 +6,9 @@ import android.support.v4.app.Fragment;
 
 import asia.trente.officeletter.R;
 import asia.trente.officeletter.commons.fragment.CameraPhotoPreviewAccountFragment;
-import trente.asia.android.util.AndroidUtil;
-import trente.asia.welfare.adr.activity.WelfareActivity;
-import trente.asia.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.android.util.AndroidUtil;
+import nguyenhoangviet.vpcorp.welfare.adr.activity.WelfareActivity;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
 
 public class CameraPhotoPreviewAccountActivity extends WelfareActivity{
 

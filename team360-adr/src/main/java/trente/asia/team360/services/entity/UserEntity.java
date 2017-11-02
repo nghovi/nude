@@ -1,4 +1,4 @@
-package trente.asia.team360.services.entity;
+package nguyenhoangviet.vpcorp.team360.services.entity;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;

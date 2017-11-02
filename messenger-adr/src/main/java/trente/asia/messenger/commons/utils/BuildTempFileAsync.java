@@ -1,4 +1,4 @@
-package trente.asia.messenger.commons.utils;
+package nguyenhoangviet.vpcorp.messenger.commons.utils;
 
 import java.io.File;
 import java.io.FileNotFoundException;

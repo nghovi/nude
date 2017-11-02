@@ -1,4 +1,4 @@
-package trente.asia.thankscard.services.rank.view;
+package nguyenhoangviet.vpcorp.thankscard.services.rank.view;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,7 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
-import trente.asia.thankscard.R;
+import nguyenhoangviet.vpcorp.thankscard.R;
 
 /**
  * Created by VietNH on 20151204.

@@ -1,12 +1,12 @@
-package trente.asia.dailyreport.services.report.model;
+package nguyenhoangviet.vpcorp.dailyreport.services.report.model;
 
 import java.util.List;
 
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.models.CommentModel;
-import trente.asia.welfare.adr.models.FileModel;
-import trente.asia.welfare.adr.models.LikeModel;
-import trente.asia.welfare.adr.models.UserModel;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.models.CommentModel;
+import nguyenhoangviet.vpcorp.welfare.adr.models.FileModel;
+import nguyenhoangviet.vpcorp.welfare.adr.models.LikeModel;
+import nguyenhoangviet.vpcorp.welfare.adr.models.UserModel;
 
 /**
  * Created by Huy-nq on 7/12/2016.

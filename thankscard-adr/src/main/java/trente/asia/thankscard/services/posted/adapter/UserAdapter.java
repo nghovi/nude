@@ -1,4 +1,4 @@
-package trente.asia.thankscard.services.posted.adapter;
+package nguyenhoangviet.vpcorp.thankscard.services.posted.adapter;
 
 import java.util.List;
 
@@ -8,10 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import trente.asia.thankscard.BR;
-import trente.asia.thankscard.R;
-import trente.asia.thankscard.databinding.ItemUserBinding;
-import trente.asia.welfare.adr.models.UserModel;
+import nguyenhoangviet.vpcorp.thankscard.BR;
+import nguyenhoangviet.vpcorp.thankscard.R;
+import nguyenhoangviet.vpcorp.thankscard.databinding.ItemUserBinding;
+import nguyenhoangviet.vpcorp.welfare.adr.models.UserModel;
 
 /**
  * Created by tien on 7/12/2017.

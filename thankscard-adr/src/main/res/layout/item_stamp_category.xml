@@ -4,7 +4,7 @@
     <data>
         <variable
             name="category"
-            type="trente.asia.thankscard.services.mypage.model.StampCategoryModel"/>
+            type="nguyenhoangviet.vpcorp.thankscard.services.mypage.model.StampCategoryModel"/>
     </data>
     <ImageView
         android:id="@+id/image_view"

@@ -1,4 +1,4 @@
-package trente.asia.calendar.services.calendar.listener;
+package nguyenhoangviet.vpcorp.calendar.services.calendar.listener;
 
 import java.util.Date;
 

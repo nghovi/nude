@@ -1,4 +1,4 @@
-package trente.asia.shiftworking.services.worktime;
+package nguyenhoangviet.vpcorp.shiftworking.services.worktime;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,14 +16,14 @@ import android.widget.ListView;
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
-import trente.asia.shiftworking.R;
-import trente.asia.shiftworking.common.defines.SwConst;
-import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
-import trente.asia.shiftworking.services.shiftworking.view.CommonMonthView;
-import trente.asia.shiftworking.services.worktime.model.WorkingTimeDailyModel;
-import trente.asia.shiftworking.services.worktime.view.WorkerAdapter;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.utils.WelfareUtil;
+import nguyenhoangviet.vpcorp.shiftworking.R;
+import nguyenhoangviet.vpcorp.shiftworking.common.defines.SwConst;
+import nguyenhoangviet.vpcorp.shiftworking.common.fragments.AbstractSwFragment;
+import nguyenhoangviet.vpcorp.shiftworking.services.shiftworking.view.CommonMonthView;
+import nguyenhoangviet.vpcorp.shiftworking.services.worktime.model.WorkingTimeDailyModel;
+import nguyenhoangviet.vpcorp.shiftworking.services.worktime.view.WorkerAdapter;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WelfareUtil;
 
 public class WorkerFragment extends AbstractSwFragment{
 

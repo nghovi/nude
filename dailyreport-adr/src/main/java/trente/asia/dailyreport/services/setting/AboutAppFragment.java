@@ -1,11 +1,11 @@
-package trente.asia.dailyreport.services.setting;
+package nguyenhoangviet.vpcorp.dailyreport.services.setting;
 
 import android.webkit.WebView;
 import android.widget.TextView;
 
-import trente.asia.android.util.AndroidUtil;
-import trente.asia.dailyreport.R;
-import trente.asia.dailyreport.fragments.AbstractDRFragment;
+import nguyenhoangviet.vpcorp.android.util.AndroidUtil;
+import nguyenhoangviet.vpcorp.dailyreport.R;
+import nguyenhoangviet.vpcorp.dailyreport.fragments.AbstractDRFragment;
 
 /**
  * Created by viet on 2/15/2016.

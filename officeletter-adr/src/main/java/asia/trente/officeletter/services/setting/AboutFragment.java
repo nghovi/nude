@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 import asia.trente.officeletter.R;
 import asia.trente.officeletter.commons.fragment.AbstractOLFragment;
-import trente.asia.android.util.AndroidUtil;
+import nguyenhoangviet.vpcorp.android.util.AndroidUtil;
 
 /**
  * Created by viet on 2/15/2016.

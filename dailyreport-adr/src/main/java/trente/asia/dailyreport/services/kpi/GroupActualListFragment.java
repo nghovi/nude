@@ -1,4 +1,4 @@
-package trente.asia.dailyreport.services.kpi;
+package nguyenhoangviet.vpcorp.dailyreport.services.kpi;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -15,13 +15,13 @@ import android.widget.TextView;
 
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
-import trente.asia.dailyreport.DRConst;
-import trente.asia.dailyreport.R;
-import trente.asia.dailyreport.fragments.AbstractDRFragment;
-import trente.asia.dailyreport.services.kpi.model.GroupKpi;
-import trente.asia.dailyreport.services.kpi.view.GroupActualListAdapter;
-import trente.asia.welfare.adr.activity.WelfareActivity;
-import trente.asia.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.dailyreport.DRConst;
+import nguyenhoangviet.vpcorp.dailyreport.R;
+import nguyenhoangviet.vpcorp.dailyreport.fragments.AbstractDRFragment;
+import nguyenhoangviet.vpcorp.dailyreport.services.kpi.model.GroupKpi;
+import nguyenhoangviet.vpcorp.dailyreport.services.kpi.view.GroupActualListAdapter;
+import nguyenhoangviet.vpcorp.welfare.adr.activity.WelfareActivity;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
 
 /**
  * Created by viet on 2/15/2016.

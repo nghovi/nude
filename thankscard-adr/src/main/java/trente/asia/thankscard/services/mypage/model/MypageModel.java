@@ -1,9 +1,9 @@
-package trente.asia.thankscard.services.mypage.model;
+package nguyenhoangviet.vpcorp.thankscard.services.mypage.model;
 
 import java.util.List;
 
-import trente.asia.thankscard.services.common.model.Template;
-import trente.asia.welfare.adr.models.DeptModel;
+import nguyenhoangviet.vpcorp.thankscard.services.common.model.Template;
+import nguyenhoangviet.vpcorp.welfare.adr.models.DeptModel;
 
 /**
  * Created by viet on 2/18/2016.

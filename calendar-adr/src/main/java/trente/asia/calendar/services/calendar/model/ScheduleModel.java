@@ -1,4 +1,4 @@
-package trente.asia.calendar.services.calendar.model;
+package nguyenhoangviet.vpcorp.calendar.services.calendar.model;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -11,11 +11,11 @@ import android.text.Html;
 
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.calendar.commons.defines.ClConst;
-import trente.asia.welfare.adr.activity.WelfareActivity;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.models.UserModel;
-import trente.asia.welfare.adr.utils.WelfareFormatUtil;
+import nguyenhoangviet.vpcorp.calendar.commons.defines.ClConst;
+import nguyenhoangviet.vpcorp.welfare.adr.activity.WelfareActivity;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.models.UserModel;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WelfareFormatUtil;
 
 /**
  * ScheduleModel

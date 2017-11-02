@@ -1,4 +1,4 @@
-package trente.asia.thankscard.services.common;
+package nguyenhoangviet.vpcorp.thankscard.services.common;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,10 +8,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
-import trente.asia.thankscard.R;
-import trente.asia.thankscard.fragments.AbstractTCFragment;
-import trente.asia.thankscard.services.common.model.HistoryModel;
-import trente.asia.thankscard.services.mypage.view.MyPagerAdapter2;
+import nguyenhoangviet.vpcorp.thankscard.R;
+import nguyenhoangviet.vpcorp.thankscard.fragments.AbstractTCFragment;
+import nguyenhoangviet.vpcorp.thankscard.services.common.model.HistoryModel;
+import nguyenhoangviet.vpcorp.thankscard.services.mypage.view.MyPagerAdapter2;
 
 /**
  * Created by viet on 2/15/2016.

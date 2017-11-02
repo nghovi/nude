@@ -1,4 +1,4 @@
-package trente.asia.dailyreport.services.kpi.view;
+package nguyenhoangviet.vpcorp.dailyreport.services.kpi.view;
 
 import android.content.Context;
 import android.support.v4.view.ViewPager;

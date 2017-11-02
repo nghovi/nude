@@ -1,7 +1,7 @@
-package trente.asia.messenger.services.message.listener;
+package nguyenhoangviet.vpcorp.messenger.services.message.listener;
 
-import trente.asia.messenger.services.message.model.MessageContentModel;
-import trente.asia.messenger.services.message.model.RealmMessageModel;
+import nguyenhoangviet.vpcorp.messenger.services.message.model.MessageContentModel;
+import nguyenhoangviet.vpcorp.messenger.services.message.model.RealmMessageModel;
 
 /**
  * Created by Huy-nq on 7/15/2016.

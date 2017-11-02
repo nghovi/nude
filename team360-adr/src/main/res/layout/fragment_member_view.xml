@@ -4,7 +4,7 @@
 
     <data>
 
-        <import type="trente.asia.team360.services.entity.UserEntity" />
+        <import type="nguyenhoangviet.vpcorp.team360.services.entity.UserEntity" />
 
         <import type="java.util.List" />
 
@@ -15,7 +15,7 @@
 
         <variable
             name="handlers"
-            type="trente.asia.team360.services.member.TmMemberViewFragment.Handlers" />
+            type="nguyenhoangviet.vpcorp.team360.services.member.TmMemberViewFragment.Handlers" />
     </data>
 
 

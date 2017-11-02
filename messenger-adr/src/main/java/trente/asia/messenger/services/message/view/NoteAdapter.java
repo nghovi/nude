@@ -1,4 +1,4 @@
-package trente.asia.messenger.services.message.view;
+package nguyenhoangviet.vpcorp.messenger.services.message.view;
 
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -6,9 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import trente.asia.messenger.R;
-import trente.asia.messenger.databinding.ItemNoteBinding;
-import trente.asia.messenger.services.user.view.ViewHolder;
+import nguyenhoangviet.vpcorp.messenger.R;
+import nguyenhoangviet.vpcorp.messenger.databinding.ItemNoteBinding;
+import nguyenhoangviet.vpcorp.messenger.services.user.view.ViewHolder;
 
 /**
  * Created by tien on 8/17/2017.

@@ -1,4 +1,4 @@
-package trente.asia.thankscard.services.posted;
+package nguyenhoangviet.vpcorp.thankscard.services.posted;
 
 import java.util.List;
 
@@ -11,17 +11,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import trente.asia.thankscard.R;
-import trente.asia.thankscard.commons.defines.TcConst;
-import trente.asia.thankscard.databinding.FragmentSelectCardBinding;
-import trente.asia.thankscard.fragments.AbstractTCFragment;
-import trente.asia.thankscard.services.common.model.Template;
-import trente.asia.thankscard.services.posted.adapter.CardAdapter;
-import trente.asia.thankscard.services.posted.dialog.CannotUseAnimationDialog;
-import trente.asia.thankscard.services.posted.dialog.CannotUsePhotoDialog;
-import trente.asia.thankscard.services.posted.dialog.ChangeToNormalCardDialog;
-import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
-import trente.asia.welfare.adr.pref.PreferencesSystemUtil;
+import nguyenhoangviet.vpcorp.thankscard.R;
+import nguyenhoangviet.vpcorp.thankscard.commons.defines.TcConst;
+import nguyenhoangviet.vpcorp.thankscard.databinding.FragmentSelectCardBinding;
+import nguyenhoangviet.vpcorp.thankscard.fragments.AbstractTCFragment;
+import nguyenhoangviet.vpcorp.thankscard.services.common.model.Template;
+import nguyenhoangviet.vpcorp.thankscard.services.posted.adapter.CardAdapter;
+import nguyenhoangviet.vpcorp.thankscard.services.posted.dialog.CannotUseAnimationDialog;
+import nguyenhoangviet.vpcorp.thankscard.services.posted.dialog.CannotUsePhotoDialog;
+import nguyenhoangviet.vpcorp.thankscard.services.posted.dialog.ChangeToNormalCardDialog;
+import nguyenhoangviet.vpcorp.welfare.adr.pref.PreferencesAccountUtil;
+import nguyenhoangviet.vpcorp.welfare.adr.pref.PreferencesSystemUtil;
 
 /**
  * Created by tien on 7/13/2017.

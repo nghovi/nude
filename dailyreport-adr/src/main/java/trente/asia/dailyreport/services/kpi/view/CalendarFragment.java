@@ -1,9 +1,9 @@
-package trente.asia.dailyreport.services.kpi.view;
+package nguyenhoangviet.vpcorp.dailyreport.services.kpi.view;
 
 import java.util.Calendar;
 
-import trente.asia.dailyreport.R;
-import trente.asia.dailyreport.fragments.AbstractDRFragment;
+import nguyenhoangviet.vpcorp.dailyreport.R;
+import nguyenhoangviet.vpcorp.dailyreport.fragments.AbstractDRFragment;
 
 /**
  * Created by hviet on 6/28/17.

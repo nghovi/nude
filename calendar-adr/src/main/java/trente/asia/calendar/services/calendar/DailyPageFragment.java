@@ -1,6 +1,6 @@
-package trente.asia.calendar.services.calendar;
+package nguyenhoangviet.vpcorp.calendar.services.calendar;
 
-import static trente.asia.calendar.services.calendar.WeeklyPageFragment.makeBlock;
+import static nguyenhoangviet.vpcorp.calendar.services.calendar.WeeklyPageFragment.makeBlock;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -28,15 +28,15 @@ import android.widget.TextView;
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
-import trente.asia.android.activity.ChiaseFragment;
-import trente.asia.calendar.R;
-import trente.asia.calendar.services.calendar.model.CategoryModel;
-import trente.asia.calendar.services.calendar.model.ScheduleModel;
-import trente.asia.calendar.services.calendar.model.WorkRequest;
-import trente.asia.calendar.services.todo.TodoListFragment;
-import trente.asia.calendar.services.todo.TodoListTodayFragment;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.utils.WelfareUtil;
+import nguyenhoangviet.vpcorp.android.activity.ChiaseFragment;
+import nguyenhoangviet.vpcorp.calendar.R;
+import nguyenhoangviet.vpcorp.calendar.services.calendar.model.CategoryModel;
+import nguyenhoangviet.vpcorp.calendar.services.calendar.model.ScheduleModel;
+import nguyenhoangviet.vpcorp.calendar.services.calendar.model.WorkRequest;
+import nguyenhoangviet.vpcorp.calendar.services.todo.TodoListFragment;
+import nguyenhoangviet.vpcorp.calendar.services.todo.TodoListTodayFragment;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WelfareUtil;
 
 /**
  * DailyPageFragment

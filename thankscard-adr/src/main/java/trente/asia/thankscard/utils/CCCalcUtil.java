@@ -1,4 +1,4 @@
-package trente.asia.thankscard.utils;
+package nguyenhoangviet.vpcorp.thankscard.utils;
 
 import java.math.BigDecimal;
 

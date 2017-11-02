@@ -1,7 +1,7 @@
-package trente.asia.shiftworking.services.shiftworking.model;
+package nguyenhoangviet.vpcorp.shiftworking.services.shiftworking.model;
 
-import trente.asia.shiftworking.common.defines.SwConst;
-import trente.asia.shiftworking.services.worktime.model.ProjectModel;
+import nguyenhoangviet.vpcorp.shiftworking.common.defines.SwConst;
+import nguyenhoangviet.vpcorp.shiftworking.services.worktime.model.ProjectModel;
 
 /**
  * WorkHistoryModel

@@ -1,4 +1,4 @@
-package trente.asia.calendar.commons.views;
+package nguyenhoangviet.vpcorp.calendar.commons.views;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -8,7 +8,7 @@ import java.util.Map;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
-import trente.asia.calendar.commons.fragments.ClPageFragment;
+import nguyenhoangviet.vpcorp.calendar.commons.fragments.ClPageFragment;
 
 /**
  * ClFragmentPagerAdapter

@@ -1,4 +1,4 @@
-package trente.asia.shiftworking.common.activities;
+package nguyenhoangviet.vpcorp.shiftworking.common.activities;
 
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -14,24 +14,24 @@ import java.util.TimerTask;
 
 import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.android.define.CsConst;
-import trente.asia.android.exception.CAException;
-import trente.asia.android.util.AndroidUtil;
-import trente.asia.shiftworking.BuildConfig;
-import trente.asia.shiftworking.R;
-import trente.asia.shiftworking.common.defines.SwConst;
-import trente.asia.shiftworking.services.login.SwLoginFragment;
-import trente.asia.shiftworking.services.requests.detail.HolidayWorkingDetailFragment;
-import trente.asia.shiftworking.services.requests.detail.OvertimeDetailFragment;
-import trente.asia.shiftworking.services.requests.detail.VacationDetailFragment;
-import trente.asia.shiftworking.services.worktime.WorkerFragment;
-import trente.asia.shiftworking.services.worktime.WorknoticeFormFragment;
-import trente.asia.shiftworking.services.worktime.WorktimeCheckInFragment;
-import trente.asia.shiftworking.services.worktime.model.NoticeModel;
-import trente.asia.welfare.adr.activity.WelfareActivity;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.models.UserModel;
-import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
+import nguyenhoangviet.vpcorp.android.define.CsConst;
+import nguyenhoangviet.vpcorp.android.exception.CAException;
+import nguyenhoangviet.vpcorp.android.util.AndroidUtil;
+import nguyenhoangviet.vpcorp.shiftworking.BuildConfig;
+import nguyenhoangviet.vpcorp.shiftworking.R;
+import nguyenhoangviet.vpcorp.shiftworking.common.defines.SwConst;
+import nguyenhoangviet.vpcorp.shiftworking.services.login.SwLoginFragment;
+import nguyenhoangviet.vpcorp.shiftworking.services.requests.detail.HolidayWorkingDetailFragment;
+import nguyenhoangviet.vpcorp.shiftworking.services.requests.detail.OvertimeDetailFragment;
+import nguyenhoangviet.vpcorp.shiftworking.services.requests.detail.VacationDetailFragment;
+import nguyenhoangviet.vpcorp.shiftworking.services.worktime.WorkerFragment;
+import nguyenhoangviet.vpcorp.shiftworking.services.worktime.WorknoticeFormFragment;
+import nguyenhoangviet.vpcorp.shiftworking.services.worktime.WorktimeCheckInFragment;
+import nguyenhoangviet.vpcorp.shiftworking.services.worktime.model.NoticeModel;
+import nguyenhoangviet.vpcorp.welfare.adr.activity.WelfareActivity;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.models.UserModel;
+import nguyenhoangviet.vpcorp.welfare.adr.pref.PreferencesAccountUtil;
 
 public class MainActivity extends WelfareActivity{
 

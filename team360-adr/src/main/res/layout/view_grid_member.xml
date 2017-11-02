@@ -6,7 +6,7 @@
 
         <variable
             name="member"
-            type="trente.asia.team360.services.entity.UserEntity" />
+            type="nguyenhoangviet.vpcorp.team360.services.entity.UserEntity" />
     </data>
 
     <RelativeLayout

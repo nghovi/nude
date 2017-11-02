@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<trente.asia.android.view.layout.CheckableLinearLayout style="@style/cs_common_match_wrap"
+<nguyenhoangviet.vpcorp.android.view.layout.CheckableLinearLayout style="@style/cs_common_match_wrap"
                                                        xmlns:android="http://schemas.android.com/apk/res/android"
                                                        android:background="@drawable/state_common_selectable_row2"
                                                        android:gravity="center_vertical"
@@ -17,10 +17,10 @@
         android:focusable="false"
         android:textSize="@dimen/margin_12dp"/>
 
-    <trente.asia.android.view.ChiaseSingleCheckBox
+    <nguyenhoangviet.vpcorp.android.view.ChiaseSingleCheckBox
         android:id="@+id/cbx_item_selected"
         style="@style/cs_custom_checkbox"
         android:layout_marginLeft="@dimen/margin_6dp"
         android:focusable="false"
         android:padding="@dimen/margin_0dp"/>
-</trente.asia.android.view.layout.CheckableLinearLayout>
+</nguyenhoangviet.vpcorp.android.view.layout.CheckableLinearLayout>

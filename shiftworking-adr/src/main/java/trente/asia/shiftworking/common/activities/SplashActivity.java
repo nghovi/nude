@@ -1,11 +1,11 @@
-package trente.asia.shiftworking.common.activities;
+package nguyenhoangviet.vpcorp.shiftworking.common.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-import trente.asia.shiftworking.R;
-import trente.asia.welfare.adr.activity.WelfareActivity;
+import nguyenhoangviet.vpcorp.shiftworking.R;
+import nguyenhoangviet.vpcorp.welfare.adr.activity.WelfareActivity;
 
 public class SplashActivity extends WelfareActivity{
 

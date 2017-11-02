@@ -1,4 +1,4 @@
-package trente.asia.shiftworking.common.models;
+package nguyenhoangviet.vpcorp.shiftworking.common.models;
 
 import java.util.List;
 
@@ -6,8 +6,8 @@ import org.json.JSONObject;
 
 import asia.chiase.core.model.KeyValueModel;
 import asia.chiase.core.util.CCJsonUtil;
-import trente.asia.shiftworking.services.worktime.model.ProjectModel;
-import trente.asia.welfare.adr.models.DeptModel;
+import nguyenhoangviet.vpcorp.shiftworking.services.worktime.model.ProjectModel;
+import nguyenhoangviet.vpcorp.welfare.adr.models.DeptModel;
 
 /**
  * SwApiHolder

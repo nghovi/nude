@@ -1,4 +1,4 @@
-package trente.asia.calendar.commons.fragments;
+package nguyenhoangviet.vpcorp.calendar.commons.fragments;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -8,11 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import trente.asia.calendar.R;
-import trente.asia.calendar.commons.utils.ClUtil;
-import trente.asia.calendar.services.user.ClLoginFragment;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.fragment.AbstractCameraPhotoPreviewFragment;
+import nguyenhoangviet.vpcorp.calendar.R;
+import nguyenhoangviet.vpcorp.calendar.commons.utils.ClUtil;
+import nguyenhoangviet.vpcorp.calendar.services.user.ClLoginFragment;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.fragment.AbstractCameraPhotoPreviewFragment;
 
 /**
  * A simple {@link Fragment} subclass.

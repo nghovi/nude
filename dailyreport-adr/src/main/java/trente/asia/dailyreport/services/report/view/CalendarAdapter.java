@@ -1,4 +1,4 @@
-package trente.asia.dailyreport.services.report.view;
+package nguyenhoangviet.vpcorp.dailyreport.services.report.view;
 
 /**
  * Created by viet on 7/12/2016.
@@ -22,13 +22,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.dailyreport.DRConst;
-import trente.asia.dailyreport.R;
-import trente.asia.dailyreport.services.report.MyReportFragment;
-import trente.asia.dailyreport.services.report.model.ReportModel;
-import trente.asia.dailyreport.utils.DRUtil;
-import trente.asia.welfare.adr.BuildConfig;
-import trente.asia.welfare.adr.utils.WfPicassoHelper;
+import nguyenhoangviet.vpcorp.dailyreport.DRConst;
+import nguyenhoangviet.vpcorp.dailyreport.R;
+import nguyenhoangviet.vpcorp.dailyreport.services.report.MyReportFragment;
+import nguyenhoangviet.vpcorp.dailyreport.services.report.model.ReportModel;
+import nguyenhoangviet.vpcorp.dailyreport.utils.DRUtil;
+import nguyenhoangviet.vpcorp.welfare.adr.BuildConfig;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WfPicassoHelper;
 
 public class CalendarAdapter extends BaseAdapter{
 
@@ -123,7 +123,7 @@ public class CalendarAdapter extends BaseAdapter{
 
 			if(CCStringUtil.isEmpty(reportModel.key)){
 				if(!CCStringUtil.isEmpty(reportModel.workingSymbol)){
-					WfPicassoHelper.loadImage2(mContext, trente.asia.dailyreport.BuildConfig.HOST, imgReportStatus, reportModel.workingSymbol);
+					WfPicassoHelper.loadImage2(mContext, nguyenhoangviet.vpcorp.dailyreport.BuildConfig.HOST, imgReportStatus, reportModel.workingSymbol);
 				} else {
 					imgReportStatus.setVisibility(View.INVISIBLE);
 				}

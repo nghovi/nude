@@ -1,4 +1,4 @@
-package trente.asia.thankscard.services.rank;
+package nguyenhoangviet.vpcorp.thankscard.services.rank;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,18 +25,18 @@ import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCNumberUtil;
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.android.util.AndroidUtil;
-import trente.asia.thankscard.R;
-import trente.asia.thankscard.activities.CameraPhotoPreviewAccountActivity;
-import trente.asia.thankscard.commons.defines.TcConst;
-import trente.asia.thankscard.fragments.AbstractTCFragment;
-import trente.asia.thankscard.fragments.dialogs.AvatarSelectionDialog;
-import trente.asia.thankscard.utils.TCUtil;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.define.WfUrlConst;
-import trente.asia.welfare.adr.models.SettingModel;
-import trente.asia.welfare.adr.utils.WelfareUtil;
-import trente.asia.welfare.adr.utils.WfPicassoHelper;
+import nguyenhoangviet.vpcorp.android.util.AndroidUtil;
+import nguyenhoangviet.vpcorp.thankscard.R;
+import nguyenhoangviet.vpcorp.thankscard.activities.CameraPhotoPreviewAccountActivity;
+import nguyenhoangviet.vpcorp.thankscard.commons.defines.TcConst;
+import nguyenhoangviet.vpcorp.thankscard.fragments.AbstractTCFragment;
+import nguyenhoangviet.vpcorp.thankscard.fragments.dialogs.AvatarSelectionDialog;
+import nguyenhoangviet.vpcorp.thankscard.utils.TCUtil;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WfUrlConst;
+import nguyenhoangviet.vpcorp.welfare.adr.models.SettingModel;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WelfareUtil;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WfPicassoHelper;
 
 /**
  * Created by viet on 2/15/2016.
@@ -189,7 +189,7 @@ public class TCAccountInfoFragment extends AbstractTCFragment implements AvatarS
 			if(data != null){
 				String detailMessage = data.getExtras().getString("detail");
 				if(WelfareConst.WF_FILE_SIZE_NG.equals(detailMessage)){
-					alertDialog.setMessage(getString(trente.asia.welfare.adr.R.string.wf_invalid_photo_over));
+					alertDialog.setMessage(getString(nguyenhoangviet.vpcorp.welfare.adr.R.string.wf_invalid_photo_over));
 					alertDialog.show();
 				}else{
 					String imagePath = data.getExtras().getString(WelfareConst.IMAGE_PATH_KEY);

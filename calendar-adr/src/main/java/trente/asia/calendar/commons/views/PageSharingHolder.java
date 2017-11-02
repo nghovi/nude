@@ -1,4 +1,4 @@
-package trente.asia.calendar.commons.views;
+package nguyenhoangviet.vpcorp.calendar.commons.views;
 
 import java.util.Date;
 import java.util.List;
@@ -7,10 +7,10 @@ import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
 
-import trente.asia.calendar.R;
-import trente.asia.calendar.commons.dialogs.ClFilterUserListDialog;
-import trente.asia.calendar.services.calendar.view.CalendarDayView;
-import trente.asia.welfare.adr.models.UserModel;
+import nguyenhoangviet.vpcorp.calendar.R;
+import nguyenhoangviet.vpcorp.calendar.commons.dialogs.ClFilterUserListDialog;
+import nguyenhoangviet.vpcorp.calendar.services.calendar.view.CalendarDayView;
+import nguyenhoangviet.vpcorp.welfare.adr.models.UserModel;
 
 /**
  * Created by viet on 2/23/2017.

@@ -1,10 +1,10 @@
-package trente.asia.calendar.services.todo.model;
+package nguyenhoangviet.vpcorp.calendar.services.todo.model;
 
 import java.util.Date;
 
 import com.bluelinelabs.logansquare.annotation.JsonField;
 
-import trente.asia.calendar.commons.activites.MainClActivity;
+import nguyenhoangviet.vpcorp.calendar.commons.activites.MainClActivity;
 
 /**
  * Created by hviet on 7/20/17.

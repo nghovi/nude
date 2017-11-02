@@ -1,4 +1,4 @@
-package trente.asia.thankscard.services.mypage.view;
+package nguyenhoangviet.vpcorp.thankscard.services.mypage.view;
 
 import java.util.List;
 
@@ -11,10 +11,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import trente.asia.thankscard.R;
-import trente.asia.thankscard.services.common.model.HistoryModel;
-import trente.asia.thankscard.services.posted.view.PhotoViewDetail;
-import trente.asia.thankscard.utils.TCUtil;
+import nguyenhoangviet.vpcorp.thankscard.R;
+import nguyenhoangviet.vpcorp.thankscard.services.common.model.HistoryModel;
+import nguyenhoangviet.vpcorp.thankscard.services.posted.view.PhotoViewDetail;
+import nguyenhoangviet.vpcorp.thankscard.utils.TCUtil;
 
 /**
  * MyPagerAdapter2

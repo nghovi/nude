@@ -1,4 +1,4 @@
-package trente.asia.shiftworking.services.requests.edit;
+package nguyenhoangviet.vpcorp.shiftworking.services.requests.edit;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,15 +15,15 @@ import android.view.ViewGroup;
 
 import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCJsonUtil;
-import trente.asia.shiftworking.R;
-import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
-import trente.asia.shiftworking.common.interfaces.OnDepartmentAdapterListener;
-import trente.asia.shiftworking.common.interfaces.OnUserAdapterListener;
-import trente.asia.shiftworking.databinding.FragmentSelectUserEditBinding;
-import trente.asia.shiftworking.services.requests.adapter.UserEditAdapter;
-import trente.asia.welfare.adr.define.WfUrlConst;
-import trente.asia.welfare.adr.models.DeptModel;
-import trente.asia.welfare.adr.models.UserModel;
+import nguyenhoangviet.vpcorp.shiftworking.R;
+import nguyenhoangviet.vpcorp.shiftworking.common.fragments.AbstractSwFragment;
+import nguyenhoangviet.vpcorp.shiftworking.common.interfaces.OnDepartmentAdapterListener;
+import nguyenhoangviet.vpcorp.shiftworking.common.interfaces.OnUserAdapterListener;
+import nguyenhoangviet.vpcorp.shiftworking.databinding.FragmentSelectUserEditBinding;
+import nguyenhoangviet.vpcorp.shiftworking.services.requests.adapter.UserEditAdapter;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WfUrlConst;
+import nguyenhoangviet.vpcorp.welfare.adr.models.DeptModel;
+import nguyenhoangviet.vpcorp.welfare.adr.models.UserModel;
 
 /**
  * Created by tien on 9/25/2017.

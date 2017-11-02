@@ -1,14 +1,14 @@
-package trente.asia.calendar.services.calendar.model;
+package nguyenhoangviet.vpcorp.calendar.services.calendar.model;
 
 import java.util.Date;
 
 import com.bluelinelabs.logansquare.annotation.JsonField;
 import com.bluelinelabs.logansquare.annotation.JsonObject;
 
-import trente.asia.welfare.adr.activity.WelfareActivity;
-import trente.asia.welfare.adr.models.HolidayWorkingModel;
-import trente.asia.welfare.adr.models.OvertimeRequestModel;
-import trente.asia.welfare.adr.models.VacationRequestModel;
+import nguyenhoangviet.vpcorp.welfare.adr.activity.WelfareActivity;
+import nguyenhoangviet.vpcorp.welfare.adr.models.HolidayWorkingModel;
+import nguyenhoangviet.vpcorp.welfare.adr.models.OvertimeRequestModel;
+import nguyenhoangviet.vpcorp.welfare.adr.models.VacationRequestModel;
 
 /**
  * HolidayModel

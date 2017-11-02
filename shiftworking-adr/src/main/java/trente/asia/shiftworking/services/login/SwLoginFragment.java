@@ -1,4 +1,4 @@
-package trente.asia.shiftworking.services.login;
+package nguyenhoangviet.vpcorp.shiftworking.services.login;
 
 import org.json.JSONObject;
 
@@ -8,13 +8,13 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
-import trente.asia.shiftworking.BuildConfig;
-import trente.asia.shiftworking.R;
-import trente.asia.shiftworking.common.activities.MainActivity;
-import trente.asia.shiftworking.services.worktime.WorktimeCheckInFragment;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.define.WfUrlConst;
-import trente.asia.welfare.adr.services.user.LoginFragment;
+import nguyenhoangviet.vpcorp.shiftworking.BuildConfig;
+import nguyenhoangviet.vpcorp.shiftworking.R;
+import nguyenhoangviet.vpcorp.shiftworking.common.activities.MainActivity;
+import nguyenhoangviet.vpcorp.shiftworking.services.worktime.WorktimeCheckInFragment;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WfUrlConst;
+import nguyenhoangviet.vpcorp.welfare.adr.services.user.LoginFragment;
 
 /**
  * A simple {@link Fragment} subclass.

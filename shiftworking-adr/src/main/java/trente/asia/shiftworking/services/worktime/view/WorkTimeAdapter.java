@@ -1,4 +1,4 @@
-package trente.asia.shiftworking.services.worktime.view;
+package nguyenhoangviet.vpcorp.shiftworking.services.worktime.view;
 
 import java.util.List;
 
@@ -13,10 +13,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import trente.asia.android.view.ChiaseTextView;
-import trente.asia.shiftworking.R;
-import trente.asia.shiftworking.services.worktime.listener.ItemWorkTimeClickListener;
-import trente.asia.shiftworking.services.worktime.model.WorkingTimeModel;
+import nguyenhoangviet.vpcorp.android.view.ChiaseTextView;
+import nguyenhoangviet.vpcorp.shiftworking.R;
+import nguyenhoangviet.vpcorp.shiftworking.services.worktime.listener.ItemWorkTimeClickListener;
+import nguyenhoangviet.vpcorp.shiftworking.services.worktime.model.WorkingTimeModel;
 
 /**
  * WorkTimeAdapter.

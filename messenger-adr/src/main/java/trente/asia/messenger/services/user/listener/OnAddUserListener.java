@@ -1,6 +1,6 @@
-package trente.asia.messenger.services.user.listener;
+package nguyenhoangviet.vpcorp.messenger.services.user.listener;
 
-import trente.asia.welfare.adr.models.UserModel;
+import nguyenhoangviet.vpcorp.welfare.adr.models.UserModel;
 
 /**
  * OnAddUserListener

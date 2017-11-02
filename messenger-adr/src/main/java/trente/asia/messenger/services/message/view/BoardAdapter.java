@@ -1,4 +1,4 @@
-package trente.asia.messenger.services.message.view;
+package nguyenhoangviet.vpcorp.messenger.services.message.view;
 
 import java.util.List;
 
@@ -13,15 +13,15 @@ import android.widget.TextView;
 
 import asia.chiase.core.util.CCNumberUtil;
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.messenger.BuildConfig;
-import trente.asia.messenger.R;
-import trente.asia.messenger.services.message.model.BoardModel;
-import trente.asia.messenger.services.message.model.MessageContentModel;
-import trente.asia.messenger.services.message.model.RealmBoardModel;
-import trente.asia.welfare.adr.activity.WelfareFragment;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.utils.WelfareUtil;
-import trente.asia.welfare.adr.utils.WfPicassoHelper;
+import nguyenhoangviet.vpcorp.messenger.BuildConfig;
+import nguyenhoangviet.vpcorp.messenger.R;
+import nguyenhoangviet.vpcorp.messenger.services.message.model.BoardModel;
+import nguyenhoangviet.vpcorp.messenger.services.message.model.MessageContentModel;
+import nguyenhoangviet.vpcorp.messenger.services.message.model.RealmBoardModel;
+import nguyenhoangviet.vpcorp.welfare.adr.activity.WelfareFragment;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WelfareUtil;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WfPicassoHelper;
 
 /**
  * BoardAdapter.

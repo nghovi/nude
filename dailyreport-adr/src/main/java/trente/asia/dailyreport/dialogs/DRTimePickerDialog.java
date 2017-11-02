@@ -1,4 +1,4 @@
-package trente.asia.dailyreport.dialogs;
+package nguyenhoangviet.vpcorp.dailyreport.dialogs;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -12,8 +12,8 @@ import android.view.View;
 import android.widget.NumberPicker;
 import android.widget.TimePicker;
 
-import trente.asia.android.view.ChiaseDateTimeView;
-import trente.asia.android.view.ChiaseDialog;
+import nguyenhoangviet.vpcorp.android.view.ChiaseDateTimeView;
+import nguyenhoangviet.vpcorp.android.view.ChiaseDialog;
 
 /**
  * Created by viet on 5/18/2016.
@@ -67,9 +67,9 @@ public class DRTimePickerDialog extends ChiaseDateTimeView{
 		// super(context);
 
 		alertDialog = new ChiaseDialog(context);
-		alertDialog.setContentView(trente.asia.android.R.layout.chiase_date_time_view);
+		alertDialog.setContentView(nguyenhoangviet.vpcorp.android.R.layout.chiase_date_time_view);
 
-		alertDialog.findViewById(trente.asia.android.R.id.txt_id_set).setOnClickListener(new View.OnClickListener() {
+		alertDialog.findViewById(nguyenhoangviet.vpcorp.android.R.id.txt_id_set).setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View view){
@@ -77,7 +77,7 @@ public class DRTimePickerDialog extends ChiaseDateTimeView{
 			}
 		});
 
-		alertDialog.findViewById(trente.asia.android.R.id.txt_id_cancel).setOnClickListener(new View.OnClickListener() {
+		alertDialog.findViewById(nguyenhoangviet.vpcorp.android.R.id.txt_id_cancel).setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View view){
@@ -85,7 +85,7 @@ public class DRTimePickerDialog extends ChiaseDateTimeView{
 			}
 		});
 
-		timePicker = (TimePicker)alertDialog.findViewById(trente.asia.android.R.id.time_picker);
+		timePicker = (TimePicker)alertDialog.findViewById(nguyenhoangviet.vpcorp.android.R.id.time_picker);
 		timePicker.setIs24HourView(true);
 	}
 

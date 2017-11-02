@@ -1,4 +1,4 @@
-package trente.asia.thankscard.services.posted;
+package nguyenhoangviet.vpcorp.thankscard.services.posted;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -14,11 +14,11 @@ import android.view.WindowManager;
 import java.util.ArrayList;
 import java.util.List;
 
-import trente.asia.thankscard.R;
-import trente.asia.thankscard.databinding.FragmentSelectDeptBinding;
-import trente.asia.thankscard.fragments.AbstractTCFragment;
-import trente.asia.thankscard.services.posted.adapter.DepartmentAdapter;
-import trente.asia.welfare.adr.models.DeptModel;
+import nguyenhoangviet.vpcorp.thankscard.R;
+import nguyenhoangviet.vpcorp.thankscard.databinding.FragmentSelectDeptBinding;
+import nguyenhoangviet.vpcorp.thankscard.fragments.AbstractTCFragment;
+import nguyenhoangviet.vpcorp.thankscard.services.posted.adapter.DepartmentAdapter;
+import nguyenhoangviet.vpcorp.welfare.adr.models.DeptModel;
 
 /**
  * Created by tien on 7/12/2017.

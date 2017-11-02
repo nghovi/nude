@@ -1,4 +1,4 @@
-package trente.asia.calendar.services.calendar.model;
+package nguyenhoangviet.vpcorp.calendar.services.calendar.model;
 
 import com.bluelinelabs.logansquare.annotation.JsonObject;
 
@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import trente.asia.welfare.adr.models.UserModel;
+import nguyenhoangviet.vpcorp.welfare.adr.models.UserModel;
 
 /**
  * Created by viet on 2/6/2017.

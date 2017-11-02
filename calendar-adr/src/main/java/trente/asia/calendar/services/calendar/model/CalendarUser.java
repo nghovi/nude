@@ -1,4 +1,4 @@
-package trente.asia.calendar.services.calendar.model;
+package nguyenhoangviet.vpcorp.calendar.services.calendar.model;
 
 /**
  * Created by hviet on 8/21/17.

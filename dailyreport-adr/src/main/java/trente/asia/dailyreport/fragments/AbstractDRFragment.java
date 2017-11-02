@@ -1,4 +1,4 @@
-package trente.asia.dailyreport.fragments;
+package nguyenhoangviet.vpcorp.dailyreport.fragments;
 
 import org.json.JSONObject;
 
@@ -11,18 +11,18 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import trente.asia.android.define.CsConst;
-import trente.asia.dailyreport.BuildConfig;
-import trente.asia.dailyreport.R;
-import trente.asia.dailyreport.services.kpi.ActionPlansAddFragment;
-import trente.asia.dailyreport.services.kpi.UserActualFragment;
-import trente.asia.dailyreport.services.other.OthersFragment;
-import trente.asia.dailyreport.services.report.MyReportFragment;
-import trente.asia.dailyreport.services.setting.DRSettingFragment;
-import trente.asia.dailyreport.services.user.DrLoginFragment;
-import trente.asia.welfare.adr.activity.WelfareFragment;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.define.WfErrorConst;
+import nguyenhoangviet.vpcorp.android.define.CsConst;
+import nguyenhoangviet.vpcorp.dailyreport.BuildConfig;
+import nguyenhoangviet.vpcorp.dailyreport.R;
+import nguyenhoangviet.vpcorp.dailyreport.services.kpi.ActionPlansAddFragment;
+import nguyenhoangviet.vpcorp.dailyreport.services.kpi.UserActualFragment;
+import nguyenhoangviet.vpcorp.dailyreport.services.other.OthersFragment;
+import nguyenhoangviet.vpcorp.dailyreport.services.report.MyReportFragment;
+import nguyenhoangviet.vpcorp.dailyreport.services.setting.DRSettingFragment;
+import nguyenhoangviet.vpcorp.dailyreport.services.user.DrLoginFragment;
+import nguyenhoangviet.vpcorp.welfare.adr.activity.WelfareFragment;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WfErrorConst;
 
 /**
  * Created by viet on 7/8/2016.

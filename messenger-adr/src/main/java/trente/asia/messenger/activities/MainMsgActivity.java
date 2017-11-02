@@ -1,4 +1,4 @@
-package trente.asia.messenger.activities;
+package nguyenhoangviet.vpcorp.messenger.activities;
 
 import android.os.Bundle;
 
@@ -7,18 +7,18 @@ import java.util.TimerTask;
 
 import asia.chiase.core.util.CCStringUtil;
 import io.realm.Realm;
-import trente.asia.messenger.R;
-import trente.asia.messenger.services.message.MessageDetailFragment;
-import trente.asia.messenger.services.message.MessageFragment;
-import trente.asia.messenger.services.message.model.BoardModel;
-import trente.asia.messenger.services.message.model.MessageContentModel;
-import trente.asia.messenger.services.message.model.RealmBoardModel;
-import trente.asia.messenger.services.message.model.RealmMessageModel;
-import trente.asia.messenger.services.user.MsgLoginFragment;
-import trente.asia.welfare.adr.activity.WelfareActivity;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.models.UserModel;
-import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
+import nguyenhoangviet.vpcorp.messenger.R;
+import nguyenhoangviet.vpcorp.messenger.services.message.MessageDetailFragment;
+import nguyenhoangviet.vpcorp.messenger.services.message.MessageFragment;
+import nguyenhoangviet.vpcorp.messenger.services.message.model.BoardModel;
+import nguyenhoangviet.vpcorp.messenger.services.message.model.MessageContentModel;
+import nguyenhoangviet.vpcorp.messenger.services.message.model.RealmBoardModel;
+import nguyenhoangviet.vpcorp.messenger.services.message.model.RealmMessageModel;
+import nguyenhoangviet.vpcorp.messenger.services.user.MsgLoginFragment;
+import nguyenhoangviet.vpcorp.welfare.adr.activity.WelfareActivity;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.models.UserModel;
+import nguyenhoangviet.vpcorp.welfare.adr.pref.PreferencesAccountUtil;
 
 public class MainMsgActivity extends WelfareActivity{
 

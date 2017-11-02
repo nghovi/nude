@@ -1,4 +1,4 @@
-package trente.asia.dailyreport;
+package nguyenhoangviet.vpcorp.dailyreport;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

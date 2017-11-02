@@ -1,4 +1,4 @@
-package trente.asia.shiftworking.common.fragments;
+package nguyenhoangviet.vpcorp.shiftworking.common.fragments;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -10,21 +10,21 @@ import android.widget.TextView;
 
 import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.android.view.ChiaseImageView;
-import trente.asia.android.view.ChiaseTextView;
-import trente.asia.shiftworking.BuildConfig;
-import trente.asia.shiftworking.R;
-import trente.asia.shiftworking.common.activities.MainActivity;
-import trente.asia.shiftworking.common.models.SwApiHolder;
-import trente.asia.shiftworking.common.utils.SwUtil;
-import trente.asia.shiftworking.services.login.SwLoginFragment;
-import trente.asia.shiftworking.services.requests.WorkRequestFragment;
-import trente.asia.shiftworking.services.setting.SwSettingFragment;
-import trente.asia.shiftworking.services.shiftworking.ShiftWorkingFragment;
-import trente.asia.shiftworking.services.worktime.WorkStatusFragment;
-import trente.asia.shiftworking.services.worktime.WorktimeCheckInFragment;
-import trente.asia.welfare.adr.activity.WelfareFragment;
-import trente.asia.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.android.view.ChiaseImageView;
+import nguyenhoangviet.vpcorp.android.view.ChiaseTextView;
+import nguyenhoangviet.vpcorp.shiftworking.BuildConfig;
+import nguyenhoangviet.vpcorp.shiftworking.R;
+import nguyenhoangviet.vpcorp.shiftworking.common.activities.MainActivity;
+import nguyenhoangviet.vpcorp.shiftworking.common.models.SwApiHolder;
+import nguyenhoangviet.vpcorp.shiftworking.common.utils.SwUtil;
+import nguyenhoangviet.vpcorp.shiftworking.services.login.SwLoginFragment;
+import nguyenhoangviet.vpcorp.shiftworking.services.requests.WorkRequestFragment;
+import nguyenhoangviet.vpcorp.shiftworking.services.setting.SwSettingFragment;
+import nguyenhoangviet.vpcorp.shiftworking.services.shiftworking.ShiftWorkingFragment;
+import nguyenhoangviet.vpcorp.shiftworking.services.worktime.WorkStatusFragment;
+import nguyenhoangviet.vpcorp.shiftworking.services.worktime.WorktimeCheckInFragment;
+import nguyenhoangviet.vpcorp.welfare.adr.activity.WelfareFragment;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
 
 /**
  * A simple {@link Fragment} subclass.

@@ -1,4 +1,4 @@
-package trente.asia.messenger.fragment;
+package nguyenhoangviet.vpcorp.messenger.fragment;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -16,20 +16,20 @@ import java.util.TimerTask;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
-import trente.asia.android.define.CsConst;
-import trente.asia.messenger.BuildConfig;
-import trente.asia.messenger.R;
-import trente.asia.messenger.commons.defines.MsConst;
-import trente.asia.messenger.services.message.MessageFragment;
-import trente.asia.messenger.services.message.model.BoardModel;
-import trente.asia.messenger.services.message.model.MessageContentModel;
-import trente.asia.messenger.services.message.model.RealmBoardModel;
-import trente.asia.messenger.services.message.model.RealmMessageModel;
-import trente.asia.messenger.services.user.MsgLoginFragment;
-import trente.asia.welfare.adr.activity.WelfareFragment;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.define.WfErrorConst;
-import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
+import nguyenhoangviet.vpcorp.android.define.CsConst;
+import nguyenhoangviet.vpcorp.messenger.BuildConfig;
+import nguyenhoangviet.vpcorp.messenger.R;
+import nguyenhoangviet.vpcorp.messenger.commons.defines.MsConst;
+import nguyenhoangviet.vpcorp.messenger.services.message.MessageFragment;
+import nguyenhoangviet.vpcorp.messenger.services.message.model.BoardModel;
+import nguyenhoangviet.vpcorp.messenger.services.message.model.MessageContentModel;
+import nguyenhoangviet.vpcorp.messenger.services.message.model.RealmBoardModel;
+import nguyenhoangviet.vpcorp.messenger.services.message.model.RealmMessageModel;
+import nguyenhoangviet.vpcorp.messenger.services.user.MsgLoginFragment;
+import nguyenhoangviet.vpcorp.welfare.adr.activity.WelfareFragment;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WfErrorConst;
+import nguyenhoangviet.vpcorp.welfare.adr.pref.PreferencesAccountUtil;
 
 /**
  * AbstractMsgFragment

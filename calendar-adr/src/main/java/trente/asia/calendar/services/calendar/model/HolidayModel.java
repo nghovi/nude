@@ -1,4 +1,4 @@
-package trente.asia.calendar.services.calendar.model;
+package nguyenhoangviet.vpcorp.calendar.services.calendar.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,7 +12,7 @@ import com.bluelinelabs.logansquare.annotation.JsonObject;
 import android.graphics.Color;
 
 import asia.chiase.core.util.CCDateUtil;
-import trente.asia.calendar.commons.activites.MainClActivity;
+import nguyenhoangviet.vpcorp.calendar.commons.activites.MainClActivity;
 
 /**
  * HolidayModel

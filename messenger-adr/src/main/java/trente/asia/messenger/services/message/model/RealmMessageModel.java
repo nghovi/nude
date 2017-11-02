@@ -1,4 +1,4 @@
-package trente.asia.messenger.services.message.model;
+package nguyenhoangviet.vpcorp.messenger.services.message.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,12 +8,12 @@ import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.models.BitmapModel;
-import trente.asia.welfare.adr.models.CommentModel;
-import trente.asia.welfare.adr.models.FileModel;
-import trente.asia.welfare.adr.models.LikeModel;
-import trente.asia.welfare.adr.models.UserModel;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.models.BitmapModel;
+import nguyenhoangviet.vpcorp.welfare.adr.models.CommentModel;
+import nguyenhoangviet.vpcorp.welfare.adr.models.FileModel;
+import nguyenhoangviet.vpcorp.welfare.adr.models.LikeModel;
+import nguyenhoangviet.vpcorp.welfare.adr.models.UserModel;
 
 /**
  * Created by tien on 6/29/2017.

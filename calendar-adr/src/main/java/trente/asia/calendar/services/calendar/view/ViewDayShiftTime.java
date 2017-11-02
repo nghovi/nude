@@ -1,4 +1,4 @@
-package trente.asia.calendar.services.calendar.view;
+package nguyenhoangviet.vpcorp.calendar.services.calendar.view;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -9,8 +9,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import trente.asia.calendar.services.calendar.model.CalendarDayModel;
-import trente.asia.calendar.services.calendar.model.ScheduleModel;
+import nguyenhoangviet.vpcorp.calendar.services.calendar.model.CalendarDayModel;
+import nguyenhoangviet.vpcorp.calendar.services.calendar.model.ScheduleModel;
 
 /**
  * Created by viet on 2/24/2017.

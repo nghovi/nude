@@ -1,4 +1,4 @@
-package trente.asia.thankscard.fragments.dialogs;
+package nguyenhoangviet.vpcorp.thankscard.fragments.dialogs;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -9,7 +9,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
-import trente.asia.thankscard.R;
+import nguyenhoangviet.vpcorp.thankscard.R;
 
 /**
  * Created by viet on 3/28/2016.

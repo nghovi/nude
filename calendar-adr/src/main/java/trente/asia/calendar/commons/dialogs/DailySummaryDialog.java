@@ -1,4 +1,4 @@
-package trente.asia.calendar.commons.dialogs;
+package nguyenhoangviet.vpcorp.calendar.commons.dialogs;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -10,15 +10,15 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import asia.chiase.core.util.CCFormatUtil;
-import trente.asia.calendar.R;
-import trente.asia.calendar.services.calendar.SchedulesPageFragment;
-import trente.asia.calendar.services.calendar.model.CalendarBirthdayModel;
-import trente.asia.calendar.services.calendar.model.HolidayModel;
-import trente.asia.calendar.services.calendar.model.ScheduleModel;
-import trente.asia.calendar.services.calendar.model.WorkRequest;
-import trente.asia.calendar.services.calendar.view.DailyScheduleList;
-import trente.asia.calendar.services.calendar.view.DailySummaryDialogPagerAdapter;
-import trente.asia.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.calendar.R;
+import nguyenhoangviet.vpcorp.calendar.services.calendar.SchedulesPageFragment;
+import nguyenhoangviet.vpcorp.calendar.services.calendar.model.CalendarBirthdayModel;
+import nguyenhoangviet.vpcorp.calendar.services.calendar.model.HolidayModel;
+import nguyenhoangviet.vpcorp.calendar.services.calendar.model.ScheduleModel;
+import nguyenhoangviet.vpcorp.calendar.services.calendar.model.WorkRequest;
+import nguyenhoangviet.vpcorp.calendar.services.calendar.view.DailyScheduleList;
+import nguyenhoangviet.vpcorp.calendar.services.calendar.view.DailySummaryDialogPagerAdapter;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
 
 /**
  * DailySummaryDialog

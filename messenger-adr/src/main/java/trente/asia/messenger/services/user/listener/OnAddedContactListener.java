@@ -1,6 +1,6 @@
-package trente.asia.messenger.services.user.listener;
+package nguyenhoangviet.vpcorp.messenger.services.user.listener;
 
-import trente.asia.messenger.services.message.model.RealmBoardModel;
+import nguyenhoangviet.vpcorp.messenger.services.message.model.RealmBoardModel;
 
 /**
  * OnAddUserListener

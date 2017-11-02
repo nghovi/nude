@@ -1,4 +1,4 @@
-package trente.asia.calendar.services.calendar.view;
+package nguyenhoangviet.vpcorp.calendar.services.calendar.view;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -17,11 +17,11 @@ import android.widget.TextView;
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
-import trente.asia.calendar.R;
-import trente.asia.calendar.services.calendar.model.CalendarDayModel;
-import trente.asia.calendar.services.calendar.model.HolidayModel;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.models.UserModel;
+import nguyenhoangviet.vpcorp.calendar.R;
+import nguyenhoangviet.vpcorp.calendar.services.calendar.model.CalendarDayModel;
+import nguyenhoangviet.vpcorp.calendar.services.calendar.model.HolidayModel;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.models.UserModel;
 
 /**
  * WeeklyCalendarDayView

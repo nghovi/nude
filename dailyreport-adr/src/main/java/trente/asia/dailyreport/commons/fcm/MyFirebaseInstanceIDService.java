@@ -1,12 +1,12 @@
-package trente.asia.dailyreport.commons.fcm;
+package nguyenhoangviet.vpcorp.dailyreport.commons.fcm;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 
 import android.util.Log;
 
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.pref.PreferencesSystemUtil;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.pref.PreferencesSystemUtil;
 
 /**
  * MyFirebaseInstanceIDService

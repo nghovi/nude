@@ -1,4 +1,4 @@
-package trente.asia.shiftworking.services.worktime;
+package nguyenhoangviet.vpcorp.shiftworking.services.worktime;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,11 +11,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import trente.asia.shiftworking.R;
-import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
-import trente.asia.shiftworking.services.shiftworking.view.CommonMonthView;
-import trente.asia.shiftworking.services.worktime.view.SegmentedButton;
-import trente.asia.shiftworking.services.worktime.view.WorkPagerAdapter;
+import nguyenhoangviet.vpcorp.shiftworking.R;
+import nguyenhoangviet.vpcorp.shiftworking.common.fragments.AbstractSwFragment;
+import nguyenhoangviet.vpcorp.shiftworking.services.shiftworking.view.CommonMonthView;
+import nguyenhoangviet.vpcorp.shiftworking.services.worktime.view.SegmentedButton;
+import nguyenhoangviet.vpcorp.shiftworking.services.worktime.view.WorkPagerAdapter;
 
 public class WorkStatusFragment extends AbstractSwFragment {
 

@@ -1,12 +1,12 @@
-package trente.asia.thankscard.services.posted.dialog;
+package nguyenhoangviet.vpcorp.thankscard.services.posted.dialog;
 
 import android.databinding.DataBindingUtil;
 import android.view.View;
 
-import trente.asia.thankscard.R;
-import trente.asia.thankscard.databinding.ChoosePictureDialogBinding;
-import trente.asia.thankscard.databinding.LimitStickerDialogBinding;
-import trente.asia.thankscard.fragments.dialogs.TCDialog;
+import nguyenhoangviet.vpcorp.thankscard.R;
+import nguyenhoangviet.vpcorp.thankscard.databinding.ChoosePictureDialogBinding;
+import nguyenhoangviet.vpcorp.thankscard.databinding.LimitStickerDialogBinding;
+import nguyenhoangviet.vpcorp.thankscard.fragments.dialogs.TCDialog;
 
 /**
  * Created by tien on 7/19/2017.

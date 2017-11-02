@@ -1,4 +1,4 @@
-package trente.asia.thankscard.utils;
+package nguyenhoangviet.vpcorp.thankscard.utils;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -18,9 +18,9 @@ import com.bumptech.glide.Glide;
 
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
-import trente.asia.thankscard.BuildConfig;
-import trente.asia.thankscard.commons.defines.TcConst;
-import trente.asia.thankscard.services.common.model.HistoryModel;
+import nguyenhoangviet.vpcorp.thankscard.BuildConfig;
+import nguyenhoangviet.vpcorp.thankscard.commons.defines.TcConst;
+import nguyenhoangviet.vpcorp.thankscard.services.common.model.HistoryModel;
 
 /**
  * Created by viet on 2/15/2016.

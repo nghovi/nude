@@ -1,4 +1,4 @@
-package trente.asia.calendar.services.user;
+package nguyenhoangviet.vpcorp.calendar.services.user;
 
 import java.io.IOException;
 
@@ -11,15 +11,15 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 
-import trente.asia.calendar.BuildConfig;
-import trente.asia.calendar.R;
-import trente.asia.calendar.commons.defines.ClConst;
-import trente.asia.calendar.services.calendar.MonthlyFragment;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.define.WfUrlConst;
-import trente.asia.welfare.adr.models.SettingModel;
-import trente.asia.welfare.adr.models.UserModel;
-import trente.asia.welfare.adr.services.user.LoginFragment;
+import nguyenhoangviet.vpcorp.calendar.BuildConfig;
+import nguyenhoangviet.vpcorp.calendar.R;
+import nguyenhoangviet.vpcorp.calendar.commons.defines.ClConst;
+import nguyenhoangviet.vpcorp.calendar.services.calendar.MonthlyFragment;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WfUrlConst;
+import nguyenhoangviet.vpcorp.welfare.adr.models.SettingModel;
+import nguyenhoangviet.vpcorp.welfare.adr.models.UserModel;
+import nguyenhoangviet.vpcorp.welfare.adr.services.user.LoginFragment;
 
 /**
  * ClLoginFragment

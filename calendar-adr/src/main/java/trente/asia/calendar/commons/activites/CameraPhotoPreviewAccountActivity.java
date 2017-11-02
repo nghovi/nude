@@ -1,14 +1,14 @@
-package trente.asia.calendar.commons.activites;
+package nguyenhoangviet.vpcorp.calendar.commons.activites;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
-import trente.asia.android.util.AndroidUtil;
-import trente.asia.calendar.R;
-import trente.asia.calendar.commons.fragments.CameraPhotoPreviewAccountFragment;
-import trente.asia.welfare.adr.activity.WelfareActivity;
-import trente.asia.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.android.util.AndroidUtil;
+import nguyenhoangviet.vpcorp.calendar.R;
+import nguyenhoangviet.vpcorp.calendar.commons.fragments.CameraPhotoPreviewAccountFragment;
+import nguyenhoangviet.vpcorp.welfare.adr.activity.WelfareActivity;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
 
 /**
  * Created by PC-Trente on 9/30/2016.

@@ -1,4 +1,4 @@
-package trente.asia.messenger.services.message.model;
+package nguyenhoangviet.vpcorp.messenger.services.message.model;
 
 import android.databinding.BindingAdapter;
 import android.widget.ImageView;
@@ -9,7 +9,7 @@ import io.realm.Realm;
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
-import trente.asia.messenger.BuildConfig;
+import nguyenhoangviet.vpcorp.messenger.BuildConfig;
 
 /**
  * Created by tien on 6/7/2017.

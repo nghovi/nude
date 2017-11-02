@@ -1,14 +1,14 @@
-package trente.asia.calendar.commons.fragments;
+package nguyenhoangviet.vpcorp.calendar.commons.fragments;
 
 import java.util.Date;
 
 import android.os.Bundle;
 
-import trente.asia.android.activity.ChiaseFragment;
-import trente.asia.calendar.BuildConfig;
-import trente.asia.calendar.commons.dialogs.DailySummaryDialog;
-import trente.asia.calendar.commons.views.PageSharingHolder;
-import trente.asia.calendar.services.calendar.ScheduleFormFragment;
+import nguyenhoangviet.vpcorp.android.activity.ChiaseFragment;
+import nguyenhoangviet.vpcorp.calendar.BuildConfig;
+import nguyenhoangviet.vpcorp.calendar.commons.dialogs.DailySummaryDialog;
+import nguyenhoangviet.vpcorp.calendar.commons.views.PageSharingHolder;
+import nguyenhoangviet.vpcorp.calendar.services.calendar.ScheduleFormFragment;
 
 /**
  * ClPageFragment

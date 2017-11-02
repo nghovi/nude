@@ -1,4 +1,4 @@
-package trente.asia.shiftworking.services.requests.adapter;
+package nguyenhoangviet.vpcorp.shiftworking.services.requests.adapter;
 
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;

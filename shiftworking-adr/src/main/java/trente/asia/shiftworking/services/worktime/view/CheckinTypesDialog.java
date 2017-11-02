@@ -1,4 +1,4 @@
-package trente.asia.shiftworking.services.worktime.view;
+package nguyenhoangviet.vpcorp.shiftworking.services.worktime.view;
 
 import java.util.Map;
 
@@ -7,10 +7,10 @@ import android.graphics.drawable.ColorDrawable;
 import android.view.Window;
 import android.widget.TextView;
 
-import trente.asia.android.view.ChiaseListDialog;
-import trente.asia.android.view.ChiaseTextView;
-import trente.asia.shiftworking.R;
-import trente.asia.shiftworking.services.worktime.model.WorkingTimeModel;
+import nguyenhoangviet.vpcorp.android.view.ChiaseListDialog;
+import nguyenhoangviet.vpcorp.android.view.ChiaseTextView;
+import nguyenhoangviet.vpcorp.shiftworking.R;
+import nguyenhoangviet.vpcorp.shiftworking.services.worktime.model.WorkingTimeModel;
 
 /**
  * Created by hviet on 2017/06/07.

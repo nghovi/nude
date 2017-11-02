@@ -1,4 +1,4 @@
-package trente.asia.thankscard.activities;
+package nguyenhoangviet.vpcorp.thankscard.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,17 +11,17 @@ import org.json.JSONObject;
 
 import asia.chiase.core.util.CCStringUtil;
 import io.realm.Realm;
-import trente.asia.thankscard.R;
-import trente.asia.thankscard.commons.defines.TcConst;
-import trente.asia.thankscard.services.common.TCDetailFragment;
-import trente.asia.thankscard.services.common.TcLogInFragment;
-import trente.asia.thankscard.services.common.model.HistoryModel;
-import trente.asia.thankscard.services.mypage.MypageFragment;
-import trente.asia.welfare.adr.activity.WelfareActivity;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.models.UserModel;
-import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
-import trente.asia.welfare.adr.pref.PreferencesSystemUtil;
+import nguyenhoangviet.vpcorp.thankscard.R;
+import nguyenhoangviet.vpcorp.thankscard.commons.defines.TcConst;
+import nguyenhoangviet.vpcorp.thankscard.services.common.TCDetailFragment;
+import nguyenhoangviet.vpcorp.thankscard.services.common.TcLogInFragment;
+import nguyenhoangviet.vpcorp.thankscard.services.common.model.HistoryModel;
+import nguyenhoangviet.vpcorp.thankscard.services.mypage.MypageFragment;
+import nguyenhoangviet.vpcorp.welfare.adr.activity.WelfareActivity;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.models.UserModel;
+import nguyenhoangviet.vpcorp.welfare.adr.pref.PreferencesAccountUtil;
+import nguyenhoangviet.vpcorp.welfare.adr.pref.PreferencesSystemUtil;
 
 public class MainActivity extends WelfareActivity{
 	public boolean loadData = false;

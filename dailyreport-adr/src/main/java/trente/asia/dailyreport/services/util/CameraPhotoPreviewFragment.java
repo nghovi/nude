@@ -1,4 +1,4 @@
-package trente.asia.dailyreport.services.util;
+package nguyenhoangviet.vpcorp.dailyreport.services.util;
 
 import java.io.File;
 import java.util.HashMap;
@@ -17,14 +17,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import trente.asia.android.util.AndroidUtil;
-import trente.asia.dailyreport.BuildConfig;
-import trente.asia.dailyreport.DRConst;
-import trente.asia.dailyreport.R;
-import trente.asia.dailyreport.services.user.DrLoginFragment;
-import trente.asia.dailyreport.utils.DRUtil;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.fragment.AbstractCameraPhotoPreviewFragment;
+import nguyenhoangviet.vpcorp.android.util.AndroidUtil;
+import nguyenhoangviet.vpcorp.dailyreport.BuildConfig;
+import nguyenhoangviet.vpcorp.dailyreport.DRConst;
+import nguyenhoangviet.vpcorp.dailyreport.R;
+import nguyenhoangviet.vpcorp.dailyreport.services.user.DrLoginFragment;
+import nguyenhoangviet.vpcorp.dailyreport.utils.DRUtil;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.fragment.AbstractCameraPhotoPreviewFragment;
 
 /**
  * AbstractCameraPhotoPreviewFragment

@@ -1,4 +1,4 @@
-package trente.asia.shiftworking.services.worktime;
+package nguyenhoangviet.vpcorp.shiftworking.services.worktime;
 
 import android.location.Location;
 import android.os.Bundle;
@@ -28,22 +28,22 @@ import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.android.view.ChiaseListDialog;
-import trente.asia.android.view.ChiaseTextView;
-import trente.asia.shiftworking.R;
-import trente.asia.shiftworking.common.defines.SwConst;
-import trente.asia.shiftworking.common.dialog.SwTimePicker;
-import trente.asia.shiftworking.common.fragments.AbstractLocationFragment;
-import trente.asia.shiftworking.services.transit.WorkTransitListFragment;
-import trente.asia.shiftworking.services.worktime.listener.ItemWorkTimeClickListener;
-import trente.asia.shiftworking.services.worktime.model.CheckinTypeModel;
-import trente.asia.shiftworking.services.worktime.model.ProjectModel;
-import trente.asia.shiftworking.services.worktime.model.WorkingTimeModel;
-import trente.asia.shiftworking.services.worktime.view.CheckinTypesDialog;
-import trente.asia.shiftworking.services.worktime.view.WorkTimeAdapter;
-import trente.asia.welfare.adr.activity.WelfareActivity;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.utils.WelfareUtil;
+import nguyenhoangviet.vpcorp.android.view.ChiaseListDialog;
+import nguyenhoangviet.vpcorp.android.view.ChiaseTextView;
+import nguyenhoangviet.vpcorp.shiftworking.R;
+import nguyenhoangviet.vpcorp.shiftworking.common.defines.SwConst;
+import nguyenhoangviet.vpcorp.shiftworking.common.dialog.SwTimePicker;
+import nguyenhoangviet.vpcorp.shiftworking.common.fragments.AbstractLocationFragment;
+import nguyenhoangviet.vpcorp.shiftworking.services.transit.WorkTransitListFragment;
+import nguyenhoangviet.vpcorp.shiftworking.services.worktime.listener.ItemWorkTimeClickListener;
+import nguyenhoangviet.vpcorp.shiftworking.services.worktime.model.CheckinTypeModel;
+import nguyenhoangviet.vpcorp.shiftworking.services.worktime.model.ProjectModel;
+import nguyenhoangviet.vpcorp.shiftworking.services.worktime.model.WorkingTimeModel;
+import nguyenhoangviet.vpcorp.shiftworking.services.worktime.view.CheckinTypesDialog;
+import nguyenhoangviet.vpcorp.shiftworking.services.worktime.view.WorkTimeAdapter;
+import nguyenhoangviet.vpcorp.welfare.adr.activity.WelfareActivity;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WelfareUtil;
 
 public class WorktimeCheckInFragment extends AbstractLocationFragment{
 

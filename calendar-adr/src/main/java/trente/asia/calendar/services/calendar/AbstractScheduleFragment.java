@@ -1,4 +1,4 @@
-package trente.asia.calendar.services.calendar;
+package nguyenhoangviet.vpcorp.calendar.services.calendar;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,21 +21,21 @@ import android.widget.TextView;
 
 import asia.chiase.core.util.CCBooleanUtil;
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.android.view.ChiaseTextView;
-import trente.asia.android.view.util.CAObjectSerializeUtil;
-import trente.asia.calendar.R;
-import trente.asia.calendar.commons.defines.ClConst;
-import trente.asia.calendar.commons.fragments.AbstractClFragment;
-import trente.asia.calendar.commons.utils.ClRepeatUtil;
-import trente.asia.calendar.commons.utils.ClUtil;
-import trente.asia.calendar.commons.views.UserListLinearLayout;
-import trente.asia.calendar.services.calendar.model.CalendarModel;
-import trente.asia.calendar.services.calendar.model.CategoryModel;
-import trente.asia.calendar.services.calendar.model.RoomModel;
-import trente.asia.calendar.services.calendar.model.ScheduleModel;
-import trente.asia.welfare.adr.models.ApiObjectModel;
-import trente.asia.welfare.adr.models.UserModel;
-import trente.asia.welfare.adr.utils.WelfareUtil;
+import nguyenhoangviet.vpcorp.android.view.ChiaseTextView;
+import nguyenhoangviet.vpcorp.android.view.util.CAObjectSerializeUtil;
+import nguyenhoangviet.vpcorp.calendar.R;
+import nguyenhoangviet.vpcorp.calendar.commons.defines.ClConst;
+import nguyenhoangviet.vpcorp.calendar.commons.fragments.AbstractClFragment;
+import nguyenhoangviet.vpcorp.calendar.commons.utils.ClRepeatUtil;
+import nguyenhoangviet.vpcorp.calendar.commons.utils.ClUtil;
+import nguyenhoangviet.vpcorp.calendar.commons.views.UserListLinearLayout;
+import nguyenhoangviet.vpcorp.calendar.services.calendar.model.CalendarModel;
+import nguyenhoangviet.vpcorp.calendar.services.calendar.model.CategoryModel;
+import nguyenhoangviet.vpcorp.calendar.services.calendar.model.RoomModel;
+import nguyenhoangviet.vpcorp.calendar.services.calendar.model.ScheduleModel;
+import nguyenhoangviet.vpcorp.welfare.adr.models.ApiObjectModel;
+import nguyenhoangviet.vpcorp.welfare.adr.models.UserModel;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WelfareUtil;
 
 /**
  * AbstractScheduleFragment

@@ -1,4 +1,4 @@
-package trente.asia.shiftworking.services.requests.edit;
+package nguyenhoangviet.vpcorp.shiftworking.services.requests.edit;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -11,10 +11,10 @@ import org.json.JSONObject;
 
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.shiftworking.R;
-import trente.asia.shiftworking.common.defines.SwConst;
-import trente.asia.shiftworking.databinding.FragmentHolidayWorkingEditBinding;
-import trente.asia.welfare.adr.models.HolidayWorkingModel;
+import nguyenhoangviet.vpcorp.shiftworking.R;
+import nguyenhoangviet.vpcorp.shiftworking.common.defines.SwConst;
+import nguyenhoangviet.vpcorp.shiftworking.databinding.FragmentHolidayWorkingEditBinding;
+import nguyenhoangviet.vpcorp.welfare.adr.models.HolidayWorkingModel;
 
 /**
  * Created by chi on 9/22/2017.

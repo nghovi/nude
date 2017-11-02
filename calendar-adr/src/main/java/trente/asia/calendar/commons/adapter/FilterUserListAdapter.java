@@ -1,4 +1,4 @@
-package trente.asia.calendar.commons.adapter;
+package nguyenhoangviet.vpcorp.calendar.commons.adapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,13 +16,13 @@ import android.widget.TextView;
 
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.android.listener.CsOnCheckedChangeListener;
-import trente.asia.android.view.layout.CheckableLinearLayout;
-import trente.asia.calendar.BuildConfig;
-import trente.asia.calendar.R;
-import trente.asia.welfare.adr.models.UserModel;
-import trente.asia.welfare.adr.utils.WelfareUtil;
-import trente.asia.welfare.adr.utils.WfPicassoHelper;
+import nguyenhoangviet.vpcorp.android.listener.CsOnCheckedChangeListener;
+import nguyenhoangviet.vpcorp.android.view.layout.CheckableLinearLayout;
+import nguyenhoangviet.vpcorp.calendar.BuildConfig;
+import nguyenhoangviet.vpcorp.calendar.R;
+import nguyenhoangviet.vpcorp.welfare.adr.models.UserModel;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WelfareUtil;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WfPicassoHelper;
 
 /**
  * FilterUserListAdapter

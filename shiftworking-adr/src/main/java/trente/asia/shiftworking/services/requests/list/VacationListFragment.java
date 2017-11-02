@@ -1,4 +1,4 @@
-package trente.asia.shiftworking.services.requests.list;
+package nguyenhoangviet.vpcorp.shiftworking.services.requests.list;
 
 import org.json.JSONObject;
 
@@ -12,13 +12,13 @@ import java.util.ArrayList;
 
 import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCJsonUtil;
-import trente.asia.shiftworking.R;
-import trente.asia.shiftworking.common.defines.SwConst;
-import trente.asia.shiftworking.services.requests.detail.VacationDetailFragment;
-import trente.asia.welfare.adr.models.ApiObjectModel;
-import trente.asia.welfare.adr.models.DeptModel;
-import trente.asia.welfare.adr.models.UserModel;
-import trente.asia.welfare.adr.models.VacationRequestModel;
+import nguyenhoangviet.vpcorp.shiftworking.R;
+import nguyenhoangviet.vpcorp.shiftworking.common.defines.SwConst;
+import nguyenhoangviet.vpcorp.shiftworking.services.requests.detail.VacationDetailFragment;
+import nguyenhoangviet.vpcorp.welfare.adr.models.ApiObjectModel;
+import nguyenhoangviet.vpcorp.welfare.adr.models.DeptModel;
+import nguyenhoangviet.vpcorp.welfare.adr.models.UserModel;
+import nguyenhoangviet.vpcorp.welfare.adr.models.VacationRequestModel;
 
 public class VacationListFragment extends AbstractListFragment{
 

@@ -1,4 +1,4 @@
-package trente.asia.calendar.commons.utils;
+package nguyenhoangviet.vpcorp.calendar.commons.utils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -14,13 +14,13 @@ import android.os.Environment;
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.calendar.commons.defines.ClConst;
-import trente.asia.calendar.services.calendar.model.CategoryModel;
-import trente.asia.calendar.services.calendar.model.RoomModel;
-import trente.asia.calendar.services.calendar.model.ScheduleModel;
-import trente.asia.calendar.services.calendar.view.MonthlyCalendarDayView;
-import trente.asia.welfare.adr.models.UserModel;
-import trente.asia.welfare.adr.utils.WelfareFormatUtil;
+import nguyenhoangviet.vpcorp.calendar.commons.defines.ClConst;
+import nguyenhoangviet.vpcorp.calendar.services.calendar.model.CategoryModel;
+import nguyenhoangviet.vpcorp.calendar.services.calendar.model.RoomModel;
+import nguyenhoangviet.vpcorp.calendar.services.calendar.model.ScheduleModel;
+import nguyenhoangviet.vpcorp.calendar.services.calendar.view.MonthlyCalendarDayView;
+import nguyenhoangviet.vpcorp.welfare.adr.models.UserModel;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WelfareFormatUtil;
 
 /**
  * Created by PC-Trente on 10/3/2016.

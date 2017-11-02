@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<trente.asia.welfare.adr.view.WfSpinner style="@style/cs_common_match_wrap"
+<nguyenhoangviet.vpcorp.welfare.adr.view.WfSpinner style="@style/cs_common_match_wrap"
                                         xmlns:android="http://schemas.android.com/apk/res/android"
                                         android:background="@drawable/wf_background_gray_border_white"
                                         android:orientation="horizontal">
@@ -21,6 +21,6 @@
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-</trente.asia.welfare.adr.view.WfSpinner>
+</nguyenhoangviet.vpcorp.welfare.adr.view.WfSpinner>
 
 

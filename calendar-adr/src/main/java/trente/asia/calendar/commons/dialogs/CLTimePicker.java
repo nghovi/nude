@@ -1,4 +1,4 @@
-package trente.asia.calendar.commons.dialogs;
+package nguyenhoangviet.vpcorp.calendar.commons.dialogs;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -10,8 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.NumberPicker;
 
-import trente.asia.calendar.commons.OnTimePickerListener;
-import trente.asia.calendar.R;
+import nguyenhoangviet.vpcorp.calendar.commons.OnTimePickerListener;
+import nguyenhoangviet.vpcorp.calendar.R;
 
 /**
  * Created by chi on 10/23/2017.

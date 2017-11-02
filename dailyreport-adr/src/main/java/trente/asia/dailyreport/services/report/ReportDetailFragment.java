@@ -1,4 +1,4 @@
-package trente.asia.dailyreport.services.report;
+package nguyenhoangviet.vpcorp.dailyreport.services.report;
 
 import java.io.File;
 
@@ -30,34 +30,34 @@ import android.widget.Toast;
 
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.android.util.AndroidUtil;
-import trente.asia.android.util.DownloadFileManager;
-import trente.asia.android.util.OpenDownloadedFile;
-import trente.asia.android.view.ChiaseDownloadFileDialog;
-import trente.asia.android.view.ChiaseEditText;
-import trente.asia.android.view.ChiaseListViewNoScroll;
-import trente.asia.dailyreport.BuildConfig;
-import trente.asia.dailyreport.DRConst;
-import trente.asia.dailyreport.R;
-import trente.asia.dailyreport.activities.CameraPhotoPreviewActivity;
-import trente.asia.dailyreport.activities.FilePreviewActivity;
-import trente.asia.dailyreport.activities.MainDLActivity;
-import trente.asia.dailyreport.dialogs.DRDialog;
-import trente.asia.dailyreport.fragments.AbstractDRFragment;
-import trente.asia.dailyreport.services.comment.menu.CommentMenuManager;
-import trente.asia.dailyreport.services.report.model.DRMessageContentModel;
-import trente.asia.dailyreport.services.report.model.ReportModel;
-import trente.asia.dailyreport.services.report.view.CommentListAdapter;
-import trente.asia.dailyreport.utils.DRUtil;
-import trente.asia.welfare.adr.activity.WelfareActivity;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.dialog.WfDialog;
-import trente.asia.welfare.adr.menu.OnMenuButtonsListener;
-import trente.asia.welfare.adr.menu.OnMenuManageListener;
-import trente.asia.welfare.adr.models.CommentModel;
-import trente.asia.welfare.adr.models.LikeModel;
-import trente.asia.welfare.adr.models.UserModel;
-import trente.asia.welfare.adr.utils.WelfareUtil;
+import nguyenhoangviet.vpcorp.android.util.AndroidUtil;
+import nguyenhoangviet.vpcorp.android.util.DownloadFileManager;
+import nguyenhoangviet.vpcorp.android.util.OpenDownloadedFile;
+import nguyenhoangviet.vpcorp.android.view.ChiaseDownloadFileDialog;
+import nguyenhoangviet.vpcorp.android.view.ChiaseEditText;
+import nguyenhoangviet.vpcorp.android.view.ChiaseListViewNoScroll;
+import nguyenhoangviet.vpcorp.dailyreport.BuildConfig;
+import nguyenhoangviet.vpcorp.dailyreport.DRConst;
+import nguyenhoangviet.vpcorp.dailyreport.R;
+import nguyenhoangviet.vpcorp.dailyreport.activities.CameraPhotoPreviewActivity;
+import nguyenhoangviet.vpcorp.dailyreport.activities.FilePreviewActivity;
+import nguyenhoangviet.vpcorp.dailyreport.activities.MainDLActivity;
+import nguyenhoangviet.vpcorp.dailyreport.dialogs.DRDialog;
+import nguyenhoangviet.vpcorp.dailyreport.fragments.AbstractDRFragment;
+import nguyenhoangviet.vpcorp.dailyreport.services.comment.menu.CommentMenuManager;
+import nguyenhoangviet.vpcorp.dailyreport.services.report.model.DRMessageContentModel;
+import nguyenhoangviet.vpcorp.dailyreport.services.report.model.ReportModel;
+import nguyenhoangviet.vpcorp.dailyreport.services.report.view.CommentListAdapter;
+import nguyenhoangviet.vpcorp.dailyreport.utils.DRUtil;
+import nguyenhoangviet.vpcorp.welfare.adr.activity.WelfareActivity;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.dialog.WfDialog;
+import nguyenhoangviet.vpcorp.welfare.adr.menu.OnMenuButtonsListener;
+import nguyenhoangviet.vpcorp.welfare.adr.menu.OnMenuManageListener;
+import nguyenhoangviet.vpcorp.welfare.adr.models.CommentModel;
+import nguyenhoangviet.vpcorp.welfare.adr.models.LikeModel;
+import nguyenhoangviet.vpcorp.welfare.adr.models.UserModel;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WelfareUtil;
 
 /**
  * Created by viet on 2/15/2016.

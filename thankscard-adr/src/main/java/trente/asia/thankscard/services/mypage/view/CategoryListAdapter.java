@@ -1,4 +1,4 @@
-package trente.asia.thankscard.services.mypage.view;
+package nguyenhoangviet.vpcorp.thankscard.services.mypage.view;
 
 import java.util.List;
 
@@ -10,8 +10,8 @@ import android.widget.ArrayAdapter;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
-import trente.asia.thankscard.R;
-import trente.asia.thankscard.services.common.model.Category;
+import nguyenhoangviet.vpcorp.thankscard.R;
+import nguyenhoangviet.vpcorp.thankscard.services.common.model.Category;
 
 /**
  * Created by viet on 3/16/2016.

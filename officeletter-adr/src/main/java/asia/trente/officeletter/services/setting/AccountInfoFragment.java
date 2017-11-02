@@ -29,12 +29,12 @@ import asia.trente.officeletter.R;
 import asia.trente.officeletter.commons.activities.CameraPhotoPreviewAccountActivity;
 import asia.trente.officeletter.commons.fragment.AbstractOLFragment;
 import asia.trente.officeletter.commons.utils.OLUtils;
-import trente.asia.android.util.AndroidUtil;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.define.WfUrlConst;
-import trente.asia.welfare.adr.models.SettingModel;
-import trente.asia.welfare.adr.utils.WelfareUtil;
-import trente.asia.welfare.adr.utils.WfPicassoHelper;
+import nguyenhoangviet.vpcorp.android.util.AndroidUtil;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WfUrlConst;
+import nguyenhoangviet.vpcorp.welfare.adr.models.SettingModel;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WelfareUtil;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WfPicassoHelper;
 
 /**
  * Created by viet on 2/15/2016.
@@ -162,7 +162,7 @@ public class AccountInfoFragment extends AbstractOLFragment implements AvatarSel
 			if(data != null){
 				String detailMessage = data.getExtras().getString("detail");
 				if(WelfareConst.WF_FILE_SIZE_NG.equals(detailMessage)){
-					alertDialog.setMessage(getString(trente.asia.welfare.adr.R.string.wf_invalid_photo_over));
+					alertDialog.setMessage(getString(nguyenhoangviet.vpcorp.welfare.adr.R.string.wf_invalid_photo_over));
 					alertDialog.show();
 				}else{
 					String imagePath = data.getExtras().getString(WelfareConst.IMAGE_PATH_KEY);

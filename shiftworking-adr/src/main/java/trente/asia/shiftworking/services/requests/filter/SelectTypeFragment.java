@@ -1,4 +1,4 @@
-package trente.asia.shiftworking.services.requests.filter;
+package nguyenhoangviet.vpcorp.shiftworking.services.requests.filter;
 
 import java.util.List;
 
@@ -12,12 +12,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import trente.asia.shiftworking.R;
-import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
-import trente.asia.shiftworking.common.interfaces.OnTypeAdapterListener;
-import trente.asia.shiftworking.databinding.FragmentSelectTypeBinding;
-import trente.asia.shiftworking.services.requests.adapter.TypeAdapter;
-import trente.asia.welfare.adr.models.ApiObjectModel;
+import nguyenhoangviet.vpcorp.shiftworking.R;
+import nguyenhoangviet.vpcorp.shiftworking.common.fragments.AbstractSwFragment;
+import nguyenhoangviet.vpcorp.shiftworking.common.interfaces.OnTypeAdapterListener;
+import nguyenhoangviet.vpcorp.shiftworking.databinding.FragmentSelectTypeBinding;
+import nguyenhoangviet.vpcorp.shiftworking.services.requests.adapter.TypeAdapter;
+import nguyenhoangviet.vpcorp.welfare.adr.models.ApiObjectModel;
 
 /**
  * Created by tien on 9/21/2017.

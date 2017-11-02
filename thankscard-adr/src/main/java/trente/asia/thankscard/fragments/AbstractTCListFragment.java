@@ -1,4 +1,4 @@
-package trente.asia.thankscard.fragments;
+package nguyenhoangviet.vpcorp.thankscard.fragments;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -21,20 +21,20 @@ import android.widget.TextView;
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
-import trente.asia.thankscard.R;
-import trente.asia.thankscard.activities.MainActivity;
-import trente.asia.thankscard.commons.defines.TcConst;
-import trente.asia.thankscard.services.common.TCDetailFragment;
-import trente.asia.thankscard.services.common.model.Category;
-import trente.asia.thankscard.services.common.model.HistoryModel;
-import trente.asia.thankscard.services.common.model.Template;
-import trente.asia.thankscard.services.posted.PostTCFragment;
-import trente.asia.thankscard.services.rank.view.TCTabLinearLayout;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.models.DeptModel;
-import trente.asia.welfare.adr.models.UserModel;
-import trente.asia.welfare.adr.utils.WelfareUtil;
-import trente.asia.welfare.adr.view.WfSpinner;
+import nguyenhoangviet.vpcorp.thankscard.R;
+import nguyenhoangviet.vpcorp.thankscard.activities.MainActivity;
+import nguyenhoangviet.vpcorp.thankscard.commons.defines.TcConst;
+import nguyenhoangviet.vpcorp.thankscard.services.common.TCDetailFragment;
+import nguyenhoangviet.vpcorp.thankscard.services.common.model.Category;
+import nguyenhoangviet.vpcorp.thankscard.services.common.model.HistoryModel;
+import nguyenhoangviet.vpcorp.thankscard.services.common.model.Template;
+import nguyenhoangviet.vpcorp.thankscard.services.posted.PostTCFragment;
+import nguyenhoangviet.vpcorp.thankscard.services.rank.view.TCTabLinearLayout;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.models.DeptModel;
+import nguyenhoangviet.vpcorp.welfare.adr.models.UserModel;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WelfareUtil;
+import nguyenhoangviet.vpcorp.welfare.adr.view.WfSpinner;
 
 /**
  * Created by viet on 2/15/2016.

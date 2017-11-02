@@ -1,4 +1,4 @@
-package trente.asia.thankscard.services.common;
+package nguyenhoangviet.vpcorp.thankscard.services.common;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,15 +15,15 @@ import java.util.List;
 
 import asia.chiase.core.util.CCJsonUtil;
 import io.realm.Realm;
-import trente.asia.thankscard.BuildConfig;
-import trente.asia.thankscard.R;
-import trente.asia.thankscard.commons.defines.TcConst;
-import trente.asia.thankscard.services.mypage.MypageFragment;
-import trente.asia.thankscard.services.mypage.model.StampCategoryModel;
-import trente.asia.thankscard.services.mypage.model.StampModel;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.define.WfUrlConst;
-import trente.asia.welfare.adr.services.user.LoginFragment;
+import nguyenhoangviet.vpcorp.thankscard.BuildConfig;
+import nguyenhoangviet.vpcorp.thankscard.R;
+import nguyenhoangviet.vpcorp.thankscard.commons.defines.TcConst;
+import nguyenhoangviet.vpcorp.thankscard.services.mypage.MypageFragment;
+import nguyenhoangviet.vpcorp.thankscard.services.mypage.model.StampCategoryModel;
+import nguyenhoangviet.vpcorp.thankscard.services.mypage.model.StampModel;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WfUrlConst;
+import nguyenhoangviet.vpcorp.welfare.adr.services.user.LoginFragment;
 
 /**
  * Created by viet on 2/15/2016.

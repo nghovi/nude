@@ -1,4 +1,4 @@
-package trente.asia.dailyreport.services.other;
+package nguyenhoangviet.vpcorp.dailyreport.services.other;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -29,27 +29,27 @@ import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.android.util.CsDateUtil;
-import trente.asia.dailyreport.BuildConfig;
-import trente.asia.dailyreport.DRConst;
-import trente.asia.dailyreport.R;
-import trente.asia.dailyreport.fragments.AbstractDRFragment;
-import trente.asia.dailyreport.services.other.view.OtherReportListAdapter;
-import trente.asia.dailyreport.services.report.MyReportFragment;
-import trente.asia.dailyreport.services.report.model.DRDeptModel;
-import trente.asia.dailyreport.services.report.model.DRUserModel;
-import trente.asia.dailyreport.services.report.model.Holiday;
-import trente.asia.dailyreport.services.report.model.ReportModel;
-import trente.asia.dailyreport.services.report.model.WorkingSymbolModel;
-import trente.asia.dailyreport.utils.DRUtil;
-import trente.asia.dailyreport.view.DRCalendarHeader;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.dialog.WfProfileDialog;
-import trente.asia.welfare.adr.models.DeptModel;
-import trente.asia.welfare.adr.models.UserModel;
-import trente.asia.welfare.adr.utils.WfPicassoHelper;
-import trente.asia.welfare.adr.view.SelectableRoundedImageView;
-import trente.asia.welfare.adr.view.WfSpinner;
+import nguyenhoangviet.vpcorp.android.util.CsDateUtil;
+import nguyenhoangviet.vpcorp.dailyreport.BuildConfig;
+import nguyenhoangviet.vpcorp.dailyreport.DRConst;
+import nguyenhoangviet.vpcorp.dailyreport.R;
+import nguyenhoangviet.vpcorp.dailyreport.fragments.AbstractDRFragment;
+import nguyenhoangviet.vpcorp.dailyreport.services.other.view.OtherReportListAdapter;
+import nguyenhoangviet.vpcorp.dailyreport.services.report.MyReportFragment;
+import nguyenhoangviet.vpcorp.dailyreport.services.report.model.DRDeptModel;
+import nguyenhoangviet.vpcorp.dailyreport.services.report.model.DRUserModel;
+import nguyenhoangviet.vpcorp.dailyreport.services.report.model.Holiday;
+import nguyenhoangviet.vpcorp.dailyreport.services.report.model.ReportModel;
+import nguyenhoangviet.vpcorp.dailyreport.services.report.model.WorkingSymbolModel;
+import nguyenhoangviet.vpcorp.dailyreport.utils.DRUtil;
+import nguyenhoangviet.vpcorp.dailyreport.view.DRCalendarHeader;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.dialog.WfProfileDialog;
+import nguyenhoangviet.vpcorp.welfare.adr.models.DeptModel;
+import nguyenhoangviet.vpcorp.welfare.adr.models.UserModel;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WfPicassoHelper;
+import nguyenhoangviet.vpcorp.welfare.adr.view.SelectableRoundedImageView;
+import nguyenhoangviet.vpcorp.welfare.adr.view.WfSpinner;
 
 /**
  * Created by viet on 2/15/2016.

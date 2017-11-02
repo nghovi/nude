@@ -1,4 +1,4 @@
-package trente.asia.team360.common.fragments;
+package nguyenhoangviet.vpcorp.team360.common.fragments;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -8,14 +8,14 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import trente.asia.team360.BuildConfig;
-import trente.asia.team360.R;
-import trente.asia.team360.services.camera.TmCameraViewFragment;
-import trente.asia.team360.services.login.TmLoginFragment;
-import trente.asia.team360.services.member.TmMemberViewFragment;
-import trente.asia.team360.services.setting.TmSettingViewFragment;
-import trente.asia.welfare.adr.activity.WelfareFragment;
-import trente.asia.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.team360.BuildConfig;
+import nguyenhoangviet.vpcorp.team360.R;
+import nguyenhoangviet.vpcorp.team360.services.camera.TmCameraViewFragment;
+import nguyenhoangviet.vpcorp.team360.services.login.TmLoginFragment;
+import nguyenhoangviet.vpcorp.team360.services.member.TmMemberViewFragment;
+import nguyenhoangviet.vpcorp.team360.services.setting.TmSettingViewFragment;
+import nguyenhoangviet.vpcorp.welfare.adr.activity.WelfareFragment;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
 
 /**
  * A simple {@link Fragment} subclass.

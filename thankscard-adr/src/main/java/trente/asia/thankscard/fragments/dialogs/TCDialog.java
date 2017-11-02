@@ -1,4 +1,4 @@
-package trente.asia.thankscard.fragments.dialogs;
+package nguyenhoangviet.vpcorp.thankscard.fragments.dialogs;
 
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;

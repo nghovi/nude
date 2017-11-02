@@ -1,4 +1,4 @@
-package trente.asia.team360.services.member;
+package nguyenhoangviet.vpcorp.team360.services.member;
 
 import android.content.Context;
 import android.databinding.BindingAdapter;
@@ -14,10 +14,10 @@ import com.squareup.picasso.Picasso;
 import asia.chiase.core.util.CCCollectionUtil;
 import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
-import trente.asia.team360.BuildConfig;
-import trente.asia.team360.R;
-import trente.asia.team360.databinding.ViewGridMemberBinding;
-import trente.asia.team360.services.entity.UserEntity;
+import nguyenhoangviet.vpcorp.team360.BuildConfig;
+import nguyenhoangviet.vpcorp.team360.R;
+import nguyenhoangviet.vpcorp.team360.databinding.ViewGridMemberBinding;
+import nguyenhoangviet.vpcorp.team360.services.entity.UserEntity;
 
 /**
  * Created by rakuishi on 6/22/14.

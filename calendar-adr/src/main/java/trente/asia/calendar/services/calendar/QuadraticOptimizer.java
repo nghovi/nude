@@ -5,7 +5,7 @@
  */
 
 // Package
-package trente.asia.calendar.services.calendar;
+package nguyenhoangviet.vpcorp.calendar.services.calendar;
 
 // Constraint optimizer class
 public class QuadraticOptimizer

@@ -1,4 +1,4 @@
-package trente.asia.thankscard.fragments.dialogs;
+package nguyenhoangviet.vpcorp.thankscard.fragments.dialogs;
 
 import java.util.List;
 
@@ -7,9 +7,9 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import trente.asia.thankscard.R;
-import trente.asia.thankscard.services.rank.model.RankStage;
-import trente.asia.thankscard.services.rank.view.RankStageListAdapter;
+import nguyenhoangviet.vpcorp.thankscard.R;
+import nguyenhoangviet.vpcorp.thankscard.services.rank.model.RankStage;
+import nguyenhoangviet.vpcorp.thankscard.services.rank.view.RankStageListAdapter;
 
 /**
  * Created by viet on 3/16/2016.

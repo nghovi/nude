@@ -1,8 +1,8 @@
-package trente.asia.messenger.services.message.listener;
+package nguyenhoangviet.vpcorp.messenger.services.message.listener;
 
-import trente.asia.android.view.model.ChiaseListItemModel;
-import trente.asia.messenger.services.message.model.MessageContentModel;
-import trente.asia.messenger.services.message.model.RealmMessageModel;
+import nguyenhoangviet.vpcorp.android.view.model.ChiaseListItemModel;
+import nguyenhoangviet.vpcorp.messenger.services.message.model.MessageContentModel;
+import nguyenhoangviet.vpcorp.messenger.services.message.model.RealmMessageModel;
 
 /**
  * OnActionClickListener

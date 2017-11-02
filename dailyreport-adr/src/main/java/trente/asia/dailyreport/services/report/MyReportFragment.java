@@ -1,4 +1,4 @@
-package trente.asia.dailyreport.services.report;
+package nguyenhoangviet.vpcorp.dailyreport.services.report;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -24,20 +24,20 @@ import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.dailyreport.DRConst;
-import trente.asia.dailyreport.R;
-import trente.asia.dailyreport.fragments.AbstractDRFragment;
-import trente.asia.dailyreport.services.report.model.Holiday;
-import trente.asia.dailyreport.services.report.model.ReportModel;
-import trente.asia.dailyreport.services.report.model.WorkingSymbolModel;
-import trente.asia.dailyreport.services.report.view.DRCalendarView;
-import trente.asia.dailyreport.services.report.view.MyReportListAdapter;
-import trente.asia.dailyreport.utils.DRUtil;
-import trente.asia.dailyreport.view.DRCalendarHeader;
-import trente.asia.welfare.adr.activity.WelfareActivity;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.models.ApiObjectModel;
-import trente.asia.welfare.adr.models.UserModel;
+import nguyenhoangviet.vpcorp.dailyreport.DRConst;
+import nguyenhoangviet.vpcorp.dailyreport.R;
+import nguyenhoangviet.vpcorp.dailyreport.fragments.AbstractDRFragment;
+import nguyenhoangviet.vpcorp.dailyreport.services.report.model.Holiday;
+import nguyenhoangviet.vpcorp.dailyreport.services.report.model.ReportModel;
+import nguyenhoangviet.vpcorp.dailyreport.services.report.model.WorkingSymbolModel;
+import nguyenhoangviet.vpcorp.dailyreport.services.report.view.DRCalendarView;
+import nguyenhoangviet.vpcorp.dailyreport.services.report.view.MyReportListAdapter;
+import nguyenhoangviet.vpcorp.dailyreport.utils.DRUtil;
+import nguyenhoangviet.vpcorp.dailyreport.view.DRCalendarHeader;
+import nguyenhoangviet.vpcorp.welfare.adr.activity.WelfareActivity;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.models.ApiObjectModel;
+import nguyenhoangviet.vpcorp.welfare.adr.models.UserModel;
 
 /**
  * Created by viet on 2/15/2016.

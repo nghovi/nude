@@ -1,4 +1,4 @@
-package trente.asia.calendar.services.calendar;
+package nguyenhoangviet.vpcorp.calendar.services.calendar;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -17,14 +17,14 @@ import android.widget.TextView;
 
 import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
-import trente.asia.android.util.CsDateUtil;
-import trente.asia.calendar.R;
-import trente.asia.calendar.commons.fragments.ClPageFragment;
-import trente.asia.calendar.commons.fragments.PageContainerFragment;
-import trente.asia.calendar.services.calendar.view.SchedulesPagerAdapter;
-import trente.asia.calendar.services.calendar.view.WeeklySchedulesPagerAdapter;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.utils.WelfareUtil;
+import nguyenhoangviet.vpcorp.android.util.CsDateUtil;
+import nguyenhoangviet.vpcorp.calendar.R;
+import nguyenhoangviet.vpcorp.calendar.commons.fragments.ClPageFragment;
+import nguyenhoangviet.vpcorp.calendar.commons.fragments.PageContainerFragment;
+import nguyenhoangviet.vpcorp.calendar.services.calendar.view.SchedulesPagerAdapter;
+import nguyenhoangviet.vpcorp.calendar.services.calendar.view.WeeklySchedulesPagerAdapter;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WelfareUtil;
 
 /**
  * WeeklyFragment

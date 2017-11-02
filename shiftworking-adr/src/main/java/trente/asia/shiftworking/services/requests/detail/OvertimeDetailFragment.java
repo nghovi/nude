@@ -1,4 +1,4 @@
-package trente.asia.shiftworking.services.requests.detail;
+package nguyenhoangviet.vpcorp.shiftworking.services.requests.detail;
 
 import java.util.List;
 import java.util.Map;
@@ -14,16 +14,16 @@ import android.view.ViewGroup;
 import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.shiftworking.R;
-import trente.asia.shiftworking.common.activities.MainActivity;
-import trente.asia.shiftworking.common.defines.SwConst;
-import trente.asia.shiftworking.databinding.FragmentOvertimeDetailBinding;
-import trente.asia.shiftworking.services.requests.edit.OvertimeEditFragment;
-import trente.asia.welfare.adr.models.OvertimeRequestModel;
-import trente.asia.welfare.adr.activity.WelfareActivity;
-import trente.asia.welfare.adr.models.ApiObjectModel;
-import trente.asia.welfare.adr.models.ApproveHistory;
-import trente.asia.welfare.adr.utils.WelfareFormatUtil;
+import nguyenhoangviet.vpcorp.shiftworking.R;
+import nguyenhoangviet.vpcorp.shiftworking.common.activities.MainActivity;
+import nguyenhoangviet.vpcorp.shiftworking.common.defines.SwConst;
+import nguyenhoangviet.vpcorp.shiftworking.databinding.FragmentOvertimeDetailBinding;
+import nguyenhoangviet.vpcorp.shiftworking.services.requests.edit.OvertimeEditFragment;
+import nguyenhoangviet.vpcorp.welfare.adr.models.OvertimeRequestModel;
+import nguyenhoangviet.vpcorp.welfare.adr.activity.WelfareActivity;
+import nguyenhoangviet.vpcorp.welfare.adr.models.ApiObjectModel;
+import nguyenhoangviet.vpcorp.welfare.adr.models.ApproveHistory;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WelfareFormatUtil;
 
 public class OvertimeDetailFragment extends AbstractDetailFragment {
 

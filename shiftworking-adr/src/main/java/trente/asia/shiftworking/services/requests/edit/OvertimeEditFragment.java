@@ -1,4 +1,4 @@
-package trente.asia.shiftworking.services.requests.edit;
+package nguyenhoangviet.vpcorp.shiftworking.services.requests.edit;
 
 import java.util.List;
 import java.util.Map;
@@ -15,15 +15,15 @@ import android.view.ViewGroup;
 
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.android.view.ChiaseListDialog;
-import trente.asia.shiftworking.R;
-import trente.asia.shiftworking.common.defines.SwConst;
-import trente.asia.shiftworking.common.dialog.SwTimePicker;
-import trente.asia.shiftworking.common.interfaces.OnTimePickerListener;
-import trente.asia.shiftworking.databinding.FragmentOvertimeEditBinding;
-import trente.asia.welfare.adr.models.OvertimeRequestModel;
-import trente.asia.welfare.adr.models.ApiObjectModel;
-import trente.asia.welfare.adr.utils.WelfareFormatUtil;
+import nguyenhoangviet.vpcorp.android.view.ChiaseListDialog;
+import nguyenhoangviet.vpcorp.shiftworking.R;
+import nguyenhoangviet.vpcorp.shiftworking.common.defines.SwConst;
+import nguyenhoangviet.vpcorp.shiftworking.common.dialog.SwTimePicker;
+import nguyenhoangviet.vpcorp.shiftworking.common.interfaces.OnTimePickerListener;
+import nguyenhoangviet.vpcorp.shiftworking.databinding.FragmentOvertimeEditBinding;
+import nguyenhoangviet.vpcorp.welfare.adr.models.OvertimeRequestModel;
+import nguyenhoangviet.vpcorp.welfare.adr.models.ApiObjectModel;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WelfareFormatUtil;
 
 /**
  * Created by chi on 9/22/2017.

@@ -1,14 +1,14 @@
-package trente.asia.dailyreport.activities;
+package nguyenhoangviet.vpcorp.dailyreport.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
-import trente.asia.android.util.AndroidUtil;
-import trente.asia.dailyreport.R;
-import trente.asia.dailyreport.services.util.CameraPhotoPreviewFragment;
-import trente.asia.welfare.adr.activity.WelfareActivity;
-import trente.asia.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.android.util.AndroidUtil;
+import nguyenhoangviet.vpcorp.dailyreport.R;
+import nguyenhoangviet.vpcorp.dailyreport.services.util.CameraPhotoPreviewFragment;
+import nguyenhoangviet.vpcorp.welfare.adr.activity.WelfareActivity;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
 
 public class CameraPhotoPreviewActivity extends WelfareActivity{
 

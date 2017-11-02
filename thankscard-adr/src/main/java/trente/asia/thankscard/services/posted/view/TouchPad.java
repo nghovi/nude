@@ -1,4 +1,4 @@
-package trente.asia.thankscard.services.posted.view;
+package nguyenhoangviet.vpcorp.thankscard.services.posted.view;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
@@ -8,7 +8,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 
-import trente.asia.welfare.adr.utils.WelfareUtil;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WelfareUtil;
 
 /**
  * Created by tien on 7/17/2017.

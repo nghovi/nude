@@ -1,4 +1,4 @@
-package trente.asia.shiftworking.services.transit.activity;
+package nguyenhoangviet.vpcorp.shiftworking.services.transit.activity;
 
 import java.util.List;
 
@@ -15,10 +15,10 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.shiftworking.R;
-import trente.asia.shiftworking.common.defines.SwConst;
-import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
-import trente.asia.shiftworking.services.transit.view.PlaceHistoryAdapter;
+import nguyenhoangviet.vpcorp.shiftworking.R;
+import nguyenhoangviet.vpcorp.shiftworking.common.defines.SwConst;
+import nguyenhoangviet.vpcorp.shiftworking.common.fragments.AbstractSwFragment;
+import nguyenhoangviet.vpcorp.shiftworking.services.transit.view.PlaceHistoryAdapter;
 
 /**
  * PlaceHistoryFragment

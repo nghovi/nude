@@ -1,4 +1,4 @@
-package trente.asia.calendar.services.calendar;
+package nguyenhoangviet.vpcorp.calendar.services.calendar;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,16 +18,16 @@ import android.widget.ListView;
 
 import asia.chiase.core.util.CCCollectionUtil;
 import asia.chiase.core.util.CCJsonUtil;
-import trente.asia.android.listener.CsOnCheckedChangeListener;
-import trente.asia.calendar.R;
-import trente.asia.calendar.commons.defines.ClConst;
-import trente.asia.calendar.commons.fragments.AbstractClFragment;
-import trente.asia.calendar.commons.utils.ClUtil;
-import trente.asia.calendar.commons.views.MyCalendarLinearLayout;
-import trente.asia.calendar.services.calendar.listener.OnChangeCalendarListener;
-import trente.asia.calendar.services.calendar.model.CalendarModel;
-import trente.asia.calendar.services.calendar.view.CalendarAdapter;
-import trente.asia.welfare.adr.models.UserModel;
+import nguyenhoangviet.vpcorp.android.listener.CsOnCheckedChangeListener;
+import nguyenhoangviet.vpcorp.calendar.R;
+import nguyenhoangviet.vpcorp.calendar.commons.defines.ClConst;
+import nguyenhoangviet.vpcorp.calendar.commons.fragments.AbstractClFragment;
+import nguyenhoangviet.vpcorp.calendar.commons.utils.ClUtil;
+import nguyenhoangviet.vpcorp.calendar.commons.views.MyCalendarLinearLayout;
+import nguyenhoangviet.vpcorp.calendar.services.calendar.listener.OnChangeCalendarListener;
+import nguyenhoangviet.vpcorp.calendar.services.calendar.model.CalendarModel;
+import nguyenhoangviet.vpcorp.calendar.services.calendar.view.CalendarAdapter;
+import nguyenhoangviet.vpcorp.welfare.adr.models.UserModel;
 
 /**
  * CalendarListFragment

@@ -1,4 +1,4 @@
-package trente.asia.shiftworking.services.transit;
+package nguyenhoangviet.vpcorp.shiftworking.services.transit;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,27 +33,27 @@ import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCNumberUtil;
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.android.util.AndroidUtil;
-import trente.asia.android.view.ChiaseImageView;
-import trente.asia.android.view.ChiaseListDialog;
-import trente.asia.android.view.ChiaseListViewNoScroll;
-import trente.asia.android.view.ChiaseTextView;
-import trente.asia.android.view.util.CAObjectSerializeUtil;
-import trente.asia.shiftworking.BuildConfig;
-import trente.asia.shiftworking.R;
-import trente.asia.shiftworking.common.defines.SwConst;
-import trente.asia.shiftworking.common.fragments.AbstractPhotoFragment;
-import trente.asia.shiftworking.services.transit.model.TransitModel;
-import trente.asia.shiftworking.services.transit.model.TransitModelHolder;
-import trente.asia.shiftworking.services.transit.view.PlaceHistoryAdapter;
-import trente.asia.welfare.adr.activity.WelfareActivity;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.dialog.WfDialog;
-import trente.asia.welfare.adr.models.ImageAttachmentModel;
-import trente.asia.welfare.adr.models.SettingModel;
-import trente.asia.welfare.adr.utils.WelfareFormatUtil;
-import trente.asia.welfare.adr.utils.WelfareUtil;
-import trente.asia.welfare.adr.utils.WfPicassoHelper;
+import nguyenhoangviet.vpcorp.android.util.AndroidUtil;
+import nguyenhoangviet.vpcorp.android.view.ChiaseImageView;
+import nguyenhoangviet.vpcorp.android.view.ChiaseListDialog;
+import nguyenhoangviet.vpcorp.android.view.ChiaseListViewNoScroll;
+import nguyenhoangviet.vpcorp.android.view.ChiaseTextView;
+import nguyenhoangviet.vpcorp.android.view.util.CAObjectSerializeUtil;
+import nguyenhoangviet.vpcorp.shiftworking.BuildConfig;
+import nguyenhoangviet.vpcorp.shiftworking.R;
+import nguyenhoangviet.vpcorp.shiftworking.common.defines.SwConst;
+import nguyenhoangviet.vpcorp.shiftworking.common.fragments.AbstractPhotoFragment;
+import nguyenhoangviet.vpcorp.shiftworking.services.transit.model.TransitModel;
+import nguyenhoangviet.vpcorp.shiftworking.services.transit.model.TransitModelHolder;
+import nguyenhoangviet.vpcorp.shiftworking.services.transit.view.PlaceHistoryAdapter;
+import nguyenhoangviet.vpcorp.welfare.adr.activity.WelfareActivity;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.dialog.WfDialog;
+import nguyenhoangviet.vpcorp.welfare.adr.models.ImageAttachmentModel;
+import nguyenhoangviet.vpcorp.welfare.adr.models.SettingModel;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WelfareFormatUtil;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WelfareUtil;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WfPicassoHelper;
 
 public class WorkTransitFormFragment extends AbstractPhotoFragment{
 

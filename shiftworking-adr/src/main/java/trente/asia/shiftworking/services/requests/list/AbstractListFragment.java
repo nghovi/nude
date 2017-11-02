@@ -1,4 +1,4 @@
-package trente.asia.shiftworking.services.requests.list;
+package nguyenhoangviet.vpcorp.shiftworking.services.requests.list;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,21 +15,21 @@ import android.widget.TextView;
 import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
-import trente.asia.shiftworking.R;
-import trente.asia.shiftworking.common.defines.SwConst;
-import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
-import trente.asia.shiftworking.common.interfaces.OnFilterListener;
-import trente.asia.shiftworking.common.interfaces.OnRequestAdapterListener;
-import trente.asia.shiftworking.services.requests.adapter.RequestAdapter;
-import trente.asia.shiftworking.services.requests.filter.RequestFilterFragment;
-import trente.asia.shiftworking.services.shiftworking.view.CommonMonthView;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.define.WfUrlConst;
-import trente.asia.welfare.adr.models.ApiObjectModel;
-import trente.asia.welfare.adr.models.DeptModel;
-import trente.asia.welfare.adr.models.UserModel;
-import trente.asia.welfare.adr.models.VacationRequestModel;
-import trente.asia.welfare.adr.utils.WelfareUtil;
+import nguyenhoangviet.vpcorp.shiftworking.R;
+import nguyenhoangviet.vpcorp.shiftworking.common.defines.SwConst;
+import nguyenhoangviet.vpcorp.shiftworking.common.fragments.AbstractSwFragment;
+import nguyenhoangviet.vpcorp.shiftworking.common.interfaces.OnFilterListener;
+import nguyenhoangviet.vpcorp.shiftworking.common.interfaces.OnRequestAdapterListener;
+import nguyenhoangviet.vpcorp.shiftworking.services.requests.adapter.RequestAdapter;
+import nguyenhoangviet.vpcorp.shiftworking.services.requests.filter.RequestFilterFragment;
+import nguyenhoangviet.vpcorp.shiftworking.services.shiftworking.view.CommonMonthView;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WfUrlConst;
+import nguyenhoangviet.vpcorp.welfare.adr.models.ApiObjectModel;
+import nguyenhoangviet.vpcorp.welfare.adr.models.DeptModel;
+import nguyenhoangviet.vpcorp.welfare.adr.models.UserModel;
+import nguyenhoangviet.vpcorp.welfare.adr.models.VacationRequestModel;
+import nguyenhoangviet.vpcorp.welfare.adr.utils.WelfareUtil;
 
 public abstract class AbstractListFragment extends AbstractSwFragment implements OnFilterListener,OnRequestAdapterListener{
 

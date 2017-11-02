@@ -1,14 +1,14 @@
-package trente.asia.thankscard.activities;
+package nguyenhoangviet.vpcorp.thankscard.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
-import trente.asia.android.util.AndroidUtil;
-import trente.asia.thankscard.R;
-import trente.asia.thankscard.services.util.CameraPhotoPreviewAccountFragment;
-import trente.asia.welfare.adr.activity.WelfareActivity;
-import trente.asia.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.android.util.AndroidUtil;
+import nguyenhoangviet.vpcorp.thankscard.R;
+import nguyenhoangviet.vpcorp.thankscard.services.util.CameraPhotoPreviewAccountFragment;
+import nguyenhoangviet.vpcorp.welfare.adr.activity.WelfareActivity;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
 
 public class CameraPhotoPreviewAccountActivity extends WelfareActivity{
 

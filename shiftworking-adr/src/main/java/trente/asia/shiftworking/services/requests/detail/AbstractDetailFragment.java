@@ -1,4 +1,4 @@
-package trente.asia.shiftworking.services.requests.detail;
+package nguyenhoangviet.vpcorp.shiftworking.services.requests.detail;
 
 import java.util.List;
 
@@ -13,16 +13,16 @@ import android.widget.LinearLayout;
 
 import asia.chiase.core.define.CCConst;
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.android.activity.ChiaseActivity;
-import trente.asia.android.view.ChiaseListViewNoScroll;
-import trente.asia.shiftworking.R;
-import trente.asia.shiftworking.common.defines.SwConst;
-import trente.asia.shiftworking.common.fragments.AbstractSwFragment;
-import trente.asia.shiftworking.services.requests.WorkRequestFragment;
-import trente.asia.shiftworking.services.requests.adapter.ApproveHistoryAdapter;
-import trente.asia.welfare.adr.activity.WelfareActivity;
-import trente.asia.welfare.adr.dialog.WfDialog;
-import trente.asia.welfare.adr.models.ApproveHistory;
+import nguyenhoangviet.vpcorp.android.activity.ChiaseActivity;
+import nguyenhoangviet.vpcorp.android.view.ChiaseListViewNoScroll;
+import nguyenhoangviet.vpcorp.shiftworking.R;
+import nguyenhoangviet.vpcorp.shiftworking.common.defines.SwConst;
+import nguyenhoangviet.vpcorp.shiftworking.common.fragments.AbstractSwFragment;
+import nguyenhoangviet.vpcorp.shiftworking.services.requests.WorkRequestFragment;
+import nguyenhoangviet.vpcorp.shiftworking.services.requests.adapter.ApproveHistoryAdapter;
+import nguyenhoangviet.vpcorp.welfare.adr.activity.WelfareActivity;
+import nguyenhoangviet.vpcorp.welfare.adr.dialog.WfDialog;
+import nguyenhoangviet.vpcorp.welfare.adr.models.ApproveHistory;
 
 public abstract class AbstractDetailFragment extends AbstractSwFragment{
 

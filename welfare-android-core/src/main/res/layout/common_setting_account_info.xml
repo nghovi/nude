@@ -18,7 +18,7 @@
                 style="@style/cs_common_wrap"
                 android:layout_gravity="center_horizontal">
 
-                <trente.asia.welfare.adr.view.SelectableRoundedImageView
+                <nguyenhoangviet.vpcorp.welfare.adr.view.SelectableRoundedImageView
                     android:id="@+id/img_fragment_setting_avatar"
                     android:layout_width="@dimen/margin_60dp"
                     android:layout_height="@dimen/margin_60dp"
@@ -100,13 +100,13 @@
                 android:visibility="gone"
                 android:layout_marginTop="@dimen/margin_16dp">
 
-                <trente.asia.android.view.ChiaseEditText
+                <nguyenhoangviet.vpcorp.android.view.ChiaseEditText
                     android:id="@+id/txt_old_password"
                     style="@style/wl_common_edit_text"
                     android:hint="@string/wf_old_password"
                     android:inputType="textPassword"/>
 
-                <trente.asia.android.view.ChiaseEditText
+                <nguyenhoangviet.vpcorp.android.view.ChiaseEditText
                     android:id="@+id/txt_new_password"
                     style="@style/wl_common_edit_text"
                     android:layout_marginBottom="@dimen/margin_10dp"
@@ -114,7 +114,7 @@
                     android:hint="@string/wf_new_password"
                     android:inputType="textPassword"/>
 
-                <trente.asia.android.view.ChiaseEditText
+                <nguyenhoangviet.vpcorp.android.view.ChiaseEditText
                     android:id="@+id/txt_comfirm_password"
                     style="@style/wl_common_edit_text"
                     android:hint="@string/wf_confirm_password"

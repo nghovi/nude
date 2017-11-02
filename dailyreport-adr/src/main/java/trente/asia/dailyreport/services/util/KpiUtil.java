@@ -1,4 +1,4 @@
-package trente.asia.dailyreport.services.util;
+package nguyenhoangviet.vpcorp.dailyreport.services.util;
 
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCNumberUtil;

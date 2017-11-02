@@ -1,4 +1,4 @@
-package trente.asia.dailyreport.services.user;
+package nguyenhoangviet.vpcorp.dailyreport.services.user;
 
 import org.json.JSONObject;
 
@@ -8,12 +8,12 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
-import trente.asia.dailyreport.BuildConfig;
-import trente.asia.dailyreport.R;
-import trente.asia.dailyreport.services.report.MyReportFragment;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.define.WfUrlConst;
-import trente.asia.welfare.adr.services.user.LoginFragment;
+import nguyenhoangviet.vpcorp.dailyreport.BuildConfig;
+import nguyenhoangviet.vpcorp.dailyreport.R;
+import nguyenhoangviet.vpcorp.dailyreport.services.report.MyReportFragment;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WfUrlConst;
+import nguyenhoangviet.vpcorp.welfare.adr.services.user.LoginFragment;
 
 /**
  * A simple {@link Fragment} subclass.

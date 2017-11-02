@@ -1,4 +1,4 @@
-package trente.asia.dailyreport.services.kpi;
+package nguyenhoangviet.vpcorp.dailyreport.services.kpi;
 
 import java.security.acl.Group;
 import java.util.ArrayList;
@@ -34,26 +34,26 @@ import asia.chiase.core.util.CCDateUtil;
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCJsonUtil;
 import asia.chiase.core.util.CCStringUtil;
-import trente.asia.android.activity.ChiaseActivity;
-import trente.asia.dailyreport.DRConst;
-import trente.asia.dailyreport.R;
-import trente.asia.dailyreport.dialogs.DRDialog;
-import trente.asia.dailyreport.fragments.AbstractDRFragment;
-import trente.asia.dailyreport.services.kpi.model.ActionPlan;
-import trente.asia.dailyreport.services.kpi.model.GroupKpi;
-import trente.asia.dailyreport.services.kpi.view.CalendarFragment;
-import trente.asia.dailyreport.services.kpi.view.CalendarPagerAdapter;
-import trente.asia.dailyreport.services.kpi.view.KpiCalendarView;
-import trente.asia.dailyreport.services.report.ReportEditFragment;
-import trente.asia.dailyreport.services.report.model.ReportModel;
-import trente.asia.dailyreport.services.report.view.DRCalendarView;
-import trente.asia.dailyreport.services.util.KpiUtil;
-import trente.asia.dailyreport.utils.DRUtil;
-import trente.asia.dailyreport.view.DRGroupHeader;
-import trente.asia.welfare.adr.activity.WelfareActivity;
-import trente.asia.welfare.adr.define.WelfareConst;
-import trente.asia.welfare.adr.models.ApiObjectModel;
-import trente.asia.welfare.adr.models.GroupModel;
+import nguyenhoangviet.vpcorp.android.activity.ChiaseActivity;
+import nguyenhoangviet.vpcorp.dailyreport.DRConst;
+import nguyenhoangviet.vpcorp.dailyreport.R;
+import nguyenhoangviet.vpcorp.dailyreport.dialogs.DRDialog;
+import nguyenhoangviet.vpcorp.dailyreport.fragments.AbstractDRFragment;
+import nguyenhoangviet.vpcorp.dailyreport.services.kpi.model.ActionPlan;
+import nguyenhoangviet.vpcorp.dailyreport.services.kpi.model.GroupKpi;
+import nguyenhoangviet.vpcorp.dailyreport.services.kpi.view.CalendarFragment;
+import nguyenhoangviet.vpcorp.dailyreport.services.kpi.view.CalendarPagerAdapter;
+import nguyenhoangviet.vpcorp.dailyreport.services.kpi.view.KpiCalendarView;
+import nguyenhoangviet.vpcorp.dailyreport.services.report.ReportEditFragment;
+import nguyenhoangviet.vpcorp.dailyreport.services.report.model.ReportModel;
+import nguyenhoangviet.vpcorp.dailyreport.services.report.view.DRCalendarView;
+import nguyenhoangviet.vpcorp.dailyreport.services.util.KpiUtil;
+import nguyenhoangviet.vpcorp.dailyreport.utils.DRUtil;
+import nguyenhoangviet.vpcorp.dailyreport.view.DRGroupHeader;
+import nguyenhoangviet.vpcorp.welfare.adr.activity.WelfareActivity;
+import nguyenhoangviet.vpcorp.welfare.adr.define.WelfareConst;
+import nguyenhoangviet.vpcorp.welfare.adr.models.ApiObjectModel;
+import nguyenhoangviet.vpcorp.welfare.adr.models.GroupModel;
 
 /**
  * Created by viet on 2/15/2016.
@@ -106,9 +106,9 @@ public class ActionPlansAddFragment extends AbstractDRFragment implements DRCale
 	public void buildBodyLayout(){
 		super.initHeader(R.drawable.wf_back_white, getString(R.string.fragment_actual_plan_title), null);
 		inflater = LayoutInflater.from(activity);
-		imgHeaderLeftIcon = (ImageView)activity.findViewById(trente.asia.welfare.adr.R.id.img_id_header_left_icon);
+		imgHeaderLeftIcon = (ImageView)activity.findViewById(nguyenhoangviet.vpcorp.welfare.adr.R.id.img_id_header_left_icon);
 		imgHeaderLeftIcon.setVisibility(View.INVISIBLE);
-		imgHeaderRightIcon = (ImageView)activity.findViewById(trente.asia.welfare.adr.R.id.img_id_header_right_icon);
+		imgHeaderRightIcon = (ImageView)activity.findViewById(nguyenhoangviet.vpcorp.welfare.adr.R.id.img_id_header_right_icon);
 		selectedDate = Calendar.getInstance().getTime();
 		txtDate = (TextView)getView().findViewById(R.id.txt_fragment_kpi_date);
 		txtDate.setText(CCFormatUtil.formatDateCustom(WelfareConst.WF_DATE_TIME_DATE, selectedDate));

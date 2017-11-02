@@ -64,7 +64,7 @@
                     android:layout_height="1px"
                     android:background="#323232" />
 
-                <trente.asia.calendar.services.calendar.ObservableScrollView
+                <nguyenhoangviet.vpcorp.calendar.services.calendar.ObservableScrollView
                     android:id="@+id/src_time_container"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -76,7 +76,7 @@
                         android:layout_height="match_parent"
                         android:orientation="vertical"
                         android:paddingLeft="@dimen/margin_16dp"></RelativeLayout>
-                </trente.asia.calendar.services.calendar.ObservableScrollView>
+                </nguyenhoangviet.vpcorp.calendar.services.calendar.ObservableScrollView>
 
             </LinearLayout>
 
