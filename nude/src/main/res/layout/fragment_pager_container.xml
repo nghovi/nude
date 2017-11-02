@@ -2,6 +2,7 @@
     android:id="@+id/main_layout"
     style="@style/wf_common_match">
 
+
     <android.support.v4.view.ViewPager
         android:id="@+id/view_id_pager"
         android:layout_width="match_parent"

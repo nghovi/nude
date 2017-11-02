@@ -1,14 +1,16 @@
 package trente.asia.welfare.adr.utils;
 
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
+
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.MemoryPolicy;
-import com.squareup.picasso.Picasso;
 
 import asia.chiase.core.util.CCStringUtil;
 import trente.asia.welfare.adr.models.BitmapModel;
@@ -40,7 +42,15 @@ public class WfPicassoHelper{
 
 		if(pgrLoading != null) pgrLoading.setVisibility(View.VISIBLE);
 
-		Picasso.with(context).load(imageUrl).into(imageView, new Callback.EmptyCallback() {
+		Picasso picasso = new Picasso.Builder(context).listener(new Picasso.Listener() {
+
+			@Override
+			public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception){
+				exception.printStackTrace();
+			}
+		}).build();
+
+		picasso.load(imageUrl).memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE).into(imageView, new Callback.EmptyCallback() {
 
 			@Override
 			public void onSuccess(){
@@ -53,7 +63,6 @@ public class WfPicassoHelper{
 			}
 		});
 	}
-
 
 	public static void loadImageFit(Context context, String imageUrl, final ImageView imageView, final ProgressBar pgrLoading){
 
@@ -102,11 +111,11 @@ public class WfPicassoHelper{
 			@Override
 			public void onSuccess(){
 				if(pgrLoading != null) pgrLoading.setVisibility(View.GONE);
-                if(imageView instanceof SelectableRoundedImageView){
-                    bitmapModel.bitmap = ((SelectableRoundedImageView.SelectableRoundedCornerDrawable)imageView.getDrawable()).getSourceBitmap();
-                }else{
-                    bitmapModel.bitmap = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
-                }
+				if(imageView instanceof SelectableRoundedImageView){
+					bitmapModel.bitmap = ((SelectableRoundedImageView.SelectableRoundedCornerDrawable)imageView.getDrawable()).getSourceBitmap();
+				}else{
+					bitmapModel.bitmap = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
+				}
 			}
 
 			@Override

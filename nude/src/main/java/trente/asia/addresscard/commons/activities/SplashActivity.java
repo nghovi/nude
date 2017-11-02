@@ -28,7 +28,7 @@ public class SplashActivity extends WelfareActivity{
 
 			@Override
 			public void run(){
-				Intent i = new Intent(SplashActivity.this, AddressCardActivity.class);
+				Intent i = new Intent(SplashActivity.this, MainActivity.class);
 				i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 				startActivity(i);
 				finish();

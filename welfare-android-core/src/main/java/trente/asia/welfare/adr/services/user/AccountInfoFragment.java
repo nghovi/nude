@@ -304,8 +304,8 @@ public abstract class AccountInfoFragment extends WelfareFragment{
 			if(returnedIntent != null){
 				String detailMessage = returnedIntent.getExtras().getString("detail");
 				if(WelfareConst.WF_FILE_SIZE_NG.equals(detailMessage)){
-					alertDialog.setMessage(getString(R.string.wf_invalid_photo_over));
-					alertDialog.show();
+//					alertDialog.setMessage(getString(R.string.wf_invalid_photo_over));
+//					alertDialog.show();
 				}else{
 					String imagePath = returnedIntent.getExtras().getString(WelfareConst.IMAGE_PATH_KEY);
 					Uri uri = AndroidUtil.getUriFromFileInternal(activity, new File(imagePath));
@@ -321,8 +321,8 @@ public abstract class AccountInfoFragment extends WelfareFragment{
 				File imageFile = new File(mImageUri.getPath());
 				SettingModel settingModel = prefAccUtil.getSetting();
 				if(CCNumberUtil.toLong(settingModel.WF_MAX_FILE_SIZE).compareTo(imageFile.length()) < 0){
-					alertDialog.setMessage(getString(R.string.wf_invalid_photo_over));
-					alertDialog.show();
+//					alertDialog.setMessage(getString(R.string.wf_invalid_photo_over));
+//					alertDialog.show();
 				}else{
 					imgAvatar.setImageURI(mImageUri);
 					updateAccountAvatar();

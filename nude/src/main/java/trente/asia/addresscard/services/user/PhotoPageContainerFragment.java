@@ -29,7 +29,8 @@ import trente.asia.welfare.adr.activity.WelfareFragment;
 
 public class PhotoPageContainerFragment extends WelfareFragment{
 
-	public List<String> photoUrls = new ArrayList<>();
+	private static final int	OFF_SCREEN_PAGE_LIMIT	= 5;
+	public List<String>			photoUrls				= new ArrayList<>();
 
 	protected Date getActiveDate(int position){
 		return null;
@@ -43,7 +44,7 @@ public class PhotoPageContainerFragment extends WelfareFragment{
 	protected ViewPager			mViewPager;
 	protected PhotoPagerAdapter	mPagerAdapter;
 
-	protected final int			INITIAL_POSITION	= Integer.MAX_VALUE / 2;
+	protected final int			INITIAL_POSITION	= 0;
 	protected final Date		TODAY				= Calendar.getInstance().getTime();
 	protected TextView			txtToday;
 	private int					pagerScrollingState;
@@ -67,13 +68,12 @@ public class PhotoPageContainerFragment extends WelfareFragment{
 	@Override
 	protected void initView(){
 		super.initView();
-		initHeader(null, "", null);
-
 		txtToday = (TextView)getView().findViewById(R.id.txt_today);
 		holder = new PageSharingHolder();
 		holder.selectedPagePosition = INITIAL_POSITION;
 
 		mViewPager = (ViewPager)getView().findViewById(R.id.view_id_pager);
+		mViewPager.setOffscreenPageLimit(OFF_SCREEN_PAGE_LIMIT);
 		mPagerAdapter = initPagerAdapter();
 		mPagerAdapter.setPageSharingHolder(holder);
 		mPagerAdapter.setInitialPosition(INITIAL_POSITION);
@@ -103,10 +103,17 @@ public class PhotoPageContainerFragment extends WelfareFragment{
 				rightNeiborFragment = (PhotoPageFragment)mPagerAdapter.getItem(position + 1);
 				fragment.showPhoto(getImgUrl(fragment.pagePosition));
 				onFragmentSelected(fragment);
+				checkToLoadMore(position);
 			}
 		});
 		leftNeighborFragment = (PhotoPageFragment)mPagerAdapter.getItem(INITIAL_POSITION - 1);
 		rightNeiborFragment = (PhotoPageFragment)mPagerAdapter.getItem(INITIAL_POSITION + 1);
+	}
+
+	private void checkToLoadMore(int position){
+		if(position - INITIAL_POSITION - photoUrls.size() == 5){
+			loadPhotos(false);
+		}
 	}
 
 	@Override
@@ -119,7 +126,13 @@ public class PhotoPageContainerFragment extends WelfareFragment{
 		JSONObject jsonObject = new JSONObject();
 		// "https://api.500px.com/v1/photos?feature=fresh_today&sort=created_at&image_size=3&include_store=store_download&include_states=voted";
 
-		String url = "v1/photos?feature=popular&sort=created_at&image_size=1080&include_store=store_download&include_states=voted&consumer_key=PSfuSSCFSFOBqq6vvhp54lEVRODRa1xncBOPIJem";
+		String url = "v1/photos?";
+		url += "feature=popular&";
+		url += "sort=rating&";
+		url += "image_size=1080&";
+		// url += "only=Nude&";
+		url += "rpp=100&";
+		url += "consumer_key=PSfuSSCFSFOBqq6vvhp54lEVRODRa1xncBOPIJem";
 
 		// String url =
 		// "v1/photos?feature=popular&only=Nude&sort=created_at&image_size=3&include_store=store_download&include_states=voted&consumer_key=PSfuSSCFSFOBqq6vvhp54lEVRODRa1xncBOPIJem";
@@ -210,7 +223,7 @@ public class PhotoPageContainerFragment extends WelfareFragment{
 	public String getImgUrl(int pagePosition){
 		String imgUrl = "";
 		if(photoUrls.size() > 0){
-			int urlIdx = pagePosition % photoUrls.size();
+			int urlIdx = Math.abs(pagePosition % photoUrls.size());
 			imgUrl = photoUrls.get(urlIdx);
 		}
 		return imgUrl;

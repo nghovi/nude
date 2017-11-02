@@ -1,5 +1,11 @@
 package trente.asia.android.activity;
 
+import java.io.File;
+import java.util.Map;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -14,17 +20,10 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.File;
-import java.util.Map;
-
 import asia.chiase.core.define.CCConst;
 import trente.asia.android.R;
 import trente.asia.android.define.CsConst;
 import trente.asia.android.util.AndroidUtil;
-import trente.asia.android.view.ChiaseAlertDialog;
 import trente.asia.android.view.ChiaseLoadingDialog;
 import trente.asia.android.view.util.CAObjectSerializeUtil;
 
@@ -47,7 +46,7 @@ public class ChiaseFragment extends Fragment implements HttpCallback{
 	 * The Alert dialog builder.
 	 */
 	// protected AlertDialog.Builder alertDialogBuilder;
-	protected ChiaseAlertDialog		alertDialog;
+	// protected ChiaseAlertDialog alertDialog;
 
 	/**
 	 * The Host.
@@ -68,13 +67,13 @@ public class ChiaseFragment extends Fragment implements HttpCallback{
 
 	protected View					mRootView;
 
-	public void setmIsNewFragment(boolean mIsNewFragment) {
+	public void setmIsNewFragment(boolean mIsNewFragment){
 		this.mIsNewFragment = mIsNewFragment;
 	}
 
-	private boolean					mIsNewFragment	= true;
-	protected ViewGroup				mFooterView;
-	protected ViewGroup				mHeaderView;
+	private boolean		mIsNewFragment	= true;
+	protected ViewGroup	mFooterView;
+	protected ViewGroup	mHeaderView;
 
 	/**
 	 * Instantiates a new Chiase fragment.
@@ -102,10 +101,10 @@ public class ChiaseFragment extends Fragment implements HttpCallback{
 		// });
 		try{
 
-			alertDialog = new ChiaseAlertDialog(activity);
 			isDestroy = false;
 
 			if(mIsNewFragment){
+				// alertDialog = new ChiaseAlertDialog(activity);
 				mIsNewFragment = false;
 				initView();
 				initData();
@@ -132,12 +131,12 @@ public class ChiaseFragment extends Fragment implements HttpCallback{
 				}
 			}
 		}catch(OutOfMemoryError error){
-			if(alertDialog != null){
-				alertDialog.setMessage("Memory is not enough. Please check again.");
-				alertDialog.show();
-			}else{
-				error.printStackTrace();
-			}
+			// if(alertDialog != null){
+			// alertDialog.setMessage("Memory is not enough. Please check again.");
+			// alertDialog.show();
+			// }else{
+			error.printStackTrace();
+			// }
 		}
 	}
 
@@ -364,7 +363,7 @@ public class ChiaseFragment extends Fragment implements HttpCallback{
 			loadingDialog.dismiss();
 			loadingDialog = null;
 		}
-		alertDialog = null;
+		// alertDialog = null;
 		swipeRfresh = null;
 		isDestroy = null;
 		mRootView = null;

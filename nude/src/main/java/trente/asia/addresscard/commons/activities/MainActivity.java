@@ -6,7 +6,7 @@ import trente.asia.addresscard.R;
 import trente.asia.addresscard.services.user.PhotoPageContainerFragment;
 import trente.asia.welfare.adr.activity.WelfareActivity;
 
-public class AddressCardActivity extends WelfareActivity{
+public class MainActivity extends WelfareActivity{
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState){

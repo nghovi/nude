@@ -14,13 +14,11 @@ import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.Html;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,7 +39,6 @@ import trente.asia.welfare.adr.models.SettingModel;
 import trente.asia.welfare.adr.models.UserModel;
 import trente.asia.welfare.adr.pref.PreferencesAccountUtil;
 import trente.asia.welfare.adr.pref.PreferencesSystemUtil;
-import trente.asia.welfare.adr.utils.WelfareUtil;
 
 /**
  * WelfareFragment
@@ -192,8 +189,8 @@ public abstract class WelfareFragment extends ChiaseFragment implements WelfareA
 			gotoSignIn();
 		}else{
 			String msg = response.optString(CsConst.MESSAGES);
-			alertDialog.setMessage(Html.fromHtml(msg).toString());
-			alertDialog.show();
+			// alertDialog.setMessage(Html.fromHtml(msg).toString());
+			// alertDialog.show();
 		}
 	}
 

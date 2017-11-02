@@ -45,7 +45,9 @@ public class PhotoPageFragment extends WelfareFragment{
 	}
 
 	public void showPhoto(String imgUrl){
-		WfPicassoHelper.loadImage(activity, imgUrl, imageView, null);
+		if(imageView != null && imageView.getDrawable() == null){
+			WfPicassoHelper.loadImage(activity, imgUrl, imageView, null);
+		}
 	}
 
 	@Override
@@ -77,6 +79,13 @@ public class PhotoPageFragment extends WelfareFragment{
 
 	public boolean isActivePage(){
 		return pageSharingHolder.selectedPagePosition == pagePosition;
+	}
+
+	@Override
+	public void onDestroy(){
+		super.onDestroy();
+		imageView.setImageDrawable(null);
+		imageView = null;
 	}
 
 }
