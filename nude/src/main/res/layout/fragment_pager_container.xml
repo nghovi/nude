@@ -2,6 +2,13 @@
     android:id="@+id/main_layout"
     style="@style/wf_common_match">
 
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/bannersizes_fl_adframe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
 
     <android.support.v4.view.ViewPager
         android:id="@+id/view_id_pager"

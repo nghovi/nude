@@ -9,13 +9,18 @@ import java.util.List;
 import org.json.JSONObject;
 
 import com.bluelinelabs.logansquare.LoganSquare;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCStringUtil;
@@ -31,6 +36,8 @@ public class PhotoPageContainerFragment extends WelfareFragment{
 
 	private static final int	OFF_SCREEN_PAGE_LIMIT	= 5;
 	public List<String>			photoUrls				= new ArrayList<>();
+	public FrameLayout			mAdFrameLayout;
+	private AdView				mAdView;
 
 	protected Date getActiveDate(int position){
 		return null;
@@ -46,7 +53,6 @@ public class PhotoPageContainerFragment extends WelfareFragment{
 
 	protected final int			INITIAL_POSITION	= 0;
 	protected final Date		TODAY				= Calendar.getInstance().getTime();
-	protected TextView			txtToday;
 	private int					pagerScrollingState;
 	public PhotoPageFragment	leftNeighborFragment;
 	public PhotoPageFragment	rightNeiborFragment;
@@ -65,10 +71,66 @@ public class PhotoPageContainerFragment extends WelfareFragment{
 		return mRootView;
 	}
 
+	public void loadAds(){
+		mAdFrameLayout.setVisibility(View.GONE);
+		if(mAdView != null){
+			mAdFrameLayout.removeView(mAdView);
+			mAdView.destroy();
+		}
+
+		mAdView = new AdView(getActivity());
+		mAdView.setAdListener(new AdListener() {
+
+			private void showToast(String message){
+				View view = getView();
+				if(view != null){
+					Toast.makeText(getView().getContext(), message, Toast.LENGTH_SHORT).show();
+				}
+			}
+
+			@Override
+			public void onAdLoaded(){
+				mAdFrameLayout.setVisibility(View.VISIBLE);
+			}
+
+			@Override
+			public void onAdFailedToLoad(int errorCode){
+				// showToast(String.format("Ad failed to load with error code %d.", errorCode));
+				mAdFrameLayout.setVisibility(View.GONE);
+			}
+
+			@Override
+			public void onAdOpened(){
+				// showToast("Ad opened.");
+				mAdFrameLayout.setVisibility(View.VISIBLE);
+			}
+
+			@Override
+			public void onAdClosed(){
+				// showToast("Ad closed.");
+				mAdFrameLayout.setVisibility(View.GONE);
+			}
+
+			@Override
+			public void onAdLeftApplication(){
+				// showToast("Ad left application.");
+				mAdFrameLayout.setVisibility(View.GONE);
+			}
+		});
+
+		// App ID: ca-app-pub-4354101127297995~5318775175
+		// Ad unit ID: ca-app-pub-4354101127297995/2910080169
+		mAdView.setAdUnitId("ca-app-pub-4354101127297995/2910080169");
+		mAdFrameLayout.addView(mAdView);
+		mAdView.setAdSize(AdSize.SMART_BANNER);
+		AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
+		mAdView.loadAd(adRequest);
+	}
+
 	@Override
 	protected void initView(){
 		super.initView();
-		txtToday = (TextView)getView().findViewById(R.id.txt_today);
+		mAdFrameLayout = (FrameLayout)getView().findViewById(R.id.bannersizes_fl_adframe);
 		holder = new PageSharingHolder();
 		holder.selectedPagePosition = INITIAL_POSITION;
 
@@ -108,6 +170,9 @@ public class PhotoPageContainerFragment extends WelfareFragment{
 		});
 		leftNeighborFragment = (PhotoPageFragment)mPagerAdapter.getItem(INITIAL_POSITION - 1);
 		rightNeiborFragment = (PhotoPageFragment)mPagerAdapter.getItem(INITIAL_POSITION + 1);
+
+
+		loadAds();
 	}
 
 	private void checkToLoadMore(int position){
