@@ -68,13 +68,6 @@ public class PhotoPageContainerFragment extends WelfareFragment{
 	protected void initView(){
 		super.initView();
 		initHeader(null, "", null);
-		getView().findViewById(R.id.img_refresh).setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v){
-				loadPhotos(true);
-			}
-		});
 
 		txtToday = (TextView)getView().findViewById(R.id.txt_today);
 		holder = new PageSharingHolder();
