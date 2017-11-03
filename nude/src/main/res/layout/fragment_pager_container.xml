@@ -1,5 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/main_layout"
+    android:background="@color/app_theme_color"
     style="@style/wf_common_match">
 
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"

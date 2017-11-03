@@ -13,5 +13,6 @@
 
     <color name="wf_login_button_color_off">#80b5ac84</color>
     <color name="wf_login_button_color_on">#b5ac84</color>
+    <color name="app_theme_color">#E8CA93</color>
 
 </resources>

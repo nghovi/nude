@@ -1,9 +1,0 @@
-<resources>
-    <string name="app_name">Team360</string>
-
-
-    <string name="footer_item1">メンバー</string>
-    <string name="footer_item2">カメラ</string>
-    <string name="footer_item3">設定</string>
-
-</resources>

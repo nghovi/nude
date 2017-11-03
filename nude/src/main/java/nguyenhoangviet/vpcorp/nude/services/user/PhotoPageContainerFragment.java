@@ -174,7 +174,7 @@ public class PhotoPageContainerFragment extends WelfareFragment{
 		url += "feature=popular&";
 		url += "sort=rating&";
 		url += "image_size=1080&";
-		// url += "only=Nude&";
+//		url += "only=Nude&";
 		url += "rpp=100&";
 		url += "consumer_key=PSfuSSCFSFOBqq6vvhp54lEVRODRa1xncBOPIJem";
 
@@ -221,9 +221,11 @@ public class PhotoPageContainerFragment extends WelfareFragment{
 
 		try{
 			PhotoPageModel photoPageModel = LoganSquare.parse(response.toString(), PhotoPageModel.class);
-			for(PhotoModel photoModel : photoPageModel.photos){
-				if(!photoUrls.contains(photoModel.image_url)){
-					photoUrls.add(photoModel.image_url);
+			if(!CCStringUtil.isEmpty(photoPageModel.photos)){
+				for(PhotoModel photoModel : photoPageModel.photos){
+					if(!photoUrls.contains(photoModel.image_url)){
+						photoUrls.add(photoModel.image_url);
+					}
 				}
 			}
 			if(photoUrls.size() > 0){
