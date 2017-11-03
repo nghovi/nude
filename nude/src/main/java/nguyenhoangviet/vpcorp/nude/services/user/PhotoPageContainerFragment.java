@@ -11,8 +11,8 @@ import org.json.JSONObject;
 import com.bluelinelabs.logansquare.LoganSquare;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -55,12 +55,47 @@ public class PhotoPageContainerFragment extends WelfareFragment{
 	protected final Date		TODAY				= Calendar.getInstance().getTime();
 	private int					pagerScrollingState;
 	public PhotoPageFragment	leftNeighborFragment;
-	public PhotoPageFragment	rightNeiborFragment;
+	public PhotoPageFragment	rightNeighborFragment;
+
+	private InterstitialAd		mInterstitialAd;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		host = BuildConfig.HOST;
+		mInterstitialAd = new InterstitialAd(activity);
+		String nudeAdId = "ca-app-pub-4354101127297995/2910080169";
+		// String nudeAdId = "ca-app-pub-3940256099942544/1033173712";//google sample id
+		mInterstitialAd.setAdUnitId(nudeAdId);
+		mInterstitialAd.setAdListener(new AdListener() {
+
+			@Override
+			public void onAdLoaded(){
+				mInterstitialAd.show();
+			}
+
+			@Override
+			public void onAdFailedToLoad(int errorCode){
+				Toast.makeText(activity, "Failed to load.", Toast.LENGTH_SHORT).show();
+			}
+
+			@Override
+			public void onAdOpened(){
+				// Code to be executed when the ad is displayed.
+			}
+
+			@Override
+			public void onAdLeftApplication(){
+				// Code to be executed when the user has left the app.
+			}
+
+			@Override
+			public void onAdClosed(){
+				// Code to be executed when when the interstitial ad is closed.
+			}
+		});
+
+		mInterstitialAd.loadAd(new AdRequest.Builder().build());
 	}
 
 	@Override
@@ -69,62 +104,6 @@ public class PhotoPageContainerFragment extends WelfareFragment{
 			mRootView = inflater.inflate(R.layout.fragment_pager_container, container, false);
 		}
 		return mRootView;
-	}
-
-	public void loadAds(){
-		mAdFrameLayout.setVisibility(View.GONE);
-		if(mAdView != null){
-			mAdFrameLayout.removeView(mAdView);
-			mAdView.destroy();
-		}
-
-		mAdView = new AdView(getActivity());
-		mAdView.setAdListener(new AdListener() {
-
-			private void showToast(String message){
-				View view = getView();
-				if(view != null){
-					Toast.makeText(getView().getContext(), message, Toast.LENGTH_SHORT).show();
-				}
-			}
-
-			@Override
-			public void onAdLoaded(){
-				mAdFrameLayout.setVisibility(View.VISIBLE);
-			}
-
-			@Override
-			public void onAdFailedToLoad(int errorCode){
-				// showToast(String.format("Ad failed to load with error code %d.", errorCode));
-				mAdFrameLayout.setVisibility(View.GONE);
-			}
-
-			@Override
-			public void onAdOpened(){
-				// showToast("Ad opened.");
-				mAdFrameLayout.setVisibility(View.VISIBLE);
-			}
-
-			@Override
-			public void onAdClosed(){
-				// showToast("Ad closed.");
-				mAdFrameLayout.setVisibility(View.GONE);
-			}
-
-			@Override
-			public void onAdLeftApplication(){
-				// showToast("Ad left application.");
-				mAdFrameLayout.setVisibility(View.GONE);
-			}
-		});
-
-		// App ID: ca-app-pub-4354101127297995~5318775175
-		// Ad unit ID: ca-app-pub-4354101127297995/2910080169
-		mAdView.setAdUnitId("ca-app-pub-4354101127297995/2910080169");
-		mAdFrameLayout.addView(mAdView);
-		mAdView.setAdSize(AdSize.SMART_BANNER);
-		AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
-		mAdView.loadAd(adRequest);
 	}
 
 	@Override
@@ -162,22 +141,22 @@ public class PhotoPageContainerFragment extends WelfareFragment{
 				holder.selectedPagePosition = position;
 				PhotoPageFragment fragment = (PhotoPageFragment)mPagerAdapter.getItem(position);
 				leftNeighborFragment = (PhotoPageFragment)mPagerAdapter.getItem(position - 1);
-				rightNeiborFragment = (PhotoPageFragment)mPagerAdapter.getItem(position + 1);
+				rightNeighborFragment = (PhotoPageFragment)mPagerAdapter.getItem(position + 1);
 				fragment.showPhoto(getImgUrl(fragment.pagePosition));
 				onFragmentSelected(fragment);
-				checkToLoadMore(position);
+				checkToLoadMoreAndDeleteOldFragment(position);
 			}
 		});
 		leftNeighborFragment = (PhotoPageFragment)mPagerAdapter.getItem(INITIAL_POSITION - 1);
-		rightNeiborFragment = (PhotoPageFragment)mPagerAdapter.getItem(INITIAL_POSITION + 1);
-
-
-		loadAds();
+		rightNeighborFragment = (PhotoPageFragment)mPagerAdapter.getItem(INITIAL_POSITION + 1);
 	}
 
-	private void checkToLoadMore(int position){
+	private void checkToLoadMoreAndDeleteOldFragment(int position){
 		if(position - INITIAL_POSITION - photoUrls.size() == 5){
 			loadPhotos(false);
+		}
+		if(position > OFF_SCREEN_PAGE_LIMIT){
+			mPagerAdapter.pagesMap.remove(mPagerAdapter.pagesMap.get(position - OFF_SCREEN_PAGE_LIMIT));
 		}
 	}
 

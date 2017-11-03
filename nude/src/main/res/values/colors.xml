@@ -3,13 +3,9 @@
     <color name="colorPrimary">#808080</color>
     <color name="colorPrimaryDark">#808080</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="deactive_tab_text_color">#BDBDBD</color>
-    <color name="btn_camera_background">#808080</color>
-    <color name="ac_common_background">#cccccc</color>
 
     <color name="wf_app_color_base">#808080</color>
     <color name="wf_app_color_base_50">#80808080</color>
-    <color name="wf_app_color_base_30">#50808080</color>
 
     <color name="wf_login_background_color">#fbf8f1</color>
     <color name="wf_app_button_color_off">#808c8464</color>
@@ -17,19 +13,5 @@
 
     <color name="wf_login_button_color_off">#80b5ac84</color>
     <color name="wf_login_button_color_on">#b5ac84</color>
-    <color name="cl_circle_bg_today">#ff0000</color>
-    <color name="cl_circle_bg_holiday">#D22DB6</color>
-    <color name="cl_circle_bg_selected">#303F9F</color>
-    <color name="cl_title_bg">#80b5ac84</color>
 
-    <color name="category_background">#cfcece</color>
-    <color name="title_background">#c2c2c2</color>
-    <color name="transparent">#00000000</color>
-
-    <color name="ac_button_pressed_color">#98848484</color>
-    <color name="ac_common_text_color_title">#818181</color>
-    <color name="ac_common_text_color_body">#000000</color>
-
-    <color name="ac_category_title_background">#8b8989</color>
-    <color name="ac_footer_color">#80ffffff</color>
 </resources>

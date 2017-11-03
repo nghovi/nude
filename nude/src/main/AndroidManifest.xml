@@ -24,6 +24,7 @@
             </intent-filter>
         </activity>
         <activity
+            android:configChanges="orientation|screenSize"
             android:name="nguyenhoangviet.vpcorp.nude.commons.activities.MainActivity"
             android:windowSoftInputMode="adjustUnspecified" />
     </application>

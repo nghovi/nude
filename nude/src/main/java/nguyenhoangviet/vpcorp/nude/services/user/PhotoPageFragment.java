@@ -84,7 +84,6 @@ public class PhotoPageFragment extends WelfareFragment{
 	@Override
 	public void onDestroy(){
 		super.onDestroy();
-		imageView.setImageDrawable(null);
 		imageView = null;
 	}
 
