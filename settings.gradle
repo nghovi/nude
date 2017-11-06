@@ -1,1 +1,1 @@
-include ':chiase-android-module', ':welfare-android-core',  ':nude'
+include ':chiase-android-module', ':welfare-android-core', ':pic'

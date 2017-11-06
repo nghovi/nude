@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "899179198378",
+    "firebase_url": "https://pic-500.firebaseio.com",
+    "project_id": "pic-500",
+    "storage_bucket": "pic-500.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:899179198378:android:f776de2abc5e4483",
+        "android_client_info": {
+          "package_name": "nguyenhoangviet.vpcorp.pic"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "899179198378-dtrv1tjtlpdijkjg6q7tmrpb3qqfond8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAxrZ0ihewB3UrSOvUec-HsovaHwEIHHnc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
