@@ -174,7 +174,7 @@ public class PhotoPageContainerFragment extends WelfareFragment{
 		url += "feature=popular&";
 		url += "sort=rating&";
 		url += "image_size=1080&";
-//		url += "only=Nude&";
+		url += "only=Nude&";
 		url += "rpp=100&";
 		url += "consumer_key=PSfuSSCFSFOBqq6vvhp54lEVRODRa1xncBOPIJem";
 
