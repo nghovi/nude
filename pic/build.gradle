@@ -7,7 +7,7 @@ android {
         applicationId "nguyenhoangviet.vpcorp.pic"
         minSdkVersion 21
         targetSdkVersion 22
-        versionCode 20171106
+        versionCode 20171122
         versionName "1.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
