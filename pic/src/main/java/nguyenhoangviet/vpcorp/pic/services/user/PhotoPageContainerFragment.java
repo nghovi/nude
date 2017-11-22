@@ -11,7 +11,6 @@ import org.json.JSONObject;
 import com.bluelinelabs.logansquare.LoganSquare;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 
 import android.os.Bundle;
@@ -22,7 +21,6 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
-import asia.chiase.core.util.CCFormatUtil;
 import asia.chiase.core.util.CCStringUtil;
 import nguyenhoangviet.vpcorp.pic.BuildConfig;
 import nguyenhoangviet.vpcorp.pic.R;
@@ -35,27 +33,16 @@ import nguyenhoangviet.vpcorp.welfare.adr.activity.WelfareFragment;
 public class PhotoPageContainerFragment extends WelfareFragment{
 
 	private static final int	OFF_SCREEN_PAGE_LIMIT	= 5;
+	public static final int		PHOTO_NUM_PER_PAGE		= 30;
 	public List<String>			photoUrls				= new ArrayList<>();
 	public FrameLayout			mAdFrameLayout;
-	private AdView				mAdView;
+	private SimplePagerAdapter	adapter;
+	private PhotoPageModel		photoPageModel;
 
-	protected Date getActiveDate(int position){
-		return null;
-	}
-
-	protected PhotoPagerAdapter initPagerAdapter(){
-		return new PhotoPagerAdapter(getChildFragmentManager());
-	}
-
-	protected PageSharingHolder	holder;
 	protected ViewPager			mViewPager;
-	protected PhotoPagerAdapter	mPagerAdapter;
 
-	protected final int			INITIAL_POSITION	= 0;
-	protected final Date		TODAY				= Calendar.getInstance().getTime();
-	private int					pagerScrollingState;
-	public PhotoPageFragment	leftNeighborFragment;
-	public PhotoPageFragment	rightNeighborFragment;
+	protected final int			INITIAL_POSITION		= 0;
+	protected final Date		TODAY					= Calendar.getInstance().getTime();
 
 	private InterstitialAd		mInterstitialAd;
 
@@ -110,24 +97,19 @@ public class PhotoPageContainerFragment extends WelfareFragment{
 	protected void initView(){
 		super.initView();
 		mAdFrameLayout = (FrameLayout)getView().findViewById(R.id.bannersizes_fl_adframe);
-		holder = new PageSharingHolder();
-		holder.selectedPagePosition = INITIAL_POSITION;
 
 		mViewPager = (ViewPager)getView().findViewById(R.id.view_id_pager);
 		mViewPager.setOffscreenPageLimit(OFF_SCREEN_PAGE_LIMIT);
-		mPagerAdapter = initPagerAdapter();
-		mPagerAdapter.setPageSharingHolder(holder);
-		mPagerAdapter.setInitialPosition(INITIAL_POSITION);
-		mViewPager.setAdapter(mPagerAdapter);
+
+		adapter = new SimplePagerAdapter(activity, photoUrls);
+		mViewPager.setAdapter(adapter);
 
 		prefAccUtil.saveActiveDate(TODAY);
-		setActiveDate(INITIAL_POSITION);
 		setWizardProgress(INITIAL_POSITION + 1);
 		mViewPager.setCurrentItem(INITIAL_POSITION);
 		mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
 			public void onPageScrollStateChanged(int state){
-				pagerScrollingState = state;
 			}
 
 			public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels){
@@ -137,26 +119,19 @@ public class PhotoPageContainerFragment extends WelfareFragment{
 				if(isSwipeRightToLeftOnly()){
 					setWizardProgress(position);
 				}
-				setActiveDate(position);
-				holder.selectedPagePosition = position;
-				PhotoPageFragment fragment = (PhotoPageFragment)mPagerAdapter.getItem(position);
-				leftNeighborFragment = (PhotoPageFragment)mPagerAdapter.getItem(position - 1);
-				rightNeighborFragment = (PhotoPageFragment)mPagerAdapter.getItem(position + 1);
-				fragment.showPhoto(getImgUrl(fragment.pagePosition));
-				onFragmentSelected(fragment);
 				checkToLoadMoreAndDeleteOldFragment(position);
 			}
 		});
-		leftNeighborFragment = (PhotoPageFragment)mPagerAdapter.getItem(INITIAL_POSITION - 1);
-		rightNeighborFragment = (PhotoPageFragment)mPagerAdapter.getItem(INITIAL_POSITION + 1);
 	}
 
 	private void checkToLoadMoreAndDeleteOldFragment(int position){
-		if(position - INITIAL_POSITION - photoUrls.size() == 5){
+		if(photoUrls.size() - position == PHOTO_NUM_PER_PAGE / 2){
 			loadPhotos(false);
 		}
-		if(position > OFF_SCREEN_PAGE_LIMIT){
-			mPagerAdapter.pagesMap.remove(mPagerAdapter.pagesMap.get(position - OFF_SCREEN_PAGE_LIMIT));
+
+		if(position % PHOTO_NUM_PER_PAGE == 0){
+			System.gc();
+			Runtime.getRuntime().gc();
 		}
 	}
 
@@ -168,28 +143,21 @@ public class PhotoPageContainerFragment extends WelfareFragment{
 	// https://github.com/500px/api-documentation/blob/master/endpoints/photo/GET_photos.md
 	public void loadPhotos(boolean showLoadingIcon){
 		JSONObject jsonObject = new JSONObject();
-		// "https://api.500px.com/v1/photos?feature=fresh_today&sort=created_at&image_size=3&include_store=store_download&include_states=voted";
-
 		String url = "v1/photos?";
 		url += "feature=popular&";
 		url += "sort=rating&";
 		url += "image_size=1080&";
 		// url += "only=Nude&";
 		url += "exclude=Nude&";
-		url += "rpp=100&";
+		url += "rpp=" + PHOTO_NUM_PER_PAGE + "&";
+		int page = 1;
+		if(photoPageModel != null){
+			page = photoPageModel.current_page + 1;
+			page = page > photoPageModel.total_pages ? photoPageModel.total_pages : page;
+		}
+
+		url += "page=" + page + "&";
 		url += "consumer_key=PSfuSSCFSFOBqq6vvhp54lEVRODRa1xncBOPIJem";
-
-		// String url =
-		// "v1/photos?feature=popular&only=Nude&sort=created_at&image_size=3&include_store=store_download&include_states=voted&consumer_key=PSfuSSCFSFOBqq6vvhp54lEVRODRa1xncBOPIJem";
-
-		// String url = "v1/photos?";
-		// url += "feature=popular";
-		// url += "&sort=created_at";
-		// url += "&image_size=3";
-		// url += "&include_store=store_download";
-		// url += "&include_states=voted";
-		// url += "&consumer_key=PSfuSSCFSFOBqq6vvhp54lEVRODRa1xncBOPIJem";
-		// url += "&only=4";
 
 		requestLoad(url, jsonObject, showLoadingIcon);
 	}
@@ -212,7 +180,6 @@ public class PhotoPageContainerFragment extends WelfareFragment{
 		}else{
 			loadingDialog.continueShowing = false;
 			dismissLoad();
-			// commonNotSuccess(response, url);
 		}
 	}
 
@@ -221,7 +188,7 @@ public class PhotoPageContainerFragment extends WelfareFragment{
 		super.successLoad(response, url);
 
 		try{
-			PhotoPageModel photoPageModel = LoganSquare.parse(response.toString(), PhotoPageModel.class);
+			photoPageModel = LoganSquare.parse(response.toString(), PhotoPageModel.class);
 			if(!CCStringUtil.isEmpty(photoPageModel.photos)){
 				for(PhotoModel photoModel : photoPageModel.photos){
 					if(!photoUrls.contains(photoModel.image_url)){
@@ -230,23 +197,13 @@ public class PhotoPageContainerFragment extends WelfareFragment{
 				}
 			}
 			if(photoUrls.size() > 0){
-				for(int position : mPagerAdapter.pagesMap.keySet()){
-					PhotoPageFragment photoPageFragment = (PhotoPageFragment)mPagerAdapter.getItem(position);
-					String imgUrl = getImgUrl(photoPageFragment.pagePosition);
-					photoPageFragment.showPhoto(imgUrl);
+				for(int position : adapter.datas.keySet()){
+					adapter.loadPhotoAt(position);
 				}
 			}
 		}catch(IOException e){
 			e.printStackTrace();
 		}
-	}
-
-	protected void onFragmentSelected(PhotoPageFragment fragment){
-
-	}
-
-	public int getScrollingState(){
-		return pagerScrollingState;
 	}
 
 	protected void setWizardProgress(int progress){
@@ -256,23 +213,9 @@ public class PhotoPageContainerFragment extends WelfareFragment{
 		return false;
 	}
 
-	protected void setActiveDate(int position){
-		Date activeDate = getActiveDate(position);
-		String title = CCFormatUtil.formatDateCustom("yyyy/M", activeDate);
-		updateHeader(title);
-	}
-
 	@Override
 	public void onDestroy(){
 		super.onDestroy();
 	}
 
-	public String getImgUrl(int pagePosition){
-		String imgUrl = "";
-		if(photoUrls.size() > 0){
-			int urlIdx = Math.abs(pagePosition % photoUrls.size());
-			imgUrl = photoUrls.get(urlIdx);
-		}
-		return imgUrl;
-	}
 }

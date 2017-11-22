@@ -109,7 +109,8 @@ public class ChiaseFragment extends Fragment implements HttpCallback{
 				initView();
 				initData();
 			}else{
-				if(((ChiaseActivity)activity).isInitData){
+				ChiaseActivity act = (ChiaseActivity)activity;
+				if(act != null && act.isInitData){
 					((ChiaseActivity)activity).isInitData = false;
 					initData();
 				}
@@ -319,7 +320,7 @@ public class ChiaseFragment extends Fragment implements HttpCallback{
 
 	public static void hideKeyBoard(Activity activity){
 		// hide soft keyboard
-		if(activity.getCurrentFocus() != null){
+		if(activity != null && activity.getCurrentFocus() != null){
 			InputMethodManager inputManager = (InputMethodManager)activity.getSystemService(Context.INPUT_METHOD_SERVICE);
 			inputManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 		}
