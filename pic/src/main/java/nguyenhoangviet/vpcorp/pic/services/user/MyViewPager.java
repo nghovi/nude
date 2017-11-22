@@ -1,4 +1,4 @@
-package nguyenhoangviet.vpcorp.nude.services.user;
+package nguyenhoangviet.vpcorp.pic.services.user;
 
 import android.content.Context;
 import android.support.v4.view.ViewPager;

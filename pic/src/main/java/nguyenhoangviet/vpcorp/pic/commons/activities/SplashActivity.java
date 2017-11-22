@@ -1,11 +1,11 @@
-package nguyenhoangviet.vpcorp.nude.commons.activities;
+package nguyenhoangviet.vpcorp.pic.commons.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
 
-import nguyenhoangviet.vpcorp.nude.R;
+import nguyenhoangviet.vpcorp.pic.R;
 import nguyenhoangviet.vpcorp.welfare.adr.activity.WelfareActivity;
 
 public class SplashActivity extends WelfareActivity{

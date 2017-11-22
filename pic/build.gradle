@@ -4,10 +4,10 @@ android {
     buildToolsVersion "25.0.2"
 
     defaultConfig {
-        applicationId "nguyenhoangviet.vpcorp.nude"
+        applicationId "nguyenhoangviet.vpcorp.pic"
         minSdkVersion 21
         targetSdkVersion 22
-        versionCode 20171103
+        versionCode 20171106
         versionName "1.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"

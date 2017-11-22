@@ -49,12 +49,12 @@ public abstract class WelfareFragment extends ChiaseFragment implements WelfareA
 
 	protected PreferencesAccountUtil	prefAccUtil;
 	protected UserModel					myself;
-	public boolean						isClickNotification			= false;
+	public boolean						isClickNotification		= false;
 	protected Integer					lnrContentId;
-	public static final int MARGIN_LEFT_RIGHT_DP = 16;
-	public static final int MARGIN_TEXT_MIDDLE_DP = 8;
-	public static final int				TIME_COLUMN_WIDTH_PX		= 60;
-	public static long					currentTime					= 0;
+	public static final int				MARGIN_LEFT_RIGHT_DP	= 16;
+	public static final int				MARGIN_TEXT_MIDDLE_DP	= 8;
+	public static final int				TIME_COLUMN_WIDTH_PX	= 60;
+	public static long					currentTime				= 0;
 
 	public void benchmark(String msg){
 		if(currentTime == 0){
@@ -76,7 +76,9 @@ public abstract class WelfareFragment extends ChiaseFragment implements WelfareA
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState){
 		super.onActivityCreated(savedInstanceState);
-		((WelfareActivity)activity).setOnDeviceBackButtonClickListener(this);
+		if(activity != null){
+			((WelfareActivity)activity).setOnDeviceBackButtonClickListener(this);
+		}
 	}
 
 	@Override
@@ -84,41 +86,41 @@ public abstract class WelfareFragment extends ChiaseFragment implements WelfareA
 		super.initView();
 		((WelfareActivity)activity).setOnActivityResultListener(null);
 
-//		if(!((WelfareActivity)activity).isClearRegistrationId && CCStringUtil.isEmpty(myself.key)){
-//			clearRegistrationId();
-//			((WelfareActivity)activity).isClearRegistrationId = true;
-//		}
+		// if(!((WelfareActivity)activity).isClearRegistrationId && CCStringUtil.isEmpty(myself.key)){
+		// clearRegistrationId();
+		// ((WelfareActivity)activity).isClearRegistrationId = true;
+		// }
 	}
 
 	protected void initHeader(Integer leftIconId, String title, Integer rightIconId){
-//		ImageView imgLeftIcon = (ImageView)activity.findViewById(R.id.img_id_header_left_icon);
-//		if(leftIconId != null){
-//			imgLeftIcon.setImageResource(leftIconId);
-//			imgLeftIcon.setVisibility(View.VISIBLE);
-//			imgLeftIcon.setOnClickListener(new View.OnClickListener() {
-//
-//				@Override
-//				public void onClick(View v){
-//					onClickBackBtn();
-//				}
-//			});
-//		}else{
-//			imgLeftIcon.setVisibility(View.INVISIBLE);
-//		}
-//
-//		if(!CCStringUtil.isEmpty(title)){
-//			TextView txtTitle = (TextView)activity.findViewById(R.id.txt_id_header_title);
-//			txtTitle.setText(title);
-//		}
-//
-//		ImageView imgRightIcon = (ImageView)activity.findViewById(R.id.img_id_header_right_icon);
-//		if(rightIconId != null){
-//			// LinearLayout lnrRightIcon = (LinearLayout)activity.findViewById(R.id.lnr_header_right_icon);
-//			imgRightIcon.setVisibility(View.VISIBLE);
-//			imgRightIcon.setImageResource(rightIconId);
-//		}else{
-//			imgRightIcon.setVisibility(View.INVISIBLE);
-//		}
+		// ImageView imgLeftIcon = (ImageView)activity.findViewById(R.id.img_id_header_left_icon);
+		// if(leftIconId != null){
+		// imgLeftIcon.setImageResource(leftIconId);
+		// imgLeftIcon.setVisibility(View.VISIBLE);
+		// imgLeftIcon.setOnClickListener(new View.OnClickListener() {
+		//
+		// @Override
+		// public void onClick(View v){
+		// onClickBackBtn();
+		// }
+		// });
+		// }else{
+		// imgLeftIcon.setVisibility(View.INVISIBLE);
+		// }
+		//
+		// if(!CCStringUtil.isEmpty(title)){
+		// TextView txtTitle = (TextView)activity.findViewById(R.id.txt_id_header_title);
+		// txtTitle.setText(title);
+		// }
+		//
+		// ImageView imgRightIcon = (ImageView)activity.findViewById(R.id.img_id_header_right_icon);
+		// if(rightIconId != null){
+		// // LinearLayout lnrRightIcon = (LinearLayout)activity.findViewById(R.id.lnr_header_right_icon);
+		// imgRightIcon.setVisibility(View.VISIBLE);
+		// imgRightIcon.setImageResource(rightIconId);
+		// }else{
+		// imgRightIcon.setVisibility(View.INVISIBLE);
+		// }
 	}
 
 	//// TODO: 7/5/17 Refactor name -> updateHeaderTitle

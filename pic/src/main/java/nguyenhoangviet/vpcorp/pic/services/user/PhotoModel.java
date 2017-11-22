@@ -1,4 +1,4 @@
-package nguyenhoangviet.vpcorp.nude.services.user;
+package nguyenhoangviet.vpcorp.pic.services.user;
 
 import com.bluelinelabs.logansquare.annotation.JsonObject;
 

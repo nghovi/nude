@@ -3,11 +3,17 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/chiase-android-module/chiase-android-module.iml" filepath="$PROJECT_DIR$/chiase-android-module/chiase-android-module.iml" />
+<<<<<<< HEAD
       <module fileurl="file://$PROJECT_DIR$/nude/nude.iml" filepath="$PROJECT_DIR$/nude/nude.iml" />
       <module fileurl="file://$PROJECT_DIR$/nude.iml" filepath="$PROJECT_DIR$/nude.iml" />
       <module fileurl="file://$PROJECT_DIR$/nude/nude-nude.iml" filepath="$PROJECT_DIR$/nude/nude-nude.iml" />
       <module fileurl="file://$PROJECT_DIR$/vpcorp.iml" filepath="$PROJECT_DIR$/vpcorp.iml" />
       <module fileurl="file://$PROJECT_DIR$/welfare-adr.iml" filepath="$PROJECT_DIR$/welfare-adr.iml" />
+=======
+      <module fileurl="file://$PROJECT_DIR$/pic/pic.iml" filepath="$PROJECT_DIR$/pic/pic.iml" />
+      <module fileurl="file://$PROJECT_DIR$/vpcorp.iml" filepath="$PROJECT_DIR$/vpcorp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/welfare-adr2.iml" filepath="$PROJECT_DIR$/welfare-adr2.iml" />
+>>>>>>> origin/pic500
       <module fileurl="file://$PROJECT_DIR$/welfare-android-core/welfare-android-core.iml" filepath="$PROJECT_DIR$/welfare-android-core/welfare-android-core.iml" />
     </modules>
   </component>
