@@ -147,23 +147,15 @@ public class PhotoPageContainerFragment extends WelfareFragment{
 		url += "feature=popular&";
 		url += "sort=rating&";
 		url += "image_size=1080&";
-<<<<<<< HEAD:nude/src/main/java/nguyenhoangviet/vpcorp/nude/services/user/PhotoPageContainerFragment.java
 		url += "only=Nude&";
-		url += "rpp=100&";
-		url += "consumer_key=PSfuSSCFSFOBqq6vvhp54lEVRODRa1xncBOPIJem";
-
-		// String url =
-		// "v1/photos?feature=popular&only=Nude&sort=created_at&image_size=3&include_store=store_download&include_states=voted&consumer_key=PSfuSSCFSFOBqq6vvhp54lEVRODRa1xncBOPIJem";
-=======
+		// url += "exclude=Nude&";
 		// url += "only=Nude&";
-		url += "exclude=Nude&";
 		url += "rpp=" + PHOTO_NUM_PER_PAGE + "&";
 		int page = 1;
 		if(photoPageModel != null){
 			page = photoPageModel.current_page + 1;
 			page = page > photoPageModel.total_pages ? photoPageModel.total_pages : page;
 		}
->>>>>>> origin/pic500:pic/src/main/java/nguyenhoangviet/vpcorp/pic/services/user/PhotoPageContainerFragment.java
 
 		url += "page=" + page + "&";
 		url += "consumer_key=PSfuSSCFSFOBqq6vvhp54lEVRODRa1xncBOPIJem";
