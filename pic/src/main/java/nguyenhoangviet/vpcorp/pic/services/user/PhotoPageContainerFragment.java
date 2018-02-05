@@ -147,8 +147,8 @@ public class PhotoPageContainerFragment extends WelfareFragment{
 		url += "feature=popular&";
 		url += "sort=rating&";
 		url += "image_size=1080&";
-		url += "only=Nude&";
-		// url += "exclude=Nude&";
+//		url += "only=Nude&";
+		 url += "exclude=Nude&";
 		// url += "only=Nude&";
 		url += "rpp=" + PHOTO_NUM_PER_PAGE + "&";
 		int page = 1;

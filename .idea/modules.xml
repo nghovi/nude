@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/chiase-android-module/chiase-android-module.iml" filepath="$PROJECT_DIR$/chiase-android-module/chiase-android-module.iml" />
+      <module fileurl="file://$PROJECT_DIR$/nude.iml" filepath="$PROJECT_DIR$/nude.iml" />
       <module fileurl="file://$PROJECT_DIR$/pic/pic.iml" filepath="$PROJECT_DIR$/pic/pic.iml" />
       <module fileurl="file://$PROJECT_DIR$/welfare-adr.iml" filepath="$PROJECT_DIR$/welfare-adr.iml" />
       <module fileurl="file://$PROJECT_DIR$/welfare-android-core/welfare-android-core.iml" filepath="$PROJECT_DIR$/welfare-android-core/welfare-android-core.iml" />
